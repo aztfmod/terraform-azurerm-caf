@@ -209,12 +209,17 @@ networking = {
 network_security_group_definition = {
   AzureBastionSubnet = {
 
-    # Support only 1 diagnostic profile for NSG
     diagnostic_profiles = {
       nsg = {
         definition_key = "network_security_group"
         destination_type = "storage"
         destination_key = "all_regions"
+      }
+      operations = {
+        name = "operations"
+        definition_key = "network_security_group"
+        destination_type = "log_analytics"
+        destination_key = "central_logs"
       }
     }
 
