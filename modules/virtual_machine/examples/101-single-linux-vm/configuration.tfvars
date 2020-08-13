@@ -21,10 +21,10 @@ virtual_machines = {
     networking_interfaces = {
       nic0 = {
         # Value of the keys from networking.tfvars
-        vnet_key   = "hub_sg"
-        subnet_key = "jumpbox"
-        name = "nic0"
-        enable_ip_forwarding = false
+        vnet_key                = "hub_sg"
+        subnet_key              = "jumpbox"
+        name                    = "nic0"
+        enable_ip_forwarding    = false
         internal_dns_name_label = "nic0"
       }
     }
@@ -32,19 +32,19 @@ virtual_machines = {
     # 
     virtual_machine_settings = {
       linux = {
-        name                = "bastion"
-        resource_group_key  = "vm_sg"
-        size                = "Standard_F2"
-        admin_username      = "adminuser"
+        name                            = "bastion"
+        resource_group_key              = "vm_sg"
+        size                            = "Standard_F2"
+        admin_username                  = "adminuser"
         disable_password_authentication = true
 
         # Value of the nic keys to attach the VM. The first one in the list is the default nic
-        network_interface_keys = [ "nic0" ]
+        network_interface_keys = ["nic0"]
 
         os_disk = {
-          name                  = "bastion-os"
-          caching               = "ReadWrite"
-          storage_account_type  = "Standard_LRS"
+          name                 = "bastion-os"
+          caching              = "ReadWrite"
+          storage_account_type = "Standard_LRS"
         }
 
         source_image_reference = {
@@ -78,7 +78,7 @@ networking = {
         nsg_name = "jumpbox_nsg"
         nsg      = []
       }
-      
+
     }
     diags = {
       log = [
@@ -91,5 +91,5 @@ networking = {
       ]
     }
   }
-  
+
 }

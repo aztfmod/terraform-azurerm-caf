@@ -29,38 +29,38 @@ virtual_machines = {
         vnet_key   = "hub_sg"
         subnet_key = "jumpbox"
         # public_address_key = ""
-        name = "nic0"
-        enable_ip_forwarding = false
+        name                    = "nic0"
+        enable_ip_forwarding    = false
         internal_dns_name_label = "nic0"
       }
       nic1 = {
         vnet_key   = "hub_sg"
         subnet_key = "jumpbox"
-        name = "nic1"
+        name       = "nic1"
       }
       nic2 = {
         vnet_key   = "hub_sg"
         subnet_key = "jumpbox"
-        name = "nic2"
+        name       = "nic2"
       }
     }
 
     # 
     virtual_machine_settings = {
       linux = {
-        name                = "bastion"
-        resource_group_key  = "vm_sg"
-        size                = "Standard_F2"
-        admin_username      = "adminuser"
+        name                            = "bastion"
+        resource_group_key              = "vm_sg"
+        size                            = "Standard_F2"
+        admin_username                  = "adminuser"
         disable_password_authentication = true
 
         # Value of the nic keys to attach the VM. The first one in the list is the primary nic
-        network_interface_keys = [ "nic0", "nic1" ]
+        network_interface_keys = ["nic0", "nic1"]
 
         os_disk = {
-          name                  = "bastion-os"
-          caching               = "ReadWrite"
-          storage_account_type  = "Standard_LRS"
+          name                 = "bastion-os"
+          caching              = "ReadWrite"
+          storage_account_type = "Standard_LRS"
         }
 
         source_image_reference = {
@@ -75,19 +75,19 @@ virtual_machines = {
 
     data_disks = {
       db_data1 = {
-        name                  = "bastion-db-data1"
-        storage_account_type  = "Standard_LRS"
+        name                 = "bastion-db-data1"
+        storage_account_type = "Standard_LRS"
         # Only Empty is supported. More community contributions required to cover other scenarios
         create_option = "Empty"
-        disk_size_gb = "10"
-        lun             = 1
+        disk_size_gb  = "10"
+        lun           = 1
       }
       db_data2 = {
-        name                  = "bastion-db-data2"
-        storage_account_type  = "Standard_LRS"
-        create_option = "Empty"
-        disk_size_gb = "10"
-        lun           = 2
+        name                 = "bastion-db-data2"
+        storage_account_type = "Standard_LRS"
+        create_option        = "Empty"
+        disk_size_gb         = "10"
+        lun                  = 2
       }
     }
 
@@ -112,7 +112,7 @@ networking = {
         nsg_name = "jumpbox_nsg"
         nsg      = []
       }
-      
+
     }
     diags = {
       log = [
@@ -125,5 +125,5 @@ networking = {
       ]
     }
   }
-  
+
 }

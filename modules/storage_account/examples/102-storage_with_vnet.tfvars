@@ -4,7 +4,7 @@ resource_groups = {
     location   = "southeastasia"
     useprefix  = true
     max_length = 40
-  }  
+  }
   vnet_sg = {
     name       = "test-networking-sg"
     location   = "southeastasia"
@@ -15,13 +15,13 @@ resource_groups = {
 
 storage_accounts = {
   media = {
-    name = "media"
+    name               = "media"
     resource_group_key = "test_sg"
     network_rules = {
       default_action = "Allow"
-      bypass = "Logging"
-      vnet_key = "hub_sg"
-      subnet_key = "jumpbox"
+      bypass         = "Logging"
+      vnet_key       = "hub_sg"
+      subnet_key     = "jumpbox"
     }
   }
 }
@@ -44,7 +44,7 @@ networking = {
         nsg_name = "jumpbox_nsg"
         nsg      = []
       }
-      
+
     }
     diags = {
       log = [
@@ -57,5 +57,5 @@ networking = {
       ]
     }
   }
-  
+
 }

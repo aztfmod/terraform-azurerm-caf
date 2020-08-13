@@ -7,18 +7,19 @@ resource "azurecaf_naming_convention" "stg" {
 }
 
 resource "azurerm_storage_account" "stg" {
-  name                     = azurecaf_naming_convention.stg.result
-  resource_group_name      = var.resource_groups[var.storage_account.resource_group_key].name
-  location                 = lookup(var.storage_account, "location", var.resource_groups[var.storage_account.resource_group_key].location)
-  account_tier             = lookup(var.storage_account, "account_tier", "Standard")
-  account_replication_type = lookup(var.storage_account, "account_replication_type", "LRS")
+  name                      = azurecaf_naming_convention.stg.result
+  resource_group_name       = var.resource_groups[var.storage_account.resource_group_key].name
+  location                  = lookup(var.storage_account, "location", var.resource_groups[var.storage_account.resource_group_key].location)
+  account_tier              = lookup(var.storage_account, "account_tier", "Standard")
+  account_replication_type  = lookup(var.storage_account, "account_replication_type", "LRS")
   account_kind              = lookup(var.storage_account, "account_kind", "StorageV2")
   access_tier               = lookup(var.storage_account, "access_tier", "Hot")
   enable_https_traffic_only = true
+  min_tls_version           = lookup(var.storage_account, "min_tls_version", "TLS1_2")
   allow_blob_public_access  = lookup(var.storage_account, "allow_blob_public_access", false)
   is_hns_enabled            = lookup(var.storage_account, "is_hns_enabled", false)
-  tags = lookup(var.storage_account, "tags", {})
-  
+  tags                      = lookup(var.storage_account, "tags", {})
+
 
   dynamic "custom_domain" {
     for_each = lookup(var.storage_account, "custom_domain", false) == false ? [] : [1]
@@ -45,11 +46,11 @@ resource "azurerm_storage_account" "stg" {
         for_each = lookup(var.storage_account.blob_properties, "cors_rule", false) == false ? [] : [1]
 
         content {
-          allowed_headers     = var.storage_account.blob_properties.cors_rule.allowed_headers
-          allowed_methods     = var.storage_account.blob_properties.cors_rule.allowed_methods
-          allowed_origins     = var.storage_account.blob_properties.cors_rule.allowed_origins
-          exposed_headers     = var.storage_account.blob_properties.cors_rule.exposed_headers
-          max_age_in_seconds  = var.storage_account.blob_properties.cors_rule.max_age_in_seconds
+          allowed_headers    = var.storage_account.blob_properties.cors_rule.allowed_headers
+          allowed_methods    = var.storage_account.blob_properties.cors_rule.allowed_methods
+          allowed_origins    = var.storage_account.blob_properties.cors_rule.allowed_origins
+          exposed_headers    = var.storage_account.blob_properties.cors_rule.exposed_headers
+          max_age_in_seconds = var.storage_account.blob_properties.cors_rule.max_age_in_seconds
         }
       }
 
@@ -72,17 +73,17 @@ resource "azurerm_storage_account" "stg" {
         for_each = lookup(var.storage_account.queue_properties, "cors_rule", false) == false ? [] : [1]
 
         content {
-          allowed_headers     = var.storage_account.queue_properties.cors_rule.allowed_headers
-          allowed_methods     = var.storage_account.queue_properties.cors_rule.allowed_methods
-          allowed_origins     = var.storage_account.queue_properties.cors_rule.allowed_origins
-          exposed_headers     = var.storage_account.queue_properties.cors_rule.exposed_headers
-          max_age_in_seconds  = var.storage_account.queue_properties.cors_rule.max_age_in_seconds
+          allowed_headers    = var.storage_account.queue_properties.cors_rule.allowed_headers
+          allowed_methods    = var.storage_account.queue_properties.cors_rule.allowed_methods
+          allowed_origins    = var.storage_account.queue_properties.cors_rule.allowed_origins
+          exposed_headers    = var.storage_account.queue_properties.cors_rule.exposed_headers
+          max_age_in_seconds = var.storage_account.queue_properties.cors_rule.max_age_in_seconds
         }
       }
 
       dynamic "logging" {
         for_each = lookup(var.storage_account.queue_properties, "logging", false) == false ? [] : [1]
-        
+
         content {
           delete                = var.storage_account.queue_properties.logging.delete
           read                  = var.storage_account.queue_properties.logging.read
@@ -120,8 +121,8 @@ resource "azurerm_storage_account" "stg" {
     for_each = lookup(var.storage_account, "static_website", false) == false ? [] : [1]
 
     content {
-      index_document               = var.storage_account.static_website.index_document
-      error_404_document           = var.storage_account.static_website.error_404_document
+      index_document     = var.storage_account.static_website.index_document
+      error_404_document = var.storage_account.static_website.error_404_document
     }
   }
 
@@ -129,10 +130,10 @@ resource "azurerm_storage_account" "stg" {
     for_each = lookup(var.storage_account, "network_rules", false) == false ? [] : [1]
 
     content {
-      default_action                = lookup(var.storage_account.network_rules, "default_action", "Deny")
-      bypass                        = lookup(var.storage_account.network_rules, "bypass", "None")
-      ip_rules                      = lookup(var.storage_account.network_rules, "ip_rules", null)
-      virtual_network_subnet_ids    = lookup(var.storage_account.network_rules, "default_action", null)
+      default_action             = lookup(var.storage_account.network_rules, "default_action", "Deny")
+      bypass                     = lookup(var.storage_account.network_rules, "bypass", "None")
+      ip_rules                   = lookup(var.storage_account.network_rules, "ip_rules", null)
+      virtual_network_subnet_ids = lookup(var.storage_account.network_rules, "default_action", null)
     }
   }
 

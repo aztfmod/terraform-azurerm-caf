@@ -9,9 +9,9 @@ resource_groups = {
 
 storage_accounts = {
   diagnostics = {
-    name = "disg"
+    name               = "disg"
     resource_group_key = "vnet_sg"
-    enable_system_msi = true
+    enable_system_msi  = true
   }
 }
 
@@ -102,11 +102,11 @@ firewalls = {
 # User assigned identities
 managed_identities = {
   kubernetes_retail = {
-    name = "kubernetes_retail_landingzone"
+    name               = "kubernetes_retail_landingzone"
     resource_group_key = "vnet_sg"
   }
   datalake_retail = {
-    name = "datalake_retail_landingzones"
+    name               = "datalake_retail_landingzones"
     resource_group_key = "vnet_sg"
   }
 }
@@ -122,18 +122,18 @@ virtual_machines = {
     networking_interfaces = {
       nic0 = {
         # Value of the keys from networking.tfvars
-        vnet_key   = "hub_sg"
-        subnet_key = "jumpbox"
-        name = "nic0"
-        enable_ip_forwarding = false
+        vnet_key                = "hub_sg"
+        subnet_key              = "jumpbox"
+        name                    = "nic0"
+        enable_ip_forwarding    = false
         internal_dns_name_label = "nic0"
       }
       nic1 = {
         # Value of the keys from networking.tfvars
-        vnet_key   = "hub_sg"
-        subnet_key = "jumpbox"
-        name = "nic1"
-        enable_ip_forwarding = false
+        vnet_key                = "hub_sg"
+        subnet_key              = "jumpbox"
+        name                    = "nic1"
+        enable_ip_forwarding    = false
         internal_dns_name_label = "nic1"
       }
     }
@@ -141,19 +141,19 @@ virtual_machines = {
     # 
     virtual_machine_settings = {
       linux = {
-        name                = "bastion"
-        resource_group_key  = "vnet_sg"
-        size                = "Standard_F2"
-        admin_username      = "adminuser"
+        name                            = "bastion"
+        resource_group_key              = "vnet_sg"
+        size                            = "Standard_F2"
+        admin_username                  = "adminuser"
         disable_password_authentication = true
 
         # Value of the nic keys to attach the VM. The first one in the list is the default nic
-        network_interface_keys = [ "nic0", "nic1" ]
+        network_interface_keys = ["nic0", "nic1"]
 
         os_disk = {
-          name                  = "bastion-os"
-          caching               = "ReadWrite"
-          storage_account_type  = "Standard_LRS"
+          name                 = "bastion-os"
+          caching              = "ReadWrite"
+          storage_account_type = "Standard_LRS"
         }
 
         source_image_reference = {
@@ -173,12 +173,12 @@ virtual_machines = {
 
     data_disks = {
       db_data1 = {
-        name                  = "bastion-db-data1"
-        storage_account_type  = "Standard_LRS"
+        name                 = "bastion-db-data1"
+        storage_account_type = "Standard_LRS"
         # Only Empty is supported. More community contributions required to cover other scenarios
         create_option = "Empty"
-        disk_size_gb = "10"
-        lun             = 1
+        disk_size_gb  = "10"
+        lun           = 1
       }
       # db_data2 = {
       #   name                  = "bastion-db-data2"

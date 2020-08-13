@@ -10,7 +10,7 @@ locals {
 
 
 resource "azurecaf_naming_convention" "nic" {
-  for_each      = var.networking_interfaces
+  for_each = var.networking_interfaces
 
   name          = each.value.name
   prefix        = var.global_settings.prefix
@@ -20,7 +20,7 @@ resource "azurecaf_naming_convention" "nic" {
 
 
 resource "azurerm_network_interface" "nic" {
-  for_each      = var.networking_interfaces
+  for_each = var.networking_interfaces
 
   name                = azurecaf_naming_convention.nic[each.key].result
   location            = var.location

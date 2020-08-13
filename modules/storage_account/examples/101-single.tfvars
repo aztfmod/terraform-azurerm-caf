@@ -9,7 +9,7 @@ resource_groups = {
 
 storage_accounts = {
   media = {
-    name = "media"
+    name               = "media"
     resource_group_key = "test_sg"
   }
 }

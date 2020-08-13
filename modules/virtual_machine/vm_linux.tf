@@ -1,8 +1,8 @@
 
 
 locals {
-  os_type = lower(keys(var.virtual_machine_settings)[0])
-  linux_settings = lookup(var.virtual_machine_settings, "linux", null)
+  os_type          = lower(keys(var.virtual_machine_settings)[0])
+  linux_settings   = lookup(var.virtual_machine_settings, "linux", null)
   windows_settings = lookup(var.virtual_machine_settings, "windows", null)
 
   managed_identities = flatten([
@@ -15,8 +15,8 @@ locals {
 resource "tls_private_key" "ssh" {
   count = var.public_key_pem_file == "" ? 1 : 0
 
-  algorithm   = "RSA"
-  rsa_bits    = 4096
+  algorithm = "RSA"
+  rsa_bits  = 4096
 }
 
 locals {
@@ -58,8 +58,8 @@ resource "azurerm_linux_virtual_machine" "vm" {
   disable_password_authentication = lookup(local.linux_settings, "disable_password_authentication", true)
 
   dynamic "admin_ssh_key" {
-    for_each =  lookup(local.linux_settings, "disable_password_authentication", true) == true ? [1] : []
-    
+    for_each = lookup(local.linux_settings, "disable_password_authentication", true) == true ? [1] : []
+
     content {
       username   = local.linux_settings.admin_username
       public_key = local.public_key
@@ -85,7 +85,7 @@ resource "azurerm_linux_virtual_machine" "vm" {
     for_each = lookup(var.virtual_machine_settings[local.os_type], "managed_identity_keys", false) == false ? [] : [1]
 
     content {
-      type = "UserAssigned"
+      type         = "UserAssigned"
       identity_ids = local.managed_identities
     }
   }
