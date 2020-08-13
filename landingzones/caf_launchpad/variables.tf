@@ -57,10 +57,6 @@ variable tf_name {
 
 variable resource_groups {}
 
-# variable storage_account_name {
-#   type = string
-# }
-
 variable storage_accounts {}
 
 variable keyvaults {}
@@ -120,7 +116,7 @@ variable blueprint_networking {
 }
 
 variable diagnostics_definition {}
-
+variable diagnostics_destinations {}
 
 variable networking {
   default = {}

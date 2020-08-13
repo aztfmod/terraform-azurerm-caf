@@ -117,11 +117,19 @@ keyvaults = {
       environment = "sandpit"
     }
 
-    # you can setup up to 5 keys
-    diagnostic_keys = [
-      "default_all", 
-      # "siem_all"
-    ]
+    # you can setup up to 5 profiles
+    diagnostic_profiles = {
+      operations = {
+        definition_key = "default_all"
+        destination_type = "log_analytics"
+        destination_key = "central_logs"
+      }
+      siem = {
+        definition_key = "siem_all"
+        destination_type = "storage"
+        destination_key = "all_regions"
+      }
+    }
 
   }
 }
@@ -131,11 +139,20 @@ subscriptions = {
     role_definition_name = "Owner"
     aad_app_key          = "caf_launchpad_level0"
 
-    # you can setup up to 5 keys
-    diagnostic_keys = [
-      "subscription_operations", 
-      "subscription_siem"
-    ]
+    # you can setup up to 5 profiles
+    diagnostic_profiles = {
+      operations = {
+        definition_key = "subscription_operations"
+        destination_type = "log_analytics"
+        destination_key = "central_logs"
+      }
+      siem = {
+        definition_key = "subscription_siem"
+        destination_type = "storage"
+        destination_key = "all_regions"
+      }
+    }
+
   }
 }
 
@@ -175,9 +192,13 @@ networking = {
     }
 
     # you can setup up to 5 keys - vnet diganostic
-    diagnostic_keys = [
-      "networking_all"
-    ]
+    diagnostic_profiles = {
+      vnet = {
+        definition_key = "networking_all"
+        destination_type = "log_analytics"
+        destination_key = "central_logs"
+      }
+    }
 
   }
 }
@@ -189,8 +210,14 @@ network_security_group_definition = {
   AzureBastionSubnet = {
 
     # Support only 1 diagnostic profile for NSG
-    diagnostic_key = "network_security_group"
-    
+    diagnostic_profiles = {
+      nsg = {
+        definition_key = "network_security_group"
+        destination_type = "storage"
+        destination_key = "all_regions"
+      }
+    }
+
     nsg = [
       {
         name                       = "bastion-in-allow",
@@ -322,13 +349,6 @@ diagnostics_definition = {
       ]
     }
 
-    # At least one of the option has to be selected
-    destinations = {
-      log_analytics = {
-        log_analytics_key              = "central_logs_sea"
-        log_analytics_destination_type = "Dedicated"
-      }
-    }
   }
 
   networking_all = {
@@ -344,13 +364,6 @@ diagnostics_definition = {
       ]
     }
 
-    # At least one of the option has to be selected
-    destinations = {
-      log_analytics = {
-        log_analytics_key              = "central_logs_sea"
-        log_analytics_destination_type = "Dedicated"
-      }
-    }
   }
 
   network_security_group = {
@@ -367,13 +380,6 @@ diagnostics_definition = {
       # ]
     }
 
-    # At least one of the option has to be selected
-    destinations = {
-      log_analytics = {
-        log_analytics_key              = "central_logs_sea"
-        log_analytics_destination_type = "Dedicated"
-      }
-    }
   }
 
   compliance_all = {
@@ -389,17 +395,6 @@ diagnostics_definition = {
       ]
     }
 
-    # At least one of the option has to be selected
-    destinations = {
-      storage = {
-        southeastasia = {
-          storage_account_key = "diaglogs_sea"
-        }
-        eastasia = {
-          storage_account_key = "diaglogs_ea"
-        }
-      }
-    }
   }
 
   siem_all = {
@@ -416,17 +411,6 @@ diagnostics_definition = {
       ]
     }
 
-    # At least one of the option has to be selected
-    destinations = {
-      storage = {
-        southeastasia = {
-          storage_account_key = "diagsiem_sea"
-        }
-        eastasia = {
-          storage_account_key = "diagsiem_ea"
-        }
-      }
-    }
   }
 
   subscription_operations = {
@@ -443,14 +427,6 @@ diagnostics_definition = {
         ["ResourceHealth", true],
         ["Recommendation", true],
       ]
-    }
-
-    # At least one of the option has to be selected
-    destinations = {
-      log_analytics = {
-        log_analytics_key              = "central_logs_sea"
-        log_analytics_destination_type = "Dedicated"
-      }
     }
   }
 
@@ -470,18 +446,27 @@ diagnostics_definition = {
       ]
     }
 
-    # At least one of the option has to be selected
-    destinations = {
-      storage = {
-        southeastasia = {
-          storage_account_key = "diagsiem_sea"
-        }
-        eastasia = {
-          storage_account_key = "diagsiem_ea"
-        }
-      }
-    }
   }
 
 }
 
+diagnostics_destinations = {
+  # Storage keys must reference the azure region name
+  storage = {
+    all_regions = {
+      southeastasia = {
+        storage_account_key = "diagsiem_sea"
+      }
+      eastasia = {
+        storage_account_key = "diagsiem_ea"
+      }
+    }
+  }
+
+  log_analytics = {
+    central_logs = {
+      log_analytics_key              = "central_logs_sea"
+      log_analytics_destination_type = "Dedicated"
+    }
+  }
+}

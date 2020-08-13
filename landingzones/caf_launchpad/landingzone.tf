@@ -1,9 +1,11 @@
 module "launchpad" {
   source = "/tf/caf"
 
+  tags = local.tags
   global_settings                   = local.global_settings
   log_analytics                     = var.log_analytics
   diagnostics_definition            = var.diagnostics_definition
+  diagnostics_destinations          = var.diagnostics_destinations
   resource_groups                   = var.resource_groups
   keyvaults                         = var.keyvaults
   subscriptions                     = var.subscriptions

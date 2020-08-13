@@ -1,18 +1,18 @@
 resource "azurerm_monitor_diagnostic_setting" "diagnostics" {
 
-  # for_each           = var.diagnostics
-  name               = var.diagnostics.name
+  for_each           = var.profiles
+  name               = var.diagnostics.diagnostics_definition[each.value.definition_key].name
   target_resource_id = var.resource_id
 
   #  eventhub_name                    = lookup(var.diagnostics, "eh_name", null)
   #  eventhub_authorization_rule_id   = lookup(var.diagnostics, "eh_id", null) != null ? "${var.diagnostics.eh_id}/authorizationrules/RootManageSharedAccessKey" : null
 
-  log_analytics_workspace_id     = lookup(var.diagnostics.destinations, "log_analytics", null) == null ? null : var.log_analytics[var.diagnostics.destinations.log_analytics.log_analytics_key].id
-  log_analytics_destination_type = lookup(var.diagnostics.destinations, "log_analytics_destination_type", null)
-  storage_account_id             = lookup(var.diagnostics.destinations, "storage", null) == null ? null : var.storage_accounts[var.diagnostics.destinations.storage[var.resource_location].storage_account_key].id
+  log_analytics_workspace_id     = each.value.destination_type == "log_analytics" ? var.diagnostics.log_analytics[var.diagnostics.diagnostics_destinations.log_analytics[each.value.destination_key].log_analytics_key].id : null
+  log_analytics_destination_type = each.value.destination_type == "log_analytics" ? lookup(var.diagnostics.diagnostics_destinations.log_analytics[each.value.destination_key], "log_analytics_destination_type", null) : null
+  storage_account_id             = each.value.destination_type == "storage" ? var.diagnostics.storage_accounts[var.diagnostics.diagnostics_destinations.storage[each.value.destination_key][var.resource_location].storage_account_key].id : null
 
   dynamic "log" {
-    for_each = lookup(var.diagnostics.categories, "log", {})
+    for_each = lookup(var.diagnostics.diagnostics_definition[each.value.definition_key].categories, "log", {})
     content {
       category = log.value[0]
       enabled  = log.value[1]
@@ -28,7 +28,7 @@ resource "azurerm_monitor_diagnostic_setting" "diagnostics" {
   }
 
   dynamic "metric" {
-    for_each = lookup(var.diagnostics.categories, "metric", {})
+    for_each = lookup(var.diagnostics.diagnostics_definition[each.value.definition_key].categories, "metric", {})
     content {
       category = metric.value[0]
       enabled  = metric.value[1]

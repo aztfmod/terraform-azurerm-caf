@@ -24,11 +24,6 @@ variable resource_groups {
   description = "Name of the existing resource group to deploy the virtual machine"
 }
 
-# variable default_region {
-#   description = "Default region to deploy the resources"
-#   default     = "region1"
-# }
-
 variable level {
   default = "level0"
   type    = string
@@ -48,6 +43,9 @@ variable diagnostics_definition {
   default     = {}
   description = "Shared diadgnostics settings that can be used by the services to enable diagnostics"
 }
+
+
+variable diagnostics_destinations {}
 
 variable log_analytics {
   default = {}

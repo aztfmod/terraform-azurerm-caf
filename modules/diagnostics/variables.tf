@@ -1,5 +1,3 @@
-variable storage_accounts {}
-variable log_analytics {}
 
 variable resource_id {
   description = "(Required) Fully qualified Azure resource identifier for which you enable diagnostics."
@@ -12,6 +10,8 @@ variable resource_location {
 variable diagnostics {
   description = "(Required) Contains the diagnostics setting object."
 }
+
+variable profiles {}
 
 # diagnostics is a an object describing the configuration of diagnostics logging for a component, as follows: 
 # diagnostics = {
