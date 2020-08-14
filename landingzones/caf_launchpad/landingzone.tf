@@ -18,4 +18,5 @@ module "launchpad" {
   azuread_apps                      = var.azuread_apps
   azuread_groups                    = var.azuread_groups
   azuread_roles                     = var.azuread_roles
+  azuread_users                     = var.azuread_users
 }

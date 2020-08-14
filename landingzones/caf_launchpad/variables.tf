@@ -38,6 +38,10 @@ variable regions {
     region1 = "southeastasia"
   }
 }
+variable max_length {
+  description = "Define the max length the naming convention will apply to generated name"
+  default     = 0
+}
 
 variable prefix {
   default = null
@@ -71,6 +75,9 @@ variable azuread_apps {
   default = {}
 }
 variable azuread_groups {
+  default = {}
+}
+variable azuread_users {
   default = {}
 }
 variable azuread_roles {

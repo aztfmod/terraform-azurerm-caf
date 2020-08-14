@@ -1,5 +1,5 @@
 
-module "keyvault" {
+module "keyvaults" {
   source = "/tf/caf/modules/security/keyvault"
 
   for_each = var.keyvaults
@@ -12,5 +12,5 @@ module "keyvault" {
 }
 
 output keyvaults {
-  value = module.keyvault
+  value = module.keyvaults
 }

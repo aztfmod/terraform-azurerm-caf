@@ -64,6 +64,7 @@ locals {
     default_region     = var.default_region
     environment        = var.environment
     regions            = var.regions
+    max_length         = var.max_length
   }
 
 }

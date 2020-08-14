@@ -188,7 +188,7 @@ keyvault_access_policies = {
       secret_permissions = ["Set", "Get", "List", "Delete"]
     }
     keyvault_password_rotation = {
-      azuread_group_key = "keyvault_password_rotation"
+      azuread_group_key  = "keyvault_password_rotation"
       secret_permissions = ["Set", "Get", "List", "Delete"]
     }
   }
@@ -271,6 +271,23 @@ azuread_groups = {
     }
     prevent_duplicate_name = true
   }
+}
+
+azuread_users = {
+
+  # don't change that key
+  aad-user-devops-user-admin = {
+    convention              = "cafrandom"
+    useprefix               = true
+    max_length              = 60
+    tenant_name             = "terraformdev.onmicrosoft.com"
+    user_name               = "caf-level0-security-devops-pat-rotation"
+    password_expire_in_days = 180
+
+    # Value must match with var.keyvaults[keyname] to store username and password for password rotation
+    keyvault_key = "secrets"
+  }
+
 }
 
 azuread_apps = {

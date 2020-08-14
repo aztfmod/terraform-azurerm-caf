@@ -79,6 +79,10 @@ variable azuread_roles {
   default = {}
 }
 
+variable azuread_users {
+  default = {}
+}
+
 variable azuread_api_permissions {
   default = {}
 }
