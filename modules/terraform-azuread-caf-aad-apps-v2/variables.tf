@@ -6,15 +6,15 @@ variable keyvaults {
   description = "Map of deployed azurerm_key_vault"
 }
 
-variable azuread_apps {
+variable aad_apps {
   description = "Map of aad_app objects to create Azure Active Directory applications"
 }
 
-variable azuread_api_permissions {
+variable aad_api_permissions {
   description = "Map of aad_api_permission objects to provide API access to an Azure Active Directory application"
 }
 
-variable azuread_app {
+variable aad_app {
   description = "Object to create Azure Active Directory application"
   type = object({
     convention              = string
@@ -41,7 +41,7 @@ variable azuread_app {
   }
 }
 
-variable azuread_api_permission {
+variable aad_api_permission {
   description = "Object to provide API access to an Azure Active Directory application"
   type = map(object({
     resource_app_id = string

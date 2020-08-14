@@ -29,7 +29,7 @@ variable convention {
 
 variable default_region {
   description = "Define the default region where services are deployed if the location is not set at the resource level"
-  default = "region1"
+  default     = "region1"
 }
 
 variable regions {
@@ -60,13 +60,20 @@ variable resource_groups {}
 variable storage_accounts {}
 
 variable keyvaults {}
+variable keyvault_access_policies {}
 
 variable subscriptions {}
 
-variable azuread_aad_apps {
+## Azure Active Directory
+variable azuread_apps {
   default = {}
 }
-
+variable azuread_groups {
+  default = {}
+}
+variable azuread_roles {
+  default = {}
+}
 
 
 variable launchpad_key_names {}

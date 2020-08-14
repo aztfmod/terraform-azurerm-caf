@@ -1,9 +1,13 @@
+#
+# The client-id, client-secret and tenant-id are stored into the keyvault to support password rotation
+#
+
 locals {
   secrets_to_store_in_keyvault = {
     for aad_app in
     flatten(
       [
-        for key, app in var.aad_apps : {
+        for key, app in var.azuread_apps : {
           app_application_id      = lookup(app, "app_application_id", null)
           app_object_id           = lookup(app, "app_object_id", null)
           sp_object_id            = lookup(app, "sp_object_id", null)

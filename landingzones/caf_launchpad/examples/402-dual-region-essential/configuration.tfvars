@@ -16,7 +16,7 @@ launchpad_key_names = {
 resource_groups = {
   tfstate = {
     name       = "launchpad-tfstates"
-    location   = "southeastasia"
+    region     = "region1"
     useprefix  = true
     max_length = 40
   }
@@ -64,7 +64,7 @@ storage_accounts = {
   # Stores diagnostic logging for southeastasia
   diaglogs_sea = {
     name                     = "diaglogssea"
-    region                 = "region1"
+    region                   = "region1"
     resource_group_key       = "ops"
     account_kind             = "BlobStorage"
     account_tier             = "Standard"
@@ -74,7 +74,7 @@ storage_accounts = {
   # Stores diagnostic logging for eastasia
   diaglogs_ea = {
     name                     = "diaglogsae"
-    region                 = "region2"
+    region                   = "region2"
     resource_group_key       = "ops"
     account_kind             = "BlobStorage"
     account_tier             = "Standard"
@@ -84,7 +84,7 @@ storage_accounts = {
   # Stores security logs for siem southeastasia
   diagsiem_sea = {
     name                     = "siemsea"
-    region                 = "region1"
+    region                   = "region1"
     resource_group_key       = "siem"
     account_kind             = "BlobStorage"
     account_tier             = "Standard"
@@ -94,7 +94,7 @@ storage_accounts = {
   # Stores diagnostic logging for eastasia
   diagsiem_ea = {
     name                     = "siemae"
-    region                 = "region2"
+    region                   = "region2"
     resource_group_key       = "siem"
     account_kind             = "BlobStorage"
     account_tier             = "Standard"
@@ -120,17 +120,77 @@ keyvaults = {
     # you can setup up to 5 profiles
     diagnostic_profiles = {
       operations = {
-        definition_key = "default_all"
+        definition_key   = "default_all"
         destination_type = "log_analytics"
-        destination_key = "central_logs"
+        destination_key  = "central_logs"
       }
       siem = {
-        definition_key = "siem_all"
+        definition_key   = "siem_all"
         destination_type = "storage"
-        destination_key = "all_regions"
+        destination_key  = "all_regions"
       }
     }
 
+  }
+
+  secrets = {
+    name               = "secrets"
+    resource_group_key = "security"
+    region             = "region1"
+    convention         = "cafrandom"
+    sku_name           = "premium"
+
+    # you can setup up to 5 profiles
+    diagnostic_profiles = {
+      operations = {
+        definition_key   = "default_all"
+        destination_type = "log_analytics"
+        destination_key  = "central_logs"
+      }
+      siem = {
+        definition_key   = "siem_all"
+        destination_type = "storage"
+        destination_key  = "all_regions"
+      }
+    }
+  }
+}
+
+keyvault_access_policies = {
+  # A maximum of 16 access policies per keyvault
+  launchpad = {
+    bootstrap_user = {
+      # azuread_group_key = ""
+      # azuread_app_key   = ""
+
+      # can be any object_id to reference an existing azure ad application, group or user
+      # if set to "logged_in_user" add the user running terraform in the policy (recommended)
+      object_id = "logged_in_user"
+
+      key_permissions         = []
+      certificate_permissions = []
+      secret_permissions      = ["Set", "Get", "List", "Delete"]
+    }
+    keyvault_level0_rw = {
+      azuread_group_key = "keyvault_level0_rw"
+      # azuread_app_key   = ""
+      # object_id               = ""
+
+      key_permissions         = []
+      certificate_permissions = []
+      secret_permissions      = ["Set", "Get", "List", "Delete"]
+    }
+  }
+
+  secrets = {
+    launchpad_bootstrap_user = {
+      object_id          = "logged_in_user"
+      secret_permissions = ["Set", "Get", "List", "Delete"]
+    }
+    keyvault_password_rotation = {
+      azuread_group_key = "keyvault_password_rotation"
+      secret_permissions = ["Set", "Get", "List", "Delete"]
+    }
   }
 }
 
@@ -142,27 +202,86 @@ subscriptions = {
     # you can setup up to 5 profiles
     diagnostic_profiles = {
       operations = {
-        definition_key = "subscription_operations"
+        definition_key   = "subscription_operations"
         destination_type = "log_analytics"
-        destination_key = "central_logs"
+        destination_key  = "central_logs"
       }
       siem = {
-        definition_key = "subscription_siem"
+        definition_key   = "subscription_siem"
         destination_type = "storage"
-        destination_key = "all_regions"
+        destination_key  = "all_regions"
       }
     }
 
   }
 }
 
-azuread_aad_apps = {
+# WIP - only support user_principal_names (note guest accounts have a special representation)
+azuread_groups = {
+  keyvault_level0_rw = {
+    name        = "caf-level0-keyvault-rw"
+    description = "Provide read and write access to the keyvault secrets / level0."
+    members = {
+      user_principal_names = [
+      ]
+      group_names      = []
+      group_object_ids = []
+      group_keys       = []
+
+      service_principal_keys = [
+        "caf_launchpad_level0"
+      ]
+      service_principal_object_id = []
+
+    }
+    owners = {
+      user_principal_names = [
+      ]
+      service_principal_keys = [
+        "caf_launchpad_level0"
+      ]
+      service_principal_object_id = []
+    }
+    prevent_duplicate_name = true
+  }
+
+  keyvault_password_rotation = {
+    name        = "caf-level0-password-rotation-rw"
+    description = "Provide read and write access to the keyvault secrets / level0."
+    members = {
+      user_principal_names = [
+      ]
+      group_names      = []
+      group_object_ids = []
+      group_keys       = []
+
+      service_principal_keys = [
+        "caf_launchpad_level0"
+      ]
+      service_principal_object_id = []
+
+    }
+    owners = {
+      user_principal_names = [
+      ]
+      service_principal_keys = [
+        "caf_launchpad_level0"
+      ]
+      service_principal_object_id = []
+    }
+    prevent_duplicate_name = true
+  }
+}
+
+azuread_apps = {
   # Do not rename the key "launchpad" to be able to upgrade to the standard launchpad
   caf_launchpad_level0 = {
     convention              = "cafrandom"
     useprefix               = true
     application_name        = "caf_launchpad_level0"
     password_expire_in_days = 180
+
+    # Store the ${secret_prefix}-client-id, ${secret_prefix}-client-secret...
     keyvault = {
       keyvault_key  = "launchpad"
       secret_prefix = "caf-launchpad-level0"
@@ -172,6 +291,25 @@ azuread_aad_apps = {
       }
     }
   }
+
+  # Changing that key requires changing the value of azure_devops.aad_app_key
+  azure_devops = {
+    convention              = "cafrandom"
+    useprefix               = true
+    application_name        = "caf-level0-security-devops-pat-rotation-aad-app1"
+    password_expire_in_days = 60
+    tenant_name             = "terraformdev.onmicrosoft.com"
+    reply_urls              = ["https://localhost"]
+    keyvault = {
+      keyvault_key  = "secrets"
+      secret_prefix = "caf-level0-security-devops-pat-rotation-aad-app"
+      access_policies = {
+        key_permissions    = []
+        secret_permissions = ["Get", "Set"]
+      }
+    }
+  }
+
 }
 
 networking = {
@@ -194,9 +332,9 @@ networking = {
     # you can setup up to 5 keys - vnet diganostic
     diagnostic_profiles = {
       vnet = {
-        definition_key = "networking_all"
+        definition_key   = "networking_all"
         destination_type = "log_analytics"
-        destination_key = "central_logs"
+        destination_key  = "central_logs"
       }
     }
 
@@ -211,15 +349,15 @@ network_security_group_definition = {
 
     diagnostic_profiles = {
       nsg = {
-        definition_key = "network_security_group"
+        definition_key   = "network_security_group"
         destination_type = "storage"
-        destination_key = "all_regions"
+        destination_key  = "all_regions"
       }
       operations = {
-        name = "operations"
-        definition_key = "network_security_group"
+        name             = "operations"
+        definition_key   = "network_security_group"
         destination_type = "log_analytics"
-        destination_key = "central_logs"
+        destination_key  = "central_logs"
       }
     }
 
@@ -299,7 +437,7 @@ network_security_group_definition = {
 #
 log_analytics = {
   central_logs_sea = {
-    region           = "region1"
+    region             = "region1"
     name               = "logs"
     resource_group_key = "ops"
     solutions_maps = {

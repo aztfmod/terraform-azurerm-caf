@@ -7,5 +7,5 @@
 
 ```bash
 cd /tf/caf
-rover -lz $PWD/landingzones/caf_launchpad -launchpad -var-file $PWD/landingzones/caf_launchpad/examples/402-dual-region-essential/configuration.tfvars -a apply
+rover -lz $PWD/landingzones/caf_launchpad -launchpad -var-file $PWD/landingzones/caf_launchpad/examples/402-dual-region-essential/configuration.tfvars -parallelism=30 -a apply
 ```

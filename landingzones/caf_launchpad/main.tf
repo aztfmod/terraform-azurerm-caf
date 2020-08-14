@@ -6,7 +6,7 @@ terraform {
     }
     azuread = {
       source  = "hashicorp/azuread"
-      version = "~> 0.10.0"
+      version = "~> 0.11.0"
     }
     random = {
       source  = "hashicorp/random"
@@ -61,9 +61,9 @@ locals {
     prefix_with_hyphen = local.prefix == "" ? "" : "${local.prefix}-"
     prefix_start_alpha = local.prefix == "" ? "" : "${random_string.alpha1.result}${local.prefix}"
     convention         = var.convention
-    default_region   = var.default_region
+    default_region     = var.default_region
     environment        = var.environment
-    regions           = var.regions
+    regions            = var.regions
   }
 
 }

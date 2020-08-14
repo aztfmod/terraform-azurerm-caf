@@ -3,7 +3,7 @@ locals {
     for access_policy in
     flatten(
       [
-        for key, app in var.aad_apps : {
+        for key, app in var.azuread_apps : {
           aad_app_key        = key
           keyvault_key       = lookup(app, "keyvault", null) == null ? null : app.keyvault.keyvault_key
           key_permissions    = lookup(app.keyvault.access_policies, "key_permissions", null) == null ? null : app.keyvault.access_policies.key_permissions
@@ -26,5 +26,8 @@ resource "azurerm_key_vault_access_policy" "policy" {
   key_permissions    = each.value.key_permissions
   secret_permissions = each.value.secret_permissions
 
+  lifecycle {
+    ignore_changes = [object_id, key_vault_id]
+  }
 }
 

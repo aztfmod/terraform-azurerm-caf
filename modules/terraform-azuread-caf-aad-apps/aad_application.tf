@@ -5,7 +5,7 @@
 locals {
   # check structure, add missing fields
   aad_apps_all_attributes = {
-    for key, aad_app in var.aad_apps : key => merge(var.aad_app, aad_app)
+    for key, aad_app in var.azuread_apps : key => merge(var.azuread_app, aad_app)
   }
 
   aad_apps_to_create = {
@@ -50,7 +50,7 @@ resource "azuread_application" "aad_apps" {
 
   dynamic "required_resource_access" {
     for_each = {
-      for key, permission in lookup(var.aad_api_permissions, each.key, []) : key => permission
+      for key, permission in lookup(var.azuread_api_permissions, each.key, []) : key => permission
     }
 
     content {

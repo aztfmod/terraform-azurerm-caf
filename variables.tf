@@ -8,7 +8,9 @@
 # Global settings 
 variable global_settings {}
 
-
+variable logged_user_objectId {
+  default = null
+}
 
 variable caf_foundations_security {
   default = {}
@@ -59,12 +61,25 @@ variable caf_foundations_accounting {
   default = {}
 }
 
+variable user_type {
+  description = "The rover set this value to user or serviceprincipal. It is used to handle Azure AD api consents."
+  default     = {}
+}
+
 ## Azure AD
-variable azuread_aad_apps {
+variable azuread_apps {
   default = {}
 }
 
-variable azuread_aad_api_permissions {
+variable azuread_groups {
+  default = {}
+}
+
+variable azuread_roles {
+  default = {}
+}
+
+variable azuread_api_permissions {
   default = {}
 }
 
@@ -98,6 +113,10 @@ variable managed_identities {
 }
 
 variable keyvaults {
+  default = {}
+}
+
+variable keyvault_access_policies {
   default = {}
 }
 

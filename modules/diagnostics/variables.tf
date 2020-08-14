@@ -14,7 +14,7 @@ variable diagnostics {
 variable profiles {
 
   validation {
-    condition = length(var.profiles) < 6
+    condition     = length(var.profiles) < 6
     error_message = "Maximun of 5 diagnostics profiles are supported."
   }
 }
