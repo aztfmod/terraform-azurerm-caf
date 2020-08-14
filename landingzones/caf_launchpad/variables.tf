@@ -43,7 +43,9 @@ variable prefix {
   default = null
 }
 
-variable log_analytics {}
+variable log_analytics {
+  default = {}
+}
 
 variable accounting_settings {
   default = {}
@@ -122,8 +124,12 @@ variable blueprint_networking {
   default = {}
 }
 
-variable diagnostics_definition {}
-variable diagnostics_destinations {}
+variable diagnostics_definition {
+  default = {}
+}
+variable diagnostics_destinations {
+  default = {}
+}
 
 variable networking {
   default = {}

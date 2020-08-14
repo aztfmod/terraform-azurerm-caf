@@ -1,6 +1,11 @@
 level = "level0"
 
-location = "southeastasia"
+# Default region
+default_region = "region1"
+
+regions = {
+  region1 = "southeastasia"
+}
 
 launchpad_key_names = {
   keyvault = "launchpad"
@@ -10,7 +15,7 @@ launchpad_key_names = {
 resource_groups = {
   tfstate = {
     name       = "launchpad-tfstates"
-    location   = "southeastasia"
+    region     = "region1"
     useprefix  = true
     max_length = 40
   }
@@ -19,23 +24,51 @@ resource_groups = {
     useprefix  = true
     max_length = 40
   }
-  gitops = {
-    name       = "launchpad-devops-agents"
-    useprefix  = true
-    max_length = 40
-  }
 }
 
-storage_account_name = "level0"
+
+storage_accounts = {
+  level0 = {
+    name                     = "level0"
+    resource_group_key       = "tfstate"
+    account_kind             = "BlobStorage"
+    account_tier             = "Standard"
+    account_replication_type = "RAGRS"
+    # tags = {
+    #   # Those tags must never be changed while set as they are used by the rover to locate the launchpad and the tfstates.
+    #   tfstate     = "level0"
+    #   environment = "sandpit"
+    #   launchpad   = "launchpad"
+    # }
+  }
+}
 
 keyvaults = {
   # Do not rename the key "launchpad" to be able to upgrade to the standard launchpad
   launchpad = {
     name               = "launchpad"
     resource_group_key = "security"
-    region             = "southeastasia"
+    region             = "region1"
     convention         = "cafrandom"
     sku_name           = "standard"
+
+    diagnostic_profiles = {}
+  }
+}
+
+
+keyvault_access_policies = {
+  # A maximum of 16 access policies per keyvault
+  launchpad = {
+    bootstrap_user = {
+      # can be any object_id to reference an existing azure ad application, group or user
+      # if set to "logged_in_user" add the user running terraform in the policy (recommended)
+      object_id = "logged_in_user"
+
+      key_permissions         = []
+      certificate_permissions = []
+      secret_permissions      = ["Set", "Get", "List", "Delete"]
+    }
   }
 }
 
@@ -43,10 +76,12 @@ subscriptions = {
   logged_in_subscription = {
     role_definition_name = "Owner"
     aad_app_key          = "caf_launchpad_level0"
+
+    diagnostic_profiles = {}
   }
 }
 
-aad_apps = {
+azuread_apps = {
   # Do not rename the key "launchpad" to be able to upgrade to the standard launchpad
   caf_launchpad_level0 = {
     convention              = "cafrandom"
@@ -63,21 +98,4 @@ aad_apps = {
     }
   }
 }
-
-# diagnostics_settings = {
-#   resource_diagnostics_name         = "diag"
-#   azure_diagnostics_logs_event_hub  = false
-#   resource_group_key                = "gitops"
-# }
-
-# log_analytics = {
-#   resource_log_analytics_name       = "logs"
-#   resource_group_key                = "gitops"
-#   solutions_maps = {
-#     KeyVaultAnalytics = {
-#       "publisher" = "Microsoft"
-#       "product"   = "OMSGallery/KeyVaultAnalytics"
-#     }
-#   }
-# }
 
