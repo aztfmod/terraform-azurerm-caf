@@ -27,7 +27,7 @@ resource "azurerm_key_vault_access_policy" "policy" {
   secret_permissions = each.value.secret_permissions
 
   lifecycle {
-    ignore_changes = [object_id, key_vault_id]
+    ignore_changes = [tenant_id, object_id, key_vault_id]
   }
 }
 

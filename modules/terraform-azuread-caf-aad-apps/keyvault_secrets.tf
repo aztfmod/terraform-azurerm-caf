@@ -88,4 +88,9 @@ resource "azurerm_key_vault_secret" "aad_app_tenant_id" {
   value        = data.azurerm_client_config.current.tenant_id
   key_vault_id = var.keyvaults[each.value.keyvault_key].id
 
+  lifecycle {
+    ignore_changes = [
+      expiration_date, value
+    ]
+  }
 }

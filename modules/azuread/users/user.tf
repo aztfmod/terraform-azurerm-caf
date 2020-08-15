@@ -35,4 +35,10 @@ resource "azurerm_key_vault_secret" "aad_user_password" {
   value           = random_password.account.result
   expiration_date = timeadd(timestamp(), format("%sh", local.password_expire_in_days * 24))
   key_vault_id    = local.keyvault_id
+
+  lifecycle {
+    ignore_changes = [
+      expiration_date, value
+    ]
+  }
 }
