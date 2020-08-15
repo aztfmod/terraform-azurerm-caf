@@ -139,6 +139,15 @@ resource "azurerm_storage_account" "stg" {
 
 }
 
+resource "azurerm_storage_container" "stg" {
+  for_each = lookup(var.storage_account, "containers", {})
+
+  name                  = each.value.name
+  storage_account_name  = azurerm_storage_account.stg.name
+  container_access_type = lookup(each.value, "container_access_type", null)
+  metadata              = lookup(each.value, "metadata", null)
+}
+
 
 # locals {
 #   storage_account_virtual_network_subnet_ids = flatten(
