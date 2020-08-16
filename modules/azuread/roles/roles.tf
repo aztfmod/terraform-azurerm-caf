@@ -9,7 +9,7 @@ resource "null_resource" "set_azure_ad_roles" {
   }
 
   provisioner "local-exec" {
-    command     = "/tf/caf/modules/azuread/roles/scripts/set_ad_role.sh"
+    command     = format("%s/scripts/set_ad_role.sh", path.module)
     interpreter = ["/bin/sh"]
     on_failure  = fail
 
@@ -21,7 +21,7 @@ resource "null_resource" "set_azure_ad_roles" {
   }
 
   provisioner "local-exec" {
-    command     = "/tf/caf/modules/azuread/roles/scripts/set_ad_role.sh"
+    command     = format("%s/scripts/set_ad_role.sh", path.module)
     when    = destroy
     interpreter = ["/bin/sh"]
     on_failure  = fail
