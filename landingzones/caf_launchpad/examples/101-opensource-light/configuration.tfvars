@@ -9,7 +9,8 @@ regions = {
 
 launchpad_key_names = {
   keyvault = "launchpad"
-  aad_app  = "caf_launchpad_level0"
+  azuread_app  = "caf_launchpad_level0"
+  storage_tfstate = "level0"
 }
 
 resource_groups = {

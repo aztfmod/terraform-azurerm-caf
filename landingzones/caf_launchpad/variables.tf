@@ -57,8 +57,8 @@ variable accounting_settings {
 
 # Do not change the default value to be able to upgrade to the standard launchpad
 variable tf_name {
-  description = "Name of the terraform state in the blob storage (Does not include the extension .tfstate)"
-  default     = "launchpad"
+  description = "Name of the terraform state in the blob storage (Does not include the extension .tfstate). Setup by the rover. Leave empty in the configuration file"
+  default     = ""
 }
 
 variable resource_groups {}
