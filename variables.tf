@@ -53,10 +53,6 @@ variable log_analytics {
   default = {}
 }
 
-variable accounting_settings {
-  default = {}
-}
-
 variable caf_foundations_accounting {
   default = {}
 }

@@ -51,9 +51,6 @@ variable log_analytics {
   default = {}
 }
 
-variable accounting_settings {
-  default = {}
-}
 
 # Do not change the default value to be able to upgrade to the standard launchpad
 variable tf_name {
