@@ -8,8 +8,8 @@ regions = {
 }
 
 launchpad_key_names = {
-  keyvault = "launchpad"
-  azuread_app  = "caf_launchpad_level0"
+  keyvault    = "launchpad"
+  azuread_app = "caf_launchpad_level0"
   tfstates = [
     "level0"
   ]

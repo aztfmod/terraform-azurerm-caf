@@ -9,10 +9,10 @@ regions = {
 }
 
 launchpad_key_names = {
-  keyvault = "launchpad"
-  azuread_app  = "caf_launchpad_level0"
+  keyvault    = "launchpad"
+  azuread_app = "caf_launchpad_level0"
   tfstates = [
-    "level0"
+    "level0", "level1", "level2", "level3"
   ]
 }
 
@@ -67,6 +67,60 @@ storage_accounts = {
       }
       level0 = {
         name = "level0"
+      }
+    }
+  }
+  level1 = {
+    name                     = "level1"
+    resource_group_key       = "tfstate"
+    account_kind             = "BlobStorage"
+    account_tier             = "Standard"
+    account_replication_type = "RAGRS"
+    tags = {
+      # Those tags must never be changed while set as they are used by the rover to locate the launchpad and the tfstates.
+      tfstate     = "level1"
+      environment = "sandpit"
+      launchpad   = "launchpad"
+    }
+    containers = {
+      tfstate = {
+        name = "tfstate"
+      }
+    }
+  }
+  level2 = {
+    name                     = "level2"
+    resource_group_key       = "tfstate"
+    account_kind             = "BlobStorage"
+    account_tier             = "Standard"
+    account_replication_type = "RAGRS"
+    tags = {
+      # Those tags must never be changed while set as they are used by the rover to locate the launchpad and the tfstates.
+      tfstate     = "level2"
+      environment = "sandpit"
+      launchpad   = "launchpad"
+    }
+    containers = {
+      tfstate = {
+        name = "tfstate"
+      }
+    }
+  }
+  level3 = {
+    name                     = "level3"
+    resource_group_key       = "tfstate"
+    account_kind             = "BlobStorage"
+    account_tier             = "Standard"
+    account_replication_type = "RAGRS"
+    tags = {
+      # Those tags must never be changed while set as they are used by the rover to locate the launchpad and the tfstates.
+      tfstate     = "level3"
+      environment = "sandpit"
+      launchpad   = "launchpad"
+    }
+    containers = {
+      tfstate = {
+        name = "tfstate"
       }
     }
   }
@@ -336,6 +390,42 @@ azuread_apps = {
     }
   }
 
+}
+
+#
+# Available roles:
+# az rest --method Get --uri https://graph.microsoft.com/v1.0/directoryRoleTemplates -o json | jq -r .value[].displayName
+#
+azuread_app_roles = {
+  caf_launchpad_level0 = {
+    roles = [
+      "Application Developer",
+      "User Account Administrator"
+    ]
+  }
+}
+
+managed_identities = {
+  level0 = {
+    name               = "launchpad-level0"
+    resource_group_key = "security"
+  }
+  level1 = {
+    name               = "launchpad-level1"
+    resource_group_key = "security"
+  }
+  level2 = {
+    name               = "launchpad-level2"
+    resource_group_key = "security"
+  }
+  level3 = {
+    name               = "launchpad-level3"
+    resource_group_key = "security"
+  }
+  level4 = {
+    name               = "launchpad-level4"
+    resource_group_key = "security"
+  }
 }
 
 networking = {
