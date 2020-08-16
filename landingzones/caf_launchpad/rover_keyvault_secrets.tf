@@ -5,8 +5,12 @@ resource "azurerm_key_vault_secret" "launchpad_blob_name" {
 }
 
 resource "azurerm_key_vault_secret" "launchpad_blob_container" {
-  name         = "launchpad-blob-container"
-  value        = module.launchpad.storage_accounts[var.launchpad_key_names.storage_tfstate].name
+  for_each = {
+    for key in var.launchpad_key_names.tfstates : key => key
+  }
+
+  name         = format("launchpad-blob-container-%s", each.value)
+  value        = module.launchpad.storage_accounts[each.value].name
   key_vault_id = module.launchpad.keyvaults[var.launchpad_key_names.keyvault].id
 }
 

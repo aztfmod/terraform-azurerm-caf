@@ -11,7 +11,9 @@ regions = {
 launchpad_key_names = {
   keyvault = "launchpad"
   azuread_app  = "caf_launchpad_level0"
-  storage_tfstate = "level0"
+  tfstates = [
+    "level0"
+  ]
 }
 
 resource_groups = {
@@ -28,11 +30,6 @@ resource_groups = {
   }
   networking = {
     name       = "networking"
-    useprefix  = true
-    max_length = 40
-  }
-  gitops = {
-    name       = "launchpad-devops-agents"
     useprefix  = true
     max_length = 40
   }
@@ -55,12 +52,12 @@ storage_accounts = {
     account_kind             = "BlobStorage"
     account_tier             = "Standard"
     account_replication_type = "RAGRS"
-    tags = {
-      # Those tags must never be changed while set as they are used by the rover to locate the launchpad and the tfstates.
-      tfstate     = "level0"
-      environment = "sandpit"
-      launchpad   = "launchpad"
-    }
+    # tags = {
+    #   # Those tags must never be changed while set as they are used by the rover to locate the launchpad and the tfstates.
+    #   tfstate     = "level0"
+    #   environment = "sandpit"
+    #   launchpad   = "launchpad"
+    # }
     containers = {
       tfstate = {
         name = "tfstate"
