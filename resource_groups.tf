@@ -5,7 +5,7 @@ resource "azurecaf_naming_convention" "rg" {
   name          = each.value.name
   resource_type = "azurerm_resource_group"
   convention    = lookup(each.value, "convention", var.global_settings.convention)
-  prefix        = var.global_settings.prefix
+  prefix        = lookup(each.value, "useprefix", false) ? var.global_settings.prefix : ""
   max_length    = lookup(each.value, "max_length", null)
 }
 
