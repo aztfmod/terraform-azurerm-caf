@@ -808,104 +808,120 @@ diagnostics_destinations = {
   }
 }
 
-# custom_role_definitions = {
-#   caf-launchpad-rwdo = {
-#     name          = "caf-launchpad-rwdo" 
-#     convention    = "passthrough"
-#     useprefix     = true
-#     description   = "Provide addition permissions on top of built-in Contributor role to manage landing zones deployment"
-#     permissions   = {
-#       actions = [
-#         "Microsoft.Authorization/roleAssignments/delete",
-#         "Microsoft.Authorization/roleAssignments/read",
-#         "Microsoft.Authorization/roleAssignments/write",
-#         "Microsoft.Authorization/roleDefinitions/delete",
-#         "Microsoft.Authorization/roleDefinitions/read",
-#         "Microsoft.Authorization/roleDefinitions/write",
-#         "microsoft.insights/diagnosticSettings/delete",
-#         "microsoft.insights/diagnosticSettings/read",
-#         "microsoft.insights/diagnosticSettings/write",
-#         "Microsoft.KeyVault/vaults/delete",
-#         "Microsoft.KeyVault/vaults/read",
-#         "Microsoft.KeyVault/vaults/write",
-#         "Microsoft.KeyVault/vaults/accessPolicies/write",
-#         "Microsoft.Network/networkSecurityGroups/delete",
-#         "Microsoft.Network/networkSecurityGroups/read",
-#         "Microsoft.Network/networkSecurityGroups/write",
-#         "Microsoft.Network/networkSecurityGroups/join/action",
-#         "Microsoft.Network/virtualNetworks/subnets/delete",
-#         "Microsoft.Network/virtualNetworks/subnets/read",
-#         "Microsoft.Network/virtualNetworks/subnets/write",
-#         "Microsoft.OperationalInsights/workspaces/delete",
-#         "Microsoft.OperationalInsights/workspaces/read",
-#         "Microsoft.OperationalInsights/workspaces/write",
-#         "Microsoft.OperationalInsights/workspaces/sharedKeys/action",
-#         "Microsoft.OperationsManagement/solutions/delete",
-#         "Microsoft.OperationsManagement/solutions/read",
-#         "Microsoft.OperationsManagement/solutions/write",
-#         "Microsoft.Storage/storageAccounts/delete",
-#         "Microsoft.Storage/storageAccounts/read",
-#         "Microsoft.Storage/storageAccounts/write",
-#         "Microsoft.Storage/storageAccounts/blobServices/containers/delete",
-#         "Microsoft.Storage/storageAccounts/blobServices/containers/read",
-#         "Microsoft.Storage/storageAccounts/blobServices/containers/write",
-#         "Microsoft.Storage/storageAccounts/blobServices/containers/lease/action",
-#         "Microsoft.Storage/storageAccounts/blobServices/read",
-#         "Microsoft.Storage/storageAccounts/listKeys/action",
-#         "Microsoft.Resources/subscriptions/providers/read",
-#         "Microsoft.Resources/subscriptions/read",
-#         "Microsoft.Resources/subscriptions/resourcegroups/delete",
-#         "Microsoft.Resources/subscriptions/resourcegroups/read",
-#         "Microsoft.Resources/subscriptions/resourcegroups/write",
-#         "Microsoft.Network/virtualNetworks/delete",
-#         "Microsoft.Network/virtualNetworks/read",
-#         "Microsoft.Network/virtualNetworks/write",
-#       ]
-#       data_actions = [
-#         "Microsoft.Storage/storageAccounts/blobServices/containers/blobs/delete",
-#         "Microsoft.Storage/storageAccounts/blobServices/containers/blobs/write",
-#         "Microsoft.Storage/storageAccounts/blobServices/containers/blobs/read",
-#       ]
-#     }
+custom_role_definitions = {
+  caf-launchpad-rwdo = {
+    name          = "caf-launchpad-rwdo" 
+    convention    = "passthrough"
+    useprefix     = true
+    description   = "Provide addition permissions on top of built-in Contributor role to manage landing zones deployment"
+    permissions   = {
+      actions = [
+        "Microsoft.Authorization/roleAssignments/delete",
+        "Microsoft.Authorization/roleAssignments/read",
+        "Microsoft.Authorization/roleAssignments/write",
+        "Microsoft.Authorization/roleDefinitions/delete",
+        "Microsoft.Authorization/roleDefinitions/read",
+        "Microsoft.Authorization/roleDefinitions/write",
+        "microsoft.insights/diagnosticSettings/delete",
+        "microsoft.insights/diagnosticSettings/read",
+        "microsoft.insights/diagnosticSettings/write",
+        "Microsoft.KeyVault/vaults/delete",
+        "Microsoft.KeyVault/vaults/read",
+        "Microsoft.KeyVault/vaults/write",
+        "Microsoft.KeyVault/vaults/accessPolicies/write",
+        "Microsoft.Network/networkSecurityGroups/delete",
+        "Microsoft.Network/networkSecurityGroups/read",
+        "Microsoft.Network/networkSecurityGroups/write",
+        "Microsoft.Network/networkSecurityGroups/join/action",
+        "Microsoft.Network/virtualNetworks/subnets/delete",
+        "Microsoft.Network/virtualNetworks/subnets/read",
+        "Microsoft.Network/virtualNetworks/subnets/write",
+        "Microsoft.OperationalInsights/workspaces/delete",
+        "Microsoft.OperationalInsights/workspaces/read",
+        "Microsoft.OperationalInsights/workspaces/write",
+        "Microsoft.OperationalInsights/workspaces/sharedKeys/action",
+        "Microsoft.OperationsManagement/solutions/delete",
+        "Microsoft.OperationsManagement/solutions/read",
+        "Microsoft.OperationsManagement/solutions/write",
+        "Microsoft.Storage/storageAccounts/delete",
+        "Microsoft.Storage/storageAccounts/read",
+        "Microsoft.Storage/storageAccounts/write",
+        "Microsoft.Storage/storageAccounts/blobServices/containers/delete",
+        "Microsoft.Storage/storageAccounts/blobServices/containers/read",
+        "Microsoft.Storage/storageAccounts/blobServices/containers/write",
+        "Microsoft.Storage/storageAccounts/blobServices/containers/lease/action",
+        "Microsoft.Storage/storageAccounts/blobServices/read",
+        "Microsoft.Storage/storageAccounts/listKeys/action",
+        "Microsoft.Resources/subscriptions/providers/read",
+        "Microsoft.Resources/subscriptions/read",
+        "Microsoft.Resources/subscriptions/resourcegroups/delete",
+        "Microsoft.Resources/subscriptions/resourcegroups/read",
+        "Microsoft.Resources/subscriptions/resourcegroups/write",
+        "Microsoft.Network/virtualNetworks/delete",
+        "Microsoft.Network/virtualNetworks/read",
+        "Microsoft.Network/virtualNetworks/write",
+      ]
+      data_actions = [
+        "Microsoft.Storage/storageAccounts/blobServices/containers/blobs/delete",
+        "Microsoft.Storage/storageAccounts/blobServices/containers/blobs/write",
+        "Microsoft.Storage/storageAccounts/blobServices/containers/blobs/read",
+      ]
+    }
 
-#     mapping_subscription_key_to_azure_app_keys = {
-#       es-level0-security                = [
-#         "caf_launchpad_level0"
-#       ]
-#     }
+  }
 
-#   }
+  caf-launchpad-contributor-rwdo = {
+    name          = "caf-launchpad-contributor-rwdo" 
+    convention    = "passthrough"
+    useprefix     = true
+    description   = "Provide addition permissions on top of built-in Contributor role to manage landing zones deployment"
+    permissions   = {
+      actions = [
+        "Microsoft.Authorization/roleAssignments/delete",
+        "Microsoft.Authorization/roleAssignments/read",
+        "Microsoft.Authorization/roleAssignments/write",
+        "Microsoft.Authorization/roleDefinitions/delete",
+        "Microsoft.Authorization/roleDefinitions/read",
+        "Microsoft.Authorization/roleDefinitions/write",
+        "Microsoft.Resources/subscriptions/providers/read"
+      ]
+      data_actions = [
+        "Microsoft.Storage/storageAccounts/blobServices/containers/blobs/delete",
+        "Microsoft.Storage/storageAccounts/blobServices/containers/blobs/write",
+        "Microsoft.Storage/storageAccounts/blobServices/containers/blobs/read",
+      ]
+    }
+  }
 
-#   caf-launchpad-contributor-rwdo = {
-#     name          = "caf-launchpad-contributor-rwdo" 
-#     convention    = "passthrough"
-#     useprefix     = true
-#     description   = "Provide addition permissions on top of built-in Contributor role to manage landing zones deployment"
-#     permissions   = {
-#       actions = [
-#         "Microsoft.Authorization/roleAssignments/delete",
-#         "Microsoft.Authorization/roleAssignments/read",
-#         "Microsoft.Authorization/roleAssignments/write",
-#         "Microsoft.Authorization/roleDefinitions/delete",
-#         "Microsoft.Authorization/roleDefinitions/read",
-#         "Microsoft.Authorization/roleDefinitions/write",
-#         "Microsoft.Resources/subscriptions/providers/read"
-#       ]
-#       data_actions = [
-#         "Microsoft.Storage/storageAccounts/blobServices/containers/blobs/delete",
-#         "Microsoft.Storage/storageAccounts/blobServices/containers/blobs/write",
-#         "Microsoft.Storage/storageAccounts/blobServices/containers/blobs/read",
-#       ]
-#     }
+}
 
-# }
+  
 
 
+#
+# Services supported: subscriptions, storage accounts and resource groups
+# Can assign roles to: AD groups, AD object ID, AD applications, Managed identities
+#
 role_mapping = {
+  custom_role_mapping = {
+    subscription_keys = {
+      logged_in_subscription = {
+        "caf-launchpad-contributor-rwdo" = {
+          azuread_group_keys = [
+            "keyvault_level0_rw", "keyvault_level1_rw", "keyvault_level2_rw", "keyvault_level3_rw", "keyvault_level4_rw",  
+          ]
+          managed_identity_keys = [
+            "level0", "level1", "level2", "level3", "level4"
+          ]
+        }
+      }
+    }
+  }
+
   built_in_role_mapping = {
     subscription_keys = {
       logged_in_subscription = {
-        "Owner" = {
+        "Contributor" = {
           azuread_app_keys = [
             "caf_launchpad_level0"
           ]
@@ -1010,20 +1026,6 @@ role_mapping = {
     }
   }
 
-  custom_role_mapping = {
-    subscriptions = {
-      github-integration-landingzones = [
-        "azure_caf-terraform-landingzones",
-        "caf_launchpad_level0"
-      ]
-
-      github-integration-launchpad = [
-        "aztfmod_level0",
-        "caf_launchpad_level0"
-      ]
-
-    }
-  }
 }
 
 azuread_api_permissions = {

@@ -5,7 +5,8 @@ resource "azurerm_role_assignment" "object_id" {
   }
 
   scope                = var.scope
-  role_definition_name = var.role_definition_name
+  role_definition_name = var.role_definition_name == null ? null : var.role_definition_name
+  role_definition_id   = var.role_definition_id == null ? null : var.role_definition_id
   principal_id         = each.value
 }
 
@@ -15,7 +16,8 @@ resource "azurerm_role_assignment" "azuread_apps" {
   }
 
   scope                = var.scope
-  role_definition_name = var.role_definition_name
+  role_definition_name = var.role_definition_name == null ? null : var.role_definition_name
+  role_definition_id   = var.role_definition_id == null ? null : var.role_definition_id
   principal_id         = var.azuread_apps.aad_apps[each.key].azuread_service_principal.object_id
 }
 
@@ -25,7 +27,8 @@ resource "azurerm_role_assignment" "azuread_group" {
   }
 
   scope                = var.scope
-  role_definition_name = var.role_definition_name
+  role_definition_name = var.role_definition_name == null ? null : var.role_definition_name
+  role_definition_id   = var.role_definition_id == null ? null : var.role_definition_id
   principal_id         = var.azuread_groups[each.key].id
 }
 
@@ -35,6 +38,7 @@ resource "azurerm_role_assignment" "msi" {
   }
 
   scope                = var.scope
-  role_definition_name = var.role_definition_name
+  role_definition_name = var.role_definition_name == null ? null : var.role_definition_name
+  role_definition_id   = var.role_definition_id == null ? null : var.role_definition_id
   principal_id         = var.managed_identities[each.key].principal_id
 }
