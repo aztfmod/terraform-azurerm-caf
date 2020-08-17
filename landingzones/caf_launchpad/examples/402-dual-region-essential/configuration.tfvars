@@ -1,6 +1,6 @@
 level = "level0"
 
-# Default region
+# Default region. When not set to a resource it will use that value
 default_region = "region1"
 
 regions = {
@@ -12,7 +12,7 @@ launchpad_key_names = {
   keyvault    = "launchpad"
   azuread_app = "caf_launchpad_level0"
   tfstates = [
-    "level0", "level1", "level2", "level3"
+    "level0", "level1", "level2", "level3", "level4"
   ]
 }
 
@@ -147,7 +147,7 @@ storage_accounts = {
     }
   }
 
-  # Stores diagnostic logging for southeastasia
+  # Stores diagnostic logging for region1
   diaglogs_sea = {
     name                     = "diaglogssea"
     region                   = "region1"
@@ -157,7 +157,7 @@ storage_accounts = {
     account_replication_type = "LRS"
     access_tier              = "Cool"
   }
-  # Stores diagnostic logging for eastasia
+  # Stores diagnostic logging for region2
   diaglogs_ea = {
     name                     = "diaglogsae"
     region                   = "region2"
@@ -167,17 +167,16 @@ storage_accounts = {
     account_replication_type = "LRS"
     access_tier              = "Cool"
   }
-  # Stores security logs for siem southeastasia
+  # Stores security logs for siem default region"
   diagsiem_sea = {
-    name                     = "siemsea"
-    region                   = "region1"
+    name                     = "siemsae"
     resource_group_key       = "siem"
     account_kind             = "BlobStorage"
     account_tier             = "Standard"
     account_replication_type = "LRS"
     access_tier              = "Cool"
   }
-  # Stores diagnostic logging for eastasia
+  # Stores diagnostic logging for region2
   diagsiem_ea = {
     name                     = "siemae"
     region                   = "region2"
