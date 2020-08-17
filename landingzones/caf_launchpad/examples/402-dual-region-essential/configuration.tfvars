@@ -12,7 +12,11 @@ launchpad_key_names = {
   keyvault    = "launchpad"
   azuread_app = "caf_launchpad_level0"
   tfstates = [
-    "level0", "level1", "level2", "level3", "level4"
+    "level0", 
+    "level1", 
+    "level2", 
+    "level3", 
+    "level4"
   ]
 }
 
@@ -43,6 +47,11 @@ resource_groups = {
     useprefix  = true
     max_length = 40
   }
+  bastion_launchpad = {
+    name       = "launchpad-bastion"
+    useprefix  = true
+    max_length = 40
+  }
 }
 
 storage_accounts = {
@@ -52,12 +61,14 @@ storage_accounts = {
     account_kind             = "BlobStorage"
     account_tier             = "Standard"
     account_replication_type = "RAGRS"
-    # tags = {
-    #   # Those tags must never be changed while set as they are used by the rover to locate the launchpad and the tfstates.
-    #   tfstate     = "level0"
-    #   environment = "sandpit"
-    #   launchpad   = "launchpad"
-    # }
+    tags = {
+      ## Those tags must never be changed after being set as they are used by the rover to locate the launchpad and the tfstates.
+      # Only adjust the environment value at creation time
+      tfstate     = "level0"
+      environment = "sandpit"
+      launchpad   = "launchpad"
+      ##
+    }
     containers = {
       tfstate = {
         name = "tfstate"
@@ -516,6 +527,11 @@ networking = {
     specialsubnets = {}
     subnets = {
       AzureBastionSubnet = {
+        name    = "AzureBastionSubnet" #Must be called AzureBastionSubnet 
+        cidr    = ["10.10.100.0/27"]
+        nsg_key = "AzureBastionSubnet"
+      }
+      jumpbox = {
         name    = "AzureBastionSubnet" #Must be called AzureBastionSubnet 
         cidr    = ["10.10.100.0/27"]
         nsg_key = "AzureBastionSubnet"
@@ -1067,4 +1083,54 @@ azuread_api_permissions = {
     }
   }
 
+}
+
+# Virtual machines
+virtual_machines = {
+
+  # Configuration to deploy a bastion host linux virtual machine
+  bastion_host = {
+    resource_group_key = "vm_sg"
+
+    # Define the number of networking cards to attach the virtual machine
+    networking_interfaces = {
+      nic0 = {
+        # Value of the keys from networking.tfvars
+        vnet_key                = "devops_sea"
+        subnet_key              = "jumpbox"
+        name                    = "nic0"
+        enable_ip_forwarding    = false
+        internal_dns_name_label = "nic0"
+      }
+    }
+
+    # 
+    virtual_machine_settings = {
+      linux = {
+        name                            = "bastion"
+        resource_group_key              = "bastion_launchpad"
+        size                            = "Standard_F2"
+        admin_username                  = "adminuser"
+        disable_password_authentication = true
+
+        # Value of the nic keys to attach the VM. The first one in the list is the default nic
+        network_interface_keys = ["nic0"]
+
+        os_disk = {
+          name                 = "bastion-os"
+          caching              = "ReadWrite"
+          storage_account_type = "Standard_LRS"
+        }
+
+        source_image_reference = {
+          publisher = "Canonical"
+          offer     = "UbuntuServer"
+          sku       = "16.04-LTS"
+          version   = "latest"
+        }
+
+      }
+    }
+
+  }
 }
