@@ -1,3 +1,5 @@
+# Admin consent management is not performed in the same way of the logged in user is a service principal or a user
+# We have two local variables to accomodate that. 
 locals {
 
   api_permissions_for_sp = flatten(

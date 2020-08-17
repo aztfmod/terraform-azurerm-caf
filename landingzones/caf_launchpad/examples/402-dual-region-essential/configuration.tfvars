@@ -70,6 +70,7 @@ storage_accounts = {
       }
     }
   }
+
   level1 = {
     name                     = "level1"
     resource_group_key       = "tfstate"
@@ -88,6 +89,7 @@ storage_accounts = {
       }
     }
   }
+
   level2 = {
     name                     = "level2"
     resource_group_key       = "tfstate"
@@ -106,6 +108,7 @@ storage_accounts = {
       }
     }
   }
+
   level3 = {
     name                     = "level3"
     resource_group_key       = "tfstate"
@@ -124,6 +127,26 @@ storage_accounts = {
       }
     }
   }
+
+  level4 = {
+    name                     = "level4"
+    resource_group_key       = "tfstate"
+    account_kind             = "BlobStorage"
+    account_tier             = "Standard"
+    account_replication_type = "RAGRS"
+    tags = {
+      # Those tags must never be changed while set as they are used by the rover to locate the launchpad and the tfstates.
+      tfstate     = "level4"
+      environment = "sandpit"
+      launchpad   = "launchpad"
+    }
+    containers = {
+      tfstate = {
+        name = "tfstate"
+      }
+    }
+  }
+
   # Stores diagnostic logging for southeastasia
   diaglogs_sea = {
     name                     = "diaglogssea"
@@ -308,6 +331,61 @@ azuread_groups = {
     prevent_duplicate_name = true
   }
 
+  keyvault_level1_rw = {
+    name        = "caf-level1-keyvault-rw"
+    description = "Provide read and write access to the keyvault secrets and tfstates / level1."
+    members = {
+    }
+    owners = {
+
+    }
+    prevent_duplicate_name = true
+  }
+
+  keyvault_level2_rw = {
+    name        = "caf-level2-keyvault-rw"
+    description = "Provide read and write access to the keyvault secrets and tfstates / level2."
+    members = {
+    }
+    owners = {
+
+    }
+    prevent_duplicate_name = true
+  }
+
+  keyvault_level3_rw = {
+    name        = "caf-level3-keyvault-rw"
+    description = "Provide read and write access to the keyvault secrets and tfstates / level3."
+    members = {
+    }
+    owners = {
+
+    }
+    prevent_duplicate_name = true
+  }
+
+  keyvault_level4_rw = {
+    name        = "caf-level4-keyvault-rw"
+    description = "Provide read and write access to the keyvault secrets and tfstates / level4."
+    members = {
+    }
+    owners = {
+
+    }
+    prevent_duplicate_name = true
+  }
+
+  caf_launchpad_Reader = {
+    name        = "caf-launchpad-Reader"
+    description = "Provide Reader role to the caf launchpad landing zone resource groups."
+    members = {
+    }
+    owners = {
+
+    }
+    prevent_duplicate_name = true
+  }
+
   keyvault_password_rotation = {
     name        = "caf-level0-password-rotation-rw"
     description = "Provide read and write access to the keyvault secrets / level0."
@@ -431,7 +509,7 @@ managed_identities = {
 networking = {
   devops_sea = {
     resource_group_key = "networking"
-    location           = "southeastasia"
+    region             = "region1"
     vnet = {
       name          = "devops"
       address_space = ["10.10.100.0/24"]
@@ -728,4 +806,264 @@ diagnostics_destinations = {
       log_analytics_destination_type = "Dedicated"
     }
   }
+}
+
+# custom_role_definitions = {
+#   caf-launchpad-rwdo = {
+#     name          = "caf-launchpad-rwdo" 
+#     convention    = "passthrough"
+#     useprefix     = true
+#     description   = "Provide addition permissions on top of built-in Contributor role to manage landing zones deployment"
+#     permissions   = {
+#       actions = [
+#         "Microsoft.Authorization/roleAssignments/delete",
+#         "Microsoft.Authorization/roleAssignments/read",
+#         "Microsoft.Authorization/roleAssignments/write",
+#         "Microsoft.Authorization/roleDefinitions/delete",
+#         "Microsoft.Authorization/roleDefinitions/read",
+#         "Microsoft.Authorization/roleDefinitions/write",
+#         "microsoft.insights/diagnosticSettings/delete",
+#         "microsoft.insights/diagnosticSettings/read",
+#         "microsoft.insights/diagnosticSettings/write",
+#         "Microsoft.KeyVault/vaults/delete",
+#         "Microsoft.KeyVault/vaults/read",
+#         "Microsoft.KeyVault/vaults/write",
+#         "Microsoft.KeyVault/vaults/accessPolicies/write",
+#         "Microsoft.Network/networkSecurityGroups/delete",
+#         "Microsoft.Network/networkSecurityGroups/read",
+#         "Microsoft.Network/networkSecurityGroups/write",
+#         "Microsoft.Network/networkSecurityGroups/join/action",
+#         "Microsoft.Network/virtualNetworks/subnets/delete",
+#         "Microsoft.Network/virtualNetworks/subnets/read",
+#         "Microsoft.Network/virtualNetworks/subnets/write",
+#         "Microsoft.OperationalInsights/workspaces/delete",
+#         "Microsoft.OperationalInsights/workspaces/read",
+#         "Microsoft.OperationalInsights/workspaces/write",
+#         "Microsoft.OperationalInsights/workspaces/sharedKeys/action",
+#         "Microsoft.OperationsManagement/solutions/delete",
+#         "Microsoft.OperationsManagement/solutions/read",
+#         "Microsoft.OperationsManagement/solutions/write",
+#         "Microsoft.Storage/storageAccounts/delete",
+#         "Microsoft.Storage/storageAccounts/read",
+#         "Microsoft.Storage/storageAccounts/write",
+#         "Microsoft.Storage/storageAccounts/blobServices/containers/delete",
+#         "Microsoft.Storage/storageAccounts/blobServices/containers/read",
+#         "Microsoft.Storage/storageAccounts/blobServices/containers/write",
+#         "Microsoft.Storage/storageAccounts/blobServices/containers/lease/action",
+#         "Microsoft.Storage/storageAccounts/blobServices/read",
+#         "Microsoft.Storage/storageAccounts/listKeys/action",
+#         "Microsoft.Resources/subscriptions/providers/read",
+#         "Microsoft.Resources/subscriptions/read",
+#         "Microsoft.Resources/subscriptions/resourcegroups/delete",
+#         "Microsoft.Resources/subscriptions/resourcegroups/read",
+#         "Microsoft.Resources/subscriptions/resourcegroups/write",
+#         "Microsoft.Network/virtualNetworks/delete",
+#         "Microsoft.Network/virtualNetworks/read",
+#         "Microsoft.Network/virtualNetworks/write",
+#       ]
+#       data_actions = [
+#         "Microsoft.Storage/storageAccounts/blobServices/containers/blobs/delete",
+#         "Microsoft.Storage/storageAccounts/blobServices/containers/blobs/write",
+#         "Microsoft.Storage/storageAccounts/blobServices/containers/blobs/read",
+#       ]
+#     }
+
+#     mapping_subscription_key_to_azure_app_keys = {
+#       es-level0-security                = [
+#         "caf_launchpad_level0"
+#       ]
+#     }
+
+#   }
+
+#   caf-launchpad-contributor-rwdo = {
+#     name          = "caf-launchpad-contributor-rwdo" 
+#     convention    = "passthrough"
+#     useprefix     = true
+#     description   = "Provide addition permissions on top of built-in Contributor role to manage landing zones deployment"
+#     permissions   = {
+#       actions = [
+#         "Microsoft.Authorization/roleAssignments/delete",
+#         "Microsoft.Authorization/roleAssignments/read",
+#         "Microsoft.Authorization/roleAssignments/write",
+#         "Microsoft.Authorization/roleDefinitions/delete",
+#         "Microsoft.Authorization/roleDefinitions/read",
+#         "Microsoft.Authorization/roleDefinitions/write",
+#         "Microsoft.Resources/subscriptions/providers/read"
+#       ]
+#       data_actions = [
+#         "Microsoft.Storage/storageAccounts/blobServices/containers/blobs/delete",
+#         "Microsoft.Storage/storageAccounts/blobServices/containers/blobs/write",
+#         "Microsoft.Storage/storageAccounts/blobServices/containers/blobs/read",
+#       ]
+#     }
+
+# }
+
+
+role_mapping = {
+  built_in_role_mapping = {
+    subscription_keys = {
+      logged_in_subscription = {
+        "Owner" = {
+          azuread_app_keys = [
+            "caf_launchpad_level0"
+          ]
+          managed_identity_keys = [
+            "level0", "level1", "level2", "level3", "level4"
+          ]
+        }
+      }
+    }
+    resource_group_keys = {
+      tfstate = {
+        "Reader" = {
+          azuread_group_keys = [
+            "caf_launchpad_Reader"
+          ]
+        }
+      }
+      security = {
+        "Reader" = {
+          azuread_group_keys = [
+            "caf_launchpad_Reader"
+          ]
+        }
+      }
+      networking = {
+        "Reader" = {
+          azuread_group_keys = [
+            "caf_launchpad_Reader"
+          ]
+        }
+      }
+      ops = {
+        "Reader" = {
+          azuread_group_keys = [
+            "caf_launchpad_Reader"
+          ]
+        }
+      }
+      siem = {
+        "Reader" = {
+          azuread_group_keys = [
+            "caf_launchpad_Reader"
+          ]
+        }
+      }
+    }
+    storage_account_keys = {
+      level0 = {
+        "Storage Blob Data Contributor" = {
+          object_ids = []
+          azuread_group_keys = [
+            "keyvault_level0_rw"
+          ]
+          azuread_app_keys = [
+            "caf_launchpad_level0"
+          ]
+          managed_identity_keys = [
+            "level0"
+          ]
+        }
+      }
+      level1 = {
+        "Storage Blob Data Contributor" = {
+          azuread_group_keys = [
+            "keyvault_level1_rw"
+          ]
+          managed_identity_keys = [
+            "level1"
+          ]
+        }
+      }
+      level2 = {
+        "Storage Blob Data Contributor" = {
+          azuread_group_keys = [
+            "keyvault_level2_rw"
+          ]
+          managed_identity_keys = [
+            "level2"
+          ]
+        }
+      }
+      level3 = {
+        "Storage Blob Data Contributor" = {
+          azuread_group_keys = [
+            "keyvault_level3_rw"
+          ]
+          managed_identity_keys = [
+            "level3"
+          ]
+        }
+      }
+      level4 = {
+        "Storage Blob Data Contributor" = {
+          azuread_group_keys = [
+            "keyvault_level4_rw"
+          ]
+          managed_identity_keys = [
+            "level4"
+          ]
+        }
+      }
+    }
+  }
+
+  custom_role_mapping = {
+    subscriptions = {
+      github-integration-landingzones = [
+        "azure_caf-terraform-landingzones",
+        "caf_launchpad_level0"
+      ]
+
+      github-integration-launchpad = [
+        "aztfmod_level0",
+        "caf_launchpad_level0"
+      ]
+
+    }
+  }
+}
+
+azuread_api_permissions = {
+
+  caf_launchpad_level0 = {
+    active_directory_graph = {
+      resource_app_id = "00000002-0000-0000-c000-000000000000"
+      resource_access = {
+        active_directory_graph_resource_access_id_Application_ReadWrite_OwnedBy = {
+          id   = "824c81eb-e3f8-4ee6-8f6d-de7f50d565b7"
+          type = "Role"
+        }
+        active_directory_graph_resource_access_id_Directory_ReadWrite_All = {
+          id   = "78c8a3c8-a07e-4b9e-af1b-b5ccab50a175"
+          type = "Role"
+        }
+      }
+    }
+
+    microsoft_graph = {
+      resource_app_id = "00000003-0000-0000-c000-000000000000"
+      resource_access = {
+        microsoft_graph_AppRoleAssignment_ReadWrite_All = {
+          id   = "06b708a9-e830-4db3-a914-8e69da51d44f"
+          type = "Role"
+        }
+        microsoft_graph_DelegatedPermissionGrant_ReadWrite_All = {
+          id   = "8e8e4742-1d95-4f68-9d56-6ee75648c72a"
+          type = "Role"
+        }
+        microsoft_graph_GroupReadWriteAll = {
+          id   = "62a82d76-70ea-41e2-9197-370581804d09"
+          type = "Role"
+        }
+        microsoft_graph_RoleManagement_ReadWrite_Directory = {
+          id   = "9e3f62cf-ca93-4989-b6ce-bf83c28f9fe8"
+          type = "Role"
+        }
+      }
+    }
+  }
+
 }

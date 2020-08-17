@@ -120,6 +120,13 @@ variable keyvault_access_policies {
   default = {}
 }
 
+variable custom_role_definitions {
+  default = {}
+}
+variable role_mapping {
+  default = {}
+}
+
 ## Storage variables
 variable storage_accounts {
   default = {}

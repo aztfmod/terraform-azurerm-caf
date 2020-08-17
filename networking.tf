@@ -6,7 +6,7 @@ module "virtual_network" {
 
   prefix                            = var.global_settings.prefix
   convention                        = lookup(each.value, "convention", var.global_settings.convention)
-  location                          = azurerm_resource_group.rg[each.value.resource_group_key].location
+  location                          = lookup(each.value, "region", null) == null ? azurerm_resource_group.rg[each.value.resource_group_key].location : var.global_settings.regions[each.value.region]
   resource_group_name               = azurerm_resource_group.rg[each.value.resource_group_key].name
   networking_object                 = each.value
   network_security_group_definition = var.network_security_group_definition

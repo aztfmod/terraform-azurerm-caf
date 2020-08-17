@@ -90,6 +90,9 @@ variable launchpad_key_names {}
 variable custom_role_definitions {
   default = {}
 }
+variable role_mapping {
+  default = {}
+}
 
 variable tags {
   type    = map
@@ -110,7 +113,7 @@ variable aad_roles {
   default = {}
 }
 
-variable aad_api_permissions {
+variable azuread_api_permissions {
   default = {}
 }
 
