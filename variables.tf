@@ -1,10 +1,3 @@
-# # Map of the remote data state for lower level
-# variable lowerlevel_storage_account_name {}
-# variable lowerlevel_container_name {}
-# variable lowerlevel_key {} # Keeping the key for the lower level0 access
-# variable lowerlevel_resource_group_name {}
-# variable workspace {}
-
 # Global settings 
 variable global_settings {}
 
@@ -12,44 +5,50 @@ variable logged_user_objectId {
   default = null
 }
 
-variable caf_foundations_security {
-  default = {}
-}
+# variable caf_foundations_security {
+#   default = null
+# }
 
 
 variable tags {
   type    = map
-  default = {}
+  default = null
 }
 
 variable resource_groups {
   description = "Name of the existing resource group to deploy the virtual machine"
+  default     = null
 }
 
-variable level {
-  default = "level0"
-  type    = string
+# variable level {
+#   default = "level0"
+#   type    = string
 
-  validation {
-    condition     = contains(["level0", "level1", "level2", "level3", "level4"], var.level)
-    error_message = "Allowed values are level0, level1, level2, level3 or level4."
-  }
-}
+#   validation {
+#     condition     = contains(["level0", "level1", "level2", "level3", "level4"], var.level)
+#     error_message = "Allowed values are level0, level1, level2, level3 or level4."
+#   }
+# }
 
 variable subscriptions {
-  default = {}
+  default = null
 }
 
-## Accounting settings
+## Diagnostics settings
 variable diagnostics_definition {
-  default     = {}
+  default     = null
   description = "Shared diadgnostics settings that can be used by the services to enable diagnostics"
 }
 
-
-variable diagnostics_destinations {}
+variable diagnostics_destinations {
+  default = null
+}
 
 variable log_analytics {
+  default = {}
+}
+
+variable diagnostics {
   default = {}
 }
 
@@ -87,6 +86,10 @@ variable azuread_api_permissions {
 variable virtual_machines {
   description = "Virtual machine object"
   default     = {}
+}
+
+variable app_service_environments {
+  default = {}
 }
 
 ## Networking variables

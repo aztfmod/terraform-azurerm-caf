@@ -40,7 +40,7 @@ variable regions {
 }
 variable max_length {
   description = "Define the max length the naming convention will apply to generated name"
-  default     = 0
+  default     = null
 }
 
 variable prefix {
