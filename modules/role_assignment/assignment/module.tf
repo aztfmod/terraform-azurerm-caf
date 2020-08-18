@@ -1,3 +1,4 @@
+data "azurerm_client_config" "current" {}
 
 resource "azurerm_role_assignment" "object_id" {
   for_each = {
@@ -7,7 +8,7 @@ resource "azurerm_role_assignment" "object_id" {
   scope                = var.scope
   role_definition_name = var.role_definition_name == null ? null : var.role_definition_name
   role_definition_id   = var.role_definition_id == null ? null : var.role_definition_id
-  principal_id         = each.value
+  principal_id         = each.value == "logged_in_user" ? data.azurerm_client_config.current.object_id : each.value
 }
 
 resource "azurerm_role_assignment" "azuread_apps" {

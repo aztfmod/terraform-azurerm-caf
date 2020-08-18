@@ -1047,7 +1047,9 @@ role_mapping = {
     storage_account_keys = {
       level0 = {
         "Storage Blob Data Contributor" = {
-          object_ids = []
+          object_ids = [
+            "logged_in_user"
+          ]
           azuread_group_keys = [
             "keyvault_level0_rw"
           ]
