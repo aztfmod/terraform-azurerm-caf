@@ -95,7 +95,10 @@ variable custom_role_definitions {
   default = {}
 }
 variable role_mapping {
-  default = {}
+  default = {
+    built_in_role_mapping = {}
+    custom_role_mapping   = {}
+  }
 }
 
 variable tags {

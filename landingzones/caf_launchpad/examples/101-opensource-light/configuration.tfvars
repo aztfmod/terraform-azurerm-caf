@@ -37,12 +37,23 @@ storage_accounts = {
     account_kind             = "BlobStorage"
     account_tier             = "Standard"
     account_replication_type = "RAGRS"
-    # tags = {
-    #   # Those tags must never be changed while set as they are used by the rover to locate the launchpad and the tfstates.
-    #   tfstate     = "level0"
-    #   environment = "sandpit"
-    #   launchpad   = "launchpad"
-    # }
+    tags = {
+      # Those tags must never be changed while set as they are used by the rover to locate the launchpad and the tfstates.
+      tfstate     = "level0"
+      environment = "sandpit"
+      launchpad   = "launchpad"
+    }
+    containers = {
+      tfstate = {
+        name = "tfstate"
+      }
+      sandpit = {
+        name = "sandpit"
+      }
+      # level0 = {
+      #   name = "level0"
+      # }
+    }
   }
 }
 
@@ -55,7 +66,10 @@ keyvaults = {
     convention         = "cafrandom"
     sku_name           = "standard"
 
-    diagnostic_profiles = {}
+    tags = {
+      tfstate     = "level0"
+      environment = "sandpit"
+    }
   }
 }
 
@@ -102,3 +116,17 @@ azuread_apps = {
   }
 }
 
+role_mapping = {
+  custom_role_mapping = {}
+  built_in_role_mapping = {
+    storage_account_keys = {
+      level0 = {
+        "Storage Blob Data Contributor" = {
+          object_ids = [
+            "logged_in_user"
+          ]
+        }
+      }
+    }
+  }
+}
