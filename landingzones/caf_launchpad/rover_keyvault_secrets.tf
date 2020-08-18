@@ -5,6 +5,14 @@ resource "azurerm_key_vault_secret" "launchpad_blob_name" {
   key_vault_id = module.launchpad.keyvaults[var.launchpad_key_names.keyvault].id
 }
 
+resource "azurerm_key_vault_secret" "launchpad_blob_container_legacy" {
+  depends_on = [module.launchpad]
+
+  name         = "launchpad-blob-container"
+  value        = module.launchpad.storage_accounts["level0"].name
+  key_vault_id = module.launchpad.keyvaults["launchpad"].id
+}
+
 resource "azurerm_key_vault_secret" "launchpad_blob_container" {
   depends_on = [module.launchpad]
   for_each = {

@@ -12,10 +12,10 @@ launchpad_key_names = {
   keyvault    = "launchpad"
   azuread_app = "caf_launchpad_level0"
   tfstates = [
-    "level0", 
-    "level1", 
-    "level2", 
-    "level3", 
+    "level0",
+    "level1",
+    "level2",
+    "level3",
     "level4"
   ]
 }
@@ -159,7 +159,7 @@ storage_accounts = {
   }
 
   # Stores diagnostic logging for region1
-  diaglogs_sea = {
+  diaglogs_region1 = {
     name                     = "diaglogssea"
     region                   = "region1"
     resource_group_key       = "ops"
@@ -169,7 +169,7 @@ storage_accounts = {
     access_tier              = "Cool"
   }
   # Stores diagnostic logging for region2
-  diaglogs_ea = {
+  diaglogs_region2 = {
     name                     = "diaglogsae"
     region                   = "region2"
     resource_group_key       = "ops"
@@ -179,7 +179,7 @@ storage_accounts = {
     access_tier              = "Cool"
   }
   # Stores security logs for siem default region"
-  diagsiem_sea = {
+  diagsiem_region1 = {
     name                     = "siemsae"
     resource_group_key       = "siem"
     account_kind             = "BlobStorage"
@@ -188,11 +188,31 @@ storage_accounts = {
     access_tier              = "Cool"
   }
   # Stores diagnostic logging for region2
-  diagsiem_ea = {
+  diagsiem_region2 = {
     name                     = "siemae"
     region                   = "region2"
     resource_group_key       = "siem"
     account_kind             = "BlobStorage"
+    account_tier             = "Standard"
+    account_replication_type = "LRS"
+    access_tier              = "Cool"
+  }
+  # Stores boot diagnostic for region1
+  bootdiag_region1 = {
+    name                     = "bootreg1"
+    region                   = "region1"
+    resource_group_key       = "ops"
+    account_kind             = "StorageV2"
+    account_tier             = "Standard"
+    account_replication_type = "LRS"
+    access_tier              = "Cool"
+  }
+  # Stores boot diagnostic for region2
+  bootdiag_region2 = {
+    name                     = "bootreg2"
+    region                   = "region2"
+    resource_group_key       = "ops"
+    account_kind             = "StorageV2"
     account_tier             = "Standard"
     account_replication_type = "LRS"
     access_tier              = "Cool"
@@ -495,29 +515,38 @@ azuread_app_roles = {
 
 managed_identities = {
   level0 = {
+    # Used by the release agent to access the level0 keyvault and storage account with the tfstates in read / write
     name               = "launchpad-level0"
     resource_group_key = "security"
   }
   level1 = {
+    # Used by the release agent to access the level1 keyvault and storage account with the tfstates in read / write
+    # Has read access to level0
     name               = "launchpad-level1"
     resource_group_key = "security"
   }
   level2 = {
+    # Used by the release agent to access the level2 keyvault and storage account with the tfstates in read / write
+    # Has read access to level1
     name               = "launchpad-level2"
     resource_group_key = "security"
   }
   level3 = {
+    # Used by the release agent to access the level3 keyvault and storage account with the tfstates in read / write
+    # Has read access to level2
     name               = "launchpad-level3"
     resource_group_key = "security"
   }
   level4 = {
+    # Used by the release agent to access the level4 keyvault and storage account with the tfstates in read / write
+    # Has read access to level3
     name               = "launchpad-level4"
     resource_group_key = "security"
   }
 }
 
 networking = {
-  devops_sea = {
+  devops_region1 = {
     resource_group_key = "networking"
     region             = "region1"
     vnet = {
@@ -529,12 +558,12 @@ networking = {
       AzureBastionSubnet = {
         name    = "AzureBastionSubnet" #Must be called AzureBastionSubnet 
         cidr    = ["10.10.100.0/27"]
-        nsg_key = "AzureBastionSubnet"
+        nsg_key = "azure_bastion_nsg"
       }
       jumpbox = {
-        name    = "AzureBastionSubnet" #Must be called AzureBastionSubnet 
-        cidr    = ["10.10.100.0/27"]
-        nsg_key = "AzureBastionSubnet"
+        name    = "jumpbox"
+        cidr    = ["10.10.100.32/27"]
+        nsg_key = "jumphost"
       }
     }
 
@@ -554,7 +583,7 @@ networking = {
 # Definition of the networking security groups
 #
 network_security_group_definition = {
-  AzureBastionSubnet = {
+  azure_bastion_nsg = {
 
     diagnostic_profiles = {
       nsg = {
@@ -639,13 +668,45 @@ network_security_group_definition = {
       }
     ]
   }
+
+  jumphost = {
+
+    diagnostic_profiles = {
+      nsg = {
+        definition_key   = "network_security_group"
+        destination_type = "storage"
+        destination_key  = "all_regions"
+      }
+      operations = {
+        name             = "operations"
+        definition_key   = "network_security_group"
+        destination_type = "log_analytics"
+        destination_key  = "central_logs"
+      }
+    }
+
+    nsg = [
+      {
+        name                       = "ssh-inbound-22",
+        priority                   = "200"
+        direction                  = "Inbound"
+        access                     = "Allow"
+        protocol                   = "tcp"
+        source_port_range          = "*"
+        destination_port_range     = "22"
+        source_address_prefix      = "*"
+        destination_address_prefix = "VirtualNetwork"
+      },
+    ]
+  }
+
 }
 
 #
 # Define the settings for log analytics workspace and solution map
 #
 log_analytics = {
-  central_logs_sea = {
+  central_logs_region1 = {
     region             = "region1"
     name               = "logs"
     resource_group_key = "ops"
@@ -807,17 +868,17 @@ diagnostics_destinations = {
   storage = {
     all_regions = {
       southeastasia = {
-        storage_account_key = "diagsiem_sea"
+        storage_account_key = "diagsiem_region1"
       }
       eastasia = {
-        storage_account_key = "diagsiem_ea"
+        storage_account_key = "diagsiem_region2"
       }
     }
   }
 
   log_analytics = {
     central_logs = {
-      log_analytics_key              = "central_logs_sea"
+      log_analytics_key              = "central_logs_region1"
       log_analytics_destination_type = "Dedicated"
     }
   }
@@ -825,11 +886,11 @@ diagnostics_destinations = {
 
 custom_role_definitions = {
   caf-launchpad-rwdo = {
-    name          = "caf-launchpad-rwdo" 
-    convention    = "passthrough"
-    useprefix     = true
-    description   = "Provide addition permissions on top of built-in Contributor role to manage landing zones deployment"
-    permissions   = {
+    name        = "caf-launchpad-rwdo"
+    convention  = "passthrough"
+    useprefix   = true
+    description = "Provide addition permissions on top of built-in Contributor role to manage landing zones deployment"
+    permissions = {
       actions = [
         "Microsoft.Authorization/roleAssignments/delete",
         "Microsoft.Authorization/roleAssignments/read",
@@ -886,11 +947,11 @@ custom_role_definitions = {
   }
 
   caf-launchpad-contributor-rwdo = {
-    name          = "caf-launchpad-contributor-rwdo" 
-    convention    = "passthrough"
-    useprefix     = true
-    description   = "Provide addition permissions on top of built-in Contributor role to manage landing zones deployment"
-    permissions   = {
+    name        = "caf-launchpad-contributor-rwdo"
+    convention  = "passthrough"
+    useprefix   = true
+    description = "Provide addition permissions on top of built-in Contributor role to manage landing zones deployment"
+    permissions = {
       actions = [
         "Microsoft.Authorization/roleAssignments/delete",
         "Microsoft.Authorization/roleAssignments/read",
@@ -910,7 +971,7 @@ custom_role_definitions = {
 
 }
 
-  
+
 
 
 #
@@ -923,7 +984,7 @@ role_mapping = {
       logged_in_subscription = {
         "caf-launchpad-contributor-rwdo" = {
           azuread_group_keys = [
-            "keyvault_level0_rw", "keyvault_level1_rw", "keyvault_level2_rw", "keyvault_level3_rw", "keyvault_level4_rw",  
+            "keyvault_level0_rw", "keyvault_level1_rw", "keyvault_level2_rw", "keyvault_level3_rw", "keyvault_level4_rw",
           ]
           managed_identity_keys = [
             "level0", "level1", "level2", "level3", "level4"
@@ -1090,25 +1151,38 @@ virtual_machines = {
 
   # Configuration to deploy a bastion host linux virtual machine
   bastion_host = {
-    resource_group_key = "vm_sg"
+    resource_group_key                   = "bastion_launchpad"
+    region                               = "region1"
+    boot_diagnostics_storage_account_key = "bootdiag_region1"
+    provision_vm_agent                   = true
+
+    os_type = "linux"
 
     # Define the number of networking cards to attach the virtual machine
     networking_interfaces = {
       nic0 = {
         # Value of the keys from networking.tfvars
-        vnet_key                = "devops_sea"
+        vnet_key                = "devops_region1"
         subnet_key              = "jumpbox"
-        name                    = "nic0"
+        name                    = "0"
         enable_ip_forwarding    = false
         internal_dns_name_label = "nic0"
+
+        # you can setup up to 5 profiles
+        diagnostic_profiles = {
+          operations = {
+            definition_key   = "default_all"
+            destination_type = "log_analytics"
+            destination_key  = "central_logs"
+          }
+        }
+
       }
     }
 
-    # 
     virtual_machine_settings = {
       linux = {
         name                            = "bastion"
-        resource_group_key              = "bastion_launchpad"
         size                            = "Standard_F2"
         admin_username                  = "adminuser"
         disable_password_authentication = true
@@ -1125,10 +1199,13 @@ virtual_machines = {
         source_image_reference = {
           publisher = "Canonical"
           offer     = "UbuntuServer"
-          sku       = "16.04-LTS"
+          sku       = "18.04-LTS"
           version   = "latest"
         }
 
+        managed_identity_keys = [
+          "level0",
+        ]
       }
     }
 

@@ -84,6 +84,10 @@ variable managed_identities {
   default = {}
 }
 
+variable virtual_machines {
+  description = "Virtual machine object"
+  default     = {}
+}
 
 variable launchpad_key_names {}
 

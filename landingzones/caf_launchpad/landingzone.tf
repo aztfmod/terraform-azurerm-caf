@@ -23,4 +23,5 @@ module "launchpad" {
   managed_identities                = var.managed_identities
   custom_role_definitions           = var.custom_role_definitions
   role_mapping                      = var.role_mapping
+  virtual_machines                  = var.virtual_machines
 }

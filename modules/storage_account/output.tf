@@ -7,3 +7,13 @@ output name {
   value     = azurerm_storage_account.stg.name
   sensitive = true
 }
+
+output location {
+  value     = var.location
+  sensitive = true
+}
+
+output resource_group_name {
+  value     = var.resource_group_name
+  sensitive = true
+}

@@ -8,8 +8,8 @@ resource "azurecaf_naming_convention" "stg" {
 
 resource "azurerm_storage_account" "stg" {
   name                      = azurecaf_naming_convention.stg.result
-  resource_group_name       = var.resource_groups[var.storage_account.resource_group_key].name
-  location                  = lookup(var.storage_account, "location", var.resource_groups[var.storage_account.resource_group_key].location)
+  resource_group_name       = var.resource_group_name
+  location                  = var.location
   account_tier              = lookup(var.storage_account, "account_tier", "Standard")
   account_replication_type  = lookup(var.storage_account, "account_replication_type", "LRS")
   account_kind              = lookup(var.storage_account, "account_kind", "StorageV2")
