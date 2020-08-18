@@ -1,5 +1,7 @@
 level = "level0"
 
+launchpad_mode = "launchpad"
+
 # Default region. When not set to a resource it will use that value
 default_region = "region1"
 

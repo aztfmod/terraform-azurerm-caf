@@ -41,7 +41,7 @@ storage_accounts = {
       # Those tags must never be changed while set as they are used by the rover to locate the launchpad and the tfstates.
       tfstate     = "level0"
       environment = "sandpit"
-      launchpad   = "launchpad"
+      launchpad   = "launchpad_light"     # Do not change. Required for the rover to work in AIRS, Limited privilege environments for demonstration purpuses
     }
     containers = {
       tfstate = {
@@ -50,9 +50,9 @@ storage_accounts = {
       sandpit = {
         name = "sandpit"
       }
-      # level0 = {
-      #   name = "level0"
-      # }
+      level0 = {
+        name = "level0"
+      }
     }
   }
 }
