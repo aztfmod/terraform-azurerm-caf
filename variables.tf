@@ -126,7 +126,7 @@ variable custom_role_definitions {
 variable role_mapping {
   default = {
     built_in_role_mapping = {}
-    custom_role_mapping = {}
+    custom_role_mapping   = {}
   }
 }
 
