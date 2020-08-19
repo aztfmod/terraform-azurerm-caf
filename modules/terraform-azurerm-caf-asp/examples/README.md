@@ -15,5 +15,5 @@ Deploys
 * A Windows app service place dedicated
 
 ```bash
-rover -lz /tf/caf/modules/terraform-azurerm-caf-asp/examples/ -var-file /tf/caf/modules/terraform-azurerm-caf-asp/examples/dedicated/configuration.tfvars -tfstate example_asp_dedicated.tfstate -a apply
+rover -lz /tf/caf -var-file /tf/caf/modules/terraform-azurerm-caf-asp/examples/windows_container/configuration.tfvars -a apply
 ```
