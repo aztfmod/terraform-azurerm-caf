@@ -110,6 +110,10 @@ variable app_service_plans {
   default = {}
 }
 
+variable azurerm_application_insights {
+  default = {}
+}
+
 ## Networking variables
 variable networking {
   default = {}
