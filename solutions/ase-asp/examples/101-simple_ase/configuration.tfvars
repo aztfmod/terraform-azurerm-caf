@@ -38,44 +38,6 @@ app_service_environments = {
       }
     }
   }
-  # ase2 = {
-  #   resource_group_key = "ase_region1"
-  #   name               = "2"
-  #   kind               = "ASEV2"
-  #   zone               = "2"
-
-  #   vnet_key                  = "ase_region1"
-  #   subnet_key                = "ase2"
-  #   internalLoadBalancingMode = "3"
-
-
-  #   diagnostic_profiles = {
-  #     ase = {
-  #       definition_key   = "ase"
-  #       destination_type = "log_analytics"
-  #       destination_key  = "central_logs"
-  #     }
-  #   }
-  # }
-  # ase3 = {
-  #   resource_group_key = "ase_region1"
-  #   name               = "3"
-  #   kind               = "ASEV2"
-  #   zone               = "3"
-
-  #   vnet_key                  = "ase_region1"
-  #   subnet_key                = "ase3"
-  #   internalLoadBalancingMode = "3"
-
-
-  #   diagnostic_profiles = {
-  #     ase = {
-  #       definition_key   = "ase"
-  #       destination_type = "log_analytics"
-  #       destination_key  = "central_logs"
-  #     }
-  #   }
-  # }
 }
 
 app_service_plans = {

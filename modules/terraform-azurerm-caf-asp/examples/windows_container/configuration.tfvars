@@ -17,11 +17,14 @@ resource_groups = {
 app_service_plans = {
   asp1 = {
     resource_group_key = "asp_region1"
-    name               = "api-appserviceplan-pro-std-windows"
+    name               = "api-appserviceplan-pro-container"
 
+    kind     = "xenon"
+    is_xenon = true
     sku = {
-      tier = "Standard"
-      size = "S1"
+      tier     = "PremiumContainer"
+      size     = "PC3"
+      capacity = 2
     }
   }
 }

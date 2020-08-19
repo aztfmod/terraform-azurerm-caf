@@ -64,10 +64,10 @@ variable log_analytics {
 
 variable diagnostics {
   default = {
-    diagnostics_definition = {}
+    diagnostics_definition   = {}
     diagnostics_destinations = {}
-    storage_accounts = {}
-    log_analytics = {}
+    storage_accounts         = {}
+    log_analytics            = {}
   }
 }
 

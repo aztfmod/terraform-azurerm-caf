@@ -14,10 +14,9 @@ resource "azurerm_app_service_plan" "asp" {
   maximum_elastic_worker_count = lookup(var.settings, "maximum_elastic_worker_count", null)
 
   # For kind=Linux must be set to true and for kind=Windows must be set to false
-  reserved = lookup(var.settings, "reserved", null) == null ? null : var.settings.reserved
-
-  #for high density support 
+  reserved         = lookup(var.settings, "reserved", null) == null ? null : var.settings.reserved
   per_site_scaling = lookup(var.settings.sku, "per_site_scaling", false)
+  is_xenon         = lookup(var.settings, "is_xenon", null)
 
   sku {
     tier     = var.settings.sku.tier
