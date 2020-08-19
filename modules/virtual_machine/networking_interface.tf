@@ -34,7 +34,7 @@ resource "azurerm_network_interface" "nic" {
 
   ip_configuration {
     name                          = azurecaf_naming_convention.nic[each.key].result
-    subnet_id                     = var.vnets[each.value.vnet_key].vnet_subnets[each.value.subnet_key]
+    subnet_id                     = var.vnets[each.value.vnet_key].subnets[each.value.subnet_key].id
     private_ip_address_allocation = lookup(each.value, "private_ip_address_allocation", "Dynamic")
     private_ip_address_version    = lookup(each.value, "private_ip_address_version", null)
     private_ip_address            = lookup(each.value, "private_ip_address", null)

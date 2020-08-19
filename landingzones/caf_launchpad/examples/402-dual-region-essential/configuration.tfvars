@@ -360,7 +360,7 @@ azuread_groups = {
       ]
       service_principal_object_id = []
     }
-    prevent_duplicate_name = true
+    prevent_duplicate_name = false
   }
 
   keyvault_level1_rw = {
@@ -371,7 +371,7 @@ azuread_groups = {
     owners = {
 
     }
-    prevent_duplicate_name = true
+    prevent_duplicate_name = false
   }
 
   keyvault_level2_rw = {
@@ -382,7 +382,7 @@ azuread_groups = {
     owners = {
 
     }
-    prevent_duplicate_name = true
+    prevent_duplicate_name = false
   }
 
   keyvault_level3_rw = {
@@ -393,7 +393,7 @@ azuread_groups = {
     owners = {
 
     }
-    prevent_duplicate_name = true
+    prevent_duplicate_name = false
   }
 
   keyvault_level4_rw = {
@@ -404,7 +404,7 @@ azuread_groups = {
     owners = {
 
     }
-    prevent_duplicate_name = true
+    prevent_duplicate_name = false
   }
 
   caf_launchpad_Reader = {
@@ -415,7 +415,7 @@ azuread_groups = {
     owners = {
 
     }
-    prevent_duplicate_name = true
+    prevent_duplicate_name = false
   }
 
   keyvault_password_rotation = {
@@ -442,7 +442,7 @@ azuread_groups = {
       ]
       service_principal_object_id = []
     }
-    prevent_duplicate_name = true
+    prevent_duplicate_name = false
   }
 }
 

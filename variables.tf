@@ -63,12 +63,7 @@ variable log_analytics {
 }
 
 variable diagnostics {
-  default = {
-    diagnostics_definition   = {}
-    diagnostics_destinations = {}
-    storage_accounts         = {}
-    log_analytics            = {}
-  }
+  default = {}
 }
 
 variable caf_foundations_accounting {
