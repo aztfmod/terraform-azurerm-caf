@@ -19,9 +19,12 @@ app_service_plans = {
     resource_group_key = "asp_region1"
     name               = "api-appserviceplan-consumption"
 
+    kind = "functionapp"
+
     sku = {
       tier     = "Dynamic"
       size     = "Y1"
+      capacity = 0
     }
   }
 }
