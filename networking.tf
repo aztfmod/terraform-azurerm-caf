@@ -1,3 +1,7 @@
+locals {
+  vnets = merge(module.virtual_network, var.networking_objects)
+}
+
 
 module "virtual_network" {
   source = "/tf/caf/modules/terraform-azurerm-caf-virtual-network"

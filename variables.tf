@@ -31,7 +31,7 @@ variable resource_groups {
 # }
 
 variable subscriptions {
-  default = null
+  default = {}
 }
 
 ## Diagnostics settings
@@ -101,7 +101,7 @@ variable network_security_group_definition {
   default = {}
 }
 
-variable vnets {
+variable networking_objects {
   description = "Represent an already deployed vnet output by another landingzone"
   default     = {}
 }
