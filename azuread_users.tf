@@ -3,7 +3,7 @@ module azuread_users {
   depends_on = [module.keyvault_access_policies]
   for_each   = var.azuread_users
 
-  global_settings = var.global_settings
+  global_settings = local.global_settings
   azuread_users   = each.value
   keyvaults       = module.keyvaults
 }

@@ -47,7 +47,7 @@ variable diagnostic_profiles {
 
 variable front_end_size {
   description = "Instance size for the front-end pool."
-  default     = "Medium"
+  default     = "Standard_D1_V2"
 
   validation {
     condition     = contains(["Medium", "Large", "ExtraLarge", "Standard_D2", "Standard_D3", "Standard_D4", "Standard_D1_V2", "Standard_D2_V2", "Standard_D3_V2", "Standard_D4_V2"], var.front_end_size)

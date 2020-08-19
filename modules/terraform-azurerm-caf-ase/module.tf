@@ -7,7 +7,7 @@ resource "azurecaf_naming_convention" "ase" {
 
 resource "azurerm_template_deployment" "ase" {
 
-  name                = formatdate("YYYYMMDDhhmmss", timestamp())
+  name                = var.name
   resource_group_name = var.resource_group_name
 
   template_body = file(local.arm_filename)

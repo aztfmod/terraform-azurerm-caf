@@ -1,6 +1,20 @@
 # Global settings 
 variable global_settings {}
 
+# To support default values
+variable convention {
+  default = "cafrandom"
+}
+
+variable environment {
+  default = "sandpit"
+}
+
+variable max_length {
+  default = "40"
+}
+
+
 variable logged_user_objectId {
   default = null
 }
@@ -49,7 +63,12 @@ variable log_analytics {
 }
 
 variable diagnostics {
-  default = {}
+  default = {
+    diagnostics_definition = {}
+    diagnostics_destinations = {}
+    storage_accounts = {}
+    log_analytics = {}
+  }
 }
 
 variable caf_foundations_accounting {
@@ -89,6 +108,10 @@ variable virtual_machines {
 }
 
 variable app_service_environments {
+  default = {}
+}
+
+variable app_service_plans {
   default = {}
 }
 

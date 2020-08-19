@@ -1,32 +1,32 @@
-resource "azurecaf_naming_convention" "plans" {
-  for_each      = var.app_service_plans
-
-  name          = each.value.name
+resource "azurecaf_naming_convention" "plan" {
+  name          = var.settings.name
   prefix        = var.prefix
   resource_type = "azurerm_app_service_plan"
   convention    = var.convention
+  max_length    = var.max_length
 }
 
-resource "azurerm_app_service_plan" "asps" {
-  for_each            = var.app_service_plans
+resource "azurerm_app_service_plan" "asp" {
+  name                         = azurecaf_naming_convention.plan.result
+  location                     = var.location
+  resource_group_name          = var.resource_group_name
+  kind                         = var.kind
+  maximum_elastic_worker_count = lookup(var.settings, "maximum_elastic_worker_count", null)
 
-  name                = azurecaf_naming_convention.plans[each.key].result
-  location            = var.resource_group_location
-  resource_group_name = var.resource_group_name
-  kind                = each.value.kind
-  reserved            = lookup(each.value, "reserved", false)
+  # For kind=Linux must be set to true and for kind=Windows must be set to false
+  reserved = lookup(var.settings, "reserved", null) == null ? null : var.settings.reserved
 
   #for high density support 
-  per_site_scaling = lookup(each.value.sku, "per_site_scaling", false)
+  per_site_scaling = lookup(var.settings.sku, "per_site_scaling", false)
 
   sku {
-    tier = each.value.sku.tier
-    size = each.value.sku.size
-    capacity = each.value.sku.capacity
+    tier     = var.settings.sku.tier
+    size     = var.settings.sku.size
+    capacity = lookup(var.settings.sku, "capacity", null)
   }
 
-  app_service_environment_id  = var.ase_id
-  tags                        = local.tags
+  app_service_environment_id = var.app_service_environment_id
+  tags                       = local.tags
 
   timeouts {
     create = "3h"

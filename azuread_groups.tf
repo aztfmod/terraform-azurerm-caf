@@ -3,7 +3,7 @@ module azuread_groups {
 
   for_each = var.azuread_groups
 
-  global_settings = var.global_settings
+  global_settings = local.global_settings
   azuread_groups  = each.value
 }
 

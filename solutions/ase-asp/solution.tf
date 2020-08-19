@@ -6,6 +6,7 @@ module "ase" {
   diagnostics                       = local.diagnostics
   resource_groups                   = var.resource_groups
   app_service_environments          = var.app_service_environments
+  app_service_plans                 = var.app_service_plans
   networking                        = var.networking
   network_security_group_definition = var.network_security_group_definition
   # logged_user_objectId              = var.logged_user_objectId

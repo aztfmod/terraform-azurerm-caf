@@ -23,6 +23,9 @@ variable tags {
 variable app_service_environments {
   default = null
 }
+variable app_service_plans {
+  default = {}
+}
 variable diagnostics_definition {
   default = null
 }
