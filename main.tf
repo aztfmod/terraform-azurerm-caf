@@ -33,8 +33,8 @@ locals {
   diagnostics = {
     diagnostics_definition   = lookup(var.diagnostics, "diagnostics_definition", var.diagnostics_definition)
     diagnostics_destinations = lookup(var.diagnostics, "diagnostics_destinations", var.diagnostics_destinations)
-    storage_accounts         = length(module.storage_accounts) == 0 ? var.diagnostics.storage_accounts : module.storage_accounts
-    log_analytics            = length(module.log_analytics) == 0 ? var.diagnostics.log_analytics : module.log_analytics
+    storage_accounts         = lookup(var.diagnostics, "storage_accounts", module.storage_accounts)
+    log_analytics            = lookup(var.diagnostics, "log_analytics", module.log_analytics)
   }
 
   prefix = lookup(var.global_settings, "prefix", null) == null ? random_string.prefix.result : var.global_settings.prefix
