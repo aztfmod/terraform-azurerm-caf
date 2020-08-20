@@ -5,12 +5,26 @@
 * Define the regions where the services are deployed
 * Deploy a diagnostics logging storage account on those locations
 
+## Deploy the launchpad light
+
 ```bash
 cd /tf/caf
 
 #  to deploy the launchpad
-rover -lz $PWD/landingzones/caf_launchpad -launchpad -var-file $PWD/landingzones/caf_launchpad/examples/402-dual-region-essential/configuration.tfvars -parallelism=30 -a apply
+rover -lz /tf/caf/landingzones/caf_launchpad -launchpad -var-file /tf/caf/landingzones/caf_launchpad/examples/101-opensource-light/configuration.tfvars -a apply -w tfstate
 
 # to destroy the launchpad landing zone
-rover -lz $PWD/landingzones/caf_launchpad -launchpad -var-file $PWD/landingzones/caf_launchpad/examples/402-dual-region-essential/configuration.tfvars -parallelism=30 -a destroy
+rover -lz /tf/caf/landingzones/caf_launchpad -launchpad -var-file /tf/caf/landingzones/caf_launchpad/examples/101-opensource-light/configuration.tfvars-a destroy -w tfstate
+```
+
+## Deploy the advanced launchpad
+
+```bash
+cd /tf/caf
+
+#  to deploy the launchpad
+rover -lz /tf/caf/landingzones/caf_launchpad -launchpad -var-file /tf/caf/landingzones/caf_launchpad/examples/402-dual-region-essential/configuration.tfvars -parallelism=30 -a apply -w tfstate
+
+# to destroy the launchpad landing zone
+rover -lz /tf/caf/landingzones/caf_launchpad -launchpad -var-file /tf/caf/landingzones/caf_launchpad/examples/402-dual-region-essential/configuration.tfvars -parallelism=30 -a destroy -w tfstate
 ```

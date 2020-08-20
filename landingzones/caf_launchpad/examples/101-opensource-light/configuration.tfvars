@@ -47,12 +47,6 @@ storage_accounts = {
       tfstate = {
         name = "tfstate"
       }
-      sandpit = {
-        name = "sandpit"
-      }
-      level0 = {
-        name = "level0"
-      }
     }
   }
 }
