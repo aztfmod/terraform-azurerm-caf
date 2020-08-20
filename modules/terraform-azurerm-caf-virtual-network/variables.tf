@@ -13,18 +13,6 @@ variable tags {
   description = "(Required) map of tags for the deployment"
 }
 
-# variable "diagnostics_map" {
-#   description = "(Required) contains the SA and EH details for operations diagnostics"
-# }
-
-# variable "log_analytics_workspace" {
-#   description = "(Required) contains the log analytics workspace details for operations diagnostics"
-# }
-
-# variable "diagnostics_settings" {
-#   description = "(Required) configuration object describing the diagnostics"
-# }
-
 variable diagnostics {
   description = "(Required) Diagnostics object with the definitions and destination services"
 }

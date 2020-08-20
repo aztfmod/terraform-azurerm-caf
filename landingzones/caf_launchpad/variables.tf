@@ -40,7 +40,7 @@ variable regions {
 }
 variable max_length {
   description = "Define the max length the naming convention will apply to generated name"
-  default     = null
+  default     = 40
 }
 
 variable prefix {
@@ -137,10 +137,6 @@ variable environment {
   description = "This variable is set by the rover during the deployment based on the -env or -environment flags. Default to sandpit"
 }
 
-variable blueprint_networking {
-  default = {}
-}
-
 variable diagnostics_definition {
   default = {}
 }
@@ -148,7 +144,7 @@ variable diagnostics_destinations {
   default = {}
 }
 
-variable networking {
+variable vnets {
   default = {}
 }
 

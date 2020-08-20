@@ -29,11 +29,6 @@ variable logged_user_objectId {
   default = null
 }
 
-# variable caf_foundations_security {
-#   default = null
-# }
-
-
 variable tags {
   type    = map
   default = null
@@ -43,16 +38,6 @@ variable resource_groups {
   description = "Name of the existing resource group to deploy the virtual machine"
   default     = null
 }
-
-# variable level {
-#   default = "level0"
-#   type    = string
-
-#   validation {
-#     condition     = contains(["level0", "level1", "level2", "level3", "level4"], var.level)
-#     error_message = "Allowed values are level0, level1, level2, level3 or level4."
-#   }
-# }
 
 variable subscriptions {
   default = {}
@@ -126,20 +111,12 @@ variable azurerm_application_insights {
 
 ## Networking variables
 variable networking {
-  default = {}
-}
-
-variable network_security_group_definition {
-  default = {}
-}
-
-variable networking_objects {
-  description = "Represent an already deployed vnet output by another landingzone"
-  default     = {}
-}
-
-variable firewalls {
-  default = {}
+  default = {
+    vnets                             = {}
+    peerings                          = {}
+    network_security_group_definition = {}
+    firewalls                         = {}
+  }
 }
 
 ## Security variables

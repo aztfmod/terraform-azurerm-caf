@@ -547,7 +547,7 @@ managed_identities = {
   }
 }
 
-networking = {
+vnets = {
   devops_region1 = {
     resource_group_key = "networking"
     region             = "region1"

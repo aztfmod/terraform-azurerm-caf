@@ -1,6 +1,6 @@
 locals {
   # Need to update the storage tags if the environment tag is updated with the rover command line
-  tags = lookup(var.keyvault, "tags", null) == null ? null : lookup(var.keyvault.tags, "environment", null) == null ? var.keyvault.tags : merge(lookup(var.keyvault, "tags", {}), {"environment":var.global_settings.environment})
+  tags = lookup(var.keyvault, "tags", null) == null ? null : lookup(var.keyvault.tags, "environment", null) == null ? var.keyvault.tags : merge(lookup(var.keyvault, "tags", {}), { "environment" : var.global_settings.environment })
 }
 
 resource "azurecaf_naming_convention" "keyvault" {

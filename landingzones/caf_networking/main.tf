@@ -1,46 +1,74 @@
-provider "azurerm" {
-  features {}
-}
-
 terraform {
   required_providers {
-    azurecaf = {
-      source  = "aztfmod/azurecaf"
-      version = "~> 0.4.3"
-    }
     azurerm = {
       source  = "hashicorp/azurerm"
-      version = "~> 2.20.0"
+      version = "~> 2.23.0"
+    }
+    azuread = {
+      source  = "hashicorp/azuread"
+      version = "~> 0.11.0"
+    }
+    random = {
+      source  = "hashicorp/random"
+      version = "~> 2.2.1"
+    }
+    external = {
+      source  = "hashicorp/external"
+      version = "~> 1.2.0"
+    }
+    null = {
+      source  = "hashicorp/null"
+      version = "~> 2.1.0"
     }
     tls = {
       source  = "hashicorp/tls"
-      version = "~> 2.1.0"
+      version = "~> 2.2.0"
+    }
+    azurecaf = {
+      source  = "aztfmod/azurecaf"
+      version = "~>0.4.3"
     }
   }
   required_version = ">= 0.13"
 }
+
+
+provider "azurerm" {
+  features {}
+}
+
+data "azurerm_client_config" "current" {}
+
+data "terraform_remote_state" "caf_foundations" {
+  backend = "azurerm"
+  config = {
+    storage_account_name = var.lowerlevel_storage_account_name
+    container_name       = var.lowerlevel_container_name
+    key                  = "caf_foundations.tfstate"
+    resource_group_name  = var.lowerlevel_resource_group_name
+  }
+}
+
 
 locals {
   landingzone_tag = {
     "landingzone" = basename(abspath(path.module))
   }
   tags = merge(var.tags, local.landingzone_tag, { "environment" = local.global_settings.environment })
-}
 
-data "terraform_remote_state" "landingzone_caf_foundations" {
-  backend = "azurerm"
-  config = {
-    storage_account_name = var.lowerlevel_storage_account_name
-    container_name       = var.workspace
-    key                  = "landingzone_caf_foundations.tfstate"
-    resource_group_name  = var.lowerlevel_resource_group_name
+  global_settings = {
+    prefix         = lookup(var.global_settings, "prefix", data.terraform_remote_state.caf_foundations.outputs.global_settings.prefix)
+    convention     = lookup(var.global_settings, "convention", data.terraform_remote_state.caf_foundations.outputs.global_settings.convention)
+    default_region = lookup(var.global_settings, "default_region", data.terraform_remote_state.caf_foundations.outputs.global_settings.default_region)
+    environment    = data.terraform_remote_state.caf_foundations.outputs.global_settings.environment
+    regions        = lookup(var.global_settings, "regions", null) == null ? data.terraform_remote_state.caf_foundations.outputs.global_settings.regions : merge(data.terraform_remote_state.caf_foundations.outputs.global_settings.regions, var.global_settings.regions)
+    max_length     = lookup(var.global_settings, "max_length", data.terraform_remote_state.caf_foundations.outputs.global_settings.max_length)
   }
-}
 
-locals {
-  prefix                     = data.terraform_remote_state.landingzone_caf_foundations.outputs.prefix
-  prefix_with_hyphen         = local.prefix == "" ? "" : "${local.prefix}-"
-  caf_foundations_accounting = data.terraform_remote_state.landingzone_caf_foundations.outputs.foundations_accounting
-  caf_foundations_security   = data.terraform_remote_state.landingzone_caf_foundations.outputs.foundations_security
-  global_settings            = data.terraform_remote_state.landingzone_caf_foundations.outputs.global_settings
+  diagnostics = {
+    diagnostics_definition   = merge(data.terraform_remote_state.caf_foundations.outputs.diagnostics.diagnostics_definition, var.diagnostics_definition)
+    diagnostics_destinations = data.terraform_remote_state.caf_foundations.outputs.diagnostics.diagnostics_destinations
+    storage_accounts         = data.terraform_remote_state.caf_foundations.outputs.diagnostics.storage_accounts
+    log_analytics            = data.terraform_remote_state.caf_foundations.outputs.diagnostics.log_analytics
+  }
 }

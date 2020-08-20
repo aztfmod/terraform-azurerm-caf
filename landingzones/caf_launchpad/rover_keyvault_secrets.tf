@@ -6,7 +6,7 @@ resource "azurerm_key_vault_secret" "launchpad_blob_name" {
 }
 
 resource "azurerm_key_vault_secret" "launchpad_blob_container_legacy" {
-  depends_on = [module.launchpad]
+  depends_on   = [module.launchpad]
   name         = "launchpad-blob-container"
   value        = "tfstate"
   key_vault_id = module.launchpad.keyvaults["launchpad"].id
@@ -17,7 +17,7 @@ resource "azurerm_key_vault_secret" "launchpad_blob_container" {
     for key in var.launchpad_key_names.tfstates : key => key
   }
 
-  depends_on = [module.launchpad]
+  depends_on   = [module.launchpad]
   name         = format("launchpad-blob-container-%s", each.value)
   value        = "tfstate"
   key_vault_id = module.launchpad.keyvaults[var.launchpad_key_names.keyvault].id

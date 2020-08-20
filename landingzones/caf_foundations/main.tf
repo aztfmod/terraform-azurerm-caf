@@ -47,5 +47,5 @@ data "terraform_remote_state" "launchpad" {
 
 locals {
   global_settings = data.terraform_remote_state.launchpad.outputs.global_settings
-  diagnostics = data.terraform_remote_state.launchpad.outputs.diagnostics
+  diagnostics     = data.terraform_remote_state.launchpad.outputs.diagnostics
 }
