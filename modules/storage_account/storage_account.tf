@@ -1,3 +1,8 @@
+locals {
+  # Need to update the storage tags if the environment tag is updated with the rover command line
+  tags = lookup(var.storage_account, "tags", null) == null ? null : lookup(var.storage_account.tags, "environment", null) == null ? var.storage_account.tags : merge(lookup(var.storage_account, "tags", {}), {"environment":var.global_settings.environment})
+}
+
 
 resource "azurecaf_naming_convention" "stg" {
   name          = var.storage_account.name
@@ -18,7 +23,7 @@ resource "azurerm_storage_account" "stg" {
   min_tls_version           = lookup(var.storage_account, "min_tls_version", "TLS1_2")
   allow_blob_public_access  = lookup(var.storage_account, "allow_blob_public_access", false)
   is_hns_enabled            = lookup(var.storage_account, "is_hns_enabled", false)
-  tags                      = lookup(var.storage_account, "tags", {})
+  tags                      = local.tags
 
 
   dynamic "custom_domain" {
