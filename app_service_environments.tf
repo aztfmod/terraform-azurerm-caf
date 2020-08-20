@@ -15,6 +15,7 @@ module "app_service_environments" {
   subnet_id                 = local.vnets[each.value.vnet_key].subnets[each.value.subnet_key].id
   subnet_name               = local.vnets[each.value.vnet_key].subnets[each.value.subnet_key].name
   internalLoadBalancingMode = each.value.internalLoadBalancingMode
+  front_end_size            = lookup(each.value, "front_end_size", "Standard_D1_V2")
   diagnostic_profiles       = lookup(each.value, "diagnostic_profiles", null)
   diagnostics               = lookup(each.value, "diagnostic_profiles", null) == null ? null : local.diagnostics
 

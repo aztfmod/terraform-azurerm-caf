@@ -28,12 +28,7 @@
         },
         "frontEndSize": {
             "type": "string",
-            "allowedValues": [
-                "Medium",
-                "Large",
-                "ExtraLarge"
-            ],
-            "defaultValue": "Medium",
+            "defaultValue": "Standard_D1_V2",
             "metadata": {
                 "description": "Instance size for the front-end pool."
             }

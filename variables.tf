@@ -1,5 +1,15 @@
 # Global settings 
-variable global_settings {}
+variable global_settings {
+  default = {
+    prefix         = ""
+    convention     = "cafrandom"
+    max_length     = 40
+    default_region = "region1"
+    regions = {
+      region1 = "southeastasia"
+    }
+  }
+}
 
 # To support default values
 variable convention {

@@ -2,11 +2,9 @@
 resource_groups = {
   ase_region1 = {
     name   = "ase"
-    region = "region1"
   }
   networking_region1 = {
     name   = "ase-networking"
-    region = "region1"
   }
 }
 
@@ -16,6 +14,7 @@ app_service_environments = {
     name               = "ase1"
     kind               = "ASEV2"
     zone               = "1"
+    # front_end_size = "Standard_D1_V2"
 
     vnet_key                  = "ase_region1"
     subnet_key                = "ase1"
@@ -25,13 +24,23 @@ app_service_environments = {
     diagnostic_profiles = {
       ase = {
         definition_key   = "ase"
-        destination_type = "log_analytics"
-        destination_key  = "central_logs"
+        destination_type = "storage_account"
+        destination_key  = "all_regions"
       }
     }
   }
 }
 
+storage_accounts = {
+  diags_region1 = {
+    name                     = "diags"
+    resource_group_key       = "ase_region1"
+    account_kind             = "BlobStorage"
+    account_tier             = "Standard"
+    account_replication_type = "LRS"
+    access_tier              = "Cool"
+  }
+}
 
 networking = {
   ase_region1 = {
@@ -53,8 +62,8 @@ networking = {
     diagnostic_profiles = {
       vnet = {
         definition_key   = "networking_all"
-        destination_type = "log_analytics"
-        destination_key  = "central_logs"
+        destination_type = "storage"
+        destination_key  = "all_regions"
       }
     }
 
@@ -69,12 +78,6 @@ network_security_group_definition = {
         definition_key   = "network_security_group"
         destination_type = "storage"
         destination_key  = "all_regions"
-      }
-      operations = {
-        name             = "operations"
-        definition_key   = "network_security_group"
-        destination_type = "log_analytics"
-        destination_key  = "central_logs"
       }
     }
 
@@ -270,6 +273,18 @@ network_security_group_definition = {
   }
 }
 
+
+diagnostics_destinations = {
+  # Storage keys must reference the azure region name
+  storage = {
+    all_regions = {
+      southeastasia = {
+        storage_account_key = "diags_region1"
+      }
+    }
+  }
+}
+
 diagnostics_definition = {
   ase = {
     name = "operational_logs_and_metrics"
@@ -291,5 +306,20 @@ diagnostics_definition = {
         ["NetworkSecurityGroupRuleCounter", true, false, 14],
       ]
     }
+  }
+
+  networking_all = {
+    name = "operational_logs_and_metrics"
+    categories = {
+      log = [
+        # ["Category name",  "Diagnostics Enabled(true/false)", "Retention Enabled(true/false)", Retention_period] 
+        ["VMProtectionAlerts", true, false, 7],
+      ]
+      metric = [
+        #["Category name",  "Diagnostics Enabled(true/false)", "Retention Enabled(true/false)", Retention_period]                 
+        ["AllMetrics", true, false, 7],
+      ]
+    }
+
   }
 }
