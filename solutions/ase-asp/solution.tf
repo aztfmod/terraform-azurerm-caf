@@ -1,5 +1,5 @@
 module "ase" {
-  source = "/tf/caf"
+  source = "../.."
 
   tags                              = local.tags
   global_settings                   = local.global_settings

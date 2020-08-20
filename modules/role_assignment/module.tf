@@ -1,7 +1,7 @@
 
 
 module assignment {
-  source   = "/tf/caf/modules/role_assignment/assignment"
+  source   = "./assignment"
   for_each = var.role_mappings
 
   scope                = var.scope

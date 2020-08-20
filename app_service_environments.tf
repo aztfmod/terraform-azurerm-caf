@@ -1,6 +1,6 @@
 
 module "app_service_environments" {
-  source = "/tf/caf/modules/terraform-azurerm-caf-ase"
+  source = "./modules/terraform-azurerm-caf-ase"
 
   for_each = var.app_service_environments
 

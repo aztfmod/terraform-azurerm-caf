@@ -1,6 +1,6 @@
 
 module azuread_app_roles {
-  source = "/tf/caf/modules/azuread/roles"
+  source = "./modules/azuread/roles"
 
   for_each = var.azuread_app_roles
 

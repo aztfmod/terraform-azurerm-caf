@@ -1,6 +1,6 @@
 
 module "subscriptions" {
-  source = "/tf/caf/modules/subscriptions"
+  source = "./modules/subscriptions"
 
   for_each = var.subscriptions
 

@@ -1,6 +1,6 @@
 
 module diagnostics {
-  source   = "/tf/caf/modules/diagnostics"
+  source   = "../../diagnostics"
   for_each = var.subnets
 
   resource_id       = azurerm_network_security_group.nsg_obj[each.key].id

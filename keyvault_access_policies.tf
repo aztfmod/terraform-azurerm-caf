@@ -1,5 +1,5 @@
 module keyvault_access_policies {
-  source   = "/tf/caf/modules/security/keyvault_access_policy"
+  source   = "./modules/security/keyvault_access_policy"
   for_each = var.keyvault_access_policies
 
   keyvault_id          = module.keyvaults[each.key].id

@@ -1,5 +1,5 @@
 module "azurerm_application_insights" {
-  source = "/tf/caf/modules/terraform-azurerm-caf-appinsights"
+  source = "./modules/terraform-azurerm-caf-appinsights"
 
   for_each = var.azurerm_application_insights
 

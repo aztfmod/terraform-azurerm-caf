@@ -1,5 +1,5 @@
 module custom_roles {
-  source   = "/tf/caf/modules/custom_roles"
+  source   = "./modules/custom_roles"
   for_each = var.custom_role_definitions
 
   global_settings      = local.global_settings

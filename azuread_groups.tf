@@ -1,5 +1,5 @@
 module azuread_groups {
-  source = "/tf/caf/modules/azuread/groups"
+  source = "./modules/azuread/groups"
 
   for_each = var.azuread_groups
 

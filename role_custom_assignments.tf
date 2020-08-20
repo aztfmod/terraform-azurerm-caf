@@ -4,7 +4,7 @@
 
 # IAM for subscriptions
 module custom_role_assignment_subscriptions {
-  source   = "/tf/caf/modules/role_assignment"
+  source   = "./modules/role_assignment"
   for_each = lookup(var.role_mapping.custom_role_mapping, "subscription_keys", {})
 
   mode               = "custom"

@@ -1,5 +1,5 @@
 module azuread_users {
-  source     = "/tf/caf/modules/azuread/users"
+  source     = "./modules/azuread/users"
   depends_on = [module.keyvault_access_policies]
   for_each   = var.azuread_users
 

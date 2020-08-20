@@ -1,6 +1,6 @@
 
 module diagnostics {
-  source = "/tf/caf/modules/diagnostics"
+  source = "../diagnostics"
 
   resource_id       = azurerm_virtual_network.vnet.id
   resource_location = azurerm_virtual_network.vnet.location

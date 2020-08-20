@@ -1,5 +1,5 @@
 module virtual_machines {
-  source = "/tf/caf/modules/virtual_machine"
+  source = "./modules/virtual_machine"
 
   for_each = var.virtual_machines
 

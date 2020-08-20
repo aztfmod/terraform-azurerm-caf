@@ -4,7 +4,7 @@ locals {
 
 
 module "virtual_network" {
-  source = "/tf/caf/modules/terraform-azurerm-caf-virtual-network"
+  source = "./modules/terraform-azurerm-caf-virtual-network"
 
   for_each = var.networking
 

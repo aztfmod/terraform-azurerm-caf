@@ -4,7 +4,7 @@
 
 # IAM for subscriptions
 module role_assignment_subscriptions {
-  source   = "/tf/caf/modules/role_assignment"
+  source   = "./modules/role_assignment"
   for_each = lookup(var.role_mapping.built_in_role_mapping, "subscription_keys", {})
 
   mode               = "built-in"
@@ -17,7 +17,7 @@ module role_assignment_subscriptions {
 
 # IAM for resource groups
 module role_assignment_resource_groups {
-  source   = "/tf/caf/modules/role_assignment"
+  source   = "./modules/role_assignment"
   for_each = lookup(var.role_mapping.built_in_role_mapping, "resource_group_keys", {})
 
   mode               = "built-in"
@@ -30,7 +30,7 @@ module role_assignment_resource_groups {
 
 # IAM for storage accounts
 module role_assignment_storage_accounts {
-  source   = "/tf/caf/modules/role_assignment"
+  source   = "./modules/role_assignment"
   for_each = lookup(var.role_mapping.built_in_role_mapping, "storage_account_keys", {})
 
   mode               = "built-in"

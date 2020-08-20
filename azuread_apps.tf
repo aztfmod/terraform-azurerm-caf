@@ -1,5 +1,5 @@
 module azuread_applications {
-  source     = "/tf/caf/modules/terraform-azuread-caf-aad-apps"
+  source     = "./modules/terraform-azuread-caf-aad-apps"
   depends_on = [module.keyvault_access_policies]
 
   azuread_apps            = var.azuread_apps

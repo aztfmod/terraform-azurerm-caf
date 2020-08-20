@@ -1,5 +1,5 @@
 module "app_service_plans" {
-  source = "/tf/caf/modules/terraform-azurerm-caf-asp"
+  source = "./modules/terraform-azurerm-caf-asp"
 
   for_each = var.app_service_plans
 
