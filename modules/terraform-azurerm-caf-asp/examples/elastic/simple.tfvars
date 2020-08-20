@@ -1,7 +1,7 @@
 
 resource_groups = {
   asp = {
-    name   = "api-rg-pro"
+    name = "api-rg-pro"
   }
 }
 

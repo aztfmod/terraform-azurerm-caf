@@ -29,6 +29,25 @@ resource "azurerm_template_deployment" "ase" {
 
 }
 
+resource "null_resource" "destroy_ase" {
+
+  triggers = {
+    resource_id = lookup(azurerm_template_deployment.ase.outputs, "id")
+  }
+
+  provisioner "local-exec" {
+    command     = format("%s/scripts/destroy_resource.sh", path.module)
+    when        = destroy
+    interpreter = ["/bin/sh"]
+    on_failure  = fail
+
+    environment = {
+      RESOURCE_IDS = self.triggers.resource_id
+    }
+  }
+
+}
+
 
 
 # As of writing, the ASE ARM deployment don't return the IP address of the ILB

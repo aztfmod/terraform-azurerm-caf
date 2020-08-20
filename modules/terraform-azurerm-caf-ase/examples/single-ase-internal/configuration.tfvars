@@ -1,10 +1,10 @@
 
 resource_groups = {
   ase_region1 = {
-    name   = "ase"
+    name = "ase"
   }
   networking_region1 = {
-    name   = "ase-networking"
+    name = "ase-networking"
   }
 }
 
