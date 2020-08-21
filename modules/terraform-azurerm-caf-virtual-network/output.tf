@@ -26,5 +26,5 @@ output resource_group_name {
 
 output "subnets" {
   description = "Returns all the subnets objects in the Virtual Network. As a map of keys, ID"
-  value       = merge(module.special_subnets.subnet_ids_map, module.subnets.subnet_ids_map)
+  value       = merge(module.special_subnets, module.subnets)
 }

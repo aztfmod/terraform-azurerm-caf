@@ -30,21 +30,29 @@ resource "azurerm_virtual_network" "vnet" {
 module "special_subnets" {
   source = "./subnet"
 
-  resource_group       = var.resource_group_name
-  virtual_network_name = azurerm_virtual_network.vnet.name
-  subnets              = var.networking_object.specialsubnets
-  tags                 = local.tags
-  location             = var.location
+  for_each                                       = lookup(var.networking_object, "specialsubnets", {})
+  name                                           = each.value.name
+  resource_group_name                            = var.resource_group_name
+  virtual_network_name                           = azurerm_virtual_network.vnet.name
+  address_prefixes                               = lookup(each.value, "cidr", [])
+  delegation                                     = lookup(each.value, "delegation", {})
+  service_endpoints                              = lookup(each.value, "service_endpoints", [])
+  enforce_private_link_endpoint_network_policies = lookup(each.value, "enforce_private_link_endpoint_network_policies", false)
+  enforce_private_link_service_network_policies  = lookup(each.value, "enforce_private_link_service_network_policies", false)
 }
 
 module "subnets" {
   source = "./subnet"
 
-  resource_group       = var.resource_group_name
-  virtual_network_name = azurerm_virtual_network.vnet.name
-  subnets              = var.networking_object.subnets
-  tags                 = local.tags
-  location             = var.location
+  for_each                                       = lookup(var.networking_object, "subnets", {})
+  name                                           = each.value.name
+  resource_group_name                            = var.resource_group_name
+  virtual_network_name                           = azurerm_virtual_network.vnet.name
+  address_prefixes                               = lookup(each.value, "cidr", [])
+  delegation                                     = lookup(each.value, "delegation", {})
+  service_endpoints                              = lookup(each.value, "service_endpoints", [])
+  enforce_private_link_endpoint_network_policies = lookup(each.value, "enforce_private_link_endpoint_network_policies", false)
+  enforce_private_link_service_network_policies  = lookup(each.value, "enforce_private_link_service_network_policies", false)
 }
 
 module "nsg" {
@@ -73,8 +81,8 @@ module "nsg" {
 # }
 
 resource "azurerm_subnet_network_security_group_association" "nsg_vnet_association" {
-  for_each = module.subnets.subnet_ids_map
+  for_each = module.subnets
 
-  subnet_id                 = module.subnets.subnet_ids_map[each.key].id
+  subnet_id                 = each.value.id
   network_security_group_id = module.nsg.nsg_obj[each.key].id
 }
