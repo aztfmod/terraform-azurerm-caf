@@ -7,7 +7,10 @@ variable lowerlevel_resource_group_name {}
 variable global_settings {
   default = {}
 }
-
+variable rover_version {}
+variable level {
+  default = "level2"
+}
 variable tags {
   type    = map
   default = {}

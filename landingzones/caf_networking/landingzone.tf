@@ -1,6 +1,7 @@
 module "landingzones_networking" {
   source = "../.."
 
+  tags            = local.tags
   diagnostics     = local.diagnostics
   global_settings = local.global_settings
 

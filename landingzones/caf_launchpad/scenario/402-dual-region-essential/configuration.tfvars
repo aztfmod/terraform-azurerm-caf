@@ -207,11 +207,11 @@ storage_accounts = {
 keyvaults = {
   # Do not rename the key "launchpad" to be able to upgrade to the standard launchpad
   launchpad = {
-    name               = "launchpad"
-    resource_group_key = "security"
-    region             = "region1"
-    convention         = "cafrandom"
-    sku_name           = "standard"
+    name                = "launchpad"
+    resource_group_key  = "security"
+    region              = "region1"
+    convention          = "cafrandom"
+    sku_name            = "standard"
     soft_delete_enabled = true
     tags = {
       tfstate     = "level0"
@@ -235,11 +235,11 @@ keyvaults = {
   }
 
   secrets = {
-    name               = "secrets"
-    resource_group_key = "security"
-    region             = "region1"
-    convention         = "cafrandom"
-    sku_name           = "premium"
+    name                = "secrets"
+    resource_group_key  = "security"
+    region              = "region1"
+    convention          = "cafrandom"
+    sku_name            = "premium"
     soft_delete_enabled = true
 
     # you can setup up to 5 profiles

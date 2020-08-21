@@ -54,15 +54,15 @@ locals {
   landingzone_tag = {
     "landingzone" = basename(abspath(path.module))
   }
-  tags = merge(var.tags, local.landingzone_tag, { "environment" = local.global_settings.environment })
+  tags = merge(var.tags, local.landingzone_tag, { "level" = var.level }, { "environment" = local.global_settings.environment }, { "rover_version" = var.rover_version })
 
   global_settings = {
-    prefix         = lookup(var.global_settings, "prefix", data.terraform_remote_state.caf_foundations.outputs.global_settings.prefix)
-    convention     = lookup(var.global_settings, "convention", data.terraform_remote_state.caf_foundations.outputs.global_settings.convention)
-    default_region = lookup(var.global_settings, "default_region", data.terraform_remote_state.caf_foundations.outputs.global_settings.default_region)
+    prefix         = try(var.global_settings.prefix, data.terraform_remote_state.caf_foundations.outputs.global_settings.prefix)
+    convention     = try(var.global_settings.convention, data.terraform_remote_state.caf_foundations.outputs.global_settings.convention)
+    default_region = try(var.global_settings.default_region, data.terraform_remote_state.caf_foundations.outputs.global_settings.default_region)
+    regions        = try(var.global_settings.regions, null) == null ? data.terraform_remote_state.caf_foundations.outputs.global_settings.regions : merge(data.terraform_remote_state.caf_foundations.outputs.global_settings.regions, var.global_settings.regions)
+    max_length     = try(var.global_settings.max_length, data.terraform_remote_state.caf_foundations.outputs.global_settings.max_length)
     environment    = data.terraform_remote_state.caf_foundations.outputs.global_settings.environment
-    regions        = lookup(var.global_settings, "regions", null) == null ? data.terraform_remote_state.caf_foundations.outputs.global_settings.regions : merge(data.terraform_remote_state.caf_foundations.outputs.global_settings.regions, var.global_settings.regions)
-    max_length     = lookup(var.global_settings, "max_length", data.terraform_remote_state.caf_foundations.outputs.global_settings.max_length)
   }
 
   diagnostics = {
