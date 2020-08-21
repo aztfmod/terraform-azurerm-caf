@@ -1,9 +1,9 @@
 #Reference: https://www.terraform.io/docs/providers/azurerm/r/firewall.html 
-resource "azurecaf_naming_convention" "fw" {  
-  name          = var.name
-  prefix        = var.global_settings.prefix
+resource "azurecaf_naming_convention" "fw" {
+  name   = var.name
+  prefix = var.global_settings.prefix
   # postfix       = var.global_settings.postfix
-  max_length    = var.global_settings.max_length 
+  max_length    = var.global_settings.max_length
   resource_type = "azurerm_firewall"
   convention    = var.global_settings.convention
 }

@@ -24,4 +24,10 @@ variable tags {
 }
 variable zones {
   default = null
-} 
+}
+variable diagnostics {
+  default = {}
+}
+variable diagnostic_profiles {
+  default = {}
+}

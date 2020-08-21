@@ -94,11 +94,20 @@ public_ip_addresses = {
     allocation_method       = "Static"
     ip_version              = "IPv4"
     idle_timeout_in_minutes = "4"
+
+    # you can setup up to 5 keys - vnet diganostic
+    diagnostic_profiles = {
+      operation = {
+        definition_key   = "public_ip_address"
+        destination_type = "log_analytics"
+        destination_key  = "central_logs"
+      }
+    }
+
   }
 }
 
 azurerm_firewalls = {
-  # Southeastasia firewall (do not change the key when created)
   fw_rg1 = {
     name               = "egress"
     resource_group_key = "vnet_rg1"
@@ -108,31 +117,13 @@ azurerm_firewalls = {
     # you can setup up to 5 keys - vnet diganostic
     diagnostic_profiles = {
       operation = {
-        definition_key   = "firewall"
+        definition_key   = "azurerm_firewall"
         destination_type = "log_analytics"
         destination_key  = "central_logs"
       }
     }
 
-    # # Settings for the public IP address to be used for Azure Firewall 
-    # # Must be standard and static for 
-    # firewall_ip_addr_config = {
-    #   ip_name           = "firewall"
-    #   allocation_method = "Static"
-    #   sku               = "Standard" #defaults to Basic
-    #   ip_version        = "IPv4"     #defaults to IP4, Only dynamic for IPv6, Supported arguments are IPv4 or IPv6, NOT Both
-    #   diagnostics = {
-    #     log = [
-    #       #["Category name",  "Diagnostics Enabled(true/false)", "Retention Enabled(true/false)", Retention_period] 
-    #       ["DDoSProtectionNotifications", true, true, 30],
-    #       ["DDoSMitigationFlowLogs", true, true, 30],
-    #       ["DDoSMitigationReports", true, true, 30],
-    #     ]
-    #     metric = [
-    #       ["AllMetrics", true, true, 30],
-    #     ]
-    #   }
-    # }
+   
 
     # # Settings for the Azure Firewall settings
     # az_fw_config = {
@@ -373,19 +364,34 @@ network_security_group_definition = {
 # Different profiles to target different operational teams
 #
 diagnostics_definition = {
-  firewall = {
+  azurerm_firewall = {
     name = "operational_logs_and_metrics"
     categories = {
       log = [
         #["Category name",  "Diagnostics Enabled(true/false)", "Retention Enabled(true/false)", Retention_period] 
-        ["AzureFirewallApplicationRule", true, true, 30],
-        ["AzureFirewallNetworkRule", true, true, 30],
-        ["AzureFirewallDnsProxy", true, true, 30],
+        ["AzureFirewallApplicationRule", true, true, 7],
+        ["AzureFirewallNetworkRule", true, true, 7],
+        ["AzureFirewallDnsProxy", true, true, 7],
       ]
       metric = [
-        ["AllMetrics", true, true, 30],
+        ["AllMetrics", true, true, 7],
       ]
     }
-
   }
+
+  public_ip_address = {
+    name = "operational_logs_and_metrics"
+    categories = {
+      log = [
+          #["Category name",  "Diagnostics Enabled(true/false)", "Retention Enabled(true/false)", Retention_period] 
+          ["DDoSProtectionNotifications", true, true, 7],
+          ["DDoSMitigationFlowLogs", true, true, 7],
+          ["DDoSMitigationReports", true, true, 7],
+        ]
+      metric = [
+        ["AllMetrics", true, true, 7],
+      ]
+    }
+  }
+
 }

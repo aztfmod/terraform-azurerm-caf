@@ -36,7 +36,8 @@ module public_ip_addresses {
   reverse_fqdn            = try(each.value.reverse_fqdn, null)
   tags                    = try(each.value.tags, null)
   zones                   = try(each.value.zones, null)
-
+  diagnostic_profiles     = try(each.value.diagnostic_profiles, {})
+  diagnostics             = local.diagnostics
 }
 
 resource "azurerm_virtual_network_peering" "peering" {
