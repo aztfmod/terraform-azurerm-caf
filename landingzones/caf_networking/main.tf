@@ -54,7 +54,7 @@ locals {
   landingzone_tag = {
     "landingzone" = basename(abspath(path.module))
   }
-  tags = merge(var.tags, local.landingzone_tag, { "level" = var.level }, { "environment" = local.global_settings.environment }, { "rover_version" = var.rover_version })
+  tags = merge(local.landingzone_tag, { "level" = var.level }, { "environment" = local.global_settings.environment }, { "rover_version" = var.rover_version }, var.tags)
 
   global_settings = {
     prefix         = try(var.global_settings.prefix, data.terraform_remote_state.caf_foundations.outputs.global_settings.prefix)

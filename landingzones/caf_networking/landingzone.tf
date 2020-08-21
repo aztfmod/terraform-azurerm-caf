@@ -12,6 +12,7 @@ module "landingzones_networking" {
     vnet_peerings                     = var.vnet_peerings
     network_security_group_definition = var.network_security_group_definition
     firewalls                         = var.firewalls
+    public_ip_addresses               = var.public_ip_addresses
   }
   compute = {
     virtual_machines = var.virtual_machines

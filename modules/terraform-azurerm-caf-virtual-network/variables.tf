@@ -17,7 +17,7 @@ variable diagnostics {
   description = "(Required) Diagnostics object with the definitions and destination services"
 }
 
-variable networking_object {
+variable settings {
   description = "(Required) configuration object describing the networking configuration, as described in README"
 }
 

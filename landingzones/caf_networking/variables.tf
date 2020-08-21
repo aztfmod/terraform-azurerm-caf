@@ -24,6 +24,9 @@ variable resource_groups {
 variable vnets {
   default = {}
 }
+variable public_ip_addresses {
+  default = {}
+}
 variable vnet_peerings {
   default = {}
 }

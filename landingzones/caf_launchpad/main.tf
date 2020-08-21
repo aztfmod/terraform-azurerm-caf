@@ -56,7 +56,7 @@ locals {
   landingzone_tag = {
     landingzone = var.launchpad_mode
   }
-  tags = merge(var.tags, local.landingzone_tag, { "level" = var.level }, { "environment" = var.environment }, { "rover_version" = var.rover_version })
+  tags = merge(local.landingzone_tag, { "level" = var.level }, { "environment" = var.environment }, { "rover_version" = var.rover_version }, var.tags)
 
   prefix = var.prefix == null ? random_string.prefix.result : var.prefix
 

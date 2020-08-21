@@ -1,6 +1,6 @@
 // Creates the networks virtual network, the subnets and associated NSG, with a special section for AzureFirewallSubnet
 resource "azurecaf_naming_convention" "caf_name_vnet" {
-  name          = var.networking_object.vnet.name
+  name          = var.settings.vnet.name
   prefix        = var.prefix != "" ? var.prefix : null
   postfix       = var.postfix != "" ? var.postfix : null
   max_length    = var.max_length != "" ? var.max_length : null
@@ -12,10 +12,10 @@ resource "azurerm_virtual_network" "vnet" {
   name                = azurecaf_naming_convention.caf_name_vnet.result
   location            = var.location
   resource_group_name = var.resource_group_name
-  address_space       = var.networking_object.vnet.address_space
+  address_space       = var.settings.vnet.address_space
   tags                = local.tags
 
-  dns_servers = lookup(var.networking_object.vnet, "dns", null)
+  dns_servers = lookup(var.settings.vnet, "dns", null)
 
   dynamic "ddos_protection_plan" {
     for_each = var.ddos_id != "" ? [1] : []
@@ -30,7 +30,7 @@ resource "azurerm_virtual_network" "vnet" {
 module "special_subnets" {
   source = "./subnet"
 
-  for_each                                       = lookup(var.networking_object, "specialsubnets", {})
+  for_each                                       = lookup(var.settings, "specialsubnets", {})
   name                                           = each.value.name
   resource_group_name                            = var.resource_group_name
   virtual_network_name                           = azurerm_virtual_network.vnet.name
@@ -44,7 +44,7 @@ module "special_subnets" {
 module "subnets" {
   source = "./subnet"
 
-  for_each                                       = lookup(var.networking_object, "subnets", {})
+  for_each                                       = lookup(var.settings, "subnets", {})
   name                                           = each.value.name
   resource_group_name                            = var.resource_group_name
   virtual_network_name                           = azurerm_virtual_network.vnet.name
@@ -60,7 +60,7 @@ module "nsg" {
 
   resource_group                    = var.resource_group_name
   virtual_network_name              = azurerm_virtual_network.vnet.name
-  subnets                           = var.networking_object.subnets
+  subnets                           = var.settings.subnets
   tags                              = local.tags
   location                          = var.location
   network_security_group_definition = var.network_security_group_definition
@@ -86,3 +86,4 @@ resource "azurerm_subnet_network_security_group_association" "nsg_vnet_associati
   subnet_id                 = each.value.id
   network_security_group_id = module.nsg.nsg_obj[each.key].id
 }
+

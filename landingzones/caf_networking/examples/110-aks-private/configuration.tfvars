@@ -86,6 +86,17 @@ vnet_peerings = {
   }
 }
 
+public_ip_addresses = {
+  firewall_rg1 = {
+    name                    = "pip1"
+    resource_group_key      = "vnet_rg1"
+    sku                     = "Standard"
+    allocation_method       = "Dynamic"
+    ip_version              = "IPv4"
+    idle_timeout_in_minutes = "4"
+  }
+}
+
 # firewalls = {
 #   # Southeastasia firewall (do not change the key when created)
 #   eastus = {
