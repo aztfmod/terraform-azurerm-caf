@@ -1,5 +1,5 @@
 module diagnostics {
-  source   = "../diagnostics"
+  source = "../../diagnostics"
 
   resource_id       = azurerm_public_ip.pip.id
   resource_location = var.location

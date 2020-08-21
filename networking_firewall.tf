@@ -1,7 +1,7 @@
 module azurerm_firewalls {
-  source = "./modules/firewall"
+  source = "./modules/networking/firewall"
 
-  for_each = lookup(var.networking, "azurerm_firewalls", {})
+  for_each = local.networking.azurerm_firewalls
 
   global_settings     = local.global_settings
   name                = each.value.name
@@ -14,3 +14,7 @@ module azurerm_firewalls {
   settings            = each.value
 }
 
+output azurerm_firewalls {
+  value     = module.azurerm_firewalls
+  sensitive = true
+}

@@ -13,6 +13,8 @@ module "landingzones_networking" {
     network_security_group_definition = var.network_security_group_definition
     azurerm_firewalls                 = var.azurerm_firewalls
     public_ip_addresses               = var.public_ip_addresses
+    route_tables                      = var.route_tables
+    azurerm_routes                    = var.azurerm_routes
   }
   compute = {
     virtual_machines = var.virtual_machines

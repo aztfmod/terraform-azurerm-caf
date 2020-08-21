@@ -1,5 +1,5 @@
 module diagnostics {
-  source = "../diagnostics"
+  source = "../../diagnostics"
 
   resource_id       = azurerm_firewall.fw.id
   resource_location = var.location

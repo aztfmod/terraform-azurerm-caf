@@ -36,6 +36,12 @@ variable azurerm_firewalls {
 variable network_security_group_definition {
   default = null
 }
+variable route_tables {
+  default = {}
+}
+variable azurerm_routes {
+  default = {}
+}
 variable storage_accounts {
   default = {}
 }

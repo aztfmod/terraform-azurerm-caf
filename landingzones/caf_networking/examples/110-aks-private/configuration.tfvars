@@ -29,8 +29,9 @@ vnets = {
     }
     subnets = {
       Active_Directory = {
-        name = "Active_Directory"
-        cidr = ["100.64.102.0/27"]
+        name            = "Active_Directory"
+        cidr            = ["100.64.102.0/27"]
+        route_table_key = "default_no_internet"
       }
       AzureBastionSubnet = {
         name    = "AzureBastionSubnet" #Must be called AzureBastionSubnet 
@@ -49,16 +50,19 @@ vnets = {
     specialsubnets = {}
     subnets = {
       aks_nodepool_system = {
-        name = "aks_nodepool_system"
-        cidr = ["100.64.48.0/24"]
+        name            = "aks_nodepool_system"
+        cidr            = ["100.64.48.0/24"]
+        route_table_key = "default_to_firewall_rg1"
       }
       aks_nodepool_user1 = {
-        name = "aks_nodepool_user1"
-        cidr = ["100.64.49.0/24"]
+        name            = "aks_nodepool_user1"
+        cidr            = ["100.64.49.0/24"]
+        route_table_key = "default_to_firewall_rg1"
       }
       aks_nodepool_user2 = {
-        name = "aks_nodepool_user2"
-        cidr = ["100.64.50.0/24"]
+        name            = "aks_nodepool_user2"
+        cidr            = ["100.64.50.0/24"]
+        route_table_key = "default_to_firewall_rg1"
       }
     }
   }
@@ -123,7 +127,7 @@ azurerm_firewalls = {
       }
     }
 
-   
+
 
     # # Settings for the Azure Firewall settings
     # az_fw_config = {
@@ -232,6 +236,45 @@ azurerm_firewalls = {
 #   }
 # }
 
+route_tables = {
+  default_to_firewall_rg1 = {
+    name               = "default_to_firewall_rg1"
+    resource_group_key = "vnet_rg1"
+  }
+  default_no_internet = {
+    name               = "default_no_internet"
+    resource_group_key = "vnet_rg1"
+  }
+}
+
+azurerm_routes = {
+  no_internet = {
+    name               = "no_internet"
+    resource_group_key = "vnet_rg1"
+    route_table_key    = "default_no_internet"
+    address_prefix     = "0.0.0.0/0"
+    next_hop_type      = "None"
+  }
+  default_to_firewall_rg1 = {
+    name               = "0-0-0-0-through-firewall-rg1"
+    resource_group_key = "vnet_rg1"
+    route_table_key    = "default_to_firewall_rg1"
+    address_prefix     = "0.0.0.0/0"
+    next_hop_type      = "VirtualAppliance"
+
+    # To be set when next_hop_type = "VirtualAppliance"
+    private_ip_keys = {
+      azurerm_firewall = {
+        key             = "fw_rg1"
+        interface_index = 0
+      }
+      # virtual_machine = {
+      #   key = ""
+      #   nic_key = ""
+      # }
+    }
+  }
+}
 
 
 #
@@ -383,11 +426,11 @@ diagnostics_definition = {
     name = "operational_logs_and_metrics"
     categories = {
       log = [
-          #["Category name",  "Diagnostics Enabled(true/false)", "Retention Enabled(true/false)", Retention_period] 
-          ["DDoSProtectionNotifications", true, true, 7],
-          ["DDoSMitigationFlowLogs", true, true, 7],
-          ["DDoSMitigationReports", true, true, 7],
-        ]
+        #["Category name",  "Diagnostics Enabled(true/false)", "Retention Enabled(true/false)", Retention_period] 
+        ["DDoSProtectionNotifications", true, true, 7],
+        ["DDoSMitigationFlowLogs", true, true, 7],
+        ["DDoSMitigationReports", true, true, 7],
+      ]
       metric = [
         ["AllMetrics", true, true, 7],
       ]

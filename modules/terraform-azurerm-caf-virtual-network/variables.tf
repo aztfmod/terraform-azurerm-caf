@@ -56,3 +56,7 @@ variable max_length {
   type        = string
   default     = "60"
 }
+
+variable route_tables {
+  default = {}
+}

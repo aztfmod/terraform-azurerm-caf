@@ -67,6 +67,16 @@ module "nsg" {
   diagnostics                       = var.diagnostics
 }
 
+resource "azurerm_subnet_route_table_association" "rt" {
+  for_each = {
+    for key, subnet in lookup(var.settings, "subnets", {}) : key => subnet
+    if lookup(subnet, "route_table_key", null) != null
+  }
+
+  subnet_id      = module.subnets[each.key].id
+  route_table_id = var.route_tables[each.value.route_table_key].id
+}
+
 # module "traffic_analytics" {
 #   source = "./traffic_analytics"
 

@@ -1,7 +1,26 @@
+# 1 - virtual networks
+# 2
+
+
+
 locals {
-  vnets = merge(module.networking, var.networking.networking_objects)
+  vnets = merge(module.networking, try(var.networking.networking_objects, {}))
+
+  networking = {
+    network_security_group_definition = try(var.networking.network_security_group_definition, {})
+    public_ip_addresses               = try(var.networking.public_ip_addresses, {})
+    vnet_peerings                     = try(var.networking.vnet_peerings, {})
+    route_tables                      = try(var.networking.route_tables, {})
+    azurerm_routes                    = try(var.networking.azurerm_routes, {})
+    azurerm_firewalls                 = try(var.networking.azurerm_firewalls, {})
+  }
 }
 
+output vnets {
+  depends_on = [azurerm_virtual_network_peering.peering]
+  value      = module.networking
+  sensitive  = true
+}
 
 module "networking" {
   source = "./modules/terraform-azurerm-caf-virtual-network"
@@ -14,16 +33,17 @@ module "networking" {
   location                          = lookup(each.value, "region", null) == null ? azurerm_resource_group.rg[each.value.resource_group_key].location : local.global_settings.regions[each.value.region]
   resource_group_name               = azurerm_resource_group.rg[each.value.resource_group_key].name
   settings                          = each.value
-  network_security_group_definition = var.networking.network_security_group_definition
+  network_security_group_definition = local.networking.network_security_group_definition
+  route_tables                      = module.route_tables
   tags                              = try(each.value.tags, null)
   diagnostics                       = local.diagnostics
 }
 
 
 module public_ip_addresses {
-  source = "./modules/public_ip_addresses"
+  source = "./modules/networking/public_ip_addresses"
 
-  for_each = lookup(var.networking, "public_ip_addresses", {})
+  for_each = local.networking.public_ip_addresses
 
   name                    = each.value.name
   resource_group_name     = azurerm_resource_group.rg[each.value.resource_group_key].name
@@ -42,7 +62,7 @@ module public_ip_addresses {
 
 resource "azurerm_virtual_network_peering" "peering" {
   depends_on = [module.networking]
-  for_each   = var.networking.vnet_peerings
+  for_each   = local.networking.vnet_peerings
 
   name                         = each.value.name
   virtual_network_name         = module.networking[each.value.from_key].name
@@ -54,9 +74,25 @@ resource "azurerm_virtual_network_peering" "peering" {
   use_remote_gateways          = lookup(each.value, "use_remote_gateways", false)
 }
 
+module "route_tables" {
+  source   = "./modules/networking/route_tables"
+  for_each = local.networking.route_tables
 
-output vnets {
-  depends_on = [azurerm_virtual_network_peering.peering]
-  value      = module.networking
-  sensitive  = true
+  name                          = each.value.name
+  resource_group_name           = azurerm_resource_group.rg[each.value.resource_group_key].name
+  location                      = lookup(each.value, "region", null) == null ? azurerm_resource_group.rg[each.value.resource_group_key].location : local.global_settings.regions[each.value.region]
+  disable_bgp_route_propagation = try(each.value.disable_bgp_route_propagation, null)
+  tags                          = try(each.value.tags, null)
+}
+
+module "routes" {
+  source   = "./modules/networking/routes"
+  for_each = local.networking.azurerm_routes
+
+  name                      = each.value.name
+  resource_group_name       = azurerm_resource_group.rg[each.value.resource_group_key].name
+  route_table_name          = module.route_tables[each.value.route_table_key].name
+  address_prefix            = each.value.address_prefix
+  next_hop_type             = each.value.next_hop_type
+  next_hop_in_ip_address_fw = try(module.azurerm_firewalls[each.value.private_ip_keys.azurerm_firewall.key].ip_configuration[each.value.private_ip_keys.azurerm_firewall.interface_index].private_ip_address, null)
 }
