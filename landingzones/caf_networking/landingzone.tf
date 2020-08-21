@@ -12,7 +12,9 @@ module "landingzones_networking" {
     network_security_group_definition = var.network_security_group_definition
     firewalls                         = var.firewalls
   }
+  compute = {
+    virtual_machines = var.virtual_machines
+  }
   storage_accounts   = var.storage_accounts
-  virtual_machines   = var.virtual_machines
   managed_identities = var.managed_identities
 }

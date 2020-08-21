@@ -24,23 +24,23 @@ launchpad_key_names = {
 
 resource_groups = {
   tfstate = {
-    name       = "launchpad-tfstates"
-    region     = "region1"
+    name   = "launchpad-tfstates"
+    region = "region1"
   }
   security = {
-    name       = "launchpad-security"
+    name = "launchpad-security"
   }
   networking = {
-    name       = "networking"
+    name = "networking"
   }
   ops = {
-    name       = "operations"
+    name = "operations"
   }
   siem = {
-    name       = "siem-logs"
+    name = "siem-logs"
   }
   bastion_launchpad = {
-    name       = "launchpad-bastion"
+    name = "launchpad-bastion"
   }
 }
 

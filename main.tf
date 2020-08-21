@@ -9,7 +9,12 @@ terraform {
 }
 
 provider "azurerm" {
-  features {}
+  features {
+    key_vault {
+      recover_soft_deleted_key_vaults = true
+      purge_soft_delete_on_destroy    = false
+    }
+  }
 }
 
 
@@ -50,4 +55,5 @@ locals {
     max_length         = lookup(var.global_settings, "max_length", var.max_length)
     regions            = var.global_settings.regions
   }
+
 }

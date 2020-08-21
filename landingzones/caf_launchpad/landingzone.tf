@@ -12,6 +12,9 @@ module "launchpad" {
   keyvaults                = var.keyvaults
   keyvault_access_policies = var.keyvault_access_policies
   subscriptions            = var.subscriptions
+  compute = {
+    virtual_machines = var.virtual_machines
+  }
   networking = {
     vnets                             = var.vnets
     networking_objects                = {}
@@ -27,5 +30,4 @@ module "launchpad" {
   managed_identities      = var.managed_identities
   custom_role_definitions = var.custom_role_definitions
   role_mapping            = var.role_mapping
-  virtual_machines        = var.virtual_machines
 }

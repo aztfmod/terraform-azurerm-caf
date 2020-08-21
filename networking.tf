@@ -1,9 +1,9 @@
 locals {
-  vnets = merge(module.virtual_network, var.networking.networking_objects)
+  vnets = merge(module.networking, var.networking.networking_objects)
 }
 
 
-module "virtual_network" {
+module "networking" {
   source = "./modules/terraform-azurerm-caf-virtual-network"
 
   for_each = var.networking.vnets
@@ -20,13 +20,13 @@ module "virtual_network" {
 }
 
 resource "azurerm_virtual_network_peering" "peering" {
-  depends_on = [module.virtual_network]
+  depends_on = [module.networking]
   for_each   = var.networking.vnet_peerings
 
   name                         = each.value.name
-  virtual_network_name         = module.virtual_network[each.value.from_key].name
-  resource_group_name          = module.virtual_network[each.value.from_key].resource_group_name
-  remote_virtual_network_id    = module.virtual_network[each.value.to_key].id
+  virtual_network_name         = module.networking[each.value.from_key].name
+  resource_group_name          = module.networking[each.value.from_key].resource_group_name
+  remote_virtual_network_id    = module.networking[each.value.to_key].id
   allow_virtual_network_access = lookup(each.value, "allow_virtual_network_access", true)
   allow_forwarded_traffic      = lookup(each.value, "allow_forwarded_traffic", false)
   allow_gateway_transit        = lookup(each.value, "allow_gateway_transit", false)
@@ -36,6 +36,6 @@ resource "azurerm_virtual_network_peering" "peering" {
 
 output vnets {
   depends_on = [azurerm_virtual_network_peering.peering]
-  value      = module.virtual_network
+  value      = module.networking
   sensitive  = true
 }

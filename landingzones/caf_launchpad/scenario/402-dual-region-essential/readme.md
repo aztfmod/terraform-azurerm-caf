@@ -23,8 +23,8 @@ rover -lz /tf/caf/landingzones/caf_launchpad -launchpad -var-file /tf/caf/landin
 cd /tf/caf
 
 #  to deploy the launchpad
-rover -lz /tf/caf/landingzones/caf_launchpad -launchpad -var-file /tf/caf/landingzones/caf_launchpad/examples/402-dual-region-essential/configuration.tfvars -parallelism=30 -a apply -w tfstate
+rover -lz /tf/caf/landingzones/caf_launchpad -launchpad -var-file /tf/caf/landingzones/caf_launchpad/examples/402-dual-region-essential/configuration.tfvars -parallelism=30 -tfstate launchpad.tfstate -w tfstate -a apply
 
 # to destroy the launchpad landing zone
-rover -lz /tf/caf/landingzones/caf_launchpad -launchpad -var-file /tf/caf/landingzones/caf_launchpad/examples/402-dual-region-essential/configuration.tfvars -parallelism=30 -a destroy -w tfstate
+rover -lz /tf/caf/landingzones/caf_launchpad -launchpad -var-file /tf/caf/landingzones/caf_launchpad/examples/402-dual-region-essential/configuration.tfvars -parallelism=30 -tfstate launchpad.tfstate -w tfstate -a destroy
 ```

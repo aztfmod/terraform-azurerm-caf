@@ -10,7 +10,10 @@ Managing the transition from manual to automated environments.
 The launchpad components are deployed by a set of Terraform files using the Rover
 
 ```
-rover -lz /tf/caf/landingzones/launchpad -a apply -launchpad
+# Simple scenario for learning and demonstration
+
+# Advanced scenario - Require Azure AD privileges
+rover -lz /tf/caf/landingzones/caf_launchpad -launchpad -var-file /tf/caf/landingzones/caf_launchpad/scenario/402-dual-region-essential/configuration.tfvars -parallelism=30 -tfstate launchpad.tfstate -w tfstate -a apply
 ```
 
 ![Launchpad Worklow](./documentation/img/launchpad_workflow.png)

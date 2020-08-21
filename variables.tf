@@ -88,9 +88,11 @@ variable azuread_api_permissions {
 }
 
 ## Compute variables
-variable virtual_machines {
-  description = "Virtual machine object"
-  default     = {}
+variable compute {
+  description = "Compute object"
+  default = {
+    virtual_machines = {}
+  }
 }
 
 variable app_service_environments {

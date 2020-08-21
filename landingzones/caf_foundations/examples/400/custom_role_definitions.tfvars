@@ -1,3 +1,5 @@
+# https://docs.microsoft.com/en-us/azure/role-based-access-control/built-in-roles
+# https://docs.microsoft.com/en-us/azure/role-based-access-control/resource-provider-operations
 
 custom_role_definitions = {
 
