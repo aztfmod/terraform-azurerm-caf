@@ -89,6 +89,10 @@ variable virtual_machines {
   default     = {}
 }
 
+variable bastion_hosts {
+  default = {}
+}
+
 variable launchpad_key_names {}
 
 variable custom_role_definitions {
@@ -149,5 +153,9 @@ variable vnets {
 }
 
 variable network_security_group_definition {
+  default = {}
+}
+
+variable public_ip_addresses {
   default = {}
 }

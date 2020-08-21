@@ -91,7 +91,7 @@ public_ip_addresses = {
     name                    = "pip1"
     resource_group_key      = "vnet_rg1"
     sku                     = "Standard"
-    allocation_method       = "Dynamic"
+    allocation_method       = "Static"
     ip_version              = "IPv4"
     idle_timeout_in_minutes = "4"
   }

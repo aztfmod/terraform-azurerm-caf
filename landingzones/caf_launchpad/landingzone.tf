@@ -14,12 +14,14 @@ module "launchpad" {
   subscriptions            = var.subscriptions
   compute = {
     virtual_machines = var.virtual_machines
+    bastion_hosts    = var.bastion_hosts
   }
   networking = {
     vnets                             = var.vnets
     networking_objects                = {}
     vnet_peerings                     = {}
     network_security_group_definition = var.network_security_group_definition
+    public_ip_addresses               = var.public_ip_addresses
   }
   storage_accounts        = var.storage_accounts
   azuread_apps            = var.azuread_apps
