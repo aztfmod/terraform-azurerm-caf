@@ -16,7 +16,7 @@ module "landingzones_networking" {
   }
   compute = {
     virtual_machines = var.virtual_machines
-    bastion_hosts = {}
+    bastion_hosts    = {}
   }
   storage_accounts   = var.storage_accounts
   managed_identities = var.managed_identities

@@ -105,6 +105,15 @@ azurerm_firewalls = {
     vnet_key           = "hub_rg1"
     public_ip_key      = "firewall_rg1"
 
+    # you can setup up to 5 keys - vnet diganostic
+    diagnostic_profiles = {
+      operation = {
+        definition_key   = "firewall"
+        destination_type = "log_analytics"
+        destination_key  = "central_logs"
+      }
+    }
+
     # # Settings for the public IP address to be used for Azure Firewall 
     # # Must be standard and static for 
     # firewall_ip_addr_config = {
@@ -355,4 +364,28 @@ network_security_group_definition = {
     ]
   }
 
+}
+
+
+#
+# Define the settings for the diagnostics settings
+# Demonstrate how to log diagnostics in the correct region
+# Different profiles to target different operational teams
+#
+diagnostics_definition = {
+  firewall = {
+    name = "operational_logs_and_metrics"
+    categories = {
+      log = [
+        #["Category name",  "Diagnostics Enabled(true/false)", "Retention Enabled(true/false)", Retention_period] 
+        ["AzureFirewallApplicationRule", true, true, 30],
+        ["AzureFirewallNetworkRule", true, true, 30],
+        ["AzureFirewallDnsProxy", true, true, 30],
+      ]
+      metric = [
+        ["AllMetrics", true, true, 30],
+      ]
+    }
+
+  }
 }
