@@ -74,7 +74,7 @@ app_service_plans = {
   }
 }
 
-networking = {
+vnets = {
   ase_region1 = {
     resource_group_key = "networking_region1"
     vnet = {
