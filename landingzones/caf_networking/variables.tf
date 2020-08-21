@@ -30,7 +30,7 @@ variable public_ip_addresses {
 variable vnet_peerings {
   default = {}
 }
-variable firewalls {
+variable azurerm_firewalls {
   default = {}
 }
 variable network_security_group_definition {

@@ -88,7 +88,7 @@ vnet_peerings = {
 
 public_ip_addresses = {
   firewall_rg1 = {
-    name                    = "pip1"
+    name                    = "egress-pip1"
     resource_group_key      = "vnet_rg1"
     sku                     = "Standard"
     allocation_method       = "Static"
@@ -97,99 +97,100 @@ public_ip_addresses = {
   }
 }
 
-# firewalls = {
-#   # Southeastasia firewall (do not change the key when created)
-#   eastus = {
-#     location           = "eastus"
-#     resource_group_key = "vnet_eus"
-#     vnet_key           = "hub_eus"
+azurerm_firewalls = {
+  # Southeastasia firewall (do not change the key when created)
+  fw_rg1 = {
+    name               = "egress"
+    resource_group_key = "vnet_rg1"
+    vnet_key           = "hub_rg1"
+    public_ip_key      = "firewall_rg1"
 
-#     # Settings for the public IP address to be used for Azure Firewall 
-#     # Must be standard and static for 
-#     firewall_ip_addr_config = {
-#       ip_name           = "firewall"
-#       allocation_method = "Static"
-#       sku               = "Standard" #defaults to Basic
-#       ip_version        = "IPv4"     #defaults to IP4, Only dynamic for IPv6, Supported arguments are IPv4 or IPv6, NOT Both
-#       diagnostics = {
-#         log = [
-#           #["Category name",  "Diagnostics Enabled(true/false)", "Retention Enabled(true/false)", Retention_period] 
-#           ["DDoSProtectionNotifications", true, true, 30],
-#           ["DDoSMitigationFlowLogs", true, true, 30],
-#           ["DDoSMitigationReports", true, true, 30],
-#         ]
-#         metric = [
-#           ["AllMetrics", true, true, 30],
-#         ]
-#       }
-#     }
+    # # Settings for the public IP address to be used for Azure Firewall 
+    # # Must be standard and static for 
+    # firewall_ip_addr_config = {
+    #   ip_name           = "firewall"
+    #   allocation_method = "Static"
+    #   sku               = "Standard" #defaults to Basic
+    #   ip_version        = "IPv4"     #defaults to IP4, Only dynamic for IPv6, Supported arguments are IPv4 or IPv6, NOT Both
+    #   diagnostics = {
+    #     log = [
+    #       #["Category name",  "Diagnostics Enabled(true/false)", "Retention Enabled(true/false)", Retention_period] 
+    #       ["DDoSProtectionNotifications", true, true, 30],
+    #       ["DDoSMitigationFlowLogs", true, true, 30],
+    #       ["DDoSMitigationReports", true, true, 30],
+    #     ]
+    #     metric = [
+    #       ["AllMetrics", true, true, 30],
+    #     ]
+    #   }
+    # }
 
-#     # Settings for the Azure Firewall settings
-#     az_fw_config = {
-#       fw1 = {
-#         name = "azfw"
-#         diagnostics = {
-#           log = [
-#             #["Category name",  "Diagnostics Enabled(true/false)", "Retention Enabled(true/false)", Retention_period] 
-#             ["AzureFirewallApplicationRule", true, true, 30],
-#             ["AzureFirewallNetworkRule", true, true, 30],
-#           ]
-#           metric = [
-#             ["AllMetrics", true, true, 30],
-#           ]
-#         }
-#         network_rules_key     = aksnetworkrules
-#         application_rules_key = aksapprules
-#       }
-#       fw2 = {
-#         name = "azfw"
-#         diagnostics = {
-#           log = [
-#             #["Category name",  "Diagnostics Enabled(true/false)", "Retention Enabled(true/false)", Retention_period] 
-#             ["AzureFirewallApplicationRule", true, true, 30],
-#             ["AzureFirewallNetworkRule", true, true, 30],
-#           ]
-#           metric = [
-#             ["AllMetrics", true, true, 30],
-#           ]
-#         }
-#         network_rules_key     = aksnetworkrules
-#         application_rules_key = aksapprules
-#       }
+    # # Settings for the Azure Firewall settings
+    # az_fw_config = {
+    #   fw1 = {
+    #     name = "azfw"
+    #     diagnostics = {
+    #       log = [
+    #         #["Category name",  "Diagnostics Enabled(true/false)", "Retention Enabled(true/false)", Retention_period] 
+    #         ["AzureFirewallApplicationRule", true, true, 30],
+    #         ["AzureFirewallNetworkRule", true, true, 30],
+    #       ]
+    #       metric = [
+    #         ["AllMetrics", true, true, 30],
+    #       ]
+    #     }
+    #     network_rules_key     = aksnetworkrules
+    #     application_rules_key = aksapprules
+    #   }
+    #   fw2 = {
+    #     name = "azfw"
+    #     diagnostics = {
+    #       log = [
+    #         #["Category name",  "Diagnostics Enabled(true/false)", "Retention Enabled(true/false)", Retention_period] 
+    #         ["AzureFirewallApplicationRule", true, true, 30],
+    #         ["AzureFirewallNetworkRule", true, true, 30],
+    #       ]
+    #       metric = [
+    #         ["AllMetrics", true, true, 30],
+    #       ]
+    #     }
+    #     network_rules_key     = aksnetworkrules
+    #     application_rules_key = aksapprules
+    #   }
 
 
 
-#       application_rules = {
-#         aksapprules = {
-#           name     = "aks"
-#           priority = 100
-#           action   = "Allow"
-#           rules = {
-#             aks = {
-#               name = "aks"
-#               source_addresses = [
-#                 "100.64.48.0/22",
-#               ]
-#               fqdn_tags = [
-#                 "AzureKubernetesService",
-#               ]
-#             }
-#             ubuntu = {
-#               name = "ubuntu"
-#               source_addresses = [
-#                 "100.64.48.0/22",
-#               ]
-#               target_fqdns = [
-#                 "security.ubuntu.com", "azure.archive.ubuntu.com", "changelogs.ubuntu.com"
-#               ]
-#               protocols = ["Http"]
-#             }
-#           }
-#         }
-#       }
-#     }
-#   }
-# }
+    # application_rules = {
+    #   aksapprules = {
+    #     name     = "aks"
+    #     priority = 100
+    #     action   = "Allow"
+    #     rules = {
+    #       aks = {
+    #         name = "aks"
+    #         source_addresses = [
+    #           "100.64.48.0/22",
+    #         ]
+    #         fqdn_tags = [
+    #           "AzureKubernetesService",
+    #         ]
+    #       }
+    #       ubuntu = {
+    #         name = "ubuntu"
+    #         source_addresses = [
+    #           "100.64.48.0/22",
+    #         ]
+    #         target_fqdns = [
+    #           "security.ubuntu.com", "azure.archive.ubuntu.com", "changelogs.ubuntu.com"
+    #         ]
+    #         protocols = ["Http"]
+    #       }
+    #     }
+    #   }
+    # }
+    # }
+  }
+}
 
 # network_rules = {
 #   aksnetworkrules = {

@@ -1,17 +1,16 @@
-# module firewalls {
-#   source "./modules/networking/firewall"
+resource "azurerm_firewall" "fw" {
+  for_each = lookup(var.networking, "azurerm_firewalls", {})
 
-#   for_each = var.firewalls
+  name                = each.value.name
+  resource_group_name = azurerm_resource_group.rg[each.value.resource_group_key].name
+  location            = lookup(each.value, "region", null) == null ? azurerm_resource_group.rg[each.value.resource_group_key].location : local.global_settings.regions[each.value.region]
+  threat_intel_mode   = try(each.value.threat_intel_mode, "Alert")
+  zones               = try(each.value.zones, null)
+  tags                = try(each.value.tags, null)
 
-#   convention           = lookup(each.value, "convention", var.global_settings.convention)
-#   name                 = each.value.az_fw_config.name
-#   resource_group_name  = azurerm_resource_group.rg[each.value.resource_group_key].name
-#   subnet_id            = module.vnets[each.value.vnet_key].vnet_subnets["AzureFirewallSubnet"]
-#   public_ip_id         = module.az_firewall_ip[each.key].id
-#   location             = each.value.location
-#   tags                 = local.tags
-#   diagnostics_map      = local.caf_foundations_accounting[each.value.location].diagnostics_map
-#   la_workspace_id      = local.caf_foundations_accounting[each.value.location].log_analytics_workspace.id
-#   diagnostics_settings = each.value.az_fw_config.diagnostics
-
-# }
+  ip_configuration {
+    name                 = "configuration"
+    subnet_id            = module.networking[each.value.vnet_key].subnets["AzureFirewallSubnet"].id
+    public_ip_address_id = module.public_ip_addresses[each.value.public_ip_key].id
+  }
+}
