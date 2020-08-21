@@ -212,6 +212,7 @@ keyvaults = {
     region             = "region1"
     convention         = "cafrandom"
     sku_name           = "standard"
+    soft_delete_enabled = true
     tags = {
       tfstate     = "level0"
       environment = "sandpit"
@@ -239,6 +240,7 @@ keyvaults = {
     region             = "region1"
     convention         = "cafrandom"
     sku_name           = "premium"
+    soft_delete_enabled = true
 
     # you can setup up to 5 profiles
     diagnostic_profiles = {
