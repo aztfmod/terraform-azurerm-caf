@@ -21,7 +21,7 @@ variable tags {
   default = null
 }
 variable app_service_environments {
-  default = null
+  default = {}
 }
 variable app_service_plans {
   default = {}
@@ -35,6 +35,6 @@ variable resource_groups {
 variable network_security_group_definition {
   default = null
 }
-variable networking {
+variable vnets {
   default = null
 }

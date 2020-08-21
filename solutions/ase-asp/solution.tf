@@ -1,14 +1,19 @@
 module "ase" {
   source = "../.."
 
-  tags                              = local.tags
-  global_settings                   = local.global_settings
-  diagnostics                       = local.diagnostics
-  resource_groups                   = var.resource_groups
-  app_service_environments          = var.app_service_environments
-  app_service_plans                 = var.app_service_plans
-  networking                        = var.networking
-  network_security_group_definition = var.network_security_group_definition
+  tags                     = local.tags
+  global_settings          = local.global_settings
+  diagnostics              = local.diagnostics
+  resource_groups          = var.resource_groups
+  app_service_environments = var.app_service_environments
+  app_service_plans        = var.app_service_plans
+  networking = {
+    vnets                             = var.vnets
+    networking_objects                = {}
+    vnet_peerings                     = {}
+    network_security_group_definition = var.network_security_group_definition
+    firewalls                         = {}
+  }
   # logged_user_objectId              = var.logged_user_objectId
   # user_type                         = var.user_type
   # log_analytics                     = var.log_analytics

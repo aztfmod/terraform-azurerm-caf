@@ -26,33 +26,21 @@ resource_groups = {
   tfstate = {
     name       = "launchpad-tfstates"
     region     = "region1"
-    useprefix  = true
-    max_length = 40
   }
   security = {
     name       = "launchpad-security"
-    useprefix  = true
-    max_length = 40
   }
   networking = {
     name       = "networking"
-    useprefix  = true
-    max_length = 40
   }
   ops = {
     name       = "operations"
-    useprefix  = true
-    max_length = 40
   }
   siem = {
     name       = "siem-logs"
-    useprefix  = true
-    max_length = 40
   }
   bastion_launchpad = {
     name       = "launchpad-bastion"
-    useprefix  = true
-    max_length = 40
   }
 }
 
@@ -74,12 +62,6 @@ storage_accounts = {
     containers = {
       tfstate = {
         name = "tfstate"
-      }
-      sandpit = {
-        name = "sandpit"
-      }
-      level0 = {
-        name = "level0"
       }
     }
   }
@@ -162,7 +144,7 @@ storage_accounts = {
 
   # Stores diagnostic logging for region1
   diaglogs_region1 = {
-    name                     = "diaglogssea"
+    name                     = "diaglogsrg1"
     region                   = "region1"
     resource_group_key       = "ops"
     account_kind             = "BlobStorage"
@@ -172,7 +154,7 @@ storage_accounts = {
   }
   # Stores diagnostic logging for region2
   diaglogs_region2 = {
-    name                     = "diaglogsae"
+    name                     = "diaglogrg2"
     region                   = "region2"
     resource_group_key       = "ops"
     account_kind             = "BlobStorage"
@@ -182,7 +164,7 @@ storage_accounts = {
   }
   # Stores security logs for siem default region"
   diagsiem_region1 = {
-    name                     = "siemsae"
+    name                     = "siemsg1"
     resource_group_key       = "siem"
     account_kind             = "BlobStorage"
     account_tier             = "Standard"
@@ -191,7 +173,7 @@ storage_accounts = {
   }
   # Stores diagnostic logging for region2
   diagsiem_region2 = {
-    name                     = "siemae"
+    name                     = "siemrg2"
     region                   = "region2"
     resource_group_key       = "siem"
     account_kind             = "BlobStorage"
@@ -201,7 +183,7 @@ storage_accounts = {
   }
   # Stores boot diagnostic for region1
   bootdiag_region1 = {
-    name                     = "bootreg1"
+    name                     = "bootrg1"
     region                   = "region1"
     resource_group_key       = "ops"
     account_kind             = "StorageV2"
@@ -211,7 +193,7 @@ storage_accounts = {
   }
   # Stores boot diagnostic for region2
   bootdiag_region2 = {
-    name                     = "bootreg2"
+    name                     = "bootrg2"
     region                   = "region2"
     resource_group_key       = "ops"
     account_kind             = "StorageV2"

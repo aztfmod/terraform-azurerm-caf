@@ -61,10 +61,6 @@ variable diagnostics {
   default = {}
 }
 
-variable caf_foundations_accounting {
-  default = {}
-}
-
 variable user_type {
   description = "The rover set this value to user or serviceprincipal. It is used to handle Azure AD api consents."
   default     = {}

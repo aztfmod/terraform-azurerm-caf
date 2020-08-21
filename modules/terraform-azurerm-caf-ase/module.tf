@@ -22,11 +22,17 @@ resource "azurerm_template_deployment" "ase" {
     "subnet_name"               = var.subnet_name
     "internalLoadBalancingMode" = var.internalLoadBalancingMode
     "frontEndSize"              = var.front_end_size
-    # "multiRoleCount"            = var.front_end_count
+    "multiRoleCount"            = var.front_end_count
   }
 
   deployment_mode = "Incremental"
 
+  timeouts {
+    create = "10h"
+    update = "10h"
+    delete = "10h"
+    read   = "5m"
+  }
 }
 
 resource "null_resource" "destroy_ase" {
