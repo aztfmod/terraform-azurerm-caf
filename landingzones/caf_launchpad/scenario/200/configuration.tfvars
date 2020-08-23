@@ -541,6 +541,14 @@ log_analytics = {
     region             = "region1"
     name               = "logs"
     resource_group_key = "ops"
+    # you can setup up to 5 key
+    diagnostic_profiles = {
+      central_logs_region1 = {
+        definition_key   = "log_analytics"
+        destination_type = "log_analytics"
+        destination_key  = "central_logs"
+      }
+    }
     solutions_maps = {
       NetworkMonitoring = {
         "publisher" = "Microsoft"
@@ -580,6 +588,21 @@ log_analytics = {
 # Different profiles to target different operational teams
 #
 diagnostics_definition = {
+  log_analytics = {
+    name = "operational_logs_and_metrics"
+    categories = {
+      log = [
+        # ["Category name",  "Diagnostics Enabled(true/false)", "Retention Enabled(true/false)", Retention_period] 
+        ["Audit", true, false, 7],
+      ]
+      metric = [
+        #["Category name",  "Diagnostics Enabled(true/false)", "Retention Enabled(true/false)", Retention_period]                 
+        ["AllMetrics", true, false, 7],
+      ]
+    }
+
+  }
+
   default_all = {
     name = "operational_logs_and_metrics"
     categories = {
@@ -650,6 +673,17 @@ diagnostics_definition = {
       #   #["Category name",  "Diagnostics Enabled(true/false)", "Retention Enabled(true/false)", Retention_period]                 
       #   ["AllMetrics", false, false, 7],
       # ]
+    }
+
+  }
+
+  nic = {
+    name = "operational_logs_and_metrics"
+    categories = {
+      metric = [
+        #["Category name",  "Diagnostics Enabled(true/false)", "Retention Enabled(true/false)", Retention_period]                 
+        ["AllMetrics", false, false, 7],
+      ]
     }
 
   }
@@ -1062,7 +1096,7 @@ virtual_machines = {
         # you can setup up to 5 profiles
         diagnostic_profiles = {
           operations = {
-            definition_key   = "default_all"
+            definition_key   = "nic"
             destination_type = "log_analytics"
             destination_key  = "central_logs"
           }
@@ -1213,6 +1247,24 @@ azurerm_routes = {
 # Definition of the networking security groups
 #
 network_security_group_definition = {
+  # This entry is applied to all subnets with no NSG defined
+  empty_nsg = {
+
+    diagnostic_profiles = {
+      nsg = {
+        definition_key   = "network_security_group"
+        destination_type = "storage"
+        destination_key  = "all_regions"
+      }
+      operations = {
+        name             = "operations"
+        definition_key   = "network_security_group"
+        destination_type = "log_analytics"
+        destination_key  = "central_logs"
+      }
+    }
+  }
+
   azure_bastion_nsg = {
 
     diagnostic_profiles = {

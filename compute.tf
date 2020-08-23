@@ -1,6 +1,7 @@
 
 module virtual_machines {
   source = "./modules/compute/virtual_machine"
+  depends_on = [module.keyvault_access_policies]
 
   for_each = lookup(var.compute, "virtual_machines", {})
 
@@ -11,7 +12,8 @@ module virtual_machines {
   vnets               = local.vnets
   managed_identities  = try(azurerm_user_assigned_identity.msi, null)
   boot_diagnostics_storage_account = try(var.storage_accounts[each.value.boot_diagnostics_storage_account_key].primary_blob_endpoint, {})
-  keyvault_id         = try(module.keyvaults[each.value.keyvault_key], null)
+  keyvault_id         = try(module.keyvaults[each.value.keyvault_key].id, null)
+  diagnostics         = local.diagnostics
 }
 
 

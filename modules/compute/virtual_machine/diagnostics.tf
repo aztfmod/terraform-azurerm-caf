@@ -1,5 +1,10 @@
-# data "azurerm_storage_account" "diag" {
-#   count               = var.boot_diagnostics_storage_account == {} ? 0 : 1
-#   name                = var.boot_diagnostics_storage_account.name
-#   resource_group_name = var.boot_diagnostics_storage_account.resource_group_name
+
+# module nics {
+#   source = "../../diagnostics"
+#   for_each = var.settings.networking_interfaces
+
+#   resource_id       = azurerm_network_interface.nic[each.key].id
+#   resource_location = azurerm_network_interface.nic[each.key].location
+#   diagnostics       = var.diagnostics
+#   profiles          = each.value.diagnostic_profiles
 # }

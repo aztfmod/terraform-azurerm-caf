@@ -9,7 +9,7 @@ variable resource_group_name {
 
 variable keyvault_id {
   description = "Keyvault ID to store the SSH public and private keys when not provided by the var.public_key_pem_file"
-  default     = {}
+  default     = ""
 }
 
 variable boot_diagnostics_storage_account {
@@ -28,5 +28,9 @@ variable public_key_pem_file {
 }
 
 variable managed_identities {
+  default = {}
+}
+
+variable diagnostics {
   default = {}
 }
