@@ -25,4 +25,16 @@ resource "azurerm_key_vault" "keyvault" {
   purge_protection_enabled        = try(var.keyvault.purge_protection_enabled, false)
   soft_delete_enabled             = try(var.keyvault.soft_delete_enabled, true)
 
+  dynamic "network_acls" {
+    for_each = lookup(var.keyvault, "network", {})
+
+    content {
+      bypass         = network_acls.value.bypass
+      default_action = try(network_acls.value.default_action, "Deny")
+      ip_rules       = try(network_acls.value.ip_rules, null)
+      virtual_network_subnet_ids = [
+        for subnet_key in network_acls.value.subnet_keys : var.vnets[network_acls.key].subnets[subnet_key].id
+      ]
+    }
+  }
 }

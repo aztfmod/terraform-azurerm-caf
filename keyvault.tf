@@ -9,6 +9,7 @@ module "keyvaults" {
   resource_groups = azurerm_resource_group.rg
   tenant_id       = data.azurerm_client_config.current.tenant_id
   diagnostics     = local.diagnostics
+  vnets           = lookup(each.value, "network", null) == null ? {} : local.vnets
 }
 
 module keyvault_access_policies {

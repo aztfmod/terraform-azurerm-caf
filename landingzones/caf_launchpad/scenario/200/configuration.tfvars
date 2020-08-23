@@ -256,6 +256,16 @@ keyvaults = {
         destination_key  = "all_regions"
       }
     }
+
+    network = {
+      # The key must be the vnet's key
+      devops_region1 = {
+        bypass         = "AzureServices"
+        default_action = "Deny"
+        ip_rules       = []
+        subnet_keys    = ["release_agent_level3", "release_agent_level4"]
+      }
+    }
   }
 }
 
@@ -1181,34 +1191,40 @@ vnets = {
         nsg_key = "azure_bastion_nsg"
       }
       jumpbox = {
-        name    = "jumpbox"
-        cidr    = ["10.100.100.32/29"]
-        nsg_key = "jumphost"
+        name              = "jumpbox"
+        cidr              = ["10.100.100.32/29"]
+        service_endpoints = ["Microsoft.KeyVault"]
+        nsg_key           = "jumphost"
       }
       release_agent_level0 = {
-        name            = "level0"
-        cidr            = ["10.100.100.40/29"]
-        route_table_key = "default_no_internet"
+        name              = "level0"
+        cidr              = ["10.100.100.40/29"]
+        service_endpoints = ["Microsoft.KeyVault"]
+        route_table_key   = "default_no_internet"
       }
       release_agent_level1 = {
-        name            = "level1"
-        cidr            = ["10.100.100.48/29"]
-        route_table_key = "default_no_internet"
+        name              = "level1"
+        cidr              = ["10.100.100.48/29"]
+        service_endpoints = ["Microsoft.KeyVault"]
+        route_table_key   = "default_no_internet"
       }
       release_agent_level2 = {
-        name            = "level2"
-        cidr            = ["10.100.100.56/29"]
-        route_table_key = "default_no_internet"
+        name              = "level2"
+        cidr              = ["10.100.100.56/29"]
+        service_endpoints = ["Microsoft.KeyVault"]
+        route_table_key   = "default_no_internet"
       }
       release_agent_level3 = {
-        name            = "level3"
-        cidr            = ["10.100.100.64/29"]
-        route_table_key = "default_no_internet"
+        name              = "level3"
+        cidr              = ["10.100.100.64/29"]
+        service_endpoints = ["Microsoft.KeyVault"]
+        route_table_key   = "default_no_internet"
       }
       release_agent_level4 = {
-        name            = "level4"
-        cidr            = ["10.100.100.72/29"]
-        route_table_key = "default_no_internet"
+        name              = "level4"
+        cidr              = ["10.100.100.72/29"]
+        service_endpoints = ["Microsoft.KeyVault"]
+        route_table_key   = "default_no_internet"
       }
     }
 
