@@ -18,10 +18,10 @@ module "launchpad" {
   }
   networking = {
     vnets                             = var.vnets
-    networking_objects                = {}
-    vnet_peerings                     = {}
     network_security_group_definition = var.network_security_group_definition
     public_ip_addresses               = var.public_ip_addresses
+    azurerm_routes                    = var.azurerm_routes
+    route_tables                      = var.route_tables
   }
   storage_accounts        = var.storage_accounts
   azuread_apps            = var.azuread_apps

@@ -8,3 +8,7 @@ variable rover_version {}
 variable level {
   default = "level1"
 }
+variable tags {
+  type = map 
+  default = {}
+}

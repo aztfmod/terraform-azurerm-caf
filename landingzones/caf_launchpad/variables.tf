@@ -159,3 +159,9 @@ variable network_security_group_definition {
 variable public_ip_addresses {
   default = {}
 }
+variable route_tables {
+  default = {}
+}
+variable azurerm_routes {
+  default = {}
+}

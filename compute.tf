@@ -1,30 +1,17 @@
 
-module "compute" {
-  source             = "./modules/terraform-azurerm-caf-compute"
-  global_settings    = local.global_settings
-  resource_groups    = azurerm_resource_group.rg
-  compute            = var.compute
-  vnets              = local.vnets
-  managed_identities = azurerm_user_assigned_identity.msi
-  storage_accounts   = module.storage_accounts
-}
+module virtual_machines {
+  source = "./modules/compute/virtual_machine"
 
-#
-# Bastion host service
-# https://www.terraform.io/docs/providers/azurerm/r/bastion_host.html
-# 
+  for_each = lookup(var.compute, "virtual_machines", {})
 
-resource "azurerm_bastion_host" "host" {
-  for_each = var.compute.bastion_hosts
-
-  name                = each.value.name
-  location            = azurerm_resource_group.rg[each.value.resource_group_key].location
+  global_settings     = var.global_settings
+  settings            = each.value
   resource_group_name = azurerm_resource_group.rg[each.value.resource_group_key].name
-  tags                = try(each.value.tags, null)
-
-  ip_configuration {
-    name                 = each.value.name
-    subnet_id            = module.networking[each.value.vnet_key].subnets[each.value.subnet_key].id
-    public_ip_address_id = module.public_ip_addresses[each.value.public_ip_key].id
-  }
+  location            = lookup(each.value, "region", null) == null ? azurerm_resource_group.rg[each.value.resource_group_key].location : var.global_settings.regions[each.value.region]
+  vnets               = local.vnets
+  managed_identities  = try(azurerm_user_assigned_identity.msi, null)
+  boot_diagnostics_storage_account = try(var.storage_accounts[each.value.boot_diagnostics_storage_account_key].primary_blob_endpoint, {})
+  keyvault_id         = try(module.keyvaults[each.value.keyvault_key], null)
 }
+
+
