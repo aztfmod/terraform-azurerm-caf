@@ -621,6 +621,23 @@ diagnostics_definition = {
 
   }
 
+  public_ip_address = {
+    name = "operational_logs_and_metrics"
+    categories = {
+      log = [
+        # ["Category name",  "Diagnostics Enabled(true/false)", "Retention Enabled(true/false)", Retention_period] 
+        ["DDoSProtectionNotifications", true, false, 7],
+        ["DDoSMitigationFlowLogs", true, false, 7],
+        ["DDoSMitigationReports", true, false, 7],
+      ]
+      metric = [
+        #["Category name",  "Diagnostics Enabled(true/false)", "Retention Enabled(true/false)", Retention_period]                 
+        ["AllMetrics", true, false, 7],
+      ]
+    }
+
+  }
+
   network_security_group = {
     name = "operational_logs_and_metrics"
     categories = {
@@ -1101,6 +1118,16 @@ public_ip_addresses = {
     allocation_method       = "Static"
     ip_version              = "IPv4"
     idle_timeout_in_minutes = "4"
+
+    # you can setup up to 5 key
+    diagnostic_profiles = {
+      bastion_host_rg1 = {
+        definition_key   = "public_ip_address"
+        destination_type = "log_analytics"
+        destination_key  = "central_logs"
+      }
+    }
+
   }
 }
 
