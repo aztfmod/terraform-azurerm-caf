@@ -257,6 +257,15 @@ keyvaults = {
       }
     }
 
+    network = {
+      # The key must be the vnet's key
+      devops_region1 = {
+        bypass         = "AzureServices"
+        default_action = "Allow"
+        ip_rules       = []
+        subnet_keys    = ["release_agent_level3", "release_agent_level4"]
+      }
+    }
   }
 }
 
@@ -670,6 +679,10 @@ diagnostics_definition = {
         ["NetworkSecurityGroupEvent", true, false, 7],
         ["NetworkSecurityGroupRuleCounter", true, false, 7],
       ]
+      # metric = [
+      #   #["Category name",  "Diagnostics Enabled(true/false)", "Retention Enabled(true/false)", Retention_period]                 
+      #   ["AllMetrics", false, false, 7],
+      # ]
     }
 
   }
@@ -1181,31 +1194,37 @@ vnets = {
         name              = "jumpbox"
         cidr              = ["10.100.100.32/29"]
         service_endpoints = ["Microsoft.KeyVault"]
+        nsg_key           = "jumphost"
       }
       release_agent_level0 = {
         name              = "level0"
         cidr              = ["10.100.100.40/29"]
         service_endpoints = ["Microsoft.KeyVault"]
+        route_table_key   = "default_no_internet"
       }
       release_agent_level1 = {
         name              = "level1"
         cidr              = ["10.100.100.48/29"]
         service_endpoints = ["Microsoft.KeyVault"]
+        route_table_key   = "default_no_internet"
       }
       release_agent_level2 = {
         name              = "level2"
         cidr              = ["10.100.100.56/29"]
         service_endpoints = ["Microsoft.KeyVault"]
+        route_table_key   = "default_no_internet"
       }
       release_agent_level3 = {
         name              = "level3"
         cidr              = ["10.100.100.64/29"]
         service_endpoints = ["Microsoft.KeyVault"]
+        route_table_key   = "default_no_internet"
       }
       release_agent_level4 = {
         name              = "level4"
         cidr              = ["10.100.100.72/29"]
         service_endpoints = ["Microsoft.KeyVault"]
+        route_table_key   = "default_no_internet"
       }
     }
 
