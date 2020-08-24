@@ -22,7 +22,7 @@ resource "azurerm_template_deployment" "ase" {
     "subnet_name"               = var.subnet_name
     "internalLoadBalancingMode" = var.internalLoadBalancingMode
     "frontEndSize"              = var.front_end_size
-    "multiRoleCount"            = var.front_end_count
+    "frontEndCount"             = var.front_end_count
   }
 
   deployment_mode = "Incremental"
