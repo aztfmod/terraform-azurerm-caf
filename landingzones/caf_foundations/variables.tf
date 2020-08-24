@@ -9,6 +9,6 @@ variable level {
   default = "level1"
 }
 variable tags {
-  type = map 
+  type    = map
   default = {}
 }

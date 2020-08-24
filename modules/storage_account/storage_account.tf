@@ -132,13 +132,15 @@ resource "azurerm_storage_account" "stg" {
   }
 
   dynamic "network_rules" {
-    for_each = lookup(var.storage_account, "network_rules", false) == false ? [] : [1]
+    for_each = lookup(var.storage_account, "network", {})
 
     content {
-      default_action             = lookup(var.storage_account.network_rules, "default_action", "Deny")
-      bypass                     = lookup(var.storage_account.network_rules, "bypass", "None")
-      ip_rules                   = lookup(var.storage_account.network_rules, "ip_rules", null)
-      virtual_network_subnet_ids = lookup(var.storage_account.network_rules, "default_action", null)
+      bypass         = network_rules.value.bypass
+      default_action = try(network_rules.value.default_action, "Deny")
+      ip_rules       = try(network_rules.value.ip_rules, null)
+      virtual_network_subnet_ids = [
+        for subnet_key in network_rules.value.subnet_keys : var.vnets[network_rules.key].subnets[subnet_key].id
+      ]
     }
   }
 
@@ -152,14 +154,3 @@ resource "azurerm_storage_container" "stg" {
   container_access_type = lookup(each.value, "container_access_type", null)
   metadata              = lookup(each.value, "metadata", null)
 }
-
-
-# locals {
-#   storage_account_virtual_network_subnet_ids = flatten(
-#     [
-#       for subnet_key in var.storage_accounts.network_interface_keys : [
-#         azurerm_network_interface.nic[nic_key].id
-#       ]
-#     ]
-#   )
-# }

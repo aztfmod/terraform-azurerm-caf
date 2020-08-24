@@ -19,7 +19,7 @@ resource "azurerm_bastion_host" "host" {
 }
 
 module bastion_host_diagnostics {
-  source = "./modules/diagnostics"
+  source   = "./modules/diagnostics"
   for_each = var.compute.bastion_hosts
 
   resource_id       = azurerm_bastion_host.host[each.key].id
