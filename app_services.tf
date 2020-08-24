@@ -17,7 +17,7 @@ module "app_service_environments" {
   internalLoadBalancingMode = each.value.internalLoadBalancingMode
   front_end_size            = try(each.value.front_end_size, "Standard_D1_V2")
   diagnostic_profiles       = try(each.value.diagnostic_profiles, null)
-  diagnostics               = try(each.value.diagnostic_profiles, local.diagnostics)
+  diagnostics               = local.diagnostics
 
 }
 

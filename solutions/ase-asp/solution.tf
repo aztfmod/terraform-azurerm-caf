@@ -17,7 +17,6 @@ module "ase" {
   # logged_user_objectId              = var.logged_user_objectId
   # user_type                         = var.user_type
   # log_analytics                     = var.log_analytics
-  # diagnostics_definition            = var.diagnostics_definition
   # diagnostics_destinations          = var.diagnostics_destinations
   # keyvaults                         = var.keyvaults
   # keyvault_access_policies          = var.keyvault_access_policies
