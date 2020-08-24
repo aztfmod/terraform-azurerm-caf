@@ -4,7 +4,7 @@
 # 
 
 resource "azurerm_bastion_host" "host" {
-  for_each = var.compute.bastion_hosts
+  for_each = local.compute.bastion_hosts
 
   name                = each.value.name
   location            = azurerm_resource_group.rg[each.value.resource_group_key].location
@@ -20,7 +20,7 @@ resource "azurerm_bastion_host" "host" {
 
 module bastion_host_diagnostics {
   source   = "./modules/diagnostics"
-  for_each = var.compute.bastion_hosts
+  for_each = local.compute.bastion_hosts
 
   resource_id       = azurerm_bastion_host.host[each.key].id
   resource_location = azurerm_resource_group.rg[each.value.resource_group_key].location

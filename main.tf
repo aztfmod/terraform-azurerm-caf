@@ -51,4 +51,24 @@ locals {
     regions            = var.global_settings.regions
   }
 
+  
+  compute = {
+    virtual_machines = try(var.compute.virtual_machines, {})
+    bastion_hosts    = try(var.compute.bastion_hosts, {})
+  }
+
+  vnets = merge(module.networking, try(var.networking.networking_objects, {}))
+
+  networking = {
+    network_security_group_definition                       = try(var.networking.network_security_group_definition, {})
+    public_ip_addresses                                     = try(var.networking.public_ip_addresses, {})
+    vnet_peerings                                           = try(var.networking.vnet_peerings, {})
+    route_tables                                            = try(var.networking.route_tables, {})
+    azurerm_routes                                          = try(var.networking.azurerm_routes, {})
+    azurerm_firewalls                                       = try(var.networking.azurerm_firewalls, {})
+    azurerm_firewall_network_rule_collection_definition     = try(var.networking.azurerm_firewall_network_rule_collection_definition, {})
+    azurerm_firewall_application_rule_collection_definition = try(var.networking.azurerm_firewall_application_rule_collection_definition, {})
+  }
+
+
 }
