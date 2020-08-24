@@ -8,7 +8,7 @@ resource "azurerm_firewall_network_rule_collection" "rule" {
   action              = var.azurerm_firewall_network_rule_collection_definition[each.key].action
 
   dynamic "rule" {
-    for_each = toset(var.azurerm_firewall_network_rule_collection_definition[each.key].ruleset)
+    for_each = var.azurerm_firewall_network_rule_collection_definition[each.key].ruleset
 
     content {
       name                  = rule.value.name

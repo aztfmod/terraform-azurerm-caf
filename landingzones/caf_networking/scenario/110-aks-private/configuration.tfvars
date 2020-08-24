@@ -178,8 +178,8 @@ azurerm_firewall_network_rule_collection_definition = {
     name     = "aks"
     action   = "Allow"
     priority = 150
-    ruleset = [
-      {
+    ruleset = {
+      ntp = {
         name = "ntp"
         source_addresses = [
           "*",
@@ -194,7 +194,7 @@ azurerm_firewall_network_rule_collection_definition = {
           "UDP",
         ]
       },
-      {
+      monitor = {
         name = "monitor"
         source_addresses = [
           "*",
@@ -209,7 +209,7 @@ azurerm_firewall_network_rule_collection_definition = {
           "TCP",
         ]
       },
-    ]
+    }
   }
 }
 
@@ -218,8 +218,8 @@ azurerm_firewall_application_rule_collection_definition = {
     name     = "aks"
     action   = "Allow"
     priority = 100
-    ruleset = [
-      {
+    ruleset = {
+      aks = {
         name = "aks"
         source_addresses = [
           "*",
@@ -228,7 +228,7 @@ azurerm_firewall_application_rule_collection_definition = {
           "AzureKubernetesService",
         ]
       },
-      {
+      ubuntu = {
         name = "ubuntu"
         source_addresses = [
           "*",
@@ -243,7 +243,7 @@ azurerm_firewall_application_rule_collection_definition = {
           }
         }
       },
-    ]
+    }
   }
 }
 
