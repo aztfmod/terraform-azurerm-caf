@@ -1,3 +1,4 @@
+level = "level2"
 
 resource_groups = {
   vnet_rg1 = {
@@ -127,7 +128,7 @@ azurerm_firewalls = {
       }
     }
 
-    azurerm_firewall_network_rule_collections = ["aks"]
+    azurerm_firewall_network_rule_collections     = ["aks"]
     azurerm_firewall_application_rule_collections = ["aks"]
   }
 }
@@ -172,7 +173,7 @@ azurerm_routes = {
   }
 }
 
-azurerm_firewall_network_rule_collections = {
+azurerm_firewall_network_rule_collection_definition = {
   aks = {
     name     = "aks"
     action   = "Allow"
@@ -212,7 +213,7 @@ azurerm_firewall_network_rule_collections = {
   }
 }
 
-azurerm_firewall_application_rule_collections = {
+azurerm_firewall_application_rule_collection_definition = {
   aks = {
     name     = "aks"
     action   = "Allow"
@@ -267,7 +268,7 @@ network_security_group_definition = {
       }
     }
   }
-  
+
   azure_bastion_nsg = {
 
     diagnostic_profiles = {

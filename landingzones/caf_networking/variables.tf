@@ -51,3 +51,9 @@ variable virtual_machines {
 variable managed_identities {
   default = {}
 }
+variable azurerm_firewall_network_rule_collection_definition {
+  default = {}
+}
+variable azurerm_firewall_application_rule_collection_definition {
+  default = {}
+}
