@@ -51,10 +51,11 @@ locals {
     regions            = var.global_settings.regions
   }
 
-  
+
   compute = {
-    virtual_machines = try(var.compute.virtual_machines, {})
-    bastion_hosts    = try(var.compute.bastion_hosts, {})
+    virtual_machines           = try(var.compute.virtual_machines, {})
+    bastion_hosts              = try(var.compute.bastion_hosts, {})
+    azure_container_registries = try(var.compute.azure_container_registries, {})
   }
 
   vnets = merge(module.networking, try(var.networking.networking_objects, {}))

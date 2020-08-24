@@ -51,19 +51,22 @@ vnets = {
     specialsubnets = {}
     subnets = {
       aks_nodepool_system = {
-        name            = "aks_nodepool_system"
-        cidr            = ["100.64.48.0/24"]
-        route_table_key = "default_to_firewall_rg1"
+        name                                           = "aks_nodepool_system"
+        cidr                                           = ["100.64.48.0/24"]
+        route_table_key                                = "default_to_firewall_rg1"
+        enforce_private_link_endpoint_network_policies = true
       }
       aks_nodepool_user1 = {
-        name            = "aks_nodepool_user1"
-        cidr            = ["100.64.49.0/24"]
-        route_table_key = "default_to_firewall_rg1"
+        name                                           = "aks_nodepool_user1"
+        cidr                                           = ["100.64.49.0/24"]
+        route_table_key                                = "default_to_firewall_rg1"
+        enforce_private_link_endpoint_network_policies = true
       }
       aks_nodepool_user2 = {
-        name            = "aks_nodepool_user2"
-        cidr            = ["100.64.50.0/24"]
-        route_table_key = "default_to_firewall_rg1"
+        name                                           = "aks_nodepool_user2"
+        cidr                                           = ["100.64.50.0/24"]
+        route_table_key                                = "default_to_firewall_rg1"
+        enforce_private_link_endpoint_network_policies = true
       }
     }
   }
@@ -425,4 +428,75 @@ diagnostics_definition = {
     }
   }
 
+  azure_container_registry = {
+    name = "operational_logs_and_metrics"
+    categories = {
+      log = [
+        # ["Category name",  "Diagnostics Enabled(true/false)", "Retention Enabled(true/false)", Retention_period] 
+        ["ContainerRegistryRepositoryEvents", true, false, 7],
+        ["ContainerRegistryLoginEvents", true, false, 7],
+      ]
+      metric = [
+        #["Category name",  "Diagnostics Enabled(true/false)", "Retention Enabled(true/false)", Retention_period]                 
+        ["AllMetrics", true, false, 7],
+      ]
+    }
+  }
+
+}
+
+azure_container_registries = {
+  acr1 = {
+    name                       = "acr-test"
+    resource_group_key         = "vnet_rg1"
+    sku                        = "Premium"
+    georeplication_region_keys = ["region2"]
+
+    private_endpoints = {
+      # Require enforce_private_link_endpoint_network_policies set to true on the subnet
+      spoke_aks_rg1-aks_nodepool_system = {
+        name               = "acr-test-private-link"
+        resource_group_key = "vnet_rg1"
+        vnet_key           = "spoke_aks_rg1"
+        subnet_key         = "aks_nodepool_system"
+        private_service_connection = {
+          name                 = "acr-test-private-link-psc"
+          is_manual_connection = false
+          subresource_names    = ["registry"]
+        }
+      }
+      spoke_aks_rg1-aks_nodepool_user1 = {
+        name               = "acr-test-private-link"
+        resource_group_key = "vnet_rg1"
+        vnet_key           = "spoke_aks_rg1"
+        subnet_key         = "aks_nodepool_user1"
+        private_service_connection = {
+          name                 = "acr-test-private-link-psc"
+          is_manual_connection = false
+          subresource_names    = ["registry"]
+        }
+      }
+      spoke_aks_rg1-aks_nodepool_user2 = {
+        name               = "acr-test-private-link"
+        resource_group_key = "vnet_rg1"
+        vnet_key           = "spoke_aks_rg1"
+        subnet_key         = "aks_nodepool_user2"
+        private_service_connection = {
+          name                 = "acr-test-private-link-psc"
+          is_manual_connection = false
+          subresource_names    = ["registry"]
+        }
+      }
+    }
+
+    # you can setup up to 5 key
+    diagnostic_profiles = {
+      central_logs_region1 = {
+        definition_key   = "azure_container_registry"
+        destination_type = "log_analytics"
+        destination_key  = "central_logs"
+      }
+    }
+
+  }
 }
