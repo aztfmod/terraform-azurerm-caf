@@ -143,6 +143,9 @@ storage_accounts = {
 
   }
 
+}
+
+diagnostic_storage_accounts = {
   # Stores diagnostic logging for region1
   diaglogs_region1 = {
     name                     = "diaglogsrg1"
