@@ -71,4 +71,22 @@ locals {
     storage_accounts         = data.terraform_remote_state.caf_foundations.outputs.diagnostics.storage_accounts
     log_analytics            = data.terraform_remote_state.caf_foundations.outputs.diagnostics.log_analytics
   }
+
+  vnets = merge(data.terraform_remote_state.caf_foundations.outputs.vnets, { "networking" = try(module.landingzones_networking.vnets, {}) })
+
+  tfstates = merge(
+    {
+      networking = {
+        storage_account_name = var.tfstate_storage_account_name
+        container_name       = var.tfstate_container_name
+        resource_group_name  = var.tfstate_resource_group_name
+        key                  = var.tfstate_key
+        level                = var.level
+        tenant_id            = data.azurerm_client_config.current.tenant_id
+        subscription_id      = data.azurerm_client_config.current.subscription_id
+      }
+    },
+    data.terraform_remote_state.caf_foundations.outputs.tfstates
+  )
+
 }

@@ -54,5 +54,25 @@ locals {
   # Passing through the higher level the base diagnostics settings
   global_settings = data.terraform_remote_state.launchpad.outputs.global_settings
   diagnostics     = data.terraform_remote_state.launchpad.outputs.diagnostics
+
+  vnets = {
+    launchpad = try(data.terraform_remote_state.launchpad.outputs.vnets, {})
+  }
+
+  tfstates = merge(
+    {
+      foundations = {
+        storage_account_name = var.tfstate_storage_account_name
+        container_name       = var.tfstate_container_name
+        resource_group_name  = var.tfstate_resource_group_name
+        key                  = var.tfstate_key
+        level                = var.level
+        tenant_id            = data.azurerm_client_config.current.tenant_id
+        subscription_id      = data.azurerm_client_config.current.subscription_id
+      }
+    },
+    data.terraform_remote_state.launchpad.outputs.tfstates
+  )
+
 }
 

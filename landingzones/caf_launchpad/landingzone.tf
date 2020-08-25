@@ -3,6 +3,7 @@ module "launchpad" {
 
   tags                     = local.tags
   global_settings          = local.global_settings
+  tfstates                 = local.tfstates
   logged_user_objectId     = var.logged_user_objectId
   user_type                = var.user_type
   log_analytics            = var.log_analytics
@@ -23,14 +24,14 @@ module "launchpad" {
     azurerm_routes                    = var.azurerm_routes
     route_tables                      = var.route_tables
   }
-  storage_accounts        = var.storage_accounts
+  storage_accounts            = var.storage_accounts
   diagnostic_storage_accounts = var.diagnostic_storage_accounts
-  azuread_apps            = var.azuread_apps
-  azuread_api_permissions = var.azuread_api_permissions
-  azuread_groups          = var.azuread_groups
-  azuread_app_roles       = var.azuread_app_roles
-  azuread_users           = var.azuread_users
-  managed_identities      = var.managed_identities
-  custom_role_definitions = var.custom_role_definitions
-  role_mapping            = var.role_mapping
+  azuread_apps                = var.azuread_apps
+  azuread_api_permissions     = var.azuread_api_permissions
+  azuread_groups              = var.azuread_groups
+  azuread_app_roles           = var.azuread_app_roles
+  azuread_users               = var.azuread_users
+  managed_identities          = var.managed_identities
+  custom_role_definitions     = var.custom_role_definitions
+  role_mapping                = var.role_mapping
 }

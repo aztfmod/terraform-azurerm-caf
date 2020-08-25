@@ -22,3 +22,13 @@ output resource_groups {
   value     = module.launchpad.resource_groups
   sensitive = true
 }
+
+output vnets {
+  value     = module.launchpad.vnets
+  sensitive = true
+}
+
+output tfstates {
+  value     = local.tfstates
+  sensitive = true
+}

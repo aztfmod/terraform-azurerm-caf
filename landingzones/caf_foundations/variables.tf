@@ -4,8 +4,14 @@ variable lowerlevel_container_name {}
 variable lowerlevel_key {}
 variable lowerlevel_resource_group_name {}
 
+variable tfstate_storage_account_name {}
+variable tfstate_container_name {}
+variable tfstate_key {}
+variable tfstate_resource_group_name {}
+
 variable rover_version {}
 variable level {
+  type    = string
   default = "level1"
 }
 variable tags {

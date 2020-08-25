@@ -1,3 +1,9 @@
+# Map of the current tfstate
+variable tfstate_storage_account_name {}
+variable tfstate_container_name {}
+variable tfstate_key {}
+variable tfstate_resource_group_name {}
+
 variable launchpad_mode {
   default = "launchpad_light"
   type    = string

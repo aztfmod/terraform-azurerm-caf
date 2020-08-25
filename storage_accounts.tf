@@ -10,7 +10,7 @@ module "storage_accounts" {
   location            = lookup(each.value, "region", null) == null ? azurerm_resource_group.rg[each.value.resource_group_key].location : local.global_settings.regions[each.value.region]
   vnets               = try(each.value.private_endpoints, {}) == {} ? null : local.vnets
   private_endpoints   = try(each.value.private_endpoints, {})
-  resource_groups     =  try(each.value.private_endpoints, {}) == {} ? null : azurerm_resource_group.rg
+  resource_groups     = try(each.value.private_endpoints, {}) == {} ? null : azurerm_resource_group.rg
 }
 
 module diagnostic_storage_accounts {

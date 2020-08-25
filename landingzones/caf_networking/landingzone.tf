@@ -4,6 +4,7 @@ module "landingzones_networking" {
   tags            = local.tags
   diagnostics     = local.diagnostics
   global_settings = local.global_settings
+  tfstates        = local.tfstates
 
   resource_groups = var.resource_groups
   networking = {

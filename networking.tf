@@ -1,5 +1,3 @@
-# 1 - virtual networks
-# 2
 
 
 output vnets {
@@ -7,6 +5,12 @@ output vnets {
   value      = module.networking
   sensitive  = true
 }
+
+#
+#
+# Virtual network
+#
+#
 
 module "networking" {
   source = "./modules/terraform-azurerm-caf-virtual-network"
@@ -25,6 +29,11 @@ module "networking" {
   diagnostics                       = local.diagnostics
 }
 
+#
+#
+# Public IP Addresses
+#
+#
 
 module public_ip_addresses {
   source = "./modules/networking/public_ip_addresses"
@@ -46,19 +55,61 @@ module public_ip_addresses {
   diagnostics             = local.diagnostics
 }
 
+#
+#
+# Vnet peering
+#  (Support vnet in remote tfstates)
+#
+
+data "terraform_remote_state" "peering_from" {
+  for_each   = {
+    for key, peering in local.networking.vnet_peerings : key => peering
+    if try(peering.from.tfstate_key, null) != null
+  }
+
+  backend = "azurerm"
+  config = {
+    storage_account_name  = var.tfstates[each.value.from.tfstate_key].storage_account_name
+    container_name        = var.tfstates[each.value.from.tfstate_key].container_name
+    resource_group_name   = var.tfstates[each.value.from.tfstate_key].resource_group_name
+    key                   = var.tfstates[each.value.from.tfstate_key].key
+  }
+}
+
+data "terraform_remote_state" "peering_to" {
+  for_each   = {
+    for key, peering in local.networking.vnet_peerings : key => peering
+    if try(peering.to.tfstate_key, null) != null
+  }
+
+  backend = "azurerm"
+  config = {
+    storage_account_name  = var.tfstates[each.value.to.tfstate_key].storage_account_name
+    container_name        = var.tfstates[each.value.to.tfstate_key].container_name
+    resource_group_name   = var.tfstates[each.value.to.tfstate_key].resource_group_name
+    key                   = var.tfstates[each.value.to.tfstate_key].key
+  }
+}
+
 resource "azurerm_virtual_network_peering" "peering" {
   depends_on = [module.networking]
   for_each   = local.networking.vnet_peerings
 
   name                         = each.value.name
-  virtual_network_name         = module.networking[each.value.from_key].name
-  resource_group_name          = module.networking[each.value.from_key].resource_group_name
-  remote_virtual_network_id    = module.networking[each.value.to_key].id
-  allow_virtual_network_access = lookup(each.value, "allow_virtual_network_access", true)
-  allow_forwarded_traffic      = lookup(each.value, "allow_forwarded_traffic", false)
-  allow_gateway_transit        = lookup(each.value, "allow_gateway_transit", false)
-  use_remote_gateways          = lookup(each.value, "use_remote_gateways", false)
+  virtual_network_name         = try(module.networking[each.value.from.vnet_key].name, data.terraform_remote_state.peering_from[each.key].outputs[each.value.from.output_key][each.value.from.vnet_key].name)
+  resource_group_name          = try(module.networking[each.value.from.vnet_key].resource_group_name, data.terraform_remote_state.peering_from[each.key].outputs[each.value.from.output_key][each.value.from.vnet_key].resource_group_name)
+  remote_virtual_network_id    = try(module.networking[each.value.to.vnet_key].id, data.terraform_remote_state.peering_to[each.key].outputs[each.value.to.output_key][each.value.to.vnet_key].id)
+  allow_virtual_network_access = try(each.value.allow_virtual_network_access, true)
+  allow_forwarded_traffic      = try(each.value.allow_forwarded_traffic, false)
+  allow_gateway_transit        = try(each.value.allow_gateway_transit, false)
+  use_remote_gateways          = try(each.value.use_remote_gateways, false)
 }
+
+#
+#
+# Route tables and routes
+#
+#
 
 module "route_tables" {
   source   = "./modules/networking/route_tables"

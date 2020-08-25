@@ -71,6 +71,18 @@ locals {
     max_length         = var.max_length
   }
 
+  tfstates = {
+    launchpad = {
+      storage_account_name = var.tfstate_storage_account_name
+      container_name       = var.tfstate_container_name
+      resource_group_name  = var.tfstate_resource_group_name
+      key                  = var.tfstate_key
+      level                = var.level
+      tenant_id            = data.azurerm_client_config.current.tenant_id
+      subscription_id      = data.azurerm_client_config.current.subscription_id
+    }
+  }
+
 }
 
 data "azurerm_client_config" "current" {}

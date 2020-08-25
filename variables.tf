@@ -11,6 +11,8 @@ variable global_settings {
   }
 }
 
+variable tfstates {}
+
 # To support default values
 variable convention {
   default = "cafrandom"
