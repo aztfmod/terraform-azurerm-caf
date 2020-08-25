@@ -792,9 +792,8 @@ diagnostics_destinations = {
 }
 
 custom_role_definitions = {
-  caf-launchpad-yroo = {
-    name        = "caf-launchpad-yroo"
-    convention  = "passthrough"
+  caf-launchpad = {
+    name        = "caf-launchpad"
     useprefix   = true
     description = "Provide addition permissions on top of built-in Contributor role to manage landing zones deployment"
     permissions = {
@@ -853,9 +852,8 @@ custom_role_definitions = {
 
   }
 
-  caf-launchpad-contributor-yroo = {
-    name        = "caf-launchpad-contributor-yroo"
-    convention  = "passthrough"
+  caf-launchpad-contributor = {
+    name        = "caf-launchpad-contributor"
     useprefix   = true
     description = "Provide addition permissions on top of built-in Contributor role to manage landing zones deployment"
     permissions = {
@@ -889,7 +887,7 @@ role_mapping = {
   custom_role_mapping = {
     subscription_keys = {
       logged_in_subscription = {
-        "caf-launchpad-contributor-yroo" = {
+        "caf-launchpad-contributor" = {
           azuread_group_keys = [
             "keyvault_level0_rw", "keyvault_level1_rw", "keyvault_level2_rw", "keyvault_level3_rw", "keyvault_level4_rw",
           ]
