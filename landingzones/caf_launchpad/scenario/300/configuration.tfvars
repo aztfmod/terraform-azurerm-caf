@@ -141,8 +141,24 @@ storage_accounts = {
       }
     }
 
-  }
+    private_endpoints = {
+      # Require enforce_private_link_endpoint_network_policies set to true on the subnet
+      private-link-level4 = {
+        name               = "private-endpoint-stg-level4"
+        resource_group_key = "networking"
+        vnet_key           = "devops_region1"
+        subnet_key         = "release_agent_level4"
+        private_service_connection = {
+          name                 = "private-endpoint-level4"
+          is_manual_connection = false
+          subresource_names    = ["Blob"]
+        }
+      }
+    }
 
+}
+
+diagnostic_storage_accounts = {
   # Stores diagnostic logging for region1
   diaglogs_region1 = {
     name                     = "diaglogsrg1"
@@ -1225,6 +1241,7 @@ vnets = {
         cidr              = ["10.100.100.72/29"]
         service_endpoints = ["Microsoft.KeyVault"]
         route_table_key   = "default_no_internet"
+        enforce_private_link_endpoint_network_policies = true
       }
     }
 

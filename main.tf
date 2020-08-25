@@ -34,7 +34,7 @@ locals {
   diagnostics = {
     diagnostics_definition   = lookup(var.diagnostics, "diagnostics_definition", var.diagnostics_definition)
     diagnostics_destinations = lookup(var.diagnostics, "diagnostics_destinations", var.diagnostics_destinations)
-    storage_accounts         = lookup(var.diagnostics, "storage_accounts", module.storage_accounts)
+    storage_accounts         = lookup(var.diagnostics, "storage_accounts", module.diagnostic_storage_accounts)
     log_analytics            = lookup(var.diagnostics, "log_analytics", module.log_analytics)
   }
 
@@ -51,10 +51,11 @@ locals {
     regions            = var.global_settings.regions
   }
 
-  
+
   compute = {
-    virtual_machines = try(var.compute.virtual_machines, {})
-    bastion_hosts    = try(var.compute.bastion_hosts, {})
+    virtual_machines           = try(var.compute.virtual_machines, {})
+    bastion_hosts              = try(var.compute.bastion_hosts, {})
+    azure_container_registries = try(var.compute.azure_container_registries, {})
   }
 
   vnets = merge(module.networking, try(var.networking.networking_objects, {}))

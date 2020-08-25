@@ -57,3 +57,9 @@ variable azurerm_firewall_network_rule_collection_definition {
 variable azurerm_firewall_application_rule_collection_definition {
   default = {}
 }
+variable azure_container_registries {
+  default = {}
+}
+variable bastion_hosts {
+  default = {}
+}

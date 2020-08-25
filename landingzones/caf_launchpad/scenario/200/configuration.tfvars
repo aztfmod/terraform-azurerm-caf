@@ -143,6 +143,9 @@ storage_accounts = {
 
   }
 
+}
+
+diagnostic_storage_accounts = {
   # Stores diagnostic logging for region1
   diaglogs_region1 = {
     name                     = "diaglogsrg1"
@@ -682,7 +685,21 @@ diagnostics_definition = {
         ["AllMetrics", false, false, 7],
       ]
     }
+  }
 
+  azure_container_registry = {
+    name = "operational_logs_and_metrics"
+    categories = {
+      log = [
+        # ["Category name",  "Diagnostics Enabled(true/false)", "Retention Enabled(true/false)", Retention_period] 
+        ["ContainerRegistryRepositoryEvents", true, false, 7],
+        ["ContainerRegistryLoginEvents", true, false, 7],
+      ]
+      metric = [
+        #["Category name",  "Diagnostics Enabled(true/false)", "Retention Enabled(true/false)", Retention_period]                 
+        ["AllMetrics", true, false, 7],
+      ]
+    }
   }
 
   compliance_all = {

@@ -61,6 +61,9 @@ variable tf_name {
 variable resource_groups {}
 
 variable storage_accounts {}
+variable diagnostic_storage_accounts {
+  default = {}
+}
 
 variable keyvaults {}
 variable keyvault_access_policies {}

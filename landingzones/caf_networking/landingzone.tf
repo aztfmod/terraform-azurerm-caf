@@ -19,8 +19,9 @@ module "landingzones_networking" {
     azurerm_routes                                          = var.azurerm_routes
   }
   compute = {
-    virtual_machines = var.virtual_machines
-    bastion_hosts    = {}
+    virtual_machines           = var.virtual_machines
+    bastion_hosts              = var.bastion_hosts
+    azure_container_registries = var.azure_container_registries
   }
   storage_accounts   = var.storage_accounts
   managed_identities = var.managed_identities

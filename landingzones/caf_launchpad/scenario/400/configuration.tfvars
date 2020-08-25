@@ -142,6 +142,9 @@ storage_accounts = {
     }
   }
 
+}
+
+diagnostic_storage_accounts = {
   # Stores diagnostic logging for region1
   diaglogs_region1 = {
     name                     = "diaglogsrg1"
@@ -202,7 +205,6 @@ storage_accounts = {
     access_tier              = "Cool"
   }
 }
-
 
 keyvaults = {
   # Do not rename the key "launchpad" to be able to upgrade to the standard launchpad

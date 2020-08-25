@@ -24,6 +24,7 @@ module "launchpad" {
     route_tables                      = var.route_tables
   }
   storage_accounts        = var.storage_accounts
+  diagnostic_storage_accounts = var.diagnostic_storage_accounts
   azuread_apps            = var.azuread_apps
   azuread_api_permissions = var.azuread_api_permissions
   azuread_groups          = var.azuread_groups
