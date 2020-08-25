@@ -21,7 +21,7 @@ resource_groups = {
 app_service_environments = {
   ase1 = {
     resource_group_key = "ase_region1"
-    name               = "1"
+    name               = "ase01"
     kind               = "ASEV2"
     zone               = "1"
 
