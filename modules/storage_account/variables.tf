@@ -5,3 +5,9 @@ variable location {}
 variable vnets {
   default = {}
 }
+variable private_endpoints {
+  default = {}
+}
+variable resource_groups {
+  default = {}
+}
