@@ -39,6 +39,9 @@
             "metadata": {
                 "description": "Number of instances in the front-end pool.  Minimum of two."
             }
+        },
+        "resourceTags": {
+            "type": "object"
         }
     },
     "resources": [
@@ -62,6 +65,7 @@
             "kind": "[parameters('kind')]",
             "location": "[parameters('location')]",
             "zones": "[if(empty(parameters('zone')),json('null'),array(parameters('zone')))]",
+            "tags": "[parameters('resourceTags')]",
             "properties": {
                 "name": "[parameters('aseName')]",
                 "location": "[parameters('location')]",

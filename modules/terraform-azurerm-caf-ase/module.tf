@@ -12,18 +12,7 @@ resource "azurerm_template_deployment" "ase" {
 
   template_body = file(local.arm_filename)
 
-  parameters = {
-    "aseName"                   = azurecaf_naming_convention.ase.result
-    "aseResourceGroupName"      = var.resource_group_name
-    "location"                  = var.location
-    "kind"                      = var.kind
-    "zone"                      = var.zone
-    "subnet_id"                 = var.subnet_id
-    "subnet_name"               = var.subnet_name
-    "internalLoadBalancingMode" = var.internalLoadBalancingMode
-    "frontEndSize"              = var.front_end_size
-    "frontEndCount"             = var.front_end_count
-  }
+  parameters_body = jsonencode(local.parameters_body)
 
   deployment_mode = "Incremental"
 
