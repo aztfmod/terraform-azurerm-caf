@@ -1,8 +1,16 @@
 # Map of the current tfstate
-variable tfstate_storage_account_name {}
-variable tfstate_container_name {}
-variable tfstate_key {}
-variable tfstate_resource_group_name {}
+variable tfstate_storage_account_name {
+  default = ""
+}
+variable tfstate_container_name {
+  default = ""
+}
+variable tfstate_key {
+  default = ""
+}
+variable tfstate_resource_group_name {
+  default = ""
+}
 
 variable landingzone_name {
   description = "The landing zone name is used to reference the tfstate in configuration files. Therefore while set it is recommended not to change"
