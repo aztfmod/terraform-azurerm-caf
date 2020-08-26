@@ -26,7 +26,6 @@ variable max_length {
   default = "40"
 }
 
-
 variable logged_user_objectId {
   default = null
 }

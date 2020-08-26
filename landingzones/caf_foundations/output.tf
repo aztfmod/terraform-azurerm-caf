@@ -15,5 +15,5 @@ output vnets {
 
 output tfstates {
   value     = local.tfstates
-  sensitive = true
+  sensitive = false
 }

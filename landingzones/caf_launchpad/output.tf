@@ -24,9 +24,7 @@ output resource_groups {
 }
 
 output vnets {
-  value     = {
-    launchpad = module.launchpad.vnets
-  }
+  value     = map(var.landingzone_name, module.launchpad.vnets)
   sensitive = true
 }
 

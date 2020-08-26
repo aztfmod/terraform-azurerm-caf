@@ -9,6 +9,11 @@ variable tfstate_container_name {}
 variable tfstate_key {}
 variable tfstate_resource_group_name {}
 
+variable landingzone_name {
+  description = "The landing zone name is used to reference the tfstate in configuration files. Therefore while set it is recommended not to change"
+  default     = "networking"
+}
+
 variable global_settings {
   default = {}
 }

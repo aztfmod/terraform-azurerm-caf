@@ -91,7 +91,7 @@ vnet_peerings = {
     allow_gateway_transit        = false
     use_remote_gateways          = false
   }
-  
+
   # Inbound peer with the devops vnet
   launchpad_devops-TO-hub_rg1 = {
     from = {
@@ -109,7 +109,7 @@ vnet_peerings = {
     allow_gateway_transit        = false
     use_remote_gateways          = false
   }
-    
+
   hub_rg1_TO_spoke_aks_rg1 = {
     from = {
       vnet_key = "hub_rg1"
@@ -117,7 +117,7 @@ vnet_peerings = {
     to = {
       vnet_key = "spoke_aks_rg1"
     }
-    name                         = "hub_rg1_TO_spoke_aks_rg1"
+    name = "hub_rg1_TO_spoke_aks_rg1"
   }
 
   spoke_aks_rg1_TO_hub_rg1 = {
@@ -127,7 +127,7 @@ vnet_peerings = {
     to = {
       vnet_key = "hub_rg1"
     }
-    name                         = "spoke_aks_rg1_TO_hub_rg1"
+    name = "spoke_aks_rg1_TO_hub_rg1"
   }
 }
 

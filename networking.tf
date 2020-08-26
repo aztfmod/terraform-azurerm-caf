@@ -62,38 +62,38 @@ module public_ip_addresses {
 #
 
 data "terraform_remote_state" "peering_from" {
-  for_each   = {
+  for_each = {
     for key, peering in local.networking.vnet_peerings : key => peering
     if try(peering.from.tfstate_key, null) != null
   }
 
   backend = "azurerm"
   config = {
-    storage_account_name  = var.tfstates[each.value.from.tfstate_key].storage_account_name
-    container_name        = var.tfstates[each.value.from.tfstate_key].container_name
-    resource_group_name   = var.tfstates[each.value.from.tfstate_key].resource_group_name
-    key                   = var.tfstates[each.value.from.tfstate_key].key
-    use_msi               = var.use_msi
-    subscription_id       = var.use_msi ? var.tfstates[each.value.from.tfstate_key].subscription_id : null
-    tenant_id             = var.use_msi ? var.tfstates[each.value.from.tfstate_key].tenant_id : null
+    storage_account_name = var.tfstates[each.value.from.tfstate_key].storage_account_name
+    container_name       = var.tfstates[each.value.from.tfstate_key].container_name
+    resource_group_name  = var.tfstates[each.value.from.tfstate_key].resource_group_name
+    key                  = var.tfstates[each.value.from.tfstate_key].key
+    use_msi              = var.use_msi
+    subscription_id      = var.use_msi ? var.tfstates[each.value.from.tfstate_key].subscription_id : null
+    tenant_id            = var.use_msi ? var.tfstates[each.value.from.tfstate_key].tenant_id : null
   }
 }
 
 data "terraform_remote_state" "peering_to" {
-  for_each   = {
+  for_each = {
     for key, peering in local.networking.vnet_peerings : key => peering
     if try(peering.to.tfstate_key, null) != null
   }
 
   backend = "azurerm"
   config = {
-    storage_account_name  = var.tfstates[each.value.to.tfstate_key].storage_account_name
-    container_name        = var.tfstates[each.value.to.tfstate_key].container_name
-    resource_group_name   = var.tfstates[each.value.to.tfstate_key].resource_group_name
-    key                   = var.tfstates[each.value.to.tfstate_key].key
-    use_msi               = var.use_msi
-    subscription_id       = var.use_msi ? var.tfstates[each.value.to.tfstate_key].subscription_id : null
-    tenant_id             = var.use_msi ? var.tfstates[each.value.to.tfstate_key].tenant_id : null
+    storage_account_name = var.tfstates[each.value.to.tfstate_key].storage_account_name
+    container_name       = var.tfstates[each.value.to.tfstate_key].container_name
+    resource_group_name  = var.tfstates[each.value.to.tfstate_key].resource_group_name
+    key                  = var.tfstates[each.value.to.tfstate_key].key
+    use_msi              = var.use_msi
+    subscription_id      = var.use_msi ? var.tfstates[each.value.to.tfstate_key].subscription_id : null
+    tenant_id            = var.use_msi ? var.tfstates[each.value.to.tfstate_key].tenant_id : null
   }
 }
 
