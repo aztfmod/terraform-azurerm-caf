@@ -74,7 +74,8 @@ vnets = {
 }
 
 vnet_peerings = {
-  hub_rg1-TO-launchpad_gitops = {
+  # Establish a peering with the devops vnet
+  hub_rg1-TO-launchpad_devops = {
     from = {
       vnet_key = "hub_rg1"
     }
@@ -89,8 +90,9 @@ vnet_peerings = {
     allow_gateway_transit        = false
     use_remote_gateways          = false
   }
-   
-  launchpad_gitops-TO-hub_rg1 = {
+  
+  # Inbound peer with the devops vnet
+  launchpad_devops-TO-hub_rg1 = {
     from = {
       tfstate_key = "launchpad"
       output_key  = "vnets"
@@ -99,7 +101,7 @@ vnet_peerings = {
     to = {
       vnet_key = "hub_rg1"
     }
-    name                         = "launchpad_gitops-TO-hub_rg1"
+    name                         = "launchpad_devops-TO-hub_rg1"
     allow_virtual_network_access = true
     allow_forwarded_traffic      = false
     allow_gateway_transit        = false
@@ -114,10 +116,6 @@ vnet_peerings = {
       vnet_key = "spoke_aks_rg1"
     }
     name                         = "hub_rg1_TO_spoke_aks_rg1"
-    allow_virtual_network_access = true
-    allow_forwarded_traffic      = false
-    allow_gateway_transit        = false
-    use_remote_gateways          = false
   }
 
   spoke_aks_rg1_TO_hub_rg1 = {
@@ -128,10 +126,6 @@ vnet_peerings = {
       vnet_key = "hub_rg1"
     }
     name                         = "spoke_aks_rg1_TO_hub_rg1"
-    allow_virtual_network_access = true
-    allow_forwarded_traffic      = false
-    allow_gateway_transit        = false
-    use_remote_gateways          = false
   }
 }
 
