@@ -71,5 +71,9 @@ locals {
     azurerm_firewall_application_rule_collection_definition = try(var.networking.azurerm_firewall_application_rule_collection_definition, {})
   }
 
+  database = {
+    azurerm_sql_servers  = try(var.database.azurerm_sql_servers, {})
+    azurerm_redis_caches = try(var.database.azurerm_redis_caches, {})
+  }
 
 }

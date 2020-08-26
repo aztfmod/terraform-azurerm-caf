@@ -38,3 +38,6 @@ variable network_security_group_definition {
 variable vnets {
   default = null
 }
+variable azurerm_redis_caches {
+  default = {}
+}

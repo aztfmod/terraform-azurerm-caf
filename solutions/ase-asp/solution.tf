@@ -14,6 +14,9 @@ module "ase" {
     network_security_group_definition = var.network_security_group_definition
     firewalls                         = {}
   }
+  databases = {
+    azure_redis_caches = var.azure_redis_caches
+  }
   # logged_user_objectId              = var.logged_user_objectId
   # user_type                         = var.user_type
   # log_analytics                     = var.log_analytics

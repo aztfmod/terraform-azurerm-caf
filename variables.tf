@@ -109,6 +109,11 @@ variable azurerm_application_insights {
   default = {}
 }
 
+## Databases variables
+variable database {
+  default = {}
+}
+
 ## Networking variables
 variable networking {
   default = {
