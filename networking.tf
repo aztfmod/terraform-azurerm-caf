@@ -73,6 +73,9 @@ data "terraform_remote_state" "peering_from" {
     container_name        = var.tfstates[each.value.from.tfstate_key].container_name
     resource_group_name   = var.tfstates[each.value.from.tfstate_key].resource_group_name
     key                   = var.tfstates[each.value.from.tfstate_key].key
+    use_msi               = var.use_msi
+    subscription_id       = var.use_msi ? var.tfstates[each.value.from.tfstate_key].subscription_id : null
+    tenant_id             = var.use_msi ? var.tfstates[each.value.from.tfstate_key].tenant_id : null
   }
 }
 
@@ -88,6 +91,9 @@ data "terraform_remote_state" "peering_to" {
     container_name        = var.tfstates[each.value.to.tfstate_key].container_name
     resource_group_name   = var.tfstates[each.value.to.tfstate_key].resource_group_name
     key                   = var.tfstates[each.value.to.tfstate_key].key
+    use_msi               = var.use_msi
+    subscription_id       = var.use_msi ? var.tfstates[each.value.to.tfstate_key].subscription_id : null
+    tenant_id             = var.use_msi ? var.tfstates[each.value.to.tfstate_key].tenant_id : null
   }
 }
 
@@ -96,9 +102,9 @@ resource "azurerm_virtual_network_peering" "peering" {
   for_each   = local.networking.vnet_peerings
 
   name                         = each.value.name
-  virtual_network_name         = try(module.networking[each.value.from.vnet_key].name, data.terraform_remote_state.peering_from[each.key].outputs[each.value.from.output_key][each.value.from.vnet_key].name)
-  resource_group_name          = try(module.networking[each.value.from.vnet_key].resource_group_name, data.terraform_remote_state.peering_from[each.key].outputs[each.value.from.output_key][each.value.from.vnet_key].resource_group_name)
-  remote_virtual_network_id    = try(module.networking[each.value.to.vnet_key].id, data.terraform_remote_state.peering_to[each.key].outputs[each.value.to.output_key][each.value.to.vnet_key].id)
+  virtual_network_name         = try(module.networking[each.value.from.vnet_key].name, data.terraform_remote_state.peering_from[each.key].outputs[each.value.from.output_key][each.value.from.lz_key][each.value.from.vnet_key].name)
+  resource_group_name          = try(module.networking[each.value.from.vnet_key].resource_group_name, data.terraform_remote_state.peering_from[each.key].outputs[each.value.from.output_key][each.value.from.lz_key][each.value.from.vnet_key].resource_group_name)
+  remote_virtual_network_id    = try(module.networking[each.value.to.vnet_key].id, data.terraform_remote_state.peering_to[each.key].outputs[each.value.to.output_key][each.value.to.lz_key][each.value.to.vnet_key].id)
   allow_virtual_network_access = try(each.value.allow_virtual_network_access, true)
   allow_forwarded_traffic      = try(each.value.allow_forwarded_traffic, false)
   allow_gateway_transit        = try(each.value.allow_gateway_transit, false)

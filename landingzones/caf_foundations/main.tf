@@ -55,9 +55,7 @@ locals {
   global_settings = data.terraform_remote_state.launchpad.outputs.global_settings
   diagnostics     = data.terraform_remote_state.launchpad.outputs.diagnostics
 
-  vnets = {
-    launchpad = try(data.terraform_remote_state.launchpad.outputs.vnets, {})
-  }
+  vnets = try(data.terraform_remote_state.launchpad.outputs.vnets, {})
 
   tfstates = merge(
     {

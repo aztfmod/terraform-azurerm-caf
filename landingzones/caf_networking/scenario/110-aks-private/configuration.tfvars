@@ -80,7 +80,8 @@ vnet_peerings = {
       vnet_key = "hub_rg1"
     }
     to = {
-      tfstate_key = "launchpad"
+      tfstate_key = "foundations"
+      lz_key      = "launchpad"
       output_key  = "vnets"
       vnet_key    = "devops_region1"
     }
@@ -94,7 +95,8 @@ vnet_peerings = {
   # Inbound peer with the devops vnet
   launchpad_devops-TO-hub_rg1 = {
     from = {
-      tfstate_key = "launchpad"
+      tfstate_key = "foundations"
+      lz_key      = "launchpad"
       output_key  = "vnets"
       vnet_key    = "devops_region1"
     }

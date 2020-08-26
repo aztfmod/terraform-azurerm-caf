@@ -24,7 +24,9 @@ output resource_groups {
 }
 
 output vnets {
-  value     = module.launchpad.vnets
+  value     = {
+    launchpad = module.launchpad.vnets
+  }
   sensitive = true
 }
 

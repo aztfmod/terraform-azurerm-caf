@@ -31,6 +31,10 @@ variable logged_user_objectId {
   default = null
 }
 
+variable use_msi {
+  default = false
+}
+
 variable tags {
   type    = map
   default = null
