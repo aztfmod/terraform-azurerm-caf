@@ -1,7 +1,6 @@
 
 module "storage_accounts" {
-  source = "./modules/storage_account"
-
+  source   = "./modules/storage_account"
   for_each = var.storage_accounts
 
   global_settings     = local.global_settings
@@ -11,11 +10,12 @@ module "storage_accounts" {
   vnets               = try(each.value.private_endpoints, {}) == {} ? null : local.vnets
   private_endpoints   = try(each.value.private_endpoints, {})
   resource_groups     = try(each.value.private_endpoints, {}) == {} ? null : azurerm_resource_group.rg
+  tfstates            = var.tfstates
+  use_msi             = var.use_msi
 }
 
 module diagnostic_storage_accounts {
-  source = "./modules/storage_account"
-
+  source   = "./modules/storage_account"
   for_each = var.diagnostic_storage_accounts
 
   global_settings     = local.global_settings

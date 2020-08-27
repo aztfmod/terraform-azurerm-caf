@@ -6,17 +6,17 @@ resource_groups = {
 }
 
 database = {
-    azurerm_redis_caches = {
-        r1 = {
-            redis = {
-                name        = "redis-std"
-                capacity    = 2
-                family      = "C"
-                sku_name    = "Standard"
-            }
-            tags = {
-                test = "AK"
-            }
-        }
+  azurerm_redis_caches = {
+    r1 = {
+      redis = {
+        name     = "redis-std"
+        capacity = 2
+        family   = "C"
+        sku_name = "Standard"
+      }
+      tags = {
+        test = "AK"
+      }
     }
+  }
 }

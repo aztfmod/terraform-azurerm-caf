@@ -7,6 +7,10 @@ variable access_policies {
   }
 }
 
-variable logged_user_objectId {}
+variable logged_user_objectId {
+  default = ""
+}
+variable logged_aad_app_objectId {
+  default = ""
+}
 variable azuread_groups {}
-# variable azuread_apps {}

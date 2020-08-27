@@ -4,8 +4,12 @@ data "azuread_users" "users" {
 
 locals {
   member_ids = toset(
-    concat(data.azuread_users.users.object_ids)
+    concat(
+      data.azuread_users.users.object_ids,
+      try(var.azuread_groups.members.object_ids, [])
+    )
   )
+
 }
 
 resource "azuread_group_member" "member" {

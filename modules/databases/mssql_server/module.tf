@@ -57,9 +57,9 @@ resource "random_password" "sql_admin" {
 resource "azurerm_key_vault_secret" "sql_admin_password" {
   count = try(var.settings.administrator_login_password, null) == null ? 1 : 0
 
-  name            = format("%s-password", azurecaf_naming_convention.mssql.result)
-  value           = random_password.sql_admin.0.result
-  key_vault_id    = var.keyvault_id
+  name         = format("%s-password", azurecaf_naming_convention.mssql.result)
+  value        = random_password.sql_admin.0.result
+  key_vault_id = var.keyvault_id
 
   lifecycle {
     ignore_changes = [
@@ -71,17 +71,17 @@ resource "azurerm_key_vault_secret" "sql_admin_password" {
 resource "azurerm_key_vault_secret" "sql_admin" {
   count = try(var.settings.administrator_login_password, null) == null ? 1 : 0
 
-  name            = format("%s-username", azurecaf_naming_convention.mssql.result)
-  value           = var.settings.administrator_login
-  key_vault_id    = var.keyvault_id
+  name         = format("%s-username", azurecaf_naming_convention.mssql.result)
+  value        = var.settings.administrator_login
+  key_vault_id = var.keyvault_id
 }
 
 resource "azurerm_key_vault_secret" "sql_fqdn" {
   count = try(var.settings.administrator_login_password, null) == null ? 1 : 0
 
-  name            = format("%s-fqdn", azurecaf_naming_convention.mssql.result)
-  value           = azurerm_mssql_server.mssql.fully_qualified_domain_name
-  key_vault_id    = var.keyvault_id
+  name         = format("%s-fqdn", azurecaf_naming_convention.mssql.result)
+  value        = azurerm_mssql_server.mssql.fully_qualified_domain_name
+  key_vault_id = var.keyvault_id
 }
 
 data "azurerm_storage_account" "mssql_auditing" {
@@ -143,21 +143,3 @@ resource "azurerm_mssql_server_vulnerability_assessment" "mssql" {
   }
 }
 
-# #
-# # Private endpoint
-# #
-
-# module private_endpoint {
-#   source   = "./modules/networking/private_endpoint"
-#   for_each = {
-#     for key, sql_server in local.database.mssql_servers : key => sql_server
-#     if try(sql_server.private_endpoints, null) != null
-#   }
-
-#   resource_id         = azurerm_mssql_server.mssql[each.key].id
-#   name                = format("%s-to-%s-%s", var.settings.private_endpoints.name, var.settings.private_endpoints.vnet_key, var.settings.private_endpoints.subnet_key)
-#   location            = var.resource_groups[var.settings.private_endpoints.resource_group_key].location
-#   resource_group_name = var.resource_groups[var.settings.private_endpoints.resource_group_key].name
-#   subnet_id           = var.vnets[var.settings.vnet_key].subnets[var.settings.subnet_key].id
-#   settings            = var.settings
-# }

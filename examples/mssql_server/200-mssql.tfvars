@@ -4,12 +4,11 @@
 # - caf_launchpad scenario 200+
 #
 # Commands
-# - deploy: rover -lz /tf/caf/examples/ -var-file /tf/caf/examples/mssql_server/mssql.tfvars -a apply
+# - deploy: rover -lz /tf/caf/examples/ -var-file /tf/caf/examples/mssql_server/200-mssql.tfvars -tfstate mssql_server.tfstate -a apply
 # - destroy: 
-#   rover -lz /tf/caf/examples/ -var-file /tf/caf/examples/mssql_server/mssql.tfvars -a destroy --impersonate
-#   rover login to switch back the context to your user
+#   rover -lz /tf/caf/examples/ -var-file /tf/caf/examples/mssql_server/200-mssql.tfvars -tfstate mssql_server.tfstate -a destroy
 #
-# The configuration deploys:
+# The configuration deploys one region:
 # - Two resources groups to store SQL servers and Security services
 # - One Keyvault to store the SQL Server admin password in order to support password rotation
 # - One Keyvault access policy to grant permission to the logged in user
@@ -17,9 +16,18 @@
 # - One Azure AD groups to administer the server
 #
 
+global_settings = {
+  convention     = "cafclassic"
+  default_region = "region1"
+  regions = {
+    region1 = "southeastasia"
+  }
+}
+
 resource_groups = {
   sql_region1 = {
-    name = "sql-rg1"
+    name   = "sql-rg1"
+    region = "region1"
   }
   security_region1 = {
     name = "sql-security-rg1"
@@ -28,16 +36,18 @@ resource_groups = {
 
 
 storage_accounts = {
-  auditing = {
-    name                     = "auditing"
+  auditing-rg1 = {
+    name                     = "auditingrg1"
     resource_group_key       = "sql_region1"
+    region                   = "region1"
     account_kind             = "BlobStorage"
     account_tier             = "Standard"
     account_replication_type = "RAGRS"
   }
-  security = {
-    name                     = "security"
+  security-rg1 = {
+    name                     = "securityrg1"
     resource_group_key       = "security_region1"
+    region                   = "region1"
     account_kind             = "BlobStorage"
     account_tier             = "Standard"
     account_replication_type = "RAGRS"
@@ -45,8 +55,8 @@ storage_accounts = {
 }
 
 keyvaults = {
-  sql = {
-    name               = "sql"
+  sql-rg1 = {
+    name               = "sqlrg1"
     resource_group_key = "security_region1"
     sku_name           = "standard"
   }
@@ -54,27 +64,31 @@ keyvaults = {
 
 keyvault_access_policies = {
   # A maximum of 16 access policies per keyvault
-  sql = {
-    bootstrap_user = {
-      object_id = "logged_in_user"
-      secret_permissions      = ["Set", "Get", "List", "Delete"]
+  sql-rg1 = {
+    logged_in_user = {
+      secret_permissions = ["Set", "Get", "List", "Delete", "Purge"]
+    }
+    logged_in_aad_app = {
+      secret_permissions = ["Set", "Get", "List", "Delete", "Purge"]
     }
   }
 }
 
 mssql_servers = {
-  sales = {
-    name                = "sales-rg1"
-    resource_group_key  = "sql_region1"
-    version             = "12.0"
-    administrator_login = "sqlsalesadmin"
-    keyvault_key        = "sql"
-    connection_policy   = "Default"
-    system_msi          = true
+  sales-rg1 = {
+    name                          = "sales-rg1"
+    region                        = "region1"
+    resource_group_key            = "sql_region1"
+    version                       = "12.0"
+    administrator_login           = "sqlsalesadmin"
+    keyvault_key                  = "sql-rg1"
+    connection_policy             = "Default"
+    system_msi                    = true
+    public_network_access_enabled = false
 
     extended_auditing_policy = {
       storage_account = {
-        key = "auditing"
+        key = "auditing-rg1"
       }
       retention_in_days = 7
     }
@@ -89,7 +103,7 @@ mssql_servers = {
 
     # Optional
     security_alert_policy = {
-      enabled            = true
+      enabled = true
       disabled_alerts = [
         # "Sql_Injection",
         # "Sql_Injection_Vulnerability",
@@ -104,7 +118,7 @@ mssql_servers = {
       # Set either the resource_id or the key of the storage account
       storage_account = {
         # resource_id = ""
-        key = "auditing"
+        key = "security-rg1"
       }
 
       # Optional
@@ -112,37 +126,16 @@ mssql_servers = {
         enabled = true
         storage_account = {
           # resource_id = ""
-          key            = "auditing"
+          key            = "security-rg1"
           container_path = "vascans"
         }
         email_subscription_admins = false
         email_addresses           = []
       }
-
-      # Optional
-      private_endpoints = {
-        # Require enforce_private_link_endpoint_network_policies set to true on the subnet
-        private-link-level4 = {
-          name               = "private-endpoint-stg-level4"
-          remote_tfstate = {
-            tfstate_key        = "foundations"
-            lz_key             = "launchpad"
-            output_key         = "vnets"
-            vnet_key           = "devops_region1"
-            subnet_key         = "release_agent_level4"
-          }
-          resource_group_key = "sql_region1"
-          
-          private_service_connection = {
-            name                 = "private-endpoint-level4"
-            is_manual_connection = false
-            subresource_names    = ["sqlServer"]
-          }
-        }
-      }
     }
 
   }
+
 }
 
 azuread_groups = {
@@ -150,10 +143,12 @@ azuread_groups = {
     name        = "sql-sales-admins"
     description = "Administrators of the sales SQL server."
     members = {
+      logged_in_user       = true
+      logged_in_aad_app    = true
       user_principal_names = []
-      object_ids           = ["logged_in_user"]
-      group_keys           = []
-
+      object_ids = [
+      ]
+      group_keys             = []
       service_principal_keys = []
     }
     owners = {

@@ -10,10 +10,10 @@ output diagnostics {
 
 output vnets {
   value     = local.vnets
-  sensitive = false
+  sensitive = true
 }
 
 output tfstates {
   value     = local.tfstates
-  sensitive = false
+  sensitive = true
 }

@@ -14,8 +14,7 @@ module azuread_applications {
 
 
 module azuread_app_roles {
-  source = "./modules/azuread/roles"
-
+  source   = "./modules/azuread/roles"
   for_each = var.azuread_app_roles
 
   object_id         = module.azuread_applications.aad_apps[each.key].azuread_service_principal.object_id
@@ -27,8 +26,7 @@ module azuread_app_roles {
 #
 
 module azuread_groups {
-  source = "./modules/azuread/groups"
-
+  source   = "./modules/azuread/groups"
   for_each = var.azuread_groups
 
   global_settings = local.global_settings

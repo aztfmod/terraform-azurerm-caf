@@ -73,11 +73,11 @@ locals {
   }
 
   vnets = merge(
-      data.terraform_remote_state.caf_foundations.outputs.vnets, 
-      map( 
+    data.terraform_remote_state.caf_foundations.outputs.vnets,
+    map(
       "networking", try(module.landingzones_networking.vnets, {})
-      )
     )
+  )
 
   tfstates = merge(
     map(var.landingzone_name,

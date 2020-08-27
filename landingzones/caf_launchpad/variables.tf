@@ -12,9 +12,19 @@ variable tfstate_resource_group_name {
   default = ""
 }
 
+variable workspace {
+  description = "The workspace is set by the rover at runtime. Do not change the walue"
+}
+
 variable landingzone_name {
   description = "The landing zone name is used to reference the tfstate in configuration files. Therefore while set it is recommended not to change"
   default     = "launchpad"
+}
+
+variable scenarios {
+  default = {
+    launchpad = 0
+  }
 }
 
 variable launchpad_mode {
@@ -136,7 +146,12 @@ variable rover_version {}
 
 variable user_type {}
 
-variable logged_user_objectId {}
+variable logged_user_objectId {
+  default = ""
+}
+variable logged_aad_app_objectId {
+  default = ""
+}
 
 variable aad_users {
   default = {}

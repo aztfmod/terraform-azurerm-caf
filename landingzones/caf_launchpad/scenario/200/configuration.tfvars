@@ -1,4 +1,7 @@
 level = "level0"
+scenario = {
+  launchpad = 200
+}
 
 launchpad_mode = "launchpad"
 
@@ -266,33 +269,20 @@ keyvaults = {
 keyvault_access_policies = {
   # A maximum of 16 access policies per keyvault
   launchpad = {
-    bootstrap_user = {
-      # azuread_group_key = ""
-      # azuread_app_key   = ""
-
-      # can be any object_id to reference an existing azure ad application, group or user
-      # if set to "logged_in_user" add the user running terraform in the policy (recommended)
-      object_id = "logged_in_user"
-
-      key_permissions         = []
-      certificate_permissions = []
-      secret_permissions      = ["Set", "Get", "List", "Delete"]
+    logged_in_user = {
+      # if the key is set to "logged_in_user" add the user running terraform in the keyvault policy
+      # More examples in /examples/keyvault
+      secret_permissions = ["Set", "Get", "List", "Delete", "Purge"]
     }
     keyvault_level0_rw = {
-      azuread_group_key = "keyvault_level0_rw"
-      # azuread_app_key   = ""
-      # object_id               = ""
-
-      key_permissions         = []
-      certificate_permissions = []
-      secret_permissions      = ["Set", "Get", "List", "Delete"]
+      azuread_group_key  = "keyvault_level0_rw"
+      secret_permissions = ["Set", "Get", "List", "Delete"]
     }
   }
 
   secrets = {
-    launchpad_bootstrap_user = {
-      object_id          = "logged_in_user"
-      secret_permissions = ["Set", "Get", "List", "Delete"]
+    logged_in_user = {
+      secret_permissions = ["Set", "Get", "List", "Delete", "Purge"]
     }
     keyvault_password_rotation = {
       azuread_group_key  = "keyvault_password_rotation"
@@ -467,7 +457,7 @@ azuread_apps = {
       secret_prefix = "caf-launchpad-level0"
       access_policies = {
         key_permissions    = []
-        secret_permissions = ["Get", "List", "Set", "Delete"]
+        secret_permissions = ["Get", "List", "Set", "Delete", "Purge"]
       }
     }
   }
@@ -483,10 +473,6 @@ azuread_apps = {
     keyvault = {
       keyvault_key  = "secrets"
       secret_prefix = "caf-level0-security-devops-pat-rotation-aad-app"
-      access_policies = {
-        key_permissions    = []
-        secret_permissions = ["Get", "Set"]
-      }
     }
   }
 
@@ -1221,6 +1207,11 @@ vnets = {
         name              = "level4"
         cidr              = ["10.100.100.72/29"]
         service_endpoints = ["Microsoft.KeyVault"]
+      }
+      private_endpoints = {
+        name                                           = "private_endpoints"
+        cidr                                           = ["10.100.100.128/25"]
+        enforce_private_link_endpoint_network_policies = true
       }
     }
 
