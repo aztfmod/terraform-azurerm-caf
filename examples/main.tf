@@ -12,13 +12,13 @@ terraform {
       source  = "hashicorp/random"
       version = "~> 2.2.1"
     }
-    external = {
-      source  = "hashicorp/external"
-      version = "~> 1.2.0"
-    }
     null = {
       source  = "hashicorp/null"
       version = "~> 2.1.0"
+    }
+    external = {
+      source  = "hashicorp/external"
+      version = "~> 1.2.0"
     }
     tls = {
       source  = "hashicorp/tls"
@@ -49,20 +49,16 @@ data "terraform_remote_state" "caf_foundations" {
   }
 }
 
-
 locals {
-  landingzone_tag = {
-    "landingzone" = basename(abspath(path.module))
-  }
-  tags = merge(local.landingzone_tag, { "level" = var.level }, { "environment" = local.global_settings.environment }, { "rover_version" = var.rover_version }, var.tags)
+  tags = merge(var.tags, { "level" = var.level }, { "environment" = var.environment }, { "rover_version" = var.rover_version })
 
   global_settings = {
-    prefix         = try(var.global_settings.prefix, data.terraform_remote_state.caf_foundations.outputs.global_settings.prefix)
-    convention     = try(var.global_settings.convention, data.terraform_remote_state.caf_foundations.outputs.global_settings.convention)
-    default_region = try(var.global_settings.default_region, data.terraform_remote_state.caf_foundations.outputs.global_settings.default_region)
-    regions        = try(var.global_settings.regions, null) == null ? data.terraform_remote_state.caf_foundations.outputs.global_settings.regions : merge(data.terraform_remote_state.caf_foundations.outputs.global_settings.regions, var.global_settings.regions)
-    max_length     = try(var.global_settings.max_length, data.terraform_remote_state.caf_foundations.outputs.global_settings.max_length)
+    prefix         = data.terraform_remote_state.caf_foundations.outputs.global_settings.prefix
+    convention     = data.terraform_remote_state.caf_foundations.outputs.global_settings.convention
+    default_region = data.terraform_remote_state.caf_foundations.outputs.global_settings.default_region
     environment    = data.terraform_remote_state.caf_foundations.outputs.global_settings.environment
+    regions        = data.terraform_remote_state.caf_foundations.outputs.global_settings.regions
+    max_length     = var.max_length == null ? data.terraform_remote_state.caf_foundations.outputs.global_settings.max_length : var.max_length
   }
 
   diagnostics = {
@@ -71,13 +67,6 @@ locals {
     storage_accounts         = data.terraform_remote_state.caf_foundations.outputs.diagnostics.storage_accounts
     log_analytics            = data.terraform_remote_state.caf_foundations.outputs.diagnostics.log_analytics
   }
-
-  vnets = merge(
-      data.terraform_remote_state.caf_foundations.outputs.vnets, 
-      map( 
-      "networking", try(module.landingzones_networking.vnets, {})
-      )
-    )
 
   tfstates = merge(
     map(var.landingzone_name,
@@ -94,6 +83,5 @@ locals {
     ,
     data.terraform_remote_state.caf_foundations.outputs.tfstates
   )
-
 
 }

@@ -72,7 +72,7 @@ locals {
   }
 
   database = {
-    azurerm_sql_servers  = try(var.database.azurerm_sql_servers, {})
+    mssql_servers        = try(var.database.mssql_servers, {})
     azurerm_redis_caches = try(var.database.azurerm_redis_caches, {})
   }
 

@@ -14,7 +14,7 @@ resource "azurecaf_naming_convention" "keyvault" {
 resource "azurerm_key_vault" "keyvault" {
 
   name                            = azurecaf_naming_convention.keyvault.result
-  location                        = var.global_settings.regions[try(var.keyvault.region, var.resource_groups[var.keyvault.resource_group_key].location)]
+  location                        = try(var.global_settings.regions[var.keyvault.region], var.resource_groups[var.keyvault.resource_group_key].location)
   resource_group_name             = var.resource_groups[var.keyvault.resource_group_key].name
   tenant_id                       = var.tenant_id
   sku_name                        = var.keyvault.sku_name

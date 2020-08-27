@@ -15,7 +15,7 @@ output vnets {
 module "networking" {
   source = "./modules/terraform-azurerm-caf-virtual-network"
 
-  for_each = var.networking.vnets
+  for_each = try(var.networking.vnets, {})
 
   max_length                        = local.global_settings.max_length
   prefix                            = local.global_settings.prefix
