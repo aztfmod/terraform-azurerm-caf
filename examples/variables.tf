@@ -15,6 +15,14 @@ variable landingzone_name {
 variable level {
   default = "level3"
 }
+variable default_region {
+  default = "region1"
+}
+variable regions {
+  default = {
+    region1 = "southeastasia"
+  }
+}
 variable environment {
   default = "sandpit"
 }

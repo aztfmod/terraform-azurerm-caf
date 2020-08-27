@@ -19,10 +19,10 @@
 
 resource_groups = {
   sql_region1 = {
-    name = "sql"
+    name = "sql-rg1"
   }
   security_region1 = {
-    name = "sql-security"
+    name = "sql-security-rg1"
   }
 }
 
