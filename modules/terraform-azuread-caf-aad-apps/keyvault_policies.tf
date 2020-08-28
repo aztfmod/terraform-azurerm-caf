@@ -20,7 +20,7 @@ locals {
 resource "azurerm_key_vault_access_policy" "policy" {
   for_each = local.aad_apps_access_policies
 
-  key_vault_id = var.keyvaults[each.value.keyvault.keyvault_key].id
+  key_vault_id = try(var.keyvaults[each.value.keyvault.keyvault_key].id, data.terraform_remote_state.keyvaults.outputs[each.value.keyvault.remote_tfstate.output_key][each.value.keyvault.keyvault_key].id)
 
   tenant_id = data.azurerm_client_config.current.tenant_id
   object_id = lookup(azuread_service_principal.aad_apps, each.value.aad_app_key, null) == null ? each.value.sp_object_id : azuread_service_principal.aad_apps[each.value.aad_app_key].object_id
