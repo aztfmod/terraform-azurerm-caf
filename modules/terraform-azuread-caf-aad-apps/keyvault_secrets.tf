@@ -36,8 +36,8 @@ locals {
           azuread_service_principal = {
             id                     = try(azuread_service_principal.aad_apps[key].id, aad_app.sp_object_id)
             object_id              = try(azuread_service_principal.aad_apps[key].object_id, aad_app.sp_object_id)
-            keyvault_id            = try(var.keyvaults[aad_app.keyvault.keyvault_key].id, data.terraform_remote_state.keyvaults[each.key].outputs[each.value.keyvault.remote_tfstate.output_key][each.value.keyvault.keyvault_key].id)
-            keyvault_name          = try(var.keyvaults[aad_app.keyvault.keyvault_key].id, data.terraform_remote_state.keyvaults[each.key].outputs[each.value.keyvault.remote_tfstate.output_key][each.value.keyvault.keyvault_key].name)
+            keyvault_id            = try(var.keyvaults[aad_app.keyvault.keyvault_key].id, data.terraform_remote_state.keyvaults[key].outputs[aad_app.keyvault.remote_tfstate.output_key][aad_app.keyvault.keyvault_key].id)
+            keyvault_name          = try(var.keyvaults[aad_app.keyvault.keyvault_key].id, data.terraform_remote_state.keyvaults[key].outputs[aad_app.keyvault.remote_tfstate.output_key][aad_app.keyvault.keyvault_key].name)
             keyvault_client_secret = format("%s-client-secret", aad_app.keyvault.secret_prefix)
           }
         }
