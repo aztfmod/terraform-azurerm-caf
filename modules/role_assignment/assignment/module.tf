@@ -19,7 +19,7 @@ resource "azurerm_role_assignment" "azuread_apps" {
   scope                = var.scope
   role_definition_name = var.role_definition_name == null ? null : var.role_definition_name
   role_definition_id   = var.role_definition_id == null ? null : var.role_definition_id
-  principal_id         = var.azuread_apps.aad_apps[each.key].azuread_service_principal.object_id
+  principal_id         = var.azuread_apps[each.key].azuread_service_principal.object_id
 }
 
 resource "azurerm_role_assignment" "azuread_group" {

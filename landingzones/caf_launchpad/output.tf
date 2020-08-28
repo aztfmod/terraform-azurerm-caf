@@ -9,12 +9,18 @@ output diagnostics {
 }
 
 output keyvaults {
-  value     = module.launchpad.keyvaults
+  value = map(
+    var.landingzone_name,
+    module.launchpad.keyvaults
+  )
   sensitive = true
 }
 
 output storage_accounts {
-  value     = module.launchpad.storage_accounts
+  value = map(
+    var.landingzone_name,
+    module.launchpad.storage_accounts
+  )
   sensitive = true
 }
 

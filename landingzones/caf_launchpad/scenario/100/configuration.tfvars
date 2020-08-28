@@ -1,5 +1,5 @@
 level = "level0"
-scenario = {
+scenarios = {
   launchpad = 100
 }
 
@@ -11,8 +11,9 @@ regions = {
 }
 
 launchpad_key_names = {
-  keyvault    = "launchpad"
-  azuread_app = "caf_launchpad_level0"
+  keyvault               = "launchpad"
+  azuread_app            = "caf_launchpad_level0"
+  keyvault_client_secret = "aadapp-caf-launchpad-level0"
   tfstates = [
     "level0"
   ]
@@ -57,17 +58,19 @@ storage_accounts = {
 keyvaults = {
   # Do not rename the key "launchpad" to be able to upgrade to the standard launchpad
   launchpad = {
-    name               = "launchpad"
-    resource_group_key = "security"
-    region             = "region1"
-    convention         = "cafrandom"
-    sku_name           = "standard"
+    name                = "launchpad"
+    resource_group_key  = "security"
+    region              = "region1"
+    convention          = "cafrandom"
+    sku_name            = "standard"
+    soft_delete_enabled = true
 
     tags = {
       tfstate     = "level0"
       environment = "sandpit"
     }
   }
+
 }
 
 
@@ -80,6 +83,7 @@ keyvault_access_policies = {
       secret_permissions = ["Set", "Get", "List", "Delete", "Purge"]
     }
   }
+
 }
 
 subscriptions = {
@@ -92,22 +96,23 @@ subscriptions = {
 }
 
 azuread_apps = {
-  # Do not rename the key "launchpad" to be able to upgrade to the standard launchpad
+  # Do not rename the key "launchpad" to be able to upgrade to higher scenario
   caf_launchpad_level0 = {
     convention              = "cafrandom"
     useprefix               = true
     application_name        = "caf_launchpad_level0"
     password_expire_in_days = 180
-    keyvault = {
-      keyvault_key  = "launchpad"
-      secret_prefix = "caf-launchpad-level0"
-      access_policies = {
-        key_permissions    = []
-        secret_permissions = ["Get", "List", "Set", "Delete", "Purge"]
+    keyvaults = {
+      launchpad = {
+        secret_prefix = "aadapp-caf-launchpad-level0"
+        access_policy = {
+          secret_permissions = ["Get", "List", "Set", "Delete", "Purge"]
+        }
       }
     }
   }
 }
+
 
 role_mapping = {
   custom_role_mapping = {}

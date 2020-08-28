@@ -3,15 +3,23 @@
 #
 
 module azuread_applications {
-  source     = "./modules/terraform-azuread-caf-aad-apps"
-  depends_on = [module.keyvault_access_policies]
+  source     = "./modules/azuread/applications"
+  depends_on = [module.keyvaults, module.keyvault_access_policies]
+  for_each   = var.azuread_apps
 
-  azuread_apps            = var.azuread_apps
-  azuread_api_permissions = var.azuread_api_permissions
+  client_config           = local.client_config
+  settings                = each.value
+  azuread_api_permissions = try(var.azuread_api_permissions[each.key], {})
+  global_settings         = local.global_settings
+  user_type               = var.user_type
   keyvaults               = module.keyvaults
-  prefix                  = local.global_settings.prefix
   tfstates                = var.tfstates
   use_msi                 = var.use_msi
+}
+
+output aad_apps {
+  value     = module.azuread_applications
+  sensitive = true
 }
 
 
@@ -19,7 +27,7 @@ module azuread_app_roles {
   source   = "./modules/azuread/roles"
   for_each = var.azuread_app_roles
 
-  object_id         = module.azuread_applications.aad_apps[each.key].azuread_service_principal.object_id
+  object_id         = module.azuread_applications[each.key].azuread_service_principal.object_id
   azuread_app_roles = each.value.roles
 }
 
