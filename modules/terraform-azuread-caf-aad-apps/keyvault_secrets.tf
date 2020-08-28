@@ -50,18 +50,18 @@ locals {
 data "terraform_remote_state" "keyvaults" {
   for_each = {
     for key, keyvault in local.secrets_to_store_in_keyvault : key => keyvault
-    if try(keyvault.keyvault.remote_tfstate, null) != null
+    # if try(keyvault.keyvault.remote_tfstate, null) != null
   }
 
   backend = "azurerm"
   config = {
-    storage_account_name = var.tfstates[each.value.keyvault.remote_tfstate.tfstate_key].storage_account_name
-    container_name       = var.tfstates[each.value.keyvault.remote_tfstate.tfstate_key].container_name
-    resource_group_name  = var.tfstates[each.value.keyvault.remote_tfstate.tfstate_key].resource_group_name
-    key                  = var.tfstates[each.value.keyvault.remote_tfstate.tfstate_key].key
+    storage_account_name = try(var.tfstates[each.value.keyvault.remote_tfstate.tfstate_key].storage_account_name, null)
+    container_name       = try(var.tfstates[each.value.keyvault.remote_tfstate.tfstate_key].container_name, null)
+    resource_group_name  = try(var.tfstates[each.value.keyvault.remote_tfstate.tfstate_key].resource_group_name, null)
+    key                  = try(var.tfstates[each.value.keyvault.remote_tfstate.tfstate_key].key, null)
     use_msi              = var.use_msi
-    subscription_id      = var.use_msi ? var.tfstates[each.value.keyvault.remote_tfstate.tfstate_key].subscription_id : null
-    tenant_id            = var.use_msi ? var.tfstates[each.value.keyvault.remote_tfstate.tfstate_key].tenant_id : null
+    subscription_id      = var.use_msi ? try(var.tfstates[each.value.keyvault.remote_tfstate.tfstate_key].subscription_id, null) : null
+    tenant_id            = var.use_msi ? try(var.tfstates[each.value.keyvault.remote_tfstate.tfstate_key].tenant_id, null) : null
   }
 }
 
