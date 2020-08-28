@@ -43,6 +43,9 @@ variable app_service_environments {
 variable app_service_plans {
   default = {}
 }
+variable app_services {
+  default = {}
+}
 variable diagnostics_definition {
   default = null
 }

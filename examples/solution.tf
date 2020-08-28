@@ -10,6 +10,7 @@ module "caf" {
   resource_groups          = var.resource_groups
   app_service_environments = var.app_service_environments
   app_service_plans        = var.app_service_plans
+  app_services             = var.app_services
   storage_accounts         = var.storage_accounts
   azuread_groups           = var.azuread_groups
   keyvaults                = var.keyvaults
