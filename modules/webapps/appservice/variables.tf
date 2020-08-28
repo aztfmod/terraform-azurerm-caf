@@ -32,7 +32,7 @@ variable "app_settings" {
 }
 
 variable "slots" {
-  default = null
+  default = {}
 }
 
 variable "settings" {}
