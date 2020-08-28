@@ -18,7 +18,7 @@ locals {
       [
         for key, access_policy_object in var.access_policies : {
           keyvault_key            = key
-          user_object_id          = try(access_policy_object.object_id,"") == "logged_in_user" ? data.azurerm_client_config.current.object_id : access_policy_object.object_id
+          user_object_id          = try(access_policy_object.object_id, "") == "logged_in_user" ? data.azurerm_client_config.current.object_id : access_policy_object.object_id
           group_key_object_id     = lookup(access_policy_object, "azuread_group_key", null) == null ? "" : var.azuread_groups[access_policy_object.azuread_group_key].id
           tenant_id               = lookup(access_policy_object, "azuread_group_key", null) == null ? data.azurerm_client_config.current.tenant_id : var.azuread_groups[access_policy_object.azuread_group_key].tenant_id
           key_permissions         = lookup(access_policy_object, "key_permissions", [])

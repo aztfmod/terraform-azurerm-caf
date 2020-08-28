@@ -56,8 +56,8 @@ keyvault_access_policies = {
   # A maximum of 16 access policies per keyvault
   sql = {
     bootstrap_user = {
-      object_id = "logged_in_user"
-      secret_permissions      = ["Set", "Get", "List", "Delete"]
+      object_id          = "logged_in_user"
+      secret_permissions = ["Set", "Get", "List", "Delete"]
     }
   }
 }
@@ -89,7 +89,7 @@ mssql_servers = {
 
     # Optional
     security_alert_policy = {
-      enabled            = true
+      enabled = true
       disabled_alerts = [
         # "Sql_Injection",
         # "Sql_Injection_Vulnerability",
@@ -123,16 +123,16 @@ mssql_servers = {
       private_endpoints = {
         # Require enforce_private_link_endpoint_network_policies set to true on the subnet
         private-link-level4 = {
-          name               = "private-endpoint-stg-level4"
+          name = "private-endpoint-stg-level4"
           remote_tfstate = {
-            tfstate_key        = "foundations"
-            lz_key             = "launchpad"
-            output_key         = "vnets"
-            vnet_key           = "devops_region1"
-            subnet_key         = "release_agent_level4"
+            tfstate_key = "foundations"
+            lz_key      = "launchpad"
+            output_key  = "vnets"
+            vnet_key    = "devops_region1"
+            subnet_key  = "release_agent_level4"
           }
           resource_group_key = "sql_region1"
-          
+
           private_service_connection = {
             name                 = "private-endpoint-level4"
             is_manual_connection = false
