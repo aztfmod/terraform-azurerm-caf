@@ -8,14 +8,14 @@ locals {
     flatten(
       [
         for key, app in var.azuread_apps : {
-          app_application_id      = lookup(app, "app_application_id", null)
-          app_object_id           = lookup(app, "app_object_id", null)
-          sp_object_id            = lookup(app, "sp_object_id", null)
-          application_name        = lookup(app, "application_name", null)
+          app_application_id      = try(app.app_application_id, null)
+          app_object_id           = try(app.app_object_id, null)
+          sp_object_id            = try(app.sp_object_id, null)
+          application_name        = try(app.application_name, null)
           keyvault                = app.keyvault
           aad_app_key             = key
           password_expire_in_days = app.password_expire_in_days
-        } if lookup(app, "keyvault", null) != null
+        } if try(app.keyvault, null) != null
       ]
     ) : aad_app.aad_app_key => aad_app
   }
@@ -28,14 +28,14 @@ locals {
           aad_app_key = key
           tenant_id   = data.azurerm_client_config.current.tenant_id
           azuread_application = {
-            id             = lookup(azuread_application.aad_apps, key, null) == null ? aad_app.app_object_id : azuread_application.aad_apps[key].id
-            object_id      = lookup(azuread_application.aad_apps, key, null) == null ? aad_app.app_object_id : azuread_application.aad_apps[key].object_id
-            application_id = lookup(azuread_application.aad_apps, key, null) == null ? aad_app.app_application_id : azuread_application.aad_apps[key].application_id
-            name           = lookup(azuread_application.aad_apps, key, null) == null ? aad_app.application_name : azuread_application.aad_apps[key].name
+            id             = try(azuread_application.aad_apps[key].id, aad_app.app_object_id)
+            object_id      = try(azuread_application.aad_apps[key].object_id, aad_app.app_object_id)
+            application_id = try(azuread_application.aad_apps[key].application_id, aad_app.app_application_id)
+            name           = try(azuread_application.aad_apps[key].name, aad_app.application_name)
           }
           azuread_service_principal = {
-            id                     = lookup(azuread_application.aad_apps, key, null) == null ? aad_app.sp_object_id : azuread_service_principal.aad_apps[key].id
-            object_id              = lookup(azuread_application.aad_apps, key, null) == null ? aad_app.sp_object_id : azuread_service_principal.aad_apps[key].object_id
+            id                     = try(azuread_service_principal.aad_apps[key].id, aad_app.sp_object_id)
+            object_id              = try(azuread_service_principal.aad_apps[key].object_id, aad_app.sp_object_id)
             keyvault_id            = try(var.keyvaults[aad_app.keyvault.keyvault_key].id, data.terraform_remote_state.keyvaults[aad_app.keyvault.keyvault_key].id)
             keyvault_name          = try(var.keyvaults[aad_app.keyvault.keyvault_key].id, data.terraform_remote_state.keyvaults[aad_app.keyvault.keyvault_key].name)
             keyvault_client_secret = format("%s-client-secret", aad_app.keyvault.secret_prefix)
@@ -72,7 +72,7 @@ resource "azurerm_key_vault_secret" "aad_app_client_id" {
   for_each = local.secrets_to_store_in_keyvault
 
   name         = format("%s-client-id", each.value.keyvault.secret_prefix)
-  value        = lookup(azuread_application.aad_apps, each.key, null) == null ? each.value.app_application_id : azuread_application.aad_apps[each.key].application_id
+  value        = try(azuread_application.aad_apps[each.key].application_id, each.value.app_application_id)
   key_vault_id = try(var.keyvaults[each.value.keyvault.keyvault_key].id, data.terraform_remote_state.keyvaults[each.value.keyvault.keyvault_key].id)
 
 }
@@ -83,7 +83,7 @@ resource "azurerm_key_vault_secret" "aad_app_client_secret" {
   for_each = local.secrets_to_store_in_keyvault
 
   name            = format("%s-client-secret", each.value.keyvault.secret_prefix)
-  value           = lookup(azuread_application.aad_apps, each.key, null) == null ? "" : azuread_service_principal_password.aad_apps[each.key].value
+  value           = try(azuread_service_principal_password.aad_apps[each.key].value, "")
   key_vault_id    = try(var.keyvaults[each.value.keyvault.keyvault_key].id, data.terraform_remote_state.keyvaults[each.value.keyvault.keyvault_key].id)
   expiration_date = timeadd(timestamp(), format("%sh", each.value.password_expire_in_days * 24))
 

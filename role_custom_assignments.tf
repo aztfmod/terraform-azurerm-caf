@@ -13,5 +13,5 @@ module custom_role_assignment_subscriptions {
   azuread_apps       = module.azuread_applications
   azuread_groups     = module.azuread_groups
   managed_identities = azurerm_user_assigned_identity.msi
-  custom_roles       = module.custom_roles
+  custom_roles       = try(module.custom_roles, {})
 }
