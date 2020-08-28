@@ -13,8 +13,7 @@ output vnets {
 #
 
 module "networking" {
-  source = "./modules/terraform-azurerm-caf-virtual-network"
-
+  source   = "./modules/terraform-azurerm-caf-virtual-network"
   for_each = try(var.networking.vnets, {})
 
   max_length                        = local.global_settings.max_length
@@ -36,8 +35,7 @@ module "networking" {
 #
 
 module public_ip_addresses {
-  source = "./modules/networking/public_ip_addresses"
-
+  source   = "./modules/networking/public_ip_addresses"
   for_each = local.networking.public_ip_addresses
 
   name                    = each.value.name

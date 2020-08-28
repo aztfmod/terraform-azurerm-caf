@@ -21,6 +21,12 @@ variable rover_version {}
 variable level {
   default = "level2"
 }
+variable logged_user_objectId {
+  default = ""
+}
+variable logged_aad_app_objectId {
+  default = ""
+}
 variable tags {
   type    = map
   default = {}

@@ -7,8 +7,7 @@ output mssql_servers {
 module "mssql_servers" {
   source     = "./modules/databases/mssql_server"
   depends_on = [module.keyvault_access_policies]
-
-  for_each = local.database.mssql_servers
+  for_each   = local.database.mssql_servers
 
   global_settings     = local.global_settings
   settings            = each.value
@@ -20,4 +19,6 @@ module "mssql_servers" {
   vnets               = try(each.value.private_endpoints, {}) == {} ? null : local.vnets
   private_endpoints   = try(each.value.private_endpoints, {})
   resource_groups     = try(each.value.private_endpoints, {}) == {} ? null : azurerm_resource_group.rg
+  tfstates            = var.tfstates
+  use_msi             = var.use_msi
 }

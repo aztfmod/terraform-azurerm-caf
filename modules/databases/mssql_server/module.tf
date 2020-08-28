@@ -143,21 +143,3 @@ resource "azurerm_mssql_server_vulnerability_assessment" "mssql" {
   }
 }
 
-# #
-# # Private endpoint
-# #
-
-# module private_endpoint {
-#   source   = "./modules/networking/private_endpoint"
-#   for_each = {
-#     for key, sql_server in local.database.mssql_servers : key => sql_server
-#     if try(sql_server.private_endpoints, null) != null
-#   }
-
-#   resource_id         = azurerm_mssql_server.mssql[each.key].id
-#   name                = format("%s-to-%s-%s", var.settings.private_endpoints.name, var.settings.private_endpoints.vnet_key, var.settings.private_endpoints.subnet_key)
-#   location            = var.resource_groups[var.settings.private_endpoints.resource_group_key].location
-#   resource_group_name = var.resource_groups[var.settings.private_endpoints.resource_group_key].name
-#   subnet_id           = var.vnets[var.settings.vnet_key].subnets[var.settings.subnet_key].id
-#   settings            = var.settings
-# }

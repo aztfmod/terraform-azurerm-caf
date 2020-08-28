@@ -27,7 +27,10 @@ variable max_length {
 }
 
 variable logged_user_objectId {
-  default = null
+  default = ""
+}
+variable logged_aad_app_objectId {
+  default = ""
 }
 
 variable use_msi {

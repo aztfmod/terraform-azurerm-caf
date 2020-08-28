@@ -18,5 +18,7 @@ module container_registry {
   diagnostic_profiles = try(each.value.diagnostic_profiles, {})
   private_endpoints   = try(each.value.private_endpoints, {})
   resource_groups     = azurerm_resource_group.rg
+  tfstates            = var.tfstates
+  use_msi             = var.use_msi
 }
 

@@ -9,6 +9,10 @@ variable tfstate_container_name {}
 variable tfstate_key {}
 variable tfstate_resource_group_name {}
 
+variable global_settings {
+  default = {}
+}
+
 variable landingzone_name {
   default = "appservices"
 }
@@ -25,7 +29,10 @@ variable max_length {
   default = 40
 }
 variable logged_user_objectId {
-  description = "Variable set by the rover to pass the objectId of the azure session. Used for scenarios executed in vscode to set access policies"
+  default = ""
+}
+variable logged_aad_app_objectId {
+  default = ""
 }
 variable tags {
   default = null

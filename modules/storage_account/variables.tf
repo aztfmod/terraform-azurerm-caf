@@ -11,3 +11,9 @@ variable private_endpoints {
 variable resource_groups {
   default = {}
 }
+variable tfstates {
+  default = null
+}
+variable use_msi {
+  default = false
+}

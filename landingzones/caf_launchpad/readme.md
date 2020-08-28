@@ -11,9 +11,10 @@ The launchpad components are deployed by a set of Terraform files using the Rove
 
 ```
 # Simple scenario for learning and demonstration
+rover -lz /tf/caf/landingzones/caf_launchpad -launchpad -var-file /tf/caf/landingzones/caf_launchpad/scenario/100/configuration.tfvars -parallelism=30 -a apply
 
 # Advanced scenario - Require Azure AD privileges
-rover -lz /tf/caf/landingzones/caf_launchpad -launchpad -var-file /tf/caf/landingzones/caf_launchpad/scenario/400/configuration.tfvars -parallelism=30 -tfstate launchpad.tfstate -w tfstate -a apply
+rover -lz /tf/caf/landingzones/caf_launchpad -launchpad -var-file /tf/caf/landingzones/caf_launchpad/scenario/200/configuration.tfvars -parallelism=30 -a apply
 ```
 
 ![Launchpad Worklow](./documentation/img/launchpad_workflow.png)

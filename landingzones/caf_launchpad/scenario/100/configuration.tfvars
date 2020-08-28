@@ -1,4 +1,7 @@
 level = "level0"
+scenario = {
+  launchpad = 100
+}
 
 # Default region
 default_region = "region1"
@@ -71,14 +74,10 @@ keyvaults = {
 keyvault_access_policies = {
   # A maximum of 16 access policies per keyvault
   launchpad = {
-    bootstrap_user = {
-      # can be any object_id to reference an existing azure ad application, group or user
-      # if set to "logged_in_user" add the user running terraform in the policy (recommended)
-      object_id = "logged_in_user"
-
-      key_permissions         = []
-      certificate_permissions = []
-      secret_permissions      = ["Set", "Get", "List", "Delete"]
+    logged_in_user = {
+      # if the key is set to "logged_in_user" add the user running terraform in the keyvault policy
+      # More examples in /examples/keyvault
+      secret_permissions = ["Set", "Get", "List", "Delete", "Purge"]
     }
   }
 }
@@ -104,7 +103,7 @@ azuread_apps = {
       secret_prefix = "caf-launchpad-level0"
       access_policies = {
         key_permissions    = []
-        secret_permissions = ["Get", "List", "Set", "Delete"]
+        secret_permissions = ["Get", "List", "Set", "Delete", "Purge"]
       }
     }
   }
