@@ -50,7 +50,7 @@ locals {
 data "terraform_remote_state" "keyvaults" {
   for_each = {
     for key, keyvault in local.secrets_to_store_in_keyvault : key => keyvault
-    # if try(keyvault.keyvault.remote_tfstate, null) != null
+    if try(keyvault.keyvault.remote_tfstate, null) != null
   }
 
   backend = "azurerm"
