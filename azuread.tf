@@ -10,6 +10,7 @@ module azuread_applications {
   azuread_api_permissions = var.azuread_api_permissions
   keyvaults               = module.keyvaults
   prefix                  = local.global_settings.prefix
+  tfstates                = var.tfstates
 }
 
 

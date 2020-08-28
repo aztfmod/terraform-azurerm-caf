@@ -14,6 +14,8 @@ variable azuread_api_permissions {
   description = "Map of aad_api_permission objects to provide API access to an Azure Active Directory application"
 }
 
+variable tfstates {}
+
 variable azuread_app {
   description = "Object to create Azure Active Directory application"
   type = object({
