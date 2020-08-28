@@ -23,10 +23,10 @@ resource "azurerm_key_vault_secret" "launchpad_blob_container" {
   key_vault_id = module.launchpad.keyvaults[var.launchpad_key_names.keyvault].id
 }
 
-resource "azurerm_key_vault_secret" "launchpad_name" {
+resource "azurerm_key_vault_secret" "launchpad-secret-prefix" {
   depends_on   = [module.launchpad]
   name         = "launchpad-secret-prefix"
-  value        = var.azuread_apps[var.launchpad_key_names.azuread_app].keyvault.secret_prefix
+  value        = var.launchpad_key_names.keyvault_client_secret
   key_vault_id = module.launchpad.keyvaults[var.launchpad_key_names.keyvault].id
 }
 

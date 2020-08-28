@@ -1,5 +1,5 @@
 level = "level0"
-scenario = {
+scenarios = {
   launchpad = 200
 }
 
@@ -14,8 +14,9 @@ regions = {
 }
 
 launchpad_key_names = {
-  keyvault    = "launchpad"
-  azuread_app = "caf_launchpad_level0"
+  keyvault               = "launchpad"
+  azuread_app            = "caf_launchpad_level0"
+  keyvault_client_secret = "aadapp-caf-launchpad-level0"
   tfstates = [
     "level0",
     "level1",
@@ -452,12 +453,12 @@ azuread_apps = {
     password_expire_in_days = 180
 
     # Store the ${secret_prefix}-client-id, ${secret_prefix}-client-secret...
-    keyvault = {
-      keyvault_key  = "launchpad"
-      secret_prefix = "caf-launchpad-level0"
-      access_policies = {
-        key_permissions    = []
-        secret_permissions = ["Get", "List", "Set", "Delete", "Purge"]
+    keyvaults = {
+      launchpad = {
+        secret_prefix = "aadapp-caf-launchpad-level0"
+        access_policy = {
+          secret_permissions = ["Get", "List", "Set", "Delete", "Purge"]
+        }
       }
     }
   }
@@ -470,9 +471,10 @@ azuread_apps = {
     password_expire_in_days = 60
     tenant_name             = "terraformdev.onmicrosoft.com"
     reply_urls              = ["https://localhost"]
-    keyvault = {
-      keyvault_key  = "secrets"
-      secret_prefix = "caf-level0-security-devops-pat-rotation-aad-app"
+    keyvaults = {
+      secrets = {
+        secret_prefix = "aadapp-caf-level0-security-devops-pat-rotation-aad-app"
+      }
     }
   }
 
@@ -1003,11 +1005,11 @@ azuread_api_permissions = {
     active_directory_graph = {
       resource_app_id = "00000002-0000-0000-c000-000000000000"
       resource_access = {
-        active_directory_graph_resource_access_id_Application_ReadWrite_OwnedBy = {
+        Application_ReadWrite_OwnedBy = {
           id   = "824c81eb-e3f8-4ee6-8f6d-de7f50d565b7"
           type = "Role"
         }
-        active_directory_graph_resource_access_id_Directory_ReadWrite_All = {
+        Directory_ReadWrite_All = {
           id   = "78c8a3c8-a07e-4b9e-af1b-b5ccab50a175"
           type = "Role"
         }
@@ -1017,19 +1019,19 @@ azuread_api_permissions = {
     microsoft_graph = {
       resource_app_id = "00000003-0000-0000-c000-000000000000"
       resource_access = {
-        microsoft_graph_AppRoleAssignment_ReadWrite_All = {
+        AppRoleAssignment_ReadWrite_All = {
           id   = "06b708a9-e830-4db3-a914-8e69da51d44f"
           type = "Role"
         }
-        microsoft_graph_DelegatedPermissionGrant_ReadWrite_All = {
+        DelegatedPermissionGrant_ReadWrite_All = {
           id   = "8e8e4742-1d95-4f68-9d56-6ee75648c72a"
           type = "Role"
         }
-        microsoft_graph_GroupReadWriteAll = {
+        GroupReadWriteAll = {
           id   = "62a82d76-70ea-41e2-9197-370581804d09"
           type = "Role"
         }
-        microsoft_graph_RoleManagement_ReadWrite_Directory = {
+        RoleManagement_ReadWrite_Directory = {
           id   = "9e3f62cf-ca93-4989-b6ce-bf83c28f9fe8"
           type = "Role"
         }
@@ -1038,7 +1040,6 @@ azuread_api_permissions = {
   }
 
 }
-
 
 ##################################################
 #

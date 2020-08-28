@@ -484,12 +484,12 @@ azuread_apps = {
     password_expire_in_days = 180
 
     # Store the ${secret_prefix}-client-id, ${secret_prefix}-client-secret...
-    keyvault = {
-      keyvault_key  = "launchpad"
-      secret_prefix = "caf-launchpad-level0"
-      access_policies = {
-        key_permissions    = []
-        secret_permissions = ["Get", "List", "Set", "Delete"]
+    keyvaults = {
+      launchpad = {
+        secret_prefix = "aadapp-caf-launchpad-level0"
+        access_policy = {
+          secret_permissions = ["Get", "List", "Set", "Delete"]
+        }
       }
     }
   }
@@ -502,12 +502,12 @@ azuread_apps = {
     password_expire_in_days = 60
     tenant_name             = "terraformdev.onmicrosoft.com"
     reply_urls              = ["https://localhost"]
-    keyvault = {
-      keyvault_key  = "secrets"
-      secret_prefix = "caf-level0-security-devops-pat-rotation-aad-app"
-      access_policies = {
-        key_permissions    = []
-        secret_permissions = ["Get", "Set"]
+    keyvaults = {
+      secrets = {
+        secret_prefix = "aadapp-caf-level0-security-devops-pat-rotation-aad-app"
+        access_policy = {
+          secret_permissions = ["Get", "Set"]
+        }
       }
     }
   }
