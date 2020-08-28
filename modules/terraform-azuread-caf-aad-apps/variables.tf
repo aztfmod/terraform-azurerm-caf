@@ -15,6 +15,7 @@ variable azuread_api_permissions {
 }
 
 variable tfstates {}
+variable use_msi {}
 
 variable azuread_app {
   description = "Object to create Azure Active Directory application"

@@ -11,6 +11,7 @@ module azuread_applications {
   keyvaults               = module.keyvaults
   prefix                  = local.global_settings.prefix
   tfstates                = var.tfstates
+  use_msi                 = var.use_msi
 }
 
 
