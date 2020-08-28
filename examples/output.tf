@@ -1,6 +1,6 @@
-output diagnostics {
-  value     = local.diagnostics
-  sensitive = true
+output app_services {
+  value     = module.caf.app_services
+  sensitive = false
 }
 
 output mssql_servers {
