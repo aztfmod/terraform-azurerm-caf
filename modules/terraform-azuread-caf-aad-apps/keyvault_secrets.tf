@@ -36,8 +36,8 @@ locals {
           azuread_service_principal = {
             id                     = try(azuread_service_principal.aad_apps[key].id, aad_app.sp_object_id)
             object_id              = try(azuread_service_principal.aad_apps[key].object_id, aad_app.sp_object_id)
-            keyvault_id            = try(var.keyvaults[aad_app.keyvault.keyvault_key].id, data.terraform_remote_state.keyvaults.outputs[each.value.keyvault.remote_tfstate.output_key][each.value.keyvault.keyvault_key].id)
-            keyvault_name          = try(var.keyvaults[aad_app.keyvault.keyvault_key].id, data.terraform_remote_state.keyvaults.outputs[each.value.keyvault.remote_tfstate.output_key][each.value.keyvault.keyvault_key].name)
+            keyvault_id            = try(var.keyvaults[aad_app.keyvault.keyvault_key].id, data.terraform_remote_state.keyvaults[each.key].outputs[each.value.keyvault.remote_tfstate.output_key][each.value.keyvault.keyvault_key].id)
+            keyvault_name          = try(var.keyvaults[aad_app.keyvault.keyvault_key].id, data.terraform_remote_state.keyvaults[each.key].outputs[each.value.keyvault.remote_tfstate.output_key][each.value.keyvault.keyvault_key].name)
             keyvault_client_secret = format("%s-client-secret", aad_app.keyvault.secret_prefix)
           }
         }
@@ -73,7 +73,7 @@ resource "azurerm_key_vault_secret" "aad_app_client_id" {
 
   name         = format("%s-client-id", each.value.keyvault.secret_prefix)
   value        = try(azuread_application.aad_apps[each.key].application_id, each.value.app_application_id)
-  key_vault_id = try(var.keyvaults[each.value.keyvault.keyvault_key].id, data.terraform_remote_state.keyvaults.outputs[each.value.keyvault.remote_tfstate.output_key][each.value.keyvault.keyvault_key].id)
+  key_vault_id = try(var.keyvaults[each.value.keyvault.keyvault_key].id, data.terraform_remote_state.keyvaults[each.key].outputs[each.value.keyvault.remote_tfstate.output_key][each.value.keyvault.keyvault_key].id)
 
 }
 
@@ -84,7 +84,7 @@ resource "azurerm_key_vault_secret" "aad_app_client_secret" {
 
   name            = format("%s-client-secret", each.value.keyvault.secret_prefix)
   value           = try(azuread_service_principal_password.aad_apps[each.key].value, "")
-  key_vault_id    = try(var.keyvaults[each.value.keyvault.keyvault_key].id, data.terraform_remote_state.keyvaults.outputs[each.value.keyvault.remote_tfstate.output_key][each.value.keyvault.keyvault_key].id)
+  key_vault_id    = try(var.keyvaults[each.value.keyvault.keyvault_key].id, data.terraform_remote_state.keyvaults[each.key].outputs[each.value.keyvault.remote_tfstate.output_key][each.value.keyvault.keyvault_key].id)
   expiration_date = timeadd(timestamp(), format("%sh", each.value.password_expire_in_days * 24))
 
   lifecycle {
@@ -101,7 +101,7 @@ resource "azurerm_key_vault_secret" "aad_app_tenant_id" {
 
   name         = format("%s-tenant-id", each.value.keyvault.secret_prefix)
   value        = data.azurerm_client_config.current.tenant_id
-  key_vault_id = try(var.keyvaults[each.value.keyvault.keyvault_key].id, data.terraform_remote_state.keyvaults.outputs[each.value.keyvault.remote_tfstate.output_key][each.value.keyvault.keyvault_key].id)
+  key_vault_id = try(var.keyvaults[each.value.keyvault.keyvault_key].id, data.terraform_remote_state.keyvaults[each.key].outputs[each.value.keyvault.remote_tfstate.output_key][each.value.keyvault.keyvault_key].id)
 
   lifecycle {
     ignore_changes = [
