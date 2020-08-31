@@ -35,8 +35,11 @@ app_services = {
     }
 
     slots = {
-      smoke_test_ase1 = {
+      smoke_test = {
           name    = "smoke-test"
+      }
+      ab_test = {
+          name    = "AB-testing"
       }
     }
 

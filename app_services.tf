@@ -52,7 +52,7 @@ module "app_services" {
   identity            = try(each.value.identity, {})
   connection_strings  = try(each.value.connection_strings, {})
   app_settings        = try(each.value.app_settings, null)
-  slots               = try(each.value.slots, null)
+  slots               = try(each.value.slots, {})
   global_settings     = local.global_settings
   tags                = try(each.value.tags, null)
 }
