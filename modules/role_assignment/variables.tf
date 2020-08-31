@@ -7,3 +7,4 @@ variable custom_roles {
 variable azuread_apps {}
 variable azuread_groups {}
 variable managed_identities {}
+variable client_config {}

@@ -13,6 +13,7 @@ module role_assignment_subscriptions {
   azuread_apps       = module.azuread_applications
   azuread_groups     = module.azuread_groups
   managed_identities = azurerm_user_assigned_identity.msi
+  client_config      = local.client_config
 }
 
 # IAM for resource groups
@@ -26,6 +27,7 @@ module role_assignment_resource_groups {
   azuread_apps       = module.azuread_applications
   azuread_groups     = module.azuread_groups
   managed_identities = azurerm_user_assigned_identity.msi
+  client_config      = local.client_config
 }
 
 # IAM for storage accounts
@@ -39,4 +41,5 @@ module role_assignment_storage_accounts {
   azuread_apps       = module.azuread_applications
   azuread_groups     = module.azuread_groups
   managed_identities = azurerm_user_assigned_identity.msi
+  client_config      = local.client_config
 }

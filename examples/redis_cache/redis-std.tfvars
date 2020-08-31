@@ -1,4 +1,7 @@
-
+# Approximative time to 
+#  - deploy: 25 mins to 30 mins
+#  - destroy:  
+#
 # rover -lz /tf/caf/examples/ -var-file /tf/caf/examples/redis_cache/redis-std.tfvars -a apply
 
 resource_groups = {

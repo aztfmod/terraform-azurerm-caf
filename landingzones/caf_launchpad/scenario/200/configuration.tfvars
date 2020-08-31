@@ -273,21 +273,35 @@ keyvault_access_policies = {
     logged_in_user = {
       # if the key is set to "logged_in_user" add the user running terraform in the keyvault policy
       # More examples in /examples/keyvault
-      secret_permissions = ["Set", "Get", "List", "Delete", "Purge"]
+      secret_permissions = ["Set", "Get", "List", "Delete", "Purge", "Recover"]
+    }
+    caf_launchpad_level0 = {
+      # Reference a key to an azure ad applications
+      azuread_app_key    = "caf_launchpad_level0"
+      secret_permissions = ["Set", "Get", "List", "Delete", "Purge", "Recover"]
     }
     keyvault_level0_rw = {
+      # Reference a key to an azure ad group
       azuread_group_key  = "keyvault_level0_rw"
-      secret_permissions = ["Set", "Get", "List", "Delete", "Recover"]
+      secret_permissions = ["Set", "Get", "List", "Delete", "Purge", "Recover"]
     }
   }
 
   secrets = {
     logged_in_user = {
-      secret_permissions = ["Set", "Get", "List", "Delete", "Purge"]
+      secret_permissions = ["Set", "Get", "List", "Delete", "Purge", "Recover"]
+    }
+    caf_launchpad_level0 = {
+      azuread_app_key    = "caf_launchpad_level0"
+      secret_permissions = ["Set", "Get", "List", "Delete", "Purge", "Recover"]
+    }
+    keyvault_level0_rw = {
+      azuread_group_key  = "keyvault_level0_rw"
+      secret_permissions = ["Set", "Get", "List", "Delete", "Purge", "Recover"]
     }
     keyvault_password_rotation = {
       azuread_group_key  = "keyvault_password_rotation"
-      secret_permissions = ["Set", "Get", "List", "Delete"]
+      secret_permissions = ["Set", "Get", "List", "Delete", ]
     }
   }
 }
@@ -323,14 +337,13 @@ azuread_groups = {
     members = {
       user_principal_names = [
       ]
-      group_names      = []
-      group_object_ids = []
-      group_keys       = []
+      group_names = []
+      object_ids  = []
+      group_keys  = []
 
       service_principal_keys = [
         "caf_launchpad_level0"
       ]
-      service_principal_object_id = []
 
     }
     owners = {
@@ -339,7 +352,6 @@ azuread_groups = {
       service_principal_keys = [
         "caf_launchpad_level0"
       ]
-      service_principal_object_id = []
     }
     prevent_duplicate_name = false
   }
@@ -405,14 +417,13 @@ azuread_groups = {
     members = {
       user_principal_names = [
       ]
-      group_names      = []
-      group_object_ids = []
-      group_keys       = []
+      group_names = []
+      object_ids  = []
+      group_keys  = []
 
       service_principal_keys = [
         "caf_launchpad_level0"
       ]
-      service_principal_object_id = []
 
     }
     owners = {
@@ -421,7 +432,6 @@ azuread_groups = {
       service_principal_keys = [
         "caf_launchpad_level0"
       ]
-      service_principal_object_id = []
     }
     prevent_duplicate_name = false
   }
@@ -453,12 +463,10 @@ azuread_apps = {
     password_expire_in_days = 180
 
     # Store the ${secret_prefix}-client-id, ${secret_prefix}-client-secret...
+    # Set the policy during the creation process of the launchpad
     keyvaults = {
       launchpad = {
         secret_prefix = "aadapp-caf-launchpad-level0"
-        access_policy = {
-          secret_permissions = ["Get", "List", "Set", "Delete", "Purge"]
-        }
       }
     }
   }

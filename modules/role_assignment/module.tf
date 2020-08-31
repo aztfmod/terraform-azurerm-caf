@@ -11,4 +11,5 @@ module assignment {
   azuread_apps         = var.azuread_apps
   azuread_groups       = var.azuread_groups
   managed_identities   = var.managed_identities
+  client_config        = var.client_config
 }

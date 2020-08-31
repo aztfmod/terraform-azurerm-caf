@@ -20,8 +20,8 @@ app_service_plans = {
 
 app_services = {
   webapp1 = {
-    resource_group_key = "webapp_simple"
-    name               = "webapp-simple"
+    resource_group_key   = "webapp_simple"
+    name                 = "webapp-simple"
     app_service_plan_key = "asp1"
 
     settings = {

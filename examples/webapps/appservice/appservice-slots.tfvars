@@ -20,26 +20,26 @@ app_service_plans = {
 
 app_services = {
   webapp1 = {
-    resource_group_key = "webapp_region1"
-    name               = "webapp"
+    resource_group_key   = "webapp_region1"
+    name                 = "webapp"
     app_service_plan_key = "asp1"
 
     settings = {
       enabled = true
 
       site_config = {
-          default_documents           = ["main.aspx"]
-          always_on                   = true
-          dotnet_framework_version    = "v4.0"
+        default_documents        = ["main.aspx"]
+        always_on                = true
+        dotnet_framework_version = "v4.0"
       }
     }
 
     slots = {
       smoke_test = {
-          name    = "smoke-test"
+        name = "smoke-test"
       }
       ab_test = {
-          name    = "AB-testing"
+        name = "AB-testing"
       }
     }
 

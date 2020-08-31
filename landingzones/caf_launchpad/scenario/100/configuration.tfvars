@@ -46,6 +46,7 @@ storage_accounts = {
       tfstate     = "level0"
       environment = "sandpit"
       launchpad   = "launchpad_light" # Do not change. Required for the rover to work in AIRS, Limited privilege environments for demonstration purpuses
+      ##
     }
     containers = {
       tfstate = {
