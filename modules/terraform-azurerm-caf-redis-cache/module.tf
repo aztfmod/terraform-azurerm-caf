@@ -18,7 +18,7 @@ resource "azurerm_redis_cache" "redis" {
   tags                = local.tags
 
   enable_non_ssl_port       = lookup(var.redis, "enable_non_ssl_port", null)
-  minimum_tls_version       = lookup(var.redis, "minimum_tls_version", null)
+  minimum_tls_version       = lookup(var.redis, "minimum_tls_version", "1.2")
   private_static_ip_address = lookup(var.redis, "private_static_ip_address", null)
   shard_count               = lookup(var.redis, "shard_count", null)
   subnet_id                 = lookup(var.redis, "subnet_id", null)
