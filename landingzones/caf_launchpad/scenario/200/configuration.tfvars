@@ -277,7 +277,7 @@ keyvault_access_policies = {
     }
     keyvault_level0_rw = {
       azuread_group_key  = "keyvault_level0_rw"
-      secret_permissions = ["Set", "Get", "List", "Delete"]
+      secret_permissions = ["Set", "Get", "List", "Delete", "Recover"]
     }
   }
 
