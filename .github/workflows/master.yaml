@@ -41,7 +41,7 @@ jobs:
           convention: ["cafrandom"]
 
     container:
-      image: aztfmod/roveralpha:2009.011038
+      image: aztfmod/roveralpha:2009.011106
       options: --user 0
 
     steps:
@@ -232,7 +232,7 @@ jobs:
           convention: ["cafrandom"]
 
     container:
-      image: aztfmod/roveralpha:2009.011038
+      image: aztfmod/roveralpha:2009.011106
       options: --user 0
 
     steps:
@@ -250,7 +250,7 @@ jobs:
           # ln -s ${GITHUB_WORKSPACE} /tf/caf
 
           export TFVARS_PATH=${GITHUB_WORKSPACE}/landingzones/caf_launchpad/scenario/100
-          
+
           /tf/rover/rover.sh -lz ${GITHUB_WORKSPACE}/landingzones/caf_launchpad/ -a destroy \
             -launchpad \
             -env ${{ github.run_id }} \
