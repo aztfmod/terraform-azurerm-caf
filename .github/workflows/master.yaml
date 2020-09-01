@@ -56,18 +56,18 @@ jobs:
       
       - name: Locate launchpad
         run: |
-          ln -s ${GITHUB_WORKSPACE} /tf/caf
+          # ln -s ${GITHUB_WORKSPACE} /tf/caf
 
-          ls /tf/caf
+          # ls /tf/caf
 
        
           id=$(az storage account list --query "[?tags.tfstate=='level0' && tags.environment=='${{ github.run_id }}']" -o json | jq -r .[0].id)
 
           if [ "${id}" == "null" ]; then
           
-            export TFVARS_PATH=/tf/caf/terraform-azurerm-caf-landingzone-modules/landingzones/caf_launchpad/scenario/100
+            export TFVARS_PATH=${GITHUB_WORKSPACE}/landingzones/caf_launchpad/scenario/100
 
-            /tf/rover/rover.sh -lz /tf/caf/terraform-azurerm-caf-landingzone-modules/landingzones/caf_launchpad -a apply \
+            /tf/rover/rover.sh -lz ${GITHUB_WORKSPACE}/landingzones/caf_launchpad -a apply \
               -launchpad \
               --environment ${{ github.run_id }} \
               '-var prefix=g${{ github.run_id }}' \
@@ -247,10 +247,11 @@ jobs:
       
       - name: Remove launchpad
         run: |
-          ln -s ${GITHUB_WORKSPACE} /tf/caf
+          # ln -s ${GITHUB_WORKSPACE} /tf/caf
 
-          export TFVARS_PATH=/tf/caf/terraform-azurerm-caf-landingzone-modules/landingzones/caf_launchpad/scenario/100
-          /tf/rover/rover.sh -lz /tf/caf/terraform-azurerm-caf-landingzone-modules/landingzones/caf_launchpad/ -a destroy \
+          export TFVARS_PATH=${GITHUB_WORKSPACE}/landingzones/caf_launchpad/scenario/100
+          
+          /tf/rover/rover.sh -lz ${GITHUB_WORKSPACE}/landingzones/caf_launchpad/ -a destroy \
             -launchpad \
             -env ${{ github.run_id }} \
             '-var prefix=g${{ github.run_id }}' \
