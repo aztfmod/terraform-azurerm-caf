@@ -20,10 +20,10 @@ variable level {
   default = "level1"
 }
 variable logged_user_objectId {
-  default = ""
+  default = null
 }
 variable logged_aad_app_objectId {
-  default = ""
+  default = null
 }
 variable tags {
   type    = map

@@ -29,8 +29,8 @@ env:
   ARM_TENANT_ID: ${{ secrets.ARM_TENANT_ID }}
 
 jobs:
-  launchpad:
-    name: launchpad
+  foundations:
+    name: foundations
     runs-on: ubuntu-latest
 
     strategy:
@@ -54,7 +54,7 @@ jobs:
 
           echo "local user: $(whoami)"
       
-      - name: Locate launchpad
+      - name: launchpad
         run: |
           # ln -s ${GITHUB_WORKSPACE} /tf/caf
 
@@ -74,6 +74,10 @@ jobs:
               '-var tags={testing_job_id="${{ github.run_id }}"}'
           fi
 
+      - name: foundations
+        run: |
+          /tf/rover/rover.sh -lz ${GITHUB_WORKSPACE}/landingzones/caf_foundations -a apply
+      
   # caf_foundations:
   #   name: caf_foundations
   #   runs-on: ubuntu-latest
@@ -217,11 +221,11 @@ jobs:
   #           '-var-file ${{ env.TFVARS_PATH }}/${{ matrix.environment }}/${{ matrix.landingzone }}/${{ matrix.landingzone }}_${{ matrix.region }}_${{ matrix.convention }}.tfvars' \
   #           '-auto-approve'
 
-  level0_destroy:
-    name: level0_destroy
+  foundations_destroy:
+    name: foundations_destroy
     runs-on: ubuntu-latest
     if: always()
-    # needs: caf_foundations_destroy
+    needs: foundations
 
     strategy:
       fail-fast: false
@@ -243,6 +247,11 @@ jobs:
 
           echo "local user: $(whoami)"
       
+      
+      - name: foundations
+        run: |
+          /tf/rover/rover.sh -lz ${GITHUB_WORKSPACE}/landingzones/caf_foundations -a apply
+
       - name: Remove launchpad
         run: |
 
