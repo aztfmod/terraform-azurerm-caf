@@ -108,16 +108,16 @@ jobs:
 
       - name: deploy example
         run: |
-        /tf/rover/rover.sh -lz ${GITHUB_WORKSPACE}/examples -a apply \
-          -var-file ${GITHUB_WORKSPACE}/examples/${{ matrix.config_files }} \
-          --environment ${{ github.run_id }}
+          /tf/rover/rover.sh -lz ${GITHUB_WORKSPACE}/examples -a apply \
+            -var-file ${GITHUB_WORKSPACE}/examples/${{ matrix.config_files }} \
+            --environment ${{ github.run_id }}
 
       - name: destroy example
         run: |
-        /tf/rover/rover.sh -lz ${GITHUB_WORKSPACE}/examples -a destroy \
-          -var-file ${GITHUB_WORKSPACE}/examples/${{ matrix.config_files }} \
-          --environment ${{ github.run_id }} \
-          -auto-approve
+          /tf/rover/rover.sh -lz ${GITHUB_WORKSPACE}/examples -a destroy \
+            -var-file ${GITHUB_WORKSPACE}/examples/${{ matrix.config_files }} \
+            --environment ${{ github.run_id }} \
+            -auto-approve
 
   # landingzones:
   #   name: landingzones
