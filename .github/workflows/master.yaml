@@ -41,7 +41,7 @@ jobs:
           convention: ["cafrandom"]
 
     container:
-      image: aztfmod/roveralpha:2008.271602
+      image: aztfmod/roveralpha:2009.011038
       options: --user 0
 
     steps:
@@ -232,7 +232,7 @@ jobs:
           convention: ["cafrandom"]
 
     container:
-      image: aztfmod/roveralpha:2008.271602
+      image: aztfmod/roveralpha:2009.011038
       options: --user 0
 
     steps:
