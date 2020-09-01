@@ -29,10 +29,10 @@ variable max_length {
   default = 40
 }
 variable logged_user_objectId {
-  default = ""
+  default = null
 }
 variable logged_aad_app_objectId {
-  default = ""
+  default = null
 }
 variable tags {
   default = null

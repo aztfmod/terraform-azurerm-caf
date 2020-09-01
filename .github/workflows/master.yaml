@@ -3,7 +3,7 @@
 # Licensed under the MIT License.
 #
 
-name: caf-module
+name: scenario-100
 
 on:
   pull_request:
@@ -79,51 +79,45 @@ jobs:
           /tf/rover/rover.sh -lz ${GITHUB_WORKSPACE}/landingzones/caf_foundations -a apply \
           --environment ${{ github.run_id }}
       
-  # caf_foundations:
-  #   name: caf_foundations
-  #   runs-on: ubuntu-latest
+  examples:
+    name: examples
+    runs-on: ubuntu-latest
     
-  #   needs: level0
+    needs: foundations
 
-  #   strategy:
-  #     fail-fast: false
-  #     matrix:
-  #         landingzone: ["landingzone_caf_foundations"]
-  #         region: ["westus2"]
-  #         convention: ["random"]
-  #         environment: ["integration-tests"]
+    strategy:
+      fail-fast: false
+      matrix:
+          config_files: [
+            "webapps/appservice/appservice-simple.tfvars",
+            "webapps/appservice/appservice-slots.tfvars"
+          ]
+          convention: ["random"]
 
-  #   container:
-  #     image: aztfmod/rover:2007.2409
-  #     options: --user 0
+    container:
+      image: aztfmod/roveralpha:2009.011106
+      options: --user 0
 
-  #   steps:
-  #     - uses: actions/checkout@v2
+    steps:
+      - uses: actions/checkout@v2
 
-  #     - name:  setup context
-  #       id: context
-  #       run: |
-  #         ln -s ${GITHUB_WORKSPACE} /tf/caf
-  #         echo "ls /tf/caf" && ls -lsa /tf/caf
-  #         ls -lsa /tmp
+      - name: Login azure
+        run: |
+          az login --service-principal -u '${{ env.ARM_CLIENT_ID }}' -p '${{ env.ARM_CLIENT_SECRET }}' --tenant '${{ env.ARM_TENANT_ID }}'
+          az account set -s  ${{ env.ARM_SUBSCRIPTION_ID }}
 
-  #         # workspace='caffoundationsci'
-  #         # echo ::set-env name=TF_VAR_workspace::${workspace}
+      - name: deploy example
+        run: |
+        /tf/rover/rover.sh -lz ${GITHUB_WORKSPACE}/examples -a apply \
+          -var-file ${GITHUB_WORKSPACE}/examples/${{ matrix.config_files }} \
+          --environment ${{ github.run_id }}
 
-  #     - name: Login azure
-  #       run: |
-  #         az login --service-principal -u '${{ env.ARM_CLIENT_ID }}' -p '${{ env.ARM_CLIENT_SECRET }}' --tenant '${{ env.ARM_TENANT_ID }}'
-  #         az account set -s  ${{ env.ARM_SUBSCRIPTION_ID }}
-
-  #         echo "local user: $(whoami)"
-            
-  #     - name: deploy caf_foundations
-  #       run: |
-  #         /tf/rover/rover.sh -lz /tf/caf/caf-terraform-landingzones/landingzones/${{ matrix.landingzone }} -a apply \
-  #         --environment ${{ github.run_id }} \
-  #         -var prefix=g${{ github.run_id}} \
-  #         '-var tags={testing_job_id="${{ github.run_id }}"}' \
-  #         '-var-file ${{ env.TFVARS_PATH }}/${{ matrix.environment }}/${{ matrix.landingzone }}/${{ matrix.landingzone }}_${{ matrix.region }}_${{ matrix.convention }}.tfvars'
+      - name: destroy example
+        run: |
+        /tf/rover/rover.sh -lz ${GITHUB_WORKSPACE}/examples -a destroy \
+          -var-file ${GITHUB_WORKSPACE}/examples/${{ matrix.config_files }} \
+          --environment ${{ github.run_id }} \
+          -auto-approve
 
   # landingzones:
   #   name: landingzones
@@ -226,7 +220,7 @@ jobs:
     name: foundations_destroy
     runs-on: ubuntu-latest
     if: always()
-    needs: foundations
+    needs: examples
 
     strategy:
       fail-fast: false
