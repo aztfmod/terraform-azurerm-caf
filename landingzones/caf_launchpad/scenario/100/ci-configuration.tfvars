@@ -1,5 +1,7 @@
 #
-# This is a ci configuration of the scenario 100. This configuration adjust the permission to the service principal calling terraform
+# This is a ci configuration of the scenario 100. This configuration adjusts the permission to the service principal calling terraform
+#
+# Runs on: pipelines, head-less
 #
 
 level = "level0"

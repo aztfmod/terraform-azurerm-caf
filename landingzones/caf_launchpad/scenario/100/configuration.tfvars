@@ -1,3 +1,7 @@
+#
+# runs on: vscode, interactive user
+#
+
 level = "level0"
 scenarios = {
   launchpad = 100

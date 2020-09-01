@@ -34,7 +34,7 @@ jobs:
     runs-on: ubuntu-latest
 
     strategy:
-      fail-fast: false
+      fail-fast: true
       max-parallel: 1
       matrix:
           region: ["southeastasia"]
@@ -76,7 +76,8 @@ jobs:
 
       - name: foundations
         run: |
-          /tf/rover/rover.sh -lz ${GITHUB_WORKSPACE}/landingzones/caf_foundations -a apply
+          /tf/rover/rover.sh -lz ${GITHUB_WORKSPACE}/landingzones/caf_foundations -a apply \
+          --environment ${{ github.run_id }}
       
   # caf_foundations:
   #   name: caf_foundations
@@ -250,7 +251,9 @@ jobs:
       
       - name: foundations
         run: |
-          /tf/rover/rover.sh -lz ${GITHUB_WORKSPACE}/landingzones/caf_foundations -a apply
+          /tf/rover/rover.sh -lz ${GITHUB_WORKSPACE}/landingzones/caf_foundations -a destroy \
+          --environment ${{ github.run_id }} \
+          -auto-approve
 
       - name: Remove launchpad
         run: |
