@@ -89,8 +89,8 @@ jobs:
       fail-fast: false
       matrix:
           config_files: [
-            "webapps/appservice/appservice-simple.tfvars",
-            "webapps/appservice/appservice-slots.tfvars"
+            "webapps/appservice/appservice-simple",
+            "webapps/appservice/appservice-slots"
           ]
           convention: ["random"]
 
@@ -109,13 +109,15 @@ jobs:
       - name: deploy example
         run: |
           /tf/rover/rover.sh -lz ${GITHUB_WORKSPACE}/examples -a apply \
-            -var-file ${GITHUB_WORKSPACE}/examples/${{ matrix.config_files }} \
+            -tfstate $(basename ${{ matrix.config_files }}).tfstate \
+            -var-file ${GITHUB_WORKSPACE}/examples/${{ matrix.config_files }}.tfvars \
             --environment ${{ github.run_id }}
 
       - name: destroy example
         run: |
           /tf/rover/rover.sh -lz ${GITHUB_WORKSPACE}/examples -a destroy \
-            -var-file ${GITHUB_WORKSPACE}/examples/${{ matrix.config_files }} \
+            -tfstate $(basename ${{ matrix.config_files }}).tfstate \
+            -var-file ${GITHUB_WORKSPACE}/examples/${{ matrix.config_files }}.tfvars \
             --environment ${{ github.run_id }} \
             -auto-approve
 
