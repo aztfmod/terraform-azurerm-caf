@@ -9,6 +9,6 @@ output name {
 }
 
 output tenant_id {
-  value = var.tenant_id
+  value     = var.tenant_id
   sensitive = true
 }

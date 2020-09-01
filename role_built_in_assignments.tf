@@ -8,7 +8,7 @@ module role_assignment_subscriptions {
   for_each = lookup(var.role_mapping.built_in_role_mapping, "subscription_keys", {})
 
   mode               = "built-in"
-  scope              = each.key == "logged_in_subscription" ? data.azurerm_subscription.primary.id : format("/subscription/%s", var.subscriptions[each.key].subscription_id)
+  scope              = each.key == "logged_in_subscription" ? data.azurerm_subscription.primary.id : format("/subscriptions/%s", var.subscriptions[each.key].subscription_id)
   role_mappings      = each.value
   azuread_apps       = module.azuread_applications
   azuread_groups     = module.azuread_groups

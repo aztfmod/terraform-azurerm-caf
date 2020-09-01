@@ -464,10 +464,9 @@ azuread_apps = {
 
     # Store the ${secret_prefix}-client-id, ${secret_prefix}-client-secret...
     # Set the policy during the creation process of the launchpad
-    keyvaults = {
-      launchpad = {
-        secret_prefix = "aadapp-caf-launchpad-level0"
-      }
+    keyvault = {
+      keyvault_key  = "launchpad"
+      secret_prefix = "aadapp-caf-launchpad-level0"
     }
   }
 
@@ -479,10 +478,9 @@ azuread_apps = {
     password_expire_in_days = 60
     tenant_name             = "terraformdev.onmicrosoft.com"
     reply_urls              = ["https://localhost"]
-    keyvaults = {
-      secrets = {
-        secret_prefix = "aadapp-caf-level0-security-devops-pat-rotation-aad-app"
-      }
+    keyvault = {
+      keyvault_key  = "secrets"
+      secret_prefix = "aadapp-caf-level0-security-devops-pat-rotation-aad-app"
     }
   }
 

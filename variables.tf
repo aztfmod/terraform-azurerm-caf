@@ -164,3 +164,10 @@ variable storage_accounts {
 variable diagnostic_storage_accounts {
   default = {}
 }
+
+## Github
+variable github {
+  default = {
+    github_secrets = {}
+  }
+}
