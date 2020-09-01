@@ -64,9 +64,9 @@ module azuread_groups_members {
 #
 
 module azuread_users {
-  source = "./modules/azuread/users"
+  source     = "./modules/azuread/users"
   depends_on = [module.keyvault_access_policies]
-  for_each = var.azuread_users
+  for_each   = var.azuread_users
 
   global_settings = local.global_settings
   azuread_users   = each.value

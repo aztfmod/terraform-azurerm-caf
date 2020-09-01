@@ -62,7 +62,7 @@ variable default_region {
 }
 
 variable regions {
-  type = map
+  type        = map
   description = "List of the regions where services can be deployed. This impact the diagnostics logs settings"
   default = {
     region1 = "southeastasia"
@@ -148,10 +148,10 @@ variable rover_version {}
 variable user_type {}
 
 variable logged_user_objectId {
-  default = ""
+  default = null
 }
 variable logged_aad_app_objectId {
-  default = ""
+  default = null
 }
 
 variable aad_users {
