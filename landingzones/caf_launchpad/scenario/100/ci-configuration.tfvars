@@ -82,10 +82,13 @@ keyvaults = {
 keyvault_access_policies = {
   # A maximum of 16 access policies per keyvault
   launchpad = {
-    logged_in_app = {
-      # if the key is set to "logged_in_app" add the user running terraform in the keyvault policy
-      # More examples in /examples/keyvault
-      secret_permissions = ["Set", "Get", "List", "Delete", "Purge"]
+    logged_in_aad_app = {
+      azuread_app_key    = "caf_launchpad_level0"
+      secret_permissions = ["Set", "Get", "List", "Delete", "Purge", "Recover"]
+    }
+    caf_launchpad_level0 = {
+      azuread_app_key    = "caf_launchpad_level0"
+      secret_permissions = ["Set", "Get", "List", "Delete", "Purge", "Recover"]
     }
   }
 
@@ -107,13 +110,9 @@ azuread_apps = {
     useprefix               = true
     application_name        = "caf_launchpad_level0"
     password_expire_in_days = 180
-    keyvaults = {
-      launchpad = {
-        secret_prefix = "aadapp-caf-launchpad-level0"
-        access_policy = {
-          secret_permissions = ["Get", "List", "Set", "Delete", "Purge"]
-        }
-      }
+    keyvault = {
+      keyvault_key  = "launchpad"
+      secret_prefix = "aadapp-caf-launchpad-level0"
     }
   }
 }
@@ -126,7 +125,7 @@ role_mapping = {
       level0 = {
         "Storage Blob Data Contributor" = {
           object_ids = [
-            "logged_in_app"
+            "logged_in_aad_app"
           ]
         }
       }
