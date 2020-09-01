@@ -65,7 +65,7 @@ jobs:
           if [ "${id}" == "null" ]; then
           
             /tf/rover/rover.sh -lz ${GITHUB_WORKSPACE}/landingzones/caf_launchpad -a apply \
-              -var-file ${GITHUB_WORKSPACE}/landingzones/caf_launchpad/scenario/100/configuration.tfvars \
+              -var-file ${GITHUB_WORKSPACE}/landingzones/caf_launchpad/scenario/100/ci-configuration.tfvars \
               -launchpad \
               --environment ${{ github.run_id }} \
               '-var prefix=g${{ github.run_id }}' \
@@ -247,7 +247,7 @@ jobs:
         run: |
 
           /tf/rover/rover.sh -lz ${GITHUB_WORKSPACE}/landingzones/caf_launchpad/ -a destroy \
-            -var-file ${GITHUB_WORKSPACE}/landingzones/caf_launchpad/scenario/100/configuration.tfvars \
+            -var-file ${GITHUB_WORKSPACE}/landingzones/caf_launchpad/scenario/100/ci-configuration.tfvars \
             -launchpad \
             -env ${{ github.run_id }} \
             '-var prefix=g${{ github.run_id }}' \
