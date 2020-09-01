@@ -60,6 +60,7 @@ jobs:
 
           # ls /tf/caf
 
+          chmod -c -R u=rwx,g=rwx ${GITHUB_WORKSPACE}/modules/*
        
           id=$(az storage account list --query "[?tags.tfstate=='level0' && tags.environment=='${{ github.run_id }}']" -o json | jq -r .[0].id)
 
@@ -249,6 +250,8 @@ jobs:
         run: |
           # ln -s ${GITHUB_WORKSPACE} /tf/caf
 
+          chmod -c -R u=rwx,g=rwx ${GITHUB_WORKSPACE}/modules/*
+          
           export TFVARS_PATH=${GITHUB_WORKSPACE}/landingzones/caf_launchpad/scenario/100
 
           /tf/rover/rover.sh -lz ${GITHUB_WORKSPACE}/landingzones/caf_launchpad/ -a destroy \
