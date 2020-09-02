@@ -11,7 +11,10 @@ module private_endpoint {
 }
 
 data "terraform_remote_state" "vnets" {
-  for_each = var.private_endpoints
+  for_each = {
+    for key, endpoint in var.private_endpoints : key => endpoint
+    if try(endpoint.remote_tfstate, null) !=  null
+  }
 
   backend = "azurerm"
   config = {
