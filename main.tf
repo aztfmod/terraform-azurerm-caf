@@ -56,6 +56,7 @@ locals {
     virtual_machines           = try(var.compute.virtual_machines, {})
     bastion_hosts              = try(var.compute.bastion_hosts, {})
     azure_container_registries = try(var.compute.azure_container_registries, {})
+    aks_clusters               = try(var.compute.aks_clusters, {})
   }
 
   networking = {

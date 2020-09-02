@@ -34,3 +34,5 @@ variable managed_identities {
 variable diagnostics {
   default = {}
 }
+variable use_msi {}
+variable tfstates {}

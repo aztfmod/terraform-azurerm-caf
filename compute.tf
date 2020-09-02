@@ -15,6 +15,8 @@ module virtual_machines {
   boot_diagnostics_storage_account = try(var.storage_accounts[each.value.boot_diagnostics_storage_account_key].primary_blob_endpoint, {})
   keyvault_id                      = try(module.keyvaults[each.value.keyvault_key].id, null)
   diagnostics                      = local.diagnostics
+  use_msi                          = var.use_msi
+  tfstates                         = var.tfstates
 }
 
 
