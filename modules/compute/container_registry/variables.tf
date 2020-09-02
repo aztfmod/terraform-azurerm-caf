@@ -31,7 +31,7 @@ variable tags {
 
 variable georeplication_locations {
   description = "(Optional) A list of Azure locations where the container registry should be geo-replicated."
-  default     = []
+  default     = null
 }
 
 variable vnets {
