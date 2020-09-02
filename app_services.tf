@@ -12,8 +12,8 @@ module "app_service_environments" {
   name                      = each.value.name
   kind                      = try(each.value.kind, "ASEV2")
   zone                      = try(each.value.zone, null)
-  subnet_id                 = local.vnets[each.value.vnet_key].subnets[each.value.subnet_key].id
-  subnet_name               = local.vnets[each.value.vnet_key].subnets[each.value.subnet_key].name
+  subnet_id                 = module.networking[each.value.vnet_key].subnets[each.value.subnet_key].id
+  subnet_name               = module.networking[each.value.vnet_key].subnets[each.value.subnet_key].name
   internalLoadBalancingMode = each.value.internalLoadBalancingMode
   front_end_size            = try(each.value.front_end_size, "Standard_D1_V2")
   diagnostic_profiles       = try(each.value.diagnostic_profiles, null)

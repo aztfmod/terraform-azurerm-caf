@@ -10,7 +10,7 @@ module container_registry {
   sku                 = try(each.value.sku, "Basic")
   tags                = try(each.value.tags, {})
   network_rule_set    = try(each.value.network_rule_set, {})
-  vnets               = local.vnets
+  vnets               = module.networking
   georeplication_locations = [
     for region in try(each.value.georeplication_region_keys, []) : var.global_settings.regions[region]
   ]

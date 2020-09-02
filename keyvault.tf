@@ -8,7 +8,7 @@ module "keyvaults" {
   resource_groups = azurerm_resource_group.rg
   tenant_id       = local.client_config.tenant_id
   diagnostics     = local.diagnostics
-  vnets           = lookup(each.value, "network", null) == null ? {} : local.vnets
+  vnets           = lookup(each.value, "network", null) == null ? {} : module.networking
 }
 
 #

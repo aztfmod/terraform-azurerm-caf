@@ -5,7 +5,7 @@ output azurerm_firewalls {
 
 output vnets {
   value     = local.vnets
-  sensitive = true
+  sensitive = false
 }
 
 output tfstates {

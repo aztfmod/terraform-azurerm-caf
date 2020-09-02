@@ -58,8 +58,8 @@ locals {
     azure_container_registries = try(var.compute.azure_container_registries, {})
   }
 
-  vnets = merge(module.networking, try(var.networking.networking_objects, {}))
-
+  # vnets = merge(module.networking, try(var.networking.networking_objects, {}))
+  
   networking = {
     network_security_group_definition                       = try(var.networking.network_security_group_definition, {})
     public_ip_addresses                                     = try(var.networking.public_ip_addresses, {})
