@@ -38,6 +38,10 @@ variable tags {
   default = null
 }
 
+variable max_length {
+  default = null
+}
+
 variable resource_groups {
   description = "Name of the existing resource group to deploy the virtual machine"
   default     = null
