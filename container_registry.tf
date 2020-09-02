@@ -11,7 +11,7 @@ module container_registry {
   tags                     = try(each.value.tags, {})
   network_rule_set         = try(each.value.network_rule_set, {})
   vnets                    = module.networking
-  georeplication_locations = try([for region in try(each.value.georeplication_region_keys, []) : var.global_settings.regions[region]], null)
+  georeplication_locations = try(each.value.georeplication_region_keys, null) == null ? null : [for region in try(each.value.georeplication_region_keys, []) : var.global_settings.regions[region]]
   diagnostics              = local.diagnostics
   diagnostic_profiles      = try(each.value.diagnostic_profiles, {})
   private_endpoints        = try(each.value.private_endpoints, {})
