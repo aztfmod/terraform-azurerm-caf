@@ -58,6 +58,7 @@ We classified the various examples in this repo:
 
 | level | functionalities                                                                               | supported environments                     |
 |-------|-----------------------------------------------------------------------------------------------|--------------------------------------------|
+| 100   | basic functionalities and features, for demo and simple POC                                   | works in AIRS                              |
 | 200   | intermediate functionalities includes RBAC features                                           | may not work in AIRS, need AAD permissions |
 | 300   | advanced functionalities, multi region support, includes RBAC features                        | not working in AIRS, need AAD permissions  |  
 | 400   | advanced functionalities, multi region support, includes RBAC features and security hardening | not working in AIRS, need AAD permissions  |
