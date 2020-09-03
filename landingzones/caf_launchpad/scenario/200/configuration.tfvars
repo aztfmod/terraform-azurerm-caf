@@ -270,7 +270,7 @@ keyvaults = {
 keyvault_access_policies = {
   # A maximum of 16 access policies per keyvault
   launchpad = {
-    logged_in_user = {
+    logged_in_aad_app = {
       # if the key is set to "logged_in_user" add the user running terraform in the keyvault policy
       # More examples in /examples/keyvault
       secret_permissions = ["Set", "Get", "List", "Delete", "Purge", "Recover"]
@@ -288,7 +288,7 @@ keyvault_access_policies = {
   }
 
   secrets = {
-    logged_in_user = {
+    logged_in_aad_app = {
       secret_permissions = ["Set", "Get", "List", "Delete", "Purge", "Recover"]
     }
     caf_launchpad_level0 = {
