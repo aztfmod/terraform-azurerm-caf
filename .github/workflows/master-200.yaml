@@ -69,7 +69,6 @@ jobs:
               -launchpad \
               --environment ${{ github.run_id }} \
               '-var prefix=g${{ github.run_id }}' \
-              '-var regions={region1="${{ matrix.region }}"}' \
               '-var convention=${{ matrix.convention }}' \
               '-var tags={testing_job_id="${{ github.run_id }}"}'
           fi
@@ -259,7 +258,6 @@ jobs:
             -launchpad \
             -env ${{ github.run_id }} \
             '-var prefix=g${{ github.run_id }}' \
-            '-var regions={region1="${{ matrix.region }}"}' \
             '-var convention=${{ matrix.convention }}' \
             '-var tags={testing_job_id="${{ github.run_id }}"}' \
             -auto-approve
