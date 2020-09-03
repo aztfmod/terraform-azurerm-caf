@@ -43,3 +43,17 @@ module role_assignment_storage_accounts {
   managed_identities = azurerm_user_assigned_identity.msi
   client_config      = local.client_config
 }
+
+# IAM for aks clusters
+module role_assignment_aks_clusters {
+  source   = "./modules/role_assignment"
+  for_each = lookup(var.role_mapping.built_in_role_mapping, "aks_clusters", {})
+
+  mode               = "built-in"
+  scope              = module.aks_clusters[each.key].id
+  role_mappings      = each.value
+  azuread_apps       = module.azuread_applications
+  azuread_groups     = module.azuread_groups
+  managed_identities = azurerm_user_assigned_identity.msi
+  client_config      = local.client_config
+}

@@ -63,30 +63,30 @@ data "terraform_remote_state" "vnets" {
 # Example of a nic configuration with vnet on a remote state
 
 # Define the number of networking cards to attach the virtual machine
-  # networking_interfaces = {
-  #   nic0 = {
-  #     # AKS rely on a remote network and need the details of the tfstate to connect (tfstate_key), assuming RBAC authorization.
-  #     networking = {
-  #       remote_tfstate = {
-  #         tfstate_key = "networking_aks"
-  #         output_key  = "vnets"
-  #         lz_key      = "networking_aks"
-  #         vnet_key    = "hub_rg1"
-  #         subnet_key  = "jumpbox"
-  #       }
-  #     }
-  #     name                    = "0"
-  #     enable_ip_forwarding    = false
-  #     internal_dns_name_label = "nic0"
+# networking_interfaces = {
+#   nic0 = {
+#     # AKS rely on a remote network and need the details of the tfstate to connect (tfstate_key), assuming RBAC authorization.
+#     networking = {
+#       remote_tfstate = {
+#         tfstate_key = "networking_aks"
+#         output_key  = "vnets"
+#         lz_key      = "networking_aks"
+#         vnet_key    = "hub_rg1"
+#         subnet_key  = "jumpbox"
+#       }
+#     }
+#     name                    = "0"
+#     enable_ip_forwarding    = false
+#     internal_dns_name_label = "nic0"
 
-  #     # you can setup up to 5 profiles
-  #     diagnostic_profiles = {
-  #       operations = {
-  #         definition_key   = "nic"
-  #         destination_type = "log_analytics"
-  #         destination_key  = "central_logs"
-  #       }
-  #     }
+#     # you can setup up to 5 profiles
+#     diagnostic_profiles = {
+#       operations = {
+#         definition_key   = "nic"
+#         destination_type = "log_analytics"
+#         destination_key  = "central_logs"
+#       }
+#     }
 
-  #   }
-  # }
+#   }
+# }

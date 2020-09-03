@@ -1,3 +1,9 @@
+output aks_clusters {
+  value     = module.aks_clusters
+  sensitive = true
+}
+
+
 module aks_clusters {
   source   = "./modules/compute/aks"
   for_each = local.compute.aks_clusters
