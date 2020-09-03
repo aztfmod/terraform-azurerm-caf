@@ -251,8 +251,6 @@ azuread_groups = {
     name        = "sql-sales-admins"
     description = "Administrators of the sales SQL server."
     members = {
-      logged_in_user       = true
-      logged_in_aad_app    = true
       user_principal_names = []
       object_ids = [
       ]

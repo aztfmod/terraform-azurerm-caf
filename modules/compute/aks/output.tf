@@ -31,3 +31,7 @@ output identity {
 output kube_admin_config_raw {
   value = azurerm_kubernetes_cluster.aks.kube_admin_config_raw
 }
+
+output rbac_id {
+  value = azurerm_kubernetes_cluster.aks.kubelet_identity[0].object_id
+}

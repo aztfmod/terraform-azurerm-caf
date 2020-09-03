@@ -879,13 +879,13 @@ custom_role_definitions = {
 #
 role_mapping = {
   custom_role_mapping = {
-    subscription_keys = {
+    subscriptions = {
       logged_in_subscription = {
         "caf-launchpad-contributor" = {
-          azuread_group_keys = [
+          azuread_groups = [
             "keyvault_level0_rw", "keyvault_level1_rw", "keyvault_level2_rw", "keyvault_level3_rw", "keyvault_level4_rw",
           ]
-          managed_identity_keys = [
+          managed_identities = [
             "level0", "level1", "level2", "level3", "level4"
           ]
         }

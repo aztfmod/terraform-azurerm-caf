@@ -25,3 +25,8 @@ output azuread_service_principal {
 output keyvault {
   value = try(module.keyvault_secret_policy.0, null)
 }
+
+output rbac_id {
+  value       = azuread_application.app.object_id
+  description = "This attribute is used to set the role assignment"
+}

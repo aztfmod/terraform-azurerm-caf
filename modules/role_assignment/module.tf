@@ -13,3 +13,4 @@ module assignment {
   managed_identities   = var.managed_identities
   client_config        = var.client_config
 }
+
