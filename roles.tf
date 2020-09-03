@@ -31,10 +31,14 @@ locals {
     azuread_users              = module.azuread_users
     managed_identities         = module.managed_identities
     storage_accounts           = module.storage_accounts
-    subscriptions              = merge(try(var.subscriptions, {}), { "logged_in_subscription" = data.azurerm_subscription.primary.id })
+    subscriptions              = merge(try(var.subscriptions, {}), { "logged_in_subscription" = {id = data.azurerm_subscription.primary.id }})
     logged_in = {
-      user = local.client_config.logged_user_objectId
-      app  = local.client_config.logged_aad_app_objectId
+      user = {
+        rbac_id = local.client_config.logged_user_objectId
+      }
+      app  = {
+        rbac_id = data.azurerm_subscription.primary.id
+      }
     }
   }
 

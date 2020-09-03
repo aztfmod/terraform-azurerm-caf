@@ -24,7 +24,7 @@ output primary_blob_endpoint {
 }
 
 
-output rbac_id {
-  value       = azurerm_storage_account.stg.id
-  description = "This attribute is used to set the role assignment"
-}
+# output rbac_id {
+#   value       = azurerm_storage_account.stg.id
+#   description = "This attribute is used to set the role assignment"
+# }

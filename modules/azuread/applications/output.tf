@@ -27,6 +27,6 @@ output keyvault {
 }
 
 output rbac_id {
-  value       = azuread_application.app.object_id
+  value       = azuread_service_principal.app.object_id
   description = "This attribute is used to set the role assignment"
 }
