@@ -22,3 +22,9 @@ output primary_blob_endpoint {
   value     = azurerm_storage_account.stg.primary_blob_endpoint
   sensitive = true
 }
+
+
+output rbac_id {
+  value       = azurerm_storage_account.stg.id
+  description = "This attribute is used to set the role assignment"
+}

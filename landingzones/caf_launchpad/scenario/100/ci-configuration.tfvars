@@ -98,9 +98,6 @@ keyvault_access_policies = {
 
 subscriptions = {
   logged_in_subscription = {
-    role_definition_name = "Owner"
-    aad_app_key          = "caf_launchpad_level0"
-
     diagnostic_profiles = {}
   }
 }
@@ -123,11 +120,20 @@ azuread_apps = {
 role_mapping = {
   custom_role_mapping = {}
   built_in_role_mapping = {
-    storage_account_keys = {
+    storage_accounts = {
       level0 = {
         "Storage Blob Data Contributor" = {
-          object_ids = [
-            "logged_in_aad_app"
+          logged_in = [
+            "app"
+          ]
+        }
+      }
+    }
+    subscriptions = {
+      logged_in_subscription = {
+        "Owner" = {
+          azuread_apps = [
+            "caf_launchpad_level0"
           ]
         }
       }

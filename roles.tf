@@ -10,6 +10,8 @@ module custom_roles {
 #
 # Roles assignments
 #
+# Require the modules output an rbac_id that is set to the principal_id
+#
 
 resource "azurerm_role_assignment" "for" {
   for_each = try(local.roles_to_process, {})
@@ -28,6 +30,7 @@ locals {
     azuread_apps               = module.azuread_applications
     azuread_users              = module.azuread_users
     managed_identities         = module.managed_identities
+    storage_accounts           = module.storage_accounts
     subscriptions              = merge(try(var.subscriptions, {}), { "logged_in_subscription" = data.azurerm_subscription.primary.id })
     logged_in = {
       user = local.client_config.logged_user_objectId
