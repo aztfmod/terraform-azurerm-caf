@@ -95,11 +95,6 @@ keyvault_access_policies = {
 
 }
 
-subscriptions = {
-  logged_in_subscription = {
-    diagnostic_profiles = {}
-  }
-}
 
 azuread_apps = {
   # Do not rename the key "launchpad" to be able to upgrade to higher scenario
@@ -124,6 +119,9 @@ role_mapping = {
         "Storage Blob Data Contributor" = {
           logged_in = [
             "user"
+          ]
+          azuread_apps = [
+            "caf_launchpad_level0"
           ]
         }
       }

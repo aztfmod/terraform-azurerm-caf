@@ -37,7 +37,7 @@ locals {
         rbac_id = local.client_config.logged_user_objectId
       }
       app  = {
-        rbac_id = data.azurerm_subscription.primary.id
+        rbac_id = data.azurerm_client_config.current.object_id
       }
     }
   }

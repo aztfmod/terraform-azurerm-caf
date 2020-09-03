@@ -98,7 +98,9 @@ variable diagnostic_storage_accounts {
 variable keyvaults {}
 variable keyvault_access_policies {}
 
-variable subscriptions {}
+variable subscriptions {
+  default = {}
+}
 
 ## Azure Active Directory
 variable azuread_apps {

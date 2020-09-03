@@ -84,6 +84,9 @@ keyvaults = {
 keyvault_access_policies = {
   # A maximum of 16 access policies per keyvault
   launchpad = {
+    logged_in_user = {
+      secret_permissions = ["Set", "Get", "List", "Delete", "Purge", "Recover"]
+    }
     logged_in_aad_app = {
       azuread_app_key    = "caf_launchpad_level0"
       secret_permissions = ["Set", "Get", "List", "Delete", "Purge", "Recover"]
@@ -96,11 +99,6 @@ keyvault_access_policies = {
 
 }
 
-subscriptions = {
-  logged_in_subscription = {
-    diagnostic_profiles = {}
-  }
-}
 
 azuread_apps = {
   # Do not rename the key "launchpad" to be able to upgrade to higher scenario
@@ -125,6 +123,9 @@ role_mapping = {
         "Storage Blob Data Contributor" = {
           logged_in = [
             "app"
+          ]
+          azuread_apps = [
+            "caf_launchpad_level0"
           ]
         }
       }
