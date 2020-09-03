@@ -308,8 +308,6 @@ keyvault_access_policies = {
 
 subscriptions = {
   logged_in_subscription = {
-    role_definition_name = "Owner"
-    aad_app_key          = "caf_launchpad_level0"
 
     # you can setup up to 5 profiles
     diagnostic_profiles = {
@@ -444,7 +442,6 @@ azuread_users = {
     convention              = "cafrandom"
     useprefix               = true
     max_length              = 60
-    tenant_name             = "terraformdev.onmicrosoft.com"
     user_name               = "caf-level0-security-devops-pat-rotation"
     password_expire_in_days = 180
 
@@ -888,114 +885,118 @@ role_mapping = {
           managed_identities = [
             "level0", "level1", "level2", "level3", "level4"
           ]
+          azuread_apps = [
+            "caf_launchpad_level0"
+          ]
         }
       }
     }
   }
 
   built_in_role_mapping = {
-    subscription_keys = {
+    subscriptions = {
       logged_in_subscription = {
         "Contributor" = {
-          azuread_app_keys = [
+          azuread_apps = [
             "caf_launchpad_level0"
           ]
-          managed_identity_keys = [
+          managed_identities = [
             "level0", "level1", "level2", "level3", "level4"
           ]
         }
       }
     }
-    resource_group_keys = {
+    resource_groups = {
       tfstate = {
         "Reader" = {
-          azuread_group_keys = [
+          azuread_groups = [
             "caf_launchpad_Reader"
           ]
         }
       }
       security = {
         "Reader" = {
-          azuread_group_keys = [
+          azuread_groups = [
             "caf_launchpad_Reader"
           ]
         }
       }
       networking = {
         "Reader" = {
-          azuread_group_keys = [
+          azuread_groups = [
             "caf_launchpad_Reader"
           ]
         }
       }
       ops = {
         "Reader" = {
-          azuread_group_keys = [
+          azuread_groups = [
             "caf_launchpad_Reader"
           ]
         }
       }
       siem = {
         "Reader" = {
-          azuread_group_keys = [
+          azuread_groups = [
             "caf_launchpad_Reader"
           ]
         }
       }
     }
-    storage_account_keys = {
+    storage_accounts = {
       level0 = {
         "Storage Blob Data Contributor" = {
-          object_ids = [
-            "logged_in_user"
+          logged_in = [
+            "user"
           ]
-          azuread_group_keys = [
+          object_ids = []
+          azuread_groups = [
             "keyvault_level0_rw"
           ]
-          azuread_app_keys = [
+          azuread_apps = [
             "caf_launchpad_level0"
           ]
-          managed_identity_keys = [
+          managed_identities = [
             "level0"
           ]
         }
       }
       level1 = {
         "Storage Blob Data Contributor" = {
-          azuread_group_keys = [
+          azuread_groups = [
             "keyvault_level1_rw"
           ]
-          managed_identity_keys = [
+          managed_identities = [
             "level1"
           ]
         }
       }
       level2 = {
         "Storage Blob Data Contributor" = {
-          azuread_group_keys = [
+          azuread_groups = [
             "keyvault_level2_rw"
           ]
-          managed_identity_keys = [
+          managed_identities = [
             "level2"
           ]
         }
       }
       level3 = {
         "Storage Blob Data Contributor" = {
-          azuread_group_keys = [
+          azuread_groups = [
             "keyvault_level3_rw"
           ]
-          managed_identity_keys = [
+          managed_identities = [
             "level3"
           ]
         }
       }
       level4 = {
         "Storage Blob Data Contributor" = {
-          azuread_group_keys = [
+          azuread_groups = [
             "keyvault_level4_rw"
           ]
-          managed_identity_keys = [
+          managed_identities = [
             "level4"
           ]
         }
@@ -1092,8 +1093,10 @@ virtual_machines = {
     networking_interfaces = {
       nic0 = {
         # Value of the keys from networking.tfvars
-        vnet_key                = "devops_region1"
-        subnet_key              = "jumpbox"
+        networking = {
+          vnet_key                = "devops_region1"
+          subnet_key              = "jumpbox"
+        }
         name                    = "0"
         enable_ip_forwarding    = false
         internal_dns_name_label = "nic0"
@@ -1133,7 +1136,7 @@ virtual_machines = {
           version   = "latest"
         }
 
-        managed_identity_keys = [
+        managed_identities = [
           "level0", "level1", "level2", "level3", "level4"
         ]
       }

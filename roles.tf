@@ -29,6 +29,7 @@ locals {
     azuread_groups             = module.azuread_groups
     azuread_apps               = module.azuread_applications
     azuread_users              = module.azuread_users
+    resource_groups            = azurerm_resource_group.rg
     managed_identities         = module.managed_identities
     storage_accounts           = module.storage_accounts
     subscriptions              = merge(try(var.subscriptions, {}), { "logged_in_subscription" = {id = data.azurerm_subscription.primary.id }})
