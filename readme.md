@@ -1,58 +1,73 @@
-![landingzones](https://github.com/Azure/caf-terraform-landingzones/workflows/landingzones/badge.svg)
-![landingzones](https://github.com/Azure/caf-terraform-landingzones/workflows/landingzones-vnext/badge.svg)
-[![VScodespaces](https://img.shields.io/endpoint?url=https%3A%2F%2Faka.ms%2Fvso-badge)](https://online.visualstudio.com/environments/new?name=caf%20landing%20zones&repo=azure/caf-terraform-landingzones)
+[![VScodespaces](https://img.shields.io/endpoint?url=https%3A%2F%2Faka.ms%2Fvso-badge)](https://online.visualstudio.com/environments/new?name=terraform-azurerm-caf-landingzone-modules&repo=aztfmod/terraform-azurerm-caf-landingzone-modules)
 
-# Azure Cloud Adoption Framework landing zones for Terraform
+# Azure Cloud Adoption Framework landing zones for Terraform vnext preview
 
 Microsoft [Cloud Adoption Framework for Azure](https://aka.ms/caf) provides you with guidance and best practices to adopt Azure.
 
 A landing zone is a segment of a cloud environment, that has been preprovisioned through code, and is dedicated to the support of one or more workloads. Landing zones provide access to foundational tools and controls to establish a compliant place to innovate and build new workloads in the cloud, or to migrate existing workloads to the cloud. Landing zones use defined sets of cloud services and best practices to set you up for success.
 
-Components parts of the Cloud Adoption Framework for Azure Terraform landing zones:
+## Vnext differentiated approach
 
-![caf_elements](./_pictures/caf_elements.png)
+This vnext is relying extensively on Terraform 0.13 capabilities (module iterations, conditional modules, variables validation, etc.). Those new features allow more complex and more dynamic code composition. The following concepts are used:
 
-## Goals
+* **Flexible fundations to meet customer needs**: everything is customizable at all layers.
+* **Key-based configuration and customization**: all configuration objects will call each other based on the object keys.
+* **Iteration-based objects deployment**: a landing zone calls all its modules, iterating on complex objects for technical resources deployment.
 
-Cloud Adoption Framework for Azure Terraform landing zones is an Open Source project with the following objectives:
+## Testing vnext
 
-* Enable the community with a set of sample reusable landing zones.
-* Standardize deployments using battlefield-proven components.
-* Accelerate the setup of complex environments on Azure.
-* Propose an enterprise-grade approach to adopting Terraform on Microsoft Azure using Cloud Adoption Framework.
-* Propose a prescriptive guidance on how to enable DevOps for infrastructure as code on Microsoft Azure.
-* Foster a community of Azure *Terraformers* using a common set of practices and sharing best practices.
+1. Prerequisites are the same as for current version of landing zones, please setup your environment using the following guide: https://github.com/Azure/caf-terraform-landingzones/blob/master/documentation/getting_started/getting_started.md 
 
-## Getting started
+2. Log in the subscription with the rover:
 
-See our [Getting Started](./documentation/getting_started/getting_started.md) on your laptop, or on the web with [Getting Started on VSCodespaces](./documentation/getting_started/getting_started_codespaces.md).
+```bash
+rover login
+### you can alternatively specify the tenant space and subscription ID on command line arguments:
+rover login --tenant <tenant_name>.onmicrosoft.com -s <subscription_id>
+```
 
-See our [Getting Started Video](https://www.youtube.com/watch?v=t1exCkWft60)
+3. Deploy the basic launchpad (working on AIRS):
 
-## Documentation
+```bash
+rover -lz /tf/caf/landingzones/caf_launchpad -launchpad -var-file /tf/caf/landingzones/caf_launchpad/scenario/100/configuration.tfvars -w tfstate -a apply
+```
 
-More details on how to develop, deploy and operate with landing zones can be found in the reference section [here](./documentation/README.md)
+Once completed you would see 2 resource groups in your subscription. The scenario 100 is pretty basic and include the minimum to get the terraform remote state management working.
 
-## Sample landing zones
+4. Upgrade to advanced launchpad (if you have Azure AD permissions - not working on AIRS):
 
-Currently we provide you with the following sample landing zones:
+```bash
+rover -lz /tf/caf/landingzones/caf_launchpad -launchpad -var-file /tf/caf/landingzones/caf_launchpad/scenario/200/configuration.tfvars -w tfstate -a apply
+```
 
-| Name                                                                      | Purpose                                                                                                                                                                                                                                                                                                                                                                                                                                                                                 |
-|---------------------------------------------------------------------------|-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
-| [landingzone_caf_foundations](./landingzones/landingzone_caf_foundations) | setup all the fundamentals for a subscription (logging, accounting, security.). You can find all details of the caf_foundations landing zone [Here](./landingzones/landingzone_caf_foundations/readme.md)                                                                                                                                                                                                                                                                               |
-| [landingzone_hub_spoke](./landingzones/landingzone_hub_spoke)             | example of [hub and spoke environment](https://docs.microsoft.com/en-us/azure/architecture/reference-architectures/hybrid-networking/hub-spoke) documentation [here](./landingzones/landingzone_hub_spoke/readme.md)                                                                                                                                                                                                                                                                    |
-| [landingzone_hub_mesh](./landingzones/landingzone_hub_mesh)               | example of [hub and mesh environment with Azure Virtual WAN](https://docs.microsoft.com/en-us/azure/virtual-wan) documentation [here](./landingzones/landingzone_hub_mesh/readme.md)                                                                                                                                                                                                                                                                                                    |
-| [landingzone_vdc_demo](./landingzones/landingzone_vdc_demo)               | setup a demo environment of a hub-spoke topology including shared services, as well as various DMZ (ingress, egress, transit). You can find all details of the vdc_demo landing zone [Here](./landingzones/landingzone_vdc_demo/readme.md)                                                                                                                                                                                                                                              |
-| [landingzone_secure_vnet_dmz](./landingzones/landingzone_secure_vnet_dmz) | (preview) this is an early implementation of the reference architecture [secure_vnet_dmz](https://docs.microsoft.com/en-gb/azure/architecture/reference-architectures/dmz/secure-vnet-dmz). This is a work in progress used to illustrate landing zone creation process as described [here](./documentation/code_architecture/how_to_code_a_landingzone.md) . You can find all details of the secure vnet dmz landing zone [Here](./landingzones/landingzone_secure_vnet_dmz/readme.md) |
-| [landingzone_starter](./landingzones/landingzone_starter)                 | this is an empty landing zones to use as a template to develop a level 2 landing zone. You can find all details of the starter landing zone [Here](./landingzones/landingzone_starter/readme.md)                                                                                                                                                                                                                                                                                        |
+5. Deploy the caf_foundations. This is currently mostly a stub, but will implement enterprise management groups, policies, alerts, etc.:
 
-## Repositories
+```bash
+rover -lz /tf/caf/landingzones/caf_foundations -w tfstate -a apply
+```
+
+6. Deploy a networking scenario:
+
+```bash
+rover -lz /tf/caf/landingzones/caf_networking/ -var-file /tf/caf/landingzones/caf_networking/scenario/110-aks-private/configuration.tfvars -w tfstate -a apply
+```
+
+## Example levels
+
+We classified the various examples in this repo:
+
+| level | functionalities                                                                               | supported environments                     |
+|-------|-----------------------------------------------------------------------------------------------|--------------------------------------------|
+| 200   | intermediate functionalities includes RBAC features                                           | may not work in AIRS, need AAD permissions |
+| 300   | advanced functionalities, multi region support, includes RBAC features                        | not working in AIRS, need AAD permissions  |  
+| 400   | advanced functionalities, multi region support, includes RBAC features and security hardening | not working in AIRS, need AAD permissions  |
+
+## Related repositories
 
 | Repo                                                                                              | Description                                                |
 |---------------------------------------------------------------------------------------------------|------------------------------------------------------------|
 | [caf-terraform-landingzones](https://github.com/azure/caf-terraform-landingzones) (You are here!) | landing zones repo with sample and core documentations     |
 | [rover](https://github.com/aztfmod/rover)                                                         | devops toolset for operating landing zones                 |
-| [launchpads](https://github.com/aztfmod/level0)                                                   | launchpads to support landing zones deployments            |
 | [azure_caf_provider](https://github.com/aztfmod/terraform-provider-azurecaf)                      | custom provider for naming conventions                     |
 | [modules](https://registry.terraform.io/modules/aztfmod)                                          | set of curated modules available in the Terraform registry |
 
