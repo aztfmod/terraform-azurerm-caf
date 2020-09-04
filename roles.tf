@@ -19,6 +19,7 @@ resource "azurerm_role_assignment" "for" {
   scope                = local.services_roles[each.value.scope_resource_key][each.value.scope_key_resource].id
   role_definition_name = each.value.mode == "built_in_role_mapping" ? each.value.role_definition_name : null
   role_definition_id   = each.value.mode == "custom_role_mapping" ? module.custom_roles[each.value.role_definition_name].id : null
+  # principal_id         = try(local.services_roles[each.value.object_id_resource_type][each.value.object_id_key_resource].rbac_id, each.value.object_id_key_resource)
   principal_id         = each.value.object_id_resource_type == "object_ids" ? each.value.object_id_key_resource : local.services_roles[each.value.object_id_resource_type][each.value.object_id_key_resource].rbac_id
 }
 
