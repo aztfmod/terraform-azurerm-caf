@@ -5,7 +5,7 @@ resource "azurerm_monitor_diagnostic_setting" "diagnostics" {
     if var.diagnostics.diagnostics_definition != {} # Disable diagnostics when not enabled in the launchpad
   }
 
-  name               = lookup(each.value, "name", null) == null ? var.diagnostics.diagnostics_definition[each.value.definition_key].name : each.value.name
+  name               = try(format("%s%s", try(var.global_settings.prefix_with_hyphen, "") , each.value.name), format("%s%s", try(var.global_settings.prefix_with_hyphen, "") , var.diagnostics.diagnostics_definition[each.value.definition_key].name))
   target_resource_id = var.resource_id
 
   #  eventhub_name                    = lookup(var.diagnostics, "eh_name", null)

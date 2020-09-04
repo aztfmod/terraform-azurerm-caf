@@ -6,4 +6,5 @@ module diagnostics {
   resource_location = var.global_settings.regions[var.global_settings.default_region]
   diagnostics       = var.diagnostics
   profiles          = try(var.subscription.diagnostic_profiles, null)
+  global_settings   = var.global_settings
 }

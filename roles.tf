@@ -29,7 +29,7 @@ locals {
     azuread_groups             = module.azuread_groups
     azuread_apps               = module.azuread_applications
     azuread_users              = module.azuread_users
-    resource_groups            = azurerm_resource_group.rg
+    resource_groups            = module.resource_groups
     managed_identities         = module.managed_identities
     storage_accounts           = module.storage_accounts
     subscriptions              = merge(try(var.subscriptions, {}), { "logged_in_subscription" = {id = data.azurerm_subscription.primary.id }})
@@ -38,7 +38,7 @@ locals {
         rbac_id = local.client_config.logged_user_objectId
       }
       app  = {
-        rbac_id = data.azurerm_client_config.current.object_id
+        rbac_id = local.client_config.logged_aad_app_objectId
       }
     }
   }

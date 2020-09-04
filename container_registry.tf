@@ -4,8 +4,8 @@ module container_registry {
 
   global_settings          = local.global_settings
   name                     = each.value.name
-  resource_group_name      = azurerm_resource_group.rg[each.value.resource_group_key].name
-  location                 = lookup(each.value, "region", null) == null ? azurerm_resource_group.rg[each.value.resource_group_key].location : local.global_settings.regions[each.value.region]
+  resource_group_name      = module.resource_groups[each.value.resource_group_key].name
+  location                 = lookup(each.value, "region", null) == null ? module.resource_groups[each.value.resource_group_key].location : local.global_settings.regions[each.value.region]
   admin_enabled            = try(each.value.admin_enabled, false)
   sku                      = try(each.value.sku, "Basic")
   tags                     = try(each.value.tags, {})
@@ -15,7 +15,7 @@ module container_registry {
   diagnostics              = local.diagnostics
   diagnostic_profiles      = try(each.value.diagnostic_profiles, {})
   private_endpoints        = try(each.value.private_endpoints, {})
-  resource_groups          = azurerm_resource_group.rg
+  resource_groups          = module.resource_groups
   tfstates                 = var.tfstates
   use_msi                  = var.use_msi
 }

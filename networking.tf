@@ -19,8 +19,8 @@ module "networking" {
   max_length                        = local.global_settings.max_length
   prefix                            = local.global_settings.prefix
   convention                        = try(each.value.convention, local.global_settings.convention)
-  location                          = lookup(each.value, "region", null) == null ? azurerm_resource_group.rg[each.value.resource_group_key].location : local.global_settings.regions[each.value.region]
-  resource_group_name               = azurerm_resource_group.rg[each.value.resource_group_key].name
+  location                          = lookup(each.value, "region", null) == null ? module.resource_groups[each.value.resource_group_key].location : local.global_settings.regions[each.value.region]
+  resource_group_name               = module.resource_groups[each.value.resource_group_key].name
   settings                          = each.value
   network_security_group_definition = local.networking.network_security_group_definition
   route_tables                      = module.route_tables
@@ -39,8 +39,8 @@ module public_ip_addresses {
   for_each = local.networking.public_ip_addresses
 
   name                    = each.value.name
-  resource_group_name     = azurerm_resource_group.rg[each.value.resource_group_key].name
-  location                = lookup(each.value, "region", null) == null ? azurerm_resource_group.rg[each.value.resource_group_key].location : local.global_settings.regions[each.value.region]
+  resource_group_name     = module.resource_groups[each.value.resource_group_key].name
+  location                = lookup(each.value, "region", null) == null ? module.resource_groups[each.value.resource_group_key].location : local.global_settings.regions[each.value.region]
   sku                     = try(each.value.sku, "Basic")
   allocation_method       = try(each.value.allocation_method, "Dynamic")
   ip_version              = try(each.value.ip_version, "IPv4")
@@ -120,8 +120,8 @@ module "route_tables" {
   for_each = local.networking.route_tables
 
   name                          = each.value.name
-  resource_group_name           = azurerm_resource_group.rg[each.value.resource_group_key].name
-  location                      = lookup(each.value, "region", null) == null ? azurerm_resource_group.rg[each.value.resource_group_key].location : local.global_settings.regions[each.value.region]
+  resource_group_name           = module.resource_groups[each.value.resource_group_key].name
+  location                      = lookup(each.value, "region", null) == null ? module.resource_groups[each.value.resource_group_key].location : local.global_settings.regions[each.value.region]
   disable_bgp_route_propagation = try(each.value.disable_bgp_route_propagation, null)
   tags                          = try(each.value.tags, null)
 }
@@ -131,7 +131,7 @@ module "routes" {
   for_each = local.networking.azurerm_routes
 
   name                      = each.value.name
-  resource_group_name       = azurerm_resource_group.rg[each.value.resource_group_key].name
+  resource_group_name       = module.resource_groups[each.value.resource_group_key].name
   route_table_name          = module.route_tables[each.value.route_table_key].name
   address_prefix            = each.value.address_prefix
   next_hop_type             = each.value.next_hop_type

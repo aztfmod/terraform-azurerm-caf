@@ -7,8 +7,8 @@ resource "azurerm_bastion_host" "host" {
   for_each = local.compute.bastion_hosts
 
   name                = each.value.name
-  location            = azurerm_resource_group.rg[each.value.resource_group_key].location
-  resource_group_name = azurerm_resource_group.rg[each.value.resource_group_key].name
+  location            = module.resource_groups[each.value.resource_group_key].location
+  resource_group_name = module.resource_groups[each.value.resource_group_key].name
   tags                = try(each.value.tags, null)
 
   ip_configuration {
@@ -23,7 +23,7 @@ module bastion_host_diagnostics {
   for_each = local.compute.bastion_hosts
 
   resource_id       = azurerm_bastion_host.host[each.key].id
-  resource_location = azurerm_resource_group.rg[each.value.resource_group_key].location
+  resource_location = module.resource_groups[each.value.resource_group_key].location
   diagnostics       = local.diagnostics
   profiles          = try(each.value.diagnostic_profiles, {})
 }

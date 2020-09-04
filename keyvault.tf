@@ -5,7 +5,7 @@ module "keyvaults" {
 
   global_settings = local.global_settings
   keyvault        = each.value
-  resource_groups = azurerm_resource_group.rg
+  resource_groups = module.resource_groups
   tenant_id       = local.client_config.tenant_id
   diagnostics     = local.diagnostics
   vnets           = lookup(each.value, "network", null) == null ? {} : module.networking
@@ -26,8 +26,8 @@ module "keyvault_access_policies" {
   access_policies         = each.value
   tenant_id               = local.client_config.tenant_id
   azuread_groups          = module.azuread_groups
-  logged_user_objectId    = var.logged_user_objectId
-  logged_aad_app_objectId = var.logged_aad_app_objectId
+  logged_user_objectId    = local.client_config.logged_user_objectId
+  logged_aad_app_objectId = local.client_config.logged_aad_app_objectId
 }
 
 # Need to separate keyvault policies from azure ad apps t

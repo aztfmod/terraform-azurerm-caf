@@ -18,3 +18,7 @@ variable profiles {
     error_message = "Maximun of 5 diagnostics profiles are supported."
   }
 }
+
+variable global_settings {
+  default = {}
+}

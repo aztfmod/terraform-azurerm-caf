@@ -5,7 +5,7 @@ module "log_analytics" {
 
   global_settings = local.global_settings
   log_analytics   = each.value
-  resource_groups = azurerm_resource_group.rg
+  resource_groups = module.resource_groups
 }
 
 module log_analytics_diagnostics {
