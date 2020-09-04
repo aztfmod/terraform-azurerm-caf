@@ -18,7 +18,7 @@
 #
 
 global_settings = {
-  convention     = "cafclassic"
+  convention     = "cafrandom"
   default_region = "region1"
   regions = {
     region1 = "southeastasia"
