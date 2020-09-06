@@ -262,7 +262,6 @@ jobs:
             '-var prefix=g${{ github.run_id }}' \
             '-var convention=${{ matrix.convention }}' \
             '-var tags={testing_job_id="${{ github.run_id }}"}' \
-            -refresh=false \
             -auto-approve
         
           
