@@ -255,7 +255,7 @@ jobs:
         run: |
 
           /tf/rover/rover.sh -lz ${GITHUB_WORKSPACE}/landingzones/caf_launchpad/ -a destroy \
-            -var-file ${GITHUB_WORKSPACE}/landingzones/caf_launchpad/scenario/200/ci-configuration.tfvars \
+            -var-file ${GITHUB_WORKSPACE}/landingzones/caf_launchpad/scenario/200/configuration.tfvars \
             -launchpad \
             -env ${{ github.run_id }} \
             '-var prefix=g${{ github.run_id }}' \
