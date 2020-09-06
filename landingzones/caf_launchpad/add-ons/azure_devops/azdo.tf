@@ -1,8 +1,7 @@
 terraform {
-  experiments = [variable_validation]
 
   required_providers {
-    azurerm = "~> 2.20.0"
+    azurerm = "~> 2.25.0"
   }
 }
 

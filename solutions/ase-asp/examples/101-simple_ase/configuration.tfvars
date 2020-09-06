@@ -22,6 +22,7 @@ app_service_environments = {
   ase1 = {
     resource_group_key = "ase_region1"
     name               = "ase01"
+    max_length         = "80"
     kind               = "ASEV2"
     zone               = "1"
 

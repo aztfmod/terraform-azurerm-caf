@@ -38,3 +38,8 @@ output tfstates {
   value     = local.tfstates
   sensitive = true
 }
+
+output aad_apps {
+  value     = module.launchpad
+  sensitive = true
+}
