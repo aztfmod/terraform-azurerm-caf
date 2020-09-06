@@ -36,3 +36,6 @@ variable diagnostics {
 }
 variable use_msi {}
 variable tfstates {}
+variable public_ip_addresses {
+  default = {}
+}

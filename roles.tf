@@ -20,7 +20,7 @@ resource "azurerm_role_assignment" "for" {
   role_definition_name = each.value.mode == "built_in_role_mapping" ? each.value.role_definition_name : null
   role_definition_id   = each.value.mode == "custom_role_mapping" ? module.custom_roles[each.value.role_definition_name].id : null
   # principal_id         = try(local.services_roles[each.value.object_id_resource_type][each.value.object_id_key_resource].rbac_id, each.value.object_id_key_resource)
-  principal_id         = each.value.object_id_resource_type == "object_ids" ? each.value.object_id_key_resource : local.services_roles[each.value.object_id_resource_type][each.value.object_id_key_resource].rbac_id
+  principal_id = each.value.object_id_resource_type == "object_ids" ? each.value.object_id_key_resource : local.services_roles[each.value.object_id_resource_type][each.value.object_id_key_resource].rbac_id
 }
 
 locals {
@@ -33,12 +33,12 @@ locals {
     resource_groups            = module.resource_groups
     managed_identities         = module.managed_identities
     storage_accounts           = module.storage_accounts
-    subscriptions              = merge(try(var.subscriptions, {}), { "logged_in_subscription" = {id = data.azurerm_subscription.primary.id }})
+    subscriptions              = merge(try(var.subscriptions, {}), { "logged_in_subscription" = { id = data.azurerm_subscription.primary.id } })
     logged_in = {
       user = {
         rbac_id = local.client_config.logged_user_objectId
       }
-      app  = {
+      app = {
         rbac_id = local.client_config.logged_aad_app_objectId
       }
     }

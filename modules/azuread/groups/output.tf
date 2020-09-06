@@ -14,7 +14,7 @@ output tenant_id {
 }
 
 output rbac_id {
-  value     = azuread_group.group.id
+  value       = azuread_group.group.id
   description = "This attribute is used to set the role assignment"
-  sensitive = true
+  sensitive   = true
 }

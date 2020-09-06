@@ -6,5 +6,5 @@ output rbac_id {
 }
 
 output id {
-  value       = azuread_user.account.id
+  value = azuread_user.account.id
 }

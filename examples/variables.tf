@@ -76,3 +76,15 @@ variable keyvaults {
 variable keyvault_access_policies {
   default = {}
 }
+variable virtual_machines {
+  default = {}
+}
+variable bastion_hosts {
+  default = {}
+}
+variable public_ip_addresses {
+  default = {}
+}
+variable diagnostic_storage_accounts {
+  default = {}
+}
