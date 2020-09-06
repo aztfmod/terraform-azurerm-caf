@@ -1,5 +1,7 @@
-data "azuread_users" "upn" {
-  user_principal_names = lookup(var.settings.members, "user_principal_names", [])
+data "azuread_user" "upn" {
+  for_each = toset(try(var.settings.members.user_principal_names, []))
+
+  user_principal_name = each.value
 }
 
 module user_principal_names {
@@ -7,7 +9,7 @@ module user_principal_names {
   for_each = toset(try(var.settings.members.user_principal_names, []))
 
   group_object_id  = var.group_id
-  member_object_id = data.azuread_users.upn.users[each.key].id
+  member_object_id = data.azuread_user.upn[each.key].id
 }
 
 
@@ -30,6 +32,8 @@ module object_id {
 
 data "azuread_group" "name" {
   for_each = toset(try(var.settings.members.group_names, []))
+
+  name = each.value
 }
 
 module group_name {
@@ -37,7 +41,7 @@ module group_name {
   for_each = toset(try(var.settings.members.group_names, []))
 
   group_object_id  = var.group_id
-  member_object_id = data.azuread_group.name[each.key].object_id
+  member_object_id = data.azuread_group.name[each.key].id
 }
 
 module group_keys {

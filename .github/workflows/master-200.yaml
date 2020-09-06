@@ -119,6 +119,7 @@ jobs:
             -tfstate $(basename ${{ matrix.config_files }}).tfstate \
             -var-file ${GITHUB_WORKSPACE}/${{ matrix.config_files }}.tfvars \
             --environment ${{ github.run_id }} \
+            -refresh=false \
             -auto-approve
 
   # landingzones:
@@ -261,6 +262,7 @@ jobs:
             '-var prefix=g${{ github.run_id }}' \
             '-var convention=${{ matrix.convention }}' \
             '-var tags={testing_job_id="${{ github.run_id }}"}' \
+            -refresh=false \
             -auto-approve
         
           
