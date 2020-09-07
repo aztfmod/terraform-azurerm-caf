@@ -9,6 +9,17 @@ variable tfstate_container_name {}
 variable tfstate_key {}
 variable tfstate_resource_group_name {}
 
+variable tfstates {
+  default = {
+    caf_foundations = {
+      tfstate = "caf_foundations.tfstate"
+    }
+    caf_networking = {
+      tfstate = "caf_networking.tfstate"
+    }
+  }
+}
+
 variable landingzone_name {
   description = "The landing zone name is used to reference the tfstate in configuration files. Therefore while set it is recommended not to change"
   default     = "networking"

@@ -26,7 +26,7 @@ terraform {
     }
     azurecaf = {
       source  = "aztfmod/azurecaf"
-      version = "~>0.4.3"
+      version = "1.0.0-pre"
     }
   }
   required_version = ">= 0.13"
@@ -44,8 +44,18 @@ data "terraform_remote_state" "caf_foundations" {
   config = {
     storage_account_name = var.lowerlevel_storage_account_name
     container_name       = var.lowerlevel_container_name
-    key                  = "caf_foundations.tfstate"
     resource_group_name  = var.lowerlevel_resource_group_name
+    key                  = var.tfstates.caf_foundations.tfstate
+  }
+}
+
+data "terraform_remote_state" "caf_networking" {
+  backend = "azurerm"
+  config = {
+    storage_account_name = var.tfstate_storage_account_name
+    container_name       = var.tfstate_container_name
+    resource_group_name  = var.tfstate_resource_group_name
+    key                  = var.tfstates.caf_networking.tfstate
   }
 }
 
@@ -94,7 +104,8 @@ locals {
       )
     )
     ,
-    data.terraform_remote_state.caf_foundations.outputs.tfstates
+    data.terraform_remote_state.caf_foundations.outputs.tfstates,
+    data.terraform_remote_state.caf_networking.outputs.tfstates
   )
 
 
