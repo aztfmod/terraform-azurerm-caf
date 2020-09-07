@@ -3,7 +3,7 @@ locals {
   os_type = lower(var.settings.os_type)
 
   managed_identities = flatten([
-    for managed_identity_key in lookup(var.settings.virtual_machine_settings[local.os_type], "managed_identity_keys", []) : [
+    for managed_identity_key in lookup(var.settings.virtual_machine_settings[local.os_type], "managed_identities", []) : [
       var.managed_identities[managed_identity_key].id
     ]
   ])
@@ -79,7 +79,7 @@ resource "azurerm_linux_virtual_machine" "vm" {
   }
 
   dynamic "identity" {
-    for_each = lookup(each.value, "managed_identity_keys", false) == false ? [] : [1]
+    for_each = lookup(each.value, "managed_identities", false) == false ? [] : [1]
 
     content {
       type         = "UserAssigned"
