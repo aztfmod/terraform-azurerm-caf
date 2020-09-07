@@ -1,36 +1,90 @@
+# Map of the remote data state for lower level
 variable lowerlevel_storage_account_name {}
 variable lowerlevel_container_name {}
-variable lowerlevel_resource_group_name {}
 variable lowerlevel_key {}
+variable lowerlevel_resource_group_name {}
 
+variable tfstate_storage_account_name {}
+variable tfstate_container_name {}
+variable tfstate_key {}
+variable tfstate_resource_group_name {}
 
-variable tags {
+variable global_settings {
   default = {}
-  type    = map
 }
 
-
-variable "storage_account_name" {
-  description = "Storage account name to store diagnostics and Azure DevOps init script"
-  default     = ""
+variable landingzone_name {
+  default = "appservices"
 }
-
-variable "disk_encryption_set_id" {
-  description = "(Optional) The ID of the Disk Encryption Set which should be used to Encrypt this OS Disk."
-  type        = string
-  default     = null
+variable level {
+  default = "level3"
 }
-
-variable "private_key_pem_file" {
-  description = "(Optional) Name of the public key file name. A local key will be created if not provided"
-  default     = ""
+variable environment {
+  default = "sandpit"
 }
-
-variable vm_object {}
-
-variable azure_devops {}
-
 variable rover_version {
-  description = "(default=aztfmod/roverdev:vnext) Version of the rover to use on the Azure Devops self-hosted agents"
-  default     = "aztfmod/roverdev:vnext"
+  default = null
+}
+variable max_length {
+  default = 40
+}
+variable logged_user_objectId {
+  default = null
+}
+variable logged_aad_app_objectId {
+  default = null
+}
+variable tags {
+  default = null
+}
+variable app_service_environments {
+  default = {}
+}
+variable app_service_plans {
+  default = {}
+}
+variable app_services {
+  default = {}
+}
+variable diagnostics_definition {
+  default = null
+}
+variable resource_groups {
+  default = null
+}
+variable network_security_group_definition {
+  default = null
+}
+variable vnets {
+  default = {}
+}
+variable azurerm_redis_caches {
+  default = {}
+}
+variable mssql_servers {
+  default = {}
+}
+variable storage_accounts {
+  default = {}
+}
+variable azuread_groups {
+  default = {}
+}
+variable keyvaults {
+  default = {}
+}
+variable keyvault_access_policies {
+  default = {}
+}
+variable virtual_machines {
+  default = {}
+}
+variable bastion_hosts {
+  default = {}
+}
+variable public_ip_addresses {
+  default = {}
+}
+variable diagnostic_storage_accounts {
+  default = {}
 }

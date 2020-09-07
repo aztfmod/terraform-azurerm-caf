@@ -27,3 +27,7 @@ module diagnostic_storage_accounts {
 output storage_accounts {
   value = module.storage_accounts
 }
+
+output diagnostic_storage_accounts {
+  value = module.diagnostic_storage_accounts
+}
