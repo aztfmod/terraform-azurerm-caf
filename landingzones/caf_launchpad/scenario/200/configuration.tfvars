@@ -1137,9 +1137,9 @@ virtual_machines = {
           version   = "latest"
         }
 
-        managed_identities = [
-          "level0", "level1", "level2", "level3", "level4"
-        ]
+        managed_identities = {
+          keys = ["level0", "level1", "level2", "level3", "level4"]
+        }
       }
     }
 

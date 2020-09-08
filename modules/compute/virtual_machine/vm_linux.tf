@@ -1,12 +1,6 @@
 
 locals {
   os_type = lower(var.settings.os_type)
-
-  managed_identities = flatten([
-    for managed_identity_key in lookup(var.settings.virtual_machine_settings[local.os_type], "managed_identities", []) : [
-      var.managed_identities[managed_identity_key].id
-    ]
-  ])
 }
 
 resource "tls_private_key" "ssh" {
@@ -79,7 +73,7 @@ resource "azurerm_linux_virtual_machine" "vm" {
   }
 
   dynamic "identity" {
-    for_each = lookup(each.value, "managed_identities", false) == false ? [] : [1]
+    for_each = try(each.value.managed_identities.keys, false) == false ? [] : [1]
 
     content {
       type         = "UserAssigned"
@@ -96,6 +90,10 @@ resource "azurerm_linux_virtual_machine" "vm" {
   }
 
 }
+
+#
+# SSH keys
+#
 
 resource "azurerm_key_vault_secret" "ssh_private_key" {
   for_each = local.os_type == "linux" ? var.settings.virtual_machine_settings : {}
@@ -126,3 +124,37 @@ resource "azurerm_key_vault_secret" "ssh_public_key_openssh" {
   }
 }
 
+#
+# Managed identities from remote state
+#
+
+locals {
+  managed_local_identities = flatten([
+    for managed_identity_key in try(var.settings.virtual_machine_settings[local.os_type].managed_identities.keys, []) : [
+      var.managed_identities[managed_identity_key].id
+    ] if try(var.settings.virtual_machine_settings[local.os_type].managed_identities.remote_tfstate, null) == null
+  ])
+
+  managed_remote_identities = flatten([
+    for managed_identity_key in try(var.settings.virtual_machine_settings[local.os_type].managed_identities.keys, []) : [
+      data.terraform_remote_state.msi[0].outputs[var.settings.virtual_machine_settings[local.os_type].managed_identities.remote_tfstate.output_key][managed_identity_key].id 
+    ] if try(var.settings.virtual_machine_settings[local.os_type].managed_identities.remote_tfstate, null) != null
+  ])
+
+  managed_identities = concat(local.managed_local_identities, local.managed_remote_identities)
+}
+
+data "terraform_remote_state" "msi" {
+  count = try(var.settings.virtual_machine_settings[local.os_type].managed_identities.remote_tfstate, null) == null ? 0 : 1
+
+  backend = "azurerm"
+  config = {
+    storage_account_name = var.tfstates[var.settings.virtual_machine_settings[local.os_type].managed_identities.remote_tfstate.tfstate_key].storage_account_name
+    container_name       = var.tfstates[var.settings.virtual_machine_settings[local.os_type].managed_identities.remote_tfstate.tfstate_key].container_name
+    resource_group_name  = var.tfstates[var.settings.virtual_machine_settings[local.os_type].managed_identities.remote_tfstate.tfstate_key].resource_group_name
+    key                  = var.tfstates[var.settings.virtual_machine_settings[local.os_type].managed_identities.remote_tfstate.tfstate_key].key
+    use_msi              = var.use_msi
+    subscription_id      = var.use_msi ? var.tfstates[var.settings.virtual_machine_settings[local.os_type].managed_identities.remote_tfstate.tfstate_key].subscription_id : null
+    tenant_id            = var.use_msi ? var.tfstates[var.settings.virtual_machine_settings[local.os_type].managed_identities.remote_tfstate.tfstate_key].tenant_id : null
+  }
+}

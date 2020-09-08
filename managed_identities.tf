@@ -7,3 +7,8 @@ module managed_identities {
   resource_group_name = module.resource_groups[each.value.resource_group_key].name
   location            = module.resource_groups[each.value.resource_group_key].location
 }
+
+output managed_identities {
+  value     = module.managed_identities
+  sensitive = true
+}
