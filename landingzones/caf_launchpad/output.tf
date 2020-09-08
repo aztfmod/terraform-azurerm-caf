@@ -45,6 +45,6 @@ output aad_apps {
 }
 
 output managed_identities {
-  value = module.launchpad.managed_identities
+  value     = module.launchpad.managed_identities
   sensitive = true
 }

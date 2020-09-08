@@ -137,7 +137,7 @@ locals {
 
   managed_remote_identities = flatten([
     for managed_identity_key in try(var.settings.virtual_machine_settings[local.os_type].managed_identities.keys, []) : [
-      data.terraform_remote_state.msi[0].outputs[var.settings.virtual_machine_settings[local.os_type].managed_identities.remote_tfstate.output_key][managed_identity_key].id 
+      data.terraform_remote_state.msi[0].outputs[var.settings.virtual_machine_settings[local.os_type].managed_identities.remote_tfstate.output_key][managed_identity_key].id
     ] if try(var.settings.virtual_machine_settings[local.os_type].managed_identities.remote_tfstate, null) != null
   ])
 
