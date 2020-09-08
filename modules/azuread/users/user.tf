@@ -13,6 +13,10 @@ resource "azuread_user" "account" {
   user_principal_name = format("%s@%s", azurecaf_naming_convention.account.result, local.tenant_name)
   display_name        = azurecaf_naming_convention.account.result
   password            = random_password.account.result
+
+  lifecycle {
+    ignore_changes = [user_principal_name]
+  }
 }
 
 
