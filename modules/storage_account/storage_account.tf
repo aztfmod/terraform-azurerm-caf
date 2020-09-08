@@ -146,11 +146,10 @@ resource "azurerm_storage_account" "stg" {
 
 }
 
-resource "azurerm_storage_container" "stg" {
-  for_each = lookup(var.storage_account, "containers", {})
+module container {
+  source   = "./container"
+  for_each = try(var.storage_account.containers, {})
 
-  name                  = each.value.name
-  storage_account_name  = azurerm_storage_account.stg.name
-  container_access_type = lookup(each.value, "container_access_type", null)
-  metadata              = lookup(each.value, "metadata", null)
+  storage_account_name = azurerm_storage_account.stg.name
+  settings             = each.value
 }
