@@ -30,3 +30,11 @@ Azure subscription
 * Azure AD Applications - An Azure AD application is created. This account is mainly use to bootstrap the services during the initialization. It is also considered as a breakglass account for the launchpad landing zones
 * Azure AD API permissions - A set of API permissions assigned to the Azure AD application to support management of the landing zones in a pipeline
 * Managed Identities - A user managed Identity account is created for each Azure devops agent. This account is configured to get access to the keyvaults and Azure storage accounts
+
+## Deployment
+
+```bash
+rover -lz /tf/caf/landingzones/caf_launchpad/ -launchpad -var-file /tf/caf/landingzones/caf_launchpad/scenario/200/configuration.tfvars -a apply
+
+rover -lz /tf/caf/landingzones/caf_launchpad/ -launchpad -var-file /tf/caf/landingzones/caf_launchpad/scenario/200/configuration.tfvars -a destroy
+```

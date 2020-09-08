@@ -6,8 +6,8 @@ Deploy the launchpad services in the level1 layer.
 cd /tf/caf
 
 #  to deploy the CAF Foundations
-rover -lz /tf/caf/landingzones/caf_foundations -a apply -w tfstate
+rover -lz /tf/caf/landingzones/caf_foundations -a apply
 
 # to destroy the CAF Foundations
-rover -lz /tf/caf/landingzones/caf_foundations -a destroy -w tfstate
+rover -lz /tf/caf/landingzones/caf_foundations -a destroy
 ```
