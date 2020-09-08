@@ -93,7 +93,7 @@ vnets = {
 
 vnet_peerings = {
   hub_rg1_TO_hub_rg2 = {
-    name                         = "hub_rg1_TO_hub_rg2"
+    name = "hub_rg1_TO_hub_rg2"
     from = {
       vnet_key = "hub_rg1"
     }
@@ -107,7 +107,7 @@ vnet_peerings = {
   }
 
   hub_rg2_TO_hub_rg1 = {
-    name                         = "hub_rg2_TO_hub_rg1"
+    name = "hub_rg2_TO_hub_rg1"
     from = {
       vnet_key = "hub_rg2"
     }
@@ -122,7 +122,7 @@ vnet_peerings = {
 
   # Establish a peering with the devops vnet
   hub_rg1-TO-launchpad_devops = {
-    name                         = "hub_rg1-TO-devops_region1"
+    name = "hub_rg1-TO-devops_region1"
     from = {
       vnet_key = "hub_rg1"
     }
@@ -140,7 +140,7 @@ vnet_peerings = {
 
   # Inbound peer with the devops vnet
   launchpad_devops-TO-hub_rg1 = {
-    name                         = "launchpad_devops-TO-hub_rg1"
+    name = "launchpad_devops-TO-hub_rg1"
     from = {
       tfstate_key = "foundations"
       lz_key      = "launchpad"
@@ -159,7 +159,7 @@ vnet_peerings = {
 
   # Establish a peering with the devops vnet
   hub_rg2-TO-launchpad_devops = {
-    name                         = "hub_rg2-TO-devops_region1"
+    name = "hub_rg2-TO-devops_region1"
     from = {
       vnet_key = "hub_rg2"
     }
@@ -177,7 +177,7 @@ vnet_peerings = {
 
   # Inbound peer with the devops vnet
   launchpad_devops-TO-hub_rg2 = {
-    name                         = "launchpad_devops-TO-hub_rg2"
+    name = "launchpad_devops-TO-hub_rg2"
     from = {
       tfstate_key = "foundations"
       lz_key      = "launchpad"
