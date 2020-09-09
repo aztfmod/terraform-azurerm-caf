@@ -88,3 +88,6 @@ variable public_ip_addresses {
 variable diagnostic_storage_accounts {
   default = {}
 }
+variable private_dns {
+  default = {}
+}

@@ -25,6 +25,7 @@ module "caf" {
     network_security_group_definition = var.network_security_group_definition
     firewalls                         = {}
     public_ip_addresses               = var.public_ip_addresses
+    private_dns                       = var.private_dns
   }
   database = {
     azurerm_redis_caches = var.azurerm_redis_caches
