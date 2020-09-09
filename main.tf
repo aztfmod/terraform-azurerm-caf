@@ -72,6 +72,7 @@ locals {
     azurerm_firewalls                                       = try(var.networking.azurerm_firewalls, {})
     azurerm_firewall_network_rule_collection_definition     = try(var.networking.azurerm_firewall_network_rule_collection_definition, {})
     azurerm_firewall_application_rule_collection_definition = try(var.networking.azurerm_firewall_application_rule_collection_definition, {})
+    private_dns                                             = try(var.networking.private_dns, {})
     azurerm_firewall_nat_rule_collection_definition         = try(var.networking.azurerm_firewall_nat_rule_collection_definition, {})
   }
 
