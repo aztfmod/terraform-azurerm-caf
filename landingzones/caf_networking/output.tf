@@ -12,3 +12,10 @@ output tfstates {
   value     = local.tfstates
   sensitive = false
 }
+
+output virtual_wans {
+  value       = module.landingzones_networking.virtual_wans
+  sensitive   = false
+  description = "Virtual WAN output"
+  depends_on  = []
+}

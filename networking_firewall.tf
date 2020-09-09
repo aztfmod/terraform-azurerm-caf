@@ -41,6 +41,21 @@ module azurerm_firewall_application_rule_collections {
 
 }
 
+
+module azurerm_firewall_nat_rule_collections {
+  source = "./modules/networking/firewall_nat_rule_collections"
+  for_each = {
+    for key, firewall in local.networking.azurerm_firewalls : key => firewall
+    if lookup(firewall, "azurerm_firewall_nat_rule_collections", null) != null
+  }
+
+  resource_group_name                             = module.azurerm_firewalls[each.key].resource_group_name
+  azure_firewall_name                             = module.azurerm_firewalls[each.key].name
+  rule_collections                                = each.value.azurerm_firewall_nat_rule_collections
+  azurerm_firewall_nat_rule_collection_definition = local.networking.azurerm_firewall_nat_rule_collection_definition
+
+}
+
 output azurerm_firewalls {
   value     = module.azurerm_firewalls
   sensitive = true

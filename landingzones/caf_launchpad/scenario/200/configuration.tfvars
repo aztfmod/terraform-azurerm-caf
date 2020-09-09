@@ -264,6 +264,19 @@ keyvaults = {
       }
     }
 
+    secrets = {
+      azdo_pat_admin = {
+        name           = "azdo-pat-admin"
+        value          = ""
+        ignore_changes = true
+      }
+      azdo_pat_agent = {
+        name           = "azdo-pat-agent"
+        value          = ""
+        ignore_changes = true
+      }
+    }
+
   }
 }
 
@@ -1137,9 +1150,9 @@ virtual_machines = {
           version   = "latest"
         }
 
-        managed_identities = [
-          "level0", "level1", "level2", "level3", "level4"
-        ]
+        managed_identities = {
+          keys = ["level0", "level1", "level2", "level3", "level4"]
+        }
       }
     }
 

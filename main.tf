@@ -48,7 +48,9 @@ locals {
     default_region     = lookup(var.global_settings, "default_region", "region1")
     environment        = lookup(var.global_settings, "environment", var.environment)
     max_length         = lookup(var.global_settings, "max_length", var.max_length)
+    random_length      = lookup(var.global_settings, "random_length", var.max_length)
     regions            = var.global_settings.regions
+    passthrough        = try(var.global_settings.convention, var.convention) == "passthrough" ? true : false
   }
 
 
@@ -63,12 +65,18 @@ locals {
     network_security_group_definition                       = try(var.networking.network_security_group_definition, {})
     public_ip_addresses                                     = try(var.networking.public_ip_addresses, {})
     vnet_peerings                                           = try(var.networking.vnet_peerings, {})
+    vhub_peerings                                           = try(var.networking.vhub_peerings, {})
     route_tables                                            = try(var.networking.route_tables, {})
+    virtual_wans                                            = try(var.networking.virtual_wans, {})
     azurerm_routes                                          = try(var.networking.azurerm_routes, {})
     azurerm_firewalls                                       = try(var.networking.azurerm_firewalls, {})
     azurerm_firewall_network_rule_collection_definition     = try(var.networking.azurerm_firewall_network_rule_collection_definition, {})
     azurerm_firewall_application_rule_collection_definition = try(var.networking.azurerm_firewall_application_rule_collection_definition, {})
+<<<<<<< HEAD
     private_dns                                             = try(var.networking.private_dns, {})
+=======
+    azurerm_firewall_nat_rule_collection_definition         = try(var.networking.azurerm_firewall_nat_rule_collection_definition, {})
+>>>>>>> eb548028fe633b26cb3a0632b9459136388d049a
   }
 
   database = {

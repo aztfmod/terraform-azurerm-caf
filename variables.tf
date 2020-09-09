@@ -128,12 +128,7 @@ variable database {
 
 ## Networking variables
 variable networking {
-  default = {
-    vnets                             = {}
-    peerings                          = {}
-    network_security_group_definition = {}
-    firewalls                         = {}
-  }
+  default = {}
 }
 
 ## Security variables

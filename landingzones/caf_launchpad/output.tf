@@ -40,6 +40,11 @@ output tfstates {
 }
 
 output aad_apps {
-  value     = module.launchpad
+  value     = module.launchpad.aad_apps
+  sensitive = true
+}
+
+output managed_identities {
+  value     = module.launchpad.managed_identities
   sensitive = true
 }
