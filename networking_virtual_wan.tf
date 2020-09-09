@@ -44,12 +44,12 @@ data "terraform_remote_state" "peering_vhub" {
 
 # Peering 
 resource "azurerm_virtual_hub_connection" "vhub_connection" {
- depends_on = [module.networking, module.virtual_wans]
- for_each   = local.networking.vhub_peerings
+  depends_on = [module.networking, module.virtual_wans]
+  for_each   = local.networking.vhub_peerings
 
   name                      = each.value.name
   virtual_hub_id            = try(module.virtual_wans[each.value.vhub.virtual_wan_key].virtual_hubs[each.value.vhub.virtual_hub_key].id, null)
-  remote_virtual_network_id = try(module.networking[each.value.vnet.vnet_key].id,  data.terraform_remote_state.peering_vhub[each.key].outputs[each.value.vnet.output_key][each.value.vnet.lz_key][each.value.vnet.vnet_key].id)
+  remote_virtual_network_id = try(module.networking[each.value.vnet.vnet_key].id, data.terraform_remote_state.peering_vhub[each.key].outputs[each.value.vnet.output_key][each.value.vnet.lz_key][each.value.vnet.vnet_key].id)
 
   hub_to_vitual_network_traffic_allowed          = try(each.value.hub_to_vitual_network_traffic_allowed, null)
   vitual_network_to_hub_gateways_traffic_allowed = try(each.value.vitual_network_to_hub_gateways_traffic_allowed, null)

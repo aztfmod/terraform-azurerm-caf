@@ -1,20 +1,20 @@
 # This configuration only work from vscode with a logged in user. More settings are required to get it working in a pipeline.
-#
+
 # Requires:
 # - caf_launchpad scenario 200+
-#
+
 # Commands
 # - deploy: rover -lz /tf/caf/examples/ -var-file /tf/caf/examples/mssql_server/200-mssql.tfvars -tfstate mssql_server.tfstate -a apply
 # - destroy: 
 #   rover -lz /tf/caf/examples/ -var-file /tf/caf/examples/mssql_server/200-mssql.tfvars -tfstate mssql_server.tfstate -a destroy
-#
+
 # The configuration deploys one region:
 # - Two resources groups to store SQL servers and Security services
 # - One Keyvault to store the SQL Server admin password in order to support password rotation
 # - One Keyvault access policy to grant permission to the logged in user
 # - Enable extended auditing, security alerts and vulnerability assessment
 # - One Azure AD groups to administer the server
-#
+
 
 global_settings = {
   convention     = "cafrandom"

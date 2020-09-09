@@ -95,6 +95,8 @@ data "terraform_remote_state" "peering_to" {
   }
 }
 
+
+# The code tries to peer to a vnet created in the same landing zone. If it fails it tries with the data remote state
 resource "azurerm_virtual_network_peering" "peering" {
   depends_on = [module.networking]
   for_each   = local.networking.vnet_peerings

@@ -82,10 +82,14 @@ virtual_machines = {
           version   = "latest"
         }
 
-        managed_identity_keys = [
-          "kubernetes_retail",
-          "datalake_retail"
-        ]
+        identity = {
+          type = "UserAssigned"
+          managed_identity_keys = [
+            "kubernetes_retail",
+            "datalake_retail"
+          ]
+        }
+
       }
     }
 

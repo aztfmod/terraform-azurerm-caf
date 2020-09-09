@@ -1,15 +1,20 @@
 level = "level2"
 
-landingzone_name = "caf_networking_hub"
+landingzone_name = "networking_hub"
+
+tfstates = {
+  caf_foundations = {
+    tfstate = "caf_foundations.tfstate"
+  }
+  networking = {
+    tfstate = "caf_foundations.tfstate"
+  }
+}
 
 resource_groups = {
   vnet_hub_rg1 = {
     name   = "vnet-hub-rg1"
     region = "region1"
-  }
-  vnet_hub_rg2 = {
-    name   = "vnet-hub-rg2"
-    region = "region2"
   }
 }
 
@@ -49,77 +54,20 @@ vnets = {
       }
     }
 
-  }
-
-  hub_rg2 = {
-    resource_group_key = "vnet_hub_rg2"
-    region             = "region2"
-    vnet = {
-      name          = "hub-rg2"
-      address_space = ["100.65.100.0/22"]
-    }
-    specialsubnets = {
-      GatewaySubnet = {
-        name = "GatewaySubnet" #Must be called GateWaySubnet in order to host a Virtual Network Gateway
-        cidr = ["100.65.100.0/27"]
-      }
-      AzureFirewallSubnet = {
-        name = "AzureFirewallSubnet" #Must be called AzureFirewallSubnet 
-        cidr = ["100.65.101.0/26"]
-      }
-    }
-    subnets = {
-      AzureBastionSubnet = {
-        name    = "AzureBastionSubnet" #Must be called AzureBastionSubnet 
-        cidr    = ["100.65.101.64/26"]
-        nsg_key = "azure_bastion_nsg"
-      }
-      jumpbox = {
-        name    = "jumpbox"
-        cidr    = ["100.65.102.0/27"]
-        nsg_key = "jumpbox"
-      }
-      private_endpoints = {
-        name                                           = "private_endpoints"
-        cidr                                           = ["100.65.103.128/25"]
-        enforce_private_link_endpoint_network_policies = true
+    # you can setup up to 5 keys - vnet diganostic
+    diagnostic_profiles = {
+      vnet = {
+        definition_key   = "networking_all"
+        destination_type = "log_analytics"
+        destination_key  = "central_logs"
       }
     }
 
   }
-
 
 }
 
 vnet_peerings = {
-  hub_rg1_TO_hub_rg2 = {
-    name = "hub_rg1_TO_hub_rg2"
-    from = {
-      vnet_key = "hub_rg1"
-    }
-    to = {
-      vnet_key = "hub_rg2"
-    }
-    allow_virtual_network_access = true
-    allow_forwarded_traffic      = false
-    allow_gateway_transit        = false
-    use_remote_gateways          = false
-  }
-
-  hub_rg2_TO_hub_rg1 = {
-    name = "hub_rg2_TO_hub_rg1"
-    from = {
-      vnet_key = "hub_rg2"
-    }
-    to = {
-      vnet_key = "hub_rg1"
-    }
-    allow_virtual_network_access = true
-    allow_forwarded_traffic      = false
-    allow_gateway_transit        = false
-    use_remote_gateways          = false
-  }
-
   # Establish a peering with the devops vnet
   hub_rg1-TO-launchpad_devops = {
     name = "hub_rg1-TO-devops_region1"
@@ -156,44 +104,6 @@ vnet_peerings = {
     use_remote_gateways          = false
   }
 
-
-  # Establish a peering with the devops vnet
-  hub_rg2-TO-launchpad_devops = {
-    name = "hub_rg2-TO-devops_region1"
-    from = {
-      vnet_key = "hub_rg2"
-    }
-    to = {
-      tfstate_key = "foundations"
-      lz_key      = "launchpad"
-      output_key  = "vnets"
-      vnet_key    = "devops_region1"
-    }
-    allow_virtual_network_access = true
-    allow_forwarded_traffic      = false
-    allow_gateway_transit        = false
-    use_remote_gateways          = false
-  }
-
-  # Inbound peer with the devops vnet
-  launchpad_devops-TO-hub_rg2 = {
-    name = "launchpad_devops-TO-hub_rg2"
-    from = {
-      tfstate_key = "foundations"
-      lz_key      = "launchpad"
-      output_key  = "vnets"
-      vnet_key    = "devops_region1"
-    }
-    to = {
-      vnet_key = "hub_rg2"
-    }
-    allow_virtual_network_access = true
-    allow_forwarded_traffic      = false
-    allow_gateway_transit        = false
-    use_remote_gateways          = false
-  }
-
-
 }
 
 public_ip_addresses = {
@@ -217,26 +127,6 @@ public_ip_addresses = {
     }
   }
 
-  bastion_host_rg2 = {
-    name                    = "bastion-rg2-pip1"
-    region                  = "region2"
-    resource_group_key      = "vnet_hub_rg2"
-    sku                     = "Standard"
-    allocation_method       = "Static"
-    ip_version              = "IPv4"
-    idle_timeout_in_minutes = "4"
-
-    # you can setup up to 5 key
-    diagnostic_profiles = {
-      bastion_host_rg2 = {
-        definition_key   = "public_ip_address"
-        destination_type = "log_analytics"
-        destination_key  = "central_logs"
-      }
-    }
-
-  }
-
 }
 
 
@@ -248,24 +138,6 @@ bastion_hosts = {
     vnet_key           = "hub_rg1"
     subnet_key         = "AzureBastionSubnet"
     public_ip_key      = "bastion_host_rg1"
-
-    # you can setup up to 5 profiles
-    diagnostic_profiles = {
-      operations = {
-        definition_key   = "bastion_host"
-        destination_type = "log_analytics"
-        destination_key  = "central_logs"
-      }
-    }
-  }
-
-  bastion_hub_rg2 = {
-    name               = "bastion-rg2"
-    region             = "region2"
-    resource_group_key = "vnet_hub_rg2"
-    vnet_key           = "hub_rg2"
-    subnet_key         = "AzureBastionSubnet"
-    public_ip_key      = "bastion_host_rg2"
 
     # you can setup up to 5 profiles
     diagnostic_profiles = {
