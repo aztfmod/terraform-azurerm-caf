@@ -49,15 +49,15 @@ data "terraform_remote_state" "caf_foundations" {
   }
 }
 
-data "terraform_remote_state" "caf_networking" {
-  backend = "azurerm"
-  config = {
-    storage_account_name = var.tfstate_storage_account_name
-    container_name       = var.tfstate_container_name
-    resource_group_name  = var.tfstate_resource_group_name
-    key                  = var.tfstates.caf_networking.tfstate
-  }
-}
+# data "terraform_remote_state" "caf_networking" {
+#   backend = "azurerm"
+#   config = {
+#     storage_account_name = var.tfstate_storage_account_name
+#     container_name       = var.tfstate_container_name
+#     resource_group_name  = var.tfstate_resource_group_name
+#     key                  = var.tfstates.caf_networking.tfstate
+#   }
+# }
 
 
 locals {
@@ -105,7 +105,7 @@ locals {
     )
     ,
     data.terraform_remote_state.caf_foundations.outputs.tfstates,
-    data.terraform_remote_state.caf_networking.outputs.tfstates
+    # data.terraform_remote_state.caf_networking.outputs.tfstates
   )
 
 

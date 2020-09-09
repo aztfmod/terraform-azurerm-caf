@@ -16,7 +16,7 @@ This vnext is relying extensively on Terraform 0.13 capabilities (module iterati
 
 ## Testing vnext
 
-1. Prerequisites are the same as for current version of landing zones, please setup your environment using the following guide: https://github.com/Azure/caf-terraform-landingzones/blob/master/documentation/getting_started/getting_started.md 
+1. Prerequisites are the same as for current version of landing zones, please setup your environment using the following guide: https://github.com/Azure/caf-terraform-landingzones/blob/master/documentation/getting_started/getting_started.md
 
 2. Log in the subscription with the rover:
 
@@ -60,7 +60,7 @@ We classified the various examples in this repo:
 |-------|-----------------------------------------------------------------------------------------------|--------------------------------------------|
 | 100   | basic functionalities and features, for demo and simple POC                                   | works in AIRS                              |
 | 200   | intermediate functionalities includes RBAC features                                           | may not work in AIRS, need AAD permissions |
-| 300   | advanced functionalities, multi region support, includes RBAC features                        | not working in AIRS, need AAD permissions  |  
+| 300   | advanced functionalities, multi region support, includes RBAC features                        | not working in AIRS, need AAD permissions  |
 | 400   | advanced functionalities, multi region support, includes RBAC features and security hardening | not working in AIRS, need AAD permissions  |
 
 ## Related repositories

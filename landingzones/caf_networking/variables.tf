@@ -51,10 +51,16 @@ variable resource_groups {
 variable vnets {
   default = {}
 }
+variable virtual_wans {
+  default = {}
+}
 variable public_ip_addresses {
   default = {}
 }
 variable vnet_peerings {
+  default = {}
+}
+variable vhub_peerings {
   default = {}
 }
 variable azurerm_firewalls {
@@ -82,6 +88,9 @@ variable azurerm_firewall_network_rule_collection_definition {
   default = {}
 }
 variable azurerm_firewall_application_rule_collection_definition {
+  default = {}
+}
+variable azurerm_firewall_nat_rule_collection_definition {
   default = {}
 }
 variable azure_container_registries {
