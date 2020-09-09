@@ -9,6 +9,17 @@ variable tfstate_container_name {}
 variable tfstate_key {}
 variable tfstate_resource_group_name {}
 
+variable tfstates {
+  default = {
+    caf_foundations = {
+      tfstate = "caf_foundations.tfstate"
+    }
+    caf_networking = {
+      tfstate = "networking_hub.tfstate"
+    }
+  }
+}
+
 variable global_settings {
   default = {}
 }
@@ -86,5 +97,8 @@ variable public_ip_addresses {
   default = {}
 }
 variable diagnostic_storage_accounts {
+  default = {}
+}
+variable managed_identities {
   default = {}
 }

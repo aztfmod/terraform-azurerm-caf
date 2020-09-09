@@ -16,6 +16,7 @@ module "caf" {
   azuread_groups              = var.azuread_groups
   keyvaults                   = var.keyvaults
   keyvault_access_policies    = var.keyvault_access_policies
+  managed_identities                = var.managed_identities
   compute = {
     virtual_machines = var.virtual_machines
     bastion_hosts    = var.bastion_hosts
@@ -38,7 +39,6 @@ module "caf" {
   # azuread_api_permissions           = var.azuread_api_permissions
   # azuread_app_roles                 = var.azuread_app_roles
   # azuread_users                     = var.azuread_users
-  # managed_identities                = var.managed_identities
   # custom_role_definitions           = var.custom_role_definitions
   # role_mapping                      = var.role_mapping
 }
