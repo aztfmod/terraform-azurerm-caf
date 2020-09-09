@@ -45,7 +45,7 @@ resource "azurerm_private_dns_mx_record" "mx_records" {
 
   dynamic "record" {
     for_each = each.value.records
-  
+
     content {
       preference = record.value.preference
       exchange   = record.value.exchange
@@ -73,7 +73,7 @@ resource "azurerm_private_dns_srv_record" "srv_records" {
 
   dynamic "record" {
     for_each = each.value.records
-  
+
     content {
       priority = record.value.priority
       weight   = record.value.weight
@@ -93,15 +93,15 @@ resource "azurerm_private_dns_txt_record" "txt_records" {
 
   dynamic "record" {
     for_each = each.value.records
-  
+
     content {
-      value  = record.value.value 
+      value = record.value.value
     }
   }
 }
 
 resource "azurerm_private_dns_zone_virtual_network_link" "vnet_links" {
-  for_each              = var.vnet_links
+  for_each = var.vnet_links
 
   name                  = each.value.name
   resource_group_name   = var.resource_group_name

@@ -28,8 +28,8 @@ private_dns = {
 
       txt_records = {
         testtxt1 = {
-          name    = "testtxt1"
-          ttl     = 3600
+          name = "testtxt1"
+          ttl  = 3600
           records = {
             r1 = {
               value = "testing txt 1"

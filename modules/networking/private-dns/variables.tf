@@ -12,5 +12,5 @@ variable records {
 }
 
 variable vnet_links {
-    default = {}
+  default = {}
 }
