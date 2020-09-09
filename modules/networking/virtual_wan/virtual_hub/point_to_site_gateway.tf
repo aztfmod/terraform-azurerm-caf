@@ -1,3 +1,14 @@
+# naming convention
+resource "azurecaf_name" "p2s_gateway" {
+  count = var.virtual_hub_config.deploy_p2s ? 1 : 0
+
+  name          = try(var.virtual_hub_config.p2s_config.name, null)
+  resource_type = "azurerm_point_to_site_vpn_gateway"
+  prefixes      = [var.global_settings.prefix]
+  random_length = var.global_settings.random_length
+  clean_input   = true
+  passthrough   = var.global_settings.passthrough
+}
 
 ## create the VPN P2S if var.vwan.p2s_gateway is set to true 
 resource "azurerm_point_to_site_vpn_gateway" "p2s_gateway" {

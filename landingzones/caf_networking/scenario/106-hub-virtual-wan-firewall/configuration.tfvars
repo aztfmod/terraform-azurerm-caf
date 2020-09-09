@@ -232,23 +232,24 @@ virtual_wans = {
 }
 
 
-vhub_peerings = {
-  # Establish the peering with Virtual Hubs
-  hub_rg1-TO-vnet_rg1 = {
-    vhub = {
-      virtual_wan_key = "vwan_rg1"
-      virtual_hub_key = "hub_rg1"
-    }
-    vnet = {
-      # If the virtual network is stored in another another landing zone, use the following attributes to refer the state file: 
-      # tfstate_key = "networking"
-      # lz_key      = "networking"
-      # output_key  = "vnets"
-      vnet_key = "vnet_rg1"
-    }
-    name                                           = "vhub_peering_hub_sg"
-    hub_to_vitual_network_traffic_allowed          = true
-    vitual_network_to_hub_gateways_traffic_allowed = true
-    internet_security_enabled                      = true
-  }
-}
+
+# vhub_peerings = {
+#   # Establish the peering with Virtual Hubs
+#   hub_rg1-TO-vnet_rg1 = {
+#     vhub = {
+#       virtual_wan_key = "vwan_rg1"
+#       virtual_hub_key = "hub_rg1"
+#     }
+#     vnet = {
+#       # If the virtual network is stored in another another landing zone, use the following attributes to refer the state file: 
+#       # tfstate_key = "networking"
+#       # lz_key      = "networking"
+#       # output_key  = "vnets"
+#       vnet_key    = "vnet_rg1"
+#     }
+#     name = "vhub_peering_hub_sg"
+#     hub_to_vitual_network_traffic_allowed          = true
+#     vitual_network_to_hub_gateways_traffic_allowed = true
+#     internet_security_enabled                      = true
+#   }
+# }
