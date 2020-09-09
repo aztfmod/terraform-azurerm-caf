@@ -12,3 +12,8 @@ output redis_caches {
   value     = module.caf.redis_caches
   sensitive = false
 }
+
+output private_dns {
+  value     = module.caf.private_dns
+  sensitive = false
+}

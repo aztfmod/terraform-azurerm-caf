@@ -102,3 +102,6 @@ variable diagnostic_storage_accounts {
 variable managed_identities {
   default = {}
 }
+variable private_dns {
+  default = {}
+}
