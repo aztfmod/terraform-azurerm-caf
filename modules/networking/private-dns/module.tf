@@ -98,16 +98,4 @@ resource "azurerm_private_dns_txt_record" "txt_records" {
       value = record.value.value
     }
   }
-<<<<<<< HEAD
-=======
-}
-
-resource "azurerm_private_dns_zone_virtual_network_link" "vnet_links" {
-  for_each = var.vnet_links
-
-  name                  = each.value.name
-  resource_group_name   = var.resource_group_name
-  private_dns_zone_name = azurerm_private_dns_zone.private_dns.name
-  virtual_network_id    = each.value.vnet_id
->>>>>>> 83cb38bb3483ccf38dec521d88fb35941280bd1a
 }
