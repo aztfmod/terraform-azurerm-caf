@@ -236,3 +236,17 @@ azuread_groups = {
     prevent_duplicate_name = false
   }
 }
+
+role_mapping = {
+  built_in_role_mapping = {
+    storage_accounts = {
+      synapsestorage_re1 = {
+        "Storage Blob Data Contributor" = {
+          synapse_workspaces = [
+            "ml_wrkspc44_re1"
+          ]
+        }
+      }
+    }
+  }
+}

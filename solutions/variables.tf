@@ -111,3 +111,6 @@ variable synapse_workspaces {
 variable azurerm_application_insights {
   default = {}
 }
+variable role_mapping {
+  default = {}
+}
