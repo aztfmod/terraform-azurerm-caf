@@ -98,7 +98,7 @@ data "terraform_remote_state" "peering_to" {
 
 # naming convention for peering name
 resource "azurecaf_name" "peering" {
-  for_each   = local.networking.vnet_peerings
+  for_each = local.networking.vnet_peerings
 
   name          = try(each.value.name, null)
   resource_type = "azurerm_virtual_network_peering"
@@ -129,7 +129,7 @@ resource "azurerm_virtual_network_peering" "peering" {
 #
 #
 resource "azurecaf_name" "route_tables" {
-  for_each   = local.networking.route_tables
+  for_each = local.networking.route_tables
 
   name          = try(each.value.name, null)
   resource_type = "azurerm_route_table"
@@ -151,7 +151,7 @@ module "route_tables" {
 }
 
 resource "azurecaf_name" "routes" {
-  for_each   = local.networking.azurerm_routes
+  for_each = local.networking.azurerm_routes
 
   name          = try(each.value.name, null)
   resource_type = "azurerm_route"
