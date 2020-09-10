@@ -1,6 +1,6 @@
 module container_registry {
   source   = "./modules/compute/container_registry"
-  for_each = try(local.compute.azure_container_registries, {})
+  for_each = local.compute.azure_container_registries
 
   global_settings          = local.global_settings
   name                     = each.value.name

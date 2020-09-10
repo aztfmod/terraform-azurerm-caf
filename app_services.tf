@@ -2,7 +2,7 @@
 module "app_service_environments" {
   source = "./modules/terraform-azurerm-caf-ase"
 
-  for_each = var.app_service_environments
+  for_each = local.webapp.app_service_environments
 
   resource_group_name       = module.resource_groups[each.value.resource_group_key].name
   location                  = lookup(each.value, "region", null) == null ? module.resource_groups[each.value.resource_group_key].location : var.global_settings.regions[each.value.region]
@@ -24,7 +24,7 @@ module "app_service_environments" {
 module "app_service_plans" {
   source = "./modules/terraform-azurerm-caf-asp"
 
-  for_each = var.app_service_plans
+  for_each = local.webapp.app_service_plans
 
   prefix                     = local.global_settings.prefix
   resource_group_name        = module.resource_groups[each.value.resource_group_key].name
@@ -42,7 +42,7 @@ module "app_service_plans" {
 module "app_services" {
   source = "./modules/webapps/appservice"
 
-  for_each = var.app_services
+  for_each = local.webapp.app_services
 
   name                = each.value.name
   resource_group_name = module.resource_groups[each.value.resource_group_key].name

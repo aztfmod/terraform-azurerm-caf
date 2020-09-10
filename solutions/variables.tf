@@ -105,3 +105,9 @@ variable managed_identities {
 variable private_dns {
   default = {}
 }
+variable synapse_workspaces {
+  default = {}
+}
+variable azurerm_application_insights {
+  default = {}
+}

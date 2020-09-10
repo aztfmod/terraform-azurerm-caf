@@ -1,6 +1,6 @@
 module "azurerm_application_insights" {
   source   = "./modules/terraform-azurerm-caf-appinsights"
-  for_each = var.azurerm_application_insights
+  for_each = local.webapp.azurerm_application_insights
 
   prefix                                = local.global_settings.prefix
   convention                            = lookup(each.value, "convention", local.global_settings.convention)

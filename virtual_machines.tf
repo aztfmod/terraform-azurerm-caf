@@ -3,8 +3,7 @@
 module virtual_machines {
   source     = "./modules/compute/virtual_machine"
   depends_on = [module.keyvault_access_policies]
-
-  for_each = local.compute.virtual_machines
+  for_each   = local.compute.virtual_machines
 
   global_settings                  = var.global_settings
   settings                         = each.value

@@ -105,19 +105,7 @@ variable compute {
   }
 }
 
-variable app_service_environments {
-  default = {}
-}
-
-variable app_service_plans {
-  default = {}
-}
-
-variable app_services {
-  default = {}
-}
-
-variable azurerm_application_insights {
+variable webapp {
   default = {}
 }
 
