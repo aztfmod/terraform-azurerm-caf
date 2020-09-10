@@ -34,7 +34,11 @@ terraform {
 
 
 provider "azurerm" {
-  features {}
+  features {
+    key_vault {
+      purge_soft_delete_on_destroy = true
+    }
+  }
 }
 
 data "azurerm_client_config" "current" {}
@@ -104,7 +108,6 @@ locals {
       )
     )
     ,
-    data.terraform_remote_state.caf_foundations.outputs.tfstates,
     data.terraform_remote_state.networking.outputs.tfstates
   )
 

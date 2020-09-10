@@ -8,10 +8,6 @@ terraform {
   required_version = ">= 0.13"
 }
 
-provider "azurerm" {
-  features {}
-}
-
 
 data "azurerm_subscription" "primary" {}
 data "azurerm_client_config" "current" {}
