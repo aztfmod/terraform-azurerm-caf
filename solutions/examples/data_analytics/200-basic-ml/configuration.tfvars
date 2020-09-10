@@ -26,6 +26,25 @@ resource_groups = {
   }
 }
 
+synapse_workspaces = {
+  ml_wrkspc44_re1 = {
+    name               = "mlwrkspc44"
+    resource_group_key = "dap_synapse_re1"
+    data_lake_filesystem = {
+      storage_account_key = "synapsestorage_re1"
+      container_key       = "mlfilesystem"
+    }
+  }
+}
+
+azurerm_application_insights = {
+  ml_app_insht44 = {
+    name               = "ml-app-insht44"
+    resource_group_key = "dap_automl_re1"
+    application_type   = "web"
+  }
+}
+
 # Virtual machines
 virtual_machines = {
 
@@ -70,10 +89,9 @@ virtual_machines = {
 
     virtual_machine_settings = {
       windows = {
-        name                            = "jumpbox-dsvm"
-        size                            = "Standard_D4s_v3"
-        admin_username                  = "adminuser"
-        disable_password_authentication = true
+        name           = "jumpbox-dsvm"
+        size           = "Standard_D4s_v3"
+        admin_username = "adminuser"
 
         # Value of the nic keys to attach the VM. The first one in the list is the default nic
         network_interface_keys = ["nic0"]
@@ -96,8 +114,6 @@ virtual_machines = {
 
         identity = {
           type = "UserAssigned"
-          # remote_state = {
-          # }
           managed_identity_keys = [
             "jumpbox",
           ]

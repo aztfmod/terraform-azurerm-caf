@@ -26,3 +26,7 @@ output primary_blob_endpoint {
 output containers {
   value = module.container
 }
+
+output data_lake_filesystems {
+  value = module.data_lake_filesystem
+}
