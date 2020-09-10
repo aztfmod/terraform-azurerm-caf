@@ -46,11 +46,11 @@ locals {
     }
     diagnostics = {
       log = [
-        # ["Category name",  "Diagnostics Enabled(true/false)", "Retention Enabled(true/false)", Retention_period] 
+        # ["Category name",  "Diagnostics Enabled(true/false)", "Retention Enabled(true/false)", Retention_period]
         ["VMProtectionAlerts", true, true, 60],
       ]
       metric = [
-        #["Category name",  "Diagnostics Enabled(true/false)", "Retention Enabled(true/false)", Retention_period]                 
+        #["Category name",  "Diagnostics Enabled(true/false)", "Retention Enabled(true/false)", Retention_period]
         ["AllMetrics", true, true, 60],
       ]
     }
@@ -60,7 +60,7 @@ locals {
     name = "az-fw-caftest"
     diagnostics = {
       log = [
-        #["Category name",  "Diagnostics Enabled(true/false)", "Retention Enabled(true/false)", Retention_period] 
+        #["Category name",  "Diagnostics Enabled(true/false)", "Retention Enabled(true/false)", Retention_period]
         ["AzureFirewallApplicationRule", true, true, 30],
         ["AzureFirewallNetworkRule", true, true, 30],
       ]
@@ -73,15 +73,15 @@ locals {
   ip_addr_config = {
     ip_name           = "caftest-pip-egress"
     allocation_method = "Static"
-    #Dynamic Public IP Addresses aren't allocated until they're assigned to a resource (such as a Virtual Machine or a Load Balancer) by design within Azure 
+    #Dynamic Public IP Addresses aren't allocated until they're assigned to a resource (such as a Virtual Machine or a Load Balancer) by design within Azure
 
-    #properties below are optional 
+    #properties below are optional
     sku        = "Standard" #defaults to Basic
     ip_version = "IPv4"     #defaults to IP4, Only dynamic for IPv6, Supported arguments are IPv4 or IPv6, NOT Both
 
     diagnostics = {
       log = [
-        #["Category name",  "Diagnostics Enabled(true/false)", "Retention Enabled(true/false)", Retention_period] 
+        #["Category name",  "Diagnostics Enabled(true/false)", "Retention Enabled(true/false)", Retention_period]
         ["DDoSProtectionNotifications", true, true, 30],
         ["DDoSMitigationFlowLogs", true, true, 30],
         ["DDoSMitigationReports", true, true, 30],

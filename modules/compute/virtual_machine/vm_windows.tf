@@ -118,7 +118,7 @@ resource "azurerm_windows_virtual_machine" "vm" {
 }
 
 resource "random_password" "admin" {
-  for_each = local.os_type == "windows" ? var.settings.virtual_machine_settings : {}
+  for_each         = local.os_type == "windows" ? var.settings.virtual_machine_settings : {}
   length           = 123
   min_upper        = 2
   min_lower        = 2

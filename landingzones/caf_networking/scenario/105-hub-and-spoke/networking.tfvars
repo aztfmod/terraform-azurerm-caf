@@ -19,7 +19,7 @@ vnets = {
     }
     specialsubnets = {
       AzureFirewallSubnet = {
-        name = "AzureFirewallSubnet" #Must be called AzureFirewallSubnet 
+        name = "AzureFirewallSubnet" #Must be called AzureFirewallSubnet
         cidr = ["10.10.100.192/26"]
       }
     }
@@ -60,8 +60,8 @@ vnets = {
 #     resource_group_key = "vnet_sg"
 #     vnet_key           = "hub_sg"
 
-#     # Settings for the public IP address to be used for Azure Firewall 
-#     # Must be standard and static for 
+#     # Settings for the public IP address to be used for Azure Firewall
+#     # Must be standard and static for
 #     firewall_ip_addr_config = {
 #       ip_name           = "firewall"
 #       allocation_method = "Static"
@@ -69,7 +69,7 @@ vnets = {
 #       ip_version        = "IPv4"     #defaults to IP4, Only dynamic for IPv6, Supported arguments are IPv4 or IPv6, NOT Both
 #       diagnostics = {
 #         log = [
-#           #["Category name",  "Diagnostics Enabled(true/false)", "Retention Enabled(true/false)", Retention_period] 
+#           #["Category name",  "Diagnostics Enabled(true/false)", "Retention Enabled(true/false)", Retention_period]
 #           ["DDoSProtectionNotifications", true, true, 30],
 #           ["DDoSMitigationFlowLogs", true, true, 30],
 #           ["DDoSMitigationReports", true, true, 30],
@@ -85,7 +85,7 @@ vnets = {
 #       name = "azfw"
 #       diagnostics = {
 #         log = [
-#           #["Category name",  "Diagnostics Enabled(true/false)", "Retention Enabled(true/false)", Retention_period] 
+#           #["Category name",  "Diagnostics Enabled(true/false)", "Retention Enabled(true/false)", Retention_period]
 #           ["AzureFirewallApplicationRule", true, true, 30],
 #           ["AzureFirewallNetworkRule", true, true, 30],
 #         ]

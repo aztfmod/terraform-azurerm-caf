@@ -44,9 +44,9 @@ resource "random_string" "suffix" {
 }
 
 resource "azuread_application" "server" {
-  
+
   name      = azurecaf_naming_convention.aks_ad_app_server.result
-  
+
   group_membership_claims = "All"
 
     # reference: https://docs.microsoft.com/en-us/azure/aks/azure-ad-integration-cli

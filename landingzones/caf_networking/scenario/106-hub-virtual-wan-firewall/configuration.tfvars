@@ -29,13 +29,13 @@ vnets = {
     }
     specialsubnets = {
       AzureFirewallSubnet = {
-        name = "AzureFirewallSubnet" #Must be called AzureFirewallSubnet 
+        name = "AzureFirewallSubnet" #Must be called AzureFirewallSubnet
         cidr = ["10.10.100.192/26"]
       }
     }
     subnets = {
       AzureBastionSubnet = {
-        name    = "AzureBastionSubnet" #Must be called AzureBastionSubnet 
+        name    = "AzureBastionSubnet" #Must be called AzureBastionSubnet
         cidr    = ["10.10.100.160/27"]
         nsg_key = "azure_bastion_nsg"
       }
@@ -241,7 +241,7 @@ virtual_wans = {
 #       virtual_hub_key = "hub_rg1"
 #     }
 #     vnet = {
-#       # If the virtual network is stored in another another landing zone, use the following attributes to refer the state file: 
+#       # If the virtual network is stored in another another landing zone, use the following attributes to refer the state file:
 #       # tfstate_key = "networking"
 #       # lz_key      = "networking"
 #       # output_key  = "vnets"

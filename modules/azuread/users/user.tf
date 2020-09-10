@@ -7,7 +7,7 @@ resource "azurecaf_naming_convention" "account" {
   max_length    = local.max_length
 }
 
-# 
+#
 #
 resource "azuread_user" "account" {
   user_principal_name = format("%s@%s", azurecaf_naming_convention.account.result, local.tenant_name)

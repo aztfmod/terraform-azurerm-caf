@@ -10,7 +10,7 @@ resource "azurecaf_name" "p2s_gateway" {
   passthrough   = var.global_settings.passthrough
 }
 
-## create the VPN P2S if var.vwan.p2s_gateway is set to true 
+## create the VPN P2S if var.vwan.p2s_gateway is set to true
 resource "azurerm_point_to_site_vpn_gateway" "p2s_gateway" {
   depends_on = [azurerm_virtual_hub.vwan_hub, azurerm_vpn_server_configuration.p2s_configuration]
 

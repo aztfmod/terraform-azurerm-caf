@@ -1,4 +1,4 @@
-# naming convention 
+# naming convention
 resource "azurecaf_name" "virtualhub_fw" {
   count = var.virtual_hub_config.deploy_firewall ? 1 : 0
 

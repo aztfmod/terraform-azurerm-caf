@@ -1,4 +1,4 @@
-#Reference: https://www.terraform.io/docs/providers/azurerm/r/firewall.html 
+#Reference: https://www.terraform.io/docs/providers/azurerm/r/firewall.html
 resource "azurecaf_naming_convention" "fw" {
   name   = var.name
   prefix = var.global_settings.prefix

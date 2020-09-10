@@ -1,5 +1,5 @@
 #
-# permissions required: 
+# permissions required:
 #   - vso.variablegroups_manage   (create)
 #   + vso.buid                    (update)
 #   + vso.build_execute           (destroy)

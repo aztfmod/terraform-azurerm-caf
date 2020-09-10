@@ -32,7 +32,7 @@
             "metadata": {
                 "description": "Instance size for the front-end pool."
             }
-        },   
+        },
         "frontEndCount": {
             "type": "string",
             "defaultValue": "2",

@@ -17,7 +17,7 @@ module virtual_wans {
 }
 
 
-# 
+#
 #
 # Virtual WAN peerings with vnets
 #
@@ -42,7 +42,7 @@ data "terraform_remote_state" "peering_vhub" {
   }
 }
 
-# Peering 
+# Peering
 resource "azurerm_virtual_hub_connection" "vhub_connection" {
   depends_on = [module.networking, module.virtual_wans]
   for_each   = local.networking.vhub_peerings
@@ -56,7 +56,7 @@ resource "azurerm_virtual_hub_connection" "vhub_connection" {
   internet_security_enabled                      = try(each.value.internet_security_enabled, null)
 }
 
-# Outputs 
+# Outputs
 output virtual_wans {
   value       = module.virtual_wans
   sensitive   = false

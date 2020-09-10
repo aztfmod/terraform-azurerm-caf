@@ -32,13 +32,13 @@ vnets = {
         cidr = ["100.64.100.0/27"]
       }
       AzureFirewallSubnet = {
-        name = "AzureFirewallSubnet" #Must be called AzureFirewallSubnet 
+        name = "AzureFirewallSubnet" #Must be called AzureFirewallSubnet
         cidr = ["100.64.101.0/26"]
       }
     }
     subnets = {
       AzureBastionSubnet = {
-        name    = "AzureBastionSubnet" #Must be called AzureBastionSubnet 
+        name    = "AzureBastionSubnet" #Must be called AzureBastionSubnet
         cidr    = ["100.64.101.64/26"]
         nsg_key = "azure_bastion_nsg"
       }
@@ -564,7 +564,7 @@ diagnostics_definition = {
     name = "operational_logs_and_metrics"
     categories = {
       log = [
-        #["Category name",  "Diagnostics Enabled(true/false)", "Retention Enabled(true/false)", Retention_period] 
+        #["Category name",  "Diagnostics Enabled(true/false)", "Retention Enabled(true/false)", Retention_period]
         ["AzureFirewallApplicationRule", true, true, 7],
         ["AzureFirewallNetworkRule", true, true, 7],
         ["AzureFirewallDnsProxy", true, true, 7],
@@ -579,7 +579,7 @@ diagnostics_definition = {
     name = "operational_logs_and_metrics"
     categories = {
       log = [
-        #["Category name",  "Diagnostics Enabled(true/false)", "Retention Enabled(true/false)", Retention_period] 
+        #["Category name",  "Diagnostics Enabled(true/false)", "Retention Enabled(true/false)", Retention_period]
         ["DDoSProtectionNotifications", true, true, 7],
         ["DDoSMitigationFlowLogs", true, true, 7],
         ["DDoSMitigationReports", true, true, 7],
@@ -594,12 +594,12 @@ diagnostics_definition = {
     name = "operational_logs_and_metrics"
     categories = {
       log = [
-        # ["Category name",  "Diagnostics Enabled(true/false)", "Retention Enabled(true/false)", Retention_period] 
+        # ["Category name",  "Diagnostics Enabled(true/false)", "Retention Enabled(true/false)", Retention_period]
         ["ContainerRegistryRepositoryEvents", true, false, 7],
         ["ContainerRegistryLoginEvents", true, false, 7],
       ]
       metric = [
-        #["Category name",  "Diagnostics Enabled(true/false)", "Retention Enabled(true/false)", Retention_period]                 
+        #["Category name",  "Diagnostics Enabled(true/false)", "Retention Enabled(true/false)", Retention_period]
         ["AllMetrics", true, false, 7],
       ]
     }

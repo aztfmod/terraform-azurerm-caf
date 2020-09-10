@@ -14,7 +14,7 @@ resource "azuredevops_agent_pool" "pool" {
   auto_provision = lookup(each.value, "auto_provision", false)
 }
 
-# 
+#
 # add the agent pools into the project
 #
 
