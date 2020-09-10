@@ -153,3 +153,11 @@ module container {
   storage_account_name = azurerm_storage_account.stg.name
   settings             = each.value
 }
+
+module filesystem {
+  source   = "./data_lake_filesystem"
+  for_each = try(var.storage_account.data_lake_filesystems, {})
+
+  storage_account_id = azurerm_storage_account.stg.id
+  settings           = each.value
+}

@@ -18,6 +18,12 @@ resource_groups = {
   dap_jumpbox_re1 = {
     name = "dap-jumpbox-re1"
   }
+  dap_automl_re1 = {
+    name = "dap-automl"
+  }
+  dap_synapse_re1 = {
+    name = "dap-synapse"
+  }
 }
 
 # Virtual machines
@@ -104,25 +110,32 @@ virtual_machines = {
 }
 
 storage_accounts = {
-  level0 = {
-    name                     = "level0"
-    resource_group_key       = "tfstate"
-    account_kind             = "BlobStorage"
+  amlstorage_re1 = {
+    name                     = "amlre1"
+    resource_group_key       = "dap_jumpbox_re1"
+    account_kind             = "StorageV2"
     account_tier             = "Standard"
-    account_replication_type = "RAGRS"
-    tags = {
-      ## Those tags must never be changed after being set as they are used by the rover to locate the launchpad and the tfstates.
-      # Only adjust the environment value at creation time
-      tfstate     = "level0"
-      environment = "sandpit"
-      launchpad   = "launchpad"
-      ##
-    }
-    containers = {
-      tfstate = {
-        name = "tfstate"
+    account_replication_type = "LRS"
+    access_tier              = "Hot"
+  }
+  synapsestorage_re1 = {
+    name                     = "synapsere1"
+    resource_group_key       = "dap_synapse_re1"
+    account_kind             = "StorageV2"
+    account_tier             = "Standard"
+    account_replication_type = "LRS"
+    access_tier              = "Hot"
+    is_hns_enabled           = true
+
+    data_lake_filesystems = {
+      mlfilesystem = {
+        name = "mlfilesystem"
+        properties = {
+          dap = "200-basic-ml"
+        }
       }
     }
+
   }
 }
 
@@ -130,6 +143,23 @@ keyvaults = {
   secrets = {
     name                = "secrets"
     resource_group_key  = "dap_jumpbox_re1"
+    convention          = "cafrandom"
+    sku_name            = "premium"
+    soft_delete_enabled = true
+
+    # you can setup up to 5 profiles
+    diagnostic_profiles = {
+      operations = {
+        definition_key   = "default_all"
+        destination_type = "log_analytics"
+        destination_key  = "central_logs"
+      }
+    }
+
+  }
+  akvmlwkspc = {
+    name                = "akvmlwkspc"
+    resource_group_key  = "dap_automl_re1"
     convention          = "cafrandom"
     sku_name            = "premium"
     soft_delete_enabled = true
