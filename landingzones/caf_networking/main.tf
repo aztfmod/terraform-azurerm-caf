@@ -104,7 +104,7 @@ locals {
       )
     )
     ,
-    # data.terraform_remote_state.caf_foundations.outputs.tfstates,
+    data.terraform_remote_state.caf_foundations.outputs.tfstates,
     data.terraform_remote_state.networking.outputs.tfstates
   )
 

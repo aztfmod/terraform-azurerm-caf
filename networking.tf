@@ -26,6 +26,7 @@ module "networking" {
   route_tables                      = module.route_tables
   tags                              = try(each.value.tags, null)
   diagnostics                       = local.diagnostics
+  ddos_id                           = try(azurerm_network_ddos_protection_plan.ddos_protection_plan[each.value.ddos_services_key].id, "")
 }
 
 #
@@ -95,13 +96,24 @@ data "terraform_remote_state" "peering_to" {
   }
 }
 
+# naming convention for peering name
+resource "azurecaf_name" "peering" {
+  for_each   = local.networking.vnet_peerings
+
+  name          = try(each.value.name, null)
+  resource_type = "azurerm_virtual_network_peering"
+  prefixes      = [local.global_settings.prefix]
+  random_length = local.global_settings.random_length
+  clean_input   = true
+  passthrough   = local.global_settings.passthrough
+}
 
 # The code tries to peer to a vnet created in the same landing zone. If it fails it tries with the data remote state
 resource "azurerm_virtual_network_peering" "peering" {
   depends_on = [module.networking]
   for_each   = local.networking.vnet_peerings
 
-  name                         = each.value.name
+  name                         = azurecaf_name.peering[each.key].result
   virtual_network_name         = try(module.networking[each.value.from.vnet_key].name, data.terraform_remote_state.peering_from[each.key].outputs[each.value.from.output_key][each.value.from.lz_key][each.value.from.vnet_key].name)
   resource_group_name          = try(module.networking[each.value.from.vnet_key].resource_group_name, data.terraform_remote_state.peering_from[each.key].outputs[each.value.from.output_key][each.value.from.lz_key][each.value.from.vnet_key].resource_group_name)
   remote_virtual_network_id    = try(module.networking[each.value.to.vnet_key].id, data.terraform_remote_state.peering_to[each.key].outputs[each.value.to.output_key][each.value.to.lz_key][each.value.to.vnet_key].id)
@@ -116,26 +128,76 @@ resource "azurerm_virtual_network_peering" "peering" {
 # Route tables and routes
 #
 #
+resource "azurecaf_name" "route_tables" {
+  for_each   = local.networking.route_tables
+
+  name          = try(each.value.name, null)
+  resource_type = "azurerm_route_table"
+  prefixes      = [local.global_settings.prefix]
+  random_length = local.global_settings.random_length
+  clean_input   = true
+  passthrough   = local.global_settings.passthrough
+}
 
 module "route_tables" {
   source   = "./modules/networking/route_tables"
   for_each = local.networking.route_tables
 
-  name                          = each.value.name
+  name                          = azurecaf_name.route_tables[each.key].result
   resource_group_name           = module.resource_groups[each.value.resource_group_key].name
   location                      = lookup(each.value, "region", null) == null ? module.resource_groups[each.value.resource_group_key].location : local.global_settings.regions[each.value.region]
   disable_bgp_route_propagation = try(each.value.disable_bgp_route_propagation, null)
   tags                          = try(each.value.tags, null)
 }
 
+resource "azurecaf_name" "routes" {
+  for_each   = local.networking.route_tables
+
+  name          = try(each.value.name, null)
+  resource_type = "azurerm_route"
+  prefixes      = [local.global_settings.prefix]
+  random_length = local.global_settings.random_length
+  clean_input   = true
+  passthrough   = local.global_settings.passthrough
+}
+
 module "routes" {
   source   = "./modules/networking/routes"
   for_each = local.networking.azurerm_routes
 
-  name                      = each.value.name
+  name                      = azurecaf_name.routes[each.key].result
   resource_group_name       = module.resource_groups[each.value.resource_group_key].name
   route_table_name          = module.route_tables[each.value.route_table_key].name
   address_prefix            = each.value.address_prefix
   next_hop_type             = each.value.next_hop_type
   next_hop_in_ip_address_fw = try(module.azurerm_firewalls[each.value.private_ip_keys.azurerm_firewall.key].ip_configuration[each.value.private_ip_keys.azurerm_firewall.interface_index].private_ip_address, null)
 }
+
+#
+#
+# Azure DDoS 
+#
+#
+
+# naming convention
+resource "azurecaf_name" "ddos_protection_plan" {
+  for_each = local.networking.ddos_services
+
+  name          = try(each.value.name, null)
+  resource_type = "azurerm_network_ddos_protection_plan"
+  prefixes      = [local.global_settings.prefix]
+  random_length = local.global_settings.random_length
+  clean_input   = true
+  passthrough   = local.global_settings.passthrough
+}
+
+resource "azurerm_network_ddos_protection_plan" "ddos_protection_plan" {
+  for_each = local.networking.ddos_services
+
+  name                = azurecaf_name.ddos_protection_plan[each.key].result
+  location            = lookup(each.value, "region", null) == null ? module.resource_groups[each.value.resource_group_key].location : local.global_settings.regions[each.value.region]
+  resource_group_name = module.resource_groups[each.value.resource_group_key].name
+  tags                = try(each.value.tags, null)
+}
+
+

@@ -99,3 +99,6 @@ variable azure_container_registries {
 variable bastion_hosts {
   default = {}
 }
+variable ddos_services {
+  default = {}
+}
