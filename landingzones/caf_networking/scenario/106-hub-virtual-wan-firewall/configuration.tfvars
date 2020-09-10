@@ -1,5 +1,16 @@
 level = "level2"
 
+landingzone_name = "networking_hub"
+
+tfstates = {
+  caf_foundations = {
+    tfstate = "caf_foundations.tfstate"
+  }
+  networking = {
+    tfstate = "caf_foundations.tfstate"
+  }
+}
+
 resource_groups = {
   vnet_rg1 = {
     name   = "vnet-spoke-rg1"
