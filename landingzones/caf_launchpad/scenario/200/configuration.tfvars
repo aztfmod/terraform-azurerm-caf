@@ -226,6 +226,14 @@ keyvaults = {
       environment = "sandpit"
     }
 
+    creation_policies = {
+      logged_in_user = {
+        # if the key is set to "logged_in_user" add the user running terraform in the keyvault policy
+        # More examples in /examples/keyvault
+        secret_permissions = ["Set", "Get", "List", "Delete", "Purge", "Recover"]
+      }
+    }
+
     # you can setup up to 5 profiles
     diagnostic_profiles = {
       operations = {
@@ -264,6 +272,14 @@ keyvaults = {
       }
     }
 
+    creation_policies = {
+      logged_in_user = {
+        # if the key is set to "logged_in_user" add the user running terraform in the keyvault policy
+        # More examples in /examples/keyvault
+        secret_permissions = ["Set", "Get", "List", "Delete", "Purge", "Recover"]
+      }
+    }
+
     secrets = {
       azdo_pat_admin = {
         name           = "azdo-pat-admin"
@@ -283,11 +299,6 @@ keyvaults = {
 keyvault_access_policies = {
   # A maximum of 16 access policies per keyvault
   launchpad = {
-    logged_in_user = {
-      # if the key is set to "logged_in_user" add the user running terraform in the keyvault policy
-      # More examples in /examples/keyvault
-      secret_permissions = ["Set", "Get", "List", "Delete", "Purge", "Recover"]
-    }
     caf_launchpad_level0 = {
       # Reference a key to an azure ad applications
       azuread_app_key    = "caf_launchpad_level0"
@@ -301,9 +312,6 @@ keyvault_access_policies = {
   }
 
   secrets = {
-    logged_in_user = {
-      secret_permissions = ["Set", "Get", "List", "Delete", "Purge", "Recover"]
-    }
     caf_launchpad_level0 = {
       azuread_app_key    = "caf_launchpad_level0"
       secret_permissions = ["Set", "Get", "List", "Delete", "Purge", "Recover"]
@@ -1151,9 +1159,15 @@ virtual_machines = {
           version   = "latest"
         }
 
-        managed_identities = {
-          keys = ["level0", "level1", "level2", "level3", "level4"]
+        identity = {
+          type = "UserAssigned"
+          # remote_state = {
+          # }
+          managed_identity_keys = [
+            "level0", "level1", "level2", "level3", "level4"
+          ]
         }
+
       }
     }
 

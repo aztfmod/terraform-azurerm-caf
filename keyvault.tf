@@ -4,7 +4,8 @@ module "keyvaults" {
   for_each = var.keyvaults
 
   global_settings = local.global_settings
-  keyvault        = each.value
+  client_config   = local.client_config
+  settings        = each.value
   resource_groups = module.resource_groups
   tenant_id       = local.client_config.tenant_id
   diagnostics     = local.diagnostics

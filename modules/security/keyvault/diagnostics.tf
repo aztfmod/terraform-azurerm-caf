@@ -4,5 +4,5 @@ module diagnostics {
   resource_id       = azurerm_key_vault.keyvault.id
   resource_location = azurerm_key_vault.keyvault.location
   diagnostics       = var.diagnostics
-  profiles          = try(var.keyvault.diagnostic_profiles, {})
+  profiles          = try(var.settings.diagnostic_profiles, {})
 }
