@@ -73,3 +73,107 @@ locals {
   }
 
 }
+
+# The code transform this input format to
+#   custom_role_mapping = {
+  #     subscription_keys = {
+  #       logged_in_subscription = {
+  #         "caf-launchpad-contributor" = {
+  #           azuread_group_keys = [
+  #             "keyvault_level0_rw", "keyvault_level1_rw", "keyvault_level2_rw", "keyvault_level3_rw", "keyvault_level4_rw",
+  #           ]
+  #           managed_identity_keys = [
+  #             "level0", "level1", "level2", "level3", "level4"
+  #           ]
+  #         }
+  #       }
+  #     }
+  #   }
+
+  #   built_in_role_mapping = {
+  #     aks_clusters = {
+  #       seacluster = {
+  #         "Azure Kubernetes Service Cluster Admin Role" = {
+  #           azuread_group_keys = [
+  #             "aks_admins"
+  #           ]
+  #           managed_identity_keys = [
+  #             "jumpbox"
+  #           ]
+  #         }
+  #       }
+  #     }
+  #     azure_container_registries = {
+  #       acr1 = {
+  #         "AcrPull" = {
+  #           aks_cluster_keys = [
+  #             "seacluster"
+  #           ]
+  #         }
+  #       }
+  #     }
+  #     storage_account_keys = {
+  #       level0 = {
+  #         "Storage Blob Data Contributor" = {
+  #           logged_in_keys = [
+  #             "user", "app"
+  #           ]
+  #           object_ids = [
+  #             "232134243242342", "1111111"
+  #           ]
+  #           azuread_group_keys = [
+  #             "keyvault_level0_rw"
+  #           ]
+  #           azuread_app_keys = [
+  #             "caf_launchpad_level0"
+  #           ]
+  #           managed_identity_keys = [
+  #             "level0"
+  #           ]
+  #         }
+  #       }
+  # ......
+
+## Generates a transformed structure for azurerm_role_assignment to process 
+# built_in_roles = {
+#   "acr1_AcrPull_seacluster" = {
+#     "mode" = "built_in_role_mapping"
+#     "object_id_key_resource" = "seacluster"
+#     "object_id_resource_type" = "aks_cluster_keys"
+#     "role_definition_name" = "AcrPull"
+#     "scope_key_resource" = "acr1"
+#     "scope_resource_key" = "azure_container_registries"
+#   }
+#   "logged_in_subscription_caf-launchpad-contributor_keyvault_level0_rw" = {
+#     "mode" = "custom_role_mapping"
+#     "object_id_key_resource" = "keyvault_level0_rw"
+#     "object_id_resource_type" = "azuread_group_keys"
+#     "role_definition_name" = "caf-launchpad-contributor"
+#     "scope_key_resource" = "logged_in_subscription"
+#     "scope_resource_key" = "subscription_keys"
+#   }
+#   "logged_in_subscription_caf-launchpad-contributor_keyvault_level1_rw" = {
+#     "mode" = "custom_role_mapping"
+#     "object_id_key_resource" = "keyvault_level1_rw"
+#     "object_id_resource_type" = "azuread_group_keys"
+#     "role_definition_name" = "caf-launchpad-contributor"
+#     "scope_key_resource" = "logged_in_subscription"
+#     "scope_resource_key" = "subscription_keys"
+#   }
+#   "logged_in_subscription_caf-launchpad-contributor_keyvault_level2_rw" = {
+#     "mode" = "custom_role_mapping"
+#     "object_id_key_resource" = "keyvault_level2_rw"
+#     "object_id_resource_type" = "azuread_group_keys"
+#     "role_definition_name" = "caf-launchpad-contributor"
+#     "scope_key_resource" = "logged_in_subscription"
+#     "scope_resource_key" = "subscription_keys"
+#   }
+#   "logged_in_subscription_caf-launchpad-contributor_keyvault_level3_rw" = {
+#     "mode" = "custom_role_mapping"
+#     "object_id_key_resource" = "keyvault_level3_rw"
+#     "object_id_resource_type" = "azuread_group_keys"
+#     "role_definition_name" = "caf-launchpad-contributor"
+#     "scope_key_resource" = "logged_in_subscription"
+#     "scope_resource_key" = "subscription_keys"
+#   }
+# .......
