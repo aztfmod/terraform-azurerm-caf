@@ -1152,9 +1152,13 @@ virtual_machines = {
           version   = "latest"
         }
 
-        managed_identity_keys = [
+        identity = {
+          type = "UserAssigned"
+          managed_identity_keys = [
           "level0", "level1", "level2", "level3", "level4"
-        ]
+          ]
+        }
+
       }
     }
 
