@@ -5,7 +5,7 @@ output azurerm_firewalls {
 
 output vnets {
   value     = local.vnets
-  sensitive = false
+  sensitive = true
 }
 
 output tfstates {
@@ -15,7 +15,6 @@ output tfstates {
 
 output virtual_wans {
   value       = module.landingzones_networking.virtual_wans
-  sensitive   = false
+  sensitive   = true
   description = "Virtual WAN output"
-  depends_on  = []
 }

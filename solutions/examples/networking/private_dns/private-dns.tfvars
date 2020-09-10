@@ -1,4 +1,4 @@
-# rover -lz /tf/caf/examples/ -var-file /tf/caf/examples/networking/private_dns/private-dns.tfvars -a apply
+# rover -lz /tf/caf/solutions/ -var-file /tf/caf/solutions/examples/networking/private_dns/private-dns.tfvars -a apply
 
 resource_groups = {
   private_dns_region1 = {
@@ -44,8 +44,8 @@ private_dns = {
 
       txt_records = {
         testtxt1 = {
-          name    = "testtxt1"
-          ttl     = 3600
+          name = "testtxt1"
+          ttl  = 3600
           records = {
             r1 = {
               value = "testing txt 1"

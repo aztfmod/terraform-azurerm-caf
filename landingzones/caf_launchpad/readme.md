@@ -106,7 +106,7 @@ The launchpad light deploys the following Azure components:
 
     API permissions and admin consent are also granted during the bootstrap process. The grant_consent.sh scripts is called for to enable API access for a given Application
     * The variable `aad_api_permissions` object can contains multiple entries
-    * each key references one of the Application defined in the `aad_apps` variable. The content of each entry is an api permission definition. 
+    * each key references one of the Application defined in the `aad_apps` variable. The content of each entry is an api permission definition.
 
     The objectId, ApplicationId, ServicePrincipalID, client_secret are each stored in a keyvault using the secret_prefix value as defined in the code example
 

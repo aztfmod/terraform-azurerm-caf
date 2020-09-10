@@ -16,7 +16,7 @@ module "caf" {
   azuread_groups              = var.azuread_groups
   keyvaults                   = var.keyvaults
   keyvault_access_policies    = var.keyvault_access_policies
-  managed_identities                = var.managed_identities
+  managed_identities          = var.managed_identities
   compute = {
     virtual_machines = var.virtual_machines
     bastion_hosts    = var.bastion_hosts
@@ -24,7 +24,6 @@ module "caf" {
   networking = {
     vnets                             = var.vnets
     network_security_group_definition = var.network_security_group_definition
-    firewalls                         = {}
     public_ip_addresses               = var.public_ip_addresses
     private_dns                       = var.private_dns
   }

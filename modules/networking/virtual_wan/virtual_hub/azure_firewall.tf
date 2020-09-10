@@ -1,41 +1,49 @@
-# # While the Azure Firewall object is using ARM template snippet, we store each object in a different RG to simplify lifecycles
-# resource "azurecaf_naming_convention" "rg_virtualhub_fw" {
-#   count         = var.virtual_hub_config.deploy_firewall ? 1 : 0
-#   name          = var.virtual_hub_config.firewall_resource_group_name
-#   prefix        = var.prefix != "" ? var.prefix : null
-#   resource_type = "azurerm_resource_group"
-#   convention    = var.global_settings.convention
-# }
+# naming convention
+resource "azurecaf_name" "virtualhub_fw" {
+  count = var.virtual_hub_config.deploy_firewall ? 1 : 0
 
-# resource "azurerm_resource_group" "rg_virtualhub_fw" {
-#   depends_on = [azurerm_virtual_hub.vwan_hub] #adding explicit dependency for destroy time since we use ARM template.
-#   count      = var.virtual_hub_config.deploy_firewall ? 1 : 0
-#   name       = azurecaf_naming_convention.rg_virtualhub_fw.0.result
-#   location   = var.virtual_hub_config.region
-#   tags       = local.tags
-# }
+  name          = try(var.virtual_hub_config.firewall_name, null)
+  resource_type = "azurerm_firewall"
+  prefixes      = [var.global_settings.prefix]
+  random_length = var.global_settings.random_length
+  clean_input   = true
+  passthrough   = var.global_settings.passthrough
+}
 
-# resource "azurecaf_naming_convention" "virtualhub_fw" {
-#   count         = var.virtual_hub_config.deploy_firewall ? 1 : 0
-#   name          = var.virtual_hub_config.firewall_name
-#   prefix        = var.prefix != "" ? var.prefix : null
-#   resource_type = "azurerm_firewall"
-#   convention    = var.global_settings.convention
-# }
 
-# # As per https://docs.microsoft.com/en-us/azure/templates/microsoft.network/2019-09-01/azurefirewalls
-# resource "azurerm_template_deployment" "arm_template_vhub_firewall" {
-#   count               = var.virtual_hub_config.deploy_firewall ? 1 : 0
-#   name                = var.virtual_hub_config.firewall_name
-#   resource_group_name = azurerm_resource_group.rg_virtualhub_fw.0.name
+# As per https://docs.microsoft.com/en-us/azure/templates/microsoft.network/2019-09-01/azurefirewalls
+resource "azurerm_template_deployment" "arm_template_vhub_firewall" {
+  count               = var.virtual_hub_config.deploy_firewall ? 1 : 0
+  name                = azurecaf_name.virtualhub_fw.0.result
+  resource_group_name = var.resource_group_name
 
-#   template_body = file("${path.module}/arm_template_vhub_firewall.json")
+  template_body = file("${path.module}/arm_template_vhub_firewall.json")
 
-#   parameters = {
-#     "vwan_id"  = azurerm_virtual_hub.vwan_hub.id,
-#     "name"     = var.virtual_hub_config.firewall_name,
-#     "location" = var.location,
-#     "Tier"     = "Standard",
-#   }
-#   deployment_mode = "Incremental"
-# }
+  parameters = {
+    "vwan_id"  = azurerm_virtual_hub.vwan_hub.id,
+    "name"     = var.virtual_hub_config.firewall_name,
+    "location" = var.location,
+    "Tier"     = "Standard",
+  }
+  deployment_mode = "Incremental"
+}
+
+
+resource "null_resource" "arm_template_vhub_firewall" {
+
+  triggers = {
+    resource_id = lookup(azurerm_template_deployment.arm_template_vhub_firewall.0.outputs, "resourceID")
+  }
+
+  provisioner "local-exec" {
+    command     = format("%s/scripts/destroy_resource.sh", path.module)
+    when        = destroy
+    interpreter = ["/bin/sh"]
+    on_failure  = fail
+
+    environment = {
+      RESOURCE_IDS = self.triggers.resource_id
+    }
+  }
+
+}

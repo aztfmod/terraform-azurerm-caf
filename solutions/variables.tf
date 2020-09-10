@@ -14,7 +14,7 @@ variable tfstates {
     caf_foundations = {
       tfstate = "caf_foundations.tfstate"
     }
-    caf_networking = {
+    networking = {
       tfstate = "networking_hub.tfstate"
     }
   }

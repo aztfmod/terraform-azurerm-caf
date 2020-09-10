@@ -21,28 +21,28 @@ echo "install Ubuntu packages"
 export DEBIAN_FRONTEND=noninteractive
 echo "APT::Get::Assume-Yes \"true\";" > /etc/apt/apt.conf.d/90assumeyes
 
-apt-get update
-apt-get install -y --no-install-recommends \
-        ca-certificates \
-        jq \
-        apt-transport-https \
-        docker.io
+# apt-get update
+# apt-get install -y --no-install-recommends \
+#         ca-certificates \
+#         jq \
+#         apt-transport-https \
+#         docker.io
 
-echo "Allowing agent to run docker"
+# echo "Allowing agent to run docker"
 
-usermod -aG docker ${admin_user}
-systemctl daemon-reload
-systemctl enable docker
-service docker start
-docker --version
+# usermod -aG docker ${admin_user}
+# systemctl daemon-reload
+# systemctl enable docker
+# service docker start
+# docker --version
 
 # Pull rover base image
 echo "Rover docker image ${rover_version}"
 docker pull "${rover_version}"
 
-echo "Installing Azure CLI"
+# echo "Installing Azure CLI"
 
-curl -sL https://aka.ms/InstallAzureCLIDeb | bash
+# curl -sL https://aka.ms/InstallAzureCLIDeb | bash
 
 echo "install VSTS Agent"
 
@@ -52,9 +52,9 @@ cd agent
 
 AGENTRELEASE="$(curl -s https://api.github.com/repos/Microsoft/azure-pipelines-agent/releases/latest | grep -oP '"tag_name": "v\K(.*)(?=")')"
 AGENTURL="https://vstsagentpackage.azureedge.net/agent/${AGENTRELEASE}/vsts-agent-linux-x64-${AGENTRELEASE}.tar.gz"
-echo "Release "${AGENTRELEASE}" appears to be latest" 
+echo "Release "${AGENTRELEASE}" appears to be latest"
 echo "Downloading..."
-wget -O agent_package.tar.gz ${AGENTURL} 
+wget -O agent_package.tar.gz ${AGENTURL}
 
 az login --identity
 
@@ -62,7 +62,7 @@ for agent_num in $(seq 1 ${num_agent}); do
   agent_dir="agent-$agent_num"
   mkdir -p "$agent_dir"
   cd "$agent_dir"
-    name="${agent_prefix}-${agent_num}" 
+    name="${agent_prefix}-${agent_num}"
     echo "installing agent $name"
     tar zxvf ../agent_package.tar.gz
     chmod -R 777 .

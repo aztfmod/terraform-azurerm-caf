@@ -19,8 +19,8 @@ Landing zones:
 
 ```bash
 # Deployment command
-rover -lz /tf/caf/landingzones/caf_networking/ -var-file /tf/caf/landingzones/caf_networking/scenario/200/multi-hub.tfvars -a apply
+rover -lz /tf/caf/landingzones/caf_networking/ -var-file /tf/caf/landingzones/caf_networking/scenario/201-multi-region-hub/configuration.tfvars -tfstate networking_hub.tfstate -a apply
 
 # Destroy command
-rover -lz /tf/caf/landingzones/caf_networking/ -var-file /tf/caf/landingzones/caf_networking/scenario/200/multi-hub.tfvars -a destroy
+rover -lz /tf/caf/landingzones/caf_networking/ -var-file /tf/caf/landingzones/caf_networking/scenario/201-multi-region-hub/configuration.tfvars -tfstate networking_hub.tfstate -a destroy
 ```

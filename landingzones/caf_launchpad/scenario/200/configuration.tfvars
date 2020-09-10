@@ -503,6 +503,7 @@ azuread_apps = {
 azuread_app_roles = {
   caf_launchpad_level0 = {
     roles = [
+      "Application Administrator",
       "Application Developer",
       "User Account Administrator"
     ]
@@ -600,11 +601,11 @@ diagnostics_definition = {
     name = "operational_logs_and_metrics"
     categories = {
       log = [
-        # ["Category name",  "Diagnostics Enabled(true/false)", "Retention Enabled(true/false)", Retention_period] 
+        # ["Category name",  "Diagnostics Enabled(true/false)", "Retention Enabled(true/false)", Retention_period]
         ["Audit", true, false, 7],
       ]
       metric = [
-        #["Category name",  "Diagnostics Enabled(true/false)", "Retention Enabled(true/false)", Retention_period]                 
+        #["Category name",  "Diagnostics Enabled(true/false)", "Retention Enabled(true/false)", Retention_period]
         ["AllMetrics", true, false, 7],
       ]
     }
@@ -615,11 +616,11 @@ diagnostics_definition = {
     name = "operational_logs_and_metrics"
     categories = {
       log = [
-        # ["Category name",  "Diagnostics Enabled(true/false)", "Retention Enabled(true/false)", Retention_period] 
+        # ["Category name",  "Diagnostics Enabled(true/false)", "Retention Enabled(true/false)", Retention_period]
         ["AuditEvent", true, false, 7],
       ]
       metric = [
-        #["Category name",  "Diagnostics Enabled(true/false)", "Retention Enabled(true/false)", Retention_period]                 
+        #["Category name",  "Diagnostics Enabled(true/false)", "Retention Enabled(true/false)", Retention_period]
         ["AllMetrics", true, false, 7],
       ]
     }
@@ -630,7 +631,7 @@ diagnostics_definition = {
     name = "operational_logs_and_metrics"
     categories = {
       log = [
-        # ["Category name",  "Diagnostics Enabled(true/false)", "Retention Enabled(true/false)", Retention_period] 
+        # ["Category name",  "Diagnostics Enabled(true/false)", "Retention Enabled(true/false)", Retention_period]
         ["BastionAuditLogs", true, false, 7],
       ]
     }
@@ -641,11 +642,11 @@ diagnostics_definition = {
     name = "operational_logs_and_metrics"
     categories = {
       log = [
-        # ["Category name",  "Diagnostics Enabled(true/false)", "Retention Enabled(true/false)", Retention_period] 
+        # ["Category name",  "Diagnostics Enabled(true/false)", "Retention Enabled(true/false)", Retention_period]
         ["VMProtectionAlerts", true, false, 7],
       ]
       metric = [
-        #["Category name",  "Diagnostics Enabled(true/false)", "Retention Enabled(true/false)", Retention_period]                 
+        #["Category name",  "Diagnostics Enabled(true/false)", "Retention Enabled(true/false)", Retention_period]
         ["AllMetrics", true, false, 7],
       ]
     }
@@ -656,13 +657,13 @@ diagnostics_definition = {
     name = "operational_logs_and_metrics"
     categories = {
       log = [
-        # ["Category name",  "Diagnostics Enabled(true/false)", "Retention Enabled(true/false)", Retention_period] 
+        # ["Category name",  "Diagnostics Enabled(true/false)", "Retention Enabled(true/false)", Retention_period]
         ["DDoSProtectionNotifications", true, false, 7],
         ["DDoSMitigationFlowLogs", true, false, 7],
         ["DDoSMitigationReports", true, false, 7],
       ]
       metric = [
-        #["Category name",  "Diagnostics Enabled(true/false)", "Retention Enabled(true/false)", Retention_period]                 
+        #["Category name",  "Diagnostics Enabled(true/false)", "Retention Enabled(true/false)", Retention_period]
         ["AllMetrics", true, false, 7],
       ]
     }
@@ -673,7 +674,7 @@ diagnostics_definition = {
     name = "operational_logs_and_metrics"
     categories = {
       log = [
-        # ["Category name",  "Diagnostics Enabled(true/false)", "Retention Enabled(true/false)", Retention_period] 
+        # ["Category name",  "Diagnostics Enabled(true/false)", "Retention Enabled(true/false)", Retention_period]
         ["NetworkSecurityGroupEvent", true, false, 7],
         ["NetworkSecurityGroupRuleCounter", true, false, 7],
       ]
@@ -685,7 +686,7 @@ diagnostics_definition = {
     name = "operational_logs_and_metrics"
     categories = {
       metric = [
-        #["Category name",  "Diagnostics Enabled(true/false)", "Retention Enabled(true/false)", Retention_period]                 
+        #["Category name",  "Diagnostics Enabled(true/false)", "Retention Enabled(true/false)", Retention_period]
         ["AllMetrics", false, false, 7],
       ]
     }
@@ -695,12 +696,12 @@ diagnostics_definition = {
     name = "operational_logs_and_metrics"
     categories = {
       log = [
-        # ["Category name",  "Diagnostics Enabled(true/false)", "Retention Enabled(true/false)", Retention_period] 
+        # ["Category name",  "Diagnostics Enabled(true/false)", "Retention Enabled(true/false)", Retention_period]
         ["ContainerRegistryRepositoryEvents", true, false, 7],
         ["ContainerRegistryLoginEvents", true, false, 7],
       ]
       metric = [
-        #["Category name",  "Diagnostics Enabled(true/false)", "Retention Enabled(true/false)", Retention_period]                 
+        #["Category name",  "Diagnostics Enabled(true/false)", "Retention Enabled(true/false)", Retention_period]
         ["AllMetrics", true, false, 7],
       ]
     }
@@ -710,11 +711,11 @@ diagnostics_definition = {
     name = "compliance_logs"
     categories = {
       log = [
-        # ["Category name",  "Diagnostics Enabled(true/false)", "Retention Enabled(true/false)", Retention_period] 
+        # ["Category name",  "Diagnostics Enabled(true/false)", "Retention Enabled(true/false)", Retention_period]
         ["AuditEvent", true, true, 365],
       ]
       metric = [
-        #["Category name",  "Diagnostics Enabled(true/false)", "Retention Enabled(true/false)", Retention_period]                 
+        #["Category name",  "Diagnostics Enabled(true/false)", "Retention Enabled(true/false)", Retention_period]
         ["AllMetrics", false, false, 7],
       ]
     }
@@ -725,12 +726,12 @@ diagnostics_definition = {
     name = "siem"
     categories = {
       log = [
-        # ["Category name",  "Diagnostics Enabled(true/false)", "Retention Enabled(true/false)", Retention_period] 
+        # ["Category name",  "Diagnostics Enabled(true/false)", "Retention Enabled(true/false)", Retention_period]
         ["AuditEvent", true, true, 0],
       ]
 
       metric = [
-        #["Category name",  "Diagnostics Enabled(true/false)", "Retention Enabled(true/false)", Retention_period]                 
+        #["Category name",  "Diagnostics Enabled(true/false)", "Retention Enabled(true/false)", Retention_period]
         ["AllMetrics", false, false, 0],
       ]
     }
@@ -741,7 +742,7 @@ diagnostics_definition = {
     name = "subscription_operations"
     categories = {
       log = [
-        # ["Category name",  "Diagnostics Enabled(true/false)"] 
+        # ["Category name",  "Diagnostics Enabled(true/false)"]
         ["Administrative", true],
         ["Security", true],
         ["ServiceHealth", true],
@@ -758,7 +759,7 @@ diagnostics_definition = {
     name = "activity_logs_for_siem"
     categories = {
       log = [
-        # ["Category name",  "Diagnostics Enabled(true/false)"] 
+        # ["Category name",  "Diagnostics Enabled(true/false)"]
         ["Administrative", false],
         ["Security", true],
         ["ServiceHealth", false],
@@ -1198,7 +1199,7 @@ vnets = {
     specialsubnets = {}
     subnets = {
       AzureBastionSubnet = {
-        name    = "AzureBastionSubnet" #Must be called AzureBastionSubnet 
+        name    = "AzureBastionSubnet" #Must be called AzureBastionSubnet
         cidr    = ["10.100.100.24/29"]
         nsg_key = "azure_bastion_nsg"
       }

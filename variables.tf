@@ -1,4 +1,4 @@
-# Global settings 
+# Global settings
 variable global_settings {
   default = {
     prefix         = ""

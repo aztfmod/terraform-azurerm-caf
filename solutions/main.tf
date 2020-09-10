@@ -48,7 +48,17 @@ data "terraform_remote_state" "caf_foundations" {
   config = {
     storage_account_name = var.lowerlevel_storage_account_name
     container_name       = var.lowerlevel_container_name
-    key                  = "caf_foundations.tfstate"
+    key                  = var.tfstates.caf_foundations.tfstate
+    resource_group_name  = var.lowerlevel_resource_group_name
+  }
+}
+
+data "terraform_remote_state" "networking" {
+  backend = "azurerm"
+  config = {
+    storage_account_name = var.lowerlevel_storage_account_name
+    container_name       = var.lowerlevel_container_name
+    key                  = var.tfstates.networking.tfstate
     resource_group_name  = var.lowerlevel_resource_group_name
   }
 }
@@ -85,7 +95,7 @@ locals {
       )
     )
     ,
-    data.terraform_remote_state.caf_foundations.outputs.tfstates
+    data.terraform_remote_state.networking.outputs.tfstates
   )
 
 }

@@ -57,7 +57,7 @@ virtual_machines = {
       }
     }
 
-    # 
+    #
     virtual_machine_settings = {
       linux = {
         name                            = "bastion"
@@ -82,10 +82,14 @@ virtual_machines = {
           version   = "latest"
         }
 
-        managed_identity_keys = [
-          "kubernetes_retail",
-          "datalake_retail"
-        ]
+        identity = {
+          type = "UserAssigned"
+          managed_identity_keys = [
+            "kubernetes_retail",
+            "datalake_retail"
+          ]
+        }
+
       }
     }
 
@@ -139,11 +143,11 @@ networking = {
     }
     diags = {
       log = [
-        # ["Category name",  "Diagnostics Enabled(true/false)", "Retention Enabled(true/false)", Retention_period] 
+        # ["Category name",  "Diagnostics Enabled(true/false)", "Retention Enabled(true/false)", Retention_period]
         ["VMProtectionAlerts", true, true, 60],
       ]
       metric = [
-        #["Category name",  "Diagnostics Enabled(true/false)", "Retention Enabled(true/false)", Retention_period]                 
+        #["Category name",  "Diagnostics Enabled(true/false)", "Retention Enabled(true/false)", Retention_period]
         ["AllMetrics", true, true, 60],
       ]
     }

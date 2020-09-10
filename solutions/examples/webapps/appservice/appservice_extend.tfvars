@@ -20,30 +20,30 @@ app_service_plans = {
 
 app_services = {
   webapp1 = {
-    resource_group_key = "webapp_extend"
-    name               = "webapp-extend"
+    resource_group_key   = "webapp_extend"
+    name                 = "webapp-extend"
     app_service_plan_key = "asp_extend"
 
     identity = {
-      type = "SystemAssigned"
+      type         = "SystemAssigned"
       identity_ids = null
     }
 
     settings = {
-      enabled = true
-      numberOfWorkers = 2
+      enabled                 = true
+      numberOfWorkers         = 2
       client_affinity_enabled = false
-      client_cert_enabled = false
-      https_only = false
+      client_cert_enabled     = false
+      https_only              = false
 
       site_config = {
-          default_documents           = ["main.aspx"]
-          always_on                   = true
-          dotnet_framework_version    = "v4.0"
-          app_command_line = null ///sbin/myserver -b 0.0.0.0
-          ftps_state = "AllAllowed" //AllAllowed, FtpsOnly and Disabled
-          http2_enabled = false
-          
+        default_documents        = ["main.aspx"]
+        always_on                = true
+        dotnet_framework_version = "v4.0"
+        app_command_line         = null         ///sbin/myserver -b 0.0.0.0
+        ftps_state               = "AllAllowed" //AllAllowed, FtpsOnly and Disabled
+        http2_enabled            = false
+
       }
 
       app_settings = {

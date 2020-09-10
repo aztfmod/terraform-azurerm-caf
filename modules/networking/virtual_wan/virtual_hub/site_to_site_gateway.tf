@@ -1,4 +1,16 @@
-## create the VPN S2S if var.vwan.s2s_gateway is set to true 
+# naming convention
+resource "azurecaf_name" "s2s_gateway" {
+  count = var.virtual_hub_config.deploy_s2s ? 1 : 0
+
+  name          = try(var.virtual_hub_config.s2s_config.name, null)
+  resource_type = "azurerm_virtual_network_gateway"
+  prefixes      = [var.global_settings.prefix]
+  random_length = var.global_settings.random_length
+  clean_input   = true
+  passthrough   = var.global_settings.passthrough
+}
+
+## create the VPN S2S if var.vwan.s2s_gateway is set to true
 resource "azurerm_vpn_gateway" "s2s_gateway" {
   depends_on = [azurerm_virtual_hub.vwan_hub]
   count      = var.virtual_hub_config.deploy_s2s ? 1 : 0

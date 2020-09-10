@@ -47,7 +47,7 @@ resource "null_resource" "destroy_ase" {
 
 # As of writing, the ASE ARM deployment don't return the IP address of the ILB
 # ASE. This workaround querys Azure's API to get the values we need for use
-# elsewhere in the script. 
+# elsewhere in the script.
 # See this https://stackoverflow.com/a/49436100
 data "external" "ase_ilb_ip" {
   # This calls the Azure CLI then passes the value to jq to return JSON as a single

@@ -1,8 +1,39 @@
+## v9.0.2009 (September 2020)
+
+FEATURES:
+
+## v8.0.2008 (August 2020)
+
+BREAKING CHANGES:
+
+* We have fully migrated the codebase to Terraform 0.13 and refactored the code rely on a new key-based iterative model to simplify deployment and maintenance. We also leverage new features like conditions and iterations on modules, variables validation, etc.
+
+FEATURES:
+
+* **added support for azurerm 2.25 :** On all sample landing zones [azurerm provider](https://github.com/terraform-providers/terraform-provider-azurerm/releases/tag/v2.25.0)
+* **landingzone_caf_foundations :** Refactoring foundations to use new key-based iterative model, enabling support for multi-regions foundations.
+* **landingzone_networking :** Refactoring networking landing zones to use new key-based iterative model, this is enabling support for all networking models in only one landing zone.
+
+
+## v7.0.2007 (July 2020)
+
+BREAKING CHANGES:
+
+* Update to rover syntax, as documented in landing zones, syntax is now: rover -lz <lz name> -a <plan|apply|delete> (refer to Getting started and landing zones readmes)
+
+FEATURES:
+
+* **launchpad:** introduced support for Azure DevOps Addons and Azure DevOps self hosted agents.
+* **added support for azurerm 2.20 :** On all sample landing zones [azurerm provider](https://github.com/terraform-providers/terraform-provider-azurerm/releases/tag/v2.20.0)
+* **rover :** upgrade to rover 2007: - support for Terraform 0.29 - [#61](https://github.com/aztfmod/rover/issues/61)
+* **rover :** support for rover in Azure Container Instance - [#62](https://github.com/aztfmod/rover/issues/62)
+* **landingzone_caf_foundations :** Fixed passing in the list of supported services- [#61](https://github.com/Azure/caf-terraform-landingzones/issues/61)
+
 ## v6.0.2006 (June 2020)
 
 BREAKING CHANGES:
 
-* New launchpad. You must destroy the 2005:1510 first before redelpoying this version of the launchap. 
+* New launchpad. You must destroy the 2005:1510 first before redeploying this version of the launchpad.
 
 FEATURES:
 
@@ -89,21 +120,21 @@ FEATURES:
 * **rover:** rollup upgrade to support workspaces [#15](https://github.com/aztfmod/landingzones/pull/15)
 * **launchpad:** Support for launchpad destroy [#16](
 https://github.com/aztfmod/level0/issues/16)
-* **rover:** Upgrade to rover version 2002.0320 - Supporting: - Terraform 0.12.20 (https://github.com/hashicorp/terraform/releases/tag/v0.12.20) 
+* **rover:** Upgrade to rover version 2002.0320 - Supporting: - Terraform 0.12.20 (https://github.com/hashicorp/terraform/releases/tag/v0.12.20)
 * **rover:** Using "4ops.terraform" extension for improved support of Terraform 0.12 syntax. [#16](https://github.com/aztfmod/landingzones/issues/16)
 
 ## v1.1.1912 (January 2020)
 
 FEATURES:
 
-* **landingzone_caf_foundations :** Major refactoring to support governance, security and accounting. 
+* **landingzone_caf_foundations :** Major refactoring to support governance, security and accounting.
 
 IMPROVEMENTS:
 
-* **rover:** Support for non root containers in Visual Studio Code Development Containers (>v1.40) 
+* **rover:** Support for non root containers in Visual Studio Code Development Containers (>v1.40)
 
 * **rover:** Upgrade to rover version 2001.1006 - Supporting: - Terraform 0.12.19 (https://github.com/hashicorp/terraform/releases/tag/v0.12.19) - azurerm provider 1.40 (https://github.com/terraform-providers/terraform-provider-azurerm/blob/v1.40.0/CHANGELOG.md )
 
-* **rover:** Restructured the folder hierarchy in landing zones to ease integration and development on standard landing zones. 
+* **rover:** Restructured the folder hierarchy in landing zones to ease integration and development on standard landing zones.
 
 * **documentation:** Instructions on rover updates for non root container and Docker volumes cleanup.
