@@ -151,7 +151,7 @@ module "route_tables" {
 }
 
 resource "azurecaf_name" "routes" {
-  for_each   = local.networking.route_tables
+  for_each   = local.networking.azurerm_routes
 
   name          = try(each.value.name, null)
   resource_type = "azurerm_route"
