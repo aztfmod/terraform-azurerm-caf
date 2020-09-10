@@ -1156,7 +1156,7 @@ virtual_machines = {
         identity = {
           type = "UserAssigned"
           managed_identity_keys = [
-          "level0", "level1", "level2", "level3", "level4"
+            "level0", "level1", "level2", "level3", "level4"
           ]
         }
 

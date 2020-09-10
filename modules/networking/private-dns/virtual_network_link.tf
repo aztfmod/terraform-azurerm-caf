@@ -19,7 +19,7 @@ data "terraform_remote_state" "vnet_links" {
 }
 
 resource "azurerm_private_dns_zone_virtual_network_link" "vnet_links" {
-  for_each              = var.vnet_links
+  for_each = var.vnet_links
 
   name                  = each.value.name
   resource_group_name   = var.resource_group_name

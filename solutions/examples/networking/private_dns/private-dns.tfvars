@@ -15,10 +15,10 @@ vnets = {
       address_space = ["10.10.100.0/24"]
     }
     specialsubnets = {
-      
+
     }
     subnets = {
-      
+
     }
   }
 }
@@ -60,8 +60,8 @@ private_dns = {
 
     vnet_links = {
       link_test = {
-        name      = "test-vnet-link"
-        vnet_key  = "vnet_test"
+        name     = "test-vnet-link"
+        vnet_key = "vnet_test"
       }
     }
   }
