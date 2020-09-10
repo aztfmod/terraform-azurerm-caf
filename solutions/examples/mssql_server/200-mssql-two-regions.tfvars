@@ -4,9 +4,9 @@
 # - caf_launchpad scenario 200+
 #
 # Commands
-# - deploy: rover -lz /tf/caf/examples/ -var-file /tf/caf/examples/mssql_server/200-mssql-two-regions.tfvars -tfstate mssql_server.tfstate -a apply
+# - deploy: rover -lz /tf/caf/solutions/ -var-file /tf/caf/solutions/examples/mssql_server/200-mssql-two-regions.tfvars -tfstate mssql_server.tfstate -a apply
 # - destroy:
-#   rover -lz /tf/caf/examples/ -var-file /tf/caf/examples/mssql_server/200-mssql-two-regions.tfvars -tfstate mssql_server.tfstate -a destroy
+#   rover -lz /tf/caf/solutions/ -var-file /tf/caf/solutions/examples/mssql_server/200-mssql-two-regions.tfvars -tfstate mssql_server.tfstate -a destroy
 #
 #
 # The configuration deploys per region:
