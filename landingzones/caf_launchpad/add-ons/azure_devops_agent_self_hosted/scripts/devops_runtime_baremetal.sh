@@ -21,28 +21,28 @@ echo "install Ubuntu packages"
 export DEBIAN_FRONTEND=noninteractive
 echo "APT::Get::Assume-Yes \"true\";" > /etc/apt/apt.conf.d/90assumeyes
 
-# apt-get update
-# apt-get install -y --no-install-recommends \
-#         ca-certificates \
-#         jq \
-#         apt-transport-https \
-#         docker.io
+apt-get update
+apt-get install -y --no-install-recommends \
+        ca-certificates \
+        jq \
+        apt-transport-https \
+        docker.io
 
-# echo "Allowing agent to run docker"
+echo "Allowing agent to run docker"
 
-# usermod -aG docker ${admin_user}
-# systemctl daemon-reload
-# systemctl enable docker
-# service docker start
-# docker --version
+usermod -aG docker ${admin_user}
+systemctl daemon-reload
+systemctl enable docker
+service docker start
+docker --version
 
 # Pull rover base image
 echo "Rover docker image ${rover_version}"
 docker pull "${rover_version}"
 
-# echo "Installing Azure CLI"
+echo "Installing Azure CLI"
 
-# curl -sL https://aka.ms/InstallAzureCLIDeb | bash
+curl -sL https://aka.ms/InstallAzureCLIDeb | bash
 
 echo "install VSTS Agent"
 

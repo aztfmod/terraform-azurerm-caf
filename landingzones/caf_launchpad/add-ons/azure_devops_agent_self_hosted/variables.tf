@@ -79,12 +79,15 @@ variable keyvault_access_policies {
 variable virtual_machines {
   default = {}
 }
-variable bastion_hosts {
-  default = {}
-}
-variable public_ip_addresses {
-  default = {}
-}
 variable diagnostic_storage_accounts {
+  default = {}
+}
+variable virtual_machine_extension_scripts {
+  default = {}
+}
+variable azure_devops {
+  default = {}
+}
+variable role_mapping {
   default = {}
 }
