@@ -7,6 +7,7 @@ resource_groups = {
 vnets = {
   hub_sg = {
     resource_group_key = "vnet_sg"
+    ddos_services_key = "ddos1"
     vnet = {
       name          = "hub"
       address_space = ["10.10.100.0/24"]
@@ -116,4 +117,11 @@ network_security_group_definition = {
   }
 
 
+}
+
+ddos_services = {
+  ddos1 = {
+    resource_group_key = "vnet_sg"
+    name = "ddos_services1"
+  }
 }

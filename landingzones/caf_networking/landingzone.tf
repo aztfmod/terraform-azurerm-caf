@@ -23,6 +23,7 @@ module "landingzones_networking" {
     route_tables                                            = var.route_tables
     azurerm_routes                                          = var.azurerm_routes
     virtual_wans                                            = var.virtual_wans
+    ddos_services                                           = var.ddos_services
   }
   compute = {
     virtual_machines           = var.virtual_machines
