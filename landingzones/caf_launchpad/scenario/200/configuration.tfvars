@@ -503,6 +503,7 @@ azuread_apps = {
 azuread_app_roles = {
   caf_launchpad_level0 = {
     roles = [
+      "Application Administrator",
       "Application Developer",
       "User Account Administrator"
     ]
