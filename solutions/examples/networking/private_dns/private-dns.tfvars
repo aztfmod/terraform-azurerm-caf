@@ -7,6 +7,22 @@ resource_groups = {
   }
 }
 
+vnets = {
+  vnet_test = {
+    resource_group_key = "private_dns_region1"
+    vnet = {
+      name          = "test-vnet"
+      address_space = ["10.10.100.0/24"]
+    }
+    specialsubnets = {
+
+    }
+    subnets = {
+
+    }
+  }
+}
+
 private_dns = {
   dns1 = {
     name               = "test-dns.mysite.com"
@@ -39,6 +55,13 @@ private_dns = {
             }
           }
         }
+      }
+    }
+
+    vnet_links = {
+      link_test = {
+        name     = "test-vnet-link"
+        vnet_key = "vnet_test"
       }
     }
   }
