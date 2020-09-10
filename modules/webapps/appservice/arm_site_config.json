@@ -9,7 +9,7 @@
             "type": "string",
             "defaultValue": 1
         }
-    }, 
+    },
     "resources": [
         {
             "type": "Microsoft.Web/sites/config",

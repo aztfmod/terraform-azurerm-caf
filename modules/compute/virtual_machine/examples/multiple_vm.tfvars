@@ -57,7 +57,7 @@ virtual_machines = {
       }
     }
 
-    # 
+    #
     virtual_machine_settings = {
       linux = {
         name                            = "bastion"
@@ -143,11 +143,11 @@ networking = {
     }
     diags = {
       log = [
-        # ["Category name",  "Diagnostics Enabled(true/false)", "Retention Enabled(true/false)", Retention_period] 
+        # ["Category name",  "Diagnostics Enabled(true/false)", "Retention Enabled(true/false)", Retention_period]
         ["VMProtectionAlerts", true, true, 60],
       ]
       metric = [
-        #["Category name",  "Diagnostics Enabled(true/false)", "Retention Enabled(true/false)", Retention_period]                 
+        #["Category name",  "Diagnostics Enabled(true/false)", "Retention Enabled(true/false)", Retention_period]
         ["AllMetrics", true, true, 60],
       ]
     }

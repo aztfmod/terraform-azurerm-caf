@@ -52,9 +52,9 @@ cd agent
 
 AGENTRELEASE="$(curl -s https://api.github.com/repos/Microsoft/azure-pipelines-agent/releases/latest | grep -oP '"tag_name": "v\K(.*)(?=")')"
 AGENTURL="https://vstsagentpackage.azureedge.net/agent/${AGENTRELEASE}/vsts-agent-linux-x64-${AGENTRELEASE}.tar.gz"
-echo "Release "${AGENTRELEASE}" appears to be latest" 
+echo "Release "${AGENTRELEASE}" appears to be latest"
 echo "Downloading..."
-wget -O agent_package.tar.gz ${AGENTURL} 
+wget -O agent_package.tar.gz ${AGENTURL}
 
 az login --identity
 
@@ -62,7 +62,7 @@ for agent_num in $(seq 1 ${num_agent}); do
   agent_dir="agent-$agent_num"
   mkdir -p "$agent_dir"
   cd "$agent_dir"
-    name="${agent_prefix}-${agent_num}" 
+    name="${agent_prefix}-${agent_num}"
     echo "installing agent $name"
     tar zxvf ../agent_package.tar.gz
     chmod -R 777 .

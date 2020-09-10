@@ -14,7 +14,7 @@ module "az_firewall" {
   convention                  = local.convention
   name                        = local.az_fw_config.name
   resource_group_name         = azurerm_resource_group.rg_test.name
-  location                    = local.location 
+  location                    = local.location
   tags                        = local.tags
   la_workspace_id             = module.la_test.id
   diagnostics_map             = module.diags_test.diagnostics_map

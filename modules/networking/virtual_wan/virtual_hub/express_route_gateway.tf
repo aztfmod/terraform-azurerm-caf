@@ -11,7 +11,7 @@ resource "azurecaf_name" "er_gateway" {
 }
 
 
-## create the ER Gateway 
+## create the ER Gateway
 resource "azurerm_express_route_gateway" "er_gateway" {
   depends_on = [azurerm_virtual_hub.vwan_hub]
   count      = var.virtual_hub_config.deploy_er ? 1 : 0

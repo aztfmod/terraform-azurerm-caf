@@ -5,7 +5,7 @@
 
 # Commands
 # - deploy: rover -lz /tf/caf/examples/ -var-file /tf/caf/examples/mssql_server/200-mssql.tfvars -tfstate mssql_server.tfstate -a apply
-# - destroy: 
+# - destroy:
 #   rover -lz /tf/caf/examples/ -var-file /tf/caf/examples/mssql_server/200-mssql.tfvars -tfstate mssql_server.tfstate -a destroy
 
 # The configuration deploys one region:

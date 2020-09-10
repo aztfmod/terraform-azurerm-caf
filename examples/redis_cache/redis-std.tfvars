@@ -1,6 +1,6 @@
-# Approximative time to 
+# Approximative time to
 #  - deploy: 25 mins to 30 mins
-#  - destroy: 5 mins 
+#  - destroy: 5 mins
 #
 # rover -lz /tf/caf/examples/ -var-file /tf/caf/examples/redis_cache/redis-std.tfvars -a apply
 

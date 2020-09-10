@@ -17,7 +17,7 @@ vnets = {
         cidr = ["10.10.100.224/27"]
       }
       AzureFirewallSubnet = {
-        name = "AzureFirewallSubnet" #Must be called AzureFirewallSubnet 
+        name = "AzureFirewallSubnet" #Must be called AzureFirewallSubnet
         cidr = ["10.10.100.192/27"]
       }
     }
@@ -27,7 +27,7 @@ vnets = {
         cidr = ["10.10.100.0/27"]
       }
       AzureBastionSubnet = {
-        name    = "AzureBastionSubnet" #Must be called AzureBastionSubnet 
+        name    = "AzureBastionSubnet" #Must be called AzureBastionSubnet
         cidr    = ["10.10.100.160/27"]
         nsg_key = "azure_bastion_nsg"
       }

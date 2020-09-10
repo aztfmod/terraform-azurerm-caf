@@ -10,7 +10,7 @@ resource "azurecaf_name" "s2s_gateway" {
   passthrough   = var.global_settings.passthrough
 }
 
-## create the VPN S2S if var.vwan.s2s_gateway is set to true 
+## create the VPN S2S if var.vwan.s2s_gateway is set to true
 resource "azurerm_vpn_gateway" "s2s_gateway" {
   depends_on = [azurerm_virtual_hub.vwan_hub]
   count      = var.virtual_hub_config.deploy_s2s ? 1 : 0

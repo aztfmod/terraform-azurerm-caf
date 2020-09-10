@@ -3,7 +3,7 @@
 # Licensed under the MIT License.
 #
 
-name: caf_landing_zones_github_actions 
+name: caf_landing_zones_github_actions
 
 on:
   push:

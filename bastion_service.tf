@@ -1,7 +1,7 @@
 #
 # Bastion host service
 # https://www.terraform.io/docs/providers/azurerm/r/bastion_host.html
-# 
+#
 
 resource "azurerm_bastion_host" "host" {
   for_each = local.compute.bastion_hosts

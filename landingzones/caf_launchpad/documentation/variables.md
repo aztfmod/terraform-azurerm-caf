@@ -25,7 +25,7 @@ There are two launchpad versions that can be deployed in an Azure subscription. 
 |---|---|
 | global_settings | The global_settings is an object containing the default settings the landing zones from a higher level can hinerit. |
 
-| Default | 
+| Default |
 |---|
 ```hcl
 default = {

@@ -70,22 +70,22 @@ virtual_machines = {
 
 virtual_machine_extension_scripts = {
   provisiton_azure_devops_selfhosted_agent = {
-    virtual_machine_key = "vm_devops_level0" 
+    virtual_machine_key = "vm_devops_level0"
     storage = {
       container = {
-        storage_account_key = "bootdiag_region1"
-        name = "deployment_scripts"
+        storage_account_key   = "bootdiag_region1"
+        name                  = "deployment_scripts"
         container_access_type = "blob"
       }
     }
-    agent_init_script = ""
+    agent_init_script             = ""
     azure_devops_organization_url = ""
   }
 }
 
 diagnostic_storage_accounts = {
   # Stores boot diagnostic for region1
-  # Is used to store the azure devops deployment script to setup the Azure Devops Selfhosted agents 
+  # Is used to store the azure devops deployment script to setup the Azure Devops Selfhosted agents
   bootdiag_region1 = {
     name                     = "bootrg1"
     resource_group_key       = "devops_region1"

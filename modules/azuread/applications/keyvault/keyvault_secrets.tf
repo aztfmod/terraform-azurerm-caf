@@ -13,7 +13,7 @@
 #       secret_prefix         = "aadapp-caf-launchpad-github-terraformdev-github-integration-landingzones"
 #     }
 #   }
-# 
+#
 
 data "terraform_remote_state" "keyvaults" {
   for_each = try(var.settings.keyvault, {})

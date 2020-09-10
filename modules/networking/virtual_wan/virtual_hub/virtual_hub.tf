@@ -24,7 +24,7 @@ resource "azurerm_virtual_hub" "vwan_hub" {
 
     content {
       address_prefixes    = each.value.address_prefixes
-      next_hop_ip_address = each.value.next_hop_ip_address 
+      next_hop_ip_address = each.value.next_hop_ip_address
     }
   }
 

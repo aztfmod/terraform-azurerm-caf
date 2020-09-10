@@ -14,8 +14,8 @@ module "keyvaults" {
 #
 # Keyvault access policies
 #
-# 1- set access policies to the rover logged in user 
-# 2 - 
+# 1- set access policies to the rover logged in user
+# 2 -
 
 
 module "keyvault_access_policies" {

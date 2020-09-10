@@ -5,9 +5,9 @@
 # - caf_neworking with 200-multi-region-hub
 
 # Commands
-# - deploy: 
+# - deploy:
 #   rover -lz /tf/caf/examples/ -var-file /tf/caf/examples/data_analytics/200-basic-ml/networking_spoke.tfvars -tfstate 200-basic-ml-networking_spoke.tfstate -a apply
-# - destroy: 
+# - destroy:
 #   rover -lz /tf/caf/examples/ -var-file /tf/caf/examples/data_analytics/200-basic-ml/networking_spoke.tfvars -tfstate 200-basic-ml-networking_spoke.tfstate -a destroy
 
 landingzone_name = "dap_networking_spoke"

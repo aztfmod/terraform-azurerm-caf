@@ -290,7 +290,7 @@ diagnostics_definition = {
     name = "operational_logs_and_metrics"
     categories = {
       log = [
-        # ["Category name",  "Diagnostics Enabled(true/false)", "Retention Enabled(true/false)", Retention_period] 
+        # ["Category name",  "Diagnostics Enabled(true/false)", "Retention Enabled(true/false)", Retention_period]
         ["AppServiceEnvironmentPlatformLogs", true, true, 5],
       ]
     }
@@ -301,7 +301,7 @@ diagnostics_definition = {
     name = "operational_logs_and_metrics"
     categories = {
       log = [
-        # ["Category name",  "Diagnostics Enabled(true/false)", "Retention Enabled(true/false)", Retention_period] 
+        # ["Category name",  "Diagnostics Enabled(true/false)", "Retention Enabled(true/false)", Retention_period]
         ["NetworkSecurityGroupEvent", true, false, 14],
         ["NetworkSecurityGroupRuleCounter", true, false, 14],
       ]
@@ -312,11 +312,11 @@ diagnostics_definition = {
     name = "operational_logs_and_metrics"
     categories = {
       log = [
-        # ["Category name",  "Diagnostics Enabled(true/false)", "Retention Enabled(true/false)", Retention_period] 
+        # ["Category name",  "Diagnostics Enabled(true/false)", "Retention Enabled(true/false)", Retention_period]
         ["VMProtectionAlerts", true, false, 7],
       ]
       metric = [
-        #["Category name",  "Diagnostics Enabled(true/false)", "Retention Enabled(true/false)", Retention_period]                 
+        #["Category name",  "Diagnostics Enabled(true/false)", "Retention Enabled(true/false)", Retention_period]
         ["AllMetrics", true, false, 7],
       ]
     }
