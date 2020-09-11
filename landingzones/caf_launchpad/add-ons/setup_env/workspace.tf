@@ -8,28 +8,28 @@ terraform {
 
 }
 
-# If you have the value handy you can add then here to be built into your TFC deployment otherwise your have to manually add them to TFC
-# variable "tenantId" {
-#   type        = string
-#   description = "The name of the resources"
-#   default     = ""
-# }
-# variable "arm_subscription_id" {
-#   type        = string
-#   description = "The name of the resources"
-#   default     = ""
-# }
-# variable "arm_client_id" {
-#   type        = string
-#   description = "The name of the resources"
-#   default     = ""
-# }
+If you have the value handy you can add then here to be built into your TFC deployment otherwise your have to manually add them to TFC
+variable "tenantId" {
+  type        = string
+  description = "The name of the resources"
+  default     = ""
+}
+variable "arm_subscription_id" {
+  type        = string
+  description = "The name of the resources"
+  default     = ""
+}
+variable "arm_client_id" {
+  type        = string
+  description = "The name of the resources"
+  default     = ""
+}
 
-# variable "arm_client_secret" {
-#   type        = string
-#   description = "The name of the resources"
-#   default     = ""
-# }
+variable "arm_client_secret" {
+  type        = string
+  description = "The name of the resources"
+  default     = ""
+}
 
 resource "random_pet" "name" {
   prefix = "CAF"
