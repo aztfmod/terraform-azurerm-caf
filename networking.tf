@@ -49,7 +49,7 @@ module public_ip_addresses {
   source   = "./modules/networking/public_ip_addresses"
   for_each = local.networking.public_ip_addresses
 
-  name                    = azurecaf_name.peering[each.key].result
+  name                    = azurecaf_name.public_ip_addresses[each.key].result
   resource_group_name     = module.resource_groups[each.value.resource_group_key].name
   location                = lookup(each.value, "region", null) == null ? module.resource_groups[each.value.resource_group_key].location : local.global_settings.regions[each.value.region]
   sku                     = try(each.value.sku, "Basic")
