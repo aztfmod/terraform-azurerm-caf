@@ -19,14 +19,6 @@ variable location {
   description = "location of the resource"
 }
 
-# variable "diagnostics_map" {
-#   description = "contains the sa and eh details for operations diagnostics"
-# }
-
-# variable "log_analytics_workspace" {
-#   description = "contains the log analytics workspace details for operations diagnostics"
-# }
-
 variable diagnostics {
 
 }
@@ -43,3 +35,5 @@ variable opslogs_retention_period {
   description = "Number of days to keep operations logs inside storage account"
   default     = 60
 }
+
+variable global_settings {}

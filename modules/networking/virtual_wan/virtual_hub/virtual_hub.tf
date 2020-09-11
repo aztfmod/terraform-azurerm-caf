@@ -8,8 +8,6 @@ resource "azurecaf_name" "vwan_hub" {
   passthrough   = var.global_settings.passthrough
 }
 
-
-
 ## creates a virtual hub in the region
 resource "azurerm_virtual_hub" "vwan_hub" {
   name                = azurecaf_name.vwan_hub.result

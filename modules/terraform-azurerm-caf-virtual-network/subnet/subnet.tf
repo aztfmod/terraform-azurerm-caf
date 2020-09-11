@@ -1,6 +1,16 @@
+resource "azurecaf_name" "subnet" {
+
+  name          = var.name
+  resource_type = "azurerm_subnet"
+  prefixes      = [var.global_settings.prefix]
+  random_length = var.global_settings.random_length
+  clean_input   = true
+  passthrough   = var.global_settings.passthrough
+}
+
 resource "azurerm_subnet" "subnet" {
 
-  name                                           = var.name
+  name                                           = azurecaf_name.subnet.result
   resource_group_name                            = var.resource_group_name
   virtual_network_name                           = var.virtual_network_name
   address_prefixes                               = var.address_prefixes

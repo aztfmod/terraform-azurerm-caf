@@ -16,9 +16,6 @@ module "networking" {
   source   = "./modules/terraform-azurerm-caf-virtual-network"
   for_each = try(var.networking.vnets, {})
 
-  max_length                        = local.global_settings.max_length
-  prefix                            = local.global_settings.prefix
-  convention                        = try(each.value.convention, local.global_settings.convention)
   location                          = lookup(each.value, "region", null) == null ? module.resource_groups[each.value.resource_group_key].location : local.global_settings.regions[each.value.region]
   resource_group_name               = module.resource_groups[each.value.resource_group_key].name
   settings                          = each.value
@@ -26,6 +23,7 @@ module "networking" {
   route_tables                      = module.route_tables
   tags                              = try(each.value.tags, null)
   diagnostics                       = local.diagnostics
+  global_settings                   = local.global_settings
   ddos_id                           = try(azurerm_network_ddos_protection_plan.ddos_protection_plan[each.value.ddos_services_key].id, "")
 }
 
@@ -35,11 +33,23 @@ module "networking" {
 #
 #
 
+# naming convention for public IP address 
+resource "azurecaf_name" "public_ip_addresses" {
+  for_each = local.networking.public_ip_addresses
+
+  name          = try(each.value.name, null)
+  resource_type = "azurerm_public_ip"
+  prefixes      = [local.global_settings.prefix]
+  random_length = local.global_settings.random_length
+  clean_input   = true
+  passthrough   = local.global_settings.passthrough
+}
+
 module public_ip_addresses {
   source   = "./modules/networking/public_ip_addresses"
   for_each = local.networking.public_ip_addresses
 
-  name                    = each.value.name
+  name                    = azurecaf_name.peering[each.key].result
   resource_group_name     = module.resource_groups[each.value.resource_group_key].name
   location                = lookup(each.value, "region", null) == null ? module.resource_groups[each.value.resource_group_key].location : local.global_settings.regions[each.value.region]
   sku                     = try(each.value.sku, "Basic")

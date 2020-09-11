@@ -3,17 +3,19 @@ locals {
   tags = try(var.settings.tags, null) == null ? null : try(var.settings.tags.environment, null) == null ? var.settings.tags : merge(lookup(var.settings, "tags", {}), { "environment" : var.global_settings.environment })
 }
 
-resource "azurecaf_naming_convention" "keyvault" {
+# naming convention
+resource "azurecaf_name" "keyvault" {
   name          = var.settings.name
-  resource_type = "kv"
-  convention    = try(var.settings.location, var.global_settings.convention)
-  prefix        = lookup(var.settings, "useprefix", false) == true ? var.global_settings.prefix_start_alpha : ""
-  max_length    = try(var.settings.max_length, null)
+  resource_type = "azurerm_key_vault"
+  prefixes      = [var.global_settings.prefix]
+  random_length = var.global_settings.random_length
+  clean_input   = true
+  passthrough   = var.global_settings.passthrough
 }
 
 resource "azurerm_key_vault" "keyvault" {
 
-  name                            = azurecaf_naming_convention.keyvault.result
+  name                            = azurecaf_name.keyvault.result
   location                        = try(var.global_settings.regions[var.settings.region], var.resource_groups[var.settings.resource_group_key].location)
   resource_group_name             = var.resource_groups[var.settings.resource_group_key].name
   tenant_id                       = var.tenant_id

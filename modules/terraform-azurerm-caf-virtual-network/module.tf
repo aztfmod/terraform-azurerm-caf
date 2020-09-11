@@ -1,15 +1,25 @@
 // Creates the networks virtual network, the subnets and associated NSG, with a special section for AzureFirewallSubnet
-resource "azurecaf_naming_convention" "caf_name_vnet" {
+# resource "azurecaf_naming_convention" "caf_name_vnet" {
+#   name          = var.settings.vnet.name
+#   prefix        = var.prefix != "" ? var.prefix : null
+#   postfix       = var.postfix != "" ? var.postfix : null
+#   max_length    = var.max_length != "" ? var.max_length : null
+#   resource_type = "azurerm_virtual_network"
+#   convention    = var.convention
+# }
+
+resource "azurecaf_name" "caf_name_vnet" {
+
   name          = var.settings.vnet.name
-  prefix        = var.prefix != "" ? var.prefix : null
-  postfix       = var.postfix != "" ? var.postfix : null
-  max_length    = var.max_length != "" ? var.max_length : null
-  resource_type = "azurerm_virtual_network"
-  convention    = var.convention
+  resource_type = "azurerm_public_ip"
+  prefixes      = [var.global_settings.prefix]
+  random_length = var.global_settings.random_length
+  clean_input   = true
+  passthrough   = var.global_settings.passthrough
 }
 
 resource "azurerm_virtual_network" "vnet" {
-  name                = azurecaf_naming_convention.caf_name_vnet.result
+  name                = azurecaf_name.caf_name_vnet.result
   location            = var.location
   resource_group_name = var.resource_group_name
   address_space       = var.settings.vnet.address_space
@@ -32,6 +42,7 @@ module "special_subnets" {
 
   for_each                                       = lookup(var.settings, "specialsubnets", {})
   name                                           = each.value.name
+  global_settings = var.global_settings
   resource_group_name                            = var.resource_group_name
   virtual_network_name                           = azurerm_virtual_network.vnet.name
   address_prefixes                               = lookup(each.value, "cidr", [])
@@ -39,6 +50,7 @@ module "special_subnets" {
   service_endpoints                              = lookup(each.value, "service_endpoints", [])
   enforce_private_link_endpoint_network_policies = lookup(each.value, "enforce_private_link_endpoint_network_policies", false)
   enforce_private_link_service_network_policies  = lookup(each.value, "enforce_private_link_service_network_policies", false)
+  
 }
 
 module "subnets" {
@@ -46,6 +58,7 @@ module "subnets" {
 
   for_each                                       = lookup(var.settings, "subnets", {})
   name                                           = each.value.name
+  global_settings = var.global_settings
   resource_group_name                            = var.resource_group_name
   virtual_network_name                           = azurerm_virtual_network.vnet.name
   address_prefixes                               = lookup(each.value, "cidr", [])
@@ -65,6 +78,7 @@ module "nsg" {
   location                          = var.location
   network_security_group_definition = var.network_security_group_definition
   diagnostics                       = var.diagnostics
+  global_settings = var.global_settings
 }
 
 resource "azurerm_subnet_route_table_association" "rt" {

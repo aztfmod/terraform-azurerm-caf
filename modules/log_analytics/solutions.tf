@@ -5,7 +5,7 @@ resource "azurerm_log_analytics_solution" "solution" {
   location              = var.global_settings.regions[var.log_analytics.region]
   resource_group_name   = var.resource_groups[var.log_analytics.resource_group_key].name
   workspace_resource_id = azurerm_log_analytics_workspace.law.id
-  workspace_name        = azurecaf_naming_convention.law.result
+  workspace_name        = azurerm_log_analytics_workspace.law.name
 
   plan {
     publisher      = lookup(each.value, "publisher")

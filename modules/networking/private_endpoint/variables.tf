@@ -15,3 +15,4 @@ variable location {
 
 variable subnet_id {}
 variable settings {}
+variable global_settings {}
