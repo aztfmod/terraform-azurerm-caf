@@ -91,7 +91,8 @@ jobs:
       matrix:
           config_files: [
             "examples/webapps/appservice/appservice-simple",
-            "examples/webapps/appservice/appservice-slots"
+            "examples/webapps/appservice/appservice-slots",
+            "examples/compute/virtual_machine/100-simple-vm"
           ]
           convention: ["random"]
 
@@ -109,14 +110,14 @@ jobs:
 
       - name: deploy example
         run: |
-          /tf/rover/rover.sh -lz ${GITHUB_WORKSPACE}/examples -a apply \
+          /tf/rover/rover.sh -lz ${GITHUB_WORKSPACE}/solutions -a apply \
             -tfstate $(basename ${{ matrix.config_files }}).tfstate \
             -var-file ${GITHUB_WORKSPACE}/solutions/${{ matrix.config_files }}.tfvars \
             --environment ${{ github.run_id }}
 
       - name: destroy example
         run: |
-          /tf/rover/rover.sh -lz ${GITHUB_WORKSPACE}/examples -a destroy \
+          /tf/rover/rover.sh -lz ${GITHUB_WORKSPACE}/solutions -a destroy \
             -tfstate $(basename ${{ matrix.config_files }}).tfstate \
             -var-file ${GITHUB_WORKSPACE}/solutions/${{ matrix.config_files }}.tfvars \
             --environment ${{ github.run_id }} \

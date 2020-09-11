@@ -90,7 +90,8 @@ jobs:
       matrix:
           config_files: [
             "examples/mssql_server/200-mssql",
-            "examples/mssql_server/200-mssql-two-regions"
+            "examples/mssql_server/200-mssql-two-regions",
+            "examples/networking/private_dns/200-private-dns-vnet-links/configuration"
           ]
           convention: ["random"]
 
@@ -108,14 +109,14 @@ jobs:
 
       - name: deploy example
         run: |
-          /tf/rover/rover.sh -lz ${GITHUB_WORKSPACE}/examples -a apply \
+          /tf/rover/rover.sh -lz ${GITHUB_WORKSPACE}/solutions -a apply \
             -tfstate $(basename ${{ matrix.config_files }}).tfstate \
             -var-file ${GITHUB_WORKSPACE}/solutions/${{ matrix.config_files }}.tfvars \
             --environment ${{ github.run_id }}
 
       - name: destroy example
         run: |
-          /tf/rover/rover.sh -lz ${GITHUB_WORKSPACE}/examples -a destroy \
+          /tf/rover/rover.sh -lz ${GITHUB_WORKSPACE}/solutions -a destroy \
             -tfstate $(basename ${{ matrix.config_files }}).tfstate \
             -var-file ${GITHUB_WORKSPACE}/solutions/${{ matrix.config_files }}.tfvars \
             --environment ${{ github.run_id }} \
