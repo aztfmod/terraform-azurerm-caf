@@ -3,7 +3,7 @@
 # Licensed under the MIT License.
 #
 
-name: scenario-200
+name: scenarios-200
 
 on:
   pull_request:
@@ -90,8 +90,7 @@ jobs:
       matrix:
           config_files: [
             "examples/mssql_server/200-mssql",
-            "examples/mssql_server/200-mssql-two-regions",
-            "examples/networking/private_dns/200-private-dns-vnet-links/configuration"
+            "examples/mssql_server/200-mssql-two-regions"
           ]
           convention: ["random"]
 
