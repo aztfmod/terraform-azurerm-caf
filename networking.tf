@@ -100,7 +100,7 @@ data "terraform_remote_state" "peering_to" {
 resource "azurecaf_name" "peering" {
   for_each = local.networking.vnet_peerings
 
-  name          = try(each.value.name, null)
+  name          = try(each.value.name, "")
   resource_type = "azurerm_virtual_network_peering"
   prefixes      = [local.global_settings.prefix]
   random_length = local.global_settings.random_length
@@ -114,9 +114,9 @@ resource "azurerm_virtual_network_peering" "peering" {
   for_each   = local.networking.vnet_peerings
 
   name                         = azurecaf_name.peering[each.key].result
-  virtual_network_name         = try(module.networking[each.value.from.vnet_key].name, data.terraform_remote_state.peering_from[each.key].outputs[each.value.from.output_key][each.value.from.lz_key][each.value.from.vnet_key].name)
-  resource_group_name          = try(module.networking[each.value.from.vnet_key].resource_group_name, data.terraform_remote_state.peering_from[each.key].outputs[each.value.from.output_key][each.value.from.lz_key][each.value.from.vnet_key].resource_group_name)
-  remote_virtual_network_id    = try(module.networking[each.value.to.vnet_key].id, data.terraform_remote_state.peering_to[each.key].outputs[each.value.to.output_key][each.value.to.lz_key][each.value.to.vnet_key].id)
+  virtual_network_name         = try(each.value.from.tfstate_key, null) == null ? module.networking[each.value.from.vnet_key].name : data.terraform_remote_state.peering_from[each.key].outputs[each.value.from.output_key][each.value.from.lz_key][each.value.from.vnet_key].name
+  resource_group_name          = try(each.value.from.tfstate_key, null) == null ? module.networking[each.value.from.vnet_key].resource_group_name : data.terraform_remote_state.peering_from[each.key].outputs[each.value.from.output_key][each.value.from.lz_key][each.value.from.vnet_key].resource_group_name
+  remote_virtual_network_id    = try(each.value.to.tfstate_key, null) == null ? module.networking[each.value.to.vnet_key].id : data.terraform_remote_state.peering_to[each.key].outputs[each.value.to.output_key][each.value.to.lz_key][each.value.to.vnet_key].id
   allow_virtual_network_access = try(each.value.allow_virtual_network_access, true)
   allow_forwarded_traffic      = try(each.value.allow_forwarded_traffic, false)
   allow_gateway_transit        = try(each.value.allow_gateway_transit, false)
