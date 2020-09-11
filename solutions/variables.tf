@@ -14,9 +14,6 @@ variable tfstates {
     caf_foundations = {
       tfstate = "caf_foundations.tfstate"
     }
-    networking = {
-      tfstate = "networking_hub.tfstate"
-    }
   }
 }
 
@@ -47,6 +44,7 @@ variable logged_aad_app_objectId {
 }
 variable tags {
   default = null
+  type = map
 }
 variable app_service_environments {
   default = {}
