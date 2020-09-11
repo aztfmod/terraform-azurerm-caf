@@ -112,3 +112,6 @@ variable azurerm_application_insights {
 variable role_mapping {
   default = {}
 }
+variable aks_clusters {
+  default = {}
+}

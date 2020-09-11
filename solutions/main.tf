@@ -54,10 +54,6 @@ data "terraform_remote_state" "caf_foundations" {
 }
 
 data "terraform_remote_state" "networking" {
-  for_each = {
-    for key, value in var.tfstates : key => value
-    if try(value.networking,null) != null
-  }
   backend = "azurerm"
   config = {
     storage_account_name = var.lowerlevel_storage_account_name
@@ -99,7 +95,7 @@ locals {
       )
     )
     ,
-    try(data.terraform_remote_state.networking["networking"].outputs.tfstates,{})
+    data.terraform_remote_state.networking.outputs.tfstates
   )
 
 }
