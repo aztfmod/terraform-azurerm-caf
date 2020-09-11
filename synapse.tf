@@ -7,4 +7,5 @@ module synapse_workspaces {
   global_settings                      = local.global_settings
   settings                             = each.value
   storage_data_lake_gen2_filesystem_id = module.storage_accounts[each.value.data_lake_filesystem.storage_account_key].data_lake_filesystems[each.value.data_lake_filesystem.container_key].id
+  keyvault_id                          = try(each.value.sql_administrator_login_password, null) == null ? module.keyvaults[each.value.keyvault_key].id : null
 }
