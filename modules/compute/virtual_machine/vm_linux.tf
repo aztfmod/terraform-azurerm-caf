@@ -8,13 +8,17 @@ resource "tls_private_key" "ssh" {
 }
 
 # Name of the VM in the Azure Control Plane
-resource "azurecaf_naming_convention" "linux" {
+resource "azurecaf_name" "linux" {
   for_each      = local.os_type == "linux" ? var.settings.virtual_machine_settings : {}
+
   name          = each.value.name
-  prefix        = var.global_settings.prefix
-  resource_type = "vml"
-  convention    = var.global_settings.convention
+  resource_type = "azurerm_linux_virtual_machine"
+  prefixes      = [var.global_settings.prefix]
+  random_length = try(var.global_settings.random_length, null)
+  clean_input   = true
+  passthrough   = try(var.global_settings.passthrough, false)
 }
+
 
 # Name of the Linux computer name
 resource "azurecaf_naming_convention" "linux_computer_name" {
@@ -29,7 +33,7 @@ resource "azurecaf_naming_convention" "linux_computer_name" {
 resource "azurerm_linux_virtual_machine" "vm" {
   for_each = local.os_type == "linux" ? var.settings.virtual_machine_settings : {}
 
-  name                  = azurecaf_naming_convention.linux[each.key].result
+  name                  = azurecaf_name.linux[each.key].result
   location              = var.location
   resource_group_name   = var.resource_group_name
   size                  = each.value.size

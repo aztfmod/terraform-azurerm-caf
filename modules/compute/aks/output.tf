@@ -3,7 +3,7 @@ output id {
 }
 
 output cluster_name {
-  value = azurecaf_naming_convention.aks.result
+  value = azurecaf_name.aks.result
 }
 
 output resource_group_name {
@@ -11,11 +11,11 @@ output resource_group_name {
 }
 
 output aks_kubeconfig_cmd {
-  value = format("az aks get-credentials --name %s --resource-group %s --overwrite-existing", azurecaf_naming_convention.aks.result, var.resource_group.name)
+  value = format("az aks get-credentials --name %s --resource-group %s --overwrite-existing", azurecaf_name.aks.result, var.resource_group.name)
 }
 
 output aks_kubeconfig_admin_cmd {
-  value = format("az aks get-credentials --name %s --resource-group %s --overwrite-existing --admin", azurecaf_naming_convention.aks.result, var.resource_group.name)
+  value = format("az aks get-credentials --name %s --resource-group %s --overwrite-existing --admin", azurecaf_name.aks.result, var.resource_group.name)
 }
 
 output kubelet_identity {

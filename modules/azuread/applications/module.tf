@@ -6,6 +6,7 @@
 #   prefix        = each.value.useprefix ? var.prefix : null
 # }
 
+
 resource "azuread_application" "app" {
 
   name = try(var.settings.useprefix, false) ? format("%s-%s", var.global_settings.prefix, var.settings.application_name) : format("%s", var.settings.application_name)

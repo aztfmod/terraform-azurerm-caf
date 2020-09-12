@@ -1,7 +1,7 @@
 
 resource "azurerm_mssql_server" "mssql" {
 
-  name                          = azurecaf_naming_convention.mssql.result
+  name                          = azurecaf_name.mssql.result
   resource_group_name           = var.resource_group_name
   location                      = var.location
   version                       = try(var.settings.version, "12.0")
@@ -33,13 +33,13 @@ resource "azurerm_mssql_server" "mssql" {
 
 }
 
-resource "azurecaf_naming_convention" "mssql" {
-
+resource "azurecaf_name" "mssql" {
   name          = var.settings.name
   resource_type = "azurerm_sql_server"
-  convention    = try(var.settings.convention, var.global_settings.convention)
-  prefix        = lookup(var.settings, "useprefix", true) == false ? "" : var.global_settings.prefix
-  max_length    = try(var.settings.max_length, var.global_settings.max_length)
+  prefixes      = [var.global_settings.prefix]
+  random_length = var.global_settings.random_length
+  clean_input   = true
+  passthrough   = var.global_settings.passthrough
 }
 
 # Generate sql server random admin password if not provided in the attribute administrator_login_password
@@ -57,7 +57,7 @@ resource "random_password" "sql_admin" {
 resource "azurerm_key_vault_secret" "sql_admin_password" {
   count = try(var.settings.administrator_login_password, null) == null ? 1 : 0
 
-  name         = format("%s-password", azurecaf_naming_convention.mssql.result)
+  name         = format("%s-password", azurecaf_name.mssql.result)
   value        = random_password.sql_admin.0.result
   key_vault_id = var.keyvault_id
 
@@ -71,7 +71,7 @@ resource "azurerm_key_vault_secret" "sql_admin_password" {
 resource "azurerm_key_vault_secret" "sql_admin" {
   count = try(var.settings.administrator_login_password, null) == null ? 1 : 0
 
-  name         = format("%s-username", azurecaf_naming_convention.mssql.result)
+  name         = format("%s-username", azurecaf_name.mssql.result)
   value        = var.settings.administrator_login
   key_vault_id = var.keyvault_id
 }
@@ -79,7 +79,7 @@ resource "azurerm_key_vault_secret" "sql_admin" {
 resource "azurerm_key_vault_secret" "sql_fqdn" {
   count = try(var.settings.administrator_login_password, null) == null ? 1 : 0
 
-  name         = format("%s-fqdn", azurecaf_naming_convention.mssql.result)
+  name         = format("%s-fqdn", azurecaf_name.mssql.result)
   value        = azurerm_mssql_server.mssql.fully_qualified_domain_name
   key_vault_id = var.keyvault_id
 }

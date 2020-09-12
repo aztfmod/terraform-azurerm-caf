@@ -1,10 +1,13 @@
 # Name of the VM in the Azure Control Plane
-resource "azurecaf_naming_convention" "windows" {
+resource "azurecaf_name" "windows" {
   for_each      = local.os_type == "windows" ? var.settings.virtual_machine_settings : {}
+
   name          = each.value.name
-  prefix        = var.global_settings.prefix
-  resource_type = "vmw"
-  convention    = var.global_settings.convention
+  resource_type = "azurerm_windows_virtual_machine"
+  prefixes      = [var.global_settings.prefix]
+  random_length = try(var.global_settings.random_length, null)
+  clean_input   = true
+  passthrough   = try(var.global_settings.passthrough, false)
 }
 
 # Name of the Windows computer name
@@ -20,7 +23,7 @@ resource "azurecaf_naming_convention" "windows_computer_name" {
 resource "azurerm_windows_virtual_machine" "vm" {
   for_each = local.os_type == "windows" ? var.settings.virtual_machine_settings : {}
 
-  name                       = azurecaf_naming_convention.windows[each.key].result
+  name                       = azurecaf_name.windows[each.key].result
   location                   = var.location
   resource_group_name        = var.resource_group_name
   size                       = each.value.size

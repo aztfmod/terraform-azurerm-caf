@@ -1,13 +1,4 @@
 // Creates the networks virtual network, the subnets and associated NSG, with a special section for AzureFirewallSubnet
-# resource "azurecaf_naming_convention" "caf_name_vnet" {
-#   name          = var.settings.vnet.name
-#   prefix        = var.prefix != "" ? var.prefix : null
-#   postfix       = var.postfix != "" ? var.postfix : null
-#   max_length    = var.max_length != "" ? var.max_length : null
-#   resource_type = "azurerm_virtual_network"
-#   convention    = var.convention
-# }
-
 resource "azurecaf_name" "caf_name_vnet" {
 
   name          = var.settings.vnet.name
