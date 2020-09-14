@@ -2,8 +2,8 @@ resource "azurecaf_naming_convention" "appis" {
   name          = var.name
   prefix        = var.prefix
   resource_type = "azurerm_application_insights"
-  convention    = var.convention
-  max_length    = var.max_length
+  # convention    = var.convention
+  # max_length    = var.max_length
 }
 
 resource "azurerm_application_insights" "appinsights" {

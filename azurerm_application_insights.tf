@@ -1,10 +1,10 @@
 module "azurerm_application_insights" {
-  source   = "./modules/terraform-azurerm-caf-appinsights"
+  source   = "./modules/app_insights"
   for_each = local.webapp.azurerm_application_insights
 
   prefix                                = local.global_settings.prefix
-  convention                            = lookup(each.value, "convention", local.global_settings.convention)
-  max_length                            = lookup(each.value, "max_length", local.global_settings.max_length)
+  # convention                            = lookup(each.value, "convention", local.global_settings.convention)
+  # max_length                            = lookup(each.value, "max_length", local.global_settings.max_length)
   tags                                  = lookup(each.value, "tags", null)
   resource_group_name                   = module.resource_groups[each.value.resource_group_key].name
   location                              = lookup(each.value, "region", null) == null ? module.resource_groups[each.value.resource_group_key].location : local.global_settings.regions[each.value.region]
