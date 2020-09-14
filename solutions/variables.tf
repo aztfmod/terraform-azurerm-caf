@@ -14,6 +14,9 @@ variable tfstates {
     caf_foundations = {
       tfstate = "caf_foundations.tfstate"
     }
+    networking = {
+      tfstate = "caf_foundations.tfstate"
+    }
   }
 }
 
@@ -44,7 +47,7 @@ variable logged_aad_app_objectId {
 }
 variable tags {
   default = null
-  type = map
+  type    = map
 }
 variable app_service_environments {
   default = {}
@@ -113,5 +116,8 @@ variable role_mapping {
   default = {}
 }
 variable aks_clusters {
+  default = {}
+}
+variable databricks_workspaces {
   default = {}
 }

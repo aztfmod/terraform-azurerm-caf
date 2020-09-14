@@ -56,7 +56,7 @@ resource "azurerm_key_vault_secret" "sql_admin" {
 resource "azurerm_key_vault_secret" "synapse_name" {
   count = try(var.settings.sql_administrator_login_password, null) == null ? 1 : 0
 
-  name         = format("%s-synapse-name",azurerm_synapse_workspace.wp.name)
+  name         = format("%s-synapse-name", azurerm_synapse_workspace.wp.name)
   value        = azurerm_synapse_workspace.wp.name
   key_vault_id = var.keyvault_id
 }
