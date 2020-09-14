@@ -33,7 +33,7 @@ module "networking" {
 #
 #
 
-# naming convention for public IP address 
+# naming convention for public IP address
 resource "azurecaf_name" "public_ip_addresses" {
   for_each = local.networking.public_ip_addresses
 
@@ -185,7 +185,7 @@ module "routes" {
 
 #
 #
-# Azure DDoS 
+# Azure DDoS
 #
 #
 

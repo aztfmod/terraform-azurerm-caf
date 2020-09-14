@@ -33,7 +33,7 @@ module "special_subnets" {
 
   for_each                                       = lookup(var.settings, "specialsubnets", {})
   name                                           = each.value.name
-  global_settings = var.global_settings
+  global_settings                                = var.global_settings
   resource_group_name                            = var.resource_group_name
   virtual_network_name                           = azurerm_virtual_network.vnet.name
   address_prefixes                               = lookup(each.value, "cidr", [])
@@ -41,7 +41,7 @@ module "special_subnets" {
   service_endpoints                              = lookup(each.value, "service_endpoints", [])
   enforce_private_link_endpoint_network_policies = lookup(each.value, "enforce_private_link_endpoint_network_policies", false)
   enforce_private_link_service_network_policies  = lookup(each.value, "enforce_private_link_service_network_policies", false)
-  
+
 }
 
 module "subnets" {
@@ -49,7 +49,7 @@ module "subnets" {
 
   for_each                                       = lookup(var.settings, "subnets", {})
   name                                           = each.value.name
-  global_settings = var.global_settings
+  global_settings                                = var.global_settings
   resource_group_name                            = var.resource_group_name
   virtual_network_name                           = azurerm_virtual_network.vnet.name
   address_prefixes                               = lookup(each.value, "cidr", [])
@@ -69,7 +69,7 @@ module "nsg" {
   location                          = var.location
   network_security_group_definition = var.network_security_group_definition
   diagnostics                       = var.diagnostics
-  global_settings = var.global_settings
+  global_settings                   = var.global_settings
 }
 
 resource "azurerm_subnet_route_table_association" "rt" {

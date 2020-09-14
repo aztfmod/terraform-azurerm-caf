@@ -9,7 +9,7 @@ resource "tls_private_key" "ssh" {
 
 # Name of the VM in the Azure Control Plane
 resource "azurecaf_name" "linux" {
-  for_each      = local.os_type == "linux" ? var.settings.virtual_machine_settings : {}
+  for_each = local.os_type == "linux" ? var.settings.virtual_machine_settings : {}
 
   name          = each.value.name
   resource_type = "azurerm_linux_virtual_machine"
@@ -32,7 +32,7 @@ resource "azurecaf_name" "linux_computer_name" {
   passthrough   = try(var.global_settings.passthrough, false)
 }
 
-# Name for the OS disk 
+# Name for the OS disk
 resource "azurecaf_name" "os_disk_linux" {
   for_each = local.os_type == "linux" ? var.settings.virtual_machine_settings : {}
 

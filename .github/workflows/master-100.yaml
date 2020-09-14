@@ -90,13 +90,13 @@ jobs:
       fail-fast: false
       matrix:
           config_files: [
-            "examples/compute/virtual_machine/100-simple-vm", 
+            "examples/compute/virtual_machine/100-simple-vm",
             "examples/networking/private_dns/100-private-dns-vnet-links",
             "examples/redis_cache/100-redis-standard",
             "examples/webapps/appservice/101-appservice-simple",
-            "examples/webapps/appservice/102-appservice-slots", 
-            "examples/webapps/appservice/103-appservice-slots", 
-            "examples/webapps/appservice-environment/101-simple_ase" 
+            "examples/webapps/appservice/102-appservice-slots",
+            "examples/webapps/appservice/103-appservice-slots",
+            "examples/webapps/appservice-environment/101-simple_ase"
           ]
           convention: ["random"]
 

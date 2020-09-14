@@ -3,7 +3,7 @@
 
 resource "azurecaf_name" "natcollection" {
   for_each = toset(var.rule_collections)
-  
+
   name          = var.azurerm_firewall_nat_rule_collection_definition[each.key].name
   resource_type = "azurerm_firewall_nat_rule_collection"
   prefixes      = [var.global_settings.prefix]

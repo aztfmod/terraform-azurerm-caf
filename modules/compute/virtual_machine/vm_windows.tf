@@ -1,6 +1,6 @@
 # Name of the VM in the Azure Control Plane
 resource "azurecaf_name" "windows" {
-  for_each      = local.os_type == "windows" ? var.settings.virtual_machine_settings : {}
+  for_each = local.os_type == "windows" ? var.settings.virtual_machine_settings : {}
 
   name          = each.value.name
   resource_type = "azurerm_windows_virtual_machine"
@@ -12,7 +12,7 @@ resource "azurecaf_name" "windows" {
 
 # Name of the Windows computer name
 resource "azurecaf_name" "windows_computer_name" {
-  for_each      = local.os_type == "windows" ? var.settings.virtual_machine_settings : {}
+  for_each = local.os_type == "windows" ? var.settings.virtual_machine_settings : {}
 
   name          = try(each.value.computer_name, each.value.name)
   resource_type = "azurerm_windows_virtual_machine"
@@ -22,7 +22,7 @@ resource "azurecaf_name" "windows_computer_name" {
   passthrough   = try(var.global_settings.passthrough, false)
 }
 
-# Name for the OS disk 
+# Name for the OS disk
 resource "azurecaf_name" "os_disk_windows" {
   for_each = local.os_type == "windows" ? var.settings.virtual_machine_settings : {}
 

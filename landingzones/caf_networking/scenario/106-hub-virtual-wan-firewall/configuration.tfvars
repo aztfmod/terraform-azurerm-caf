@@ -256,9 +256,9 @@ vhub_peerings = {
       # tfstate_key = "networking"
       # lz_key      = "networking"
       # output_key  = "vnets"
-      vnet_key    = "vnet_rg1"
+      vnet_key = "vnet_rg1"
     }
-    name = "vhub_peering_hub_sg"
+    name                                           = "vhub_peering_hub_sg"
     hub_to_vitual_network_traffic_allowed          = true
     vitual_network_to_hub_gateways_traffic_allowed = true
     internet_security_enabled                      = true

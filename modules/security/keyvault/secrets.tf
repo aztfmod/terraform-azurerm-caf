@@ -1,5 +1,5 @@
-# naming convention - 
-# --> check if no interference with default secrets 
+# naming convention -
+# --> check if no interference with default secrets
 # resource "azurecaf_name" "secret" {
 #   depends_on = [module.initial_policy]
 #   for_each = {

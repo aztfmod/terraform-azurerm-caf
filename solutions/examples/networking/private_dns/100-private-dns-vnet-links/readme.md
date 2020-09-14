@@ -6,7 +6,7 @@ rover -lz /tf/caf/landingzones/caf_networking/ -var-file /tf/caf/landingzones/ca
 # Set the following variable environment
 export example="200-private-dns-vnet-links"
 
-# Private dns 
+# Private dns
 rover -lz /tf/caf/solutions -var-file /tf/caf/solutions/examples/networking/private_dns/${example}/configuration.tfvars -tfstate ${example}.tfstate -a apply
 
 ```

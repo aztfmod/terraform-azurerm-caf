@@ -76,7 +76,7 @@ locals {
   }
 
   keyvaults = data.terraform_remote_state.launchpad.outputs.keyvaults
-  aad_apps = data.terraform_remote_state.launchpad.outputs.aad_apps
+  aad_apps  = data.terraform_remote_state.launchpad.outputs.aad_apps
 
   tfstates = merge(
     map(var.landingzone_name,
