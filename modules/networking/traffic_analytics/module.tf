@@ -1,3 +1,5 @@
+## TO BE REFACTORED 
+
 locals {
   checkifconfigpresent = lookup(var.nw_config, "create", {}) != {} ? true : false
   checkifcreateconfig  = lookup(var.nw_config, "create", {}) != {} ? var.nw_config.create : false
