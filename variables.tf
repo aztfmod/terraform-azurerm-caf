@@ -3,11 +3,14 @@ variable global_settings {
   default = {
     prefix         = ""
     convention     = "cafrandom"
-    max_length     = 40
+    #max_length     = 40
+    passthrough = false
+    random_length = 4
     default_region = "region1"
     regions = {
       region1 = "southeastasia"
     }
+    
   }
 }
 

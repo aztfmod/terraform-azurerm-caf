@@ -73,6 +73,8 @@ locals {
     environment        = var.environment
     regions            = var.regions
     max_length         = var.max_length
+    passthrough        = var.passthrough
+    random_length      = var.random_length
   }
 
   tfstates = {
