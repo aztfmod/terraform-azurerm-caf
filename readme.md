@@ -1,20 +1,47 @@
 [![VScodespaces](https://img.shields.io/endpoint?url=https%3A%2F%2Faka.ms%2Fvso-badge)](https://online.visualstudio.com/environments/new?name=terraform-azurerm-caf-landingzone-modules&repo=aztfmod/terraform-azurerm-caf-landingzone-modules)
 
-# Azure Cloud Adoption Framework landing zones for Terraform vnext preview
+# Azure Cloud Adoption Framework - enterprise-scale on Terraform module
 
+This is a preview of azurerm module for enterprise-scale landing zones on Terraform.
 Microsoft [Cloud Adoption Framework for Azure](https://aka.ms/caf) provides you with guidance and best practices to adopt Azure.
 
-A landing zone is a segment of a cloud environment, that has been preprovisioned through code, and is dedicated to the support of one or more workloads. Landing zones provide access to foundational tools and controls to establish a compliant place to innovate and build new workloads in the cloud, or to migrate existing workloads to the cloud. Landing zones use defined sets of cloud services and best practices to set you up for success.
+## Core enterprise-scale components
 
-## Vnext differentiated approach
+Deploying the core of enterprise-scale landing zones will use two elements:
 
-This vnext is relying extensively on Terraform 0.13 capabilities (module iterations, conditional modules, variables validation, etc.). Those new features allow more complex and more dynamic code composition. The following concepts are used:
+* landing zones repository (https://github.com/Azure/caf-terraform-landingzones): will assemble all components together and do service composition.
+* this module, called from the Terraform registry (https://registry.terraform.io/namespaces/aztfmod): will provide all the logic to deploy fundamental components.
 
-* **Flexible fundations to meet customer needs**: everything is customizable at all layers.
+**For the time of preview** we will use a single repository (this one.)
+
+## Landing zone solutions
+
+Once you deploy the core enterprise scale components, you can leverage the following additional solution landing zones:
+
+| Solution                  | URL                                                         |
+|---------------------------|-------------------------------------------------------------|
+| Azure Kubernetes Services | https://github.com/aztfmod/landingzone_aks                  |
+| Data and Analytics        | https://github.com/aztfmod/landingzone_data_analytics       |
+| SAP on Azure              | https://github.com/aztfmod/terraform-azurerm-sap            |
+| Shared Image Gallery      | https://github.com/aztfmod/landingzone_shared_image_gallery |
+
+To review the enterprise-scale on Terraform landing zone hierarchy model, you can refer to the classic model:
+
+* Hierarchy model: https://github.com/Azure/caf-terraform-landingzones/blob/master/documentation/code_architecture/hierarchy.md
+* Delivery model: https://github.com/Azure/caf-terraform-landingzones/blob/master/documentation/delivery/delivery_landingzones.md 
+
+## Coding principles
+
+This vnext is relying extensively on Terraform 0.13 capabilities (module iterations, conditional modules, variables validation, etc.).
+
+Those new features allow more complex and more dynamic code composition. The following concepts are used:
+
+* **No code environment composition**: a landing zone environment can be composed customizing variable files and code must be robust enough to accommodate combinations and composition.
+* **Flexible foundations to meet customer needs**: everything is customizable at all layers.
 * **Key-based configuration and customization**: all configuration objects will call each other based on the object keys.
 * **Iteration-based objects deployment**: a landing zone calls all its modules, iterating on complex objects for technical resources deployment.
 
-## Testing vnext
+## Testing this code
 
 1. Prerequisites are the same as for current version of landing zones, please setup your environment using the following guide: https://github.com/Azure/caf-terraform-landingzones/blob/master/documentation/getting_started/getting_started.md
 
@@ -54,7 +81,7 @@ rover -lz /tf/caf/landingzones/caf_networking/ -var-file /tf/caf/landingzones/ca
 
 ## Example levels
 
-We classified the various examples in this repo:
+We categorize the various examples in this repo as follow:
 
 | level | functionalities                                                                               | supported environments                     |
 |-------|-----------------------------------------------------------------------------------------------|--------------------------------------------|
