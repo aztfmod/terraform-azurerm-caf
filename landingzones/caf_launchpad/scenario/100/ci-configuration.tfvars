@@ -5,6 +5,9 @@
 #
 
 level = "level0"
+
+random_length = 5
+
 scenarios = {
   launchpad = 100
 }
