@@ -1,11 +1,12 @@
 ### Naming convention
 
-resource "azurecaf_naming_convention" "aks" {
+resource "azurecaf_name" "aks" {
   name          = var.settings.name
-  prefix        = var.global_settings.prefix
   resource_type = "azurerm_kubernetes_cluster"
-  max_length    = var.global_settings.max_length
-  convention    = var.global_settings.convention
+  prefixes      = [var.global_settings.prefix]
+  random_length = var.global_settings.random_length
+  clean_input   = true
+  passthrough   = var.global_settings.passthrough
 }
 
 resource "azurecaf_naming_convention" "default_node_pool" {
@@ -16,28 +17,39 @@ resource "azurecaf_naming_convention" "default_node_pool" {
   convention    = var.global_settings.convention
 }
 
+# missing in 1.0.0-pre
+# resource "azurecaf_name" "default_node_pool" {
+#   name          = var.settings.default_node_pool.name
+#   resource_type = "aks_node_pool_linux"
+#   prefixes      = [var.global_settings.prefix]
+#   random_length = var.global_settings.random_length
+#   clean_input   = true
+#   passthrough   = var.global_settings.passthrough
+# }
+
 # locals {
 #   rg_node_name = lookup(var.settings, "node_resource_group", "${var.resource_group.name}-nodes")
 # }
-resource "azurecaf_naming_convention" "rg_node" {
-  name          = var.settings.node_resource_group_name
-  prefix        = var.global_settings.prefix
-  resource_type = "azurerm_resource_group"
-  max_length    = var.global_settings.max_length
-  convention    = var.global_settings.convention
-}
 
+resource "azurecaf_name" "rg_node" {
+  name          = var.settings.node_resource_group_name
+  resource_type = "azurerm_resource_group"
+  prefixes      = [var.global_settings.prefix]
+  random_length = var.global_settings.random_length
+  clean_input   = true
+  passthrough   = var.global_settings.passthrough
+}
 
 ### AKS cluster resource
 
 resource "azurerm_kubernetes_cluster" "aks" {
 
-  name                    = azurecaf_naming_convention.aks.result
+  name                    = azurecaf_name.aks.result
   location                = var.resource_group.location
   resource_group_name     = var.resource_group.name
   dns_prefix              = try(var.settings.dns_prefix, random_string.prefix.result)
   kubernetes_version      = try(var.settings.kubernetes_version, null)
-  node_resource_group     = azurecaf_naming_convention.rg_node.result
+  node_resource_group     = azurecaf_name.rg_node.result
   private_cluster_enabled = try(var.settings.private_cluster_enabled, false)
 
   network_profile {

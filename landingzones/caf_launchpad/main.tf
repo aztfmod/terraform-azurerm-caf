@@ -3,10 +3,11 @@ terraform {
     azurerm = {
       source  = "hashicorp/azurerm"
       version = "~> 2.26.0"
+      # bug on 2.27.0 for roles as per: https://github.com/terraform-providers/terraform-provider-azurerm/issues/8426
     }
     azuread = {
       source  = "hashicorp/azuread"
-      version = "~> 0.11.0"
+      version = "~> 1.0.0"
     }
     random = {
       source  = "hashicorp/random"
@@ -73,6 +74,8 @@ locals {
     environment        = var.environment
     regions            = var.regions
     max_length         = var.max_length
+    passthrough        = var.passthrough
+    random_length      = var.random_length
   }
 
   tfstates = {

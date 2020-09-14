@@ -1,15 +1,17 @@
 
-resource "azurecaf_naming_convention" "redis" {
+resource "azurecaf_name" "redis" {
+
   name          = var.redis.name
-  prefix        = var.global_settings.prefix
-  resource_type = "generic"
-  convention    = var.global_settings.convention
-  max_length    = var.global_settings.max_length
+  resource_type = "azurerm_redis_cache"
+  prefixes      = [var.global_settings.prefix]
+  random_length = var.global_settings.random_length
+  clean_input   = true
+  passthrough   = var.global_settings.passthrough
 }
 
 # NOTE: the Name used for Redis needs to be globally unique
 resource "azurerm_redis_cache" "redis" {
-  name                = azurecaf_naming_convention.redis.result
+  name                = azurecaf_name.redis.result
   location            = var.location
   resource_group_name = var.resource_group_name
   capacity            = var.redis.capacity

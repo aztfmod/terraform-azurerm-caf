@@ -1,13 +1,14 @@
-resource "azurecaf_naming_convention" "acr" {
+resource "azurecaf_name" "acr" {
   name          = var.name
-  prefix        = var.global_settings.prefix
   resource_type = "azurerm_container_registry"
-  max_length    = var.global_settings.max_length
-  convention    = var.global_settings.convention
+  prefixes      = [var.global_settings.prefix]
+  random_length = var.global_settings.random_length
+  clean_input   = true
+  passthrough   = var.global_settings.passthrough
 }
 
 resource "azurerm_container_registry" "acr" {
-  name                     = azurecaf_naming_convention.acr.result
+  name                     = azurecaf_name.acr.result
   resource_group_name      = var.resource_group_name
   location                 = var.location
   sku                      = var.sku

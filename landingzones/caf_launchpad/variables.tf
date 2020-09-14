@@ -56,6 +56,13 @@ variable convention {
   }
 }
 
+variable passthrough {
+  default = false
+}
+variable random_length {
+  default = null
+}
+
 variable default_region {
   description = "Define the default region where services are deployed if the location is not set at the resource level"
   default     = "region1"

@@ -24,6 +24,7 @@ module azurerm_firewall_network_rule_collections {
   azure_firewall_name                                 = module.azurerm_firewalls[each.key].name
   rule_collections                                    = each.value.azurerm_firewall_network_rule_collections
   azurerm_firewall_network_rule_collection_definition = local.networking.azurerm_firewall_network_rule_collection_definition
+  global_settings                                     = var.global_settings
 
 }
 
@@ -38,6 +39,7 @@ module azurerm_firewall_application_rule_collections {
   azure_firewall_name                                     = module.azurerm_firewalls[each.key].name
   rule_collections                                        = each.value.azurerm_firewall_application_rule_collections
   azurerm_firewall_application_rule_collection_definition = local.networking.azurerm_firewall_application_rule_collection_definition
+  global_settings                                         = var.global_settings
 
 }
 
@@ -53,6 +55,7 @@ module azurerm_firewall_nat_rule_collections {
   azure_firewall_name                             = module.azurerm_firewalls[each.key].name
   rule_collections                                = each.value.azurerm_firewall_nat_rule_collections
   azurerm_firewall_nat_rule_collection_definition = local.networking.azurerm_firewall_nat_rule_collection_definition
+  global_settings                                 = var.global_settings
 
 }
 

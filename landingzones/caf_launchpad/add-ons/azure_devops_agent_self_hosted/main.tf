@@ -2,7 +2,7 @@ terraform {
   required_providers {
     azurerm = {
       source  = "hashicorp/azurerm"
-      version = "~> 2.26.0"
+      version = "~> 2.27.0"
     }
     azuread = {
       source  = "hashicorp/azuread"
@@ -76,7 +76,7 @@ locals {
   }
 
   keyvaults = data.terraform_remote_state.launchpad.outputs.keyvaults
-  aad_apps = data.terraform_remote_state.launchpad.outputs.aad_apps
+  aad_apps  = data.terraform_remote_state.launchpad.outputs.aad_apps
 
   tfstates = merge(
     map(var.landingzone_name,

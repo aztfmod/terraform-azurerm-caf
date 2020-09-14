@@ -1,16 +1,17 @@
 #Reference: https://www.terraform.io/docs/providers/azurerm/r/firewall.html
-resource "azurecaf_naming_convention" "fw" {
-  name   = var.name
-  prefix = var.global_settings.prefix
-  # postfix       = var.global_settings.postfix
-  max_length    = var.global_settings.max_length
+
+resource "azurecaf_name" "fw" {
+  name          = var.name
   resource_type = "azurerm_firewall"
-  convention    = var.global_settings.convention
+  prefixes      = [var.global_settings.prefix]
+  random_length = var.global_settings.random_length
+  clean_input   = true
+  passthrough   = var.global_settings.passthrough
 }
 
 resource "azurerm_firewall" "fw" {
 
-  name                = azurecaf_naming_convention.fw.result
+  name                = azurecaf_name.fw.result
   resource_group_name = var.resource_group_name
   location            = var.location
   threat_intel_mode   = try(var.settings.threat_intel_mode, "Alert")

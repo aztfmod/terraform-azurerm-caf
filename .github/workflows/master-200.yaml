@@ -3,7 +3,7 @@
 # Licensed under the MIT License.
 #
 
-name: scenario-200
+name: scenarios-200
 
 on:
   pull_request:
@@ -108,16 +108,16 @@ jobs:
 
       - name: deploy example
         run: |
-          /tf/rover/rover.sh -lz ${GITHUB_WORKSPACE}/examples -a apply \
+          /tf/rover/rover.sh -lz ${GITHUB_WORKSPACE}/solutions -a apply \
             -tfstate $(basename ${{ matrix.config_files }}).tfstate \
-            -var-file ${GITHUB_WORKSPACE}/${{ matrix.config_files }}.tfvars \
+            -var-file ${GITHUB_WORKSPACE}/solutions/${{ matrix.config_files }}.tfvars \
             --environment ${{ github.run_id }}
 
       - name: destroy example
         run: |
-          /tf/rover/rover.sh -lz ${GITHUB_WORKSPACE}/examples -a destroy \
+          /tf/rover/rover.sh -lz ${GITHUB_WORKSPACE}/solutions -a destroy \
             -tfstate $(basename ${{ matrix.config_files }}).tfstate \
-            -var-file ${GITHUB_WORKSPACE}/${{ matrix.config_files }}.tfvars \
+            -var-file ${GITHUB_WORKSPACE}/solutions/${{ matrix.config_files }}.tfvars \
             --environment ${{ github.run_id }} \
             -refresh=false \
             -auto-approve

@@ -8,21 +8,21 @@ locals {
   )
 }
 
-
-resource "azurecaf_naming_convention" "nic" {
+resource "azurecaf_name" "nic" {
   for_each = var.settings.networking_interfaces
 
   name          = each.value.name
-  prefix        = var.global_settings.prefix
   resource_type = "azurerm_network_interface"
-  convention    = var.global_settings.convention
+  prefixes      = [var.global_settings.prefix]
+  random_length = try(var.global_settings.random_length, null)
+  clean_input   = true
+  passthrough   = try(var.global_settings.passthrough, false)
 }
-
 
 resource "azurerm_network_interface" "nic" {
   for_each = var.settings.networking_interfaces
 
-  name                = azurecaf_naming_convention.nic[each.key].result
+  name                = azurecaf_name.nic[each.key].result
   location            = var.location
   resource_group_name = var.resource_group_name
 
@@ -33,7 +33,7 @@ resource "azurerm_network_interface" "nic" {
   tags                          = lookup(each.value, "tags", null)
 
   ip_configuration {
-    name                          = azurecaf_naming_convention.nic[each.key].result
+    name                          = azurecaf_name.nic[each.key].result
     subnet_id                     = try(each.value.networking.remote_tfstate, null) == null ? var.vnets[each.value.networking.vnet_key].subnets[each.value.networking.subnet_key].id : data.terraform_remote_state.vnets[each.key].outputs[each.value.networking.remote_tfstate.output_key][each.value.networking.remote_tfstate.lz_key][each.value.networking.remote_tfstate.vnet_key].subnets[each.value.networking.remote_tfstate.subnet_key].id
     private_ip_address_allocation = lookup(each.value, "private_ip_address_allocation", "Dynamic")
     private_ip_address_version    = lookup(each.value, "private_ip_address_version", null)

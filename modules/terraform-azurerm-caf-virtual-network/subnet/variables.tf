@@ -33,3 +33,4 @@ variable service_endpoints {
   # }
 }
 
+variable global_settings {}

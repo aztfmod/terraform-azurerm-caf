@@ -7,9 +7,9 @@
 resource "azuredevops_variable_group" "variable_group" {
   for_each = try(var.azure_devops.variable_groups, {})
 
-  project_id  = data.azuredevops_project.project.id
-  name        = each.value.name
-  description = try(each.value.description, null)
+  project_id   = data.azuredevops_project.project.id
+  name         = each.value.name
+  description  = try(each.value.description, null)
   allow_access = try(each.value.allow_access, false)
 
   dynamic "key_vault" {
