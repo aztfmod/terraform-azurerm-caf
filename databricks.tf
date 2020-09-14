@@ -10,3 +10,8 @@ module databricks_workspaces {
   public_subnet_name  = lookup(each.value.custom_parameters, "vnet_key") == null ? null : module.networking[each.value.custom_parameters.vnet_key].subnets[each.value.custom_parameters.public_subnet_key].name
   private_subnet_name = lookup(each.value.custom_parameters, "vnet_key") == null ? null : module.networking[each.value.custom_parameters.vnet_key].subnets[each.value.custom_parameters.private_subnet_key].name
 }
+
+output databricks_workspaces {
+  value       = module.databricks_workspaces
+  sensitive   = true
+}
