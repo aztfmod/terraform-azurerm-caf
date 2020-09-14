@@ -1,6 +1,6 @@
 
 module "redis_caches" {
-  source   = "./modules/terraform-azurerm-caf-redis-cache"
+  source   = "./modules/redis_cache"
   for_each = local.database.azurerm_redis_caches
 
   tags                = try(each.value.tags, null)
