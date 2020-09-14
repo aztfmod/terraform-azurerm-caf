@@ -1,26 +1,43 @@
 # Name of the VM in the Azure Control Plane
-resource "azurecaf_naming_convention" "windows" {
-  for_each      = local.os_type == "windows" ? var.settings.virtual_machine_settings : {}
+resource "azurecaf_name" "windows" {
+  for_each = local.os_type == "windows" ? var.settings.virtual_machine_settings : {}
+
   name          = each.value.name
-  prefix        = var.global_settings.prefix
-  resource_type = "vmw"
-  convention    = var.global_settings.convention
+  resource_type = "azurerm_windows_virtual_machine"
+  prefixes      = [var.global_settings.prefix]
+  random_length = try(var.global_settings.random_length, null)
+  clean_input   = true
+  passthrough   = try(var.global_settings.passthrough, false)
 }
 
 # Name of the Windows computer name
-resource "azurecaf_naming_convention" "windows_computer_name" {
+resource "azurecaf_name" "windows_computer_name" {
   for_each = local.os_type == "windows" ? var.settings.virtual_machine_settings : {}
 
   name          = try(each.value.computer_name, each.value.name)
-  prefix        = var.global_settings.prefix
-  resource_type = "vmw"
-  convention    = var.global_settings.convention
+  resource_type = "azurerm_windows_virtual_machine"
+  prefixes      = [var.global_settings.prefix]
+  random_length = try(var.global_settings.random_length, null)
+  clean_input   = true
+  passthrough   = try(var.global_settings.passthrough, false)
+}
+
+# Name for the OS disk
+resource "azurecaf_name" "os_disk_windows" {
+  for_each = local.os_type == "windows" ? var.settings.virtual_machine_settings : {}
+
+  name          = try(each.value.os_disk.name, null)
+  resource_type = "azurerm_managed_disk"
+  prefixes      = [var.global_settings.prefix]
+  random_length = try(var.global_settings.random_length, null)
+  clean_input   = true
+  passthrough   = try(var.global_settings.passthrough, false)
 }
 
 resource "azurerm_windows_virtual_machine" "vm" {
   for_each = local.os_type == "windows" ? var.settings.virtual_machine_settings : {}
 
-  name                       = azurecaf_naming_convention.windows[each.key].result
+  name                       = azurecaf_name.windows[each.key].result
   location                   = var.location
   resource_group_name        = var.resource_group_name
   size                       = each.value.size
@@ -28,7 +45,7 @@ resource "azurerm_windows_virtual_machine" "vm" {
   admin_password             = random_password.admin[local.os_type].result
   network_interface_ids      = local.nic_ids
   allow_extension_operations = try(each.value.allow_extension_operations, null)
-  computer_name              = azurecaf_naming_convention.windows_computer_name[each.key].result
+  computer_name              = azurecaf_name.windows_computer_name[each.key].result
   provision_vm_agent         = try(each.value.provision_vm_agent, true)
   zone                       = try(each.value.zone, null)
   custom_data                = try(each.value.custom_data, null) == null ? null : filebase64(format("%s/%s", path.cwd, each.value.custom_data))
@@ -42,7 +59,7 @@ resource "azurerm_windows_virtual_machine" "vm" {
   os_disk {
     caching                   = each.value.os_disk.caching
     disk_size_gb              = try(each.value.os_disk.disk_size_gb, null)
-    name                      = try(each.value.os_disk.name, null)
+    name                      = azurecaf_name.os_disk_windows[each.key].result
     storage_account_type      = each.value.os_disk.storage_account_type
     write_accelerator_enabled = try(each.value.os_disk.write_accelerator_enabled, false)
 
@@ -131,7 +148,7 @@ resource "random_password" "admin" {
 resource "azurerm_key_vault_secret" "admin_password" {
   for_each = local.os_type == "windows" ? var.settings.virtual_machine_settings : {}
 
-  name         = format("%s-admin-password", azurecaf_naming_convention.windows_computer_name[each.key].result)
+  name         = format("%s-admin-password", azurecaf_name.windows_computer_name[each.key].result)
   value        = random_password.admin[local.os_type].result
   key_vault_id = var.keyvault_id
 

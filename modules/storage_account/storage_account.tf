@@ -3,16 +3,18 @@ locals {
   tags = lookup(var.storage_account, "tags", null) == null ? null : lookup(var.storage_account.tags, "environment", null) == null ? var.storage_account.tags : merge(lookup(var.storage_account, "tags", {}), { "environment" : var.global_settings.environment })
 }
 
-
-resource "azurecaf_naming_convention" "stg" {
+# naming convention
+resource "azurecaf_name" "stg" {
   name          = var.storage_account.name
-  prefix        = var.global_settings.prefix
   resource_type = "azurerm_storage_account"
-  convention    = var.global_settings.convention
+  prefixes      = [var.global_settings.prefix]
+  random_length = var.global_settings.random_length
+  clean_input   = true
+  passthrough   = var.global_settings.passthrough
 }
 
 resource "azurerm_storage_account" "stg" {
-  name                      = azurecaf_naming_convention.stg.result
+  name                      = azurecaf_name.stg.result
   resource_group_name       = var.resource_group_name
   location                  = var.location
   account_tier              = lookup(var.storage_account, "account_tier", "Standard")

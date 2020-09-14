@@ -3,7 +3,7 @@
 # Licensed under the MIT License.
 #
 
-name: scenario-100
+name: scenarios-100
 
 on:
   pull_request:
@@ -90,8 +90,13 @@ jobs:
       fail-fast: false
       matrix:
           config_files: [
-            "webapps/appservice/appservice-simple",
-            "webapps/appservice/appservice-slots"
+            "examples/compute/virtual_machine/100-simple-vm",
+            "examples/networking/private_dns/100-private-dns-vnet-links",
+            "examples/redis_cache/100-redis-standard",
+            "examples/webapps/appservice/101-appservice-simple",
+            "examples/webapps/appservice/102-appservice-slots",
+            "examples/webapps/appservice/103-appservice-slots",
+            "examples/webapps/appservice-environment/101-simple_ase"
           ]
           convention: ["random"]
 
@@ -109,16 +114,16 @@ jobs:
 
       - name: deploy example
         run: |
-          /tf/rover/rover.sh -lz ${GITHUB_WORKSPACE}/examples -a apply \
+          /tf/rover/rover.sh -lz ${GITHUB_WORKSPACE}/solutions -a apply \
             -tfstate $(basename ${{ matrix.config_files }}).tfstate \
-            -var-file ${GITHUB_WORKSPACE}/examples/${{ matrix.config_files }}.tfvars \
+            -var-file ${GITHUB_WORKSPACE}/solutions/${{ matrix.config_files }}/configuration.tfvars \
             --environment ${{ github.run_id }}
 
       - name: destroy example
         run: |
-          /tf/rover/rover.sh -lz ${GITHUB_WORKSPACE}/examples -a destroy \
+          /tf/rover/rover.sh -lz ${GITHUB_WORKSPACE}/solutions -a destroy \
             -tfstate $(basename ${{ matrix.config_files }}).tfstate \
-            -var-file ${GITHUB_WORKSPACE}/examples/${{ matrix.config_files }}.tfvars \
+            -var-file ${GITHUB_WORKSPACE}/solutions/${{ matrix.config_files }}/configuration.tfvars \
             --environment ${{ github.run_id }} \
             -auto-approve
 

@@ -100,7 +100,7 @@ virtual_machines = {
 
 
 storage_accounts = {
-  # Is used to store the azure devops deployment script to setup the Azure Devops Selfhosted agents 
+  # Is used to store the azure devops deployment script to setup the Azure Devops Selfhosted agents
   scripts_region1 = {
     name                     = "scripts"
     resource_group_key       = "devops_region1"

@@ -3,10 +3,21 @@
 # https://www.terraform.io/docs/providers/azurerm/r/bastion_host.html
 #
 
+resource "azurecaf_name" "host" {
+  for_each = local.compute.bastion_hosts
+
+  name          = try(each.value.name, "")
+  resource_type = "azurerm_bastion_host"
+  prefixes      = [local.global_settings.prefix]
+  random_length = local.global_settings.random_length
+  clean_input   = true
+  passthrough   = local.global_settings.passthrough
+}
+
 resource "azurerm_bastion_host" "host" {
   for_each = local.compute.bastion_hosts
 
-  name                = each.value.name
+  name                = azurecaf_name.host[each.key].result
   location            = module.resource_groups[each.value.resource_group_key].location
   resource_group_name = module.resource_groups[each.value.resource_group_key].name
   tags                = try(each.value.tags, null)

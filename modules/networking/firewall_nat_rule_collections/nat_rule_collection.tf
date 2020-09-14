@@ -1,10 +1,21 @@
 # processing of the rules for:
 # azurerm_firewall_nat_rule_collection - https://www.terraform.io/docs/providers/azurerm/r/firewall_nat_rule_collection.html
 
+resource "azurecaf_name" "natcollection" {
+  for_each = toset(var.rule_collections)
+
+  name          = var.azurerm_firewall_nat_rule_collection_definition[each.key].name
+  resource_type = "azurerm_firewall_nat_rule_collection"
+  prefixes      = [var.global_settings.prefix]
+  random_length = var.global_settings.random_length
+  clean_input   = true
+  passthrough   = var.global_settings.passthrough
+}
+
 resource "azurerm_firewall_nat_rule_collection" "natcollection" {
   for_each = toset(var.rule_collections)
 
-  name                = var.azurerm_firewall_nat_rule_collection_definition[each.key].name
+  name                = azurecaf_name.natcollection[each.key].result
   azure_firewall_name = var.azure_firewall_name
   resource_group_name = var.resource_group_name
   priority            = var.azurerm_firewall_nat_rule_collection_definition[each.key].priority

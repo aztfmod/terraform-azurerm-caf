@@ -1,8 +1,17 @@
+resource "azurecaf_name" "nsg_obj" {
+  for_each      = var.subnets
+  name          = each.value.name
+  resource_type = "azurerm_network_security_group"
+  prefixes      = [var.global_settings.prefix]
+  random_length = var.global_settings.random_length
+  clean_input   = true
+  passthrough   = var.global_settings.passthrough
+}
 
 resource "azurerm_network_security_group" "nsg_obj" {
 
   for_each            = var.subnets
-  name                = each.value.name
+  name                = azurecaf_name.nsg_obj[each.key].result
   resource_group_name = var.resource_group
   location            = var.location
   tags                = var.tags

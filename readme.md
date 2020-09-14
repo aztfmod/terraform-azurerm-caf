@@ -29,7 +29,7 @@ rover login --tenant <tenant_name>.onmicrosoft.com -s <subscription_id>
 3. Deploy the basic launchpad (working on AIRS):
 
 ```bash
-rover -lz /tf/caf/landingzones/caf_launchpad -launchpad -var-file /tf/caf/landingzones/caf_launchpad/scenario/100/configuration.tfvars -w tfstate -a apply
+rover -lz /tf/caf/landingzones/caf_launchpad -launchpad -var-file /tf/caf/landingzones/caf_launchpad/scenario/100/configuration.tfvars -a apply
 ```
 
 Once completed you would see 2 resource groups in your subscription. The scenario 100 is pretty basic and include the minimum to get the terraform remote state management working.
@@ -37,19 +37,19 @@ Once completed you would see 2 resource groups in your subscription. The scenari
 4. Upgrade to advanced launchpad (if you have Azure AD permissions - not working on AIRS):
 
 ```bash
-rover -lz /tf/caf/landingzones/caf_launchpad -launchpad -var-file /tf/caf/landingzones/caf_launchpad/scenario/200/configuration.tfvars -w tfstate -a apply
+rover -lz /tf/caf/landingzones/caf_launchpad -launchpad -var-file /tf/caf/landingzones/caf_launchpad/scenario/200/configuration.tfvars -a apply
 ```
 
 5. Deploy the caf_foundations. This is currently mostly a stub, but will implement enterprise management groups, policies, alerts, etc.:
 
 ```bash
-rover -lz /tf/caf/landingzones/caf_foundations -w tfstate -a apply
+rover -lz /tf/caf/landingzones/caf_foundations -a apply
 ```
 
 6. Deploy a networking scenario:
 
 ```bash
-rover -lz /tf/caf/landingzones/caf_networking/ -var-file /tf/caf/landingzones/caf_networking/scenario/110-aks-private/configuration.tfvars -w tfstate -a apply
+rover -lz /tf/caf/landingzones/caf_networking/ -var-file /tf/caf/landingzones/caf_networking/scenario/110-aks-private/configuration.tfvars -a apply
 ```
 
 ## Example levels
@@ -58,7 +58,7 @@ We classified the various examples in this repo:
 
 | level | functionalities                                                                               | supported environments                     |
 |-------|-----------------------------------------------------------------------------------------------|--------------------------------------------|
-| 100   | basic functionalities and features, for demo and simple POC                                   | works in AIRS                              |
+| 100   | basic functionalities and features, no RBAC or security hardening - for demo and simple POC   | working on AIRS subscriptions              |
 | 200   | intermediate functionalities includes RBAC features                                           | may not work in AIRS, need AAD permissions |
 | 300   | advanced functionalities, multi region support, includes RBAC features                        | not working in AIRS, need AAD permissions  |
 | 400   | advanced functionalities, multi region support, includes RBAC features and security hardening | not working in AIRS, need AAD permissions  |
@@ -67,7 +67,7 @@ We classified the various examples in this repo:
 
 | Repo                                                                                              | Description                                                |
 |---------------------------------------------------------------------------------------------------|------------------------------------------------------------|
-| [caf-terraform-landingzones](https://github.com/azure/caf-terraform-landingzones) (You are here!) | landing zones repo with sample and core documentations     |
+| [caf-terraform-landingzones](https://github.com/azure/caf-terraform-landingzones)                 | landing zones repo with sample and core documentations     |
 | [rover](https://github.com/aztfmod/rover)                                                         | devops toolset for operating landing zones                 |
 | [azure_caf_provider](https://github.com/aztfmod/terraform-provider-azurecaf)                      | custom provider for naming conventions                     |
 | [modules](https://registry.terraform.io/modules/aztfmod)                                          | set of curated modules available in the Terraform registry |

@@ -8,28 +8,46 @@ resource "tls_private_key" "ssh" {
 }
 
 # Name of the VM in the Azure Control Plane
-resource "azurecaf_naming_convention" "linux" {
-  for_each      = local.os_type == "linux" ? var.settings.virtual_machine_settings : {}
+resource "azurecaf_name" "linux" {
+  for_each = local.os_type == "linux" ? var.settings.virtual_machine_settings : {}
+
   name          = each.value.name
-  prefix        = var.global_settings.prefix
-  resource_type = "vml"
-  convention    = var.global_settings.convention
+  resource_type = "azurerm_linux_virtual_machine"
+  prefixes      = [var.global_settings.prefix]
+  random_length = try(var.global_settings.random_length, null)
+  clean_input   = true
+  passthrough   = try(var.global_settings.passthrough, false)
 }
 
+
 # Name of the Linux computer name
-resource "azurecaf_naming_convention" "linux_computer_name" {
+resource "azurecaf_name" "linux_computer_name" {
   for_each = local.os_type == "linux" ? var.settings.virtual_machine_settings : {}
 
   name          = try(each.value.computer_name, each.value.name)
-  prefix        = var.global_settings.prefix
-  resource_type = "vml"
-  convention    = var.global_settings.convention
+  resource_type = "azurerm_linux_virtual_machine"
+  prefixes      = [var.global_settings.prefix]
+  random_length = try(var.global_settings.random_length, null)
+  clean_input   = true
+  passthrough   = try(var.global_settings.passthrough, false)
+}
+
+# Name for the OS disk
+resource "azurecaf_name" "os_disk_linux" {
+  for_each = local.os_type == "linux" ? var.settings.virtual_machine_settings : {}
+
+  name          = try(each.value.os_disk.name, null)
+  resource_type = "azurerm_managed_disk"
+  prefixes      = [var.global_settings.prefix]
+  random_length = try(var.global_settings.random_length, null)
+  clean_input   = true
+  passthrough   = try(var.global_settings.passthrough, false)
 }
 
 resource "azurerm_linux_virtual_machine" "vm" {
   for_each = local.os_type == "linux" ? var.settings.virtual_machine_settings : {}
 
-  name                  = azurecaf_naming_convention.linux[each.key].result
+  name                  = azurecaf_name.linux[each.key].result
   location              = var.location
   resource_group_name   = var.resource_group_name
   size                  = each.value.size
@@ -37,7 +55,7 @@ resource "azurerm_linux_virtual_machine" "vm" {
   network_interface_ids = local.nic_ids
 
   allow_extension_operations      = try(each.value.allow_extension_operations, null)
-  computer_name                   = azurecaf_naming_convention.linux_computer_name[each.key].result
+  computer_name                   = azurecaf_name.linux_computer_name[each.key].result
   max_bid_price                   = try(each.value.max_bid_price, null)
   priority                        = try(each.value.priority, null)
   provision_vm_agent              = try(each.value.provision_vm_agent, true)
@@ -57,7 +75,7 @@ resource "azurerm_linux_virtual_machine" "vm" {
   os_disk {
     caching                   = try(each.value.os_disk.caching, null)
     disk_size_gb              = try(each.value.os_disk.disk_size_gb, null)
-    name                      = try(each.value.os_disk.name, null)
+    name                      = try(azurecaf_name.os_disk_linux[each.key].result, null)
     storage_account_type      = try(each.value.os_disk.storage_account_type, null)
     write_accelerator_enabled = try(each.value.os_disk.write_accelerator_enabled, false)
   }
@@ -95,7 +113,7 @@ resource "azurerm_linux_virtual_machine" "vm" {
 resource "azurerm_key_vault_secret" "ssh_private_key" {
   for_each = local.os_type == "linux" ? var.settings.virtual_machine_settings : {}
 
-  name         = format("%s-ssh-private-key", azurecaf_naming_convention.linux_computer_name[each.key].result)
+  name         = format("%s-ssh-private-key", azurecaf_name.linux_computer_name[each.key].result)
   value        = tls_private_key.ssh[each.key].private_key_pem
   key_vault_id = var.keyvault_id
 
@@ -110,7 +128,7 @@ resource "azurerm_key_vault_secret" "ssh_private_key" {
 resource "azurerm_key_vault_secret" "ssh_public_key_openssh" {
   for_each = local.os_type == "linux" ? var.settings.virtual_machine_settings : {}
 
-  name         = format("%s-ssh-public-key-openssh", azurecaf_naming_convention.linux_computer_name[each.key].result)
+  name         = format("%s-ssh-public-key-openssh", azurecaf_name.linux_computer_name[each.key].result)
   value        = tls_private_key.ssh[each.key].public_key_openssh
   key_vault_id = var.keyvault_id
 
