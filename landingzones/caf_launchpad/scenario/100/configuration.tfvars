@@ -7,6 +7,8 @@ scenarios = {
   launchpad = 100
 }
 
+random_length = 5
+
 # Default region
 default_region = "region1"
 
