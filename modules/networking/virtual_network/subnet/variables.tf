@@ -12,10 +12,6 @@ variable address_prefixes {
   description = "(Optional) The address prefixes to use for the subnet."
   default     = []
 }
-variable delegation {
-  description = "(Optional) One or more delegation blocks as defined below."
-  default     = {}
-}
 variable enforce_private_link_endpoint_network_policies {
   description = "(Optional) Enable or Disable network policies for the private link endpoint on the subnet. Default value is false. Conflicts with enforce_private_link_service_network_policies."
   default     = null
@@ -34,3 +30,4 @@ variable service_endpoints {
 }
 
 variable global_settings {}
+variable settings {}

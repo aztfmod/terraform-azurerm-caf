@@ -33,9 +33,10 @@ module "caf" {
     private_dns                       = var.private_dns
   }
   database = {
-    azurerm_redis_caches = var.azurerm_redis_caches
-    mssql_servers        = var.mssql_servers
-    synapse_workspaces   = var.synapse_workspaces
+    azurerm_redis_caches  = var.azurerm_redis_caches
+    mssql_servers         = var.mssql_servers
+    synapse_workspaces    = var.synapse_workspaces
+    databricks_workspaces = var.databricks_workspaces
   }
   # user_type                         = var.user_type
   # log_analytics                     = var.log_analytics

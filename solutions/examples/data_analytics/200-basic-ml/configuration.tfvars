@@ -28,8 +28,8 @@ resource_groups = {
 
 synapse_workspaces = {
   ml_wrkspc44_re1 = {
-    name               = "mlwrkspc44"
-    resource_group_key = "dap_synapse_re1"
+    name                    = "mlwrkspc44"
+    resource_group_key      = "dap_synapse_re1"
     sql_administrator_login = "dbadmin"
     # sql_administrator_login_password = "<string password>"   # If not set use module autogenerate a strong password and stores it in the keyvault
     keyvault_key = "secrets"
