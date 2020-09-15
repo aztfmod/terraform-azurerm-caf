@@ -19,6 +19,5 @@ locals {
 
   # Global settings can be overwritten
   prefix     = lookup(var.azuread_users, "useprefix", null) == true ? var.global_settings.prefix : ""
-  convention = lookup(var.azuread_users, "convention", var.global_settings.convention)
-  max_length = lookup(var.azuread_users, "max_length", var.global_settings.max_length)
+
 }

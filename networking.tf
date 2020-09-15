@@ -13,7 +13,7 @@ output vnets {
 #
 
 module "networking" {
-  source   = "./modules/terraform-azurerm-caf-virtual-network"
+  source   = "./modules/networking/virtual_network"
   for_each = try(var.networking.vnets, {})
 
   location                          = lookup(each.value, "region", null) == null ? module.resource_groups[each.value.resource_group_key].location : local.global_settings.regions[each.value.region]

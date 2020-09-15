@@ -1,5 +1,4 @@
 global_settings = {
-  convention     = "cafrandom"
   default_region = "region1"
   environment    = "test"
   regions = {

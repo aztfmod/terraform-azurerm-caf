@@ -68,11 +68,9 @@ locals {
 
   global_settings = {
     prefix         = data.terraform_remote_state.caf_foundations.outputs.global_settings.prefix
-    convention     = try(var.global_settings.convention, data.terraform_remote_state.caf_foundations.outputs.global_settings.convention)
     default_region = try(var.global_settings.default_region, data.terraform_remote_state.caf_foundations.outputs.global_settings.default_region)
     environment    = data.terraform_remote_state.caf_foundations.outputs.global_settings.environment
     regions        = try(var.global_settings.regions, data.terraform_remote_state.caf_foundations.outputs.global_settings.regions)
-    max_length     = try(var.max_length, data.terraform_remote_state.caf_foundations.outputs.global_settings.max_length)
   }
 
   diagnostics = {

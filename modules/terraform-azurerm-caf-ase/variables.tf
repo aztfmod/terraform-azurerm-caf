@@ -1,7 +1,7 @@
 
-variable prefix {
-  description = "(Optional) You can use a prefix to add to the list of resource groups you want to create"
-}
+# variable prefix {
+#   description = "(Optional) You can use a prefix to add to the list of resource groups you want to create"
+# }
 
 variable tags {
   description = "(Required) map of tags for the deployment"
@@ -35,8 +35,6 @@ variable subnet_name {}
 
 variable internalLoadBalancingMode {}
 
-variable convention {}
-
 variable diagnostics {
   default = null
 }
@@ -60,3 +58,4 @@ variable front_end_count {
   default     = "2"
 }
 
+variable global_settings {}

@@ -1,6 +1,5 @@
 
 global_settings = {
-  convention     = "random"
   default_region = "region1"
   regions = {
     region1 = "southeastasia"

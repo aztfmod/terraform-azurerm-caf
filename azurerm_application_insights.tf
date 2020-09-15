@@ -1,10 +1,8 @@
 module "azurerm_application_insights" {
-  source   = "./modules/terraform-azurerm-caf-appinsights"
+  source   = "./modules/app_insights"
   for_each = local.webapp.azurerm_application_insights
 
-  prefix                                = local.global_settings.prefix
-  convention                            = lookup(each.value, "convention", local.global_settings.convention)
-  max_length                            = lookup(each.value, "max_length", local.global_settings.max_length)
+  prefix = local.global_settings.prefix
   tags                                  = lookup(each.value, "tags", null)
   resource_group_name                   = module.resource_groups[each.value.resource_group_key].name
   location                              = lookup(each.value, "region", null) == null ? module.resource_groups[each.value.resource_group_key].location : local.global_settings.regions[each.value.region]
@@ -15,4 +13,5 @@ module "azurerm_application_insights" {
   retention_in_days                     = lookup(each.value, "retention_in_days", "90")
   sampling_percentage                   = lookup(each.value, "sampling_percentage", null)
   disable_ip_masking                    = lookup(each.value, "disable_ip_masking", null)
+  global_settings                       = local.global_settings
 }

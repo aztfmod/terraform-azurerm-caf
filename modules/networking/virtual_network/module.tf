@@ -81,19 +81,6 @@ resource "azurerm_subnet_route_table_association" "rt" {
   route_table_id = var.route_tables[each.value.route_table_key].id
 }
 
-# module "traffic_analytics" {
-#   source = "./traffic_analytics"
-
-#   rg                      = var.resource_group_name
-#   tags                    = var.tags
-#   location                = var.location
-#   log_analytics_workspace = var.log_analytics_workspace
-#   diagnostics_map         = var.diagnostics_map
-#   nw_config               = lookup(var.networking_object, "netwatcher", {})
-#   nsg                     = module.nsg.nsg_obj
-#   netwatcher              = var.netwatcher
-# }
-
 resource "azurerm_subnet_network_security_group_association" "nsg_vnet_association" {
   for_each = module.subnets
 

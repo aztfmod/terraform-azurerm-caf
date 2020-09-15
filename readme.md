@@ -28,7 +28,7 @@ Once you deploy the core enterprise scale components, you can leverage the follo
 To review the enterprise-scale on Terraform landing zone hierarchy model, you can refer to the classic model:
 
 * Hierarchy model: https://github.com/Azure/caf-terraform-landingzones/blob/master/documentation/code_architecture/hierarchy.md
-* Delivery model: https://github.com/Azure/caf-terraform-landingzones/blob/master/documentation/delivery/delivery_landingzones.md 
+* Delivery model: https://github.com/Azure/caf-terraform-landingzones/blob/master/documentation/delivery/delivery_landingzones.md
 
 ## Coding principles
 

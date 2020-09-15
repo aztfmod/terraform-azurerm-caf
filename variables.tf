@@ -1,9 +1,7 @@
 # Global settings
 variable global_settings {
   default = {
-    prefix     = ""
-    convention = "cafrandom"
-    #max_length     = 40
+    prefix = ""
     passthrough    = false
     random_length  = 4
     default_region = "region1"
@@ -17,9 +15,6 @@ variable global_settings {
 variable tfstates {}
 
 # To support default values
-variable convention {
-  default = "cafrandom"
-}
 
 variable environment {
   default = "sandpit"

@@ -4,7 +4,7 @@ output "id" {
 }
 
 output "name" {
-  value       = azurecaf_naming_convention.ase.result
+  value       = azurecaf_name.ase.result
   description = "App Service Environment Name"
 }
 

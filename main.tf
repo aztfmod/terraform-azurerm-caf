@@ -40,13 +40,11 @@ locals {
     prefix             = local.prefix
     prefix_with_hyphen = local.prefix == "" ? "" : "${local.prefix}-"
     prefix_start_alpha = local.prefix == "" ? "" : "${random_string.alpha1.result}${local.prefix}"
-    convention         = lookup(var.global_settings, "convention", var.convention)
     default_region     = lookup(var.global_settings, "default_region", "region1")
     environment        = lookup(var.global_settings, "environment", var.environment)
-    max_length         = lookup(var.global_settings, "max_length", var.max_length)
     random_length      = lookup(var.global_settings, "random_length", var.max_length)
     regions            = var.global_settings.regions
-    passthrough        = try(var.global_settings.convention, var.convention) == "passthrough" ? true : false
+    passthrough        = try(var.global_settings.passthrough, false) 
   }
 
 

@@ -17,7 +17,7 @@ locals {
   # this is the format required by ARM templates
   parameters_body = {
     aseName = {
-      value = azurecaf_naming_convention.ase.result
+      value = azurecaf_name.ase.result
     }
     aseResourceGroupName = {
       value = var.resource_group_name

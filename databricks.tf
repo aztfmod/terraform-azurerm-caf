@@ -12,6 +12,6 @@ module databricks_workspaces {
 }
 
 output databricks_workspaces {
-  value       = module.databricks_workspaces
-  sensitive   = true
+  value     = module.databricks_workspaces
+  sensitive = true
 }

@@ -162,7 +162,6 @@ keyvaults = {
   secrets = {
     name                = "secrets"
     resource_group_key  = "dap_jumpbox_re1"
-    convention          = "cafrandom"
     sku_name            = "premium"
     soft_delete_enabled = true
 
@@ -179,7 +178,6 @@ keyvaults = {
   akvmlwkspc = {
     name                = "akvmlwkspc"
     resource_group_key  = "dap_automl_re1"
-    convention          = "cafrandom"
     sku_name            = "premium"
     soft_delete_enabled = true
 
