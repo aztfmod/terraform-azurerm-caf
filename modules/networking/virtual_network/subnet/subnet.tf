@@ -19,14 +19,14 @@ resource "azurerm_subnet" "subnet" {
   enforce_private_link_service_network_policies  = try(var.enforce_private_link_service_network_policies, false)
 
   dynamic "delegation" {
-    for_each = try(var.settings.delegation, null) == null ? [0] : [1]
+    for_each = try(var.settings.delegation, null) == null ? [] : [1]
 
     content {
       name = var.settings.delegation.name
 
       service_delegation {
-        name    = var.settings.delegation.service_delegation.name
-        actions = lookup(var.settings.delegation.service_delegation, "actions", null)
+        name    = var.settings.delegation.service_delegation
+        actions = lookup(var.settings.delegation, "actions", null)
       }
     }
   }

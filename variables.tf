@@ -2,7 +2,7 @@
 variable global_settings {
   default = {
     prefix     = ""
-    convention = "cafrandom"
+    #convention = "cafrandom"
     #max_length     = 40
     passthrough    = false
     random_length  = 4
