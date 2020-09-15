@@ -44,7 +44,7 @@ locals {
     environment        = lookup(var.global_settings, "environment", var.environment)
     random_length      = lookup(var.global_settings, "random_length", var.max_length)
     regions            = var.global_settings.regions
-    passthrough        = try(var.global_settings.convention, var.convention) == "passthrough" ? true : false
+    passthrough        = try(var.global_settings.passthrough, false) 
   }
 
 

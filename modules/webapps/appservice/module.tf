@@ -269,6 +269,6 @@ resource "azurerm_template_deployment" "site_config" {
     "numberOfWorkers" = tonumber(var.settings.numberOfWorkers)
     "name"            = azurecaf_name.app_service.result
   }
-
+  
   deployment_mode = "Incremental"
 }
