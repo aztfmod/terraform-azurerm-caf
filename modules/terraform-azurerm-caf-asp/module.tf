@@ -1,13 +1,17 @@
-resource "azurecaf_naming_convention" "plan" {
+
+resource "azurecaf_name" "plan" {
   name          = var.settings.name
-  prefix        = var.prefix
-  resource_type = "azurerm_app_service_plan"
-  convention    = var.convention
-  max_length    = var.max_length
+  resource_type = "azurerm_storage_account"
+  #TODO: replace with azurerm_app_service_plan when available
+  prefixes      = [var.global_settings.prefix]
+  random_length = var.global_settings.random_length
+  clean_input   = true
+  passthrough   = var.global_settings.passthrough
 }
 
+
 resource "azurerm_app_service_plan" "asp" {
-  name                         = azurecaf_naming_convention.plan.result
+  name                         = azurecaf_name.plan.result
   location                     = var.location
   resource_group_name          = var.resource_group_name
   kind                         = var.kind

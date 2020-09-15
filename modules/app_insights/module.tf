@@ -1,13 +1,16 @@
-resource "azurecaf_naming_convention" "appis" {
+
+resource "azurecaf_name" "appis" {
   name          = var.name
-  prefix        = var.prefix
-  resource_type = "azurerm_application_insights"
-  # convention    = var.convention
-  # max_length    = var.max_length
+  resource_type = "azurerm_resource_group"
+  #TODO: need to be changed to azurerm_application_insights
+  prefixes      = [var.global_settings.prefix]
+  random_length = var.global_settings.random_length
+  clean_input   = true
+  passthrough   = var.global_settings.passthrough
 }
 
 resource "azurerm_application_insights" "appinsights" {
-  name                                  = azurecaf_naming_convention.appis.result
+  name                                  = azurecaf_name.appis.result
   location                              = var.location
   resource_group_name                   = var.resource_group_name
   application_type                      = var.application_type

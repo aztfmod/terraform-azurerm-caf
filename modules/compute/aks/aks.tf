@@ -9,23 +9,15 @@ resource "azurecaf_name" "aks" {
   passthrough   = var.global_settings.passthrough
 }
 
-resource "azurecaf_naming_convention" "default_node_pool" {
+resource "azurecaf_name" "default_node_pool" {
   name          = var.settings.default_node_pool.name
-  prefix        = var.global_settings.prefix
-  resource_type = "aks_node_pool_linux"
-  max_length    = var.global_settings.max_length
-  convention    = var.global_settings.convention
+  resource_type = "azurerm_kubernetes_cluster"
+  #TODO: replace with aks_node_pool_linux when available.
+  prefixes      = [var.global_settings.prefix]
+  random_length = var.global_settings.random_length
+  clean_input   = true
+  passthrough   = var.global_settings.passthrough
 }
-
-# missing in 1.0.0-pre
-# resource "azurecaf_name" "default_node_pool" {
-#   name          = var.settings.default_node_pool.name
-#   resource_type = "aks_node_pool_linux"
-#   prefixes      = [var.global_settings.prefix]
-#   random_length = var.global_settings.random_length
-#   clean_input   = true
-#   passthrough   = var.global_settings.passthrough
-# }
 
 # locals {
 #   rg_node_name = lookup(var.settings, "node_resource_group", "${var.resource_group.name}-nodes")
@@ -72,7 +64,7 @@ resource "azurerm_kubernetes_cluster" "aks" {
     for_each = var.settings.default_node_pool == null ? [0] : [1]
 
     content {
-      name                  = azurecaf_naming_convention.default_node_pool.result
+      name                  = azurecaf_name.default_node_pool.result
       vm_size               = var.settings.default_node_pool.vm_size
       type                  = try(var.settings.default_node_pool.type, "VirtualMachineScaleSets")
       os_disk_size_gb       = try(var.settings.default_node_pool.os_disk_size_gb, null)

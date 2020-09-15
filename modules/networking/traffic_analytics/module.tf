@@ -1,4 +1,4 @@
-## TO BE REFACTORED 
+## TO BE REFACTORED
 
 locals {
   checkifconfigpresent = lookup(var.nw_config, "create", {}) != {} ? true : false

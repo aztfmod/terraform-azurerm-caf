@@ -1,12 +1,16 @@
-resource "azurecaf_naming_convention" "custom_role" {
+
+resource "azurecaf_name" "custom_role" {
   name          = var.custom_role.name
-  prefix        = lookup(var.custom_role, "useprefix", false) ? "" : var.global_settings.prefix
-  resource_type = "rg" # workaround to keep the dashes
-  convention    = lookup(var.custom_role, "convention", var.global_settings.convention)
+  resource_type = "azurerm_resource_group"
+  #TODO: replace with right resource when available
+  prefixes      = [var.global_settings.prefix]
+  random_length = var.global_settings.random_length
+  clean_input   = true
+  passthrough   = var.global_settings.passthrough
 }
 
 resource "azurerm_role_definition" "custom_role" {
-  name = azurecaf_naming_convention.custom_role.result
+  name = azurecaf_name.custom_role.result
 
   # TODO: refactor scope to include other scopes like RG, resources.
   scope       = lookup(var.custom_role, "scope", var.subscription_primary)

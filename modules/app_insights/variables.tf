@@ -3,10 +3,6 @@ variable prefix {
   description = "(Optional) You can use a prefix to add to the list of resource groups you want to create"
 }
 
-# variable convention {}
-
-# variable max_length {}
-
 variable tags {
   description = "(Required) map of tags for the deployment"
 }
@@ -62,3 +58,5 @@ variable disable_ip_masking {
   description = "(Optional) By default the real client ip is masked as 0.0.0.0 in the logs. Use this argument to disable masking and log the real client ip. Defaults to false."
   default     = false
 }
+
+variable global_settings {}
