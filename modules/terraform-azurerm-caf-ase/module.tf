@@ -1,8 +1,10 @@
-resource "azurecaf_naming_convention" "ase" {
+resource "azurecaf_name" "ase" {
   name          = var.name
-  prefix        = var.prefix
   resource_type = "azurerm_storage_account"
-  convention    = var.convention
+  prefixes      = [var.global_settings.prefix]
+  random_length = var.global_settings.random_length
+  clean_input   = true
+  passthrough   = var.global_settings.passthrough
 }
 
 resource "azurerm_template_deployment" "ase" {

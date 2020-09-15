@@ -47,15 +47,6 @@ variable level {
   }
 }
 
-variable convention {
-  default = "cafrandom"
-
-  validation {
-    condition     = contains(["cafrandom", "random", "passthrough", "cafclassic"], var.convention)
-    error_message = "Convention allowed values are cafrandom, random, passthrough or cafclassic."
-  }
-}
-
 variable passthrough {
   default = false
 }
@@ -74,10 +65,6 @@ variable regions {
   default = {
     region1 = "southeastasia"
   }
-}
-variable max_length {
-  description = "Define the max length the naming convention will apply to generated name"
-  default     = 40
 }
 
 variable prefix {

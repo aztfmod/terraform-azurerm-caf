@@ -69,11 +69,9 @@ locals {
     prefix             = local.prefix
     prefix_with_hyphen = local.prefix == "" ? "" : "${local.prefix}-"
     prefix_start_alpha = local.prefix == "" ? "" : "${random_string.alpha1.result}${local.prefix}"
-    convention         = var.convention
     default_region     = var.default_region
     environment        = var.environment
     regions            = var.regions
-    max_length         = var.max_length
     passthrough        = var.passthrough
     random_length      = var.random_length
   }

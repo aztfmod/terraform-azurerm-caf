@@ -1,17 +1,19 @@
 
-resource "azurecaf_naming_convention" "account" {
+resource "azurecaf_name" "account" {
   name          = local.user_name
-  prefix        = local.prefix
-  resource_type = "rg" # workaround to keep the dashes
-  convention    = local.convention
-  max_length    = local.max_length
+  resource_type = "azurerm_resource_group"
+  #TODO: replace with account convention when available 
+  prefixes      = [local.prefix]
+  random_length = var.global_settings.random_length
+  clean_input   = true
+  passthrough   = var.global_settings.passthrough
 }
 
 #
 #
 resource "azuread_user" "account" {
-  user_principal_name = format("%s@%s", azurecaf_naming_convention.account.result, local.tenant_name)
-  display_name        = azurecaf_naming_convention.account.result
+  user_principal_name = format("%s@%s", azurecaf_name.account.result, local.tenant_name)
+  display_name        = azurecaf_name.account.result
   password            = random_password.account.result
 
   lifecycle {

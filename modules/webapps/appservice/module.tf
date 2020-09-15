@@ -1,16 +1,19 @@
 
-resource "azurecaf_naming_convention" "app_service" {
+resource "azurecaf_name" "app_service" {
   name          = var.name
-  resource_type = "azurerm_app_service"
-  prefix        = var.global_settings.prefix
-  convention    = var.global_settings.convention
-  max_length    = var.global_settings.max_length
+  resource_type = "azurerm_storage_account"
+  #TODO: replace with azurerm_app_service
+  prefixes      = [var.global_settings.prefix]
+  random_length = var.global_settings.random_length
+  clean_input   = true
+  passthrough   = var.global_settings.passthrough
 }
+
 
 # Per options https://www.terraform.io/docs/providers/azurerm/r/app_service.html
 
 resource "azurerm_app_service" "app_service" {
-  name                = azurecaf_naming_convention.app_service.result
+  name                = azurecaf_name.app_service.result
   location            = var.location
   resource_group_name = var.resource_group_name
   app_service_plan_id = var.app_service_plan_id
@@ -257,15 +260,15 @@ resource "azurerm_template_deployment" "site_config" {
 
   count = lookup(var.settings, "numberOfWorkers", {}) != {} ? 1 : 0
 
-  name                = azurecaf_naming_convention.app_service.result
+  name                = azurecaf_name.app_service.result
   resource_group_name = var.resource_group_name
 
   template_body = file(local.arm_filename)
 
   parameters = {
     "numberOfWorkers" = tonumber(var.settings.numberOfWorkers)
-    "name"            = azurecaf_naming_convention.app_service.result
+    "name"            = azurecaf_name.app_service.result
   }
-
+  
   deployment_mode = "Incremental"
 }
