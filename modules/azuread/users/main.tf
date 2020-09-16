@@ -18,6 +18,6 @@ locals {
   password_expire_in_days = lookup(var.azuread_users, "password_expire_in_days", 180)
 
   # Global settings can be overwritten
-  prefix     = lookup(var.azuread_users, "useprefix", null) == true ? var.global_settings.prefix : ""
+  prefix = lookup(var.azuread_users, "useprefix", null) == true ? var.global_settings.prefix : ""
 
 }
