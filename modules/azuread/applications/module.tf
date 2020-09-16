@@ -2,7 +2,7 @@
 # resource "azurecaf_name" "aad_apps" {
 #   name          = var.settings.name
 #   resource_type = "azurerm_resource_group"
-#   #TODO: need to be changed to azurerm_application_insights
+#   #TODO: need to be changed to appropriate resource (no caf reference for now)
 #   prefixes      = [var.global_settings.prefix]
 #   random_length = var.global_settings.random_length
 #   clean_input   = true

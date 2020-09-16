@@ -6,9 +6,8 @@ global_settings = {
 
 resource_groups = {
   security = {
-    name       = "launchpad-security"
-    useprefix  = true
-    max_length = 40
+    name      = "launchpad-security"
+    useprefix = true
   }
 }
 

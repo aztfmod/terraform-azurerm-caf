@@ -1,7 +1,4 @@
 
-variable max_length {
-  default = null
-}
 
 variable tags {
   description = "(Required) map of tags for the deployment"
@@ -12,13 +9,9 @@ variable app_service_environment_id {
   default     = null
 }
 
-variable resource_group_name {
+variable resource_group_name {}
 
-}
-
-variable location {
-
-}
+variable location {}
 
 variable settings {}
 

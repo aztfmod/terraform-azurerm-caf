@@ -1,6 +1,6 @@
 
 module "app_service_environments" {
-  source = "./modules/terraform-azurerm-caf-ase"
+  source = "./modules/webapps/ase"
 
   for_each = local.webapp.app_service_environments
 
@@ -21,7 +21,7 @@ module "app_service_environments" {
 }
 
 module "app_service_plans" {
-  source = "./modules/terraform-azurerm-caf-asp"
+  source = "./modules/webapps/asp"
 
   for_each = local.webapp.app_service_plans
 

@@ -42,9 +42,9 @@ locals {
     prefix_start_alpha = local.prefix == "" ? "" : "${random_string.alpha1.result}${local.prefix}"
     default_region     = lookup(var.global_settings, "default_region", "region1")
     environment        = lookup(var.global_settings, "environment", var.environment)
-    random_length      = lookup(var.global_settings, "random_length", var.max_length)
+    random_length      = lookup(var.global_settings, "random_length", null)
     regions            = var.global_settings.regions
-    passthrough        = try(var.global_settings.passthrough, false) 
+    passthrough        = try(var.global_settings.passthrough, false)
   }
 
 
