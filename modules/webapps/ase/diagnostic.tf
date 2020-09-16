@@ -1,6 +1,6 @@
 
 module diagnostics {
-  source = "../diagnostics"
+  source = "../../diagnostics"
   count  = var.diagnostic_profiles == null ? 0 : 1
 
   resource_id       = lookup(azurerm_template_deployment.ase.outputs, "id")
