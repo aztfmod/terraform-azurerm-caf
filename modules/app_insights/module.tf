@@ -1,8 +1,7 @@
 
 resource "azurecaf_name" "appis" {
   name          = var.name
-  resource_type = "azurerm_resource_group"
-  #TODO: need to be changed to azurerm_application_insights
+  resource_type = "azurerm_application_insights"
   prefixes      = [var.global_settings.prefix]
   random_length = var.global_settings.random_length
   clean_input   = true
