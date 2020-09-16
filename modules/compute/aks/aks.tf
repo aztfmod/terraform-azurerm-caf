@@ -64,7 +64,7 @@ resource "azurerm_kubernetes_cluster" "aks" {
     for_each = var.settings.default_node_pool == null ? [0] : [1]
 
     content {
-      name                  = azurecaf_name.default_node_pool.result
+      name                  = var.settings.default_node_pool.name//azurecaf_name.default_node_pool.result
       vm_size               = var.settings.default_node_pool.vm_size
       type                  = try(var.settings.default_node_pool.type, "VirtualMachineScaleSets")
       os_disk_size_gb       = try(var.settings.default_node_pool.os_disk_size_gb, null)
