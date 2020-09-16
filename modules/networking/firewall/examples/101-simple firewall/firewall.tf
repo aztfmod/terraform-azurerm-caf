@@ -47,7 +47,6 @@ module "vnet_test" {
   log_analytics_workspace = module.la_test
   diagnostics_settings    = local.vnet_config.diagnostics
   convention              = local.convention
-  max_length              = 60
 }
 
 module "public_ip_test" {

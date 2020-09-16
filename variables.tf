@@ -1,7 +1,7 @@
 # Global settings
 variable global_settings {
   default = {
-    prefix = ""
+    prefix         = ""
     passthrough    = false
     random_length  = 4
     default_region = "region1"
@@ -35,10 +35,6 @@ variable use_msi {
 
 variable tags {
   type    = map
-  default = null
-}
-
-variable max_length {
   default = null
 }
 

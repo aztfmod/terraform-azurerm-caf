@@ -1,33 +1,21 @@
-variable "nw_config" {
+variable nw_config {
   description = "(Optional) Configuration settings for network watcher."
 }
 
-variable "nsg" {
+variable nsg {
   description = "(Required) NSG list of objects"
 }
 
-variable "rg" {
+variable rg {}
+variable diagnostics_map {}
+variable log_analytics_workspace {}
+variable location {}
 
-}
-
-variable "diagnostics_map" {
-
-}
-
-variable "log_analytics_workspace" {
-
-}
-
-
-variable "location" {
-
-}
-
-variable "netwatcher" {
+variable netwatcher {
   description = "(Optional) is a map with two attributes: name, rg who describes the name and rg where the netwatcher was already deployed"
   default     = {}
 }
 
-variable "tags" {
+variable tags {
 
 }

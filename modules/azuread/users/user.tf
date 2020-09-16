@@ -2,7 +2,7 @@
 resource "azurecaf_name" "account" {
   name          = local.user_name
   resource_type = "azurerm_resource_group"
-  #TODO: replace with account convention when available 
+  #TODO: need to be changed to appropriate resource (no caf reference for now)
   prefixes      = [local.prefix]
   random_length = var.global_settings.random_length
   clean_input   = true

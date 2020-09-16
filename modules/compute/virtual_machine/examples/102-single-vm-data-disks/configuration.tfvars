@@ -2,16 +2,14 @@ location = "southeastasia"
 
 resource_groups = {
   vm_sg = {
-    name       = "test-vm-sg"
-    location   = "southeastasia"
-    useprefix  = true
-    max_length = 40
+    name      = "test-vm-sg"
+    location  = "southeastasia"
+    useprefix = true
   }
   vnet_sg = {
-    name       = "test-networking-sg"
-    location   = "southeastasia"
-    useprefix  = true
-    max_length = 40
+    name      = "test-networking-sg"
+    location  = "southeastasia"
+    useprefix = true
   }
 }
 

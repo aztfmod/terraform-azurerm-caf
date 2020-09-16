@@ -1,9 +1,8 @@
 resource_groups = {
   test_sg = {
-    name       = "test-caf_storage_account-sg"
-    location   = "southeastasia"
-    useprefix  = true
-    max_length = 40
+    name      = "test-caf_storage_account-sg"
+    location  = "southeastasia"
+    useprefix = true
   }
 }
 

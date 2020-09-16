@@ -228,7 +228,6 @@ keyvaults = {
     name                = "launchpad"
     resource_group_key  = "security"
     region              = "region1"
-    #convention          = "cafrandom"
     sku_name            = "standard"
     soft_delete_enabled = true
     tags = {
@@ -256,7 +255,6 @@ keyvaults = {
     name                = "secrets"
     resource_group_key  = "security"
     region              = "region1"
-    #convention          = "cafrandom"
     sku_name            = "premium"
     soft_delete_enabled = true
 
@@ -463,9 +461,7 @@ azuread_users = {
 
   # don't change that key
   aad-user-devops-user-admin = {
-    #convention              = "cafrandom"
     useprefix               = true
-    max_length              = 60
     tenant_name             = "terraformdev.onmicrosoft.com"
     user_name               = "caf-level0-security-devops-pat-rotation"
     password_expire_in_days = 180
@@ -497,7 +493,6 @@ azuread_apps = {
 
   # Changing that key requires changing the value of azure_devops.aad_app_key
   azure_devops = {
-    #convention              = "cafrandom"
     useprefix               = true
     application_name        = "caf-level0-security-devops-pat-rotation-aad-app1"
     password_expire_in_days = 60
