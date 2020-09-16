@@ -1,8 +1,7 @@
 
 resource "azurecaf_name" "app_service" {
   name          = var.name
-  resource_type = "azurerm_storage_account"
-  #TODO: replace with azurerm_app_service
+  resource_type = "azurerm_app_service"
   prefixes      = [var.global_settings.prefix]
   random_length = var.global_settings.random_length
   clean_input   = true
@@ -269,6 +268,6 @@ resource "azurerm_template_deployment" "site_config" {
     "numberOfWorkers" = tonumber(var.settings.numberOfWorkers)
     "name"            = azurecaf_name.app_service.result
   }
-  
+
   deployment_mode = "Incremental"
 }

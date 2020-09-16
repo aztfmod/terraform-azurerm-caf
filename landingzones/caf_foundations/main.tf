@@ -22,7 +22,7 @@ terraform {
     }
     azurecaf = {
       source  = "aztfmod/azurecaf"
-      version = "~>0.4.3"
+      version = "~> 1.0.0"
     }
   }
   required_version = ">= 0.13"
