@@ -30,15 +30,13 @@ launchpad_key_names = {
 
 resource_groups = {
   tfstate = {
-    name       = "launchpad-tfstates"
-    region     = "region1"
-    useprefix  = true
-    max_length = 40
+    name      = "launchpad-tfstates"
+    region    = "region1"
+    useprefix = true
   }
   security = {
-    name       = "launchpad-security"
-    useprefix  = true
-    max_length = 40
+    name      = "launchpad-security"
+    useprefix = true
   }
 }
 

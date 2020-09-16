@@ -27,15 +27,13 @@ launchpad_key_names = {
 
 resource_groups = {
   tfstate = {
-    name       = "launchpad-tfstates"
-    region     = "region1"
-    useprefix  = true
-    max_length = 40
+    name      = "launchpad-tfstates"
+    region    = "region1"
+    useprefix = true
   }
   security = {
-    name       = "launchpad-security"
-    useprefix  = true
-    max_length = 40
+    name      = "launchpad-security"
+    useprefix = true
   }
 }
 
@@ -68,7 +66,6 @@ keyvaults = {
     name                = "launchpad"
     resource_group_key  = "security"
     region              = "region1"
-    #convention          = "cafrandom"
     sku_name            = "standard"
     soft_delete_enabled = true
 
@@ -101,7 +98,6 @@ keyvault_access_policies = {
 azuread_apps = {
   # Do not rename the key "launchpad" to be able to upgrade to higher scenario
   caf_launchpad_level0 = {
-    #convention              = "cafrandom"
     useprefix               = true
     application_name        = "caf_launchpad_level0"
     password_expire_in_days = 180
