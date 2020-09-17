@@ -1,44 +1,14 @@
-output private_dns_zone {
-  value     = azurerm_private_dns_zone.private_dns
+output id {
+  value     = azurerm_private_dns_zone.private_dns.id
   sensitive = true
 }
 
-output a_records {
-  value     = azurerm_private_dns_a_record.a_records
+output name {
+  value     = azurerm_private_dns_zone.private_dns.name
   sensitive = true
 }
 
-output aaaa_records {
-  value     = azurerm_private_dns_aaaa_record.aaaa_records
-  sensitive = true
-}
-
-output cname_records {
-  value     = azurerm_private_dns_cname_record.cname_records
-  sensitive = true
-}
-
-output mx_records {
-  value     = azurerm_private_dns_mx_record.mx_records
-  sensitive = true
-}
-
-output ptr_records {
-  value     = azurerm_private_dns_ptr_record.ptr_records
-  sensitive = true
-}
-
-output srv_records {
-  value     = azurerm_private_dns_srv_record.srv_records
-  sensitive = true
-}
-
-output txt_records {
-  value     = azurerm_private_dns_txt_record.txt_records
-  sensitive = true
-}
-
-output vnet_links {
-  value     = azurerm_private_dns_zone_virtual_network_link.vnet_links
+output resource_group_name {
+  value     = var.resource_group_name
   sensitive = true
 }
