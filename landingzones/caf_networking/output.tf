@@ -18,3 +18,8 @@ output virtual_wans {
   sensitive   = true
   description = "Virtual WAN output"
 }
+
+output "private_dns" {
+  value     = module.landingzones_networking.private_dns
+  sensitive = true
+}

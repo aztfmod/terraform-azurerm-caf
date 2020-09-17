@@ -102,3 +102,6 @@ variable bastion_hosts {
 variable ddos_services {
   default = {}
 }
+variable private_dns {
+  default = {}
+}

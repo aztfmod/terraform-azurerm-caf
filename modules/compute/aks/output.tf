@@ -29,7 +29,7 @@ output identity {
 }
 
 output enable_rbac {
-  value       = lookup(var.settings, "enable_rbac", true)
+  value = lookup(var.settings, "enable_rbac", true)
 }
 
 output kube_admin_config {
