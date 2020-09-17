@@ -18,7 +18,7 @@ vnets = {
         name = "databricks-public"
         cidr = ["10.150.100.64/26"]
         delegation = {
-          name = "databricks"
+          name               = "databricks"
           service_delegation = "Microsoft.Databricks/workspaces"
           actions = [
             "Microsoft.Network/virtualNetworks/subnets/join/action",
@@ -31,7 +31,7 @@ vnets = {
         name = "databricks-private"
         cidr = ["10.150.100.128/26"]
         delegation = {
-          name = "databricks"
+          name               = "databricks"
           service_delegation = "Microsoft.Databricks/workspaces"
           actions = [
             "Microsoft.Network/virtualNetworks/subnets/join/action",
