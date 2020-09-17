@@ -20,7 +20,7 @@ module "app_service_environments" {
   global_settings           = local.global_settings
   tfstates                  = var.tfstates
   use_msi                   = var.use_msi
-  private_dns               = lookup(each.value.private_dns_key, null) == null ? {} : module.private_dns[each.value.private_dns_key]
+  private_dns               = lookup(each.value, "private_dns_records", null) == null ? {} : module.private_dns
 }
 
 #
