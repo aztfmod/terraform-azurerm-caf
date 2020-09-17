@@ -31,7 +31,7 @@ resource "azurerm_databricks_workspace" "ws" {
 
 
 data "terraform_remote_state" "vnets" {
-  count = try(var.settings.custom_parameters.remote_tfstate, null) == null ? 0 : 1
+  count   = try(var.settings.custom_parameters.remote_tfstate, null) == null ? 0 : 1
   backend = "azurerm"
   config = {
     storage_account_name = var.tfstates[var.settings.custom_parameters.remote_tfstate.tfstate_key].storage_account_name
