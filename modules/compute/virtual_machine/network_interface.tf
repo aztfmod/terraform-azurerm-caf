@@ -72,9 +72,9 @@ data "terraform_remote_state" "vnets" {
 #         tfstate_key = "networking_aks"
 #         output_key  = "vnets"
 #         lz_key      = "networking_aks"
-#         vnet_key    = "hub_rg1"
-#         subnet_key  = "jumpbox"
 #       }
+#       vnet_key    = "hub_rg1"
+#       subnet_key  = "jumpbox"
 #     }
 #     name                    = "0"
 #     enable_ip_forwarding    = false

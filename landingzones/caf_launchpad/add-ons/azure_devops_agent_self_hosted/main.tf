@@ -2,7 +2,7 @@ terraform {
   required_providers {
     azurerm = {
       source  = "hashicorp/azurerm"
-      version = "~> 2.27.0"
+      version = "~> 2.26.0"
     }
     azuread = {
       source  = "hashicorp/azuread"
@@ -61,6 +61,7 @@ locals {
 
   global_settings = {
     prefix         = data.terraform_remote_state.launchpad.outputs.global_settings.prefix
+    prefix_with_hyphen = data.terraform_remote_state.launchpad.outputs.global_settings.prefix_with_hyphen
     default_region = try(var.global_settings.default_region, data.terraform_remote_state.launchpad.outputs.global_settings.default_region)
     environment    = data.terraform_remote_state.launchpad.outputs.global_settings.environment
     regions        = try(var.global_settings.regions, data.terraform_remote_state.launchpad.outputs.global_settings.regions)
