@@ -1,40 +1,40 @@
 
 
-variable "tags" {
+variable tags {
   description = "(Required) map of tags for the deployment"
 }
 
-variable "name" {
+variable name {
   description = "(Required) Name of the App Service"
 }
 
-variable "location" {
+variable location {
   description = "(Required) Resource Location"
 }
 
-variable "resource_group_name" {
+variable resource_group_name {
   description = "(Required) Resource group of the App Service"
 }
 
-variable "app_service_plan_id" {
+variable app_service_plan_id {
 }
 
-variable "identity" {
+variable identity {
   default = {}
 }
 
-variable "connection_strings" {
+variable connection_strings {
   default = {}
 }
 
-variable "app_settings" {
+variable app_settings {
   default = null
 }
 
-variable "slots" {
+variable slots {
   default = {}
 }
 
-variable "settings" {}
+variable settings {}
 
 variable global_settings {}
