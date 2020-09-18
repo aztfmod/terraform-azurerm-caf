@@ -54,3 +54,13 @@ variable front_end_count {
 }
 
 variable global_settings {}
+
+variable private_dns {
+  default = {}
+}
+
+variable settings {}
+
+variable tfstates {}
+
+variable use_msi {}

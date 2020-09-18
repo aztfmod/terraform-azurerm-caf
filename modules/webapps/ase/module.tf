@@ -59,3 +59,4 @@ data "external" "ase_ilb_ip" {
 
   depends_on = [azurerm_template_deployment.ase]
 }
+

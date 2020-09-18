@@ -6,12 +6,13 @@ module databricks_workspaces {
   resource_group_name = module.resource_groups[each.value.resource_group_key].name
   global_settings     = local.global_settings
   settings            = each.value
-  virtual_network_id  = lookup(each.value.custom_parameters, "vnet_key") == null ? null : module.networking[each.value.custom_parameters.vnet_key].id
-  public_subnet_name  = lookup(each.value.custom_parameters, "vnet_key") == null ? null : module.networking[each.value.custom_parameters.vnet_key].subnets[each.value.custom_parameters.public_subnet_key].name
-  private_subnet_name = lookup(each.value.custom_parameters, "vnet_key") == null ? null : module.networking[each.value.custom_parameters.vnet_key].subnets[each.value.custom_parameters.private_subnet_key].name
+  vnet                = lookup(each.value.custom_parameters, "remote_tfstate", null) == null ? module.networking[each.value.custom_parameters.vnet_key] : null
+  use_msi             = var.use_msi
+  tfstates            = var.tfstates
 }
 
 output databricks_workspaces {
   value     = module.databricks_workspaces
   sensitive = true
 }
+
