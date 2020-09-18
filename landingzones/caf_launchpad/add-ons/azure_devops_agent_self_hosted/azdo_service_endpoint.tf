@@ -46,6 +46,6 @@ resource "azurerm_role_assignment" "devops" {
   for_each = local.service_endpoints
 
   scope              = format("/subscriptions/%s", each.value.subscription_id)
-  role_definition_id = azurerm_role_definition.devops[each.key].id
+  role_definition_id = azurerm_role_definition.devops[each.key].role_definition_resource_id
   principal_id       = local.aad_apps[each.value.aad_app_key].azuread_service_principal.object_id
 }

@@ -2,8 +2,7 @@ terraform {
   required_providers {
     azurerm = {
       source  = "hashicorp/azurerm"
-      version = "~> 2.26.0"
-      # bug on 2.27.0 for roles as per: https://github.com/terraform-providers/terraform-provider-azurerm/issues/8426
+      version = "~> 2.28.0"
     }
     azuread = {
       source  = "hashicorp/azuread"
