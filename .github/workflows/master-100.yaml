@@ -78,6 +78,13 @@ jobs:
           /tf/rover/rover.sh -lz ${GITHUB_WORKSPACE}/landingzones/caf_foundations -a apply \
           --environment ${{ github.run_id }}
 
+      - name: networking_hub
+        run: |
+          /tf/rover/rover.sh -lz ${GITHUB_WORKSPACE}/landingzones/caf_networking -a apply \
+            -tfstate networking_hub.tfstate \
+            -var-file ${GITHUB_WORKSPACE}/landingzones/caf_networking/scenario/100-single-region-hub/configuration.tfvars \
+            --environment ${{ github.run_id }}
+
   examples:
     name: examples
     runs-on: ubuntu-latest
@@ -124,6 +131,7 @@ jobs:
             --environment ${{ github.run_id }} \
             -auto-approve
 
+
   foundations_destroy:
     name: foundations_destroy
     runs-on: ubuntu-latest
@@ -133,7 +141,7 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-          region: ["westus2"]
+          region: ["southeastasia"]
 
     container:
       image: aztfmod/roveralpha:2009.180404
@@ -149,6 +157,13 @@ jobs:
 
           echo "local user: $(whoami)"
 
+      - name: networking_hub
+        run: |
+          /tf/rover/rover.sh -lz ${GITHUB_WORKSPACE}/landingzones/caf_networking -a destroy \
+          -var-file ${GITHUB_WORKSPACE}/landingzones/caf_networking/scenario/100-single-region-hub/configuration.tfvars \
+          --environment ${{ github.run_id }} \
+          -auto-approve
+  
 
       - name: foundations
         run: |
