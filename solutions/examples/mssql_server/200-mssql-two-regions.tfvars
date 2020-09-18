@@ -169,9 +169,9 @@ mssql_servers = {
           tfstate_key = "foundations"
           lz_key      = "launchpad"
           output_key  = "vnets"
-          vnet_key    = "devops_region1"
-          subnet_key  = "private_endpoints"
         }
+        vnet_key    = "devops_region1"
+        subnet_key  = "private_endpoints"
         resource_group_key = "sql_region1"
 
         private_service_connection = {
