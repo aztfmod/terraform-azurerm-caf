@@ -144,9 +144,7 @@ variable diagnostic_storage_accounts {
   default = {}
 }
 
-## Github
-variable github {
-  default = {
-    github_secrets = {}
-  }
+# Shared services
+variable shared_services {
+  default = {}
 }

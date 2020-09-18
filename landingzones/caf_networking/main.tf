@@ -26,7 +26,7 @@ terraform {
     }
     azurecaf = {
       source  = "aztfmod/azurecaf"
-      version = "~>1.0.0"
+      version = "~>1.1.0"
     }
   }
   required_version = ">= 0.13"
@@ -53,13 +53,13 @@ data "terraform_remote_state" "caf_foundations" {
   }
 }
 
-data "terraform_remote_state" "networking" {
+data "terraform_remote_state" "caf_networking" {
   backend = "azurerm"
   config = {
     storage_account_name = var.tfstate_storage_account_name
     container_name       = var.tfstate_container_name
     resource_group_name  = var.tfstate_resource_group_name
-    key                  = var.tfstates.networking.tfstate
+    key                  = var.tfstates.caf_networking.tfstate
   }
 }
 
@@ -75,6 +75,8 @@ locals {
     default_region = try(var.global_settings.default_region, data.terraform_remote_state.caf_foundations.outputs.global_settings.default_region)
     regions        = try(var.global_settings.regions, null) == null ? data.terraform_remote_state.caf_foundations.outputs.global_settings.regions : merge(data.terraform_remote_state.caf_foundations.outputs.global_settings.regions, var.global_settings.regions)
     environment    = data.terraform_remote_state.caf_foundations.outputs.global_settings.environment
+    random_length  = try(var.global_settings.random_length, data.terraform_remote_state.caf_foundations.outputs.global_settings.random_length)
+    passthrough    = try(var.global_settings.passthrough, false)
   }
 
   diagnostics = {
@@ -106,7 +108,7 @@ locals {
       )
     )
     ,
-    data.terraform_remote_state.networking.outputs.tfstates
+    data.terraform_remote_state.caf_networking.outputs.tfstates
   )
 
 

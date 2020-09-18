@@ -12,13 +12,13 @@ terraform {
       source  = "hashicorp/random"
       version = "~> 2.2.1"
     }
-    null = {
-      source  = "hashicorp/null"
-      version = "~> 2.1.0"
-    }
     external = {
       source  = "hashicorp/external"
       version = "~> 1.2.0"
+    }
+    null = {
+      source  = "hashicorp/null"
+      version = "~> 2.1.0"
     }
     tls = {
       source  = "hashicorp/tls"
@@ -48,29 +48,35 @@ data "terraform_remote_state" "caf_foundations" {
   config = {
     storage_account_name = var.lowerlevel_storage_account_name
     container_name       = var.lowerlevel_container_name
-    key                  = var.tfstates.caf_foundations.tfstate
     resource_group_name  = var.lowerlevel_resource_group_name
+    key                  = var.tfstates.caf_foundations.tfstate
   }
 }
 
-data "terraform_remote_state" "networking" {
+data "terraform_remote_state" "caf_networking" {
   backend = "azurerm"
   config = {
-    storage_account_name = var.lowerlevel_storage_account_name
-    container_name       = var.lowerlevel_container_name
-    key                  = var.tfstates.networking.tfstate
-    resource_group_name  = var.lowerlevel_resource_group_name
+    storage_account_name = var.tfstate_storage_account_name
+    container_name       = var.tfstate_container_name
+    resource_group_name  = var.tfstate_resource_group_name
+    key                  = var.tfstates.caf_networking.tfstate
   }
 }
 
+
 locals {
-  tags = merge(var.tags, { "level" = var.level }, { "environment" = var.environment }, { "rover_version" = var.rover_version })
+  landingzone_tag = {
+    "landingzone" = basename(abspath(path.module))
+  }
+  tags = merge(local.landingzone_tag, { "level" = var.level }, { "environment" = local.global_settings.environment }, { "rover_version" = var.rover_version }, var.tags)
 
   global_settings = {
-    prefix         = data.terraform_remote_state.caf_foundations.outputs.global_settings.prefix
+    prefix         = try(var.global_settings.prefix, data.terraform_remote_state.caf_foundations.outputs.global_settings.prefix)
     default_region = try(var.global_settings.default_region, data.terraform_remote_state.caf_foundations.outputs.global_settings.default_region)
+    regions        = try(var.global_settings.regions, null) == null ? data.terraform_remote_state.caf_foundations.outputs.global_settings.regions : merge(data.terraform_remote_state.caf_foundations.outputs.global_settings.regions, var.global_settings.regions)
     environment    = data.terraform_remote_state.caf_foundations.outputs.global_settings.environment
-    regions        = try(var.global_settings.regions, data.terraform_remote_state.caf_foundations.outputs.global_settings.regions)
+    random_length  = try(var.global_settings.random_length, data.terraform_remote_state.caf_foundations.outputs.global_settings.random_length)
+    passthrough    = try(var.global_settings.passthrough, false)
   }
 
   diagnostics = {
@@ -93,7 +99,9 @@ locals {
       )
     )
     ,
-    data.terraform_remote_state.networking.outputs.tfstates
+    data.terraform_remote_state.caf_networking.outputs.tfstates,
+    data.terraform_remote_state.caf_foundations.outputs.tfstates
   )
+
 
 }
