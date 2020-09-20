@@ -1,7 +1,7 @@
 # naming convention
 resource "azurecaf_name" "wp" {
   name          = var.settings.name
-  resource_type = "azurerm_machine_learning_workspace"
+  resource_type = "azurerm_synapse_workspace"
   prefixes      = [var.global_settings.prefix]
   random_length = var.global_settings.random_length
   clean_input   = true
@@ -9,7 +9,7 @@ resource "azurecaf_name" "wp" {
 }
 
 # synapse workspace
-resource "azurerm_synapse_workspace" "wp" {
+resource "azurerm_synapse_workspace" "ws" {
   name                                 = azurecaf_name.wp.result
   resource_group_name                  = var.resource_group_name
   location                             = var.location
