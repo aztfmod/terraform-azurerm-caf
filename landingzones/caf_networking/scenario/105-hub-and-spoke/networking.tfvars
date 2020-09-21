@@ -4,6 +4,15 @@ global_settings = {
   }
 }
 
+tfstates = {
+  caf_foundations = {
+    tfstate = "caf_foundations.tfstate"
+  }
+  networking = {
+    tfstate = "caf_foundations.tfstate"
+  }
+}
+
 resource_groups = {
   vnet_region1 = {
     name = "vnet-hub"
