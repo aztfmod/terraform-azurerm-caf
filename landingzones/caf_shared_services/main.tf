@@ -53,7 +53,7 @@ data "terraform_remote_state" "caf_foundations" {
   }
 }
 
-data "terraform_remote_state" "caf_networking" {
+data "terraform_remote_state" "networking" {
   backend = "azurerm"
   config = {
     storage_account_name = var.tfstate_storage_account_name
@@ -99,7 +99,7 @@ locals {
       )
     )
     ,
-    data.terraform_remote_state.caf_networking.outputs.tfstates,
+    data.terraform_remote_state.networking.outputs.tfstates,
     data.terraform_remote_state.caf_foundations.outputs.tfstates
   )
 
