@@ -12,3 +12,8 @@ module "app_service_plans" {
   settings                   = each.value
   global_settings            = local.global_settings
 }
+
+output app_service_plans {
+  value       = module.app_service_plans
+  sensitive   = true
+}
