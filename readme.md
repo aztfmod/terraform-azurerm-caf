@@ -76,7 +76,17 @@ rover -lz /tf/caf/landingzones/caf_foundations -a apply
 6. Deploy a networking scenario:
 
 ```bash
-rover -lz /tf/caf/landingzones/caf_networking/ -var-file /tf/caf/landingzones/caf_networking/scenario/110-aks-private/configuration.tfvars -a apply
+# rover -lz /tf/caf/landingzones/caf_networking/ -var-file /tf/caf/landingzones/caf_networking/scenario/110-aks-private/configuration.tfvars -a apply
+rover -lz /tf/caf/landingzones/caf_networking/ -var-file /tf/caf/landingzones/caf_networking/scenario/100-single-region-hub/configuration.tfvars -a apply
+```
+
+7. Deploy a example scenario:
+
+```bash
+# Set the example folder
+export example="200-basic-ml"
+
+rover -lz /tf/caf/ -var-file /tf/caf/solutions/examples/data_analytics/${example}/aml_configuration.tfvars -a apply
 ```
 
 ## Example levels
