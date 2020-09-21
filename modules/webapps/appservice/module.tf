@@ -272,24 +272,3 @@ resource "azurerm_template_deployment" "site_config" {
   deployment_mode = "Incremental"
 }
 
-
-# #
-# # Get remote ase vnet
-# #
-# data "terraform_remote_state" "tfstate" {
-#   for_each = {
-#     for key, value in var.settings.private_dns_records.a_records : key => value
-#     if try(value.remote_tfstate, null) != null
-#   }
-
-#   backend = "azurerm"
-#   config = {
-#     storage_account_name = var.tfstates[each.value.remote_tfstate.tfstate_key].storage_account_name
-#     container_name       = var.tfstates[each.value.remote_tfstate.tfstate_key].container_name
-#     resource_group_name  = var.tfstates[each.value.remote_tfstate.tfstate_key].resource_group_name
-#     key                  = var.tfstates[each.value.remote_tfstate.tfstate_key].key
-#     use_msi              = var.use_msi
-#     subscription_id      = var.use_msi ? var.tfstates[each.value.remote_tfstate.tfstate_key].subscription_id : null
-#     tenant_id            = var.use_msi ? var.tfstates[each.value.remote_tfstate.tfstate_key].tenant_id : null
-#   }
-# }
