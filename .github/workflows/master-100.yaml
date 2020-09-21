@@ -163,7 +163,7 @@ jobs:
           -var-file ${GITHUB_WORKSPACE}/landingzones/caf_networking/scenario/100-single-region-hub/configuration.tfvars \
           --environment ${{ github.run_id }} \
           -auto-approve
-  
+
 
       - name: foundations
         run: |
