@@ -43,3 +43,9 @@ data "terraform_remote_state" "ase_vnets" {
     tenant_id            = var.use_msi ? var.tfstates[each.value.remote_networking.tfstate_key].tenant_id : null
   }
 }
+
+
+output "app_service_environments" {
+  value = module.app_service_environments
+  sensitive = true
+}
