@@ -4,7 +4,7 @@ tfstates = {
   caf_foundations = {
     tfstate = "caf_foundations.tfstate"
   }
-  caf_networking = {
+  networking = {
     tfstate = "caf_foundations.tfstate"
   }
 }
