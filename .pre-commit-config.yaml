@@ -7,7 +7,7 @@ repos:
     - id: terraform_fmt
     # - id: terraform_docs
     # - id: terraform_tflint
-    - id: terraform_tfsec
+    # - id: terraform_tfsec
   - repo: git://github.com/pre-commit/pre-commit-hooks
     rev: v3.2.0
     hooks:

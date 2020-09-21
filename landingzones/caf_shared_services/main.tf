@@ -59,7 +59,7 @@ data "terraform_remote_state" "networking" {
     storage_account_name = var.tfstate_storage_account_name
     container_name       = var.tfstate_container_name
     resource_group_name  = var.tfstate_resource_group_name
-    key                  = var.tfstates.networking.tfstate
+    key                  = var.tfstates.caf_networking.tfstate
   }
 }
 
@@ -86,15 +86,6 @@ locals {
     log_analytics            = data.terraform_remote_state.caf_foundations.outputs.diagnostics.log_analytics
   }
 
-  vnets = merge(
-    data.terraform_remote_state.caf_foundations.outputs.vnets,
-    map(
-      var.landingzone_name,
-      try(module.landingzones_networking.vnets, {}
-      )
-    )
-  )
-
   tfstates = merge(
     map(var.landingzone_name,
       map(
@@ -108,7 +99,8 @@ locals {
       )
     )
     ,
-    data.terraform_remote_state.networking.outputs.tfstates
+    data.terraform_remote_state.networking.outputs.tfstates,
+    data.terraform_remote_state.caf_foundations.outputs.tfstates
   )
 
 
