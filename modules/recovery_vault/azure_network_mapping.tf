@@ -1,4 +1,4 @@
-#TODO 
+#TODO
 # resource "azurerm_site_recovery_network_mapping" "network_mapping" {
 #   for_each = try(var.settings.recovery_fabrics, {})
 

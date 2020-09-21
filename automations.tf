@@ -1,7 +1,7 @@
 
-module recovery_vaults {
-  source   = "./modules/recovery_vault"
-  for_each = local.shared_services.recovery_vaults
+module automations {
+  source   = "./modules/automation"
+  for_each = local.shared_services.automations
 
   global_settings     = local.global_settings
   settings            = each.value
@@ -10,7 +10,7 @@ module recovery_vaults {
   location            = lookup(each.value, "region", null) == null ? module.resource_groups[each.value.resource_group_key].location : var.global_settings.regions[each.value.region]
 }
 
-output recovery_vaults {
-  value     = module.recovery_vaults
+output automations {
+  value     = module.automations
   sensitive = false
 }

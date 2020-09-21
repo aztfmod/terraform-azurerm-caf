@@ -9,12 +9,10 @@ module "landingzones_shared_services" {
   logged_aad_app_objectId = var.logged_aad_app_objectId
 
   resource_groups = var.resource_groups
-  shared_services = { 
-    recovery_vaults      = var.recovery_vaults
-    automations          = var.automations
+  shared_services = {
+    recovery_vaults = var.recovery_vaults
+    automations     = var.automations
   }
 
-  # storage_accounts   = var.storage_accounts
-  # managed_identities = var.managed_identities
 
 }

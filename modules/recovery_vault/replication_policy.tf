@@ -12,7 +12,7 @@
 
 resource "azurerm_site_recovery_replication_policy" "policy" {
   depends_on = [azurerm_recovery_services_vault.asr_rg_vault]
-  for_each = try(var.settings.replication_policies, {})
+  for_each   = try(var.settings.replication_policies, {})
 
   name                                                 = each.value.name
   resource_group_name                                  = var.resource_group_name
