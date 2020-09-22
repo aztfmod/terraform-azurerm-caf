@@ -1,6 +1,6 @@
 # naming convention
-resource "azurecaf_name" "wp" {
-  name          = var.settings.application_insight_name
+resource "azurecaf_name" "ws" {
+  name          = var.settings.name
   prefixes        = [var.global_settings.prefix]
   resource_type = "azurerm_machine_learning_workspace"
   random_length = var.global_settings.random_length
@@ -10,7 +10,7 @@ resource "azurecaf_name" "wp" {
 
 # ML Workspace
 resource "azurerm_machine_learning_workspace" "ws" {
-  name                    = azurecaf_name.wp.result
+  name                    = azurecaf_name.ws.result
   location                = var.location
   resource_group_name     = var.resource_group_name
   application_insights_id = var.application_insights_id
