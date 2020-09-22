@@ -29,6 +29,7 @@ module "keyvault_access_policies" {
   azuread_groups          = module.azuread_groups
   logged_user_objectId    = local.client_config.logged_user_objectId
   logged_aad_app_objectId = local.client_config.logged_aad_app_objectId
+  managed_identities      = module.managed_identities
 }
 
 # Need to separate keyvault policies from azure AD apps to get the keyvault with the default policies.
@@ -42,7 +43,6 @@ module "keyvault_access_policies_azuread_apps" {
   tenant_id       = local.client_config.tenant_id
   azuread_apps    = module.azuread_applications
 }
-
 
 
 output keyvaults {
