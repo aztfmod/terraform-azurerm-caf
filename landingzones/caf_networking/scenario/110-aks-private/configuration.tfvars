@@ -1,5 +1,14 @@
 level = "level2"
 
+tfstates = {
+  caf_foundations = {
+    tfstate = "caf_foundations.tfstate"
+  }
+  networking = {
+    tfstate = "caf_foundations.tfstate"
+  }
+}
+
 resource_groups = {
   vnet_rg1 = {
     name   = "vnet-rg1"

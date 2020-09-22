@@ -95,6 +95,10 @@ locals {
     app_services                 = try(var.webapp.app_services, {})
   }
 
+  shared_services = {
+    recovery_vaults = try(var.shared_services.recovery_vaults, {})
+    automations     = try(var.shared_services.automations, {})
+  }
 }
 
 # The rover handle the identity management transition to cover interactive run and execution on pipelines using azure ad applications or managed identities
