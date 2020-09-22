@@ -55,11 +55,24 @@ module object_id {
   source = "./access_policy"
   for_each = {
     for key, access_policy in var.access_policies : key => access_policy
-    if key == "object_id" && var.logged_aad_app_objectId != null
+    if try(access_policy.object_id, null) != null && var.logged_aad_app_objectId != null
   }
 
   keyvault_id   = var.keyvault_id
   access_policy = each.value
   tenant_id     = try(each.value.tenant_id, var.tenant_id)
   object_id     = each.value.object_id
+}
+
+module managed_identity {
+  source = "./access_policy"
+  for_each = {
+    for key, access_policy in var.access_policies : key => access_policy
+    if try(access_policy.managed_identity_key, null) != null && var.managed_identities != {}
+  }
+
+  keyvault_id   = var.keyvault_id
+  access_policy = each.value
+  tenant_id     = var.tenant_id
+  object_id     = var.managed_identities[each.value.managed_identity_key].principal_id
 }
