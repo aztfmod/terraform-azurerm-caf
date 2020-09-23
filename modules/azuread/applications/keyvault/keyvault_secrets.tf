@@ -34,7 +34,8 @@ data "terraform_remote_state" "keyvaults" {
 resource "azurerm_key_vault_secret" "client_id" {
   name         = format("%s-client-id", var.settings.secret_prefix)
   value        = var.application_id
-  key_vault_id = try(data.terraform_remote_state.keyvaults["remote_tfstate"].outputs[var.settings.remote_tfstate.output_key][var.settings.remote_tfstate.lz_key][var.settings.keyvault_key].id, var.keyvault_id)
+  key_vault_id =  try(var.settings.remote_tfstate.tfstate_key, null) == null ? var.keyvault_id : data.terraform_remote_state.keyvaults["remote_tfstate"].outputs[var.settings.remote_tfstate.output_key][var.settings.remote_tfstate.lz_key][var.settings.keyvault_key].id
+  # key_vault_id = try(data.terraform_remote_state.keyvaults["remote_tfstate"].outputs[var.settings.remote_tfstate.output_key][var.settings.remote_tfstate.lz_key][var.settings.keyvault_key].id, var.keyvault_id)
 
   lifecycle {
     ignore_changes = [
