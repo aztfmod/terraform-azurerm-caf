@@ -15,10 +15,10 @@ resource_groups = {
 
 machine_learning_workspaces = {
   ml_wrkspc44_re1 = {
-    name                    = "amlwrkspc"
-    resource_group_key      = "dap_azure_ml_re1"
-    keyvault_key = "aml_secrets"
-    storage_account_key = "amlstorage_re1"
+    name                     = "amlwrkspc"
+    resource_group_key       = "dap_azure_ml_re1"
+    keyvault_key             = "aml_secrets"
+    storage_account_key      = "amlstorage_re1"
     application_insights_key = "ml_app_insight"
     //sku_name  = "Enterprise"  - disabling this will set up Basic
   }
@@ -45,8 +45,8 @@ storage_accounts = {
 
 keyvaults = {
   aml_secrets = {
-    name                = "amlsecrets"
-    resource_group_key  = "dap_azure_ml_re1"
+    name               = "amlsecrets"
+    resource_group_key = "dap_azure_ml_re1"
     //convention          = "cafrandom"
     sku_name            = "premium"
     soft_delete_enabled = true

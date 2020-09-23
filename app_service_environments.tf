@@ -46,6 +46,6 @@ data "terraform_remote_state" "ase_vnets" {
 
 
 output "app_service_environments" {
-  value = module.app_service_environments
+  value     = module.app_service_environments
   sensitive = true
 }

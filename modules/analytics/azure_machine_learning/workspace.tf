@@ -1,11 +1,11 @@
 # naming convention
 resource "azurecaf_name" "ws" {
   name          = var.settings.name
-  prefixes        = [var.global_settings.prefix]
+  prefixes      = [var.global_settings.prefix]
   resource_type = "azurerm_machine_learning_workspace"
   random_length = var.global_settings.random_length
   clean_input   = true
-  passthrough    = var.global_settings.passthrough
+  passthrough   = var.global_settings.passthrough
 }
 
 # ML Workspace
