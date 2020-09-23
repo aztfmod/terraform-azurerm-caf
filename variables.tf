@@ -79,7 +79,7 @@ variable azuread_groups {
   default = {}
 }
 
-variable azuread_app_roles {
+variable azuread_roles {
   default = {}
 }
 
