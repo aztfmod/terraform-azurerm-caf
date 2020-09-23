@@ -67,15 +67,6 @@ rover -lz /tf/caf/public/landingzones/caf_foundations -a apply
 rover -lz /tf/caf/public/landingzones/caf_networking/ -var-file /tf/caf/public/landingzones/caf_networking/scenario/100-single-region-hub/configuration.tfvars -a apply
 ```
 
-8. Deploy an example scenario:
-
-```bash
-# Set the example folder
-export example="200-basic-ml"
-
-rover -lz /tf/caf/ -var-file /tf/caf/solutions/examples/data_analytics/${example}/aml_configuration.tfvars -a apply
-```
-
 ## Coding principles
 
 This vnext is relying extensively on Terraform 0.13 capabilities (module iterations, conditional modules, variables validation, etc.).
