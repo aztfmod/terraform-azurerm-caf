@@ -12,7 +12,7 @@ Deploying the core of enterprise-scale landing zones will use two elements:
 * landing zones repository (https://github.com/Azure/caf-terraform-landingzones): will assemble all components together and do service composition.
 * this module, called from the Terraform registry (https://registry.terraform.io/namespaces/aztfmod): will provide all the logic to deploy fundamental components.
 
-This module can be called from landing zones using the Terraform registry: https://registry.terraform.io/modules/aztfmod/caf-enterprise-scale/azurerm/0.2.0
+This module can be called from landing zones using the Terraform registry: https://registry.terraform.io/modules/aztfmod/caf-enterprise-scale/azurerm/
 
 ```terraform
 module "caf-enterprise-scale" {
@@ -29,16 +29,11 @@ module "caf-enterprise-scale" {
 2. Clone the Azure landing zones repo:
 
 ```bash
-git clone https://github.com/Azure/caf-terraform-landingzones.git
+git clone --branch vnext https://github.com/Azure/caf-terraform-landingzones.git /tf/caf/public
+
 ```
 
-3. Switch to vnext branch:
-
-```bash
-git checkout vnext
-```
-
-4. Log in the subscription with the rover:
+3. Log in the subscription with the rover:
 
 ```bash
 rover login
@@ -46,30 +41,30 @@ rover login
 rover login --tenant <tenant_name>.onmicrosoft.com -s <subscription_id>
 ```
 
-5. Deploy the basic launchpad:
+4. Deploy the basic launchpad:
 
 ```bash
-rover -lz /tf/caf/landingzones/caf_launchpad -launchpad -var-file /tf/caf/landingzones/caf_launchpad/scenario/100/configuration.tfvars -a apply
+rover -lz /tf/caf/public/landingzones/caf_launchpad -launchpad -var-file /tf/caf/public/landingzones/caf_launchpad/scenario/100/configuration.tfvars -a apply
 ```
 
 Once completed you would see 2 resource groups in your subscription. The scenario 100 is pretty basic and include the minimum to get the terraform remote state management working.
 
-6. Upgrade to advanced launchpad (if you have Azure AD permissions - not working on AIRS):
+5. Upgrade to advanced launchpad (if you have Azure AD permissions - not working on AIRS):
 
 ```bash
-rover -lz /tf/caf/landingzones/caf_launchpad -launchpad -var-file /tf/caf/landingzones/caf_launchpad/scenario/200/configuration.tfvars -a apply
+rover -lz /tf/caf/public/landingzones/caf_launchpad -launchpad -var-file /tf/caf/public/landingzones/caf_launchpad/scenario/200/configuration.tfvars -a apply
 ```
 
-7. Deploy the caf_foundations. This is currently mostly a stub, but will implement enterprise management groups, policies, alerts, etc.:
+6. Deploy the caf_foundations. This is currently mostly a stub, but will implement enterprise management groups, policies, alerts, etc.:
 
 ```bash
-rover -lz /tf/caf/landingzones/caf_foundations -a apply
+rover -lz /tf/caf/public/landingzones/caf_foundations -a apply
 ```
 
-8. Deploy a networking scenario:
+7. Deploy a networking scenario:
 
 ```bash
-rover -lz /tf/caf/landingzones/caf_networking/ -var-file /tf/caf/landingzones/caf_networking/scenario/110-aks-private/configuration.tfvars -a apply
+rover -lz /tf/caf/public/landingzones/caf_networking/ -var-file /tf/caf/public/landingzones/caf_networking/scenario/100-single-region-hub/configuration.tfvars -a apply
 ```
 
 ## Coding principles
