@@ -1,9 +1,6 @@
 module keyvault_secret_policy {
-  # count = try(var.keyvaults[var.settings.keyvault.keyvault_key].id, null) != null ? 1 : 0
-  for_each = {
-    for key, value in var.settings.keyvault : key => value
-    if try(value.keyvault_key, null) != null
-  }
+  count = try(var.keyvaults[var.settings.keyvault.keyvault_key].id, null) != null ? 1 : 0
+  # for_each = try(var.settings.keyvault.keyvault_key, {})
 
   source                  = "./keyvault"
   settings                = var.settings.keyvault
