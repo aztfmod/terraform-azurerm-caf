@@ -15,11 +15,6 @@
 #   }
 #
 
-locals {
-  keyvault_id = try(var.keyvaults[var.settings.keyvault.keyvault_key].id, "")
-}
-
-
 data "terraform_remote_state" "keyvaults" {
   for_each = {
     for key, value in try(var.settings.keyvaults, {}) : key => value
@@ -44,7 +39,7 @@ resource "azurerm_key_vault_secret" "client_id" {
 
   name         = format("%s-client-id", each.value.secret_prefix)
   value        = azuread_application.app.application_id
-  key_vault_id = try(data.terraform_remote_state.keyvaults[each.key].outputs[each.value.remote_tfstate.output_key][each.value.remote_tfstate.lz_key][each.key].id, local.keyvault_id)
+  key_vault_id = try(data.terraform_remote_state.keyvaults[each.key].outputs[each.value.remote_tfstate.output_key][each.value.remote_tfstate.lz_key][each.key].id, var.keyvaults[each.key].id)
 
   lifecycle {
     ignore_changes = [
@@ -55,10 +50,10 @@ resource "azurerm_key_vault_secret" "client_id" {
 }
 
 resource "azurerm_key_vault_secret" "client_secret" {
-  for_each = try(var.settings.keyvaults, {})
+  for_each        = try(var.settings.keyvaults, {})
   name            = format("%s-client-secret", each.value.secret_prefix)
   value           = azuread_service_principal_password.app.value
-  key_vault_id    = try(data.terraform_remote_state.keyvaults[each.key].outputs[each.value.remote_tfstate.output_key][each.value.remote_tfstate.lz_key][each.key].id, local.keyvault_id)
+  key_vault_id    = try(data.terraform_remote_state.keyvaults[each.key].outputs[each.value.remote_tfstate.output_key][each.value.remote_tfstate.lz_key][each.key].id, var.keyvaults[each.key].id)
   expiration_date = timeadd(timestamp(), format("%sh", try(var.settings.password_expire_in_days, 180) * 24))
 
   lifecycle {
@@ -69,8 +64,8 @@ resource "azurerm_key_vault_secret" "client_secret" {
 }
 
 resource "azurerm_key_vault_secret" "tenant_id" {
-  for_each = try(var.settings.keyvaults, {})
+  for_each     = try(var.settings.keyvaults, {})
   name         = format("%s-tenant-id", each.value.secret_prefix)
   value        = var.client_config.tenant_id
-  key_vault_id = try(data.terraform_remote_state.keyvaults[each.key].outputs[each.value.remote_tfstate.output_key][each.value.remote_tfstate.lz_key][each.key].id, local.keyvault_id)
+  key_vault_id = try(data.terraform_remote_state.keyvaults[each.key].outputs[each.value.remote_tfstate.output_key][each.value.remote_tfstate.lz_key][each.key].id, var.keyvaults[each.key].id)
 }
