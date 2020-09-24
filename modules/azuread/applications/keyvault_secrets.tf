@@ -15,8 +15,16 @@
 #   }
 #
 
+locals {
+  keyvault_id = try(var.keyvaults[var.settings.keyvault.keyvault_key].id, "")
+}
+
+
 data "terraform_remote_state" "keyvaults" {
-  for_each = try(var.settings.keyvault, {})
+  for_each = {
+    for key, value in try(var.settings.keyvaults, {}) : key => value
+    if try(value.remote_tfstate, null) != null
+  }
 
   backend = "azurerm"
   config = {
@@ -32,9 +40,11 @@ data "terraform_remote_state" "keyvaults" {
 
 
 resource "azurerm_key_vault_secret" "client_id" {
-  name         = format("%s-client-id", var.settings.secret_prefix)
-  value        = var.application_id
-  key_vault_id = try(data.terraform_remote_state.keyvaults["remote_tfstate"].outputs[var.settings.remote_tfstate.output_key][var.settings.remote_tfstate.lz_key][var.settings.keyvault_key].id, var.keyvault_id)
+  for_each = try(var.settings.keyvaults, {})
+
+  name         = format("%s-client-id", each.value.secret_prefix)
+  value        = azuread_application.app.application_id
+  key_vault_id = try(data.terraform_remote_state.keyvaults[each.key].outputs[each.value.remote_tfstate.output_key][each.value.remote_tfstate.lz_key][each.key].id, local.keyvault_id)
 
   lifecycle {
     ignore_changes = [
@@ -45,10 +55,11 @@ resource "azurerm_key_vault_secret" "client_id" {
 }
 
 resource "azurerm_key_vault_secret" "client_secret" {
-  name            = format("%s-client-secret", var.settings.secret_prefix)
-  value           = var.client_secret
-  key_vault_id    = try(data.terraform_remote_state.keyvaults["remote_tfstate"].outputs[var.settings.remote_tfstate.output_key][var.settings.remote_tfstate.lz_key][var.settings.keyvault_key].id, var.keyvault_id)
-  expiration_date = timeadd(timestamp(), format("%sh", try(var.password_expire_in_days, 180) * 24))
+  for_each = try(var.settings.keyvaults, {})
+  name            = format("%s-client-secret", each.value.secret_prefix)
+  value           = azuread_service_principal_password.app.value
+  key_vault_id    = try(data.terraform_remote_state.keyvaults[each.key].outputs[each.value.remote_tfstate.output_key][each.value.remote_tfstate.lz_key][each.key].id, local.keyvault_id)
+  expiration_date = timeadd(timestamp(), format("%sh", try(var.settings.password_expire_in_days, 180) * 24))
 
   lifecycle {
     ignore_changes = [
@@ -58,7 +69,8 @@ resource "azurerm_key_vault_secret" "client_secret" {
 }
 
 resource "azurerm_key_vault_secret" "tenant_id" {
-  name         = format("%s-tenant-id", var.settings.secret_prefix)
-  value        = var.tenant_id
-  key_vault_id = try(data.terraform_remote_state.keyvaults["remote_tfstate"].outputs[var.settings.remote_tfstate.output_key][var.settings.remote_tfstate.lz_key][var.settings.keyvault_key].id, var.keyvault_id)
+  for_each = try(var.settings.keyvaults, {})
+  name         = format("%s-tenant-id", each.value.secret_prefix)
+  value        = var.client_config.tenant_id
+  key_vault_id = try(data.terraform_remote_state.keyvaults[each.key].outputs[each.value.remote_tfstate.output_key][each.value.remote_tfstate.lz_key][each.key].id, local.keyvault_id)
 }

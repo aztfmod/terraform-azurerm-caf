@@ -23,7 +23,12 @@ output azuread_service_principal {
 }
 
 output keyvault {
-  value = try(module.keyvault_secret_policy.0, null)
+  value = {
+    for key, value in try(var.settings.keyvaults, {}) : key => {
+      id                        = azurerm_key_vault_secret.client_id[key].key_vault_id
+      secret_name_client_secret = value.secret_prefix
+    }
+  }
 }
 
 output rbac_id {
