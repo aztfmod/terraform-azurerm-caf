@@ -40,7 +40,7 @@ variable tags {
 
 variable resource_groups {
   description = "Name of the existing resource group to deploy the virtual machine"
-  default     = null
+  default     = {}
 }
 
 variable subscriptions {
@@ -79,7 +79,7 @@ variable azuread_groups {
   default = {}
 }
 
-variable azuread_app_roles {
+variable azuread_roles {
   default = {}
 }
 
