@@ -14,7 +14,7 @@ resource_groups = {
 }
 
 machine_learning_workspaces = {
-  ml_wrkspc44_re1 = {
+  ml_workspace = {
     name                     = "amlwrkspc"
     resource_group_key       = "dap_azure_ml_re1"
     keyvault_key             = "aml_secrets"
