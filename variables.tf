@@ -155,3 +155,7 @@ variable machine_learning_workspaces {
 variable application_insights {
   default = {}
 }
+
+variable synapse_workspaces {
+  default = {}
+}
