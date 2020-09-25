@@ -8,6 +8,7 @@ resource "azurerm_mssql_server" "mssql" {
   administrator_login           = var.settings.administrator_login
   administrator_login_password  = try(var.settings.administrator_login_password, azurerm_key_vault_secret.sql_admin_password.0.value)
   public_network_access_enabled = try(var.settings.public_network_access_enabled, true)
+  connection_policy             = try(var.settings.connection_policy, null)
   tags                          = try(var.settings.tags, null)
 
   dynamic "azuread_administrator" {
