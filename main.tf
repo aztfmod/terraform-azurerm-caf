@@ -73,6 +73,7 @@ locals {
 
   database = {
     mssql_servers               = try(var.database.mssql_servers, {})
+    mssql_databases             = try(var.database.mssql_databases, {})
     azurerm_redis_caches        = try(var.database.azurerm_redis_caches, {})
     synapse_workspaces          = try(var.database.synapse_workspaces, {})
     databricks_workspaces       = try(var.database.databricks_workspaces, {})
