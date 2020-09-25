@@ -1,4 +1,3 @@
-
 resource "azurerm_mssql_server" "mssql" {
 
   name                          = azurecaf_name.mssql.result
