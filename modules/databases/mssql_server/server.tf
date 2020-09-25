@@ -20,6 +20,14 @@ resource "azurerm_mssql_server" "mssql" {
     }
   }
 
+  dynamic "identity" {
+    for_each = lookup(var.settings, "identity", {}) == {} ? [] : [1]
+
+    content {
+      type = var.settings.identity.type
+    }
+  }
+
 }
 
 resource "azurecaf_name" "mssql" {
