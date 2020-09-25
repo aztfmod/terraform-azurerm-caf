@@ -24,7 +24,7 @@ machine_learning_workspaces = {
   }
 }
 
-application_insights = {
+azurerm_application_insights = {
   ml_app_insight = {
     name               = "ml-app-insight"
     resource_group_key = "dap_azure_ml_re1"

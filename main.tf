@@ -84,7 +84,7 @@ locals {
     azurerm_redis_caches        = try(var.database.azurerm_redis_caches, {})
     synapse_workspaces          = try(var.database.synapse_workspaces, {})
     databricks_workspaces       = try(var.database.databricks_workspaces, {})
-    machine_learning_workspaces = try(var.machine_learning_workspaces, {})
+    machine_learning_workspaces = try(var.database.machine_learning_workspaces, {})
   }
 
   client_config = {
@@ -97,7 +97,7 @@ locals {
   }
 
   webapp = {
-    azurerm_application_insights = try(var.application_insights, {})
+    azurerm_application_insights = try(var.webapp.azurerm_application_insights, {})
     app_service_environments     = try(var.webapp.app_service_environments, {})
     app_service_plans            = try(var.webapp.app_service_plans, {})
     app_services                 = try(var.webapp.app_services, {})

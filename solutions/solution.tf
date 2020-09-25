@@ -37,6 +37,7 @@ module "caf" {
     mssql_servers         = var.mssql_servers
     synapse_workspaces    = var.synapse_workspaces
     databricks_workspaces = var.databricks_workspaces
+    machine_learning_workspaces = var.machine_learning_workspaces
   }
   # user_type                         = var.user_type
   # log_analytics                     = var.log_analytics

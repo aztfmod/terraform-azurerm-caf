@@ -37,6 +37,14 @@ synapse_workspaces = {
   }
 }
 
+synapse_sql_pool = {
+  sql_pool1 = {
+    name = "sqlpool1"
+    sku_name = "DW100c"
+    create_mode = "Default"
+  }
+}
+
 storage_accounts = {
   synapsestorage_re1 = {
     name                     = "synapsere1"
@@ -110,29 +118,6 @@ keyvault_access_policies = {
       ]
     }
     prevent_duplicate_name = false
-  }
-} */
-
-/* role_mapping = {
-   built_in_role_mapping = {
-    synapse_workspaces = {
-      synapse_wrkspc = {
-        "Owner" = {
-          logged_in = [
-            "user"
-          ]
-        }
-      }
-    }
-    storage_accounts = {
-      synapsestorage_re1 = {
-        "Storage Blob Data Contributor" = {
-          synapse_workspaces = [
-            "synapse_wrkspc"
-          ]
-        }
-      }
-    }
   }
 } */
 
