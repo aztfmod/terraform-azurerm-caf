@@ -6,7 +6,6 @@ output mssql_databases {
 
 module "mssql_databases" {
   source     = "./modules/databases/mssql_database"
-  depends_on = [module.mssql_servers]
   for_each   = local.database.mssql_databases
 
   global_settings  = local.global_settings
