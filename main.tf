@@ -98,7 +98,12 @@ locals {
   shared_services = {
     recovery_vaults = try(var.shared_services.recovery_vaults, {})
     automations     = try(var.shared_services.automations, {})
+    monitoring = try(var.shared_services.monitoring, {})
   }
+
+  # monitoring = {
+  #   service_health_alerts = try(var.monitoring.service_health_alerts, {})
+  # }
 }
 
 # The rover handle the identity management transition to cover interactive run and execution on pipelines using azure ad applications or managed identities
