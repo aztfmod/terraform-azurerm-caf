@@ -51,7 +51,7 @@ storage_accounts = {
       synaspe_filesystem = {
         name = "synapsefilesystem"
         properties = {
-          dap = "100-basic-analytics"
+          dap = "101-synapse"
         }
       }
     }
@@ -95,7 +95,7 @@ keyvault_access_policies = {
 #
 # IAM
 #
-azuread_groups = {
+/* azuread_groups = {
   dap_admins = {
     name        = "dap-admins"
     description = "Provide access to the Data Analytics Platform services and the jumpbox Keyvault secret."
@@ -111,7 +111,7 @@ azuread_groups = {
     }
     prevent_duplicate_name = false
   }
-}
+} */
 
 /* role_mapping = {
   built_in_role_mapping = {
