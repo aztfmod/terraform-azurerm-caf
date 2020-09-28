@@ -56,6 +56,7 @@ resource "azurerm_linux_virtual_machine" "vm" {
 
   allow_extension_operations      = try(each.value.allow_extension_operations, null)
   computer_name                   = azurecaf_name.linux_computer_name[each.key].result
+  eviction_policy                 = try(each.value.eviction_policy, null)
   max_bid_price                   = try(each.value.max_bid_price, null)
   priority                        = try(each.value.priority, null)
   provision_vm_agent              = try(each.value.provision_vm_agent, true)
