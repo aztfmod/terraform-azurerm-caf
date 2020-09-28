@@ -10,6 +10,6 @@ output identity {
   value = try(azurerm_mssql_server.mssql.identity, null)
 }
 
-output azuread_administrator  {
-  value = try(azurerm_mssql_server.mssql.azuread_administrator , null)
+output azuread_administrator {
+  value = try(azurerm_mssql_server.mssql.azuread_administrator, null)
 }
