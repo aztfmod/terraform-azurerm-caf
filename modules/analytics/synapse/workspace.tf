@@ -68,3 +68,10 @@ resource "azurerm_key_vault_secret" "synapse_rg_name" {
   value        = var.resource_group_name
   key_vault_id = var.keyvault_id
 }
+
+resource "azurerm_synapse_firewall_rule" "wrkspc_firewall" {
+  name                 = var.settings.workspace_firewall.name
+  synapse_workspace_id = azurerm_synapse_workspace.ws.id
+  start_ip_address     = var.settings.workspace_firewall.start_ip
+  end_ip_address       = var.settings.workspace_firewall.end_ip
+}

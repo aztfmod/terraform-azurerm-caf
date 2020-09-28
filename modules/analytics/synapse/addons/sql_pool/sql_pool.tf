@@ -1,4 +1,4 @@
-resource "azurecaf_name" "sp" {
+resource "azurecaf_name" "sqlpool" {
   name          = var.settings.name
   resource_type = "azurerm_storage_account"
   prefixes      = [var.global_settings.prefix]
@@ -8,9 +8,9 @@ resource "azurecaf_name" "sp" {
 }
 
 resource "azurerm_synapse_sql_pool" "sql_pool" {
-  name                 = azurecaf_name.sp.result
-  synapse_workspace_id = azurerm_synapse_workspace.synapse_wrkspc.id
-  sku_name             = try(var.settings.sql_pool.sku_name, "DW100c")
-  create_mode          = try(var.settings.sql_pool.create_mode, "Default")
+  name                 = azurecaf_name.sqlpool.result
+  synapse_workspace_id = var.synapse_workspace_id
+  sku_name             = try(var.settings.sku_name, "DW100c")
+  create_mode          = try(var.settings.create_mode, "Default")
 }
 

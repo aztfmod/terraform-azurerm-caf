@@ -18,9 +18,6 @@ resource_groups = {
   dap_synapse_re1 = {
     name = "dap-synapse"
   }
-  dap_azure_ml_re1 = {
-    name = "azure-ml"
-  }
 }
 
 synapse_workspaces = {
@@ -29,10 +26,15 @@ synapse_workspaces = {
     resource_group_key      = "dap_synapse_re1"
     sql_administrator_login = "dbadmin"
     # sql_administrator_login_password = "<string password>"   # If not set use module autogenerate a strong password and stores it in the keyvault
-    keyvault_key = "secrets"
+    keyvault_key = "synapse_secrets"
     data_lake_filesystem = {
       storage_account_key = "synapsestorage_re1"
       container_key       = "synaspe_filesystem"
+    }
+    workspace_firewall = {
+      name     = "AllowAll"
+      start_ip = "0.0.0.0"
+      end_ip   = "255.255.255.255"
     }
   }
 }
@@ -59,8 +61,8 @@ storage_accounts = {
 }
 
 keyvaults = {
-  secrets = {
-    name                = "secrets"
+  synapse_secrets = {
+    name                = "synapsesecrets"
     resource_group_key  = "dap_synapse_re1"
     sku_name            = "premium"
     soft_delete_enabled = true
@@ -77,7 +79,7 @@ keyvaults = {
 }
 
 keyvault_access_policies = {
-  secrets = {
+  synapse_secrets = {
     logged_in_user = {
       secret_permissions = ["Set", "Get", "List", "Delete", "Purge", "Recover"]
     }
@@ -113,30 +115,7 @@ keyvault_access_policies = {
   }
 } */
 
-/* role_mapping = {
-   built_in_role_mapping = {
-    synapse_workspaces = {
-      synapse_wrkspc = {
-        "Owner" = {
-          logged_in = [
-            "user"
-          ]
-        }
-      }
-    }
-    storage_accounts = {
-      synapsestorage_re1 = {
-        "Storage Blob Data Contributor" = {
-          synapse_workspaces = [
-            "synapse_wrkspc"
-          ]
-        }
-      }
-    }
-  }
-} */
-
-/* role_mapping = {
+role_mapping = {
   built_in_role_mapping = {
     storage_accounts = {
       synapsestorage_re1 = {
@@ -148,4 +127,4 @@ keyvault_access_policies = {
       }
     }
   }
-} */
+}
