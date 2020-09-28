@@ -52,6 +52,7 @@ resource "azurerm_windows_virtual_machine" "vm" {
   enable_automatic_updates   = try(each.value.enable_automatic_updates, null)
   eviction_policy            = try(each.value.eviction_policy, null)
   max_bid_price              = try(each.value.max_bid_price, null)
+  priority                   = try(each.value.priority, null)
   license_type               = try(each.value.license_type, null)
   tags                       = try(each.value.tags, null)
   timezone                   = try(each.value.timezone, null)
