@@ -13,3 +13,13 @@ module application_gateways {
   public_ip_addresses              = module.public_ip_addresses
   application_gateway_applications = local.networking.application_gateway_applications[each.key]
 }
+
+output application_gateways {
+  value       = module.application_gateways
+  sensitive   = true
+}
+
+output application_gateway_applications {
+  value       = local.networking.application_gateway_applications
+  sensitive   = true
+}
