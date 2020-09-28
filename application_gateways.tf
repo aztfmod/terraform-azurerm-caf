@@ -11,7 +11,10 @@ module application_gateways {
   sku_tier                         = each.value.sku_tier
   vnets                            = module.networking
   public_ip_addresses              = module.public_ip_addresses
-  application_gateway_applications = local.networking.application_gateway_applications[each.key]
+  application_gateway_applications = {
+    for key, value in local.networking.application_gateway_applications : key => value
+    if value.application_gateway_key == key
+  }
 }
 
 output application_gateways {

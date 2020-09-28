@@ -82,7 +82,7 @@ resource "azurerm_application_gateway" "agw" {
   }
 
   dynamic backend_http_settings {
-    for_each = var.application_gateway_applications.backend_http_settings
+    for_each = local.backend_http_settings
 
     content {
       name                  = backend_http_settings.value.name
@@ -94,10 +94,11 @@ resource "azurerm_application_gateway" "agw" {
   }
 
   dynamic backend_address_pool {
-    for_each = var.application_gateway_applications.backend_pools
+    for_each = local.backend_pools
 
     content {
       name = backend_address_pool.value.name
+      fqdns = try(length(backend_address_pool.value.fqdns), 0) > 0 ? backend_address_pool.value.fqdns : null
     }
   }
 
