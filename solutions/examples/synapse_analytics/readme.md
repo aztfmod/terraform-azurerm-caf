@@ -4,7 +4,12 @@
 rover -lz /tf/caf/landingzones/caf_networking/ -var-file /tf/caf/landingzones/caf_networking/scenario/200-single-region-hub/configuration.tfvars -tfstate networking_hub.tfstate -a apply
 
 
-# Set the following variable environment
+# Set the following variable environment for basic workspace
+export example="100-synapse"
+
+# To setup the advance configuration and compute resources set env variable
+# sql pool
+# spark pool
 export example="101-synapse"
 
 # Dap spoke network

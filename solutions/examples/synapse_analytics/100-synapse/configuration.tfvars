@@ -18,9 +18,6 @@ resource_groups = {
   dap_synapse_re1 = {
     name = "dap-synapse"
   }
-  # dap_azure_ml_re1 = {
-  #   name = "azure-ml"
-  # }
 }
 
 synapse_workspaces = {
@@ -29,7 +26,7 @@ synapse_workspaces = {
     resource_group_key      = "dap_synapse_re1"
     sql_administrator_login = "dbadmin"
     # sql_administrator_login_password = "<string password>"   # If not set use module autogenerate a strong password and stores it in the keyvault
-    keyvault_key = "secrets"
+    keyvault_key = "synapse_secrets"
     data_lake_filesystem = {
       storage_account_key = "synapsestorage_re1"
       container_key       = "synaspe_filesystem"
@@ -38,33 +35,6 @@ synapse_workspaces = {
       name     = "AllowAll"
       start_ip = "0.0.0.0"
       end_ip   = "255.255.255.255"
-    }
-  }
-}
-
-synapse_addons = {
-  synapse_sql_pool = {
-    sql_pool1 = {
-      name                  = "sqlpool1"
-      synapse_workspace_key = "synapse_wrkspc"
-      sku_name              = "DW200c"
-      create_mode           = "Default"
-    }
-  }
-  synapse_spark_pool = {
-    spark_pool1 = {
-      name                  = "sprkpool1" #[name can contain only letters or numbers, must start with a letter, and be between 1 and 15 characters long]
-      synapse_workspace_key = "synapse_wrkspc"
-      node_size_family      = "MemoryOptimized"
-      node_size             = "Small"
-      auto_scale = {
-        max_node_count = 50
-        min_node_count = 3
-      }
-      auto_pause = {
-        delay_in_minutes = 15
-      }
-      tags = "Production"
     }
   }
 }
@@ -83,7 +53,7 @@ storage_accounts = {
       synaspe_filesystem = {
         name = "synapsefilesystem"
         properties = {
-          dap = "200-synapse"
+          dap = "101-synapse"
         }
       }
     }
@@ -91,8 +61,8 @@ storage_accounts = {
 }
 
 keyvaults = {
-  secrets = {
-    name                = "secrets"
+  synapse_secrets = {
+    name                = "synapsesecrets"
     resource_group_key  = "dap_synapse_re1"
     sku_name            = "premium"
     soft_delete_enabled = true
@@ -109,7 +79,7 @@ keyvaults = {
 }
 
 keyvault_access_policies = {
-  secrets = {
+  synapse_secrets = {
     logged_in_user = {
       secret_permissions = ["Set", "Get", "List", "Delete", "Purge", "Recover"]
     }
