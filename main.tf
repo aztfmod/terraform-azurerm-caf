@@ -8,14 +8,6 @@ terraform {
   required_version = ">= 0.13"
 }
 
-provider "azurerm" {
-  features {
-    key_vault {
-      purge_soft_delete_on_destroy    = true
-      recover_soft_deleted_key_vaults = false
-    }
-  }
-}
 
 data "azurerm_subscription" "primary" {}
 data "azurerm_client_config" "current" {}
@@ -42,8 +34,8 @@ locals {
     log_analytics            = lookup(var.diagnostics, "log_analytics", module.log_analytics)
   }
 
-  prefix = lookup(var.global_settings, "prefix") == "" ? random_string.prefix.result : var.global_settings.prefix
-
+  prefix = lookup(var.global_settings, "prefix", null) == null ? random_string.prefix.result : var.global_settings.prefix
+  
   global_settings = {
     prefix             = local.prefix
     prefix_with_hyphen = local.prefix == "" ? "" : "${local.prefix}-"
