@@ -3,7 +3,7 @@ tfstates = {
     tfstate = "caf_foundations.tfstate"
   }
   networking = {
-    tfstate = "caf_networking.tfstate"
+    tfstate = "networking_spoke_data_analytics.tfstate"
   }
 }
 
