@@ -47,7 +47,7 @@ synapse_addons = {
     sql_pool_re1 = {
       name                  = "sqlpool1"
       synapse_workspace_key = "synapse_wrkspc_re1"
-      sku_name              = "DW200c"
+      sku_name              = "DW100c"
       create_mode           = "Default"
     }
   }
