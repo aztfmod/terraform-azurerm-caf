@@ -22,3 +22,16 @@ output machine_learning_workspaces {
   value     = module.machine_learning_workspaces
   sensitive = true
 }
+
+module ml_compute_instance {
+  source     = "./modules/analytics/azure_machine_learning/addons/compute_instance"
+  depends_on = [module.machine_learning_workspaces]
+  for_each   = try(local.database.machine_learning_addons.compute_instance, {})
+
+  global_settings      = local.global_settings
+  settings             = each.value
+  resource_group_name = module.resource_groups[each.value.resource_group_key].name
+  #location            = lookup(each.value, "region", null) == null ? module.resource_groups[each.value.resource_group_key].location : local.global_settings.regions[each.value.region]
+  machine_learning_workspace_id = module.machine_learning_workspaces[each.value.machine_learning_workspaces_key].id
+  subnet_id  = module.networking[each.value.vnet_key].subnets[each.value.subnet_key].id
+}

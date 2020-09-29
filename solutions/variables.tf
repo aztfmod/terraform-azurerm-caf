@@ -124,4 +124,8 @@ variable machine_learning_workspaces {
 variable synapse_addons {
   default = {}
 }
+variable machine_learning_addons {
+  default = {}
+}
+
 

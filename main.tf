@@ -89,6 +89,7 @@ locals {
     synapse_addons              = try(var.database.synapse_addons, {})
     databricks_workspaces       = try(var.database.databricks_workspaces, {})
     machine_learning_workspaces = try(var.database.machine_learning_workspaces, {})
+    machine_learning_addons = try(var.database.machine_learning_addons, {})
   }
 
   client_config = {

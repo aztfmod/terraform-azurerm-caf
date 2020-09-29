@@ -1,7 +1,7 @@
 
 resource "azurerm_template_deployment" "mlci" {
 
-  name                = var.name
+  name                = var.settings.computeInstanceName
   resource_group_name = var.resource_group_name
 
   template_body = file(local.arm_filename)

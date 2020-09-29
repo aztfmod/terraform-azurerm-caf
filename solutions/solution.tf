@@ -39,7 +39,7 @@ module "caf" {
     synapse_addons              = var.synapse_addons
     databricks_workspaces       = var.databricks_workspaces
     machine_learning_workspaces = var.machine_learning_workspaces
-
+    machine_learning_addons     = var.machine_learning_addons
   }
   # user_type                         = var.user_type
   # log_analytics                     = var.log_analytics

@@ -15,23 +15,23 @@ locals {
 
   # this is the format required by ARM templates
   parameters_body = {
-    workspaceName = {
-      value = azurecaf_name.ase.result
-    }
     computeInstanceName = {
-      value = var.resource_group_name
+      value = var.settings.computeInstanceName
+    }
+    workspaceName = {
+      value = var.machine_learning_workspace_id
     }
     location = {
-      value = var.location
+      value = var.settings.region
     }
     vmSize = {
-      value = var.kind
+      value = var.settings.vmSize
     }
     sshAccess = {
-      value = var.zone
+      value = var.settings.sshAccess
     }
     adminUserSshPublicKey = {
-      value = var.internalLoadBalancingMode
+      value = var.settings.adminUserSshPublicKey
     }
     virtualNetworkSubnet = {
       value = var.subnet_id
