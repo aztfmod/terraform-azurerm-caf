@@ -8,7 +8,7 @@ resource "azurecaf_name" "sparkpool" {
 }
 
 resource "azurerm_synapse_spark_pool" "spark_pool" {
-  name                 = var.settings.name
+  name                 = azurecaf_name.sparkpool.result
   synapse_workspace_id = var.synapse_workspace_id
   node_size_family     = var.settings.node_size_family
   node_size            = var.settings.node_size

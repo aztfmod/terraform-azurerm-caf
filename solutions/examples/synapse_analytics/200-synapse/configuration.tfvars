@@ -53,7 +53,7 @@ synapse_addons = {
   }
   synapse_spark_pool = {
     spark_pool1 = {
-      name                  = "sppool1" #[name can contain only letters or numbers, must start with a letter, and be between 1 and 15 characters long]
+      name                  = "sprkpool1" #[name can contain only letters or numbers, must start with a letter, and be between 1 and 15 characters long]
       synapse_workspace_key = "synapse_wrkspc"
       node_size_family      = "MemoryOptimized"
       node_size             = "Small"
