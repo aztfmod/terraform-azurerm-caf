@@ -8,7 +8,6 @@ variable global_settings {
     regions = {
       region1 = "southeastasia"
     }
-
   }
 }
 
@@ -146,5 +145,13 @@ variable diagnostic_storage_accounts {
 
 # Shared services
 variable shared_services {
+  default = {}
+}
+
+variable machine_learning_workspaces {
+  default = {}
+}
+
+variable application_insights {
   default = {}
 }

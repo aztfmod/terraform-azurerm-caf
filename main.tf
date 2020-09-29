@@ -8,6 +8,14 @@ terraform {
   required_version = ">= 0.13"
 }
 
+provider "azurerm" {
+  features {
+    key_vault {
+      purge_soft_delete_on_destroy    = true
+      recover_soft_deleted_key_vaults = false
+    }
+  }
+}
 
 data "azurerm_subscription" "primary" {}
 data "azurerm_client_config" "current" {}
@@ -34,7 +42,7 @@ locals {
     log_analytics            = lookup(var.diagnostics, "log_analytics", module.log_analytics)
   }
 
-  prefix = lookup(var.global_settings, "prefix", null) == null ? random_string.prefix.result : var.global_settings.prefix
+  prefix = lookup(var.global_settings, "prefix") == "" ? random_string.prefix.result : var.global_settings.prefix
 
   global_settings = {
     prefix             = local.prefix
@@ -79,7 +87,7 @@ locals {
     azurerm_redis_caches        = try(var.database.azurerm_redis_caches, {})
     synapse_workspaces          = try(var.database.synapse_workspaces, {})
     databricks_workspaces       = try(var.database.databricks_workspaces, {})
-    machine_learning_workspaces = try(var.database.machine_learning_workspaces, {})
+    machine_learning_workspaces = try(var.machine_learning_workspaces, {})
   }
 
   client_config = {
@@ -92,7 +100,7 @@ locals {
   }
 
   webapp = {
-    azurerm_application_insights = try(var.webapp.azurerm_application_insights, {})
+    azurerm_application_insights = try(var.application_insights, {})
     app_service_environments     = try(var.webapp.app_service_environments, {})
     app_service_plans            = try(var.webapp.app_service_plans, {})
     app_services                 = try(var.webapp.app_services, {})
