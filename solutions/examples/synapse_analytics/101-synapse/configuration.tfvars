@@ -24,7 +24,7 @@ resource_groups = {
 }
 
 synapse_workspaces = {
-  synapse_wrkspc = {
+  synapse_wrkspc_re1 = {
     name                    = "synapsewpc"
     resource_group_key      = "dap_synapse_re1"
     sql_administrator_login = "dbadmin"
@@ -44,17 +44,17 @@ synapse_workspaces = {
 
 synapse_addons = {
   synapse_sql_pool = {
-    sql_pool1 = {
+    sql_pool_re1 = {
       name                  = "sqlpool1"
-      synapse_workspace_key = "synapse_wrkspc"
+      synapse_workspace_key = "synapse_wrkspc_re1"
       sku_name              = "DW200c"
       create_mode           = "Default"
     }
   }
   synapse_spark_pool = {
-    spark_pool1 = {
+    spark_pool_re1 = {
       name                  = "sprkpool1" #[name can contain only letters or numbers, must start with a letter, and be between 1 and 15 characters long]
-      synapse_workspace_key = "synapse_wrkspc"
+      synapse_workspace_key = "synapse_wrkspc_re1"
       node_size_family      = "MemoryOptimized"
       node_size             = "Small"
       auto_scale = {
@@ -151,7 +151,7 @@ role_mapping = {
       synapsestorage_re1 = {
         "Storage Blob Data Contributor" = {
           synapse_workspaces = [
-            "synapse_wrkspc"
+            "synapse_wrkspc_re1"
           ]
         }
       }

@@ -21,7 +21,7 @@ resource_groups = {
 }
 
 synapse_workspaces = {
-  synapse_wrkspc = {
+  synapse_wrkspc_re1 = {
     name                    = "synapsewpc"
     resource_group_key      = "dap_synapse_re1"
     sql_administrator_login = "dbadmin"
@@ -121,7 +121,7 @@ role_mapping = {
       synapsestorage_re1 = {
         "Storage Blob Data Contributor" = {
           synapse_workspaces = [
-            "synapse_wrkspc"
+            "synapse_wrkspc_re1"
           ]
         }
       }

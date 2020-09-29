@@ -1,7 +1,7 @@
 # naming convention
 resource "azurecaf_name" "ws" {
   name          = var.settings.name
-  resource_type = "azurerm_storage_account"
+  resource_type = "azurerm_synapse_workspace"
   prefixes      = [var.global_settings.prefix]
   random_length = var.global_settings.random_length
   clean_input   = true
