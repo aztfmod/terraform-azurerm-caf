@@ -148,10 +148,5 @@ variable shared_services {
   default = {}
 }
 
-variable machine_learning_workspaces {
-  default = {}
-}
 
-variable application_insights {
-  default = {}
-}
+
