@@ -14,13 +14,32 @@ resource_groups = {
 }
 
 machine_learning_workspaces = {
-  ml_workspace = {
+  ml_workspace_re1 = {
     name                     = "amlwrkspc"
     resource_group_key       = "dap_azure_ml_re1"
     keyvault_key             = "aml_secrets"
     storage_account_key      = "amlstorage_re1"
     application_insights_key = "ml_app_insight"
     sku_name                 = "Enterprise" # disabling this will set up Basic
+    compute_instances = {
+      compute_instance_re1 = {
+        #resource_group_key = "dap_azure_ml_re1"
+        computeInstanceName = "cominst25829"
+        #machine_learning_workspaces_key = "amlwrkspc"
+        #region = "region1"   #[For allowed value - refer Readme.md]
+        vmSize = "Standard_NV6"    #[For allowed value - refer Readme.md]
+        adminUserName = "azureuser"
+        sshAccess = "Enabled"   
+        adminUserSshPublicKey = "ssh-rsa AAAAB3NzaC1yc2EAABADAQABAAACAQC1"
+        remote_tfstate = {
+          tfstate_key = "dap_networking_spoke"
+          lz_key = "dap_networking_spoke"
+          output_key = "vnets"
+        }
+        vnet_key = "spoke_dap_re1"
+        subnet_key = "AmlSubnet"
+      }
+    }
   }
 }
 
@@ -43,21 +62,6 @@ storage_accounts = {
   }
 }
 
-machine_learning_addons = {
-  compute_instance = {
-    compute_instance_re1 = {
-      resource_group_key = "dap_azure_ml_re1"
-      computeInstanceName = "instance1"
-      machine_learning_workspaces_key = "ml_workspace"
-      region = "southeastasia"   #[For allowed value - refer Readme.md]
-      vmSize = "Standard_NV6"    #[For allowed value - refer Readme.md]
-      sshAccess = "Enabled"   
-      adminUserSshPublicKey = "ssh-rsa AAAAB3NzaC1yc2EAABADAQABAAACAQC1"
-      vnet_key = "dap-spoke"
-      subnet_key = "AmlSubnet"
-    }
-  }
-}
 
 keyvaults = {
   aml_secrets = {
@@ -84,7 +88,7 @@ keyvaults = {
       amlstorage_re1 = {
         "Storage Blob Data Contributor" = {
           machine_learning_workspaces = [
-            "ml_wrkspc44_re1"
+            "ml_workspace_re1"
           ]
         }
       }

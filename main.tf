@@ -78,10 +78,8 @@ locals {
     mssql_databases             = try(var.database.mssql_databases, {})
     azurerm_redis_caches        = try(var.database.azurerm_redis_caches, {})
     synapse_workspaces          = try(var.database.synapse_workspaces, {})
-    synapse_addons              = try(var.database.synapse_addons, {})
     databricks_workspaces       = try(var.database.databricks_workspaces, {})
     machine_learning_workspaces = try(var.database.machine_learning_workspaces, {})
-    machine_learning_addons = try(var.database.machine_learning_addons, {})
   }
 
   client_config = {

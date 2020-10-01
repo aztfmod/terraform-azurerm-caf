@@ -14,7 +14,7 @@ resource_groups = {
 }
 
 machine_learning_workspaces = {
-  ml_workspace = {
+  ml_workspace_re1 = {
     name                     = "amlwrkspc"
     resource_group_key       = "dap_azure_ml_re1"
     keyvault_key             = "aml_secrets"
@@ -68,7 +68,7 @@ keyvaults = {
       amlstorage_re1 = {
         "Storage Blob Data Contributor" = {
           machine_learning_workspaces = [
-            "ml_wrkspc44_re1"
+            "ml_workspace_re1"
           ]
         }
       }

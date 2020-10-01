@@ -16,23 +16,5 @@ output synapse_workspaces {
   sensitive = true
 }
 
-module synapse_sql_pool {
-  source     = "./modules/analytics/synapse/addons/sql_pool"
-  depends_on = [module.synapse_workspaces]
-  for_each   = try(local.database.synapse_addons.synapse_sql_pool, {})
 
-  global_settings      = local.global_settings
-  settings             = each.value
-  synapse_workspace_id = module.synapse_workspaces[each.value.synapse_workspace_key].id
-}
-
-module synapse_spark_pool {
-  source     = "./modules/analytics/synapse/addons/spark_pool"
-  depends_on = [module.synapse_workspaces]
-  for_each   = try(local.database.synapse_addons.synapse_spark_pool, {})
-
-  global_settings      = local.global_settings
-  settings             = each.value
-  synapse_workspace_id = module.synapse_workspaces[each.value.synapse_workspace_key].id
-}
 

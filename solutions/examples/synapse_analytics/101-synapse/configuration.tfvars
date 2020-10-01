@@ -39,32 +39,29 @@ synapse_workspaces = {
       start_ip = "0.0.0.0"
       end_ip   = "255.255.255.255"
     }
-  }
-}
-
-synapse_addons = {
-  synapse_sql_pool = {
-    sql_pool_re1 = {
-      name                  = "sqlpool1"
-      synapse_workspace_key = "synapse_wrkspc_re1"
-      sku_name              = "DW100c"
-      create_mode           = "Default"
+    synapse_sql_pools = {
+      sql_pool_re1 = {
+        name                  = "sqlpool1"
+        synapse_workspace_key = "synapse_wrkspc_re1"
+        sku_name              = "DW100c"
+        create_mode           = "Default"
+      }
     }
-  }
-  synapse_spark_pool = {
-    spark_pool_re1 = {
-      name                  = "sprkpool1" #[name can contain only letters or numbers, must start with a letter, and be between 1 and 15 characters long]
-      synapse_workspace_key = "synapse_wrkspc_re1"
-      node_size_family      = "MemoryOptimized"
-      node_size             = "Small"
-      auto_scale = {
-        max_node_count = 50
-        min_node_count = 3
+    synapse_spark_pools = {
+      spark_pool_re1 = {
+        name                  = "sprkpool1" #[name can contain only letters or numbers, must start with a letter, and be between 1 and 15 characters long]
+        synapse_workspace_key = "synapse_wrkspc_re1"
+        node_size_family      = "MemoryOptimized"
+        node_size             = "Small"
+        auto_scale = {
+          max_node_count = 50
+          min_node_count = 3
+        }
+        auto_pause = {
+          delay_in_minutes = 15
+        }
+        tags = "Production"
       }
-      auto_pause = {
-        delay_in_minutes = 15
-      }
-      tags = "Production"
     }
   }
 }

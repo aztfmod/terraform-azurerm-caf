@@ -13,4 +13,3 @@ resource "azurerm_synapse_sql_pool" "sql_pool" {
   sku_name             = try(var.settings.sku_name, "DW100c")
   create_mode          = try(var.settings.create_mode, "Default")
 }
-

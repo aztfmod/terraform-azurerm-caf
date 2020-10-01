@@ -26,3 +26,4 @@ resource "azurerm_synapse_spark_pool" "spark_pool" {
     ENV = var.settings.tags
   }
 }
+

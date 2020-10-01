@@ -22,10 +22,13 @@ locals {
       value = var.machine_learning_workspace_id
     }
     location = {
-      value = var.settings.region
+      value = var.location
     }
     vmSize = {
       value = var.settings.vmSize
+    }
+    adminUserName = {
+      value = var.settings.adminUserName
     }
     sshAccess = {
       value = var.settings.sshAccess

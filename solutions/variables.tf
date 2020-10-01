@@ -121,11 +121,6 @@ variable databricks_workspaces {
 variable machine_learning_workspaces {
   default = {}
 }
-variable synapse_addons {
-  default = {}
-}
-variable machine_learning_addons {
-  default = {}
-}
+
 
 
