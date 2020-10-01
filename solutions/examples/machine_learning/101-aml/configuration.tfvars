@@ -23,20 +23,17 @@ machine_learning_workspaces = {
     sku_name                 = "Enterprise" # disabling this will set up Basic
     compute_instances = {
       compute_instance_re1 = {
-        #resource_group_key = "dap_azure_ml_re1"
-        computeInstanceName = "cominst25829"
-        #machine_learning_workspaces_key = "amlwrkspc"
-        #region = "region1"   #[For allowed value - refer Readme.md]
-        vmSize = "Standard_NV6"    #[For allowed value - refer Readme.md]
-        adminUserName = "azureuser"
-        sshAccess = "Enabled"   
+        computeInstanceName   = "cominst25829"
+        vmSize                = "Standard_NV6" #[For allowed value - refer Readme.md]
+        adminUserName         = "azureuser"
+        sshAccess             = "Enabled"
         adminUserSshPublicKey = "ssh-rsa AAAAB3NzaC1yc2EAABADAQABAAACAQC1"
         remote_tfstate = {
           tfstate_key = "dap_networking_spoke"
-          lz_key = "dap_networking_spoke"
-          output_key = "vnets"
+          lz_key      = "dap_networking_spoke"
+          output_key  = "vnets"
         }
-        vnet_key = "spoke_dap_re1"
+        vnet_key   = "spoke_dap_re1"
         subnet_key = "AmlSubnet"
       }
     }

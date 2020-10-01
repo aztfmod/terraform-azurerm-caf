@@ -73,11 +73,11 @@ resource "azurerm_application_gateway" "agw" {
     for_each = var.application_gateway_applications.request_routing_rules
 
     content {
-      name               = request_routing_rule.value.name
-      rule_type          = request_routing_rule.value.rule_type
-      http_listener_name = var.application_gateway_applications.listeners[request_routing_rule.value.http_listener_key].name
+      name                       = request_routing_rule.value.name
+      rule_type                  = request_routing_rule.value.rule_type
+      http_listener_name         = var.application_gateway_applications.listeners[request_routing_rule.value.http_listener_key].name
       backend_http_settings_name = var.application_gateway_applications.backend_http_settings[request_routing_rule.value.backend_http_settings_key].name
-      backend_address_pool_name = var.application_gateway_applications.backend_pools[request_routing_rule.value.backend_pool_key].name
+      backend_address_pool_name  = var.application_gateway_applications.backend_pools[request_routing_rule.value.backend_pool_key].name
     }
   }
 

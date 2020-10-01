@@ -1,13 +1,13 @@
 module compute_instance {
-  source     = "./compute_instance"
-  for_each   = try(var.settings.compute_instances, {})
+  source   = "./compute_instance"
+  for_each = try(var.settings.compute_instances, {})
 
-  global_settings      = var.global_settings
-  settings             = each.value
-  resource_group_name = azurerm_machine_learning_workspace.ws.resource_group_name
-  location            = azurerm_machine_learning_workspace.ws.location
+  global_settings               = var.global_settings
+  settings                      = each.value
+  resource_group_name           = azurerm_machine_learning_workspace.ws.resource_group_name
+  location                      = azurerm_machine_learning_workspace.ws.location
   machine_learning_workspace_id = azurerm_machine_learning_workspace.ws.id
-  subnet_id                 = lookup(each.value, "remote_tfstate", null) == null ? var.networking[each.value.vnet_key].subnets[each.value.subnet_key].id : data.terraform_remote_state.vnets[each.key].outputs[each.value.remote_tfstate.output_key][each.value.remote_tfstate.lz_key][each.value.vnet_key].subnets[each.value.subnet_key].id
+  subnet_id                     = lookup(each.value, "remote_tfstate", null) == null ? var.networking[each.value.vnet_key].subnets[each.value.subnet_key].id : data.terraform_remote_state.vnets[each.key].outputs[each.value.remote_tfstate.output_key][each.value.remote_tfstate.lz_key][each.value.vnet_key].subnets[each.value.subnet_key].id
 }
 
 #

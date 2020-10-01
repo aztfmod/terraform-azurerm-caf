@@ -1,6 +1,6 @@
 module sql_pool {
-  source     = "./sql_pool"
-  for_each   = try(var.settings.synapse_sql_pools, {})
+  source   = "./sql_pool"
+  for_each = try(var.settings.synapse_sql_pools, {})
 
   global_settings      = var.global_settings
   settings             = each.value

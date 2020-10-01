@@ -9,7 +9,4 @@ variable networking {}
 variable tfstates {}
 variable use_msi {}
 
-/* variable virtual_network_id {}
-variable private_subnet_name {}
-variable public_subnet_name {} */
 
