@@ -9,14 +9,42 @@ tfstates = {
     tfstate = "caf_foundations.tfstate"
   }
   networking = {
-    tfstate = "networking_spoke_data_analytics.tfstate"
+    tfstate = "200-basic-ml-networking_spoke.tfstate"
   }
 }
 
 
 resource_groups = {
   dap_jumpbox_re1 = {
-    name = "dap_gateway_re1"
+    name = "dap-jumpbox-re1"
+  }
+  dap_automl_re1 = {
+    name = "dap-automl"
+  }
+  dap_synapse_re1 = {
+    name = "dap-synapse"
+  }
+}
+
+synapse_workspaces = {
+  ml_wrkspc44_re1 = {
+    name                    = "mlwrkspc44"
+    resource_group_key      = "dap_synapse_re1"
+    sql_administrator_login = "dbadmin"
+    # sql_administrator_login_password = "<string password>"   # If not set use module autogenerate a strong password and stores it in the keyvault
+    keyvault_key = "secrets"
+    data_lake_filesystem = {
+      storage_account_key = "synapsestorage_re1"
+      container_key       = "mlfilesystem"
+    }
+  }
+}
+
+azurerm_application_insights = {
+  ml_app_insht44 = {
+    name               = "ml-app-insht44"
+    resource_group_key = "dap_automl_re1"
+    application_type   = "web"
   }
 }
 
