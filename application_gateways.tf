@@ -2,27 +2,29 @@ module application_gateways {
   source   = "./modules/networking/application_gateway"
   for_each = local.networking.application_gateways
 
-  global_settings                  = local.global_settings
-  diagnostics                      = local.diagnostics
-  resource_group_name              = module.resource_groups[each.value.resource_group_key].name
-  location                         = lookup(each.value, "region", null) == null ? module.resource_groups[each.value.resource_group_key].location : local.global_settings.regions[each.value.region]
-  settings                         = each.value
-  sku_name                         = each.value.sku_name
-  sku_tier                         = each.value.sku_tier
-  vnets                            = module.networking
-  public_ip_addresses              = module.public_ip_addresses
+  global_settings     = local.global_settings
+  diagnostics         = local.diagnostics
+  tfstates            = var.tfstates
+  use_msi             = var.use_msi
+  resource_group_name = module.resource_groups[each.value.resource_group_key].name
+  location            = lookup(each.value, "region", null) == null ? module.resource_groups[each.value.resource_group_key].location : local.global_settings.regions[each.value.region]
+  settings            = each.value
+  sku_name            = each.value.sku_name
+  sku_tier            = each.value.sku_tier
+  vnets               = module.networking
+  public_ip_addresses = module.public_ip_addresses
   application_gateway_applications = {
     for key, value in local.networking.application_gateway_applications : key => value
-    if value.application_gateway_key == key
+    if value.application_gateway_key == each.key
   }
 }
 
 output application_gateways {
-  value       = module.application_gateways
-  sensitive   = true
+  value     = module.application_gateways
+  sensitive = true
 }
 
 output application_gateway_applications {
-  value       = local.networking.application_gateway_applications
-  sensitive   = true
+  value     = local.networking.application_gateway_applications
+  sensitive = true
 }
