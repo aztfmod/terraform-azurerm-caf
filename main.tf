@@ -102,6 +102,10 @@ locals {
     recovery_vaults = try(var.shared_services.recovery_vaults, {})
     automations     = try(var.shared_services.automations, {})
   }
+
+  combined_objects = {
+    keyvaults = merge(module.keyvaults, try(var.combined_objects.keyvaults, {}))
+  }
 }
 
 # The rover handle the identity management transition to cover interactive run and execution on pipelines using azure ad applications or managed identities
