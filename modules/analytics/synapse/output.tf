@@ -1,7 +1,7 @@
 output id {
-  value = azurerm_synapse_workspace.ws.id
+  value = azurerm_synapse_workspace.wp.id
 }
 
 output rbac_id {
-  value = azurerm_synapse_workspace.ws.identity[0].principal_id
+  value = azurerm_synapse_workspace.wp.identity[0].principal_id
 }

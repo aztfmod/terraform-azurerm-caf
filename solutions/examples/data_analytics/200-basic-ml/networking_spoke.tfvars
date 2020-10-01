@@ -17,13 +17,13 @@ tfstates = {
     tfstate = "caf_foundations.tfstate"
   }
   networking = {
-    tfstate = "caf_networking.tfstate"
+    tfstate = "networking_hub.tfstate"
   }
 }
 
 resource_groups = {
   dap_spoke_re1 = {
-    name   = "dap-vnet-spoke"
+    name   = "dap-vnet"
     region = "region1"
   }
 }
@@ -33,7 +33,7 @@ vnets = {
     resource_group_key = "dap_spoke_re1"
     region             = "region1"
     vnet = {
-      name          = "dap-spoke"
+      name          = "dap"
       address_space = ["100.64.52.0/22"]
     }
     specialsubnets = {}
@@ -43,25 +43,25 @@ vnets = {
         cidr    = ["100.64.52.0/29"]
         nsg_key = "azure_bastion_nsg"
       }
-      JumpboxSubnet = {
-        name              = "JumpboxSubnet"
+      jumpbox = {
+        name              = "jumpbox"
         cidr              = ["100.64.52.8/29"]
         service_endpoints = ["Microsoft.Storage"]
       }
-      DatalakeStorageSubnet = {
-        name              = "DatalakeStorageSubnet"
+      Subnet_storage = {
+        name              = "Datalake"
         cidr              = ["100.64.53.0/25"]
         service_endpoints = ["Microsoft.Storage"]
         # nsg_name          = "datalake_nsg"
       }
-      AmlSubnet = {
-        name              = "AmlSubnet"
+      Subnet_ml = {
+        name              = "Ml_Workspace"
         cidr              = ["100.64.53.128/25"]
         service_endpoints = ["Microsoft.Storage", "Microsoft.KeyVault"]
         # nsg_name          = "Ml_Workspace_nsg"
       }
-      SynapseSubnet = {
-        name              = "SynapseSubnet"
+      Subnet_synapse = {
+        name              = "Synpase_Workspace"
         cidr              = ["100.64.54.0/25"]
         service_endpoints = ["Microsoft.Storage"]
         # nsg_name          = "Synapse_Workspace_nsg"
