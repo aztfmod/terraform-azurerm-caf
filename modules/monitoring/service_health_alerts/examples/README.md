@@ -1,6 +1,3 @@
-[![VScodespaces](https://img.shields.io/endpoint?url=https%3A%2F%2Faka.ms%2Fvso-badge)](https://online.visualstudio.com/environments/new?name=terraform-azurerm-caf-azure-firewall&repo=terraform-azurerm-caf-azure-firewall)
-[![Gitter](https://badges.gitter.im/aztfmod/community.svg)](https://gitter.im/aztfmod/community?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge)
-
 # Deploys Service Health Alerts
 This module tracks the following types of health events (subscription wide) and send alerts:
 
@@ -16,9 +13,6 @@ Ref : https://docs.microsoft.com/en-us/azure/service-health/service-health-overv
 
 An Action Group will be created and your choice of Notifications type can be chosen dynamically (refer input syntax). 
 Due to the some limitations, Service Health Alerts are being created using an ARM Template and is embedded within the Terraform script.
-
-
-
 
 ## Requirements
 
