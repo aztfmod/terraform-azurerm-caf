@@ -19,7 +19,7 @@ locals {
       value = var.settings.computeInstanceName
     }
     workspaceName = {
-      value = var.machine_learning_workspace_id
+      value = var.machine_learning_workspace_name
     }
     location = {
       value = var.location

@@ -6,7 +6,7 @@ module compute_instance {
   settings                      = each.value
   resource_group_name           = azurerm_machine_learning_workspace.ws.resource_group_name
   location                      = azurerm_machine_learning_workspace.ws.location
-  machine_learning_workspace_id = azurerm_machine_learning_workspace.ws.id
+  machine_learning_workspace_name = azurerm_machine_learning_workspace.ws.name
   subnet_id                     = lookup(each.value, "remote_tfstate", null) == null ? var.networking[each.value.vnet_key].subnets[each.value.subnet_key].id : data.terraform_remote_state.vnets[each.key].outputs[each.value.remote_tfstate.output_key][each.value.remote_tfstate.lz_key][each.value.vnet_key].subnets[each.value.subnet_key].id
 }
 
