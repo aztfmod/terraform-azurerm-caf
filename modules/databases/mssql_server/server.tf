@@ -1,4 +1,3 @@
-
 resource "azurerm_mssql_server" "mssql" {
 
   name                          = azurecaf_name.mssql.result
@@ -8,6 +7,7 @@ resource "azurerm_mssql_server" "mssql" {
   administrator_login           = var.settings.administrator_login
   administrator_login_password  = try(var.settings.administrator_login_password, azurerm_key_vault_secret.sql_admin_password.0.value)
   public_network_access_enabled = try(var.settings.public_network_access_enabled, true)
+  connection_policy             = try(var.settings.connection_policy, null)
   tags                          = try(var.settings.tags, null)
 
   dynamic "azuread_administrator" {
@@ -17,6 +17,14 @@ resource "azurerm_mssql_server" "mssql" {
       login_username = try(var.settings.azuread_administrator.login_username, var.azuread_groups[var.settings.azuread_administrator.azuread_group_key].name)
       object_id      = try(var.settings.azuread_administrator.object_id, var.azuread_groups[var.settings.azuread_administrator.azuread_group_key].id)
       tenant_id      = try(var.settings.azuread_administrator.tenant_id, var.azuread_groups[var.settings.azuread_administrator.azuread_group_key].tenant_id)
+    }
+  }
+
+  dynamic "identity" {
+    for_each = lookup(var.settings, "identity", {}) == {} ? [] : [1]
+
+    content {
+      type = var.settings.identity.type
     }
   }
 

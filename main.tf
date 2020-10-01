@@ -56,6 +56,8 @@ locals {
   }
 
   networking = {
+    application_gateways                                    = try(var.networking.application_gateways, {})
+    application_gateway_applications                        = try(var.networking.application_gateway_applications, {})
     network_security_group_definition                       = try(var.networking.network_security_group_definition, {})
     public_ip_addresses                                     = try(var.networking.public_ip_addresses, {})
     vnet_peerings                                           = try(var.networking.vnet_peerings, {})
@@ -73,6 +75,7 @@ locals {
 
   database = {
     mssql_servers               = try(var.database.mssql_servers, {})
+    mssql_databases             = try(var.database.mssql_databases, {})
     azurerm_redis_caches        = try(var.database.azurerm_redis_caches, {})
     synapse_workspaces          = try(var.database.synapse_workspaces, {})
     databricks_workspaces       = try(var.database.databricks_workspaces, {})
@@ -101,6 +104,9 @@ locals {
     monitoring      = try(var.shared_services.monitoring, {})
   }
 
+  combined_objects = {
+    keyvaults = merge(module.keyvaults, try(var.combined_objects.keyvaults, {}))
+  }
 
 }
 

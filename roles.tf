@@ -32,6 +32,7 @@ locals {
     resource_groups            = module.resource_groups
     managed_identities         = module.managed_identities
     storage_accounts           = module.storage_accounts
+    mssql_servers              = module.mssql_servers
     synapse_workspaces         = module.synapse_workspaces
     subscriptions              = merge(try(var.subscriptions, {}), { "logged_in_subscription" = { id = data.azurerm_subscription.primary.id } })
     logged_in = {

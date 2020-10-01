@@ -8,7 +8,6 @@ variable global_settings {
     regions = {
       region1 = "southeastasia"
     }
-
   }
 }
 
@@ -44,6 +43,10 @@ variable resource_groups {
 }
 
 variable subscriptions {
+  default = {}
+}
+
+variable combined_objects {
   default = {}
 }
 
@@ -152,3 +155,4 @@ variable shared_services {
 variable monitoring {
   default = {}
 }
+

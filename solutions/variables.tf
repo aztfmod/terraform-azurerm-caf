@@ -118,3 +118,9 @@ variable aks_clusters {
 variable databricks_workspaces {
   default = {}
 }
+variable machine_learning_workspaces {
+  default = {}
+}
+
+
+
