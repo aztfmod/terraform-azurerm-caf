@@ -1,6 +1,6 @@
 resource "azurecaf_name" "sqlpool" {
   name          = var.settings.name
-  resource_type = "azurerm_synapse_sql_pool "
+  resource_type = "azurerm_synapse_sql_pool"
   prefixes      = [var.global_settings.prefix]
   random_length = var.global_settings.random_length
   clean_input   = true
