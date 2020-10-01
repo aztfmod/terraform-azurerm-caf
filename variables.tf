@@ -152,5 +152,7 @@ variable shared_services {
   default = {}
 }
 
-
+variable monitoring {
+  default = {}
+}
 
