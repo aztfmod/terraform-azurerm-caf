@@ -46,6 +46,10 @@ variable subscriptions {
   default = {}
 }
 
+variable combined_objects {
+  default = {}
+}
+
 ## Diagnostics settings
 variable diagnostics_definition {
   default     = null
