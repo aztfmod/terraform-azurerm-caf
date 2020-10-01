@@ -8,7 +8,6 @@ variable global_settings {
     regions = {
       region1 = "southeastasia"
     }
-
   }
 }
 
@@ -152,3 +151,6 @@ variable diagnostic_storage_accounts {
 variable shared_services {
   default = {}
 }
+
+
+
