@@ -33,44 +33,62 @@ No requirements.
 
 ##  Input Syntax
 ```hcl
-  
+  # refer example configuration file
    monitoring = {
     service_health_alerts = {
         enable_service_health_alerts = true/false
-        name = " <name>"
-        location = ["location1", "location2"] 
+        name = "<string>"
+        location = ["region1", "region2"] 
         #add/modify more regions if needed; must be supplied in a List.
-        action_group_name = "<name>"
-        shortname = "<name>"
-        resource_group_key = "<resource group key>"
+        action_group_name = "<string>"
+        shortname = "<string>"
+        resource_group_key = "<string>"
         
-        email_alert_settings = {  
-            enable_email_alert = true/false
-            name = "<name>"          
-            email_address = "<email address>"
+        email_alert_settings = [
+          {
+            enable_email_alerts = true/false
+            name = "<string>"        
+            email_address = "<emailAddress>"
             use_common_alert_schema = true/false
-        }
-        sms_alert_settings = {  
-            enable_sms_alert = true/false
-            name = "<name>"        
-            country_code = "<country code>"
-            phone_number = "<phone number>"
+          },
+          #remove the below block if more email addresses need not to be added
+          {
+            enable_email_alerts = true/false
+            name = "<string>"          
+            email_address = "email@domain2"
+            use_common_alert_schema = false
+          }
+          #keep expanding this block to add more email addresses
+        ]
             
-        }
-        webhook = {  
-            enable_webhook_trigger = true/false
-            name = "<name>          
-            service_uri = "https://<uri>"
-        }
-        arm_role_alert = {
-            enable_arm_role_alert = true/false
-            name = "<name>"
-            #refer https://docs.microsoft.com/en-us/azure/role-based-access-control/ 
-            role_id = "b24988ac-6180-42a0-ab88-20f7382dd24c"  #UUID for Contributor Role.  
-            use_common_alert_schema = true/false
-        }
+        sms_alert_settings = [
+          # { #comment out this block exclude this configuration completely
+          #   name = "<string>"       
+          #   country_code ="<countryCode>"
+          #   phone_number = "<phoneNumber>"
+          # } #follow the syntax of email alert settings to have one or more alerts
+        ]
+
+        webhook = [
+          # { #comment out this block exclude this configuration
+          #   name = "<string>"         
+          #   service_uri = "<URI>"
+          # } #follow the syntax of email alert settings to have one or more alerts
+        ]
+
+        arm_role_alert = [
+          {
+            name = "<string>"          
+            # refer https://docs.microsoft.com/en-us/azure/role-based-access-control/built-in-roles
+            role_id = "b24988ac-6180-42a0-ab88-20f7382dd24c"  #UUID for Contributor Role
+            use_common_alert_schema = false
+          } #follow the syntax of email alert settings to have one or more alerts
+        ]
+
     
     }
+    
+}
     
 }
 ```
