@@ -46,17 +46,15 @@ No requirements.
         
         email_alert_settings = [
           {
-            enable_email_alerts = true/false
             name = "<string>"        
             email_address = "<emailAddress>"
             use_common_alert_schema = true/false
           },
           #remove the below block if more email addresses need not to be added
           {
-            enable_email_alerts = true/false
             name = "<string>"          
             email_address = "email@domain2"
-            use_common_alert_schema = false
+            use_common_alert_schema = true/false
           }
           #keep expanding this block to add more email addresses
         ]
