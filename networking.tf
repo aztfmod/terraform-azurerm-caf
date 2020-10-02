@@ -171,6 +171,24 @@ resource "azurecaf_name" "routes" {
   passthrough   = local.global_settings.passthrough
 }
 
+
+data "terraform_remote_state" "firewall" {
+  for_each = {
+    for key, route in local.networking.azurerm_routes : key => route
+    if try(route.remote_tfstate.tfstate_key, null) != null
+  }
+
+  backend = "azurerm"
+  config = {
+    storage_account_name = var.tfstates[each.value.remote_tfstate.tfstate_key].storage_account_name
+    container_name       = var.tfstates[each.value.remote_tfstate.tfstate_key].container_name
+    resource_group_name  = var.tfstates[each.value.remote_tfstate.tfstate_key].resource_group_name
+    key                  = var.tfstates[each.value.remote_tfstate.tfstate_key].key
+    use_msi              = var.use_msi
+    subscription_id      = var.use_msi ? var.tfstates[each.value.remote_tfstate.tfstate_key].subscription_id : null
+    tenant_id            = var.use_msi ? var.tfstates[each.value.remote_tfstate.tfstate_key].tenant_id : null
+  }
+}
 module "routes" {
   source   = "./modules/networking/routes"
   for_each = local.networking.azurerm_routes
@@ -180,7 +198,7 @@ module "routes" {
   route_table_name          = module.route_tables[each.value.route_table_key].name
   address_prefix            = each.value.address_prefix
   next_hop_type             = each.value.next_hop_type
-  next_hop_in_ip_address_fw = try(module.azurerm_firewalls[each.value.private_ip_keys.azurerm_firewall.key].ip_configuration[each.value.private_ip_keys.azurerm_firewall.interface_index].private_ip_address, null)
+  next_hop_in_ip_address_fw = try(each.value.remote_tfstate.tfstate_key, null) == null ? try(module.azurerm_firewalls[each.value.private_ip_keys.azurerm_firewall.key].ip_configuration[each.value.private_ip_keys.azurerm_firewall.interface_index].private_ip_address, null) : data.terraform_remote_state.firewall[each.key].outputs[each.value.remote_tfstate.output_key][each.value.remote_tfstate.fw_key].ip_configuration[each.value.remote_tfstate.interface_index].private_ip_address
 }
 
 #
