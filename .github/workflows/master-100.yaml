@@ -75,7 +75,7 @@ jobs:
               '-var prefix=g${{ github.run_id }}' \
               '-var regions={region1="${{ matrix.region }}"}' \
               '-var tags={testing_job_id="${{ github.run_id }}"}'
-          fi
+          #fi
 
       - name: foundations
         run: |
