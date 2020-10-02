@@ -76,6 +76,7 @@ resource "azurerm_kubernetes_cluster" "aks" {
       node_labels           = try(var.settings.default_node_pool.node_labels, null)
       node_taints           = try(var.settings.default_node_pool.node_taints, null)
       vnet_subnet_id        = var.subnets[var.settings.default_node_pool.subnet_key].id
+      orchestrator_version  = try(var.settings.default_node_pool.orchestrator_version, var.settings.kubernetes_version)
       tags                  = merge(try(var.settings.default_node_pool.tags, {}), local.tags)
     }
 
