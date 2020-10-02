@@ -56,6 +56,8 @@ locals {
   }
 
   networking = {
+    application_gateways                                    = try(var.networking.application_gateways, {})
+    application_gateway_applications                        = try(var.networking.application_gateway_applications, {})
     network_security_group_definition                       = try(var.networking.network_security_group_definition, {})
     public_ip_addresses                                     = try(var.networking.public_ip_addresses, {})
     vnet_peerings                                           = try(var.networking.vnet_peerings, {})
@@ -99,6 +101,10 @@ locals {
   shared_services = {
     recovery_vaults = try(var.shared_services.recovery_vaults, {})
     automations     = try(var.shared_services.automations, {})
+  }
+
+  combined_objects = {
+    keyvaults = merge(module.keyvaults, try(var.combined_objects.keyvaults, {}))
   }
 }
 
