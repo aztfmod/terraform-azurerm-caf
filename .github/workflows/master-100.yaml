@@ -45,8 +45,6 @@ jobs:
       options: --user 0
 
     steps:
-      # - uses: actions/checkout@v2
-
       - uses: actions/checkout@v2
         with:
           repository: Azure/caf-terraform-landingzones
@@ -66,12 +64,12 @@ jobs:
 
           # ls /tf/caf
 
-          id=$(az storage account list --query "[?tags.tfstate=='level0' && tags.environment=='${{ github.run_id }}']" -o json | jq -r .[0].id)
+          # id=$(az storage account list --query "[?tags.tfstate=='level0' && tags.environment=='${{ github.run_id }}']" -o json | jq -r .[0].id)
 
-          if [ "${id}" == "null" ]; then
+          # if [ "${id}" == "null" ]; then
 
             /tf/rover/rover.sh -lz ${GITHUB_WORKSPACE}/public/landingzones/caf_launchpad -a apply \
-              -var-file ${GITHUB_WORKSPACE}/public/landingzones/caf_launchpad/scenario/100/ci-configuration.tfvars \
+              -var-file ${GITHUB_WORKSPACE}/public/landingzones/caf_launchpad/scenario/100/configuration.tfvars \
               -launchpad \
               --environment ${{ github.run_id }} \
               '-var prefix=g${{ github.run_id }}' \
@@ -154,8 +152,6 @@ jobs:
       options: --user 0
 
     steps:
-      #- uses: actions/checkout@v2
-
       - uses: actions/checkout@v2
         with:
           repository: Azure/caf-terraform-landingzones
@@ -171,23 +167,23 @@ jobs:
 
       - name: networking_hub
         run: |
-          /tf/rover/rover.sh -lz ${GITHUB_WORKSPACE}/landingzones/caf_networking -a destroy \
-          -var-file ${GITHUB_WORKSPACE}/landingzones/caf_networking/scenario/100-single-region-hub/configuration.tfvars \
+          /tf/rover/rover.sh -lz ${GITHUB_WORKSPACE}/public/landingzones/caf_networking -a destroy \
+          -var-file ${GITHUB_WORKSPACE}/public/landingzones/caf_networking/scenario/100-single-region-hub/configuration.tfvars \
           --environment ${{ github.run_id }} \
           -auto-approve
 
 
       - name: foundations
         run: |
-          /tf/rover/rover.sh -lz ${GITHUB_WORKSPACE}/landingzones/caf_foundations -a destroy \
+          /tf/rover/rover.sh -lz ${GITHUB_WORKSPACE}/public/landingzones/caf_foundations -a destroy \
           --environment ${{ github.run_id }} \
           -auto-approve
 
       - name: Remove launchpad
         run: |
 
-          /tf/rover/rover.sh -lz ${GITHUB_WORKSPACE}/landingzones/caf_launchpad/ -a destroy \
-            -var-file ${GITHUB_WORKSPACE}/landingzones/caf_launchpad/scenario/100/ci-configuration.tfvars \
+          /tf/rover/rover.sh -lz ${GITHUB_WORKSPACE}/public/landingzones/caf_launchpad/ -a destroy \
+            -var-file ${GITHUB_WORKSPACE}/public/landingzones/caf_launchpad/scenario/100/ci-configuration.tfvars \
             -launchpad \
             --environment ${{ github.run_id }} \
             '-var prefix=g${{ github.run_id }}' \
