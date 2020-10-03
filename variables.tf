@@ -49,8 +49,9 @@ variable subscriptions {
   default = {}
 }
 
-variable combined_objects {
-  default = {}
+variable remote_objects {
+  description = "Remote objects is used to allow the landing zone to retrieve remote tfstate objects and pass them to the caf module"
+  default     = {}
 }
 
 ## Diagnostics settings
