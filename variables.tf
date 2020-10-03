@@ -12,7 +12,9 @@ variable global_settings {
   }
 }
 
-variable tfstates {}
+variable tfstates {
+  default = {}
+}
 
 # To support default values
 
