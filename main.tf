@@ -103,6 +103,11 @@ locals {
     automations     = try(var.shared_services.automations, {})
   }
 
+  enable = {
+    bastion_hosts    = try(var.enable.bastion_hosts, true)
+    virtual_machines = try(var.enable.virtual_machines, true)
+  }
+
   # CAF landing zones can retrieve remote objects from a different landing zone and the 
   # combined_objects will merge it with the local objects 
   combined_objects = {
