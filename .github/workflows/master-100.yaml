@@ -56,12 +56,12 @@ jobs:
             -var-folder ${GITHUB_WORKSPACE}/public/landingzones/caf_launchpad/scenario/100 \
             -var-folder ${GITHUB_WORKSPACE}/public/landingzones/caf_launchpad/scenario/100/ci \
             -launchpad \
+            -parallelism=30 \
             --environment ${{ github.run_id }} \
             -var 'random_length=${{ matrix.random_length }}' \
             -var prefix=g${{ github.run_id }} \
             -var 'regions={region1="${{ matrix.region }}"}' \
             -var 'tags={testing_job_id="${{ github.run_id }}"}'
-
 
       - name: foundations
         run: |
@@ -166,6 +166,7 @@ jobs:
             -var-folder ${GITHUB_WORKSPACE}/public/landingzones/caf_launchpad/scenario/100 \
             -launchpad \
             --environment ${{ github.run_id }} \
+            -parallelism=30 \
             '-var prefix=g${{ github.run_id }}' \
             '-var regions={region1="${{ matrix.region }}"}' \
             '-var tags={testing_job_id="${{ github.run_id }}"}' \
