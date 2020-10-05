@@ -75,7 +75,7 @@ resource "azurerm_template_deployment" "alert1" {
   parameters = {
     "name"              = azurecaf_name.service_health_alert_name.result
     "actionGroups_name" = azurerm_monitor_action_group.ag1.name
-    "region"            = "${join(",", var.settings.location)}"
+    "region"            = join(",", var.settings.location)
   }
   deployment_mode = "Incremental"
 }
