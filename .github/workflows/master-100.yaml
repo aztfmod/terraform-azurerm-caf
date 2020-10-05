@@ -66,14 +66,8 @@ jobs:
       - name: foundations
         run: |
           /tf/rover/rover.sh -lz ${GITHUB_WORKSPACE}/public/landingzones/caf_foundations -a apply \
+          -level -level1 \
           --environment ${{ github.run_id }}
-
-      # - name: networking_hub
-      #   run: |
-      #     /tf/rover/rover.sh -lz ${GITHUB_WORKSPACE}/public/landingzones/caf_networking -a apply \
-      #       -tfstate networking_hub.tfstate \
-      #       -var-file ${GITHUB_WORKSPACE}/public/landingzones/caf_networking/scenario/100-single-region-hub/configuration.tfvars \
-      #       --environment ${{ github.run_id }}
 
   examples:
     name: examples
@@ -120,6 +114,7 @@ jobs:
             --environment ${{ github.run_id }}
 
       - name: destroy example
+        if: always()
         run: |
           /tf/rover/rover.sh -lz ${GITHUB_WORKSPACE}/examples -a destroy \
             -tfstate $(basename ${{ matrix.config_files }}).tfstate \

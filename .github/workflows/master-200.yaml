@@ -7,18 +7,6 @@ name: scenarios-200
 
 on:
   pull_request:
-  #   branches:
-  #     - master
-  #     - '0.4'
-  # push:
-  #   branches:
-  #     - master
-  #   paths-ignore:
-  #     - .github/workflows/master-100.yaml
-  #     - 'documentation/**'
-  #     - '_pictures/**'
-  #     - 'README.md'
-  #     - 'CHANGELOG.md'
   schedule:
     - cron:  '0 0 * * *'
 
@@ -66,15 +54,16 @@ jobs:
             -var-folder ${GITHUB_WORKSPACE}/public/landingzones/caf_launchpad/scenario/200 \
             -launchpad \
             --environment ${{ github.run_id }} \
-            '-var random_length=${{ matrix.random_length }}' \ 
-            '-var prefix=g${{ github.run_id }}' \
-            '-var regions={region1="${{ matrix.region }}"}' \
-            '-var tags={testing_job_id="${{ github.run_id }}"}'
+            -var 'random_length=${{ matrix.random_length }}' \
+            -var prefix=g${{ github.run_id }} \
+            -var 'regions={region1="${{ matrix.region }}"}' \
+            -var 'tags={testing_job_id="${{ github.run_id }}"}'
 
 
       - name: foundations
         run: |
           /tf/rover/rover.sh -lz ${GITHUB_WORKSPACE}/public/landingzones/caf_foundations -a apply \
+          -level -level1 \
           --environment ${{ github.run_id }}
 
   examples:
@@ -111,6 +100,7 @@ jobs:
             --environment ${{ github.run_id }}
 
       - name: destroy example
+        if: always()
         run: |
           /tf/rover/rover.sh -lz ${GITHUB_WORKSPACE}/examples -a destroy \
             -tfstate $(basename ${{ matrix.config_files }}).tfstate \
