@@ -51,7 +51,7 @@ jobs:
         with:
           repository: Azure/caf-terraform-landingzones
           path: public
-          ref: vnext
+          ref: "0.4"
 
       - name: Login azure
         run: |
@@ -62,23 +62,15 @@ jobs:
 
       - name: launchpad
         run: |
-          # ln -s ${GITHUB_WORKSPACE} /tf/caf
-
-          # ls /tf/caf
-
-          # id=$(az storage account list --query "[?tags.tfstate=='level0' && tags.environment=='${{ github.run_id }}']" -o json | jq -r .[0].id)
-
-          # if [ "${id}" == "null" ]; then
-
           /tf/rover/rover.sh -lz ${GITHUB_WORKSPACE}/public/landingzones/caf_launchpad -a apply \
-            -var-file ${GITHUB_WORKSPACE}/public/landingzones/caf_launchpad/scenario/200/configuration.tfvars \
+            -var-folder ${GITHUB_WORKSPACE}/public/landingzones/caf_launchpad/scenario/200 \
             -launchpad \
             --environment ${{ github.run_id }} \
             '-var random_length=${{ matrix.random_length }}' \ 
             '-var prefix=g${{ github.run_id }}' \
             '-var regions={region1="${{ matrix.region }}"}' \
             '-var tags={testing_job_id="${{ github.run_id }}"}'
-          #fi
+
 
       - name: foundations
         run: |
