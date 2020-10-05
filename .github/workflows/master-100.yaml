@@ -50,6 +50,7 @@ jobs:
 
       - name: launchpad
         run: |
+          ls -lsa ${GITHUB_WORKSPACE}
           /tf/rover/rover.sh -lz ${GITHUB_WORKSPACE}/public/landingzones/caf_launchpad -a apply \
             -var-folder ${GITHUB_WORKSPACE}/public/landingzones/caf_launchpad/scenario/100 \
             -launchpad \
