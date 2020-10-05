@@ -43,7 +43,7 @@ jobs:
           random_length: ['5']
 
     container:
-      image: aztfmod/roverdev:vnext
+      image: aztfmod/roveralpha:2010.050603
       options: --user 0
 
     steps:
@@ -92,7 +92,7 @@ jobs:
           ]
 
     container:
-      image: aztfmod/roverdev:vnext
+      image: aztfmod/roveralpha:2010.050603
       options: --user 0
 
     steps:
@@ -131,7 +131,7 @@ jobs:
           region: ["westus2"]
 
     container:
-      image: aztfmod/roverdev:vnext
+      image: aztfmod/roveralpha:2010.050603
       options: --user 0
 
     steps:
