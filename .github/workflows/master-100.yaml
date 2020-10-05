@@ -129,16 +129,16 @@ jobs:
 
       - name: deploy example
         run: |
-          /tf/rover/rover.sh -lz ${GITHUB_WORKSPACE}/solutions -a apply \
+          /tf/rover/rover.sh -lz ${GITHUB_WORKSPACE}/examples -a apply \
             -tfstate $(basename ${{ matrix.config_files }}).tfstate \
-            -var-file ${GITHUB_WORKSPACE}/solutions/${{ matrix.config_files }}/configuration.tfvars \
+            -var-file ${GITHUB_WORKSPACE}/${{ matrix.config_files }}/configuration.tfvars \
             --environment ${{ github.run_id }}
 
       - name: destroy example
         run: |
-          /tf/rover/rover.sh -lz ${GITHUB_WORKSPACE}/solutions -a destroy \
+          /tf/rover/rover.sh -lz ${GITHUB_WORKSPACE}/examples -a destroy \
             -tfstate $(basename ${{ matrix.config_files }}).tfstate \
-            -var-file ${GITHUB_WORKSPACE}/solutions/${{ matrix.config_files }}/configuration.tfvars \
+            -var-file ${GITHUB_WORKSPACE}/${{ matrix.config_files }}/configuration.tfvars \
             --environment ${{ github.run_id }} \
             -auto-approve
 
