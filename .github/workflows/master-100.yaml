@@ -36,6 +36,9 @@ jobs:
 
     steps:
       - uses: actions/checkout@v2
+          ref: "0.4"
+          
+      - uses: actions/checkout@v2
         with:
           repository: Azure/caf-terraform-landingzones
           path: public
