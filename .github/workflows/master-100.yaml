@@ -40,6 +40,7 @@ jobs:
       max-parallel: 1
       matrix:
           region: ["southeastasia"]
+          random_length: ['5']
 
     container:
       image: aztfmod/roverdev:vnext
@@ -73,6 +74,7 @@ jobs:
               -var-file ${GITHUB_WORKSPACE}/public/landingzones/caf_launchpad/scenario/100/configuration.tfvars \
               -launchpad \
               --environment ${{ github.run_id }} \
+              '-var random_length=${{ matrix.random_length }} '\ 
               '-var prefix=g${{ github.run_id }}' \
               '-var regions={region1="${{ matrix.region }}"}' \
               '-var tags={testing_job_id="${{ github.run_id }}"}'
