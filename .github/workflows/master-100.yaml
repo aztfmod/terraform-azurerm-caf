@@ -7,18 +7,6 @@ name: scenarios-100
 
 on:
   pull_request:
-  #   branches:
-  #     - master
-  #     - '0.4'
-  # push:
-  #   branches:
-  #     - master
-  #   paths-ignore:
-  #     - .github/workflows/master-200.yaml
-  #     - 'documentation/**'
-  #     - '_pictures/**'
-  #     - 'README.md'
-  #     - 'CHANGELOG.md'
   schedule:
     - cron:  '0 3 * * *'
 
@@ -40,9 +28,10 @@ jobs:
       max-parallel: 1
       matrix:
           region: ["southeastasia"]
+          random_length: ['5']
 
     container:
-      image: aztfmod/roverdev:vnext
+      image: aztfmod/roveralpha:2010.050603
       options: --user 0
 
     steps:
@@ -50,7 +39,7 @@ jobs:
         with:
           repository: Azure/caf-terraform-landingzones
           path: public
-          ref: vnext
+          ref: "0.4"
 
       - name: Login azure
         run: |
@@ -61,22 +50,15 @@ jobs:
 
       - name: launchpad
         run: |
-          # ln -s ${GITHUB_WORKSPACE} /tf/caf
+          /tf/rover/rover.sh -lz ${GITHUB_WORKSPACE}/public/landingzones/caf_launchpad -a apply \
+            -var-folder ${GITHUB_WORKSPACE}/public/landingzones/caf_launchpad/scenario/100 \
+            -launchpad \
+            --environment ${{ github.run_id }} \
+            '-var random_length=${{ matrix.random_length }}' \ 
+            '-var prefix=g${{ github.run_id }}' \
+            '-var regions={region1="${{ matrix.region }}"}' \
+            '-var tags={testing_job_id="${{ github.run_id }}"}'
 
-          # ls /tf/caf
-
-          # id=$(az storage account list --query "[?tags.tfstate=='level0' && tags.environment=='${{ github.run_id }}']" -o json | jq -r .[0].id)
-
-          # if [ "${id}" == "null" ]; then
-
-            /tf/rover/rover.sh -lz ${GITHUB_WORKSPACE}/public/landingzones/caf_launchpad -a apply \
-              -var-file ${GITHUB_WORKSPACE}/public/landingzones/caf_launchpad/scenario/100/configuration.tfvars \
-              -launchpad \
-              --environment ${{ github.run_id }} \
-              '-var prefix=g${{ github.run_id }}' \
-              '-var regions={region1="${{ matrix.region }}"}' \
-              '-var tags={testing_job_id="${{ github.run_id }}"}'
-          #fi
 
       - name: foundations
         run: |
@@ -108,7 +90,7 @@ jobs:
             "examples/networking/virtual_network/100-subnet-delegation",
             "examples/databricks/100-simple-databricks",
             "examples/networking/private_dns/100-private-dns-vnet-links",
-            "examples/redis_cache/100-redis-standard",
+            "examples/redis_cache/100-redis-standard"
             # "examples/webapps/appservice/101-appservice-simple",
             # "examples/webapps/appservice/102-appservice-slots",
             # "examples/webapps/appservice/103-appservice-slots",
@@ -116,7 +98,7 @@ jobs:
           ]
 
     container:
-      image: aztfmod/roverdev:vnext
+      image: aztfmod/roveralpha:2010.050603
       options: --user 0
 
     steps:
@@ -129,16 +111,16 @@ jobs:
 
       - name: deploy example
         run: |
-          /tf/rover/rover.sh -lz ${GITHUB_WORKSPACE}/solutions -a apply \
+          /tf/rover/rover.sh -lz ${GITHUB_WORKSPACE}/examples -a apply \
             -tfstate $(basename ${{ matrix.config_files }}).tfstate \
-            -var-file ${GITHUB_WORKSPACE}/solutions/${{ matrix.config_files }}/configuration.tfvars \
+            -var-file ${GITHUB_WORKSPACE}/${{ matrix.config_files }}/configuration.tfvars \
             --environment ${{ github.run_id }}
 
       - name: destroy example
         run: |
-          /tf/rover/rover.sh -lz ${GITHUB_WORKSPACE}/solutions -a destroy \
+          /tf/rover/rover.sh -lz ${GITHUB_WORKSPACE}/examples -a destroy \
             -tfstate $(basename ${{ matrix.config_files }}).tfstate \
-            -var-file ${GITHUB_WORKSPACE}/solutions/${{ matrix.config_files }}/configuration.tfvars \
+            -var-file ${GITHUB_WORKSPACE}/${{ matrix.config_files }}/configuration.tfvars \
             --environment ${{ github.run_id }} \
             -auto-approve
 
@@ -155,7 +137,7 @@ jobs:
           region: ["southeastasia"]
 
     container:
-      image: aztfmod/roverdev:vnext
+      image: aztfmod/roveralpha:2010.050603
       options: --user 0
 
     steps:

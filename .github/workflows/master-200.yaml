@@ -40,9 +40,10 @@ jobs:
       max-parallel: 1
       matrix:
           region: ["southeastasia"]
+          random_length: ['5']
 
     container:
-      image: aztfmod/roverdev:vnext
+      image: aztfmod/roveralpha:2010.050603
       options: --user 0
 
     steps:
@@ -50,7 +51,7 @@ jobs:
         with:
           repository: Azure/caf-terraform-landingzones
           path: public
-          ref: vnext
+          ref: "0.4"
 
       - name: Login azure
         run: |
@@ -61,21 +62,15 @@ jobs:
 
       - name: launchpad
         run: |
-          # ln -s ${GITHUB_WORKSPACE} /tf/caf
+          /tf/rover/rover.sh -lz ${GITHUB_WORKSPACE}/public/landingzones/caf_launchpad -a apply \
+            -var-folder ${GITHUB_WORKSPACE}/public/landingzones/caf_launchpad/scenario/200 \
+            -launchpad \
+            --environment ${{ github.run_id }} \
+            '-var random_length=${{ matrix.random_length }}' \ 
+            '-var prefix=g${{ github.run_id }}' \
+            '-var regions={region1="${{ matrix.region }}"}' \
+            '-var tags={testing_job_id="${{ github.run_id }}"}'
 
-          # ls /tf/caf
-
-          # id=$(az storage account list --query "[?tags.tfstate=='level0' && tags.environment=='${{ github.run_id }}']" -o json | jq -r .[0].id)
-
-          # if [ "${id}" == "null" ]; then
-
-            /tf/rover/rover.sh -lz ${GITHUB_WORKSPACE}/public/landingzones/caf_launchpad -a apply \
-              -var-file ${GITHUB_WORKSPACE}/public/landingzones/caf_launchpad/scenario/200/configuration.tfvars \
-              -launchpad \
-              --environment ${{ github.run_id }} \
-              '-var prefix=g${{ github.run_id }}' \
-              '-var tags={testing_job_id="${{ github.run_id }}"}'
-          #fi
 
       - name: foundations
         run: |
@@ -97,7 +92,7 @@ jobs:
           ]
 
     container:
-      image: aztfmod/roverdev:vnext
+      image: aztfmod/roveralpha:2010.050603
       options: --user 0
 
     steps:
@@ -110,16 +105,16 @@ jobs:
 
       - name: deploy example
         run: |
-          /tf/rover/rover.sh -lz ${GITHUB_WORKSPACE}/solutions -a apply \
+          /tf/rover/rover.sh -lz ${GITHUB_WORKSPACE}/examples -a apply \
             -tfstate $(basename ${{ matrix.config_files }}).tfstate \
-            -var-file ${GITHUB_WORKSPACE}/solutions/${{ matrix.config_files }}.tfvars \
+            -var-file ${GITHUB_WORKSPACE}/${{ matrix.config_files }}.tfvars \
             --environment ${{ github.run_id }}
 
       - name: destroy example
         run: |
-          /tf/rover/rover.sh -lz ${GITHUB_WORKSPACE}/solutions -a destroy \
+          /tf/rover/rover.sh -lz ${GITHUB_WORKSPACE}/examples -a destroy \
             -tfstate $(basename ${{ matrix.config_files }}).tfstate \
-            -var-file ${GITHUB_WORKSPACE}/solutions/${{ matrix.config_files }}.tfvars \
+            -var-file ${GITHUB_WORKSPACE}/${{ matrix.config_files }}.tfvars \
             --environment ${{ github.run_id }} \
             -refresh=false \
             -auto-approve
@@ -136,7 +131,7 @@ jobs:
           region: ["westus2"]
 
     container:
-      image: aztfmod/roverdev:vnext
+      image: aztfmod/roveralpha:2010.050603
       options: --user 0
 
     steps:
