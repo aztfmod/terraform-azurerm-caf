@@ -24,5 +24,5 @@ resource "azurerm_private_dns_zone_virtual_network_link" "vnet_links" {
   name                  = each.value.name
   resource_group_name   = var.resource_group_name
   private_dns_zone_name = azurerm_private_dns_zone.private_dns.name
-  virtual_network_id    = try(var.vnets[each.value.vnet_key].id, data.terraform_remote_state.vnet_links[each.key].outputs[each.value.remote_tfstate.output_key][each.value.remote_tfstate.lz_key][each.value.remote_tfstate.vnet_key].id)
+  virtual_network_id    = try(each.value.remote_tfstate, null) == null ? var.vnets[each.value.vnet_key].id : data.terraform_remote_state.vnet_links[each.key].outputs[each.value.remote_tfstate.output_key][each.value.remote_tfstate.lz_key][each.value.vnet_key].id
 }

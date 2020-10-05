@@ -7,8 +7,9 @@ name: scenarios-200
 
 on:
   pull_request:
-    branches:
-      - master
+  #   branches:
+  #     - master
+  #     - '0.4'
   # push:
   #   branches:
   #     - master
@@ -41,11 +42,15 @@ jobs:
           region: ["southeastasia"]
 
     container:
-      image: aztfmod/roveralpha:2009.180404
+      image: aztfmod/roverdev:vnext
       options: --user 0
 
     steps:
       - uses: actions/checkout@v2
+        with:
+          repository: Azure/caf-terraform-landingzones
+          path: public
+          ref: vnext
 
       - name: Login azure
         run: |
@@ -60,21 +65,21 @@ jobs:
 
           # ls /tf/caf
 
-          id=$(az storage account list --query "[?tags.tfstate=='level0' && tags.environment=='${{ github.run_id }}']" -o json | jq -r .[0].id)
+          # id=$(az storage account list --query "[?tags.tfstate=='level0' && tags.environment=='${{ github.run_id }}']" -o json | jq -r .[0].id)
 
-          if [ "${id}" == "null" ]; then
+          # if [ "${id}" == "null" ]; then
 
-            /tf/rover/rover.sh -lz ${GITHUB_WORKSPACE}/landingzones/caf_launchpad -a apply \
-              -var-file ${GITHUB_WORKSPACE}/landingzones/caf_launchpad/scenario/200/configuration.tfvars \
+            /tf/rover/rover.sh -lz ${GITHUB_WORKSPACE}/public/landingzones/caf_launchpad -a apply \
+              -var-file ${GITHUB_WORKSPACE}/public/landingzones/caf_launchpad/scenario/200/configuration.tfvars \
               -launchpad \
               --environment ${{ github.run_id }} \
               '-var prefix=g${{ github.run_id }}' \
               '-var tags={testing_job_id="${{ github.run_id }}"}'
-          fi
+          #fi
 
       - name: foundations
         run: |
-          /tf/rover/rover.sh -lz ${GITHUB_WORKSPACE}/landingzones/caf_foundations -a apply \
+          /tf/rover/rover.sh -lz ${GITHUB_WORKSPACE}/public/landingzones/caf_foundations -a apply \
           --environment ${{ github.run_id }}
 
   examples:
@@ -92,7 +97,7 @@ jobs:
           ]
 
     container:
-      image: aztfmod/roveralpha:2009.180404
+      image: aztfmod/roverdev:vnext
       options: --user 0
 
     steps:
@@ -131,11 +136,15 @@ jobs:
           region: ["westus2"]
 
     container:
-      image: aztfmod/roveralpha:2009.180404
+      image: aztfmod/roverdev:vnext
       options: --user 0
 
     steps:
       - uses: actions/checkout@v2
+        with:
+          repository: Azure/caf-terraform-landingzones
+          path: public
+          ref: vnext
 
       - name: Login azure
         run: |
@@ -147,15 +156,15 @@ jobs:
 
       - name: foundations
         run: |
-          /tf/rover/rover.sh -lz ${GITHUB_WORKSPACE}/landingzones/caf_foundations -a destroy \
+          /tf/rover/rover.sh -lz ${GITHUB_WORKSPACE}/public/landingzones/caf_foundations -a destroy \
           --environment ${{ github.run_id }} \
           -auto-approve
 
       - name: Remove launchpad
         run: |
 
-          /tf/rover/rover.sh -lz ${GITHUB_WORKSPACE}/landingzones/caf_launchpad/ -a destroy \
-            -var-file ${GITHUB_WORKSPACE}/landingzones/caf_launchpad/scenario/200/configuration.tfvars \
+          /tf/rover/rover.sh -lz ${GITHUB_WORKSPACE}/public/landingzones/caf_launchpad/ -a destroy \
+            -var-file ${GITHUB_WORKSPACE}/public/landingzones/caf_launchpad/scenario/200/configuration.tfvars \
             -launchpad \
             -env ${{ github.run_id }} \
             '-var prefix=g${{ github.run_id }}' \
