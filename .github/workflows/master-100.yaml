@@ -6,9 +6,10 @@
 name: scenarios-100
 
 on:
-  pull_request:
-    branches:
-      - master
+  # pull_request:
+  #   branches:
+  #     - master
+  #     - '0.4'
   # push:
   #   branches:
   #     - master
@@ -41,7 +42,7 @@ jobs:
           region: ["southeastasia"]
 
     container:
-      image: aztfmod/rover:2010.0106
+      image: aztfmod/roverdev:vnext
       options: --user 0
 
     steps:
@@ -99,17 +100,23 @@ jobs:
       fail-fast: false
       matrix:
           config_files: [
-            "examples/compute/virtual_machine/100-simple-vm",
-            "examples/networking/private_dns/100-private-dns-vnet-links",
+            "examples/app_insights/100-all-attributes",
+            "examples/app_insights/100-simple",
+            "examples/compute/container_registry/100-simple-acr",
+            "examples/compute/virtual_machine/100-single-linux-vm",
+            "examples/compute/virtual_machine/101-single-windows-vm",
+            "examples/networking/virtual_network/100-subnet-delegation",
+            #"examples/databricks/100-simple-databricks",
+            #"examples/networking/private_dns/100-private-dns-vnet-links",
             "examples/redis_cache/100-redis-standard",
-            "examples/webapps/appservice/101-appservice-simple",
-            "examples/webapps/appservice/102-appservice-slots",
-            "examples/webapps/appservice/103-appservice-slots",
-            "examples/webapps/appservice-environment/101-simple_ase"
+            # "examples/webapps/appservice/101-appservice-simple",
+            # "examples/webapps/appservice/102-appservice-slots",
+            # "examples/webapps/appservice/103-appservice-slots",
+            # "examples/webapps/appservice-environment/101-simple_ase"
           ]
 
     container:
-      image: aztfmod/rover:2010.0106
+      image: aztfmod/roverdev:vnext
       options: --user 0
 
     steps:
@@ -148,7 +155,7 @@ jobs:
           region: ["southeastasia"]
 
     container:
-      image: aztfmod/rover:2010.0106
+      image: aztfmod/roverdev:vnext
       options: --user 0
 
     steps:

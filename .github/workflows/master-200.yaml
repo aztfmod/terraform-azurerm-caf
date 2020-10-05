@@ -6,9 +6,10 @@
 name: scenarios-200
 
 on:
-  pull_request:
-    branches:
-      - master
+  # pull_request:
+  #   branches:
+  #     - master
+  #     - '0.4'
   # push:
   #   branches:
   #     - master
@@ -41,7 +42,7 @@ jobs:
           region: ["southeastasia"]
 
     container:
-      image: aztfmod/rover:2010.0106
+      image: aztfmod/roverdev:vnext
       options: --user 0
 
     steps:
@@ -96,7 +97,7 @@ jobs:
           ]
 
     container:
-      image: aztfmod/rover:2010.0106
+      image: aztfmod/roverdev:vnext
       options: --user 0
 
     steps:
@@ -135,7 +136,7 @@ jobs:
           region: ["westus2"]
 
     container:
-      image: aztfmod/rover:2010.0106
+      image: aztfmod/roverdev:vnext
       options: --user 0
 
     steps:
