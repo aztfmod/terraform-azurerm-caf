@@ -6,7 +6,7 @@
 name: scenarios-200
 
 on:
-  # pull_request:
+  pull_request:
   #   branches:
   #     - master
   #     - '0.4'
