@@ -68,12 +68,12 @@ jobs:
           /tf/rover/rover.sh -lz ${GITHUB_WORKSPACE}/public/landingzones/caf_foundations -a apply \
           --environment ${{ github.run_id }}
 
-      - name: networking_hub
-        run: |
-          /tf/rover/rover.sh -lz ${GITHUB_WORKSPACE}/public/landingzones/caf_networking -a apply \
-            -tfstate networking_hub.tfstate \
-            -var-file ${GITHUB_WORKSPACE}/public/landingzones/caf_networking/scenario/100-single-region-hub/configuration.tfvars \
-            --environment ${{ github.run_id }}
+      # - name: networking_hub
+      #   run: |
+      #     /tf/rover/rover.sh -lz ${GITHUB_WORKSPACE}/public/landingzones/caf_networking -a apply \
+      #       -tfstate networking_hub.tfstate \
+      #       -var-file ${GITHUB_WORKSPACE}/public/landingzones/caf_networking/scenario/100-single-region-hub/configuration.tfvars \
+      #       --environment ${{ github.run_id }}
 
   examples:
     name: examples
@@ -93,7 +93,7 @@ jobs:
             "examples/networking/virtual_network/100-subnet-delegation",
             "examples/databricks/100-simple-databricks",
             "examples/networking/private_dns/100-private-dns-vnet-links",
-            "examples/redis_cache/100-redis-standard"
+            # "examples/redis_cache/100-redis-standard"
             # "examples/webapps/appservice/101-appservice-simple",
             # "examples/webapps/appservice/102-appservice-slots",
             # "examples/webapps/appservice/103-appservice-slots",
