@@ -1,4 +1,3 @@
-# rover -lz /tf/caf/solutions/ -var-file /tf/caf/solutions/examples/networking/private_dns/private-dns.tfvars -a apply
 
 resource_groups = {
   private_dns_region1 = {
@@ -63,15 +62,15 @@ private_dns = {
         name     = "test-vnet-link"
         vnet_key = "vnet_test"
       }
-      link_hub = {
-        name = "hub-vnet-link"
-        remote_tfstate = {
-          tfstate_key = "networking_hub"
-          lz_key      = "networking_hub"
-          output_key  = "vnets"
-          vnet_key    = "hub_rg1"
-        }
-      }
+      # link_hub = {
+      #   name = "hub-vnet-link"
+      #   remote_tfstate = {
+      #     tfstate_key = "networking_hub"
+      #     lz_key      = "networking_hub"
+      #     output_key  = "vnets"
+      #     vnet_key    = "hub_rg1"
+      #   }
+      # }
     }
   }
 }

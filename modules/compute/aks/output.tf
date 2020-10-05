@@ -47,3 +47,11 @@ output kube_config {
 output rbac_id {
   value = azurerm_kubernetes_cluster.aks.kubelet_identity[0].object_id
 }
+
+output node_resource_group {
+  value = azurerm_kubernetes_cluster.aks.node_resource_group
+}
+
+output private_fqdn {
+  value = azurerm_kubernetes_cluster.aks.private_fqdn
+}

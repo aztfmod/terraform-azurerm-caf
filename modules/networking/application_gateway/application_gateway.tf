@@ -86,11 +86,19 @@ resource "azurerm_application_gateway" "agw" {
     for_each = local.backend_http_settings
 
     content {
+<<<<<<< HEAD
       name                  = try(backend_http_settings.value.name, local.listeners[backend_http_settings.key].name)
       cookie_based_affinity = try(backend_http_settings.value.cookie_based_affinity, "Disabled")
       port                  = backend_http_settings.value.port
       protocol              = backend_http_settings.value.protocol
       request_timeout       = try(backend_http_settings.value.request_timeout, 30)
+=======
+      name                                = try(backend_http_settings.value.name, local.listeners[backend_http_settings.key].name)
+      cookie_based_affinity               = try(backend_http_settings.value.cookie_based_affinity, "Disabled")
+      port                                = backend_http_settings.value.port
+      protocol                            = backend_http_settings.value.protocol
+      request_timeout                     = try(backend_http_settings.value.request_timeout, 30)
+>>>>>>> 0923110911aa0ec22b0aa42a7afb6364e7ad0d46
       pick_host_name_from_backend_address = try(backend_http_settings.value.pick_host_name_from_backend_address, false)
     }
   }

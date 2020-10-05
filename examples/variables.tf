@@ -1,8 +1,7 @@
 # Map of the remote data state for lower level
-variable lowerlevel_storage_account_name {}
-variable lowerlevel_container_name {}
-variable lowerlevel_key {}
-variable lowerlevel_resource_group_name {}
+variable lower_storage_account_name {}
+variable lower_container_name {}
+variable lower_resource_group_name {}
 
 variable tfstate_storage_account_name {}
 variable tfstate_container_name {}
@@ -116,5 +115,8 @@ variable aks_clusters {
   default = {}
 }
 variable databricks_workspaces {
+  default = {}
+}
+variable monitoring {
   default = {}
 }
