@@ -61,20 +61,20 @@ vnets = {
         name = "databricks-public"
         cidr = ["10.100.100.64/26"]
         delegation = {
-          name = "databricks"
+          name               = "databricks"
           service_delegation = "Microsoft.Databricks/workspaces"
-          }
         }
+      }
       databricks_private = {
         name = "databricks-private"
         cidr = ["10.100.100.128/26"]
         delegation = {
-          name = "databricks"
+          name               = "databricks"
           service_delegation = "Microsoft.Databricks/workspaces"
-          }
         }
       }
     }
+  }
 }
 
 

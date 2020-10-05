@@ -19,7 +19,7 @@ virtual_machines = {
   # Configuration to deploy a bastion host linux virtual machine
   bastion_host = {
     resource_group_key = "vm_sg"
-    os_type = "linux" 
+    os_type            = "linux"
     # Define the number of networking cards to attach the virtual machine
     networking_interfaces = {
       nic0 = {
