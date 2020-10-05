@@ -6,9 +6,6 @@ resource_groups = {
   primary = {
     name = "asr-sg"
   }
-  secondary = {
-    name = "asr-hk"
-  }
 }
 
 tfstates = {
@@ -21,7 +18,7 @@ tfstates = {
 }
 
 
-
+#refer README
 monitoring = {
     service_health_alerts = {
         enable_service_health_alerts = true
@@ -33,33 +30,32 @@ monitoring = {
         
         email_alert_settings = [
           {
-            enable_email_alerts = true
-            name = "email_alert_servicehealth"          
-            email_address = "email@domain"
+            name = "email_alert_servicehealth_me"          
+            email_address = "email1@domain"
             use_common_alert_schema = false
-          },
+          }, #remove the following block if additional email alerts aren't needed. 
           {
-            enable_email_alerts = true
-            name = "email_alert_servicehealth1"          
-            email_address = "email@domain2"
+            name = "email_alert_servicehealth_somoneelse"          
+            email_address = "email2@domain"
             use_common_alert_schema = false
           }
-        ]
-
-        sms_alert_settings = [
+        ] #add more email alerts by repeating the block.
+        
+      #more alert settings can be dynamically added/removed by commenting in/out the following blocks
+        #sms_alert_settings = [
           # {
           #   name = "sms_alert_servicehealth"          
           #   country_code = "65"
           #   phone_number = "0000000"
           # }
-        ]
+        #]
 
-        webhook = [
+        #webhook = [
           # {
           #   name = "webhook_trigger_servicehealth"          
           #   service_uri = "https://uri"
           # }
-        ]
+        #]
 
         arm_role_alert = [
           {
@@ -68,7 +64,7 @@ monitoring = {
             role_id = "b24988ac-6180-42a0-ab88-20f7382dd24c"  #UUID for Contributor Role
             use_common_alert_schema = false
           }
-        ]
+        ] 
 
     
     }

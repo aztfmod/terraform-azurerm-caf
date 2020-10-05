@@ -46,42 +46,43 @@ No requirements.
         
         email_alert_settings = [
           {
-            enable_email_alerts = true/false
             name = "<string>"        
             email_address = "<emailAddress>"
             use_common_alert_schema = true/false
           },
-          #remove the below block if more email addresses need not to be added
+          #remove the following block if additional email alerts aren't needed.
           {
-            enable_email_alerts = true/false
             name = "<string>"          
-            email_address = "email@domain2"
-            use_common_alert_schema = false
+            email_address = "<emailAddress>"
+            use_common_alert_schema = true/false
           }
-          #keep expanding this block to add more email addresses
+          ##add more email alerts by repeating the block.
         ]
             
+        #comment out this block exclude this configuration completely
         sms_alert_settings = [
-          # { #comment out this block exclude this configuration completely
-          #   name = "<string>"       
-          #   country_code ="<countryCode>"
-          #   phone_number = "<phoneNumber>"
-          # } #follow the syntax of email alert settings to have one or more alerts
+           { 
+             name = "<string>"       
+             country_code ="<countryCode>"
+             phone_number = "<phoneNumber>"
+           } #follow the syntax of email alert settings to have one or more alerts
         ]
 
-        webhook = [
-          # { #comment out this block exclude this configuration
+        #comment out this block exclude this configuration completely
+        #webhook = [
+          # { 
           #   name = "<string>"         
           #   service_uri = "<URI>"
           # } #follow the syntax of email alert settings to have one or more alerts
-        ]
+        #]
 
+        #comment out this block exclude this configuration completely
         arm_role_alert = [
           {
             name = "<string>"          
             # refer https://docs.microsoft.com/en-us/azure/role-based-access-control/built-in-roles
             role_id = "b24988ac-6180-42a0-ab88-20f7382dd24c"  #UUID for Contributor Role
-            use_common_alert_schema = false
+            use_common_alert_schema = true/false
           } #follow the syntax of email alert settings to have one or more alerts
         ]
 
