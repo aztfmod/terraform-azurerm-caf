@@ -53,7 +53,11 @@ No requirements.
           #remove the following block if additional email alerts aren't needed.
           {
             name = "<string>"          
+<<<<<<< HEAD
             email_address = "<emailAddress>"
+=======
+            email_address = "email@domain2"
+>>>>>>> 75792837d467e394d566e7cfae5888f0c4f59725
             use_common_alert_schema = true/false
           }
           ##add more email alerts by repeating the block.
