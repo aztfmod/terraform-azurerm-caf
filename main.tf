@@ -103,8 +103,20 @@ locals {
     automations     = try(var.shared_services.automations, {})
   }
 
+<<<<<<< HEAD
   combined_objects = {
     keyvaults = merge(module.keyvaults, try(var.combined_objects.keyvaults, {}))
+=======
+  enable = {
+    bastion_hosts    = try(var.enable.bastion_hosts, true)
+    virtual_machines = try(var.enable.virtual_machines, true)
+  }
+
+  # CAF landing zones can retrieve remote objects from a different landing zone and the 
+  # combined_objects will merge it with the local objects 
+  combined_objects = {
+    keyvaults = merge(module.keyvaults, try(var.remote_objects.keyvaults, {}))
+>>>>>>> 0923110911aa0ec22b0aa42a7afb6364e7ad0d46
   }
 }
 

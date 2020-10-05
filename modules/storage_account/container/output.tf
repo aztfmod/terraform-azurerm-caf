@@ -3,3 +3,6 @@ output blobs {
 }
 
 
+output name {
+  value = azurerm_storage_container.stg.name
+}
