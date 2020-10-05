@@ -52,7 +52,6 @@ jobs:
 
       - name: launchpad
         run: |
-          ls -lsa ${GITHUB_WORKSPACE}
           /tf/rover/rover.sh -lz ${GITHUB_WORKSPACE}/public/landingzones/caf_launchpad -a apply \
             -var-folder ${GITHUB_WORKSPACE}/public/landingzones/caf_launchpad/scenario/100 \
             -launchpad \
@@ -66,7 +65,7 @@ jobs:
       - name: foundations
         run: |
           /tf/rover/rover.sh -lz ${GITHUB_WORKSPACE}/public/landingzones/caf_foundations -a apply \
-          -level -level1 \
+          -level level1 \
           --environment ${{ github.run_id }}
 
   examples:
