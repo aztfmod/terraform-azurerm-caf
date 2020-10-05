@@ -12,7 +12,7 @@ vnets = {
       name          = "databricks"
       address_space = ["10.150.100.0/24"]
     }
-    specialsubnets = {}
+    #specialsubnets = {}
     subnets = {
       databricks_public = {
         name = "databricks-public"
