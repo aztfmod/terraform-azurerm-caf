@@ -28,7 +28,7 @@ jobs:
       max-parallel: 1
       matrix:
           region: ["southeastasia"]
-          random_length: "5"
+          random_length: ['5']
 
     container:
       image: aztfmod/roverdev:vnext
