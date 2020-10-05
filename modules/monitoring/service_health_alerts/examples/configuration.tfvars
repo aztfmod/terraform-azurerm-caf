@@ -8,16 +8,6 @@ resource_groups = {
   }
 }
 
-tfstates = {
-  caf_foundations = {
-    tfstate = "caf_foundations.tfstate"
-  }
-  networking = {
-     tfstate = "caf_foundations.tfstate"
-  }
-}
-
-
 #refer README
 monitoring = {
     service_health_alerts = {
