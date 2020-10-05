@@ -7,18 +7,6 @@ name: scenarios-100
 
 on:
   pull_request:
-  #   branches:
-  #     - master
-  #     - '0.4'
-  # push:
-  #   branches:
-  #     - master
-  #   paths-ignore:
-  #     - .github/workflows/master-200.yaml
-  #     - 'documentation/**'
-  #     - '_pictures/**'
-  #     - 'README.md'
-  #     - 'CHANGELOG.md'
   schedule:
     - cron:  '0 3 * * *'
 
@@ -62,23 +50,15 @@ jobs:
 
       - name: launchpad
         run: |
-          # ln -s ${GITHUB_WORKSPACE} /tf/caf
+          /tf/rover/rover.sh -lz ${GITHUB_WORKSPACE}/public/landingzones/caf_launchpad -a apply \
+            -var-file ${GITHUB_WORKSPACE}/public/landingzones/caf_launchpad/scenario/100/configuration.tfvars \
+            -launchpad \
+            --environment ${{ github.run_id }} \
+            '-var random_length=${{ matrix.random_length }}' \ 
+            '-var prefix=g${{ github.run_id }}' \
+            '-var regions={region1="${{ matrix.region }}"}' \
+            '-var tags={testing_job_id="${{ github.run_id }}"}'
 
-          # ls /tf/caf
-
-          # id=$(az storage account list --query "[?tags.tfstate=='level0' && tags.environment=='${{ github.run_id }}']" -o json | jq -r .[0].id)
-
-          # if [ "${id}" == "null" ]; then
-
-            /tf/rover/rover.sh -lz ${GITHUB_WORKSPACE}/public/landingzones/caf_launchpad -a apply \
-              -var-file ${GITHUB_WORKSPACE}/public/landingzones/caf_launchpad/scenario/100/configuration.tfvars \
-              -launchpad \
-              --environment ${{ github.run_id }} \
-              '-var random_length=${{ matrix.random_length }} ' \ 
-              '-var prefix=g${{ github.run_id }}' \
-              '-var regions={region1="${{ matrix.region }}"}' \
-              '-var tags={testing_job_id="${{ github.run_id }}"}'
-          #fi
 
       - name: foundations
         run: |
@@ -110,7 +90,7 @@ jobs:
             "examples/networking/virtual_network/100-subnet-delegation",
             "examples/databricks/100-simple-databricks",
             "examples/networking/private_dns/100-private-dns-vnet-links",
-            "examples/redis_cache/100-redis-standard",
+            "examples/redis_cache/100-redis-standard"
             # "examples/webapps/appservice/101-appservice-simple",
             # "examples/webapps/appservice/102-appservice-slots",
             # "examples/webapps/appservice/103-appservice-slots",
