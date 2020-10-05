@@ -53,7 +53,8 @@ jobs:
       - name: launchpad
         run: |
           /tf/rover/rover.sh -lz ${GITHUB_WORKSPACE}/public/landingzones/caf_launchpad -a apply \
-            -var-folder ${GITHUB_WORKSPACE}/public/landingzones/caf_launchpad/scenario/100 \
+            -var-folder ${GITHUB_WORKSPACE}/public/landingzones/caf_launchpad/scenario/100 \ 
+            -var-folder ${GITHUB_WORKSPACE}/public/landingzones/caf_launchpad/scenario/100/ci \
             -launchpad \
             --environment ${{ github.run_id }} \
             -var 'random_length=${{ matrix.random_length }}' \
@@ -151,17 +152,10 @@ jobs:
 
           echo "local user: $(whoami)"
 
-      - name: networking_hub
-        run: |
-          /tf/rover/rover.sh -lz ${GITHUB_WORKSPACE}/public/landingzones/caf_networking -a destroy \
-          -var-file ${GITHUB_WORKSPACE}/public/landingzones/caf_networking/scenario/100-single-region-hub/configuration.tfvars \
-          --environment ${{ github.run_id }} \
-          -auto-approve
-
-
       - name: foundations
         run: |
           /tf/rover/rover.sh -lz ${GITHUB_WORKSPACE}/public/landingzones/caf_foundations -a destroy \
+          -level level1 \
           --environment ${{ github.run_id }} \
           -auto-approve
 
@@ -169,7 +163,7 @@ jobs:
         run: |
 
           /tf/rover/rover.sh -lz ${GITHUB_WORKSPACE}/public/landingzones/caf_launchpad/ -a destroy \
-            -var-file ${GITHUB_WORKSPACE}/public/landingzones/caf_launchpad/scenario/100/ci-configuration.tfvars \
+            -var-folder ${GITHUB_WORKSPACE}/public/landingzones/caf_launchpad/scenario/100 \
             -launchpad \
             --environment ${{ github.run_id }} \
             '-var prefix=g${{ github.run_id }}' \
