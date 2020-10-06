@@ -1,22 +1,22 @@
 [![VScodespaces](https://img.shields.io/endpoint?url=https%3A%2F%2Faka.ms%2Fvso-badge)](https://online.visualstudio.com/environments/new?name=terraform-azurerm-caf-landingzone-modules&repo=aztfmod/terraform-azurerm-caf-landingzone-modules)
 
-# Azure Cloud Adoption Framework - enterprise-scale on Terraform module
+# Azure Cloud Adoption Framework - Terraform module
 
-This is a preview of azurerm module for enterprise-scale landing zones on Terraform.
+This is a preview of vnext azurerm module for CAF landing zones on Terraform.
 Microsoft [Cloud Adoption Framework for Azure](https://aka.ms/caf) provides you with guidance and best practices to adopt Azure.
 
-## Core enterprise-scale components
+## Core components
 
-Deploying the core of enterprise-scale landing zones will use two elements:
+Deploying the core of landing zones will use two elements:
 
 * landing zones repository (https://github.com/Azure/caf-terraform-landingzones): will assemble all components together and do service composition.
 * this module, called from the Terraform registry (https://registry.terraform.io/namespaces/aztfmod): will provide all the logic to deploy fundamental components.
 
-This module can be called from landing zones using the Terraform registry: https://registry.terraform.io/modules/aztfmod/caf-enterprise-scale/azurerm/
+This module can be called from landing zones using the Terraform registry: https://registry.terraform.io/modules/aztfmod/caf/azurerm/
 
 ```terraform
-module "caf-enterprise-scale" {
-  source  = "aztfmod/caf-enterprise-scale/azurerm"
+module "caf" {
+  source  = "aztfmod/caf/azurerm"
   version = "~>0.2"
   # insert the 7 required variables here
 }
@@ -92,7 +92,7 @@ We categorize the various examples in this repo as follow:
 | 400   | advanced functionalities, multi region support, includes RBAC features and security hardening | not working in AIRS, need AAD permissions  |
 
 
-## Landing zone constructions sets
+## Landing zone solutions
 
 Once you deploy the core enterprise scale components, you can leverage the following additional solution landing zones:
 
