@@ -74,42 +74,6 @@ module public_ip_addresses {
 #  (Support vnet in remote tfstates)
 #
 
-data "terraform_remote_state" "peering_from" {
-  for_each = {
-    for key, peering in local.networking.vnet_peerings : key => peering
-    if try(peering.from.tfstate_key, null) != null
-  }
-
-  backend = "azurerm"
-  config = {
-    storage_account_name = var.tfstates[each.value.from.tfstate_key].storage_account_name
-    container_name       = var.tfstates[each.value.from.tfstate_key].container_name
-    resource_group_name  = var.tfstates[each.value.from.tfstate_key].resource_group_name
-    key                  = var.tfstates[each.value.from.tfstate_key].key
-    use_msi              = var.use_msi
-    subscription_id      = var.use_msi ? var.tfstates[each.value.from.tfstate_key].subscription_id : null
-    tenant_id            = var.use_msi ? var.tfstates[each.value.from.tfstate_key].tenant_id : null
-  }
-}
-
-data "terraform_remote_state" "peering_to" {
-  for_each = {
-    for key, peering in local.networking.vnet_peerings : key => peering
-    if try(peering.to.tfstate_key, null) != null
-  }
-
-  backend = "azurerm"
-  config = {
-    storage_account_name = var.tfstates[each.value.to.tfstate_key].storage_account_name
-    container_name       = var.tfstates[each.value.to.tfstate_key].container_name
-    resource_group_name  = var.tfstates[each.value.to.tfstate_key].resource_group_name
-    key                  = var.tfstates[each.value.to.tfstate_key].key
-    use_msi              = var.use_msi
-    subscription_id      = var.use_msi ? var.tfstates[each.value.to.tfstate_key].subscription_id : null
-    tenant_id            = var.use_msi ? var.tfstates[each.value.to.tfstate_key].tenant_id : null
-  }
-}
-
 # naming convention for peering name
 resource "azurecaf_name" "peering" {
   for_each = local.networking.vnet_peerings
@@ -128,9 +92,9 @@ resource "azurerm_virtual_network_peering" "peering" {
   for_each   = local.networking.vnet_peerings
 
   name                         = azurecaf_name.peering[each.key].result
-  virtual_network_name         = try(each.value.from.tfstate_key, null) == null ? module.networking[each.value.from.vnet_key].name : data.terraform_remote_state.peering_from[each.key].outputs[each.value.from.output_key][each.value.from.lz_key][each.value.from.vnet_key].name
-  resource_group_name          = try(each.value.from.tfstate_key, null) == null ? module.networking[each.value.from.vnet_key].resource_group_name : data.terraform_remote_state.peering_from[each.key].outputs[each.value.from.output_key][each.value.from.lz_key][each.value.from.vnet_key].resource_group_name
-  remote_virtual_network_id    = try(each.value.to.tfstate_key, null) == null ? module.networking[each.value.to.vnet_key].id : data.terraform_remote_state.peering_to[each.key].outputs[each.value.to.output_key][each.value.to.lz_key][each.value.to.vnet_key].id
+  virtual_network_name         = try(each.value.from.lz_key, null) == null ? local.combined_objects_networking[each.value.from.vnet_key].name : local.combined_objects_networking[each.value.from.lz_key].vnets[each.value.from.vnet_key].name
+  resource_group_name          = try(each.value.from.lz_key, null) == null ? local.combined_objects_networking[each.value.from.vnet_key].resource_group_name : local.combined_objects_networking[each.value.from.lz_key].vnets[each.value.from.vnet_key].resource_group_name
+  remote_virtual_network_id    = try(each.value.to.lz_key, null) == null ? local.combined_objects_networking[each.value.to.vnet_key].id : local.combined_objects_networking[each.value.to.lz_key].vnets[each.value.to.vnet_key].id
   allow_virtual_network_access = try(each.value.allow_virtual_network_access, true)
   allow_forwarded_traffic      = try(each.value.allow_forwarded_traffic, false)
   allow_gateway_transit        = try(each.value.allow_gateway_transit, false)

@@ -13,8 +13,6 @@ module azuread_applications {
   global_settings         = local.global_settings
   user_type               = var.user_type
   keyvaults               = module.keyvaults
-  tfstates                = var.tfstates
-  use_msi                 = var.use_msi
 }
 
 output aad_apps {

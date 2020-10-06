@@ -21,7 +21,7 @@ virtual_machines = {
     provision_vm_agent                   = true
     boot_diagnostics_storage_account_key = "bootdiag_region1"
 
-    os_type = "linux"
+    os_type = "windows"
 
     # the auto-generated ssh key in keyvault secret. Secret name being {VM name}-ssh-public and {VM name}-ssh-private
     keyvault_key = "example_vm_rg1"
@@ -42,12 +42,14 @@ virtual_machines = {
     }
 
     virtual_machine_settings = {
-      linux = {
-        name                            = "example_vm1"
-        size                            = "Standard_F2"
-        admin_username                  = "adminuser"
-        disable_password_authentication = true
-        custom_data                     = "scripts/cloud-init/install-rover-tools.config"
+      windows = {
+        name           = "example_vm2"
+        size           = "Standard_F2"
+        admin_username = "adminuser"
+
+        # Spot VM to save money
+        priority        = "Spot"
+        eviction_policy = "Deallocate"
 
         # Value of the nic keys to attach the VM. The first one in the list is the default nic
         network_interface_keys = ["nic0"]
@@ -59,9 +61,9 @@ virtual_machines = {
         }
 
         source_image_reference = {
-          publisher = "Canonical"
-          offer     = "UbuntuServer"
-          sku       = "18.04-LTS"
+          publisher = "MicrosoftWindowsServer"
+          offer     = "WindowsServer"
+          sku       = "2019-Datacenter"
           version   = "latest"
         }
 
