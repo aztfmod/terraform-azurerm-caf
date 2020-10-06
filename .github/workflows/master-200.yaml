@@ -128,7 +128,6 @@ jobs:
 
     strategy:
       fail-fast: false
-      matrix:
 
     container:
       image: aztfmod/roveralpha:2010.061305
