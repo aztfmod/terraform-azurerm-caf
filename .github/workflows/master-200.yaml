@@ -6,20 +6,18 @@
 name: scenarios-200
 
 on:
-  push:
+
   pull_request:
   #   branches:
   #     - master
   #     - '0.4'
-  # push:
-  #   branches:
-  #     - master
-  #   paths-ignore:
-  #     - .github/workflows/master-100.yaml
-  #     - 'documentation/**'
-  #     - '_pictures/**'
-  #     - 'README.md'
-  #     - 'CHANGELOG.md'
+  push:
+    paths-ignore:
+      - .github/workflows/master-100.yaml
+      - 'documentation/**'
+      - '_pictures/**'
+      - 'README.md'
+      - 'CHANGELOG.md'
   schedule:
     - cron:  '0 0 * * *'
 
@@ -44,7 +42,7 @@ jobs:
           random_length: ['5']
 
     container:
-      image: aztfmod/roveralpha:2010.050603
+      image: aztfmod/roveralpha:2010.061305
       options: --user 0
 
     steps:
@@ -95,7 +93,7 @@ jobs:
           ]
 
     container:
-      image: aztfmod/roveralpha:2010.050603
+      image: aztfmod/roveralpha:2010.061305
       options: --user 0
 
     steps:
@@ -136,7 +134,7 @@ jobs:
           region: ["westus2"]
 
     container:
-      image: aztfmod/roveralpha:2010.050603
+      image: aztfmod/roveralpha:2010.061305
       options: --user 0
 
     steps:
