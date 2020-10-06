@@ -122,7 +122,7 @@ jobs:
       - name: deploy example
         run: |
           /tf/rover/rover.sh -lz ${GITHUB_WORKSPACE}/examples -a apply \
-            -level level2 \
+            -level level3 \
             -tfstate $(basename ${{ matrix.config_files }}).tfstate \
             -var-folder ${GITHUB_WORKSPACE}/${{ matrix.config_files }} \
             --environment ${{ github.run_id }}
@@ -130,7 +130,7 @@ jobs:
       - name: destroy example
         run: |
           /tf/rover/rover.sh -lz ${GITHUB_WORKSPACE}/examples -a destroy \
-            -level level2 \
+            -level level3 \
             -tfstate $(basename ${{ matrix.config_files }}).tfstate \
             -var-folder ${GITHUB_WORKSPACE}/${{ matrix.config_files }} \
             --environment ${{ github.run_id }} \
