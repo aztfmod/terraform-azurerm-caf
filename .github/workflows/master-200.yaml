@@ -98,6 +98,7 @@ jobs:
         run: |
           /tf/rover/rover.sh -lz ${GITHUB_WORKSPACE}/examples -a apply \
             -tfstate $(basename ${{ matrix.config_files }}).tfstate \
+            -level level2 \
             -var-file ${GITHUB_WORKSPACE}/${{ matrix.config_files }}.tfvars \
             --environment ${{ github.run_id }}
 
@@ -106,6 +107,7 @@ jobs:
         run: |
           /tf/rover/rover.sh -lz ${GITHUB_WORKSPACE}/examples -a destroy \
             -tfstate $(basename ${{ matrix.config_files }}).tfstate \
+            -level level2 \
             -var-file ${GITHUB_WORKSPACE}/${{ matrix.config_files }}.tfvars \
             --environment ${{ github.run_id }} \
             -refresh=false \

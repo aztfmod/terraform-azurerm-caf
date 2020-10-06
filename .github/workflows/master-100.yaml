@@ -87,6 +87,7 @@ jobs:
             "examples/networking/virtual_network/100-subnet-delegation",
             "examples/databricks/100-simple-databricks",
             "examples/networking/private_dns/100-private-dns-vnet-links",
+            "examples/monitoring/service_health_alerts",
             # "examples/redis_cache/100-redis-standard"
             # "examples/webapps/appservice/101-appservice-simple",
             # "examples/webapps/appservice/102-appservice-slots",
@@ -110,6 +111,7 @@ jobs:
         run: |
           /tf/rover/rover.sh -lz ${GITHUB_WORKSPACE}/examples -a apply \
             -tfstate $(basename ${{ matrix.config_files }}).tfstate \
+            -level level2 \
             -var-file ${GITHUB_WORKSPACE}/${{ matrix.config_files }}/configuration.tfvars \
             --environment ${{ github.run_id }}
 
@@ -118,6 +120,7 @@ jobs:
         run: |
           /tf/rover/rover.sh -lz ${GITHUB_WORKSPACE}/examples -a destroy \
             -tfstate $(basename ${{ matrix.config_files }}).tfstate \
+            -level level2 \
             -var-file ${GITHUB_WORKSPACE}/${{ matrix.config_files }}/configuration.tfvars \
             --environment ${{ github.run_id }} \
             -auto-approve
