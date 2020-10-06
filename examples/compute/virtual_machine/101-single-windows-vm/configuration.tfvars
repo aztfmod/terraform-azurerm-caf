@@ -43,12 +43,12 @@ virtual_machines = {
 
     virtual_machine_settings = {
       windows = {
-        name                            = "example_vm2"
-        size                            = "Standard_F2"
-        admin_username                  = "adminuser"
+        name           = "example_vm2"
+        size           = "Standard_F2"
+        admin_username = "adminuser"
 
         # Spot VM to save money
-        priority = "Spot"
+        priority        = "Spot"
         eviction_policy = "Deallocate"
 
         # Value of the nic keys to attach the VM. The first one in the list is the default nic

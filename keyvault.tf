@@ -9,7 +9,7 @@ module "keyvaults" {
   resource_groups = module.resource_groups
   tenant_id       = local.client_config.tenant_id
   diagnostics     = local.diagnostics
-  vnets           = lookup(each.value, "network", null) == null ? {} : module.networking
+  vnets           = lookup(each.value, "network", null) == null ? {} : local.combined_objects_networking
 }
 
 #
@@ -23,7 +23,7 @@ module "keyvault_access_policies" {
   source   = "./modules/security/keyvault_access_policies"
   for_each = var.keyvault_access_policies
 
-  keyvault_id             = local.combined_objects.keyvaults[each.key].id
+  keyvault_id             = local.combined_objects_keyvaults[each.key].id
   access_policies         = each.value
   tenant_id               = local.client_config.tenant_id
   azuread_groups          = module.azuread_groups
@@ -38,7 +38,7 @@ module "keyvault_access_policies_azuread_apps" {
   source   = "./modules/security/keyvault_access_policies"
   for_each = var.keyvault_access_policies
 
-  keyvault_id     = local.combined_objects.keyvaults[each.key].id
+  keyvault_id     = local.combined_objects_keyvaults[each.key].id
   access_policies = each.value
   tenant_id       = local.client_config.tenant_id
   azuread_apps    = module.azuread_applications

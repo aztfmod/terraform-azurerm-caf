@@ -111,9 +111,9 @@ locals {
 
   # CAF landing zones can retrieve remote objects from a different landing zone and the 
   # combined_objects will merge it with the local objects 
-  combined_objects = {
-    keyvaults = merge(module.keyvaults, try(var.remote_objects.keyvaults, {}))
-  }
+  combined_objects_keyvaults   = merge(module.keyvaults, try(var.remote_objects.keyvaults, {}))
+  combined_objects_networking  = merge(module.networking, try(var.remote_objects.networking, {}))
+  combined_objects_private_dns = merge(module.private_dns, try(var.remote_objects.private_dns, {}))
 
 }
 

@@ -16,7 +16,7 @@ resource "azurecaf_name" "keyvault" {
 resource "azurerm_key_vault" "keyvault" {
 
   name                            = azurecaf_name.keyvault.result
-  location                        = lookup(var.settings, "region", null) == null ? var.resource_groups[var.settings.resource_group_key].location : var.global_settings.regions[var.settings.region] 
+  location                        = lookup(var.settings, "region", null) == null ? var.resource_groups[var.settings.resource_group_key].location : var.global_settings.regions[var.settings.region]
   resource_group_name             = var.resource_groups[var.settings.resource_group_key].name
   tenant_id                       = var.tenant_id
   sku_name                        = try(var.settings.sku_name, "standard")

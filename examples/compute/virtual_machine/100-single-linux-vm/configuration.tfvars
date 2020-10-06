@@ -50,7 +50,7 @@ virtual_machines = {
         custom_data                     = "scripts/cloud-init/install-rover-tools.config"
 
         # Spot VM to save money
-        priority = "Spot"
+        priority        = "Spot"
         eviction_policy = "Deallocate"
 
         # Value of the nic keys to attach the VM. The first one in the list is the default nic

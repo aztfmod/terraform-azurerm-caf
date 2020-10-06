@@ -18,6 +18,7 @@ variable tfstates {
 
 variable enable {
   description = "Map of services defined in the configuration file you want to disable during a deployment"
+  default     = {}
 }
 variable environment {
   default = "sandpit"
