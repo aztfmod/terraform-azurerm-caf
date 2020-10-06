@@ -92,9 +92,9 @@ resource "azurerm_virtual_network_peering" "peering" {
   for_each   = local.networking.vnet_peerings
 
   name                         = azurecaf_name.peering[each.key].result
-  virtual_network_name         = try(each.value.from.lz_key, null) == null ? local.combined_objects.networking[each.value.from.vnet_key].name : local.combined_objects.networking[each.value.from.lz_key].vnets[each.value.from.vnet_key].name
-  resource_group_name          = try(each.value.from.lz_key, null) == null ? local.combined_objects.networking[each.value.from.vnet_key].resource_group_name : local.combined_objects.networking[each.value.from.lz_key].vnets[each.value.from.vnet_key].resource_group_name
-  remote_virtual_network_id    = try(each.value.to.lz_key, null) == null ? local.combined_objects.networking[each.value.to.vnet_key].id : local.combined_objects.networking[each.value.to.lz_key].vnets[each.value.to.vnet_key].id
+  virtual_network_name         = try(each.value.from.lz_key, null) == null ? local.combined_objects_networking[each.value.from.vnet_key].name : local.combined_objects_networking[each.value.from.lz_key].vnets[each.value.from.vnet_key].name
+  resource_group_name          = try(each.value.from.lz_key, null) == null ? local.combined_objects_networking[each.value.from.vnet_key].resource_group_name : local.combined_objects_networking[each.value.from.lz_key].vnets[each.value.from.vnet_key].resource_group_name
+  remote_virtual_network_id    = try(each.value.to.lz_key, null) == null ? local.combined_objects_networking[each.value.to.vnet_key].id : local.combined_objects_networking[each.value.to.lz_key].vnets[each.value.to.vnet_key].id
   allow_virtual_network_access = try(each.value.allow_virtual_network_access, true)
   allow_forwarded_traffic      = try(each.value.allow_forwarded_traffic, false)
   allow_gateway_transit        = try(each.value.allow_gateway_transit, false)

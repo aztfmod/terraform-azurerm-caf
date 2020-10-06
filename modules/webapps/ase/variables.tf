@@ -60,7 +60,3 @@ variable private_dns {
 }
 
 variable settings {}
-
-variable tfstates {}
-
-variable use_msi {}
