@@ -64,6 +64,7 @@ jobs:
       - name: launchpad
         run: |
           /tf/rover/rover.sh -lz ${GITHUB_WORKSPACE}/public/landingzones/caf_launchpad -a apply \
+            -level level0 \
             -var-folder ${GITHUB_WORKSPACE}/public/landingzones/caf_launchpad/scenario/200 \
             -launchpad \
             --environment ${{ github.run_id }} \
@@ -76,7 +77,8 @@ jobs:
       - name: foundations
         run: |
           /tf/rover/rover.sh -lz ${GITHUB_WORKSPACE}/public/landingzones/caf_foundations -a apply \
-          --environment ${{ github.run_id }}
+            -level level1 \
+            --environment ${{ github.run_id }}
 
   examples:
     name: examples
@@ -107,6 +109,7 @@ jobs:
       - name: deploy example
         run: |
           /tf/rover/rover.sh -lz ${GITHUB_WORKSPACE}/examples -a apply \
+            -level level2 \
             -tfstate $(basename ${{ matrix.config_files }}).tfstate \
             -var-file ${GITHUB_WORKSPACE}/${{ matrix.config_files }}.tfvars \
             --environment ${{ github.run_id }}
@@ -114,6 +117,7 @@ jobs:
       - name: destroy example
         run: |
           /tf/rover/rover.sh -lz ${GITHUB_WORKSPACE}/examples -a destroy \
+            -level level2 \
             -tfstate $(basename ${{ matrix.config_files }}).tfstate \
             -var-file ${GITHUB_WORKSPACE}/${{ matrix.config_files }}.tfvars \
             --environment ${{ github.run_id }} \
@@ -153,14 +157,16 @@ jobs:
       - name: foundations
         run: |
           /tf/rover/rover.sh -lz ${GITHUB_WORKSPACE}/public/landingzones/caf_foundations -a destroy \
-          --environment ${{ github.run_id }} \
-          -auto-approve
+            -level level1 \
+            --environment ${{ github.run_id }} \
+            -auto-approve
 
       - name: Remove launchpad
         run: |
 
           /tf/rover/rover.sh -lz ${GITHUB_WORKSPACE}/public/landingzones/caf_launchpad/ -a destroy \
-            -var-file ${GITHUB_WORKSPACE}/public/landingzones/caf_launchpad/scenario/200/configuration.tfvars \
+            -level level0 \
+            -var-folder ${GITHUB_WORKSPACE}/public/landingzones/caf_launchpad/scenario/200 \
             -launchpad \
             -env ${{ github.run_id }} \
             '-var prefix=g${{ github.run_id }}' \
