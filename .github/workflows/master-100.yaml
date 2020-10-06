@@ -7,6 +7,12 @@ name: scenarios-100
 
 on:
   push:
+    paths-ignore:
+      - .github/workflows/master-200.yaml
+      - 'documentation/**'
+      - '_pictures/**'
+      - 'README.md'
+      - 'CHANGELOG.md'
   pull_request:
   schedule:
     - cron:  '0 3 * * *'
