@@ -53,6 +53,7 @@ jobs:
         run: |
           /tf/rover/rover.sh -lz ${GITHUB_WORKSPACE}/public/landingzones/caf_launchpad -a apply \
             -var-folder ${GITHUB_WORKSPACE}/public/landingzones/caf_launchpad/scenario/100 \
+            -level level0 \
             -launchpad \
             --environment ${{ github.run_id }} \
             '-var random_length=${{ matrix.random_length }}' \
@@ -64,13 +65,15 @@ jobs:
       - name: foundations
         run: |
           /tf/rover/rover.sh -lz ${GITHUB_WORKSPACE}/public/landingzones/caf_foundations -a apply \
-          --environment ${{ github.run_id }}
+            -level level1 \
+            --environment ${{ github.run_id }}
 
       - name: networking_hub
         run: |
           /tf/rover/rover.sh -lz ${GITHUB_WORKSPACE}/public/landingzones/caf_networking -a apply \
+            -level level2 \
             -tfstate networking_hub.tfstate \
-            -var-file ${GITHUB_WORKSPACE}/public/landingzones/caf_networking/scenario/100-single-region-hub/configuration.tfvars \
+            -var-folder ${GITHUB_WORKSPACE}/public/landingzones/caf_networking/scenario/100-single-region-hub \
             --environment ${{ github.run_id }}
 
   examples:
@@ -113,15 +116,17 @@ jobs:
       - name: deploy example
         run: |
           /tf/rover/rover.sh -lz ${GITHUB_WORKSPACE}/examples -a apply \
+            -level level2 \
             -tfstate $(basename ${{ matrix.config_files }}).tfstate \
-            -var-file ${GITHUB_WORKSPACE}/${{ matrix.config_files }}/configuration.tfvars \
+            -var-folder ${GITHUB_WORKSPACE}/${{ matrix.config_files }} \
             --environment ${{ github.run_id }}
 
       - name: destroy example
         run: |
           /tf/rover/rover.sh -lz ${GITHUB_WORKSPACE}/examples -a destroy \
+            -level level2 \
             -tfstate $(basename ${{ matrix.config_files }}).tfstate \
-            -var-file ${GITHUB_WORKSPACE}/${{ matrix.config_files }}/configuration.tfvars \
+            -var-folder ${GITHUB_WORKSPACE}/${{ matrix.config_files }} \
             --environment ${{ github.run_id }} \
             -auto-approve
 
@@ -158,22 +163,25 @@ jobs:
       - name: networking_hub
         run: |
           /tf/rover/rover.sh -lz ${GITHUB_WORKSPACE}/public/landingzones/caf_networking -a destroy \
-          -var-file ${GITHUB_WORKSPACE}/public/landingzones/caf_networking/scenario/100-single-region-hub/configuration.tfvars \
-          --environment ${{ github.run_id }} \
-          -auto-approve
+            -level level2 \
+            -var-folder ${GITHUB_WORKSPACE}/public/landingzones/caf_networking/scenario/100-single-region-hub \
+            --environment ${{ github.run_id }} \
+            -auto-approve
 
 
       - name: foundations
         run: |
           /tf/rover/rover.sh -lz ${GITHUB_WORKSPACE}/public/landingzones/caf_foundations -a destroy \
-          --environment ${{ github.run_id }} \
-          -auto-approve
+            -level level1 \
+            --environment ${{ github.run_id }} \
+            -auto-approve
 
       - name: Remove launchpad
         run: |
 
           /tf/rover/rover.sh -lz ${GITHUB_WORKSPACE}/public/landingzones/caf_launchpad/ -a destroy \
-            -var-file ${GITHUB_WORKSPACE}/public/landingzones/caf_launchpad/scenario/100/ci-configuration.tfvars \
+            -level level0 \
+            -var-folder ${GITHUB_WORKSPACE}/public/landingzones/caf_launchpad/scenario/100 \
             -launchpad \
             --environment ${{ github.run_id }} \
             '-var prefix=g${{ github.run_id }}' \
