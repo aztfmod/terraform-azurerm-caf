@@ -24,7 +24,7 @@ resource "azurerm_app_service" "app_service" {
   https_only              = lookup(var.settings, "https_only", null)
 
   dynamic "identity" {
-    for_each = try(var.identity, null) != null ? [1] : [0]
+    for_each = try(var.identity, null) != null ? [1] : []
 
     content {
       type         = try(var.identity.type, null)

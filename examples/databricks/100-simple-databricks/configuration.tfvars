@@ -56,30 +56,24 @@ vnets = {
       name          = "databricks"
       address_space = ["10.100.100.0/24"]
     }
-    specialsubnets = {}
     subnets = {
       databricks_public = {
         name = "databricks-public"
         cidr = ["10.100.100.64/26"]
         delegation = {
-          name = "databricks"
-          service_delegation = {
-            name = "Microsoft.Databricks/workspaces"
-          }
+          name               = "databricks"
+          service_delegation = "Microsoft.Databricks/workspaces"
         }
       }
       databricks_private = {
         name = "databricks-private"
         cidr = ["10.100.100.128/26"]
         delegation = {
-          name = "databricks"
-          service_delegation = {
-            name = "Microsoft.Databricks/workspaces"
-          }
+          name               = "databricks"
+          service_delegation = "Microsoft.Databricks/workspaces"
         }
       }
     }
-
   }
 }
 

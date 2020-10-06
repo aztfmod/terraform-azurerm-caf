@@ -46,20 +46,20 @@ data "azurerm_client_config" "current" {}
 data "terraform_remote_state" "caf_foundations" {
   backend = "azurerm"
   config = {
-    storage_account_name = var.lowerlevel_storage_account_name
-    container_name       = var.lowerlevel_container_name
+    storage_account_name = var.lower_storage_account_name
+    container_name       = var.lower_container_name
     key                  = var.tfstates.caf_foundations.tfstate
-    resource_group_name  = var.lowerlevel_resource_group_name
+    resource_group_name  = var.lower_resource_group_name
   }
 }
 
 data "terraform_remote_state" "networking" {
   backend = "azurerm"
   config = {
-    storage_account_name = var.lowerlevel_storage_account_name
-    container_name       = var.lowerlevel_container_name
+    storage_account_name = var.lower_storage_account_name
+    container_name       = var.lower_container_name
     key                  = var.tfstates.networking.tfstate
-    resource_group_name  = var.lowerlevel_resource_group_name
+    resource_group_name  = var.lower_resource_group_name
   }
 }
 

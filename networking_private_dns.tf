@@ -12,7 +12,7 @@ module "private_dns" {
   tags                = try(each.value.tags, null)
   tfstates            = var.tfstates
   use_msi             = var.use_msi
-  vnets               = module.networking
+  vnets               = local.combined_objects_networking
 }
 
 output "private_dns" {
