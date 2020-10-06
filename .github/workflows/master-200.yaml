@@ -6,6 +6,7 @@
 name: scenarios-200
 
 on:
+  push:
   pull_request:
   #   branches:
   #     - master
