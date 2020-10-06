@@ -8,27 +8,33 @@ variable tfstate_container_name {}
 variable tfstate_key {}
 variable tfstate_resource_group_name {}
 
-variable tfstates {
-  default = {
-    caf_foundations = {
-      tfstate = "caf_foundations.tfstate"
-    }
-    networking = {
-      tfstate = "caf_foundations.tfstate"
-    }
-  }
-}
-
 variable global_settings {
   default = {}
 }
 
-variable landingzone_name {
-  default = "appservices"
+variable landingzone {
+  default = {
+    backend_type = "azurerm"
+    current = {
+      level = "level3"
+      key   = "examples"
+    }
+    lower = {
+      foundations = {
+        tfstate = "caf_foundations.tfstate"
+      }
+      networking = {
+        networking_hub = {
+          tfstate = "networking_hub.tfstate"
+        }
+        launchpad = {
+          tfstate = "caf_foundations.tfstate"
+        }
+      }
+    }
+  }
 }
-variable level {
-  default = "level3"
-}
+
 variable environment {
   default = "sandpit"
 }
