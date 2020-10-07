@@ -9,7 +9,7 @@ module "keyvaults" {
   resource_groups = module.resource_groups
   tenant_id       = local.client_config.tenant_id
   diagnostics     = local.diagnostics
-  vnets           = lookup(each.value, "network", null) == null ? {} : local.combined_objects_networking
+  vnets           = local.combined_objects_networking
 }
 
 #
