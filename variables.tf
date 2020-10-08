@@ -155,3 +155,7 @@ variable diagnostic_storage_accounts {
 variable shared_services {
   default = {}
 }
+
+variable monitoring {
+  default = {}
+}

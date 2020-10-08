@@ -46,6 +46,8 @@ jobs:
 
     steps:
       - uses: actions/checkout@v2
+
+      - uses: actions/checkout@v2
         with:
           repository: Azure/caf-terraform-landingzones
           path: public
@@ -64,6 +66,7 @@ jobs:
             -level level0 \
             -var-folder ${GITHUB_WORKSPACE}/public/landingzones/caf_launchpad/scenario/200 \
             -launchpad \
+            -parallelism=30 \
             --environment ${{ github.run_id }} \
             '-var random_length=${{ matrix.random_length }}' \
             '-var prefix=g${{ github.run_id }}' \\
@@ -105,15 +108,16 @@ jobs:
       - name: deploy example
         run: |
           /tf/rover/rover.sh -lz ${GITHUB_WORKSPACE}/examples -a apply \
-            -level level3 \
+            -level level2 \
             -tfstate $(basename ${{ matrix.config_files }}).tfstate \
             -var-file ${GITHUB_WORKSPACE}/${{ matrix.config_files }}.tfvars \
             --environment ${{ github.run_id }}
 
       - name: destroy example
+        if: always()
         run: |
           /tf/rover/rover.sh -lz ${GITHUB_WORKSPACE}/examples -a destroy \
-            -level level3 \
+            -level level2 \
             -tfstate $(basename ${{ matrix.config_files }}).tfstate \
             -var-file ${GITHUB_WORKSPACE}/${{ matrix.config_files }}.tfvars \
             --environment ${{ github.run_id }} \
@@ -152,6 +156,7 @@ jobs:
         run: |
           /tf/rover/rover.sh -lz ${GITHUB_WORKSPACE}/public/landingzones/caf_foundations -a destroy \
             -level level1 \
+            -parallelism=30 \
             --environment ${{ github.run_id }} \
             -auto-approve
 
@@ -162,6 +167,7 @@ jobs:
             -level level0 \
             -var-folder ${GITHUB_WORKSPACE}/public/landingzones/caf_launchpad/scenario/200 \
             -launchpad \
+            -parallelism=30 \
             -env ${{ github.run_id }} \
             '-var prefix=g${{ github.run_id }}' \
             '-var tags={testing_job_id="${{ github.run_id }}"}' \
