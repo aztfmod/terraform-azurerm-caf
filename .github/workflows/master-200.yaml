@@ -62,7 +62,7 @@ jobs:
         run: |
           /tf/rover/rover.sh -lz ${GITHUB_WORKSPACE}/public/landingzones/caf_launchpad -a apply \
             -level level0 \
-            -var-folder ${GITHUB_WORKSPACE}/public/landingzones/caf_launchpad/scenario/200 \
+            '-var-folder ${GITHUB_WORKSPACE}/public/landingzones/caf_launchpad/scenario/200' \
             -launchpad \
             --environment ${{ github.run_id }} \
             '-var random_length=${{ matrix.random_length }}' \
