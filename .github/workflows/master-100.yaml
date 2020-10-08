@@ -108,7 +108,7 @@ jobs:
             # "examples/machine_learning/101-aml-vnet",
             "examples/datalake/101-datalake-storage",
             "examples/synapse_analytics/100-synapse",
-            "examples/synapse_analytics/101-synapse-sparkpool"
+            "examples/synapse_analytics/101-synapse-sparkpool",
             "examples/monitoring/service_health_alerts",
             "examples/redis_cache/100-redis-standard",
             "examples/mssql_server/elastic_pools"
