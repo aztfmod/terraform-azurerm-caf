@@ -76,6 +76,7 @@ locals {
   database = {
     mssql_servers               = try(var.database.mssql_servers, {})
     mssql_databases             = try(var.database.mssql_databases, {})
+    mssql_elastic_pools         = try(var.database.mssql_elastic_pools, {})
     azurerm_redis_caches        = try(var.database.azurerm_redis_caches, {})
     synapse_workspaces          = try(var.database.synapse_workspaces, {})
     databricks_workspaces       = try(var.database.databricks_workspaces, {})
@@ -101,6 +102,7 @@ locals {
   shared_services = {
     recovery_vaults = try(var.shared_services.recovery_vaults, {})
     automations     = try(var.shared_services.automations, {})
+    monitoring      = try(var.shared_services.monitoring, {})
   }
 
   enable = {
@@ -108,14 +110,7 @@ locals {
     virtual_machines = try(var.enable.virtual_machines, true)
   }
 
-  # CAF landing zones can retrieve remote objects from a different landing zone and the 
-  # combined_objects will merge it with the local objects 
-  combined_objects_keyvaults           = merge(module.keyvaults, try(var.remote_objects.keyvaults, {}))
-  combined_objects_networking          = merge(module.networking, try(var.remote_objects.networking, {}))
-  combined_objects_private_dns         = merge(module.private_dns, try(var.remote_objects.private_dns, {}))
-  combined_objects_public_ip_addresses = merge(module.public_ip_addresses, try(var.remote_objects.public_ip_addresses, {}))
-
-}
+ }
 
 # The rover handle the identity management transition to cover interactive run and execution on pipelines using azure ad applications or managed identities
 # There are different scenrios are considered:
