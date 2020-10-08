@@ -13,3 +13,15 @@ output identity {
 output azuread_administrator {
   value = try(azurerm_mssql_server.mssql.azuread_administrator, null)
 }
+
+output name {
+  value = azurecaf_name.mssql.result
+}
+
+output resource_group_name {
+  value = var.resource_group_name
+}
+
+output location {
+  value = var.location
+}
