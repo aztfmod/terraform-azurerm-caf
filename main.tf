@@ -108,14 +108,7 @@ locals {
     virtual_machines = try(var.enable.virtual_machines, true)
   }
 
-  # CAF landing zones can retrieve remote objects from a different landing zone and the 
-  # combined_objects will merge it with the local objects 
-  combined_objects_keyvaults           = merge(module.keyvaults, try(var.remote_objects.keyvaults, {}))
-  combined_objects_networking          = merge(module.networking, try(var.remote_objects.networking, {}))
-  combined_objects_private_dns         = merge(module.private_dns, try(var.remote_objects.private_dns, {}))
-  combined_objects_public_ip_addresses = merge(module.public_ip_addresses, try(var.remote_objects.public_ip_addresses, {}))
-
-}
+ }
 
 # The rover handle the identity management transition to cover interactive run and execution on pipelines using azure ad applications or managed identities
 # There are different scenrios are considered:
