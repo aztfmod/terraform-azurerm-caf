@@ -8,7 +8,3 @@ variable azuread_groups {}
 variable vnets {}
 variable private_endpoints {}
 variable resource_groups {}
-variable tfstates {}
-variable use_msi {
-  default = false
-}

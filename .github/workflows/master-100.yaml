@@ -104,7 +104,8 @@ jobs:
             "examples/databricks/100-simple-databricks",
             "examples/networking/private_dns/100-private-dns-vnet-links",
             "examples/monitoring/service_health_alerts",
-            # "examples/redis_cache/100-redis-standard"
+            "examples/redis_cache/100-redis-standard",
+            "examples/mssql_server/elastic_pools"
             # "examples/webapps/appservice/101-appservice-simple",
             # "examples/webapps/appservice/102-appservice-slots",
             # "examples/webapps/appservice/103-appservice-slots",
