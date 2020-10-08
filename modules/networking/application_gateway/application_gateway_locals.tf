@@ -25,7 +25,7 @@ locals {
 
 
   # Try getting subnet from remote vnets
-  private_subnet_id = local.private_local_subnet_id == null? null : try(var.vnets[var.settings.front_end_ip_configurations.private.lz_key].vnets[var.settings.front_end_ip_configurations.private.vnet_key].subnets[var.settings.front_end_ip_configurations.private.subnet_key].id, local.private_local_subnet_id)
+  private_subnet_id = local.private_local_subnet_id == null ? null : try(var.vnets[var.settings.front_end_ip_configurations.private.lz_key].vnets[var.settings.front_end_ip_configurations.private.vnet_key].subnets[var.settings.front_end_ip_configurations.private.subnet_key].id, local.private_local_subnet_id)
   public_subnet_id  = local.public_local_subnet_id == null ? null : try(var.vnets[var.settings.front_end_ip_configurations.public.lz_key].vnets[var.settings.front_end_ip_configurations.public.vnet_key].subnets[var.settings.front_end_ip_configurations.public.subnet_key].id, local.public_local_subnet_id)
 
   ip_configuration = {

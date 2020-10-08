@@ -29,7 +29,7 @@ resource "azurerm_monitor_action_group" "ag1" {
 
 
   dynamic "email_receiver" {
-    for_each = try (var.settings.email_alert_settings, [])
+    for_each = try(var.settings.email_alert_settings, [])
     content {
       name                    = email_receiver.value.name
       email_address           = email_receiver.value.email_address
