@@ -16,9 +16,7 @@ module "mssql_servers" {
   keyvault_id         = try(each.value.administrator_login_password, null) == null ? module.keyvaults[each.value.keyvault_key].id : null
   storage_accounts    = module.storage_accounts
   azuread_groups      = module.azuread_groups
-  vnets               = try(each.value.private_endpoints, {}) == {} ? null : module.networking
+  vnets               = local.combined_objects_networking
   private_endpoints   = try(each.value.private_endpoints, {})
   resource_groups     = try(each.value.private_endpoints, {}) == {} ? null : module.resource_groups
-  tfstates            = var.tfstates
-  use_msi             = var.use_msi
 }
