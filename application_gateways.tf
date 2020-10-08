@@ -11,8 +11,8 @@ module application_gateways {
   settings            = each.value
   sku_name            = each.value.sku_name
   sku_tier            = each.value.sku_tier
-  vnets               = module.networking
-  public_ip_addresses = module.public_ip_addresses
+  vnets               = local.combined_objects_networking
+  public_ip_addresses = local.combined_objects_public_ip_addresses
   application_gateway_applications = {
     for key, value in local.networking.application_gateway_applications : key => value
     if value.application_gateway_key == each.key
