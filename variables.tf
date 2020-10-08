@@ -1,7 +1,6 @@
 # Global settings
 variable global_settings {
   default = {
-    prefix         = ""
     passthrough    = false
     random_length  = 4
     default_region = "region1"
@@ -11,10 +10,14 @@ variable global_settings {
   }
 }
 
-variable tfstates {}
+variable tfstates {
+  default = {}
+}
 
-# To support default values
-
+variable enable {
+  description = "Map of services defined in the configuration file you want to disable during a deployment"
+  default     = {}
+}
 variable environment {
   default = "sandpit"
 }
@@ -46,8 +49,9 @@ variable subscriptions {
   default = {}
 }
 
-variable combined_objects {
-  default = {}
+variable remote_objects {
+  description = "Remote objects is used to allow the landing zone to retrieve remote tfstate objects and pass them to the caf module"
+  default     = {}
 }
 
 ## Diagnostics settings

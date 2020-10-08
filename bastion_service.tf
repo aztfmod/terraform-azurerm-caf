@@ -4,7 +4,7 @@
 #
 
 resource "azurecaf_name" "host" {
-  for_each = local.compute.bastion_hosts
+  for_each = local.enable.bastion_hosts ? local.compute.bastion_hosts : {}
 
   name          = try(each.value.name, "")
   resource_type = "azurerm_bastion_host"
@@ -15,7 +15,7 @@ resource "azurecaf_name" "host" {
 }
 
 resource "azurerm_bastion_host" "host" {
-  for_each = local.compute.bastion_hosts
+  for_each = local.enable.bastion_hosts ? local.compute.bastion_hosts : {}
 
   name                = azurecaf_name.host[each.key].result
   location            = module.resource_groups[each.value.resource_group_key].location
@@ -31,7 +31,7 @@ resource "azurerm_bastion_host" "host" {
 
 module bastion_host_diagnostics {
   source   = "./modules/diagnostics"
-  for_each = local.compute.bastion_hosts
+  for_each = local.enable.bastion_hosts ? local.compute.bastion_hosts : {}
 
   resource_id       = azurerm_bastion_host.host[each.key].id
   resource_location = module.resource_groups[each.value.resource_group_key].location

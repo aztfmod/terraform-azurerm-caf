@@ -3,12 +3,12 @@
 module virtual_machines {
   source     = "./modules/compute/virtual_machine"
   depends_on = [module.keyvault_access_policies]
-  for_each   = local.compute.virtual_machines
+  for_each   = local.enable.virtual_machines ? local.compute.virtual_machines : {}
 
-  global_settings                  = var.global_settings
+  global_settings                  = local.global_settings
   settings                         = each.value
   resource_group_name              = module.resource_groups[each.value.resource_group_key].name
-  location                         = lookup(each.value, "region", null) == null ? module.resource_groups[each.value.resource_group_key].location : var.global_settings.regions[each.value.region]
+  location                         = lookup(each.value, "region", null) == null ? module.resource_groups[each.value.resource_group_key].location : local.global_settings.regions[each.value.region]
   vnets                            = module.networking
   managed_identities               = module.managed_identities
   boot_diagnostics_storage_account = try(module.diagnostic_storage_accounts[each.value.boot_diagnostics_storage_account_key].primary_blob_endpoint, {})

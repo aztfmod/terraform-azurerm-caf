@@ -22,8 +22,8 @@ resource "azurerm_databricks_workspace" "ws" {
 
     content {
       no_public_ip        = try(var.settings.custom_parameters.no_public_ip, false)
-      public_subnet_name  = var.vnet == null ? data.terraform_remote_state.vnets[0].outputs[var.settings.custom_parameters.remote_tfstate.output_key][var.settings.custom_parameters.remote_tfstate.lz_key][var.settings.custom_parameters.remote_tfstate.vnet_key].subnets[var.settings.custom_parameters.public_subnet_key].name : var.vnet.subnets[var.settings.public_subnet_key].name
-      private_subnet_name = var.vnet == null ? data.terraform_remote_state.vnets[0].outputs[var.settings.custom_parameters.remote_tfstate.output_key][var.settings.custom_parameters.remote_tfstate.lz_key][var.settings.custom_parameters.remote_tfstate.vnet_key].subnets[var.settings.custom_parameters.private_subnet_key].name : var.vnet.subnets[var.settings.private_subnet_key].name
+      public_subnet_name  = var.vnet == null ? data.terraform_remote_state.vnets[0].outputs[var.settings.custom_parameters.remote_tfstate.output_key][var.settings.custom_parameters.remote_tfstate.lz_key][var.settings.custom_parameters.remote_tfstate.vnet_key].subnets[var.settings.custom_parameters.public_subnet_key].name : var.vnet.subnets[var.settings.custom_parameters.public_subnet_key].name
+      private_subnet_name = var.vnet == null ? data.terraform_remote_state.vnets[0].outputs[var.settings.custom_parameters.remote_tfstate.output_key][var.settings.custom_parameters.remote_tfstate.lz_key][var.settings.custom_parameters.remote_tfstate.vnet_key].subnets[var.settings.custom_parameters.private_subnet_key].name : var.vnet.subnets[var.settings.custom_parameters.private_subnet_key].name
       virtual_network_id  = var.vnet == null ? data.terraform_remote_state.vnets[0].outputs[var.settings.custom_parameters.remote_tfstate.output_key][var.settings.custom_parameters.remote_tfstate.lz_key][var.settings.custom_parameters.remote_tfstate.vnet_key].id : var.vnet.id
     }
   }

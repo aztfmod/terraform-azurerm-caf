@@ -6,18 +6,14 @@
 name: scenarios-100
 
 on:
+  push:
+    paths-ignore:
+      - .github/workflows/master-200.yaml
+      - 'documentation/**'
+      - '_pictures/**'
+      - 'README.md'
+      - 'CHANGELOG.md'
   pull_request:
-    branches:
-      - master
-  # push:
-  #   branches:
-  #     - master
-  #   paths-ignore:
-  #     - .github/workflows/master-200.yaml
-  #     - 'documentation/**'
-  #     - '_pictures/**'
-  #     - 'README.md'
-  #     - 'CHANGELOG.md'
   schedule:
     - cron:  '0 3 * * *'
 
@@ -39,13 +35,18 @@ jobs:
       max-parallel: 1
       matrix:
           region: ["southeastasia"]
+          random_length: ['5']
 
     container:
-      image: aztfmod/roveralpha:2009.180404
+      image: aztfmod/roveralpha:2010.061305
       options: --user 0
 
     steps:
       - uses: actions/checkout@v2
+        with:
+          repository: Azure/caf-terraform-landingzones
+          path: public
+          ref: "0.4"
 
       - name: Login azure
         run: |
@@ -56,33 +57,29 @@ jobs:
 
       - name: launchpad
         run: |
-          # ln -s ${GITHUB_WORKSPACE} /tf/caf
+          /tf/rover/rover.sh -lz ${GITHUB_WORKSPACE}/public/landingzones/caf_launchpad -a apply \
+            -var-folder ${GITHUB_WORKSPACE}/public/landingzones/caf_launchpad/scenario/100 \
+            -level level0 \
+            -launchpad \
+            --environment ${{ github.run_id }} \
+            '-var random_length=${{ matrix.random_length }}' \
+            '-var prefix=g${{ github.run_id }}' \
+            '-var regions={region1="${{ matrix.region }}"}' \
+            '-var tags={testing_job_id="${{ github.run_id }}"}'
 
-          # ls /tf/caf
-
-          id=$(az storage account list --query "[?tags.tfstate=='level0' && tags.environment=='${{ github.run_id }}']" -o json | jq -r .[0].id)
-
-          if [ "${id}" == "null" ]; then
-
-            /tf/rover/rover.sh -lz ${GITHUB_WORKSPACE}/landingzones/caf_launchpad -a apply \
-              -var-file ${GITHUB_WORKSPACE}/landingzones/caf_launchpad/scenario/100/ci-configuration.tfvars \
-              -launchpad \
-              --environment ${{ github.run_id }} \
-              '-var prefix=g${{ github.run_id }}' \
-              '-var regions={region1="${{ matrix.region }}"}' \
-              '-var tags={testing_job_id="${{ github.run_id }}"}'
-          fi
 
       - name: foundations
         run: |
-          /tf/rover/rover.sh -lz ${GITHUB_WORKSPACE}/landingzones/caf_foundations -a apply \
-          --environment ${{ github.run_id }}
+          /tf/rover/rover.sh -lz ${GITHUB_WORKSPACE}/public/landingzones/caf_foundations -a apply \
+            -level level1 \
+            --environment ${{ github.run_id }}
 
       - name: networking_hub
         run: |
-          /tf/rover/rover.sh -lz ${GITHUB_WORKSPACE}/landingzones/caf_networking -a apply \
+          /tf/rover/rover.sh -lz ${GITHUB_WORKSPACE}/public/landingzones/caf_networking -a apply \
+            -level level2 \
             -tfstate networking_hub.tfstate \
-            -var-file ${GITHUB_WORKSPACE}/landingzones/caf_networking/scenario/100-single-region-hub/configuration.tfvars \
+            -var-folder ${GITHUB_WORKSPACE}/public/landingzones/caf_networking/scenario/100-single-region-hub \
             --environment ${{ github.run_id }}
 
   examples:
@@ -95,17 +92,28 @@ jobs:
       fail-fast: false
       matrix:
           config_files: [
-            "examples/compute/virtual_machine/100-simple-vm",
+            "examples/app_insights/100-all-attributes",
+            "examples/app_insights/100-simple",
+            "examples/compute/container_registry/100-simple-acr",
+            "examples/compute/virtual_machine/100-single-linux-vm",
+            "examples/compute/virtual_machine/101-single-windows-vm",
+            "examples/networking/virtual_network/100-subnet-delegation",
+            "examples/databricks/100-simple-databricks",
             "examples/networking/private_dns/100-private-dns-vnet-links",
             "examples/redis_cache/100-redis-standard",
-            "examples/webapps/appservice/101-appservice-simple",
-            "examples/webapps/appservice/102-appservice-slots",
-            "examples/webapps/appservice/103-appservice-slots",
-            "examples/webapps/appservice-environment/101-simple_ase"
+            "examples/machine_learning/100-aml",
+            "examples/machine_learning/101-aml-vnet",
+            "examples/datalake/101-datalake-storage",
+            "examples/synapse_analytics/100-synapse",
+            "examples/synapse_analytics/101-synapse-sparkpool"
+            # "examples/webapps/appservice/101-appservice-simple",
+            # "examples/webapps/appservice/102-appservice-slots",
+            # "examples/webapps/appservice/103-appservice-slots",
+            # "examples/webapps/appservice-environment/101-simple_ase"
           ]
 
     container:
-      image: aztfmod/roveralpha:2009.180404
+      image: aztfmod/roveralpha:2010.061305
       options: --user 0
 
     steps:
@@ -118,16 +126,18 @@ jobs:
 
       - name: deploy example
         run: |
-          /tf/rover/rover.sh -lz ${GITHUB_WORKSPACE}/solutions -a apply \
+          /tf/rover/rover.sh -lz ${GITHUB_WORKSPACE}/examples -a apply \
+            -level level3 \
             -tfstate $(basename ${{ matrix.config_files }}).tfstate \
-            -var-file ${GITHUB_WORKSPACE}/solutions/${{ matrix.config_files }}/configuration.tfvars \
+            -var-folder ${GITHUB_WORKSPACE}/${{ matrix.config_files }} \
             --environment ${{ github.run_id }}
 
       - name: destroy example
         run: |
-          /tf/rover/rover.sh -lz ${GITHUB_WORKSPACE}/solutions -a destroy \
+          /tf/rover/rover.sh -lz ${GITHUB_WORKSPACE}/examples -a destroy \
+            -level level3 \
             -tfstate $(basename ${{ matrix.config_files }}).tfstate \
-            -var-file ${GITHUB_WORKSPACE}/solutions/${{ matrix.config_files }}/configuration.tfvars \
+            -var-folder ${GITHUB_WORKSPACE}/${{ matrix.config_files }} \
             --environment ${{ github.run_id }} \
             -auto-approve
 
@@ -144,11 +154,15 @@ jobs:
           region: ["southeastasia"]
 
     container:
-      image: aztfmod/roveralpha:2009.180404
+      image: aztfmod/roveralpha:2010.061305
       options: --user 0
 
     steps:
       - uses: actions/checkout@v2
+        with:
+          repository: Azure/caf-terraform-landingzones
+          path: public
+          ref: "0.4"
 
       - name: Login azure
         run: |
@@ -159,23 +173,26 @@ jobs:
 
       - name: networking_hub
         run: |
-          /tf/rover/rover.sh -lz ${GITHUB_WORKSPACE}/landingzones/caf_networking -a destroy \
-          -var-file ${GITHUB_WORKSPACE}/landingzones/caf_networking/scenario/100-single-region-hub/configuration.tfvars \
-          --environment ${{ github.run_id }} \
-          -auto-approve
+          /tf/rover/rover.sh -lz ${GITHUB_WORKSPACE}/public/landingzones/caf_networking -a destroy \
+            -level level2 \
+            -var-folder ${GITHUB_WORKSPACE}/public/landingzones/caf_networking/scenario/100-single-region-hub \
+            --environment ${{ github.run_id }} \
+            -auto-approve
 
 
       - name: foundations
         run: |
-          /tf/rover/rover.sh -lz ${GITHUB_WORKSPACE}/landingzones/caf_foundations -a destroy \
-          --environment ${{ github.run_id }} \
-          -auto-approve
+          /tf/rover/rover.sh -lz ${GITHUB_WORKSPACE}/public/landingzones/caf_foundations -a destroy \
+            -level level1 \
+            --environment ${{ github.run_id }} \
+            -auto-approve
 
       - name: Remove launchpad
         run: |
 
-          /tf/rover/rover.sh -lz ${GITHUB_WORKSPACE}/landingzones/caf_launchpad/ -a destroy \
-            -var-file ${GITHUB_WORKSPACE}/landingzones/caf_launchpad/scenario/100/ci-configuration.tfvars \
+          /tf/rover/rover.sh -lz ${GITHUB_WORKSPACE}/public/landingzones/caf_launchpad/ -a destroy \
+            -level level0 \
+            -var-folder ${GITHUB_WORKSPACE}/public/landingzones/caf_launchpad/scenario/100 \
             -launchpad \
             --environment ${{ github.run_id }} \
             '-var prefix=g${{ github.run_id }}' \
@@ -187,9 +204,11 @@ jobs:
       - name: Complete purge
         if: ${{ always() }}
         run: |
+          for i in `az monitor diagnostic-settings subscription list -o tsv --query "value[?contains(name, '${{ github.run_id }}' )].name"`; do echo "purging subscription diagnostic-settings: $i" && $(az monitor diagnostic-settings subscription delete --name $i --yes); done
           for i in `az monitor log-profiles list -o tsv --query '[].name'`; do az monitor log-profiles delete --name $i; done
           for i in `az ad group list --query "[?contains(displayName, '${{ github.run_id }}')].objectId" -o tsv`; do echo "purging Azure AD group: $i" && $(az ad group delete --verbose --group $i || true); done
           for i in `az ad app list --query "[?contains(displayName, '${{ github.run_id }}')].appId" -o tsv`; do echo "purging Azure AD app: $i" && $(az ad app delete --verbose --id $i || true); done
+          for i in `az keyvault list-deleted --query "[?tags.environment=='${{ github.run_id }}'].name" -o tsv`; do az keyvault purge --name $i; done
           for i in `az group list --query "[?tags.environment=='${{ github.run_id }}'].name" -o tsv`; do echo "purging resource group: $i" && $(az group delete -n $i -y --no-wait || true); done
           for i in `az role assignment list --query "[?contains(roleDefinitionName, '${{ github.run_id }}')].roleDefinitionName" -o tsv`; do echo "purging role assignment: $i" && $(az role assignment delete --role $i || true); done
           for i in `az role definition list --query "[?contains(roleName, '${{ github.run_id }}')].roleName" -o tsv`; do echo "purging custom role definition: $i" && $(az role definition delete --name $i || true); done
