@@ -1,23 +1,18 @@
 [![VScodespaces](https://img.shields.io/endpoint?url=https%3A%2F%2Faka.ms%2Fvso-badge)](https://online.visualstudio.com/environments/new?name=terraform-azurerm-caf-landingzone-modules&repo=aztfmod/terraform-azurerm-caf-landingzone-modules)
 
-# Azure Cloud Adoption Framework - enterprise-scale on Terraform module
+# Azure Cloud Adoption Framework - Terraform module
 
-This is a preview of azurerm module for enterprise-scale landing zones on Terraform.
+This is a preview of azurerm module for CAF landing zones on Terraform.
 Microsoft [Cloud Adoption Framework for Azure](https://aka.ms/caf) provides you with guidance and best practices to adopt Azure.
 
-## Core enterprise-scale components
+## Core components
 
-Deploying the core of enterprise-scale landing zones will use two elements:
-
-* landing zones repository (https://github.com/Azure/caf-terraform-landingzones): will assemble all components together and do service composition.
-* this module, called from the Terraform registry (https://registry.terraform.io/namespaces/aztfmod): will provide all the logic to deploy fundamental components.
-
-This module can be called from landing zones using the Terraform registry: https://registry.terraform.io/modules/aztfmod/caf-enterprise-scale/azurerm/
+This module is usually called by a landing zones using the Terraform registry: https://registry.terraform.io/modules/aztfmod/caf/azurerm/
 
 ```terraform
-module "caf-enterprise-scale" {
-  source  = "aztfmod/caf-enterprise-scale/azurerm"
-  version = "~>0.2"
+module "caf" {
+  source  = "aztfmod/caf/azurerm"
+  version = "~>0.3.0"
   # insert the 7 required variables here
 }
 ```
@@ -29,7 +24,7 @@ module "caf-enterprise-scale" {
 2. Clone the Azure landing zones repo:
 
 ```bash
-git clone --branch vnext https://github.com/Azure/caf-terraform-landingzones.git /tf/caf/public
+git clone --branch 0.4 https://github.com/Azure/caf-terraform-landingzones.git /tf/caf/public
 
 ```
 
@@ -44,7 +39,7 @@ rover login --tenant <tenant_name>.onmicrosoft.com -s <subscription_id>
 4. Deploy the basic launchpad:
 
 ```bash
-rover -lz /tf/caf/public/landingzones/caf_launchpad -launchpad -var-file /tf/caf/public/landingzones/caf_launchpad/scenario/100/configuration.tfvars -a apply
+rover -lz /tf/caf/public/landingzones/caf_launchpad -launchpad -var-folder /tf/caf/public/landingzones/caf_launchpad/scenario/100 -a apply
 ```
 
 Once completed you would see 2 resource groups in your subscription. The scenario 100 is pretty basic and include the minimum to get the terraform remote state management working.
@@ -52,19 +47,19 @@ Once completed you would see 2 resource groups in your subscription. The scenari
 5. Upgrade to advanced launchpad (if you have Azure AD permissions - not working on AIRS):
 
 ```bash
-rover -lz /tf/caf/public/landingzones/caf_launchpad -launchpad -var-file /tf/caf/public/landingzones/caf_launchpad/scenario/200/configuration.tfvars -a apply
+rover -lz /tf/caf/public/landingzones/caf_launchpad -launchpad -var-folder /tf/caf/public/landingzones/caf_launchpad/scenario/200 -a apply
 ```
 
 6. Deploy the caf_foundations. This is currently mostly a stub, but will implement enterprise management groups, policies, alerts, etc.:
 
 ```bash
-rover -lz /tf/caf/public/landingzones/caf_foundations -a apply
+rover -lz /tf/caf/public/landingzones/caf_foundations -level level1 -a apply
 ```
 
 7. Deploy a networking scenario:
 
 ```bash
-rover -lz /tf/caf/public/landingzones/caf_networking/ -var-file /tf/caf/public/landingzones/caf_networking/scenario/100-single-region-hub/configuration.tfvars -a apply
+rover -lz /tf/caf/public/landingzones/caf_networking/ -var-file /tf/caf/public/landingzones/caf_networking/scenario/100-single-region-hub/configuration.tfvars -level level2 -a apply
 ```
 
 ## Coding principles

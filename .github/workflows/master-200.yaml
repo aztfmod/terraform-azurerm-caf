@@ -138,7 +138,7 @@ jobs:
         with:
           repository: Azure/caf-terraform-landingzones
           path: public
-          ref: vnext
+          ref: "0.4"
 
       - name: Login azure
         run: |
