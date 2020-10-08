@@ -1,10 +1,6 @@
 module "caf" {
   source = "../"
 
-  tfstates                    = local.tfstates
-  tags                        = local.tags
-  global_settings             = local.global_settings
-  diagnostics                 = local.diagnostics
   diagnostic_storage_accounts = var.diagnostic_storage_accounts
   logged_user_objectId        = var.logged_user_objectId
   logged_aad_app_objectId     = var.logged_aad_app_objectId
@@ -42,13 +38,4 @@ module "caf" {
     monitoring = var.monitoring
   }
   enable = {}
-  # user_type                         = var.user_type
-  # log_analytics                     = var.log_analytics
-  # diagnostics_destinations          = var.diagnostics_destinations
-  # subscriptions                     = var.subscriptions
-  # azuread_apps                      = var.azuread_apps
-  # azuread_api_permissions           = var.azuread_api_permissions
-  # azuread_app_roles                 = var.azuread_app_roles
-  # azuread_users                     = var.azuread_users
-  # custom_role_definitions           = var.custom_role_definitions
 }
