@@ -1,4 +1,12 @@
-variable keyvault_id {}
+variable keyvaults {
+  default = {}
+}
+variable keyvault_key {
+  default = null
+}
+variable keyvault_id {
+  default = null
+}
 
 variable access_policies {
   validation {
