@@ -15,6 +15,7 @@ resource "azurerm_mssql_database" "mssqldb" {
   create_mode                 = try(var.settings.create_mode, null)
   creation_source_database_id = try(var.settings.creation_source_database_id, null)
   collation                   = try(var.settings.collation, null)
+  elastic_pool_id             = try(var.elastic_pool_id, null)
   license_type                = try(var.settings.license_type, null)
   max_size_gb                 = try(var.settings.max_size_gb, null)
   min_capacity                = try(var.settings.min_capacity, null)
