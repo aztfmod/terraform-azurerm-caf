@@ -14,22 +14,21 @@ module "keyvaults" {
 
 #
 # Keyvault access policies
-#
-# 1- set access policies to the rover logged in user
-# 2 -
+#-
 
 
 module "keyvault_access_policies" {
   source   = "./modules/security/keyvault_access_policies"
   for_each = var.keyvault_access_policies
 
-  keyvault_id             = local.combined_objects_keyvaults[each.key].id
+  keyvault_key            = each.key
+  keyvaults               = local.combined_objects_keyvaults
   access_policies         = each.value
   tenant_id               = local.client_config.tenant_id
   azuread_groups          = module.azuread_groups
   logged_user_objectId    = local.client_config.logged_user_objectId
   logged_aad_app_objectId = local.client_config.logged_aad_app_objectId
-  managed_identities      = module.managed_identities
+  managed_identities      = local.combined_objects_managed_identities
 }
 
 # Need to separate keyvault policies from azure AD apps to get the keyvault with the default policies.
@@ -38,7 +37,8 @@ module "keyvault_access_policies_azuread_apps" {
   source   = "./modules/security/keyvault_access_policies"
   for_each = var.keyvault_access_policies
 
-  keyvault_id     = local.combined_objects_keyvaults[each.key].id
+  keyvault_key    = each.key
+  keyvaults       = local.combined_objects_keyvaults 
   access_policies = each.value
   tenant_id       = local.client_config.tenant_id
   azuread_apps    = module.azuread_applications
