@@ -34,7 +34,8 @@ module "caf" {
     mssql_elastic_pools   = var.mssql_elastic_pools
     synapse_workspaces    = var.synapse_workspaces
     databricks_workspaces = var.databricks_workspaces
-  }
+    machine_learning_workspaces = var.machine_learning_workspaces
+   }
   shared_services = {
     monitoring = var.monitoring
   }
