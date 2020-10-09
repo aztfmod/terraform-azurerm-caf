@@ -109,7 +109,7 @@ locals {
     virtual_machines = try(var.enable.virtual_machines, true)
   }
 
- }
+}
 
 # The rover handle the identity management transition to cover interactive run and execution on pipelines using azure ad applications or managed identities
 # There are different scenrios are considered:
