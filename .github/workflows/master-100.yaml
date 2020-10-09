@@ -77,13 +77,13 @@ jobs:
             -level level1 \
             --environment ${{ github.run_id }}
 
-      - name: networking_hub
-        run: |
-          /tf/rover/rover.sh -lz ${GITHUB_WORKSPACE}/public/landingzones/caf_networking -a apply \
-            -level level2 \
-            -tfstate networking_hub.tfstate \
-            -var-folder ${GITHUB_WORKSPACE}/public/landingzones/caf_networking/scenario/100-single-region-hub \
-            --environment ${{ github.run_id }}
+      # - name: networking_hub
+      #   run: |
+      #     /tf/rover/rover.sh -lz ${GITHUB_WORKSPACE}/public/landingzones/caf_networking -a apply \
+      #       -level level2 \
+      #       -tfstate networking_hub.tfstate \
+      #       -var-folder ${GITHUB_WORKSPACE}/public/landingzones/caf_networking/scenario/100-single-region-hub \
+      #       --environment ${{ github.run_id }}
 
   examples:
     name: examples
