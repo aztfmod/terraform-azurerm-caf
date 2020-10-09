@@ -85,7 +85,7 @@ locals {
 
   client_config = {
     client_id               = data.azurerm_client_config.current.client_id
-    tenant_id               = data.azurerm_client_config.current.tenant_id
+    tenant_id               = var.tenant_id
     subscription_id         = data.azurerm_client_config.current.subscription_id
     object_id               = data.azurerm_client_config.current.object_id
     logged_aad_app_objectId = var.logged_aad_app_objectId == null ? var.logged_user_objectId == null ? data.azuread_service_principal.logged_in_app.0.object_id : var.logged_user_objectId : var.logged_aad_app_objectId
