@@ -10,6 +10,8 @@ variable global_settings {
   }
 }
 
+variable tenant_id {}
+
 variable tfstates {
   default = {}
 }
