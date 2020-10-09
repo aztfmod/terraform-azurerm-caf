@@ -8,9 +8,9 @@ module "mssql_elastic_pools" {
   source   = "./modules/databases/mssql_elastic_pool"
   for_each = local.database.mssql_elastic_pools
 
-  global_settings  = local.global_settings
-  settings         = each.value
-  server           = try(each.value.remote_tfstate, null) == null ? module.mssql_servers[each.value.mssql_server_key] : data.terraform_remote_state.mssql_pool_remote_server[each.key].outputs[each.value.remote_tfstate.output_key][each.value.mssql_server_key]
+  global_settings = local.global_settings
+  settings        = each.value
+  server          = try(each.value.remote_tfstate, null) == null ? module.mssql_servers[each.value.mssql_server_key] : data.terraform_remote_state.mssql_pool_remote_server[each.key].outputs[each.value.remote_tfstate.output_key][each.value.mssql_server_key]
 }
 
 #
