@@ -11,6 +11,7 @@ module "mssql_databases" {
   global_settings  = local.global_settings
   settings         = each.value
   server_id        = try(each.value.remote_tfstate, null) == null ? module.mssql_servers[each.value.mssql_server_key].id : data.terraform_remote_state.mssql_remote_server[each.key].outputs[each.value.remote_tfstate.output_key][each.value.mssql_server_key].id
+  elastic_pool_id  = try(module.mssql_elastic_pools[each.value.elastic_pool_key].id, null)
   storage_accounts = module.storage_accounts
 }
 

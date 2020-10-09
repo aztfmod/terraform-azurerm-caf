@@ -1,20 +1,3 @@
-# This configuration only work from vscode with a logged in user. More settings are required to get it working in a pipeline.
-
-# Requires:
-# - caf_launchpad scenario 200+
-
-# Commands
-# - deploy: rover -lz /tf/caf/solutions/ -var-file /tf/caf/solutions/examples/mssql_server/200-mssql.tfvars -tfstate mssql_server.tfstate -a apply
-# - destroy:
-#   rover -lz /tf/caf/solutions/ -var-file /tf/caf/solutions/examples/mssql_server/200-mssql.tfvars -tfstate mssql_server.tfstate -a destroy
-
-# The configuration deploys one region:
-# - Two resources groups to store SQL servers and Security services
-# - One Keyvault to store the SQL Server admin password in order to support password rotation
-# - One Keyvault access policy to grant permission to the logged in user
-# - Enable extended auditing, security alerts and vulnerability assessment
-# - One Azure AD groups to administer the server
-
 
 global_settings = {
   default_region = "region1"
@@ -73,12 +56,19 @@ keyvault_access_policies = {
   }
 }
 
+mssql_databases = {
+  sales-db1-rg1 = {
+    mssql_server_key = "sales-rg1"
+    elastic_pool_key = "sales-ep1-rg1"
+    name             = "salesdb1rg1"
+  }
+}
+
 mssql_elastic_pools = {
   sales-ep1-rg1 = {
     mssql_server_key = "sales-rg1"
     name             = "sales-ep1-rg1"
-    //license_type     = "LicenseIncluded"
-    max_size_gb = 756
+    max_size_gb      = 756
 
     sku = {
       name     = "GP_Gen5"

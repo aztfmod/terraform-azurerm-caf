@@ -78,6 +78,9 @@ variable azurerm_redis_caches {
 variable mssql_servers {
   default = {}
 }
+variable mssql_databases {
+  default = {}
+}
 variable mssql_elastic_pools {
   default = {}
 }
@@ -124,6 +127,9 @@ variable aks_clusters {
   default = {}
 }
 variable databricks_workspaces {
+  default = {}
+}
+variable machine_learning_workspaces {
   default = {}
 }
 variable monitoring {

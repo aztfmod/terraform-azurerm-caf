@@ -29,11 +29,13 @@ module "caf" {
     private_dns                       = var.private_dns
   }
   database = {
-    azurerm_redis_caches  = var.azurerm_redis_caches
-    mssql_servers         = var.mssql_servers
-    mssql_elastic_pools   = var.mssql_elastic_pools
-    synapse_workspaces    = var.synapse_workspaces
-    databricks_workspaces = var.databricks_workspaces
+    azurerm_redis_caches        = var.azurerm_redis_caches
+    mssql_servers               = var.mssql_servers
+    mssql_databases             = var.mssql_databases
+    mssql_elastic_pools         = var.mssql_elastic_pools
+    synapse_workspaces          = var.synapse_workspaces
+    databricks_workspaces       = var.databricks_workspaces
+    machine_learning_workspaces = var.machine_learning_workspaces
   }
   shared_services = {
     monitoring = var.monitoring
