@@ -35,6 +35,8 @@ variable landingzone {
   }
 }
 
+variable tenant_id {}
+
 variable environment {
   default = "sandpit"
 }
