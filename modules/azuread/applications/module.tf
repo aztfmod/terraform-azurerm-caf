@@ -11,7 +11,7 @@
 
 resource "azuread_application" "app" {
 
-  name = try(var.settings.useprefix, false) ? format("%s-%s", var.global_settings.prefix, var.settings.application_name) : format("%s", var.settings.application_name)
+  name = var.global_settings.passthrough ? format("%s", var.settings.application_name) : format("%s-%s", var.global_settings.prefix, var.settings.application_name)
 
   owners = [
     var.client_config.object_id
