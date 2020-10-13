@@ -7,6 +7,7 @@ module managed_identities {
   resource_group_name = module.resource_groups[each.value.resource_group_key].name
   location            = module.resource_groups[each.value.resource_group_key].location
   prefix              = try(local.prefix, "")
+  global_settings     = local.global_settings
 }
 
 output managed_identities {
