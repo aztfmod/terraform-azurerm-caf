@@ -55,6 +55,10 @@ locals {
     aks_clusters               = try(var.compute.aks_clusters, {})
   }
 
+  storage = {
+    storage_account_blobs      = try(var.storage.storage_account_blobs, {})
+  }
+
   networking = {
     application_gateways                                    = try(var.networking.application_gateways, {})
     application_gateway_applications                        = try(var.networking.application_gateway_applications, {})
