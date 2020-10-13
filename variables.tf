@@ -149,6 +149,9 @@ variable role_mapping {
 variable storage_accounts {
   default = {}
 }
+variable storage {
+  default = {}
+}
 variable diagnostic_storage_accounts {
   default = {}
 }
