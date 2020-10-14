@@ -87,7 +87,7 @@ We categorize the various examples in this repo as follow:
 | 400   | advanced functionalities, multi region support, includes RBAC features and security hardening | not working in AIRS, need AAD permissions  |
 
 
-## Landing zone constructions sets
+## Landing zone solutions
 
 Once you deploy the core enterprise scale components, you can leverage the following additional solution landing zones:
 

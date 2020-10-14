@@ -3,13 +3,13 @@ output aks_clusters {
   sensitive = true
 }
 
-
 module aks_clusters {
   source   = "./modules/compute/aks"
   for_each = local.compute.aks_clusters
 
   global_settings = local.global_settings
   diagnostics     = local.diagnostics
+  diagnostic_profiles    = try(each.value.diagnostic_profiles, {})
   settings        = each.value
   subnets         = lookup(each.value.networking, "lz_key", null) == null ? local.combined_objects_networking[each.value.vnet_key].subnets : local.combined_objects_networking[each.value.lz_key].vnets[each.value.vnet_key].subnets
   resource_group  = module.resource_groups[each.value.resource_group_key]
