@@ -1,5 +1,5 @@
 {
-    "name": "Azure CAF ES module",
+    "name": "Azure CAF module",
 
     // Update the 'dockerComposeFile' list if you have more compose files or use different names.
     "dockerComposeFile": "docker-compose.yml",
@@ -9,7 +9,7 @@
     "service": "rover",
 
     // Container user to use in VSCode Online and GitHub Codespaces
-    //"containerUser" : "vscode",
+    "containerUser" : "vscode",
 
     // The optional 'workspaceFolder' property is the path VS Code should open by default when
     // connected. This is typically a volume mount in .devcontainer/docker-compose.yml

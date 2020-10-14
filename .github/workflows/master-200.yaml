@@ -41,7 +41,7 @@ jobs:
           random_length: ['5']
 
     container:
-      image: aztfmod/roveralpha:2010.091125
+      image: aztfmod/roveralpha:2010.141417
       options: --user 0
 
     steps:
@@ -94,7 +94,7 @@ jobs:
           ]
 
     container:
-      image: aztfmod/roveralpha:2010.091125
+      image: aztfmod/roveralpha:2010.141417
       options: --user 0
 
     steps:
@@ -134,7 +134,7 @@ jobs:
       fail-fast: false
 
     container:
-      image: aztfmod/roveralpha:2010.091125
+      image: aztfmod/roveralpha:2010.141417
       options: --user 0
 
     steps:
