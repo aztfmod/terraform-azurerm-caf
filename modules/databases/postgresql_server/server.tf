@@ -1,22 +1,22 @@
 
 
-resource "azurerm_postgresql_server" "example" {
-  name                = each.value.name
+resource "azurerm_postgresql_server" "server" {
+  name                          = var.settings.name
   resource_group_name           = var.resource_group_name
   location                      = var.location
 
-  administrator_login          = each.value.settings.administrator_login
-  administrator_login_password = each.value.settings.administrator_login_password
+  administrator_login          = var.settings.administrator_login
+  administrator_login_password = var.settings.administrator_login_password
 
-  sku_name   = each.value.settings.sku_name
-  version    = each.value.settings.version
-  storage_mb = each.value.settings.storage_mb
+  sku_name   = var.settings.sku_name
+  version    = var.settings.version
+  storage_mb = var.settings.storage_mb
 
-  backup_retention_days        = each.value.settings.backup_retention_days
-  geo_redundant_backup_enabled = each.value.settings.geo_redundant_backup_enabled
-  auto_grow_enabled            = each.value.settings.auto_grow_enabled
+  backup_retention_days        = var.settings.backup_retention_days
+  geo_redundant_backup_enabled = var.settings.geo_redundant_backup_enabled
+  auto_grow_enabled            = var.settings.auto_grow_enabled
 
-  public_network_access_enabled    = each.value.settings.public_network_access_enabled
-  ssl_enforcement_enabled          = each.value.settings.ssl_enforcement_enabled
-  ssl_minimal_tls_version_enforced = each.value.settings.ssl_minimal_tls_version_enforced
+  public_network_access_enabled    = var.settings.public_network_access_enabled
+  ssl_enforcement_enabled          = var.settings.ssl_enforcement_enabled
+  ssl_minimal_tls_version_enforced = var.settings.ssl_minimal_tls_version_enforced
 }

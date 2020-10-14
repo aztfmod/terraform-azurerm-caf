@@ -132,3 +132,6 @@ variable machine_learning_workspaces {
 variable monitoring {
   default = {}
 }
+variable postgresql_servers {
+  default = {}
+}
