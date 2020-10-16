@@ -29,6 +29,7 @@ locals {
     azuread_groups             = module.azuread_groups
     azuread_apps               = module.azuread_applications
     azuread_users              = module.azuread_users
+    keyvaults                  = module.keyvaults
     resource_groups            = module.resource_groups
     managed_identities         = module.managed_identities
     storage_accounts           = module.storage_accounts

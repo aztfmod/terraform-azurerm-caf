@@ -26,6 +26,7 @@ resource "azurerm_key_vault" "keyvault" {
   enabled_for_template_deployment = try(var.settings.enabled_for_template_deployment, false)
   purge_protection_enabled        = try(var.settings.purge_protection_enabled, false)
   soft_delete_enabled             = try(var.settings.soft_delete_enabled, true)
+  enable_rbac_authorization       = try(var.settings.enable_rbac_authorization, false)
 
   dynamic "network_acls" {
     for_each = lookup(var.settings, "network", {})
