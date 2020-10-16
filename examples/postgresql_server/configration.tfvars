@@ -1,27 +1,4 @@
 
-# This configuration only work from vscode with a logged in user. More settings are required to get it working in a pipeline.
-
-# Requires:
-# Landing Zone
-# rover -lz /tf/caf/public/landingzones/caf_launchpad \
-# > -launchpad -var-folder \
-# > /tf/caf/public/landingzones/caf_launchpad/scenario/100 \
-# > -a apply
-
-
-# Commands
-# - plan: rover -lz /tf/caf/examples/ -level level1 -var-file /tf/caf/examples/postgresql_server/configration.tfvars -a plan
-# - apply: rover -lz /tf/caf/examples/ -level level1 -var-file /tf/caf/examples/postgresql_server/configration.tfvars -a apply
-# - destroy: rover -lz /tf/caf/examples/ -level level1 -var-file /tf/caf/examples/postgresql_server/configration.tfvars -a destroy
-
-
-global_settings = {
-  default_region = "region1"
-  regions = {
-    region1 = "southeastasia"
-  }
-}
-
 resource_groups = {
   sql_region1 = {
     name   = "sql-rg1"

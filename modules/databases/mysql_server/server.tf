@@ -1,27 +1,27 @@
 resource "azurerm_mysql_server" "mysql" {
 
-  name                          = azurecaf_name.mysql.result
-  sku_name                      = var.settings.sku_name
-  storage_mb                    = var.settings.storage_mb
-  resource_group_name           = var.resource_group_name
-  location                      = var.location
-  version                       = try(var.settings.version, "5.7")
-  administrator_login           = var.settings.administrator_login
-  administrator_login_password  = try(var.settings.administrator_login_password, azurerm_key_vault_secret.sql_admin_password.0.value)
-  public_network_access_enabled = try(var.settings.public_network_access_enabled, true)
-  #connection_policy             = try(var.settings.connection_policy, null)
-  tags                          = try(var.settings.tags, null)
-  ssl_enforcement_enabled       = try(var.settings.ssl_enforcement_enabled, true)
+  name                = azurecaf_name.mysql.result
+  resource_group_name = var.resource_group_name
+  location            = var.location
+  version             = var.settings.version
+  sku_name            = var.settings.sku_name
 
-  /*dynamic "azuread_administrator" {
-    for_each = lookup(var.settings, "azuread_administrator", {}) == {} ? [] : [1]
+  administrator_login          = var.settings.administrator_login
+  administrator_login_password = try(var.settings.administrator_login_password, azurerm_key_vault_secret.mysql_admin_password.0.value)
 
-    content {
-      login_username = try(var.settings.azuread_administrator.login_username, var.azuread_groups[var.settings.azuread_administrator.azuread_group_key].name)
-      object_id      = try(var.settings.azuread_administrator.object_id, var.azuread_groups[var.settings.azuread_administrator.azuread_group_key].id)
-      tenant_id      = try(var.settings.azuread_administrator.tenant_id, var.azuread_groups[var.settings.azuread_administrator.azuread_group_key].tenant_id)
-    }
-  }*/
+  auto_grow_enabled                 = try(var.settings.auto_grow_enabled, true)
+  storage_mb                        = var.settings.storage_mb
+  backup_retention_days             = try(var.settings.backup_retention_days, null)
+  create_mode                       = try(var.settings.create_mode, "Default")
+  creation_source_server_id         = try(var.settings.creation_source_server_id, null)
+  geo_redundant_backup_enabled      = try(var.settings.geo_redundant_backup_enabled, null)
+  infrastructure_encryption_enabled = try(var.settings.infrastructure_encryption_enabled, false)
+  restore_point_in_time             = try(var.settings.restore_point_in_time, null)
+  public_network_access_enabled     = try(var.settings.public_network_access_enabled, true)
+
+  ssl_enforcement_enabled          = try(var.settings.ssl_enforcement_enabled, true)
+  ssl_minimal_tls_version_enforced = try(var.settings.ssl_minimal_tls_version_enforced, "TLSEnforcementDisabled")
+  tags                             = try(var.settings.tags, null)
 
   dynamic "identity" {
     for_each = lookup(var.settings, "identity", {}) == {} ? [] : [1]
@@ -31,11 +31,25 @@ resource "azurerm_mysql_server" "mysql" {
     }
   }
 
+  dynamic "threat_detection_policy" {
+    for_each = lookup(var.settings, "threat_detection_policy", {}) == {} ? [] : [1]
+
+    content {
+      enabled = var.settings.threat_detection_policy.enabled
+      disabled_alerts = var.settings.threat_detection_policy.disabled_alerts
+      email_account_admins = var.settings.threat_detection_policy.email_account_admins
+      email_addresses = var.settings.threat_detection_policy.email_addresses
+      retention_days = var.settings.threat_detection_policy.retention_days
+      storage_account_access_key = var.settings.threat_detection_policy.storage_account_access_key
+      storage_endpoint = var.settings.threat_detection_policy.storage_endpoint
+    }
+  }
+
 }
 
 resource "azurecaf_name" "mysql" {
   name          = var.settings.name
-  resource_type = "azurerm_sql_server"
+  resource_type = "azurerm_mysql_server"
   prefixes      = [var.global_settings.prefix]
   random_length = var.global_settings.random_length
   clean_input   = true
@@ -43,7 +57,7 @@ resource "azurecaf_name" "mysql" {
 }
 
 # Generate sql server random admin password if not provided in the attribute administrator_login_password
-resource "random_password" "sql_admin" {
+resource "random_password" "mysql_admin" {
   count = try(var.settings.administrator_login_password, null) == null ? 1 : 0
 
   length           = 128
@@ -54,11 +68,11 @@ resource "random_password" "sql_admin" {
 }
 
 # Store the generated password into keyvault
-resource "azurerm_key_vault_secret" "sql_admin_password" {
+resource "azurerm_key_vault_secret" "mysql_admin_password" {
   count = try(var.settings.administrator_login_password, null) == null ? 1 : 0
 
   name         = format("%s-password", azurecaf_name.mysql.result)
-  value        = random_password.sql_admin.0.result
+  value        = random_password.mysql_admin.0.result
   key_vault_id = var.keyvault_id
 
   lifecycle {

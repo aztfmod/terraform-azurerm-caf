@@ -1,33 +1,62 @@
-
-global_settings = {
-  default_region = "region1"
-  regions = {
-    region1 = "southeastasia"
-  }
-}
-
 resource_groups = {
-  sql_region1 = {
-    name   = "sql-rg1"
+  mysql_region1 = {
+    name   = "mysql-re1"
     region = "region1"
   }
   security_region1 = {
-    name = "sql-security-rg1"
+    name = "mysql-security-re1"
   }
 }
 
+mysql_servers = {
+  sales-re1 = {
+    name                          = "sales-re1"
+    region                        = "region1"
+    resource_group_key            = "mysql_region1"
+    version                       = "5.7"
+    sku_name                      = "GP_Gen5_8"
+    storage_mb                    = 5120
+    administrator_login           = "mysqlsalesadmin"
+    keyvault_key                  = "mysql-re1"
+    system_msi                    = true
+    public_network_access_enabled = false
+    
+    auto_grow_enabled = true
+    
+    tags = {
+      segment = "sales"
+    }
+
+    # Optional
+    # threat_detection_policy = {
+    #   enabled = true
+    #   disabled_alerts = [
+    #     # "Sql_Injection",
+    #     # "Sql_Injection_Vulnerability",
+    #     # "Access_Anomaly",
+    #     # "Data_Exfiltration",
+    #     # "Unsafe_Action"
+    #   ]
+    #   email_account_admins = false
+    #   email_addresses           = []
+    #   retention_days            = 15
+    # }
+
+  }
+
+}
 
 storage_accounts = {
-  auditing-rg1 = {
-    name                     = "auditingrg1"
-    resource_group_key       = "sql_region1"
+  auditing-re1 = {
+    name                     = "auditingre1"
+    resource_group_key       = "mysql_region1"
     region                   = "region1"
     account_kind             = "BlobStorage"
     account_tier             = "Standard"
     account_replication_type = "RAGRS"
   }
-  security-rg1 = {
-    name                     = "securityrg1"
+  security-re1 = {
+    name                     = "securityre1"
     resource_group_key       = "security_region1"
     region                   = "region1"
     account_kind             = "BlobStorage"
@@ -37,8 +66,8 @@ storage_accounts = {
 }
 
 keyvaults = {
-  sql-rg1 = {
-    name               = "sqlrg1"
+  mysql-re1 = {
+    name               = "mysqlre1"
     resource_group_key = "security_region1"
     sku_name           = "standard"
   }
@@ -46,7 +75,7 @@ keyvaults = {
 
 keyvault_access_policies = {
   # A maximum of 16 access policies per keyvault
-  sql-rg1 = {
+  mysql-re1 = {
     logged_in_user = {
       secret_permissions = ["Set", "Get", "List", "Delete", "Purge"]
     }
@@ -56,75 +85,11 @@ keyvault_access_policies = {
   }
 }
 
-mysql_servers = {
-  sales-rg1 = {
-    name                          = "sales-rg1"
-    region                        = "region1"
-    resource_group_key            = "sql_region1"
-    version                       = "5.7"
-    sku_name                      = "GP_Gen5_8"
-    storage_mb                    = 5120
-    administrator_login           = "sqlsalesadmin"
-    keyvault_key                  = "sql-rg1"
-    system_msi                    = true
-    public_network_access_enabled = false
-
-    extended_auditing_policy = {
-      storage_account = {
-        key = "auditing-rg1"
-      }
-      retention_in_days = 7
-    }
-
-    azuread_administrator = {
-      azuread_group_key = "sales_admins"
-    }
-
-    tags = {
-      segment = "sales"
-    }
-
-    # Optional
-    security_alert_policy = {
-      enabled = true
-      disabled_alerts = [
-        # "Sql_Injection",
-        # "Sql_Injection_Vulnerability",
-        # "Access_Anomaly",
-        # "Data_Exfiltration",
-        # "Unsafe_Action"
-      ]
-      email_subscription_admins = false
-      email_addresses           = []
-      retention_days            = 0
-
-      # Set either the resource_id or the key of the storage account
-      storage_account = {
-        # resource_id = ""
-        key = "security-rg1"
-      }
-
-      # Optional
-      vulnerability_assessment = {
-        enabled = true
-        storage_account = {
-          # resource_id = ""
-          key            = "security-rg1"
-          container_path = "vascans"
-        }
-        email_subscription_admins = false
-        email_addresses           = []
-      }
-    }
-
-  }
-
-}
 
 azuread_groups = {
   sales_admins = {
     name        = "sql-sales-admins"
-    description = "Administrators of the sales SQL server."
+    description = "Administrators of the sales MySQL server."
     members = {
       user_principal_names = []
       object_ids = [
