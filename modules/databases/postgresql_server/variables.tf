@@ -5,7 +5,6 @@ variable administrator_login{}
 variable administrator_login_password{}
 
 variable sku_name{} //(Required)
-#variable version{} //(Required)
 variable storage_mb{}
 
 variable auto_grow_enabled{}

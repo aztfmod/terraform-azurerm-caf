@@ -32,7 +32,6 @@ module "postgresql_servers" {
   infrastructure_encryption_enabled       = try(each.value.infrastructure_encryption_enabled, null)
   creation_source_server_id               = try(each.value.creation_source_server_id, null)
   administrator_login                     = try(each.value.administrator_login, null)
-  #version                                 = each.value.version
   public_network_access_enabled           = try(each.value.public_network_access_enabled, null)
   ssl_minimal_tls_version_enforced        = try(each.value.ssl_minimal_tls_version_enforced, null)
   restore_point_in_time                   = try(each.value.restore_point_in_time, null)

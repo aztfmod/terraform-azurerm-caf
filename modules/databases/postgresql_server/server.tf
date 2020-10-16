@@ -8,7 +8,7 @@ resource "azurerm_postgresql_server" "postgresql" {
  
 
   sku_name                      = var.settings.sku_name
-  version                       = try(var.settings.version, "5.7")
+  version                       = var.settings.version
   storage_mb                    = try(var.settings.storage_mb, null)
   
   auto_grow_enabled             = try(var.settings.auto_grow_enabled, false)
