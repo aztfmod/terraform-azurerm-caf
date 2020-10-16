@@ -36,6 +36,7 @@ module "caf" {
     databricks_workspaces = var.databricks_workspaces
     machine_learning_workspaces = var.machine_learning_workspaces
     postgresql_servers = var.postgresql_servers
+    mysql_servers         = var.mysql_servers
    }
   shared_services = {
     monitoring = var.monitoring

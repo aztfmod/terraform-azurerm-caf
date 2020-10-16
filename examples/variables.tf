@@ -135,3 +135,6 @@ variable monitoring {
 variable postgresql_servers {
   default = {}
 }
+variable mysql_servers {
+  default = {}
+}
