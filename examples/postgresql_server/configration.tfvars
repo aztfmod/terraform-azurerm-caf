@@ -1,5 +1,5 @@
 resource_groups = {
-  sql_region1 = {
+  postgresql_region1 = {
     name   = "postgresql-rg1"
     region = "region1"
   }
