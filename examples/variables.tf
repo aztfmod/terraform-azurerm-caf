@@ -15,18 +15,13 @@ variable global_settings {
 variable landingzone {
   default = {
     backend_type          = "azurerm"
-    global_settings_key   = "launchpad"
+    global_settings_key   = "shared_services"
     level = "level3"
     key   = "examples"
     tfstates = {
-      foundations = {
-        tfstate = "caf_foundations.tfstate"
-      }
-      networking_hub = {
-        tfstate = "networking_hub.tfstate"
-      }
-      launchpad = {
-        tfstate = "caf_foundations.tfstate"
+      shared_services = {
+        level   = "lower"
+        tfstate = "caf_shared_services.tfstate"
       }
     }
   }
