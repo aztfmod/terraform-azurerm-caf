@@ -38,7 +38,7 @@ module "keyvault_access_policies_azuread_apps" {
   for_each = var.keyvault_access_policies
 
   keyvault_key    = each.key
-  keyvaults       = local.combined_objects_keyvaults 
+  keyvaults       = local.combined_objects_keyvaults
   access_policies = each.value
   tenant_id       = local.client_config.tenant_id
   azuread_apps    = module.azuread_applications

@@ -137,9 +137,9 @@ role_mapping = {
     storage_accounts = {
       synapsestorage_re1 = {
         "Storage Blob Data Contributor" = {
-          synapse_workspaces = [
-            "synapse_wrkspc_re1"
-          ]
+          synapse_workspaces = {
+            keys = ["synapse_wrkspc_re1"]
+          }
         }
       }
     }
