@@ -86,6 +86,7 @@ We categorize the various examples in this repo as follow:
 | 300   | advanced functionalities, multi region support, includes RBAC features                        | not working in AIRS, need AAD permissions  |
 | 400   | advanced functionalities, multi region support, includes RBAC features and security hardening | not working in AIRS, need AAD permissions  |
 
+
 ## Related repositories
 
 | Repo                                                                              | Description                                            |
