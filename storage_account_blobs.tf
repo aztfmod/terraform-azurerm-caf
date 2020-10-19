@@ -4,6 +4,7 @@
 
 resource "null_resource" "delay" {
   depends_on = [azurerm_role_assignment.for]
+  for_each   = local.storage.storage_account_blobs
   provisioner "local-exec" {
     command = "sleep 120"
   }
