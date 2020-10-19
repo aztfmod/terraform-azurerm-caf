@@ -58,7 +58,7 @@ module object_id {
     if try(access_policy.object_id, null) != null && var.logged_aad_app_objectId != null
   }
 
-  keyvault_id   = var.keyvault_id == null ? try(each.value.lz_key, null) == null ? var.keyvaults[var.keyvault_key].id : var.keyvaults[each.value.lz_key][var.keyvault_key].id :var.keyvault_id
+  keyvault_id   = var.keyvault_id == null ? try(each.value.lz_key, null) == null ? var.keyvaults[var.keyvault_key].id : var.keyvaults[each.value.lz_key][var.keyvault_key].id : var.keyvault_id
   access_policy = each.value
   tenant_id     = try(each.value.tenant_id, var.tenant_id)
   object_id     = each.value.object_id
