@@ -8,12 +8,13 @@ module aks_clusters {
   source   = "./modules/compute/aks"
   for_each = local.compute.aks_clusters
 
-  global_settings = local.global_settings
-  diagnostics     = local.diagnostics
-  settings        = each.value
-  subnets         = try(each.value.networking.remote_tfstate, null) == null ? module.networking[each.value.networking.vnet_key].subnets : data.terraform_remote_state.vnets[each.key].outputs[each.value.networking.remote_tfstate.output_key][each.value.networking.remote_tfstate.lz_key][each.value.networking.remote_tfstate.vnet_key].subnets
-  resource_group  = module.resource_groups[each.value.resource_group_key]
-  admin_group_ids = try(each.value.admin_groups.azuread_group_keys, null) == null ? each.value.admin_groups.ids : [for group_key in each.value.admin_groups.azuread_group_keys : module.azuread_groups[group_key].id]
+  global_settings        = local.global_settings
+  diagnostics            = local.diagnostics
+  diagnostic_profiles    = try(each.value.diagnostic_profiles, {})
+  settings               = each.value
+  subnets                = try(each.value.networking.remote_tfstate, null) == null ? module.networking[each.value.networking.vnet_key].subnets : data.terraform_remote_state.vnets[each.key].outputs[each.value.networking.remote_tfstate.output_key][each.value.networking.remote_tfstate.lz_key][each.value.networking.remote_tfstate.vnet_key].subnets
+  resource_group         = module.resource_groups[each.value.resource_group_key]
+  admin_group_ids        = try(each.value.admin_groups.azuread_group_keys, null) == null ? each.value.admin_groups.ids : [for group_key in each.value.admin_groups.azuread_group_keys : module.azuread_groups[group_key].id]
 }
 
 data "terraform_remote_state" "vnets" {
