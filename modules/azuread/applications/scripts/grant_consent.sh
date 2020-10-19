@@ -5,7 +5,7 @@ set -e
 
 user_type=$(az account show --query user.type -o tsv)
 
-if [ ${user_type} == "user" ]; then
+if [ "${user_type}" = "user" ]; then
 
     az ad app permission admin-consent --id ${applicationId}
 
