@@ -15,13 +15,8 @@ variable access_policies {
   }
 }
 
-variable tenant_id {}
-
-variable logged_user_objectId {
-  default = null
-}
-variable logged_aad_app_objectId {
-  default = null
+variable client_config {
+  default = {}
 }
 variable azuread_groups {
   default = {}

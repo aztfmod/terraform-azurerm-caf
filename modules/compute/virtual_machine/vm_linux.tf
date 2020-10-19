@@ -146,7 +146,7 @@ resource "azurerm_key_vault_secret" "ssh_public_key_openssh" {
 
 locals {
   managed_local_identities = flatten([
-    for managed_identity_key in try(var.settings.virtual_machine_settings[local.os_type].identity.managed_identity_keys, []) : [
+    for managed_identity_key in try(var.settings.virtual_machine_settings[local.os_type].identity[var.client_config.landingzone_key].managed_identity_keys, []) : [
       var.managed_identities[managed_identity_key].id
     ] if try(var.settings.virtual_machine_settings[local.os_type].identity.lz_key, null) == null
   ])
