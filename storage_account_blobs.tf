@@ -15,6 +15,7 @@ module "storage_account_blobs" {
   depends_on = [null_resource.delay]
   for_each   = local.storage.storage_account_blobs
 
+
   storage_account_name   = module.storage_accounts[each.value.storage_account_key].name
   storage_container_name = each.value.storage_container_name
   settings               = each.value

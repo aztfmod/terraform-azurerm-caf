@@ -78,7 +78,7 @@ resource "azurerm_app_service" "app_service" {
     }
   }
 
-  app_settings = var.app_settings
+  app_settings = local.app_settings
 
   dynamic "connection_string" {
     for_each = var.connection_strings
