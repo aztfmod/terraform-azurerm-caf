@@ -56,7 +56,7 @@ locals {
   }
 
   storage = {
-    storage_account_blobs      = try(var.storage.storage_account_blobs, {})
+    storage_account_blobs = try(var.storage.storage_account_blobs, {})
   }
 
   networking = {

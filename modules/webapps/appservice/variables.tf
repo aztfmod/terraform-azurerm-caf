@@ -20,7 +20,7 @@ variable app_service_plan_id {
 }
 
 variable identity {
-  default = {}
+  default = null
 }
 
 variable connection_strings {
@@ -33,6 +33,10 @@ variable app_settings {
 
 variable slots {
   default = {}
+}
+
+variable ai_instrumentation_key {
+  default = null
 }
 
 variable settings {}
