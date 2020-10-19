@@ -6,9 +6,7 @@ module machine_learning_workspaces {
   resource_group_name     = module.resource_groups[each.value.resource_group_key].name
   global_settings         = local.global_settings
   settings                = each.value
-  networking              = module.networking
-  tfstates                = var.tfstates
-  use_msi                 = var.use_msi
+  subnets         = lookup(each.value.networking, "lz_key", null) == null ? local.combined_objects_networking[each.value.networking.vnet_key].subnets : local.combined_objects_networking[each.value.networking.lz_key].vnets[each.value.networking.vnet_key].subnets 
   storage_account_id      = lookup(each.value, "storage_account_key") == null ? null : module.storage_accounts[each.value.storage_account_key].id
   keyvault_id             = lookup(each.value, "keyvault_key") == null ? null : module.keyvaults[each.value.keyvault_key].id
   application_insights_id = lookup(each.value, "application_insights_key") == null ? null : module.azurerm_application_insights[each.value.application_insights_key].id
