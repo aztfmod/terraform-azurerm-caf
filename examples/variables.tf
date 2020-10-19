@@ -8,27 +8,35 @@ variable tfstate_container_name {}
 variable tfstate_key {}
 variable tfstate_resource_group_name {}
 
-variable tfstates {
-  default = {
-    caf_foundations = {
-      tfstate = "caf_foundations.tfstate"
-    }
-    networking = {
-      tfstate = "caf_foundations.tfstate"
-    }
-  }
-}
-
 variable global_settings {
   default = {}
 }
 
-variable landingzone_name {
-  default = "appservices"
+variable landingzone {
+  default = {
+    backend_type = "azurerm"
+    current = {
+      level = "level3"
+      key   = "examples"
+    }
+    lower = {
+      foundations = {
+        tfstate = "caf_foundations.tfstate"
+      }
+      networking = {
+        networking_hub = {
+          tfstate = "networking_hub.tfstate"
+        }
+        launchpad = {
+          tfstate = "caf_foundations.tfstate"
+        }
+      }
+    }
+  }
 }
-variable level {
-  default = "level3"
-}
+
+variable tenant_id {}
+
 variable environment {
   default = "sandpit"
 }
@@ -70,6 +78,12 @@ variable azurerm_redis_caches {
   default = {}
 }
 variable mssql_servers {
+  default = {}
+}
+variable mssql_databases {
+  default = {}
+}
+variable mssql_elastic_pools {
   default = {}
 }
 variable storage_accounts {
@@ -115,6 +129,9 @@ variable aks_clusters {
   default = {}
 }
 variable databricks_workspaces {
+  default = {}
+}
+variable machine_learning_workspaces {
   default = {}
 }
 variable monitoring {

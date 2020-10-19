@@ -12,7 +12,7 @@ module azuread_applications {
   azuread_api_permissions = try(var.azuread_api_permissions[each.key], {})
   global_settings         = local.global_settings
   user_type               = var.user_type
-  keyvaults               = module.keyvaults
+  keyvaults               = local.combined_objects_keyvaults
 }
 
 output aad_apps {
@@ -59,7 +59,7 @@ module azuread_users {
 
   global_settings = local.global_settings
   azuread_users   = each.value
-  keyvaults       = module.keyvaults
+  keyvaults       = local.combined_objects_keyvaults
 }
 
 output azuread_users {

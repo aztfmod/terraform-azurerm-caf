@@ -1,8 +1,9 @@
 module diagnostics {
   source = "../../diagnostics"
+  count  = var.diagnostic_profiles == null ? 0 : 1
 
-  resource_id       = azurerm_firewall.fw.id
+  resource_id       = lookup(azurerm_firewall.fw, "id")
   resource_location = var.location
   diagnostics       = var.diagnostics
-  profiles          = var.settings.diagnostic_profiles
+  profiles          = var.diagnostic_profiles
 }

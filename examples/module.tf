@@ -1,10 +1,7 @@
 module "caf" {
   source = "../"
 
-  tfstates                    = local.tfstates
-  tags                        = local.tags
-  global_settings             = local.global_settings
-  diagnostics                 = local.diagnostics
+  tenant_id                   = var.tenant_id
   diagnostic_storage_accounts = var.diagnostic_storage_accounts
   logged_user_objectId        = var.logged_user_objectId
   logged_aad_app_objectId     = var.logged_aad_app_objectId
@@ -33,22 +30,16 @@ module "caf" {
     private_dns                       = var.private_dns
   }
   database = {
-    azurerm_redis_caches  = var.azurerm_redis_caches
-    mssql_servers         = var.mssql_servers
-    synapse_workspaces    = var.synapse_workspaces
-    databricks_workspaces = var.databricks_workspaces
+    azurerm_redis_caches        = var.azurerm_redis_caches
+    mssql_servers               = var.mssql_servers
+    mssql_databases             = var.mssql_databases
+    mssql_elastic_pools         = var.mssql_elastic_pools
+    synapse_workspaces          = var.synapse_workspaces
+    databricks_workspaces       = var.databricks_workspaces
+    machine_learning_workspaces = var.machine_learning_workspaces
   }
   shared_services = {
     monitoring = var.monitoring
   }
   enable = {}
-  # user_type                         = var.user_type
-  # log_analytics                     = var.log_analytics
-  # diagnostics_destinations          = var.diagnostics_destinations
-  # subscriptions                     = var.subscriptions
-  # azuread_apps                      = var.azuread_apps
-  # azuread_api_permissions           = var.azuread_api_permissions
-  # azuread_app_roles                 = var.azuread_app_roles
-  # azuread_users                     = var.azuread_users
-  # custom_role_definitions           = var.custom_role_definitions
 }

@@ -1,39 +1,40 @@
-[![VScodespaces](https://img.shields.io/endpoint?url=https%3A%2F%2Faka.ms%2Fvso-badge)](https://online.visualstudio.com/environments/new?name=terraform-azurerm-caf-landingzone-modules&repo=aztfmod/terraform-azurerm-caf-landingzone-modules)
+[![VScodespaces](https://img.shields.io/endpoint?url=https%3A%2F%2Faka.ms%2Fvso-badge)](https://online.visualstudio.com/environments/new?name=terraform-azurerm-caf-landingzone-modules&repo=aztfmod/terraform-azurerm-caf)
 
-# Azure Cloud Adoption Framework - Terraform module
 
-This is a preview of vnext azurerm module for CAF landing zones on Terraform.
-Microsoft [Cloud Adoption Framework for Azure](https://aka.ms/caf) provides you with guidance and best practices to adopt Azure.
+# Cloud Adoption Framework for Azure - Terraform module
 
-## Core components
+Microsoft [Cloud Adoption Framework for Azure](https://aka.ms/caf) provides you with guidance and best practices to adopt Azure. This module is used by the CAF landing zones to provision resources in Azure subscription.
 
-Deploying the core of landing zones will use two elements:
+## Getting started
 
-* landing zones repository (https://github.com/Azure/caf-terraform-landingzones): will assemble all components together and do service composition.
-* this module, called from the Terraform registry (https://registry.terraform.io/namespaces/aztfmod): will provide all the logic to deploy fundamental components.
-
-This module can be called from landing zones using the Terraform registry: https://registry.terraform.io/modules/aztfmod/caf/azurerm/
+This module can be used to create resources directly or called from a landing zone. It can be invoked directly from the [Terraform registry](https://registry.terraform.io/modules/aztfmod/caf/azurerm/)
 
 ```terraform
 module "caf" {
   source  = "aztfmod/caf/azurerm"
-  version = "~>0.2"
+  version = "~>0.4.0"
   # insert the 7 required variables here
 }
 ```
 
-## Getting started
+## Prerequisites
 
-1. Prerequisites are the same as for current version of landing zones, please setup your environment using the following guide: https://github.com/Azure/caf-terraform-landingzones/blob/master/documentation/getting_started/getting_started.md.
+- Setup your **environment** using the following guide [Getting Started](https://github.com/Azure/caf-terraform-landingzones/blob/master/documentation/getting_started/getting_started.md) or you can alternatively use [Visual Studio Code Online]((https://online.visualstudio.com/environments/new?name=terraform-azurerm-caf&repo=aztfmod/terraform-azurerm-caf)
+) or GitHub Codespaces.
+- Access to an **Azure subscription** where you have **Owner** role.
 
-2. Clone the Azure landing zones repo:
+
+## Developing and testing module for landing zones
+
+If you want to test, develop this module for landing zones integration, please follow the steps:
+
+1. Clone the Azure landing zones repo
 
 ```bash
-git clone --branch vnext https://github.com/Azure/caf-terraform-landingzones.git /tf/caf/public
-
+git clone --branch 0.4 https://github.com/Azure/caf-terraform-landingzones.git /tf/caf/public
 ```
 
-3. Log in the subscription with the rover:
+2. Log in the subscription with the rover
 
 ```bash
 rover login
@@ -41,46 +42,41 @@ rover login
 rover login --tenant <tenant_name>.onmicrosoft.com -s <subscription_id>
 ```
 
-4. Deploy the basic launchpad:
+3. Deploy the basic launchpad
 
 ```bash
-rover -lz /tf/caf/public/landingzones/caf_launchpad -launchpad -var-file /tf/caf/public/landingzones/caf_launchpad/scenario/100/configuration.tfvars -a apply
+rover -lz /tf/caf/public/landingzones/caf_launchpad \
+-launchpad \
+-var-folder /tf/caf/public/landingzones/caf_launchpad/scenario/100 \
+-a apply
 ```
 
-Once completed you would see 2 resource groups in your subscription. The scenario 100 is pretty basic and include the minimum to get the terraform remote state management working.
-
-5. Upgrade to advanced launchpad (if you have Azure AD permissions - not working on AIRS):
+4. Deploy the caf_foundations landing zones
 
 ```bash
-rover -lz /tf/caf/public/landingzones/caf_launchpad -launchpad -var-file /tf/caf/public/landingzones/caf_launchpad/scenario/200/configuration.tfvars -a apply
+rover -lz /tf/caf/public/landingzones/caf_foundations \
+-level level1 \
+-a apply
 ```
 
-6. Deploy the caf_foundations. This is currently mostly a stub, but will implement enterprise management groups, policies, alerts, etc.:
+5. Deploy a networking scenario:
 
 ```bash
-rover -lz /tf/caf/public/landingzones/caf_foundations -a apply
+rover -lz /tf/caf/public/landingzones/caf_networking/ \
+-var-folder /tf/caf/public/landingzones/caf_networking/scenario/100-single-region-hub \
+-level level2 \
+-a apply
 ```
 
-7. Deploy a networking scenario:
+## Deploying examples
+
+Once you have setup the environment up to stage 3 (have finished the deployment of the launchpad), you can also deploy examples using the following syntax:
 
 ```bash
-rover -lz /tf/caf/public/landingzones/caf_networking/ -var-file /tf/caf/public/landingzones/caf_networking/scenario/100-single-region-hub/configuration.tfvars -a apply
+rover -lz /tf/caf/examples \
+-var-folder /tf/caf/examples/<path of the example> \
+-a plan|apply
 ```
-
-## Coding principles
-
-This vnext is relying extensively on Terraform 0.13 capabilities (module iterations, conditional modules, variables validation, etc.).
-
-Those new features allow more complex and more dynamic code composition. The following concepts are used:
-
-* **No code environment composition**: a landing zone environment can be composed customizing variable files and code must be robust enough to accommodate combinations and composition.
-* **Flexible foundations to meet customer needs**: everything is customizable at all layers.
-* **Key-based configuration and customization**: all configuration objects will call each other based on the object keys.
-* **Iteration-based objects deployment**: a landing zone calls all its modules, iterating on complex objects for technical resources deployment.
-
-
-
-## Example levels
 
 We categorize the various examples in this repo as follow:
 
@@ -92,30 +88,17 @@ We categorize the various examples in this repo as follow:
 | 400   | advanced functionalities, multi region support, includes RBAC features and security hardening | not working in AIRS, need AAD permissions  |
 
 
-## Landing zone solutions
-
-Once you deploy the core enterprise scale components, you can leverage the following additional solution landing zones:
-
-| Solution                  | URL                                                         |
-|---------------------------|-------------------------------------------------------------|
-| Azure Kubernetes Services | https://github.com/aztfmod/landingzone_aks                  |
-| Data and Analytics        | https://github.com/aztfmod/landingzone_data_analytics       |
-| SAP on Azure              | https://github.com/aztfmod/terraform-azurerm-sap            |
-| Shared Image Gallery      | https://github.com/aztfmod/landingzone_shared_image_gallery |
-
-To review the enterprise-scale on Terraform landing zone hierarchy model, you can refer to the classic model:
-
-* Hierarchy model: https://github.com/Azure/caf-terraform-landingzones/blob/master/documentation/code_architecture/hierarchy.md
-* Delivery model: https://github.com/Azure/caf-terraform-landingzones/blob/master/documentation/delivery/delivery_landingzones.md
-
 ## Related repositories
 
-| Repo                                                                                              | Description                                                |
-|---------------------------------------------------------------------------------------------------|------------------------------------------------------------|
-| [caf-terraform-landingzones](https://github.com/azure/caf-terraform-landingzones)                 | landing zones repo with sample and core documentations     |
-| [rover](https://github.com/aztfmod/rover)                                                         | devops toolset for operating landing zones                 |
-| [azure_caf_provider](https://github.com/aztfmod/terraform-provider-azurecaf)                      | custom provider for naming conventions                     |
-| [modules](https://registry.terraform.io/modules/aztfmod)                                          | set of curated modules available in the Terraform registry |
+| Repo                                                                              | Description                                            |
+|-----------------------------------------------------------------------------------|--------------------------------------------------------|
+| [caf-terraform-landingzones](https://github.com/azure/caf-terraform-landingzones) | landing zones repo with sample and core documentations |
+| [rover](https://github.com/aztfmod/rover)                                         | devops toolset for operating landing zones             |
+| [azure_caf_provider](https://github.com/aztfmod/terraform-provider-azurecaf)      | custom provider for naming conventions                 |
+| [Azure Kubernetes Services](https://github.com/aztfmod/landingzone_aks)           | Azure Kubernetes Services solutions                    |
+| [Data and Analytics](https://github.com/aztfmod/landingzone_data_analytics)       | Data and Analytics solutions                           |
+| SAP on Azure                                                                      | Coming soon...                                         |
+| Shared Image Gallery                                                              | Coming soon...                                         |
 
 ## Community
 

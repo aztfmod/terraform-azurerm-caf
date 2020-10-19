@@ -55,6 +55,10 @@ locals {
     aks_clusters               = try(var.compute.aks_clusters, {})
   }
 
+  storage = {
+    storage_account_blobs      = try(var.storage.storage_account_blobs, {})
+  }
+
   networking = {
     application_gateways                                    = try(var.networking.application_gateways, {})
     application_gateway_applications                        = try(var.networking.application_gateway_applications, {})
@@ -76,6 +80,7 @@ locals {
   database = {
     mssql_servers               = try(var.database.mssql_servers, {})
     mssql_databases             = try(var.database.mssql_databases, {})
+    mssql_elastic_pools         = try(var.database.mssql_elastic_pools, {})
     azurerm_redis_caches        = try(var.database.azurerm_redis_caches, {})
     synapse_workspaces          = try(var.database.synapse_workspaces, {})
     databricks_workspaces       = try(var.database.databricks_workspaces, {})
@@ -84,7 +89,7 @@ locals {
 
   client_config = {
     client_id               = data.azurerm_client_config.current.client_id
-    tenant_id               = data.azurerm_client_config.current.tenant_id
+    tenant_id               = var.tenant_id
     subscription_id         = data.azurerm_client_config.current.subscription_id
     object_id               = data.azurerm_client_config.current.object_id
     logged_aad_app_objectId = var.logged_aad_app_objectId == null ? var.logged_user_objectId == null ? data.azuread_service_principal.logged_in_app.0.object_id : var.logged_user_objectId : var.logged_aad_app_objectId
@@ -101,18 +106,13 @@ locals {
   shared_services = {
     recovery_vaults = try(var.shared_services.recovery_vaults, {})
     automations     = try(var.shared_services.automations, {})
+    monitoring      = try(var.shared_services.monitoring, {})
   }
 
   enable = {
     bastion_hosts    = try(var.enable.bastion_hosts, true)
     virtual_machines = try(var.enable.virtual_machines, true)
   }
-
-  # CAF landing zones can retrieve remote objects from a different landing zone and the 
-  # combined_objects will merge it with the local objects 
-  combined_objects_keyvaults   = merge(module.keyvaults, try(var.remote_objects.keyvaults, {}))
-  combined_objects_networking  = merge(module.networking, try(var.remote_objects.networking, {}))
-  combined_objects_private_dns = merge(module.private_dns, try(var.remote_objects.private_dns, {}))
 
 }
 

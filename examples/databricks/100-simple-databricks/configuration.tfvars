@@ -85,30 +85,30 @@ network_security_group_definition = {
   # This entry is applied to all subnets with no NSG defined
   empty_nsg = {
 
-    diagnostic_profiles = {
-      nsg = {
-        definition_key   = "network_security_group"
-        destination_type = "storage"
-        destination_key  = "all_regions"
-      }
-    }
+    # diagnostic_profiles = {
+    #   nsg = {
+    #     definition_key   = "network_security_group"
+    #     destination_type = "storage"
+    #     destination_key  = "all_regions"
+    #   }
+    # }
   }
 
   azure_bastion_nsg = {
 
-    diagnostic_profiles = {
-      nsg = {
-        definition_key   = "network_security_group"
-        destination_type = "storage"
-        destination_key  = "all_regions"
-      }
-      operations = {
-        name             = "operations"
-        definition_key   = "network_security_group"
-        destination_type = "log_analytics"
-        destination_key  = "central_logs"
-      }
-    }
+    # diagnostic_profiles = {
+    #   nsg = {
+    #     definition_key   = "network_security_group"
+    #     destination_type = "storage"
+    #     destination_key  = "all_regions"
+    #   }
+    #   operations = {
+    #     name             = "operations"
+    #     definition_key   = "network_security_group"
+    #     destination_type = "log_analytics"
+    #     destination_key  = "central_logs"
+    #   }
+    # }
 
     nsg = [
       {

@@ -1,16 +1,16 @@
 # Global settings
 variable global_settings {
   default = {
-    prefix         = ""
     passthrough    = false
     random_length  = 4
     default_region = "region1"
     regions = {
       region1 = "southeastasia"
     }
-
   }
 }
+
+variable tenant_id {}
 
 variable tfstates {
   default = {}
@@ -149,6 +149,9 @@ variable role_mapping {
 variable storage_accounts {
   default = {}
 }
+variable storage {
+  default = {}
+}
 variable diagnostic_storage_accounts {
   default = {}
 }
@@ -157,3 +160,8 @@ variable diagnostic_storage_accounts {
 variable shared_services {
   default = {}
 }
+
+variable monitoring {
+  default = {}
+}
+
