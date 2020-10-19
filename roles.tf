@@ -35,7 +35,7 @@ locals {
     storage_accounts           = local.combined_objects_storage_accounts
     mssql_servers              = local.combined_objects_mssql_servers
     synapse_workspaces         = local.combined_objects_synapse_workspaces
-    subscriptions              = merge(try(var.subscriptions, {}), { "logged_in_subscription" = { id = data.azurerm_subscription.primary.id } })
+    subscriptions              = map(var.current_landingzone_key, merge(try(var.subscriptions, {}), { "logged_in_subscription" = { id = data.azurerm_subscription.primary.id } }))
     logged_in                  = local.logged_in
   }
 

@@ -25,8 +25,9 @@ module "keyvault_access_policies" {
   access_policies         = each.value
   azuread_groups          = module.azuread_groups
   client_config           = local.client_config
-  managed_identities      = local.combined_objects_managed_identities
+  managed_identities      = module.managed_identities
 }
+
 
 # Need to separate keyvault policies from azure AD apps to get the keyvault with the default policies.
 # Reason - Azure AD apps passwords are stored into keyvault secrets and combining would create a circular reference

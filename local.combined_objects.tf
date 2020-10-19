@@ -10,7 +10,7 @@ locals {
   combined_objects_keyvaults                  = merge(map(var.current_landingzone_key, module.keyvaults), try(var.remote_objects.keyvaults, {}))
   combined_objects_managed_identities         = merge(map(var.current_landingzone_key, module.managed_identities), try(var.remote_objects.managed_identities, {}))
   combined_objects_mssql_servers              = merge(map(var.current_landingzone_key, module.mssql_servers), try(var.remote_objects.mssql_servers, {}))
-  combined_objects_networking                 = merge(map(var.current_landingzone_key, module.networking), try(var.remote_objects.networking, {}))
+  combined_objects_networking                 = merge(map(var.current_landingzone_key, module.networking), try(var.remote_objects.vnets, {}))
   combined_objects_public_ip_addresses        = merge(map(var.current_landingzone_key, module.public_ip_addresses), try(var.remote_objects.public_ip_addresses, {}))
   combined_objects_private_dns                = merge(map(var.current_landingzone_key, module.private_dns), try(var.remote_objects.private_dns, {}))
   combined_objects_resource_groups            = merge(map(var.current_landingzone_key, module.resource_groups), try(var.remote_objects.resource_groups, {}))
