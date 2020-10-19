@@ -30,8 +30,8 @@ virtual_machines = {
     networking_interfaces = {
       nic0 = {
         # Value of the keys from networking.tfvars
-        vnet_key   = "vnet_region1"
-        subnet_key = "example"
+        vnet_key                = "vnet_region1"
+        subnet_key              = "example"
         name                    = "0"
         enable_ip_forwarding    = false
         internal_dns_name_label = "nic0"
