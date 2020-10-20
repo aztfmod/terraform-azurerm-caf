@@ -12,6 +12,8 @@ variable global_settings {
 
 variable tenant_id {}
 
+variable current_landingzone_key {}
+
 variable tfstates {
   default = {}
 }

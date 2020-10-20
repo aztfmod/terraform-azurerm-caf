@@ -6,7 +6,7 @@ output mssql_servers {
 
 module "mssql_servers" {
   source     = "./modules/databases/mssql_server"
-  depends_on = [module.keyvault_access_policies]
+  depends_on = [module.keyvault_access_policies, module.keyvault_access_policies_azuread_apps]
   for_each   = local.database.mssql_servers
 
   global_settings     = local.global_settings

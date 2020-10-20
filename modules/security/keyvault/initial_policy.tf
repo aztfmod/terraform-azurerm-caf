@@ -5,7 +5,5 @@ module "initial_policy" {
 
   keyvault_id             = azurerm_key_vault.keyvault.id
   access_policies         = var.settings.creation_policies
-  tenant_id               = var.client_config.tenant_id
-  logged_user_objectId    = var.client_config.logged_user_objectId
-  logged_aad_app_objectId = var.client_config.logged_aad_app_objectId
+  client_config           = var.client_config
 }
