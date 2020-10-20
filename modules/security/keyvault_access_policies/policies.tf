@@ -33,7 +33,7 @@ module logged_in_user {
   }
 
   # keyvault_id   = var.keyvault_id == null ? try(each.value.lz_key, null) == null ? var.keyvaults[var.keyvault_key].id : var.keyvaults[each.value.lz_key][var.keyvault_key].id : var.keyvault_id
-  keyvault_id   = var.keyvault_id == null ? try(var.keyvaults[var.client_config.landingzone_key][var.keyvault_key].id, var.keyvaults[each.value.lz_key][var.keyvault_key].id) : var.keyvault_id
+  keyvault_id   = var.keyvault_id == null ? try(var.keyvaults[var.client_config.landingzone_key][each.value.key].id, var.keyvaults[each.value.lz_key][each.value.key].id) : var.keyvault_id
   access_policy = each.value
   tenant_id     = var.client_config.tenant_id
   object_id     = var.client_config.logged_user_objectId
