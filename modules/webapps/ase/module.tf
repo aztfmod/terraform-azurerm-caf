@@ -9,7 +9,7 @@ resource "azurecaf_name" "ase" {
 
 resource "azurerm_template_deployment" "ase" {
 
-  name                = var.name
+  name                = azurecaf_name.ase.result
   resource_group_name = var.resource_group_name
 
   template_body = file(local.arm_filename)

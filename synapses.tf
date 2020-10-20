@@ -1,6 +1,6 @@
 module synapse_workspaces {
   source     = "./modules/analytics/synapse"
-  depends_on = [module.keyvault_access_policies]
+  depends_on = [module.keyvault_access_policies, module.keyvault_access_policies_azuread_apps]
   for_each   = local.database.synapse_workspaces
 
   location                             = lookup(each.value, "region", null) == null ? module.resource_groups[each.value.resource_group_key].location : local.global_settings.regions[each.value.region]

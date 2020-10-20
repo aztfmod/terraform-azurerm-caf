@@ -1,4 +1,5 @@
 variable global_settings {}
+variable client_config {}
 variable tags {
 }
 
@@ -13,14 +14,6 @@ variable records {
 
 variable vnet_links {
   default = {}
-}
-
-variable tfstates {
-  default = null
-}
-
-variable use_msi {
-  default = false
 }
 
 variable vnets {
