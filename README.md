@@ -1,5 +1,6 @@
 [![VScodespaces](https://img.shields.io/endpoint?url=https%3A%2F%2Faka.ms%2Fvso-badge)](https://online.visualstudio.com/environments/new?name=terraform-azurerm-caf-landingzone-modules&repo=aztfmod/terraform-azurerm-caf)
 
+
 # Cloud Adoption Framework for Azure - Terraform module
 
 Microsoft [Cloud Adoption Framework for Azure](https://aka.ms/caf) provides you with guidance and best practices to adopt Azure. This module is used by the CAF landing zones to provision resources in Azure subscription.
@@ -79,12 +80,13 @@ rover -lz /tf/caf/examples \
 
 We categorize the various examples in this repo as follow:
 
-| level | functionalities                                                                               | supported environments                     |
-|-------|-----------------------------------------------------------------------------------------------|--------------------------------------------|
-| 100   | basic functionalities and features, no RBAC or security hardening - for demo and simple POC   | working on AIRS subscriptions              |
-| 200   | intermediate functionalities includes RBAC features                                           | may not work in AIRS, need AAD permissions |
-| 300   | advanced functionalities, multi region support, includes RBAC features                        | not working in AIRS, need AAD permissions  |
-| 400   | advanced functionalities, multi region support, includes RBAC features and security hardening | not working in AIRS, need AAD permissions  |
+| level | scenario                                                                                                                               | requirements                                       |
+|-------|----------------------------------------------------------------------------------------------------------------------------------------|----------------------------------------------------|
+| 100   | Start with this one! basic functionalities and features, no RBAC or security hardening - for demo and simple POC                       | working on any subscription with Owner permissions |
+| 200   | intermediate functionalities includes diagnostics features and Azure Active Directory groups                                           | may need custom AAD permissions                    |
+| 300   | advanced functionalities, includes RBAC features, virtual network and private link scenario and reduced portal view for hardened items | need custom AAD permissions                        |
+| 400   | advanced functionalities, includes RBAC features and security hardening                                                                | need custom AAD permissions                        |
+
 
 ## Related repositories
 

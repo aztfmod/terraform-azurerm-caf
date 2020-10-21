@@ -56,7 +56,7 @@ locals {
   }
 
   storage = {
-    storage_account_blobs      = try(var.storage.storage_account_blobs, {})
+    storage_account_blobs = try(var.storage.storage_account_blobs, {})
   }
 
   networking = {
@@ -94,6 +94,7 @@ locals {
     object_id               = data.azurerm_client_config.current.object_id
     logged_aad_app_objectId = var.logged_aad_app_objectId == null ? var.logged_user_objectId == null ? data.azuread_service_principal.logged_in_app.0.object_id : var.logged_user_objectId : var.logged_aad_app_objectId
     logged_user_objectId    = var.logged_user_objectId == null ? var.logged_aad_app_objectId == null ? data.azuread_service_principal.logged_in_app.0.object_id : var.logged_aad_app_objectId : var.logged_user_objectId
+    landingzone_key         = var.current_landingzone_key
   }
 
   webapp = {

@@ -8,6 +8,11 @@ output location {
   sensitive = true
 }
 
+output tags {
+  value     = azurerm_resource_group.rg.tags
+  sensitive = true
+}
+
 output rbac_id {
   value = azurerm_resource_group.rg.id
 }

@@ -15,3 +15,8 @@ module "azurerm_application_insights" {
   disable_ip_masking                    = lookup(each.value, "disable_ip_masking", null)
   global_settings                       = local.global_settings
 }
+
+output application_insights {
+  value     = module.azurerm_application_insights
+  sensitive = true
+}
