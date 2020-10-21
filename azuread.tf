@@ -58,6 +58,7 @@ module azuread_users {
   for_each   = var.azuread_users
 
   global_settings = local.global_settings
+  client_config   = local.client_config
   azuread_users   = each.value
   keyvaults       = local.combined_objects_keyvaults
 }
