@@ -6,7 +6,7 @@ module "app_service_plans" {
 
   resource_group_name        = module.resource_groups[each.value.resource_group_key].name
   location                   = lookup(each.value, "region", null) == null ? module.resource_groups[each.value.resource_group_key].location : local.global_settings.regions[each.value.region]
-  app_service_environment_id = lookup(each.value, "app_service_environment_key", null) == null ? null : module.app_service_environments[each.value.app_service_environment_key].id
+  app_service_environment_id = try(each.value.lz_key, null) == null ? local.combined_objects_app_service_environments[local.client_config.landingzone_key][each.value.app_service_environment_key].id : local.combined_objects_app_service_plans[each.value.lz_key][each.value.app_service_environment_key].id
   tags                       = try(each.value.tags, null)
   kind                       = try(each.value.kind, null)
   settings                   = each.value

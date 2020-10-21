@@ -2,6 +2,7 @@ locals {
   # CAF landing zones can retrieve remote objects from a different landing zone and the 
   # combined_objects will merge it with the local objects 
   combined_objects_aks_clusters               = merge(map(local.client_config.landingzone_key, module.aks_clusters), try(var.remote_objects.aks_clusters, {}))
+  combined_objects_app_service_environments   = merge(map(local.client_config.landingzone_key, module.app_service_environments), try(var.remote_objects.app_service_environments, {}))
   combined_objects_app_service_plans          = merge(map(local.client_config.landingzone_key, module.app_service_plans), try(var.remote_objects.app_service_plans, {}))
   combined_objects_azuread_applications       = merge(map(local.client_config.landingzone_key, module.azuread_applications), try(var.remote_objects.azuread_applications, {}))
   combined_objects_azuread_groups             = merge(map(local.client_config.landingzone_key, module.azuread_groups), try(var.remote_objects.azuread_groups, {}))
