@@ -26,7 +26,7 @@ module "keyvault_access_policies" {
   access_policies         = each.value
   azuread_groups          = local.combined_objects_azuread_groups
   client_config           = local.client_config
-  managed_identities      = module.managed_identities
+  managed_identities      = local.combined_objects_managed_identities
 }
 
 
