@@ -50,7 +50,9 @@ synapse_workspaces = {
         auto_pause = {
           delay_in_minutes = 15
         }
-        tags = "Production"
+        tags = {
+          environment = "Production"
+        }
       }
     }
   }
