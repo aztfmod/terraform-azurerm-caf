@@ -10,6 +10,7 @@ module "keyvaults" {
   diagnostics     = local.diagnostics
   vnets           = local.combined_objects_networking
   azuread_groups  = local.combined_objects_azuread_groups
+  base_tags       = try(local.global_settings.inherit_tags, false) ? module.resource_groups[each.value.resource_group_key].tags : {}
 }
 
 #

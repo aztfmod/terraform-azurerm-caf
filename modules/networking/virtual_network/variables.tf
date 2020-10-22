@@ -38,3 +38,4 @@ variable route_tables {
 }
 
 variable global_settings {}
+variable base_tags {}

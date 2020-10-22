@@ -15,7 +15,7 @@ resource "azurerm_databricks_workspace" "ws" {
   location                    = var.location
   sku                         = try(var.settings.sku, "standard")
   managed_resource_group_name = try(var.settings.managed_resource_group_name, null)
-  tags                        = try(var.settings.tags, null)
+  tags                        = try(local.tags, null)
 
   dynamic "custom_parameters" {
     for_each = try(var.settings.custom_parameters, null) == null ? [] : [1]

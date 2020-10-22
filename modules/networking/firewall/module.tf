@@ -16,7 +16,7 @@ resource "azurerm_firewall" "fw" {
   location            = var.location
   threat_intel_mode   = try(var.settings.threat_intel_mode, "Alert")
   zones               = try(var.settings.zones, null)
-  tags                = try(var.tags, null)
+  tags                = local.tags
 
   ip_configuration {
     name                 = "configuration"

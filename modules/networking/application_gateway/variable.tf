@@ -35,4 +35,4 @@ variable sku_tier {
   }
 }
 
-
+variable base_tags {}

@@ -12,3 +12,4 @@ variable azuread_groups {
 variable diagnostics {
   default = {}
 }
+variable base_tags {}

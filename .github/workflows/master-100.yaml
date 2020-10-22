@@ -6,14 +6,13 @@
 name: scenarios-100
 
 on:
-  push:
+  pull_request:
     paths-ignore:
       - .github/workflows/master-200.yaml
       - 'documentation/**'
       - '_pictures/**'
       - 'README.md'
       - 'CHANGELOG.md'
-  pull_request:
   schedule:
     - cron:  '0 3 * * *'
 
@@ -38,7 +37,7 @@ jobs:
           random_length: ['5']
 
     container:
-      image: aztfmod/roverdev:2010.190123
+      image: aztfmod/roverdev:2010.220257
       options: --user 0
 
     steps:
@@ -111,21 +110,20 @@ jobs:
             "examples/networking/private_dns/100-private-dns-vnet-links",
             "examples/redis_cache/100-redis-standard",
             "examples/machine_learning/100-aml",
-            # "examples/machine_learning/101-aml-vnet",
+            "examples/machine_learning/101-aml-vnet",
             "examples/datalake/101-datalake-storage",
             "examples/synapse_analytics/100-synapse",
             "examples/synapse_analytics/101-synapse-sparkpool",
             "examples/monitoring/service_health_alerts",
             "examples/mssql_server/elastic_pools",
+            "examples/webapps/appservice/101-appservice-simple",
+            "examples/webapps/appservice/102-appservice-slots",
+            "examples/webapps/appservice/103-appservice-extend",
             "examples/webapps/appservice/104-appservice-appinsight"
-            # "examples/webapps/appservice/101-appservice-simple",
-            # "examples/webapps/appservice/102-appservice-slots",
-            # "examples/webapps/appservice/103-appservice-slots",
-            # "examples/webapps/appservice-environment/101-simple_ase"
           ]
 
     container:
-      image: aztfmod/roverdev:2010.190123
+      image: aztfmod/roverdev:2010.220257
       options: --user 0
 
     steps:
@@ -167,7 +165,7 @@ jobs:
           region: ["southeastasia"]
 
     container:
-      image: aztfmod/roverdev:2010.190123
+      image: aztfmod/roverdev:2010.220257
       options: --user 0
 
     steps:

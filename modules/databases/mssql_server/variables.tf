@@ -8,3 +8,4 @@ variable azuread_groups {}
 variable vnets {}
 variable private_endpoints {}
 variable resource_groups {}
+variable base_tags {}

@@ -7,6 +7,7 @@ module azurerm_firewalls {
   resource_group_name = module.resource_groups[each.value.resource_group_key].name
   location            = lookup(each.value, "region", null) == null ? module.resource_groups[each.value.resource_group_key].location : local.global_settings.regions[each.value.region]
   tags                = try(each.value.tags, null)
+  base_tags           = try(local.global_settings.inherit_tags, false) ? module.resource_groups[each.value.resource_group_key].tags : {}
   subnet_id           = module.networking[each.value.vnet_key].subnets["AzureFirewallSubnet"].id
   public_ip_id        = module.public_ip_addresses[each.value.public_ip_key].id
   diagnostics         = local.diagnostics

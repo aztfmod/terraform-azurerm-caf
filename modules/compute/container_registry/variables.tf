@@ -63,3 +63,5 @@ variable tfstates {}
 variable use_msi {
   default = false
 }
+
+variable base_tags {}

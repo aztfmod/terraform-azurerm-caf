@@ -1,8 +1,5 @@
 variable global_settings {}
 variable client_config {}
-variable tags {
-}
-
 variable name {
 }
 
@@ -17,5 +14,9 @@ variable vnet_links {
 }
 
 variable vnets {
+  default = {}
+}
+variable base_tags {}
+variable tags {
   default = {}
 }

@@ -14,10 +14,10 @@ variable global_settings {
 
 variable landingzone {
   default = {
-    backend_type          = "azurerm"
-    global_settings_key   = "launchpad"
-    level = "level0"
-    key   = "examples"
+    backend_type        = "azurerm"
+    global_settings_key = "launchpad"
+    level               = "level0"
+    key                 = "examples"
     tfstates = {
       launchpad = {
         level   = "current"
