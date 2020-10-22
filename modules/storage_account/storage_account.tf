@@ -25,7 +25,7 @@ resource "azurerm_storage_account" "stg" {
   min_tls_version           = lookup(var.storage_account, "min_tls_version", "TLS1_2")
   allow_blob_public_access  = lookup(var.storage_account, "allow_blob_public_access", false)
   is_hns_enabled            = lookup(var.storage_account, "is_hns_enabled", false)
-  tags                      = local.tags
+  tags                      = merge(local.tags, var.base_tags)
 
 
   dynamic "custom_domain" {

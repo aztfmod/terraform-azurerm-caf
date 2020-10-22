@@ -22,8 +22,6 @@ resource "azurerm_synapse_spark_pool" "spark_pool" {
     delay_in_minutes = var.settings.auto_pause.delay_in_minutes
   }
 
-  tags = {
-    ENV = var.settings.tags
-  }
+  tags = local.tags
 }
 

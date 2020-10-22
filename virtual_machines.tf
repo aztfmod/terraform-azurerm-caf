@@ -16,6 +16,8 @@ module virtual_machines {
   keyvault_id                      = local.combined_objects_keyvaults[lookup(each.value, "lz_key", var.current_landingzone_key)][each.value.keyvault_key].id
   diagnostics                      = local.diagnostics
   public_ip_addresses              = local.combined_objects_public_ip_addresses
+  base_tags                        = try(local.global_settings.inherit_tags, false) ? module.resource_groups[each.value.resource_group_key].tags : {}
+
 }
 
 

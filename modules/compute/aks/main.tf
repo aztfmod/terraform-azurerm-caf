@@ -1,10 +1,10 @@
 data "azurerm_client_config" "current" {}
 
 locals {
-  blueprint_tag = {
-    "blueprint" = basename(abspath(path.module))
+  module_tag = {
+    "module" = basename(abspath(path.module))
   }
-  tags = local.blueprint_tag
+  tags = merge(local.module_tag, var.base_tags)
 }
 
 terraform {

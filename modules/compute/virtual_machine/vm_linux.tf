@@ -53,6 +53,7 @@ resource "azurerm_linux_virtual_machine" "vm" {
   size                  = each.value.size
   admin_username        = each.value.admin_username
   network_interface_ids = local.nic_ids
+  tags                  = merge(local.tags, try(each.value.tags, null))
 
   allow_extension_operations      = try(each.value.allow_extension_operations, null)
   computer_name                   = azurecaf_name.linux_computer_name[each.key].result

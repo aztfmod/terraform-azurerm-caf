@@ -20,7 +20,7 @@ resource "azurerm_bastion_host" "host" {
   name                = azurecaf_name.host[each.key].result
   location            = module.resource_groups[each.value.resource_group_key].location
   resource_group_name = module.resource_groups[each.value.resource_group_key].name
-  tags                = try(each.value.tags, null)
+  tags                = try(local.global_settings.inherit_tags, false) ? merge(module.resource_groups[each.value.resource_group_key].tags, try(each.value.tags, null))  : try(each.value.tags, null)
 
   ip_configuration {
     name                 = each.value.name

@@ -15,3 +15,4 @@ variable managed_identities {
 variable diagnostics {
   default = {}
 }
+variable base_tags {}

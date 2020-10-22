@@ -54,7 +54,7 @@ resource "azurerm_windows_virtual_machine" "vm" {
   max_bid_price              = try(each.value.max_bid_price, null)
   priority                   = try(each.value.priority, null)
   license_type               = try(each.value.license_type, null)
-  tags                       = try(each.value.tags, null)
+  tags                       = merge(local.tags, try(each.value.tags, null))
   timezone                   = try(each.value.timezone, null)
 
   os_disk {
