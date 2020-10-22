@@ -42,3 +42,5 @@ variable application_insight {
 variable settings {}
 
 variable global_settings {}
+
+variable base_tags {}

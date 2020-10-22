@@ -6,3 +6,4 @@ variable resource_group_name {}
 variable keyvault_id {
   default = null
 }
+variable base_tags {}

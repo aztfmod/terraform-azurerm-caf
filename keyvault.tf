@@ -9,6 +9,7 @@ module "keyvaults" {
   resource_groups = module.resource_groups
   diagnostics     = local.diagnostics
   vnets           = local.combined_objects_networking
+  base_tags       = try(local.global_settings.inherit_tags, false) ? module.resource_groups[each.value.resource_group_key].tags : {}
 }
 
 #
@@ -20,12 +21,12 @@ module "keyvault_access_policies" {
   source   = "./modules/security/keyvault_access_policies"
   for_each = var.keyvault_access_policies
 
-  keyvault_key            = each.key
-  keyvaults               = local.combined_objects_keyvaults
-  access_policies         = each.value
-  azuread_groups          = module.azuread_groups
-  client_config           = local.client_config
-  managed_identities      = module.managed_identities
+  keyvault_key       = each.key
+  keyvaults          = local.combined_objects_keyvaults
+  access_policies    = each.value
+  azuread_groups     = module.azuread_groups
+  client_config      = local.client_config
+  managed_identities = module.managed_identities
 }
 
 

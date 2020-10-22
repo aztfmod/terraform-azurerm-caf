@@ -16,7 +16,7 @@ resource "azurerm_synapse_workspace" "ws" {
   storage_data_lake_gen2_filesystem_id = var.storage_data_lake_gen2_filesystem_id
   sql_administrator_login              = var.settings.sql_administrator_login
   sql_administrator_login_password     = try(var.settings.sql_administrator_login_password, random_password.sql_admin.0.result)
-  tags                                 = try(var.settings.tags, null)
+  tags                                 = local.tags
 }
 
 # Generate sql server random admin password if not provided in the attribute administrator_login_password

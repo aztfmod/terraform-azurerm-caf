@@ -45,6 +45,7 @@ locals {
     random_length      = lookup(var.global_settings, "random_length", null)
     regions            = var.global_settings.regions
     passthrough        = try(var.global_settings.passthrough, false)
+    inherit_tags       = try(var.global_settings.inherit_tags, false)
   }
 
 

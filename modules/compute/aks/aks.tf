@@ -11,8 +11,7 @@ resource "azurecaf_name" "aks" {
 
 resource "azurecaf_name" "default_node_pool" {
   name          = var.settings.default_node_pool.name
-  resource_type = "azurerm_kubernetes_cluster"
-  #TODO: replace with aks_node_pool_linux when available.
+  resource_type = "aks_node_pool_linux"
   prefixes      = [var.global_settings.prefix]
   random_length = var.global_settings.random_length
   clean_input   = true

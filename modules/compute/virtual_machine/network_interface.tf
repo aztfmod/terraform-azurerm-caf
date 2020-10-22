@@ -30,7 +30,7 @@ resource "azurerm_network_interface" "nic" {
   enable_ip_forwarding          = lookup(each.value, "enable_ip_forwarding", false)
   enable_accelerated_networking = lookup(each.value, "enable_accelerated_networking", false)
   internal_dns_name_label       = lookup(each.value, "internal_dns_name_label", null)
-  tags                          = lookup(each.value, "tags", null)
+  tags                          = local.tags
 
   ip_configuration {
     name                          = azurecaf_name.nic[each.key].result

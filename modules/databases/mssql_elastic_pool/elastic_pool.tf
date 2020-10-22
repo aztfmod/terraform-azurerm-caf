@@ -18,7 +18,7 @@ resource "azurerm_mssql_elasticpool" "elasticpool" {
   max_size_bytes      = try(var.settings.max_size_bytes, null)
   zone_redundant      = try(var.settings.zone_redundant, null)
   license_type        = try(var.settings.license_type, null)
-  tags                = try(var.settings.tags, null)
+  tags                = local.tags
 
   sku {
     name     = var.settings.sku.name

@@ -36,3 +36,4 @@ variable diagnostics {
 variable public_ip_addresses {
   default = {}
 }
+variable base_tags {}

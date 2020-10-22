@@ -8,6 +8,8 @@ module "redis_caches" {
   resource_group_name = module.resource_groups[each.value.resource_group_key].name
   redis               = each.value.redis
   global_settings     = local.global_settings
+  base_tags           = try(local.global_settings.inherit_tags, false) ? module.resource_groups[each.value.resource_group_key].tags : {}
+
 }
 
 output "redis_caches" {

@@ -12,6 +12,7 @@ module "private_dns" {
   vnet_links          = try(each.value.vnet_links, {})
   tags                = try(each.value.tags, null)
   vnets               = local.combined_objects_networking
+  base_tags           = try(local.global_settings.inherit_tags, false) ? module.resource_groups[each.value.resource_group_key].tags : {}
 }
 
 output "private_dns" {

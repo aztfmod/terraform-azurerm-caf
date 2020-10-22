@@ -53,20 +53,20 @@ locals {
   roles_to_process = {
     for mapping in
     flatten(
-      [                                                                              # Variable
-        for key_mode, all_role_mapping in var.role_mapping : [                      #  built_in_role_mapping = {
-          for key, role_mappings in all_role_mapping : [                            #       aks_clusters = {
-            for scope_key_resource, role_mapping in role_mappings : [               #         seacluster = {
-              for role_definition_name, resources in role_mapping : [               #           "Azure Kubernetes Service Cluster Admin Role" = {
-                for object_id_key, object_resources in resources : [                #             azuread_group_keys = {
-                  for object_id_key_resource in object_resources.keys :             #               keys = [ "aks_admins" ] ----End of variable
-                  {                                                                 # "seacluster_Azure_Kubernetes_Service_Cluster_Admin_Role_aks_admins" = {
-                    mode                    = key_mode                              #   "mode" = "built_in_role_mapping"
+      [                                                                 # Variable
+        for key_mode, all_role_mapping in var.role_mapping : [          #  built_in_role_mapping = {
+          for key, role_mappings in all_role_mapping : [                #       aks_clusters = {
+            for scope_key_resource, role_mapping in role_mappings : [   #         seacluster = {
+              for role_definition_name, resources in role_mapping : [   #           "Azure Kubernetes Service Cluster Admin Role" = {
+                for object_id_key, object_resources in resources : [    #             azuread_group_keys = {
+                  for object_id_key_resource in object_resources.keys : #               keys = [ "aks_admins" ] ----End of variable
+                  {                                                     # "seacluster_Azure_Kubernetes_Service_Cluster_Admin_Role_aks_admins" = {
+                    mode                    = key_mode                  #   "mode" = "built_in_role_mapping"
                     scope_resource_key      = key
                     scope_key_resource      = scope_key_resource
                     role_definition_name    = role_definition_name
-                    object_id_resource_type = object_id_key                         
-                    object_id_key_resource  = object_id_key_resource                #   "object_id_key_resource" = "aks_admins"
+                    object_id_resource_type = object_id_key
+                    object_id_key_resource  = object_id_key_resource #   "object_id_key_resource" = "aks_admins"
                     lz_key                  = try(object_resources.lz_key, null)
                   }
                 ]
