@@ -6,6 +6,7 @@ variable resource_group_name {}
 variable keyvault_id {}
 variable storage_account_id {}
 variable application_insights_id {}
+variable base_tags {}
 variable vnets {}
 
 

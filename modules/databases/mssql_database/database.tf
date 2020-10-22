@@ -25,7 +25,7 @@ resource "azurerm_mssql_database" "mssqldb" {
   sample_name                 = try(var.settings.sample_name, null)
   sku_name                    = try(var.settings.sku_name, null)
   zone_redundant              = try(var.settings.zone_redundant, null)
-  tags                        = try(var.settings.tags, null)
+  tags                        = local.tags
 
   dynamic "threat_detection_policy" {
     for_each = lookup(var.settings, "threat_detection_policy", {}) == {} ? [] : [1]

@@ -16,7 +16,7 @@ resource "azurerm_machine_learning_workspace" "ws" {
   application_insights_id = var.application_insights_id
   key_vault_id            = var.keyvault_id
   storage_account_id      = var.storage_account_id
-  tags                    = try(var.settings.tags, null)
+  tags                    = try(local.tags, null)
   sku_name                = try(var.settings.sku_name, "basic")
 
   identity {

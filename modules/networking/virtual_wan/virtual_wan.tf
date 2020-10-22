@@ -30,7 +30,7 @@ module hubs {
   virtual_hub_config  = each.value
   resource_group_name = var.resource_group_name
   vwan_id             = azurerm_virtual_wan.vwan.id
-  tags                = local.tags
+  tags                = merge(try(each.value.tags, null), local.tags)
 }
 
 output virtual_hubs {
