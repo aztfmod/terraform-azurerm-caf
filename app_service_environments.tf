@@ -11,8 +11,8 @@ module "app_service_environments" {
   name                      = each.value.name
   kind                      = try(each.value.kind, "ASEV2")
   zone                      = try(each.value.zone, null)
-  subnet_id                 = lookup(each.value, "lz_key", null) == null ? local.combined_objects_networking[each.value.vnet_key].subnets[each.value.subnet_key].id : local.combined_objects_networking[each.value.lz_key].vnets[each.value.vnet_key].subnets[each.value.subnet_key].id
-  subnet_name               = lookup(each.value, "lz_key", null) == null ? local.combined_objects_networking[each.value.vnet_key].subnets[each.value.subnet_key].name : local.combined_objects_networking[each.value.lz_key].vnets[each.value.vnet_key].subnets[each.value.subnet_key].name
+  subnet_id                 = lookup(each.value, "lz_key", null) == null ? local.combined_objects_networking[each.value.vnet_key].subnets[each.value.subnet_key].id : local.combined_objects_networking[each.value.lz_key][each.value.vnet_key].subnets[each.value.subnet_key].id
+  subnet_name               = lookup(each.value, "lz_key", null) == null ? local.combined_objects_networking[each.value.vnet_key].subnets[each.value.subnet_key].name : local.combined_objects_networking[each.value.lz_key][each.value.vnet_key].subnets[each.value.subnet_key].name
   internalLoadBalancingMode = each.value.internalLoadBalancingMode
   front_end_size            = try(each.value.front_end_size, "Standard_D1_V2")
   diagnostic_profiles       = try(each.value.diagnostic_profiles, null)
