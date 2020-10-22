@@ -6,4 +6,5 @@ module "initial_policy" {
   keyvault_id             = azurerm_key_vault.keyvault.id
   access_policies         = var.settings.creation_policies
   client_config           = var.client_config
+  azuread_groups          = var.azuread_groups
 }

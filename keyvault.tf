@@ -9,6 +9,7 @@ module "keyvaults" {
   resource_groups = module.resource_groups
   diagnostics     = local.diagnostics
   vnets           = local.combined_objects_networking
+  azuread_groups  = local.combined_objects_azuread_groups
 }
 
 #
@@ -23,7 +24,7 @@ module "keyvault_access_policies" {
   keyvault_key            = each.key
   keyvaults               = local.combined_objects_keyvaults
   access_policies         = each.value
-  azuread_groups          = module.azuread_groups
+  azuread_groups          = local.combined_objects_azuread_groups
   client_config           = local.client_config
   managed_identities      = module.managed_identities
 }
