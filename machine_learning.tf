@@ -1,5 +1,5 @@
 module machine_learning_workspaces {
-  source   = "./modules/analytics/azure_machine_learning"
+  source   = "./modules/analytics/machine_learning"
   for_each = local.database.machine_learning_workspaces
 
   client_config           = local.client_config

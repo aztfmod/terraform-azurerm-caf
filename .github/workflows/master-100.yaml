@@ -111,7 +111,7 @@ jobs:
             "examples/networking/private_dns/100-private-dns-vnet-links",
             "examples/redis_cache/100-redis-standard",
             "examples/machine_learning/100-aml",
-            # "examples/machine_learning/101-aml-vnet",
+            "examples/machine_learning/101-aml-vnet",
             "examples/datalake/101-datalake-storage",
             "examples/synapse_analytics/100-synapse",
             "examples/synapse_analytics/101-synapse-sparkpool",
