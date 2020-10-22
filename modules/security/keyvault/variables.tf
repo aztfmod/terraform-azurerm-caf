@@ -5,6 +5,9 @@ variable settings {}
 variable vnets {
   default = {}
 }
+variable azuread_groups {
+  default = {}
+}
 # For diagnostics settings
 variable diagnostics {
   default = {}
