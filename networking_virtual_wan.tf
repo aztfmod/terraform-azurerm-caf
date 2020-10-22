@@ -14,6 +14,7 @@ module virtual_wans {
   location            = lookup(each.value, "region", null) == null ? module.resource_groups[each.value.resource_group_key].location : local.global_settings.regions[each.value.region]
   diagnostics         = local.diagnostics
   global_settings     = local.global_settings
+  base_tags           = try(local.global_settings.inherit_tags, false) ? module.resource_groups[each.value.resource_group_key].tags : {}
 }
 
 

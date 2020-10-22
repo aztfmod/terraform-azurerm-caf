@@ -42,3 +42,5 @@ variable ai_instrumentation_key {
 variable settings {}
 
 variable global_settings {}
+
+variable base_tags {}

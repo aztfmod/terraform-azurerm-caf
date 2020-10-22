@@ -12,6 +12,7 @@ module application_gateways {
   sku_name            = each.value.sku_name
   sku_tier            = each.value.sku_tier
   vnets               = local.combined_objects_networking
+  base_tags           = try(local.global_settings.inherit_tags, false) ? module.resource_groups[each.value.resource_group_key].tags : {}
   public_ip_addresses = local.combined_objects_public_ip_addresses
   application_gateway_applications = {
     for key, value in local.networking.application_gateway_applications : key => value

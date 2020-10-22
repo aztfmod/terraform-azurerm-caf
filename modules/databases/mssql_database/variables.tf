@@ -5,3 +5,4 @@ variable storage_accounts {}
 variable elastic_pool_id {
   default = null
 }
+variable base_tags {}

@@ -14,7 +14,7 @@ resource "azurerm_application_gateway" "agw" {
 
   zones              = try(var.settings.zones, null)
   enable_http2       = try(var.settings.enable_http2, true)
-  tags               = try(var.settings.tags, null)
+  tags               = try(local.tags, null)
   firewall_policy_id = try(var.settings.firewall_policy_id, null)
 
   sku {

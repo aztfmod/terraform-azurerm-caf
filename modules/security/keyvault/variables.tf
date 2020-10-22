@@ -9,3 +9,4 @@ variable vnets {
 variable diagnostics {
   default = {}
 }
+variable base_tags {}

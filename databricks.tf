@@ -9,6 +9,7 @@ module databricks_workspaces {
   vnet                = lookup(each.value.custom_parameters, "remote_tfstate", null) == null ? module.networking[each.value.custom_parameters.vnet_key] : null
   use_msi             = var.use_msi
   tfstates            = var.tfstates
+  base_tags           = try(local.global_settings.inherit_tags, false) ? module.resource_groups[each.value.resource_group_key].tags : {}
 }
 
 output databricks_workspaces {

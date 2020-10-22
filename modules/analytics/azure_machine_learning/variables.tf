@@ -8,5 +8,5 @@ variable application_insights_id {}
 variable networking {}
 variable tfstates {}
 variable use_msi {}
-
+variable base_tags {}
 
