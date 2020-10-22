@@ -35,7 +35,7 @@ variable slots {
   default = {}
 }
 
-variable ai_instrumentation_key {
+variable application_insight {
   default = null
 }
 

@@ -14,7 +14,7 @@ module "app_services" {
   app_settings           = try(each.value.app_settings, null)
   slots                  = try(each.value.slots, {})
   global_settings        = local.global_settings
-  ai_instrumentation_key = try(each.value.application_insight_key, module.azurerm_application_insights[each.value.application_insight_key].instrumentation_key)
+  application_insight    = try(each.value.application_insight_key, null) == null ? null : module.azurerm_application_insights[each.value.application_insight_key]
   tags                   = try(each.value.tags, null)
 }
 
