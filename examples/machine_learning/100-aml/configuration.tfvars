@@ -36,19 +36,9 @@ storage_accounts = {
 
 keyvaults = {
   aml_secrets = {
-    name               = "amlsecrets"
-    resource_group_key = "dap_azure_ml_re1"
-    //convention          = "cafrandom"
+    name                = "amlsecrets"
+    resource_group_key  = "dap_azure_ml_re1"
     sku_name            = "premium"
     soft_delete_enabled = true
-
-    # you can setup up to 5 profiles
-    # diagnostic_profiles = {
-    #   operations = {
-    #     definition_key   = "default_all"
-    #     destination_type = "log_analytics"
-    #     destination_key  = "central_logs"
-    #   }
-    # }
   }
 }
