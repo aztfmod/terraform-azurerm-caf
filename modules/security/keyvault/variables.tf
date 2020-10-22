@@ -8,6 +8,9 @@ variable vnets {
 variable azuread_groups {
   default = {}
 }
+variable managed_identities {
+  default = {}
+}
 # For diagnostics settings
 variable diagnostics {
   default = {}
