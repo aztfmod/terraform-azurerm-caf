@@ -13,7 +13,7 @@ postgresql_servers = {
     name                          = "sales-rg1"
     region                        = "region1"
     resource_group_key            = "postgresql_region1"
-    version                       = "11"
+    version                       = "9.5"
     sku_name                      = "GP_Gen5_8"
     administrator_login           = "postgresqlsalesadmin"
     keyvault_key                  = "postgresql-rg1"
@@ -31,6 +31,15 @@ postgresql_servers = {
         server_name         = "sales-rg1"
         start_ip_address    = "40.112.8.12"
         end_ip_address      = "40.112.8.12"
+      }
+    }
+
+     postgresql_configuration = {
+      postgresql_configuration = {
+        name = "configuration_server-rg1"
+        resource_group_name = "postgresql_region1"
+        server_name         = "sales-rg1"
+        value = "on"
       }
     }
 
@@ -122,17 +131,4 @@ azuread_groups = {
     prevent_duplicate_name = false
   }
 }
-/*
-postgresql_configuration = {
-  postgresql-configuration = {
-    value = "on"
-  }
-}
 
-postgresql_database = { 
-  postgresql-database = {
-      charset             = "UTF8"
-      collation           = "English_United States.1252"
-  }
-}
-*/
