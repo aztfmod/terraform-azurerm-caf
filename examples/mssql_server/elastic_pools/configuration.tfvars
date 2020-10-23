@@ -41,17 +41,13 @@ keyvaults = {
     name               = "sqlrg1"
     resource_group_key = "security_region1"
     sku_name           = "standard"
-  }
-}
-
-keyvault_access_policies = {
-  # A maximum of 16 access policies per keyvault
-  sql-rg1 = {
-    logged_in_user = {
-      secret_permissions = ["Set", "Get", "List", "Delete", "Purge"]
-    }
-    logged_in_aad_app = {
-      secret_permissions = ["Set", "Get", "List", "Delete", "Purge"]
+    creation_policies = {
+      logged_in_user = {
+        secret_permissions = ["Set", "Get", "List", "Delete", "Purge"]
+      }
+      logged_in_aad_app = {
+        secret_permissions = ["Set", "Get", "List", "Delete", "Purge"]
+      }
     }
   }
 }
