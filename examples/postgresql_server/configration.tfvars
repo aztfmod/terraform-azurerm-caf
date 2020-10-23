@@ -13,18 +13,18 @@ postgresql_servers = {
     name                          = "sales-rg1"
     region                        = "region1"
     resource_group_key            = "postgresql_region1"
-    version                       = "9.5"
+    version                       = "9.6"
     sku_name                      = "GP_Gen5_8"
     administrator_login           = "postgresqlsalesadmin"
     keyvault_key                  = "postgresql-rg1"
     connection_policy             = "Default"
     system_msi                    = true
-    public_network_access_enabled = false
+    public_network_access_enabled = true
     
 
     postgresql_firewall_rules = {
       postgresql-firewall-rules = {
-        name = "firewallrule_server-rg1"
+        name = "postgresql_server_firewallrule"
         resource_group_name = "postgresql_region1"
         server_name         = "sales-rg1"
         start_ip_address    = "40.112.8.12"
@@ -34,7 +34,7 @@ postgresql_servers = {
 
      postgresql_configuration = {
       postgresql_configuration = {
-        name = "configuration_server-rg1"
+        name = "postgresql_server_configuration"
         resource_group_name = "postgresql_region1"
         server_name         = "sales-rg1"
         value = "on"
@@ -43,7 +43,7 @@ postgresql_servers = {
 
     postgresql_database = {
       postgresql_database = {
-        name = "database_server-rg1"
+        name = "postgresql_server_sampledb"
         resource_group_name = "postgresql_region1"
         server_name         = "sales-rg1"
         charset             = "UTF8"
