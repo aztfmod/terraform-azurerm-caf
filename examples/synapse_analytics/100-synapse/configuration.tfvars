@@ -52,7 +52,7 @@ keyvaults = {
     sku_name            = "premium"
     soft_delete_enabled = true
 
-    creation_policy = {
+    creation_policies = {
       logged_in_user = {
         secret_permissions = ["Set", "Get", "List", "Delete", "Purge", "Recover"]
       }
