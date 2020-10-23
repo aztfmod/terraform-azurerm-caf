@@ -102,10 +102,10 @@ keyvault_access_policies = {
     logged_in_aad_app = {
       secret_permissions = ["Set", "Get", "List", "Delete", "Purge", "Recover"]
     }
-    dap_admins = {
-      azuread_group_key  = "dap_admins"
-      secret_permissions = ["Get", "List"]
-    }
+    # dap_admins = {
+    #   azuread_group_key  = "dap_admins"
+    #   secret_permissions = ["Get", "List"]
+    # }
   }
 }
 
