@@ -3,6 +3,7 @@ module application_gateways {
   for_each = local.networking.application_gateways
 
   global_settings     = local.global_settings
+  client_config       = local.client_config
   diagnostics         = local.diagnostics
   tfstates            = var.tfstates
   use_msi             = var.use_msi
