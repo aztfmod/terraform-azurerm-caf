@@ -23,6 +23,7 @@ resource "azurerm_postgresql_server" "postgresql" {
   ssl_minimal_tls_version_enforced = try(var.settings.ssl_minimal_tls_version_enforced, "TLSEnforcementDisabled")
   tags                             = try(var.settings.tags, null)
   
+  
 
   dynamic "identity" {
     for_each = lookup(var.settings, "identity", {}) == {} ? [] : [1]
@@ -89,5 +90,43 @@ resource "azurerm_key_vault_secret" "sql_admin" {
   value        = var.settings.administrator_login
   key_vault_id = var.keyvault_id
 }
+
+resource "azurerm_postgresql_active_directory_administrator" "aad_admin" {
+  count = try(var.settings.azuread_administrator, null) == null ? 0 : 1
+
+  server_name         = azurerm_postgresql_server.postgresql.name
+  resource_group_name = var.resource_group_name
+  login               = try(var.settings.azuread_administrator.login_username, var.azuread_groups[var.settings.azuread_administrator.azuread_group_key].name)
+  tenant_id           = try(var.settings.azuread_administrator.tenant_id, var.azuread_groups[var.settings.azuread_administrator.azuread_group_key].tenant_id)
+  object_id           = try(var.settings.azuread_administrator.object_id, var.azuread_groups[var.settings.azuread_administrator.azuread_group_key].id)
+}
+
+/*
+resource "azurerm_postgresql_configuration" "postgresql_configuration" {
+  name                = var.settings.name
+  resource_group_name = var.resource_group_name
+  server_name         = azurerm_postgresql_server.postgresql.name
+  value               = var.settings.postgresql_configuration.value
+}
+
+resource "azurerm_postgresql_database" "postgresql_database" {
+  name                = var.settings.name
+  resource_group_name = var.resource_group_name
+  server_name         = azurerm_postgresql_server.postgresql.name
+  charset               = var.settings.postgresql_configuration.charset
+  collation               = var.settings.postgresql_configuration.collation
+}
+
+
+*/
+
+
+
+
+
+
+
+
+
 
 

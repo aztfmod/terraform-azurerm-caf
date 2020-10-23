@@ -20,8 +20,25 @@ postgresql_servers = {
     connection_policy             = "Default"
     system_msi                    = true
     public_network_access_enabled = false
+    //postgresql_configuration  = "postgresql-configuration"
+    //postgresql_database  = "postgresql-database"
+    
+
+    postgresql_firewall_rules = {
+      postgresql-firewall-rules = {
+        name = "firewallrule_server-rg1"
+        resource_group_name = "postgresql_region1"
+        server_name         = "sales-rg1"
+        start_ip_address    = "40.112.8.12"
+        end_ip_address      = "40.112.8.12"
+      }
+    }
 
     auto_grow_enabled = true
+
+    azuread_administrator = {
+      azuread_group_key = "sales_admins"
+    }
     
     tags = {
       segment = "sales"
@@ -85,8 +102,6 @@ keyvault_access_policies = {
   }
 }
 
-
-
 azuread_groups = {
   sales_admins = {
     name        = "sql-sales-admins"
@@ -107,3 +122,17 @@ azuread_groups = {
     prevent_duplicate_name = false
   }
 }
+/*
+postgresql_configuration = {
+  postgresql-configuration = {
+    value = "on"
+  }
+}
+
+postgresql_database = { 
+  postgresql-database = {
+      charset             = "UTF8"
+      collation           = "English_United States.1252"
+  }
+}
+*/
