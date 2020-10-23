@@ -20,8 +20,6 @@ postgresql_servers = {
     connection_policy             = "Default"
     system_msi                    = true
     public_network_access_enabled = false
-    //postgresql_configuration  = "postgresql-configuration"
-    //postgresql_database  = "postgresql-database"
     
 
     postgresql_firewall_rules = {
@@ -40,6 +38,16 @@ postgresql_servers = {
         resource_group_name = "postgresql_region1"
         server_name         = "sales-rg1"
         value = "on"
+      }
+    }
+
+    postgresql_database = {
+      postgresql_database = {
+        name = "database_server-rg1"
+        resource_group_name = "postgresql_region1"
+        server_name         = "sales-rg1"
+        charset             = "UTF8"
+        collation           = "English_United States.1252"
       }
     }
 
