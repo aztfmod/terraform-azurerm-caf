@@ -3,7 +3,7 @@ module azuread_apps {
   source = "./access_policy"
   for_each = {
     for key, access_policy in var.access_policies : key => access_policy
-    if try(access_policy.azuread_app_key, null) != null && var.azuread_apps != {}
+    if try(access_policy.azuread_app_key, null) != null
   }
 
   keyvault_id   = var.keyvault_id == null ? try(var.keyvaults[var.client_config.landingzone_key][var.keyvault_key].id, var.keyvaults[each.value.lz_key][var.keyvault_key].id) : var.keyvault_id
@@ -16,7 +16,7 @@ module azuread_group {
   source = "./access_policy"
   for_each = {
     for key, access_policy in var.access_policies : key => access_policy
-    if try(access_policy.azuread_group_key, null) != null && var.azuread_groups != {}
+    if try(access_policy.azuread_group_key, null) != null
   }
 
   keyvault_id   = var.keyvault_id == null ? try(var.keyvaults[var.client_config.landingzone_key][var.keyvault_key].id, var.keyvaults[each.value.lz_key][var.keyvault_key].id) : var.keyvault_id
@@ -69,7 +69,7 @@ module managed_identity {
   source = "./access_policy"
   for_each = {
     for key, access_policy in var.access_policies : key => access_policy
-    if try(access_policy.managed_identity_key, null) != null && var.managed_identities != {}
+    if try(access_policy.managed_identity_key, null) != null
   }
 
   keyvault_id   = var.keyvault_id == null ? try(var.keyvaults[var.client_config.landingzone_key][var.keyvault_key].id, var.keyvaults[each.value.lz_key][var.keyvault_key].id) : var.keyvault_id
