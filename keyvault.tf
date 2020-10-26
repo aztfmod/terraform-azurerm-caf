@@ -36,7 +36,7 @@ module "keyvault_access_policies" {
 # Reason - Azure AD apps passwords are stored into keyvault secrets and combining would create a circular reference
 module "keyvault_access_policies_azuread_apps" {
   source   = "./modules/security/keyvault_access_policies"
-  for_each = var.keyvault_access_policies
+  for_each = var.keyvault_access_policies_azuread_apps
 
   keyvault_key    = each.key
   keyvaults       = local.combined_objects_keyvaults
