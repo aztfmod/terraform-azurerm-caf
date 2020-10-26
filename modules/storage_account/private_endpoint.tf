@@ -9,6 +9,7 @@ module private_endpoint {
   subnet_id           = try(var.vnets[each.value.vnet_key].subnets[each.value.subnet_key].id, data.terraform_remote_state.vnets[each.key].outputs[each.value.remote_tfstate.output_key][each.value.remote_tfstate.lz_key][each.value.remote_tfstate.vnet_key].subnets[each.value.remote_tfstate.subnet_key].id)
   settings            = each.value
   global_settings     = var.global_settings
+  base_tags           = local.tags
 }
 
 

@@ -12,7 +12,7 @@ resource "azurerm_network_watcher" "netwatcher" {
   name                = var.nw_config.name
   location            = var.location
   resource_group_name = var.rg
-  tags                = var.tags
+  tags                = local.tags
 }
 
 resource "azurerm_network_watcher_flow_log" "nw_flow" {
