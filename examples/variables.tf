@@ -129,3 +129,6 @@ variable machine_learning_workspaces {
 variable monitoring {
   default = {}
 }
+variable virtual_wans {
+  default = {}
+}
