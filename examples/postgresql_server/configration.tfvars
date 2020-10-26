@@ -13,15 +13,49 @@ postgresql_servers = {
     name                          = "sales-rg1"
     region                        = "region1"
     resource_group_key            = "postgresql_region1"
-    version                       = "11"
+    version                       = "9.6"
     sku_name                      = "GP_Gen5_8"
     administrator_login           = "postgresqlsalesadmin"
     keyvault_key                  = "postgresql-rg1"
     connection_policy             = "Default"
     system_msi                    = true
-    public_network_access_enabled = false
+    public_network_access_enabled = true
+    
+
+    postgresql_firewall_rules = {
+      postgresql-firewall-rules = {
+        name = "postgresql_server_firewallrule"
+        resource_group_name = "postgresql_region1"
+        server_name         = "sales-rg1"
+        start_ip_address    = "40.112.8.12"
+        end_ip_address      = "40.112.8.12"
+      }
+    }
+
+     postgresql_configuration = {
+      postgresql_configuration = {
+        name = "postgresql_server_configuration"
+        resource_group_name = "postgresql_region1"
+        server_name         = "sales-rg1"
+        value = "on"
+      }
+    }
+
+    postgresql_database = {
+      postgresql_database = {
+        name = "postgresql_server_sampledb"
+        resource_group_name = "postgresql_region1"
+        server_name         = "sales-rg1"
+        charset             = "UTF8"
+        collation           = "English_United States.1252"
+      }
+    }
 
     auto_grow_enabled = true
+
+    azuread_administrator = {
+      azuread_group_key = "sales_admins"
+    }
     
     tags = {
       segment = "sales"
@@ -85,8 +119,6 @@ keyvault_access_policies = {
   }
 }
 
-
-
 azuread_groups = {
   sales_admins = {
     name        = "sql-sales-admins"
@@ -107,3 +139,4 @@ azuread_groups = {
     prevent_duplicate_name = false
   }
 }
+
