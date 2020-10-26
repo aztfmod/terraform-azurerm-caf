@@ -2,6 +2,9 @@ resource_groups = {
   mysql_region1 = {
     name   = "mysql-re1"
     region = "region1"
+    tags = {
+      rgtag = "example"
+    }
   }
   security_region1 = {
     name = "mysql-security-re1"

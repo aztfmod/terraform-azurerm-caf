@@ -20,7 +20,7 @@ resource "azurerm_mysql_server" "mysql" {
   public_network_access_enabled     = try(var.settings.public_network_access_enabled, true)
   ssl_enforcement_enabled           = try(var.settings.ssl_enforcement_enabled, true)
   ssl_minimal_tls_version_enforced  = try(var.settings.ssl_minimal_tls_version_enforced, "TLSEnforcementDisabled")
-  tags                              = try(var.settings.tags, null)
+  tags                              = local.tags
 
   dynamic "identity" {
     for_each = lookup(var.settings, "identity", {}) == {} ? [] : [1]

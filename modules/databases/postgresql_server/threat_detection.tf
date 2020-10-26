@@ -4,7 +4,7 @@
 #
 #
 
-data "azurerm_storage_account" "postgresql_security_alert" {
+data "azurerm_storage_account" "postgresql_va" {
   count = try(var.settings.security_alert_policy.storage_account.key, null) == null ? 0 : 1
 
   name                = var.storage_accounts[var.settings.security_alert_policy.storage_account.key].name

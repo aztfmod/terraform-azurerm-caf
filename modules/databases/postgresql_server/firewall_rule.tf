@@ -4,7 +4,6 @@
 #
 
 resource "azurerm_postgresql_firewall_rule" "postgresql_firewall_rules" {
-  
   for_each = var.settings.postgresql_firewall_rules
 
   name                = each.value.name

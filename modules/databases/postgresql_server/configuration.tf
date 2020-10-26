@@ -4,7 +4,7 @@
 #
 
 resource "azurerm_postgresql_configuration" "postgresql_configuration" {
-  
+
   for_each = var.settings.postgresql_configuration
 
   name                = each.value.name
