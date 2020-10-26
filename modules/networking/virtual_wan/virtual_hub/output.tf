@@ -13,10 +13,10 @@ output "name" {
   value       = azurerm_virtual_hub.vwan_hub.name
 }
 
-# output "firewall_id" {
-#   description = "Resource ID of the Azure Firewall for Virtual Hub"
-#   value       = var.virtual_hub_config.deploy_firewall ? azurerm_template_deployment.arm_template_vhub_firewall.*.outputs.resourceID : null
-# }
+output "firewall_id" {
+  description = "Resource ID of the Azure Firewall for Virtual Hub"
+  value       = var.virtual_hub_config.deploy_firewall ? azurerm_template_deployment.arm_template_vhub_firewall.*.outputs.resourceID : null
+}
 
 # output virtual network gateway objects: p2s, s2s, er objects
 output "er_gateway" {
