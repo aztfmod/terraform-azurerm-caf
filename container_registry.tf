@@ -18,5 +18,6 @@ module container_registry {
   resource_groups          = module.resource_groups
   tfstates                 = var.tfstates
   use_msi                  = var.use_msi
+  base_tags                = try(local.global_settings.inherit_tags, false) ? module.resource_groups[each.value.resource_group_key].tags : {}
 }
 

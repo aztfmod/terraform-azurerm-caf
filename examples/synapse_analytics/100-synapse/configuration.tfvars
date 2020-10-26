@@ -52,6 +52,15 @@ keyvaults = {
     sku_name            = "premium"
     soft_delete_enabled = true
 
+    creation_policies = {
+      logged_in_user = {
+        secret_permissions = ["Set", "Get", "List", "Delete", "Purge", "Recover"]
+      }
+      logged_in_aad_app = {
+        secret_permissions = ["Set", "Get", "List", "Delete", "Purge", "Recover"]
+      }
+    }
+
     # you can setup up to 5 profiles
     # diagnostic_profiles = {
     #   operations = {
@@ -63,51 +72,19 @@ keyvaults = {
   }
 }
 
-keyvault_access_policies = {
-  synapse_secrets = {
-    logged_in_user = {
-      secret_permissions = ["Set", "Get", "List", "Delete", "Purge", "Recover"]
-    }
-    logged_in_aad_app = {
-      secret_permissions = ["Set", "Get", "List", "Delete", "Purge", "Recover"]
-    }
-    dap_admins = {
-      azuread_group_key  = "dap_admins"
-      secret_permissions = ["Get", "List"]
-    }
-  }
-}
-
 
 #
 # IAM
 #
-/* azuread_groups = {
-  dap_admins = {
-    name        = "dap-admins"
-    description = "Provide access to the Data Analytics Platform services and the jumpbox Keyvault secret."
-    members = {
-      user_principal_names = [
-      ]
-      group_names = []
-      object_ids  = []
-      group_keys  = []
-
-      service_principal_keys = [
-      ]
-    }
-    prevent_duplicate_name = false
-  }
-} */
 
 role_mapping = {
   built_in_role_mapping = {
     storage_accounts = {
       synapsestorage_re1 = {
         "Storage Blob Data Contributor" = {
-          synapse_workspaces = [
-            "synapse_wrkspc_re1"
-          ]
+          synapse_workspaces = {
+            keys = ["synapse_wrkspc_re1"]
+          }
         }
       }
     }

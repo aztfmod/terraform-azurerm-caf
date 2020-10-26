@@ -1,5 +1,6 @@
 variable settings {}
 variable global_settings {}
+variable client_config {}
 variable tfstates {}
 variable use_msi {}
 variable diagnostics {}
@@ -35,4 +36,4 @@ variable sku_tier {
   }
 }
 
-
+variable base_tags {}

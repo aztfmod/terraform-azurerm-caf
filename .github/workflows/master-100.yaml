@@ -6,14 +6,13 @@
 name: scenarios-100
 
 on:
-  push:
+  pull_request:
     paths-ignore:
       - .github/workflows/master-200.yaml
       - 'documentation/**'
       - '_pictures/**'
       - 'README.md'
       - 'CHANGELOG.md'
-  pull_request:
   schedule:
     - cron:  '0 3 * * *'
 
@@ -38,7 +37,7 @@ jobs:
           random_length: ['5']
 
     container:
-      image: aztfmod/roverdev:2010.141511
+      image: aztfmod/roverdev:2010.220257
       options: --user 0
 
     steps:
@@ -71,11 +70,17 @@ jobs:
             '-var tags={testing_job_id="${{ github.run_id }}"}'
 
 
-      - name: foundations
-        run: |
-          /tf/rover/rover.sh -lz ${GITHUB_WORKSPACE}/public/landingzones/caf_foundations -a apply \
-            -level level1 \
-            --environment ${{ github.run_id }}
+      # - name: foundations
+      #   run: |
+      #     /tf/rover/rover.sh -lz ${GITHUB_WORKSPACE}/public/landingzones/caf_foundations -a apply \
+      #       -level level1 \
+      #       --environment ${{ github.run_id }}
+
+      # - name: shared_services
+      #   run: |
+      #     /tf/rover/rover.sh -lz ${GITHUB_WORKSPACE}/public/landingzones/caf_shared_services -a apply \
+      #       -level level2 \
+      #       --environment ${{ github.run_id }}
 
       # - name: networking_hub
       #   run: |
@@ -105,21 +110,21 @@ jobs:
             "examples/networking/private_dns/100-private-dns-vnet-links",
             "examples/redis_cache/100-redis-standard",
             "examples/machine_learning/100-aml",
-            # "examples/machine_learning/101-aml-vnet",
+            "examples/machine_learning/101-aml-vnet",
             "examples/datalake/101-datalake-storage",
             "examples/synapse_analytics/100-synapse",
             "examples/synapse_analytics/101-synapse-sparkpool",
             "examples/monitoring/service_health_alerts",
             "examples/mssql_server/elastic_pools",
             "examples/mysql_server/100-simple-mysql"
-            # "examples/webapps/appservice/101-appservice-simple",
-            # "examples/webapps/appservice/102-appservice-slots",
-            # "examples/webapps/appservice/103-appservice-slots",
-            # "examples/webapps/appservice-environment/101-simple_ase"
+            "examples/webapps/appservice/101-appservice-simple",
+            "examples/webapps/appservice/102-appservice-slots",
+            "examples/webapps/appservice/103-appservice-extend",
+            "examples/webapps/appservice/104-appservice-appinsight"
           ]
 
     container:
-      image: aztfmod/roverdev:2010.141511
+      image: aztfmod/roverdev:2010.220257
       options: --user 0
 
     steps:
@@ -161,7 +166,7 @@ jobs:
           region: ["southeastasia"]
 
     container:
-      image: aztfmod/roverdev:2010.141511
+      image: aztfmod/roverdev:2010.220257
       options: --user 0
 
     steps:
@@ -178,21 +183,27 @@ jobs:
 
           echo "local user: $(whoami)"
 
-      - name: networking_hub
-        run: |
-          /tf/rover/rover.sh -lz ${GITHUB_WORKSPACE}/public/landingzones/caf_networking -a destroy \
-            -level level2 \
-            -var-folder ${GITHUB_WORKSPACE}/public/landingzones/caf_networking/scenario/100-single-region-hub \
-            --environment ${{ github.run_id }} \
-            -auto-approve
+      # - name: networking_hub
+      #   run: |
+      #     /tf/rover/rover.sh -lz ${GITHUB_WORKSPACE}/public/landingzones/caf_networking -a destroy \
+      #       -level level2 \
+      #       -var-folder ${GITHUB_WORKSPACE}/public/landingzones/caf_networking/scenario/100-single-region-hub \
+      #       --environment ${{ github.run_id }} \
+      #       -auto-approve
 
+      # - name: shared_services
+      #   run: |
+      #     /tf/rover/rover.sh -lz ${GITHUB_WORKSPACE}/public/landingzones/caf_shared_services -a destroy \
+      #       -level level2 \
+      #       --environment ${{ github.run_id }} \
+      #       -auto-approve
 
-      - name: foundations
-        run: |
-          /tf/rover/rover.sh -lz ${GITHUB_WORKSPACE}/public/landingzones/caf_foundations -a destroy \
-            -level level1 \
-            --environment ${{ github.run_id }} \
-            -auto-approve
+      # - name: foundations
+      #   run: |
+      #     /tf/rover/rover.sh -lz ${GITHUB_WORKSPACE}/public/landingzones/caf_foundations -a destroy \
+      #       -level level1 \
+      #       --environment ${{ github.run_id }} \
+      #       -auto-approve
 
       - name: Remove launchpad
         run: |

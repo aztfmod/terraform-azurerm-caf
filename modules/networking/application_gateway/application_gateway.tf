@@ -14,7 +14,7 @@ resource "azurerm_application_gateway" "agw" {
 
   zones              = try(var.settings.zones, null)
   enable_http2       = try(var.settings.enable_http2, true)
-  tags               = try(var.settings.tags, null)
+  tags               = try(local.tags, null)
   firewall_policy_id = try(var.settings.firewall_policy_id, null)
 
   sku {
@@ -43,7 +43,7 @@ resource "azurerm_application_gateway" "agw" {
     content {
       name                          = frontend_ip_configuration.value.name
       public_ip_address_id          = try(frontend_ip_configuration.value.public_ip_key, null) == null ? null : try(var.public_ip_addresses[frontend_ip_configuration.value.public_ip_key].id, var.public_ip_addresses[frontend_ip_configuration.value.lz_key][frontend_ip_configuration.value.public_ip_key].id)
-      private_ip_address            = try(frontend_ip_configuration.value.public_ip_key, null) == null ? cidrhost(try(var.vnets[frontend_ip_configuration.value.lz_key].vnets[frontend_ip_configuration.value.vnet_key].subnets[frontend_ip_configuration.value.subnet_key].cidr[frontend_ip_configuration.value.subnet_cidr_index], var.vnets[frontend_ip_configuration.value.vnet_key].subnets[frontend_ip_configuration.value.subnet_key].cidr[frontend_ip_configuration.value.subnet_cidr_index]), frontend_ip_configuration.value.private_ip_offset) : null
+      private_ip_address            = try(frontend_ip_configuration.value.public_ip_key, null) == null ? cidrhost(try(var.vnets[var.client_config.landingzone_key][frontend_ip_configuration.value.lz_key][frontend_ip_configuration.value.vnet_key].subnets[frontend_ip_configuration.value.subnet_key].cidr[frontend_ip_configuration.value.subnet_cidr_index], var.vnets[frontend_ip_configuration.value.lz_key][frontend_ip_configuration.value.vnet_key].subnets[frontend_ip_configuration.value.subnet_key].cidr[frontend_ip_configuration.value.subnet_cidr_index]), frontend_ip_configuration.value.private_ip_offset) : null
       private_ip_address_allocation = try(frontend_ip_configuration.value.private_ip_address_allocation, null)
       subnet_id                     = try(frontend_ip_configuration.value.public_ip_key, null) == null ? local.ip_configuration["gateway"].subnet_id : null
     }

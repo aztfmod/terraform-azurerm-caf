@@ -20,7 +20,7 @@ variable app_service_plan_id {
 }
 
 variable identity {
-  default = {}
+  default = null
 }
 
 variable connection_strings {
@@ -35,6 +35,12 @@ variable slots {
   default = {}
 }
 
+variable application_insight {
+  default = null
+}
+
 variable settings {}
 
 variable global_settings {}
+
+variable base_tags {}

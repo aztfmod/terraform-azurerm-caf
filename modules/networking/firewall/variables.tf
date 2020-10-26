@@ -31,3 +31,5 @@ variable settings {}
 variable diagnostic_profiles {
   default = {}
 }
+
+variable base_tags {}

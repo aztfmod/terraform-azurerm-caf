@@ -12,6 +12,8 @@ module "mssql_databases" {
   settings         = each.value
   server_id        = try(each.value.remote_tfstate, null) == null ? module.mssql_servers[each.value.mssql_server_key].id : data.terraform_remote_state.mssql_remote_server[each.key].outputs[each.value.remote_tfstate.output_key][each.value.mssql_server_key].id
   storage_accounts = module.storage_accounts
+  base_tags        = try(local.global_settings.inherit_tags, false) ? module.resource_groups[each.value.resource_group_key].tags : {}
+
 }
 
 #

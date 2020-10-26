@@ -53,6 +53,7 @@ resource "azurerm_linux_virtual_machine" "vm" {
   size                  = each.value.size
   admin_username        = each.value.admin_username
   network_interface_ids = local.nic_ids
+  tags                  = merge(local.tags, try(each.value.tags, null))
 
   allow_extension_operations      = try(each.value.allow_extension_operations, null)
   computer_name                   = azurecaf_name.linux_computer_name[each.key].result
@@ -147,7 +148,7 @@ resource "azurerm_key_vault_secret" "ssh_public_key_openssh" {
 locals {
   managed_local_identities = flatten([
     for managed_identity_key in try(var.settings.virtual_machine_settings[local.os_type].identity.managed_identity_keys, []) : [
-      var.managed_identities[managed_identity_key].id
+      var.managed_identities[var.client_config.landingzone_key][managed_identity_key].id
     ] if try(var.settings.virtual_machine_settings[local.os_type].identity.lz_key, null) == null
   ])
 

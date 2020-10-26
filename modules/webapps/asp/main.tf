@@ -12,7 +12,7 @@ locals {
   module_tag = {
     "module" = basename(abspath(path.module))
   }
-  tags = merge(lookup(var.settings, "tags", {}), local.module_tag)
+  tags = merge(lookup(var.settings, "tags", {}), local.module_tag, var.base_tags)
 
   # skus = {
   #   "F1" = "Free"
