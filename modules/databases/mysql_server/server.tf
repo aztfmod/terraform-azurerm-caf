@@ -18,10 +18,9 @@ resource "azurerm_mysql_server" "mysql" {
   infrastructure_encryption_enabled = try(var.settings.infrastructure_encryption_enabled, false)
   restore_point_in_time             = try(var.settings.restore_point_in_time, null)
   public_network_access_enabled     = try(var.settings.public_network_access_enabled, true)
-
-  ssl_enforcement_enabled          = try(var.settings.ssl_enforcement_enabled, true)
-  ssl_minimal_tls_version_enforced = try(var.settings.ssl_minimal_tls_version_enforced, "TLSEnforcementDisabled")
-  tags                             = try(var.settings.tags, null)
+  ssl_enforcement_enabled           = try(var.settings.ssl_enforcement_enabled, true)
+  ssl_minimal_tls_version_enforced  = try(var.settings.ssl_minimal_tls_version_enforced, "TLSEnforcementDisabled")
+  tags                              = try(var.settings.tags, null)
 
   dynamic "identity" {
     for_each = lookup(var.settings, "identity", {}) == {} ? [] : [1]
@@ -35,13 +34,13 @@ resource "azurerm_mysql_server" "mysql" {
     for_each = lookup(var.settings, "threat_detection_policy", {}) == {} ? [] : [1]
 
     content {
-      enabled = var.settings.threat_detection_policy.enabled
-      disabled_alerts = var.settings.threat_detection_policy.disabled_alerts
-      email_account_admins = var.settings.threat_detection_policy.email_account_admins
-      email_addresses = var.settings.threat_detection_policy.email_addresses
-      retention_days = var.settings.threat_detection_policy.retention_days
+      enabled                    = var.settings.threat_detection_policy.enabled
+      disabled_alerts            = var.settings.threat_detection_policy.disabled_alerts
+      email_account_admins       = var.settings.threat_detection_policy.email_account_admins
+      email_addresses            = var.settings.threat_detection_policy.email_addresses
+      retention_days             = var.settings.threat_detection_policy.retention_days
       storage_account_access_key = data.azurerm_storage_account.mysql_va[0].primary_access_key
-      storage_endpoint = data.azurerm_storage_account.mysql_va[0].primary_blob_endpoint
+      storage_endpoint           = data.azurerm_storage_account.mysql_va[0].primary_blob_endpoint
     }
   }
 

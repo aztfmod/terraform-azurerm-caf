@@ -154,7 +154,9 @@ variable storage_accounts {
 variable diagnostic_storage_accounts {
   default = {}
 }
-
+variable storage {
+  default = {}
+}
 # Shared services
 variable shared_services {
   default = {}
