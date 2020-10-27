@@ -141,6 +141,10 @@ variable keyvault_access_policies {
   default = {}
 }
 
+variable keyvault_access_policies_azuread_apps {
+  default = {}
+}
+
 variable custom_role_definitions {
   default = {}
 }
