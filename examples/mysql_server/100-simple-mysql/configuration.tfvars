@@ -21,6 +21,35 @@ mysql_servers = {
     system_msi                    = true
     public_network_access_enabled = false
     
+    mysql_firewall_rules = {
+      mysql-firewall-rules = {
+        name = "mysql_server_firewallrule"
+        resource_group_name = "mysql_region1"
+        server_name         = "sales-rg1"
+        start_ip_address    = "40.112.8.12"
+        end_ip_address      = "40.112.8.12"
+      }
+    }
+
+     mysql_configuration = {
+      mysql_configuration = {
+        name = "mysql_server_configuration"
+        resource_group_name = "mysql_region1"
+        server_name         = "sales-rg1"
+        value = "600"
+      }
+    }
+
+    mysql_database = {
+      mysql_database = {
+        name = "mysql_server_sampledb"
+        resource_group_name = "mysql_region1"
+        server_name         = "sales-rg1"
+        charset             = "UTF8"
+        collation           = "English_United States.1252"
+      }
+    }
+    
     auto_grow_enabled = true
     
     tags = {
