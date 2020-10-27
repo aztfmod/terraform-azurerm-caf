@@ -30,16 +30,17 @@ resource "azurerm_template_deployment" "arm_template_vhub_firewall" {
 
 
 resource "null_resource" "arm_template_vhub_firewall" {
+  count = var.virtual_hub_config.deploy_firewall ? 1 : 0
 
   triggers = {
-    resource_id = lookup(azurerm_template_deployment.arm_template_vhub_firewall.0.outputs, "resourceID")
+    resource_id = azurerm_template_deployment.arm_template_vhub_firewall[0].outputs.resourceID
   }
 
   provisioner "local-exec" {
     command     = format("%s/scripts/destroy_resource.sh", path.module)
     when        = destroy
     interpreter = ["/bin/sh"]
-    on_failure  = fail
+    on_failure  = continue
 
     environment = {
       RESOURCE_IDS = self.triggers.resource_id

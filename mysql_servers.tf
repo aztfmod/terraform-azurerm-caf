@@ -11,8 +11,6 @@ module "mysql_servers" {
 
   global_settings     = local.global_settings
   settings            = each.value
-  sku_name            = each.value
-  storage_mb          = each.value
   resource_group_name = module.resource_groups[each.value.resource_group_key].name
   location            = lookup(each.value, "region", null) == null ? module.resource_groups[each.value.resource_group_key].location : local.global_settings.regions[each.value.region]
   keyvault_id         = try(each.value.administrator_login_password, null) == null ? module.keyvaults[each.value.keyvault_key].id : null
@@ -21,4 +19,5 @@ module "mysql_servers" {
   vnets               = local.combined_objects_networking
   private_endpoints   = try(each.value.private_endpoints, {})
   resource_groups     = try(each.value.private_endpoints, {}) == {} ? null : module.resource_groups
+  base_tags           = try(local.global_settings.inherit_tags, false) ? module.resource_groups[each.value.resource_group_key].tags : {}
 }

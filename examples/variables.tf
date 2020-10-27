@@ -132,3 +132,6 @@ variable postgresql_servers {
 variable mysql_servers {
   default = {}
 }
+variable virtual_wans {
+  default = {}
+}

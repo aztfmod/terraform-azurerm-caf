@@ -20,7 +20,7 @@ resource "azurerm_postgresql_server" "postgresql" {
   public_network_access_enabled     = try(var.settings.public_network_access_enabled, true)
   ssl_enforcement_enabled           = try(var.settings.ssl_enforcement_enabled, true)
   ssl_minimal_tls_version_enforced  = try(var.settings.ssl_minimal_tls_version_enforced, "TLSEnforcementDisabled")
-  tags                              = try(var.settings.tags, null)
+  tags                              = local.tags
 
 
   dynamic "identity" {
@@ -40,8 +40,8 @@ resource "azurerm_postgresql_server" "postgresql" {
       email_account_admins       = var.settings.threat_detection_policy.email_account_admins
       email_addresses            = var.settings.threat_detection_policy.email_addresses
       retention_days             = var.settings.threat_detection_policy.retention_days
-      storage_account_access_key = var.settings.threat_detection_policy.storage_account_access_key
-      storage_endpoint           = var.settings.threat_detection_policy.storage_endpoint
+      storage_account_access_key = data.azurerm_storage_account.postgresql_va[0].primary_access_key
+      storage_endpoint           = data.azurerm_storage_account.postgresql_va[0].primary_blob_endpoint
     }
   }
 }
