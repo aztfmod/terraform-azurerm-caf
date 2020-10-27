@@ -72,12 +72,4 @@ resource "azurerm_key_vault_secret" "sql_admin" {
   key_vault_id = var.keyvault_id
 }
 
-resource "azurerm_key_vault_secret" "sql_fqdn" {
-  count = try(var.settings.administrator_login_password, null) == null ? 1 : 0
-
-  name         = format("%s-fqdn", azurecaf_name.mssql.result)
-  value        = azurerm_mssql_server.mssql.fully_qualified_domain_name
-  key_vault_id = var.keyvault_id
-}
-
 
