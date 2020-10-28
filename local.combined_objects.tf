@@ -8,6 +8,7 @@ locals {
   combined_objects_azuread_groups             = merge(map(local.client_config.landingzone_key, module.azuread_groups), try(var.remote_objects.azuread_groups, {}))
   combined_objects_azuread_users              = merge(map(local.client_config.landingzone_key, module.azuread_users), try(var.remote_objects.azuread_users, {}))
   combined_objects_azure_container_registries = merge(map(local.client_config.landingzone_key, module.container_registry), try(var.remote_objects.container_registry, {}))
+  combined_objects_azurerm_firewalls          = merge(map(local.client_config.landingzone_key, module.azurerm_firewalls), try(var.remote_objects.azurerm_firewalls, {}))
   combined_objects_keyvaults                  = merge(map(local.client_config.landingzone_key, module.keyvaults), try(var.remote_objects.keyvaults, {}))
   combined_objects_managed_identities         = merge(map(local.client_config.landingzone_key, module.managed_identities), try(var.remote_objects.managed_identities, {}))
   combined_objects_mssql_servers              = merge(map(local.client_config.landingzone_key, module.mssql_servers), try(var.remote_objects.mssql_servers, {}))

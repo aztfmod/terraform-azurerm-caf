@@ -9,7 +9,7 @@ module private_endpoint {
   for_each = var.private_endpoints
 
   resource_id         = azurerm_mssql_server.mssql.id
-  name                = try(format("%s-to-%s-%s", each.value.name, each.value.vnet_key, each.value.subnet_key), format("%s-to-%s-%s-%s", each.value.name, each.value.remote_tfstate.lz_key, each.value.vnet_key, each.value.subnet_key))
+  name                = each.value.name
   location            = var.resource_groups[each.value.resource_group_key].location
   resource_group_name = var.resource_groups[each.value.resource_group_key].name
   subnet_id           = try(var.vnets[var.client_config.landingzone_key][each.value.vnet_key].subnets[each.value.subnet_key].id, var.vnets[each.value.lz_key][each.value.vnet_key].subnets[each.value.subnet_key].id)

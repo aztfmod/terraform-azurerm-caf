@@ -37,7 +37,7 @@ jobs:
           random_length: ['5']
 
     container:
-      image: aztfmod/roverdev:2010.220257
+      image: aztfmod/roverdev:2010.280156
       options: --user 0
 
     steps:
@@ -127,7 +127,7 @@ jobs:
           ]
 
     container:
-      image: aztfmod/roverdev:2010.220257
+      image: aztfmod/roverdev:2010.280156
       options: --user 0
 
     steps:
@@ -169,7 +169,7 @@ jobs:
           region: ["southeastasia"]
 
     container:
-      image: aztfmod/roverdev:2010.220257
+      image: aztfmod/roverdev:2010.280156
       options: --user 0
 
     steps:
