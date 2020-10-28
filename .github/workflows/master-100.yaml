@@ -37,7 +37,7 @@ jobs:
           random_length: ['5']
 
     container:
-      image: aztfmod/roverdev:2010.280156
+      image: aztfmod/rover:2010.2808
       options: --user 0
 
     steps:
@@ -69,26 +69,6 @@ jobs:
             '-var regions={region1="${{ matrix.region }}"}' \
             '-var tags={testing_job_id="${{ github.run_id }}"}'
 
-
-      # - name: foundations
-      #   run: |
-      #     /tf/rover/rover.sh -lz ${GITHUB_WORKSPACE}/public/landingzones/caf_foundations -a apply \
-      #       -level level1 \
-      #       --environment ${{ github.run_id }}
-
-      # - name: shared_services
-      #   run: |
-      #     /tf/rover/rover.sh -lz ${GITHUB_WORKSPACE}/public/landingzones/caf_shared_services -a apply \
-      #       -level level2 \
-      #       --environment ${{ github.run_id }}
-
-      # - name: networking_hub
-      #   run: |
-      #     /tf/rover/rover.sh -lz ${GITHUB_WORKSPACE}/public/landingzones/caf_networking -a apply \
-      #       -level level2 \
-      #       -tfstate networking_hub.tfstate \
-      #       -var-folder ${GITHUB_WORKSPACE}/public/landingzones/caf_networking/scenario/100-single-region-hub \
-      #       --environment ${{ github.run_id }}
 
   examples:
     name: examples
@@ -127,7 +107,7 @@ jobs:
           ]
 
     container:
-      image: aztfmod/roverdev:2010.280156
+      image: aztfmod/rover:2010.2808
       options: --user 0
 
     steps:
@@ -169,7 +149,7 @@ jobs:
           region: ["southeastasia"]
 
     container:
-      image: aztfmod/roverdev:2010.280156
+      image: aztfmod/rover:2010.2808
       options: --user 0
 
     steps:
@@ -185,28 +165,6 @@ jobs:
           az account set -s  ${{ env.ARM_SUBSCRIPTION_ID }}
 
           echo "local user: $(whoami)"
-
-      # - name: networking_hub
-      #   run: |
-      #     /tf/rover/rover.sh -lz ${GITHUB_WORKSPACE}/public/landingzones/caf_networking -a destroy \
-      #       -level level2 \
-      #       -var-folder ${GITHUB_WORKSPACE}/public/landingzones/caf_networking/scenario/100-single-region-hub \
-      #       --environment ${{ github.run_id }} \
-      #       -auto-approve
-
-      # - name: shared_services
-      #   run: |
-      #     /tf/rover/rover.sh -lz ${GITHUB_WORKSPACE}/public/landingzones/caf_shared_services -a destroy \
-      #       -level level2 \
-      #       --environment ${{ github.run_id }} \
-      #       -auto-approve
-
-      # - name: foundations
-      #   run: |
-      #     /tf/rover/rover.sh -lz ${GITHUB_WORKSPACE}/public/landingzones/caf_foundations -a destroy \
-      #       -level level1 \
-      #       --environment ${{ github.run_id }} \
-      #       -auto-approve
 
       - name: Remove launchpad
         run: |
