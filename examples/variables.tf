@@ -132,3 +132,6 @@ variable monitoring {
 variable virtual_wans {
   default = {}
 }
+variable event_hub_namespaces {
+  default = {}
+}
