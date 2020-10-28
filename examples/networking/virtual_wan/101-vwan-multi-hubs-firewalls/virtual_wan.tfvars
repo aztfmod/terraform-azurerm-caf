@@ -20,11 +20,11 @@ virtual_wans = {
         firewall_name               = "hub-fw-re1"
         firewall_resource_group_key = "hub_re1"
         deploy_p2s                  = false
-        p2s_config = {}
-        deploy_s2s = false
-        s2s_config = {}
-        deploy_er = false
-        er_config = {}
+        p2s_config                  = {}
+        deploy_s2s                  = false
+        s2s_config                  = {}
+        deploy_er                   = false
+        er_config                   = {}
 
       }
 
