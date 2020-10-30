@@ -9,7 +9,7 @@ module azuread_apps {
   keyvault_id   = var.keyvault_id == null ? try(var.keyvaults[var.client_config.landingzone_key][var.keyvault_key].id, var.keyvaults[each.value.lz_key][var.keyvault_key].id) : var.keyvault_id
   access_policy = each.value
   tenant_id     = var.client_config.tenant_id
-  object_id     = var.azuread_apps[each.value.azuread_app_key].azuread_service_principal.object_id
+  object_id     = try(var.azuread_apps[var.client_config.landingzone_key][each.value.azuread_app_key].azuread_service_principal.object_id, var.azuread_apps[each.value.lz_key][each.value.azuread_app_key].azuread_service_principal.object_id)
 }
 
 module azuread_group {
@@ -22,7 +22,7 @@ module azuread_group {
   keyvault_id   = var.keyvault_id == null ? try(var.keyvaults[var.client_config.landingzone_key][var.keyvault_key].id, var.keyvaults[each.value.lz_key][var.keyvault_key].id) : var.keyvault_id
   access_policy = each.value
   tenant_id     = var.client_config.tenant_id
-  object_id     = try(each.value.lz_key , null) == null ? var.azuread_groups[var.client_config.landingzone_key][each.value.azuread_group_key].id : var.azuread_groups[each.value.lz_key][each.value.azuread_group_key].id
+  object_id     = try(each.value.lz_key, null) == null ? var.azuread_groups[var.client_config.landingzone_key][each.value.azuread_group_key].id : var.azuread_groups[each.value.lz_key][each.value.azuread_group_key].id
 }
 
 module logged_in_user {

@@ -37,7 +37,7 @@ jobs:
           random_length: ['5']
 
     container:
-      image: aztfmod/roverdev:2010.220257
+      image: aztfmod/rover:2010.2808
       options: --user 0
 
     steps:
@@ -70,26 +70,6 @@ jobs:
             '-var tags={testing_job_id="${{ github.run_id }}"}'
 
 
-      # - name: foundations
-      #   run: |
-      #     /tf/rover/rover.sh -lz ${GITHUB_WORKSPACE}/public/landingzones/caf_foundations -a apply \
-      #       -level level1 \
-      #       --environment ${{ github.run_id }}
-
-      # - name: shared_services
-      #   run: |
-      #     /tf/rover/rover.sh -lz ${GITHUB_WORKSPACE}/public/landingzones/caf_shared_services -a apply \
-      #       -level level2 \
-      #       --environment ${{ github.run_id }}
-
-      # - name: networking_hub
-      #   run: |
-      #     /tf/rover/rover.sh -lz ${GITHUB_WORKSPACE}/public/landingzones/caf_networking -a apply \
-      #       -level level2 \
-      #       -tfstate networking_hub.tfstate \
-      #       -var-folder ${GITHUB_WORKSPACE}/public/landingzones/caf_networking/scenario/100-single-region-hub \
-      #       --environment ${{ github.run_id }}
-
   examples:
     name: examples
     runs-on: ubuntu-latest
@@ -112,6 +92,7 @@ jobs:
             "examples/databricks/100-simple-databricks",
             "examples/networking/private_dns/100-private-dns-vnet-links",
             "examples/redis_cache/100-redis-standard",
+            "examples/eventhub_namespace/100-simple-evh",
             "examples/machine_learning/100-aml",
             "examples/machine_learning/101-aml-vnet",
             "examples/datalake/101-datalake-storage",
@@ -128,7 +109,7 @@ jobs:
           ]
 
     container:
-      image: aztfmod/roverdev:2010.220257
+      image: aztfmod/rover:2010.2808
       options: --user 0
 
     steps:
@@ -170,7 +151,7 @@ jobs:
           region: ["southeastasia"]
 
     container:
-      image: aztfmod/roverdev:2010.220257
+      image: aztfmod/rover:2010.2808
       options: --user 0
 
     steps:
@@ -186,28 +167,6 @@ jobs:
           az account set -s  ${{ env.ARM_SUBSCRIPTION_ID }}
 
           echo "local user: $(whoami)"
-
-      # - name: networking_hub
-      #   run: |
-      #     /tf/rover/rover.sh -lz ${GITHUB_WORKSPACE}/public/landingzones/caf_networking -a destroy \
-      #       -level level2 \
-      #       -var-folder ${GITHUB_WORKSPACE}/public/landingzones/caf_networking/scenario/100-single-region-hub \
-      #       --environment ${{ github.run_id }} \
-      #       -auto-approve
-
-      # - name: shared_services
-      #   run: |
-      #     /tf/rover/rover.sh -lz ${GITHUB_WORKSPACE}/public/landingzones/caf_shared_services -a destroy \
-      #       -level level2 \
-      #       --environment ${{ github.run_id }} \
-      #       -auto-approve
-
-      # - name: foundations
-      #   run: |
-      #     /tf/rover/rover.sh -lz ${GITHUB_WORKSPACE}/public/landingzones/caf_foundations -a destroy \
-      #       -level level1 \
-      #       --environment ${{ github.run_id }} \
-      #       -auto-approve
 
       - name: Remove launchpad
         run: |

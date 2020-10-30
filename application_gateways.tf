@@ -5,8 +5,6 @@ module application_gateways {
   global_settings     = local.global_settings
   client_config       = local.client_config
   diagnostics         = local.diagnostics
-  tfstates            = var.tfstates
-  use_msi             = var.use_msi
   resource_group_name = module.resource_groups[each.value.resource_group_key].name
   location            = lookup(each.value, "region", null) == null ? module.resource_groups[each.value.resource_group_key].location : local.global_settings.regions[each.value.region]
   settings            = each.value
