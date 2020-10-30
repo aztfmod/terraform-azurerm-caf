@@ -22,7 +22,7 @@ locals {
       name = try(value.backend_pool.name, local.listeners[key].name)
       fqdns = flatten(
         [
-          local.backend_pools_app_services[key], 
+          local.backend_pools_app_services[key],
           local.backend_pools_fqdn[key]
         ]
       )
