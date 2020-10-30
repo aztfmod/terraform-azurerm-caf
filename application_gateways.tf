@@ -12,6 +12,7 @@ module application_gateways {
   sku_tier            = each.value.sku_tier
   vnets               = local.combined_objects_networking
   base_tags           = try(local.global_settings.inherit_tags, false) ? module.resource_groups[each.value.resource_group_key].tags : {}
+  private_dns         = lookup(each.value, "private_dns_records", null) == null ? {} : local.combined_objects_private_dns
   public_ip_addresses = local.combined_objects_public_ip_addresses
   app_services        = local.combined_objects_app_services
   application_gateway_applications = {
