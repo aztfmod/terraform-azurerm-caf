@@ -135,3 +135,9 @@ variable virtual_wans {
 variable event_hub_namespaces {
   default = {}
 }
+variable application_gateways {
+  default = {}
+}
+variable application_gateway_applications {
+  default = {}
+}

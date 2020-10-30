@@ -31,6 +31,8 @@ module "caf" {
     public_ip_addresses               = var.public_ip_addresses
     private_dns                       = var.private_dns
     virtual_wans                      = var.virtual_wans
+    application_gateways              = var.application_gateways
+    application_gateway_applications  = var.application_gateway_applications
   }
   database = {
     azurerm_redis_caches        = var.azurerm_redis_caches
