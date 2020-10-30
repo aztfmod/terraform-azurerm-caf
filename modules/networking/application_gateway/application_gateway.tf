@@ -99,8 +99,9 @@ resource "azurerm_application_gateway" "agw" {
     for_each = local.backend_pools
 
     content {
-      name  = try(backend_address_pool.value.name, local.listeners[backend_address_pool.key].name)
-      fqdns = try(backend_address_pool.value.fqdns, null)
+      name         = backend_address_pool.value.name
+      fqdns        = backend_address_pool.value.fqdns
+      ip_addresses = try(backend_address_pool.value.ip_addresses, null)
     }
   }
 

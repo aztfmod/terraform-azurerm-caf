@@ -13,6 +13,7 @@ module application_gateways {
   vnets               = local.combined_objects_networking
   base_tags           = try(local.global_settings.inherit_tags, false) ? module.resource_groups[each.value.resource_group_key].tags : {}
   public_ip_addresses = local.combined_objects_public_ip_addresses
+  app_services        = local.combined_objects_app_services
   application_gateway_applications = {
     for key, value in local.networking.application_gateway_applications : key => value
     if value.application_gateway_key == each.key
