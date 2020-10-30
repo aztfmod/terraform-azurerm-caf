@@ -35,8 +35,6 @@ No requirements.
     service_health_alerts = {
         enable_service_health_alerts = true/false
         name = "<string>"
-        location = ["region1", "region2"] 
-        #add/modify more regions if needed; must be supplied in a List.
         action_group_name = "<string>"
         shortname = "<string>"
         resource_group_key = "<string>"
