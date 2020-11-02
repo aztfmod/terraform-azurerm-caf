@@ -63,6 +63,12 @@ variable resource_groups {
 variable network_security_group_definition {
   default = null
 }
+variable route_tables {
+  default = {}
+}
+variable azurerm_routes {
+  default = {}
+}
 variable vnets {
   default = {}
 }
