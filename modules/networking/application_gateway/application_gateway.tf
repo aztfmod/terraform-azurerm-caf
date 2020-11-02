@@ -42,10 +42,10 @@ resource "azurerm_application_gateway" "agw" {
 
     content {
       name                          = frontend_ip_configuration.value.name
-      public_ip_address_id          = try(frontend_ip_configuration.value.public_ip_key, null) == null ? null : try(var.public_ip_addresses[frontend_ip_configuration.value.public_ip_key].id, var.public_ip_addresses[frontend_ip_configuration.value.lz_key][frontend_ip_configuration.value.public_ip_key].id)
-      private_ip_address            = try(frontend_ip_configuration.value.public_ip_key, null) == null ? cidrhost(try(var.vnets[var.client_config.landingzone_key][frontend_ip_configuration.value.lz_key][frontend_ip_configuration.value.vnet_key].subnets[frontend_ip_configuration.value.subnet_key].cidr[frontend_ip_configuration.value.subnet_cidr_index], var.vnets[frontend_ip_configuration.value.lz_key][frontend_ip_configuration.value.vnet_key].subnets[frontend_ip_configuration.value.subnet_key].cidr[frontend_ip_configuration.value.subnet_cidr_index]), frontend_ip_configuration.value.private_ip_offset) : null
+      public_ip_address_id          = try(local.ip_configuration[frontend_ip_configuration.key].ip_address_id, null)
+      private_ip_address            = try(frontend_ip_configuration.value.public_ip_key, null) == null ? local.private_ip_address : null
       private_ip_address_allocation = try(frontend_ip_configuration.value.private_ip_address_allocation, null)
-      subnet_id                     = try(frontend_ip_configuration.value.public_ip_key, null) == null ? local.ip_configuration["gateway"].subnet_id : null
+      subnet_id                     = local.ip_configuration[frontend_ip_configuration.key].subnet_id
     }
   }
 
@@ -99,8 +99,9 @@ resource "azurerm_application_gateway" "agw" {
     for_each = local.backend_pools
 
     content {
-      name  = try(backend_address_pool.value.name, local.listeners[backend_address_pool.key].name)
-      fqdns = try(backend_address_pool.value.fqdns, null)
+      name         = backend_address_pool.value.name
+      fqdns        = backend_address_pool.value.fqdns
+      ip_addresses = try(backend_address_pool.value.ip_addresses, null)
     }
   }
 

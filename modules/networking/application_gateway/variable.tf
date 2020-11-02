@@ -8,6 +8,9 @@ variable public_ip_addresses {
   default = {}
 }
 variable application_gateway_applications {}
+variable app_services {
+  default = {}
+}
 variable vnets {
   default = {}
 }
@@ -35,3 +38,6 @@ variable sku_tier {
 }
 
 variable base_tags {}
+variable private_dns {
+  default = {}
+}
