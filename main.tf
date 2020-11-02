@@ -81,6 +81,7 @@ locals {
 
   database = {
     mssql_servers               = try(var.database.mssql_servers, {})
+    mssql_managed_instances     = try(var.database.mssql_managed_instances, {})
     mssql_databases             = try(var.database.mssql_databases, {})
     mssql_elastic_pools         = try(var.database.mssql_elastic_pools, {})
     azurerm_redis_caches        = try(var.database.azurerm_redis_caches, {})

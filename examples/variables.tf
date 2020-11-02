@@ -72,6 +72,9 @@ variable azurerm_redis_caches {
 variable mssql_servers {
   default = {}
 }
+variable mssql_managed_instances {
+  default = {}
+}
 variable mssql_databases {
   default = {}
 }

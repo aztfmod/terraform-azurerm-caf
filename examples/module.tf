@@ -35,6 +35,7 @@ module "caf" {
   database = {
     azurerm_redis_caches        = var.azurerm_redis_caches
     mssql_servers               = var.mssql_servers
+    mssql_managed_instances     = var.mssql_managed_instances
     mssql_databases             = var.mssql_databases
     mssql_elastic_pools         = var.mssql_elastic_pools
     synapse_workspaces          = var.synapse_workspaces
