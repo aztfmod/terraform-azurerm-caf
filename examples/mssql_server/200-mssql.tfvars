@@ -58,7 +58,7 @@ keyvaults = {
     name               = "sqlrg1"
     resource_group_key = "security_region1"
     sku_name           = "standard"
-    
+
     creation_policies = {
       logged_in_user = {
         secret_permissions = ["Set", "Get", "List", "Delete", "Purge"]
