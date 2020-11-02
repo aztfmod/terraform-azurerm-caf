@@ -17,7 +17,7 @@ resource "azurerm_network_security_group" "nsg_obj" {
   tags                = local.tags
 
   dynamic "security_rule" {
-    for_each = lookup(each.value, "nsg_key", null) == null ? [] : var.network_security_group_definition[each.value.nsg_key].nsg
+    for_each = try(var.network_security_group_definition[each.value.nsg_key].nsg, [])
     content {
       name                                       = lookup(security_rule.value, "name", null)
       priority                                   = lookup(security_rule.value, "priority", null)
