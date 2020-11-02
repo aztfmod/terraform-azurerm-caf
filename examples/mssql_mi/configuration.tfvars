@@ -17,12 +17,12 @@ vnets = {
       name          = "sqlmi"
       address_space = ["172.25.88.0/21"]
     }
-    specialsubnets = {}
     subnets = {
       sqlmi1 = {
         name              = "sqlmi1"
         cidr              = ["172.25.88.0/24"]
         nsg_key           = "sqlmi"
+        route_table_key   = "sqlmi"
         delegation = {
           name = "sqlmidelegation"
           service_delegation = "Microsoft.Sql/managedInstances"
@@ -32,24 +32,6 @@ vnets = {
   }
 }
 
-network_security_group_definition = {
-  sqlmi = {
-    nsg = [
-      {
-        name                       = "allow_tds_inbound",
-        priority                   = "1000"
-        direction                  = "Inbound"
-        access                     = "Allow"
-        protocol                   = "Tcp"
-        source_port_range          = "*"
-        destination_port_range     = "1433"
-        source_address_prefix      = "VirtualNetwork"
-        destination_address_prefix = "*"
-      },
-
-    ]
-  }
-}
 
 mssql_managed_instances = {
   sqlmi1 = {
