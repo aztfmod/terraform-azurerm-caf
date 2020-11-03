@@ -1,5 +1,5 @@
 module cosmos_db {
-  source   = "./modules/analytics/cosmos_db"
+  source   = "./modules/databases/cosmos_db"
   for_each = local.database.cosmos_db
 
   location                = lookup(each.value, "region", null) == null ? module.resource_groups[each.value.resource_group_key].location : local.global_settings.regions[each.value.region]
