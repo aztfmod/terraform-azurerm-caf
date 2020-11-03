@@ -73,5 +73,8 @@ locals {
     managedInstanceTags = {
       value = local.tags
     }
+    resourceGroupName = {
+      value = var.resource_group_name
+    }
   }
 }

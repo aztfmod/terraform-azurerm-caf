@@ -7,6 +7,7 @@ output mssql_managed_instances {
 module "mssql_managed_instances" {
   source     = "./modules/databases/mssql_mi"
   for_each   = local.database.mssql_managed_instances
+  depends_on = [module.routes]
 
   global_settings     = local.global_settings
   settings            = each.value

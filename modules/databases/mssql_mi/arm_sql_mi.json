@@ -173,6 +173,9 @@
         "metadata": {
             "description": "Resource tags to associate with the instance."
         }
+    },
+    "resourceGroupName": {
+        "type": "string"
     }
   },
   "resources": [
@@ -207,5 +210,11 @@
               "backupStorageRedundancy": "[parameters('storageAccountType')]"
           }
       }
-  ]
+  ],
+  "outputs": {
+      "id": {
+          "type": "string",
+          "value": "[resourceId(parameters('resourceGroupName'), 'Microsoft.Sql/managedInstances', parameters('managedInstanceName'))]"
+      }
+  }
 }

@@ -26,3 +26,22 @@ resource "azurerm_template_deployment" "mssqlmi" {
     read   = "5m"
   }
 }
+
+resource "null_resource" "destroy_sqlmi" {
+
+  triggers = {
+    resource_id = lookup(azurerm_template_deployment.mssqlmi.outputs, "id")
+  }
+
+  provisioner "local-exec" {
+    command     = format("%s/scripts/destroy_resource.sh", path.module)
+    when        = destroy
+    interpreter = ["/bin/sh"]
+    on_failure  = fail
+
+    environment = {
+      RESOURCE_IDS = self.triggers.resource_id
+    }
+  }
+
+}
