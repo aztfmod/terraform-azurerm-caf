@@ -1,0 +1,4 @@
+output mssql_managed_instances {
+  value     = module.caf.mssql_managed_instances
+  sensitive = false
+}
