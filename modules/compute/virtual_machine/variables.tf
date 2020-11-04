@@ -1,5 +1,5 @@
 variable global_settings {}
-
+variable client_config {}
 variable location {}
 
 variable resource_group_name {
@@ -33,8 +33,7 @@ variable managed_identities {
 variable diagnostics {
   default = {}
 }
-variable use_msi {}
-variable tfstates {}
 variable public_ip_addresses {
   default = {}
 }
+variable base_tags {}

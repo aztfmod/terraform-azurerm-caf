@@ -4,3 +4,4 @@ variable resource_group_name {}
 variable location {}
 variable diagnostics {}
 variable global_settings {}
+variable base_tags {}

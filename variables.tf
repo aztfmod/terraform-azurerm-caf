@@ -1,16 +1,18 @@
 # Global settings
 variable global_settings {
   default = {
-    prefix         = ""
     passthrough    = false
     random_length  = 4
     default_region = "region1"
     regions = {
       region1 = "southeastasia"
     }
-
   }
 }
+
+variable tenant_id {}
+
+variable current_landingzone_key {}
 
 variable tfstates {
   default = {}
@@ -71,6 +73,10 @@ variable log_analytics {
 }
 
 variable diagnostics {
+  default = {}
+}
+
+variable event_hub_namespaces {
   default = {}
 }
 
@@ -135,6 +141,10 @@ variable keyvault_access_policies {
   default = {}
 }
 
+variable keyvault_access_policies_azuread_apps {
+  default = {}
+}
+
 variable custom_role_definitions {
   default = {}
 }
@@ -149,6 +159,9 @@ variable role_mapping {
 variable storage_accounts {
   default = {}
 }
+variable storage {
+  default = {}
+}
 variable diagnostic_storage_accounts {
   default = {}
 }
@@ -157,3 +170,8 @@ variable diagnostic_storage_accounts {
 variable shared_services {
   default = {}
 }
+
+variable monitoring {
+  default = {}
+}
+

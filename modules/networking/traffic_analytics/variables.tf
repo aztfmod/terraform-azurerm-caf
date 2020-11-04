@@ -16,6 +16,5 @@ variable netwatcher {
   default     = {}
 }
 
-variable tags {
-
-}
+variable tags {}
+variable base_tags {}

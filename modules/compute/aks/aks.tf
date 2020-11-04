@@ -11,8 +11,7 @@ resource "azurecaf_name" "aks" {
 
 resource "azurecaf_name" "default_node_pool" {
   name          = var.settings.default_node_pool.name
-  resource_type = "azurerm_kubernetes_cluster"
-  #TODO: replace with aks_node_pool_linux when available.
+  resource_type = "aks_node_pool_linux"
   prefixes      = [var.global_settings.prefix]
   random_length = var.global_settings.random_length
   clean_input   = true
@@ -116,14 +115,6 @@ resource "random_string" "prefix" {
   number  = false
 }
 
-
-# resource "azurerm_role_assignment" "aks_acr" {
-#   depends_on = [azurerm_kubernetes_cluster.aks]
-#   for_each = lookup(var.settings,"acr_keys",{})
-#   scope                = var.registries[each.value].object.id
-#   role_definition_name = "AcrPull"
-#   principal_id         = azurerm_kubernetes_cluster.aks.kubelet_identity[0].object_id
-# }
 
 #
 # Node pools

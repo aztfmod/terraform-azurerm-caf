@@ -6,8 +6,9 @@
   version: '3.7'
   services:
     rover:
-      image: aztfmod/roveralpha:2010.050603
-
+      image: aztfmod/rover:2010.2808
+      user: vscode
+      
       labels:
         - "caf=Azure CAF"
 
