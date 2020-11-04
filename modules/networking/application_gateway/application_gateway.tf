@@ -66,7 +66,10 @@ resource "azurerm_application_gateway" "agw" {
       frontend_ip_configuration_name = var.settings.front_end_ip_configurations[http_listener.value.front_end_ip_configuration_key].name
       frontend_port_name             = var.settings.front_end_ports[http_listener.value.front_end_port_key].name
       protocol                       = var.settings.front_end_ports[http_listener.value.front_end_port_key].protocol
-      host_name                      = try(http_listener.value.host_name, null)
+      host_name                      = try(http_listener.value.host_names, null) == null ? http_listener.value.host_name : null
+      host_names                     = try(http_listener.value.host_name, null) == null ? http_listener.value.host_names : null
+      require_sni                    = try(http_listener.value.require_sni, false)
+      ssl_certificate_name           = try(http_listener.value.ssl_certificate_name, null)
     }
   }
 
@@ -75,10 +78,11 @@ resource "azurerm_application_gateway" "agw" {
 
     content {
       name                       = try(request_routing_rule.value.name, local.listeners[request_routing_rule.key].name)
-      rule_type                  = request_routing_rule.value.rule_type
+      rule_type                  = try(request_routing_rule.value.rule_type, "Basic")
       http_listener_name         = local.listeners[request_routing_rule.key].name
-      backend_http_settings_name = try(local.backend_http_settings[request_routing_rule.key].name, local.listeners[request_routing_rule.key].name)
-      backend_address_pool_name  = try(local.backend_pools[request_routing_rule.key].name, local.listeners[request_routing_rule.key].name)
+      backend_http_settings_name = request_routing_rule.value.rule_type == "Basic" ? try(local.backend_http_settings[request_routing_rule.key].name, local.listeners[request_routing_rule.key].name) : null
+      backend_address_pool_name  = request_routing_rule.value.rule_type == "Basic" ? try(local.backend_pools[request_routing_rule.key].name, local.listeners[request_routing_rule.key].name) : null
+      # WIP url_path_map_name          = request_routing_rule.value.rule_type == "PathBasedRouting" ? request_routing_rule.value.url_path_map_name : null
     }
   }
 
@@ -127,9 +131,15 @@ resource "azurerm_application_gateway" "agw" {
 
   # }
 
-  # ssl_certificate {
+  dynamic ssl_certificate {
+    for_each = var.settings.application_gateway_ssl_certificate
 
-  # }
+    content {
+      name     = ssl_certificate.value.name
+      data     = try(ssl_certificate.value.key_vault_secret_id, null) == null ? ssl_certificate.value.data : null
+      password = try(ssl_certificate.value.data, null) != null ? ssl_certificate.value.password : null
+    }
+  }
 
   # url_path_map {}
 
