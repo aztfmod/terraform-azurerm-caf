@@ -8,3 +8,4 @@ variable redis {}
 
 variable global_settings {}
 
+variable base_tags {}

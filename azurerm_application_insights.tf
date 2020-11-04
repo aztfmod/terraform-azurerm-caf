@@ -14,4 +14,10 @@ module "azurerm_application_insights" {
   sampling_percentage                   = lookup(each.value, "sampling_percentage", null)
   disable_ip_masking                    = lookup(each.value, "disable_ip_masking", null)
   global_settings                       = local.global_settings
+  base_tags                             = try(local.global_settings.inherit_tags, false) ? module.resource_groups[each.value.resource_group_key].tags : {}
+}
+
+output application_insights {
+  value     = module.azurerm_application_insights
+  sensitive = true
 }

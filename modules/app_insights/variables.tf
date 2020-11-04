@@ -60,3 +60,4 @@ variable disable_ip_masking {
 }
 
 variable global_settings {}
+variable base_tags {}

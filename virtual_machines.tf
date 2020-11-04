@@ -2,21 +2,22 @@
 
 module virtual_machines {
   source     = "./modules/compute/virtual_machine"
-  depends_on = [module.keyvault_access_policies]
-  for_each   = local.enable.virtual_machines ? local.compute.virtual_machines : {}
+  depends_on = [module.keyvault_access_policies, module.keyvault_access_policies_azuread_apps]
+  for_each   = local.compute.virtual_machines
 
-  global_settings                  = var.global_settings
+  global_settings                  = local.global_settings
+  client_config                    = local.client_config
   settings                         = each.value
   resource_group_name              = module.resource_groups[each.value.resource_group_key].name
-  location                         = lookup(each.value, "region", null) == null ? module.resource_groups[each.value.resource_group_key].location : var.global_settings.regions[each.value.region]
-  vnets                            = module.networking
-  managed_identities               = module.managed_identities
+  location                         = lookup(each.value, "region", null) == null ? module.resource_groups[each.value.resource_group_key].location : local.global_settings.regions[each.value.region]
+  vnets                            = local.combined_objects_networking
+  managed_identities               = local.combined_objects_managed_identities
   boot_diagnostics_storage_account = try(module.diagnostic_storage_accounts[each.value.boot_diagnostics_storage_account_key].primary_blob_endpoint, {})
-  keyvault_id                      = try(module.keyvaults[each.value.keyvault_key].id, null)
+  keyvault_id                      = local.combined_objects_keyvaults[lookup(each.value, "lz_key", var.current_landingzone_key)][each.value.keyvault_key].id
   diagnostics                      = local.diagnostics
-  use_msi                          = var.use_msi
-  tfstates                         = var.tfstates
-  public_ip_addresses              = module.public_ip_addresses
+  public_ip_addresses              = local.combined_objects_public_ip_addresses
+  base_tags                        = try(local.global_settings.inherit_tags, false) ? module.resource_groups[each.value.resource_group_key].tags : {}
+
 }
 
 
