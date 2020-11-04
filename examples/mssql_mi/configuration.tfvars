@@ -55,3 +55,11 @@ mssql_managed_instances = {
     vCores          = 8
   }
 }
+
+mssql_managed_databases = {
+  managed_db1 = {
+    resource_group_key = "sqlmi_region1"
+    name               = "lz-sql-managed-db1"
+    mi_key             = "sqlmi1"
+  }
+}

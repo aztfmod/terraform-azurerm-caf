@@ -41,6 +41,7 @@ module "caf" {
     mssql_servers               = var.mssql_servers
     mssql_managed_instances     = var.mssql_managed_instances
     mssql_databases             = var.mssql_databases
+    mssql_managed_databases     = var.mssql_managed_databases
     mssql_elastic_pools         = var.mssql_elastic_pools
     synapse_workspaces          = var.synapse_workspaces
     databricks_workspaces       = var.databricks_workspaces
