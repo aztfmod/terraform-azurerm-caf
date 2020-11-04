@@ -8,4 +8,5 @@ module compute_instance {
   location                        = azurerm_machine_learning_workspace.ws.location
   machine_learning_workspace_name = azurerm_machine_learning_workspace.ws.name
   subnet_id                       = lookup(each.value, "lz_key", null) == null ? var.vnets[var.client_config.landingzone_key][each.value.vnet_key].subnets[each.value.subnet_key].id : var.vnets[each.value.lz_key][each.value.vnet_key].subnets[each.value.subnet_key].id
+  tags                            = local.tags
 }
