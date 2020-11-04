@@ -60,3 +60,5 @@ variable private_dns {
 }
 
 variable settings {}
+
+variable base_tags {}

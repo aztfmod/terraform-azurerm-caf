@@ -30,34 +30,16 @@ resource "azurerm_network_interface" "nic" {
   enable_ip_forwarding          = lookup(each.value, "enable_ip_forwarding", false)
   enable_accelerated_networking = lookup(each.value, "enable_accelerated_networking", false)
   internal_dns_name_label       = lookup(each.value, "internal_dns_name_label", null)
-  tags                          = lookup(each.value, "tags", null)
+  tags                          = merge(local.tags, try(each.value.tags, null))
 
   ip_configuration {
     name                          = azurecaf_name.nic[each.key].result
-    subnet_id                     = try(each.value.networking.remote_tfstate, null) == null ? var.vnets[each.value.networking.vnet_key].subnets[each.value.networking.subnet_key].id : data.terraform_remote_state.vnets[each.key].outputs[each.value.networking.remote_tfstate.output_key][each.value.networking.remote_tfstate.lz_key][each.value.networking.remote_tfstate.vnet_key].subnets[each.value.networking.remote_tfstate.subnet_key].id
+    subnet_id                     = try(var.vnets[var.client_config.landingzone_key][each.value.vnet_key].subnets[each.value.subnet_key].id, var.vnets[each.value.lz_key][each.value.vnet_key].subnets[each.value.subnet_key].id)
     private_ip_address_allocation = lookup(each.value, "private_ip_address_allocation", "Dynamic")
     private_ip_address_version    = lookup(each.value, "private_ip_address_version", null)
     private_ip_address            = lookup(each.value, "private_ip_address", null)
     primary                       = lookup(each.value, "primary", null)
     public_ip_address_id          = try(var.public_ip_addresses[each.value.public_ip_address_key].id, null)
-  }
-}
-
-data "terraform_remote_state" "vnets" {
-  for_each = {
-    for key, nic in var.settings.networking_interfaces : key => nic
-    if try(nic.networking.remote_tfstate, null) != null
-  }
-
-  backend = "azurerm"
-  config = {
-    storage_account_name = var.tfstates[each.value.networking.remote_tfstate.tfstate_key].storage_account_name
-    container_name       = var.tfstates[each.value.networking.remote_tfstate.tfstate_key].container_name
-    resource_group_name  = var.tfstates[each.value.networking.remote_tfstate.tfstate_key].resource_group_name
-    key                  = var.tfstates[each.value.networking.remote_tfstate.tfstate_key].key
-    use_msi              = var.use_msi
-    subscription_id      = var.use_msi ? var.tfstates[each.value.networking.remote_tfstate.tfstate_key].subscription_id : null
-    tenant_id            = var.use_msi ? var.tfstates[each.value.networking.remote_tfstate.tfstate_key].tenant_id : null
   }
 }
 
@@ -68,11 +50,7 @@ data "terraform_remote_state" "vnets" {
 #   nic0 = {
 #     # AKS rely on a remote network and need the details of the tfstate to connect (tfstate_key), assuming RBAC authorization.
 #     networking = {
-#       remote_tfstate = {
-#         tfstate_key = "networking_aks"
-#         output_key  = "vnets"
-#         lz_key      = "networking_aks"
-#       }
+#       lz_key      = "networking_aks"
 #       vnet_key    = "hub_rg1"
 #       subnet_key  = "jumpbox"
 #     }
