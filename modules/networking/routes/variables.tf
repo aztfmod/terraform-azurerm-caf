@@ -9,3 +9,6 @@ variable next_hop_in_ip_address_fw {
 variable next_hop_in_ip_address_vm {
   default = null
 }
+variable next_hop_in_ip_address {
+  default = null
+}

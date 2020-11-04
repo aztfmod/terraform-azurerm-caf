@@ -28,5 +28,5 @@ locals {
 
   private_cidr       = local.ip_configuration.private.cidr[var.settings.front_end_ip_configurations.private.subnet_cidr_index]
   private_ip_address = cidrhost(local.private_cidr, var.settings.front_end_ip_configurations.private.private_ip_offset)
-  
+
 }
