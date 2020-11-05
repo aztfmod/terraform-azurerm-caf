@@ -10,6 +10,7 @@ variable global_settings {
   }
 }
 
+<<<<<<< HEAD
 variable tenant_id {
   default = null
 }
@@ -17,6 +18,11 @@ variable tenant_id {
 variable current_landingzone_key {
   default = "standalone"
 }
+=======
+variable tenant_id {}
+
+variable current_landingzone_key {}
+>>>>>>> origin/master
 
 variable tfstates {
   default = {}

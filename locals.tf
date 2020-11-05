@@ -63,6 +63,7 @@ locals {
 
   client_config = {
     client_id               = data.azurerm_client_config.current.client_id
+<<<<<<< HEAD
     tenant_id               = var.tenant_id == null ? data.azurerm_client_config.current.tenant_id : var.tenant_id
     subscription_id         = data.azurerm_client_config.current.subscription_id
     object_id               = local.object_id
@@ -75,6 +76,16 @@ locals {
 
   object_id = coalesce(var.logged_user_objectId, var.logged_aad_app_objectId, try(data.azurerm_client_config.current.object_id, null), try(data.azuread_service_principal.logged_in_app.0.object_id, null))
 
+=======
+    tenant_id               = var.tenant_id
+    subscription_id         = data.azurerm_client_config.current.subscription_id
+    object_id               = data.azurerm_client_config.current.object_id
+    logged_aad_app_objectId = var.logged_aad_app_objectId == null ? var.logged_user_objectId == null ? data.azuread_service_principal.logged_in_app.0.object_id : var.logged_user_objectId : var.logged_aad_app_objectId
+    logged_user_objectId    = var.logged_user_objectId == null ? var.logged_aad_app_objectId == null ? data.azuread_service_principal.logged_in_app.0.object_id : var.logged_aad_app_objectId : var.logged_user_objectId
+    landingzone_key         = var.current_landingzone_key
+  }
+
+>>>>>>> origin/master
   webapp = {
     azurerm_application_insights = try(var.webapp.azurerm_application_insights, {})
     app_service_environments     = try(var.webapp.app_service_environments, {})
