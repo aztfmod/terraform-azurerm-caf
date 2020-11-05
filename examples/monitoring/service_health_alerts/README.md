@@ -39,51 +39,49 @@ No requirements.
         shortname = "<string>"
         resource_group_key = "<string>"
         
-        email_alert_settings = [
-          {
+        email_alert_settings = {
+          email_aler1 = {
             name = "<string>"        
             email_address = "<emailAddress>"
             use_common_alert_schema = true/false
-          },
+          }
           #remove the following block if additional email alerts aren't needed.
-          {
+          email_alert2 = {
             name = "<string>"          
             email_address = "<emailAddress>"
             use_common_alert_schema = true/false
           }
           ##add more email alerts by repeating the block.
-        ]
+        }
             
         #comment out this block exclude this configuration completely
-        sms_alert_settings = [
-           { 
+        sms_alert_settings = {
+          sms_alert1 = { 
              name = "<string>"       
              country_code ="<countryCode>"
              phone_number = "<phoneNumber>"
            } #follow the syntax of email alert settings to have one or more alerts
-        ]
+        }
 
         #comment out this block exclude this configuration completely
-        #webhook = [
-          # { 
+        #webhook = {
+        #  webhook1 = { 
           #   name = "<string>"         
           #   service_uri = "<URI>"
           # } #follow the syntax of email alert settings to have one or more alerts
-        #]
+        #}
 
         #comment out this block exclude this configuration completely
-        arm_role_alert = [
-          {
+        arm_role_alert = {
+          arm_alert1 = {
             name = "<string>"          
-            # refer https://docs.microsoft.com/en-us/azure/role-based-access-control/built-in-roles
-            role_id = "b24988ac-6180-42a0-ab88-20f7382dd24c"  #UUID for Contributor Role
             use_common_alert_schema = true/false
+            role_name = "Contributor" # Use the Built-in role names
           } #follow the syntax of email alert settings to have one or more alerts
-        ]
-
-    
-    }
-    
+        }
+  
+  }
+  
 }
     
 }
