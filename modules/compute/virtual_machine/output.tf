@@ -21,7 +21,7 @@ output admin_username {
 output winrm {
   value = local.os_type == "windows" ? {
     keyvault_id     = var.keyvault_id
-    certificate_url = azurerm_key_vault_certificate.self_signed_winrm[local.os_type].secret_id
+    certificate_url = try(azurerm_key_vault_certificate.self_signed_winrm[local.os_type].secret_id, null)
   } : null
 }
 

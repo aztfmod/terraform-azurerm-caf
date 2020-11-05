@@ -131,15 +131,15 @@ resource "azurerm_application_gateway" "agw" {
 
   # }
 
-  dynamic ssl_certificate {
-    for_each = var.settings.application_gateway_ssl_certificate
+  # dynamic ssl_certificate {
+  #   for_each = var.settings.application_gateway_ssl_certificate
 
-    content {
-      name     = ssl_certificate.value.name
-      data     = try(ssl_certificate.value.key_vault_secret_id, null) == null ? ssl_certificate.value.data : null
-      password = try(ssl_certificate.value.data, null) != null ? ssl_certificate.value.password : null
-    }
-  }
+  #   content {
+  #     name     = ssl_certificate.value.name
+  #     data     = try(ssl_certificate.value.key_vault_secret_id, null) == null ? ssl_certificate.value.data : null
+  #     password = try(ssl_certificate.value.data, null) != null ? ssl_certificate.value.password : null
+  #   }
+  # }
 
   # url_path_map {}
 
