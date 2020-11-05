@@ -31,6 +31,7 @@ module "caf" {
     public_ip_addresses               = var.public_ip_addresses
     private_dns                       = var.private_dns
     virtual_wans                      = var.virtual_wans
+<<<<<<< HEAD:examples/module.tf
     application_gateways              = var.application_gateways
     application_gateway_applications  = var.application_gateway_applications
   }
@@ -43,6 +44,19 @@ module "caf" {
     databricks_workspaces       = var.databricks_workspaces
     machine_learning_workspaces = var.machine_learning_workspaces
   }
+=======
+  }
+  database = {
+    azurerm_redis_caches  = var.azurerm_redis_caches
+    mssql_servers         = var.mssql_servers
+    mssql_elastic_pools   = var.mssql_elastic_pools
+    synapse_workspaces    = var.synapse_workspaces
+    databricks_workspaces = var.databricks_workspaces
+    machine_learning_workspaces = var.machine_learning_workspaces
+    postgresql_servers = var.postgresql_servers
+    mysql_servers         = var.mysql_servers
+   }
+>>>>>>> 26c5af3f4a89bec1bca1fa9b304dd5dd5fe20aef:examples/solution.tf
   shared_services = {
     monitoring = var.monitoring
   }

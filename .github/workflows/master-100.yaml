@@ -89,7 +89,10 @@ jobs:
             "examples/networking/virtual_wan/100-vwan-multi-hubs",
             "examples/networking/virtual_wan/101-vwan-multi-hubs-firewalls",
             # "examples/networking/virtual_wan/102-vwan-multi-hubs-gw",
+<<<<<<< HEAD
             "examples/app_gateway/100-simple-app-gateway",
+=======
+>>>>>>> 26c5af3f4a89bec1bca1fa9b304dd5dd5fe20aef
             "examples/databricks/100-simple-databricks",
             "examples/networking/private_dns/100-private-dns-vnet-links",
             "examples/redis_cache/100-redis-standard",
@@ -101,6 +104,11 @@ jobs:
             "examples/synapse_analytics/101-synapse-sparkpool",
             "examples/monitoring/service_health_alerts",
             "examples/mssql_server/elastic_pools",
+<<<<<<< HEAD
+=======
+            "examples/mysql_server/100-simple-mysql",
+            "examples/postgresql_server/100-simple-postgresql",
+>>>>>>> 26c5af3f4a89bec1bca1fa9b304dd5dd5fe20aef
             "examples/webapps/appservice/101-appservice-simple",
             "examples/webapps/appservice/102-appservice-slots",
             "examples/webapps/appservice/103-appservice-extend",

@@ -38,6 +38,9 @@ variable sku_tier {
 }
 
 variable base_tags {}
+<<<<<<< HEAD
 variable private_dns {
   default = {}
 }
+=======
+>>>>>>> 26c5af3f4a89bec1bca1fa9b304dd5dd5fe20aef

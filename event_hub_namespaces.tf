@@ -4,7 +4,11 @@ module "event_hub_namespaces" {
   for_each = var.event_hub_namespaces
 
   global_settings = local.global_settings
+<<<<<<< HEAD
   settings        = each.value
+=======
+  settings   = each.value
+>>>>>>> 26c5af3f4a89bec1bca1fa9b304dd5dd5fe20aef
   resource_groups = module.resource_groups
   base_tags       = try(local.global_settings.inherit_tags, false) ? module.resource_groups[each.value.resource_group_key].tags : {}
 }

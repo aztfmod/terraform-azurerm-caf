@@ -42,8 +42,13 @@ resource "azurerm_application_gateway" "agw" {
 
     content {
       name                          = frontend_ip_configuration.value.name
+<<<<<<< HEAD
       public_ip_address_id          = try(local.ip_configuration[frontend_ip_configuration.key].ip_address_id, null)
       private_ip_address            = try(frontend_ip_configuration.value.public_ip_key, null) == null ? local.private_ip_address : null
+=======
+      public_ip_address_id          = try(frontend_ip_configuration.value.public_ip_key, null) == null ? null : try(var.public_ip_addresses[frontend_ip_configuration.value.public_ip_key].id, var.public_ip_addresses[frontend_ip_configuration.value.lz_key][frontend_ip_configuration.value.public_ip_key].id)
+      private_ip_address            = try(frontend_ip_configuration.value.public_ip_key, null) == null ? cidrhost(try(var.vnets[var.client_config.landingzone_key][frontend_ip_configuration.value.lz_key][frontend_ip_configuration.value.vnet_key].subnets[frontend_ip_configuration.value.subnet_key].cidr[frontend_ip_configuration.value.subnet_cidr_index], var.vnets[frontend_ip_configuration.value.lz_key][frontend_ip_configuration.value.vnet_key].subnets[frontend_ip_configuration.value.subnet_key].cidr[frontend_ip_configuration.value.subnet_cidr_index]), frontend_ip_configuration.value.private_ip_offset) : null
+>>>>>>> 26c5af3f4a89bec1bca1fa9b304dd5dd5fe20aef
       private_ip_address_allocation = try(frontend_ip_configuration.value.private_ip_address_allocation, null)
       subnet_id                     = local.ip_configuration[frontend_ip_configuration.key].subnet_id
     }

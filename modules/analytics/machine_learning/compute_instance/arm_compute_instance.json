@@ -42,9 +42,12 @@
         "description": "Specifies the location for all resources."
       }
     },
+<<<<<<< HEAD
     "tags": {
       "type": "object"
      },
+=======
+>>>>>>> 26c5af3f4a89bec1bca1fa9b304dd5dd5fe20aef
     "adminUserName": {
       "type": "string",
       "metadata": {
@@ -168,10 +171,16 @@
   "resources": [
     {
       "type": "Microsoft.MachineLearningServices/workspaces/computes",
+<<<<<<< HEAD
       "apiVersion": "2020-08-01",
       "name": "[concat(parameters('workspaceName'), '/', parameters('computeInstanceName'))]",
       "location": "[parameters('location')]",
       "tags": "[parameters('tags')]",
+=======
+      "apiVersion": "2020-02-18-preview",
+      "name": "[concat(parameters('workspaceName'), '/', parameters('computeInstanceName'))]",
+      "location": "[parameters('location')]",
+>>>>>>> 26c5af3f4a89bec1bca1fa9b304dd5dd5fe20aef
       "properties": {
         "computeType": "ComputeInstance",
         "properties": {
