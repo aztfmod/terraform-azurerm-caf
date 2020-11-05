@@ -57,10 +57,10 @@ resource "azurerm_monitor_action_group" "ag1" {
   }
 
   dynamic "arm_role_receiver" {
-    for_each = try(var.settings.arm_role_alert, [])
+    for_each = try(var.settings.arm_role_alert, {})
     content {
       name                    = arm_role_receiver.value.name
-      role_id                 = arm_role_receiver.value.role_id
+      role_id                 = regex("[0-9a-f-]{36}.?", data.azurerm_role_definition.arm_role[arm_role_receiver.key].id)
       use_common_alert_schema = arm_role_receiver.value.use_common_alert_schema
     }
   }
@@ -78,4 +78,10 @@ resource "azurerm_template_deployment" "alert1" {
     "region"            = join(",", var.settings.location)
   }
   deployment_mode = "Incremental"
+}
+
+
+data "azurerm_role_definition" "arm_role" {
+  for_each = try(var.settings.arm_role_alert, {})
+  name = each.value.role_name
 }
