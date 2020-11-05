@@ -15,8 +15,6 @@ This module tracks the following types of health events (subscription wide) and 
 Ref : https://docs.microsoft.com/en-us/azure/service-health/service-health-overview
 
 An Action Group will be created and your choice of Notifications type can be chosen dynamically (refer input syntax).
-Due to the some limitations, Service Health Alerts are being created using an ARM Template and is embedded within the Terraform script.
-
 
 ## Requirements
 
@@ -41,7 +39,7 @@ No requirements.
         resource_group_key = "<string>"
 
         email_alert_settings = {
-          email_aler1 = {
+          email_alert1 = {
             name = "<string>"
             email_address = "<emailAddress>"
             use_common_alert_schema = true/false
