@@ -83,5 +83,5 @@ resource "azurerm_template_deployment" "alert1" {
 
 data "azurerm_role_definition" "arm_role" {
   for_each = try(var.settings.arm_role_alert, {})
-  name = each.value.role_name
+  name     = each.value.role_name
 }
