@@ -89,7 +89,7 @@ virtual_machines = {
         zone = "1"
 
         os_disk = {
-          name                 = "server-os"
+          name                 = "server1-os"
           caching              = "ReadWrite"
           create_option        = "FromImage"
           storage_account_type = "Standard_LRS"
@@ -111,17 +111,17 @@ virtual_machines = {
       }
     }
 
-    data_disks = {
-      data1 = {
-        name                 = "server1-data1"
-        storage_account_type = "Standard_LRS"
-        # Only Empty is supported. More community contributions required to cover other scenarios
-        create_option = "Empty"
-        disk_size_gb  = "10"
-        lun           = 1
-        zones         = ["1"]
-      }
-    }
+    # data_disks = {
+    #   data1 = {
+    #     name                 = "server1-data1"
+    #     storage_account_type = "Standard_LRS"
+    #     # Only Empty is supported. More community contributions required to cover other scenarios
+    #     create_option = "Empty"
+    #     disk_size_gb  = "10"
+    #     lun           = 1
+    #     zones         = ["1"]
+    #   }
+    # }
 
   }
 }
