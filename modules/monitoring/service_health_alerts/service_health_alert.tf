@@ -29,7 +29,7 @@ resource "azurerm_monitor_action_group" "ag1" {
 
 
   dynamic "email_receiver" {
-    for_each = try(var.settings.email_alert_settings, [])
+    for_each = try(var.settings.email_alert_settings, {})
     content {
       name                    = email_receiver.value.name
       email_address           = email_receiver.value.email_address
@@ -40,7 +40,7 @@ resource "azurerm_monitor_action_group" "ag1" {
 
 
   dynamic "sms_receiver" {
-    for_each = try(var.settings.sms_alert_settings, [])
+    for_each = try(var.settings.sms_alert_settings, {})
     content {
       name         = sms_receiver.value.name
       country_code = sms_receiver.value.country_code
@@ -49,7 +49,7 @@ resource "azurerm_monitor_action_group" "ag1" {
   }
 
   dynamic "webhook_receiver" {
-    for_each = try(var.settings.webhook, [])
+    for_each = try(var.settings.webhook, {})
     content {
       name        = webhook_receiver.value.name
       service_uri = webhook_receiver.value.service_uri
@@ -75,7 +75,7 @@ resource "azurerm_template_deployment" "alert1" {
   parameters = {
     "name"              = azurecaf_name.service_health_alert_name.result
     "actionGroups_name" = azurerm_monitor_action_group.ag1.name
-    "region"            = var.location
+    "region"            = join(",", var.settings.location)
   }
   deployment_mode = "Incremental"
 }
