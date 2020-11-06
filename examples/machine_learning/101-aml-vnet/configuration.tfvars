@@ -19,13 +19,8 @@ machine_learning_workspaces = {
         adminUserName         = "azureuser"
         sshAccess             = "Enabled"
         adminUserSshPublicKey = "ssh-rsa AAAAB3NzaC1yc2EAABADAQABAAACAQC1"
-<<<<<<< HEAD
         vnet_key              = "spoke_dap_re1"
         subnet_key            = "AmlSubnet"
-=======
-        vnet_key   = "spoke_dap_re1"
-        subnet_key = "AmlSubnet"
->>>>>>> 26c5af3f4a89bec1bca1fa9b304dd5dd5fe20aef
       }
     }
   }

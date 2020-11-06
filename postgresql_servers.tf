@@ -9,7 +9,7 @@ module "postgresql_servers" {
   depends_on = [module.keyvault_access_policies]
   for_each   = local.database.postgresql_servers
 
-  
+
   global_settings     = local.global_settings
   settings            = each.value
   resource_group_name = module.resource_groups[each.value.resource_group_key].name

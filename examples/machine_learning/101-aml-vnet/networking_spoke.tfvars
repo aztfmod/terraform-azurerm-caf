@@ -17,21 +17,13 @@ vnets = {
         name              = "JumpboxSubnet"
         cidr              = ["100.64.52.8/29"]
         service_endpoints = ["Microsoft.Storage"]
-<<<<<<< HEAD
         nsg_key           = "empty_nsg"
-=======
-        nsg_key = "empty_nsg"
->>>>>>> 26c5af3f4a89bec1bca1fa9b304dd5dd5fe20aef
       }
       DatalakeStorageSubnet = {
         name              = "DatalakeStorageSubnet"
         cidr              = ["100.64.53.0/25"]
         service_endpoints = ["Microsoft.Storage"]
-<<<<<<< HEAD
         nsg_key           = "empty_nsg"
-=======
-        nsg_key = "empty_nsg"
->>>>>>> 26c5af3f4a89bec1bca1fa9b304dd5dd5fe20aef
       }
       AmlSubnet = {
         name              = "AmlSubnet"
@@ -43,11 +35,7 @@ vnets = {
         name              = "SynapseSubnet"
         cidr              = ["100.64.54.0/25"]
         service_endpoints = ["Microsoft.Storage"]
-<<<<<<< HEAD
         nsg_key           = "empty_nsg"
-=======
-        nsg_key = "empty_nsg"
->>>>>>> 26c5af3f4a89bec1bca1fa9b304dd5dd5fe20aef
       }
       private_endpoints = {
         name                                           = "private_endpoints"

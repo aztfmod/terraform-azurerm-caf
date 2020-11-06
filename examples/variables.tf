@@ -72,12 +72,9 @@ variable azurerm_redis_caches {
 variable mssql_servers {
   default = {}
 }
-<<<<<<< HEAD
 variable mssql_databases {
   default = {}
 }
-=======
->>>>>>> 26c5af3f4a89bec1bca1fa9b304dd5dd5fe20aef
 variable mssql_elastic_pools {
   default = {}
 }
@@ -132,7 +129,6 @@ variable machine_learning_workspaces {
 variable monitoring {
   default = {}
 }
-<<<<<<< HEAD
 variable virtual_wans {
   default = {}
 }
@@ -143,17 +139,5 @@ variable application_gateways {
   default = {}
 }
 variable application_gateway_applications {
-=======
-variable postgresql_servers {
-  default = {}
-}
-variable mysql_servers {
-  default = {}
-}
-variable virtual_wans {
-  default = {}
-}
-variable event_hub_namespaces {
->>>>>>> 26c5af3f4a89bec1bca1fa9b304dd5dd5fe20aef
   default = {}
 }

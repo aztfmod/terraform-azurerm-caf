@@ -59,6 +59,8 @@ locals {
     synapse_workspaces          = try(var.database.synapse_workspaces, {})
     databricks_workspaces       = try(var.database.databricks_workspaces, {})
     machine_learning_workspaces = try(var.database.machine_learning_workspaces, {})
+    mysql_servers               = try(var.database.mysql_servers, {})
+    postgresql_servers          = try(var.database.postgresql_servers, {})
   }
 
   client_config = {
