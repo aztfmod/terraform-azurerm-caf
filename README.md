@@ -31,7 +31,7 @@ If you want to test, develop this module for landing zones integration, please f
 1. Clone the Azure landing zones repo
 
 ```bash
-git clone --branch 2010.0.preview2 https://github.com/Azure/caf-terraform-landingzones.git /tf/caf/public
+git clone --branch 2010.0.0 https://github.com/Azure/caf-terraform-landingzones.git /tf/caf/public
 ```
 
 2. Log in the subscription with the rover
