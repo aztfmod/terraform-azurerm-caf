@@ -10,6 +10,7 @@ resource "azurerm_private_dns_a_record" "a_records" {
   tags                = merge(try(each.value.tags, {}), local.tags)
 
   lifecycle {
+    # TEMP until native tf provider for ASE ready to avoid force replacment of record on every ase changes
     ignore_changes = [records]
   }
 }
