@@ -1,5 +1,5 @@
-module mongo_db_api {
-  source   = "./mongo_db_api"
+module mongo_db {
+  source   = "./mongo_db"
   for_each = try(var.settings.mongo_db, {})
 
   global_settings       = var.global_settings

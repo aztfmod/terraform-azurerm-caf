@@ -78,7 +78,7 @@ cosmos_db = {
       failover_priority = 1
     }
 
-    mongo_db = {
+    mongo_dbs = {
       database_re1 = {
         name = "cosmos-mongo-exdb"
         throughput = 400
