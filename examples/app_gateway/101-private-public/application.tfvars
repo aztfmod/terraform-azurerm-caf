@@ -1,16 +1,22 @@
 application_gateway_applications = {
-  demo_app1_80 = {
+  demo_app1_80_private = {
 
     application_gateway_key = "agw1"
     name                    = "demoapp1"
 
     listeners = {
       private = {
-        name                           = "demo-app1-80"
+        name                           = "demo-app1-80-private"
         front_end_ip_configuration_key = "private"
         front_end_port_key             = "80"
-        host_name                      = "cafdemo.internal"
+        host_name                      = "cafdemo.com"
         request_routing_rule_key       = "default"
+      }
+      public = {
+        name                           = "demo-app1-80-public"
+        front_end_ip_configuration_key = "public"
+        front_end_port_key             = "81"
+        host_name                      = "cafdemo.com"
       }
     }
 
