@@ -10,9 +10,13 @@ variable global_settings {
   }
 }
 
-variable tenant_id {}
+variable tenant_id {
+  default = null
+}
 
-variable current_landingzone_key {}
+variable current_landingzone_key {
+  default = "standalone"
+}
 
 variable tfstates {
   default = {}
@@ -129,6 +133,10 @@ variable networking {
 }
 
 ## Security variables
+variable security {
+  default = {}
+}
+
 variable managed_identities {
   default = {}
 }

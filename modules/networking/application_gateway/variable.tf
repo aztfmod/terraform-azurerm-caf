@@ -41,3 +41,9 @@ variable base_tags {}
 variable private_dns {
   default = {}
 }
+variable keyvault_certificates {
+  default = {}
+}
+variable managed_identities {
+  default = {}
+}
