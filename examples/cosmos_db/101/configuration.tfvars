@@ -12,7 +12,7 @@ cosmos_db = {
     offer_type                = "Standard"
     kind                      = "GlobalDocumentDB"
     enable_automatic_failover = "true"
-
+   
     consistency_policy = {
       consistency_level       = "BoundedStaleness"
       max_interval_in_seconds = "300"
@@ -21,17 +21,26 @@ cosmos_db = {
     # Primary location (Write Region)
     primary_geo_location = {
       prefix            = "customid-101"
-      location          = "southeastasia"
-      failover_priority = 0
+      region          = "southeastasia"
+      zone_redundant    = false
     }
     # failover location
     failover_geo_location = {
-      location          = "eastasia"
+      region          = "eastasia"
       failover_priority = 1
+    }  
+    
+    # Optional
+    enable_free_tier          = false
+    ip_range_filter           = "116.88.85.63,116.88.85.64"
+    #capabilities              = "EnableTable"
+    enable_multiple_write_locations = false
+    tags = {
+        "project" = "EDH"
     }
 
     # [optional] - Other DB API supoorted - MongoDB, Table, Gramlin GraphDB
-    sql_db = {
+    sql_databases = {
       database_re1 = {
         name       = "cosmos-sql-exdb"
         throughput = 400
