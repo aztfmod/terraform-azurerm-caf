@@ -8,3 +8,8 @@ module mongo_db {
   location              = azurerm_cosmosdb_account.cosmos_account.location
   cosmosdb_account_name = azurerm_cosmosdb_account.cosmos_account.name
 }
+
+output mongo_db = {
+  value = module.mongo_db
+  sensitive = true
+}
