@@ -19,7 +19,7 @@ application_gateways = {
       public = {
         name          = "public"
         public_ip_key = "example_agw_pip1_rg1"
-        subnet_key                    = "app_gateway_public"
+        subnet_key    = "app_gateway_public"
       }
       private = {
         name                          = "private"

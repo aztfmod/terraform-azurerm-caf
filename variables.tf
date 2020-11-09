@@ -133,6 +133,10 @@ variable networking {
 }
 
 ## Security variables
+variable security {
+  default = {}
+}
+
 variable managed_identities {
   default = {}
 }
