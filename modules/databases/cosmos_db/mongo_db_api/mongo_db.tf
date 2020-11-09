@@ -6,24 +6,21 @@ resource "random_integer" "ri" {
 }
 
 # Create example Database
-resource "azurerm_cosmosdb_sql_database" "ex_database" {
-  name                = "${var.settings.name}-${random_integer.ri.result}"
+resource "azurerm_cosmosdb_mongo_database" "ex_database" {
+  name                = "${var.settings.database_re1.name}-${random_integer.ri.result}"
   resource_group_name = var.resource_group_name
   account_name        = var.cosmosdb_account_name
   throughput          = var.settings.throughput
 }
 
 # Create example Container
-resource "azurerm_cosmosdb_sql_container" "ex_container" {
-  name                = var.settings.container_re1.name
+resource "azurerm_cosmosdb_mongo_collection" "ex_collection" {
+  name                = var.settings.collection_re1.name
   resource_group_name = var.resource_group_name
   account_name        = var.cosmosdb_account_name
-  database_name       = azurerm_cosmosdb_sql_database.ex_database.name
-  partition_key_path  = var.settings.container_re1.partition_key_path
-  throughput          = var.settings.container_re1.throughput
-
-  unique_key {
-    paths = var.settings.container_re1.unique_key_path
-  }
+  database_name       = azurerm_cosmosdb_mongo_database.ex_database.name
+  shard_key           = var.settings.collection_re1.shard_key
+  throughput          = var.settings.collection_re1.throughput
+  default_ttl_seconds = var.settings.collection_re1.default_ttl_seconds
 }
 

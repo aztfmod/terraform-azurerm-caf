@@ -43,7 +43,44 @@ cosmos_db = {
         }
       }
     }
+  }
 
+  cosmos_db_account_mongo_re1 = {
+    name                      = "cosmosdbmongo-ex101"
+    resource_group_key        = "cosmosdbmongo_re1"
+    offer_type                = "Standard"
+    kind                      = "MongoDB"
+    enable_automatic_failover = "true"
+
+    consistency_policy = {
+      consistency_level       = "BoundedStaleness"
+      max_interval_in_seconds = "300"
+      max_staleness_prefix    = "100000"
+    }
+    # Primary location (Write Region)
+    primary_geo_location = {
+      prefix            = "customid-101"
+      location          = "southeastasia"
+      failover_priority = 0
+    }
+    # failover location
+    failover_geo_location = {
+      location          = "eastasia"
+      failover_priority = 1
+    }
+
+    mongo_db = {
+      database_re1 = {
+        name = "cosmos-mongo-exdb"
+        throughput = 400
+        collection_re1 = {
+          name = "collection-ex101"
+          shard_key = "example_key"
+          thoughput = 400
+          default_ttl_seconds = "0"
+        }
+      }
+    }
   }
 }
 
