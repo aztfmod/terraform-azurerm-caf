@@ -34,6 +34,11 @@ resource "azurerm_app_service_plan" "asp" {
     create = "3h"
     update = "3h"
   }
+
+  lifecycle {
+    # TEMP until native tf provider for ASE ready to avoid force replacement of asp on every ase changes
+    ignore_changes = [app_service_environment_id]
+  }
 }
 
 
