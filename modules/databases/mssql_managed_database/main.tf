@@ -28,6 +28,15 @@ locals {
     collation = {
       value = try(var.settings.collation, "SQL_Latin1_General_CP1_CI_AS")
     }
+    createMode = {
+      value = try(var.settings.createMode, "Default")
+    }
+    sourceDatabaseId = {
+      value = try(var.settings.createMode, null) == "PointInTimeRestore" ? var.settings.sourceDatabaseId : ""
+    }
+    restorePointInTime = {
+      value = try(var.settings.createMode, null) == "PointInTimeRestore" ? var.settings.restorePointInTime : ""
+    }
     retentionDays = {
       value = try(var.settings.retentionDays, 7)
     }
