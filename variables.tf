@@ -175,3 +175,6 @@ variable monitoring {
   default = {}
 }
 
+variable shared_image_gallery {
+  default = {}
+}
