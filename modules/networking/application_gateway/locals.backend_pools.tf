@@ -19,7 +19,7 @@ locals {
 
   backend_pools = {
     for key, value in var.application_gateway_applications : key => {
-      name = try(value.backend_pool.name, local.listeners[key].name)
+      name = try(value.backend_pool.name, value.name)
       fqdns = flatten(
         [
           local.backend_pools_app_services[key],
