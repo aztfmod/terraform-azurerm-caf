@@ -1,4 +1,12 @@
-variable keyvault_id {}
+variable keyvaults {
+  default = {}
+}
+variable keyvault_key {
+  default = null
+}
+variable keyvault_id {
+  default = null
+}
 
 variable access_policies {
   validation {
@@ -7,13 +15,8 @@ variable access_policies {
   }
 }
 
-variable tenant_id {}
-
-variable logged_user_objectId {
-  default = null
-}
-variable logged_aad_app_objectId {
-  default = null
+variable client_config {
+  default = {}
 }
 variable azuread_groups {
   default = {}

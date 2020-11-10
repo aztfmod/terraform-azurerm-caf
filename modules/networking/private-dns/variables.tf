@@ -1,7 +1,5 @@
 variable global_settings {}
-variable tags {
-}
-
+variable client_config {}
 variable name {
 }
 
@@ -15,14 +13,10 @@ variable vnet_links {
   default = {}
 }
 
-variable tfstates {
-  default = null
-}
-
-variable use_msi {
-  default = false
-}
-
 variable vnets {
+  default = {}
+}
+variable base_tags {}
+variable tags {
   default = {}
 }

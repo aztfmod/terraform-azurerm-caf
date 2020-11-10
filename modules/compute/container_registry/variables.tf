@@ -1,4 +1,5 @@
 variable global_settings {}
+variable client_config {}
 
 variable name {
   type        = string
@@ -59,7 +60,4 @@ variable resource_groups {
   default = {}
 }
 
-variable tfstates {}
-variable use_msi {
-  default = false
-}
+variable base_tags {}

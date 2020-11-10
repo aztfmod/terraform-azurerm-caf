@@ -1,6 +1,6 @@
 resource "azurecaf_name" "ase" {
   name          = var.name
-  resource_type = "azurerm_storage_account"
+  resource_type = "azurerm_app_service_environment"
   prefixes      = [var.global_settings.prefix]
   random_length = var.global_settings.random_length
   clean_input   = true
@@ -9,7 +9,7 @@ resource "azurecaf_name" "ase" {
 
 resource "azurerm_template_deployment" "ase" {
 
-  name                = var.name
+  name                = azurecaf_name.ase.result
   resource_group_name = var.resource_group_name
 
   template_body = file(local.arm_filename)

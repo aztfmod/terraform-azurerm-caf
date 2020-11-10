@@ -21,3 +21,5 @@ variable kind {
 }
 
 variable global_settings {}
+
+variable base_tags {}

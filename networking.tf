@@ -29,6 +29,7 @@ module "networking" {
   diagnostics                       = local.diagnostics
   global_settings                   = local.global_settings
   ddos_id                           = try(azurerm_network_ddos_protection_plan.ddos_protection_plan[each.value.ddos_services_key].id, "")
+  base_tags                         = try(local.global_settings.inherit_tags, false) ? module.resource_groups[each.value.resource_group_key].tags : {}
 }
 
 #
@@ -66,6 +67,7 @@ module public_ip_addresses {
   zones                   = try(each.value.zones, null)
   diagnostic_profiles     = try(each.value.diagnostic_profiles, {})
   diagnostics             = local.diagnostics
+  base_tags               = try(local.global_settings.inherit_tags, false) ? module.resource_groups[each.value.resource_group_key].tags : {}
 }
 
 #
@@ -92,9 +94,9 @@ resource "azurerm_virtual_network_peering" "peering" {
   for_each   = local.networking.vnet_peerings
 
   name                         = azurecaf_name.peering[each.key].result
-  virtual_network_name         = try(each.value.from.lz_key, null) == null ? local.combined_objects_networking[each.value.from.vnet_key].name : local.combined_objects_networking[each.value.from.lz_key].vnets[each.value.from.vnet_key].name
-  resource_group_name          = try(each.value.from.lz_key, null) == null ? local.combined_objects_networking[each.value.from.vnet_key].resource_group_name : local.combined_objects_networking[each.value.from.lz_key].vnets[each.value.from.vnet_key].resource_group_name
-  remote_virtual_network_id    = try(each.value.to.lz_key, null) == null ? local.combined_objects_networking[each.value.to.vnet_key].id : local.combined_objects_networking[each.value.to.lz_key].vnets[each.value.to.vnet_key].id
+  virtual_network_name         = try(each.value.from.lz_key, null) == null ? local.combined_objects_networking[local.client_config.landingzone_key][each.value.from.vnet_key].name : local.combined_objects_networking[each.value.from.lz_key][each.value.from.vnet_key].name
+  resource_group_name          = try(each.value.from.lz_key, null) == null ? local.combined_objects_networking[local.client_config.landingzone_key][each.value.from.vnet_key].resource_group_name : local.combined_objects_networking[each.value.from.lz_key][each.value.from.vnet_key].resource_group_name
+  remote_virtual_network_id    = try(each.value.to.lz_key, null) == null ? local.combined_objects_networking[local.client_config.landingzone_key][each.value.to.vnet_key].id : local.combined_objects_networking[each.value.to.lz_key][each.value.to.vnet_key].id
   allow_virtual_network_access = try(each.value.allow_virtual_network_access, true)
   allow_forwarded_traffic      = try(each.value.allow_forwarded_traffic, false)
   allow_gateway_transit        = try(each.value.allow_gateway_transit, false)
@@ -126,6 +128,7 @@ module "route_tables" {
   location                      = lookup(each.value, "region", null) == null ? module.resource_groups[each.value.resource_group_key].location : local.global_settings.regions[each.value.region]
   disable_bgp_route_propagation = try(each.value.disable_bgp_route_propagation, null)
   tags                          = try(each.value.tags, null)
+  base_tags                     = try(local.global_settings.inherit_tags, false) ? module.resource_groups[each.value.resource_group_key].tags : {}
 }
 
 resource "azurecaf_name" "routes" {
@@ -140,23 +143,6 @@ resource "azurecaf_name" "routes" {
 }
 
 
-data "terraform_remote_state" "firewall" {
-  for_each = {
-    for key, route in local.networking.azurerm_routes : key => route
-    if try(route.remote_tfstate.tfstate_key, null) != null
-  }
-
-  backend = "azurerm"
-  config = {
-    storage_account_name = var.tfstates[each.value.remote_tfstate.tfstate_key].storage_account_name
-    container_name       = var.tfstates[each.value.remote_tfstate.tfstate_key].container_name
-    resource_group_name  = var.tfstates[each.value.remote_tfstate.tfstate_key].resource_group_name
-    key                  = var.tfstates[each.value.remote_tfstate.tfstate_key].key
-    use_msi              = var.use_msi
-    subscription_id      = var.use_msi ? var.tfstates[each.value.remote_tfstate.tfstate_key].subscription_id : null
-    tenant_id            = var.use_msi ? var.tfstates[each.value.remote_tfstate.tfstate_key].tenant_id : null
-  }
-}
 module "routes" {
   source   = "./modules/networking/routes"
   for_each = local.networking.azurerm_routes
@@ -166,7 +152,8 @@ module "routes" {
   route_table_name          = module.route_tables[each.value.route_table_key].name
   address_prefix            = each.value.address_prefix
   next_hop_type             = each.value.next_hop_type
-  next_hop_in_ip_address_fw = try(each.value.remote_tfstate.tfstate_key, null) == null ? try(module.azurerm_firewalls[each.value.private_ip_keys.azurerm_firewall.key].ip_configuration[each.value.private_ip_keys.azurerm_firewall.interface_index].private_ip_address, null) : data.terraform_remote_state.firewall[each.key].outputs[each.value.remote_tfstate.output_key][each.value.remote_tfstate.fw_key].ip_configuration[each.value.remote_tfstate.interface_index].private_ip_address
+  next_hop_in_ip_address    = try(lower(each.value.next_hop_type), null) == "virtualappliance" ? try(each.value.next_hop_in_ip_address, null) : null
+  next_hop_in_ip_address_fw = try(lower(each.value.next_hop_type), null) == "virtualappliance" ? try(try(local.combined_objects_azurerm_firewalls[local.client_config.landingzone_key][each.value.private_ip_keys.azurerm_firewall.key].ip_configuration[each.value.private_ip_keys.azurerm_firewall.interface_index].private_ip_address, local.combined_objects_azurerm_firewalls[each.value.lz_key][each.value.private_ip_keys.azurerm_firewall.key].ip_configuration[each.value.private_ip_keys.azurerm_firewall.interface_index].private_ip_address), null) : null
 }
 
 #
@@ -193,7 +180,7 @@ resource "azurerm_network_ddos_protection_plan" "ddos_protection_plan" {
   name                = azurecaf_name.ddos_protection_plan[each.key].result
   location            = lookup(each.value, "region", null) == null ? module.resource_groups[each.value.resource_group_key].location : local.global_settings.regions[each.value.region]
   resource_group_name = module.resource_groups[each.value.resource_group_key].name
-  tags                = try(each.value.tags, null)
+  tags                = try(local.global_settings.inherit_tags, false) ? merge(module.resource_groups[each.value.resource_group_key].tags, each.value.tags) : try(each.value.tags, null)
 }
 
 
