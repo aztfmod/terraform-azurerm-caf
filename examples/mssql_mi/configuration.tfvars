@@ -62,4 +62,13 @@ mssql_managed_databases = {
     name               = "lz-sql-managed-db1"
     mi_key             = "sqlmi1"
   }
+  # TODO: Remote source DB
+  # managed_db_restore = {
+  #   resource_group_key = "sqlmi_region1"
+  #   name               = "lz-sql-managed-db-restore"
+  #   mi_key             = "sqlmi1"
+  #   createMode         = "PointInTimeRestore"
+  #   sourceDatabaseId   = "/subscriptions/1d53e782-9f46-4720-b6b3-cff29106e9f6/resourceGroups/qcgz-rg-sqlmi-xfek/providers/Microsoft.Sql/managedInstances/qcgz-sql-lz-sql-mi-ilgj/databases/qcgz-sqldb-lz-sql-managed-db1-dvbu"
+  #   restorePointInTime = "2020-11-05T09:03:00Z"
+  # }
 }
