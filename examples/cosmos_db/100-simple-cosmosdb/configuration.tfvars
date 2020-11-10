@@ -1,7 +1,15 @@
+global_settings = {
+  default_region = "region1"
+  regions = {
+    region1 = "southeastasia"
+    region2 = "eastasia"
+  }
+}
 
 resource_groups = {
-  cosmosdb_re1 = {
+  cosmosdb_region1 = {
     name = "cosmosdb"
+    region = "region1"
   }
 }
 
@@ -21,12 +29,12 @@ cosmos_db = {
     # Primary location (Write Region)
     primary_geo_location = {
       prefix            = "customid-101"
-      region          = "southeastasia"
+      region          = "region1"
       zone_redundant    = false
     }
     # failover location
     failover_geo_location = {
-      region          = "eastasia"
+      region          = "region2"
       failover_priority = 1
     }  
     
@@ -69,12 +77,12 @@ cosmos_db = {
     # Primary location (Write Region)
     primary_geo_location = {
       prefix            = "customid-101"
-      location          = "southeastasia"
+      location          = "region1"
       failover_priority = 0
     }
     # failover location
     failover_geo_location = {
-      location          = "eastasia"
+      location          = "region2"
       failover_priority = 1
     }
 
