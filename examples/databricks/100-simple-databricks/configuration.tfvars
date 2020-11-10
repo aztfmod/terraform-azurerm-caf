@@ -34,17 +34,16 @@ keyvaults = {
     name               = "secrets"
     resource_group_key = "databricks_re1"
     sku_name           = "standard"
-  }
-}
 
-keyvault_access_policies = {
-  # A maximum of 16 access policies per keyvault
-  secrets_re1 = {
-    logged_in_user = {
-      secret_permissions = ["Set", "Get", "List", "Delete", "Purge"]
-    }
-    logged_in_aad_app = {
-      secret_permissions = ["Set", "Get", "List", "Delete", "Purge"]
+    creation_policies = {
+      logged_in_user = {
+        # if the key is set to "logged_in_user" add the user running terraform in the keyvault policy
+        # More examples in /examples/keyvault
+        secret_permissions = ["Set", "Get", "List", "Delete", "Purge", "Recover"]
+      }
+      logged_in_aad_app = {
+        secret_permissions = ["Set", "Get", "List", "Delete", "Purge"]
+      }
     }
   }
 }
@@ -85,30 +84,30 @@ network_security_group_definition = {
   # This entry is applied to all subnets with no NSG defined
   empty_nsg = {
 
-    diagnostic_profiles = {
-      nsg = {
-        definition_key   = "network_security_group"
-        destination_type = "storage"
-        destination_key  = "all_regions"
-      }
-    }
+    # diagnostic_profiles = {
+    #   nsg = {
+    #     definition_key   = "network_security_group"
+    #     destination_type = "storage"
+    #     destination_key  = "all_regions"
+    #   }
+    # }
   }
 
   azure_bastion_nsg = {
 
-    diagnostic_profiles = {
-      nsg = {
-        definition_key   = "network_security_group"
-        destination_type = "storage"
-        destination_key  = "all_regions"
-      }
-      operations = {
-        name             = "operations"
-        definition_key   = "network_security_group"
-        destination_type = "log_analytics"
-        destination_key  = "central_logs"
-      }
-    }
+    # diagnostic_profiles = {
+    #   nsg = {
+    #     definition_key   = "network_security_group"
+    #     destination_type = "storage"
+    #     destination_key  = "all_regions"
+    #   }
+    #   operations = {
+    #     name             = "operations"
+    #     definition_key   = "network_security_group"
+    #     destination_type = "log_analytics"
+    #     destination_key  = "central_logs"
+    #   }
+    # }
 
     nsg = [
       {

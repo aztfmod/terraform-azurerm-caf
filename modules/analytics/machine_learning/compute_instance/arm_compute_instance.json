@@ -1,0 +1,192 @@
+{
+  "$schema": "https://schema.management.azure.com/schemas/2019-04-01/deploymentTemplate.json#",
+  "contentVersion": "1.0.0.0",
+  "parameters": {
+    "workspaceName": {
+      "type": "string",
+      "metadata": {
+        "description": "Specifies the name of the Azure Machine Learning service workspace."
+      }
+    },
+    "computeInstanceName": {
+      "type": "string",
+      "metadata": {
+        "description": "Specifies the name of the Compute Instance to create under Azure Machine Learning workspace."
+      }
+    },
+    "location": {
+      "type": "string",
+      "allowedValues": [
+        "australiaeast",
+        "brazilsouth",
+        "canadacentral",
+        "centralus",
+        "centraluseuap",
+        "eastasia",
+        "eastus",
+        "eastus2",
+        "francecentral",
+        "japaneast",
+        "koreacentral",
+        "northcentralus",
+        "northeurope",
+        "southeastasia",
+        "southcentralus",
+        "uksouth",
+        "westcentralus",
+        "westus",
+        "westus2",
+        "westeurope"
+      ],
+      "metadata": {
+        "description": "Specifies the location for all resources."
+      }
+    },
+    "tags": {
+      "type": "object"
+     },
+    "adminUserName": {
+      "type": "string",
+      "metadata": {
+        "description": "Name of the administrator user account which can be used to SSH to nodes."
+      }
+    },
+    "adminUserSshPublicKey": {
+      "type": "string",
+      "defaultValue": "",
+      "metadata": {
+        "description": "Specifies the SSH Public Key to use for SSH access to the Compute Instance."
+      }
+    },
+    "sshAccess": {
+      "type": "string",
+      "defaultValue": "Disabled",
+      "allowedValues": [
+        "Disabled",
+        "Enabled"
+      ],
+      "metadata": {
+        "description": "Specifies whether SSH access should be enabled for compute instance"
+      }
+    },
+    "vmSize": {
+      "type": "string",
+      "defaultValue": "Standard_DS3_v2",
+      "allowedValues": [
+        "Standard_D1_v2",
+        "Standard_D2_v2",
+        "Standard_D3_v2",
+        "Standard_D4_v2",
+        "Standard_D11_v2",
+        "Standard_D12_v2",
+        "Standard_D13_v2",
+        "Standard_D14_v2",
+        "Standard_DS1_v2",
+        "Standard_DS2_v2",
+        "Standard_DS3_v2",
+        "Standard_DS4_v2",
+        "Standard_DS5_v2",
+        "Standard_DS11_v2",
+        "Standard_DS12_v2",
+        "Standard_DS13_v2",
+        "Standard_DS14_v2",
+        "Standard_M8-2ms",
+        "Standard_M8-4ms",
+        "Standard_M8ms",
+        "Standard_M16-4ms",
+        "Standard_M16-8ms",
+        "Standard_M16ms",
+        "Standard_M32-8ms",
+        "Standard_M32-16ms",
+        "Standard_M32ls",
+        "Standard_M32ms",
+        "Standard_M32ts",
+        "Standard_M64-16ms",
+        "Standard_M64-32ms",
+        "Standard_M64ls",
+        "Standard_M64ms",
+        "Standard_M64s",
+        "Standard_M128-32ms",
+        "Standard_M128-64ms",
+        "Standard_M128ms",
+        "Standard_M128s",
+        "Standard_M64",
+        "Standard_M64m",
+        "Standard_M128",
+        "Standard_M128m",
+        "Standard_D1",
+        "Standard_D2",
+        "Standard_D3",
+        "Standard_D4",
+        "Standard_D11",
+        "Standard_D12",
+        "Standard_D13",
+        "Standard_D14",
+        "Standard_DS15_v2",
+        "Standard_NV6",
+        "Standard_NV12",
+        "Standard_NV24",
+        "Standard_F2s_v2",
+        "Standard_F4s_v2",
+        "Standard_F8s_v2",
+        "Standard_F16s_v2",
+        "Standard_F32s_v2",
+        "Standard_F64s_v2",
+        "Standard_F72s_v2",
+        "Standard_NC6s_v3",
+        "Standard_NC12s_v3",
+        "Standard_NC24rs_v3",
+        "Standard_NC24s_v3",
+        "Standard_NC6",
+        "Standard_NC12",
+        "Standard_NC24",
+        "Standard_NC24r",
+        "Standard_ND6s",
+        "Standard_ND12s",
+        "Standard_ND24rs",
+        "Standard_ND24s",
+        "Standard_NC6s_v2",
+        "Standard_NC12s_v2",
+        "Standard_NC24rs_v2",
+        "Standard_NC24s_v2",
+        "Standard_ND40rs_v2",
+        "Standard_NV12s_v3",
+        "Standard_NV24s_v3",
+        "Standard_NV48s_v3"
+      ],
+      "metadata": {
+        "description": "Specifies the VM size of the Compute Instance to create under Azure Machine Learning workspace."
+      }
+    },
+    "virtualNetworkSubnet": {
+      "type": "string",
+      "metadata": {
+        "description": "Specifies the virtual network and subnet resouce id for the Compute Instance."
+      }
+    }
+  },
+  "resources": [
+    {
+      "type": "Microsoft.MachineLearningServices/workspaces/computes",
+      "apiVersion": "2020-08-01",
+      "name": "[concat(parameters('workspaceName'), '/', parameters('computeInstanceName'))]",
+      "location": "[parameters('location')]",
+      "tags": "[parameters('tags')]",
+      "properties": {
+        "computeType": "ComputeInstance",
+        "properties": {
+          "VMSize": "[parameters('vmSize')]",
+          "applicationSharingPolicy": "Personal",
+          "sshSettings": {
+            "adminUserName": "[parameters('adminUserName')]",
+            "sshPublicAccess": "[parameters('sshAccess')]",
+            "adminPublicKey": "[parameters('adminUserSshPublicKey')]"
+          },
+          "subnet": {
+            "id": "[parameters('virtualNetworkSubnet')]"
+          }
+        }
+      }
+    }
+  ]
+}

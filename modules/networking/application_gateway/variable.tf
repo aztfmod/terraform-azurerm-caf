@@ -1,7 +1,6 @@
 variable settings {}
 variable global_settings {}
-variable tfstates {}
-variable use_msi {}
+variable client_config {}
 variable diagnostics {}
 variable resource_group_name {}
 variable location {}
@@ -9,6 +8,9 @@ variable public_ip_addresses {
   default = {}
 }
 variable application_gateway_applications {}
+variable app_services {
+  default = {}
+}
 variable vnets {
   default = {}
 }
@@ -35,4 +37,7 @@ variable sku_tier {
   }
 }
 
-
+variable base_tags {}
+variable private_dns {
+  default = {}
+}

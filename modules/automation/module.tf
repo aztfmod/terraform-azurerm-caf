@@ -12,7 +12,7 @@ resource "azurerm_automation_account" "auto_account" {
   name                = azurecaf_name.auto_account.result
   location            = var.location
   resource_group_name = var.resource_group_name
-  tags                = try(var.settings.tags, {})
+  tags                = try(local.tags, {})
 
   sku_name = "Basic" #only Basic is supported at this time.
 }

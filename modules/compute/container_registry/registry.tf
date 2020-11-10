@@ -14,7 +14,7 @@ resource "azurerm_container_registry" "acr" {
   sku                      = var.sku
   admin_enabled            = var.admin_enabled
   georeplication_locations = var.georeplication_locations
-  tags                     = var.tags
+  tags                     = local.tags
 
   dynamic "network_rule_set" {
     for_each = var.network_rule_set

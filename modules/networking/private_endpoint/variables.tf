@@ -16,3 +16,4 @@ variable location {
 variable subnet_id {}
 variable settings {}
 variable global_settings {}
+variable base_tags {}

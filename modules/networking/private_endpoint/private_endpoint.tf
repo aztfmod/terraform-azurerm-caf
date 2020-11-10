@@ -13,6 +13,7 @@ resource "azurerm_private_endpoint" "pep" {
   location            = var.location
   resource_group_name = var.resource_group_name
   subnet_id           = var.subnet_id
+  tags                = local.tags
 
   private_service_connection {
     name                           = var.settings.private_service_connection.name

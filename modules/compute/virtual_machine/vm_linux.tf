@@ -53,6 +53,7 @@ resource "azurerm_linux_virtual_machine" "vm" {
   size                  = each.value.size
   admin_username        = each.value.admin_username
   network_interface_ids = local.nic_ids
+  tags                  = merge(local.tags, try(each.value.tags, null))
 
   allow_extension_operations      = try(each.value.allow_extension_operations, null)
   computer_name                   = azurecaf_name.linux_computer_name[each.key].result
@@ -140,37 +141,3 @@ resource "azurerm_key_vault_secret" "ssh_public_key_openssh" {
   }
 }
 
-#
-# Managed identities from remote state
-#
-
-locals {
-  managed_local_identities = flatten([
-    for managed_identity_key in try(var.settings.virtual_machine_settings[local.os_type].identity.managed_identity_keys, []) : [
-      var.managed_identities[managed_identity_key].id
-    ] if try(var.settings.virtual_machine_settings[local.os_type].identity.remote_tfstate, null) == null
-  ])
-
-  managed_remote_identities = flatten([
-    for managed_identity_key in try(var.settings.virtual_machine_settings[local.os_type].identity.managed_identity_keys, []) : [
-      data.terraform_remote_state.msi[0].outputs[var.settings.virtual_machine_settings[local.os_type].identity.remote_tfstate.output_key][managed_identity_key].id
-    ] if try(var.settings.virtual_machine_settings[local.os_type].identity.remote_tfstate, null) != null
-  ])
-
-  managed_identities = concat(local.managed_local_identities, local.managed_remote_identities)
-}
-
-data "terraform_remote_state" "msi" {
-  count = try(var.settings.virtual_machine_settings[local.os_type].identity.remote_tfstate, null) == null ? 0 : 1
-
-  backend = "azurerm"
-  config = {
-    storage_account_name = var.tfstates[var.settings.virtual_machine_settings[local.os_type].identity.remote_tfstate.tfstate_key].storage_account_name
-    container_name       = var.tfstates[var.settings.virtual_machine_settings[local.os_type].identity.remote_tfstate.tfstate_key].container_name
-    resource_group_name  = var.tfstates[var.settings.virtual_machine_settings[local.os_type].identity.remote_tfstate.tfstate_key].resource_group_name
-    key                  = var.tfstates[var.settings.virtual_machine_settings[local.os_type].identity.remote_tfstate.tfstate_key].key
-    use_msi              = var.use_msi
-    subscription_id      = var.use_msi ? var.tfstates[var.settings.virtual_machine_settings[local.os_type].identity.remote_tfstate.tfstate_key].subscription_id : null
-    tenant_id            = var.use_msi ? var.tfstates[var.settings.virtual_machine_settings[local.os_type].identity.remote_tfstate.tfstate_key].tenant_id : null
-  }
-}
