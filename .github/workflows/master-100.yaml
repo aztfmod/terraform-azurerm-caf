@@ -47,7 +47,7 @@ jobs:
         with:
           repository: Azure/caf-terraform-landingzones
           path: public
-          ref: '2010.0.0'
+          ref: "2010.0.0"
 
       - name: Login azure
         run: |
@@ -90,7 +90,7 @@ jobs:
             "examples/networking/virtual_wan/101-vwan-multi-hubs-firewalls",
             # "examples/networking/virtual_wan/102-vwan-multi-hubs-gw",
             "examples/app_gateway/100-simple-app-gateway",
-            "examples/cosmos_db/101",
+            "examples/cosmos_db/100-simple-cosmosdb",
             "examples/databricks/100-simple-databricks",
             "examples/networking/private_dns/100-private-dns-vnet-links",
             "examples/redis_cache/100-redis-standard",
@@ -159,7 +159,7 @@ jobs:
         with:
           repository: Azure/caf-terraform-landingzones
           path: public
-          ref: '2010.0.0'
+          ref: "2010.0.0"
 
       - name: Login azure
         run: |
