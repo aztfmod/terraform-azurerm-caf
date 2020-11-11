@@ -43,14 +43,7 @@ mysql_servers = {
       }
     }
 
-    mysql_network = {
-      mysql_network = {
-        name = "mysql_network_rule"
-        resource_group_name = "mysql_region1"
-        server_name         = "sales-re1"
-      }
-    }
-
+    
     mysql_database = {
       mysql_database = {
         name                = "mysql_server_sampledb"
