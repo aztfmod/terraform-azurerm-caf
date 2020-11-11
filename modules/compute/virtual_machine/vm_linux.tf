@@ -141,22 +141,3 @@ resource "azurerm_key_vault_secret" "ssh_public_key_openssh" {
   }
 }
 
-#
-# Managed identities from remote state
-#
-
-locals {
-  managed_local_identities = flatten([
-    for managed_identity_key in try(var.settings.virtual_machine_settings[local.os_type].identity.managed_identity_keys, []) : [
-      var.managed_identities[var.client_config.landingzone_key][managed_identity_key].id
-    ]
-  ])
-
-  managed_remote_identities = flatten([
-    for managed_identity_key in try(var.settings.virtual_machine_settings[local.os_type].identity.remote.managed_identity_keys, []) : [
-      var.managed_identities[var.settings.virtual_machine_settings[local.os_type].identity.remote.lz_key][managed_identity_key].id
-    ]
-  ])
-
-  managed_identities = concat(local.managed_local_identities, local.managed_remote_identities)
-}

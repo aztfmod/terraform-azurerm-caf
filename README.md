@@ -1,13 +1,13 @@
 [![VScodespaces](https://img.shields.io/endpoint?url=https%3A%2F%2Faka.ms%2Fvso-badge)](https://online.visualstudio.com/environments/new?name=terraform-azurerm-caf-landingzone-modules&repo=aztfmod/terraform-azurerm-caf)
 
-
 # Cloud Adoption Framework for Azure - Terraform module
 
 Microsoft [Cloud Adoption Framework for Azure](https://aka.ms/caf) provides you with guidance and best practices to adopt Azure. This module is used by the CAF landing zones to provision resources in Azure subscription.
 
 ## Getting started
 
-This module can be used to create resources directly or called from a landing zone. It can be invoked directly from the [Terraform registry](https://registry.terraform.io/modules/aztfmod/caf/azurerm/)
+This module can be used to create resources directly or called from a landing zone. 
+It can be invoked directly from the [Terraform registry](https://registry.terraform.io/modules/aztfmod/caf/azurerm/)
 
 ```terraform
 module "caf" {
@@ -31,7 +31,7 @@ If you want to test, develop this module for landing zones integration, please f
 1. Clone the Azure landing zones repo
 
 ```bash
-git clone --branch 0.4 https://github.com/Azure/caf-terraform-landingzones.git /tf/caf/public
+git clone --branch 2010.0.preview2 https://github.com/Azure/caf-terraform-landingzones.git /tf/caf/public
 ```
 
 2. Log in the subscription with the rover
@@ -86,7 +86,6 @@ We categorize the various examples in this repo as follow:
 | 200   | intermediate functionalities includes diagnostics features and Azure Active Directory groups                                           | may need custom AAD permissions                    |
 | 300   | advanced functionalities, includes RBAC features, virtual network and private link scenario and reduced portal view for hardened items | need custom AAD permissions                        |
 | 400   | advanced functionalities, includes RBAC features and security hardening                                                                | need custom AAD permissions                        |
-
 
 ## Related repositories
 

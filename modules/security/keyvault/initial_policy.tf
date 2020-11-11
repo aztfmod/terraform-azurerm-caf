@@ -8,4 +8,5 @@ module "initial_policy" {
   client_config      = var.client_config
   azuread_groups     = var.azuread_groups
   managed_identities = var.managed_identities
+
 }
