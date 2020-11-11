@@ -178,3 +178,7 @@ variable monitoring {
 variable shared_image_gallery {
   default = {}
 }
+
+variable packer {
+  default = {}
+}
