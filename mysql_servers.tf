@@ -10,7 +10,6 @@ module "mysql_servers" {
   for_each   = local.database.mysql_servers
 
   global_settings     = local.global_settings
-  client_config       = local.client_config
   settings            = each.value
   resource_group_name = module.resource_groups[each.value.resource_group_key].name
   location            = lookup(each.value, "region", null) == null ? module.resource_groups[each.value.resource_group_key].location : local.global_settings.regions[each.value.region]
