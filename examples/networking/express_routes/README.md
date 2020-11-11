@@ -1,8 +1,7 @@
 You can test this module outside of a landingzone using
 
 ```bash
-
-terraform init
+sudo terraform init
 
 terraform [plan|apply|destroy] \
   -var-file ../configuration.tfvars \
@@ -14,3 +13,7 @@ terraform [plan|apply|destroy] \
 
 
 ```
+
+sudo terraform plan -var-file examples/networking/express_routes/configuration.tfvars
+
+sudo terraform plan -var-file configuration.tfvars
