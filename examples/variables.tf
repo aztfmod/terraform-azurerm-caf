@@ -72,6 +72,9 @@ variable azurerm_routes {
 variable vnets {
   default = {}
 }
+variable vnet_peerings {
+  default = {}
+}
 variable azurerm_redis_caches {
   default = {}
 }
@@ -88,6 +91,9 @@ variable mssql_managed_databases {
   default = {}
 }
 variable mssql_elastic_pools {
+  default = {}
+}
+variable mssql_failover_groups {
   default = {}
 }
 variable storage_accounts {
