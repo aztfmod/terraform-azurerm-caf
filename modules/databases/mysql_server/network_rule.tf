@@ -14,8 +14,8 @@ resource "azurerm_subnet" "internal" {
 }
 
 resource "azurerm_mysql_virtual_network_rule" "mysql_network" {
-  for_each = var.settings.mysql_network
-  name                = each.value.name
+  
+  name                = virtual-network-rule
   resource_group_name = var.resource_group_name
   server_name         = azurerm_mysql_server.mysql.name
   subnet_id           = azurerm_subnet.internal.id
