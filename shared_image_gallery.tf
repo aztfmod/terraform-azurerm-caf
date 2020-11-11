@@ -63,7 +63,7 @@ data "template_file" "packer_template" {
     vm_size = each.value.vm_size
     managed_image_resource_group_name = module.resource_groups[each.value.resource_group_key].name
     managed_image_name = each.value.managed_image_name
-    ansible_playbook_path = "random=path"
+    ansible_playbook_path = each.value.ansible_playbook_path
 
     //shared_image_gallery destination values. If publishing to a different Subscription, change the following arguments and supply the values as variables
     subscription = data.azurerm_subscription.primary.subscription_id
@@ -84,4 +84,17 @@ resource "null_resource" "packer_configuration_generator" {
   provisioner "local-exec" {
     command = "cat > ${each.value.packer_configuration_filepath} <<EOL\n${data.template_file.packer_template[each.key].rendered}\nEOL"
   }
+}
+
+
+resource "null_resource" "create_image" {
+  for_each = try(local.shared_services.packer, {})
+  provisioner "local-exec" {
+    command = "packer build ${each.value.packer_configuration_filepath}"
+  }
+  depends_on = [
+    null_resource.packer_configuration_generator,
+    azurerm_shared_image_gallery.gallery,
+    azurerm_shared_image.image
+  ]
 }
