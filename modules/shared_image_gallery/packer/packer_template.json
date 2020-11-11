@@ -15,16 +15,16 @@
   "location": "${location}",
   "vm_size": "${vm_size}",
 
-  "managed_image_resource_group_name": "${image_resource_group}",
-  "managed_image_name": "${image_name}",
+  "managed_image_resource_group_name": "${managed_image_resource_group_name}",
+  "managed_image_name": "${managed_image_name}",
 
   "shared_image_gallery_destination": {
     "subscription": "${subscription_id}",
-    "resource_group": "${sig_resource_group}",
+    "resource_group": "${resource_group}",
     "gallery_name": "${gallery_name}",
     "image_name": "${image_name}",
     "image_version": "${image_version}",
-    "replication_regions": "${location}"
+    "replication_regions": "${replication_regions}"
     }
  }
 ],
