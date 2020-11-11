@@ -50,7 +50,7 @@ locals {
     #   value = try(var.settings.hardwareFamily, "Gen5")
     # }
     dnsZonePartner = {
-      value = try(var.settings.dnsZonePartner, "")
+      value = try(var.primary_server_id, "")
     }
     collation = {
       value = try(var.settings.collation, "SQL_Latin1_General_CP1_CI_AS")

@@ -61,6 +61,7 @@ locals {
     mssql_databases             = try(var.database.mssql_databases, {})
     mssql_managed_databases     = try(var.database.mssql_managed_databases, {})
     mssql_elastic_pools         = try(var.database.mssql_elastic_pools, {})
+    mssql_failover_groups       = try(var.database.mssql_failover_groups, {})
     azurerm_redis_caches        = try(var.database.azurerm_redis_caches, {})
     synapse_workspaces          = try(var.database.synapse_workspaces, {})
     databricks_workspaces       = try(var.database.databricks_workspaces, {})
