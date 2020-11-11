@@ -35,5 +35,4 @@
     "playbook_file": "${ansible_playbook_path}"
    }
  ]
-
 }
