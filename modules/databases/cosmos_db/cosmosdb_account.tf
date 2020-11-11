@@ -7,15 +7,21 @@ resource "azurecaf_name" "cdb" {
   clean_input   = true
   passthrough   = var.global_settings.passthrough
 }
+
 ## Cosmos DB account
 resource "azurerm_cosmosdb_account" "cosmos_account" {
   name                = azurecaf_name.cdb.result
   location            = var.location
   resource_group_name = var.resource_group_name
   offer_type          = var.settings.offer_type
-  kind                = var.settings.kind
+  kind                = try(var.settings.kind, "GlobalDocumentDB")
+  tags                = local.tags
 
-  enable_automatic_failover = var.settings.enable_automatic_failover
+  enable_free_tier                  = try(var.settings.enable_free_tier, false)
+  ip_range_filter                   = try(var.settings.ip_range_filter, null)
+  enable_multiple_write_locations   = try(var.settings.enable_multiple_write_locations, false)
+  enable_automatic_failover         = try(var.settings.enable_automatic_failover, null)
+  is_virtual_network_filter_enabled = try(var.settings.is_virtual_network_filter_enabled, null)
 
   dynamic "consistency_policy" {
     for_each = lookup(var.settings, "consistency_policy", {}) == {} ? [] : [1]
@@ -28,20 +34,17 @@ resource "azurerm_cosmosdb_account" "cosmos_account" {
   }
 
   # Primary location (Write Region)
-  geo_location {
-    prefix            = try(var.settings.primary_geo_location.prefix, null) == null ? null : "${azurecaf_name.cdb.result}-${var.settings.primary_geo_location.prefix}" # used to generate document endpoint
-    location          = try(var.settings.primary_geo_location.region, var.location)
-    failover_priority = 0
-    zone_redundant    = try(var.settings.primary_geo_location.zone_redundant, false)
+  dynamic "geo_location" {
+    for_each = var.settings.geo_locations
+
+    content {
+      location          = try(var.global_settings.regions[geo_location.value.region], geo_location.value.location)
+      failover_priority = geo_location.value.failover_priority
+      zone_redundant    = try(geo_location.value.zone_redundant, null)
+    }
   }
 
-  # failover location
-  geo_location {
-    location          = var.settings.failover_geo_location.region
-    failover_priority = var.settings.failover_geo_location.failover_priority
-  }
-
-  # Optional 
+  # Optional
   dynamic "capabilities" {
     for_each = lookup(var.settings, "capabilities", {}) == {} ? [] : [1]
 
@@ -50,12 +53,6 @@ resource "azurerm_cosmosdb_account" "cosmos_account" {
     }
   }
 
-  /*  capabilities {
-    name = try(var.settings.capabilities, {})
-  } */
-  enable_free_tier                = try(var.settings.enable_free_tier, {})
-  ip_range_filter                 = try(var.settings.ip_range_filter, {})
-  enable_multiple_write_locations = try(var.settings.enable_multiple_write_locations, false)
 
 }
 

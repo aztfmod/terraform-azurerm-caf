@@ -9,7 +9,7 @@ module mongo_databases {
   cosmosdb_account_name = azurerm_cosmosdb_account.cosmos_account.name
 }
 
-output mongo_databases = {
-  value = module.mongo_databases
+output mongo_databases {
+  value     = module.mongo_databases
   sensitive = true
 }

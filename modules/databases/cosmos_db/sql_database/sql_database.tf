@@ -5,25 +5,27 @@ resource "random_integer" "ri" {
   max = 99999
 }
 
-# Create example Database
-resource "azurerm_cosmosdb_sql_database" "ex_database" {
+# Create database
+resource "azurerm_cosmosdb_sql_database" "database" {
   name                = "${var.settings.name}-${random_integer.ri.result}"
   resource_group_name = var.resource_group_name
   account_name        = var.cosmosdb_account_name
   throughput          = var.settings.throughput
 }
 
-# Create example Container
-resource "azurerm_cosmosdb_sql_container" "ex_container" {
-  name                = var.settings.container_re1.name
+# Create container
+resource "azurerm_cosmosdb_sql_container" "container" {
+  for_each = var.settings.containers
+
+  name                = each.value.name
   resource_group_name = var.resource_group_name
   account_name        = var.cosmosdb_account_name
-  database_name       = azurerm_cosmosdb_sql_database.ex_database.name
-  partition_key_path  = var.settings.container_re1.partition_key_path
-  throughput          = var.settings.container_re1.throughput
+  database_name       = azurerm_cosmosdb_sql_database.database.name
+  partition_key_path  = each.value.partition_key_path
+  throughput          = each.value.throughput
 
   unique_key {
-    paths = var.settings.container_re1.unique_key_path
+    paths = each.value.unique_key_path
   }
 }
 
