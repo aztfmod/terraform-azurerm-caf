@@ -4,5 +4,5 @@ module "diagnostics_automation" {
   resource_id       = azurerm_automation_account.auto_account.id
   resource_location = var.location
   diagnostics       = var.diagnostics
-  profiles          = var.settings.diagnostic_profiles
+  profiles          = try(var.settings.diagnostic_profiles, {})
 }
