@@ -105,6 +105,25 @@ resource "azurerm_windows_virtual_machine" "vm" {
     }
   }
 
+  dynamic "secret" {
+    for_each = try(each.value.winrm.enable_self_signed, false) == false ? [] : [1]
+
+    content {
+
+      key_vault_id = var.keyvault_id
+
+      # WinRM certificate
+      dynamic "certificate" {
+        for_each = try(each.value.winrm.enable_self_signed, false) == false ? [] : [1]
+
+        content {
+          url   = azurerm_key_vault_certificate.self_signed_winrm[each.key].secret_id
+          store = "My"
+        }
+      }
+    }
+  }
+
   dynamic "identity" {
     for_each = try(each.value.identity, false) == false ? [] : [1]
 
@@ -125,11 +144,11 @@ resource "azurerm_windows_virtual_machine" "vm" {
   }
 
   dynamic "winrm_listener" {
-    for_each = try(each.value.winrm_listener, false) == false ? [] : [1]
+    for_each = try(each.value.winrm, false) == false ? [] : [1]
 
     content {
-      protocol        = each.value.winrm_listener.protocol
-      certificate_url = each.value.winrm_listener.certificate_url
+      protocol        = try(each.value.winrm.protocol, "Https")
+      certificate_url = try(each.value.winrm.enable_self_signed, false) ? azurerm_key_vault_certificate.self_signed_winrm[each.key].secret_id : each.value.winrm.certificate_url
     }
   }
 

@@ -2,16 +2,22 @@ application_gateway_applications = {
   demo_app1_80 = {
 
     application_gateway_key = "agw1"
+    name                    = "demoapp1"
 
-    listener = {
-      name                           = "demo-app1-80"
-      front_end_ip_configuration_key = "private"
-      front_end_port_key             = "80"
-      host_name                      = "cafdemo.internal"
+    listeners = {
+      private = {
+        name                           = "demo-app1-80"
+        front_end_ip_configuration_key = "private"
+        front_end_port_key             = "80"
+        host_name                      = "cafdemo.internal"
+        request_routing_rule_key       = "default"
+      }
     }
 
-    request_routing_rule = {
-      rule_type = "Basic"
+    request_routing_rules = {
+      default = {
+        rule_type = "Basic"
+      }
     }
 
     backend_http_setting = {
