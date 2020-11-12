@@ -96,6 +96,9 @@ variable mssql_elastic_pools {
 variable mssql_failover_groups {
   default = {}
 }
+variable mssql_mi_failover_groups {
+  default = {}
+}
 variable storage_accounts {
   default = {}
 }

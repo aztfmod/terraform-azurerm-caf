@@ -200,7 +200,7 @@
               "vCores": "[parameters('vCores')]",
               "licenseType": "[parameters('licenseType')]",
               "hardwareFamily": "[parameters('hardwareFamily')]",
-              "dnsZonePartner": "[parameters('dnsZonePartner')]",
+              "dnsZonePartner": "[if(equals(parameters('dnsZonePartner'), ''), json('null'), parameters('dnsZonePartner'))]",
               "collation": "[parameters('collation')]",
               "proxyOverride": "[parameters('proxyOverride')]",
               "publicDataEndpointEnabled": "[parameters('publicDataEndpointEnabled')]",

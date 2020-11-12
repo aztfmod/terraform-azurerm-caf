@@ -46,6 +46,7 @@ module "caf" {
     mssql_managed_databases     = var.mssql_managed_databases
     mssql_elastic_pools         = var.mssql_elastic_pools
     mssql_failover_groups       = var.mssql_failover_groups
+    mssql_mi_failover_groups    = var.mssql_mi_failover_groups
     synapse_workspaces          = var.synapse_workspaces
     databricks_workspaces       = var.databricks_workspaces
     machine_learning_workspaces = var.machine_learning_workspaces

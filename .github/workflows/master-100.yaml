@@ -101,6 +101,7 @@ jobs:
             "examples/synapse_analytics/101-synapse-sparkpool",
             "examples/monitoring/service_health_alerts",
             "examples/mssql_server/elastic_pools",
+            "examples/mssql_server/failover_groups",
             "examples/webapps/appservice/101-appservice-simple",
             "examples/webapps/appservice/102-appservice-slots",
             "examples/webapps/appservice/103-appservice-extend",

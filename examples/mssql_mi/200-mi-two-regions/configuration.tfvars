@@ -74,6 +74,25 @@ vnets = {
   }
 }
 
+network_security_group_definition = {
+  sqlmi = {
+    nsg = [
+      
+    ]
+  }
+}
+
+route_tables = {
+  sqlmi1 = {
+    name               = "sqlmi1"
+    resource_group_key = "networking_region1"
+  }
+  sqlmi2 = {
+    name               = "sqlmi2"
+    resource_group_key = "networking_region2"
+  }
+}
+
 vnet_peerings = {
 
   # Establish a peering with the devops vnet
@@ -147,12 +166,12 @@ mssql_managed_databases = {
   managed_db1 = {
     resource_group_key = "sqlmi_region1"
     name               = "lz-sql-managed-db1"
-    mi_key             = "sqlmi1"
+    mi_server_key             = "sqlmi1"
   }
   managed_db2 = {
     resource_group_key = "sqlmi_region1"
     name               = "lz-sql-managed-db2"
-    mi_key             = "sqlmi1"
+    mi_server_key             = "sqlmi1"
   }
   # TODO: Remote source DB
   # managed_db_restore = {
@@ -163,4 +182,21 @@ mssql_managed_databases = {
   #   sourceDatabaseId   = "/subscriptions/1d53e782-9f46-4720-b6b3-cff29106e9f6/resourceGroups/qcgz-rg-sqlmi-xfek/providers/Microsoft.Sql/managedInstances/qcgz-sql-lz-sql-mi-ilgj/databases/qcgz-sqldb-lz-sql-managed-db1-dvbu"
   #   restorePointInTime = "2020-11-05T09:03:00Z"
   # }
+}
+
+mssql_mi_failover_groups = {
+  failover-mi = {
+    resource_group_key = "sqlmi_region1"
+    name               = "failover-test"
+    primary_server = {
+      mi_server_key = "sqlmi1"
+    }
+    secondary_server = {
+      mi_server_key = "sqlmi2"
+    }
+    readWriteEndpoint = {
+      failoverPolicy                         = "Automatic"
+      failoverWithDataLossGracePeriodMinutes = "60"
+    }
+  }
 }
