@@ -183,13 +183,5 @@ variable monitoring {
   default = {}
 }
 
-variable express_route_authorizations {
-  default = {}
-}
-
-variable express_route_circuits {
-  default = {}
-}
-
 
 
