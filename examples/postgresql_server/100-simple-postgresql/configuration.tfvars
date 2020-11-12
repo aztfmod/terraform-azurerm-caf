@@ -32,7 +32,17 @@ postgresql_servers = {
       }
     }
 
-     postgresql_configuration = {
+    postgresql_firewall_rules = {
+      postgresql-firewall-rules = {
+        name = "postgresql_server_firewallrule"
+        resource_group_name = "postgresql_region1"
+        server_name         = "sales-re1"
+        start_ip_address    = "40.112.8.13"
+        end_ip_address      = "40.112.8.13"
+      }
+    }
+
+    postgresql_configuration = {
       postgresql_configuration = {
         name = "postgresql_server_configuration"
         resource_group_name = "postgresql_region1"
