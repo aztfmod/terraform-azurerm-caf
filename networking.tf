@@ -87,7 +87,7 @@ resource "azurecaf_name" "peering" {
   random_length = local.global_settings.random_length
   clean_input   = true
   passthrough   = local.global_settings.passthrough
-  use_slug      = var.global_settings.use_slug
+  use_slug      = local.global_settings.use_slug
 }
 
 # The code tries to peer to a vnet created in the same landing zone. If it fails it tries with the data remote state
@@ -119,7 +119,7 @@ resource "azurecaf_name" "route_tables" {
   random_length = local.global_settings.random_length
   clean_input   = true
   passthrough   = local.global_settings.passthrough
-  use_slug      = var.global_settings.use_slug
+  use_slug      = local.global_settings.use_slug
 }
 
 module "route_tables" {
@@ -143,7 +143,7 @@ resource "azurecaf_name" "routes" {
   random_length = local.global_settings.random_length
   clean_input   = true
   passthrough   = local.global_settings.passthrough
-  use_slug      = var.global_settings.use_slug
+  use_slug      = local.global_settings.use_slug
 }
 
 
