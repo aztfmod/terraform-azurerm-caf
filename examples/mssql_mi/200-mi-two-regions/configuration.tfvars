@@ -144,44 +144,46 @@ mssql_managed_instances = {
     storageSizeInGB = 32
     vCores          = 8
   }
-  sqlmi2 = {
-    resource_group_key = "sqlmi_region2"
-    name = "lz-sql-mi-rg2"
-    sku = {
-      name = "GP_Gen5"
-    }
-    administratorLogin = "adminuser"
-    administratorLoginPassword = "@dm1nu53r@11112020"
+  # sqlmi2 = {
+  #   resource_group_key = "sqlmi_region2"
+  #   name = "lz-sql-mi-rg2"
+  #   sku = {
+  #     name = "GP_Gen5"
+  #   }
+  #   administratorLogin = "adminuser"
+  #   administratorLoginPassword = "@dm1nu53r@11112020"
 
-    //networking
-    vnet_key  = "sqlmi_region2"
-    subnet_key = "sqlmi2"
+  #   //networking
+  #   vnet_key  = "sqlmi_region2"
+  #   subnet_key = "sqlmi2"
 
-    storageSizeInGB = 32
-    vCores          = 8
-  }
+  #   storageSizeInGB = 32
+  #   vCores          = 8
+  # }
 }
 
 mssql_managed_databases = {
   managed_db1 = {
     resource_group_key = "sqlmi_region1"
     name               = "lz-sql-managed-db1"
-    mi_server_key             = "sqlmi1"
+    mi_server_key      = "sqlmi1"
   }
   managed_db2 = {
     resource_group_key = "sqlmi_region1"
     name               = "lz-sql-managed-db2"
-    mi_server_key             = "sqlmi1"
+    mi_server_key      = "sqlmi1"
   }
-  # TODO: Remote source DB
-  # managed_db_restore = {
-  #   resource_group_key = "sqlmi_region1"
-  #   name               = "lz-sql-managed-db-restore"
-  #   mi_key             = "sqlmi1"
-  #   createMode         = "PointInTimeRestore"
-  #   sourceDatabaseId   = "/subscriptions/1d53e782-9f46-4720-b6b3-cff29106e9f6/resourceGroups/qcgz-rg-sqlmi-xfek/providers/Microsoft.Sql/managedInstances/qcgz-sql-lz-sql-mi-ilgj/databases/qcgz-sqldb-lz-sql-managed-db1-dvbu"
-  #   restorePointInTime = "2020-11-05T09:03:00Z"
-  # }
+}
+
+mssql_managed_databases_restore = {
+  managed_db_restore = {
+    resource_group_key  = "sqlmi_region1"
+    name                = "lz-sql-managed-db-restore"
+    mi_server_key       = "sqlmi1"
+    createMode          = "PointInTimeRestore"
+    source_database_key = "managed_db1"
+    restorePointInTime  = "2020-11-11T10:00:00Z"
+  }
 }
 
 # mssql_mi_failover_groups = {

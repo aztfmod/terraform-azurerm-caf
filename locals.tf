@@ -61,6 +61,7 @@ locals {
     mssql_managed_instances_secondary = try(var.database.mssql_managed_instances_secondary, {})
     mssql_databases                   = try(var.database.mssql_databases, {})
     mssql_managed_databases           = try(var.database.mssql_managed_databases, {})
+    mssql_managed_databases_restore = try(var.database.mssql_managed_databases_restore, {})
     mssql_elastic_pools               = try(var.database.mssql_elastic_pools, {})
     mssql_failover_groups             = try(var.database.mssql_failover_groups, {})
     mssql_mi_failover_groups          = try(var.database.mssql_mi_failover_groups, {})

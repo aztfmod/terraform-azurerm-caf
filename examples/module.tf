@@ -45,6 +45,7 @@ module "caf" {
     mssql_managed_instances_secondary = var.mssql_managed_instances_secondary
     mssql_databases                   = var.mssql_databases
     mssql_managed_databases           = var.mssql_managed_databases
+    mssql_managed_databases_restore   = var.mssql_managed_databases_restore
     mssql_elastic_pools               = var.mssql_elastic_pools
     mssql_failover_groups             = var.mssql_failover_groups
     mssql_mi_failover_groups          = var.mssql_mi_failover_groups
