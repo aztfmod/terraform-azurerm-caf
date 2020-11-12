@@ -8,3 +8,7 @@ output id {
   value       = lookup(azurerm_template_deployment.mssqlmi.outputs, "id")
   description = "SQL MI Id"
 }
+
+output location {
+  value       = var.location
+}

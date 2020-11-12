@@ -1,0 +1,62 @@
+{
+  "$schema": "https://schema.management.azure.com/schemas/2019-04-01/deploymentTemplate.json#",
+  "contentVersion": "1.0.0.0",
+  "parameters": {
+    "name": {
+      "type": "string"
+    },
+    "primaryManagedInstanceId": {
+      "type": "string"
+    },
+    "partnerManagedInstanceId": {
+      "type": "string"
+    },
+    "partnerRegion": {
+      "type": "string"
+    },
+    "readWriteFailoverPolicy": {
+        "type": "string"
+    },
+    "readWriteGraceMinutes": {
+        "type": "string",
+        "defaultValue": ""
+    },
+    "readOnlyFailoverPolicy": {
+        "type": "string",
+        "defaultValue": "Disabled"
+    }
+  },
+  "resources": [
+    {
+      "name": "[parameters('name')]",
+      "type": "Microsoft.Sql/locations/instanceFailoverGroups",
+      "apiVersion": "2017-10-01-preview",
+      "properties": {
+        "managedInstancePairs": [
+          {
+            "primaryManagedInstanceId": "[parameters('primaryManagedInstanceId')]",
+            "partnerManagedInstanceId": "[parameters('partnerManagedInstanceId')]"
+          }
+        ],
+        "partnerRegions": [
+          {
+            "location": "[parameters('partnerRegion')]"
+          }
+        ],
+        "readWriteEndpoint": {
+          "failoverPolicy": "[parameters('readWriteFailoverPolicy')]",
+          "failoverWithDataLossGracePeriodMinutes": "[if(equals(parameters('readWriteGraceMinutes'), ''), json('null'), parameters('readWriteGraceMinutes'))]"
+        },
+        "readOnlyEndpoint": {
+          "failoverPolicy": "[parameters('readOnlyFailoverPolicy')]"
+        }
+      }
+    }
+  ],
+  "outputs": {
+      "id": {
+          "type": "string",
+          "value": "[resourceId('Microsoft.Sql/locations/instanceFailoverGroups', parameters('name'))]"
+      }
+  }
+}

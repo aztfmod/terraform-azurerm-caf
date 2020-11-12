@@ -52,15 +52,17 @@ mssql_failover_groups = {
     resource_group_key  = "sql_region1"
     name                = "failover-group"
     primary_server = {
-      key = "sql-server-rg1"
+      sql_server_key = "sql-server-rg1"
     }
     secondary_server = {
-      key = "sql-server-rg2"
+      sql_server_key = "sql-server-rg2"
     }
     databases = {
       db1-rg1 = {
+        database_key = "db1-rg1"
       }
       db2-rg1 = {
+        database_key = "db2-rg1"
       }
     }
     # primary_server_name = "test-sql-failover-source-server"
