@@ -18,8 +18,8 @@
         "type": "string"
     },
     "readWriteGraceMinutes": {
-        "type": "string",
-        "defaultValue": ""
+        "type": "int",
+        "defaultValue": 60
     },
     "readOnlyFailoverPolicy": {
         "type": "string",
@@ -45,7 +45,7 @@
         ],
         "readWriteEndpoint": {
           "failoverPolicy": "[parameters('readWriteFailoverPolicy')]",
-          "failoverWithDataLossGracePeriodMinutes": "[if(equals(parameters('readWriteGraceMinutes'), ''), json('null'), parameters('readWriteGraceMinutes'))]"
+          "failoverWithDataLossGracePeriodMinutes": "[parameters('readWriteGraceMinutes')]"
         },
         "readOnlyEndpoint": {
           "failoverPolicy": "[parameters('readOnlyFailoverPolicy')]"
