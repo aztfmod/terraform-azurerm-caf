@@ -41,8 +41,8 @@ postgresql_servers = {
 
     
     postgresql_configuration = {
-      postgresql_configuration = {
-        name = "postgresql_server_configuration"
+      postgresql_configuration1 = {
+        name = "backslash_quote"
         resource_group_name = "postgresql_region1"
         server_name         = "sales-re1"
         value = "on"
