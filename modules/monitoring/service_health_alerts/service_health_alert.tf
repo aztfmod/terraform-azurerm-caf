@@ -5,6 +5,7 @@ resource "azurecaf_name" "ag1_name" {
   random_length = var.global_settings.random_length
   clean_input   = true
   passthrough   = var.global_settings.passthrough
+  use_slug      = var.global_settings.use_slug
 }
 
 resource "azurecaf_name" "service_health_alert_name" {
@@ -14,6 +15,7 @@ resource "azurecaf_name" "service_health_alert_name" {
   random_length = var.global_settings.random_length
   clean_input   = true
   passthrough   = var.global_settings.passthrough
+  use_slug      = var.global_settings.use_slug
 }
 
 resource "random_string" "random1" {
