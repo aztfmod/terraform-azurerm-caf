@@ -84,6 +84,9 @@ variable mssql_servers {
 variable mssql_managed_instances {
   default = {}
 }
+variable mssql_managed_instances_secondary {
+  default = {}
+}
 variable mssql_databases {
   default = {}
 }
