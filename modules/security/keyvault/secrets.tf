@@ -1,18 +1,3 @@
-# naming convention -
-# --> check if no interference with default secrets
-# resource "azurecaf_name" "secret" {
-#   depends_on = [module.initial_policy]
-#   for_each = {
-#     for key, value in try(var.settings.secrets, {}) : key => value
-#     if try(value.ignore_changes, false) == false
-#   }
-#   name          = each.value.name
-#   resource_type = "azurerm_key_vault_secret"
-#   prefixes      = [var.global_settings.prefix]
-#   random_length = var.global_settings.random_length
-#   clean_input   = true
-#   passthrough   = var.global_settings.passthrough
-# }
 
 resource "azurerm_key_vault_secret" "secret" {
   depends_on = [module.initial_policy]
