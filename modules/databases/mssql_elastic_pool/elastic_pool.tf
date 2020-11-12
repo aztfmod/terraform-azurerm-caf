@@ -24,7 +24,7 @@ resource "azurerm_mssql_elasticpool" "elasticpool" {
     name     = var.settings.sku.name
     tier     = var.settings.sku.tier
     family   = try(var.settings.sku.family, null)
-    capacity = try(var.settings.sku.capacity, null)
+    capacity = var.settings.sku.capacity
   }
 
   per_database_settings {
