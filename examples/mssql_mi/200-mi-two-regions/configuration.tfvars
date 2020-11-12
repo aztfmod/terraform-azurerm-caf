@@ -184,19 +184,19 @@ mssql_managed_databases = {
   # }
 }
 
-mssql_mi_failover_groups = {
-  failover-mi = {
-    resource_group_key = "sqlmi_region1"
-    name               = "failover-test"
-    primary_server = {
-      mi_server_key = "sqlmi1"
-    }
-    secondary_server = {
-      mi_server_key = "sqlmi2"
-    }
-    readWriteEndpoint = {
-      failoverPolicy                         = "Automatic"
-      failoverWithDataLossGracePeriodMinutes = "60"
-    }
-  }
-}
+# mssql_mi_failover_groups = {
+#   failover-mi = {
+#     resource_group_key = "sqlmi_region1"
+#     name               = "failover-test"
+#     primary_server = {
+#       mi_server_key = "sqlmi1"
+#     }
+#     secondary_server = {
+#       mi_server_key = "sqlmi2"
+#     }
+#     readWriteEndpoint = {
+#       failoverPolicy                         = "Automatic"
+#       failoverWithDataLossGracePeriodMinutes = "60"
+#     }
+#   }
+# }
