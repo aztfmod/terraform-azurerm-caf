@@ -62,9 +62,10 @@ mssql_databases = {
 
 mssql_elastic_pools = {
   sales-ep1-rg1 = {
-    mssql_server_key = "sales-rg1"
-    name             = "sales-ep1-rg1"
-    max_size_gb      = 756
+    resource_group_key  = "sql_region1"
+    mssql_server_key    = "sales-rg1"
+    name                = "sales-ep1-rg1"
+    max_size_gb         = 756
 
     sku = {
       name     = "GP_Gen5"
