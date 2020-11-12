@@ -4,3 +4,6 @@ variable settings {}
 variable base_tags {}
 variable resource_group_name {}
 variable location {}
+variable sourceDatabaseId {
+  default = ""
+}

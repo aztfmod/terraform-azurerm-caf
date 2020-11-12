@@ -32,7 +32,7 @@ locals {
       value = try(var.settings.createMode, "Default")
     }
     sourceDatabaseId = {
-      value = try(var.settings.createMode, null) == "PointInTimeRestore" ? var.settings.sourceDatabaseId : ""
+      value = var.sourceDatabaseId
     }
     restorePointInTime = {
       value = try(var.settings.createMode, null) == "PointInTimeRestore" ? var.settings.restorePointInTime : ""
