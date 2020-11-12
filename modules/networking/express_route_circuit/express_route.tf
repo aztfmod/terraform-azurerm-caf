@@ -5,6 +5,7 @@ resource "azurecaf_name" "circuit" {
   random_length = var.global_settings.random_length
   clean_input   = true
   passthrough   = var.global_settings.passthrough
+  use_slug      = var.global_settings.use_slug
 }
 
 resource "azurerm_express_route_circuit" "circuit" {
@@ -22,9 +23,3 @@ resource "azurerm_express_route_circuit" "circuit" {
     family = try(var.settings.family, "MeteredData")
   }
 }
-
-# resource "azurerm_express_route_circuit_authorization" "circuitauth" {
-#   name                       = azurecaf_name.circuitauth.result
-#   express_route_circuit_name = azurerm_express_route_circuit.circuit.name
-#   resource_group_name        = var.resource_group_name
-# }
