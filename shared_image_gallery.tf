@@ -51,26 +51,26 @@ data "template_file" "packer_template" {
   for_each = try(local.shared_services.packer, {})
   template = file(each.value.packer_template_filepath)
   vars = {
-    client_id = module.azuread_applications[each.value.azuread_apps_key].azuread_service_principal.id
-    client_secret = module.azuread_applications[each.value.azuread_apps_key].azuread_service_principal_password.value
-    tenant_id =  data.azurerm_client_config.current.tenant_id
-    subscription_id = data.azurerm_subscription.primary.subscription_id
-    os_type = each.value.os_type
-    image_publisher = each.value.image_publisher
-    image_offer = each.value.image_offer
-    image_sku = each.value.image_sku
-    location = lookup(each.value, "region", null) == null ? module.resource_groups[each.value.resource_group_key].location : local.global_settings.regions[each.value.region]
-    vm_size = each.value.vm_size
+    client_id                         = module.azuread_applications[each.value.azuread_apps_key].azuread_service_principal.id
+    client_secret                     = module.azuread_applications[each.value.azuread_apps_key].azuread_service_principal_password.value
+    tenant_id                         = data.azurerm_client_config.current.tenant_id
+    subscription_id                   = data.azurerm_subscription.primary.subscription_id
+    os_type                           = each.value.os_type
+    image_publisher                   = each.value.image_publisher
+    image_offer                       = each.value.image_offer
+    image_sku                         = each.value.image_sku
+    location                          = lookup(each.value, "region", null) == null ? module.resource_groups[each.value.resource_group_key].location : local.global_settings.regions[each.value.region]
+    vm_size                           = each.value.vm_size
     managed_image_resource_group_name = module.resource_groups[each.value.resource_group_key].name
-    managed_image_name = each.value.managed_image_name
-    ansible_playbook_path = each.value.ansible_playbook_path
+    managed_image_name                = each.value.managed_image_name
+    ansible_playbook_path             = each.value.ansible_playbook_path
 
     //shared_image_gallery destination values. If publishing to a different Subscription, change the following arguments and supply the values as variables
-    subscription = data.azurerm_subscription.primary.subscription_id
-    resource_group = module.resource_groups[each.value.shared_image_gallery_destination.resource_group_key].name 
-    gallery_name = azurerm_shared_image_gallery.gallery[each.value.shared_image_gallery_destination.gallery_key].name
-    image_name = azurerm_shared_image.image[each.value.shared_image_gallery_destination.image_key].name
-    image_version = each.value.shared_image_gallery_destination.image_version
+    subscription        = data.azurerm_subscription.primary.subscription_id
+    resource_group      = module.resource_groups[each.value.shared_image_gallery_destination.resource_group_key].name
+    gallery_name        = azurerm_shared_image_gallery.gallery[each.value.shared_image_gallery_destination.gallery_key].name
+    image_name          = azurerm_shared_image.image[each.value.shared_image_gallery_destination.image_key].name
+    image_version       = each.value.shared_image_gallery_destination.image_version
     replication_regions = each.value.shared_image_gallery_destination.replication_regions
   }
   depends_on = [
