@@ -5,6 +5,13 @@
     "name": {
       "type": "string"
     },
+    "location": {
+        "type": "string",
+        "defaultValue": "[resourceGroup().location]",
+        "metadata": {
+            "description": "The location of the Primary Managed Instance. Default is the location of the selected resource group."
+        }
+    },
     "primaryManagedInstanceId": {
       "type": "string"
     },
@@ -28,7 +35,7 @@
   },
   "resources": [
     {
-      "name": "[parameters('name')]",
+      "name": "[concat(parameters('location'), '/', parameters('name'))]",
       "type": "Microsoft.Sql/locations/instanceFailoverGroups",
       "apiVersion": "2017-10-01-preview",
       "properties": {
@@ -56,7 +63,7 @@
   "outputs": {
       "id": {
           "type": "string",
-          "value": "[resourceId('Microsoft.Sql/locations/instanceFailoverGroups', parameters('name'))]"
+          "value": "[resourceId('Microsoft.Sql/locations/instanceFailoverGroups', parameters('location'), parameters('name'))]"
       }
   }
 }
