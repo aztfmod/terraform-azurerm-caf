@@ -36,10 +36,10 @@ mysql_servers = {
 
     mysql_configuration = {
       mysql_configuration = {
-        name = "mysql_server_configuration"
+        name                = "interactive_timeout"
         resource_group_name = "mysql_region1"
         server_name         = "sales-re1"
-        value = "600"
+        value               = "600"
       }
     }
 
