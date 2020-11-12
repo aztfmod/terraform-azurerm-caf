@@ -31,7 +31,6 @@ resource "azurerm_shared_image_gallery" "gallery" {
   description         = each.value.description
 }
 
-
 resource "azurerm_shared_image" "image" {
   for_each = try(local.shared_services.shared_image_gallery.image_definition, {})
   name     = each.value.name
@@ -47,12 +46,13 @@ resource "azurerm_shared_image" "image" {
   }
 }
 
+
 data "template_file" "packer_template" {
   for_each = try(local.shared_services.packer, {})
   template = file(each.value.packer_template_filepath)
   vars = {
-    client_id = each.value.client_id
-    client_secret = each.value.client_secret
+    client_id = module.azuread_applications[each.value.azuread_apps_key].azuread_service_principal.id
+    client_secret = module.azuread_applications[each.value.azuread_apps_key].azuread_service_principal_password.value
     tenant_id =  data.azurerm_client_config.current.tenant_id
     subscription_id = data.azurerm_subscription.primary.subscription_id
     os_type = each.value.os_type
