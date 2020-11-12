@@ -39,17 +39,18 @@ module "caf" {
     application_gateway_applications  = var.application_gateway_applications
   }
   database = {
-    azurerm_redis_caches        = var.azurerm_redis_caches
-    mssql_servers               = var.mssql_servers
-    mssql_managed_instances     = var.mssql_managed_instances
-    mssql_databases             = var.mssql_databases
-    mssql_managed_databases     = var.mssql_managed_databases
-    mssql_elastic_pools         = var.mssql_elastic_pools
-    mssql_failover_groups       = var.mssql_failover_groups
-    mssql_mi_failover_groups    = var.mssql_mi_failover_groups
-    synapse_workspaces          = var.synapse_workspaces
-    databricks_workspaces       = var.databricks_workspaces
-    machine_learning_workspaces = var.machine_learning_workspaces
+    azurerm_redis_caches              = var.azurerm_redis_caches
+    mssql_servers                     = var.mssql_servers
+    mssql_managed_instances           = var.mssql_managed_instances
+    mssql_managed_instances_secondary = var.mssql_managed_instances_secondary
+    mssql_databases                   = var.mssql_databases
+    mssql_managed_databases           = var.mssql_managed_databases
+    mssql_elastic_pools               = var.mssql_elastic_pools
+    mssql_failover_groups             = var.mssql_failover_groups
+    mssql_mi_failover_groups          = var.mssql_mi_failover_groups
+    synapse_workspaces                = var.synapse_workspaces
+    databricks_workspaces             = var.databricks_workspaces
+    machine_learning_workspaces       = var.machine_learning_workspaces
   }
   shared_services = {
     monitoring = var.monitoring
