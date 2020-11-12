@@ -48,7 +48,7 @@ resource "azurecaf_name" "public_ip_addresses" {
   random_length = local.global_settings.random_length
   clean_input   = true
   passthrough   = local.global_settings.passthrough
-  use_slug      = var.global_settings.use_slug
+  use_slug      = local.global_settings.use_slug
 }
 
 module public_ip_addresses {
