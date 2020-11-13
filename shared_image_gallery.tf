@@ -98,19 +98,29 @@ resource "null_resource" "create_image" {
   ]
 }
 
-data "azurerm_managed_image" "managed_image_packer" {
-  name = var.settings.packer.managed_image_name
+data "azurerm_image" "image_id" {
+  for_each = try(local.shared_services.packer, {})
+  name = each.value.managed_image_name
+  resource_group_name = module.resource_groups[each.value.resource_group_key].name
   depends_on = [
-    null_resource.create-image
+    null_resource.create_image
   ]
 }
 
+
 resource "null_resource" "delete_image" {
+  for_each = try(local.shared_services.packer, {})
+  triggers = {
+    resource_id = data.azurerm_image.image_id[each.key].id
+  }
   provisioner "local-exec" {
     when = destroy
-    commmand = "terraform destroy -target data.azurerm_managed_image.managed_image_packer"
+    interpreter = ["/bin/sh"]
+    command     = format("%s/scripts/destroy_image.sh", path.module)
+    on_failure  = fail
+    environment = {
+      RESOURCE_IDS = self.triggers.resource_id
+    }    
   }
-  depends_on = [
-    azurerm_shared_image.image
-  ]
+
 }
