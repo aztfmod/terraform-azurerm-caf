@@ -5,4 +5,3 @@ variable resource_group_name {}
 variable primary_server_name {}
 variable secondary_server_id {}
 variable databases {}
-variable base_tags {}
