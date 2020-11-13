@@ -97,3 +97,20 @@ resource "null_resource" "create_image" {
     azurerm_shared_image.image
   ]
 }
+
+data "azurerm_managed_image" "managed_image_packer" {
+  name = var.settings.packer.managed_image_name
+  depends_on = [
+    null_resource.create-image
+  ]
+}
+
+resource "null_resource" "delete_image" {
+  provisioner "local-exec" {
+    when = destroy
+    commmand = "terraform destroy -target data.azurerm_managed_image.managed_image_packer"
+  }
+  depends_on = [
+    azurerm_shared_image.image
+  ]
+}
