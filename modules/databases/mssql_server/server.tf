@@ -36,6 +36,7 @@ resource "azurecaf_name" "mssql" {
   random_length = var.global_settings.random_length
   clean_input   = true
   passthrough   = var.global_settings.passthrough
+  use_slug      = var.global_settings.use_slug
 }
 
 # Generate sql server random admin password if not provided in the attribute administrator_login_password
