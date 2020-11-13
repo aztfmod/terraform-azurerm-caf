@@ -2,14 +2,14 @@
 # See http://pre-commit.com/hooks.html for more hooks
 repos:
   - repo: git://github.com/antonbabenko/pre-commit-terraform
-    rev: v1.39.0
+    rev: v1.44.0
     hooks:
     - id: terraform_fmt
     # - id: terraform_docs
     # - id: terraform_tflint
     # - id: terraform_tfsec
   - repo: git://github.com/pre-commit/pre-commit-hooks
-    rev: v3.2.0
+    rev: v3.3.0
     hooks:
       - id: check-merge-conflict
       - id: trailing-whitespace

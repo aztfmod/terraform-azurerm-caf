@@ -2,11 +2,11 @@
 
 # Cloud Adoption Framework for Azure - Terraform module
 
-Microsoft [Cloud Adoption Framework for Azure](https://aka.ms/caf) provides you with guidance and best practices to adopt Azure. This module is used by the CAF landing zones to provision resources in Azure subscription.
+Microsoft [Cloud Adoption Framework for Azure](https://aka.ms/caf) provides you with guidance and best practices to adopt Azure. This module is used by the CAF landing zones to provision resources in Azure subscription. 
 
 ## Getting started
 
-This module can be used to create resources directly or called from a landing zone. 
+This module can be used to create resources directly or called from a landing zone.
 It can be invoked directly from the [Terraform registry](https://registry.terraform.io/modules/aztfmod/caf/azurerm/)
 
 ```terraform
