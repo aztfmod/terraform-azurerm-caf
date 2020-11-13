@@ -215,6 +215,10 @@
       "id": {
           "type": "string",
           "value": "[resourceId(parameters('resourceGroupName'), 'Microsoft.Sql/managedInstances', parameters('managedInstanceName'))]"
+      },
+      "objectId": {
+        "type": "string",
+        "value": "[reference(parameters('managedInstanceName'), '2020-02-02-preview', 'Full').identity.principalId]"
       }
   }
 }
