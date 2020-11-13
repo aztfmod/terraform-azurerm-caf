@@ -9,7 +9,7 @@ output name {
 }
 
 output ilb_ip {
-  value       = data.azurerm_app_service_environment.ase.internal_ip_address
+  value = data.azurerm_app_service_environment.ase.internal_ip_address
 }
 
 output subnet_id {
