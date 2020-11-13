@@ -144,22 +144,29 @@ mssql_managed_instances = {
     storageSizeInGB = 32
     vCores          = 8
   }
-  # sqlmi2 = {
-  #   resource_group_key = "sqlmi_region2"
-  #   name = "lz-sql-mi-rg2"
-  #   sku = {
-  #     name = "GP_Gen5"
-  #   }
-  #   administratorLogin = "adminuser"
-  #   administratorLoginPassword = "@dm1nu53r@11112020"
+}
 
-  #   //networking
-  #   vnet_key  = "sqlmi_region2"
-  #   subnet_key = "sqlmi2"
+mssql_managed_instances_secondary = {
+  sqlmi2 = {
+    resource_group_key = "sqlmi_region2"
+    name = "lz-sql-mi-rg2"
+    sku = {
+      name = "GP_Gen5"
+    }
+    administratorLogin = "adminuser"
+    administratorLoginPassword = "@dm1nu53r@11112020"
 
-  #   storageSizeInGB = 32
-  #   vCores          = 8
-  # }
+    primary_server = {
+      mi_server_key    = "sqlmi1"
+    }
+
+    //networking
+    vnet_key  = "sqlmi_region2"
+    subnet_key = "sqlmi2"
+
+    storageSizeInGB = 32
+    vCores          = 8
+  }
 }
 
 mssql_managed_databases = {
@@ -186,19 +193,19 @@ mssql_managed_databases_restore = {
   }
 }
 
-# mssql_mi_failover_groups = {
-#   failover-mi = {
-#     resource_group_key = "sqlmi_region1"
-#     name               = "failover-test"
-#     primary_server = {
-#       mi_server_key = "sqlmi1"
-#     }
-#     secondary_server = {
-#       mi_server_key = "sqlmi2"
-#     }
-#     readWriteEndpoint = {
-#       failoverPolicy                         = "Automatic"
-#       failoverWithDataLossGracePeriodMinutes = "60"
-#     }
-#   }
-# }
+mssql_mi_failover_groups = {
+  failover-mi = {
+    resource_group_key = "sqlmi_region1"
+    name               = "failover-test"
+    primary_server = {
+      mi_server_key = "sqlmi1"
+    }
+    secondary_server = {
+      mi_server_key = "sqlmi2"
+    }
+    readWriteEndpoint = {
+      failoverPolicy                         = "Automatic"
+      failoverWithDataLossGracePeriodMinutes = 60
+    }
+  }
+}
