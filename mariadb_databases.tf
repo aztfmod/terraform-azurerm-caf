@@ -5,7 +5,7 @@ output mariadb_databases {
 }
 
 module "mariadb_databases" {
-  source   = "./modules/databases/mariadb_database"
+  source   = "./modules/databases/mariadb_server"
   for_each = local.database.mariadb_databases
 
   global_settings  = local.global_settings
