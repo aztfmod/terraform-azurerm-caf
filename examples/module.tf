@@ -39,8 +39,7 @@ module "caf" {
     mssql_servers               = var.mssql_servers
     mssql_databases             = var.mssql_databases
     mssql_elastic_pools         = var.mssql_elastic_pools
-    mariadb_servers             = var.mssql_servers
-    mariadb_databases           = var.mssql_databases
+    mariadb_servers             = var.mariadb_servers
     synapse_workspaces          = var.synapse_workspaces
     databricks_workspaces       = var.databricks_workspaces
     machine_learning_workspaces = var.machine_learning_workspaces
