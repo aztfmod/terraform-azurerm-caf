@@ -78,6 +78,12 @@ variable mssql_databases {
 variable mssql_elastic_pools {
   default = {}
 }
+variable mariadb_servers {
+  default = {}
+}
+variable mariadb_databases {
+  default = {}
+}
 variable storage_accounts {
   default = {}
 }
