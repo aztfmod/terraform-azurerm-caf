@@ -19,9 +19,9 @@ mariadb_servers = {
     version                       = "10.2"
     sku_name                      = "GP_Gen5_2"
     storage_mb                    = 5120
-    administrator_login           = "mariadbsalesadmin"
+    administrator_login           = "mariadbadmin"
     keyvault_key                  = "mariadb-re1"
-    public_network_access_enabled = false
+    public_network_access_enabled = true
     auto_grow_enabled = true
     
     tags = {
@@ -30,7 +30,7 @@ mariadb_servers = {
     
     mariadb_firewall_rules = {
       mariadb-firewall-rules = {
-        name = "mariadb_server_firewallrule"
+        name = "mariadb-firewallrule"
         resource_group_name = "mariadb_region1"
         server_name         = "sales-rg1"
         start_ip_address    = "52.163.80.201"
