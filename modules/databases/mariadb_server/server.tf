@@ -24,18 +24,19 @@ resource "azurerm_mariadb_server" "mariadb" {
 resource "random_password" "mariadb_admin" {
   count = try(var.settings.administrator_login_password, null) == null ? 1 : 0
 
-  length           = 128
+  length           = 100
   special          = true
   upper            = true
   number           = true
-  override_special = "$#%"
+  override_special = "!@#$%&"
+  
 }
 
 # Store the generated password into keyvault
 resource "azurerm_key_vault_secret" "mariadb_admin_password" {
   count = try(var.settings.administrator_login_password, null) == null ? 1 : 0
 
-  name         = format("%s-password", azurecaf_name.mariadb.result)
+  name         = format("%s-passwd", azurecaf_name.mariadb.result)
   value        = random_password.mariadb_admin.0.result
   key_vault_id = var.keyvault_id
 
@@ -49,7 +50,7 @@ resource "azurerm_key_vault_secret" "mariadb_admin_password" {
 resource "azurerm_key_vault_secret" "mariadb_admin" {
   count = try(var.settings.administrator_login_password, null) == null ? 1 : 0
 
-  name         = format("%s-username", azurecaf_name.mariadb.result)
+  name         = format("%s-user", azurecaf_name.mariadb.result)
   value        = var.settings.administrator_login
   key_vault_id = var.keyvault_id
 }
