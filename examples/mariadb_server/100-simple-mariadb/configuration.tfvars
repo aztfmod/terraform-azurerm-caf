@@ -20,6 +20,7 @@ mariadb_servers = {
     sku_name                      = "GP_Gen5_2"
     storage_mb                    = 5120
     administrator_login           = "mariadbadmin"
+    administrator_login_password  = "Testpass@1"
     keyvault_key                  = "mariadb-re1"
     public_network_access_enabled = true
     auto_grow_enabled = true
@@ -38,15 +39,7 @@ mariadb_servers = {
       }
     }
 
-    # mysql_configuration = {
-    #   mysql_configuration = {
-    #     name = "mysql_server_configuration"
-    #     resource_group_name = "mysql_region1"
-    #     server_name         = "sales-re1"
-    #     value = "600"
-    #   }
-    # }
-
+    
     mariadb_database = {
       mariadb_database = {
         name                = "mariadb_server_sampledb"
@@ -56,25 +49,6 @@ mariadb_servers = {
         collation           = "utf8_general_ci"
       }
     }
-    
-    
-
-    # Optional
-    # threat_detection_policy = {
-    #   enabled = true
-    #   disabled_alerts = [
-    #     # "Sql_Injection",
-    #     # "Sql_Injection_Vulnerability",
-    #     # "Access_Anomaly",
-    #     # "Data_Exfiltration",
-    #     # "Unsafe_Action"
-    #   ]
-    #   email_account_admins = false
-    #   email_addresses           = []
-    #   retention_days            = 15
-    #   storage_account_key = "security-re1"
-    # }
-
   }
 
 }
@@ -111,23 +85,3 @@ keyvault_access_policies = {
 }
 
 
-# azuread_groups = {
-#   sales_admins = {
-#     name        = "sql-sales-admins"
-#     description = "Administrators of the sales MySQL server."
-#     members = {
-#       user_principal_names = []
-#       object_ids = [
-#       ]
-#       group_keys             = []
-#       service_principal_keys = []
-#     }
-#     owners = {
-#       user_principal_names = [
-#       ]
-#       service_principal_keys = []
-#       object_ids             = []
-#     }
-#     prevent_duplicate_name = false
-#   }
-# }
