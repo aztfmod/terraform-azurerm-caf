@@ -20,6 +20,7 @@ mysql_servers = {
     sku_name                      = "B_Gen5_2"
     storage_mb                    = 5120
     administrator_login           = "mysqlsalesadmin"
+    administrator_login_password  = "Testpass@1"
     keyvault_key                  = "mysql-re1"
     system_msi                    = true
     public_network_access_enabled = true
