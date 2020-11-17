@@ -105,10 +105,16 @@ variable mssql_failover_groups {
 variable mssql_mi_failover_groups {
   default = {}
 }
+variable mssql_mi_administrators {
+  default = {}
+}
 variable storage_accounts {
   default = {}
 }
 variable azuread_groups {
+  default = {}
+}
+variable azuread_roles {
   default = {}
 }
 variable keyvaults {

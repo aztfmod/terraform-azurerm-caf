@@ -209,3 +209,53 @@ mssql_mi_failover_groups = {
     }
   }
 }
+
+azuread_roles = {
+  mssql_managed_instances = {
+    sqlmi1 = {
+      roles = [
+        "Directory Readers"
+      ]
+    }
+  }
+  mssql_managed_instances_secondary = {
+    sqlmi2 = {
+      roles = [
+        "Directory Readers"
+      ]
+    }
+  }
+}
+
+azuread_groups = {
+  sql_mi_admins = {
+    name        = "sql-mi-admins"
+    description = "Administrators of the SQL MI."
+    members = {
+      user_principal_names = []
+      object_ids = [
+      ]
+      group_keys             = []
+      service_principal_keys = []
+    }
+    owners = {
+      user_principal_names = [
+      ]
+      service_principal_keys = []
+      object_ids             = []
+    }
+    prevent_duplicate_name = false
+  }
+}
+
+mssql_mi_administrators = {
+  sqlmi1 = {
+    resource_group_key  = "sqlmi_region1"
+    mi_server_key       = "sqlmi1"
+    login               = "sqlmiadmin-khairi"
+    azuread_group_key   = "sql_mi_admins"
+
+    # group key or upn supported
+    # user_principal_name = ""
+  }
+}

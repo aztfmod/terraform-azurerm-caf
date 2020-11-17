@@ -24,7 +24,7 @@ module "mssql_servers" {
 }
 
 module "mssql_failover_groups" {
-  source   = "./modules/databases/mssql_failover_group"
+  source   = "./modules/databases/mssql_server/failover_group"
   for_each = local.database.mssql_failover_groups
 
   global_settings       = local.global_settings

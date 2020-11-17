@@ -33,7 +33,7 @@ module "mssql_managed_instances_secondary" {
 }
 
 module "mssql_mi_failover_groups" {
-  source   = "./modules/databases/mssql_mi_failover_group"
+  source   = "./modules/databases/mssql_managed_instance/failover_group"
   for_each = local.database.mssql_mi_failover_groups
 
   global_settings           = local.global_settings
@@ -42,4 +42,18 @@ module "mssql_mi_failover_groups" {
   primaryManagedInstanceId  = local.combined_objects_mssql_managed_instances[try(each.value.primary_server.lz_key, local.client_config.landingzone_key)][each.value.primary_server.mi_server_key].id
   partnerManagedInstanceId  = module.mssql_managed_instances_secondary[each.value.secondary_server.mi_server_key].id
   partnerRegion             = module.mssql_managed_instances_secondary[each.value.secondary_server.mi_server_key].location
+}
+
+module "mssql_mi_administrators" {
+  source   = "./modules/databases/mssql_managed_instance/administrator"
+
+  depends_on = [module.azuread_roles_sql_mi, module.azuread_roles_sql_mi_secondary]
+  for_each = local.database.mssql_mi_administrators
+
+  resource_group_name = module.resource_groups[each.value.resource_group_key].name
+  mi_name             = try(module.mssql_managed_instances[each.value.mi_server_key].name, module.mssql_managed_instances_secondary[each.value.mi_server_key].name)
+  settings            = each.value
+  user_principal_name = try(each.value.user_principal_name, null)
+  group_id            = try(local.combined_objects_azuread_groups[try(each.value.lz_key, local.client_config.landingzone_key)][each.value.azuread_group_key].id, null)
+  group_name          = try(local.combined_objects_azuread_groups[try(each.value.lz_key, local.client_config.landingzone_key)][each.value.azuread_group_key].name, null)
 }
