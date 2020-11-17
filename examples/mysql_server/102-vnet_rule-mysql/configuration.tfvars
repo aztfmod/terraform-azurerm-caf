@@ -24,6 +24,8 @@ mysql_servers = {
     keyvault_key                  = "mysql-re1"
     system_msi                    = true
     public_network_access_enabled = true
+    vnet_key           = "vnet_region1"
+    subnet_key         = "mysql_subnet"
     
     mysql_firewall_rules = {
       mysql-firewall-rules = {
@@ -41,6 +43,12 @@ mysql_servers = {
         resource_group_name = "mysql_region1"
         server_name         = "sales-re1"
         value               = "600"
+      }
+    }
+    
+    mysql_vnet_rules = {
+      mysql_vnet_rules = {
+        name                = "mysql-vnet-rule"
       }
     }
 
@@ -88,6 +96,49 @@ mysql_servers = {
   }
 
 }
+
+## Networking configuration
+vnets = {
+  vnet_region1 = {
+    resource_group_key = "mysql_region1"
+        
+    vnet = {
+      name          = "mysql-vnet"
+      address_space = ["10.150.100.0/24"]
+      
+    }
+    #specialsubnets = {}
+    subnets = {
+      mysql_subnet = {
+        name    = "mysql_subnet"
+        cidr    = ["10.150.100.0/25"]
+        service_endpoints   = ["Microsoft.Sql"]
+      }
+    }
+    
+  }
+}
+
+
+
+# vnets = {
+#   vnet_region1 = {
+#     resource_group_key = "agw_region1"
+#     vnet = {
+#       name          = "app_gateway_vnet"
+#       address_space = ["10.100.100.0/24"]
+#     }
+#     specialsubnets = {}
+#     subnets = {
+#       app-gateway-subnet = {
+#         name    = "app_gateway_subnet"
+#         cidr    = ["10.100.100.0/25"]
+#         nsg_key = "application_gateway"
+#       }
+#     }
+
+#   }
+# }
 
 storage_accounts = {
   security-re1 = {
