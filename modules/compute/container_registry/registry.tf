@@ -5,6 +5,7 @@ resource "azurecaf_name" "acr" {
   random_length = var.global_settings.random_length
   clean_input   = true
   passthrough   = var.global_settings.passthrough
+  use_slug      = var.global_settings.use_slug
 }
 
 resource "azurerm_container_registry" "acr" {
