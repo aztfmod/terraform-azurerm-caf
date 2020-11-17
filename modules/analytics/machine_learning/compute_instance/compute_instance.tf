@@ -3,9 +3,10 @@ resource "azurecaf_name" "ci" {
   name          = var.settings.computeInstanceName
   resource_type = "azurerm_linux_virtual_machine"
   prefixes      = [var.global_settings.prefix]
-  random_length = try(var.global_settings.random_length, null)
+  random_length = var.global_settings.random_length
   clean_input   = true
-  passthrough   = try(var.global_settings.passthrough, false)
+  passthrough   = var.global_settings.passthrough
+  use_slug      = var.global_settings.use_slug
 }
 
 # create compute instance

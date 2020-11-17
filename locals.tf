@@ -15,12 +15,12 @@ locals {
     prefix_start_alpha = local.prefix == "" ? "" : "${random_string.alpha1.result}${local.prefix}"
     default_region     = lookup(var.global_settings, "default_region", "region1")
     environment        = lookup(var.global_settings, "environment", var.environment)
-    random_length      = lookup(var.global_settings, "random_length", null)
+    random_length      = try(var.global_settings.random_length, 0)
     regions            = var.global_settings.regions
     passthrough        = try(var.global_settings.passthrough, false)
     inherit_tags       = try(var.global_settings.inherit_tags, false)
+    use_slug           = try(var.global_settings.use_slug, true)
   }
-
 
   compute = {
     virtual_machines           = try(var.compute.virtual_machines, {})
@@ -53,6 +53,8 @@ locals {
     private_dns                                             = try(var.networking.private_dns, {})
     azurerm_firewall_nat_rule_collection_definition         = try(var.networking.azurerm_firewall_nat_rule_collection_definition, {})
     ddos_services                                           = try(var.networking.ddos_services, {})
+    express_route_circuits                                  = try(var.networking.express_route_circuits, {})
+    express_route_circuit_authorizations                    = try(var.networking.express_route_circuit_authorizations, {})
   }
 
   database = {

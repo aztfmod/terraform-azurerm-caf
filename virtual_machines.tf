@@ -13,7 +13,7 @@ module virtual_machines {
   vnets                            = local.combined_objects_networking
   managed_identities               = local.combined_objects_managed_identities
   boot_diagnostics_storage_account = try(module.diagnostic_storage_accounts[each.value.boot_diagnostics_storage_account_key].primary_blob_endpoint, {})
-  keyvault_id                      = local.combined_objects_keyvaults[lookup(each.value, "lz_key", var.current_landingzone_key)][each.value.keyvault_key].id
+  keyvault_id                      = try(local.combined_objects_keyvaults[each.value.lz_key][each.value.keyvault_key].id, local.combined_objects_keyvaults[local.client_config.landingzone_key][each.value.keyvault_key].id)
   diagnostics                      = local.diagnostics
   public_ip_addresses              = local.combined_objects_public_ip_addresses
   base_tags                        = try(local.global_settings.inherit_tags, false) ? module.resource_groups[each.value.resource_group_key].tags : {}
