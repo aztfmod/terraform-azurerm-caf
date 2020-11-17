@@ -14,6 +14,7 @@ output name {
   value = azurecaf_name.mysql.result
 }
 
+
 output resource_group_name {
   value = var.resource_group_name
 }
