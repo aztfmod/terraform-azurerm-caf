@@ -1,0 +1,28 @@
+{
+  "$schema": "https://schema.management.azure.com/schemas/2019-04-01/deploymentTemplate.json#",
+  "contentVersion": "1.0.0.0",
+  "parameters": {
+    "managedInstanceName": {
+      "type": "string"
+    },
+    "login": {
+      "type": "string"
+    },
+    "sid": {
+      "type": "string"
+    }
+  },
+  "resources": [
+    {
+      
+      "name": "[concat(parameters('managedInstanceName'), '/ActiveDirectory')]",
+      "type": "Microsoft.Sql/managedInstances/administrators",
+      "apiVersion": "2017-03-01-preview",
+      "properties": {
+        "administratorType": "ActiveDirectory",
+        "login": "[parameters('login')]",
+        "sid": "[parameters('sid')]"
+      }
+    }
+  ]
+}

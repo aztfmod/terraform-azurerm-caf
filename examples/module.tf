@@ -10,6 +10,7 @@ module "caf" {
   resource_groups             = var.resource_groups
   storage_accounts            = var.storage_accounts
   azuread_groups              = var.azuread_groups
+  azuread_roles               = var.azuread_roles
   keyvaults                   = var.keyvaults
   keyvault_access_policies    = var.keyvault_access_policies
   managed_identities          = var.managed_identities
@@ -49,6 +50,7 @@ module "caf" {
     mssql_elastic_pools               = var.mssql_elastic_pools
     mssql_failover_groups             = var.mssql_failover_groups
     mssql_mi_failover_groups          = var.mssql_mi_failover_groups
+    mssql_mi_administrators           = var.mssql_mi_administrators
     synapse_workspaces                = var.synapse_workspaces
     databricks_workspaces             = var.databricks_workspaces
     machine_learning_workspaces       = var.machine_learning_workspaces
