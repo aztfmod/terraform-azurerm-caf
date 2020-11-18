@@ -1,5 +1,6 @@
 
-resource "azurerm_backup_policy_vm" "vm_backup_policy" {
+resource "azurerm_backup_policy_vm" "vm" {
+  depends_on = [time_sleep.delay, time_sleep.delay_create]
   for_each = try(var.settings.backup_policies.vms, {})
 
   name                = each.value.name
@@ -57,7 +58,8 @@ resource "azurerm_backup_policy_vm" "vm_backup_policy" {
   }
 }
 
-resource "azurerm_backup_policy_file_share" "fs_backup_policy" {
+resource "azurerm_backup_policy_file_share" "fs" {
+  depends_on = [time_sleep.delay, time_sleep.delay_create]
   for_each = try(var.settings.backup_policies.fs, {})
 
   name                = each.value.name
@@ -86,3 +88,16 @@ resource "azurerm_backup_policy_file_share" "fs_backup_policy" {
 
 # TODO: SAP HANA in Azure VM when available
 # TODO: SQL Server in Azure VM when available
+
+resource "time_sleep" "delay" {
+  depends_on = [azurerm_recovery_services_vault.asr_rg_vault]
+
+  destroy_duration = "15s"
+  create_duration = "15s"
+}
+
+resource "time_sleep" "delay_create" {
+  depends_on = [azurerm_recovery_services_vault.asr_rg_vault ]
+
+  create_duration = "15s"
+}
