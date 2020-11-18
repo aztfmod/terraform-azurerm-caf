@@ -175,7 +175,7 @@ Created Image Definitions within Shared Image Galleries
       name               = "<string>"
       gallery_key        = "<string>"
       resource_group_key = "<string>"
-      os_type            = "<string>
+      os_type            = "<string>"
       publisher          = "<string>"
       offer              = "<string>"
       sku                = "<string>"
