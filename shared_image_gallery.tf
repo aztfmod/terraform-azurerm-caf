@@ -8,6 +8,7 @@ resource "azurecaf_name" "sig_name" {
   random_length = local.global_settings.random_length
   clean_input   = true
   passthrough   = local.global_settings.passthrough
+  use_slug      = var.global_settings.use_slug
 }
 
 
@@ -19,6 +20,7 @@ resource "azurecaf_name" "image_definition_name" {
   random_length = local.global_settings.random_length
   clean_input   = true
   passthrough   = local.global_settings.passthrough
+  use_slug      = var.global_settings.use_slug
 }
 
 # creates Shared Image Gallery
