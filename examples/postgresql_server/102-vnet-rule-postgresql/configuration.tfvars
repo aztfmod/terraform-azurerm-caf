@@ -14,7 +14,7 @@ postgresql_servers = {
     region                        = "region1"
     resource_group_key            = "postgresql_region1"
     version                       = "9.6"
-    sku_name                      = "B_Gen5_2"
+    sku_name                      = "GP_Gen5_2"
     administrator_login           = "postgresqlsalesadmin"
     administrator_login_password  = "Testpass@9"
     keyvault_key                  = "postgresql-re1"
@@ -22,6 +22,8 @@ postgresql_servers = {
     system_msi                    = true
     public_network_access_enabled = true
     auto_grow_enabled             = true
+    vnet_key                      = "vnet_region1"
+    subnet_key                    = "postgresql_subnet"
     
 
     postgresql_firewall_rules = {
@@ -61,10 +63,14 @@ postgresql_servers = {
       }
     }
 
-    
-    # azuread_administrator = {
-    #   azuread_group_key = "sales_admins"
-    # }
+    postgresql_vnet_rules = {
+      postgresql_vnet_rules = {
+        name                = "postgresql-vnet-rule"
+      }
+    }
+    azuread_administrator = {
+      azuread_group_key = "sales_admins"
+    }
     
     tags = {
       segment = "sales"
@@ -128,9 +134,32 @@ keyvault_access_policies = {
   }
 }
 
+## Networking configuration
+vnets = {
+  vnet_region1 = {
+    resource_group_key = "postgresql_region1"
+        
+    vnet = {
+      name          = "postgresql-vnet"
+      address_space = ["10.150.101.0/24"]
+      
+    }
+    #specialsubnets = {}
+    subnets = {
+      postgresql_subnet = {
+        name    = "postgresql_subnet"
+        cidr    = ["10.150.101.0/25"]
+        service_endpoints   = ["Microsoft.Sql"]
+      }
+    }
+    
+  }
+}
+
+
 azuread_groups = {
   sales_admins = {
-    name        = "sql-sales-admins"
+    name        = "postgresql-sales-admins"
     description = "Administrators of the sales SQL server."
     members = {
       user_principal_names = []

@@ -62,9 +62,9 @@ postgresql_servers = {
     }
 
     
-    # azuread_administrator = {
-    #   azuread_group_key = "sales_admins"
-    # }
+    azuread_administrator = {
+      azuread_group_key = "sales_admins"
+    }
     
     tags = {
       segment = "sales"
@@ -130,7 +130,7 @@ keyvault_access_policies = {
 
 azuread_groups = {
   sales_admins = {
-    name        = "sql-sales-admins"
+    name        = "postgresql-sales-admins"
     description = "Administrators of the sales SQL server."
     members = {
       user_principal_names = []
