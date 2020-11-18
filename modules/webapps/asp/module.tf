@@ -6,6 +6,7 @@ resource "azurecaf_name" "plan" {
   random_length = var.global_settings.random_length
   clean_input   = true
   passthrough   = var.global_settings.passthrough
+  use_slug      = var.global_settings.use_slug
 }
 
 
@@ -33,6 +34,11 @@ resource "azurerm_app_service_plan" "asp" {
   timeouts {
     create = "3h"
     update = "3h"
+  }
+
+  lifecycle {
+    # TEMP until native tf provider for ASE ready to avoid force replacement of asp on every ase changes
+    ignore_changes = [app_service_environment_id]
   }
 }
 

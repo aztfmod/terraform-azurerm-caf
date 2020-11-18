@@ -6,6 +6,7 @@ resource "azurecaf_name" "elasticpool" {
   random_length = var.global_settings.random_length
   clean_input   = true
   passthrough   = var.global_settings.passthrough
+  use_slug      = var.global_settings.use_slug
 }
 
 resource "azurerm_mssql_elasticpool" "elasticpool" {
@@ -23,8 +24,8 @@ resource "azurerm_mssql_elasticpool" "elasticpool" {
   sku {
     name     = var.settings.sku.name
     tier     = var.settings.sku.tier
-    family   = var.settings.sku.family
-    capacity = try(var.settings.sku.capacity, null)
+    family   = try(var.settings.sku.family, null)
+    capacity = var.settings.sku.capacity
   }
 
   per_database_settings {

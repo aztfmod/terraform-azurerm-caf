@@ -6,6 +6,7 @@ resource "azurecaf_name" "appis" {
   random_length = var.global_settings.random_length
   clean_input   = true
   passthrough   = var.global_settings.passthrough
+  use_slug      = var.global_settings.use_slug
 }
 
 resource "azurerm_application_insights" "appinsights" {

@@ -36,6 +36,6 @@ resource "random_string" "alpha1" {
 
 
 data "azuread_service_principal" "logged_in_app" {
-  count          = var.logged_user_objectId == null ? 1 : 0
+  count          = try(data.azurerm_client_config.current.object_id, null) == null ? 1 : 0
   application_id = data.azurerm_client_config.current.client_id
 }
