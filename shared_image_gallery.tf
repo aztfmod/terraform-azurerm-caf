@@ -55,6 +55,7 @@ data "azurerm_key_vault_secret" "packer_secret" {
   key_vault_id = lookup(each.value, "keyvault_key") == null ? null : module.keyvaults[each.value.keyvault_key].id
   depends_on = [
     time_sleep.time_delay2,
+    module.keyvaults,
     module.keyvaults.azurerm_key_vault_secret
   ]
 }
@@ -134,9 +135,11 @@ resource "time_sleep" "time_delay" {
 }
 
 resource "time_sleep" "time_delay2" {
-  create_duration = "240s"
+  create_duration = "300s"
   depends_on = [
-    module.keyvaults.azurerm_key_vault_secret
+    module.keyvaults,
+    module.keyvaults.azurerm_key_vault_secret,
+    azurerm_role_assignment.for
   ]
 }
 
