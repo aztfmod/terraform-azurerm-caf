@@ -138,8 +138,10 @@ mssql_managed_instances = {
     administratorLoginPassword = "@dm1nu53r@30102020"
 
     //networking
-    vnet_key  = "sqlmi_region1"
-    subnet_key = "sqlmi1"
+    networking = {
+      vnet_key  = "sqlmi_region1"
+      subnet_key = "sqlmi1"
+    }
 
     storageSizeInGB = 32
     vCores          = 8
@@ -161,8 +163,10 @@ mssql_managed_instances_secondary = {
     }
 
     //networking
-    vnet_key  = "sqlmi_region2"
-    subnet_key = "sqlmi2"
+    networking = {
+      vnet_key  = "sqlmi_region2"
+      subnet_key = "sqlmi2"
+    }
 
     storageSizeInGB = 32
     vCores          = 8
