@@ -24,6 +24,7 @@ mysql_servers = {
     keyvault_key                  = "mysql-re1"
     system_msi                    = true
     public_network_access_enabled = true
+    auto_grow_enabled             = true
     
     
     mysql_firewall_rules = {
@@ -64,8 +65,7 @@ mysql_servers = {
       }
     }
     
-    auto_grow_enabled = true
-    
+        
     tags = {
       segment = "sales"
     }

@@ -20,12 +20,13 @@ mysql_servers = {
     sku_name                      = "GP_Gen5_2"
     storage_mb                    = 5120
     administrator_login           = "mysqlsalesadmin"
-    administrator_login_password  = "Testpass@1"
+    administrator_login_password  = "Testpass@9"
     keyvault_key                  = "mysql-re1"
     system_msi                    = true
     public_network_access_enabled = true
-    vnet_key           = "vnet_region1"
-    subnet_key         = "mysql_subnet"
+    auto_grow_enabled             = true
+    vnet_key                      = "vnet_region1"
+    subnet_key                    = "mysql_subnet"
     
     mysql_firewall_rules = {
       mysql-firewall-rules = {
@@ -70,9 +71,7 @@ mysql_servers = {
         collation           = "utf8_unicode_ci"
       }
     }
-    
-    auto_grow_enabled = true
-    
+            
     tags = {
       segment = "sales"
     }
@@ -118,27 +117,6 @@ vnets = {
     
   }
 }
-
-
-
-# vnets = {
-#   vnet_region1 = {
-#     resource_group_key = "agw_region1"
-#     vnet = {
-#       name          = "app_gateway_vnet"
-#       address_space = ["10.100.100.0/24"]
-#     }
-#     specialsubnets = {}
-#     subnets = {
-#       app-gateway-subnet = {
-#         name    = "app_gateway_subnet"
-#         cidr    = ["10.100.100.0/25"]
-#         nsg_key = "application_gateway"
-#       }
-#     }
-
-#   }
-# }
 
 storage_accounts = {
   security-re1 = {
