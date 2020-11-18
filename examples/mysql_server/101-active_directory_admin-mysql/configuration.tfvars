@@ -25,6 +25,7 @@ mysql_servers = {
     system_msi                    = true
     public_network_access_enabled = true
     
+    
     mysql_firewall_rules = {
       mysql-firewall-rules = {
         name = "mysql_server_firewallrule"
