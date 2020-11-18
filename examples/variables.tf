@@ -144,6 +144,11 @@ variable application_gateway_applications {
 variable mysql_servers {
   default = {}
 }
+
+variable subnet_id {
+  default = {}
+}
+
 variable postgresql_servers {
   default = {}
 }

@@ -91,6 +91,7 @@ jobs:
           config_files: [
             "examples/mssql_server/200-mssql",
             "examples/mssql_server/200-mssql-two-regions"
+            
           ]
 
     container:
