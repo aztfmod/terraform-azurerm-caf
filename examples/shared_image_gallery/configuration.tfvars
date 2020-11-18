@@ -38,9 +38,10 @@ keyvault_access_policies_azuread_apps = {
 
 azuread_apps = {
   packer_client = {
-    useprefix               = true
-    application_name        = "packer-client"
-    password_expire_in_days = 1
+    useprefix                    = true
+    application_name             = "packer-client"
+    password_expire_in_days      = 1
+    app_role_assignment_required = true
     keyvaults = {
       packer_client = {
         secret_prefix = "packer-client"
@@ -72,6 +73,7 @@ role_mapping = {
     }
   }
 }
+
 shared_image_gallery = {
   galleries = {
     gallery1 = {
@@ -119,6 +121,4 @@ packer = {
     }
   }
 }
-
-
 
