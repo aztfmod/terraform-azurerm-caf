@@ -141,3 +141,6 @@ variable application_gateways {
 variable application_gateway_applications {
   default = {}
 }
+variable recovery_vaults {
+  default = {}
+}
