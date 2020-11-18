@@ -49,14 +49,7 @@ mysql_servers = {
     azuread_administrator = {
       azuread_group_key = "sales_admins"
     }
-    # mysql_ad_admin = {
-    #   mysql_ad_admin = {
-    #     login               = "abhilash"
-    #     object_id           = "28baece4-1803-4e9f-89e3-1ca0fe820b96"
-    #     tenant_id           = "0873a9b0-a78c-47e6-b937-5a1c3053f4a7"
-        
-    #   }
-    # }
+    
 
     mysql_database = {
       mysql_database = {
