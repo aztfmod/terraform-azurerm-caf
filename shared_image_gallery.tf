@@ -21,7 +21,7 @@ resource "azurecaf_name" "image_definition_name" {
   passthrough   = local.global_settings.passthrough
 }
 
-#Creating Shared Image Gallery and Image Definitions
+# creates Shared Image Gallery
 resource "azurerm_shared_image_gallery" "gallery" {
   for_each            = try(local.shared_services.shared_image_gallery.galleries, {})
   name                = azurecaf_name.sig_name[each.key].result
@@ -30,6 +30,7 @@ resource "azurerm_shared_image_gallery" "gallery" {
   description         = each.value.description
 }
 
+# creates Image Definitions
 resource "azurerm_shared_image" "image" {
   for_each            = try(local.shared_services.shared_image_gallery.image_definition, {})
   name                = azurecaf_name.image_definition_name[each.key].result
@@ -47,29 +48,24 @@ resource "azurerm_shared_image" "image" {
   ]
 }
 
-# data "azurerm_key_vault" "packer-kv" {
-#   for_each            = try(var.keyvaults, {})
-#   name                = var.keyvaults[each.key].name
-#   resource_group_name = module.resource_groups[each.value.resource_group_key].name
-# }
+# retrieves Client Secret for the Packer Template
+data "azurerm_key_vault_secret" "packer_secret" {
+  for_each     = try(local.shared_services.packer, {})
+  name         = format("%s-client-secret", each.value.secret_prefix)
+  key_vault_id = lookup(each.value, "keyvault_key") == null ? null : module.keyvaults[each.value.keyvault_key].id
+  depends_on = [
+    time_sleep.time_delay2,
+    module.keyvaults.azurerm_key_vault_secret
+  ]
+}
 
-# data "azurerm_key_vault_secret" "packer-kv-secret" {
-#   for_each = try(local.shared_services.packer, {})
-#   name         =  module.azuread_applications.azurerm_key_vault_secret[each.value.secret_prefix].client_secret.name
-#   key_vault_id = data.azurerm_key_vault.packer-kv[each.key].id
-# }
-
-
-#the following block generates Packer template with the variables
-
+# generates Packer template with the variables
 data "template_file" "packer_template" {
   for_each = try(local.shared_services.packer, {})
   template = file(each.value.packer_template_filepath)
   vars = {
-    client_id     = " "
-    client_secret = " "
-    #client_id                         = module.azuread_applications[each.value.azuread_apps_key].azuread_service_principal.id
-    #client_secret                     = "module.azuread_applications.azurerm_key_vault_secret[each.value.secret_prefix].value"
+    client_id                         = module.azuread_applications[each.value.azuread_apps_key].azuread_application.application_id
+    client_secret                     = data.azurerm_key_vault_secret.packer_secret[each.key].value
     tenant_id                         = data.azurerm_client_config.current.tenant_id
     subscription_id                   = data.azurerm_subscription.primary.subscription_id
     os_type                           = each.value.os_type
@@ -96,8 +92,7 @@ data "template_file" "packer_template" {
   ]
 }
 
-# renders to a JSON script for Packer configuration
-
+# renders to a JSON script for Packer
 resource "null_resource" "packer_configuration_generator" {
   for_each = try(local.shared_services.packer, {})
   provisioner "local-exec" {
@@ -105,7 +100,7 @@ resource "null_resource" "packer_configuration_generator" {
   }
 }
 
-#runs Packer with the above mentioned JSON config file.
+# executes Packer with the above mentioned JSON config file.
 resource "null_resource" "create_image" {
   for_each = try(local.shared_services.packer, {})
   provisioner "local-exec" {
@@ -118,7 +113,7 @@ resource "null_resource" "create_image" {
   ]
 }
 
-#import Image ID, to help in rolling back, as its being created outside of Terraform
+# imports Image ID, to help in rolling back, as its being created by Packer (outside of Terraform)
 data "azurerm_shared_image_version" "image_version" {
   for_each            = try(local.shared_services.packer, {})
   name                = each.value.shared_image_gallery_destination.image_version
@@ -130,14 +125,22 @@ data "azurerm_shared_image_version" "image_version" {
   ]
 }
 
+# add a time delay before deleting Shared Image Definition; makes sure the Image gets deleted first
 resource "time_sleep" "time_delay" {
-  destroy_duration = "180s"
+  destroy_duration = "120s"
   depends_on = [
     azurerm_shared_image.image
   ]
 }
 
-#deletes the image first during Destroy operation, as it's a nested resource
+resource "time_sleep" "time_delay2" {
+  create_duration = "240s"
+  depends_on = [
+    module.keyvaults.azurerm_key_vault_secret
+  ]
+}
+
+# deletes the image first during Destroy operation, as it's a nested resource
 resource "null_resource" "delete_image" {
   for_each = try(local.shared_services.packer, {})
   triggers = {

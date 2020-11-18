@@ -17,7 +17,6 @@ keyvaults = {
     tags = {
       tfstate = "level2"
     }
-
     creation_policies = {
       logged_in_user = {
         # if the key is set to "logged_in_user" add the user running terraform in the keyvault policy
@@ -25,7 +24,15 @@ keyvaults = {
         secret_permissions = ["Set", "Get", "List", "Delete", "Purge", "Recover"]
       }
     }
+  }
+}
 
+keyvault_access_policies_azuread_apps = {
+  packer_client = {
+    packer_client = {
+      azuread_app_key    = "packer_client"
+      secret_permissions = ["Set", "Get", "List", "Delete"]
+    }
   }
 }
 
@@ -52,6 +59,19 @@ azuread_roles = {
   }
 }
 
+role_mapping = {
+  built_in_role_mapping = {
+    subscriptions = {
+      logged_in_subscription = {
+        "Contributor" = {
+          azuread_apps = {
+            keys = ["packer_client"]
+          }
+        }
+      }
+    }
+  }
+}
 shared_image_gallery = {
   galleries = {
     gallery1 = {
@@ -72,7 +92,6 @@ shared_image_gallery = {
       sku                = "2020.1"
     }
   }
-
 }
 
 packer = {
@@ -81,6 +100,7 @@ packer = {
     packer_configuration_filepath = "/tf/caf/modules/shared_image_gallery/packer/deploy.json"
     azuread_apps_key              = "packer_client"
     secret_prefix                 = "packer-client"
+    keyvault_key                  = "packer_client"
     managed_image_name            = "myImage"
     resource_group_key            = "sig" #for managed_image_resource_group_name
     os_type                       = "Linux"
@@ -90,7 +110,6 @@ packer = {
     location                      = "southeastasia"
     vm_size                       = "Standard_DS1_v2"
     ansible_playbook_path         = "/tf/caf/public/landingzones/caf_shared_services/scenario/100/ansible-ping.yml"
-
     shared_image_gallery_destination = {
       gallery_key         = "gallery1"
       image_key           = "image1"
@@ -98,9 +117,7 @@ packer = {
       resource_group_key  = "sig"
       replication_regions = "southeastasia"
     }
-    image_delete_script_filepath = "/tf/caf/modules/shared_image_gallery/packer/destroy_image.sh"
   }
-
 }
 
 
