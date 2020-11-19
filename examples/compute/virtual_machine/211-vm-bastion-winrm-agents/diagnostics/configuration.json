@@ -1,0 +1,115 @@
+{
+    "DiagnosticMonitorConfiguration": {
+        "overallQuotaInMB": 10000,
+        "DiagnosticInfrastructureLogs": {
+            "scheduledTransferLogLevelFilter": "Error"
+        },
+        "PerformanceCounters": {
+            "scheduledTransferPeriod": "PT1M",
+            "sinks": "AzureMonitorSink",
+            "PerformanceCounterConfiguration": [
+                {
+                    "counterSpecifier": "\\Processor(_Total)\\% Processor Time",
+                    "sampleRate": "PT1M",
+                    "unit": "percent"
+                }
+            ]
+        },
+        "Directories": {
+            "scheduledTransferPeriod": "PT5M",
+            "IISLogs": {
+                "containerName": "iislogs"
+            },
+            "FailedRequestLogs": {
+                "containerName": "iisfailed"
+            },
+            "DataSources": [
+                {
+                    "containerName": "mynewprocess",
+                    "Absolute": {
+                        "path": "C:\\MyNewProcess",
+                        "expandEnvironment": false
+                    }
+                },
+                {
+                    "containerName": "badapp",
+                    "Absolute": {
+                        "path": "%SYSTEMDRIVE%\\BadApp",
+                        "expandEnvironment": true
+                    }
+                },
+                {
+                    "containerName": "goodapp",
+                    "LocalResource": {
+                        "relativePath": "..\\PeanutButter",
+                        "name": "Skippy"
+                    }
+                }
+            ]
+        },
+        "EtwProviders": {
+            "sinks": "",
+            "EtwEventSourceProviderConfiguration": [
+                {
+                    "scheduledTransferPeriod": "PT5M",
+                    "provider": "MyProviderClass",
+                    "Event": [
+                        {
+                            "id": 0
+                        },
+                        {
+                            "id": 1,
+                            "eventDestination": "errorTable"
+                        }
+                    ],
+                    "DefaultEvents": {}
+                }
+            ],
+            "EtwManifestProviderConfiguration": [
+                {
+                    "scheduledTransferPeriod": "PT2M",
+                    "scheduledTransferLogLevelFilter": "Information",
+                    "provider": "5974b00b-84c2-44bc-9e58-3a2451b4e3ad",
+                    "Event": [
+                        {
+                            "id": 0
+                        }
+                    ],
+                    "DefaultEvents": {}
+                }
+            ]
+        },
+        "WindowsEventLog": {
+            "scheduledTransferPeriod": "PT5M",
+            "DataSource": [
+                {
+                    "name": "System!*[System[Provider[@Name='Microsoft Antimalware']]]"
+                },
+                {
+                    "name": "System!*[System[Provider[@Name='NTFS'] and (EventID=55)]]"
+                },
+                {
+                    "name": "System!*[System[Provider[@Name='disk'] and (EventID=7 or EventID=52 or EventID=55)]]"
+                }
+            ]
+        },
+        "Logs": {
+            "scheduledTransferPeriod": "PT1M",
+            "scheduledTransferLogLevelFilter": "Verbose",
+            "sinks": "ApplicationInsights.AppLogs"
+        },
+        "CrashDumps": {
+            "directoryQuotaPercentage": 30,
+            "dumpType": "Mini",
+            "containerName": "wad-crashdumps",
+            "CrashDumpConfiguration": [
+                {
+                    "processName": "mynewprocess.exe"
+                },
+                {
+                    "processName": "badapp.exe"
+                }
+            ]
+        }
+    }
+}

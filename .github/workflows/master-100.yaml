@@ -84,6 +84,7 @@ jobs:
             "examples/app_insights/100-simple",
             "examples/compute/container_registry/100-simple-acr",
             "examples/compute/virtual_machine/100-single-linux-vm",
+            "examples/compute/virtual_machine/211-vm-bastion-winrm-agents",
             "examples/compute/virtual_machine/101-single-windows-vm",
             "examples/networking/virtual_network/100-subnet-delegation",
             "examples/networking/virtual_wan/100-vwan-multi-hubs",
