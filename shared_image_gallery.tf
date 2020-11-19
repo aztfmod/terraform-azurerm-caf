@@ -1,7 +1,7 @@
 
 # CAF naming for Resources
 resource "azurecaf_name" "sig_name" {
-  for_each      = local.shared_services.shared_image_gallery.galleries
+  for_each      = try(local.shared_services.shared_image_gallery.galleries, {})
   name          = each.value.name
   prefixes      = [local.global_settings.prefix]
   resource_type = "azurerm_shared_image_gallery"
@@ -13,7 +13,7 @@ resource "azurecaf_name" "sig_name" {
 
 
 resource "azurecaf_name" "image_definition_name" {
-  for_each      = local.shared_services.shared_image_gallery.image_definition
+  for_each      = try(local.shared_services.shared_image_gallery.image_definition, {})
   name          = each.value.name
   prefixes      = [local.global_settings.prefix]
   resource_type = "azurerm_shared_image"
