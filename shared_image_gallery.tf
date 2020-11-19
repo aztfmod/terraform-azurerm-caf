@@ -65,7 +65,7 @@ data "azurerm_key_vault_secret" "packer_secret" {
 # generates Packer template with the variables
 data "template_file" "packer_template" {
   for_each = try(local.shared_services.packer, {})
-  template = file("${path.module}/examples/packer_template.json")
+  template = file(each.value.packer_template_filepath)
   vars = {
     client_id                         = module.azuread_applications[each.value.azuread_apps_key].azuread_application.application_id
     client_secret                     = data.azurerm_key_vault_secret.packer_secret[each.key].value
