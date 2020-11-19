@@ -21,18 +21,18 @@ resource_groups = {
 
 mssql_servers = {
   sql-server-rg1 = {
-    name                          = "sql-server-rg1"
-    region                        = "region1"
-    resource_group_key            = "sql_region1"
-    administrator_login           = "adminuser"
-    administrator_login_password  = "@dm1nu53r"
+    name                         = "sql-server-rg1"
+    region                       = "region1"
+    resource_group_key           = "sql_region1"
+    administrator_login          = "adminuser"
+    administrator_login_password = "@dm1nu53r"
   }
   sql-server-rg2 = {
-    name                          = "sql-server-rg2"
-    region                        = "region2"
-    resource_group_key            = "sql_region2"
-    administrator_login           = "adminuser"
-    administrator_login_password  = "@dm1nu53r"
+    name                         = "sql-server-rg2"
+    region                       = "region2"
+    resource_group_key           = "sql_region2"
+    administrator_login          = "adminuser"
+    administrator_login_password = "@dm1nu53r"
   }
 }
 
@@ -49,8 +49,8 @@ mssql_databases = {
 
 mssql_failover_groups = {
   failover_group1 = {
-    resource_group_key  = "sql_region1"
-    name                = "failover-group"
+    resource_group_key = "sql_region1"
+    name               = "failover-group"
     primary_server = {
       sql_server_key = "sql-server-rg1"
     }

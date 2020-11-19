@@ -10,7 +10,7 @@ output id {
 }
 
 output location {
-  value       = var.location
+  value = var.location
 }
 
 output principal_id {

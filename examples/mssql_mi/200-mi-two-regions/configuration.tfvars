@@ -34,17 +34,17 @@ vnets = {
     }
     subnets = {
       sqlmi1 = {
-        name              = "sqlmi1"
-        cidr              = ["172.25.88.0/24"]
-        nsg_key           = "sqlmi"
-        route_table_key   = "sqlmi1"
+        name            = "sqlmi1"
+        cidr            = ["172.25.88.0/24"]
+        nsg_key         = "sqlmi"
+        route_table_key = "sqlmi1"
         delegation = {
-          name = "sqlmidelegation"
+          name               = "sqlmidelegation"
           service_delegation = "Microsoft.Sql/managedInstances"
           actions = [
-            "Microsoft.Network/virtualNetworks/subnets/join/action", 
-            "Microsoft.Network/virtualNetworks/subnets/prepareNetworkPolicies/action", 
-            "Microsoft.Network/virtualNetworks/subnets/unprepareNetworkPolicies/action"]
+            "Microsoft.Network/virtualNetworks/subnets/join/action",
+            "Microsoft.Network/virtualNetworks/subnets/prepareNetworkPolicies/action",
+          "Microsoft.Network/virtualNetworks/subnets/unprepareNetworkPolicies/action"]
         }
       }
     }
@@ -57,17 +57,17 @@ vnets = {
     }
     subnets = {
       sqlmi2 = {
-        name              = "sqlmi2"
-        cidr              = ["172.25.96.0/24"]
-        nsg_key           = "sqlmi"
-        route_table_key   = "sqlmi2"
+        name            = "sqlmi2"
+        cidr            = ["172.25.96.0/24"]
+        nsg_key         = "sqlmi"
+        route_table_key = "sqlmi2"
         delegation = {
-          name = "sqlmidelegation"
+          name               = "sqlmidelegation"
           service_delegation = "Microsoft.Sql/managedInstances"
           actions = [
-            "Microsoft.Network/virtualNetworks/subnets/join/action", 
-            "Microsoft.Network/virtualNetworks/subnets/prepareNetworkPolicies/action", 
-            "Microsoft.Network/virtualNetworks/subnets/unprepareNetworkPolicies/action"]
+            "Microsoft.Network/virtualNetworks/subnets/join/action",
+            "Microsoft.Network/virtualNetworks/subnets/prepareNetworkPolicies/action",
+          "Microsoft.Network/virtualNetworks/subnets/unprepareNetworkPolicies/action"]
         }
       }
     }
@@ -77,7 +77,7 @@ vnets = {
 network_security_group_definition = {
   sqlmi = {
     nsg = [
-      
+
     ]
   }
 }
@@ -130,16 +130,16 @@ vnet_peerings = {
 mssql_managed_instances = {
   sqlmi1 = {
     resource_group_key = "sqlmi_region1"
-    name = "lz-sql-mi"
+    name               = "lz-sql-mi"
     sku = {
       name = "GP_Gen5"
     }
-    administratorLogin = "adminuser"
+    administratorLogin         = "adminuser"
     administratorLoginPassword = "@dm1nu53r@30102020"
 
     //networking
     networking = {
-      vnet_key  = "sqlmi_region1"
+      vnet_key   = "sqlmi_region1"
       subnet_key = "sqlmi1"
     }
 
@@ -151,20 +151,20 @@ mssql_managed_instances = {
 mssql_managed_instances_secondary = {
   sqlmi2 = {
     resource_group_key = "sqlmi_region2"
-    name = "lz-sql-mi-rg2"
+    name               = "lz-sql-mi-rg2"
     sku = {
       name = "GP_Gen5"
     }
-    administratorLogin = "adminuser"
+    administratorLogin         = "adminuser"
     administratorLoginPassword = "@dm1nu53r@11112020"
 
     primary_server = {
-      mi_server_key    = "sqlmi1"
+      mi_server_key = "sqlmi1"
     }
 
     //networking
     networking = {
-      vnet_key  = "sqlmi_region2"
+      vnet_key   = "sqlmi_region2"
       subnet_key = "sqlmi2"
     }
 
@@ -254,10 +254,10 @@ azuread_groups = {
 
 mssql_mi_administrators = {
   sqlmi1 = {
-    resource_group_key  = "sqlmi_region1"
-    mi_server_key       = "sqlmi1"
-    login               = "sqlmiadmin-khairi"
-    azuread_group_key   = "sql_mi_admins"
+    resource_group_key = "sqlmi_region1"
+    mi_server_key      = "sqlmi1"
+    login              = "sqlmiadmin-khairi"
+    azuread_group_key  = "sql_mi_admins"
 
     # group key or upn supported
     # user_principal_name = ""

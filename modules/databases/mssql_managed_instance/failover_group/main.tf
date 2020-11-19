@@ -28,7 +28,7 @@ locals {
       value = var.settings.readWriteEndpoint.failoverPolicy
     }
     readWriteGraceMinutes = {
-      value = try(var.settings.readWriteEndpoint.failoverWithDataLossGracePeriodMinutes, 60) 
+      value = try(var.settings.readWriteEndpoint.failoverWithDataLossGracePeriodMinutes, 60)
     }
     readOnlyFailoverPolicy = {
       value = try(var.settings.readOnlyEndpoint.failoverPolicy, "Disabled")

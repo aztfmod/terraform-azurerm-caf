@@ -5,8 +5,8 @@ output mssql_managed_databases {
 }
 
 module "mssql_managed_databases" {
-  source     = "./modules/databases/mssql_managed_database"
-  for_each   = local.database.mssql_managed_databases
+  source   = "./modules/databases/mssql_managed_database"
+  for_each = local.database.mssql_managed_databases
 
   global_settings     = local.global_settings
   settings            = each.value
@@ -17,8 +17,8 @@ module "mssql_managed_databases" {
 }
 
 module "mssql_managed_databases_restore" {
-  source     = "./modules/databases/mssql_managed_database"
-  for_each   = local.database.mssql_managed_databases_restore
+  source   = "./modules/databases/mssql_managed_database"
+  for_each = local.database.mssql_managed_databases_restore
 
   global_settings     = local.global_settings
   settings            = each.value
