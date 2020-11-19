@@ -44,7 +44,10 @@ module "caf" {
     machine_learning_workspaces = var.machine_learning_workspaces
   }
   shared_services = {
-    monitoring = var.monitoring
+    monitoring           = var.monitoring
+    shared_image_gallery = var.shared_image_gallery
+    packer               = var.packer
+
   }
   enable = {}
 }
