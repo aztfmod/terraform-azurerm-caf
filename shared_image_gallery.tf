@@ -130,7 +130,7 @@ data "azurerm_shared_image_version" "image_version" {
 
 # add a time delay before deleting Shared Image Definition; ensures the Image gets deleted first
 resource "time_sleep" "time_delay" {
-  destroy_duration = "120s"
+  destroy_duration = "60s"
   depends_on = [
     azurerm_shared_image.image
   ]
@@ -138,7 +138,7 @@ resource "time_sleep" "time_delay" {
 
 # ensures roll assignments executes first
 resource "time_sleep" "time_delay2" {
-  create_duration = "120s"
+  create_duration = "60s"
   depends_on = [
     module.keyvaults,
     module.keyvaults.azurerm_key_vault_secret,
@@ -155,7 +155,7 @@ resource "null_resource" "delete_image" {
   provisioner "local-exec" {
     when        = destroy
     interpreter = ["/bin/sh"]
-    command     = format("%s/modules/shared_image_gallery/packer/destroy_image.sh", "/tf/caf")
+    command     = format("%s/shared_image_gallery/packer/destroy_image.sh", ".")
     on_failure  = fail
     environment = {
       RESOURCE_IDS = self.triggers.resource_id
