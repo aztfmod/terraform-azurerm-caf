@@ -47,7 +47,6 @@ module "caf" {
     monitoring           = var.monitoring
     shared_image_gallery = var.shared_image_gallery
     packer               = var.packer
-
   }
   enable = {}
 }
