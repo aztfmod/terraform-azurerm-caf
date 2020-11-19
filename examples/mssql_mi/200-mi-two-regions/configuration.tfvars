@@ -1,11 +1,3 @@
-global_settings = {
-  default_region = "region1"
-  regions = {
-    region1 = "southeastasia"
-    region2 = "eastasia"
-  }
-}
-
 resource_groups = {
   networking_region1 = {
     name   = "mi-networking-rg1"
