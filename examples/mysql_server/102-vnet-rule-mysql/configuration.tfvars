@@ -27,6 +27,13 @@ mysql_servers = {
     auto_grow_enabled             = true
     vnet_key                      = "vnet_region1"
     subnet_key                    = "mysql_subnet"
+
+    extended_auditing_policy = {
+      storage_account = {
+        key = "auditing-re1"
+      }
+      retention_in_days = 7
+    }
     
     mysql_firewall_rules = {
       mysql-firewall-rules = {
@@ -114,6 +121,14 @@ vnets = {
 }
 
 storage_accounts = {
+  auditing-re1 = {
+    name                     = "auditingre1"
+    resource_group_key       = "mysql_region1"
+    region                   = "region1"
+    account_kind             = "BlobStorage"
+    account_tier             = "Standard"
+    account_replication_type = "RAGRS"
+  }
   security-re1 = {
     name                     = "securityre1"
     resource_group_key       = "security_region1"
@@ -147,7 +162,7 @@ keyvault_access_policies = {
 
 azuread_groups = {
   sales_admins = {
-    name        = "sql-sales-admins"
+    name        = "mysql-sales-admins"
     description = "Administrators of the sales MySQL server."
     members = {
       user_principal_names = []
