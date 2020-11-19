@@ -1,0 +1,39 @@
+{
+  "builders" : [{
+  "type": "azure-arm",
+
+  "client_id": "90ef96f1-5d77-40c0-a9f7-8cc960884584",
+  "client_secret": "5V4DpLMmH4ksA5GcvjFOiJN9LN19f8LmyPAhI11poJdgHG62vPhDOB2B5zdqJ2vC9B7TPPLTLoyzaMhur6xremtrDanunsp74RFL8HWDHK9zDnvUOVPf866yxXR6M8GyMauWsg7lR6NOeEjcZuGViN8YXD5VhqzvvqiXpz8IC4IxV9uer7fseAVcQs5RY9EdxozW0CWQwNqX9lybTwBHHEHKpWGnu6BTQGsyVaXlKCx0XvmXeTVtbDT3AR",
+  "tenant_id": "72f988bf-86f1-41af-91ab-2d7cd011db47",
+  "subscription_id": "c6b21e43-39d1-46f3-8948-51cbc81b3ef4",
+
+  "os_type": "Linux",
+  "image_publisher": "Canonical",
+  "image_offer": "UbuntuServer",
+  "image_sku": "16.04-LTS",
+
+  "location": "southeastasia",
+  "vm_size": "Standard_DS1_v2",
+
+  "managed_image_resource_group_name": "znui-rg-sig",
+  "managed_image_name": "myImage",
+
+  "shared_image_gallery_destination": {
+    "subscription": "c6b21e43-39d1-46f3-8948-51cbc81b3ef4",
+    "resource_group": "znui-rg-sig",
+    "gallery_name": "znuisigtest1",
+    "image_name": "znuisiimage1",
+    "image_version": "1.0.0",
+    "replication_regions": "southeastasia"
+    }
+ }
+],
+
+  "provisioners": [
+   {
+    "type": "ansible",
+    "playbook_file": "/tf/caf/public/landingzones/caf_shared_services/scenario/100/ansible-ping.yml"
+   }
+ ]
+}
+

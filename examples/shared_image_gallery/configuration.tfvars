@@ -1,6 +1,9 @@
-level = "level2"
-
-landingzone_name = "shared_services"
+global_settings = {
+  default_region = "region1"
+  regions = {
+    region1 = "southeastasia"
+  }
+}
 
 resource_groups = {
   sig = {

@@ -1,19 +1,22 @@
 module "caf" {
   source = "../"
 
-  current_landingzone_key     = var.landingzone.key
-  tenant_id                   = var.tenant_id
-  diagnostic_storage_accounts = var.diagnostic_storage_accounts
-  logged_user_objectId        = var.logged_user_objectId
-  logged_aad_app_objectId     = var.logged_aad_app_objectId
-  resource_groups             = var.resource_groups
-  storage_accounts            = var.storage_accounts
-  azuread_groups              = var.azuread_groups
-  keyvaults                   = var.keyvaults
-  keyvault_access_policies    = var.keyvault_access_policies
-  managed_identities          = var.managed_identities
-  role_mapping                = var.role_mapping
-  event_hub_namespaces        = var.event_hub_namespaces
+  current_landingzone_key               = var.landingzone.key
+  tenant_id                             = var.tenant_id
+  diagnostic_storage_accounts           = var.diagnostic_storage_accounts
+  logged_user_objectId                  = var.logged_user_objectId
+  logged_aad_app_objectId               = var.logged_aad_app_objectId
+  resource_groups                       = var.resource_groups
+  storage_accounts                      = var.storage_accounts
+  azuread_apps                          = var.azuread_apps
+  azuread_roles                         = var.azuread_roles
+  azuread_groups                        = var.azuread_groups
+  keyvaults                             = var.keyvaults
+  keyvault_access_policies              = var.keyvault_access_policies
+  keyvault_access_policies_azuread_apps = var.keyvault_access_policies_azuread_apps
+  managed_identities                    = var.managed_identities
+  role_mapping                          = var.role_mapping
+  event_hub_namespaces                  = var.event_hub_namespaces
   webapp = {
     azurerm_application_insights = var.azurerm_application_insights
     app_service_environments     = var.app_service_environments

@@ -98,6 +98,7 @@ jobs:
             "examples/machine_learning/101-aml-vnet",
             "examples/datalake/101-datalake-storage",
             "examples/synapse_analytics/100-synapse",
+            "examples/shared_image_gallery",
             "examples/synapse_analytics/101-synapse-sparkpool",
             "examples/monitoring/service_health_alerts",
             "examples/mssql_server/elastic_pools",

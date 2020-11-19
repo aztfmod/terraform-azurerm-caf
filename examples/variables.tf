@@ -142,6 +142,9 @@ variable application_gateway_applications {
   default = {}
 }
 
+variable shared_services {
+  default = {}
+}
 
 variable shared_image_gallery {
   default = {}
@@ -152,5 +155,17 @@ variable packer {
 }
 
 variable enable {
+  default = {}
+}
+
+variable azuread_roles {
+  default = {}
+}
+
+variable keyvault_access_policies_azuread_apps {
+  default = {}
+}
+
+variable azuread_apps {
   default = {}
 }
