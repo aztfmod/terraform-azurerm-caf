@@ -138,7 +138,7 @@ resource "time_sleep" "time_delay" {
 
 # ensures roll assignments executes first
 resource "time_sleep" "time_delay2" {
-  create_duration = "300s"
+  create_duration = "120s"
   depends_on = [
     module.keyvaults,
     module.keyvaults.azurerm_key_vault_secret,

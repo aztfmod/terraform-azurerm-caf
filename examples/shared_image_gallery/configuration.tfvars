@@ -101,8 +101,8 @@ shared_image_gallery = {
 
 packer = {
   build1 = {
-    packer_template_filepath      = "/tf/caf/modules/shared_image_gallery/packer/packer_template.json"
-    packer_configuration_filepath = "/tf/caf/modules/shared_image_gallery/packer/deploy.json"
+    packer_template_filepath      = "/tf/caf/examples/shared_image_gallery/packer_template.json"
+    packer_configuration_filepath = "/tf/caf/examples/shared_image_gallery/packer_config.json"
     azuread_apps_key              = "packer_client"
     secret_prefix                 = "packer-client"
     keyvault_key                  = "packer_client"
