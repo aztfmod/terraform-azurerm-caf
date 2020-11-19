@@ -1,11 +1,8 @@
 
-resource "azurerm_virtual_machine_extension" "monitoring_agent" {
-  for_each = {
-    for key, value in var.extensions : key => value
-    if key == "microsoft_enterprisecloud_monitoring"
-  }
+resource "azurerm_virtual_machine_extension" "monitoring" {
+  for_each = var.extension_name == "microsoft_enterprise_cloud_monitoring" ? toset(["enabled"]) : toset([])
 
-  name = "microsoft_enterprisecloud_monitoring"
+  name = "microsoft_enterprise_cloud_monitoring"
 
   virtual_machine_id   = var.virtual_machine_id
   publisher            = "Microsoft.EnterpriseCloud.Monitoring"
@@ -14,31 +11,20 @@ resource "azurerm_virtual_machine_extension" "monitoring_agent" {
 
   settings = jsonencode(
     {
-      "workspaceId" : data.azurerm_log_analytics_workspace.monitoring_agent[each.key].workspace_id
+      "workspaceId" : data.azurerm_log_analytics_workspace.monitoring[each.key].workspace_id
     }
   )
   protected_settings = jsonencode(
     {
-      "workspaceKey" : data.azurerm_log_analytics_workspace.monitoring_agent[each.key].primary_shared_key
+      "workspaceKey" : data.azurerm_log_analytics_workspace.monitoring[each.key].primary_shared_key
     }
   )
 
 }
 
-data "azurerm_log_analytics_workspace" "monitoring_agent" {
-  for_each = {
-    for key, value in var.extensions : key => value
-    if key == "microsoft_enterprisecloud_monitoring"
-  }
+data "azurerm_log_analytics_workspace" "monitoring" {
+  for_each = var.extension_name == "microsoft_enterprise_cloud_monitoring" ? toset(["enabled"]) : toset([])
 
-  name                = try(local.settings[each.key].log_analytics[var.client_config.landingzone_key][each.value.log_analytics_key].name, local.settings[each.key].log_analytics[each.value.lz_key][each.value.log_analytics_key].name)
-  resource_group_name = try(local.settings[each.key].log_analytics[var.client_config.landingzone_key][each.value.log_analytics_key].resource_group_name, local.settings[each.key].log_analytics[each.value.lz_key][each.value.log_analytics_key].resource_group_name)
+  name                = try(var.settings.log_analytics[var.client_config.landingzone_key][var.extension.log_analytics_key].name, var.settings.log_analytics[var.extension.lz_key][each.value.log_analytics_key].name)
+  resource_group_name = try(var.settings.log_analytics[var.client_config.landingzone_key][var.extension.log_analytics_key].resource_group_name, var.settings.log_analytics[var.extension.lz_key][each.value.log_analytics_key].resource_group_name)
 } 
-
-locals {
-  settings = {
-    microsoft_enterprisecloud_monitoring = {
-      log_analytics  = var.settings.microsoft_enterprisecloud_monitoring.log_analytics
-    }
-  }
-}
