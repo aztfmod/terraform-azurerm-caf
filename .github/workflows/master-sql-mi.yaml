@@ -3,7 +3,7 @@
 # Licensed under the MIT License.
 #
 
-name: scenarios-100
+name: scenarios-sql-mi
 
 on:
   pull_request:
