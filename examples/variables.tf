@@ -144,3 +144,6 @@ variable application_gateway_applications {
 variable recovery_vaults {
   default = {}
 }
+variable proximity_placement_groups {
+  default = {}
+}
