@@ -107,7 +107,7 @@ jobs:
             "examples/webapps/appservice/104-appservice-appinsight"
             "examples/postgresql_server/100-simple-postgresql",
             "examples/postgresql_server/101-active-directory-admin-postgresql",
-            "examples/postgresql_server/102-vnet-rule-postgresql",
+            "examples/postgresql_server/102-vnet-rule-postgresql"
           ]
 
     container:
