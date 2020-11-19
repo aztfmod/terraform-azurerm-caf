@@ -150,3 +150,7 @@ variable shared_image_gallery {
 variable packer {
   default = {}
 }
+
+variable enable {
+  default = {}
+}
