@@ -8,7 +8,7 @@ resource "azurecaf_name" "sig_name" {
   random_length = local.global_settings.random_length
   clean_input   = true
   passthrough   = local.global_settings.passthrough
-  use_slug      = var.global_settings.use_slug
+  use_slug      = local.global_settings.use_slug
 }
 
 
@@ -20,7 +20,7 @@ resource "azurecaf_name" "image_definition_name" {
   random_length = local.global_settings.random_length
   clean_input   = true
   passthrough   = local.global_settings.passthrough
-  use_slug      = var.global_settings.use_slug
+  use_slug      = local.global_settings.use_slug
 }
 
 # creates Shared Image Gallery
@@ -128,7 +128,7 @@ data "azurerm_shared_image_version" "image_version" {
   ]
 }
 
-# add a time delay before deleting Shared Image Definition; makes sure the Image gets deleted first
+# add a time delay before deleting Shared Image Definition; ensures the Image gets deleted first
 resource "time_sleep" "time_delay" {
   destroy_duration = "120s"
   depends_on = [
@@ -136,6 +136,7 @@ resource "time_sleep" "time_delay" {
   ]
 }
 
+# ensures roll assignments executes first
 resource "time_sleep" "time_delay2" {
   create_duration = "300s"
   depends_on = [

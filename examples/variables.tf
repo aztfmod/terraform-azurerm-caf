@@ -141,3 +141,12 @@ variable application_gateways {
 variable application_gateway_applications {
   default = {}
 }
+
+
+variable shared_image_gallery {
+  default = {}
+}
+
+variable packer {
+  default = {}
+}
