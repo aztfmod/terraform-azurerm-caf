@@ -35,19 +35,6 @@ resource "null_resource" "set_mi_ad_admin" {
       MI_NAME      = var.mi_name
     }
   }
-
-  # provisioner "local-exec" {
-  #   command     = format("%s/scripts/mi_ad_admin.sh", path.module)
-  #   when        = destroy
-  #   interpreter = ["/bin/sh"]
-  #   on_failure  = fail
-
-  #   environment = {
-  #     METHOD       = "DELETE"
-  #     RG_NAME      = self.triggers.resource_group_name
-  #     MI_NAME      = self.triggers.mi_name
-  #   }
-  # }
 }
 
 
