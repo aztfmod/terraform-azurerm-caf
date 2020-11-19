@@ -79,8 +79,8 @@ jobs:
       fail-fast: false
       matrix:
           config_files: [
-            "examples/mssql_mi/200-mi/configuration.tfvars",
-            "examples/mssql_mi/200-mi-two-regions/configuration.tfvars"
+            "examples/mssql_mi/200-mi",
+            "examples/mssql_mi/200-mi-two-regions"
           ]
 
     container:
