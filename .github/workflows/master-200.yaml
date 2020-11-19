@@ -10,7 +10,7 @@ on:
   pull_request:
   #   branches:
   #     - master
-  #     - '0.4'
+  #     - '2010.0.0'
   push:
     paths-ignore:
       - .github/workflows/master-100.yaml
@@ -51,7 +51,7 @@ jobs:
         with:
           repository: Azure/caf-terraform-landingzones
           path: public
-          ref: "0.4"
+          ref: "2010.0.0"
 
       - name: Login azure
         run: |
@@ -142,7 +142,7 @@ jobs:
         with:
           repository: Azure/caf-terraform-landingzones
           path: public
-          ref: "0.4"
+          ref: "2010.0.0"
 
       - name: Login azure
         run: |

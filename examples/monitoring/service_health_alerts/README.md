@@ -1,7 +1,6 @@
 [![Gitter](https://badges.gitter.im/aztfmod/community.svg)](https://gitter.im/aztfmod/community?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge)
 
 # Deploys Service Health Alerts
-
 This module tracks the following types of health events (subscription wide) and send alerts:
 
 1. Service issues - Problems in the Azure services that affect you right now.

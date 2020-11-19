@@ -8,6 +8,7 @@ resource "azurecaf_name" "s2s_gateway" {
   random_length = var.global_settings.random_length
   clean_input   = true
   passthrough   = var.global_settings.passthrough
+  use_slug      = var.global_settings.use_slug
 }
 
 ## create the VPN S2S if var.vwan.s2s_gateway is set to true

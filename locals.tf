@@ -15,12 +15,12 @@ locals {
     prefix_start_alpha = local.prefix == "" ? "" : "${random_string.alpha1.result}${local.prefix}"
     default_region     = lookup(var.global_settings, "default_region", "region1")
     environment        = lookup(var.global_settings, "environment", var.environment)
-    random_length      = lookup(var.global_settings, "random_length", null)
+    random_length      = try(var.global_settings.random_length, 0)
     regions            = var.global_settings.regions
     passthrough        = try(var.global_settings.passthrough, false)
     inherit_tags       = try(var.global_settings.inherit_tags, false)
+    use_slug           = try(var.global_settings.use_slug, true)
   }
-
 
   compute = {
     virtual_machines           = try(var.compute.virtual_machines, {})
@@ -31,6 +31,10 @@ locals {
 
   storage = {
     storage_account_blobs = try(var.storage.storage_account_blobs, {})
+  }
+
+  security = {
+    keyvault_certificates = try(var.security.keyvault_certificates, {})
   }
 
   networking = {
@@ -49,6 +53,8 @@ locals {
     private_dns                                             = try(var.networking.private_dns, {})
     azurerm_firewall_nat_rule_collection_definition         = try(var.networking.azurerm_firewall_nat_rule_collection_definition, {})
     ddos_services                                           = try(var.networking.ddos_services, {})
+    express_route_circuits                                  = try(var.networking.express_route_circuits, {})
+    express_route_circuit_authorizations                    = try(var.networking.express_route_circuit_authorizations, {})
   }
 
   database = {
@@ -63,13 +69,17 @@ locals {
 
   client_config = {
     client_id               = data.azurerm_client_config.current.client_id
-    tenant_id               = var.tenant_id
+    tenant_id               = var.tenant_id == null ? data.azurerm_client_config.current.tenant_id : var.tenant_id
     subscription_id         = data.azurerm_client_config.current.subscription_id
-    object_id               = data.azurerm_client_config.current.object_id
-    logged_aad_app_objectId = var.logged_aad_app_objectId == null ? var.logged_user_objectId == null ? data.azuread_service_principal.logged_in_app.0.object_id : var.logged_user_objectId : var.logged_aad_app_objectId
-    logged_user_objectId    = var.logged_user_objectId == null ? var.logged_aad_app_objectId == null ? data.azuread_service_principal.logged_in_app.0.object_id : var.logged_aad_app_objectId : var.logged_user_objectId
-    landingzone_key         = var.current_landingzone_key
+    object_id               = local.object_id
+    logged_aad_app_objectId = local.object_id
+    logged_user_objectId    = local.object_id
+    # logged_aad_app_objectId = var.logged_aad_app_objectId == null ? var.logged_user_objectId == null ? data.azuread_service_principal.logged_in_app.0.object_id : var.logged_user_objectId : var.logged_aad_app_objectId
+    # logged_user_objectId    = var.logged_user_objectId == null ? var.logged_aad_app_objectId == null ? data.azuread_service_principal.logged_in_app.0.object_id : var.logged_aad_app_objectId : var.logged_user_objectId
+    landingzone_key = var.current_landingzone_key
   }
+
+  object_id = coalesce(var.logged_user_objectId, var.logged_aad_app_objectId, try(data.azurerm_client_config.current.object_id, null), try(data.azuread_service_principal.logged_in_app.0.object_id, null))
 
   webapp = {
     azurerm_application_insights = try(var.webapp.azurerm_application_insights, {})

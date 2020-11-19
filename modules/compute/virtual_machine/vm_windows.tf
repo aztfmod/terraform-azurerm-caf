@@ -5,9 +5,10 @@ resource "azurecaf_name" "windows" {
   name          = each.value.name
   resource_type = "azurerm_windows_virtual_machine"
   prefixes      = [var.global_settings.prefix]
-  random_length = try(var.global_settings.random_length, null)
+  random_length = var.global_settings.random_length
   clean_input   = true
-  passthrough   = try(var.global_settings.passthrough, false)
+  passthrough   = var.global_settings.passthrough
+  use_slug      = var.global_settings.use_slug
 }
 
 # Name of the Windows computer name
@@ -17,9 +18,10 @@ resource "azurecaf_name" "windows_computer_name" {
   name          = try(each.value.computer_name, each.value.name)
   resource_type = "azurerm_windows_virtual_machine"
   prefixes      = [var.global_settings.prefix]
-  random_length = try(var.global_settings.random_length, null)
+  random_length = var.global_settings.random_length
   clean_input   = true
-  passthrough   = try(var.global_settings.passthrough, false)
+  passthrough   = var.global_settings.passthrough
+  use_slug      = var.global_settings.use_slug
 }
 
 # Name for the OS disk
@@ -29,9 +31,10 @@ resource "azurecaf_name" "os_disk_windows" {
   name          = try(each.value.os_disk.name, null)
   resource_type = "azurerm_managed_disk"
   prefixes      = [var.global_settings.prefix]
-  random_length = try(var.global_settings.random_length, null)
+  random_length = var.global_settings.random_length
   clean_input   = true
-  passthrough   = try(var.global_settings.passthrough, false)
+  passthrough   = var.global_settings.passthrough
+  use_slug      = var.global_settings.use_slug
 }
 
 resource "azurerm_windows_virtual_machine" "vm" {
@@ -105,6 +108,25 @@ resource "azurerm_windows_virtual_machine" "vm" {
     }
   }
 
+  dynamic "secret" {
+    for_each = try(each.value.winrm.enable_self_signed, false) == false ? [] : [1]
+
+    content {
+
+      key_vault_id = var.keyvault_id
+
+      # WinRM certificate
+      dynamic "certificate" {
+        for_each = try(each.value.winrm.enable_self_signed, false) == false ? [] : [1]
+
+        content {
+          url   = azurerm_key_vault_certificate.self_signed_winrm[each.key].secret_id
+          store = "My"
+        }
+      }
+    }
+  }
+
   dynamic "identity" {
     for_each = try(each.value.identity, false) == false ? [] : [1]
 
@@ -125,11 +147,11 @@ resource "azurerm_windows_virtual_machine" "vm" {
   }
 
   dynamic "winrm_listener" {
-    for_each = try(each.value.winrm_listener, false) == false ? [] : [1]
+    for_each = try(each.value.winrm, false) == false ? [] : [1]
 
     content {
-      protocol        = each.value.winrm_listener.protocol
-      certificate_url = each.value.winrm_listener.certificate_url
+      protocol        = try(each.value.winrm.protocol, "Https")
+      certificate_url = try(each.value.winrm.enable_self_signed, false) ? azurerm_key_vault_certificate.self_signed_winrm[each.key].secret_id : each.value.winrm.certificate_url
     }
   }
 

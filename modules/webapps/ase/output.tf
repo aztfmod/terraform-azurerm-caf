@@ -1,5 +1,5 @@
 output id {
-  value       = lookup(azurerm_template_deployment.ase.outputs, "id")
+  value       = data.azurerm_app_service_environment.ase.id
   description = "App Service Environment Resource Id"
 }
 
@@ -9,7 +9,7 @@ output name {
 }
 
 output ilb_ip {
-  value = data.external.ase_ilb_ip.result.internalIpAddress
+  value = data.azurerm_app_service_environment.ase.internal_ip_address
 }
 
 output subnet_id {
