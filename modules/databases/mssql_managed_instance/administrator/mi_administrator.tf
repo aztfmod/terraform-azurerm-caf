@@ -20,7 +20,7 @@ data "azuread_user" "upn" {
 resource "null_resource" "set_mi_ad_admin" {
 
   triggers = {
-    object_id           = local.object_id
+    object_id = local.object_id
   }
 
   provisioner "local-exec" {
@@ -53,8 +53,8 @@ resource "null_resource" "remove_mi_ad_admin" {
     on_failure  = fail
 
     environment = {
-      RG_NAME      = self.triggers.resource_group_name
-      MI_NAME      = self.triggers.mi_name
+      RG_NAME = self.triggers.resource_group_name
+      MI_NAME = self.triggers.mi_name
     }
   }
 
