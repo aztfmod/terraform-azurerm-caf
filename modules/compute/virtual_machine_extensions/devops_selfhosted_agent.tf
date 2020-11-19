@@ -1,7 +1,7 @@
 
 resource "azurerm_virtual_machine_extension" "devops_selfhosted_agent" {
   for_each = {
-    for key, value in var.extensions : key => value
+    for key, value in var.extension : key => value
     if key == "devops_selfhosted_agent"
   }
 
@@ -23,7 +23,7 @@ resource "azurerm_virtual_machine_extension" "devops_selfhosted_agent" {
   )
   protected_settings = jsonencode(
     {
-      "commandToExecute" : format("bash %s '%s' '%s' '%s' '%s' '%s' '%s' '%s'", var.extensions[each.key].agent_init_script, var.settings[each.key].azure_devops.url, var.settings[each.key].agent_pat, var.settings[each.key].azure_devops.agent_pool.name, var.settings[each.key].azure_devops.agent_pool.agent_name_prefix, var.settings[each.key].azure_devops.agent_pool.num_agents, var.settings[each.key].admin_username, var.settings[each.key].azure_devops.rover_version)
+      "commandToExecute" : format("bash %s '%s' '%s' '%s' '%s' '%s' '%s' '%s'", var.extension[each.key].agent_init_script, var.settings[each.key].azure_devops.url, var.settings[each.key].agent_pat, var.settings[each.key].azure_devops.agent_pool.name, var.settings[each.key].azure_devops.agent_pool.agent_name_prefix, var.settings[each.key].azure_devops.agent_pool.num_agents, var.settings[each.key].admin_username, var.settings[each.key].azure_devops.rover_version)
     }
   )
 
@@ -33,7 +33,7 @@ locals {
   devops_selfhosted_agent = {
     file_uris = flatten(
       [
-        for file_uris_key, file in try(var.extensions.devops_selfhosted_agent.fileUris, {}) : [
+        for file_uris_key, file in try(var.extension.devops_selfhosted_agent.fileUris, {}) : [
           for file_uri_key in file.storage_blob_keys : var.settings.devops_selfhosted_agent.storage_accounts[file.storage_account_key].containers[file.container_key].blobs[file_uri_key].url
         ]
       ]

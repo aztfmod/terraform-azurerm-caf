@@ -124,8 +124,16 @@ virtual_machines = {
     }
 
     virtual_machine_extensions = {
-      microsoft_enterprisecloud_monitoring = {
+      microsoft_enterprise_cloud_monitoring = {
         log_analytics_key = "central_logs_region1"
+      }
+
+      microsoft_azure_diagnostics = {
+        diagnostics_storage_account_keys = ["bootdiag_region1"]
+
+        # Relative path to the landing zone folder
+        # json_diagnostics_file           = "/compute/virtual_machine/211-vm-bastion-winrm-agents/diagnostics/configuration.json"
+        xml_diagnostics_file = "/compute/virtual_machine/211-vm-bastion-winrm-agents/diagnostics/wadcfg.xml"
       }
     }
 
