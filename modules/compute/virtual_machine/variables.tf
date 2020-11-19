@@ -42,3 +42,7 @@ variable recovery_vaults {
 }
 
 variable base_tags {}
+
+variable proximity_placement_groups {
+  default = {}
+}

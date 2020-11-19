@@ -18,7 +18,7 @@ module virtual_machines {
   diagnostics                      = local.diagnostics
   public_ip_addresses              = local.combined_objects_public_ip_addresses
   base_tags                        = try(local.global_settings.inherit_tags, false) ? module.resource_groups[each.value.resource_group_key].tags : {}
-
+  proximity_placement_groups       = local.combined_objects_proximity_placement_groups
 }
 
 
@@ -26,3 +26,4 @@ output virtual_machines {
   value     = module.virtual_machines
   sensitive = true
 }
+

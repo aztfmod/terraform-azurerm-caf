@@ -25,6 +25,7 @@ module "caf" {
     virtual_machines = var.virtual_machines
     bastion_hosts    = var.bastion_hosts
     aks_clusters     = var.aks_clusters
+    proximity_placement_groups = var.proximity_placement_groups
   }
   networking = {
     vnets                             = var.vnets
