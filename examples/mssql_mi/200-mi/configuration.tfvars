@@ -68,8 +68,10 @@ mssql_managed_instances = {
     administratorLoginPassword = "@dm1nu53r@30102020"
 
     //networking
-    vnet_key  = "sqlmi_region1"
-    subnet_key = "sqlmi1"
+    networking = {
+      vnet_key  = "sqlmi_region1"
+      subnet_key = "sqlmi1"
+    }
 
     storageSizeInGB = 32
     vCores          = 8
@@ -80,6 +82,6 @@ mssql_managed_databases = {
   managed_db1 = {
     resource_group_key = "sqlmi_region1"
     name               = "lz-sql-managed-db1"
-    mi_server_key             = "sqlmi1"
+    mi_server_key      = "sqlmi1"
   }
 }
