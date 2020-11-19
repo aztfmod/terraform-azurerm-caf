@@ -20,12 +20,17 @@ mysql_servers = {
     sku_name                      = "GP_Gen5_2"
     storage_mb                    = 5120
     administrator_login           = "mysqlsalesadmin"
-    administrator_login_password  = "Testpass@1"
+    administrator_login_password  = "Testpass@9"
     keyvault_key                  = "mysql-re1"
     system_msi                    = true
     public_network_access_enabled = true
     auto_grow_enabled             = true
-    
+    extended_auditing_policy = {
+      storage_account = {
+        key = "auditing-re1"
+      }
+      retention_in_days = 7
+    }
     
     mysql_firewall_rules = {
       mysql-firewall-rules = {
@@ -87,6 +92,14 @@ mysql_servers = {
 }
 
 storage_accounts = {
+  auditing-re1 = {
+    name                     = "auditingre1"
+    resource_group_key       = "mysql_region1"
+    region                   = "region1"
+    account_kind             = "BlobStorage"
+    account_tier             = "Standard"
+    account_replication_type = "RAGRS"
+  }
   security-re1 = {
     name                     = "securityre1"
     resource_group_key       = "security_region1"
@@ -120,7 +133,7 @@ keyvault_access_policies = {
 
 azuread_groups = {
   sales_admins = {
-    name        = "sql-sales-admins"
+    name        = "mysql-sales-admins"
     description = "Administrators of the sales MySQL server."
     members = {
       user_principal_names = []

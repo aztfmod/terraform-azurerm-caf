@@ -1,7 +1,7 @@
 data "azurerm_client_config" "current" {}
 
 resource "azurerm_mysql_active_directory_administrator" "mysql_ad_admin" {
-  for_each = try(var.settings.azuread_administrator, {})
+  count = try(var.settings.azuread_administrator, null) == null ? 0 : 1
   
   server_name         = azurerm_mysql_server.mysql.name
   resource_group_name = var.resource_group_name
