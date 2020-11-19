@@ -13,6 +13,7 @@ module "caf" {
   keyvault_access_policies    = var.keyvault_access_policies
   managed_identities          = var.managed_identities
   role_mapping                = var.role_mapping
+  log_analytics               = var.log_analytics
   event_hub_namespaces        = var.event_hub_namespaces
   webapp = {
     azurerm_application_insights = var.azurerm_application_insights
