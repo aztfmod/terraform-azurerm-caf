@@ -14,7 +14,7 @@ postgresql_servers = {
     region                        = "region1"
     resource_group_key            = "postgresql_region1"
     version                       = "9.6"
-    sku_name                      = "B_Gen5_2"
+    sku_name                      = "GP_Gen5_2"
     administrator_login           = "postgresqlsalesadmin"
     administrator_login_password  = "Testpass@9"
     keyvault_key                  = "postgresql-re1"
@@ -22,7 +22,13 @@ postgresql_servers = {
     system_msi                    = true
     public_network_access_enabled = true
     auto_grow_enabled             = true
-    
+    extended_auditing_policy = {
+      storage_account = {
+        key = "auditing-re1"
+      }
+      retention_in_days = 7
+    }
+        
 
     postgresql_firewall_rules = {
       postgresql-firewall-rule1 = {
@@ -62,28 +68,26 @@ postgresql_servers = {
     }
 
     
-    # azuread_administrator = {
-    #   azuread_group_key = "sales_admins"
-    # }
+    
     
     tags = {
       segment = "sales"
     }
 
      # Optional
-    # threat_detection_policy = {
-    #   enabled = true
-    #   disabled_alerts = [
-    #     # "Sql_Injection",
-    #     # "Sql_Injection_Vulnerability",
-    #     # "Access_Anomaly",
-    #     # "Data_Exfiltration",
-    #     # "Unsafe_Action"
-    #   ]
-    #   email_account_admins = false
-    #   email_addresses           = []
-    #   retention_days            = 15
-    # }
+    threat_detection_policy = {
+      enabled = true
+      disabled_alerts = [
+        # "Sql_Injection",
+        # "Sql_Injection_Vulnerability",
+        # "Access_Anomaly",
+        # "Data_Exfiltration",
+        # "Unsafe_Action"
+      ]
+      email_account_admins = false
+      email_addresses           = []
+      retention_days            = 15
+    }
     
   }
 
@@ -130,7 +134,7 @@ keyvault_access_policies = {
 
 azuread_groups = {
   sales_admins = {
-    name        = "sql-sales-admins"
+    name        = "postgresql-sales-admins"
     description = "Administrators of the sales SQL server."
     members = {
       user_principal_names = []

@@ -24,6 +24,13 @@ postgresql_servers = {
     auto_grow_enabled             = true
     vnet_key                      = "vnet_region1"
     subnet_key                    = "postgresql_subnet"
+
+    extended_auditing_policy = {
+      storage_account = {
+        key = "auditing-re1"
+      }
+      retention_in_days = 7
+    }
     
 
     postgresql_firewall_rules = {
@@ -77,19 +84,19 @@ postgresql_servers = {
     }
 
      # Optional
-    # threat_detection_policy = {
-    #   enabled = true
-    #   disabled_alerts = [
-    #     # "Sql_Injection",
-    #     # "Sql_Injection_Vulnerability",
-    #     # "Access_Anomaly",
-    #     # "Data_Exfiltration",
-    #     # "Unsafe_Action"
-    #   ]
-    #   email_account_admins = false
-    #   email_addresses           = []
-    #   retention_days            = 15
-    # }
+    threat_detection_policy = {
+      enabled = true
+      disabled_alerts = [
+        # "Sql_Injection",
+        # "Sql_Injection_Vulnerability",
+        # "Access_Anomaly",
+        # "Data_Exfiltration",
+        # "Unsafe_Action"
+      ]
+      email_account_admins = false
+      email_addresses           = []
+      retention_days            = 15
+    }
     
   }
 
