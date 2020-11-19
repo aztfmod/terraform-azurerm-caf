@@ -20,7 +20,8 @@ mysql_servers = {
     sku_name                      = "GP_Gen5_2"
     storage_mb                    = 5120
     administrator_login           = "mysqlsalesadmin"
-    administrator_login_password  = "Testpass@9"
+#   Below password argument is used to set the DB password. If not passed, there will be a random password generated and stored in azure keyvault. 
+#   administrator_login_password  = "Testpass@9"
     keyvault_key                  = "mysql-re1"
     system_msi                    = true
     public_network_access_enabled = true
