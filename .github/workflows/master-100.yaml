@@ -104,6 +104,7 @@ jobs:
             "examples/mysql_server/100-simple-mysql",
             "examples/mysql_server/101-active-directory-admin-mysql",
             "examples/mysql_server/102-vnet-rule-mysql",
+            "examples/mysql_server/103-private-endpoint-mysql",
             "examples/webapps/appservice/101-appservice-simple",
             "examples/webapps/appservice/102-appservice-slots",
             "examples/webapps/appservice/103-appservice-extend",
