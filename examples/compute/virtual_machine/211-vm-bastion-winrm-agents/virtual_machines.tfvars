@@ -132,7 +132,6 @@ virtual_machines = {
         diagnostics_storage_account_keys = ["bootdiag_region1"]
 
         # Relative path to the landing zone folder
-        # json_diagnostics_file           = "/compute/virtual_machine/211-vm-bastion-winrm-agents/diagnostics/configuration.json"
         xml_diagnostics_file = "/compute/virtual_machine/211-vm-bastion-winrm-agents/diagnostics/wadcfg.xml"
       }
     }
