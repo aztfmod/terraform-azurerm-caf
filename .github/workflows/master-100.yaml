@@ -84,6 +84,7 @@ jobs:
             "examples/app_insights/100-simple",
             "examples/compute/container_registry/100-simple-acr",
             "examples/compute/virtual_machine/100-single-linux-vm",
+            "examples/compute/virtual_machine/211-vm-bastion-winrm-agents",
             "examples/compute/virtual_machine/101-single-windows-vm",
             "examples/compute/virtual_machine/104-single-windows-backup",
             "examples/recovery_vault/101-simple-asrv",
