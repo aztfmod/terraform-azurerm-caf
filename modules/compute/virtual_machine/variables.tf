@@ -36,4 +36,9 @@ variable diagnostics {
 variable public_ip_addresses {
   default = {}
 }
+
+variable recovery_vaults {
+  default = {}
+}
+
 variable base_tags {}
