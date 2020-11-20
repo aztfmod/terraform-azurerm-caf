@@ -96,6 +96,7 @@ jobs:
           az account set -s  ${{ env.ARM_SUBSCRIPTION_ID }}
 
       - name: deploy example
+        timeout-minutes: 600
         run: |
           /tf/rover/rover.sh -lz ${GITHUB_WORKSPACE}/examples -a apply \
             -level level3 \
@@ -104,6 +105,7 @@ jobs:
             --environment ${{ github.run_id }}
 
       - name: destroy example
+        timeout-minutes: 600
         if: always()
         run: |
           /tf/rover/rover.sh -lz ${GITHUB_WORKSPACE}/examples -a destroy \
