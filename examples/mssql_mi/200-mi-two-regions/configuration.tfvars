@@ -28,7 +28,7 @@ vnets = {
       sqlmi1 = {
         name            = "sqlmi1"
         cidr            = ["172.25.88.0/24"]
-        nsg_key         = "sqlmi"
+        nsg_key         = "sqlmi1"
         route_table_key = "sqlmi1"
         delegation = {
           name               = "sqlmidelegation"
@@ -36,7 +36,8 @@ vnets = {
           actions = [
             "Microsoft.Network/virtualNetworks/subnets/join/action",
             "Microsoft.Network/virtualNetworks/subnets/prepareNetworkPolicies/action",
-          "Microsoft.Network/virtualNetworks/subnets/unprepareNetworkPolicies/action"]
+            "Microsoft.Network/virtualNetworks/subnets/unprepareNetworkPolicies/action"
+          ]
         }
       }
     }
@@ -51,7 +52,7 @@ vnets = {
       sqlmi2 = {
         name            = "sqlmi2"
         cidr            = ["172.25.96.0/24"]
-        nsg_key         = "sqlmi"
+        nsg_key         = "sqlmi2"
         route_table_key = "sqlmi2"
         delegation = {
           name               = "sqlmidelegation"
@@ -59,7 +60,8 @@ vnets = {
           actions = [
             "Microsoft.Network/virtualNetworks/subnets/join/action",
             "Microsoft.Network/virtualNetworks/subnets/prepareNetworkPolicies/action",
-          "Microsoft.Network/virtualNetworks/subnets/unprepareNetworkPolicies/action"]
+            "Microsoft.Network/virtualNetworks/subnets/unprepareNetworkPolicies/action"
+          ]
         }
       }
     }
@@ -67,9 +69,100 @@ vnets = {
 }
 
 network_security_group_definition = {
-  sqlmi = {
+  sqlmi1 = {
     nsg = [
-
+      {
+        name                       = "allow-replication-from-mi2-5022",
+        priority                   = "1000"
+        direction                  = "Inbound"
+        access                     = "Allow"
+        protocol                   = "*"
+        source_port_range          = "*"
+        destination_port_range     = "5022"
+        source_address_prefix      = "172.25.96.0/24"
+        destination_address_prefix = "172.25.88.0/24"
+      },
+      {
+        name                       = "allow-replication-from-mi2-11000-11999",
+        priority                   = "1100"
+        direction                  = "Inbound"
+        access                     = "Allow"
+        protocol                   = "*"
+        source_port_range          = "*"
+        destination_port_range     = "11000-11999"
+        source_address_prefix      = "172.25.96.0/24"
+        destination_address_prefix = "172.25.88.0/24"
+      },
+      {
+        name                       = "allow-replication-to-mi2-5022",
+        priority                   = "1000"
+        direction                  = "Outbound"
+        access                     = "Allow"
+        protocol                   = "*"
+        source_port_range          = "*"
+        destination_port_range     = "5022"
+        source_address_prefix      = "172.25.88.0/24"
+        destination_address_prefix = "172.25.96.0/24"
+      },
+      {
+        name                       = "allow-replication-to-mi2-11000-11999",
+        priority                   = "1100"
+        direction                  = "Outbound"
+        access                     = "Allow"
+        protocol                   = "*"
+        source_port_range          = "*"
+        destination_port_range     = "11000-11999"
+        source_address_prefix      = "172.25.88.0/24"
+        destination_address_prefix = "172.25.96.0/24"
+      }
+    ]
+  }
+  sqlmi2 = {
+    nsg = [
+      {
+        name                       = "allow-replication-from-mi1-5022",
+        priority                   = "1000"
+        direction                  = "Inbound"
+        access                     = "Allow"
+        protocol                   = "*"
+        source_port_range          = "*"
+        destination_port_range     = "5022"
+        source_address_prefix      = "172.25.88.0/24"
+        destination_address_prefix = "172.25.96.0/24"
+      },
+      {
+        name                       = "allow-replication-from-mi1-11000-11999",
+        priority                   = "1100"
+        direction                  = "Inbound"
+        access                     = "Allow"
+        protocol                   = "*"
+        source_port_range          = "*"
+        destination_port_range     = "11000-11999"
+        source_address_prefix      = "172.25.88.0/24"
+        destination_address_prefix = "172.25.96.0/24"
+      },
+      {
+        name                       = "allow-replication-to-mi1-5022",
+        priority                   = "1000"
+        direction                  = "Outbound"
+        access                     = "Allow"
+        protocol                   = "*"
+        source_port_range          = "*"
+        destination_port_range     = "5022"
+        source_address_prefix      = "172.25.96.0/24"
+        destination_address_prefix = "172.25.88.0/24"
+      },
+      {
+        name                       = "allow-replication-to-mi1-11000-11999",
+        priority                   = "1100"
+        direction                  = "Outbound"
+        access                     = "Allow"
+        protocol                   = "*"
+        source_port_range          = "*"
+        destination_port_range     = "11000-11999"
+        source_address_prefix      = "172.25.96.0/24"
+        destination_address_prefix = "172.25.88.0/24"
+      }
     ]
   }
 }
@@ -170,6 +263,8 @@ mssql_managed_databases = {
     resource_group_key = "sqlmi_region1"
     name               = "lz-sql-managed-db1"
     mi_server_key      = "sqlmi1"
+    # retentionDays      = 20
+    # collation          = "Greek_CS_AI"
   }
   managed_db2 = {
     resource_group_key = "sqlmi_region1"
