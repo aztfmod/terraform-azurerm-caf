@@ -1,7 +1,3 @@
-level = "level2"
-
-landingzone_name = "shared_services"
-
 resource_groups = {
   alerts = {
     name = "alerts"

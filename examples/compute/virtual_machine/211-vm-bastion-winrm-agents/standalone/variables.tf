@@ -1,54 +1,14 @@
-# Map of the remote data state for lower level
-variable lower_storage_account_name {}
-variable lower_container_name {}
-variable lower_resource_group_name {}
-
-variable tfstate_storage_account_name {}
-variable tfstate_container_name {}
-variable tfstate_key {}
-variable tfstate_resource_group_name {}
 
 variable global_settings {
-  default = {
-    default_region = "region1"
-    regions = {
-      region1 = "southeastasia"
-  }
-  }
+  default = {}
 }
 
-variable landingzone {
-  default = {
-    backend_type        = "azurerm"
-    global_settings_key = "launchpad"
-    level               = "level0"
-    key                 = "examples"
-    tfstates = {
-      launchpad = {
-        level   = "current"
-        tfstate = "caf_launchpad.tfstate"
-      }
-    }
-  }
-}
-
-variable tenant_id {}
-
-variable environment {
-  default = "sandpit"
-}
-variable rover_version {
-  default = null
-}
-variable logged_user_objectId {
-  default = null
-}
-variable logged_aad_app_objectId {
-  default = null
-}
 variable tags {
   default = null
   type    = map
+}
+variable log_analytics {
+  default = {}
 }
 variable app_service_environments {
   default = {}
@@ -68,16 +28,7 @@ variable resource_groups {
 variable network_security_group_definition {
   default = null
 }
-variable route_tables {
-  default = {}
-}
-variable azurerm_routes {
-  default = {}
-}
 variable vnets {
-  default = {}
-}
-variable vnet_peerings {
   default = {}
 }
 variable azurerm_redis_caches {
@@ -86,40 +37,16 @@ variable azurerm_redis_caches {
 variable mssql_servers {
   default = {}
 }
-variable mssql_managed_instances {
-  default = {}
-}
-variable mssql_managed_instances_secondary {
-  default = {}
-}
 variable mssql_databases {
   default = {}
 }
-variable mssql_managed_databases {
-  default = {}
-}
-variable mssql_managed_databases_restore {
-  default = {}
-}
 variable mssql_elastic_pools {
-  default = {}
-}
-variable mssql_failover_groups {
-  default = {}
-}
-variable mssql_mi_failover_groups {
-  default = {}
-}
-variable mssql_mi_administrators {
   default = {}
 }
 variable storage_accounts {
   default = {}
 }
 variable azuread_groups {
-  default = {}
-}
-variable azuread_roles {
   default = {}
 }
 variable keyvaults {
@@ -177,11 +104,5 @@ variable application_gateways {
   default = {}
 }
 variable application_gateway_applications {
-  default = {}
-}
-variable log_analytics {
-  default = {}
-}
-variable recovery_vaults {
   default = {}
 }
