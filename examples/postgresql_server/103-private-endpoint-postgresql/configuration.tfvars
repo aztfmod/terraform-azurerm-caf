@@ -168,14 +168,14 @@ vnets = {
         
     vnet = {
       name          = "postgresql-vnet"
-      address_space = ["10.150.101.0/24"]
+      address_space = ["10.150.102.0/24"]
       
     }
     #specialsubnets = {}
     subnets = {
       postgresql_subnet = {
         name    = "postgresql_subnet"
-        cidr    = ["10.150.101.0/25"]
+        cidr    = ["10.150.102.0/25"]
         enforce_private_link_endpoint_network_policies = "true"
       }
     }
