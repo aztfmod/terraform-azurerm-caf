@@ -144,6 +144,7 @@ variable application_gateway_applications {
 variable mysql_servers {
   default = {}
 }
+
 variable postgresql_servers {
   default = {}
 }
