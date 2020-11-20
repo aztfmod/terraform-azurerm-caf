@@ -9,7 +9,12 @@ variable tfstate_key {}
 variable tfstate_resource_group_name {}
 
 variable global_settings {
-  default = {}
+  default = {
+    default_region = "region1"
+    regions = {
+      region1 = "southeastasia"
+  }
+  }
 }
 
 variable landingzone {
@@ -139,5 +144,8 @@ variable application_gateways {
   default = {}
 }
 variable application_gateway_applications {
+  default = {}
+}
+variable recovery_vaults {
   default = {}
 }
