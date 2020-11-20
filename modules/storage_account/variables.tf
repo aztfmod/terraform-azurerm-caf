@@ -15,3 +15,6 @@ variable resource_groups {
 variable base_tags {
   default = {}
 }
+variable recovery_vaults {
+  default = {}
+}

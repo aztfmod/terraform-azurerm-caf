@@ -17,6 +17,7 @@ locals {
   combined_objects_networking                 = merge(map(local.client_config.landingzone_key, module.networking), try(var.remote_objects.vnets, {}))
   combined_objects_public_ip_addresses        = merge(map(local.client_config.landingzone_key, module.public_ip_addresses), try(var.remote_objects.public_ip_addresses, {}))
   combined_objects_private_dns                = merge(map(local.client_config.landingzone_key, module.private_dns), try(var.remote_objects.private_dns, {}))
+  combined_objects_recovery_vaults            = merge(map(local.client_config.landingzone_key, module.recovery_vaults), try(var.remote_objects.recovery_vaults, {}))
   combined_objects_resource_groups            = merge(map(local.client_config.landingzone_key, module.resource_groups), try(var.remote_objects.resource_groups, {}))
   combined_objects_storage_accounts           = merge(map(local.client_config.landingzone_key, module.storage_accounts), try(var.remote_objects.storage_accounts, {}))
   combined_objects_synapse_workspaces         = merge(map(local.client_config.landingzone_key, module.synapse_workspaces), try(var.remote_objects.synapse_workspaces, {}))
