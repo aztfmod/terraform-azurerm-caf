@@ -23,13 +23,16 @@ postgresql_servers = {
     system_msi                    = true
     public_network_access_enabled = true
     auto_grow_enabled             = true
+    vnet_key                      = "vnet_region1"
+    subnet_key                    = "postgresql_subnet"
+
     extended_auditing_policy = {
       storage_account = {
         key = "auditing-re1"
       }
       retention_in_days = 7
     }
-        
+    
 
     postgresql_firewall_rules = {
       postgresql-firewall-rule1 = {
@@ -68,11 +71,39 @@ postgresql_servers = {
       }
     }
 
-    
-    
+    postgresql_vnet_rules = {
+      postgresql_vnet_rules = {
+        name                = "postgresql-vnet-rule"
+      }
+    }
+    azuread_administrator = {
+      azuread_group_key = "sales_admins"
+    }
     
     tags = {
       segment = "sales"
+    }
+
+    # Optional
+    private_endpoints = {
+      # Require enforce_private_link_endpoint_network_policies set to true on the subnet
+      private-link-level4 = {
+        name = "sales-postgresql-re1"
+        remote_tfstate = {
+          tfstate_key = "foundations"
+          lz_key      = "launchpad"
+          output_key  = "vnets"
+        }
+        vnet_key           = "vnet_region1"
+        subnet_key         = "postgresql_subnet"
+        resource_group_key = "postgresql_region1"
+
+        private_service_connection = {
+          name                 = "sales-postgresql-re1"
+          is_manual_connection = false
+          subresource_names    = ["postgresqlServer"]
+        }
+      }
     }
 
      # Optional
@@ -128,6 +159,30 @@ keyvaults = {
     }
   }
 }
+
+
+## Networking configuration
+vnets = {
+  vnet_region1 = {
+    resource_group_key = "postgresql_region1"
+        
+    vnet = {
+      name          = "postgresql-vnet"
+      address_space = ["10.150.101.0/24"]
+      
+    }
+    #specialsubnets = {}
+    subnets = {
+      postgresql_subnet = {
+        name    = "postgresql_subnet"
+        cidr    = ["10.150.101.0/25"]
+        enforce_private_link_endpoint_network_policies = "true"
+      }
+    }
+    
+  }
+}
+
 
 azuread_groups = {
   sales_admins = {
