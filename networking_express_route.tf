@@ -27,7 +27,7 @@ module express_route_circuit_authorizations {
   for_each = local.networking.express_route_circuit_authorizations
 
   settings                   = each.value
-  resource_group_name        = module.express_route_circuits[each.value.express_route_key].resource_group_name
+  resource_group_name        = try(module.resource_groups[each.value.resource_group_key].name, null) == null ? module.express_route_circuits[each.value.express_route_key].resource_group_name : module.resource_groups[each.value.resource_group_key].name
   express_route_circuit_name = module.express_route_circuits[each.value.express_route_key].name
 }
 
