@@ -129,10 +129,16 @@ virtual_machines = {
       }
 
       microsoft_azure_diagnostics = {
+        # Requires at least one diagnostics storage account
         diagnostics_storage_account_keys = ["bootdiag_region1"]
 
         # Relative path to the landing zone folder
         xml_diagnostics_file = "/compute/virtual_machine/211-vm-bastion-winrm-agents/diagnostics/wadcfg.xml"
+
+        # Additional destinations can be set
+        #
+        # Event Hub namespaces
+        event_hub_namespace_keys = []
       }
     }
 
