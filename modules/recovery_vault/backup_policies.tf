@@ -1,7 +1,7 @@
 
 resource "azurerm_backup_policy_vm" "vm" {
   depends_on = [time_sleep.delay, time_sleep.delay_create]
-  for_each = try(var.settings.backup_policies.vms, {})
+  for_each   = try(var.settings.backup_policies.vms, {})
 
   name                = each.value.name
   resource_group_name = var.resource_group_name
@@ -60,7 +60,7 @@ resource "azurerm_backup_policy_vm" "vm" {
 
 resource "azurerm_backup_policy_file_share" "fs" {
   depends_on = [time_sleep.delay, time_sleep.delay_create]
-  for_each = try(var.settings.backup_policies.fs, {})
+  for_each   = try(var.settings.backup_policies.fs, {})
 
   name                = each.value.name
   resource_group_name = var.resource_group_name
@@ -93,11 +93,11 @@ resource "time_sleep" "delay" {
   depends_on = [azurerm_recovery_services_vault.asr_rg_vault]
 
   destroy_duration = "15s"
-  create_duration = "15s"
+  create_duration  = "15s"
 }
 
 resource "time_sleep" "delay_create" {
-  depends_on = [azurerm_recovery_services_vault.asr_rg_vault ]
+  depends_on = [azurerm_recovery_services_vault.asr_rg_vault]
 
-  create_duration = "15s"
+  create_duration = "30s"
 }

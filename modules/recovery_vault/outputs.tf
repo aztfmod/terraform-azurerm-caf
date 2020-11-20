@@ -11,11 +11,11 @@ output "name" {
 
 output "backup_policies" {
   description = "Output the set of backup policies in this vault"
-  value       = {
+  value = {
     virtual_machines = azurerm_backup_policy_vm.vm
-    file_shares = azurerm_backup_policy_file_share.fs
+    file_shares      = azurerm_backup_policy_file_share.fs
   }
-  
+
 }
 
 output "replication_policies" {

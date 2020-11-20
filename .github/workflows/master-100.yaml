@@ -47,7 +47,7 @@ jobs:
         with:
           repository: Azure/caf-terraform-landingzones
           path: public
-          ref: '2010.0.0'
+          ref: '2010.0.1'
 
       - name: Login azure
         run: |
@@ -84,8 +84,12 @@ jobs:
             "examples/app_insights/100-simple",
             "examples/compute/container_registry/100-simple-acr",
             "examples/compute/virtual_machine/100-single-linux-vm",
+            "examples/compute/virtual_machine/211-vm-bastion-winrm-agents",
             "examples/compute/virtual_machine/101-single-windows-vm",
             "examples/compute/proximity_placement_group",
+            "examples/compute/virtual_machine/104-single-windows-backup",
+            "examples/recovery_vault/101-simple-asrv",
+            "examples/recovery_vault/102-asr-protection",
             "examples/networking/virtual_network/100-subnet-delegation",
             "examples/networking/virtual_wan/100-vwan-multi-hubs",
             "examples/networking/virtual_wan/101-vwan-multi-hubs-firewalls",
