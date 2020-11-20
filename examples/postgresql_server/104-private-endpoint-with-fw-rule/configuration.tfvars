@@ -32,7 +32,26 @@ postgresql_servers = {
       }
       retention_in_days = 7
     }
-        
+    
+
+    postgresql_firewall_rules = {
+      postgresql-firewall-rule1 = {
+        name = "postgresql_server_firewallrule1"
+        resource_group_name = "postgresql_region1"
+        server_name         = "sales-re1"
+        start_ip_address    = "40.112.8.12"
+        end_ip_address      = "40.112.8.12"
+      }
+      postgresql-firewall-rule2 = {
+        name = "postgresql_server_firewallrule2"
+        resource_group_name = "postgresql_region1"
+        server_name         = "sales-re1"
+        start_ip_address    = "52.163.188.229"
+        end_ip_address      = "52.163.188.229"
+      }
+    }
+
+    
     postgresql_configuration = {
       postgresql_configuration1 = {
         name = "backslash_quote"
