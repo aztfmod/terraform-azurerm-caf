@@ -16,7 +16,8 @@ postgresql_servers = {
     version                       = "9.6"
     sku_name                      = "GP_Gen5_2"
     administrator_login           = "postgresqlsalesadmin"
-    administrator_login_password  = "Testpass@9"
+#   Below password argument is used to set the DB password. If not passed, there will be a random password generated and stored in azure keyvault. 
+#   administrator_login_password  = "ComplxP@ssw0rd!"
     keyvault_key                  = "postgresql-re1"
     connection_policy             = "Default"
     system_msi                    = true
