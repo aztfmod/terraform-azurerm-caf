@@ -1,6 +1,7 @@
 module "caf" {
   source = "../"
 
+  global_settings             = var.global_settings
   current_landingzone_key     = var.landingzone.key
   tenant_id                   = var.tenant_id
   diagnostic_storage_accounts = var.diagnostic_storage_accounts
@@ -47,6 +48,7 @@ module "caf" {
   }
   shared_services = {
     monitoring = var.monitoring
+    recovery_vaults = var.recovery_vaults
   }
   enable = {}
 }
