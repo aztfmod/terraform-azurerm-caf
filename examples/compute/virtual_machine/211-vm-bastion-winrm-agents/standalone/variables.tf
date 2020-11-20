@@ -1,54 +1,14 @@
-# Map of the remote data state for lower level
-variable lower_storage_account_name {}
-variable lower_container_name {}
-variable lower_resource_group_name {}
-
-variable tfstate_storage_account_name {}
-variable tfstate_container_name {}
-variable tfstate_key {}
-variable tfstate_resource_group_name {}
 
 variable global_settings {
-  default = {
-    default_region = "region1"
-    regions = {
-      region1 = "southeastasia"
-  }
-  }
+  default = {}
 }
 
-variable landingzone {
-  default = {
-    backend_type        = "azurerm"
-    global_settings_key = "launchpad"
-    level               = "level0"
-    key                 = "examples"
-    tfstates = {
-      launchpad = {
-        level   = "current"
-        tfstate = "caf_launchpad.tfstate"
-      }
-    }
-  }
-}
-
-variable tenant_id {}
-
-variable environment {
-  default = "sandpit"
-}
-variable rover_version {
-  default = null
-}
-variable logged_user_objectId {
-  default = null
-}
-variable logged_aad_app_objectId {
-  default = null
-}
 variable tags {
   default = null
   type    = map
+}
+variable log_analytics {
+  default = {}
 }
 variable app_service_environments {
   default = {}
@@ -144,11 +104,5 @@ variable application_gateways {
   default = {}
 }
 variable application_gateway_applications {
-  default = {}
-}
-variable log_analytics {
-  default = {}
-}
-variable recovery_vaults {
   default = {}
 }
