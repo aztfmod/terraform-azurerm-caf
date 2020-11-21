@@ -273,16 +273,16 @@ mssql_managed_databases = {
   }
 }
 
-mssql_managed_databases_restore = {
-  managed_db_restore = {
-    resource_group_key  = "sqlmi_region1"
-    name                = "lz-sql-managed-db-restore"
-    mi_server_key       = "sqlmi1"
-    createMode          = "PointInTimeRestore"
-    source_database_key = "managed_db1"
-    restorePointInTime  = "2020-11-11T10:00:00Z"
-  }
-}
+# mssql_managed_databases_restore = {
+#   managed_db_restore = {
+#     resource_group_key  = "sqlmi_region1"
+#     name                = "lz-sql-managed-db-restore"
+#     mi_server_key       = "sqlmi1"
+#     createMode          = "PointInTimeRestore"
+#     source_database_key = "managed_db1"
+#     restorePointInTime  = "2020-11-11T10:00:00Z"
+#   }
+# }
 
 mssql_mi_failover_groups = {
   failover-mi = {
