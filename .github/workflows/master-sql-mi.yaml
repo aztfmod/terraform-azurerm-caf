@@ -106,8 +106,8 @@ jobs:
             --environment ${{ github.run_id }}
 
       - name: destroy example
-        if: always()
         timeout-minutes: 600
+        if: always()
         run: |
           /tf/rover/rover.sh -lz ${GITHUB_WORKSPACE}/examples -a destroy \
             -level level3 \
