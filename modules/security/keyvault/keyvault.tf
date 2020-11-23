@@ -42,4 +42,14 @@ resource "azurerm_key_vault" "keyvault" {
       ]
     }
   }
+
+  dynamic "contact" {
+    for_each = lookup(var.settings, "contact", {})
+
+    content {
+      email  = contact.value.email
+      name   = try(contact.value.name, null)
+      phone  = try(contact.value.phone, null)
+    }
+  }
 }
