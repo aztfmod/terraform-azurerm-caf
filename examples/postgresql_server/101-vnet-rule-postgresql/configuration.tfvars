@@ -39,15 +39,15 @@ postgresql_servers = {
         name = "postgresql_server_firewallrule1"
         resource_group_name = "postgresql_region1"
         server_name         = "sales-re1"
-        start_ip_address    = "40.112.8.12"
-        end_ip_address      = "40.112.8.12"
+        start_ip_address    = "10.0.1.10"
+        end_ip_address      = "10.0.1.11"
       }
       postgresql-firewall-rule2 = {
         name = "postgresql_server_firewallrule2"
         resource_group_name = "postgresql_region1"
         server_name         = "sales-re1"
-        start_ip_address    = "52.163.188.229"
-        end_ip_address      = "52.163.188.229"
+        start_ip_address    = "10.0.2.10"
+        end_ip_address      = "10.0.2.11"
       }
     }
 
@@ -76,10 +76,7 @@ postgresql_servers = {
         name                = "postgresql-vnet-rule"
       }
     }
-    azuread_administrator = {
-      azuread_group_key = "sales_admins"
-    }
-    
+        
     tags = {
       segment = "sales"
     }
@@ -162,24 +159,5 @@ vnets = {
 }
 
 
-azuread_groups = {
-  sales_admins = {
-    name        = "postgresql-sales-admins"
-    description = "Administrators of the sales SQL server."
-    members = {
-      user_principal_names = []
-      object_ids = [
-      ]
-      group_keys             = []
-      service_principal_keys = []
-    }
-    owners = {
-      user_principal_names = [
-      ]
-      service_principal_keys = []
-      object_ids             = []
-    }
-    prevent_duplicate_name = false
-  }
-}
+
 

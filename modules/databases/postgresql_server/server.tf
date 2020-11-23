@@ -76,15 +76,6 @@ resource "azurerm_key_vault_secret" "sql_admin" {
   key_vault_id = var.keyvault_id
 }
 
-resource "azurerm_postgresql_active_directory_administrator" "aad_admin" {
-  count = try(var.settings.azuread_administrator, null) == null ? 0 : 1
-
-  server_name         = azurerm_postgresql_server.postgresql.name
-  resource_group_name = var.resource_group_name
-  login               = try(var.settings.azuread_administrator.login_username, var.azuread_groups[var.settings.azuread_administrator.azuread_group_key].name)
-  tenant_id           = try(var.settings.azuread_administrator.tenant_id, var.azuread_groups[var.settings.azuread_administrator.azuread_group_key].tenant_id)
-  object_id           = try(var.settings.azuread_administrator.object_id, var.azuread_groups[var.settings.azuread_administrator.azuread_group_key].id)
-}
 
 
 
