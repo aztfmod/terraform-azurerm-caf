@@ -32,13 +32,14 @@ mysql_servers = {
       }
       retention_in_days = 7
     }
+    
     mysql_firewall_rules = {
       mysql-firewall-rules = {
         name = "mysql_server_firewallrule"
         resource_group_name = "mysql_region1"
         server_name         = "sales-rg1"
-        start_ip_address    = "52.163.80.201"
-        end_ip_address      = "52.163.80.201"
+        start_ip_address    = "10.0.0.1"
+        end_ip_address      = "10.0.0.3"
       }
     }
 
@@ -122,24 +123,3 @@ keyvaults = {
   }
 }
 
-
-azuread_groups = {
-  sales_admins = {
-    name        = "mysql-sales-admins"
-    description = "Administrators of the sales MySQL server."
-    members = {
-      user_principal_names = []
-      object_ids = [
-      ]
-      group_keys             = []
-      service_principal_keys = []
-    }
-    owners = {
-      user_principal_names = [
-      ]
-      service_principal_keys = []
-      object_ids             = []
-    }
-    prevent_duplicate_name = false
-  }
-}
