@@ -14,6 +14,7 @@ postgresql_servers = {
     region                        = "region1"
     resource_group_key            = "postgresql_region1"
     version                       = "9.6"
+#   PostgreSQL Virtual Network Rules can only be used with SKU Tiers of GeneralPurpose or MemoryOptimized
     sku_name                      = "GP_Gen5_2"
     administrator_login           = "postgresqlsalesadmin"
 #   Below password argument is used to set the DB password. If not passed, there will be a random password generated and stored in azure keyvault. 
