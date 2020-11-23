@@ -9,10 +9,10 @@ module private_endpoint {
   for_each = var.private_endpoints
 
   resource_id         = azurerm_mariadb_server.mariadb.id
-  name                = try(format("%s-to-%s-%s", each.value.name, each.value.vnet_key, each.value.subnet_key), format("%s-to-%s-%s-%s", each.value.name, each.value.remote_tfstate.lz_key, each.value.vnet_key, each.value.subnet_key))
-  location            = var.resource_groups[each.value.resource_group_key].location
-  resource_group_name = var.resource_groups[each.value.resource_group_key].name
-  subnet_id           = try(var.vnets[each.value.vnet_key].subnets[each.value.subnet_key].id, var.vnets[each.value.lz_key].vnets[each.value.vnet_key].subnets[each.value.subnet_key].id)
+  name                = each.value.name
+  location            = var.location
+  resource_group_name = var.resource_group_name
+  subnet_id           = var.subnet_id
   settings            = each.value
   global_settings     = var.global_settings
   base_tags           = local.tags

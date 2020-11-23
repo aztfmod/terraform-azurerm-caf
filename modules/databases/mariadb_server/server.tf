@@ -23,13 +23,12 @@ resource "azurerm_mariadb_server" "mariadb" {
 # Generate mariadb server random admin password if not provided in the attribute administrator_login_password
 resource "random_password" "mariadb_admin" {
   count = try(var.settings.administrator_login_password, null) == null ? 1 : 0
-
-  length           = 100
+  length           = 32
   special          = true
   upper            = true
   number           = true
-  override_special = "!@#$%&"
-  
+  override_special = "_%@"
+    
 }
 
 # Store the generated password into keyvault
