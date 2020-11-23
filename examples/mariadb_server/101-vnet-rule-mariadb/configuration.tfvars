@@ -17,6 +17,7 @@ mariadb_servers = {
     region                        = "region1"
     resource_group_key            = "mariadb_region1"
     version                       = "10.2"
+# MariaDB Virtual Network Rules can only be used with SKU Tiers of GeneralPurpose or MemoryOptimized
     sku_name                      = "GP_Gen5_2"
     storage_mb                    = 5120
     administrator_login           = "mariadbadmin"
@@ -25,11 +26,13 @@ mariadb_servers = {
     keyvault_key                  = "mariadb-re1"
     public_network_access_enabled = true
     auto_grow_enabled             = true
-           
+    vnet_key                      = "vnet_region1"
+    subnet_key                    = "mariadb_subnet"
+
     tags = {
       segment = "sales"
     }
-    
+              
     mariadb_firewall_rules = {
       mariadb-firewall-rules = {
         name = "mariadb-firewallrule"
@@ -49,7 +52,12 @@ mariadb_servers = {
       }
     }
 
-    
+    mariadb_vnet_rules = {
+      mariadb_vnet_rules = {
+        name                = "mariadb-vnet-rule"
+      }
+    }
+
     mariadb_database = {
       mariadb_database = {
         name                = "mariadb_server_sampledb"
@@ -59,14 +67,14 @@ mariadb_servers = {
         collation           = "utf8_general_ci"
       }
     }
-
+    
     extended_auditing_policy = {
       storage_account = {
         key = "auditing-re1"
       }
       retention_in_days = 7
     }
-       
+    
     # Optional
     threat_detection_policy = {
       enabled = true
@@ -86,6 +94,29 @@ mariadb_servers = {
   }
 
 }
+
+## Networking configuration
+vnets = {
+  vnet_region1 = {
+    resource_group_key = "mariadb_region1"
+        
+    vnet = {
+      name          = "mariadb-vnet"
+      address_space = ["10.150.102.0/24"]
+      
+    }
+    #specialsubnets = {}
+    subnets = {
+      mariadb_subnet = {
+        name    = "mariadb_subnet"
+        cidr    = ["10.150.102.0/25"]
+        service_endpoints   = ["Microsoft.Sql"]
+      }
+    }
+    
+  }
+}
+
 
 storage_accounts = {
   security-re1 = {
