@@ -50,7 +50,6 @@ keyvaults = {
     network = {
       bypass         = "AzureServices"
       default_action = "Deny"
-      # ip_rules       = ["11.11.11.11/32"]
     }
 
     private_endpoints = {
@@ -65,6 +64,13 @@ keyvaults = {
           name                 = "keyvault-certificates"
           is_manual_connection = false
           subresource_names    = ["vault"]
+        }
+
+        private_dns = {
+          dns1 = {
+            lz_key = ""
+            private_dns_key = ""
+          }
         }
       }
     }
