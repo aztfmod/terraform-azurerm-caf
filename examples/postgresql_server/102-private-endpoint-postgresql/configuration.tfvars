@@ -23,31 +23,16 @@ postgresql_servers = {
     system_msi                    = true
     public_network_access_enabled = true
     auto_grow_enabled             = true
+    vnet_key                      = "vnet_region1"
+    subnet_key                    = "postgresql_subnet"
+
     extended_auditing_policy = {
       storage_account = {
         key = "auditing-re1"
       }
       retention_in_days = 7
-    }    
-
-    postgresql_firewall_rules = {
-      postgresql-firewall-rule1 = {
-        name = "postgresql_server_firewallrule1"
-        resource_group_name = "postgresql_region1"
-        server_name         = "sales-re1"
-        start_ip_address    = "40.112.8.12"
-        end_ip_address      = "40.112.8.12"
-      }
-      postgresql-firewall-rule2 = {
-        name = "postgresql_server_firewallrule2"
-        resource_group_name = "postgresql_region1"
-        server_name         = "sales-re1"
-        start_ip_address    = "52.163.188.229"
-        end_ip_address      = "52.163.188.229"
-      }
     }
-
-    
+        
     postgresql_configuration = {
       postgresql_configuration1 = {
         name = "backslash_quote"
@@ -67,13 +52,34 @@ postgresql_servers = {
       }
     }
 
-    
     azuread_administrator = {
       azuread_group_key = "sales_admins"
     }
     
     tags = {
       segment = "sales"
+    }
+
+    # Optional
+    private_endpoints = {
+      # Require enforce_private_link_endpoint_network_policies set to true on the subnet
+      private-link-level4 = {
+        name = "sales-postgresql-re1"
+        remote_tfstate = {
+          tfstate_key = "foundations"
+          lz_key      = "launchpad"
+          output_key  = "vnets"
+        }
+        vnet_key           = "vnet_region1"
+        subnet_key         = "postgresql_subnet"
+        resource_group_key = "postgresql_region1"
+
+        private_service_connection = {
+          name                 = "sales-postgresql-re1"
+          is_manual_connection = false
+          subresource_names    = ["postgresqlServer"]
+        }
+      }
     }
 
      # Optional
@@ -130,24 +136,25 @@ keyvaults = {
   }
 }
 
-azuread_groups = {
-  sales_admins = {
-    name        = "postgresql-sales-admins"
-    description = "Administrators of the sales SQL server."
-    members = {
-      user_principal_names = []
-      object_ids = [
-      ]
-      group_keys             = []
-      service_principal_keys = []
+
+## Networking configuration
+vnets = {
+  vnet_region1 = {
+    resource_group_key = "postgresql_region1"
+        
+    vnet = {
+      name          = "postgresql-vnet"
+      address_space = ["10.150.102.0/24"]
+      
     }
-    owners = {
-      user_principal_names = [
-      ]
-      service_principal_keys = []
-      object_ids             = []
+    #specialsubnets = {}
+    subnets = {
+      postgresql_subnet = {
+        name    = "postgresql_subnet"
+        cidr    = ["10.150.102.0/25"]
+        enforce_private_link_endpoint_network_policies = "true"
+      }
     }
-    prevent_duplicate_name = false
+    
   }
 }
-
