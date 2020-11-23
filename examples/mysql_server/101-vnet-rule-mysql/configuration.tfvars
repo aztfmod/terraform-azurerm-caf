@@ -17,6 +17,7 @@ mysql_servers = {
     region                        = "region1"
     resource_group_key            = "mysql_region1"
     version                       = "5.7"
+#   MySQL Virtual Network Rules can only be used with SKU Tiers of GeneralPurpose or MemoryOptimized 
     sku_name                      = "GP_Gen5_2"
     storage_mb                    = 5120
     administrator_login           = "mysqlsalesadmin"
