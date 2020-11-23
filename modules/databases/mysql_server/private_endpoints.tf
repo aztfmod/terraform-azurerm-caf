@@ -4,7 +4,7 @@
 
 module private_endpoint {
   source   = "../../networking/private_endpoint"
-  for_each = var.private_endpoints
+  for_each = try(var.private_endpoints, {})
 
   resource_id         = azurerm_mysql_server.mysql.id
   name                = each.value.name

@@ -28,7 +28,8 @@ mysql_servers = {
     auto_grow_enabled             = true
     vnet_key                      = "vnet_region1"
     subnet_key                    = "mysql_subnet"
-
+    
+    
     extended_auditing_policy = {
       storage_account = {
         key = "auditing-re1"
@@ -55,16 +56,6 @@ mysql_servers = {
       }
     }
     
-    mysql_vnet_rules = {
-      mysql_vnet_rules = {
-        name                = "mysql-vnet-rule"
-      }
-    }
-
-    azuread_administrator = {
-      azuread_group_key = "sales_admins"
-    }
-    
     mysql_database = {
       mysql_database = {
         name                = "mysql_server_sampledb"
@@ -77,6 +68,28 @@ mysql_servers = {
             
     tags = {
       segment = "sales"
+    }
+
+    # Optional
+    private_endpoints = {
+      # Require enforce_private_link_endpoint_network_policies set to true on the subnet
+      private-link-level4 = {
+        name = "sales-mysql-re1"
+        remote_tfstate = {
+          tfstate_key = "foundations"
+          lz_key      = "launchpad"
+          output_key  = "vnets"
+        }
+        vnet_key           = "vnet_region1"
+        subnet_key         = "mysql_subnet"
+        resource_group_key = "mysql_region1"
+
+        private_service_connection = {
+          name                 = "sales-mysql-re1"
+          is_manual_connection = false
+          subresource_names    = ["mysqlServer"]
+        }
+      }
     }
 
     # Optional
@@ -97,28 +110,6 @@ mysql_servers = {
 
   }
 
-}
-
-## Networking configuration
-vnets = {
-  vnet_region1 = {
-    resource_group_key = "mysql_region1"
-        
-    vnet = {
-      name          = "mysql-vnet"
-      address_space = ["10.150.100.0/24"]
-      
-    }
-    #specialsubnets = {}
-    subnets = {
-      mysql_subnet = {
-        name    = "mysql_subnet"
-        cidr    = ["10.150.100.0/25"]
-        service_endpoints   = ["Microsoft.Sql"]
-      }
-    }
-    
-  }
 }
 
 storage_accounts = {
@@ -156,23 +147,26 @@ keyvaults = {
   }
 }
 
-azuread_groups = {
-  sales_admins = {
-    name        = "mysql-sales-admins"
-    description = "Administrators of the sales MySQL server."
-    members = {
-      user_principal_names = []
-      object_ids = [
-      ]
-      group_keys             = []
-      service_principal_keys = []
+## Networking configuration
+vnets = {
+  vnet_region1 = {
+    resource_group_key = "mysql_region1"
+        
+    vnet = {
+      name          = "mysql-vnet"
+      address_space = ["10.150.100.0/24"]
+      
     }
-    owners = {
-      user_principal_names = [
-      ]
-      service_principal_keys = []
-      object_ids             = []
+    #specialsubnets = {}
+    subnets = {
+      mysql_subnet = {
+        name    = "mysql_subnet"
+        cidr    = ["10.150.100.0/25"]
+        enforce_private_link_endpoint_network_policies = "true"  
+        
+      }
     }
-    prevent_duplicate_name = false
+    
   }
 }
+

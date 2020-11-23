@@ -45,11 +45,10 @@ resource "azurecaf_name" "mysql" {
 resource "random_password" "mysql_admin" {
   count = try(var.settings.administrator_login_password, null) == null ? 1 : 0
 
-  length           = 128
+  length           = 32
   special          = true
-  upper            = true
-  number           = true
-  override_special = "$#%"
+  override_special = "_%@"
+  
 }
 
 # Store the generated password into keyvault
