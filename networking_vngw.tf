@@ -1,6 +1,6 @@
-module virtual_gateways {
-  source   = "./modules/networking/virtual_gateways"
-  for_each = local.networking.express_route_circuits
+module virtual_network_gateways {
+  source   = "./modules/networking/virtual_network_gateways"
+  for_each = try(local.networking.virtual_network_gateways, {})
 
   settings            = each.value
   resource_group_name = module.resource_groups[each.value.resource_group_key].name
