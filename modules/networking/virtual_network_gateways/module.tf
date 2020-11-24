@@ -1,6 +1,6 @@
 resource "azurecaf_name" "vgw" {
   name          = var.name
-  resource_type = "azurerm_firewall"
+  resource_type = "azurerm_virtual_network_gateway"
   prefixes      = [var.global_settings.prefix]
   random_length = var.global_settings.random_length
   clean_input   = true
@@ -20,11 +20,16 @@ resource "azurerm_virtual_network_gateway" "vngw" {
   ip_configuration {
     name                          = var.ip_config_name
     public_ip_address_id          = var.public_ip_address_id
-    private_ip_address_allocation = "Dynamic"
+    private_ip_address_allocation = var.private_ip_address_allocation
     subnet_id                     = var.subnet_id
   }
 
+  timeouts {
+    create = "60m"
+    delete = "60m"
+  }
 
+}
 #### In development. VPN Type will be coming soon ####
 #   enable_bgp    = false
 #   vpn_type = " "
