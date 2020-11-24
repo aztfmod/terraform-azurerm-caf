@@ -119,6 +119,14 @@ vnets = {
 
 
 storage_accounts = {
+  auditing-re1 = {
+    name                     = "auditingre1"
+    resource_group_key       = "mariadb_region1"
+    region                   = "region1"
+    account_kind             = "BlobStorage"
+    account_tier             = "Standard"
+    account_replication_type = "RAGRS"
+  }
   security-re1 = {
     name                     = "securityre1"
     resource_group_key       = "security_region1"
@@ -134,17 +142,13 @@ keyvaults = {
     name               = "mariadbre1"
     resource_group_key = "security_region1"
     sku_name           = "standard"
-  }
-}
-
-keyvault_access_policies = {
-  # A maximum of 16 access policies per keyvault
-  mariadb-re1 = {
-    logged_in_user = {
-      secret_permissions = ["Set", "Get", "List", "Delete", "Purge"]
-    }
-    logged_in_aad_app = {
-      secret_permissions = ["Set", "Get", "List", "Delete", "Purge"]
+    creation_policies = {
+      logged_in_user = {
+        secret_permissions = ["Set", "Get", "List", "Delete", "Purge"]
+      }
+      logged_in_aad_app = {
+        secret_permissions = ["Set", "Get", "List", "Delete", "Purge"]
+      }
     }
   }
 }

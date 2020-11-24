@@ -25,21 +25,13 @@ mariadb_servers = {
     keyvault_key                  = "mariadb-re1"
     public_network_access_enabled = true
     auto_grow_enabled             = true
+    vnet_key                      = "vnet_region1"
+    subnet_key                    = "mariadb_subnet"
            
     tags = {
       segment = "sales"
     }
     
-    mariadb_firewall_rules = {
-      mariadb-firewall-rules = {
-        name = "mariadb-firewallrule"
-        resource_group_name = "mariadb_region1"
-        server_name         = "sales-rg1"
-        start_ip_address    = "10.0.0.1"
-        end_ip_address      = "10.0.0.3"
-      }
-    }
-
     mariadb_configuration = {
       mariadb_configuration = {
         name                = "interactive_timeout"
@@ -57,6 +49,28 @@ mariadb_servers = {
         server_name         = "sales-re1"
         charset             = "utf8"
         collation           = "utf8_general_ci"
+      }
+    }
+
+    private_endpoints = {
+      # Require enforce_private_link_endpoint_network_policies set to true on the subnet
+      private-link-level4 = {
+        name = "sales-mariadb-re1"
+        remote_tfstate = {
+          tfstate_key = "foundations"
+          lz_key      = "launchpad"
+          output_key  = "vnets"
+        }
+        vnet_key           = "vnet_region1"
+        subnet_key         = "mariadb_subnet"
+        resource_group_key = "mariadb_region1"
+
+        private_service_connection = {
+          name                 = "sales-mariadb-re1"
+          is_manual_connection = false
+          enforce_private_link_endpoint_network_policies = "true"
+          subresource_names    = ["mariadbServer"]
+        }
       }
     }
 
@@ -85,6 +99,29 @@ mariadb_servers = {
 
   }
 
+}
+
+## Networking configuration
+vnets = {
+  vnet_region1 = {
+    resource_group_key = "mariadb_region1"
+        
+    vnet = {
+      name          = "mariadb-vnet"
+      address_space = ["10.150.102.0/24"]
+      
+    }
+    #specialsubnets = {}
+    subnets = {
+      mariadb_subnet = {
+        name    = "mariadb_subnet"
+        cidr    = ["10.150.102.0/25"]
+        enforce_private_link_endpoint_network_policies = "true"
+        service_endpoints   = ["Microsoft.Sql"]
+      }
+    }
+    
+  }
 }
 
 storage_accounts = {
@@ -121,5 +158,4 @@ keyvaults = {
     }
   }
 }
-
 
