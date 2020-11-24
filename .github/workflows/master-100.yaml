@@ -104,7 +104,11 @@ jobs:
             "examples/webapps/appservice/101-appservice-simple",
             "examples/webapps/appservice/102-appservice-slots",
             "examples/webapps/appservice/103-appservice-extend",
-            "examples/webapps/appservice/104-appservice-appinsight"
+            "examples/webapps/appservice/104-appservice-appinsight",
+            "examples/postgresql_server/100-simple-mariadb",
+            "examples/postgresql_server/101-vnet-rule-mariadb",
+            "examples/postgresql_server/102-private-endpoint-mariadb",
+            "examples/postgresql_server/103-private-endpoint-with-fw-rule-mariadb"
           ]
 
     container:
