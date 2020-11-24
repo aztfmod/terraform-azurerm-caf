@@ -1,6 +1,7 @@
 module "caf" {
   source = "../"
 
+  global_settings             = var.global_settings
   current_landingzone_key     = var.landingzone.key
   tenant_id                   = var.tenant_id
   diagnostic_storage_accounts = var.diagnostic_storage_accounts
@@ -13,6 +14,7 @@ module "caf" {
   keyvault_access_policies    = var.keyvault_access_policies
   managed_identities          = var.managed_identities
   role_mapping                = var.role_mapping
+  log_analytics               = var.log_analytics
   event_hub_namespaces        = var.event_hub_namespaces
   webapp = {
     azurerm_application_insights = var.azurerm_application_insights
@@ -46,6 +48,7 @@ module "caf" {
   }
   shared_services = {
     monitoring = var.monitoring
+    recovery_vaults = var.recovery_vaults
   }
   enable = {}
 }

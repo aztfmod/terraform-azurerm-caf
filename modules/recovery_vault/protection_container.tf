@@ -1,5 +1,6 @@
 resource "azurerm_site_recovery_protection_container" "protection_container" {
-  for_each = try(var.settings.protection_containers, {})
+  depends_on = [time_sleep.delay_create]
+  for_each   = try(var.settings.protection_containers, {})
 
   name                 = each.value.name
   resource_group_name  = var.resource_group_name
