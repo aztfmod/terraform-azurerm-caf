@@ -10,7 +10,7 @@ module "log_analytics" {
 }
 
 output log_analytics {
-  value       = module.log_analytics
+  value = module.log_analytics
 }
 
 module log_analytics_diagnostics {
