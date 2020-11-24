@@ -30,7 +30,7 @@ resource "azurerm_bastion_host" "host" {
   }
   timeouts {
     create = "60m"
-  }  
+  }
 }
 
 module bastion_host_diagnostics {
