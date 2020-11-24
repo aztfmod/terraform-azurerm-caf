@@ -8,17 +8,17 @@ resource "azurecaf_name" "vgw" {
   use_slug      = var.global_settings.use_slug
 }
 
-resource "azurerm_virtual_network_gateway" "vgw" {
+resource "azurerm_virtual_network_gateway" "vngw" {
   name                = azurecaf_name.vgw.result
   location            = azurerm_resource_group.example.location
   resource_group_name = azurerm_resource_group.example.name
 
-  type     = "Vpn"  
-  sku           = "Basic"
-  active_active = false
+  type     = var.type 
+  sku           = var.sku
+  active_active = var.active_active
 
   ip_configuration {
-    name                          = "vnetGatewayConfig"
+    name                          = var.ip_config_name
     public_ip_address_id          = var.public_ip_address_id
     private_ip_address_allocation = "Dynamic"
     subnet_id                     = var.subnet_id
