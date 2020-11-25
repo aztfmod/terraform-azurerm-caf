@@ -10,6 +10,8 @@
 
     // Container user to use in VSCode Online and GitHub Codespaces
     //"containerUser" : "vscode",
+      "remoteUser" : "vscode",
+
 
     // The optional 'workspaceFolder' property is the path VS Code should open by default when
     // connected. This is typically a volume mount in .devcontainer/docker-compose.yml
