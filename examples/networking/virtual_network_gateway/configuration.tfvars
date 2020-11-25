@@ -12,7 +12,7 @@ resource_groups = {
 }
 
 vnets = {
-  vnet_spoke_data_re1 = {
+  vnet_er = {
     resource_group_key = "er"
     vnet = {
       name          = "test-vn"
@@ -23,6 +23,7 @@ vnets = {
         name = "GatewaySubnet"  # must be named GatewaySubnet
         cidr = ["10.2.1.0/24"]
       }
+    }
     subnets = {} 
     }
   }
@@ -46,10 +47,12 @@ virtual_network_gateways = {
    public_ip_key = "vngw"
    #supports only ExpressRoute at this time. VPN type is coming soon
    type = "ExpressRoute" 
+   vnet_key = "vnet_er"
    sku = "Standard"
    # enable active_active only with UltraPerformance and HighPerformance SKUs
    active_active = false  
    enable_bgp = false 
    ip_config_name = "gatewayIp"
+   private_ip_address_allocation = "Dynamic"
    }
   }
