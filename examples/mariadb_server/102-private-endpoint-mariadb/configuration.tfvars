@@ -57,7 +57,6 @@ mariadb_servers = {
       private-link-level4 = {
         name = "sales-mariadb-re1"
         remote_tfstate = {
-          tfstate_key = "foundations"
           lz_key      = "launchpad"
           output_key  = "vnets"
         }
