@@ -15,8 +15,8 @@ resource "azurerm_virtual_network_gateway" "vngw" {
 
   type     = var.settings.type 
   sku           = var.settings.sku
-  active_active = var.settings.active_active
-  enable_bgp    = var.settings.enable_bgp
+  active_active = try(var.settings.active_active, null)
+  enable_bgp    = try(var.settings.enable_bgp, null)
 
   dynamic "bgp_settings" {
     for_each = try(var.settings.bgp_settings, {})
@@ -27,11 +27,14 @@ resource "azurerm_virtual_network_gateway" "vngw" {
     }
   }
   
-  ip_configuration {
-    name                          = var.settings.ip_config_name
-    public_ip_address_id          = var.public_ip_id
-    private_ip_address_allocation = var.settings.private_ip_address_allocation
-    subnet_id                     = var.subnet_id
+  dynamic "ip_configuration" {
+    for_each = try(var.settings.ip_configuration, {})
+    content {
+    name                          = ip_configuration.value.ipconfig_name
+    public_ip_address_id          = try(var.public_ip_addresses[ip_configuration.public_ip_address_key].id, null)
+    private_ip_address_allocation = ip_configuration.value.private_ip_address_allocation
+    subnet_id                  = try(var.vnets[var.client_config.landingzone_key][ip_configuration.value.vnet_key].subnets[ip_configuration.value.subnet_key].id, var.vnets[ip_configuration.lz_key][ip_configuration.value.vnet_key].subnets[ip_configuration.value.subnet_key].id)
+    }
   }
 
 

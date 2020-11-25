@@ -51,11 +51,16 @@ virtual_network_gateways = {
    active_active = false 
    # enable_bpg defaults to false. If set, true, input the necessary parameters as well.
    enable_bgp = false 
-   ip_config_name = "gatewayIp"
-   private_ip_address_allocation = "Dynamic"
-   ipconfig_name = "gatewayIp1"
-   public_ip_key = "vngw"
-   vnet_key = "vnet_er"
+   ip_configuration = {
+     ipconfig1 = {
+       ipconfig_name = "gatewayIp"
+       public_ip_key = "vngw"
+       lz_key = "examples"
+       vnet_key = "vnet_er"
+       subnet_key = "GatewaySubnet"
+       private_ip_address_allocation  = "Dynamic"
+     }
+   }
   
    }
   }
