@@ -10,12 +10,13 @@ resource "azurecaf_name" "vgw" {
 
 resource "azurerm_virtual_network_gateway" "vngw" {
   name                = azurecaf_name.vgw.result
-  location            = azurerm_resource_group.example.location
-  resource_group_name = azurerm_resource_group.example.name
+  location            = var.location
+  resource_group_name = var.resource_group_name
 
   type     = var.type 
   sku           = var.sku
   active_active = var.active_active
+  enable_bgp    = var.enable_bgp
 
   ip_configuration {
     name                          = var.ip_config_name
@@ -31,7 +32,7 @@ resource "azurerm_virtual_network_gateway" "vngw" {
 
 }
 #### In development. VPN Type will be coming soon ####
-#   enable_bgp    = false
+#   
 #   vpn_type = " "
 
 #   vpn_client_configuration {
