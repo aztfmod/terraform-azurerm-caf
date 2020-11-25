@@ -25,5 +25,12 @@ vnets = {
 
 virtual_network_gateways = {
   name = "mygateway"
-  
+  #supports only ExpressRoute at this time. VPN type is coming soon
+  type = "ExpressRoute" 
+  sku = "Standard"
+  # enable active_active only with UltraPerformance and HighPerformance SKUs
+  active_active = false  
+  enable_bgp = false 
+  ip_config_name = "gatewayIp"
+  # Note: For UltraPerformance ExpressRoute Virtual Network gateway, the associated Public IP needs to be sku "Basic" not "Standard"
     

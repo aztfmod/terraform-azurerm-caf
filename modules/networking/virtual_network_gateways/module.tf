@@ -29,6 +29,7 @@ resource "azurerm_virtual_network_gateway" "vngw" {
     create = "60m"
     delete = "60m"
   }
+  tags = var.tags
 
 }
 #### In development. VPN Type will be coming soon ####
