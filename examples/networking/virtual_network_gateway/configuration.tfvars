@@ -29,7 +29,7 @@ vnets = {
   }
 
 public_ip_addresses = {
-  vngw = {
+  vngw_pip = {
     name                    = "vngw_pip1"
     resource_group_key      = "er"
     sku                     = "Standard"  
@@ -48,19 +48,16 @@ virtual_network_gateways = {
    type = "ExpressRoute" 
    sku = "Standard"
    # enable active_active only with UltraPerformance and HighPerformance SKUs
-   active_active = false 
+   active_active = false
    # enable_bpg defaults to false. If set, true, input the necessary parameters as well.
    enable_bgp = false 
    ip_configuration = {
-     ipconfig1 = {
        ipconfig_name = "gatewayIp"
-       public_ip_key = "vngw"
+       public_ip_address_key = "vngw_pip"
        lz_key = "examples"
        vnet_key = "vnet_er"
        subnet_key = "GatewaySubnet"
        private_ip_address_allocation  = "Dynamic"
      }
    }
-  
    }
-  }

@@ -4,7 +4,7 @@ module virtual_network_gateways {
 
   resource_group_name = module.resource_groups[each.value.resource_group_key].name
   location            = lookup(each.value, "region", null) == null ? module.resource_groups[each.value.resource_group_key].location : local.global_settings.regions[each.value.region]
-  public_ip_addresses = local.combined_objects_public_ip_addresses
+  public_ip_addresses              = local.combined_objects_public_ip_addresses
   diagnostics         = local.diagnostics
   client_config       = local.client_config
   vnets               = local.combined_objects_networking

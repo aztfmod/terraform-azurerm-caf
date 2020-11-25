@@ -31,9 +31,9 @@ resource "azurerm_virtual_network_gateway" "vngw" {
     for_each = try(var.settings.ip_configuration, {})
     content {
     name                          = ip_configuration.value.ipconfig_name
-    public_ip_address_id          = try(var.public_ip_addresses[ip_configuration.public_ip_address_key].id, null)
+    public_ip_address_id          = try(var.public_ip_addresses[ip_configuration.value.public_ip_address_key].id, null)
     private_ip_address_allocation = ip_configuration.value.private_ip_address_allocation
-    subnet_id                  = try(var.vnets[var.client_config.landingzone_key][ip_configuration.value.vnet_key].subnets[ip_configuration.value.subnet_key].id, var.vnets[ip_configuration.lz_key][ip_configuration.value.vnet_key].subnets[ip_configuration.value.subnet_key].id)
+    subnet_id                  = try(var.vnets[var.client_config.landingzone_key][ip_configuration.value.vnet_key].subnets["GatewaySubnet"].id, var.vnets[ip_configuration.lz_key][ip_configuration.value.vnet_key].subnets["GatewaySubnet"].id)
     }
   }
 
