@@ -93,6 +93,7 @@ jobs:
             "examples/networking/virtual_wan/100-vwan-multi-hubs",
             "examples/networking/virtual_wan/101-vwan-multi-hubs-firewalls",
             # "examples/networking/virtual_wan/102-vwan-multi-hubs-gw",
+            "examples/networking/virtual_network_gateway",
             "examples/app_gateway/100-simple-app-gateway",
             "examples/databricks/100-simple-databricks",
             "examples/networking/private_dns/100-private-dns-vnet-links",

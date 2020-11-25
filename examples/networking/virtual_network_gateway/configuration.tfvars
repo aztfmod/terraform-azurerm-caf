@@ -44,15 +44,18 @@ virtual_network_gateways = {
   gateway1 = {
    name = "mygateway"
    resource_group_key = "er"
-   public_ip_key = "vngw"
    #supports only ExpressRoute at this time. VPN type is coming soon
    type = "ExpressRoute" 
-   vnet_key = "vnet_er"
    sku = "Standard"
    # enable active_active only with UltraPerformance and HighPerformance SKUs
-   active_active = false  
+   active_active = false 
+   # enable_bpg defaults to false. If set, true, input the necessary parameters as well.
    enable_bgp = false 
    ip_config_name = "gatewayIp"
    private_ip_address_allocation = "Dynamic"
+   ipconfig_name = "gatewayIp1"
+   public_ip_key = "vngw"
+   vnet_key = "vnet_er"
+  
    }
   }
