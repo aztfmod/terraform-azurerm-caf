@@ -23,9 +23,10 @@ module "caf" {
     app_services                 = var.app_services
   }
   compute = {
-    virtual_machines = var.virtual_machines
-    bastion_hosts    = var.bastion_hosts
-    aks_clusters     = var.aks_clusters
+    virtual_machines  = var.virtual_machines
+    bastion_hosts     = var.bastion_hosts
+    aks_clusters      = var.aks_clusters
+    availability_sets = var.availability_sets
   }
   networking = {
     vnets                             = var.vnets
@@ -46,7 +47,7 @@ module "caf" {
     machine_learning_workspaces = var.machine_learning_workspaces
   }
   shared_services = {
-    monitoring = var.monitoring
+    monitoring      = var.monitoring
     recovery_vaults = var.recovery_vaults
   }
   enable = {}

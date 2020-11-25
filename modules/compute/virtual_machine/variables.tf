@@ -41,4 +41,9 @@ variable recovery_vaults {
   default = {}
 }
 
+variable availability_sets {
+  default = {}
+}
+
 variable base_tags {}
+
