@@ -50,11 +50,9 @@ resource "azurerm_network_interface" "nic" {
 # networking_interfaces = {
 #   nic0 = {
 #     # AKS rely on a remote network and need the details of the tfstate to connect (tfstate_key), assuming RBAC authorization.
-#     networking = {
-#       lz_key      = "networking_aks"
-#       vnet_key    = "hub_rg1"
-#       subnet_key  = "jumpbox"
-#     }
+#     lz_key      = "networking_aks"
+#     vnet_key    = "hub_rg1"
+#     subnet_key  = "jumpbox"
 #     name                    = "0"
 #     enable_ip_forwarding    = false
 #     internal_dns_name_label = "nic0"
