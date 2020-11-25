@@ -40,7 +40,7 @@ resource "azurerm_network_interface" "nic" {
     private_ip_address_version    = lookup(each.value, "private_ip_address_version", null)
     private_ip_address            = lookup(each.value, "private_ip_address", null)
     primary                       = lookup(each.value, "primary", null)
-    public_ip_address_id          = try(var.public_ip_addresses[each.value.public_ip_address_key].id, null)
+    public_ip_address_id          = try(var.public_ip_addresses[var.client_config.landingzone_key][each.value.public_ip_address_key].id, var.public_ip_addresses[each.value.lz_key][each.value.public_ip_address_key].id)
   }
 }
 
