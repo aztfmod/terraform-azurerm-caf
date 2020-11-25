@@ -38,7 +38,7 @@ virtual_machines = {
         subnet_key              = "example"
         name                    = "0"
         enable_ip_forwarding    = false
-        internal_dns_name_label = "ppg_example_vm1_nic0"
+        internal_dns_name_label = "ppg-example-vm1-nic0"
       }
     }
 
@@ -92,7 +92,7 @@ virtual_machines = {
         subnet_key              = "example"
         name                    = "0"
         enable_ip_forwarding    = false
-        internal_dns_name_label = "ppg_example_vm2_nic"
+        internal_dns_name_label = "ppg-example-vm2-nic"
       }
     }
 
