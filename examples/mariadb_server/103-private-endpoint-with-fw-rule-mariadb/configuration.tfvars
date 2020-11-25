@@ -66,11 +66,6 @@ mariadb_servers = {
       # Require enforce_private_link_endpoint_network_policies set to true on the subnet
       private-link-level4 = {
         name = "sales-mariadb-re1"
-        remote_tfstate = {
-          tfstate_key = "foundations"
-          lz_key      = "launchpad"
-          output_key  = "vnets"
-        }
         vnet_key           = "vnet_region1"
         subnet_key         = "mariadb_subnet"
         resource_group_key = "mariadb_region1"
