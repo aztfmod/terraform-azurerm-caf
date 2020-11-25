@@ -32,7 +32,7 @@ resource "azurerm_virtual_network_gateway" "vngw" {
   tags = var.tags
 
 }
-#### In development. VPN Type will be coming soon ####
+#### In development. VPN Type will be supported soon ####
 #   
 #   vpn_type = " "
 
