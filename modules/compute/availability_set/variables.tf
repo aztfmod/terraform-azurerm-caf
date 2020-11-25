@@ -5,6 +5,8 @@ variable resource_group_name {
   description = "Name of the existing resource group to deploy the virtual machine"
 }
 variable base_tags {}
+variable settings {}
+variable availability_sets {}
 variable tags {
   default = null
 }

@@ -67,6 +67,8 @@ resource "azurerm_linux_virtual_machine" "vm" {
   zone                            = try(each.value.zone, null)
   disable_password_authentication = try(each.value.disable_password_authentication, true)
   custom_data                     = try(each.value.custom_data, null) == null ? null : filebase64(format("%s/%s", path.cwd, each.value.custom_data))
+  availability_set_id             = try(var.availability_sets[var.client_config.landingzone_key][each.value.availability_set_key].id, var.availability_sets[each.value.availability_sets].id, null)
+
 
   dynamic "admin_ssh_key" {
     for_each = lookup(each.value, "disable_password_authentication", true) == true ? [1] : []

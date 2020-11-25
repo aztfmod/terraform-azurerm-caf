@@ -122,6 +122,7 @@ variable webapp {
   default = {}
 }
 
+
 ## Databases variables
 variable database {
   default = {}
@@ -182,6 +183,13 @@ variable shared_services {
 variable monitoring {
   default = {}
 }
+
+variable availability_sets {
+  default = {}
+}
+
+
+
 
 
 

@@ -59,6 +59,7 @@ resource "azurerm_windows_virtual_machine" "vm" {
   license_type               = try(each.value.license_type, null)
   tags                       = merge(local.tags, try(each.value.tags, null))
   timezone                   = try(each.value.timezone, null)
+  availability_set_id        = try(var.availability_sets[var.client_config.landingzone_key][each.value.availability_set_key].id, var.availability_sets[each.value.availability_sets].id, null)
 
   os_disk {
     caching                   = each.value.os_disk.caching
