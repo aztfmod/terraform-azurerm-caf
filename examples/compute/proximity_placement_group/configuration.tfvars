@@ -24,7 +24,6 @@ virtual_machines = {
   example_vm1 = {
     resource_group_key                   = "ppg"
     provision_vm_agent                   = true
-    boot_diagnostics_storage_account_key = "bootdiag_region1"
     
     os_type = "linux"
 
@@ -39,8 +38,7 @@ virtual_machines = {
         subnet_key              = "example"
         name                    = "0"
         enable_ip_forwarding    = false
-        internal_dns_name_label = "nic0"
-        public_ip_address_key   = "example_vm_pip1_rg1"
+        internal_dns_name_label = "ppg_example_vm1_nic0"
       }
     }
 
@@ -80,7 +78,6 @@ virtual_machines = {
   example_vm2 = {
     resource_group_key                   = "ppg"
     provision_vm_agent                   = true
-    boot_diagnostics_storage_account_key = "bootdiag_region1"
     
     os_type = "linux"
 
@@ -95,8 +92,7 @@ virtual_machines = {
         subnet_key              = "example"
         name                    = "0"
         enable_ip_forwarding    = false
-        internal_dns_name_label = "nic0-1"
-        public_ip_address_key   = "example_vm_pip1_rg1"
+        internal_dns_name_label = "ppg_example_vm2_nic"
       }
     }
 
