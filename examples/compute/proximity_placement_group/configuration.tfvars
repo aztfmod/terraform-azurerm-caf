@@ -47,7 +47,7 @@ virtual_machines = {
     virtual_machine_settings = {
       linux = {
         proximity_placement_group_key   = "ppg1"
-        name                            = "example_vm1"
+        name                            = "ppg_example_vm1"
         size                            = "Standard_F2"
         admin_username                  = "adminuser"
         disable_password_authentication = true
@@ -61,7 +61,7 @@ virtual_machines = {
         network_interface_keys = ["nic0"]
 
         os_disk = {
-          name                 = "example_vm1-os"
+          name                 = "ppg_example_vm1-os"
           caching              = "ReadWrite"
           storage_account_type = "Standard_LRS"
         }
@@ -103,7 +103,7 @@ virtual_machines = {
     virtual_machine_settings = {
       linux = {
         proximity_placement_group_key   = "ppg1"
-        name                            = "example_vm2"
+        name                            = "ppg_example_vm2"
         size                            = "Standard_F2"
         admin_username                  = "adminuser"
         disable_password_authentication = true
@@ -117,7 +117,7 @@ virtual_machines = {
         network_interface_keys = ["nic0"]
 
         os_disk = {
-          name                 = "example_vm1-os"
+          name                 = "ppg_example_vm2-os"
           caching              = "ReadWrite"
           storage_account_type = "Standard_LRS"
         }
