@@ -16,6 +16,10 @@ module "storage_accounts" {
 
 }
 
+output storage_accounts {
+  value = module.storage_accounts
+}
+
 module diagnostic_storage_accounts {
   source   = "./modules/storage_account"
   for_each = var.diagnostic_storage_accounts
@@ -28,6 +32,6 @@ module diagnostic_storage_accounts {
   base_tags           = try(local.global_settings.inherit_tags, false) ? module.resource_groups[each.value.resource_group_key].tags : {}
 }
 
-output storage_accounts {
-  value = module.storage_accounts
+output diagnostic_storage_accounts {
+  value = module.diagnostic_storage_accounts
 }
