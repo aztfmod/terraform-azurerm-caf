@@ -35,19 +35,13 @@ resource "azurerm_virtual_network_gateway" "vngw" {
 #### In development. VPN Type will be supported soon ####
 #   
 #   vpn_type = " "
-
 #   vpn_client_configuration {
 #     address_space = [" "]
-
 #     root_certificate {
 #       name = " "
-
 #       public_cert_data = <<EOF
-
 #       EOF
-
 #     }
-
 #     revoked_certificate {
 #       name       = " "
 #       thumbprint = " "
