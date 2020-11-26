@@ -48,7 +48,7 @@ resource "random_password" "mysql_admin" {
   length           = 32
   special          = true
   override_special = "_%@"
-  
+
 }
 
 # Store the generated password into keyvault
