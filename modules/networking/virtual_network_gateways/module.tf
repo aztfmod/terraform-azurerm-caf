@@ -12,9 +12,9 @@ resource "azurerm_virtual_network_gateway" "vngw" {
   name                = azurecaf_name.vgw.result
   location            = var.location
   resource_group_name = var.resource_group_name
-
-  type     = var.settings.type 
+  type     = var.settings.type #ExpressRoute or VPN
   sku           = var.settings.sku
+
   active_active = try(var.settings.active_active, null)
   enable_bgp    = try(var.settings.enable_bgp, null)
 
@@ -31,20 +31,18 @@ resource "azurerm_virtual_network_gateway" "vngw" {
     for_each = try(var.settings.ip_configuration, {})
     content {
     name                          = ip_configuration.value.ipconfig_name
-       public_ip_address_id          = try(var.public_ip_addresses[var.client_config.landingzone_key][ip_configuration.value.public_ip_address_key].id, var.public_ip_addresses[ip_configuration.value.lz_key][ip_configuration.value.public_ip_address_key].id)
+    public_ip_address_id          = try(var.public_ip_addresses[var.client_config.landingzone_key][ip_configuration.value.public_ip_address_key].id, var.public_ip_addresses[ip_configuration.value.lz_key][ip_configuration.value.public_ip_address_key].id)
     private_ip_address_allocation = ip_configuration.value.private_ip_address_allocation
     subnet_id                     = try(var.vnets[var.client_config.landingzone_key][ip_configuration.value.vnet_key].subnets["GatewaySubnet"].id, var.vnets[ip_configuration.value.lz_key][ip_configuration.value.vnet_key].subnets["GatewaySubnet"].id)
-  
-   }
+    }
   }
-
 
   timeouts {
     create = "60m"
     delete = "60m"
   }
   
-  tags = var.tags
+  tags                = local.tags
 
 }
 #### In development. VPN Type will be supported soon ####

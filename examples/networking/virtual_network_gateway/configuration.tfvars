@@ -32,9 +32,9 @@ public_ip_addresses = {
   vngw_pip = {
     name                    = "vngw_pip1"
     resource_group_key      = "er"
-    sku                     = "Standard"  
+    sku                     = "Basic"  
     # Note: For UltraPerformance ExpressRoute Virtual Network gateway, the associated Public IP needs to be sku "Basic" not "Standard"
-    allocation_method       = "Static"
+    allocation_method       = "Dynamic"
     ip_version              = "IPv4"
     idle_timeout_in_minutes = "4"
   }
@@ -47,10 +47,11 @@ virtual_network_gateways = {
    #supports only ExpressRoute at this time. VPN type is coming soon
    type = "ExpressRoute" 
    sku = "Standard"
-   # enable active_active only with UltraPerformance and HighPerformance SKUs
+   # enable active_active only with VPN Type
    active_active = false
-   # enable_bpg defaults to false. If set, true, input the necessary parameters as well.
+   # enable_bpg defaults to false. If set, true, input the necessary parameters as well. VPN Type only
    enable_bgp = false 
+   # multiple IP configs are needed for active_active state. VPN Type only. 
    ip_configuration = {
      ipconfig1 ={
        ipconfig_name = "gatewayIp"
