@@ -28,17 +28,18 @@ module "caf" {
     aks_clusters     = var.aks_clusters
   }
   networking = {
-    vnets                             = var.vnets
-    network_security_group_definition = var.network_security_group_definition
-    public_ip_addresses               = var.public_ip_addresses
-    private_dns                       = var.private_dns
-    virtual_wans                      = var.virtual_wans
-    application_gateways              = var.application_gateways
-    application_gateway_applications  = var.application_gateway_applications
-    virtual_network_gateways          = var.virtual_network_gateways
-    virtual_network_gateway_connections = var.virtual_network_gateway_connections
-    express_route_circuits = var.express_route_circuits
+    vnets                                = var.vnets
+    network_security_group_definition    = var.network_security_group_definition
+    public_ip_addresses                  = var.public_ip_addresses
+    private_dns                          = var.private_dns
+    virtual_wans                         = var.virtual_wans
+    application_gateways                 = var.application_gateways
+    application_gateway_applications     = var.application_gateway_applications
+    virtual_network_gateways             = var.virtual_network_gateways
+    virtual_network_gateway_connections  = var.virtual_network_gateway_connections
+    express_route_circuits               = var.express_route_circuits
     express_route_circuit_authorizations = var.express_route_circuit_authorizations
+    vnet_peerings                        = var.vnet_peerings
   }
   database = {
     azurerm_redis_caches        = var.azurerm_redis_caches
@@ -50,7 +51,7 @@ module "caf" {
     machine_learning_workspaces = var.machine_learning_workspaces
   }
   shared_services = {
-    monitoring = var.monitoring
+    monitoring      = var.monitoring
     recovery_vaults = var.recovery_vaults
   }
   enable = {}

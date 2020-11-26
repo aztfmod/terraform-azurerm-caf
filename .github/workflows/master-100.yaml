@@ -90,6 +90,7 @@ jobs:
             "examples/recovery_vault/101-simple-asrv",
             "examples/recovery_vault/102-asr-protection",
             "examples/networking/virtual_network/100-subnet-delegation",
+            "examples/networking/virtual_network/101-vnet-peering-nsg",
             "examples/networking/virtual_wan/100-vwan-multi-hubs",
             "examples/networking/virtual_wan/101-vwan-multi-hubs-firewalls",
             # "examples/networking/virtual_wan/102-vwan-multi-hubs-gw",

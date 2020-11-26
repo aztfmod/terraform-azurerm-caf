@@ -13,7 +13,7 @@ variable global_settings {
     default_region = "region1"
     regions = {
       region1 = "southeastasia"
-  }
+    }
   }
 }
 
@@ -152,19 +152,21 @@ variable log_analytics {
 variable recovery_vaults {
   default = {}
 }
-
 variable virtual_network_gateways {
   default = {}
 }
-
 variable virtual_network_gateway_connections {
   default = {}
 }
-
 variable express_route_circuits {
   default = {}
 }
-
 variable express_route_circuit_authorizations {
+  default = {}
+}
+variable diagnostics_destinations {
+  default = {}
+}
+variable vnet_peerings {
   default = {}
 }
