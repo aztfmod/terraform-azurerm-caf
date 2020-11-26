@@ -60,7 +60,9 @@ cosmos_db = {
             name               = "container-ex101"
             partition_key_path = "/definition/id"
             throughput         = 400
-            unique_key_path    = ["/definition/idlong", "/definition/idshort"]
+            unique_key = {
+              path     = ["/definition/idlong", "/definition/idshort"]
+            }
           }
         }
       }
