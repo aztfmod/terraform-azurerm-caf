@@ -13,15 +13,15 @@ resource_groups = {
 
 mysql_servers = {
   sales-re1 = {
-    name                          = "sales-re1"
-    region                        = "region1"
-    resource_group_key            = "mysql_region1"
-    version                       = "5.7"
-    sku_name                      = "GP_Gen5_2"
-    storage_mb                    = 5120
-    administrator_login           = "mysqlsalesadmin"
-#   Below password argument is used to set the DB password. If not passed, there will be a random password generated and stored in azure keyvault. 
-#   administrator_login_password  = "ComplxP@ssw0rd!"
+    name                = "sales-re1"
+    region              = "region1"
+    resource_group_key  = "mysql_region1"
+    version             = "5.7"
+    sku_name            = "GP_Gen5_2"
+    storage_mb          = 5120
+    administrator_login = "mysqlsalesadmin"
+    #   Below password argument is used to set the DB password. If not passed, there will be a random password generated and stored in azure keyvault.
+    #   administrator_login_password  = "ComplxP@ssw0rd!"
     keyvault_key                  = "mysql-re1"
     system_msi                    = true
     public_network_access_enabled = true
@@ -32,10 +32,10 @@ mysql_servers = {
       }
       retention_in_days = 7
     }
-    
+
     mysql_firewall_rules = {
-      mysql-firewall-rules = {
-        name = "mysql_server_firewallrule"
+      mysql-firewall-rule = {
+        name                = "mysql_server_firewallrule"
         resource_group_name = "mysql_region1"
         server_name         = "sales-rg1"
         start_ip_address    = "10.0.0.1"
@@ -43,7 +43,7 @@ mysql_servers = {
       }
     }
 
-    mysql_configuration = {
+    mysql_configurations = {
       mysql_configuration = {
         name                = "interactive_timeout"
         resource_group_name = "mysql_region1"
@@ -52,7 +52,7 @@ mysql_servers = {
       }
     }
 
-    mysql_database = {
+    mysql_databases = {
       mysql_database = {
         name                = "mysql_server_sampledb"
         resource_group_name = "mysql_region1"
@@ -61,8 +61,8 @@ mysql_servers = {
         collation           = "utf8_unicode_ci"
       }
     }
-    
-       
+
+
     tags = {
       segment = "sales"
     }
@@ -78,9 +78,9 @@ mysql_servers = {
         # "Unsafe_Action"
       ]
       email_account_admins = false
-      email_addresses           = []
-      retention_days            = 15
-      storage_account_key = "security-re1"
+      email_addresses      = []
+      retention_days       = 15
+      storage_account_key  = "security-re1"
     }
 
   }
