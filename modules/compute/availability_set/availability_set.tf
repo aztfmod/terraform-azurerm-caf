@@ -5,6 +5,7 @@ resource "azurerm_availability_set" "avset" {
   tags                         = local.tags
   platform_update_domain_count = var.settings.platform_update_domain_count
   platform_fault_domain_count  = var.settings.platform_fault_domain_count
+  managed                      = try(var.settings.managed, true)
 
 }
 
