@@ -35,7 +35,8 @@ module "caf" {
     virtual_wans                      = var.virtual_wans
     application_gateways              = var.application_gateways
     application_gateway_applications  = var.application_gateway_applications
-    virtual_network_gateways  = var.virtual_network_gateways
+    virtual_network_gateways          = var.virtual_network_gateways
+    virtual_network_gateway_connections = var.virtual_network_gateway_connections
   }
   database = {
     azurerm_redis_caches        = var.azurerm_redis_caches
