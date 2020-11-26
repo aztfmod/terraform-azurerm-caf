@@ -27,6 +27,6 @@ module virtual_network_gateway_connections {
   client_config       = local.client_config
   virtual_network_gateway_id = module.virtual_network_gateways[each.value.virtual_network_gateway_key].id
   express_route_circuit_id = module.express_route_circuits[each.value.express_route_circuit_key].id
-  authorization_key = module.express_route_circuit_authorizations[each.value.authorization_key].circuitauth.authorization_key
+  authorization_key = module.express_route_circuit_authorizations[each.value.authorization_key].authorization_key
   base_tags           = try(local.global_settings.inherit_tags, false) ? module.resource_groups[each.value.resource_group_key].tags : {}
 }

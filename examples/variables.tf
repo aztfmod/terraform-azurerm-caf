@@ -160,3 +160,11 @@ variable virtual_network_gateways {
 variable virtual_network_gateway_connections {
   default = {}
 }
+
+variable express_route_circuits {
+  default = {}
+}
+
+variable express_route_circuit_authorizations {
+  default = {}
+}
