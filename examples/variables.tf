@@ -155,3 +155,6 @@ variable recovery_vaults {
 variable availability_sets {
   default = {}
 }
+variable proximity_placement_groups {
+  default = {}
+}

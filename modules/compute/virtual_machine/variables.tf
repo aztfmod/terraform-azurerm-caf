@@ -47,3 +47,8 @@ variable availability_sets {
 
 variable base_tags {}
 
+variable base_tags {}
+
+variable proximity_placement_groups {
+  default = {}
+}
