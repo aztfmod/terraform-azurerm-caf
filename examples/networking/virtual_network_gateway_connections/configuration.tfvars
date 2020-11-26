@@ -11,6 +11,25 @@ resource_groups = {
   }
 }
 
+express_route_circuits = {
+  er1 = {
+    name                  = "errg1"
+    resource_group_key    = "er"
+    service_provider_name = "Equinix"
+    peering_location      = "Silicon Valley"
+    tier                  = "Standard"
+    bandwidth_in_mbps     = 50
+  }
+}
+
+express_route_circuit_authorizations = {
+  key1 = {
+    name               = "er_centralus_np"
+    resource_group_key = "vm_region1 "
+    express_route_key  = "er1"
+  }
+}
+
 vnets = {
   vnet_er = {
     resource_group_key = "er"
@@ -64,4 +83,16 @@ virtual_network_gateways = {
      }
    }
    }
+}
+
+virtual_network_gateway_connections = {
+  connection1= {
+    name = "connection"
+    resource_group_key = "er"
+    type = "ExpressRoute"
+    virtual_network_gateway_key = "gateway1"
+    authorization_key ="key1"
+    express_route_circuit_key ="er1"
+  }
+ 
 }
