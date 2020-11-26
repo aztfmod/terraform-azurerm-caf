@@ -4,7 +4,7 @@
 #
 
 resource "azurerm_postgresql_database" "postgresql_database" {
-  for_each = var.settings.postgresql_database
+  for_each = var.settings.postgresql_databases
 
   name                = each.value.name
   resource_group_name = var.resource_group_name
