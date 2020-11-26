@@ -55,6 +55,7 @@ locals {
     ddos_services                                           = try(var.networking.ddos_services, {})
     express_route_circuits                                  = try(var.networking.express_route_circuits, {})
     express_route_circuit_authorizations                    = try(var.networking.express_route_circuit_authorizations, {})
+    network_watchers                                        = try(var.networking.network_watchers, {})
   }
 
   database = {

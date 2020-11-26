@@ -31,9 +31,13 @@ variable link_nsg_to_subnet {
   default = true
 }
 
-variable opslogs_retention_period {
-  description = "Number of days to keep operations logs inside storage account"
-  default     = 60
-}
+# variable opslogs_retention_period {
+#   description = "Number of days to keep operations logs inside storage account"
+#   default     = 60
+# }
 
 variable global_settings {}
+
+variable network_watchers {
+  default = {}
+}
