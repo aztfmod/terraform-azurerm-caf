@@ -15,6 +15,7 @@ locals {
   combined_objects_mssql_servers              = merge(map(local.client_config.landingzone_key, module.mssql_servers), try(var.remote_objects.mssql_servers, {}))
   combined_objects_mssql_elastic_pools        = merge(map(local.client_config.landingzone_key, module.mssql_elastic_pools), try(var.remote_objects.mssql_elastic_pools, {}))
   combined_objects_networking                 = merge(map(local.client_config.landingzone_key, module.networking), try(var.remote_objects.vnets, {}))
+  combined_objects_network_watchers           = merge(map(local.client_config.landingzone_key, module.network_watchers), try(var.remote_objects.network_watchers, {}))
   combined_objects_public_ip_addresses        = merge(map(local.client_config.landingzone_key, module.public_ip_addresses), try(var.remote_objects.public_ip_addresses, {}))
   combined_objects_private_dns                = merge(map(local.client_config.landingzone_key, module.private_dns), try(var.remote_objects.private_dns, {}))
   combined_objects_recovery_vaults            = merge(map(local.client_config.landingzone_key, module.recovery_vaults), try(var.remote_objects.recovery_vaults, {}))

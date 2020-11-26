@@ -30,6 +30,7 @@ module "networking" {
   global_settings                   = local.global_settings
   ddos_id                           = try(azurerm_network_ddos_protection_plan.ddos_protection_plan[each.value.ddos_services_key].id, "")
   base_tags                         = try(local.global_settings.inherit_tags, false) ? module.resource_groups[each.value.resource_group_key].tags : {}
+  network_watchers                  = try(local.combined_objects_network_watchers, null)
 }
 
 #
@@ -188,4 +189,19 @@ resource "azurerm_network_ddos_protection_plan" "ddos_protection_plan" {
   tags                = try(local.global_settings.inherit_tags, false) ? merge(module.resource_groups[each.value.resource_group_key].tags, each.value.tags) : try(each.value.tags, null)
 }
 
+#
+#
+# Network Watchers
+#
+#
+module "network_watchers" {
+  source   = "./modules/networking/network_watcher"
+  for_each = local.networking.network_watchers
 
+  resource_group_name = module.resource_groups[each.value.resource_group_key].name
+  location            = lookup(each.value, "region", null) == null ? module.resource_groups[each.value.resource_group_key].location : local.global_settings.regions[each.value.region]
+  settings            = each.value.settings
+  tags                = try(each.value.tags, null)
+  base_tags           = try(local.global_settings.inherit_tags, false) ? module.resource_groups[each.value.resource_group_key].tags : {}
+  global_settings     = local.global_settings
+}
