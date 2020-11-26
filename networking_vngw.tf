@@ -10,7 +10,7 @@ module virtual_network_gateways {
   vnets               = local.combined_objects_networking
   global_settings     = local.global_settings
   settings            = each.value
-  tags                = try(each.value.tags, null)
+  base_tags           = try(local.global_settings.inherit_tags, false) ? module.resource_groups[each.value.resource_group_key].tags : {}
 
 
 }

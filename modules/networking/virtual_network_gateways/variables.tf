@@ -1,6 +1,6 @@
 variable resource_group_name {}
 variable location {}
-variable tags {}
+variable base_tags {}
 variable settings {}
 variable global_settings {}
 variable diagnostics {}
