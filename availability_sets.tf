@@ -11,7 +11,7 @@ module availability_sets {
   base_tags                  = try(local.global_settings.inherit_tags, false) ? module.resource_groups[each.value.resource_group_key].tags : {}
   availability_sets          = local.compute.availability_sets
   proximity_placement_groups = local.combined_objects_proximity_placement_groups
-  ppg_id                     = module.proximity_placement_groups[each.value.ppg_key].id
+  ppg_id                     = try(module.proximity_placement_groups[each.value.ppg_key].id, null)
 
 }
 
