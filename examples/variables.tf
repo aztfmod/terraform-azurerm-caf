@@ -78,9 +78,6 @@ variable azurerm_routes {
 variable vnets {
   default = {}
 }
-variable vnet_peerings {
-  default = {}
-}
 variable azurerm_redis_caches {
   default = {}
 }
