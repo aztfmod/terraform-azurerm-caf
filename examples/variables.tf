@@ -13,7 +13,7 @@ variable global_settings {
     default_region = "region1"
     regions = {
       region1 = "southeastasia"
-  }
+    }
   }
 }
 
@@ -150,5 +150,8 @@ variable log_analytics {
   default = {}
 }
 variable recovery_vaults {
+  default = {}
+}
+variable network_watchers {
   default = {}
 }
