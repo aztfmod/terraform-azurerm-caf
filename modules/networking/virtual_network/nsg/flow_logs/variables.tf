@@ -12,6 +12,7 @@ variable diagnostics {
 }
 
 variable settings {
+  default = {}
 }
 
 variable global_settings {
