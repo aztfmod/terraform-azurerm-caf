@@ -155,3 +155,9 @@ variable recovery_vaults {
 variable network_watchers {
   default = {}
 }
+variable diagnostics_destinations {
+  default = {}
+}
+variable vnet_peerings {
+  default = {}
+}
