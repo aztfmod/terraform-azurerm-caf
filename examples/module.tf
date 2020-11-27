@@ -30,7 +30,6 @@ module "caf" {
   }
   networking = {
     vnets                             = var.vnets
-    vnet_peerings                     = var.vnet_peerings
     network_security_group_definition = var.network_security_group_definition
     public_ip_addresses               = var.public_ip_addresses
     route_tables                      = var.route_tables
