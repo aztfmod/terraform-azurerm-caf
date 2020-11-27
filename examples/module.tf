@@ -39,6 +39,7 @@ module "caf" {
     virtual_wans                      = var.virtual_wans
     application_gateways              = var.application_gateways
     application_gateway_applications  = var.application_gateway_applications
+    vnet_peerings                     = var.vnet_peerings
   }
   database = {
     azurerm_redis_caches              = var.azurerm_redis_caches
@@ -57,7 +58,7 @@ module "caf" {
     machine_learning_workspaces       = var.machine_learning_workspaces
   }
   shared_services = {
-    monitoring = var.monitoring
+    monitoring      = var.monitoring
     recovery_vaults = var.recovery_vaults
   }
   enable = {}

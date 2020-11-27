@@ -186,3 +186,9 @@ variable log_analytics {
 variable recovery_vaults {
   default = {}
 }
+variable diagnostics_destinations {
+  default = {}
+}
+variable vnet_peerings {
+  default = {}
+}
