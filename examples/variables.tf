@@ -158,3 +158,6 @@ variable availability_sets {
 variable proximity_placement_groups {
   default = {}
 }
+variable ppg_id {
+  default = {}
+}
