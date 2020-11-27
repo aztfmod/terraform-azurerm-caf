@@ -21,24 +21,39 @@ resource "azurerm_key_vault" "keyvault" {
   resource_group_name             = var.resource_groups[var.settings.resource_group_key].name
   tenant_id                       = var.client_config.tenant_id
   sku_name                        = try(var.settings.sku_name, "standard")
-  tags                            = merge(local.tags, var.base_tags)
+  tags                            = try(merge(local.tags, var.base_tags), {})
   enabled_for_deployment          = try(var.settings.enabled_for_deployment, false)
   enabled_for_disk_encryption     = try(var.settings.enabled_for_disk_encryption, false)
   enabled_for_template_deployment = try(var.settings.enabled_for_template_deployment, false)
   purge_protection_enabled        = try(var.settings.purge_protection_enabled, false)
   soft_delete_enabled             = try(var.settings.soft_delete_enabled, true)
+  soft_delete_retention_days      = try(var.settings.soft_delete_retention_days, 7)
   enable_rbac_authorization       = try(var.settings.enable_rbac_authorization, false)
+  timeouts {
+    delete = "60m"
+    
+  }
 
   dynamic "network_acls" {
-    for_each = lookup(var.settings, "network", {})
+    for_each = lookup(var.settings, "network", null) == null ? [] : [1]
 
     content {
-      bypass         = network_acls.value.bypass
-      default_action = try(network_acls.value.default_action, "Deny")
-      ip_rules       = try(network_acls.value.ip_rules, null)
-      virtual_network_subnet_ids = [
-        for subnet_key in network_acls.value.subnet_keys : var.vnets[network_acls.key].subnets[subnet_key].id
+      bypass         = var.settings.network.bypass
+      default_action = try(var.settings.network.default_action, "Deny")
+      ip_rules       = try(var.settings.network.ip_rules, null)
+      virtual_network_subnet_ids = try(var.settings.network.subnets, null) == null ? null : [
+        for key, value in var.settings.network.subnets : try(var.vnets[var.client_config.landingzone_key][value.vnet_key].subnets[value.subnet_key].id, var.vnets[value.lz_key][value.vnet_key].subnets[value.subnet_key].id)
       ]
+    }
+  }
+
+  dynamic "contact" {
+    for_each = lookup(var.settings, "contacts", {})
+
+    content {
+      email = contact.value.email
+      name  = try(contact.value.name, null)
+      phone = try(contact.value.phone, null)
     }
   }
 }
