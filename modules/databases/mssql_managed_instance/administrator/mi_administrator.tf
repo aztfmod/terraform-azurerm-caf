@@ -5,18 +5,6 @@ data "azuread_user" "upn" {
   user_principal_name = var.user_principal_name
 }
 
-# resource "azurerm_template_deployment" "miadministrator" {
-
-#   name                = "${var.settings.login}-${var.managedInstanceName}"
-#   resource_group_name = var.resource_group_name
-
-#   template_body = file(local.arm_filename)
-
-#   parameters_body = jsonencode(local.parameters_body)
-
-#   deployment_mode = "Incremental"
-# }
-
 resource "null_resource" "set_mi_ad_admin" {
 
   triggers = {

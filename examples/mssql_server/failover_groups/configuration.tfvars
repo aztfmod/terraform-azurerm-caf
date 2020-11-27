@@ -65,12 +65,6 @@ mssql_failover_groups = {
         database_key = "db2-rg1"
       }
     }
-    # primary_server_name = "test-sql-failover-source-server"
-    # secondary_server_id = "/subscriptions/1d53e782-9f46-4720-b6b3-cff29106e9f6/resourceGroups/test-sql-failover-secondary/providers/Microsoft.Sql/servers/test-sql-failover-secondary-server"
-    # database_ids        = [
-    #   "/subscriptions/1d53e782-9f46-4720-b6b3-cff29106e9f6/resourceGroups/test-sql-failover-source/providers/Microsoft.Sql/servers/test-sql-failover-source-server/databases/test-sql-failover-source-db1", 
-    #   "/subscriptions/1d53e782-9f46-4720-b6b3-cff29106e9f6/resourceGroups/test-sql-failover-source/providers/Microsoft.Sql/servers/test-sql-failover-source-server/databases/test-sql-failover-source-db2"
-    # ]
 
     read_write_endpoint_failover_policy = {
       mode          = "Automatic"
