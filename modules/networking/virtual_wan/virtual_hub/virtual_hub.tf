@@ -1,7 +1,7 @@
 ## naming convention
 resource "azurecaf_name" "vwan_hub" {
   name          = var.virtual_hub_config.hub_name
-  resource_type = "azurerm_virtual_wan"
+  resource_type = "azurerm_virtual_hub"
   prefixes      = [var.global_settings.prefix]
   random_length = var.global_settings.random_length
   clean_input   = true

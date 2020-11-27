@@ -161,3 +161,9 @@ variable proximity_placement_groups {
 variable ppg_id {
   default = {}
 }
+variable diagnostics_destinations {
+  default = {}
+}
+variable vnet_peerings {
+  default = {}
+}
