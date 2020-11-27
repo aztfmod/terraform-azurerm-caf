@@ -36,6 +36,7 @@ module "caf" {
     application_gateways              = var.application_gateways
     application_gateway_applications  = var.application_gateway_applications
     network_watchers                  = var.network_watchers
+    vnet_peerings                     = var.vnet_peerings
   }
   database = {
     azurerm_redis_caches        = var.azurerm_redis_caches
