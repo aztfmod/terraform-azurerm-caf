@@ -1,10 +1,10 @@
 locals {
   diagnostics = {
-    diagnostics_definition   = lookup(var.diagnostics, "diagnostics_definition", var.diagnostics_definition)
-    diagnostics_destinations = lookup(var.diagnostics, "diagnostics_destinations", var.diagnostics_destinations)
-    storage_accounts         = lookup(var.diagnostics, "storage_accounts", module.diagnostic_storage_accounts)
-    log_analytics            = lookup(var.diagnostics, "log_analytics", module.log_analytics)
-    event_hub_namespaces     = lookup(var.diagnostics, "event_hub_namespaces", module.event_hub_namespaces)
+    diagnostics_definition   = try(var.diagnostics.diagnostics_definition, var.diagnostics_definition)
+    diagnostics_destinations = try(var.diagnostics.diagnostics_destinations, var.diagnostics_destinations)
+    storage_accounts         = try(var.diagnostics.storage_accounts, module.diagnostic_storage_accounts)
+    log_analytics            = try(var.diagnostics.log_analytics, module.log_analytics)
+    event_hub_namespaces     = try(var.diagnostics.event_hub_namespaces, module.event_hub_namespaces)
   }
 
   prefix = lookup(var.global_settings, "prefix", null) == null ? random_string.prefix.result : var.global_settings.prefix
