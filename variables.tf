@@ -192,4 +192,3 @@ variable availability_sets {
 
 
 
-

@@ -11,3 +11,5 @@ variable tags {
   default = null
 }
 variable name {}
+variable ppg_id {}
+variable proximity_placement_groups {}
