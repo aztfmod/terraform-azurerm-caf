@@ -88,6 +88,8 @@ jobs:
             "examples/compute/virtual_machine/101-single-windows-vm",
             "examples/compute/proximity_placement_group",
             "examples/compute/virtual_machine/104-single-windows-backup",
+            "examples/compute/availability_set/100-simple-availabilityset",
+            "examples/compute/availability_set/101-availabilityset-with-proximity-placement-group",
             "examples/recovery_vault/101-simple-asrv",
             "examples/recovery_vault/102-asr-protection",
             "examples/networking/virtual_network/100-subnet-delegation",
