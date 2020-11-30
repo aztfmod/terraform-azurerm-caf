@@ -17,4 +17,7 @@ resource "azurerm_recovery_services_vault" "asr_rg_vault" {
   tags                = local.tags
 
   soft_delete_enabled = try(var.settings.soft_delete_enabled, true)
+  
 }
+
+
