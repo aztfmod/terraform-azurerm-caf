@@ -6,6 +6,7 @@ variable global_settings {
     default_region = "region1"
     regions = {
       region1 = "southeastasia"
+      region2 = "eastasia"
     }
   }
 }
@@ -183,6 +184,7 @@ variable monitoring {
   default = {}
 }
 
+<<<<<<< HEAD
 variable virtual_network_gateways {
   default = {}
 }
@@ -199,3 +201,5 @@ variable image_definitions {
   default = {}
 }
 
+=======
+>>>>>>> b5ff25eadf490c99815e1858ef3ad458235ed9be
