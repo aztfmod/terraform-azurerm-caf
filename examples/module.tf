@@ -39,6 +39,7 @@ module "caf" {
     virtual_network_gateway_connections  = var.virtual_network_gateway_connections
     express_route_circuits               = var.express_route_circuits
     express_route_circuit_authorizations = var.express_route_circuit_authorizations
+    network_watchers                     = var.network_watchers
     vnet_peerings                        = var.vnet_peerings
   }
   database = {
