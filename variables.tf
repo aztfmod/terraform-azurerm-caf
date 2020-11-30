@@ -203,3 +203,7 @@ variable image_definitions {
 variable packer_service_principal {
   default = {}
 }
+
+variable packer_managed_identity {
+  default = {}
+}

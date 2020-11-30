@@ -53,6 +53,17 @@ network_security_group_definition = {
         source_address_prefix      = "*"
         destination_address_prefix = "VirtualNetwork"
       },
+      {
+        name                       = "https_outbound",
+        priority                   = "110"
+        direction                  = "Outbound"
+        access                     = "Allow"
+        protocol                   = "tcp"
+        source_port_range          = "*"
+        destination_port_range     = "443"
+        source_address_prefix      = "*"
+        destination_address_prefix = "*"
+      },
     ]
   }
 

@@ -217,3 +217,19 @@ variable vnet_peerings {
 variable packer_service_principal {
   default = {}
 }
+
+variable packer_managed_identity  {
+  default = {}
+}
+
+variable azuread_apps {
+  default = {}
+}
+
+variable azuread_api_permissions {
+  default = {}
+}
+
+variable keyvault_access_policies_azuread_apps {
+  default = {}
+}
