@@ -4,7 +4,6 @@ locals {
     diagnostics_destinations = try(var.diagnostics.diagnostics_destinations, var.diagnostics_destinations)
     storage_accounts         = try(var.diagnostics.storage_accounts, module.diagnostic_storage_accounts)
     log_analytics            = try(var.diagnostics.log_analytics, module.log_analytics)
-    event_hub_namespaces     = try(var.diagnostics.event_hub_namespaces, module.event_hub_namespaces)
   }
 
   prefix = lookup(var.global_settings, "prefix", null) == null ? random_string.prefix.result : var.global_settings.prefix
@@ -57,6 +56,7 @@ locals {
     express_route_circuit_authorizations                    = try(var.networking.express_route_circuit_authorizations, {})
     virtual_network_gateways                                = try(var.networking.virtual_network_gateways, {})
     virtual_network_gateway_connections                     = try(var.networking.virtual_network_gateway_connections, {})
+    
   }
 
   database = {

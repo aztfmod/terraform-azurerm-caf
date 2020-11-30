@@ -14,4 +14,3 @@ event_hub_namespaces = {
     region             = "region1"
   }
 }
-
