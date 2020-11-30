@@ -11,7 +11,7 @@ resource "azurerm_virtual_machine_extension" "diagnostics" {
 
   settings = jsonencode(
     {
-      "xmlCfg" : base64encode(templatefile(format("%s%s", path.cwd, var.settings.xml_diagnostics_file), { resource_id = var.virtual_machine_id}))
+      "xmlCfg" : base64encode(templatefile(format("%s%s", path.cwd, var.settings.xml_diagnostics_file), { resource_id = var.virtual_machine_id }))
       "storageAccount" : var.settings.diagnostics.storage_accounts[var.extension.diagnostics_storage_account_keys[0]].name
     }
   )
@@ -29,4 +29,4 @@ data "azurerm_storage_account" "diagnostics_storage_account" {
 
   name                = var.settings.diagnostics.storage_accounts[each.key].name
   resource_group_name = var.settings.diagnostics.storage_accounts[each.key].resource_group_name
-} 
+}

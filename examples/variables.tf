@@ -13,7 +13,7 @@ variable global_settings {
     default_region = "region1"
     regions = {
       region1 = "southeastasia"
-  }
+    }
   }
 }
 
@@ -168,3 +168,12 @@ variable express_route_circuits {
 variable express_route_circuit_authorizations {
   default = {}
 }
+
+variable shared_image_galleries {
+  default = {}
+}
+
+variable image_definitions {
+  default = {}
+}
+

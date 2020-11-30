@@ -3,7 +3,7 @@
 #
 
 module "vm_extension_monitoring_agent" {
-  source = "../modules/compute/virtual_machine_extensions"
+  source     = "../modules/compute/virtual_machine_extensions"
   depends_on = [module.caf]
 
   for_each = {
@@ -24,7 +24,7 @@ module "vm_extension_monitoring_agent" {
 }
 
 module "vm_extension_diagnostics" {
-  source = "../modules/compute/virtual_machine_extensions"
+  source     = "../modules/compute/virtual_machine_extensions"
   depends_on = [module.caf]
 
   for_each = {

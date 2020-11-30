@@ -27,4 +27,4 @@ data "azurerm_log_analytics_workspace" "monitoring" {
 
   name                = try(var.settings.log_analytics[var.client_config.landingzone_key][var.extension.log_analytics_key].name, var.settings.log_analytics[var.extension.lz_key][each.value.log_analytics_key].name)
   resource_group_name = try(var.settings.log_analytics[var.client_config.landingzone_key][var.extension.log_analytics_key].resource_group_name, var.settings.log_analytics[var.extension.lz_key][each.value.log_analytics_key].resource_group_name)
-} 
+}

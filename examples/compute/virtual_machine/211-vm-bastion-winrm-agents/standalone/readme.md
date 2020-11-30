@@ -24,5 +24,5 @@ rover \
   -lz /tf/caf/aztfmod/examples \
   -var-folder /tf/caf/aztfmod/examples/compute/virtual_machine/211-vm-bastion-winrm-agents \
   -a [plan|apply|delete]
-  
+
 ```

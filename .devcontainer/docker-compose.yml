@@ -8,7 +8,7 @@
     rover:
       image: aztfmod/rover:2010.2808
       user: vscode
-      
+
       labels:
         - "caf=Azure CAF"
 
