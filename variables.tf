@@ -182,3 +182,4 @@ variable shared_services {
 variable monitoring {
   default = {}
 }
+
