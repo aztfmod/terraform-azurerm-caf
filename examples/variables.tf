@@ -152,6 +152,9 @@ variable log_analytics {
 variable recovery_vaults {
   default = {}
 }
+variable network_watchers {
+  default = {}
+}
 variable virtual_network_gateways {
   default = {}
 }
