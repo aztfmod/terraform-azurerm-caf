@@ -32,8 +32,8 @@ resource "azurerm_app_service_plan" "asp" {
   tags                       = local.tags
 
   timeouts {
-    create = "3h"
-    update = "3h"
+    create = "5h"
+    update = "5h"
   }
 
   lifecycle {
