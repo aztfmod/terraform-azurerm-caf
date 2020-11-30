@@ -183,5 +183,11 @@ variable monitoring {
   default = {}
 }
 
+variable virtual_network_gateways {
+  default = {}
+}
 
+variable virtual_network_gateway_connections {
+  default = {}
+}
 
