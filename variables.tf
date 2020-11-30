@@ -191,3 +191,11 @@ variable virtual_network_gateway_connections {
   default = {}
 }
 
+variable shared_image_galleries {
+  default = {}
+}
+
+variable image_definitions {
+  default = {}
+}
+
