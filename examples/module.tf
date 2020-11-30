@@ -32,11 +32,8 @@ module "caf" {
     vnets                                = var.vnets
     network_security_group_definition    = var.network_security_group_definition
     public_ip_addresses                  = var.public_ip_addresses
-<<<<<<< HEAD
-=======
     route_tables                         = var.route_tables
     azurerm_routes                       = var.azurerm_routes
->>>>>>> b5ff25eadf490c99815e1858ef3ad458235ed9be
     private_dns                          = var.private_dns
     virtual_wans                         = var.virtual_wans
     application_gateways                 = var.application_gateways
@@ -69,6 +66,7 @@ module "caf" {
     recovery_vaults = var.recovery_vaults
     shared_image_galleries = var.shared_image_galleries
     image_definitions = var.image_definitions
+    packer_service_principal = var.packer_service_principal
   }
   enable = {}
 }

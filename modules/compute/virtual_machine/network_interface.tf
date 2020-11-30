@@ -35,7 +35,7 @@ resource "azurerm_network_interface" "nic" {
 
   ip_configuration {
     name                          = azurecaf_name.nic[each.key].result
-    subnet_id                     = try(var.vnets[var.client_config.landingzone_key][each.value.vnet_key].subnets[each.value.subnet_key].id, var.vnets[each.value.lz_key][each.value.vnet_key].subnets[each.value.subnet_key].id)
+  subnet_id                     = try(var.vnets[var.client_config.landingzone_key][each.value.vnet_key].subnets[each.value.subnet_key].id, var.vnets[each.value.lz_key][each.value.vnet_key].subnets[each.value.subnet_key].id)
     private_ip_address_allocation = lookup(each.value, "private_ip_address_allocation", "Dynamic")
     private_ip_address_version    = lookup(each.value, "private_ip_address_version", null)
     private_ip_address            = lookup(each.value, "private_ip_address", null)

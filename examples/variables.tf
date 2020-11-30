@@ -13,10 +13,7 @@ variable global_settings {
     default_region = "region1"
     regions = {
       region1 = "southeastasia"
-<<<<<<< HEAD
-=======
       region2 = "eastasia"
->>>>>>> b5ff25eadf490c99815e1858ef3ad458235ed9be
     }
   }
 }
@@ -201,7 +198,6 @@ variable express_route_circuits {
 variable express_route_circuit_authorizations {
   default = {}
 }
-<<<<<<< HEAD
 
 variable shared_image_galleries {
   default = {}
@@ -211,11 +207,13 @@ variable image_definitions {
   default = {}
 }
 
-=======
 variable diagnostics_destinations {
   default = {}
 }
 variable vnet_peerings {
   default = {}
 }
->>>>>>> b5ff25eadf490c99815e1858ef3ad458235ed9be
+
+variable packer_service_principal {
+  default = {}
+}
