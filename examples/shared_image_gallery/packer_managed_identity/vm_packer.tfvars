@@ -7,7 +7,7 @@ vnets = {
     }
     specialsubnets = {}
     subnets = {
-      servers = {
+      packer_subnet = {
         name    = "packer_subnet"
         cidr    = ["10.100.100.128/25"]
         nsg_key = "packer"
@@ -89,11 +89,12 @@ virtual_machines = {
       nic0 = {
         # Value of the keys from networking.tfvars
         vnet_key                = "packer_vnet"
-        subnet_key              = "packer_vnet"
+        subnet_key              = "packer_subnet"
         name                    = "0-packer_host"
         enable_ip_forwarding    = false
         internal_dns_name_label = "packer-host-nic0"
         public_ip_address_key   = "packer_vm_pip"
+        lz_key = "examples"
       }
     }
 
