@@ -21,11 +21,13 @@ resource "azurerm_recovery_services_vault" "asr_rg_vault" {
 }
 
 
-resource "null_resource" "create_identity {
+resource "null_resource" "enable_asr_system_identity" {
+
+  # depends_on = [azurerm_recovery_services_vault.asr_rg_vault]
 
   
   triggers = {
-    identity = var.identity
+    asr_id = azurerm_recovery_services_vault.asr_rg_vault.id
   }
 
   
@@ -35,24 +37,18 @@ resource "null_resource" "create_identity {
     on_failure  = fail
 
     environment = {
-      METHOD                      = "POST"
-      ARS_IDENTITY                = var.identity
-      
+      METHOD = "PATCH"
+      URI    = local.asr_uri
     }
   }
 
-  provisioner "local-exec" {
-    command     = format("%s/scripts/create_identity.sh", path.module)
-    when        = destroy
-    interpreter = ["/bin/sh"]
-    on_failure  = fail
-
-    environment = {
-      METHOD                      = "DELETE"
-      ARS_IDENTITY                = var.identity
-      
-    }
-  }
 }
 
-
+locals {
+  asr_uri = format(
+    "%s%s%s" , 
+    "https://management.azure.com", 
+    azurerm_recovery_services_vault.asr_rg_vault.id,
+    "?api-version=2016-06-01"
+  )
+}
