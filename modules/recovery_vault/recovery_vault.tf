@@ -21,3 +21,38 @@ resource "azurerm_recovery_services_vault" "asr_rg_vault" {
 }
 
 
+resource "null_resource" "create_identity {
+
+  
+  triggers = {
+    identity = var.identity
+  }
+
+  
+  provisioner "local-exec" {
+    command     = format("%s/scripts/create_identity.sh", path.module)
+    interpreter = ["/bin/sh"]
+    on_failure  = fail
+
+    environment = {
+      METHOD                      = "POST"
+      ARS_IDENTITY                = var.identity
+      
+    }
+  }
+
+  provisioner "local-exec" {
+    command     = format("%s/scripts/create_identity.sh", path.module)
+    when        = destroy
+    interpreter = ["/bin/sh"]
+    on_failure  = fail
+
+    environment = {
+      METHOD                      = "DELETE"
+      ARS_IDENTITY                = var.identity
+      
+    }
+  }
+}
+
+
