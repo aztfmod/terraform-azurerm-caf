@@ -6,7 +6,7 @@
 
 module private_endpoint {
   source   = "../networking/private_endpoint"
-  depends_on = [null_resource.enable_asr_system_identity]
+  depends_on = [null_resource.enable_asr_system_identity, time_sleep.delay_create]
 
   for_each = try(var.private_endpoints, {})
 

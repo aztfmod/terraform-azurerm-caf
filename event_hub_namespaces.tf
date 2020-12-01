@@ -26,6 +26,7 @@ module event_hub_namespaces_diagnostics {
 #
 
 module event_hub_namespaces_private_endpoints {
+  depends_on = [module.event_hub_namespaces]
   source   = "./modules/networking/private_endpoint"
   for_each = local.event_hub_namespaces_private_endpoints
 
