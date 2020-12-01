@@ -16,6 +16,7 @@ module "vm_extension_monitoring_agent" {
   extension          = each.value.virtual_machine_extensions.microsoft_enterprise_cloud_monitoring
   extension_name     = "microsoft_enterprise_cloud_monitoring"
   settings = {
+    diagnostics = module.caf.diagnostics
     log_analytics = map(
       module.caf.client_config.landingzone_key,
       module.caf.log_analytics
