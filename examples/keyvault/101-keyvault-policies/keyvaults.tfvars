@@ -68,7 +68,7 @@ keyvaults = {
 
         private_dns = {
           dns1 = {
-            lz_key = ""
+            lz_key          = ""
             private_dns_key = ""
           }
         }
