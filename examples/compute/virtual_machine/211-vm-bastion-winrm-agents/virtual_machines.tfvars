@@ -134,8 +134,8 @@ virtual_machines = {
         # Requires at least one diagnostics storage account
         diagnostics_storage_account_keys = ["bootdiag_region1"]
 
-        # Relative path to the landing zone folder
-        xml_diagnostics_file = "../diagnostics/wadcfg.xml"
+        # Relative path to the configuration folder or full path
+        xml_diagnostics_file = "diagnostics/wadcfg.xml"
       }
     }
   }
