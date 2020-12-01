@@ -6,6 +6,7 @@ resource "azurecaf_name" "plan" {
   random_length = var.global_settings.random_length
   clean_input   = true
   passthrough   = var.global_settings.passthrough
+  use_slug      = var.global_settings.use_slug
 }
 
 
@@ -31,8 +32,8 @@ resource "azurerm_app_service_plan" "asp" {
   tags                       = local.tags
 
   timeouts {
-    create = "3h"
-    update = "3h"
+    create = "5h"
+    update = "5h"
   }
 
   lifecycle {

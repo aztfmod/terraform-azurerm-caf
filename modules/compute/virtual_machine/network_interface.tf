@@ -14,9 +14,10 @@ resource "azurecaf_name" "nic" {
   name          = each.value.name
   resource_type = "azurerm_network_interface"
   prefixes      = [var.global_settings.prefix]
-  random_length = try(var.global_settings.random_length, null)
+  random_length = var.global_settings.random_length
   clean_input   = true
-  passthrough   = try(var.global_settings.passthrough, false)
+  passthrough   = var.global_settings.passthrough
+  use_slug      = var.global_settings.use_slug
 }
 
 resource "azurerm_network_interface" "nic" {
@@ -39,7 +40,7 @@ resource "azurerm_network_interface" "nic" {
     private_ip_address_version    = lookup(each.value, "private_ip_address_version", null)
     private_ip_address            = lookup(each.value, "private_ip_address", null)
     primary                       = lookup(each.value, "primary", null)
-    public_ip_address_id          = try(var.public_ip_addresses[each.value.public_ip_address_key].id, null)
+    public_ip_address_id          = lookup(each.value, "public_ip_address_key", null) == null ? null : try(var.public_ip_addresses[var.client_config.landingzone_key][each.value.public_ip_address_key].id, var.public_ip_addresses[each.value.lz_key][each.value.public_ip_address_key].id)
   }
 }
 
@@ -49,11 +50,9 @@ resource "azurerm_network_interface" "nic" {
 # networking_interfaces = {
 #   nic0 = {
 #     # AKS rely on a remote network and need the details of the tfstate to connect (tfstate_key), assuming RBAC authorization.
-#     networking = {
-#       lz_key      = "networking_aks"
-#       vnet_key    = "hub_rg1"
-#       subnet_key  = "jumpbox"
-#     }
+#     lz_key      = "networking_aks"
+#     vnet_key    = "hub_rg1"
+#     subnet_key  = "jumpbox"
 #     name                    = "0"
 #     enable_ip_forwarding    = false
 #     internal_dns_name_label = "nic0"

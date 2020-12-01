@@ -14,9 +14,10 @@ resource "azurecaf_name" "linux" {
   name          = each.value.name
   resource_type = "azurerm_linux_virtual_machine"
   prefixes      = [var.global_settings.prefix]
-  random_length = try(var.global_settings.random_length, null)
+  random_length = var.global_settings.random_length
   clean_input   = true
-  passthrough   = try(var.global_settings.passthrough, false)
+  passthrough   = var.global_settings.passthrough
+  use_slug      = var.global_settings.use_slug
 }
 
 
@@ -27,9 +28,10 @@ resource "azurecaf_name" "linux_computer_name" {
   name          = try(each.value.computer_name, each.value.name)
   resource_type = "azurerm_linux_virtual_machine"
   prefixes      = [var.global_settings.prefix]
-  random_length = try(var.global_settings.random_length, null)
+  random_length = var.global_settings.random_length
   clean_input   = true
-  passthrough   = try(var.global_settings.passthrough, false)
+  passthrough   = var.global_settings.passthrough
+  use_slug      = var.global_settings.use_slug
 }
 
 # Name for the OS disk
@@ -39,9 +41,10 @@ resource "azurecaf_name" "os_disk_linux" {
   name          = try(each.value.os_disk.name, null)
   resource_type = "azurerm_managed_disk"
   prefixes      = [var.global_settings.prefix]
-  random_length = try(var.global_settings.random_length, null)
+  random_length = var.global_settings.random_length
   clean_input   = true
-  passthrough   = try(var.global_settings.passthrough, false)
+  passthrough   = var.global_settings.passthrough
+  use_slug      = var.global_settings.use_slug
 }
 
 resource "azurerm_linux_virtual_machine" "vm" {

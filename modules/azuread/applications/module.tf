@@ -1,14 +1,4 @@
 
-# resource "azurecaf_name" "aad_apps" {
-#   name          = var.settings.name
-#   resource_type = "azurerm_resource_group"
-#   #TODO: need to be changed to appropriate resource (no caf reference for now)
-#   prefixes      = [var.global_settings.prefix]
-#   random_length = var.global_settings.random_length
-#   clean_input   = true
-#   passthrough   = var.global_settings.passthrough
-# }
-
 resource "azuread_application" "app" {
 
   name = var.global_settings.passthrough ? format("%s", var.settings.application_name) : format("%s-%s", var.global_settings.prefix, var.settings.application_name)

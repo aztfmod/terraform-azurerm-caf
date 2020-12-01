@@ -1,10 +1,10 @@
 locals {
   diagnostics = {
-    diagnostics_definition   = lookup(var.diagnostics, "diagnostics_definition", var.diagnostics_definition)
-    diagnostics_destinations = lookup(var.diagnostics, "diagnostics_destinations", var.diagnostics_destinations)
-    storage_accounts         = lookup(var.diagnostics, "storage_accounts", module.diagnostic_storage_accounts)
-    log_analytics            = lookup(var.diagnostics, "log_analytics", module.log_analytics)
-    event_hub_namespaces     = lookup(var.diagnostics, "event_hub_namespaces", module.event_hub_namespaces)
+    diagnostics_definition   = try(var.diagnostics.diagnostics_definition, var.diagnostics_definition)
+    diagnostics_destinations = try(var.diagnostics.diagnostics_destinations, var.diagnostics_destinations)
+    storage_accounts         = try(var.diagnostics.storage_accounts, module.diagnostic_storage_accounts)
+    log_analytics            = try(var.diagnostics.log_analytics, module.log_analytics)
+    event_hub_namespaces     = try(var.diagnostics.event_hub_namespaces, module.event_hub_namespaces)
   }
 
   prefix = lookup(var.global_settings, "prefix", null) == null ? random_string.prefix.result : var.global_settings.prefix
@@ -15,12 +15,12 @@ locals {
     prefix_start_alpha = local.prefix == "" ? "" : "${random_string.alpha1.result}${local.prefix}"
     default_region     = lookup(var.global_settings, "default_region", "region1")
     environment        = lookup(var.global_settings, "environment", var.environment)
-    random_length      = lookup(var.global_settings, "random_length", null)
+    random_length      = try(var.global_settings.random_length, 0)
     regions            = var.global_settings.regions
     passthrough        = try(var.global_settings.passthrough, false)
     inherit_tags       = try(var.global_settings.inherit_tags, false)
+    use_slug           = try(var.global_settings.use_slug, true)
   }
-
 
   compute = {
     virtual_machines           = try(var.compute.virtual_machines, {})
@@ -53,17 +53,29 @@ locals {
     private_dns                                             = try(var.networking.private_dns, {})
     azurerm_firewall_nat_rule_collection_definition         = try(var.networking.azurerm_firewall_nat_rule_collection_definition, {})
     ddos_services                                           = try(var.networking.ddos_services, {})
+    express_route_circuits                                  = try(var.networking.express_route_circuits, {})
+    express_route_circuit_authorizations                    = try(var.networking.express_route_circuit_authorizations, {})
+    network_watchers                                        = try(var.networking.network_watchers, {})
+    virtual_network_gateways                                = try(var.networking.virtual_network_gateways, {})
+    virtual_network_gateway_connections                     = try(var.networking.virtual_network_gateway_connections, {})
   }
 
   database = {
-    mssql_servers               = try(var.database.mssql_servers, {})
-    mssql_databases             = try(var.database.mssql_databases, {})
-    mssql_elastic_pools         = try(var.database.mssql_elastic_pools, {})
-    azurerm_redis_caches        = try(var.database.azurerm_redis_caches, {})
-    synapse_workspaces          = try(var.database.synapse_workspaces, {})
-    databricks_workspaces       = try(var.database.databricks_workspaces, {})
-    machine_learning_workspaces = try(var.database.machine_learning_workspaces, {})
-    cosmos_db                   = try(var.database.cosmos_db, {})
+    mssql_servers                     = try(var.database.mssql_servers, {})
+    mssql_managed_instances           = try(var.database.mssql_managed_instances, {})
+    mssql_managed_instances_secondary = try(var.database.mssql_managed_instances_secondary, {})
+    mssql_databases                   = try(var.database.mssql_databases, {})
+    mssql_managed_databases           = try(var.database.mssql_managed_databases, {})
+    mssql_managed_databases_restore   = try(var.database.mssql_managed_databases_restore, {})
+    mssql_elastic_pools               = try(var.database.mssql_elastic_pools, {})
+    mssql_failover_groups             = try(var.database.mssql_failover_groups, {})
+    mssql_mi_failover_groups          = try(var.database.mssql_mi_failover_groups, {})
+    mssql_mi_administrators           = try(var.database.mssql_mi_administrators, {})
+    azurerm_redis_caches              = try(var.database.azurerm_redis_caches, {})
+    synapse_workspaces                = try(var.database.synapse_workspaces, {})
+    databricks_workspaces             = try(var.database.databricks_workspaces, {})
+    machine_learning_workspaces       = try(var.database.machine_learning_workspaces, {})
+    cosmos_db                         = try(var.database.cosmos_db, {})
   }
 
   client_config = {

@@ -47,7 +47,7 @@ jobs:
         with:
           repository: Azure/caf-terraform-landingzones
           path: public
-          ref: '2010.0.0'
+          ref: '2010.0.1'
 
       - name: Login azure
         run: |
@@ -84,11 +84,17 @@ jobs:
             "examples/app_insights/100-simple",
             "examples/compute/container_registry/100-simple-acr",
             "examples/compute/virtual_machine/100-single-linux-vm",
+            "examples/compute/virtual_machine/211-vm-bastion-winrm-agents",
             "examples/compute/virtual_machine/101-single-windows-vm",
+            "examples/compute/virtual_machine/104-single-windows-backup",
+            "examples/recovery_vault/101-simple-asrv",
+            "examples/recovery_vault/102-asr-protection",
             "examples/networking/virtual_network/100-subnet-delegation",
+            "examples/networking/virtual_network/101-vnet-peering-nsg",
             "examples/networking/virtual_wan/100-vwan-multi-hubs",
             "examples/networking/virtual_wan/101-vwan-multi-hubs-firewalls",
             # "examples/networking/virtual_wan/102-vwan-multi-hubs-gw",
+            "examples/networking/virtual_network_gateway",
             "examples/app_gateway/100-simple-app-gateway",
             "examples/cosmos_db/100-simple-cosmos-db",
             "examples/databricks/100-simple-databricks",
@@ -102,6 +108,7 @@ jobs:
             "examples/synapse_analytics/101-synapse-sparkpool",
             "examples/monitoring/service_health_alerts",
             "examples/mssql_server/elastic_pools",
+            "examples/mssql_server/failover_groups",
             "examples/webapps/appservice/101-appservice-simple",
             "examples/webapps/appservice/102-appservice-slots",
             "examples/webapps/appservice/103-appservice-extend",
