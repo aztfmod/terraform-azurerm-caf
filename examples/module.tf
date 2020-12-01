@@ -62,12 +62,12 @@ module "caf" {
     machine_learning_workspaces       = var.machine_learning_workspaces
   }
   shared_services = {
-    monitoring      = var.monitoring
-    recovery_vaults = var.recovery_vaults
-    shared_image_galleries = var.shared_image_galleries
-    image_definitions = var.image_definitions
+    monitoring               = var.monitoring
+    recovery_vaults          = var.recovery_vaults
+    shared_image_galleries   = var.shared_image_galleries
+    image_definitions        = var.image_definitions
     packer_service_principal = var.packer_service_principal
-    packer_managed_identity  = var.packer_managed_identity 
+    packer_managed_identity  = var.packer_managed_identity
   }
   enable = {}
 }

@@ -27,25 +27,38 @@ module image_definitions {
 
 }
 
+resource "time_sleep" "time_delay" {
+  destroy_duration = "60s"
+  depends_on = [
+    module.image_definitions
+  ]
+}
+
 module packer_managed_identity {
   source   = "./modules/shared_image_gallery/packer_managed_identity"
   for_each = try(local.shared_services.packer_managed_identity, {})
 
-  resource_group_name = module.resource_groups[each.value.resource_group_key].name
-  location            = lookup(each.value, "region", null) == null ? module.resource_groups[each.value.resource_group_key].location : local.global_settings.regions[each.value.region]
-  client_config       = local.client_config
-  global_settings     = local.global_settings
-  gallery_name        = module.shared_image_galleries[each.value.gallery_key].name
-  image_name          = module.image_definitions[each.value.image_key].name
-  key_vault_id        = lookup(each.value, "keyvault_key") == null ? null : module.keyvaults[each.value.keyvault_key].id
-  settings            = each.value
-  base_tags           = try(local.global_settings.inherit_tags, false) ? module.resource_groups[each.value.resource_group_key].tags : {}
+  resource_group_name      = module.resource_groups[each.value.resource_group_key].name
+  location                 = lookup(each.value, "region", null) == null ? module.resource_groups[each.value.resource_group_key].location : local.global_settings.regions[each.value.region]
+  client_config            = local.client_config
+  global_settings          = local.global_settings
+  subscription             = data.azurerm_subscription.primary.subscription_id
+  tenant_id                = data.azurerm_client_config.current.tenant_id
+  gallery_name             = module.shared_image_galleries[each.value.shared_image_gallery_destination.gallery_key].name
+  image_name               = module.image_definitions[each.value.shared_image_gallery_destination.image_key].name
+  key_vault_id             = lookup(each.value, "keyvault_key") == null ? null : module.keyvaults[each.value.keyvault_key].id
+  ssh_private_pem_key_name = module.virtual_machines[each.value.vm_key].ssh_keys.ssh_private_key_pem
+  public_ip_addresses      = local.combined_objects_public_ip_addresses
+  settings                 = each.value
+  base_tags                = try(local.global_settings.inherit_tags, false) ? module.resource_groups[each.value.resource_group_key].tags : {}
   depends_on = [
     module.shared_image_galleries,
     module.image_definitions,
+    module.virtual_machines,
     module.keyvaults,
     module.keyvaults.azurerm_key_vault_secret,
-    azurerm_role_assignment.for
+    azurerm_role_assignment.for,
+    time_sleep.time_delay
   ]
 }
 

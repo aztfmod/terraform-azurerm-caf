@@ -1,4 +1,4 @@
-packer_service_principal= {
+packer_service_principal = {
   build1 = {
     packer_template_filepath      = "./shared_image_gallery/packer/packer_template_msi.json"
     packer_configuration_filepath = "./shared_image_gallery/packer/packer_config.json"

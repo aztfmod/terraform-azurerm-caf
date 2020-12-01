@@ -104,8 +104,8 @@ locals {
     monitoring               = try(var.shared_services.monitoring, {})
     shared_image_galleries   = try(var.shared_services.shared_image_galleries, {})
     image_definitions        = try(var.shared_services.image_definitions, {})
-    packer_service_principal = try(var.shared_image_galleries.packer_service_principal, {})
-    packer_managed_identity  = try(var.shared_image_galleries.packer_managed_identity, {})
+    packer_service_principal = try(var.shared_services.packer_service_principal, {})
+    packer_managed_identity  = try(var.shared_services.packer_managed_identity, {})
   }
 
   enable = {

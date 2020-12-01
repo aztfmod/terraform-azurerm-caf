@@ -14,7 +14,7 @@
   "managed_image_name": "${managed_image_name}",
 
   "shared_image_gallery_destination": {
-    "subscription": "${subscription_id}",
+    "subscription": "${subscription}",
     "resource_group": "${resource_group}",
     "gallery_name": "${gallery_name}",
     "image_name": "${image_name}",

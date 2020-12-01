@@ -105,7 +105,7 @@ virtual_machines = {
         enable_ip_forwarding    = false
         internal_dns_name_label = "packer-host-nic0"
         public_ip_address_key   = "packer_vm_pip"
-        lz_key = "examples"
+        lz_key                  = "examples"
       }
     }
 
@@ -125,10 +125,10 @@ virtual_machines = {
           storage_account_type = "Standard_LRS"
         }
         source_image_reference = {
-          publisher = "canonical"
-          offer     = "0001-com-ubuntu-server-focal"
-          sku       = "20_04-lts"
-          version   = "latest"
+          publisher = "OpenLogic"
+          offer     = "CentOS"
+          sku       = "7.7"
+          version   = "7.7.2020111300"
         }
         identity = {
           type                  = "UserAssigned"
