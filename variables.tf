@@ -6,6 +6,7 @@ variable global_settings {
     default_region = "region1"
     regions = {
       region1 = "southeastasia"
+      region2 = "eastasia"
     }
   }
 }
@@ -180,14 +181,6 @@ variable shared_services {
 }
 
 variable monitoring {
-  default = {}
-}
-
-variable virtual_network_gateways {
-  default = {}
-}
-
-variable virtual_network_gateway_connections {
   default = {}
 }
 
