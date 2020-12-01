@@ -13,7 +13,7 @@ module "caf" {
   compute = {
     virtual_machines = var.virtual_machines
   }
-  
+
   networking = {
     vnets                             = var.vnets
     network_security_group_definition = var.network_security_group_definition

@@ -31,7 +31,7 @@ resource "azurerm_key_vault" "keyvault" {
   enable_rbac_authorization       = try(var.settings.enable_rbac_authorization, false)
   timeouts {
     delete = "60m"
-    
+
   }
 
   dynamic "network_acls" {
