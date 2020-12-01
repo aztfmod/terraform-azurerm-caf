@@ -57,7 +57,7 @@ locals {
     network_watchers                                        = try(var.networking.network_watchers, {})
     virtual_network_gateways                                = try(var.networking.virtual_network_gateways, {})
     virtual_network_gateway_connections                     = try(var.networking.virtual_network_gateway_connections, {})
-    
+
   }
 
   database = {
