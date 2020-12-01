@@ -39,3 +39,6 @@ variable route_tables {
 
 variable global_settings {}
 variable base_tags {}
+variable network_watchers {
+  default = {}
+}

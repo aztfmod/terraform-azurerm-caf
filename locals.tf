@@ -55,18 +55,26 @@ locals {
     ddos_services                                           = try(var.networking.ddos_services, {})
     express_route_circuits                                  = try(var.networking.express_route_circuits, {})
     express_route_circuit_authorizations                    = try(var.networking.express_route_circuit_authorizations, {})
+    network_watchers                                        = try(var.networking.network_watchers, {})
     virtual_network_gateways                                = try(var.networking.virtual_network_gateways, {})
     virtual_network_gateway_connections                     = try(var.networking.virtual_network_gateway_connections, {})
   }
 
   database = {
-    mssql_servers               = try(var.database.mssql_servers, {})
-    mssql_databases             = try(var.database.mssql_databases, {})
-    mssql_elastic_pools         = try(var.database.mssql_elastic_pools, {})
-    azurerm_redis_caches        = try(var.database.azurerm_redis_caches, {})
-    synapse_workspaces          = try(var.database.synapse_workspaces, {})
-    databricks_workspaces       = try(var.database.databricks_workspaces, {})
-    machine_learning_workspaces = try(var.database.machine_learning_workspaces, {})
+    mssql_servers                     = try(var.database.mssql_servers, {})
+    mssql_managed_instances           = try(var.database.mssql_managed_instances, {})
+    mssql_managed_instances_secondary = try(var.database.mssql_managed_instances_secondary, {})
+    mssql_databases                   = try(var.database.mssql_databases, {})
+    mssql_managed_databases           = try(var.database.mssql_managed_databases, {})
+    mssql_managed_databases_restore   = try(var.database.mssql_managed_databases_restore, {})
+    mssql_elastic_pools               = try(var.database.mssql_elastic_pools, {})
+    mssql_failover_groups             = try(var.database.mssql_failover_groups, {})
+    mssql_mi_failover_groups          = try(var.database.mssql_mi_failover_groups, {})
+    mssql_mi_administrators           = try(var.database.mssql_mi_administrators, {})
+    azurerm_redis_caches              = try(var.database.azurerm_redis_caches, {})
+    synapse_workspaces                = try(var.database.synapse_workspaces, {})
+    databricks_workspaces             = try(var.database.databricks_workspaces, {})
+    machine_learning_workspaces       = try(var.database.machine_learning_workspaces, {})
   }
 
   client_config = {
