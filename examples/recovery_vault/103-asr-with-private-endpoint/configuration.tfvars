@@ -58,7 +58,7 @@ recovery_vaults = {
 
     private_endpoints = {
       # Require enforce_private_link_endpoint_network_policies set to true on the subnet
-      private-link-level4 = {
+      private-link = {
         name = "sales-asr-rg1"
         vnet_key           = "vnet_region1"
         subnet_key         = "asr_subnet"
