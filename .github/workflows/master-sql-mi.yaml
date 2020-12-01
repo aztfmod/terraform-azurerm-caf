@@ -3,18 +3,17 @@
 # Licensed under the MIT License.
 #
 
-name: scenarios-100
+name: scenarios-sql-mi
 
 on:
   pull_request:
-    paths-ignore:
-      - .github/workflows/master-200.yaml
-      - 'documentation/**'
-      - '_pictures/**'
-      - 'README.md'
-      - 'CHANGELOG.md'
+    paths:
+      - msssql_managed_instances.tf
+      - msssql_managed_databases.tf
+      - modules/databases/mssql_managed_instance/**
+      - modules/databases/mssql_managed_database/**
   schedule:
-    - cron:  '0 3 * * *'
+    - cron:  '0 3 * * 0' #3 AM on sunday
 
 env:
   TF_CLI_ARGS: '-no-color'
@@ -47,7 +46,7 @@ jobs:
         with:
           repository: Azure/caf-terraform-landingzones
           path: public
-          ref: '2010.0.1'
+          ref: '2010.0.0'
 
       - name: Login azure
         run: |
@@ -80,40 +79,7 @@ jobs:
       fail-fast: false
       matrix:
           config_files: [
-            "examples/app_insights/100-all-attributes",
-            "examples/app_insights/100-simple",
-            "examples/compute/container_registry/100-simple-acr",
-            "examples/compute/virtual_machine/100-single-linux-vm",
-            "examples/compute/virtual_machine/211-vm-bastion-winrm-agents",
-            "examples/compute/virtual_machine/101-single-windows-vm",
-            "examples/compute/virtual_machine/104-single-windows-backup",
-            "examples/recovery_vault/101-simple-asrv",
-            "examples/recovery_vault/102-asr-protection",
-            "examples/recovery_vault/103-asr-with-private-endpoint",
-            "examples/networking/virtual_network/100-subnet-delegation",
-            "examples/networking/virtual_network/101-vnet-peering-nsg",
-            "examples/networking/virtual_wan/100-vwan-multi-hubs",
-            "examples/networking/virtual_wan/101-vwan-multi-hubs-firewalls",
-            # "examples/networking/virtual_wan/102-vwan-multi-hubs-gw",
-            "examples/networking/virtual_network_gateway",
-            "examples/app_gateway/100-simple-app-gateway",
-            "examples/databricks/100-simple-databricks",
-            "examples/networking/private_dns/100-private-dns-vnet-links",
-            "examples/redis_cache/100-redis-standard",
-            "examples/eventhub_namespace/100-simple-evh",
-            "examples/eventhub_namespace/101-evh-with-private-endpoint",
-            "examples/machine_learning/100-aml",
-            "examples/machine_learning/101-aml-vnet",
-            "examples/datalake/101-datalake-storage",
-            "examples/synapse_analytics/100-synapse",
-            "examples/synapse_analytics/101-synapse-sparkpool",
-            "examples/monitoring/service_health_alerts",
-            "examples/mssql_server/elastic_pools",
-            "examples/mssql_server/failover_groups",
-            "examples/webapps/appservice/101-appservice-simple",
-            "examples/webapps/appservice/102-appservice-slots",
-            "examples/webapps/appservice/103-appservice-extend",
-            "examples/webapps/appservice/104-appservice-appinsight"
+            "examples/mssql_mi/200-mi"
           ]
 
     container:
