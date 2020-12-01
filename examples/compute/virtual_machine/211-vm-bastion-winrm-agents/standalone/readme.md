@@ -11,7 +11,8 @@ terraform [plan|apply|delete] \
   -var-file ../nsg_definitions.tfvars \
   -var-file ../virtual_networks.tfvars \
   -var-file ../public_ip_addresses.tfvars \
-  -var-file ../virtual_machines.tfvars
+  -var-file ../virtual_machines.tfvars \
+  -var var_folder_path="/compute/virtual_machine/211-vm-bastion-winrm-agents"
 
 
 ```

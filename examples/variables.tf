@@ -32,6 +32,7 @@ variable landingzone {
   }
 }
 
+variable var_folder_path {}
 variable tenant_id {}
 
 variable environment {
