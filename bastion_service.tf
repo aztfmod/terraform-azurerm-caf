@@ -12,6 +12,7 @@ resource "azurecaf_name" "host" {
   random_length = local.global_settings.random_length
   clean_input   = true
   passthrough   = local.global_settings.passthrough
+  use_slug      = var.global_settings.use_slug
 }
 
 resource "azurerm_bastion_host" "host" {
@@ -26,6 +27,9 @@ resource "azurerm_bastion_host" "host" {
     name                 = each.value.name
     subnet_id            = module.networking[each.value.vnet_key].subnets[each.value.subnet_key].id
     public_ip_address_id = module.public_ip_addresses[each.value.public_ip_key].id
+  }
+  timeouts {
+    create = "60m"
   }
 }
 

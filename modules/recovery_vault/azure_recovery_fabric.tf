@@ -1,5 +1,6 @@
 resource "azurerm_site_recovery_fabric" "recovery_fabric" {
-  for_each = try(var.settings.recovery_fabrics, {})
+  depends_on = [time_sleep.delay_create]
+  for_each   = try(var.settings.recovery_fabrics, {})
 
   name                = each.value.name
   resource_group_name = var.resource_group_name

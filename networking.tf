@@ -30,6 +30,7 @@ module "networking" {
   global_settings                   = local.global_settings
   ddos_id                           = try(azurerm_network_ddos_protection_plan.ddos_protection_plan[each.value.ddos_services_key].id, "")
   base_tags                         = try(local.global_settings.inherit_tags, false) ? module.resource_groups[each.value.resource_group_key].tags : {}
+  network_watchers                  = try(local.combined_objects_network_watchers, null)
 }
 
 #
@@ -48,6 +49,7 @@ resource "azurecaf_name" "public_ip_addresses" {
   random_length = local.global_settings.random_length
   clean_input   = true
   passthrough   = local.global_settings.passthrough
+  use_slug      = local.global_settings.use_slug
 }
 
 module public_ip_addresses {
@@ -86,6 +88,7 @@ resource "azurecaf_name" "peering" {
   random_length = local.global_settings.random_length
   clean_input   = true
   passthrough   = local.global_settings.passthrough
+  use_slug      = local.global_settings.use_slug
 }
 
 # The code tries to peer to a vnet created in the same landing zone. If it fails it tries with the data remote state
@@ -117,6 +120,7 @@ resource "azurecaf_name" "route_tables" {
   random_length = local.global_settings.random_length
   clean_input   = true
   passthrough   = local.global_settings.passthrough
+  use_slug      = local.global_settings.use_slug
 }
 
 module "route_tables" {
@@ -140,6 +144,7 @@ resource "azurecaf_name" "routes" {
   random_length = local.global_settings.random_length
   clean_input   = true
   passthrough   = local.global_settings.passthrough
+  use_slug      = local.global_settings.use_slug
 }
 
 
@@ -172,6 +177,7 @@ resource "azurecaf_name" "ddos_protection_plan" {
   random_length = local.global_settings.random_length
   clean_input   = true
   passthrough   = local.global_settings.passthrough
+  use_slug      = local.global_settings.use_slug
 }
 
 resource "azurerm_network_ddos_protection_plan" "ddos_protection_plan" {
@@ -183,4 +189,19 @@ resource "azurerm_network_ddos_protection_plan" "ddos_protection_plan" {
   tags                = try(local.global_settings.inherit_tags, false) ? merge(module.resource_groups[each.value.resource_group_key].tags, each.value.tags) : try(each.value.tags, null)
 }
 
+#
+#
+# Network Watchers
+#
+#
+module "network_watchers" {
+  source   = "./modules/networking/network_watcher"
+  for_each = local.networking.network_watchers
 
+  resource_group_name = module.resource_groups[each.value.resource_group_key].name
+  location            = lookup(each.value, "region", null) == null ? module.resource_groups[each.value.resource_group_key].location : local.global_settings.regions[each.value.region]
+  settings            = each.value
+  tags                = try(each.value.tags, null)
+  base_tags           = try(local.global_settings.inherit_tags, false) ? module.resource_groups[each.value.resource_group_key].tags : {}
+  global_settings     = local.global_settings
+}
