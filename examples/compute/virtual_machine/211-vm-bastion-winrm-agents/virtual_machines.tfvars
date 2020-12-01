@@ -111,6 +111,8 @@ virtual_machines = {
       }
     }
 
+
+
     data_disks = {
       data1 = {
         name                 = "server1-data1"
@@ -133,16 +135,11 @@ virtual_machines = {
         diagnostics_storage_account_keys = ["bootdiag_region1"]
 
         # Relative path to the landing zone folder
-        xml_diagnostics_file = "/compute/virtual_machine/211-vm-bastion-winrm-agents/diagnostics/wadcfg.xml"
-
-        # Additional destinations can be set
-        #
-        # Event Hub namespaces
-        event_hub_namespace_keys = []
+        xml_diagnostics_file = "../diagnostics/wadcfg.xml"
       }
     }
-
   }
+
 }
 
 log_analytics = {
