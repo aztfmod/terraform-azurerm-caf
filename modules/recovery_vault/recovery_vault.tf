@@ -22,10 +22,7 @@ resource "azurerm_recovery_services_vault" "asr_rg_vault" {
 
 
 resource "null_resource" "enable_asr_system_identity" {
-
-  # depends_on = [azurerm_recovery_services_vault.asr_rg_vault]
-
-  
+    
   triggers = {
     asr_id = azurerm_recovery_services_vault.asr_rg_vault.id
   }
