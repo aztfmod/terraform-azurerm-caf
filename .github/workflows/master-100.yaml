@@ -131,7 +131,7 @@ jobs:
             -level level3 \
             -tfstate $(basename ${{ matrix.config_files }}).tfstate \
             -var-folder ${GITHUB_WORKSPACE}/examples/${{ matrix.config_files }} \
-            -var var_folder_path=${{ matrix.config_files }} \
+            -var var_folder_path="${GITHUB_WORKSPACE}/examples/${{ matrix.config_files }}" \
             --environment ${{ github.run_id }}
 
       - name: destroy example
@@ -141,7 +141,7 @@ jobs:
             -level level3 \
             -tfstate $(basename ${{ matrix.config_files }}).tfstate \
             -var-folder ${GITHUB_WORKSPACE}/examples/${{ matrix.config_files }} \
-            -var var_folder_path=${{ matrix.config_files }} \
+            -var var_folder_path="${GITHUB_WORKSPACE}/examples/${{ matrix.config_files }}" \
             --environment ${{ github.run_id }} \
             -auto-approve
 
