@@ -6,6 +6,8 @@
 
 module private_endpoint {
   source   = "../networking/private_endpoint"
+  depends_on = [null_resource.enable_asr_system_identity]
+
   for_each = try(var.private_endpoints, {})
 
   resource_id         = azurerm_recovery_services_vault.asr_rg_vault.id
