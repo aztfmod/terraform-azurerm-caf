@@ -46,14 +46,12 @@ resource "azurerm_cosmosdb_account" "cosmos_account" {
 
   # Optional
   dynamic "capabilities" {
-    for_each = lookup(var.settings, "capabilities", {}) == {} ? [] : [1]
+    for_each = toset(var.settings.capabilities)
 
     content {
-      name = var.settings.capabilities
+      name = capabilities.value
     }
   }
-
-
 }
 
 
