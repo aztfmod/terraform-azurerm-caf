@@ -54,7 +54,7 @@ module packer_managed_identity {
   depends_on = [
     module.shared_image_galleries,
     module.image_definitions,
-    module.virtual_machines,    
+    module.virtual_machines,
     module.keyvaults,
     time_sleep.time_delay
   ]
