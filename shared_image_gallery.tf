@@ -9,7 +9,10 @@ module shared_image_galleries {
   global_settings     = local.global_settings
   settings            = each.value
   base_tags           = try(local.global_settings.inherit_tags, false) ? module.resource_groups[each.value.resource_group_key].tags : {}
-
+  depends_on = [
+    module.keyvaults,
+    module.azuread_applications
+  ]
 }
 
 module image_definitions {
@@ -29,9 +32,6 @@ module image_definitions {
 
 resource "time_sleep" "time_delay" {
   destroy_duration = "60s"
-  depends_on = [
-    module.image_definitions
-  ]
 }
 
 module packer_managed_identity {
@@ -54,9 +54,8 @@ module packer_managed_identity {
   depends_on = [
     module.shared_image_galleries,
     module.image_definitions,
-    module.virtual_machines,
+    module.virtual_machines,    
     module.keyvaults,
-    azurerm_role_assignment.for,
     time_sleep.time_delay
   ]
 }
@@ -79,7 +78,6 @@ module packer_service_principal {
   depends_on = [
     module.shared_image_galleries,
     module.image_definitions,
-    module.keyvaults,
     azurerm_role_assignment.for,
     time_sleep.time_delay
   ]

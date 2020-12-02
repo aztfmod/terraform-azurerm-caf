@@ -2,7 +2,6 @@ packer_service_principal = {
   build1 = {
     packer_template_filepath             = "./shared_image_gallery/packer_service_principal/packer_files/packer_template_sp.json"
     packer_config_filepath               = "./shared_image_gallery/packer_service_principal/packer_files/packer_config_sp.json"
-    azuread_apps_key              = "packer_client"
     secret_prefix                 = "packer-client"
     keyvault_key                  = "packer_client"
     managed_image_name            = "myImage"
