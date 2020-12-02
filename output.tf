@@ -1,7 +1,3 @@
-output diagnostics {
-  value     = local.combined_diagnostics
-  sensitive = true
-}
 
 output client_config {
   value = {
