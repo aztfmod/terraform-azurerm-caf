@@ -1,0 +1,33 @@
+{
+  "builders" : [{
+  "type": "azure-arm",
+
+  "os_type": "Linux",
+  "image_publisher": "Canonical",
+  "image_offer": "UbuntuServer",
+  "image_sku": "16.04-LTS",
+
+  "location": "southeastasia",
+  "vm_size": "Standard_A2_v2",
+
+  "managed_image_resource_group_name": "chjt-rg-sig",
+  "managed_image_name": "myImage",
+
+  "shared_image_gallery_destination": {
+    "subscription": "c6b21e43-39d1-46f3-8948-51cbc81b3ef4",
+    "resource_group": "chjt-rg-sig",
+    "gallery_name": "chjtsigtest1",
+    "image_name": "chjtsiimage1",
+    "image_version": "1.0.0",
+    "replication_regions": "southeastasia"
+    }
+ }
+],
+
+  "provisioners": [
+   {
+    "type": "ansible",
+    "playbook_file": "/tmp/packer/ansible-ping.yml"
+   }
+ ]
+}
