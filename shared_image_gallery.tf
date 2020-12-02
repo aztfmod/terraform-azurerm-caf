@@ -11,7 +11,7 @@ module shared_image_galleries {
   base_tags           = try(local.global_settings.inherit_tags, false) ? module.resource_groups[each.value.resource_group_key].tags : {}
   depends_on = [
     module.keyvaults,
-    module.azuread_applications
+    time_sleep.time_delay_01
   ]
 }
 
@@ -30,7 +30,15 @@ module image_definitions {
 
 }
 
-resource "time_sleep" "time_delay" {
+resource "time_sleep" "time_delay_01" {
+  create_duration = "180s"
+  depends_on = [
+    module.azuread_applications
+  ]
+}
+
+
+resource "time_sleep" "time_delay_03" {
   destroy_duration = "60s"
 }
 
@@ -56,7 +64,8 @@ module packer_managed_identity {
     module.image_definitions,
     module.virtual_machines,
     module.keyvaults,
-    time_sleep.time_delay
+    time_sleep.time_delay_01,
+    time_sleep.time_delay_01
   ]
 }
 
@@ -79,6 +88,6 @@ module packer_service_principal {
     module.shared_image_galleries,
     module.image_definitions,
     azurerm_role_assignment.for,
-    time_sleep.time_delay
+    time_sleep.time_delay_01
   ]
 }
