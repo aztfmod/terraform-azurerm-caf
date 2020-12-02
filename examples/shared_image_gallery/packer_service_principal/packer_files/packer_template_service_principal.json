@@ -28,7 +28,6 @@
     }
  }
 ],
-
   "provisioners": [
    {
     "type": "ansible",

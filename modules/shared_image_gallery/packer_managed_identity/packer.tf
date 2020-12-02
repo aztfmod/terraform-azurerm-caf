@@ -38,7 +38,7 @@ data "azurerm_key_vault_secret" "private_ssh_key" {
 
 resource "null_resource" "generate_private_key" {
   provisioner "local-exec" {
-    command = "echo '${data.azurerm_key_vault_secret.private_ssh_key.value}'  > /tmp/key ; sudo chmod 600 /tmp/key"
+    command = "echo '${data.azurerm_key_vault_secret.private_ssh_key.value}'  > /tmp/key ; sudo chmod 700 /tmp/key"
   }
   depends_on = [
     data.azurerm_key_vault_secret.private_ssh_key
