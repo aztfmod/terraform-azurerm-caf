@@ -27,7 +27,7 @@ recovery_vaults = {
       }
     }
 
-   
+
     backup_policies = {
       vms = {
         policy1 = {
