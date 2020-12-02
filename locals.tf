@@ -1,8 +1,8 @@
 locals {
   diagnostics = {
-    diagnostic_event_hub_namespaces = var.diagnostics.diagnostic_event_hub_namespaces
-    diagnostic_log_analytics        = var.diagnostics.diagnostic_log_analytics
-    diagnostic_storage_accounts     = var.diagnostics.diagnostic_storage_accounts
+    diagnostic_event_hub_namespaces = try(var.diagnostics.diagnostic_event_hub_namespaces, {})
+    diagnostic_log_analytics        = try(var.diagnostics.diagnostic_log_analytics, {})
+    diagnostic_storage_accounts     = try(var.diagnostics.diagnostic_storage_accounts, {})
   }
 
 
