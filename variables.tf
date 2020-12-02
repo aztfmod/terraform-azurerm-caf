@@ -184,3 +184,7 @@ variable monitoring {
   default = {}
 }
 
+variable cosmos_dbs {
+  default = {}
+}
+
