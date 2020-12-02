@@ -1,3 +1,26 @@
+locals {
+  # Diagnostics services to create
+  diagnostics = {
+    diagnostic_event_hub_namespaces = try(var.diagnostics.diagnostic_event_hub_namespaces, {})
+    diagnostic_log_analytics        = try(var.diagnostics.diagnostic_log_analytics, {})
+    diagnostic_storage_accounts     = try(var.diagnostics.diagnostic_storage_accounts, {})
+  }
+
+  # Remote amd locally created diagnostics  objects 
+  combined_diagnostics = {
+    diagnostics_definition          = var.diagnostics.diagnostics_definition
+    diagnostics_destinations        = var.diagnostics.diagnostics_destinations
+    storage_accounts                = merge(try(var.diagnostics.storage_accounts, {}), module.diagnostic_storage_accounts)
+    log_analytics                   = merge(try(var.diagnostics.log_analytics, {}), module.diagnostic_log_analytics)
+    event_hub_namespaces            = merge(try(var.diagnostics.event_hub_namespaces, {}), module.diagnostic_event_hub_namespaces)
+  }
+}
+
+# Output diagnostics
+output diagnostics {
+  value     = local.combined_diagnostics
+  sensitive = true
+}
 
 module diagnostic_storage_accounts {
   source   = "./modules/storage_account"

@@ -1,10 +1,4 @@
 locals {
-  diagnostics = {
-    diagnostic_event_hub_namespaces = try(var.diagnostics.diagnostic_event_hub_namespaces, {})
-    diagnostic_log_analytics        = try(var.diagnostics.diagnostic_log_analytics, {})
-    diagnostic_storage_accounts     = try(var.diagnostics.diagnostic_storage_accounts, {})
-  }
-
 
   prefix = lookup(var.global_settings, "prefix", null) == null ? random_string.prefix.result : var.global_settings.prefix
 

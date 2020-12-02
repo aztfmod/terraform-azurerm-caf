@@ -26,12 +26,4 @@ locals {
   combined_objects_resource_groups            = merge(map(local.client_config.landingzone_key, module.resource_groups), try(var.remote_objects.resource_groups, {}))
   combined_objects_storage_accounts           = merge(map(local.client_config.landingzone_key, module.storage_accounts), try(var.remote_objects.storage_accounts, {}))
   combined_objects_synapse_workspaces         = merge(map(local.client_config.landingzone_key, module.synapse_workspaces), try(var.remote_objects.synapse_workspaces, {}))
-  
-  combined_diagnostics = {
-    diagnostics_definition          = var.diagnostics.diagnostics_definition
-    diagnostics_destinations        = var.diagnostics.diagnostics_destinations
-    storage_accounts                = merge(try(var.diagnostics.storage_accounts, {}), module.diagnostic_storage_accounts)
-    log_analytics                   = merge(try(var.diagnostics.log_analytics, {}), module.diagnostic_log_analytics)
-    event_hub_namespaces            = merge(try(var.diagnostics.event_hub_namespaces, {}), module.diagnostic_event_hub_namespaces)
-  }
 }
