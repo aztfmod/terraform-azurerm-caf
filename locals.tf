@@ -76,7 +76,7 @@ locals {
     synapse_workspaces                = try(var.database.synapse_workspaces, {})
     databricks_workspaces             = try(var.database.databricks_workspaces, {})
     machine_learning_workspaces       = try(var.database.machine_learning_workspaces, {})
-    cosmos_db                         = try(var.database.cosmos_db, {})
+    cosmos_db                         = try(var.database.cosmos_dbs, {})
   }
 
   client_config = {

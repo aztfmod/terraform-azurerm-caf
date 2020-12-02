@@ -13,7 +13,7 @@ resource_groups = {
   }
 }
 
-cosmos_db = {
+cosmos_dbs = {
   cosmosdb_account_re1 = {
     name                      = "cosmosdb-ex101"
     resource_group_key        = "cosmosdb_region1"
