@@ -44,7 +44,7 @@ cosmos_db = {
     # Optional
     enable_free_tier = false
     ip_range_filter  = "116.88.85.63,116.88.85.64"
-    #capabilities              = "EnableTable"
+    #capabilities              = ["EnableTable"]
     enable_multiple_write_locations = false
     tags = {
       "project" = "EDH"

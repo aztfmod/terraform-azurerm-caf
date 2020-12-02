@@ -9,10 +9,10 @@ resource "azurerm_cosmosdb_mongo_database" "database" {
 
   # Note : throughput & autoscaling are conflicting properties
   dynamic "autoscale_settings" {
-    for_each = var.settings.autoscale_settings
+    for_each = try(var.settings.autoscale_settings, {})
 
     content {
-      max_throughput = try(autoscale_settings.value.max_throughput, {})
+      max_throughput = autoscale_settings.value.max_throughput
     }
   }
 }
@@ -31,15 +31,15 @@ resource "azurerm_cosmosdb_mongo_collection" "collection" {
 
   # Note : throughput & autoscaling are conflicting properties
   dynamic "autoscale_settings" {
-    for_each = each.value.autoscale_settings
+    for_each = try(each.value.autoscale_settings, {})
 
     content {
-      max_throughput = try(autoscale_settings.value.max_throughput, {})
+      max_throughput = autoscale_settings.value.max_throughput
     }
   }
 
   dynamic "index" {
-    for_each = each.value.index
+    for_each = try(each.value.index, {})
 
     content {
       keys = index.value.keys

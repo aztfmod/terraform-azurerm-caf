@@ -46,7 +46,7 @@ resource "azurerm_cosmosdb_account" "cosmos_account" {
 
   # Optional
   dynamic "capabilities" {
-    for_each = toset(var.settings.capabilities)
+    for_each = try(toset(var.settings.capabilities), [])
 
     content {
       name = capabilities.value
