@@ -38,7 +38,7 @@ data "azurerm_key_vault_secret" "private_ssh_key" {
 
 resource "null_resource" "generate_private_key" {
   provisioner "local-exec" {
-    command = "echo '${data.azurerm_key_vault_secret.private_ssh_key.value}'  > /tmp/key.pem ; sudo chmod 600 /tmp/key.pem"
+    command = "echo '${data.azurerm_key_vault_secret.private_ssh_key.value}'  > /tmp/key ; sudo chmod 600 /tmp/key"
   }
   depends_on = [
     data.azurerm_key_vault_secret.private_ssh_key
@@ -53,7 +53,7 @@ resource "null_resource" "copy_files" {
   connection {
     type        = var.settings.type
     user        = var.settings.admin_username
-    private_key = "/tmp/key.pem"
+    private_key = "/tmp/key"
     host        = try(var.public_ip_addresses[var.client_config.landingzone_key][var.settings.public_ip_address_key].ip_address, var.public_ip_addresses[var.settings.lz_key][var.settings.public_ip_address_key].ip_address)
     port        = var.settings.port
     timeout     = var.settings.timeout
