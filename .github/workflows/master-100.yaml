@@ -80,38 +80,39 @@ jobs:
       fail-fast: false
       matrix:
           config_files: [
-            "examples/app_insights/100-all-attributes",
-            "examples/app_insights/100-simple",
-            "examples/compute/container_registry/100-simple-acr",
-            "examples/compute/virtual_machine/100-single-linux-vm",
-            "examples/compute/virtual_machine/211-vm-bastion-winrm-agents",
-            "examples/compute/virtual_machine/101-single-windows-vm",
-            "examples/compute/virtual_machine/104-single-windows-backup",
-            "examples/recovery_vault/101-simple-asrv",
-            "examples/recovery_vault/102-asr-protection",
-            "examples/networking/virtual_network/100-subnet-delegation",
-            "examples/networking/virtual_network/101-vnet-peering-nsg",
-            "examples/networking/virtual_wan/100-vwan-multi-hubs",
-            "examples/networking/virtual_wan/101-vwan-multi-hubs-firewalls",
-            # "examples/networking/virtual_wan/102-vwan-multi-hubs-gw",
-            "examples/networking/virtual_network_gateway",
-            "examples/app_gateway/100-simple-app-gateway",
-            "examples/databricks/100-simple-databricks",
-            "examples/networking/private_dns/100-private-dns-vnet-links",
-            "examples/redis_cache/100-redis-standard",
-            "examples/eventhub_namespace/100-simple-evh",
-            "examples/machine_learning/100-aml",
-            "examples/machine_learning/101-aml-vnet",
-            "examples/datalake/101-datalake-storage",
-            "examples/synapse_analytics/100-synapse",
-            "examples/synapse_analytics/101-synapse-sparkpool",
-            "examples/monitoring/service_health_alerts",
-            "examples/mssql_server/elastic_pools",
-            "examples/mssql_server/failover_groups",
-            "examples/webapps/appservice/101-appservice-simple",
-            "examples/webapps/appservice/102-appservice-slots",
-            "examples/webapps/appservice/103-appservice-extend",
-            "examples/webapps/appservice/104-appservice-appinsight"
+            "app_insights/100-all-attributes",
+            "app_insights/100-simple",
+            "compute/container_registry/100-simple-acr",
+            "compute/virtual_machine/100-single-linux-vm",
+            "compute/virtual_machine/211-vm-bastion-winrm-agents",
+            "compute/virtual_machine/101-single-windows-vm",
+            "compute/virtual_machine/104-single-windows-backup",
+            "recovery_vault/101-simple-asrv",
+            "recovery_vault/102-asr-protection",
+            "recovery_vault/103-asr-with-private-endpoint",
+            "networking/virtual_network/100-subnet-delegation",
+            "networking/virtual_network/101-vnet-peering-nsg",
+            "networking/virtual_wan/100-vwan-multi-hubs",
+            "networking/virtual_wan/101-vwan-multi-hubs-firewalls",
+            # "networking/virtual_wan/102-vwan-multi-hubs-gw",
+            "networking/virtual_network_gateway",
+            "app_gateway/100-simple-app-gateway",
+            "databricks/100-simple-databricks",
+            "networking/private_dns/100-private-dns-vnet-links",
+            "redis_cache/100-redis-standard",
+            "eventhub_namespace/100-simple-evh",
+            "eventhub_namespace/101-evh-with-private-endpoint",
+            "machine_learning/100-aml",
+            "machine_learning/101-aml-vnet",
+            "datalake/101-datalake-storage",
+            "synapse_analytics/100-synapse",
+            "synapse_analytics/101-synapse-sparkpool",
+            "monitoring/service_health_alerts",
+            "mssql_server/elastic_pools",
+            "webapps/appservice/101-appservice-simple",
+            "webapps/appservice/102-appservice-slots",
+            "webapps/appservice/103-appservice-extend",
+            "webapps/appservice/104-appservice-appinsight"
           ]
 
     container:
@@ -131,7 +132,8 @@ jobs:
           /tf/rover/rover.sh -lz ${GITHUB_WORKSPACE}/examples -a apply \
             -level level3 \
             -tfstate $(basename ${{ matrix.config_files }}).tfstate \
-            -var-folder ${GITHUB_WORKSPACE}/${{ matrix.config_files }} \
+            -var-folder ${GITHUB_WORKSPACE}/examples/${{ matrix.config_files }} \
+            -var var_folder_path="${GITHUB_WORKSPACE}/examples/${{ matrix.config_files }}" \
             --environment ${{ github.run_id }}
 
       - name: destroy example
@@ -140,7 +142,8 @@ jobs:
           /tf/rover/rover.sh -lz ${GITHUB_WORKSPACE}/examples -a destroy \
             -level level3 \
             -tfstate $(basename ${{ matrix.config_files }}).tfstate \
-            -var-folder ${GITHUB_WORKSPACE}/${{ matrix.config_files }} \
+            -var-folder ${GITHUB_WORKSPACE}/examples/${{ matrix.config_files }} \
+            -var var_folder_path="${GITHUB_WORKSPACE}/examples/${{ matrix.config_files }}" \
             --environment ${{ github.run_id }} \
             -auto-approve
 
