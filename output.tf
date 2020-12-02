@@ -1,5 +1,5 @@
 output diagnostics {
-  value     = local.diagnostics
+  value     = local.combined_diagnostics
   sensitive = true
 }
 

@@ -8,7 +8,7 @@ module aks_clusters {
   for_each = local.compute.aks_clusters
 
   global_settings     = local.global_settings
-  diagnostics         = local.diagnostics
+  diagnostics         = local.combined_diagnostics
   diagnostic_profiles = try(each.value.diagnostic_profiles, {})
   base_tags           = try(local.global_settings.inherit_tags, false) ? module.resource_groups[each.value.resource_group_key].tags : {}
   settings            = each.value

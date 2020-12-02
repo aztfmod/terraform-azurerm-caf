@@ -16,7 +16,7 @@ module event_hub_namespaces_diagnostics {
 
   resource_id       = module.event_hub_namespaces[each.key].id
   resource_location = module.event_hub_namespaces[each.key].location
-  diagnostics       = local.diagnostics
+  diagnostics       = local.combined_diagnostics
   profiles          = try(each.value.diagnostic_profiles, {})
 }
 

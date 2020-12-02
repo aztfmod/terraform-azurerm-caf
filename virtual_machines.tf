@@ -15,7 +15,7 @@ module virtual_machines {
   boot_diagnostics_storage_account = try(local.diagnostics.storage_accounts[each.value.boot_diagnostics_storage_account_key].primary_blob_endpoint, {})
   keyvault_id                      = try(local.combined_objects_keyvaults[each.value.lz_key][each.value.keyvault_key].id, local.combined_objects_keyvaults[local.client_config.landingzone_key][each.value.keyvault_key].id)
   recovery_vaults                  = local.combined_objects_recovery_vaults
-  diagnostics                      = local.diagnostics
+  diagnostics                      = local.combined_diagnostics
   public_ip_addresses              = local.combined_objects_public_ip_addresses
   base_tags                        = try(local.global_settings.inherit_tags, false) ? module.resource_groups[each.value.resource_group_key].tags : {}
 
