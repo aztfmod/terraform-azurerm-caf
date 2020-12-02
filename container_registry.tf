@@ -20,3 +20,8 @@ module container_registry {
   base_tags                = try(local.global_settings.inherit_tags, false) ? module.resource_groups[each.value.resource_group_key].tags : {}
 }
 
+output azure_container_registries {
+  value     = module.container_registry
+  sensitive = true
+}
+  
