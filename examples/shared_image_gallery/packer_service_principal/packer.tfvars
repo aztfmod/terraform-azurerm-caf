@@ -1,11 +1,10 @@
 packer_service_principal = {
   build1 = {
-    packer_template_filepath      = "./shared_image_gallery/packer/packer_template_msi.json"
-    packer_configuration_filepath = "./shared_image_gallery/packer/packer_config.json"
-    image_destroy_script_filepath = "./shared_image_gallery/packer/destroy_image.sh"
+    packer_template_filepath             = "./shared_image_gallery/packer_service_principal/packer_files/packer_template_sp.json"
+    packer_config_filepath               = "./shared_image_gallery/packer_service_principal/packer_files/packer_config_sp.json"
     azuread_apps_key              = "packer_client"
     secret_prefix                 = "packer-client"
-    keyvault_key                  = "packer"
+    keyvault_key                  = "packer_client"
     managed_image_name            = "myImage"
     resource_group_key            = "sig" #for managed_image_resource_group_name
     os_type                       = "Linux"

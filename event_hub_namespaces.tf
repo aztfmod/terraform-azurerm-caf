@@ -3,11 +3,11 @@ module "event_hub_namespaces" {
   source   = "./modules/event_hub_namespaces"
   for_each = var.event_hub_namespaces
 
-  global_settings   = local.global_settings
-  settings          = each.value
-  resource_groups   = module.resource_groups
-  client_config     = local.client_config
-  base_tags         = try(local.global_settings.inherit_tags, false) ? module.resource_groups[each.value.resource_group_key].tags : {}
+  global_settings = local.global_settings
+  settings        = each.value
+  resource_groups = module.resource_groups
+  client_config   = local.client_config
+  base_tags       = try(local.global_settings.inherit_tags, false) ? module.resource_groups[each.value.resource_group_key].tags : {}
 }
 
 module event_hub_namespaces_diagnostics {
@@ -27,8 +27,8 @@ module event_hub_namespaces_diagnostics {
 
 module event_hub_namespaces_private_endpoints {
   depends_on = [module.event_hub_namespaces]
-  source   = "./modules/networking/private_endpoint"
-  for_each = local.event_hub_namespaces_private_endpoints
+  source     = "./modules/networking/private_endpoint"
+  for_each   = local.event_hub_namespaces_private_endpoints
 
   resource_id         = each.value.id
   name                = each.value.settings.name
@@ -41,7 +41,7 @@ module event_hub_namespaces_private_endpoints {
 }
 
 locals {
-  event_hub_namespaces_private_endpoints = {  
+  event_hub_namespaces_private_endpoints = {
     for private_endpoint in
     flatten(
       [
