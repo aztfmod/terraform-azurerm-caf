@@ -10,5 +10,5 @@ resource "azurerm_backup_protected_vm" "backup" {
   recovery_vault_name = local.recovery_vault.name
   source_vm_id        = local.source_vm_id
   backup_policy_id    = local.recovery_vault.backup_policies.virtual_machines[var.settings.backup.policy_key].id
-  tags                = local.tags
+  # tags                = local.tags      # Commented - forcing a plan to create some diff as the tag is not handled properly in 2.37.0
 }
