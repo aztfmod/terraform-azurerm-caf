@@ -210,3 +210,7 @@ variable diagnostics_destinations {
 variable vnet_peerings {
   default = {}
 }
+
+variable cosmos_dbs {
+  default = {}
+}

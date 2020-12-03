@@ -54,7 +54,7 @@ cosmos_dbs = {
     capabilities = [
       "EnableMongo", 
       #"EnableServerless",
-      "DisableRateLimitingResponses"
+      #"DisableRateLimitingResponses"
       ]
 
     mongo_databases = {
@@ -73,8 +73,8 @@ cosmos_dbs = {
                 unique = true
               }
               index_2 = {
-                keys = ["_ts"]
-                unique = false
+                keys = ["_id"]
+                unique = true
               }
             }
           }
