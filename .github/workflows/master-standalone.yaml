@@ -8,7 +8,6 @@ name: standalone-scenario
 on:
 
   pull_request:
-  push:
     paths-ignore:
       - .github/workflows/master-100.yaml
       - 'documentation/**'
