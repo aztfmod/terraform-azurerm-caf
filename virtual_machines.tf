@@ -12,7 +12,7 @@ module virtual_machines {
   location                         = lookup(each.value, "region", null) == null ? module.resource_groups[each.value.resource_group_key].location : local.global_settings.regions[each.value.region]
   vnets                            = local.combined_objects_networking
   managed_identities               = local.combined_objects_managed_identities
-  boot_diagnostics_storage_account = try(local.diagnostics.storage_accounts[each.value.boot_diagnostics_storage_account_key].primary_blob_endpoint, {})
+  boot_diagnostics_storage_account = try(local.combined_diagnostics.storage_accounts[each.value.boot_diagnostics_storage_account_key].primary_blob_endpoint, {})
   keyvault_id                      = try(local.combined_objects_keyvaults[each.value.lz_key][each.value.keyvault_key].id, local.combined_objects_keyvaults[local.client_config.landingzone_key][each.value.keyvault_key].id)
   recovery_vaults                  = local.combined_objects_recovery_vaults
   diagnostics                      = local.combined_diagnostics
