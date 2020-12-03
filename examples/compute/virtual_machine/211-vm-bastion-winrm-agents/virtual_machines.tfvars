@@ -135,17 +135,10 @@ virtual_machines = {
         diagnostics_storage_account_keys = ["bootdiag_region1"]
 
         # Relative path to the configuration folder or full path
-        xml_diagnostics_file = "diagnostics/wadcfg.xml"
+        xml_diagnostics_file = "./diagnostics/wadcfg.xml"
       }
     }
   }
 
 }
 
-log_analytics = {
-  central_logs_region1 = {
-    region             = "region1"
-    name               = "logs"
-    resource_group_key = "vm_region1"
-  }
-}

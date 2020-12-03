@@ -141,6 +141,12 @@ variable public_ip_addresses {
 variable diagnostic_storage_accounts {
   default = {}
 }
+variable diagnostic_event_hub_namespaces {
+  default = {}
+}
+variable diagnostic_log_analytics {
+  default = {}
+}
 variable managed_identities {
   default = {}
 }
