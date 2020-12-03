@@ -6,11 +6,12 @@
 
 module private_endpoint {
   source   = "../networking/private_endpoint"
-  depends_on = [null_resource.enable_asr_system_identity, time_sleep.delay_create]
+  depends_on = [azurerm_resource_group_template_deployment.asr]
+  # depends_on = [null_resource.enable_asr_system_identity, time_sleep.delay_create]
 
   for_each = try(var.private_endpoints, {})
 
-  resource_id         = azurerm_recovery_services_vault.asr_rg_vault.id
+  resource_id         = local.asr_id
   name                = each.value.name
   location            = var.location
   resource_group_name = var.resource_group_name
