@@ -184,3 +184,7 @@ variable monitoring {
   default = {}
 }
 
+variable keyvault_certificate_issuers {
+  default = {}
+}
+
