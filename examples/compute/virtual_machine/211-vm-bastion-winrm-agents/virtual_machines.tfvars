@@ -127,7 +127,7 @@ virtual_machines = {
 
     virtual_machine_extensions = {
       microsoft_enterprise_cloud_monitoring = {
-        log_analytics_key = "central_logs_region1"
+        diagnostic_log_analytics_key = "central_logs_region1"
       }
 
       microsoft_azure_diagnostics = {
