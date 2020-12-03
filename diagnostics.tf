@@ -45,6 +45,16 @@ module "diagnostic_event_hub_namespaces" {
   base_tags         = try(local.global_settings.inherit_tags, false) ? module.resource_groups[each.value.resource_group_key].tags : {}
 }
 
+module diagnostic_event_hub_namespaces_diagnostics {
+  source   = "./modules/diagnostics"
+  for_each = local.diagnostics.diagnostic_event_hub_namespaces
+
+  resource_id       = module.diagnostic_event_hub_namespaces[each.key].id
+  resource_location = module.diagnostic_event_hub_namespaces[each.key].location
+  diagnostics       = local.combined_diagnostics
+  profiles          = try(each.value.diagnostic_profiles, {})
+}
+
 module "diagnostic_log_analytics" {
   source   = "./modules/log_analytics"
   for_each = local.diagnostics.diagnostic_log_analytics
@@ -53,4 +63,14 @@ module "diagnostic_log_analytics" {
   log_analytics   = each.value
   resource_groups = module.resource_groups
   base_tags       = try(local.global_settings.inherit_tags, false) ? module.resource_groups[each.value.resource_group_key].tags : {}
+}
+
+module diagnostic_log_analytics_diagnostics {
+  source   = "./modules/diagnostics"
+  for_each = local.diagnostics.diagnostic_log_analytics
+
+  resource_id       = module.diagnostic_log_analytics[each.key].id
+  resource_location = module.diagnostic_log_analytics[each.key].location
+  diagnostics       = local.combined_diagnostics
+  profiles          = try(each.value.diagnostic_profiles, {})
 }
