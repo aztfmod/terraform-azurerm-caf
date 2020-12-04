@@ -13,7 +13,7 @@ module container_registry {
   network_rule_set         = try(each.value.network_rule_set, {})
   vnets                    = local.combined_objects_networking
   georeplication_locations = try(each.value.georeplication_region_keys, null) == null ? null : [for region in try(each.value.georeplication_region_keys, []) : var.global_settings.regions[region]]
-  diagnostics              = local.diagnostics
+  diagnostics              = local.combined_diagnostics
   diagnostic_profiles      = try(each.value.diagnostic_profiles, {})
   private_endpoints        = try(each.value.private_endpoints, {})
   resource_groups          = module.resource_groups

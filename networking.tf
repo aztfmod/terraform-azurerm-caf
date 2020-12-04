@@ -26,7 +26,7 @@ module "networking" {
   network_security_group_definition = local.networking.network_security_group_definition
   route_tables                      = module.route_tables
   tags                              = try(each.value.tags, null)
-  diagnostics                       = local.diagnostics
+  diagnostics                       = local.combined_diagnostics
   global_settings                   = local.global_settings
   ddos_id                           = try(azurerm_network_ddos_protection_plan.ddos_protection_plan[each.value.ddos_services_key].id, "")
   base_tags                         = try(local.global_settings.inherit_tags, false) ? module.resource_groups[each.value.resource_group_key].tags : {}
@@ -68,7 +68,7 @@ module public_ip_addresses {
   tags                    = try(each.value.tags, null)
   zones                   = try(each.value.zones, null)
   diagnostic_profiles     = try(each.value.diagnostic_profiles, {})
-  diagnostics             = local.diagnostics
+  diagnostics             = local.combined_diagnostics
   base_tags               = try(local.global_settings.inherit_tags, false) ? module.resource_groups[each.value.resource_group_key].tags : {}
 }
 

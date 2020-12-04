@@ -39,6 +39,6 @@ module bastion_host_diagnostics {
 
   resource_id       = azurerm_bastion_host.host[each.key].id
   resource_location = module.resource_groups[each.value.resource_group_key].location
-  diagnostics       = local.diagnostics
+  diagnostics       = local.combined_diagnostics
   profiles          = try(each.value.diagnostic_profiles, {})
 }
