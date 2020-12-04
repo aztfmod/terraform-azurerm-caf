@@ -87,7 +87,6 @@ jobs:
             "compute/virtual_machine/211-vm-bastion-winrm-agents",
             "compute/virtual_machine/101-single-windows-vm",
             "compute/virtual_machine/104-single-windows-backup",
-            "compute/virtual_machine/105-single-windows-vm-kv-admin-secrets",
             "recovery_vault/101-simple-asrv",
             "recovery_vault/102-asr-protection",
             "recovery_vault/103-asr-with-private-endpoint",
