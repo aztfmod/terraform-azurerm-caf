@@ -8,5 +8,5 @@ module "subscriptions" {
   subscription_key        = each.key
   subscription            = each.value
   primary_subscription_id = data.azurerm_subscription.primary.subscription_id
-  diagnostics             = local.diagnostics
+  diagnostics             = local.combined_diagnostics
 }
