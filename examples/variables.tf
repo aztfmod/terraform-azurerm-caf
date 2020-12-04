@@ -213,3 +213,6 @@ variable diagnostics_destinations {
 variable vnet_peerings {
   default = {}
 }
+variable dynamic_keyvault_secrets {
+  default = {}
+}

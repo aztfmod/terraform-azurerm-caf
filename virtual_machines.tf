@@ -2,7 +2,11 @@
 
 module virtual_machines {
   source     = "./modules/compute/virtual_machine"
-  depends_on = [module.keyvault_access_policies, module.keyvault_access_policies_azuread_apps]
+  depends_on = [
+    module.keyvault_access_policies, 
+    module.keyvault_access_policies_azuread_apps,
+    module.dynamic_keyvault_secrets
+  ]
   for_each   = local.compute.virtual_machines
 
   global_settings                  = local.global_settings
@@ -13,7 +17,7 @@ module virtual_machines {
   vnets                            = local.combined_objects_networking
   managed_identities               = local.combined_objects_managed_identities
   boot_diagnostics_storage_account = try(local.combined_diagnostics.storage_accounts[each.value.boot_diagnostics_storage_account_key].primary_blob_endpoint, {})
-  keyvault_id                      = try(local.combined_objects_keyvaults[each.value.lz_key][each.value.keyvault_key].id, local.combined_objects_keyvaults[local.client_config.landingzone_key][each.value.keyvault_key].id)
+  keyvaults                        = local.combined_objects_keyvaults
   recovery_vaults                  = local.combined_objects_recovery_vaults
   diagnostics                      = local.combined_diagnostics
   public_ip_addresses              = local.combined_objects_public_ip_addresses
