@@ -34,6 +34,7 @@ jobs:
       fail-fast: false
       matrix:
           config_files: [
+            "compute/virtual_machine/105-single-windows-vm-kv-admin-secrets",
             "compute/virtual_machine/211-vm-bastion-winrm-agents"
           ]
 
