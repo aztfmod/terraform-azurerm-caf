@@ -185,6 +185,19 @@ mssql_managed_databases = {
 #   }
 # }
 
+# mssql_managed_databases_backup_ltr = {
+#   sqlmi1 = {
+#     resource_group_key  = "sqlmi_region1"
+#     mi_server_key       = "sqlmi1"
+#     database_key        = "managed_db1"
+
+#     weeklyRetention     = "P12W" 
+#     monthlyRetention    = "P12M"
+#     yearlyRetention     = "P5Y"
+#     weekOfYear          = 16
+#   }
+# }
+
 mssql_mi_failover_groups = {
   failover-mi = {
     resource_group_key = "sqlmi_region1"
