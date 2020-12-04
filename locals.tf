@@ -1,11 +1,4 @@
 locals {
-  diagnostics = {
-    diagnostics_definition   = try(var.diagnostics.diagnostics_definition, var.diagnostics_definition)
-    diagnostics_destinations = try(var.diagnostics.diagnostics_destinations, var.diagnostics_destinations)
-    storage_accounts         = try(var.diagnostics.storage_accounts, module.diagnostic_storage_accounts)
-    log_analytics            = try(var.diagnostics.log_analytics, module.log_analytics)
-    event_hub_namespaces     = try(var.diagnostics.event_hub_namespaces, module.event_hub_namespaces)
-  }
 
   prefix = lookup(var.global_settings, "prefix", null) == null ? random_string.prefix.result : var.global_settings.prefix
 
@@ -86,9 +79,7 @@ locals {
     object_id               = local.object_id
     logged_aad_app_objectId = local.object_id
     logged_user_objectId    = local.object_id
-    # logged_aad_app_objectId = var.logged_aad_app_objectId == null ? var.logged_user_objectId == null ? data.azuread_service_principal.logged_in_app.0.object_id : var.logged_user_objectId : var.logged_aad_app_objectId
-    # logged_user_objectId    = var.logged_user_objectId == null ? var.logged_aad_app_objectId == null ? data.azuread_service_principal.logged_in_app.0.object_id : var.logged_aad_app_objectId : var.logged_user_objectId
-    landingzone_key = var.current_landingzone_key
+    landingzone_key         = var.current_landingzone_key
   }
 
   object_id = coalesce(var.logged_user_objectId, var.logged_aad_app_objectId, try(data.azurerm_client_config.current.object_id, null), try(data.azuread_service_principal.logged_in_app.0.object_id, null))

@@ -7,7 +7,7 @@ module "keyvaults" {
   client_config      = local.client_config
   settings           = each.value
   resource_groups    = module.resource_groups
-  diagnostics        = local.diagnostics
+  diagnostics        = local.combined_diagnostics
   vnets              = local.combined_objects_networking
   azuread_groups     = local.combined_objects_azuread_groups
   managed_identities = local.combined_objects_managed_identities
