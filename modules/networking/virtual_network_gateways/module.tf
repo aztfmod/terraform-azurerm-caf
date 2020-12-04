@@ -13,20 +13,14 @@ resource "azurerm_virtual_network_gateway" "vngw" {
   location            = var.location
   resource_group_name = var.resource_group_name
   type                = var.settings.type #ExpressRoute or VPN
-  sku                 = var.settings.sku
+  # ExpressRoute SKUs : Basic, Standard, HighPerformance, UltraPerformance
+  # VPN SKUs : Basic, VpnGw1, VpnGw2, VpnGw3, VpnGw4,VpnGw5, VpnGw1AZ, VpnGw2AZ, VpnGw3AZ,VpnGw4AZ and VpnGw5AZ
+  # SKUs are subject to change. Check Documentation page for updated information
+  # The following options may change depending upon SKU type. Check product documentation
+  sku                        = var.settings.sku
+  private_ip_address_enabled = try(var.settings.private_ip_address_enabled, null)
 
-  active_active = try(var.settings.active_active, null)
-  enable_bgp    = try(var.settings.enable_bgp, null)
-
-  dynamic "bgp_settings" {
-    for_each = try(var.settings.bgp_settings, {})
-    content {
-      asn             = each.value.asn
-      peering_address = each.value.peering_address
-      peer_weight     = each.value.peer_weight
-    }
-  }
-
+  #Create multiple IPs only if active-active mode is enabled.
   dynamic "ip_configuration" {
     for_each = try(var.settings.ip_configuration, {})
     content {
@@ -37,6 +31,27 @@ resource "azurerm_virtual_network_gateway" "vngw" {
     }
   }
 
+  active_active = try(var.settings.active_active, null)
+  enable_bgp    = try(var.settings.enable_bgp, null)
+  vpn_type      = try(var.settings.vpn_type, null)
+
+  dynamic "bgp_settings" {
+    for_each = try(var.settings.bgp_settings, {})
+    content {
+      asn             = each.value.asn
+      peering_address = each.value.peering_address
+      peer_weight     = each.value.peer_weight
+    }
+  }
+
+  dynamic "custom_route" {
+    for_each = try(var.settings.custom_route, {})
+    content {
+      address_prefixes = each.value.address_prefixes
+    }
+
+  }
+
   timeouts {
     create = "60m"
     delete = "60m"
@@ -45,19 +60,3 @@ resource "azurerm_virtual_network_gateway" "vngw" {
   tags = local.tags
 
 }
-#### In development. VPN Type will be supported soon ####
-#
-#   vpn_type = " "
-#   vpn_client_configuration {
-#     address_space = [" "]
-#     root_certificate {
-#       name = " "
-#       public_cert_data = <<EOF
-#       EOF
-#     }
-#     revoked_certificate {
-#       name       = " "
-#       thumbprint = " "
-#     }
-#   }
-# }
