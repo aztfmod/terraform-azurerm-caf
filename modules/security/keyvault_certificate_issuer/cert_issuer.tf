@@ -10,11 +10,11 @@
 
 
 resource "azurerm_key_vault_certificate_issuer" "keycertisr" {
-  name          =  "modname"
+  name          =  var.issuer_name
   org_id        =  var.org_id
   key_vault_id  =  var.keyvault_id
-  provider_name = "DigiCert"
-  account_id    = "0000"
+  provider_name =  var.provider_name
+  account_id    =  var.account_id
   password      = "example-password"
 }
 
