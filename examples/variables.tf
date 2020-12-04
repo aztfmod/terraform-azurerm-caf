@@ -102,6 +102,9 @@ variable mssql_managed_databases {
 variable mssql_managed_databases_restore {
   default = {}
 }
+variable mssql_managed_databases_backup_ltr {
+  default = {}
+}
 variable mssql_elastic_pools {
   default = {}
 }
