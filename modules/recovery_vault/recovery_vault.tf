@@ -43,7 +43,7 @@ resource "azurerm_resource_group_template_deployment" "asr" {
 }
 
 
-resource "null_resource" "backup_con" {
+resource "null_resource" "backup_configuration" {
   depends_on = [time_sleep.delay_create]
     
   triggers = {
@@ -58,7 +58,7 @@ resource "null_resource" "backup_con" {
     on_failure  = fail
 
     environment = {
-      METHOD  = "PUT"
+      METHOD  = "PATCH"
       URI     = local.asr_backup_config_uri
       PAYLOAD = local.asr_backup_config
     }
