@@ -11,3 +11,8 @@ variable keyvault_id {
   default = null
 }
 variable org_id {}
+variable provider_name {}
+variable account_id {}
+variable issuer_name {
+  default = null
+}

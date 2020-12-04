@@ -12,31 +12,33 @@ resource_groups = {
 }
 
 keyvaults = {
-  example_rg1 = {
-    name               = "kvsecrets"
-    resource_group_key = "kv_region1"
-    sku_name           = "standard"
+  cert_secrets = {
+    name                = "certsecrets"
+    resource_group_key  = "kv_region1"
+    sku_name            = "standard"
+    soft_delete_enabled = true
+        
   }
 }
 
 keyvault_certificate_issuers = {
   kv_cert_issuer = {
-    name = "testing"
-    org_id        = "ExampleOrgName"
-    resource_group_key = "kv_region1"
-    keyvault_key       = "key-rg1"
+    issuer_name = "Dummy_issuer"
+    org_id    = "ExampleOrgName"
+    provider_name = "DigiCert"
+    account_id = "0000"
 
+    resource_group_key = "kv_region1"
+    keyvault_key       = "cert_secrets"
+  
   }
 }
 
 keyvault_access_policies = {
   # A maximum of 16 access policies per keyvault
-  example_kv_rg1 = {
+  cert_secrets = {
     logged_in_user = {
-      secret_permissions = ["Set", "Get", "List", "Delete", "Purge", "Recover"]
-    }
-    logged_in_aad_app = {
-      secret_permissions = ["Set", "Get", "List", "Delete", "Purge", "Recover"]
+      certificate_permissions = ["Get", "List", "Update", "Create", "Import", "Delete", "Purge", "Recover", "Getissuers", "Setissuers", "Listissuers", "Deleteissuers", "Manageissuers", "Restore", "Managecontacts"]
     }
   }
 }

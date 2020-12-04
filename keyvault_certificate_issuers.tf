@@ -7,7 +7,10 @@ module keyvault_certificate_issuers {
   global_settings     = local.global_settings
   settings            = each.value
   org_id              = each.value.org_id
-  keyvault_id         = try(each.value.administrator_login_password, null) != null ? null : try(each.value.lz_key, null) == null ? local.combined_objects_keyvaults[local.client_config.landingzone_key][each.value.keyvault_key].id : local.combined_objects_keyvaults[each.value.lz_key][each.value.keyvault_key].id
+  issuer_name         = each.value.issuer_name
+  account_id          = each.value.account_id
+  provider_name       = each.value.provider_name
+  keyvault_id         = try(local.combined_objects_keyvaults[each.value.lz_key][each.value.keyvault_key].id, local.combined_objects_keyvaults[local.client_config.landingzone_key][each.value.keyvault_key].id)
   base_tags           = try(local.global_settings.inherit_tags, false) ? module.resource_groups[each.value.resource_group_key].tags : {}
 }
 
