@@ -1,7 +1,6 @@
 
 resource "azurerm_site_recovery_replication_policy" "policy" {
   depends_on = [azurerm_resource_group_template_deployment.asr]
-  # depends_on = [azurerm_recovery_services_vault.asr_rg_vault, time_sleep.delay_create]
   for_each   = try(var.settings.replication_policies, {})
 
   name                                                 = each.value.name
