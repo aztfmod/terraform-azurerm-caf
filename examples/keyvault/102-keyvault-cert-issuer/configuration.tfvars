@@ -23,7 +23,7 @@ keyvaults = {
 
 keyvault_certificate_issuers = {
   kv_cert_issuer = {
-    issuer_name = "Dummy_issuer"
+    issuer_name = "DummyIssuer"
     org_id    = "ExampleOrgName"
     provider_name = "DigiCert"
     account_id = "0000"
