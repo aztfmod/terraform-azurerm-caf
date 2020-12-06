@@ -1,7 +1,7 @@
 module keyvault_certificate_issuers {
   source   = "./modules/security/keyvault_certificate_issuer"
   for_each = var.keyvault_certificate_issuers
-  
+
   resource_group_name = module.resource_groups[each.value.resource_group_key].name
   location            = module.resource_groups[each.value.resource_group_key].location
   global_settings     = local.global_settings
