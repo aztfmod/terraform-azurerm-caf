@@ -107,3 +107,6 @@ variable application_gateways {
 variable application_gateway_applications {
   default = {}
 }
+variable dynamic_keyvault_secrets {
+  default = {}
+}

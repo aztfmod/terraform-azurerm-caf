@@ -164,6 +164,10 @@ variable role_mapping {
   }
 }
 
+variable dynamic_keyvault_secrets {
+  default = {}
+}
+
 ## Storage variables
 variable storage_accounts {
   default = {}
