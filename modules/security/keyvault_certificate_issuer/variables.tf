@@ -10,7 +10,7 @@ variable base_tags {}
 variable keyvault_id {
   default = null
 }
-variable org_id {}
+variable organization_id {}
 variable provider_name {}
 variable account_id {}
 variable issuer_name {
