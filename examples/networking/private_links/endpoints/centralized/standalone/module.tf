@@ -8,6 +8,7 @@ module "caf" {
   keyvaults                   = var.keyvaults
   managed_identities          = var.managed_identities
   role_mapping                = var.role_mapping
+  event_hub_namespaces        = var.event_hub_namespaces
 
   diagnostics = {
     # Get the diagnostics settings of services to create
@@ -23,6 +24,7 @@ module "caf" {
     vnets                             = var.vnets
     network_security_group_definition = var.network_security_group_definition
     public_ip_addresses               = var.public_ip_addresses
+    private_endpoints                 = var.private_endpoints
   }
 }
 
