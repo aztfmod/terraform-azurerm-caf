@@ -39,7 +39,7 @@ resource "azurerm_cosmosdb_mongo_collection" "collection" {
   }
 
   dynamic "index" {
-    for_each = try(each.value.index, {})
+    for_each = try(each.value.indexes, {})
 
     content {
       keys = index.value.keys
