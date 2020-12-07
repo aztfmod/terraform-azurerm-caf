@@ -8,6 +8,8 @@ variable tfstate_container_name {}
 variable tfstate_key {}
 variable tfstate_resource_group_name {}
 
+variable tfstate_subscription_id {}
+
 variable global_settings {
   default = {
     default_region = "region1"
@@ -214,5 +216,8 @@ variable vnet_peerings {
   default = {}
 }
 variable dynamic_keyvault_secrets {
+  default = {}
+}
+variable private_endpoints {
   default = {}
 }

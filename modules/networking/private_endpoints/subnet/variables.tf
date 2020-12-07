@@ -1,0 +1,9 @@
+variable global_settings {}
+variable client_config {}
+variable resource_groups {}
+variable private_endpoints {}
+variable remote_objects {}
+variable subnet_id {}
+variable vnet_resource_group_name {}
+variable vnet_location {}
+variable base_tags {}
