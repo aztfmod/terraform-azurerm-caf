@@ -28,7 +28,7 @@ variable landingzone {
     key                 = "examples"
     tfstates = {
       launchpad = {
-        level   = "current"
+        level   = "lower"
         tfstate = "caf_launchpad.tfstate"
       }
     }
