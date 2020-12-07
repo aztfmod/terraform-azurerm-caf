@@ -19,28 +19,16 @@ keyvaults = {
     creation_policies = {
       logged_in_user = {
         certificate_permissions = ["Get", "List", "Update", "Create", "Import", "Delete", "Purge", "Recover", "Getissuers", "Setissuers", "Listissuers", "Deleteissuers", "Manageissuers", "Restore", "Managecontacts"]
+        secret_permissions = ["Set", "Get", "List", "Delete", "Purge"]
       }
       logged_in_aad_app = {
         certificate_permissions = ["Get", "List", "Update", "Create", "Import", "Delete", "Purge", "Recover", "Getissuers", "Setissuers", "Listissuers", "Deleteissuers", "Manageissuers", "Restore", "Managecontacts"]
+        secret_permissions = ["Set", "Get", "List", "Delete", "Purge"]
       }
     }
         
   }
 }
-
-
-# keyvault_access_policies = {
-#   # A maximum of 16 access policies per keyvault
-#   cert_secrets = {
-#     logged_in_user = {
-#       certificate_permissions = ["Get", "List", "Update", "Create", "Import", "Delete", "Purge", "Recover", "Getissuers", "Setissuers", "Listissuers", "Deleteissuers", "Manageissuers", "Restore", "Managecontacts"]
-#     }
-#     logged_in_aad_app = {
-#       certificate_permissions = ["Get", "List", "Update", "Create", "Import", "Delete", "Purge", "Recover", "Getissuers", "Setissuers", "Listissuers", "Deleteissuers", "Manageissuers", "Restore", "Managecontacts"]
-#     }
-
-#   }
-# }
 
 keyvault_certificate_issuers = {
   kv_cert_issuer = {
@@ -50,6 +38,7 @@ keyvault_certificate_issuers = {
     account_id = "0000"
     resource_group_key = "kv_region1"
     keyvault_key       = "cert_secrets"
+    cert_issuer_password = "@dm1nu53r"
 
     admin_settings = {
       admin1 = {
