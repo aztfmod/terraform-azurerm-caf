@@ -14,7 +14,6 @@ vnets = {
         name                                           = "subnet-01"
         cidr                                           = ["10.100.1.128/25"]
         enforce_private_link_endpoint_network_policies = "true"
-        private_endpoints_key                          = "ppl1"
       }
 
     }

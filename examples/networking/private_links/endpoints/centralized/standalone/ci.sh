@@ -7,28 +7,30 @@ terraform init
 
 terraform apply \
   -var-file ../configuration.tfvars \
-  -var-file ../diagnostics.tfvars \
+  -var-file ./private_endpoints.tfvars \
+  -var-file ../diagnostic_storage_accounts.tfvars \
+  -var-file ../diagnostic_event_hub_namespaces.tfvars \
   -var-file ../keyvaults.tfvars \
-  -var-file ../nsg_definitions.tfvars \
+  -var-file ../eventhub_namespaces.tfvars \
   -var-file ../virtual_networks.tfvars \
-  -var-file ../public_ip_addresses.tfvars \
-  -var-file ../virtual_machines.tfvars \
+  -var-file ../private_dns.tfvars \
+  -var-file ../storage_accounts.tfvars
   -var tags='{testing_job_id="${1}"}' \
-  -var var_folder_path=${current_folder} \
   -input=false \
   -auto-approve
 
 
 terraform destroy \
   -var-file ../configuration.tfvars \
-  -var-file ../diagnostics.tfvars \
+  -var-file ./private_endpoints.tfvars \
+  -var-file ../diagnostic_storage_accounts.tfvars \
+  -var-file ../diagnostic_event_hub_namespaces.tfvars \
   -var-file ../keyvaults.tfvars \
-  -var-file ../nsg_definitions.tfvars \
+  -var-file ../eventhub_namespaces.tfvars \
   -var-file ../virtual_networks.tfvars \
-  -var-file ../public_ip_addresses.tfvars \
-  -var-file ../virtual_machines.tfvars \
+  -var-file ../private_dns.tfvars \
+  -var-file ../storage_accounts.tfvars
   -var tags='{testing_job_id="${1}"}' \
-  -var var_folder_path=${current_folder} \
   -input=false \
   -auto-approve
 
