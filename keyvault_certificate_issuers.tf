@@ -1,5 +1,5 @@
 module keyvault_certificate_issuers {
-  source   = "./modules/security/keyvault_certificate_issuer"
+  source = "./modules/security/keyvault_certificate_issuer"
   depends_on = [
     module.keyvaults,
     module.dynamic_keyvault_secrets
