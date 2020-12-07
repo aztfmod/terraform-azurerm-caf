@@ -20,7 +20,7 @@ resource "azurerm_private_endpoint" "pep" {
     name                           = var.settings.private_service_connection.name
     private_connection_resource_id = var.resource_id
     is_manual_connection           = try(var.settings.private_service_connection.is_manual_connection, false)
-    subresource_names              = [each.key]
+    subresource_names              = var.settings.private_service_connection.subresource_names
     request_message                = try(var.settings.private_service_connection.request_message, null)
   }
 }
