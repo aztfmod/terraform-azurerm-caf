@@ -130,7 +130,7 @@ jobs:
       - name: deploy example
         run: |
           /tf/rover/rover.sh -lz ${GITHUB_WORKSPACE}/examples -a apply \
-            -level level3 \
+            -level level1 \
             -tfstate $(basename ${{ matrix.config_files }}).tfstate \
             -var-folder ${GITHUB_WORKSPACE}/examples/${{ matrix.config_files }} \
             -var var_folder_path="${GITHUB_WORKSPACE}/examples/${{ matrix.config_files }}" \
@@ -140,7 +140,7 @@ jobs:
         if: always()
         run: |
           /tf/rover/rover.sh -lz ${GITHUB_WORKSPACE}/examples -a destroy \
-            -level level3 \
+            -level level1 \
             -tfstate $(basename ${{ matrix.config_files }}).tfstate \
             -var-folder ${GITHUB_WORKSPACE}/examples/${{ matrix.config_files }} \
             -var var_folder_path="${GITHUB_WORKSPACE}/examples/${{ matrix.config_files }}" \
