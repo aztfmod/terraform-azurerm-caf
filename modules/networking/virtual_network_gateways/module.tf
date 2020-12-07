@@ -17,7 +17,7 @@ resource "azurerm_virtual_network_gateway" "vngw" {
   # VPN SKUs : Basic, VpnGw1, VpnGw2, VpnGw3, VpnGw4,VpnGw5, VpnGw1AZ, VpnGw2AZ, VpnGw3AZ,VpnGw4AZ and VpnGw5AZ
   # SKUs are subject to change. Check Documentation page for updated information
   # The following options may change depending upon SKU type. Check product documentation
-  sku                        = var.settings.sku
+  sku = var.settings.sku
 
   #Create multiple IPs only if active-active mode is enabled.
   dynamic "ip_configuration" {
@@ -33,7 +33,7 @@ resource "azurerm_virtual_network_gateway" "vngw" {
   active_active = try(var.settings.active_active, null)
   enable_bgp    = try(var.settings.enable_bgp, null)
   #vpn_type defaults to 'RouteBased'. Type 'PolicyBased' supported only by Basic SKU
-  vpn_type      = try(var.settings.vpn_type, null)
+  vpn_type = try(var.settings.vpn_type, null)
 
   dynamic "bgp_settings" {
     for_each = try(var.settings.bgp_settings, {})

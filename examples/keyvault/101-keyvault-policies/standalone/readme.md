@@ -21,5 +21,5 @@ rover \
   -tfstate example-101-keyvault-policies.tfstate \
   -var-folder /tf/caf/aztfmod/examples/keyvault/101-keyvault-policies \
   -a [plan|apply|delete]
-  
+
 ```

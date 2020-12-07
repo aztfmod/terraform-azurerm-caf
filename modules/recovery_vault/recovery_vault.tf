@@ -17,7 +17,7 @@ resource "azurecaf_name" "asr_rg_vault" {
 #   tags                = local.tags
 
 #   soft_delete_enabled = try(var.settings.soft_delete_enabled, true)
-  
+
 # }
 
 resource "azurerm_resource_group_template_deployment" "asr" {
@@ -45,13 +45,13 @@ resource "azurerm_resource_group_template_deployment" "asr" {
 
 resource "null_resource" "backup_configuration" {
   depends_on = [time_sleep.delay_create]
-    
+
   triggers = {
-    asr_id = local.asr_id
+    asr_id                 = local.asr_id
     softDeleteFeatureState = try(var.settings.soft_delete_enabled, true)
   }
 
-  
+
   provisioner "local-exec" {
     command     = format("%s/scripts/backup_config.sh", path.module)
     interpreter = ["/bin/sh"]
@@ -67,13 +67,13 @@ resource "null_resource" "backup_configuration" {
 }
 
 locals {
-  
+
   asr_id = jsondecode(azurerm_resource_group_template_deployment.asr.output_content).id.value
 
   arm_filename = "${path.module}/arm_recovery_vault.json"
 
-  asr_backup_config_uri = format("%s%s%s", 
-    "https://management.azure.com", 
+  asr_backup_config_uri = format("%s%s%s",
+    "https://management.azure.com",
     local.asr_id,
     "/backupconfig/vaultconfig?api-version=2019-06-15"
   )
@@ -81,7 +81,7 @@ locals {
   # enhancedSecurityState must be set to "Enabled" and cannot be removed
   asr_backup_config = jsonencode(
     {
-      properties =  {
+      properties = {
         softDeleteFeatureState = try(var.settings.soft_delete_enabled, true) ? "Enabled" : "Disabled"
         enhancedSecurityState  = "Enabled"
       }

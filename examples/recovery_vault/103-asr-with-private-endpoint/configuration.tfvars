@@ -21,15 +21,15 @@ recovery_vaults = {
   asr1 = {
     name               = "vault_re1"
     resource_group_key = "primary"
-    region = "region1"
-    vnet_key                      = "vnet_region1"
-    subnet_key                    = "asr_subnet"
+    region             = "region1"
+    vnet_key           = "vnet_region1"
+    subnet_key         = "asr_subnet"
 
     identity = {
       type         = "SystemAssigned"
       identity_ids = null
     }
-    
+
     replication_policies = {
       repl1 = {
         name               = "policy1"
@@ -59,7 +59,7 @@ recovery_vaults = {
     private_endpoints = {
       # Require enforce_private_link_endpoint_network_policies set to true on the subnet
       private-link = {
-        name = "sales-asr-rg1"
+        name               = "sales-asr-rg1"
         vnet_key           = "vnet_region1"
         subnet_key         = "asr_subnet"
         resource_group_key = "primary"

@@ -12,13 +12,13 @@ event_hub_namespaces = {
     resource_group_key = "evh_examples"
     sku                = "Standard"
     region             = "region1"
-    vnet_key                      = "vnet_region1"
-    subnet_key                    = "evh_subnet"
+    vnet_key           = "vnet_region1"
+    subnet_key         = "evh_subnet"
 
     private_endpoints = {
       # Require enforce_private_link_endpoint_network_policies set to true on the subnet
       private-link = {
-        name = "sales-evh-rg1"
+        name               = "sales-evh-rg1"
         vnet_key           = "vnet_region1"
         subnet_key         = "evh_subnet"
         resource_group_key = "evh_examples"

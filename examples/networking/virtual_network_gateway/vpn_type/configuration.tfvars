@@ -63,25 +63,25 @@ virtual_network_gateways = {
     active_active = true
     # enable_bpg defaults to false. If set, true, input the necessary parameters as well. VPN Type only
     enable_bgp = false
-    vpn_type = "RouteBased"
+    vpn_type   = "RouteBased"
     # multiple IP configs are needed for active_active state. VPN Type only.
     # do not create multiple IP configuration for ExpressRoute type.
     ip_configuration = {
       ipconfig1 = {
-        ipconfig_name         = "gatewayIp1"
-        public_ip_address_key = "vngw_pip"
-        lz_key = "examples"
+        ipconfig_name                 = "gatewayIp1"
+        public_ip_address_key         = "vngw_pip"
+        lz_key                        = "examples"
         vnet_key                      = "vnet_gw"
         private_ip_address_allocation = "Dynamic"
       }
       ipconfig2 = {
-        ipconfig_name         = "gatewayIp2"
-        public_ip_address_key = "vngw_pip2"
-        lz_key = "examples"
+        ipconfig_name                 = "gatewayIp2"
+        public_ip_address_key         = "vngw_pip2"
+        lz_key                        = "examples"
         vnet_key                      = "vnet_gw"
         private_ip_address_allocation = "Dynamic"
       }
-      
+
     }
   }
 }
