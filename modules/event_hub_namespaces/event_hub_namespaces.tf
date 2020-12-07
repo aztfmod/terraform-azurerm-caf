@@ -10,7 +10,7 @@ resource "azurecaf_name" "evh" {
 
 resource "azurerm_eventhub_namespace" "evh" {
   name                = azurecaf_name.evh.result
-  location            = var.global_settings.regions[var.settings.region]
+  location            = lookup(var.settings, "region", null) == null ? var.resource_groups[var.settings.resource_group_key].location : var.global_settings.regions[var.settings.region]
   resource_group_name = var.resource_groups[var.settings.resource_group_key].name
   sku                 = var.settings.sku
   capacity            = try(var.settings.capacity, null)
