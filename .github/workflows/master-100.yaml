@@ -169,7 +169,7 @@ jobs:
         with:
           repository: Azure/caf-terraform-landingzones
           path: public
-          ref: "integration"
+          ref: 'integration'
 
       - name: Login azure
         run: |
