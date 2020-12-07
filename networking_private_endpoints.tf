@@ -1,5 +1,5 @@
 module private_endpoints {
-  source = "./modules/networking/private_endpoints"
+  source = "./modules/networking/private_links/endpoints"
   for_each = {
     for key, value in try(var.networking.vnets, {}) : key => value
     if try(var.networking.private_endpoints, null) != null

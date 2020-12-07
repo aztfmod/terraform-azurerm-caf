@@ -107,3 +107,6 @@ variable application_gateways {
 variable application_gateway_applications {
   default = {}
 }
+variable private_endpoints {
+  default = {}
+}

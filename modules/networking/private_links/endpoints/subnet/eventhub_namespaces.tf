@@ -1,5 +1,5 @@
 module "event_hub_namespaces" {
-  source   = "../../private_endpoint"
+  source   = "../private_endpoint"
   for_each = try(var.private_endpoints.event_hub_namespaces, {})
 
   global_settings     = var.global_settings
