@@ -123,6 +123,10 @@ variable webapp {
   default = {}
 }
 
+variable logicapp {
+  default = {}
+}
+
 ## Databases variables
 variable database {
   default = {}
