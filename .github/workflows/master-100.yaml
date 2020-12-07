@@ -98,6 +98,9 @@ jobs:
             "networking/virtual_network_gateway/vpn_type",
             "app_gateway/100-simple-app-gateway",
             "databricks/100-simple-databricks",
+            # "cosmos_db/100-simple-cosmos-db",
+            "cosmos_db/100-simple-cosmos-db-mongo",
+            "cosmos_db/100-simple-cosmos-db-sql",
             "networking/private_dns/100-private-dns-vnet-links",
             "redis_cache/100-redis-standard",
             "eventhub_namespace/100-simple-evh",
@@ -168,7 +171,7 @@ jobs:
         with:
           repository: Azure/caf-terraform-landingzones
           path: public
-          ref: "integration"
+          ref: 'integration'
 
       - name: Login azure
         run: |
