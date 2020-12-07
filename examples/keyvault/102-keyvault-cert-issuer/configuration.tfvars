@@ -16,17 +16,24 @@ keyvaults = {
     name                = "certsecrets"
     resource_group_key  = "kv_region1"
     sku_name            = "standard"
+    cert_password_key = "cert-password"
     creation_policies = {
       logged_in_user = {
         certificate_permissions = ["Get", "List", "Update", "Create", "Import", "Delete", "Purge", "Recover", "Getissuers", "Setissuers", "Listissuers", "Deleteissuers", "Manageissuers", "Restore", "Managecontacts"]
         secret_permissions = ["Set", "Get", "List", "Delete", "Purge"]
       }
-      logged_in_aad_app = {
-        certificate_permissions = ["Get", "List", "Update", "Create", "Import", "Delete", "Purge", "Recover", "Getissuers", "Setissuers", "Listissuers", "Deleteissuers", "Manageissuers", "Restore", "Managecontacts"]
-        secret_permissions = ["Set", "Get", "List", "Delete", "Purge"]
-      }
     }
         
+  }
+}
+
+# Store output attributes into keyvault secret
+dynamic_keyvault_secrets = {
+  cert_secrets = {      # Key of the keyvault
+    cert-password = {
+      secret_name = "cert-password"
+      value       = "Very@Str5ngP!44w0rdToChaNge#"
+    }
   }
 }
 
@@ -37,8 +44,8 @@ keyvault_certificate_issuers = {
     organization_id = "ExampleOrg"
     account_id = "0000"
     resource_group_key = "kv_region1"
-    keyvault_key       = "cert_secrets"
-    cert_issuer_password = "@dm1nu53r"
+    keyvault_key = "cert_secrets"
+    cert_password_key = "cert-password"
 
     admin_settings = {
       admin1 = {
