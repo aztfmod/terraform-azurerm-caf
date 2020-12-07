@@ -62,6 +62,7 @@ module "caf" {
     synapse_workspaces                = var.synapse_workspaces
     databricks_workspaces             = var.databricks_workspaces
     machine_learning_workspaces       = var.machine_learning_workspaces
+    cosmos_dbs                        = var.cosmos_dbs
   }
   shared_services = {
     monitoring      = var.monitoring

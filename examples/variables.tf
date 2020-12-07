@@ -188,6 +188,9 @@ variable application_gateways {
 variable application_gateway_applications {
   default = {}
 }
+variable cosmos_db {
+  default = {}
+}
 variable log_analytics {
   default = {}
 }
@@ -214,6 +217,9 @@ variable diagnostics_destinations {
 }
 variable vnet_peerings {
   default = {}
+}
+variable cosmos_dbs {
+    default = {}
 }
 variable dynamic_keyvault_secrets {
   default = {}
