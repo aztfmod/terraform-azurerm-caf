@@ -18,7 +18,6 @@ resource "azurerm_virtual_network_gateway" "vngw" {
   # SKUs are subject to change. Check Documentation page for updated information
   # The following options may change depending upon SKU type. Check product documentation
   sku                        = var.settings.sku
-  private_ip_address_enabled = try(var.settings.private_ip_address_enabled, null)
 
   #Create multiple IPs only if active-active mode is enabled.
   dynamic "ip_configuration" {
@@ -33,6 +32,7 @@ resource "azurerm_virtual_network_gateway" "vngw" {
 
   active_active = try(var.settings.active_active, null)
   enable_bgp    = try(var.settings.enable_bgp, null)
+  #vpn_type defaults to 'RouteBased'. Type 'PolicyBased' supported only by Basic SKU
   vpn_type      = try(var.settings.vpn_type, null)
 
   dynamic "bgp_settings" {
@@ -42,14 +42,6 @@ resource "azurerm_virtual_network_gateway" "vngw" {
       peering_address = each.value.peering_address
       peer_weight     = each.value.peer_weight
     }
-  }
-
-  dynamic "custom_route" {
-    for_each = try(var.settings.custom_route, {})
-    content {
-      address_prefixes = each.value.address_prefixes
-    }
-
   }
 
   timeouts {
