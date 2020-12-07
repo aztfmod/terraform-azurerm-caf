@@ -5,7 +5,7 @@
 #
 
 module private_endpoint {
-  source   = "../networking/private_endpoint"
+  source     = "../networking/private_endpoint"
   depends_on = [azurerm_resource_group_template_deployment.asr]
   # depends_on = [null_resource.enable_asr_system_identity, time_sleep.delay_create]
 

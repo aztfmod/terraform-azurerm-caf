@@ -6,13 +6,13 @@ locals {
     diagnostic_storage_accounts     = try(var.diagnostics.diagnostic_storage_accounts, {})
   }
 
-  # Remote amd locally created diagnostics  objects 
+  # Remote amd locally created diagnostics  objects
   combined_diagnostics = {
-    diagnostics_definition          = try(var.diagnostics.diagnostics_definition, {})
-    diagnostics_destinations        = try(var.diagnostics.diagnostics_destinations, {})
-    storage_accounts                = merge(try(var.diagnostics.storage_accounts, {}), module.diagnostic_storage_accounts)
-    log_analytics                   = merge(try(var.diagnostics.log_analytics, {}), module.diagnostic_log_analytics)
-    event_hub_namespaces            = merge(try(var.diagnostics.event_hub_namespaces, {}), module.diagnostic_event_hub_namespaces)
+    diagnostics_definition   = try(var.diagnostics.diagnostics_definition, {})
+    diagnostics_destinations = try(var.diagnostics.diagnostics_destinations, {})
+    storage_accounts         = merge(try(var.diagnostics.storage_accounts, {}), module.diagnostic_storage_accounts)
+    log_analytics            = merge(try(var.diagnostics.log_analytics, {}), module.diagnostic_log_analytics)
+    event_hub_namespaces     = merge(try(var.diagnostics.event_hub_namespaces, {}), module.diagnostic_event_hub_namespaces)
   }
 }
 
@@ -38,11 +38,11 @@ module "diagnostic_event_hub_namespaces" {
   source   = "./modules/event_hub_namespaces"
   for_each = local.diagnostics.diagnostic_event_hub_namespaces
 
-  global_settings   = local.global_settings
-  settings          = each.value
-  resource_groups   = module.resource_groups
-  client_config     = local.client_config
-  base_tags         = try(local.global_settings.inherit_tags, false) ? module.resource_groups[each.value.resource_group_key].tags : {}
+  global_settings = local.global_settings
+  settings        = each.value
+  resource_groups = module.resource_groups
+  client_config   = local.client_config
+  base_tags       = try(local.global_settings.inherit_tags, false) ? module.resource_groups[each.value.resource_group_key].tags : {}
 }
 
 module diagnostic_event_hub_namespaces_diagnostics {

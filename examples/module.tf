@@ -1,29 +1,29 @@
 module "caf" {
   source = "../"
 
-  global_settings             = var.global_settings
-  current_landingzone_key     = var.landingzone.key
-  tenant_id                   = var.tenant_id
-  logged_user_objectId        = var.logged_user_objectId
-  logged_aad_app_objectId     = var.logged_aad_app_objectId
-  resource_groups             = var.resource_groups
-  storage_accounts            = var.storage_accounts
-  azuread_groups              = var.azuread_groups
-  azuread_roles               = var.azuread_roles
-  keyvaults                   = var.keyvaults
-  keyvault_access_policies    = var.keyvault_access_policies
-  managed_identities          = var.managed_identities
-  role_mapping                = var.role_mapping
-  log_analytics               = var.log_analytics
-  event_hub_namespaces        = var.event_hub_namespaces
+  global_settings          = var.global_settings
+  current_landingzone_key  = var.landingzone.key
+  tenant_id                = var.tenant_id
+  logged_user_objectId     = var.logged_user_objectId
+  logged_aad_app_objectId  = var.logged_aad_app_objectId
+  resource_groups          = var.resource_groups
+  storage_accounts         = var.storage_accounts
+  azuread_groups           = var.azuread_groups
+  azuread_roles            = var.azuread_roles
+  keyvaults                = var.keyvaults
+  keyvault_access_policies = var.keyvault_access_policies
+  managed_identities       = var.managed_identities
+  role_mapping             = var.role_mapping
+  log_analytics            = var.log_analytics
+  event_hub_namespaces     = var.event_hub_namespaces
 
   diagnostics = {
     diagnostics_definition   = var.diagnostics_definition
     diagnostics_destinations = var.diagnostics_destinations
 
-    diagnostic_log_analytics            = var.diagnostic_log_analytics
-    diagnostic_event_hub_namespaces     = var.diagnostic_event_hub_namespaces
-    diagnostic_storage_accounts         = var.diagnostic_storage_accounts
+    diagnostic_log_analytics        = var.diagnostic_log_analytics
+    diagnostic_event_hub_namespaces = var.diagnostic_event_hub_namespaces
+    diagnostic_storage_accounts     = var.diagnostic_storage_accounts
   }
   webapp = {
     azurerm_application_insights = var.azurerm_application_insights
