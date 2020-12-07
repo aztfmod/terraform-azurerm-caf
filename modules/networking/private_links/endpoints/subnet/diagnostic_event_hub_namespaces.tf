@@ -1,11 +1,11 @@
-module "event_hub_namespaces" {
+module "diagnostic_event_hub_namespaces" {
   source   = "../private_endpoint"
-  for_each = try(var.private_endpoints.event_hub_namespaces, {})
+  for_each = try(var.private_endpoints.diagnostic_event_hub_namespaces, {})
 
   global_settings     = var.global_settings
   client_config       = var.client_config
   settings            = each.value
-  resource_id         = try(var.remote_objects.event_hub_namespaces[each.value.lz_key][each.key].id, var.remote_objects.event_hub_namespaces[var.client_config.landingzone_key][each.key].id)
+  resource_id         = var.remote_objects.diagnostic_event_hub_namespaces[each.key].id
   subresource_names   = ["namespace"]
   subnet_id           = var.subnet_id
   private_dns         = var.private_dns

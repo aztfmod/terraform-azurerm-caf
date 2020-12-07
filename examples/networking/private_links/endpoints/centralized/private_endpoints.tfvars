@@ -1,5 +1,8 @@
 private_endpoints = {
-  ppl1 = {
+  vnet_01 = {           # Key of the virtual network
+    # lz_key = ""  # Landingzone key when deployed in remote landing zone
+    vnet_key    = "vnet_01"
+    subnet_keys = ["subnet_01"]
 
     storage_accounts = {
       level0 = {
@@ -13,6 +16,12 @@ private_endpoints = {
           # request_message = ""
           # is_manual_connection = [true|false]
         }
+
+        private_dns = {
+          zone_group_name  ="default"
+          # lz_key          = ""   # If the DNS keys are deployed in a remote landingzone
+          keys = ["dns1"]
+        }
       }
     }
 
@@ -24,6 +33,12 @@ private_endpoints = {
           name = "psc-stg-diag-diaglogs"
           subresource_names = ["blob", "queue"]
         }
+
+        private_dns = {
+          zone_group_name  ="default"
+          # lz_key          = ""   # If the DNS keys are deployed in a remote landingzone
+          keys = ["dns1"]
+        }
       }
 
       # Create in the launchpad scenario 200
@@ -33,6 +48,26 @@ private_endpoints = {
           name = "psc-stg-diag-diaglogs_region1"
           subresource_names = ["blob"]
         }
+
+        private_dns = {
+          zone_group_name  ="default"
+          # lz_key          = ""   # If the DNS keys are deployed in a remote landingzone
+          keys = ["dns1"]
+        }
+      }
+    }
+
+    diagnostic_event_hub_namespaces = {
+      central_logs_region1 = {
+        private_service_connection = {
+          name = "psc-evh-central-logs"
+        }
+
+        private_dns = {
+          zone_group_name  ="default"
+          # lz_key          = ""   # If the DNS keys are deployed in a remote landingzone
+          keys = ["dns1"]
+        }
       }
     }
 
@@ -41,6 +76,12 @@ private_endpoints = {
         private_service_connection = {
           name = "psc-kv_rg1"
         }
+
+        private_dns = {
+          zone_group_name  ="default"
+          # lz_key          = ""   # If the DNS keys are deployed in a remote landingzone
+          keys = ["dns1"]
+        }
       }
     }
 
@@ -48,6 +89,12 @@ private_endpoints = {
       evh1 = {
         private_service_connection = {
           name = "psc-evh1"
+        }
+
+        private_dns = {
+          zone_group_name  ="default"
+          # lz_key          = ""   # If the DNS keys are deployed in a remote landingzone
+          keys = ["dns1"]
         }
       }
     }
