@@ -1,10 +1,12 @@
 resource "azurerm_key_vault_certificate_issuer" "keycertisr" {
-  name          =  var.issuer_name
+  name          =  try(var.settings.issuer_name, null)
   key_vault_id  =  var.keyvault_id
-  provider_name =  var.provider_name
+  provider_name =  try(var.settings.provider_name, null)
   org_id        = try(var.settings.organization_id, null)
   account_id    = try(var.settings.account_id, null)
-  password      = azurerm_key_vault_secret.cert_password.value 
+  password      = try(var.settings.cert_password_key, null) == null ? var.settings.cert_issuer_password : local.cert_password
+  
+  
 
   dynamic "admin" {
     for_each = try(var.settings.admin_settings, {})
@@ -18,9 +20,15 @@ resource "azurerm_key_vault_certificate_issuer" "keycertisr" {
   }
 }
 
-resource "azurerm_key_vault_secret" "cert_password" {
-  name         = "certpassword"
-  value        = var.settings.cert_issuer_password
+locals {
+  cert_password     = try(data.azurerm_key_vault_secret.cert_password_key.0.value, null)
+}
+
+data "azurerm_key_vault_secret" "cert_password_key" {
+  count        = try(var.settings.cert_password_key, null) == null ? 0 : 1
+  name         = var.settings.cert_password_key
   key_vault_id = var.keyvault_id
 }
+
+
 
