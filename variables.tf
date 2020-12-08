@@ -192,3 +192,7 @@ variable cosmos_dbs {
   default = {}
 }
 
+variable front_doors {
+  default = {}
+}
+

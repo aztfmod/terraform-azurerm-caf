@@ -52,6 +52,7 @@ module "caf" {
     express_route_circuit_authorizations = var.express_route_circuit_authorizations
     network_watchers                     = var.network_watchers
     vnet_peerings                        = var.vnet_peerings
+    front_doors                          = var.front_doors
   }
   database = {
     azurerm_redis_caches              = var.azurerm_redis_caches

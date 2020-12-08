@@ -222,3 +222,7 @@ variable cosmos_dbs {
 variable dynamic_keyvault_secrets {
   default = {}
 }
+variable front_doors {
+  default = {}
+}
+
