@@ -10,7 +10,7 @@ resource "azurecaf_name" "pep" {
 }
 
 resource "azurerm_private_endpoint" "pep" {
-  for_each = toset(try(var.settings.private_service_connection.subresource_names, var.subresource_names))
+  for_each = toset(var.subresource_names)
 
   name                = format("%s-%s", azurecaf_name.pep.result, each.key)
   location            = var.location
