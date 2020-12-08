@@ -1,5 +1,5 @@
 module "caf" {
-  source = "../../../../../"
+  source = "../../../../../../"
 
   global_settings             = var.global_settings
   tags                        = var.tags

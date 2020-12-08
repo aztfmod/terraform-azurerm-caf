@@ -68,6 +68,9 @@ variable public_ip_addresses {
 variable diagnostic_storage_accounts {
   default = {}
 }
+variable diagnostic_event_hub_namespaces {
+  default = {}
+}
 variable managed_identities {
   default = {}
 }
