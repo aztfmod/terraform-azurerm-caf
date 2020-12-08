@@ -33,4 +33,3 @@ terraform destroy \
   -var tags='{testing_job_id="${1}"}' \
   -input=false \
   -auto-approve
-
