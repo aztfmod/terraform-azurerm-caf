@@ -97,7 +97,7 @@ jobs:
             "monitoring/service_health_alerts",
             "mssql_server/elastic_pools",
             "networking/private_dns/100-private-dns-vnet-links",
-            "networking/private_links/endpoints/centralized",
+            # "networking/private_links/endpoints/centralized",  # Requires launchpad scenario 200
             "networking/virtual_network/100-subnet-delegation",
             "networking/virtual_network/101-vnet-peering-nsg",
             "networking/virtual_network_gateway",
