@@ -6,6 +6,7 @@ module "diagnostic_storage_account" {
   client_config       = var.client_config
   settings            = each.value
   resource_id         = var.remote_objects.diagnostic_storage_accounts[each.key].id
+  subresource_names   = toset(try(each.value.private_service_connection.subresource_names, ["blob"]))
   subnet_id           = var.subnet_id
   private_dns         = var.private_dns
   name                = try(each.value.name, each.key)
