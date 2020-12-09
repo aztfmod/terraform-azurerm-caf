@@ -80,7 +80,8 @@ jobs:
       fail-fast: false
       matrix:
           config_files: [
-            "app_gateway/100-simple-app-gateway","app_insights/100-all-attributes",
+            "app_gateway/100-simple-app-gateway",
+            "app_insights/100-all-attributes",
             "app_insights/100-simple",
             "compute/availability_set/100-simple-availabilityset",
             "compute/availability_set/101-availabilityset-with-proximity-placement-group",
