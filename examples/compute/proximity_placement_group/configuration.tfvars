@@ -14,31 +14,30 @@ resource_groups = {
 
 proximity_placement_groups = {
   ppg1 = {
-    name                          = "sales-re1"
-    region                        = "region1"
-    resource_group_key            = "ppg"    
-   }
+    name               = "sales-re1"
+    region             = "region1"
+    resource_group_key = "ppg"
+  }
 }
 
 virtual_machines = {
   example_vm1 = {
-    resource_group_key                   = "ppg"
-    provision_vm_agent                   = true
-    
+    resource_group_key = "ppg"
+    provision_vm_agent = true
+
     os_type = "linux"
 
     # the auto-generated ssh key in keyvault secret. Secret name being {VM name}-ssh-public and {VM name}-ssh-private
     keyvault_key = "example_vm_rg1"
-    
+
     # Define the number of networking cards to attach the virtual machine
     networking_interfaces = {
       nic0 = {
         # Value of the keys from networking.tfvars
-        vnet_key                = "vnet_region1"
-        subnet_key              = "example"
-        name                    = "0"
-        enable_ip_forwarding    = false
-        internal_dns_name_label = "ppg-example-vm1-nic0"
+        vnet_key             = "vnet_region1"
+        subnet_key           = "example"
+        name                 = "ppg_example_vm1-0"
+        enable_ip_forwarding = false
       }
     }
 
@@ -76,23 +75,22 @@ virtual_machines = {
 
   }
   example_vm2 = {
-    resource_group_key                   = "ppg"
-    provision_vm_agent                   = true
-    
+    resource_group_key = "ppg"
+    provision_vm_agent = true
+
     os_type = "linux"
 
     # the auto-generated ssh key in keyvault secret. Secret name being {VM name}-ssh-public and {VM name}-ssh-private
     keyvault_key = "example_vm_rg1"
-    
+
     # Define the number of networking cards to attach the virtual machine
     networking_interfaces = {
       nic0 = {
         # Value of the keys from networking.tfvars
-        vnet_key                = "vnet_region1"
-        subnet_key              = "example"
-        name                    = "0"
-        enable_ip_forwarding    = false
-        internal_dns_name_label = "ppg-example-vm2-nic"
+        vnet_key             = "vnet_region1"
+        subnet_key           = "example"
+        name                 = "ppg_example_vm2-0"
+        enable_ip_forwarding = false
       }
     }
 
