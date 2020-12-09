@@ -17,6 +17,25 @@ front_doors = {
     name                = "sales-rg1"
     region              = "region1"
     resource_group_key = "front_door_region1"
+
+    routing_rule = {
+      name                    = "ExampleRouteRule1"
+      accepted_protocols      = ["Http", "Https"]
+      patterns_to_match       = ["/*"]
+      frontend_endpoints      = ["exampleFrontendEndpoint1"]
+      forwarding_protocol = "MatchRequest"
+      backend_pool_name   = "exampleBackendBing"
+      # forwarding_configuration = {}
+    }
+
+    backend_pool_load_balancing = {
+      name = "exampleLoadBalancingSettings1"
+
+    }
+    
+    backend_pool_health_probe = {
+      name = "exampleHealthProbeSetting1"
+    }  
     
   }
 }

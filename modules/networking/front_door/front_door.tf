@@ -16,25 +16,36 @@ resource "azurerm_frontdoor" "frontdoor" {
   enforce_backend_pools_certificate_name_check = false
   tags                = local.tags
 
+
   routing_rule {
-    name               = "exampleRoutingRule1"
-    accepted_protocols = ["Http", "Https"]
-    patterns_to_match  = ["/*"]
-    frontend_endpoints = ["exampleFrontendEndpoint1"]
+    name                  =   var.settings.routing_rule.name
+    frontend_endpoints    =   var.settings.routing_rule.frontend_endpoints
+    accepted_protocols    =   try(var.settings.routing_rule.accepted_protocols, null)
+    patterns_to_match     =   try(var.settings.routing_rule.patterns_to_match, null)
     forwarding_configuration {
-      forwarding_protocol = "MatchRequest"
-      backend_pool_name   = "exampleBackendBing"
+      backend_pool_name  =    try(var.settings.routing_rule.backend_pool_name, null)
     }
   }
+      # dynamic "forwarding_configuration" {
+      #   for_each = lookup(var.settings.routing_rule, "forwarding_configuration", false) == false ? [] : [1]
 
+      #   content {
+      #     forwarding_protocol = try(var.settings.routing_rule.forwarding_configuration.forwarding_protocol, null)
+      #     backend_pool_name   = var.settings.routing_rule.forwarding_configuration.backend_pool_name
+      #     cache_enabled       = try(var.settings.routing_rule.forwarding_configuration.cache_enabled, false)
+      #     cache_use_dynamic_compression =  try(var.settings.routing_rule.forwarding_configuration.cache_use_dynamic_compression, false)
+      #     cache_query_parameter_strip_directive = try(var.settings.routing_rule.forwarding_configuration.cache_query_parameter_strip_directive, "StripAll")
+      #   }
+      # }
+    # }
   backend_pool_load_balancing {
-    name = "exampleLoadBalancingSettings1"
+    name = var.settings.backend_pool_load_balancing.name
   }
 
   backend_pool_health_probe {
-    name = "exampleHealthProbeSetting1"
+    name = var.settings.backend_pool_health_probe.name
   }
-
+  
   backend_pool {
     name = "exampleBackendBing"
     backend {
