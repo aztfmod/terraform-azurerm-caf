@@ -52,7 +52,6 @@ virtual_machines = {
         name                    = "00"
         enable_ip_forwarding    = false
         internal_dns_name_label = "nic00"
-        public_ip_address_key   = "example_vm_pip1_rg1"
       }
     }
 
@@ -105,7 +104,6 @@ virtual_machines = {
         name                    = "0"
         enable_ip_forwarding    = false
         internal_dns_name_label = "nic0-1"
-        public_ip_address_key   = "example_vm_pip1_rg1"
       }
     }
 

@@ -3,9 +3,10 @@
 module virtual_machines {
   source = "./modules/compute/virtual_machine"
   depends_on = [
+    module.dynamic_keyvault_secrets,
     module.keyvault_access_policies,
     module.keyvault_access_policies_azuread_apps,
-    module.dynamic_keyvault_secrets
+    module.proximity_placement_groups
   ]
   for_each = local.compute.virtual_machines
 
