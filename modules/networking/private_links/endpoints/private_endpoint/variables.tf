@@ -16,7 +16,9 @@ variable location {
 variable subnet_id {}
 variable settings {}
 variable global_settings {}
+variable client_config {}
 variable base_tags {}
-variable subresource_names {
-  default = []
+variable subresource_names {}
+variable private_dns {
+  default = {}
 }

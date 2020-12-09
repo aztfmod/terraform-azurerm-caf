@@ -192,7 +192,10 @@ variable monitoring {
   default = {}
 }
 
-variable cosmos_dbs {
+variable keyvault_certificate_issuers {
   default = {}
 }
 
+variable cosmos_dbs {
+  default = {}
+}
