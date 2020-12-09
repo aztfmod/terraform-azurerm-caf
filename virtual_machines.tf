@@ -1,13 +1,13 @@
 
 
 module virtual_machines {
-  source     = "./modules/compute/virtual_machine"
+  source = "./modules/compute/virtual_machine"
   depends_on = [
-    module.keyvault_access_policies, 
+    module.keyvault_access_policies,
     module.keyvault_access_policies_azuread_apps,
     module.dynamic_keyvault_secrets
   ]
-  for_each   = local.compute.virtual_machines
+  for_each = local.compute.virtual_machines
 
   global_settings                  = local.global_settings
   client_config                    = local.client_config
