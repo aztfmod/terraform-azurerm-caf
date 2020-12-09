@@ -2,6 +2,7 @@ module "caf" {
   source = "../"
 
   global_settings             = var.global_settings
+  diagnostics                 = local.remote.diagnostics
   current_landingzone_key     = var.landingzone.key
   tenant_id                   = var.tenant_id
   logged_user_objectId        = var.logged_user_objectId
@@ -18,14 +19,6 @@ module "caf" {
   log_analytics               = var.log_analytics
   event_hub_namespaces        = var.event_hub_namespaces
 
-  diagnostics = {
-    diagnostics_definition   = var.diagnostics_definition
-    diagnostics_destinations = var.diagnostics_destinations
-
-    diagnostic_log_analytics            = var.diagnostic_log_analytics
-    diagnostic_event_hub_namespaces     = var.diagnostic_event_hub_namespaces
-    diagnostic_storage_accounts         = var.diagnostic_storage_accounts
-  }
   webapp = {
     azurerm_application_insights = var.azurerm_application_insights
     app_service_environments     = var.app_service_environments
@@ -58,6 +51,7 @@ module "caf" {
     express_route_circuit_authorizations = var.express_route_circuit_authorizations
     network_watchers                     = var.network_watchers
     vnet_peerings                        = var.vnet_peerings
+    private_endpoints                    = var.private_endpoints
   }
   database = {
     azurerm_redis_caches              = var.azurerm_redis_caches
