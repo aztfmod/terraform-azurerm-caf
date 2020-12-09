@@ -13,6 +13,7 @@ variable global_settings {
     default_region = "region1"
     regions = {
       region1 = "southeastasia"
+      region2 = "eastasia"
     }
   }
 }
@@ -32,6 +33,9 @@ variable landingzone {
   }
 }
 
+variable var_folder_path {
+  default = {}
+}
 variable tenant_id {}
 
 variable environment {
@@ -68,6 +72,12 @@ variable resource_groups {
 variable network_security_group_definition {
   default = null
 }
+variable route_tables {
+  default = {}
+}
+variable azurerm_routes {
+  default = {}
+}
 variable vnets {
   default = {}
 }
@@ -77,16 +87,40 @@ variable azurerm_redis_caches {
 variable mssql_servers {
   default = {}
 }
+variable mssql_managed_instances {
+  default = {}
+}
+variable mssql_managed_instances_secondary {
+  default = {}
+}
 variable mssql_databases {
   default = {}
 }
+variable mssql_managed_databases {
+  default = {}
+}
+variable mssql_managed_databases_restore {
+  default = {}
+}
 variable mssql_elastic_pools {
+  default = {}
+}
+variable mssql_failover_groups {
+  default = {}
+}
+variable mssql_mi_failover_groups {
+  default = {}
+}
+variable mssql_mi_administrators {
   default = {}
 }
 variable storage_accounts {
   default = {}
 }
 variable azuread_groups {
+  default = {}
+}
+variable azuread_roles {
   default = {}
 }
 variable keyvaults {
@@ -105,6 +139,12 @@ variable public_ip_addresses {
   default = {}
 }
 variable diagnostic_storage_accounts {
+  default = {}
+}
+variable diagnostic_event_hub_namespaces {
+  default = {}
+}
+variable diagnostic_log_analytics {
   default = {}
 }
 variable managed_identities {
@@ -146,6 +186,9 @@ variable application_gateways {
 variable application_gateway_applications {
   default = {}
 }
+variable cosmos_db {
+  default = {}
+}
 variable log_analytics {
   default = {}
 }
@@ -158,12 +201,30 @@ variable availability_sets {
 variable proximity_placement_groups {
   default = {}
 }
-variable ppg_id {
+variable network_watchers {
+  default = {}
+}
+variable virtual_network_gateways {
+  default = {}
+}
+variable virtual_network_gateway_connections {
+  default = {}
+}
+variable express_route_circuits {
+  default = {}
+}
+variable express_route_circuit_authorizations {
   default = {}
 }
 variable diagnostics_destinations {
   default = {}
 }
 variable vnet_peerings {
+  default = {}
+}
+variable cosmos_dbs {
+    default = {}
+}
+variable dynamic_keyvault_secrets {
   default = {}
 }

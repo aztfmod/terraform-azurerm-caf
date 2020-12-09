@@ -23,8 +23,8 @@ virtual_machines = {
 
     os_type = "windows"
 
-    backup = {      
-      vault_key = "asr1" 
+    backup = {
+      vault_key  = "asr1"
       policy_key = "policy1"
       #lz_key = "" if in landing zone context, you can get the state from a remote LZ using this key
     }
@@ -147,9 +147,9 @@ recovery_vaults = {
     name               = "vault_re1"
     resource_group_key = "vm_region1"
 
-    region = "region1"
+    region              = "region1"
     soft_delete_enabled = false
-    
+
     backup_policies = {
       vms = {
         policy1 = {
