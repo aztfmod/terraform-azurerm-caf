@@ -146,20 +146,14 @@ keyvaults = {
     name               = "examplevmsecrets"
     resource_group_key = "avset"
     sku_name           = "standard"
+    creation_policies = {
+      logged_in_user = {
+        secret_permissions = ["Set", "Get", "List", "Delete", "Purge", "Recover"]
+      }
+    }
   }
 }
 
-keyvault_access_policies = {
-  # A maximum of 16 access policies per keyvault
-  example_vm_rg1 = {
-    logged_in_user = {
-      secret_permissions = ["Set", "Get", "List", "Delete", "Purge", "Recover"]
-    }
-    logged_in_aad_app = {
-      secret_permissions = ["Set", "Get", "List", "Delete", "Purge", "Recover"]
-    }
-  }
-}
 
 vnets = {
   vnet_region1 = {
@@ -185,7 +179,6 @@ proximity_placement_groups = {
     name               = "example-ppg"
     region             = "region1"
     resource_group_key = "avset"
-    ppg_key            = "ppg-avset"
   }
 }
 
