@@ -123,7 +123,7 @@ variable webapp {
   default = {}
 }
 
-variable logicapp {
+variable logic_app {
   default = {}
 }
 
