@@ -3,23 +3,17 @@
 # Licensed under the MIT License.
 #
 
-name: scenarios-200
+name: scenarios-sql-mi
 
 on:
-
   pull_request:
-  #   branches:
-  #     - master
-  #     - '2010.0.0'
-  push:
-    paths-ignore:
-      - .github/workflows/master-100.yaml
-      - 'documentation/**'
-      - '_pictures/**'
-      - 'README.md'
-      - 'CHANGELOG.md'
+    paths:
+      - msssql_managed_instances.tf
+      - msssql_managed_databases.tf
+      - modules/databases/mssql_managed_instance/**
+      - modules/databases/mssql_managed_database/**
   schedule:
-    - cron:  '0 0 * * *'
+    - cron:  '0 3 * * 0' #3 AM on sunday
 
 env:
   TF_CLI_ARGS: '-no-color'
@@ -38,10 +32,11 @@ jobs:
       fail-fast: true
       max-parallel: 1
       matrix:
+          region: ["southeastasia"]
           random_length: ['5']
 
     container:
-      image: aztfmod/roverdev:2010.141511
+      image: aztfmod/rover:2011.3012
       options: --user 0
 
     steps:
@@ -51,7 +46,7 @@ jobs:
         with:
           repository: Azure/caf-terraform-landingzones
           path: public
-          ref: "2010.0.0"
+          ref: '2010.0.2'
 
       - name: Login azure
         run: |
@@ -63,21 +58,16 @@ jobs:
       - name: launchpad
         run: |
           /tf/rover/rover.sh -lz ${GITHUB_WORKSPACE}/public/landingzones/caf_launchpad -a apply \
+            -var-folder ${GITHUB_WORKSPACE}/public/landingzones/caf_launchpad/scenario/100 \
             -level level0 \
-            -var-folder ${GITHUB_WORKSPACE}/public/landingzones/caf_launchpad/scenario/200 \
             -launchpad \
             -parallelism=30 \
             --environment ${{ github.run_id }} \
             '-var random_length=${{ matrix.random_length }}' \
-            '-var prefix=g${{ github.run_id }}' \\
+            '-var prefix=g${{ github.run_id }}' \
+            '-var regions={region1="${{ matrix.region }}"}' \
             '-var tags={testing_job_id="${{ github.run_id }}"}'
 
-
-      - name: foundations
-        run: |
-          /tf/rover/rover.sh -lz ${GITHUB_WORKSPACE}/public/landingzones/caf_foundations -a apply \
-            -level level1 \
-            --environment ${{ github.run_id }}
 
   examples:
     name: examples
@@ -89,12 +79,11 @@ jobs:
       fail-fast: false
       matrix:
           config_files: [
-            "examples/mssql_server/200-mssql",
-            "examples/mssql_server/200-mssql-two-regions"
+            "examples/mssql_mi/200-mi"
           ]
 
     container:
-      image: aztfmod/roverdev:2010.141511
+      image: aztfmod/rover:2011.3012
       options: --user 0
 
     steps:
@@ -108,21 +97,21 @@ jobs:
       - name: deploy example
         run: |
           /tf/rover/rover.sh -lz ${GITHUB_WORKSPACE}/examples -a apply \
-            -level level2 \
+            -level level3 \
             -tfstate $(basename ${{ matrix.config_files }}).tfstate \
-            -var-file ${GITHUB_WORKSPACE}/${{ matrix.config_files }}.tfvars \
+            -var-folder ${GITHUB_WORKSPACE}/${{ matrix.config_files }} \
             --environment ${{ github.run_id }}
 
       - name: destroy example
         if: always()
         run: |
           /tf/rover/rover.sh -lz ${GITHUB_WORKSPACE}/examples -a destroy \
-            -level level2 \
+            -level level3 \
             -tfstate $(basename ${{ matrix.config_files }}).tfstate \
-            -var-file ${GITHUB_WORKSPACE}/${{ matrix.config_files }}.tfvars \
+            -var-folder ${GITHUB_WORKSPACE}/${{ matrix.config_files }} \
             --environment ${{ github.run_id }} \
-            -refresh=false \
             -auto-approve
+
 
   foundations_destroy:
     name: foundations_destroy
@@ -132,9 +121,11 @@ jobs:
 
     strategy:
       fail-fast: false
+      matrix:
+          region: ["southeastasia"]
 
     container:
-      image: aztfmod/roverdev:2010.141511
+      image: aztfmod/rover:2011.3012
       options: --user 0
 
     steps:
@@ -142,7 +133,7 @@ jobs:
         with:
           repository: Azure/caf-terraform-landingzones
           path: public
-          ref: "2010.0.0"
+          ref: "2010.0.2"
 
       - name: Login azure
         run: |
@@ -151,25 +142,17 @@ jobs:
 
           echo "local user: $(whoami)"
 
-
-      - name: foundations
-        run: |
-          /tf/rover/rover.sh -lz ${GITHUB_WORKSPACE}/public/landingzones/caf_foundations -a destroy \
-            -level level1 \
-            -parallelism=30 \
-            --environment ${{ github.run_id }} \
-            -auto-approve
-
       - name: Remove launchpad
         run: |
 
           /tf/rover/rover.sh -lz ${GITHUB_WORKSPACE}/public/landingzones/caf_launchpad/ -a destroy \
             -level level0 \
-            -var-folder ${GITHUB_WORKSPACE}/public/landingzones/caf_launchpad/scenario/200 \
+            -var-folder ${GITHUB_WORKSPACE}/public/landingzones/caf_launchpad/scenario/100 \
             -launchpad \
+            --environment ${{ github.run_id }} \
             -parallelism=30 \
-            -env ${{ github.run_id }} \
             '-var prefix=g${{ github.run_id }}' \
+            '-var regions={region1="${{ matrix.region }}"}' \
             '-var tags={testing_job_id="${{ github.run_id }}"}' \
             -auto-approve
 

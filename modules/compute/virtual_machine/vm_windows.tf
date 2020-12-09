@@ -115,7 +115,7 @@ resource "azurerm_windows_virtual_machine" "vm" {
 
     content {
 
-      key_vault_id = var.keyvault_id
+      key_vault_id = local.keyvault_id
 
       # WinRM certificate
       dynamic "certificate" {
@@ -160,7 +160,7 @@ resource "azurerm_windows_virtual_machine" "vm" {
 }
 
 resource "random_password" "admin" {
-  for_each         = local.os_type == "windows" ? var.settings.virtual_machine_settings : {}
+  for_each         = (local.os_type == "windows") && (try(var.settings.virtual_machine_settings["windows"].admin_password_key, null) == null ) ? var.settings.virtual_machine_settings : {}
   length           = 123
   min_upper        = 2
   min_lower        = 2
@@ -171,15 +171,36 @@ resource "random_password" "admin" {
 }
 
 resource "azurerm_key_vault_secret" "admin_password" {
-  for_each = local.os_type == "windows" ? var.settings.virtual_machine_settings : {}
+  for_each = local.os_type == "windows" && try(var.settings.virtual_machine_settings[local.os_type].admin_password_key, null) == null  ? var.settings.virtual_machine_settings : {}
 
   name         = format("%s-admin-password", azurecaf_name.windows_computer_name[each.key].result)
   value        = random_password.admin[local.os_type].result
-  key_vault_id = var.keyvault_id
+  key_vault_id = local.keyvault_id
 
   lifecycle {
     ignore_changes = [
       value
     ]
   }
+}
+
+#
+# Get the admin username and password from keyvault
+#
+
+locals {
+  admin_user     = try(data.azurerm_key_vault_secret.windows_admin_user_key.0.value, null)
+  admin_password = try(data.azurerm_key_vault_secret.windows_admin_password_key.0.value, null)
+}
+
+data "azurerm_key_vault_secret" "windows_admin_user_key" {
+  count        = try(var.settings.virtual_machine_settings["windows"].admin_user_key, null) == null ? 0 : 1
+  name         = var.settings.virtual_machine_settings["windows"].admin_user_key
+  key_vault_id = local.keyvault_id
+}
+
+data "azurerm_key_vault_secret" "windows_admin_password_key" {
+  count        = try(var.settings.virtual_machine_settings["windows"].admin_password_key, null) == null ? 0 : 1
+  name         = var.settings.virtual_machine_settings["windows"].admin_password_key
+  key_vault_id = local.keyvault_id
 }
