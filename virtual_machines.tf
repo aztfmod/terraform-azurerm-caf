@@ -3,6 +3,7 @@
 module virtual_machines {
   source = "./modules/compute/virtual_machine"
   depends_on = [
+    module.availability_sets,
     module.dynamic_keyvault_secrets,
     module.keyvault_access_policies,
     module.keyvault_access_policies_azuread_apps,
