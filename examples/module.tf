@@ -75,5 +75,8 @@ module "caf" {
     monitoring      = var.monitoring
     recovery_vaults = var.recovery_vaults
   }
-  enable = {}
+
+  security = {
+    dynamic_keyvault_secrets    = var.dynamic_keyvault_secrets
+  }
 }
