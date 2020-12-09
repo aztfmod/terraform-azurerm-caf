@@ -92,6 +92,7 @@ jobs:
             "datalake/101-datalake-storage",
             "eventhub_namespace/100-simple-evh",
             "eventhub_namespace/101-evh-with-private-endpoint",
+            "keyvault/102-keyvault-cert-issuer",
             "machine_learning/100-aml",
             "machine_learning/101-aml-vnet",
             "monitoring/service_health_alerts",
