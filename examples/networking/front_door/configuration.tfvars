@@ -35,6 +35,22 @@ front_doors = {
     
     backend_pool_health_probe = {
       name = "exampleHealthProbeSetting1"
+    }
+
+    backend_pool = {
+      name = "exampleBackendBing"
+      host_header = "www.bing.com"
+      address     = "www.bing.com"
+      http_port   = 80
+      https_port  = 443
+      load_balancing_name = "exampleLoadBalancingSettings1"
+      health_probe_name   = "exampleHealthProbeSetting1"
+    }
+
+    frontend_endpoint = {
+      name                              = "exampleFrontendEndpoint1"
+      host_name                         = "example-FrontDoor.azurefd.net"
+      custom_https_provisioning_enabled = false
     }  
     
   }

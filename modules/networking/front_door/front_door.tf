@@ -13,7 +13,7 @@ resource "azurerm_frontdoor" "frontdoor" {
   name                = azurecaf_name.frontdoor.result
   location            = var.location
   resource_group_name = var.resource_group_name
-  enforce_backend_pools_certificate_name_check = false
+  enforce_backend_pools_certificate_name_check = try(var.settings.certificate_name_check, false)
   tags                = local.tags
 
 
@@ -26,7 +26,37 @@ resource "azurerm_frontdoor" "frontdoor" {
       backend_pool_name  =    try(var.settings.routing_rule.backend_pool_name, null)
     }
   }
-      # dynamic "forwarding_configuration" {
+  
+  backend_pool_load_balancing {
+    name = var.settings.backend_pool_load_balancing.name
+  }
+
+  backend_pool_health_probe {
+    name = var.settings.backend_pool_health_probe.name
+  }
+  
+  backend_pool {
+    name = var.settings.backend_pool.name
+    backend {
+      host_header = var.settings.backend_pool.host_header
+      address     = var.settings.backend_pool.address
+      http_port   = var.settings.backend_pool.http_port
+      https_port  = var.settings.backend_pool.https_port
+    }
+
+    load_balancing_name = var.settings.backend_pool.load_balancing_name
+    health_probe_name   = var.settings.backend_pool.health_probe_name
+  }
+
+  frontend_endpoint {
+    name                              = var.settings.frontend_endpoint.name
+    host_name                         = var.settings.frontend_endpoint.host_name
+    custom_https_provisioning_enabled = var.settings.frontend_endpoint.custom_https_provisioning_enabled
+  }
+}
+
+
+    # dynamic "forwarding_configuration" {
       #   for_each = lookup(var.settings.routing_rule, "forwarding_configuration", false) == false ? [] : [1]
 
       #   content {
@@ -38,30 +68,3 @@ resource "azurerm_frontdoor" "frontdoor" {
       #   }
       # }
     # }
-  backend_pool_load_balancing {
-    name = var.settings.backend_pool_load_balancing.name
-  }
-
-  backend_pool_health_probe {
-    name = var.settings.backend_pool_health_probe.name
-  }
-  
-  backend_pool {
-    name = "exampleBackendBing"
-    backend {
-      host_header = "www.bing.com"
-      address     = "www.bing.com"
-      http_port   = 80
-      https_port  = 443
-    }
-
-    load_balancing_name = "exampleLoadBalancingSettings1"
-    health_probe_name   = "exampleHealthProbeSetting1"
-  }
-
-  frontend_endpoint {
-    name                              = "exampleFrontendEndpoint1"
-    host_name                         = "example-FrontDoor.azurefd.net"
-    custom_https_provisioning_enabled = false
-  }
-}
