@@ -21,11 +21,15 @@ resource "azurerm_frontdoor" "frontdoor" {
     name                  =   var.settings.routing_rule.name
     frontend_endpoints    =   var.settings.routing_rule.frontend_endpoints
     accepted_protocols    =   try(var.settings.routing_rule.accepted_protocols, null)
-    patterns_to_match     =   try(var.settings.routing_rule.patterns_to_match, null)
+    patterns_to_match     =   try(var.settings.routing_rule.patterns_to_match, ["/*"])
     forwarding_configuration {
       backend_pool_name  =    try(var.settings.routing_rule.backend_pool_name, null)
     }
   }
+
+  backend_pools_send_receive_timeout_seconds = try(var.settings.backend_pools_send_receive_timeout_seconds, 60)
+  load_balancer_enabled  =  try(var.settings.load_balancer_enabled, true)
+  friendly_name          =  try(var.settings.friendly_name, null)
   
   backend_pool_load_balancing {
     name = var.settings.backend_pool_load_balancing.name
@@ -33,8 +37,8 @@ resource "azurerm_frontdoor" "frontdoor" {
 
   backend_pool_health_probe {
     name = var.settings.backend_pool_health_probe.name
-  }
-  
+  } 
+    
   backend_pool {
     name = var.settings.backend_pool.name
     backend {
