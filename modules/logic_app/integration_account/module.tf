@@ -1,4 +1,4 @@
-# Resorce type doesn't "azurerm_logic_app_workflow" doesn't exist in azurecaf!!
+# Resorce type doesn't "azurerm_logic_app_integration_account" doesn't exist in azurecaf!!
 # resource "azurecaf_name" "integration_account" {
 #   name          = var.name
 #   resource_type = "azurerm_logic_app_integration_account"
