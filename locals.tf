@@ -57,17 +57,10 @@ locals {
   }
 
   database = {
-<<<<<<< HEAD
-    mssql_servers               = try(var.database.mssql_servers, {})
-    mssql_databases             = try(var.database.mssql_databases, {})
-    mssql_elastic_pools         = try(var.database.mssql_elastic_pools, {})
-    mysql_servers               = try(var.database.mysql_servers, {})
-    mysql_databases             = try(var.database.mysql_databases, {})
-    azurerm_redis_caches        = try(var.database.azurerm_redis_caches, {})
-    synapse_workspaces          = try(var.database.synapse_workspaces, {})
-    databricks_workspaces       = try(var.database.databricks_workspaces, {})
-    machine_learning_workspaces = try(var.database.machine_learning_workspaces, {})
-=======
+    azurerm_redis_caches              = try(var.database.azurerm_redis_caches, {})
+    cosmos_dbs                        = try(var.database.cosmos_dbs, {})
+    databricks_workspaces             = try(var.database.databricks_workspaces, {})
+    machine_learning_workspaces       = try(var.database.machine_learning_workspaces, {})
     mssql_servers                     = try(var.database.mssql_servers, {})
     mssql_managed_instances           = try(var.database.mssql_managed_instances, {})
     mssql_managed_instances_secondary = try(var.database.mssql_managed_instances_secondary, {})
@@ -78,12 +71,9 @@ locals {
     mssql_failover_groups             = try(var.database.mssql_failover_groups, {})
     mssql_mi_failover_groups          = try(var.database.mssql_mi_failover_groups, {})
     mssql_mi_administrators           = try(var.database.mssql_mi_administrators, {})
-    azurerm_redis_caches              = try(var.database.azurerm_redis_caches, {})
+    mysql_servers                     = try(var.database.mysql_servers, {})
+    mysql_databases                   = try(var.database.mysql_databases, {})
     synapse_workspaces                = try(var.database.synapse_workspaces, {})
-    databricks_workspaces             = try(var.database.databricks_workspaces, {})
-    machine_learning_workspaces       = try(var.database.machine_learning_workspaces, {})
-    cosmos_dbs                        = try(var.database.cosmos_dbs, {})
->>>>>>> origin/master
   }
 
   client_config = {
