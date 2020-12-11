@@ -105,19 +105,9 @@ jobs:
             "networking/virtual_wan/100-vwan-multi-hubs",
             "networking/virtual_wan/101-vwan-multi-hubs-firewalls",
             # "networking/virtual_wan/102-vwan-multi-hubs-gw",
-<<<<<<< HEAD
-            "networking/virtual_network_gateway/vpn_type",
-            "app_gateway/100-simple-app-gateway",
-            "databricks/100-simple-databricks",
-            # "cosmos_db/100-simple-cosmos-db",
-            "cosmos_db/100-simple-cosmos-db-mongo",
-            "cosmos_db/100-simple-cosmos-db-sql",
-            "networking/private_dns/100-private-dns-vnet-links",
-=======
             "recovery_vault/101-simple-asrv",
             "recovery_vault/102-asr-protection",
             "recovery_vault/103-asr-with-private-endpoint",
->>>>>>> a7d4fa12b97348d818da2f10de4163e8e3459e6b
             "redis_cache/100-redis-standard",
             "synapse_analytics/100-synapse",
             "synapse_analytics/101-synapse-sparkpool",
