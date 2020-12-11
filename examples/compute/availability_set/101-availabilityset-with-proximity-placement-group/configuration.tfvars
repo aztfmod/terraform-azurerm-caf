@@ -16,7 +16,7 @@ availability_sets = {
     platform_fault_domain_count  = 2
     # By default availability set is configured as managed. Below can be used to change it to unmanged.
     # managed                      = false
-    ppg_key = "ppg1"
+    proximity_placement_group_key = "ppg1"
 
 
 
@@ -58,7 +58,7 @@ virtual_machines = {
     virtual_machine_settings = {
       linux = {
         availability_set_key            = "avset1"
-        ppg_key                         = "ppg1"
+        proximity_placement_group_key                         = "ppg1"
         name                            = "example_vm1"
         size                            = "Standard_F2"
         admin_username                  = "adminuser"
@@ -110,7 +110,7 @@ virtual_machines = {
     virtual_machine_settings = {
       linux = {
         availability_set_key            = "avset1"
-        ppg_key                         = "ppg1"
+        proximity_placement_group_key                         = "ppg1"
         name                            = "example_vm2"
         size                            = "Standard_F2"
         admin_username                  = "adminuser"
