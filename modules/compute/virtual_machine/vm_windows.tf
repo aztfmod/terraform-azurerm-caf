@@ -44,8 +44,8 @@ resource "azurerm_windows_virtual_machine" "vm" {
   location                     = var.location
   resource_group_name          = var.resource_group_name
   size                         = each.value.size
-  admin_username               = each.value.admin_username
-  admin_password               = random_password.admin[local.os_type].result
+  admin_username               = try(each.value.admin_user_key, null) == null ? each.value.admin_username : local.admin_user
+  admin_password               = try(each.value.admin_password_key, null) == null ? random_password.admin[local.os_type].result : local.admin_password
   network_interface_ids        = local.nic_ids
   allow_extension_operations   = try(each.value.allow_extension_operations, null)
   computer_name                = azurecaf_name.windows_computer_name[each.key].result
