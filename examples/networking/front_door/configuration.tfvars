@@ -58,12 +58,36 @@ front_doors = {
 
     frontend_endpoint = {
       name                              = "exampleFrontendEndpoint1"
-      host_name                         = "example-FrontDoor.azurefd.net"
+      host_name                         = "terraatsg.com"
       custom_https_provisioning_enabled = false
     }  
     
   }
 }
+
+dns_zones = {
+  dns_zone1 = {
+    name                = "terraatsg.com"
+    region              = "region1"
+    resource_group_key  = "front_door_region1"
+
+    contract = {
+      name_first   = "John"
+      name_last    = "Doe"
+      email        = "test@contoso.com"
+      phone        = "+65.12345678"
+      organization = "Sandpit"
+      job_title    = "Engineer"
+      address1     = "Singapore"
+      address2     = ""
+      postal_code  = "018898"
+      state        = "Singapore"
+      city         = "Singapore"
+      country      = "SG"
+      auto_renew   = true
+    }
+  }
+} 
 
 # vnets = {
 #   vnet_test = {
