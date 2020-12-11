@@ -1,5 +1,5 @@
 resource "azurerm_backup_policy_file_share" "fs" {
-  depends_on = [azurerm_resource_group_template_deployment.asr]
+  depends_on = [azurerm_recovery_services_vault.asr]
   for_each   = try(var.settings.backup_policies.fs, {})
 
   name                = each.value.name
