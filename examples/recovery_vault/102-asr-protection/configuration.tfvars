@@ -11,7 +11,7 @@ resource_groups = {
     name   = "sharedsvc_re1"
     region = "region1"
   }
-  primary = {
+  secondary = {
     name   = "sharedsvc_re2"
     region = "region2"
   }
