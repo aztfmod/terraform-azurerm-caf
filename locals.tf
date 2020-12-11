@@ -1,11 +1,4 @@
 locals {
-  diagnostics = {
-    diagnostics_definition   = try(var.diagnostics.diagnostics_definition, var.diagnostics_definition)
-    diagnostics_destinations = try(var.diagnostics.diagnostics_destinations, var.diagnostics_destinations)
-    storage_accounts         = try(var.diagnostics.storage_accounts, module.diagnostic_storage_accounts)
-    log_analytics            = try(var.diagnostics.log_analytics, module.log_analytics)
-    event_hub_namespaces     = try(var.diagnostics.event_hub_namespaces, module.event_hub_namespaces)
-  }
 
   prefix = lookup(var.global_settings, "prefix", null) == null ? random_string.prefix.result : var.global_settings.prefix
 
@@ -27,6 +20,8 @@ locals {
     bastion_hosts              = try(var.compute.bastion_hosts, {})
     azure_container_registries = try(var.compute.azure_container_registries, {})
     aks_clusters               = try(var.compute.aks_clusters, {})
+    availability_sets          = try(var.compute.availability_sets, {})
+    proximity_placement_groups = try(var.compute.proximity_placement_groups, {})
   }
 
   storage = {
@@ -55,9 +50,14 @@ locals {
     ddos_services                                           = try(var.networking.ddos_services, {})
     express_route_circuits                                  = try(var.networking.express_route_circuits, {})
     express_route_circuit_authorizations                    = try(var.networking.express_route_circuit_authorizations, {})
+    network_watchers                                        = try(var.networking.network_watchers, {})
+    virtual_network_gateways                                = try(var.networking.virtual_network_gateways, {})
+    virtual_network_gateway_connections                     = try(var.networking.virtual_network_gateway_connections, {})
+
   }
 
   database = {
+<<<<<<< HEAD
     mssql_servers               = try(var.database.mssql_servers, {})
     mssql_databases             = try(var.database.mssql_databases, {})
     mssql_elastic_pools         = try(var.database.mssql_elastic_pools, {})
@@ -67,6 +67,23 @@ locals {
     synapse_workspaces          = try(var.database.synapse_workspaces, {})
     databricks_workspaces       = try(var.database.databricks_workspaces, {})
     machine_learning_workspaces = try(var.database.machine_learning_workspaces, {})
+=======
+    mssql_servers                     = try(var.database.mssql_servers, {})
+    mssql_managed_instances           = try(var.database.mssql_managed_instances, {})
+    mssql_managed_instances_secondary = try(var.database.mssql_managed_instances_secondary, {})
+    mssql_databases                   = try(var.database.mssql_databases, {})
+    mssql_managed_databases           = try(var.database.mssql_managed_databases, {})
+    mssql_managed_databases_restore   = try(var.database.mssql_managed_databases_restore, {})
+    mssql_elastic_pools               = try(var.database.mssql_elastic_pools, {})
+    mssql_failover_groups             = try(var.database.mssql_failover_groups, {})
+    mssql_mi_failover_groups          = try(var.database.mssql_mi_failover_groups, {})
+    mssql_mi_administrators           = try(var.database.mssql_mi_administrators, {})
+    azurerm_redis_caches              = try(var.database.azurerm_redis_caches, {})
+    synapse_workspaces                = try(var.database.synapse_workspaces, {})
+    databricks_workspaces             = try(var.database.databricks_workspaces, {})
+    machine_learning_workspaces       = try(var.database.machine_learning_workspaces, {})
+    cosmos_dbs                        = try(var.database.cosmos_dbs, {})
+>>>>>>> origin/master
   }
 
   client_config = {
@@ -76,9 +93,7 @@ locals {
     object_id               = local.object_id
     logged_aad_app_objectId = local.object_id
     logged_user_objectId    = local.object_id
-    # logged_aad_app_objectId = var.logged_aad_app_objectId == null ? var.logged_user_objectId == null ? data.azuread_service_principal.logged_in_app.0.object_id : var.logged_user_objectId : var.logged_aad_app_objectId
-    # logged_user_objectId    = var.logged_user_objectId == null ? var.logged_aad_app_objectId == null ? data.azuread_service_principal.logged_in_app.0.object_id : var.logged_aad_app_objectId : var.logged_user_objectId
-    landingzone_key = var.current_landingzone_key
+    landingzone_key         = var.current_landingzone_key
   }
 
   object_id = coalesce(var.logged_user_objectId, var.logged_aad_app_objectId, try(data.azurerm_client_config.current.object_id, null), try(data.azuread_service_principal.logged_in_app.0.object_id, null))

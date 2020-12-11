@@ -1,13 +1,14 @@
-
 variable global_settings {
   default = {}
 }
-
+variable var_folder_path {
+  default = {}
+}
 variable tags {
   default = null
   type    = map
 }
-variable log_analytics {
+variable diagnostic_log_analytics {
   default = {}
 }
 variable app_service_environments {

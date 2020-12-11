@@ -9,16 +9,24 @@ module "log_analytics" {
   base_tags       = try(local.global_settings.inherit_tags, false) ? module.resource_groups[each.value.resource_group_key].tags : {}
 }
 
+<<<<<<< HEAD
 output log_analytics {
   value = module.log_analytics
 }
 
+=======
+>>>>>>> origin/master
 module log_analytics_diagnostics {
   source   = "./modules/diagnostics"
   for_each = var.log_analytics
 
   resource_id       = module.log_analytics[each.key].id
   resource_location = module.log_analytics[each.key].location
-  diagnostics       = local.diagnostics
+  diagnostics       = local.combined_diagnostics
   profiles          = try(each.value.diagnostic_profiles, {})
 }
+
+output log_analytics {
+  value = module.log_analytics
+}
+
