@@ -86,6 +86,7 @@ jobs:
             "compute/availability_set/100-simple-availabilityset",
             "compute/availability_set/101-availabilityset-with-proximity-placement-group",
             "compute/container_registry/100-simple-acr",
+            "compute/kubernetes_services/101-single-cluster",
             "compute/proximity_placement_group",
             "compute/virtual_machine/100-single-linux-vm",
             "compute/virtual_machine/101-single-windows-vm",
