@@ -1,6 +1,6 @@
 # Server auditing
 
-data "azurerm_storage_account" "postgresql_auditing" {
+data "azurerm_storage_account" "mysql_auditing" {
   count = try(var.settings.extended_auditing_policy.storage_account.key, null) == null ? 0 : 1
 
   name                = var.storage_accounts[var.settings.extended_auditing_policy.storage_account.key].name

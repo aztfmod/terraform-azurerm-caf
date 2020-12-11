@@ -8,7 +8,7 @@ private_endpoints = {
         # resource_group_key = ""          # Key of the resource group where the private endpoint will be created. Default to the vnet's resource group
         # tags
         private_service_connection = {
-          name = "psc-stg-level0"
+          name              = "psc-stg-level0"
           subresource_names = ["blob", "table"]
           # request_message = ""
           # is_manual_connection = [true|false]
@@ -21,7 +21,7 @@ private_endpoints = {
       # locally created
       diaglogs = {
         private_service_connection = {
-          name = "psc-stg-diag-diaglogs"
+          name              = "psc-stg-diag-diaglogs"
           subresource_names = ["blob", "queue"]
         }
       }

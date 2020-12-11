@@ -40,21 +40,17 @@ mysql_servers = {
 
     mysql_configurations = {
       mysql_configuration = {
-        name                = "interactive_timeout"
-        resource_group_name = "mysql_region1"
-        server_name         = "sales-re1"
-        value               = "600"
+        name  = "interactive_timeout"
+        value = "600"
       }
     }
 
 
     mysql_databases = {
       mysql_database = {
-        name                = "mysql_server_sampledb"
-        resource_group_name = "mysql_region1"
-        server_name         = "sales-re1"
-        charset             = "UTF8"
-        collation           = "utf8_unicode_ci"
+        name      = "mysql_server_sampledb"
+        charset   = "UTF8"
+        collation = "utf8_unicode_ci"
       }
     }
 
