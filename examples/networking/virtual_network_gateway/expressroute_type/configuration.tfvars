@@ -45,7 +45,6 @@ virtual_network_gateways = {
   gateway1 = {
     name               = "mygateway"
     resource_group_key = "er"
-    #supports only ExpressRoute at this time. VPN type is coming soon
     type = "ExpressRoute"
     sku  = "Standard"
     # enable active_active only with VPN Type

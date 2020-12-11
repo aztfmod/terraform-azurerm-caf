@@ -55,7 +55,6 @@ virtual_network_gateways = {
   gateway1 = {
     name               = "mygateway"
     resource_group_key = "vgnw"
-    #supports only ExpressRoute at this time. VPN type is coming soon
     type                       = "VPN"
     sku                        = "VpnGw1"
     private_ip_address_enabled = true
