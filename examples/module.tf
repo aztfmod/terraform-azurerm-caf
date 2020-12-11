@@ -53,6 +53,7 @@ module "caf" {
     network_watchers                     = var.network_watchers
     vnet_peerings                        = var.vnet_peerings
     front_doors                          = var.front_doors
+    dns_zones                            = var.dns_zones
   }
   database = {
     azurerm_redis_caches              = var.azurerm_redis_caches

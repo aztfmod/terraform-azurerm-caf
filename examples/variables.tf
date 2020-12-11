@@ -226,3 +226,7 @@ variable front_doors {
   default = {}
 }
 
+variable dns_zones {
+  default = {}
+}
+

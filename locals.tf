@@ -46,6 +46,7 @@ locals {
     private_dns                                             = try(var.networking.private_dns, {})
     azurerm_firewall_nat_rule_collection_definition         = try(var.networking.azurerm_firewall_nat_rule_collection_definition, {})
     ddos_services                                           = try(var.networking.ddos_services, {})
+    dns_zones                                               = try(var.networking.dns_zones, {})
     express_route_circuits                                  = try(var.networking.express_route_circuits, {})
     express_route_circuit_authorizations                    = try(var.networking.express_route_circuit_authorizations, {})
     network_watchers                                        = try(var.networking.network_watchers, {})
