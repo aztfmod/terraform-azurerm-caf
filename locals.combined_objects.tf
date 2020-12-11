@@ -14,20 +14,17 @@ locals {
   combined_objects_event_hub_namespaces       = merge(map(local.client_config.landingzone_key, module.event_hub_namespaces), try(var.remote_objects.event_hub_namespaces, {}))
   combined_objects_keyvaults                  = merge(map(local.client_config.landingzone_key, module.keyvaults), try(var.remote_objects.keyvaults, {}))
   combined_objects_managed_identities         = merge(map(local.client_config.landingzone_key, module.managed_identities), try(var.remote_objects.managed_identities, {}))
-  combined_objects_mssql_servers              = merge(map(local.client_config.landingzone_key, module.mssql_servers), try(var.remote_objects.mssql_servers, {}))
   combined_objects_mssql_databases            = merge(map(local.client_config.landingzone_key, module.mssql_databases), try(var.remote_objects.mssql_databases, {}))
-  combined_objects_mssql_managed_instances    = merge(map(local.client_config.landingzone_key, module.mssql_managed_instances), try(var.remote_objects.mssql_managed_instances, {}))
   combined_objects_mssql_managed_databases    = merge(map(local.client_config.landingzone_key, module.mssql_managed_databases), try(var.remote_objects.mssql_managed_databases, {}))
+  combined_objects_mssql_managed_instances    = merge(map(local.client_config.landingzone_key, module.mssql_managed_instances), try(var.remote_objects.mssql_managed_instances, {}))
   combined_objects_mssql_elastic_pools        = merge(map(local.client_config.landingzone_key, module.mssql_elastic_pools), try(var.remote_objects.mssql_elastic_pools, {}))
-<<<<<<< HEAD
+  combined_objects_mssql_servers              = merge(map(local.client_config.landingzone_key, module.mssql_servers), try(var.remote_objects.mssql_servers, {}))
   combined_objects_mysql_servers              = merge(map(local.client_config.landingzone_key, module.mysql_servers), try(var.remote_objects.mysql_servers, {}))
-=======
-  combined_objects_proximity_placement_groups = merge(map(local.client_config.landingzone_key, module.proximity_placement_groups), try(var.remote_objects.proximity_placement_groups, {}))
->>>>>>> origin/master
   combined_objects_networking                 = merge(map(local.client_config.landingzone_key, module.networking), try(var.remote_objects.vnets, {}))
   combined_objects_network_watchers           = merge(map(local.client_config.landingzone_key, module.network_watchers), try(var.remote_objects.network_watchers, {}))
   combined_objects_public_ip_addresses        = merge(map(local.client_config.landingzone_key, module.public_ip_addresses), try(var.remote_objects.public_ip_addresses, {}))
   combined_objects_private_dns                = merge(map(local.client_config.landingzone_key, module.private_dns), try(var.remote_objects.private_dns, {}))
+  combined_objects_proximity_placement_groups = merge(map(local.client_config.landingzone_key, module.proximity_placement_groups), try(var.remote_objects.proximity_placement_groups, {}))
   combined_objects_recovery_vaults            = merge(map(local.client_config.landingzone_key, module.recovery_vaults), try(var.remote_objects.recovery_vaults, {}))
   combined_objects_resource_groups            = merge(map(local.client_config.landingzone_key, module.resource_groups), try(var.remote_objects.resource_groups, {}))
   combined_objects_storage_accounts           = merge(map(local.client_config.landingzone_key, module.storage_accounts), try(var.remote_objects.storage_accounts, {}))
