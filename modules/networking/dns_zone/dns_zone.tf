@@ -1,7 +1,7 @@
 resource "azurerm_dns_zone" "domain_zone" {
   name                = var.settings.name
   resource_group_name = var.resource_group_name
-  tags                = var.tags
+  tags                = local.tags
 }
 
 resource "azurerm_template_deployment" "domain" {
@@ -55,39 +55,3 @@ resource "azurerm_management_lock" "lock_domain" {
   lock_level = "CanNotDelete"
   notes      = "Deleting a domain will make it unavailable to purchase for 60 days. Please remove the lock before deleting this domain."
 }
-
-resource "azurerm_dns_cname_record" "target" {
-  name                = "target"
-  zone_name           = azurerm_dns_zone.domain_zone.name
-  resource_group_name = var.resource_group_name
-  ttl                 = 300
-  record              = "forfrontdoor.azurefd.net"
-}
-
-# module "dns_records" {
-#   # source = "terraformdns/dns-recordsets/azurerm"
-
-#   resource_group_name = var.resource_group_name
-#   dns_zone_name       = azurerm_dns_zone.domain_zone.name
-#   recordsets = [
-#     {
-#       name    = "www"
-#       type    = "A"
-#       ttl     = 3600
-#       records = [
-#         "192.0.2.56",
-#       ]
-#     },
-#     {
-#       name    = ""
-#       type    = "TXT"
-#       ttl     = 3600
-#       records = [
-#         "\"v=spf1 ip4:192.0.2.3 include:backoff.${aws_route53_zone.example.name} -all\"",
-#       ]
-#     },
-    
-#   ]
-# }
-
-

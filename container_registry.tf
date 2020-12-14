@@ -24,4 +24,4 @@ output azure_container_registries {
   value     = module.container_registry
   sensitive = true
 }
-  
+
