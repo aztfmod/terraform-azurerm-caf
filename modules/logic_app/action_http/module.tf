@@ -3,14 +3,15 @@ resource "azurerm_logic_app_action_http" "action" {
   logic_app_id = var.logic_app_id
   method       = var.method
   uri          = var.uri
-  body         = var.body
-  headers      = var.headers
+  body         = try(var.body, null)
+  headers      = try(var.headers, null)
+
   dynamic "run_after" {
     for_each = try(var.run_after, null) != null ? [1] : []
 
     content {
-      action_name   = try(var.run_after.action_name, null)
-      action_result = try(var.run_after.action_result, null)
+      action_name   = var.run_after.action_name
+      action_result = var.run_after.action_result
     }
   }
 }
