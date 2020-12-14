@@ -44,9 +44,9 @@ module "logic_app_action_http" {
   logic_app_id = try(each.value.lz_key, null) == null ? local.combined_objects_logic_app_workflow[local.client_config.landingzone_key][each.value.logic_app_workflow_key].id : local.combined_objects_logic_app_workflow[each.value.lz_key][each.value.logic_app_workflow_key].id
   method       = each.value.method
   uri          = each.value.uri
-  body         = try(each.value.body, null)
-  headers      = try(each.value.headers, null)
-  run_after    = try(each.value.run_after, null)
+  body         = each.value.body
+  headers      = each.value.headers
+  run_after    = each.value.run_after
 }
 
 output "logic_app_action_http" {
@@ -96,8 +96,8 @@ module "logic_app_trigger_http_request" {
   name          = each.value.name
   logic_app_id  = try(each.value.lz_key, null) == null ? local.combined_objects_logic_app_workflow[local.client_config.landingzone_key][each.value.logic_app_workflow_key].id : local.combined_objects_logic_app_workflow[each.value.lz_key][each.value.logic_app_workflow_key].id
   schema        = each.value.schema
-  method        = try(each.value.method, null)
-  relative_path = try(each.value.relative_path, null)
+  method        = each.value.method
+  relative_path = each.value.relative_path
 }
 
 output "logic_app_trigger_http_request" {
@@ -114,7 +114,7 @@ module "logic_app_trigger_recurrence" {
   logic_app_id = try(each.value.lz_key, null) == null ? local.combined_objects_logic_app_workflow[local.client_config.landingzone_key][each.value.logic_app_workflow_key].id : local.combined_objects_logic_app_workflow[each.value.lz_key][each.value.logic_app_workflow_key].id
   frequency    = each.value.frequency
   interval     = each.value.interval
-  start_time   = try(each.value.start_time, null)
+  start_time   = each.value.start_time
   # time_zone            = try(each.value.time_zone, null)
 }
 
