@@ -23,3 +23,7 @@ variable lock_domain {
   type        = bool
   default     = false
 }
+
+variable records {
+  default = {}
+}

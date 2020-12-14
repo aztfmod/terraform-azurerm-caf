@@ -86,5 +86,23 @@ dns_zones = {
       country      = "SG"
       auto_renew   = true
     }
+
+    records = {
+      txt_records = {
+        testtxt1 = {
+          name = "testtxt1"
+          ttl  = 3600
+          records = {
+            r1 = {
+              value = "testing txt 1"
+            }
+            r2 = {
+              value = "testing txt 2"
+            }
+          }
+        }
+      }
+    }
+
   }
 } 
