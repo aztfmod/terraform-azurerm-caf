@@ -1,7 +1,7 @@
 
 resource "azurecaf_name" "plan" {
   name          = var.name
-  resource_type = "azurerm_app_service"
+  resource_type = "azurerm_function_app"
   prefixes      = [var.global_settings.prefix]
   random_length = var.global_settings.random_length
   clean_input   = true
