@@ -200,6 +200,12 @@ variable log_analytics {
 variable recovery_vaults {
   default = {}
 }
+variable availability_sets {
+  default = {}
+}
+variable proximity_placement_groups {
+  default = {}
+}
 variable network_watchers {
   default = {}
 }

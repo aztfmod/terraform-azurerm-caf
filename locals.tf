@@ -20,6 +20,8 @@ locals {
     bastion_hosts              = try(var.compute.bastion_hosts, {})
     azure_container_registries = try(var.compute.azure_container_registries, {})
     aks_clusters               = try(var.compute.aks_clusters, {})
+    availability_sets          = try(var.compute.availability_sets, {})
+    proximity_placement_groups = try(var.compute.proximity_placement_groups, {})
   }
 
   storage = {
