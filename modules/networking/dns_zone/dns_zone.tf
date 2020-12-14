@@ -55,3 +55,13 @@ resource "azurerm_management_lock" "lock_domain" {
   lock_level = "CanNotDelete"
   notes      = "Deleting a domain will make it unavailable to purchase for 60 days. Please remove the lock before deleting this domain."
 }
+
+resource "azurerm_dns_cname_record" "cname_records" {
+  for_each = try(var.records.cname_records, {})
+
+  name                = each.value.name
+  zone_name           = azurerm_dns_zone.domain_zone.name
+  resource_group_name = var.resource_group_name
+  ttl                 = each.value.ttl
+  record              = each.value.records
+}
