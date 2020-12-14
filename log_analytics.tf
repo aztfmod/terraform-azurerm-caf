@@ -9,7 +9,6 @@ module "log_analytics" {
   base_tags       = try(local.global_settings.inherit_tags, false) ? module.resource_groups[each.value.resource_group_key].tags : {}
 }
 
-
 module log_analytics_diagnostics {
   source   = "./modules/diagnostics"
   for_each = var.log_analytics

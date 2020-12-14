@@ -35,11 +35,12 @@ jobs:
       matrix:
           config_files: [
             "compute/virtual_machine/105-single-windows-vm-kv-admin-secrets",
-            "compute/virtual_machine/211-vm-bastion-winrm-agents"
+            "compute/virtual_machine/211-vm-bastion-winrm-agents",
+            "networking/private_links/endpoints/centralized"
           ]
 
     container:
-      image: aztfmod/rover:2011.3012
+      image: aztfmod/rover:2012.1109
       options: --user 0
 
     steps:
