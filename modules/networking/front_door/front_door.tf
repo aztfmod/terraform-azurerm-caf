@@ -23,13 +23,13 @@ resource "azurerm_frontdoor" "frontdoor" {
     accepted_protocols    =   try(var.settings.routing_rule.accepted_protocols, null)
     patterns_to_match     =   try(var.settings.routing_rule.patterns_to_match, ["/*"])
     forwarding_configuration {
-      backend_pool_name  =    try(var.settings.routing_rule.backend_pool_name, null)
+      backend_pool_name  =    try(var.settings.backend_pool.name, null)
     }
   }
 
   backend_pools_send_receive_timeout_seconds = try(var.settings.backend_pools_send_receive_timeout_seconds, 60)
   load_balancer_enabled  =  try(var.settings.load_balancer_enabled, true)
-  friendly_name          =  try(var.settings.friendly_name, null)
+  friendly_name          =  try(var.settings.backend_pool.name, null)
   
   backend_pool_load_balancing {
     name = var.settings.backend_pool_load_balancing.name
@@ -54,21 +54,8 @@ resource "azurerm_frontdoor" "frontdoor" {
 
   frontend_endpoint {
     name                              = var.settings.frontend_endpoint.name
-    host_name                         = var.settings.frontend_endpoint.host_name
+    host_name                         = format("%s.azurefd.net", azurecaf_name.frontdoor.result)
     custom_https_provisioning_enabled = var.settings.frontend_endpoint.custom_https_provisioning_enabled
   }
 }
-
-
-    # dynamic "forwarding_configuration" {
-      #   for_each = lookup(var.settings.routing_rule, "forwarding_configuration", false) == false ? [] : [1]
-
-      #   content {
-      #     forwarding_protocol = try(var.settings.routing_rule.forwarding_configuration.forwarding_protocol, null)
-      #     backend_pool_name   = var.settings.routing_rule.forwarding_configuration.backend_pool_name
-      #     cache_enabled       = try(var.settings.routing_rule.forwarding_configuration.cache_enabled, false)
-      #     cache_use_dynamic_compression =  try(var.settings.routing_rule.forwarding_configuration.cache_use_dynamic_compression, false)
-      #     cache_query_parameter_strip_directive = try(var.settings.routing_rule.forwarding_configuration.cache_query_parameter_strip_directive, "StripAll")
-      #   }
-      # }
-    # }
+  
