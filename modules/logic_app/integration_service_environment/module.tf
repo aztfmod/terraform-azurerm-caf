@@ -1,16 +1,15 @@
-# Resorce type doesn't "integration_service_environment" doesn't exist in azurecaf!!
-# resource "azurecaf_name" "integration_service_environment" {
-#   name          = var.name
-#   resource_type = "azurerm_integration_service_environment"
-#   prefixes      = [var.global_settings.prefix]
-#   random_length = var.global_settings.random_length
-#   clean_input   = true
-#   passthrough   = var.global_settings.passthrough
-#   use_slug      = var.global_settings.use_slug
-# }
+resource "azurecaf_name" "integration_service_environment" {
+  name          = var.name
+  resource_type = "azurerm_integration_service_environment"
+  prefixes      = [var.global_settings.prefix]
+  random_length = var.global_settings.random_length
+  clean_input   = true
+  passthrough   = var.global_settings.passthrough
+  use_slug      = var.global_settings.use_slug
+}
 
 resource "azurerm_integration_service_environment" "ise" {
-  name                       = var.name
+  name                       = azurecaf_name.integration_service_environment.result
   resource_group_name        = var.resource_group_name
   location                   = var.location
   sku_name                   = var.sku_name
