@@ -196,3 +196,7 @@ variable keyvault_certificate_issuers {
 variable cosmos_dbs {
   default = {}
 }
+
+variable security_center_automation {
+  default = {}
+}

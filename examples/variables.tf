@@ -236,3 +236,7 @@ variable dynamic_keyvault_secrets {
 variable private_endpoints {
   default = {}
 }
+
+variable security_center_automation {
+  default = {}
+}
