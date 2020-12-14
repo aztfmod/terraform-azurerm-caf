@@ -8,6 +8,8 @@ variable tfstate_container_name {}
 variable tfstate_key {}
 variable tfstate_resource_group_name {}
 
+variable tfstate_subscription_id {}
+
 variable global_settings {
   default = {
     default_region = "region1"
@@ -26,7 +28,7 @@ variable landingzone {
     key                 = "examples"
     tfstates = {
       launchpad = {
-        level   = "current"
+        level   = "lower"
         tfstate = "caf_launchpad.tfstate"
       }
     }
@@ -129,6 +131,9 @@ variable keyvaults {
 variable keyvault_access_policies {
   default = {}
 }
+variable keyvault_certificate_issuers {
+  default = {}
+}
 variable virtual_machines {
   default = {}
 }
@@ -195,6 +200,12 @@ variable log_analytics {
 variable recovery_vaults {
   default = {}
 }
+variable availability_sets {
+  default = {}
+}
+variable proximity_placement_groups {
+  default = {}
+}
 variable network_watchers {
   default = {}
 }
@@ -220,5 +231,8 @@ variable cosmos_dbs {
     default = {}
 }
 variable dynamic_keyvault_secrets {
+  default = {}
+}
+variable private_endpoints {
   default = {}
 }
