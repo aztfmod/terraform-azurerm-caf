@@ -15,3 +15,16 @@ keyvaults = {
   }
 }
 
+# Store output attributes into keyvault secret
+dynamic_keyvault_secrets = {
+  ssh_keys = {      # Key of the keyvault
+    vm-win-admin-username = {
+      secret_name = "vm-win-admin-username"
+      value       = "vmadmin"
+    }
+    vm-win-admin-password = {
+      secret_name = "vm-win-admin-password"
+      value       = "Very@Str5ngP!44w0rdToChaNge#"
+    }
+  }
+}
