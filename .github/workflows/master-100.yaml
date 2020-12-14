@@ -37,7 +37,7 @@ jobs:
           random_length: ['5']
 
     container:
-      image: aztfmod/rover:2011.3012
+      image: aztfmod/rover:2012.1109
       options: --user 0
 
     steps:
@@ -47,7 +47,7 @@ jobs:
         with:
           repository: Azure/caf-terraform-landingzones
           path: public
-          ref: 'integration'
+          ref: '2012.0.0'
 
       - name: Login azure
         run: |
@@ -83,11 +83,17 @@ jobs:
             "app_gateway/100-simple-app-gateway",
             "app_insights/100-all-attributes",
             "app_insights/100-simple",
+            "compute/availability_set/100-simple-availabilityset",
+            "compute/availability_set/101-availabilityset-with-proximity-placement-group",
             "compute/container_registry/100-simple-acr",
+            "compute/kubernetes_services/101-single-cluster",
+            "compute/proximity_placement_group",
             "compute/virtual_machine/100-single-linux-vm",
-            "compute/virtual_machine/211-vm-bastion-winrm-agents",
             "compute/virtual_machine/101-single-windows-vm",
             "compute/virtual_machine/104-single-windows-backup",
+            "compute/virtual_machine/211-vm-bastion-winrm-agents",
+            "cosmos_db/100-simple-cosmos-db-mongo",
+            "cosmos_db/100-simple-cosmos-db-sql",
             "databricks/100-simple-databricks",
             "datalake/101-datalake-storage",
             "eventhub_namespace/100-simple-evh",
@@ -118,7 +124,7 @@ jobs:
           ]
 
     container:
-      image: aztfmod/rover:2011.3012
+      image: aztfmod/rover:2012.1109
       options: --user 0
 
     steps:
@@ -162,7 +168,7 @@ jobs:
           region: ["southeastasia"]
 
     container:
-      image: aztfmod/rover:2011.3012
+      image: aztfmod/rover:2012.1109
       options: --user 0
 
     steps:
@@ -170,7 +176,7 @@ jobs:
         with:
           repository: Azure/caf-terraform-landingzones
           path: public
-          ref: 'integration'
+          ref: '2012.0.0'
 
       - name: Login azure
         run: |
