@@ -25,7 +25,7 @@ front_doors = {
       frontend_endpoints      = ["exampleFrontendEndpoint1"]
       forwarding_protocol = "MatchRequest"
       backend_pool_name   = "exampleBackendBing"
-      # forwarding_configuration = {}
+      
     }
     
     # Following optional argument can be used to set a time out value between 0-240. If not passed, by default it will be set to 60
@@ -58,50 +58,9 @@ front_doors = {
 
     frontend_endpoint = {
       name                              = "exampleFrontendEndpoint1"
-      host_name                         = "terraatsg.com"
+      host_name                         = "randomabcxyz-FrontDoor.azurefd.net"
       custom_https_provisioning_enabled = false
     }  
     
   }
 }
-
-dns_zones = {
-  dns_zone1 = {
-    name                = "terraatsg.com"
-    region              = "region1"
-    resource_group_key  = "front_door_region1"
-
-    contract = {
-      name_first   = "John"
-      name_last    = "Doe"
-      email        = "test@contoso.com"
-      phone        = "+65.12345678"
-      organization = "Sandpit"
-      job_title    = "Engineer"
-      address1     = "Singapore"
-      address2     = ""
-      postal_code  = "018898"
-      state        = "Singapore"
-      city         = "Singapore"
-      country      = "SG"
-      auto_renew   = true
-    }
-  }
-} 
-
-# vnets = {
-#   vnet_test = {
-#     resource_group_key = "private_dns_region1"
-#     vnet = {
-#       name          = "test-vnet"
-#       address_space = ["10.10.100.0/24"]
-#     }
-#     specialsubnets = {
-
-#     }
-#     subnets = {
-
-#     }
-#   }
-# }
-
