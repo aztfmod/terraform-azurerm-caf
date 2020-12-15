@@ -97,7 +97,7 @@ locals {
     recovery_vaults            = try(var.shared_services.recovery_vaults, {})
     automations                = try(var.shared_services.automations, {})
     monitoring                 = try(var.shared_services.monitoring, {})
-    security_center_automation = try(var.shared_services.security_center_automation)
+    security_center_automation = try(var.shared_services.security_center_automation, {})
   }
 
   enable = {
