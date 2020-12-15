@@ -43,8 +43,8 @@ resource "azurerm_security_center_automation" "sca1" {
         for_each = try(var.settings.source.ruleset, {})
         content {
         rule {
-          property_path = source.rulesetvalue.property_path
-          operator = source.rulesetvalue.operator
+          property_path = source.ruleset.value.property_path
+          operator = source.ruleset.value.operator
           expected_value = source.ruleset.value.expected_value
           property_type = source.ruleset.value.property_type
          }
