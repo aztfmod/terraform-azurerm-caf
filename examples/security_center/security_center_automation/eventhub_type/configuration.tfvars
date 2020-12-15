@@ -34,7 +34,16 @@ security_center_automation = {
     }
     source = {
       source1= {
-        event_source = "Alerts"
+        event_source = "Assessments"
+        ruleset = {
+          ruleset1 ={
+            property_path  = "properties.metadata.severity"
+            operator       = "Equals"
+            expected_value = "High"
+            property_type  = "String"
+          }
+          
+        }
       }
     }
 
