@@ -35,6 +35,10 @@ rover -lz /tf/caf/examples \
 -a plan|apply
 ```
 
+rover -lz /tf/caf/examples \
+-var-folder /tf/caf//tf/caf/examples/mssql_mi/200-mi-two-regions \
+-a plan|apply
+
 
 ## Developing and testing module for landing zones
 
