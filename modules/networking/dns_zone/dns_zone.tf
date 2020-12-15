@@ -57,7 +57,7 @@ resource "azurerm_management_lock" "lock_domain" {
 }
 
 resource "azurerm_dns_cname_record" "cname_records" {
-  for_each = try(var.records.cname_records, {})
+  for_each = try(var.settings.records.cname_records, {})
 
   name                = each.value.name
   zone_name           = azurerm_dns_zone.domain_zone.name
