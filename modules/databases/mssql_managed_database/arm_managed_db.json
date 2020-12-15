@@ -43,6 +43,13 @@
             "description": "(createMode: PointInTimeRestore) Specifies the point in time (ISO8601 format) of the source database that will be restored to create the new database."
         }
     },
+    "longTermRetentionBackupResourceId": {
+        "type": "string",
+        "defaultValue": "",
+        "metadata": {
+            "description": "(createMode: RestoreLongTermRetentionBackup)The name of the Long Term Retention backup to be used for restore of this managed database."
+        }
+    },
     "retentionDays": {
         "type": "int",
         "defaultValue": 7,
@@ -69,6 +76,7 @@
         "collation": "[parameters('collation')]",
         "createMode": "[parameters('createMode')]",
         "sourceDatabaseId": "[if(equals(parameters('sourceDatabaseId'), ''), json('null'), parameters('sourceDatabaseId'))]",
+        "longTermRetentionBackupResourceId": "[if(equals(parameters('longTermRetentionBackupResourceId'), ''), json('null'), parameters('longTermRetentionBackupResourceId'))]",
         "restorePointInTime": "[if(equals(parameters('restorePointInTime'), ''), json('null'), parameters('restorePointInTime'))]"
       }
     },
