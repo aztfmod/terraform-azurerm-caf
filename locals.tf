@@ -81,7 +81,9 @@ locals {
     object_id               = local.object_id
     logged_aad_app_objectId = local.object_id
     logged_user_objectId    = local.object_id
-    landingzone_key         = var.current_landingzone_key
+    # logged_aad_app_objectId = var.logged_aad_app_objectId == null ? var.logged_user_objectId == null ? data.azuread_service_principal.logged_in_app.0.object_id : var.logged_user_objectId : var.logged_aad_app_objectId
+    # logged_user_objectId    = var.logged_user_objectId == null ? var.logged_aad_app_objectId == null ? data.azuread_service_principal.logged_in_app.0.object_id : var.logged_aad_app_objectId : var.logged_user_objectId
+    landingzone_key = var.current_landingzone_key
   }
 
   object_id = coalesce(var.logged_user_objectId, var.logged_aad_app_objectId, try(data.azurerm_client_config.current.object_id, null), try(data.azuread_service_principal.logged_in_app.0.object_id, null))
@@ -91,6 +93,7 @@ locals {
     app_service_environments     = try(var.webapp.app_service_environments, {})
     app_service_plans            = try(var.webapp.app_service_plans, {})
     app_services                 = try(var.webapp.app_services, {})
+    function_apps                 = try(var.webapp.function_apps, {})
   }
 
   shared_services = {
