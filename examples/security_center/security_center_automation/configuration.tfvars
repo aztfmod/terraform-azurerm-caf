@@ -21,5 +21,23 @@ event_hub_namespaces = {
 }
 
 security_center_automation = {
-  
+  automation1 = {
+    name = "sec-center"
+    resource_group_key = "sec_center"
+    type = "EventHub"
+    eventhub_namespace_key = "evh1"
+    eventhub_data = {
+      action1= {
+        type = "EventHub"
+        resource_id = "some"
+      }
+    }
+    source = {
+      source1= {
+        event_source = "Alerts"
+      }
+    }
+
+  }
+
 }
