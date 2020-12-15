@@ -10,6 +10,7 @@ locals {
   combined_objects_azuread_users              = merge(map(local.client_config.landingzone_key, module.azuread_users), try(var.remote_objects.azuread_users, {}))
   combined_objects_azure_container_registries = merge(map(local.client_config.landingzone_key, module.container_registry), try(var.remote_objects.container_registry, {}))
   combined_objects_azurerm_firewalls          = merge(map(local.client_config.landingzone_key, module.azurerm_firewalls), try(var.remote_objects.azurerm_firewalls, {}))
+  combined_objects_availability_sets          = merge(map(local.client_config.landingzone_key, module.availability_sets), try(var.remote_objects.availability_sets, {}))
   combined_objects_event_hub_namespaces       = merge(map(local.client_config.landingzone_key, module.event_hub_namespaces), try(var.remote_objects.event_hub_namespaces, {}))
   combined_objects_keyvaults                  = merge(map(local.client_config.landingzone_key, module.keyvaults), try(var.remote_objects.keyvaults, {}))
   combined_objects_managed_identities         = merge(map(local.client_config.landingzone_key, module.managed_identities), try(var.remote_objects.managed_identities, {}))
@@ -18,6 +19,7 @@ locals {
   combined_objects_mssql_managed_instances    = merge(map(local.client_config.landingzone_key, module.mssql_managed_instances), try(var.remote_objects.mssql_managed_instances, {}))
   combined_objects_mssql_managed_databases    = merge(map(local.client_config.landingzone_key, module.mssql_managed_databases), try(var.remote_objects.mssql_managed_databases, {}))
   combined_objects_mssql_elastic_pools        = merge(map(local.client_config.landingzone_key, module.mssql_elastic_pools), try(var.remote_objects.mssql_elastic_pools, {}))
+  combined_objects_proximity_placement_groups = merge(map(local.client_config.landingzone_key, module.proximity_placement_groups), try(var.remote_objects.proximity_placement_groups, {}))
   combined_objects_networking                 = merge(map(local.client_config.landingzone_key, module.networking), try(var.remote_objects.vnets, {}))
   combined_objects_network_watchers           = merge(map(local.client_config.landingzone_key, module.network_watchers), try(var.remote_objects.network_watchers, {}))
   combined_objects_public_ip_addresses        = merge(map(local.client_config.landingzone_key, module.public_ip_addresses), try(var.remote_objects.public_ip_addresses, {}))
@@ -26,5 +28,4 @@ locals {
   combined_objects_resource_groups            = merge(map(local.client_config.landingzone_key, module.resource_groups), try(var.remote_objects.resource_groups, {}))
   combined_objects_storage_accounts           = merge(map(local.client_config.landingzone_key, module.storage_accounts), try(var.remote_objects.storage_accounts, {}))
   combined_objects_synapse_workspaces         = merge(map(local.client_config.landingzone_key, module.synapse_workspaces), try(var.remote_objects.synapse_workspaces, {}))
-
 }
