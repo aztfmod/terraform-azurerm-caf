@@ -74,7 +74,7 @@ output "logic_app_integration_account" {
 
 ##### azurerm_logic_app_trigger_custom
 module "logic_app_trigger_custom" {
-  source = "./modules/logic_app/trigger_request_custom"
+  source = "./modules/logic_app/trigger_custom"
 
   for_each = local.logic_app.logic_app_trigger_custom
 
