@@ -30,3 +30,7 @@ output containers {
 output data_lake_filesystems {
   value = module.data_lake_filesystem
 }
+
+output primary_access_key {
+  value = azurerm_storage_account.stg.primary_access_key
+}
