@@ -2,9 +2,9 @@ module "caf" {
   source = "../"
 
   global_settings             = var.global_settings
+  diagnostics                 = local.remote.diagnostics
   current_landingzone_key     = var.landingzone.key
   tenant_id                   = var.tenant_id
-  diagnostic_storage_accounts = var.diagnostic_storage_accounts
   logged_user_objectId        = var.logged_user_objectId
   logged_aad_app_objectId     = var.logged_aad_app_objectId
   resource_groups             = var.resource_groups
@@ -13,10 +13,12 @@ module "caf" {
   azuread_roles               = var.azuread_roles
   keyvaults                   = var.keyvaults
   keyvault_access_policies    = var.keyvault_access_policies
+  keyvault_certificate_issuers = var.keyvault_certificate_issuers
   managed_identities          = var.managed_identities
   role_mapping                = var.role_mapping
   log_analytics               = var.log_analytics
   event_hub_namespaces        = var.event_hub_namespaces
+
   webapp = {
     azurerm_application_insights = var.azurerm_application_insights
     app_service_environments     = var.app_service_environments
@@ -24,9 +26,14 @@ module "caf" {
     app_services                 = var.app_services
   }
   compute = {
-    virtual_machines = var.virtual_machines
-    bastion_hosts    = var.bastion_hosts
-    aks_clusters     = var.aks_clusters
+    virtual_machines           = var.virtual_machines
+    bastion_hosts              = var.bastion_hosts
+    aks_clusters               = var.aks_clusters
+    availability_sets          = var.availability_sets
+    virtual_machines           = var.virtual_machines
+    bastion_hosts              = var.bastion_hosts
+    aks_clusters               = var.aks_clusters
+    proximity_placement_groups = var.proximity_placement_groups
   }
   networking = {
     vnets                                = var.vnets
@@ -44,27 +51,32 @@ module "caf" {
     express_route_circuit_authorizations = var.express_route_circuit_authorizations
     network_watchers                     = var.network_watchers
     vnet_peerings                        = var.vnet_peerings
+    private_endpoints                    = var.private_endpoints
   }
   database = {
-    azurerm_redis_caches               = var.azurerm_redis_caches
-    mssql_servers                      = var.mssql_servers
-    mssql_managed_instances            = var.mssql_managed_instances
-    mssql_managed_instances_secondary  = var.mssql_managed_instances_secondary
-    mssql_databases                    = var.mssql_databases
-    mssql_managed_databases            = var.mssql_managed_databases
-    mssql_managed_databases_restore    = var.mssql_managed_databases_restore
+    azurerm_redis_caches              = var.azurerm_redis_caches
+    mssql_servers                     = var.mssql_servers
+    mssql_managed_instances           = var.mssql_managed_instances
+    mssql_managed_instances_secondary = var.mssql_managed_instances_secondary
+    mssql_databases                   = var.mssql_databases
+    mssql_managed_databases           = var.mssql_managed_databases
+    mssql_managed_databases_restore   = var.mssql_managed_databases_restore
     mssql_managed_databases_backup_ltr = var.mssql_managed_databases_backup_ltr
-    mssql_elastic_pools                = var.mssql_elastic_pools
-    mssql_failover_groups              = var.mssql_failover_groups
-    mssql_mi_failover_groups           = var.mssql_mi_failover_groups
-    mssql_mi_administrators            = var.mssql_mi_administrators
-    synapse_workspaces                 = var.synapse_workspaces
-    databricks_workspaces              = var.databricks_workspaces
-    machine_learning_workspaces        = var.machine_learning_workspaces
+    mssql_elastic_pools               = var.mssql_elastic_pools
+    mssql_failover_groups             = var.mssql_failover_groups
+    mssql_mi_failover_groups          = var.mssql_mi_failover_groups
+    mssql_mi_administrators           = var.mssql_mi_administrators
+    synapse_workspaces                = var.synapse_workspaces
+    databricks_workspaces             = var.databricks_workspaces
+    machine_learning_workspaces       = var.machine_learning_workspaces
+    cosmos_dbs                        = var.cosmos_dbs
   }
   shared_services = {
     monitoring      = var.monitoring
     recovery_vaults = var.recovery_vaults
   }
-  enable = {}
+
+  security = {
+    dynamic_keyvault_secrets    = var.dynamic_keyvault_secrets
+  }
 }

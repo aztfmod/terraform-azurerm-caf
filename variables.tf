@@ -123,6 +123,7 @@ variable webapp {
   default = {}
 }
 
+
 ## Databases variables
 variable database {
   default = {}
@@ -164,6 +165,10 @@ variable role_mapping {
   }
 }
 
+variable dynamic_keyvault_secrets {
+  default = {}
+}
+
 ## Storage variables
 variable storage_accounts {
   default = {}
@@ -184,3 +189,10 @@ variable monitoring {
   default = {}
 }
 
+variable keyvault_certificate_issuers {
+  default = {}
+}
+
+variable cosmos_dbs {
+  default = {}
+}
