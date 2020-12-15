@@ -117,6 +117,7 @@ jobs:
             "redis_cache/100-redis-standard",
             "synapse_analytics/100-synapse",
             "synapse_analytics/101-synapse-sparkpool",
+            "security_center/security_center_automation/eventhub_type"
             "webapps/appservice/101-appservice-simple",
             "webapps/appservice/102-appservice-slots",
             "webapps/appservice/103-appservice-extend",
