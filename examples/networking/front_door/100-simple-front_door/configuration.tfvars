@@ -1,14 +1,6 @@
-global_settings = {
-  default_region = "region1"
-  regions = {
-    region1 = "southeastasia"
-  }
-}
-
 resource_groups = {
   front_door_region1 = {
-    name = "front-door-rg"
-    region = "region1"
+    name = "front-door-rg"        
   }
 }
 
@@ -18,15 +10,6 @@ front_doors = {
     region              = "region1"
     resource_group_key = "front_door_region1"
     certificate_name_check = false
-
-    # routing_rule = {
-    #   name                    = "ExampleRouteRule1"
-    #   accepted_protocols      = ["Http", "Https"]
-    #   frontend_endpoints      = ["exampleFrontendEndpoint1"]
-    #   forwarding_protocol = "MatchRequest"
-    #   backend_pool_name   = "exampleBackendBing"
-      
-    # }
 
     routing_rule = {
       rr1 = {
@@ -82,25 +65,6 @@ front_doors = {
       }                             
     }
 
-    # backend_pool_load_balancing = {
-    #   name = "exampleLoadBalancingSettings1"
-
-    # }
-    
-    # backend_pool_health_probe = {
-    #   name = "exampleHealthProbeSetting1"
-    # }
-
-    # backend_pool = {
-    #   name = "exampleBackendBing"
-    #   host_header = "www.bing.com"
-    #   address     = "www.bing.com"
-    #   http_port   = 80
-    #   https_port  = 443
-    #   load_balancing_name = "exampleLoadBalancingSettings1"
-    #   health_probe_name   = "exampleHealthProbeSetting1"
-    # }
-
     backend_pool = {
       bp1 = {
         name = "exampleBackendBing1"
@@ -129,12 +93,6 @@ front_doors = {
         
       } 
     }
-
-    # frontend_endpoint = {
-    #   name                              = "exampleFrontendEndpoint1"
-    #   host_name                         = "randomabcxyz-FrontDoor.azurefd.net"
-    #   custom_https_provisioning_enabled = false
-    # } 
 
     frontend_endpoint = {
       fe1 = {
