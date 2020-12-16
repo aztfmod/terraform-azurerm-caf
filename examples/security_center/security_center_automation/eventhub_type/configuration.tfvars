@@ -29,7 +29,6 @@ security_center_automation = {
     eventhub_data = {
       action1= {
         type = "EventHub"
-        resource_id = "some"
       }
     }
     source = {
