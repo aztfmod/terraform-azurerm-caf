@@ -1,9 +1,9 @@
 
 global_settings = {
-  random_length = "5"
+  random_length  = "5"
   default_region = "region1"
   regions = {
-    region1 = "southeastasia"
+    region1 = "eastus"
   }
 }
 
