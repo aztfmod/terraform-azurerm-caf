@@ -1,4 +1,4 @@
 output id {
-  value       = azurerm_data_factory_dataset_azure_blob.dataset.id
-  sensitive   = true
+  value     = azurerm_data_factory_linked_service_azure_function.linked_service_azure_function.id
+  sensitive = true
 }
