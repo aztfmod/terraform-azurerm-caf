@@ -3,7 +3,7 @@ variable name {
 }
 
 variable resource_group_name {
-  description = " (Required) The name of the resource group in which to create the Data Factory Linked Service. Changing this forces a new resource"
+  description = "(Required) The name of the resource group in which to create the Data Factory Linked Service. Changing this forces a new resource"
 }
 
 variable data_factory_name {
@@ -27,7 +27,7 @@ variable parameters {
 }
 
 variable additional_properties {
-  description = " (Optional) A map of additional properties to associate with the Data Factory Linked Service"
+  description = "(Optional) A map of additional properties to associate with the Data Factory Linked Service"
 }
 
 variable connection_string {
