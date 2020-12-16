@@ -10,7 +10,6 @@ resource "azurecaf_name" "frontdoor" {
 
 resource "azurerm_frontdoor" "frontdoor" {
   name                = azurecaf_name.frontdoor.result
-  location            = var.location
   resource_group_name = var.resource_group_name
   enforce_backend_pools_certificate_name_check = try(var.settings.certificate_name_check, false)
   tags                = local.tags
