@@ -1,23 +1,12 @@
-resource "azurerm_data_factory_dataset_azure_blob" "dataset" {
-  name                = var.name
-  resource_group_name = var.resource_group_name
-  data_factory_name   = var.data_factory_name
-  linked_service_name = var.linked_service_name
-  folder = var.folder
-  description = var.description 
-  annotations = var.annotations
-  parameters = var.parameters
-  additional_properties = var.additional_properties
-  path     = var.path
-  filename = var.filename
+resource "azurerm_data_factory_linked_service_azure_blob_storage" "linked_service_azure_blob_storage" {
+  name                     = var.name
+  resource_group_name      = var.resource_group_name
+  data_factory_name        = var.data_factory_name
+  description              = try(var.description, null)
+  integration_runtime_name = try(var.integration_runtime_name, null)
+  annotations              = try(var.annotations, null)
+  parameters               = try(var.parameters, null)
+  additional_properties    = try(var.additional_properties, null)
+  connection_string        = try(var.connection_string, null)
 
-  dynamic "schema_column" {
-    for_each = lookup(var.settings, "schema_column", {}) == {} ? [] : [1]
-
-    content {
-      name = var.settings.schema_column.name
-      type = var.settings.schema_column.type
-      description = var.settings.schema_column.description
-    }
-  }
 }
