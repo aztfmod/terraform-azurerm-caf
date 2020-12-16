@@ -1,49 +1,48 @@
 resource_groups = {
-  front_door_region1 = {
-    name = "front-door-rg"        
+  front_door = {
+    name = "front-door-rg"
   }
 }
 
 front_doors = {
   front_door1 = {
-    name                = "sales-rg1"
-    region              = "region1"
-    resource_group_key = "front_door_region1"
+    name                   = "sales-rg1"
+    resource_group_key     = "front_door"
     certificate_name_check = false
 
     routing_rule = {
       rr1 = {
-        name               = "exampleRoutingRule1"
-        frontend_endpoints = ["exampleFrontendEndpoint1"]
-        accepted_protocols = ["Http", "Https"] 
-        patterns_to_match  = ["/*"]           
-        enabled            = true              
-        configuration      = "Forwarding"        
+        name                   = "exampleRoutingRule1"
+        frontend_endpoint_keys = ["fe1"]
+        accepted_protocols     = ["Http", "Https"]
+        patterns_to_match      = ["/*"]
+        enabled                = true
+        configuration          = "Forwarding"
         forwarding_configuration = {
-          backend_pool_name                     = "exampleBackendBing1"
-          cache_enabled                         = false       
-          cache_use_dynamic_compression         = false       
-          cache_query_parameter_strip_directive = "StripNone" 
+          backend_pool_name                     = "bing"
+          cache_enabled                         = false
+          cache_use_dynamic_compression         = false
+          cache_query_parameter_strip_directive = "StripNone"
           custom_forwarding_path                = ""
-          forwarding_protocol                   = "MatchRequest"   
+          forwarding_protocol                   = "MatchRequest"
         }
         redirect_configuration = {
-          custom_host         = ""             
-          redirect_protocol   = "MatchRequest"   
-          redirect_type       = "Found"        
+          custom_host         = ""
+          redirect_protocol   = "MatchRequest"
+          redirect_type       = "Found"
           custom_fragment     = ""
           custom_path         = ""
           custom_query_string = ""
         }
-      } 
+      }
     }
-    
+
     # Following optional argument can be used to set a time out value between 0-240. If not passed, by default it will be set to 60
     # backend_pools_send_receive_timeout_seconds = 120
-    
+
     # Following optional argument can be used to disable Front Door Load Balancer
     # load_balancer_enabled  =  false
-    
+
     # Following optional argument can be used to pass a friendly name for the Front Door service
     # friendly_name          =  "ExampleFriendDoor"
 
@@ -52,24 +51,24 @@ front_doors = {
         name                            = "exampleLoadBalancingSettings1"
         sample_size                     = 4
         successful_samples_required     = 2
-        additional_latency_milliseconds = 0 
-      }                                     
+        additional_latency_milliseconds = 0
+      }
     }
 
     backend_pool_health_probe = {
       hp1 = {
         name                = "exampleHealthProbeSetting1"
         path                = "/"
-        protocol            = "Http"
-        interval_in_seconds = 120    
-      }                             
+        protocol            = "Https"
+        interval_in_seconds = 120
+      }
     }
 
     backend_pool = {
       bp1 = {
-        name = "exampleBackendBing1"
-        load_balancing_name = "exampleLoadBalancingSettings1"
-        health_probe_name   = "exampleHealthProbeSetting1"
+        name               = "bing"
+        load_balancing_key = "lb1"
+        health_probe_key   = "hp1"
         backend = {
           be1 = {
             enabled     = true
@@ -77,7 +76,7 @@ front_doors = {
             host_header = "www.bing.com"
             http_port   = 80
             https_port  = 443
-            priority    = 1  
+            priority    = 1
             weight      = 50
           },
           be2 = {
@@ -86,32 +85,32 @@ front_doors = {
             host_header = "www.bing.co.uk"
             http_port   = 80
             https_port  = 443
-            priority    = 1 
+            priority    = 1
             weight      = 50
           }
         }
-        
-      } 
+
+      }
     }
 
-    frontend_endpoint = {
+    frontend_endpoints = {
       fe1 = {
         name                              = "exampleFrontendEndpoint1"
-        host_name                         = "randomabcxyz-FrontDoor.azurefd.net"
-        session_affinity_enabled          = false 
-        session_affinity_ttl_seconds      = 0     
+        # host_name                         = "randomabcxyz-FrontDoor.azurefd.net" ?? not used in the code
+        session_affinity_enabled          = false
+        session_affinity_ttl_seconds      = 0
         custom_https_provisioning_enabled = false
         #Required if custom_https_provisioning_enabled is true
         custom_https_configuration = {
-          certificate_source = "FrontDoor" 
+          certificate_source = "FrontDoor"
           #If certificate source is AzureKeyVault the below are required:
           azure_key_vault_certificate_vault_id       = ""
           azure_key_vault_certificate_secret_name    = ""
           azure_key_vault_certificate_secret_version = ""
         }
-        web_application_firewall_policy_link_name = ""  
+        web_application_firewall_policy_link_name = ""
       }
-    } 
-    
+    }
+
   }
 }
