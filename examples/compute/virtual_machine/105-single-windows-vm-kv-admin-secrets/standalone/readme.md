@@ -17,8 +17,8 @@ To test this deployment in the example landingzone. Make sure the launchpad has 
 
 rover \
   -lz /tf/caf/aztfmod/examples \
-  -var-folder /tf/caf/aztfmod/examples/compute/virtual_machine/211-vm-bastion-winrm-agents \
-  -var var_folder_path="/tf/caf/aztfmod/examples/compute/virtual_machine/211-vm-bastion-winrm-agents" \
+  -var-folder  /tf/caf/aztfmod/examples/compute/virtual_machine/105-single-windows-vm-kv-admin-secrets \
+  -level level1 \
   -a plan
   
 ```

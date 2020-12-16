@@ -79,9 +79,10 @@ virtual_machines = {
 
     virtual_machine_settings = {
       windows = {
-        name           = "server1"
-        size           = "Standard_F2s_v2"
-        admin_username = "adminuser"
+        name               = "server1"
+        size               = "Standard_F2s_v2"
+        admin_username_key = "vm-win-admin-username"
+        admin_password_key = "vm-win-admin-password"
 
         # Value of the nic keys to attach the VM. The first one in the list is the default nic
         network_interface_keys = ["nic0"]
