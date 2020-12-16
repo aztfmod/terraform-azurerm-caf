@@ -1,52 +1,91 @@
 resource "azurerm_frontdoor_firewall_policy" "wafpolicy" {
-  for_each = var.settings.waf_policy
-  
-  name                              = var.settings.waf_policy.name
+  for_each = var.settings.waf_policies
+
+  name                              = each.value.name
   resource_group_name               = var.resource_group_name
-  enabled                           = var.settings.waf_policy.enabled
-  mode                              = var.settings.waf_policy.mode
-  redirect_url                      = var.settings.waf_policy.redirect_url
-  custom_block_response_status_code = var.settings.waf_policy.custom_block_response_status_code
-  custom_block_response_body        = var.settings.waf_policy.custom_block_response_body
+  enabled                           = try(each.value.enabled, true)
+  mode                              = try(each.value.mode, null)
+  redirect_url                      = try(each.value.redirect_url, null)
+  custom_block_response_status_code = try(each.value.custom_block_response_status_code, null)
+  custom_block_response_body        = try(each.value.custom_block_response_body)
   tags                              = local.tags
-  
+
   dynamic "custom_rule" {
-    for_each = var.settings.waf_policy.custom_rule
+    for_each = each.value.custom_rule
     content {
+      action                         = custom_rule.value.action
+      enabled                        = try(custom_rule.value.enabled, true)
       name                           = custom_rule.value.name
-      enabled                        = custom_rule.value.enabled
       priority                       = custom_rule.value.priority
-      rate_limit_duration_in_minutes = custom_rule.value.rate_limit_duration_in_minutes
-      rate_limit_threshold           = custom_rule.value.rate_limit_threshold
+      rate_limit_duration_in_minutes = try(custom_rule.value.rate_limit_duration_in_minutes, 1)
+      rate_limit_threshold           = try(custom_rule.value.rate_limit_threshold, 10)
       type                           = custom_rule.value.type
-      action                         = custom_rule.value. action
 
       dynamic "match_condition" {
         for_each = custom_rule.value.match_condition
         content {
           match_variable     = match_condition.value.match_variable
           operator           = match_condition.value.operator
-          negation_condition = match_condition.value.negation_condition
+          negation_condition = try(match_condition.value.negation_condition, null)
           match_values       = match_condition.value.match_values
+          selector           = try(match_condition.value.selector, null)
+          transforms         = try(match_condition.value.transforms, null)
         }
       }
     }
   }
 
   dynamic "managed_rule" {
-    for_each = var.settings.waf_policy.managed_rule
+    for_each = each.value.managed_rules
     content {
-      type                           = managed_rule.value.type
-      version                        = managed_rule.value.version
-      
+      type    = managed_rule.value.type
+      version = managed_rule.value.version
+
       dynamic "exclusion" {
-        for_each = managed_rule.value.exclusion
+        for_each = try(managed_rule.value.exclusions, {})
         content {
-          match_variable     = exclusion.value.match_variable
-          operator           = exclusion.value.operator
-          selector           = exclusion.value.selector
+          match_variable = exclusion.value.match_variable
+          operator       = exclusion.value.operator
+          selector       = exclusion.value.selector
         }
-      }      
+      }
+
+      dynamic "override" {
+        for_each = try(managed_rule.value.overrides, {})
+        content {
+          rule_group_name = override.value.rule_group_name
+
+          dynamic "exclusion" {
+            iterator = override_exclusion
+            for_each = try(override.value.exclusions, {})
+            content {
+              match_variable = override_exclusion.value.match_variable
+              operator       = override_exclusion.value.operator
+              selector       = override_exclusion.value.selector
+            }
+          }
+
+          dynamic "rule" {
+            for_each = try(override.value.rules, {})
+            content {
+              rule_id = rule.value.rule_id
+              action  = rule.value.action
+              enabled = try(rule.value.enabled, false)
+
+              dynamic "exclusion" {
+                iterator = rule_exclusion
+                for_each = try(rule.value.exclusions, {})
+                content {
+                  match_variable = rule_exclusion.value.match_variable
+                  operator       = rule_exclusion.value.operator
+                  selector       = rule_exclusion.value.selector
+                }
+              }
+            }
+          }
+
+        }
+      }
 
     }
   }
