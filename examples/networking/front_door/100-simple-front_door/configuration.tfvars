@@ -1,3 +1,11 @@
+global_settings = {
+  random_length  = "5"
+  default_region = "region1"
+  regions = {
+    region1 = "southeastasia"
+  }
+}
+
 resource_groups = {
   front_door = {
     name = "front-door-rg"
@@ -22,7 +30,7 @@ front_doors = {
           backend_pool_name                     = "bing"
           cache_enabled                         = false
           cache_use_dynamic_compression         = false
-          cache_query_parameter_strip_directive = "StripNone"
+          cache_query_parameter_strip_directive = "StripAll"
           custom_forwarding_path                = ""
           forwarding_protocol                   = "MatchRequest"
         }
@@ -95,7 +103,7 @@ front_doors = {
 
     frontend_endpoints = {
       fe1 = {
-        name                              = "exampleFrontendEndpoint1"
+        name = "exampleFrontendEndpoint1"
         # host_name                         = "randomabcxyz-FrontDoor.azurefd.net" ?? not used in the code
         session_affinity_enabled          = false
         session_affinity_ttl_seconds      = 0
@@ -109,6 +117,15 @@ front_doors = {
           azure_key_vault_certificate_secret_version = ""
         }
         web_application_firewall_policy_link_name = ""
+      }
+    }
+
+    # you can setup up to 5 profiles
+    diagnostic_profiles = {
+      operations = {
+        definition_key   = "azure_front_door"
+        destination_type = "storage"
+        destination_key  = "all_regions"
       }
     }
 

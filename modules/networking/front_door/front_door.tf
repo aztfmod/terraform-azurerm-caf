@@ -29,7 +29,7 @@ resource "azurerm_frontdoor" "frontdoor" {
           ]
         ]
       )
-      
+
       dynamic "forwarding_configuration" {
         for_each = lower(routing_rule.value.configuration) == "forwarding" ? [routing_rule.value.forwarding_configuration] : []
         content {
