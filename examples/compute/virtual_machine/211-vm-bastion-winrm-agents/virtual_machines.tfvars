@@ -79,8 +79,8 @@ virtual_machines = {
 
     virtual_machine_settings = {
       windows = {
-        name           = "server1"
-        size           = "Standard_F2s_v2"
+        name               = "server1"
+        size               = "Standard_F2s_v2"
         admin_username_key = "vm-win-admin-username"
         admin_password_key = "vm-win-admin-password"
 
