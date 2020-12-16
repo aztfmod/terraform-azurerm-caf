@@ -60,6 +60,13 @@ resource "azurerm_kubernetes_cluster" "aks" {
     outbound_type = try(var.settings.outbound_type, "loadBalancer")
   }
 
+  addon_profile {
+    aci_connector_linux      = try(var.settings.addon_profile,aci_connector_linux,null)
+    azure_policy             = try(var.settings.addon_profile,azure_policy,null)
+    http_application_routing = try(var.settings.addon_profile,http_application_routing,null)
+    kube_dashboard           = try(var.settings.addon_profile,kube_dashboard,null)
+    oms_agent                = try(var.settings.addon_profile,oms_agent,null)
+  }
 
   dynamic "default_node_pool" {
 
