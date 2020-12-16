@@ -10,7 +10,6 @@ variable data_factory_name {
   description = "(Required) The Data Factory name in which to associate the Linked Service with. Changing this forces a new resource"
 }
 
-
 variable description {
   description = "(Optional) The description for the Data Factory Linked Service"
 }
