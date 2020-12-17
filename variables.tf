@@ -123,6 +123,9 @@ variable webapp {
   default = {}
 }
 
+variable data_factory {
+  default = {}
+}
 
 ## Databases variables
 variable database {

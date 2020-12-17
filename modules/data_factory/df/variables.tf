@@ -25,3 +25,7 @@ variable vsts_configuration {
 variable tags {
   description = "(Optional) A mapping of tags to assign to the resource"
 }
+
+variable base_tags {}
+
+variable global_settings {}
