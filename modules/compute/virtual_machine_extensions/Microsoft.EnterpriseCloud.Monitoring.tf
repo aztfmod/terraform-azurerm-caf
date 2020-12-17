@@ -27,4 +27,4 @@ data "azurerm_log_analytics_workspace" "monitoring" {
 
   name                = var.settings.diagnostics.log_analytics[var.extension.diagnostic_log_analytics_key].name
   resource_group_name = var.settings.diagnostics.log_analytics[var.extension.diagnostic_log_analytics_key].resource_group_name
-} 
+}
