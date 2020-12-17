@@ -39,7 +39,7 @@ variable use_managed_identity {
 }
 
 variable service_principal_id {
-  description = " (Optional) The service principal id in which to authenticate against the Azure Data Lake Storage Gen2 account. Required if use_managed_identity is true"
+  description = "(Optional) The service principal id in which to authenticate against the Azure Data Lake Storage Gen2 account. Required if use_managed_identity is true"
 }
 
 variable service_principal_key {

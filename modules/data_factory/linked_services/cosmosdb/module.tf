@@ -6,6 +6,7 @@ resource "azurerm_data_factory_linked_service_cosmosdb" "linked_service_cosmosdb
   integration_runtime_name = try(var.integration_runtime_name, null)
   annotations              = try(var.annotations, null)
   parameters               = try(var.parameters, null)
+  additional_properties    = try(var.additional_properties, null)
   account_endpoint         = try(var.account_endpoint, null)
   account_key              = try(var.account_key, null)
   database                 = try(var.database, null)
