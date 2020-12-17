@@ -6,4 +6,5 @@ variable tags {
   default = {}
 }
 variable global_settings {}
+variable web_application_firewall_policy_link_id {}
 

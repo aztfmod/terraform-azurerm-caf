@@ -133,10 +133,6 @@ variable database {
 variable networking {
   default = {}
 }
-variable front_door_waf_policies {
-  default = {}
-}
-
 
 ## Security variables
 variable security {
@@ -198,4 +194,7 @@ variable keyvault_certificate_issuers {
 variable cosmos_dbs {
   default = {}
 }
+
+
+
 
