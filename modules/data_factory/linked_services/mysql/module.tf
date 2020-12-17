@@ -6,5 +6,6 @@ resource "azurerm_data_factory_linked_service_mysql" "linked_service_mysql" {
   integration_runtime_name = try(var.integration_runtime_name, null)
   annotations              = try(var.annotations, null)
   parameters               = try(var.parameters, null)
+  additional_properties    = try(var.additional_properties, null)
   connection_string        = var.connection_string
 }
