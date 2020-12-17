@@ -6,7 +6,7 @@ resource "azurerm_data_factory_linked_service_data_lake_storage_gen2" "linked_se
   integration_runtime_name = try(var.integration_runtime_name, null)
   annotations              = try(var.annotations, null)
   parameters               = try(var.parameters, null)
-  additional_properties    = try(var.account_endpoint, null)
+  additional_properties    = try(var.additional_properties, null)
   url                      = var.url
   use_managed_identity     = try(var.use_managed_identity, null)
   service_principal_id     = try(var.service_principal_id, null)

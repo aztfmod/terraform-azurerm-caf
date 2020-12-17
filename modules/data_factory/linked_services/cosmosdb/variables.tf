@@ -35,7 +35,7 @@ variable account_endpoint {
 }
 
 variable account_key {
-  description = " (Optional) The account key of the Azure Cosmos DB account. Required if connection_string is unspecified"
+  description = "(Optional) The account key of the Azure Cosmos DB account. Required if connection_string is unspecified"
 }
 
 variable database {
