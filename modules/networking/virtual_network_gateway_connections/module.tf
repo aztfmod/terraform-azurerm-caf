@@ -17,14 +17,14 @@ resource "azurerm_virtual_network_gateway_connection" "vngw_connection" {
   virtual_network_gateway_id = var.virtual_network_gateway_id
 
   # The following arguments are applicable only if the type is ExpressRoute
-  express_route_circuit_id = var.express_route_circuit_id
-  authorization_key        = var.authorization_key
+  express_route_circuit_id = try(var.express_route_circuit_id, null)
+  authorization_key        = try(var.authorization_key, null)
 
   # The following arguments are applicable only if the type is IPsec (VPN)
   connection_protocol      = try(var.settings.connection_method, null)
   shared_key               = try(var.settings.shared_key, null)
   enable_bgp               = try(var.settings.enable_bgp, null)
-  local_network_gateway_id = try(var.settings.local_network_gateway_id, null)
+  local_network_gateway_id = try(var.local_network_gateway_id, null)
   routing_weight           = try(var.settings.routing_weight, null)
   use_policy_based_traffic_selectors = try(var.settings.use_policy_based_traffic_selectors, false) #if set true, IPsec Policy block has to be set
   tags = local.tags
@@ -43,5 +43,4 @@ resource "azurerm_virtual_network_gateway_connection" "vngw_connection" {
       sa_lifetime = try(ipsec_policy.value.sa_lifetime, null) #Must be at least 300 seconds. Defaults to 27000 seconds.
     }
   }
-
 }
