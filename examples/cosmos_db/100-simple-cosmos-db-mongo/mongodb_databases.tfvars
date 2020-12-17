@@ -31,31 +31,31 @@ cosmos_dbs = {
       primary_geo_location = {
         prefix            = "customid-101"
         region            = "region1"
-        zone_redundant = false
+        zone_redundant    = false
         failover_priority = 0
       }
-      
+
       # failover location
       failover_geo_location = {
         region            = "region2"
-        zone_redundant = false
+        zone_redundant    = false
         failover_priority = 1
       }
     }
 
     # optional
-    enable_free_tier = false
-    ip_range_filter  = ""
+    enable_free_tier                = false
+    ip_range_filter                 = ""
     enable_multiple_write_locations = false
     tags = {
       "project" = "EDH"
     }
 
     capabilities = [
-      "EnableMongo", 
+      "EnableMongo",
       #"EnableServerless",
       #"DisableRateLimitingResponses"
-      ]
+    ]
 
     mongo_databases = {
       database_re1 = {
@@ -68,12 +68,12 @@ cosmos_dbs = {
             thoughput           = 400
             default_ttl_seconds = 0
             indexes = {
-              index_1  = {
-                keys = ["user_id", "user_address"]
+              index_1 = {
+                keys   = ["user_id", "user_address"]
                 unique = true
               }
               index_2 = {
-                keys = ["_id"]
+                keys   = ["_id"]
                 unique = true
               }
             }
