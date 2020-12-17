@@ -11,7 +11,7 @@ resource "azurerm_frontdoor_firewall_policy" "wafpolicy" {
   tags                              = local.tags
 
   dynamic "custom_rule" {
-    for_each = each.value.custom_rule
+    for_each = each.value.custom_rules
     content {
       action                         = custom_rule.value.action
       enabled                        = try(custom_rule.value.enabled, true)
@@ -27,7 +27,7 @@ resource "azurerm_frontdoor_firewall_policy" "wafpolicy" {
           match_variable     = match_condition.value.match_variable
           operator           = match_condition.value.operator
           negation_condition = try(match_condition.value.negation_condition, null)
-          match_values       = match_condition.value.match_values
+          match_values       = lower(match_condition.value.operator) == "geomatch" ? flatten([for key in match_condition.value.match_values : [local.countries[lower(key)]]]) : match_condition.value.match_values
           selector           = try(match_condition.value.selector, null)
           transforms         = try(match_condition.value.transforms, null)
         }

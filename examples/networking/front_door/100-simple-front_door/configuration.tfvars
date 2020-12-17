@@ -115,8 +115,10 @@ front_doors = {
           azure_key_vault_certificate_vault_id       = ""
           azure_key_vault_certificate_secret_name    = ""
           azure_key_vault_certificate_secret_version = ""
+          lz_key = ""
         }
-        web_application_firewall_policy_link_name = ""
+        web_application_firewall_policy_key = "wp1"
+        lz_key = ""
       }
     }
 
@@ -138,7 +140,7 @@ front_doors = {
         custom_block_response_status_code = 403
         custom_block_response_body        = "PGh0bWw+CjxoZWFkZXI+PHRpdGxlPkhlbGxvPC90aXRsZT48L2hlYWRlcj4KPGJvZHk+CkhlbGxvIHdvcmxkCjwvYm9keT4KPC9odG1sPg=="
 
-        custom_rule = {
+        custom_rules = {
           rule1 = {
             name                           = "Rule1"
             enabled                        = true
@@ -155,11 +157,14 @@ front_doors = {
                 negation_condition = false
                 match_values       = ["192.168.1.0/24", "10.0.0.0/24"]
               }
-              singapore = {
+              countries = {
                 match_variable     = "RemoteAddr"
                 operator           = "GeoMatch"
                 negation_condition = false
-                match_values       = ["SG"]
+                match_values       = [
+                  "bahrain",
+                  "Singapore"
+                ]
               }
             }
 
