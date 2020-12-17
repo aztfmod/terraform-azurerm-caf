@@ -11,12 +11,12 @@ resource "azurerm_data_factory_dataset_cosmosdb_sqlapi" "dataset" {
   collection_name       = try(var.collection_name, null)
 
   dynamic "schema_column" {
-    for_each = lookup(var.settings, "schema_column", {}) == {} ? [] : [1]
+    for_each = try(var.schema_column, null) != null ? [1] : []
 
     content {
-      name        = var.settings.schema_column.name
-      type        = try(var.settings.schema_column.type, null)
-      description = try(var.settings.schema_column.description, null)
+      name        = schema_column.value.name
+      type        = lookup(schema_column.value, "type", null)
+      description = lookup(schema_column.value, "description", null)
     }
   }
 }

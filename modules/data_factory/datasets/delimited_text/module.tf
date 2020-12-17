@@ -17,32 +17,32 @@ resource "azurerm_data_factory_dataset_delimited_text" "dataset" {
   null_value            = var.null_value
 
   dynamic "http_server_location" {
-    for_each = lookup(var.settings, "http_server_location", {}) == {} ? [] : [1]
+    for_each = try(var.http_server_location, null) != null ? [1] : []
 
     content {
-      relative_url = var.settings.relative_url
-      path         = var.settings.path
-      filename     = var.settings.filename
+      relative_url = http_server_location.value.relative_url
+      path         = http_server_location.value.path
+      filename     = http_server_location.value.filename
     }
   }
 
   dynamic "azure_blob_storage_location" {
-    for_each = lookup(var.settings, "azure_blob_storage_location", {}) == {} ? [] : [1]
+    for_each = try(var.azure_blob_storage_location, null) != null ? [1] : []
 
     content {
-      container = var.settings.container
-      path      = var.settings.path
-      filename  = var.settings.filename
+      container = azure_blob_storage_location.value.container
+      path      = azure_blob_storage_location.value.path
+      filename  = azure_blob_storage_location.value.filename
     }
   }
 
   dynamic "schema_column" {
-    for_each = lookup(var.settings, "schema_column", {}) == {} ? [] : [1]
+    for_each = try(var.schema_column, null) != null ? [1] : []
 
     content {
-      name        = var.settings.schema_column.name
-      type        = var.settings.schema_column.type
-      description = var.settings.schema_column.description
+      name        = schema_column.value.name
+      type        = lookup(schema_column.value, "type", null)
+      description = lookup(schema_column.value, "description", null)
     }
   }
 }

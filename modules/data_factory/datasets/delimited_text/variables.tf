@@ -45,3 +45,11 @@ variable path {
 variable filename {
   description = "(Required) The filename of the Azure Blob"
 }
+
+variable http_server_location {
+  description = "(Required) A http_server_location block"
+}
+
+variable azure_blob_storage_location {
+  description = "(Required) A azure_blob_storage_location block"
+}
