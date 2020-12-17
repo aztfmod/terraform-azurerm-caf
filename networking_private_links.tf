@@ -1,5 +1,5 @@
 module private_endpoints {
-  source = "./modules/networking/private_links/endpoints"
+  source   = "./modules/networking/private_links/endpoints"
   for_each = try(var.networking.private_endpoints, {})
 
   global_settings   = local.global_settings
@@ -16,8 +16,8 @@ module private_endpoints {
     diagnostic_event_hub_namespaces = local.combined_diagnostics.event_hub_namespaces
     networking                      = local.combined_objects_networking
     event_hub_namespaces            = local.combined_objects_event_hub_namespaces
-    keyvaults                       = local.combined_objects_keyvaults 
+    keyvaults                       = local.combined_objects_keyvaults
     storage_accounts                = local.combined_objects_storage_accounts
   }
-  
+
 }
