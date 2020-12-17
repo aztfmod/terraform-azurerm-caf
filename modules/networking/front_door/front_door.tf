@@ -16,11 +16,11 @@ resource "azurerm_frontdoor" "frontdoor" {
 
   dynamic "routing_rule" {
     for_each = var.settings.routing_rule
+
     content {
       name               = routing_rule.value.name
       accepted_protocols = routing_rule.value.accepted_protocols
       patterns_to_match  = routing_rule.value.patterns_to_match
-      # frontend_endpoints = routing_rule.value.frontend_endpoints
 
       frontend_endpoints = flatten(
         [
@@ -32,6 +32,7 @@ resource "azurerm_frontdoor" "frontdoor" {
 
       dynamic "forwarding_configuration" {
         for_each = lower(routing_rule.value.configuration) == "forwarding" ? [routing_rule.value.forwarding_configuration] : []
+
         content {
           backend_pool_name                     = routing_rule.value.forwarding_configuration.backend_pool_name
           cache_enabled                         = routing_rule.value.forwarding_configuration.cache_enabled
@@ -43,6 +44,7 @@ resource "azurerm_frontdoor" "frontdoor" {
       }
       dynamic "redirect_configuration" {
         for_each = lower(routing_rule.value.configuration) == "redirecting" ? [routing_rule.value.redirect_configuration] : []
+
         content {
           custom_host         = routing_rule.value.redirect_configuration.custom_host
           redirect_protocol   = routing_rule.value.redirect_configuration.redirect_protocol
@@ -58,10 +60,11 @@ resource "azurerm_frontdoor" "frontdoor" {
   backend_pools_send_receive_timeout_seconds = try(var.settings.backend_pools_send_receive_timeout_seconds, 60)
   load_balancer_enabled                      = try(var.settings.load_balancer_enabled, true)
   friendly_name                              = try(var.settings.backend_pool.name, null)
-  
+
 
   dynamic "backend_pool_load_balancing" {
     for_each = var.settings.backend_pool_load_balancing
+
     content {
       name                            = backend_pool_load_balancing.value.name
       sample_size                     = backend_pool_load_balancing.value.sample_size
@@ -72,6 +75,7 @@ resource "azurerm_frontdoor" "frontdoor" {
 
   dynamic "backend_pool_health_probe" {
     for_each = var.settings.backend_pool_health_probe
+
     content {
       name                = backend_pool_health_probe.value.name
       path                = backend_pool_health_probe.value.path
@@ -82,6 +86,7 @@ resource "azurerm_frontdoor" "frontdoor" {
 
   dynamic "backend_pool" {
     for_each = var.settings.backend_pool
+
     content {
       name                = backend_pool.value.name
       load_balancing_name = var.settings.backend_pool_load_balancing[backend_pool.value.load_balancing_key].name
@@ -104,13 +109,15 @@ resource "azurerm_frontdoor" "frontdoor" {
 
   dynamic "frontend_endpoint" {
     for_each = var.settings.frontend_endpoints
+
     content {
-      name                              = frontend_endpoint.value.name
-      host_name                         = format("%s.azurefd.net", azurecaf_name.frontdoor.result)
-      session_affinity_enabled          = frontend_endpoint.value.session_affinity_enabled
-      session_affinity_ttl_seconds      = frontend_endpoint.value.session_affinity_ttl_seconds
-      custom_https_provisioning_enabled = frontend_endpoint.value.custom_https_provisioning_enabled
-      web_application_firewall_policy_link_id    = var.web_application_firewall_policy_link_id
+      name                                    = frontend_endpoint.value.name
+      host_name                               = format("%s.azurefd.net", azurecaf_name.frontdoor.result)
+      session_affinity_enabled                = frontend_endpoint.value.session_affinity_enabled
+      session_affinity_ttl_seconds            = frontend_endpoint.value.session_affinity_ttl_seconds
+      custom_https_provisioning_enabled       = frontend_endpoint.value.custom_https_provisioning_enabled
+      web_application_firewall_policy_link_id = try(var.front_door_waf_policies[var.client_config.landingzone_key][frontend_endpoint.value.front_door_waf_policy_key].id, var.front_door_waf_policies[frontend_endpoint.value.lz_key][frontend_endpoint.value.front_door_waf_policy_key].id)
+
       dynamic "custom_https_configuration" {
         for_each = frontend_endpoint.value.custom_https_provisioning_enabled == true ? [frontend_endpoint.value.custom_https_configuration] : []
         content {
