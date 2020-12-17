@@ -74,6 +74,12 @@ locals {
     cosmos_dbs                        = try(var.database.cosmos_dbs, {})
   }
 
+  data_factory = {
+    df                  = try(var.data_factory.df, {})
+    df_trigger_schedule = try(var.data_factory.df_trigger_schedule, {}) 
+    df_pipeline         = try(var.data_factory.df_pipeline, {})
+  }
+
   client_config = {
     client_id               = data.azurerm_client_config.current.client_id
     tenant_id               = var.tenant_id == null ? data.azurerm_client_config.current.tenant_id : var.tenant_id
