@@ -1,9 +1,12 @@
+variable base_tags {}
 variable diagnostics {}
+variable global_settings {}
+variable keyvaults {
+  default = {}
+}
 variable resource_group_name {}
 variable settings {}
-variable base_tags {}
 variable tags {
   default = {}
 }
-variable global_settings {}
 

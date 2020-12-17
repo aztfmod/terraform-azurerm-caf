@@ -24,7 +24,7 @@ resource "azurerm_frontdoor" "frontdoor" {
 
       frontend_endpoints = flatten(
         [
-          for key in routing_rule.value.frontend_endpoint_keys : [
+          for key in try(routing_rule.value.frontend_endpoint_keys, []) : [
             var.settings.frontend_endpoints[key].name
           ]
         ]
@@ -123,4 +123,3 @@ resource "azurerm_frontdoor" "frontdoor" {
   }
 
 }
-  
