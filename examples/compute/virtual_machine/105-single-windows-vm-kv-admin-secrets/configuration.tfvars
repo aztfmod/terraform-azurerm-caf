@@ -2,7 +2,7 @@
 global_settings = {
   default_region = "region1"
   regions = {
-    region1 = "southeastasia"
+    region1 = "eastus"
   }
 }
 
@@ -44,7 +44,7 @@ virtual_machines = {
         name = "example_vm2"
         size = "Standard_F2"
 
-        admin_user_key     = "vmadmin-username"
+        admin_username_key = "vmadmin-username"
         admin_password_key = "vmadmin-password"
 
         # Spot VM to save money

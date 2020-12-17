@@ -14,10 +14,12 @@ module private_endpoints {
   remote_objects = {
     diagnostic_storage_accounts     = local.combined_diagnostics.storage_accounts
     diagnostic_event_hub_namespaces = local.combined_diagnostics.event_hub_namespaces
-    networking                      = local.combined_objects_networking
-    event_hub_namespaces            = local.combined_objects_event_hub_namespaces
-    keyvaults                       = local.combined_objects_keyvaults
-    storage_accounts                = local.combined_objects_storage_accounts
+
+    event_hub_namespaces = local.combined_objects_event_hub_namespaces
+    keyvaults            = local.combined_objects_keyvaults
+    networking           = local.combined_objects_networking
+    recovery_vaults      = local.combined_objects_recovery_vaults
+    storage_accounts     = local.combined_objects_storage_accounts
   }
 
 }

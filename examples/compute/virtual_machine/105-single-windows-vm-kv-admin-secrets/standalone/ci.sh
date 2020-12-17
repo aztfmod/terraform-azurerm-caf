@@ -1,5 +1,7 @@
 #!/bin/bash
 
+set -e
+
 current_folder=$(pwd)
 cd standalone
 

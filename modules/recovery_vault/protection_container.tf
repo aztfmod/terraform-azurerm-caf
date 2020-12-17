@@ -1,5 +1,5 @@
 resource "azurerm_site_recovery_protection_container" "protection_container" {
-  depends_on = [azurerm_resource_group_template_deployment.asr]
+  depends_on = [azurerm_recovery_services_vault.asr, azurerm_site_recovery_fabric.recovery_fabric]
   # depends_on = [time_sleep.delay_create]
   for_each = try(var.settings.protection_containers, {})
 
@@ -10,7 +10,7 @@ resource "azurerm_site_recovery_protection_container" "protection_container" {
 }
 
 resource "azurerm_site_recovery_protection_container_mapping" "container-mapping" {
-  depends_on = [azurerm_resource_group_template_deployment.asr]
+  depends_on = [azurerm_recovery_services_vault.asr, azurerm_site_recovery_fabric.recovery_fabric]
   for_each   = try(var.settings.protection_container_mapping, {})
 
   name                                      = each.value.name

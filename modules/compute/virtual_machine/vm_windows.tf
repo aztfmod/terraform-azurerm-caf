@@ -40,25 +40,27 @@ resource "azurecaf_name" "os_disk_windows" {
 resource "azurerm_windows_virtual_machine" "vm" {
   for_each = local.os_type == "windows" ? var.settings.virtual_machine_settings : {}
 
-  name                       = azurecaf_name.windows[each.key].result
-  location                   = var.location
-  resource_group_name        = var.resource_group_name
-  size                       = each.value.size
-  admin_username             = try(each.value.admin_user_key, null) == null ? each.value.admin_username : local.admin_user
-  admin_password             = try(each.value.admin_password_key, null) == null ? random_password.admin[local.os_type].result : local.admin_password
-  network_interface_ids      = local.nic_ids
-  allow_extension_operations = try(each.value.allow_extension_operations, null)
-  computer_name              = azurecaf_name.windows_computer_name[each.key].result
-  provision_vm_agent         = try(each.value.provision_vm_agent, true)
-  zone                       = try(each.value.zone, null)
-  custom_data                = try(each.value.custom_data, null) == null ? null : filebase64(format("%s/%s", path.cwd, each.value.custom_data))
-  enable_automatic_updates   = try(each.value.enable_automatic_updates, null)
-  eviction_policy            = try(each.value.eviction_policy, null)
-  max_bid_price              = try(each.value.max_bid_price, null)
-  priority                   = try(each.value.priority, null)
-  license_type               = try(each.value.license_type, null)
-  tags                       = merge(local.tags, try(each.value.tags, null))
-  timezone                   = try(each.value.timezone, null)
+  name                         = azurecaf_name.windows[each.key].result
+  location                     = var.location
+  resource_group_name          = var.resource_group_name
+  size                         = each.value.size
+  admin_username               = try(each.value.admin_username_key, null) == null ? each.value.admin_username : local.admin_username
+  admin_password               = try(each.value.admin_password_key, null) == null ? random_password.admin[local.os_type].result : local.admin_password
+  network_interface_ids        = local.nic_ids
+  allow_extension_operations   = try(each.value.allow_extension_operations, null)
+  computer_name                = azurecaf_name.windows_computer_name[each.key].result
+  provision_vm_agent           = try(each.value.provision_vm_agent, true)
+  zone                         = try(each.value.zone, null)
+  custom_data                  = try(each.value.custom_data, null) == null ? null : filebase64(format("%s/%s", path.cwd, each.value.custom_data))
+  enable_automatic_updates     = try(each.value.enable_automatic_updates, null)
+  eviction_policy              = try(each.value.eviction_policy, null)
+  max_bid_price                = try(each.value.max_bid_price, null)
+  priority                     = try(each.value.priority, null)
+  license_type                 = try(each.value.license_type, null)
+  tags                         = merge(local.tags, try(each.value.tags, null))
+  timezone                     = try(each.value.timezone, null)
+  availability_set_id          = try(var.availability_sets[var.client_config.landingzone_key][each.value.availability_set_key].id, var.availability_sets[each.value.availability_sets].id, null)
+  proximity_placement_group_id = try(var.proximity_placement_groups[var.client_config.landingzone_key][each.value.proximity_placement_group_key].id, var.proximity_placement_groups[each.value.proximity_placement_groups].id, null)
 
   os_disk {
     caching                   = each.value.os_disk.caching
@@ -113,7 +115,7 @@ resource "azurerm_windows_virtual_machine" "vm" {
 
     content {
 
-      key_vault_id = local.keyvault_id
+      key_vault_id = local.keyvault.id
 
       # WinRM certificate
       dynamic "certificate" {
@@ -173,7 +175,7 @@ resource "azurerm_key_vault_secret" "admin_password" {
 
   name         = format("%s-admin-password", azurecaf_name.windows_computer_name[each.key].result)
   value        = random_password.admin[local.os_type].result
-  key_vault_id = local.keyvault_id
+  key_vault_id = local.keyvault.id
 
   lifecycle {
     ignore_changes = [
@@ -187,18 +189,18 @@ resource "azurerm_key_vault_secret" "admin_password" {
 #
 
 locals {
-  admin_user     = try(data.azurerm_key_vault_secret.windows_admin_user_key.0.value, null)
+  admin_username = try(data.azurerm_key_vault_secret.windows_admin_username_key.0.value, null)
   admin_password = try(data.azurerm_key_vault_secret.windows_admin_password_key.0.value, null)
 }
 
-data "azurerm_key_vault_secret" "windows_admin_user_key" {
-  count        = try(var.settings.virtual_machine_settings["windows"].admin_user_key, null) == null ? 0 : 1
-  name         = var.settings.virtual_machine_settings["windows"].admin_user_key
-  key_vault_id = local.keyvault_id
+data "azurerm_key_vault_secret" "windows_admin_username_key" {
+  count        = try(var.settings.virtual_machine_settings["windows"].admin_username_key, null) == null ? 0 : 1
+  name         = var.settings.virtual_machine_settings["windows"].admin_username_key
+  key_vault_id = local.keyvault.id
 }
 
 data "azurerm_key_vault_secret" "windows_admin_password_key" {
   count        = try(var.settings.virtual_machine_settings["windows"].admin_password_key, null) == null ? 0 : 1
   name         = var.settings.virtual_machine_settings["windows"].admin_password_key
-  key_vault_id = local.keyvault_id
+  key_vault_id = local.keyvault.id
 }

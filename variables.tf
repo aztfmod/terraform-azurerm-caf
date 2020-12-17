@@ -123,6 +123,7 @@ variable webapp {
   default = {}
 }
 
+
 ## Databases variables
 variable database {
   default = {}
