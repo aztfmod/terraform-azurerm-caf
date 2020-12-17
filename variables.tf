@@ -195,6 +195,6 @@ variable cosmos_dbs {
   default = {}
 }
 
-
-
-
+variable local_network_gateways {
+  default = {}
+}

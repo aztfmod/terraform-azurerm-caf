@@ -20,5 +20,5 @@ rover \
   -var-folder  /tf/caf/aztfmod/examples/compute/virtual_machine/105-single-windows-vm-kv-admin-secrets \
   -level level1 \
   -a plan
-  
+
 ```

@@ -56,6 +56,7 @@ locals {
     virtual_network_gateway_connections                     = try(var.networking.virtual_network_gateway_connections, {})
     front_doors                                             = try(var.networking.front_doors, {})
     front_door_waf_policies                                 = try(var.networking.front_door_waf_policies, {})
+    local_network_gateways                                  = try(var.networking.local_network_gateways, {})
 
   }
 

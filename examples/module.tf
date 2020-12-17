@@ -1,23 +1,23 @@
 module "caf" {
   source = "../"
 
-  global_settings             = var.global_settings
-  diagnostics                 = local.remote.diagnostics
-  current_landingzone_key     = var.landingzone.key
-  tenant_id                   = var.tenant_id
-  logged_user_objectId        = var.logged_user_objectId
-  logged_aad_app_objectId     = var.logged_aad_app_objectId
-  resource_groups             = var.resource_groups
-  storage_accounts            = var.storage_accounts
-  azuread_groups              = var.azuread_groups
-  azuread_roles               = var.azuread_roles
-  keyvaults                   = var.keyvaults
-  keyvault_access_policies    = var.keyvault_access_policies
+  global_settings              = var.global_settings
+  diagnostics                  = local.remote.diagnostics
+  current_landingzone_key      = var.landingzone.key
+  tenant_id                    = var.tenant_id
+  logged_user_objectId         = var.logged_user_objectId
+  logged_aad_app_objectId      = var.logged_aad_app_objectId
+  resource_groups              = var.resource_groups
+  storage_accounts             = var.storage_accounts
+  azuread_groups               = var.azuread_groups
+  azuread_roles                = var.azuread_roles
+  keyvaults                    = var.keyvaults
+  keyvault_access_policies     = var.keyvault_access_policies
   keyvault_certificate_issuers = var.keyvault_certificate_issuers
-  managed_identities          = var.managed_identities
-  role_mapping                = var.role_mapping
-  log_analytics               = var.log_analytics
-  event_hub_namespaces        = var.event_hub_namespaces
+  managed_identities           = var.managed_identities
+  role_mapping                 = var.role_mapping
+  log_analytics                = var.log_analytics
+  event_hub_namespaces         = var.event_hub_namespaces
 
   webapp = {
     azurerm_application_insights = var.azurerm_application_insights
@@ -55,6 +55,7 @@ module "caf" {
     front_door_waf_policies              = var.front_door_waf_policies
     dns_zones                            = var.dns_zones
     private_endpoints                    = var.private_endpoints
+    local_network_gateways               = var.local_network_gateways
   }
   database = {
     azurerm_redis_caches              = var.azurerm_redis_caches
@@ -79,7 +80,7 @@ module "caf" {
   }
 
   security = {
-    dynamic_keyvault_secrets    = var.dynamic_keyvault_secrets
+    dynamic_keyvault_secrets = var.dynamic_keyvault_secrets
   }
 
   remote_objects = {

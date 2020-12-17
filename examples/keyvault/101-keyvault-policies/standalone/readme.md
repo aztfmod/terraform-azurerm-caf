@@ -22,5 +22,5 @@ rover \
   -var-folder /tf/caf/aztfmod/examples/keyvault/101-keyvault-policies \
   -level level1 \
   -a [plan|apply|delete]
-  
+
 ```

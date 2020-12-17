@@ -109,7 +109,7 @@ jobs:
             # "networking/private_links/endpoints/centralized",  # Requires launchpad scenario 200
             "networking/virtual_network/100-subnet-delegation",
             "networking/virtual_network/101-vnet-peering-nsg",
-            "networking/virtual_network_gateway",
+            "networking/virtual_network_gateway/103-vpn-site-to-site-connection",
             "networking/virtual_wan/100-vwan-multi-hubs",
             "networking/virtual_wan/101-vwan-multi-hubs-firewalls",
             # "networking/virtual_wan/102-vwan-multi-hubs-gw",

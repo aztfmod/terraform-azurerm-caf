@@ -228,7 +228,7 @@ variable vnet_peerings {
   default = {}
 }
 variable cosmos_dbs {
-    default = {}
+  default = {}
 }
 variable dynamic_keyvault_secrets {
   default = {}
@@ -244,5 +244,9 @@ variable dns_zones {
 }
 
 variable private_endpoints {
+  default = {}
+}
+
+variable local_network_gateways {
   default = {}
 }
