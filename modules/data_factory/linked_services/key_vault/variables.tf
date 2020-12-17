@@ -1,5 +1,5 @@
 variable name {
-  description = " (Required) Specifies the name of the Data Factory Linked Service Key Vault. Changing this forces a new resource to be created. Must be globally unique."
+  description = "(Required) Specifies the name of the Data Factory Linked Service Key Vault. Changing this forces a new resource to be created. Must be globally unique."
 }
 
 variable resource_group_name {
