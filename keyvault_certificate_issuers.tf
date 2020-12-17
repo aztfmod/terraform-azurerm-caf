@@ -1,7 +1,7 @@
 module keyvault_certificate_issuers {
-  source = "./modules/security/keyvault_certificate_issuer"
+  source     = "./modules/security/keyvault_certificate_issuer"
   depends_on = [module.keyvaults]
-  for_each = var.keyvault_certificate_issuers
+  for_each   = var.keyvault_certificate_issuers
 
   resource_group_name = module.resource_groups[each.value.resource_group_key].name
   location            = module.resource_groups[each.value.resource_group_key].location
@@ -18,7 +18,7 @@ data "azurerm_key_vault_secret" "certificate_issuer_password" {
     for key, value in var.keyvault_certificate_issuers : key => value
     if try(value.cert_password_key, null) != null
   }
-  
+
   name         = each.value.cert_password_key
   key_vault_id = try(local.combined_objects_keyvaults[each.value.lz_key][each.value.keyvault_key].id, local.combined_objects_keyvaults[local.client_config.landingzone_key][each.value.keyvault_key].id)
 }
@@ -31,10 +31,10 @@ data "azurerm_key_vault_secret" "certificate_issuer_password" {
 #   }
 
 #   program = [
-#     "bash", "-c", 
+#     "bash", "-c",
 #     format(
-#       "az keyvault secret show -n '%s' --vault-name '%s' --query '{value: value }' -o json ", 
-#       each.value.cert_password_key, 
+#       "az keyvault secret show -n '%s' --vault-name '%s' --query '{value: value }' -o json ",
+#       each.value.cert_password_key,
 #       try(local.combined_objects_keyvaults[each.value.lz_key][each.value.keyvault_key].name, local.combined_objects_keyvaults[local.client_config.landingzone_key][each.value.keyvault_key].name)
 #     )
 #   ]
