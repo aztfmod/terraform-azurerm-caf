@@ -1,7 +1,7 @@
 global_settings = {
   default_region = "region1"
   regions = {
-    region1 = "southeastasia"
+    region1 = "eastasia"
   }
 }
 
@@ -44,9 +44,9 @@ virtual_machines = {
         # Value of the keys from networking.tfvars
         vnet_key                = "vnet_region1"
         subnet_key              = "example"
-        name                    = "00"
+        name                    = "0-example-vm1"
         enable_ip_forwarding    = false
-        internal_dns_name_label = "nic00"
+        internal_dns_name_label = "nic0-example-vm1"
       }
     }
 
@@ -63,7 +63,7 @@ virtual_machines = {
         network_interface_keys = ["nic0"]
 
         os_disk = {
-          name                 = "example_vm1-os"
+          name                 = "example-vm1-os"
           caching              = "ReadWrite"
           storage_account_type = "Standard_LRS"
         }
@@ -95,9 +95,9 @@ virtual_machines = {
         # Value of the keys from networking.tfvars
         vnet_key                = "vnet_region1"
         subnet_key              = "example"
-        name                    = "0"
+        name                    = "0-example-vm2"
         enable_ip_forwarding    = false
-        internal_dns_name_label = "nic0-1"
+        internal_dns_name_label = "nic0-example-vm2"
       }
     }
 
@@ -114,7 +114,7 @@ virtual_machines = {
         network_interface_keys = ["nic0"]
 
         os_disk = {
-          name                 = "example_vm2-os"
+          name                 = "example-vm2-os"
           caching              = "ReadWrite"
           storage_account_type = "Standard_LRS"
         }

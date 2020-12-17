@@ -81,4 +81,8 @@ module "caf" {
   security = {
     dynamic_keyvault_secrets    = var.dynamic_keyvault_secrets
   }
+
+  remote_objects = {
+    keyvaults = local.remote.keyvaults
+  }
 }
