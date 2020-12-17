@@ -20,6 +20,7 @@ rover \
   -lz /tf/caf/aztfmod/examples \
   -tfstate example-101-keyvault-policies.tfstate \
   -var-folder /tf/caf/aztfmod/examples/keyvault/101-keyvault-policies \
+  -level level1 \
   -a [plan|apply|delete]
 
 ```

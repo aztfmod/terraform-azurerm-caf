@@ -24,6 +24,10 @@ module "caf" {
     network_security_group_definition = var.network_security_group_definition
     public_ip_addresses               = var.public_ip_addresses
   }
+
+  security = {
+    dynamic_keyvault_secrets = var.dynamic_keyvault_secrets
+  }
 }
 
 output diagnostics {
