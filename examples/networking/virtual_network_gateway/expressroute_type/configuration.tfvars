@@ -45,8 +45,8 @@ virtual_network_gateways = {
   gateway1 = {
     name               = "mygateway"
     resource_group_key = "er"
-    type = "ExpressRoute"
-    sku  = "Standard"
+    type               = "ExpressRoute"
+    sku                = "Standard"
     # enable active_active only with VPN Type
     active_active = false
     # enable_bpg defaults to false. If set, true, input the necessary parameters as well. VPN Type only

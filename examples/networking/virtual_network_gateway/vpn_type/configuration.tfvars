@@ -53,8 +53,8 @@ public_ip_addresses = {
 
 virtual_network_gateways = {
   gateway1 = {
-    name               = "mygateway"
-    resource_group_key = "vgnw"
+    name                       = "mygateway"
+    resource_group_key         = "vgnw"
     type                       = "VPN"
     sku                        = "VpnGw1"
     private_ip_address_enabled = true

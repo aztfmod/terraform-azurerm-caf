@@ -1,5 +1,5 @@
 private_endpoints = {
-  vnet_01 = {           # Key of the virtual network
+  vnet_01 = { # Key of the virtual network
     # lz_key = ""  # Landingzone key when deployed in remote landing zone
     vnet_key    = "vnet_01"
     subnet_keys = ["subnet_01"]
@@ -11,14 +11,14 @@ private_endpoints = {
         # resource_group_key = ""          # Key of the resource group where the private endpoint will be created. Default to the vnet's resource group
         # tags
         private_service_connection = {
-          name = "psc-stg-level0"
+          name              = "psc-stg-level0"
           subresource_names = ["blob", "table"]
           # request_message = ""
           # is_manual_connection = [true|false]
         }
 
         private_dns = {
-          zone_group_name  ="default"
+          zone_group_name = "default"
           # lz_key          = ""   # If the DNS keys are deployed in a remote landingzone
           keys = ["dns1"]
         }
@@ -30,12 +30,12 @@ private_endpoints = {
       # locally created
       diaglogs = {
         private_service_connection = {
-          name = "psc-stg-diag-diaglogs"
+          name              = "psc-stg-diag-diaglogs"
           subresource_names = ["blob", "queue"]
         }
 
         private_dns = {
-          zone_group_name  ="default"
+          zone_group_name = "default"
           # lz_key          = ""   # If the DNS keys are deployed in a remote landingzone
           keys = ["dns1"]
         }
@@ -45,12 +45,12 @@ private_endpoints = {
       # As it is a global object, no lz_key is required 
       diaglogs_region1 = {
         private_service_connection = {
-          name = "psc-stg-diag-diaglogs_region1"
+          name              = "psc-stg-diag-diaglogs_region1"
           subresource_names = ["blob"]
         }
 
         private_dns = {
-          zone_group_name  ="default"
+          zone_group_name = "default"
           # lz_key          = ""   # If the DNS keys are deployed in a remote landingzone
           keys = ["dns1"]
         }
@@ -64,7 +64,7 @@ private_endpoints = {
         }
 
         private_dns = {
-          zone_group_name  ="default"
+          zone_group_name = "default"
           # lz_key          = ""   # If the DNS keys are deployed in a remote landingzone
           keys = ["dns1"]
         }
@@ -78,7 +78,7 @@ private_endpoints = {
         }
 
         private_dns = {
-          zone_group_name  ="default"
+          zone_group_name = "default"
           # lz_key          = ""   # If the DNS keys are deployed in a remote landingzone
           keys = ["dns1"]
         }
@@ -92,7 +92,7 @@ private_endpoints = {
         }
 
         private_dns = {
-          zone_group_name  ="default"
+          zone_group_name = "default"
           # lz_key          = ""   # If the DNS keys are deployed in a remote landingzone
           keys = ["dns1"]
         }
