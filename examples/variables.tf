@@ -236,7 +236,9 @@ variable dynamic_keyvault_secrets {
 variable front_doors {
   default = {}
 }
-
+variable front_door_waf_policies {
+  default = {}
+}
 variable dns_zones {
   default = {}
 }
