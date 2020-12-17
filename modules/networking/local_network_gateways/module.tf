@@ -10,7 +10,7 @@ resource "azurecaf_name" "lngw" {
 
 resource "azurerm_local_network_gateway" "lngw" {
   name                = azurecaf_name.lngw.result
-  resource_group_name = var.location
+  resource_group_name = var.resource_group_name
   location            = var.location
   address_space       = var.settings.address_space
   gateway_address     = try(var.settings.gateway_address, null)
@@ -19,9 +19,9 @@ resource "azurerm_local_network_gateway" "lngw" {
   dynamic "bgp_settings" {
     for_each = try(var.settings.bgp_settings, {})
     content {
-      asn             = each.value.asn
-      peering_address = each.value.peering_address
-      peer_weight     = each.value.peer_weight
+      asn                 = each.value.asn
+      bgp_peering_address = each.value.peering_address
+      peer_weight         = try(each.value.peer_weight, null)
     }
   }
 }
