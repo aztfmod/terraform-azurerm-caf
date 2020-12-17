@@ -5,7 +5,7 @@ variable front_door_waf_policies {
   default = {}
 }
 variable global_settings {}
-variable keyvaults {
+variable keyvault_id {
   default = {}
 }
 variable resource_group_name {}

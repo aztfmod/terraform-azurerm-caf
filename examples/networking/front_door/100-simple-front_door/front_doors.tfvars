@@ -3,6 +3,8 @@ front_doors = {
     name                   = "sales-rg1"
     resource_group_key     = "front_door"
     certificate_name_check = false
+    # Keyvault key hosting the ssl certificates
+    keyvault_key = "cert_secrets"
 
     routing_rule = {
       rr1 = {
@@ -96,12 +98,13 @@ front_doors = {
         custom_https_provisioning_enabled = false
         #Required if custom_https_provisioning_enabled is true
         custom_https_configuration = {
-          certificate_source = "FrontDoor"
+          certificate_source = "AzureKeyVault"
           #If certificate source is AzureKeyVault the below are required:
-          azure_key_vault_certificate_vault_id       = ""
-          azure_key_vault_certificate_secret_name    = ""
-          azure_key_vault_certificate_secret_version = ""
-          lz_key                                     = ""
+            azure_key_vault_certificate_vault_id       = "/subscriptions/fed745fc-818a-4b9f-8338-22368e098c5c/resourceGroups/inos-rg-front-door-rg-guinc/providers/Microsoft.KeyVault/vaults/kv-certsecrets-ccmcj"
+            azure_key_vault_certificate_secret_name    = "test"
+            azure_key_vault_certificate_secret_version = "b672b38ce10245b8bd3ba75924c80d3d"
+          # Or if created from CAF module
+          # keyvault_certificate_key = ""
         }
         front_door_waf_policy_key = "wp1"
         lz_key                    = ""
