@@ -33,7 +33,7 @@ jobs:
       fail-fast: true
       max-parallel: 1
       matrix:
-          region: ["southeastasia"]
+          region: ["eastus"]
           random_length: ['5']
 
     container:
