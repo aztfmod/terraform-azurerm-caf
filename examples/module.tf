@@ -47,6 +47,7 @@ module "caf" {
     network_watchers                     = var.network_watchers
     vnet_peerings                        = var.vnet_peerings
     private_endpoints                    = var.private_endpoints
+    local_network_gateways               = var.local_network_gateways
   }
   database = {
     azurerm_redis_caches              = var.azurerm_redis_caches

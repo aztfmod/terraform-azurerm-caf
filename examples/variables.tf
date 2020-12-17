@@ -230,3 +230,7 @@ variable dynamic_keyvault_secrets {
 variable private_endpoints {
   default = {}
 }
+
+variable local_network_gateways {
+  default = {}
+}
