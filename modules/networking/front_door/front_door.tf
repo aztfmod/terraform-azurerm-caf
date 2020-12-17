@@ -58,6 +58,7 @@ resource "azurerm_frontdoor" "frontdoor" {
   backend_pools_send_receive_timeout_seconds = try(var.settings.backend_pools_send_receive_timeout_seconds, 60)
   load_balancer_enabled                      = try(var.settings.load_balancer_enabled, true)
   friendly_name                              = try(var.settings.backend_pool.name, null)
+  
 
   dynamic "backend_pool_load_balancing" {
     for_each = var.settings.backend_pool_load_balancing
@@ -109,6 +110,7 @@ resource "azurerm_frontdoor" "frontdoor" {
       session_affinity_enabled          = frontend_endpoint.value.session_affinity_enabled
       session_affinity_ttl_seconds      = frontend_endpoint.value.session_affinity_ttl_seconds
       custom_https_provisioning_enabled = frontend_endpoint.value.custom_https_provisioning_enabled
+      web_application_firewall_policy_link_id    = var.web_application_firewall_policy_link_id
       dynamic "custom_https_configuration" {
         for_each = frontend_endpoint.value.custom_https_provisioning_enabled == true ? [frontend_endpoint.value.custom_https_configuration] : []
         content {
