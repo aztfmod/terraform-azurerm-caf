@@ -1,4 +1,4 @@
-module "recovery_vault" {
+module "mssql_servers" {
   source   = "../private_endpoint"
   for_each = try(var.private_endpoints.mssql_servers, {})
 
