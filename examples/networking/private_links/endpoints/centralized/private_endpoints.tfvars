@@ -98,5 +98,19 @@ private_endpoints = {
         }
       }
     }
+
+    mssql_servers = {
+      sales_rg1 = {
+        private_service_connection = {
+          name = "psc-mssql"
+        }
+
+        private_dns = {
+          zone_group_name = "default"
+          # lz_key          = ""   # If the DNS keys are deployed in a remote landingzone
+          keys = ["dns1"]
+        }
+      }
+    }
   }
 }
