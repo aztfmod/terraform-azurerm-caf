@@ -29,7 +29,7 @@ front_door_waf_policies = {
             match_variable     = "RemoteAddr"
             operator           = "GeoMatch"
             negation_condition = false
-            match_values       = [
+            match_values = [
               "bahrain",
               "Singapore"
             ]

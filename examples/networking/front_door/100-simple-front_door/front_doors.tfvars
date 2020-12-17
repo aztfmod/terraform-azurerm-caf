@@ -101,10 +101,10 @@ front_doors = {
           azure_key_vault_certificate_vault_id       = ""
           azure_key_vault_certificate_secret_name    = ""
           azure_key_vault_certificate_secret_version = ""
-          lz_key = ""
+          lz_key                                     = ""
         }
-        web_application_firewall_policy_key = "wp1"
-        lz_key = ""
+        front_door_waf_policy_key = "wp1"
+        lz_key                    = ""
       }
     }
 

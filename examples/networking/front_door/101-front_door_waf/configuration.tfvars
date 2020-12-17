@@ -14,9 +14,9 @@ resource_groups = {
 
 front_doors = {
   front_door1 = {
-    name                   = "sales-rg1"
-    resource_group_key     = "front_door"
-    certificate_name_check = false
+    name                      = "sales-rg1"
+    resource_group_key        = "front_door"
+    certificate_name_check    = false
     front_door_waf_policy_key = "wp1"
 
     routing_rule = {
@@ -116,10 +116,10 @@ front_doors = {
           azure_key_vault_certificate_vault_id       = ""
           azure_key_vault_certificate_secret_name    = ""
           azure_key_vault_certificate_secret_version = ""
-          lz_key = ""
+          lz_key                                     = ""
         }
         web_application_firewall_policy_key = "wp1"
-        lz_key = ""
+        lz_key                              = ""
       }
     }
 
@@ -165,7 +165,7 @@ front_door_waf_policies = {
             match_variable     = "RemoteAddr"
             operator           = "GeoMatch"
             negation_condition = false
-            match_values       = [
+            match_values = [
               "bahrain",
               "Singapore"
             ]
