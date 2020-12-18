@@ -1,4 +1,4 @@
-resource "azurerm_data_factory_dataset_azure_blob" "blob" {
+resource "azurerm_data_factory_dataset_json" "dataset" {
   name                  = var.name
   resource_group_name   = var.resource_group_name
   data_factory_name     = var.data_factory_name
@@ -8,8 +8,27 @@ resource "azurerm_data_factory_dataset_azure_blob" "blob" {
   annotations           = try(var.annotations, null)
   parameters            = try(var.parameters, null)
   additional_properties = try(var.additional_properties, null)
-  path                  = var.path
-  filename              = var.filename
+  encoding              = var.encoding
+
+  dynamic "http_server_location" {
+    for_each = try(var.http_server_location, null) != null ? [1] : []
+
+    content {
+      relative_url = http_server_location.value.relative_url
+      path         = http_server_location.value.path
+      filename     = http_server_location.value.filename
+    }
+  }
+
+  dynamic "azure_blob_storage_location" {
+    for_each = try(var.azure_blob_storage_location, null) != null ? [1] : []
+
+    content {
+      container = azure_blob_storage_location.value.container
+      path      = azure_blob_storage_location.value.path
+      filename  = azure_blob_storage_location.value.filename
+    }
+  }
 
   dynamic "schema_column" {
     for_each = try(var.schema_column, null) != null ? [1] : []
