@@ -240,3 +240,7 @@ variable private_endpoints {
 variable local_network_gateways {
   default = {}
 }
+
+variable event_hub {
+  default = {}
+}

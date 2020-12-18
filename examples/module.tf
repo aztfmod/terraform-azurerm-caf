@@ -18,6 +18,7 @@ module "caf" {
   role_mapping                 = var.role_mapping
   log_analytics                = var.log_analytics
   event_hub_namespaces         = var.event_hub_namespaces
+  event_hub                    = var.event_hub
 
   webapp = {
     azurerm_application_insights = var.azurerm_application_insights
