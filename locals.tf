@@ -29,7 +29,8 @@ locals {
   }
 
   security = {
-    keyvault_certificates = try(var.security.keyvault_certificates, {})
+    keyvault_certificates         = try(var.security.keyvault_certificates, {})
+    keyvault_certificate_requests = try(var.security.keyvault_certificate_requests, {})
   }
 
   networking = {

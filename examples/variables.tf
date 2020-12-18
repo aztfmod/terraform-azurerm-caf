@@ -134,6 +134,9 @@ variable keyvault_access_policies {
 variable keyvault_certificate_issuers {
   default = {}
 }
+variable keyvault_certificate_requests {
+  default = {}
+}
 variable virtual_machines {
   default = {}
 }
