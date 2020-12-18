@@ -38,10 +38,14 @@ variable additional_properties {
   description = "(Optional) A map of additional properties to associate with the Data Factory Dataset"
 }
 
-variable path {
-  description = "(Required) The path of the Azure Blob"
+variable http_server_location {
+  description = "(Required) A http_server_location block"
 }
 
-variable filename {
-  description = "(Required) The filename of the Azure Blob"
+variable azure_blob_storage_location {
+  description = "(Required) A azure_blob_storage_location block"
+}
+
+variable encoding {
+  description = "(Required) The encoding format for the file"
 }
