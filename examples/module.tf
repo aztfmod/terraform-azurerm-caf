@@ -80,7 +80,8 @@ module "caf" {
   }
 
   security = {
-    dynamic_keyvault_secrets = var.dynamic_keyvault_secrets
+    dynamic_keyvault_secrets      = var.dynamic_keyvault_secrets
+    keyvault_certificate_requests = var.keyvault_certificate_requests
   }
 
   remote_objects = {
