@@ -34,6 +34,8 @@ module "caf" {
     bastion_hosts              = var.bastion_hosts
     aks_clusters               = var.aks_clusters
     proximity_placement_groups = var.proximity_placement_groups
+    wvd_host_pools             = var.wvd_host_pools
+    wvd_workspaces             = var.wvd_workspaces
   }
   networking = {
     vnets                                = var.vnets

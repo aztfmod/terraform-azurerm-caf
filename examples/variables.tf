@@ -240,3 +240,11 @@ variable private_endpoints {
 variable local_network_gateways {
   default = {}
 }
+
+variable wvd_workspaces {
+  default = {}
+}
+
+variable wvd_host_pools {
+  default = {}
+}
