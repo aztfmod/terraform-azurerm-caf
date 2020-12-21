@@ -38,12 +38,32 @@ variable additional_properties {
   description = "(Optional) A map of additional properties to associate with the Data Factory Dataset"
 }
 
-variable path {
-  description = "(Required) The path of the Azure Blob"
+variable column_delimiter {
+  description = "(Required) The column delimiter"
 }
 
-variable filename {
-  description = "(Required) The filename of the Azure Blob"
+variable row_delimiter {
+  description = "(Required) The row delimiter"
+}
+
+variable encoding {
+  description = "(Required) The encoding format for the file"
+}
+
+variable quote_character {
+  description = "(Required) The quote character"
+}
+
+variable escape_character {
+  description = "(Required) The escape character"
+}
+
+variable first_row_as_header {
+  description = "(Required) When used as input, treat the first row of data as headers"
+}
+
+variable null_value  {
+  description = "(Required) The null value string"
 }
 
 variable http_server_location {
