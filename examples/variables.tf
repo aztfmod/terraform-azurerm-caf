@@ -134,6 +134,9 @@ variable keyvault_access_policies {
 variable keyvault_certificate_issuers {
   default = {}
 }
+variable keyvault_certificate_requests {
+  default = {}
+}
 variable virtual_machines {
   default = {}
 }
@@ -233,6 +236,16 @@ variable cosmos_dbs {
 variable dynamic_keyvault_secrets {
   default = {}
 }
+variable front_doors {
+  default = {}
+}
+variable front_door_waf_policies {
+  default = {}
+}
+variable dns_zones {
+  default = {}
+}
+
 variable private_endpoints {
   default = {}
 }

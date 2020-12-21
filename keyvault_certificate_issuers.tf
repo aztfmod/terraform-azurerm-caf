@@ -23,23 +23,6 @@ data "azurerm_key_vault_secret" "certificate_issuer_password" {
   key_vault_id = try(local.combined_objects_keyvaults[each.value.lz_key][each.value.keyvault_key].id, local.combined_objects_keyvaults[local.client_config.landingzone_key][each.value.keyvault_key].id)
 }
 
-# data external certificate_issuer_password {
-#   depends_on = [module.dynamic_keyvault_secrets]
-#   for_each = {
-#     for key, value in var.keyvault_certificate_issuers : key => value
-#     if try(value.cert_password_key, null) != null
-#   }
-
-#   program = [
-#     "bash", "-c",
-#     format(
-#       "az keyvault secret show -n '%s' --vault-name '%s' --query '{value: value }' -o json ",
-#       each.value.cert_password_key,
-#       try(local.combined_objects_keyvaults[each.value.lz_key][each.value.keyvault_key].name, local.combined_objects_keyvaults[local.client_config.landingzone_key][each.value.keyvault_key].name)
-#     )
-#   ]
-# }
-
 output keyvault_certificate_issuers {
   value     = module.keyvault_certificate_issuers
   sensitive = true
