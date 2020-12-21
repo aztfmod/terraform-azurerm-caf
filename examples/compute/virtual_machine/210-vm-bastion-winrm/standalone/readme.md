@@ -5,6 +5,7 @@ terraform init
 
 terraform [plan|apply|destroy] \
   -var-file ../configuration.tfvars \
+  -var-file ../diagnostics.tfvars \
   -var-file ../keyvaults.tfvars \
   -var-file ../nsg_definitions.tfvars \
   -var-file ../virtual_networks.tfvars \

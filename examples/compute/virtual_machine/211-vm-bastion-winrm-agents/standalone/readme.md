@@ -5,8 +5,9 @@ cd /tf/caf/aztfmod/examples/compute/virtual_machine/211-vm-bastion-winrm-agents/
 
 terraform init
 
-terraform [plan|apply|destroy] \
+terraform plan \
   -var-file ../configuration.tfvars \
+  -var-file ../diagnostics.tfvars \
   -var-file ../keyvaults.tfvars \
   -var-file ../nsg_definitions.tfvars \
   -var-file ../virtual_networks.tfvars \
@@ -25,6 +26,7 @@ rover \
   -lz /tf/caf/aztfmod/examples \
   -var-folder /tf/caf/aztfmod/examples/compute/virtual_machine/211-vm-bastion-winrm-agents \
   -var var_folder_path="/tf/caf/aztfmod/examples/compute/virtual_machine/211-vm-bastion-winrm-agents" \
-  -a [plan|apply|destroy]
-  
+  -level level1 \
+  -a plan
+
 ```
