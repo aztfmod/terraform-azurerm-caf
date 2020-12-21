@@ -51,6 +51,9 @@ module "caf" {
     express_route_circuit_authorizations = var.express_route_circuit_authorizations
     network_watchers                     = var.network_watchers
     vnet_peerings                        = var.vnet_peerings
+    front_doors                          = var.front_doors
+    front_door_waf_policies              = var.front_door_waf_policies
+    dns_zones                            = var.dns_zones
     private_endpoints                    = var.private_endpoints
     local_network_gateways               = var.local_network_gateways
   }
@@ -77,7 +80,8 @@ module "caf" {
   }
 
   security = {
-    dynamic_keyvault_secrets = var.dynamic_keyvault_secrets
+    dynamic_keyvault_secrets      = var.dynamic_keyvault_secrets
+    keyvault_certificate_requests = var.keyvault_certificate_requests
   }
 
   remote_objects = {

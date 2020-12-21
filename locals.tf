@@ -29,7 +29,8 @@ locals {
   }
 
   security = {
-    keyvault_certificates = try(var.security.keyvault_certificates, {})
+    keyvault_certificates         = try(var.security.keyvault_certificates, {})
+    keyvault_certificate_requests = try(var.security.keyvault_certificate_requests, {})
   }
 
   networking = {
@@ -48,11 +49,14 @@ locals {
     private_dns                                             = try(var.networking.private_dns, {})
     azurerm_firewall_nat_rule_collection_definition         = try(var.networking.azurerm_firewall_nat_rule_collection_definition, {})
     ddos_services                                           = try(var.networking.ddos_services, {})
+    dns_zones                                               = try(var.networking.dns_zones, {})
     express_route_circuits                                  = try(var.networking.express_route_circuits, {})
     express_route_circuit_authorizations                    = try(var.networking.express_route_circuit_authorizations, {})
     network_watchers                                        = try(var.networking.network_watchers, {})
     virtual_network_gateways                                = try(var.networking.virtual_network_gateways, {})
     virtual_network_gateway_connections                     = try(var.networking.virtual_network_gateway_connections, {})
+    front_doors                                             = try(var.networking.front_doors, {})
+    front_door_waf_policies                                 = try(var.networking.front_door_waf_policies, {})
     local_network_gateways                                  = try(var.networking.local_network_gateways, {})
 
   }
