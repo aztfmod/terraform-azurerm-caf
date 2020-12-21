@@ -76,17 +76,17 @@ locals {
 
   data_factory = {
     df                  = try(var.data_factory.df, {})
-    df_trigger_schedule = try(var.data_factory.df_trigger_schedule, {}) 
+    df_trigger_schedule = try(var.data_factory.df_trigger_schedule, {})
     df_pipeline         = try(var.data_factory.df_pipeline, {})
     datasets = {
-      azure_blob        = try(var.data_factory.datasets.azure_blob, {})
-      cosmosdb_sqlapi   = try(var.data_factory.datasets.cosmosdb_sqlapi, {})
-      delimited_text    = try(var.data_factory.datasets.delimited_text, {})
-      http              = try(var.data_factory.datasets.http, {})
-      json              = try(var.data_factory.datasets.json, {})
-      mysql             = try(var.data_factory.datasets.mysql, {})
-      postgresql        = try(var.data_factory.datasets.postgresql, {})
-      sql_server_table  = try(var.data_factory.datasets.sql_server_table, {})
+      azure_blob       = try(var.data_factory.datasets.azure_blob, {})
+      cosmosdb_sqlapi  = try(var.data_factory.datasets.cosmosdb_sqlapi, {})
+      delimited_text   = try(var.data_factory.datasets.delimited_text, {})
+      http             = try(var.data_factory.datasets.http, {})
+      json             = try(var.data_factory.datasets.json, {})
+      mysql            = try(var.data_factory.datasets.mysql, {})
+      postgresql       = try(var.data_factory.datasets.postgresql, {})
+      sql_server_table = try(var.data_factory.datasets.sql_server_table, {})
     }
   }
 
