@@ -28,4 +28,6 @@ locals {
   combined_objects_resource_groups            = merge(map(local.client_config.landingzone_key, module.resource_groups), try(var.remote_objects.resource_groups, {}))
   combined_objects_storage_accounts           = merge(map(local.client_config.landingzone_key, module.storage_accounts), try(var.remote_objects.storage_accounts, {}))
   combined_objects_synapse_workspaces         = merge(map(local.client_config.landingzone_key, module.synapse_workspaces), try(var.remote_objects.synapse_workspaces, {}))
+  combined_objects_wvd_host_pools             = merge(map(local.client_config.landingzone_key, module.wvd_host_pools), try(var.remote_objects.wvd_host_pools, {}))
+  combined_objects_wvd_workspaces             = merge(map(local.client_config.landingzone_key, module.wvd_workspaces), try(var.remote_objects.wvd_workspaces, {})) 
 }
