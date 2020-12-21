@@ -1,7 +1,5 @@
-
-
 resource "tls_private_key" "ssh" {
-  for_each = local.os_type == "linux" ? var.settings.virtual_machine_settings : {}
+  for_each = local.create_sshkeys ? var.settings.virtual_machine_settings : {}
 
   algorithm = "RSA"
   rsa_bits  = 4096
@@ -75,7 +73,7 @@ resource "azurerm_linux_virtual_machine" "vm" {
 
     content {
       username   = each.value.admin_username
-      public_key = tls_private_key.ssh[each.key].public_key_openssh
+      public_key = local.create_sshkeys ? tls_private_key.ssh[each.key].public_key_openssh : file(var.settings.public_key_pem_file)
     }
   }
 
@@ -114,11 +112,11 @@ resource "azurerm_linux_virtual_machine" "vm" {
 }
 
 #
-# SSH keys
+# SSH keys to be stored in KV only if public_key_pem_file is not set
 #
 
 resource "azurerm_key_vault_secret" "ssh_private_key" {
-  for_each = local.os_type == "linux" ? var.settings.virtual_machine_settings : {}
+  for_each = local.create_sshkeys ? var.settings.virtual_machine_settings : {}
 
   name         = format("%s-ssh-private-key", azurecaf_name.linux_computer_name[each.key].result)
   value        = tls_private_key.ssh[each.key].private_key_pem
@@ -133,7 +131,7 @@ resource "azurerm_key_vault_secret" "ssh_private_key" {
 
 
 resource "azurerm_key_vault_secret" "ssh_public_key_openssh" {
-  for_each = local.os_type == "linux" ? var.settings.virtual_machine_settings : {}
+  for_each = local.create_sshkeys ? var.settings.virtual_machine_settings : {}
 
   name         = format("%s-ssh-public-key-openssh", azurecaf_name.linux_computer_name[each.key].result)
   value        = tls_private_key.ssh[each.key].public_key_openssh
