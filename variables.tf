@@ -123,6 +123,7 @@ variable webapp {
   default = {}
 }
 
+
 ## Databases variables
 variable database {
   default = {}
@@ -164,6 +165,10 @@ variable role_mapping {
   }
 }
 
+variable dynamic_keyvault_secrets {
+  default = {}
+}
+
 ## Storage variables
 variable storage_accounts {
   default = {}
@@ -184,6 +189,7 @@ variable monitoring {
   default = {}
 }
 
+<<<<<<< HEAD
 variable virtual_network_gateways {
   default = {}
 }
@@ -205,5 +211,16 @@ variable packer_service_principal {
 }
 
 variable packer_managed_identity {
+=======
+variable keyvault_certificate_issuers {
+  default = {}
+}
+
+variable cosmos_dbs {
+  default = {}
+}
+
+variable local_network_gateways {
+>>>>>>> 96d7afea85feea5b1c1d63ad2d57db3a6f7491cd
   default = {}
 }

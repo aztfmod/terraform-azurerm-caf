@@ -1,3 +1,5 @@
 variable settings {}
-variable objects {}
-variable keyvault_id {}
+variable keyvault {}
+variable objects {
+  default = {}
+}

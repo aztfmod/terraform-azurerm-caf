@@ -8,6 +8,8 @@ variable tfstate_container_name {}
 variable tfstate_key {}
 variable tfstate_resource_group_name {}
 
+variable tfstate_subscription_id {}
+
 variable global_settings {
   default = {
     default_region = "region1"
@@ -26,7 +28,7 @@ variable landingzone {
     key                 = "examples"
     tfstates = {
       launchpad = {
-        level   = "current"
+        level   = "lower"
         tfstate = "caf_launchpad.tfstate"
       }
     }
@@ -129,6 +131,9 @@ variable keyvaults {
 variable keyvault_access_policies {
   default = {}
 }
+variable keyvault_certificate_issuers {
+  default = {}
+}
 variable virtual_machines {
   default = {}
 }
@@ -139,6 +144,12 @@ variable public_ip_addresses {
   default = {}
 }
 variable diagnostic_storage_accounts {
+  default = {}
+}
+variable diagnostic_event_hub_namespaces {
+  default = {}
+}
+variable diagnostic_log_analytics {
   default = {}
 }
 variable managed_identities {
@@ -180,10 +191,19 @@ variable application_gateways {
 variable application_gateway_applications {
   default = {}
 }
+variable cosmos_db {
+  default = {}
+}
 variable log_analytics {
   default = {}
 }
 variable recovery_vaults {
+  default = {}
+}
+variable availability_sets {
+  default = {}
+}
+variable proximity_placement_groups {
   default = {}
 }
 variable network_watchers {
@@ -216,6 +236,7 @@ variable diagnostics_destinations {
 variable vnet_peerings {
   default = {}
 }
+<<<<<<< HEAD
 
 variable packer_service_principal {
   default = {}
@@ -234,5 +255,18 @@ variable azuread_api_permissions {
 }
 
 variable keyvault_access_policies_azuread_apps {
+=======
+variable cosmos_dbs {
+  default = {}
+}
+variable dynamic_keyvault_secrets {
+  default = {}
+}
+variable private_endpoints {
+  default = {}
+}
+
+variable local_network_gateways {
+>>>>>>> 96d7afea85feea5b1c1d63ad2d57db3a6f7491cd
   default = {}
 }

@@ -25,6 +25,12 @@ resource "azurerm_virtual_machine_extension" "monitoring" {
 data "azurerm_log_analytics_workspace" "monitoring" {
   for_each = var.extension_name == "microsoft_enterprise_cloud_monitoring" ? toset(["enabled"]) : toset([])
 
+<<<<<<< HEAD
   name                = var.settings.diagnostics.log_analytics[var.extension.log_analytics_key].name
   resource_group_name = var.settings.diagnostics.log_analytics[var.extension.log_analytics_key].resource_group_name
 } 
+=======
+  name                = var.settings.diagnostics.log_analytics[var.extension.diagnostic_log_analytics_key].name
+  resource_group_name = var.settings.diagnostics.log_analytics[var.extension.diagnostic_log_analytics_key].resource_group_name
+}
+>>>>>>> 96d7afea85feea5b1c1d63ad2d57db3a6f7491cd

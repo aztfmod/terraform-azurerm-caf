@@ -16,12 +16,12 @@ module event_hub_namespaces_diagnostics {
 
   resource_id       = module.event_hub_namespaces[each.key].id
   resource_location = module.event_hub_namespaces[each.key].location
-  diagnostics       = local.diagnostics
+  diagnostics       = local.combined_diagnostics
   profiles          = try(each.value.diagnostic_profiles, {})
 }
 
 #
-# Event_hub_namespace is one of the three diagnostics destination objects and for that reason requires the 
+# Event_hub_namespace is one of the three diagnostics destination objects and for that reason requires the
 # private endpoint to be done at the root module to prevent circular references
 #
 

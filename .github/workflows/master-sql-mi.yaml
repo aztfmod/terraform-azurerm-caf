@@ -36,7 +36,7 @@ jobs:
           random_length: ['5']
 
     container:
-      image: aztfmod/rover:2010.2808
+      image: aztfmod/rover:2012.1109
       options: --user 0
 
     steps:
@@ -46,7 +46,7 @@ jobs:
         with:
           repository: Azure/caf-terraform-landingzones
           path: public
-          ref: '2010.0.0'
+          ref: '2012.1.0'
 
       - name: Login azure
         run: |
@@ -83,7 +83,7 @@ jobs:
           ]
 
     container:
-      image: aztfmod/rover:2010.2808
+      image: aztfmod/rover:2012.1109
       options: --user 0
 
     steps:
@@ -97,7 +97,7 @@ jobs:
       - name: deploy example
         run: |
           /tf/rover/rover.sh -lz ${GITHUB_WORKSPACE}/examples -a apply \
-            -level level3 \
+            -level level1 \
             -tfstate $(basename ${{ matrix.config_files }}).tfstate \
             -var-folder ${GITHUB_WORKSPACE}/${{ matrix.config_files }} \
             --environment ${{ github.run_id }}
@@ -106,7 +106,7 @@ jobs:
         if: always()
         run: |
           /tf/rover/rover.sh -lz ${GITHUB_WORKSPACE}/examples -a destroy \
-            -level level3 \
+            -level level1 \
             -tfstate $(basename ${{ matrix.config_files }}).tfstate \
             -var-folder ${GITHUB_WORKSPACE}/${{ matrix.config_files }} \
             --environment ${{ github.run_id }} \
@@ -125,7 +125,7 @@ jobs:
           region: ["southeastasia"]
 
     container:
-      image: aztfmod/rover:2010.2808
+      image: aztfmod/rover:2012.1109
       options: --user 0
 
     steps:
@@ -133,7 +133,7 @@ jobs:
         with:
           repository: Azure/caf-terraform-landingzones
           path: public
-          ref: "2010.0.0"
+          ref: "2012.1.0"
 
       - name: Login azure
         run: |

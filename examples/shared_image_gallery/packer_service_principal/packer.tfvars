@@ -1,6 +1,6 @@
 packer_service_principal = {
   build1 = {
-    packer_template_filepath             = "./shared_image_gallery/packer_service_principal/packer_files/packer_template_sp.json"
+    packer_template_filepath             = "./shared_image_gallery/packer_service_principal/packer_files/packer_template_service_principal.json"
     packer_config_filepath               = "./shared_image_gallery/packer_service_principal/packer_files/packer_config_sp.json"
     secret_prefix                 = "packer-client"
     keyvault_key                  = "packer_client"
