@@ -14,7 +14,7 @@ resource_groups = {
 }
 
 cosmos_dbs = {
-  cosmosdb_accounts = {
+  cosmosdb_account_re1 = {
     name                      = "cosmosdbtable-ex101"
     resource_group_key        = "cosmosdb_region1"
     offer_type                = "Standard"

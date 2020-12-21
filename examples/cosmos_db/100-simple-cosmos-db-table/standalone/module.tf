@@ -10,6 +10,6 @@ module "caf" {
   role_mapping                = var.role_mapping
 
   database = {
-    cosmos_db = var.cosmos_dbs
+    cosmos_dbs = var.cosmos_dbs
   }
 }
