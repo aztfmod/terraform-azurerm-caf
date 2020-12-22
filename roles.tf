@@ -43,6 +43,7 @@ locals {
     mssql_managed_databases    = local.combined_objects_mssql_managed_databases
     mssql_managed_instances    = local.combined_objects_mssql_managed_instances
     mssql_servers              = local.combined_objects_mssql_servers
+    mysql_servers              = local.combined_objects_mysql_servers
     networking                 = local.combined_objects_networking
     network_watchers           = local.combined_objects_network_watchers
     postgresql_servers         = local.combined_objects_postgresql_servers

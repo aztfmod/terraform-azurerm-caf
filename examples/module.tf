@@ -11,6 +11,7 @@ module "caf" {
   storage_accounts             = var.storage_accounts
   azuread_groups               = var.azuread_groups
   azuread_roles                = var.azuread_roles
+  tags                         = local.tags
   keyvaults                    = var.keyvaults
   keyvault_access_policies     = var.keyvault_access_policies
   keyvault_certificate_issuers = var.keyvault_certificate_issuers
@@ -59,6 +60,9 @@ module "caf" {
   }
   database = {
     azurerm_redis_caches              = var.azurerm_redis_caches
+    cosmos_dbs                        = var.cosmos_dbs
+    databricks_workspaces             = var.databricks_workspaces
+    machine_learning_workspaces       = var.machine_learning_workspaces
     mssql_servers                     = var.mssql_servers
     mssql_managed_instances           = var.mssql_managed_instances
     mssql_managed_instances_secondary = var.mssql_managed_instances_secondary
@@ -69,11 +73,9 @@ module "caf" {
     mssql_failover_groups             = var.mssql_failover_groups
     mssql_mi_failover_groups          = var.mssql_mi_failover_groups
     mssql_mi_administrators           = var.mssql_mi_administrators
+    mysql_servers                     = var.mysql_servers
     postgresql_servers                = var.postgresql_servers
     synapse_workspaces                = var.synapse_workspaces
-    databricks_workspaces             = var.databricks_workspaces
-    machine_learning_workspaces       = var.machine_learning_workspaces
-    cosmos_dbs                        = var.cosmos_dbs
   }
   shared_services = {
     monitoring      = var.monitoring

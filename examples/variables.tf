@@ -194,6 +194,9 @@ variable application_gateways {
 variable application_gateway_applications {
   default = {}
 }
+variable mysql_servers {
+  default = {}
+}
 variable postgresql_servers {
   default = {}
 }
@@ -248,11 +251,9 @@ variable front_door_waf_policies {
 variable dns_zones {
   default = {}
 }
-
 variable private_endpoints {
   default = {}
 }
-
 variable local_network_gateways {
   default = {}
 }
