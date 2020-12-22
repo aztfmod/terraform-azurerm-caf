@@ -22,6 +22,7 @@ locals {
     aks_clusters               = try(var.compute.aks_clusters, {})
     availability_sets          = try(var.compute.availability_sets, {})
     proximity_placement_groups = try(var.compute.proximity_placement_groups, {})
+    wvd_application_groups     = try(var.compute.wvd_application_groups, {})
     wvd_host_pools             = try(var.compute.wvd_host_pools, {})
     wvd_workspaces             = try(var.compute.wvd_workspaces, {})
   }

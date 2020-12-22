@@ -241,10 +241,14 @@ variable local_network_gateways {
   default = {}
 }
 
-variable wvd_workspaces {
+
+variable wvd_application_groups {
+  default = {}
+}
+variable wvd_host_pools {
   default = {}
 }
 
-variable wvd_host_pools {
+variable wvd_workspaces {
   default = {}
 }
