@@ -1,8 +1,8 @@
 ##### azurerm_data_factory
 module "data_factory" {
-  source = "./modules/data_factory/df"
+  source = "./modules/data_factory/data_factory"
 
-  for_each = local.data_factory.df
+  for_each = local.data_factory.data_factory
 
   name                 = each.value.name
   resource_group_name  = module.resource_groups[each.value.resource_group_key].name
@@ -21,9 +21,9 @@ output "data_factory" {
 
 ##### azurerm_data_factory_pipeline
 module "data_factory_pipeline" {
-  source = "./modules/data_factory/df_pipeline"
+  source = "./modules/data_factory/data_factory_pipeline"
 
-  for_each = local.data_factory.df_pipeline
+  for_each = local.data_factory.data_factory_pipeline
 
   name                = each.value.name
   resource_group_name = module.resource_groups[each.value.resource_group_key].name
@@ -41,9 +41,9 @@ output "data_factory_pipeline" {
 
 ##### azurerm_data_factory_trigger_schedule
 module "data_factory_trigger_schedule" {
-  source = "./modules/data_factory/df_trigger_schedule"
+  source = "./modules/data_factory/data_factory_trigger_schedule"
 
-  for_each = local.data_factory.df_trigger_schedule
+  for_each = local.data_factory.data_factory_trigger_schedule
 
   name                = each.value.name
   resource_group_name = module.resource_groups[each.value.resource_group_key].name

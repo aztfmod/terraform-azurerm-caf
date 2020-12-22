@@ -127,6 +127,15 @@ variable data_factory {
   default = {}
 }
 
+## Data Factory Linked Services
+variable linked_services {
+  default = []
+}
+
+variable linked_service_azure_blob_storage {
+  default = {}
+}
+
 ## Databases variables
 variable database {
   default = {}
