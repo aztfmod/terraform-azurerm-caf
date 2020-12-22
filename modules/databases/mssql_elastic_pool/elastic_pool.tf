@@ -12,9 +12,9 @@ resource "azurecaf_name" "elasticpool" {
 resource "azurerm_mssql_elasticpool" "elasticpool" {
 
   name                = azurecaf_name.elasticpool.result
-  resource_group_name = var.server.resource_group_name
-  location            = var.server.location
-  server_name         = var.server.name
+  resource_group_name = var.resource_group_name
+  location            = var.location
+  server_name         = var.server_name
   max_size_gb         = try(var.settings.max_size_gb, null)
   max_size_bytes      = try(var.settings.max_size_bytes, null)
   zone_redundant      = try(var.settings.zone_redundant, null)
