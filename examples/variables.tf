@@ -194,6 +194,9 @@ variable application_gateways {
 variable application_gateway_applications {
   default = {}
 }
+variable postgresql_servers {
+  default = {}
+}
 variable cosmos_db {
   default = {}
 }
