@@ -162,12 +162,8 @@ mssql_servers = {
     private_endpoints = {
       # Require enforce_private_link_endpoint_network_policies set to true on the subnet
       private-link-level4 = {
-        name = "sales-sql-rg1"
-        remote_tfstate = {
-          tfstate_key = "foundations"
-          lz_key      = "launchpad"
-          output_key  = "vnets"
-        }
+        name               = "sales-sql-rg1"
+        lz_key             = "launchpad"
         vnet_key           = "devops_region1"
         subnet_key         = "private_endpoints"
         resource_group_key = "sql_region1"

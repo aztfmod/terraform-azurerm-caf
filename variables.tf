@@ -6,6 +6,7 @@ variable global_settings {
     default_region = "region1"
     regions = {
       region1 = "southeastasia"
+      region2 = "eastasia"
     }
   }
 }
@@ -126,6 +127,7 @@ variable webapp {
   default = {}
 }
 
+
 ## Databases variables
 variable database {
   default = {}
@@ -167,6 +169,10 @@ variable role_mapping {
   }
 }
 
+variable dynamic_keyvault_secrets {
+  default = {}
+}
+
 ## Storage variables
 variable storage_accounts {
   default = {}
@@ -186,6 +192,13 @@ variable shared_services {
 variable monitoring {
   default = {}
 }
+variable keyvault_certificate_issuers {
+  default = {}
+}
+variable cosmos_dbs {
+  default = {}
+}
 
-
-
+variable local_network_gateways {
+  default = {}
+}
