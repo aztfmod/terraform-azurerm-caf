@@ -1,12 +1,14 @@
 
 output "id" {
+  # depends_on = [azurerm_resource_group_template_deployment.asr]
   description = "Output the object ID"
-  value       = azurerm_recovery_services_vault.asr_rg_vault.id
+  value       = azurerm_recovery_services_vault.asr.id
 }
 
 output "name" {
+  depends_on  = [azurerm_recovery_services_vault.asr]
   description = "Output the object name"
-  value       = azurerm_recovery_services_vault.asr_rg_vault.name
+  value       = azurecaf_name.asr_rg_vault.result
 }
 
 output "backup_policies" {
@@ -27,3 +29,12 @@ output "resource_group_name" {
   description = "Output the object ID"
   value       = var.resource_group_name
 }
+
+output soft_delete_enabled {
+  value = try(var.settings.soft_delete_enabled, true)
+}
+
+# output rbac_id {
+#   depends_on  = [azurerm_resource_group_template_deployment.asr]
+#   value       = jsondecode(azurerm_resource_group_template_deployment.asr.output_content).principalId.value
+# }

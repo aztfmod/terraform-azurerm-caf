@@ -5,13 +5,15 @@ cd /tf/caf/aztfmod/examples/compute/virtual_machine/211-vm-bastion-winrm-agents/
 
 terraform init
 
-terraform [plan|apply|delete] \
+terraform plan \
   -var-file ../configuration.tfvars \
+  -var-file ../diagnostics.tfvars \
   -var-file ../keyvaults.tfvars \
   -var-file ../nsg_definitions.tfvars \
   -var-file ../virtual_networks.tfvars \
   -var-file ../public_ip_addresses.tfvars \
-  -var-file ../virtual_machines.tfvars
+  -var-file ../virtual_machines.tfvars \
+  -var var_folder_path="/tf/caf/aztfmod/examples/compute/virtual_machine/211-vm-bastion-winrm-agents"
 
 
 ```
@@ -23,6 +25,8 @@ To test this deployment in the example landingzone. Make sure the launchpad has 
 rover \
   -lz /tf/caf/aztfmod/examples \
   -var-folder /tf/caf/aztfmod/examples/compute/virtual_machine/211-vm-bastion-winrm-agents \
-  -a [plan|apply|delete]
-  
+  -var var_folder_path="/tf/caf/aztfmod/examples/compute/virtual_machine/211-vm-bastion-winrm-agents" \
+  -level level1 \
+  -a plan
+
 ```

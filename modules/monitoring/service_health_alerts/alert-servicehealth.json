@@ -5,7 +5,7 @@
         "actionGroups_name": {
             "type": "String"
         },
-        
+
         "name": {
           "type": "String"
         },
@@ -21,7 +21,7 @@
     },
 
     "resources": [
-        
+
            {
             "comments": "Service Health Activity Log Alert",
             "type": "microsoft.insights/activityLogAlerts",
@@ -63,4 +63,4 @@
 
         }
     ]
-}                
+}
