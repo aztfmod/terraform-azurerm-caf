@@ -6,7 +6,7 @@ resource "azurerm_key_vault_certificate" "self_signed_winrm" {
   }
 
   name         = format("%s-winrm-cert", azurecaf_name.windows[each.key].result)
-  key_vault_id = var.keyvault_id
+  key_vault_id = local.keyvault.id
   tags         = try(merge(try(each.value.tags, null), var.base_tags), null)
 
   certificate_policy {
@@ -55,4 +55,11 @@ resource "azurerm_key_vault_certificate" "self_signed_winrm" {
       }
     }
   }
+
+  timeouts {
+    create = "30m"
+    delete = "30m"
+    read   = "5m"
+  }
+
 }

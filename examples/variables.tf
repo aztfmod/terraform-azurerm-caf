@@ -8,12 +8,15 @@ variable tfstate_container_name {}
 variable tfstate_key {}
 variable tfstate_resource_group_name {}
 
+variable tfstate_subscription_id {}
+
 variable global_settings {
   default = {
     default_region = "region1"
     regions = {
       region1 = "southeastasia"
-  }
+      region2 = "eastasia"
+    }
   }
 }
 
@@ -25,13 +28,16 @@ variable landingzone {
     key                 = "examples"
     tfstates = {
       launchpad = {
-        level   = "current"
+        level   = "lower"
         tfstate = "caf_launchpad.tfstate"
       }
     }
   }
 }
 
+variable var_folder_path {
+  default = {}
+}
 variable tenant_id {}
 
 variable environment {
@@ -68,6 +74,12 @@ variable resource_groups {
 variable network_security_group_definition {
   default = null
 }
+variable route_tables {
+  default = {}
+}
+variable azurerm_routes {
+  default = {}
+}
 variable vnets {
   default = {}
 }
@@ -77,7 +89,19 @@ variable azurerm_redis_caches {
 variable mssql_servers {
   default = {}
 }
+variable mssql_managed_instances {
+  default = {}
+}
+variable mssql_managed_instances_secondary {
+  default = {}
+}
 variable mssql_databases {
+  default = {}
+}
+variable mssql_managed_databases {
+  default = {}
+}
+variable mssql_managed_databases_restore {
   default = {}
 }
 variable mssql_elastic_pools {
@@ -89,16 +113,34 @@ variable mariadb_servers {
 variable mariadb_databases {
   default = {}
 }
+variable mssql_failover_groups {
+  default = {}
+}
+variable mssql_mi_failover_groups {
+  default = {}
+}
+variable mssql_mi_administrators {
+  default = {}
+}
 variable storage_accounts {
   default = {}
 }
 variable azuread_groups {
   default = {}
 }
+variable azuread_roles {
+  default = {}
+}
 variable keyvaults {
   default = {}
 }
 variable keyvault_access_policies {
+  default = {}
+}
+variable keyvault_certificate_issuers {
+  default = {}
+}
+variable keyvault_certificate_requests {
   default = {}
 }
 variable virtual_machines {
@@ -111,6 +153,12 @@ variable public_ip_addresses {
   default = {}
 }
 variable diagnostic_storage_accounts {
+  default = {}
+}
+variable diagnostic_event_hub_namespaces {
+  default = {}
+}
+variable diagnostic_log_analytics {
   default = {}
 }
 variable managed_identities {
@@ -152,9 +200,66 @@ variable application_gateways {
 variable application_gateway_applications {
   default = {}
 }
+variable mysql_servers {
+  default = {}
+}
+variable postgresql_servers {
+  default = {}
+}
+variable cosmos_db {
+  default = {}
+}
 variable log_analytics {
   default = {}
 }
 variable recovery_vaults {
+  default = {}
+}
+variable availability_sets {
+  default = {}
+}
+variable proximity_placement_groups {
+  default = {}
+}
+variable network_watchers {
+  default = {}
+}
+variable virtual_network_gateways {
+  default = {}
+}
+variable virtual_network_gateway_connections {
+  default = {}
+}
+variable express_route_circuits {
+  default = {}
+}
+variable express_route_circuit_authorizations {
+  default = {}
+}
+variable diagnostics_destinations {
+  default = {}
+}
+variable vnet_peerings {
+  default = {}
+}
+variable cosmos_dbs {
+  default = {}
+}
+variable dynamic_keyvault_secrets {
+  default = {}
+}
+variable front_doors {
+  default = {}
+}
+variable front_door_waf_policies {
+  default = {}
+}
+variable dns_zones {
+  default = {}
+}
+variable private_endpoints {
+  default = {}
+}
+variable local_network_gateways {
   default = {}
 }

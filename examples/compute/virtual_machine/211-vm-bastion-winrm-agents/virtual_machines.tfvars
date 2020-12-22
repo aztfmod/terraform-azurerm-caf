@@ -75,16 +75,25 @@ virtual_machines = {
         internal_dns_name_label = "server1-nic0"
 
       }
+      nic1 = {
+        vnet_key                = "vnet_region1"
+        subnet_key              = "servers"
+        name                    = "1-server1"
+        enable_ip_forwarding    = false
+        internal_dns_name_label = "server1-nic1"
+
+      }
     }
 
     virtual_machine_settings = {
       windows = {
-        name           = "server1"
-        size           = "Standard_F2s_v2"
-        admin_username = "adminuser"
+        name               = "server1"
+        size               = "Standard_F2s_v2"
+        admin_username_key = "vm-win-admin-username"
+        admin_password_key = "vm-win-admin-password"
 
         # Value of the nic keys to attach the VM. The first one in the list is the default nic
-        network_interface_keys = ["nic0"]
+        network_interface_keys = ["nic0","nic1"]
 
         zone = "1"
 
@@ -111,6 +120,8 @@ virtual_machines = {
       }
     }
 
+
+
     data_disks = {
       data1 = {
         name                 = "server1-data1"
@@ -121,34 +132,31 @@ virtual_machines = {
         lun           = 1
         zones         = ["1"]
       }
+      data2 = {
+        name                 = "server1-data2"
+        storage_account_type = "Standard_LRS"
+        # Only Empty is supported. More community contributions required to cover other scenarios
+        create_option = "Empty"
+        disk_size_gb  = "30"
+        lun           = 2
+        zones         = ["1"]
+      }
     }
 
     virtual_machine_extensions = {
       microsoft_enterprise_cloud_monitoring = {
-        log_analytics_key = "central_logs_region1"
+        diagnostic_log_analytics_key = "central_logs_region1"
       }
 
       microsoft_azure_diagnostics = {
         # Requires at least one diagnostics storage account
         diagnostics_storage_account_keys = ["bootdiag_region1"]
 
-        # Relative path to the landing zone folder
-        xml_diagnostics_file = "/compute/virtual_machine/211-vm-bastion-winrm-agents/diagnostics/wadcfg.xml"
-
-        # Additional destinations can be set
-        #
-        # Event Hub namespaces
-        event_hub_namespace_keys = []
+        # Relative path to the configuration folder or full path
+        xml_diagnostics_file = "./diagnostics/wadcfg.xml"
       }
     }
-
   }
+
 }
 
-log_analytics = {
-  central_logs_region1 = {
-    region             = "region1"
-    name               = "logs"
-    resource_group_key = "vm_region1"
-  }
-}

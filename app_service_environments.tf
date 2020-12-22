@@ -17,7 +17,7 @@ module "app_service_environments" {
   internalLoadBalancingMode = each.value.internalLoadBalancingMode
   front_end_size            = try(each.value.front_end_size, "Standard_D1_V2")
   diagnostic_profiles       = try(each.value.diagnostic_profiles, null)
-  diagnostics               = local.diagnostics
+  diagnostics               = local.combined_diagnostics
   global_settings           = local.global_settings
   private_dns               = lookup(each.value, "private_dns_records", null) == null ? {} : local.combined_objects_private_dns
 }
