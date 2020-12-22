@@ -16,11 +16,11 @@ variable pipeline_name {
 
 variable start_time {
   description = "(Optional) The time the Schedule Trigger will start"
-}    
+}
 
 variable end_time {
   description = "(Optional) The time the Schedule Trigger should end"
-}   
+}
 
 variable interval {
   description = " (Optional) The interval for how often the trigger occurs. This defaults to 1"

@@ -75,9 +75,9 @@ locals {
   }
 
   data_factory = {
-    df                  = try(var.data_factory.df, {})
-    df_trigger_schedule = try(var.data_factory.df_trigger_schedule, {})
-    df_pipeline         = try(var.data_factory.df_pipeline, {})
+    data_factory                  = try(var.data_factory.data_factory, {})
+    data_factory_trigger_schedule = try(var.data_factory.data_factory_trigger_schedule, {})
+    data_factory_pipeline         = try(var.data_factory.data_factory_pipeline, {})
     datasets = {
       azure_blob       = try(var.data_factory.datasets.azure_blob, {})
       cosmosdb_sqlapi  = try(var.data_factory.datasets.cosmosdb_sqlapi, {})
@@ -87,6 +87,9 @@ locals {
       mysql            = try(var.data_factory.datasets.mysql, {})
       postgresql       = try(var.data_factory.datasets.postgresql, {})
       sql_server_table = try(var.data_factory.datasets.sql_server_table, {})
+    }
+    linked_services = {
+      linked_service_azure_blob_storage = try(var.data_factory.linked_services.linked_service_azure_blob_storage, {})
     }
   }
 

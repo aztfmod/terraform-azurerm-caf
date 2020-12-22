@@ -12,7 +12,7 @@ resource "azurerm_data_factory" "df" {
   name                = azurecaf_name.df.result
   resource_group_name = var.resource_group_name
   location            = var.location
-  
+
   dynamic "github_configuration" {
     for_each = try(var.github_configuration, null) != null ? [1] : []
 
