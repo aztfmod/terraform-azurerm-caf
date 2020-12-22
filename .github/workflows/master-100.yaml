@@ -37,7 +37,7 @@ jobs:
           random_length: ['5']
 
     container:
-      image: aztfmod/rover:2011.3012
+      image: aztfmod/rover:2012.1109
       options: --user 0
 
     steps:
@@ -47,7 +47,7 @@ jobs:
         with:
           repository: Azure/caf-terraform-landingzones
           path: public
-          ref: 'integration'
+          ref: '2012.1.0'
 
       - name: Login azure
         run: |
@@ -86,6 +86,7 @@ jobs:
             "compute/availability_set/100-simple-availabilityset",
             "compute/availability_set/101-availabilityset-with-proximity-placement-group",
             "compute/container_registry/100-simple-acr",
+            "compute/kubernetes_services/101-single-cluster",
             "compute/proximity_placement_group",
             "compute/virtual_machine/100-single-linux-vm",
             "compute/virtual_machine/101-single-windows-vm",
@@ -106,14 +107,20 @@ jobs:
             "mysql_server/101-vnet-rule-mysql",
             "mysql_server/102-private-endpoint-mysql",
             "mysql_server/103-private-endpoint-with-fw-rule-mysql",
+            "networking/dns_zones/100-simple-dns_zone",
+            "networking/front_door/100-simple-front_door",
             "networking/private_dns/100-private-dns-vnet-links",
             "networking/private_links/endpoints/centralized",
             "networking/virtual_network/100-subnet-delegation",
             "networking/virtual_network/101-vnet-peering-nsg",
-            "networking/virtual_network_gateway",
+            "networking/virtual_network_gateway/103-vpn-site-to-site-connection",
             "networking/virtual_wan/100-vwan-multi-hubs",
             "networking/virtual_wan/101-vwan-multi-hubs-firewalls",
             # "networking/virtual_wan/102-vwan-multi-hubs-gw",
+            "postgresql_server/100-simple-postgresql",
+            "postgresql_server/101-vnet-rule-postgresql",
+            "postgresql_server/102-private-endpoint-postgresql",
+            "postgresql_server/103-private-endpoint-with-fw-rule",
             "recovery_vault/101-simple-asrv",
             "recovery_vault/102-asr-protection",
             "recovery_vault/103-asr-with-private-endpoint",
@@ -127,7 +134,7 @@ jobs:
           ]
 
     container:
-      image: aztfmod/rover:2011.3012
+      image: aztfmod/rover:2012.1109
       options: --user 0
 
     steps:
@@ -171,7 +178,7 @@ jobs:
           region: ["southeastasia"]
 
     container:
-      image: aztfmod/rover:2011.3012
+      image: aztfmod/rover:2012.1109
       options: --user 0
 
     steps:
@@ -179,7 +186,7 @@ jobs:
         with:
           repository: Azure/caf-terraform-landingzones
           path: public
-          ref: 'integration'
+          ref: '2012.1.0'
 
       - name: Login azure
         run: |
