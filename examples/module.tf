@@ -63,6 +63,7 @@ module "caf" {
     cosmos_dbs                        = var.cosmos_dbs
     databricks_workspaces             = var.databricks_workspaces
     machine_learning_workspaces       = var.machine_learning_workspaces
+    mariadb_servers                   = var.mariadb_servers
     mssql_servers                     = var.mssql_servers
     mssql_managed_instances           = var.mssql_managed_instances
     mssql_managed_instances_secondary = var.mssql_managed_instances_secondary
