@@ -107,6 +107,12 @@ variable mssql_managed_databases_restore {
 variable mssql_elastic_pools {
   default = {}
 }
+variable mariadb_servers {
+  default = {}
+}
+variable mariadb_databases {
+  default = {}
+}
 variable mssql_failover_groups {
   default = {}
 }

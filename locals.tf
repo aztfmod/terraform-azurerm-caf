@@ -65,6 +65,8 @@ locals {
     cosmos_dbs                        = try(var.database.cosmos_dbs, {})
     databricks_workspaces             = try(var.database.databricks_workspaces, {})
     machine_learning_workspaces       = try(var.database.machine_learning_workspaces, {})
+    mariadb_servers                   = try(var.database.mariadb_servers, {})
+    mariadb_databases                 = try(var.database.mariadb_databases, {})
     mssql_servers                     = try(var.database.mssql_servers, {})
     mssql_managed_instances           = try(var.database.mssql_managed_instances, {})
     mssql_managed_instances_secondary = try(var.database.mssql_managed_instances_secondary, {})
