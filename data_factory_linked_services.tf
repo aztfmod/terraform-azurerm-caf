@@ -17,7 +17,7 @@ module "data_factory_linked_service_azure_blob_storage" {
   annotations              = try(each.value.annotations, null)
   parameters               = try(each.value.parameters, null)
   additional_properties    = try(each.value.additional_properties, null)
-  connection_string        = try(each.value.connection_string, null)
+  connection_string        = module.storage_accounts[each.value.storage_account_key].primary_connection_string
   # global_settings          = local.global_settings
   # base_tags                = try(local.global_settings.inherit_tags, false) ? module.resource_groups[each.value.resource_group_key].tags : {}
   # tags                     = try(each.value.tags, null)
