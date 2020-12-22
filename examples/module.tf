@@ -11,6 +11,7 @@ module "caf" {
   storage_accounts             = var.storage_accounts
   azuread_groups               = var.azuread_groups
   azuread_roles                = var.azuread_roles
+  tags                         = local.tags
   keyvaults                    = var.keyvaults
   keyvault_access_policies     = var.keyvault_access_policies
   keyvault_certificate_issuers = var.keyvault_certificate_issuers
