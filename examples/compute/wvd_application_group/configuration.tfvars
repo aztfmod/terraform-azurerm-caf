@@ -22,6 +22,7 @@ wvd_application_groups = {
     name                = "firsthp"
     friendly_name      = "FriendlyName"
     description        = "A description of my workspace"
+    #Type of Virtual Desktop Application Group. Valid options are RemoteApp or Desktop.
     type          = "RemoteApp"
     
   }
