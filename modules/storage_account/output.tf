@@ -34,3 +34,8 @@ output data_lake_filesystems {
 output primary_access_key {
   value = azurerm_storage_account.stg.primary_access_key
 }
+
+output primary_connection_string {
+  value = azurerm_storage_account.stg.primary_connection_string 
+  sensitive = true
+}

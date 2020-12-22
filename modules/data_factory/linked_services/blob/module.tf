@@ -7,5 +7,5 @@ resource "azurerm_data_factory_linked_service_azure_blob_storage" "linked_servic
   annotations              = try(var.annotations, null)
   parameters               = try(var.parameters, null)
   additional_properties    = try(var.additional_properties, null)
-  connection_string        = try(var.connection_string, null)
+  connection_string        = var.connection_string
 }
