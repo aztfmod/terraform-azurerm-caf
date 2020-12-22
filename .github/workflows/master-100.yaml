@@ -67,7 +67,7 @@ jobs:
             '-var random_length=${{ matrix.random_length }}' \
             '-var prefix=g${{ github.run_id }}' \
             '-var regions={region1="${{ matrix.region }}"}' \
-            '-var tags={testing_job_id="${{ github.run_id }}"}'
+            '-var tags={environment="${{ github.run_id }}"}'
 
 
   examples:
@@ -152,7 +152,8 @@ jobs:
             -tfstate $(basename ${{ matrix.config_files }}).tfstate \
             -var-folder ${GITHUB_WORKSPACE}/examples/${{ matrix.config_files }} \
             -var var_folder_path="${GITHUB_WORKSPACE}/examples/${{ matrix.config_files }}" \
-            --environment ${{ github.run_id }}
+            --environment ${{ github.run_id }} \
+            '-var tags={environment="${{ github.run_id }}"}'
 
       - name: destroy example
         if: always()
@@ -206,7 +207,7 @@ jobs:
             -parallelism=30 \
             '-var prefix=g${{ github.run_id }}' \
             '-var regions={region1="${{ matrix.region }}"}' \
-            '-var tags={testing_job_id="${{ github.run_id }}"}' \
+            '-var tags={environment="${{ github.run_id }}"}' \
             -auto-approve
 
 
