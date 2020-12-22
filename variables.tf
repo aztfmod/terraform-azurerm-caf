@@ -85,6 +85,10 @@ variable event_hub_namespaces {
   default = {}
 }
 
+variable subnet_id {
+  default = {}
+}
+
 variable user_type {
   description = "The rover set this value to user or serviceprincipal. It is used to handle Azure AD api consents."
   default     = {}
