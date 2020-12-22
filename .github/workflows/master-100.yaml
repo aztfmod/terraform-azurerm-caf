@@ -67,7 +67,7 @@ jobs:
             '-var random_length=${{ matrix.random_length }}' \
             '-var prefix=g${{ github.run_id }}' \
             '-var regions={region1="${{ matrix.region }}"}' \
-            '-var tags={testing_job_id="${{ github.run_id }}"}'
+            '-var tags={environment="${{ github.run_id }}"}'
 
 
   examples:
@@ -103,10 +103,14 @@ jobs:
             "machine_learning/101-aml-vnet",
             "monitoring/service_health_alerts",
             "mssql_server/elastic_pools",
+            "mysql_server/100-simple-mysql",
+            "mysql_server/101-vnet-rule-mysql",
+            "mysql_server/102-private-endpoint-mysql",
+            "mysql_server/103-private-endpoint-with-fw-rule-mysql",
             "networking/dns_zones/100-simple-dns_zone",
             "networking/front_door/100-simple-front_door",
             "networking/private_dns/100-private-dns-vnet-links",
-            # "networking/private_links/endpoints/centralized",  # Requires launchpad scenario 200
+            "networking/private_links/endpoints/centralized",
             "networking/virtual_network/100-subnet-delegation",
             "networking/virtual_network/101-vnet-peering-nsg",
             "networking/virtual_network_gateway/103-vpn-site-to-site-connection",
@@ -148,7 +152,8 @@ jobs:
             -tfstate $(basename ${{ matrix.config_files }}).tfstate \
             -var-folder ${GITHUB_WORKSPACE}/examples/${{ matrix.config_files }} \
             -var var_folder_path="${GITHUB_WORKSPACE}/examples/${{ matrix.config_files }}" \
-            --environment ${{ github.run_id }}
+            --environment ${{ github.run_id }} \
+            '-var tags={environment="${{ github.run_id }}"}'
 
       - name: destroy example
         if: always()
@@ -202,7 +207,7 @@ jobs:
             -parallelism=30 \
             '-var prefix=g${{ github.run_id }}' \
             '-var regions={region1="${{ matrix.region }}"}' \
-            '-var tags={testing_job_id="${{ github.run_id }}"}' \
+            '-var tags={environment="${{ github.run_id }}"}' \
             -auto-approve
 
 

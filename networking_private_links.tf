@@ -17,6 +17,7 @@ module private_endpoints {
 
     event_hub_namespaces = local.combined_objects_event_hub_namespaces
     keyvaults            = local.combined_objects_keyvaults
+    mysql_servers        = local.combined_objects_mysql_servers
     mssql_servers        = local.combined_objects_mssql_servers
     networking           = local.combined_objects_networking
     recovery_vaults      = local.combined_objects_recovery_vaults

@@ -75,6 +75,8 @@ locals {
     mssql_failover_groups             = try(var.database.mssql_failover_groups, {})
     mssql_mi_failover_groups          = try(var.database.mssql_mi_failover_groups, {})
     mssql_mi_administrators           = try(var.database.mssql_mi_administrators, {})
+    mysql_servers                     = try(var.database.mysql_servers, {})
+    mysql_databases                   = try(var.database.mysql_databases, {})
     postgresql_servers                = try(var.database.postgresql_servers, {})
     synapse_workspaces                = try(var.database.synapse_workspaces, {})
   }

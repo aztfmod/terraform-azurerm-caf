@@ -18,7 +18,7 @@ keyvaults = {
 
     network = {
       bypass         = "AzureServices"
-      default_action = "Deny"
+      default_action = "Allow"
     }
 
   }
