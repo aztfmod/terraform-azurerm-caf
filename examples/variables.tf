@@ -263,3 +263,7 @@ variable private_endpoints {
 variable local_network_gateways {
   default = {}
 }
+
+variable automations {
+  default = {}
+}
