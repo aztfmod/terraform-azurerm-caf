@@ -81,6 +81,7 @@ module "caf" {
   shared_services = {
     monitoring      = var.monitoring
     recovery_vaults = var.recovery_vaults
+    automations     = var.automations
   }
 
   security = {
