@@ -23,6 +23,8 @@ wvd_host_pools = {
     description        = "A description of my workspace"
     validate_environment     = true
     type                     = "Pooled"
+    #Option to specify the preferred Application Group type for the Virtual Desktop Host Pool. Valid options are None, Desktop or RailApplications.
+    preferred_app_group_type = "Desktop"
     maximum_sessions_allowed = 50
     load_balancer_type       = "DepthFirst"
     registration_info = {
