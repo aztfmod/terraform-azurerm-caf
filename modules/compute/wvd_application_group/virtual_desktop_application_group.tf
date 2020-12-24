@@ -34,7 +34,7 @@
 # }
 
 
-resource "azurerm_virtual_desktop_application_group" "remoteapp" {
+resource "azurerm_virtual_desktop_application_group" "appgroup" {
   name                = var.settings.name
   location            = var.location
   resource_group_name = var.resource_group_name  
@@ -43,5 +43,10 @@ resource "azurerm_virtual_desktop_application_group" "remoteapp" {
   type                     = var.settings.type
   host_pool_id             = var.host_pool_id
   tags = local.tags
+}
+
+resource "azurerm_virtual_desktop_workspace_application_group_association" "workspaceremoteapp" {
+  workspace_id         = var.workspace_id
+  application_group_id = azurerm_virtual_desktop_application_group.appgroup.id
 }
 

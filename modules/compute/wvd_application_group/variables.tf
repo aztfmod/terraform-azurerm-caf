@@ -14,3 +14,6 @@ variable name {
 variable host_pool_id {
   default = {}
 }
+variable workspace_id {
+  default = {}
+}
