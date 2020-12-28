@@ -10,6 +10,8 @@ module "caf" {
   resource_groups              = var.resource_groups
   storage_accounts             = var.storage_accounts
   azuread_groups               = var.azuread_groups
+  azuread_apps                 = var.azuread_apps
+  azuread_users                = var.azuread_users
   azuread_roles                = var.azuread_roles
   tags                         = local.tags
   keyvaults                    = var.keyvaults
