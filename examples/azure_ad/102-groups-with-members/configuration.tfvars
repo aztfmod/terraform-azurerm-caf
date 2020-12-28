@@ -45,7 +45,7 @@ role_mapping = {
       # subcription level access
       logged_in_subscription = {
         "Contributor" = {
-          azuread_users = {
+          azuread_groups = {
             keys = ["user1"]
            }
         }

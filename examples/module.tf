@@ -59,6 +59,11 @@ module "caf" {
     dns_zones                            = var.dns_zones
     private_endpoints                    = var.private_endpoints
     local_network_gateways               = var.local_network_gateways
+    azurerm_firewalls                    = var.azurerm_firewalls
+    azurerm_firewall_network_rule_collection_definition      = var.azurerm_firewall_network_rule_collection_definition
+    azurerm_firewall_application_rule_collection_definition  = var.azurerm_firewall_application_rule_collection_definition
+    azurerm_firewall_nat_rule_collection_definition          = var.azurerm_firewall_nat_rule_collection_definition
+
   }
   database = {
     azurerm_redis_caches              = var.azurerm_redis_caches
