@@ -267,3 +267,15 @@ variable local_network_gateways {
 variable automations {
   default = {}
 }
+
+variable keyvault_access_policies_azuread_apps {
+  default = {}
+}
+
+variable azuread_apps {
+  default = {}
+}
+
+variable azuread_users {
+  default = {}
+}
