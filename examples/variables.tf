@@ -279,3 +279,19 @@ variable azuread_apps {
 variable azuread_users {
   default = {}
 }
+
+variable azurerm_firewalls {
+  default = {}
+}
+
+variable azurerm_firewall_network_rule_collection_definition {
+  default = {}
+}
+
+variable azurerm_firewall_application_rule_collection_definition {
+  default = {}
+}
+
+variable azurerm_firewall_nat_rule_collection_definition {
+  default = {}
+}
