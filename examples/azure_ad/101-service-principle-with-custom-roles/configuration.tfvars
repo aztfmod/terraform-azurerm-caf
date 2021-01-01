@@ -30,7 +30,6 @@ keyvault_access_policies_azuread_apps = {
 }
 
 
-
 custom_role_definitions = {
   test_client = {
     name        = "test-client"
@@ -123,28 +122,18 @@ azuread_apps = {
   }
 }
 
-
-
 role_mapping = {
-  built_in_role_mapping = {
+  custom_role_mapping = {
     subscriptions = {
-      # subcription level access
       logged_in_subscription = {
-        "Contributor" = {
+        "test_client" = {
           azuread_apps = {
             keys = ["test_client"]
-           }
+          }
         }
       }
     }
   }
 }
 
-azuread_roles = {
-  packer_client = {
-    roles = [
-      "Contributor"
-    ]
-  }
-}
 
