@@ -18,6 +18,5 @@ vnets = {
         nsg_key = "windows_server"
       }
     }
-
   }
 }
