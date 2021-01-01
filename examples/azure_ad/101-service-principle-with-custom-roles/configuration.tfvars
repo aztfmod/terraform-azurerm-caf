@@ -5,7 +5,7 @@ resource_groups = {
 }
 
 keyvaults = {
-  test_client = {
+  test_client = { #KeyVault Key
     name                = "testkv"
     resource_group_key  = "test"
     sku_name            = "standard"
@@ -22,30 +22,22 @@ keyvaults = {
 
 keyvault_access_policies_azuread_apps = {
   test_client  = {
-    test_client = {
+    test_client = {  #KeyVault Key
       azuread_app_key    = "test_client"
       secret_permissions = ["Set", "Get", "List", "Delete"]
     }
   }
 }
 
+# Complete list of Provider Operations : https://docs.microsoft.com/en-us/azure/role-based-access-control/resource-provider-operations
 
 custom_role_definitions = {
-  test_client = {
-    name        = "test-client"
+  test_role = {
+    name        = "test_role"
     useprefix   = true
     description = "custom permissions for the app"
     permissions = {
       actions = [
-        "Microsoft.Authorization/roleAssignments/delete",
-        "Microsoft.Authorization/roleAssignments/read",
-        "Microsoft.Authorization/roleAssignments/write",
-        "Microsoft.Authorization/roleDefinitions/delete",
-        "Microsoft.Authorization/roleDefinitions/read",
-        "Microsoft.Authorization/roleDefinitions/write",
-        "microsoft.insights/diagnosticSettings/delete",
-        "microsoft.insights/diagnosticSettings/read",
-        "microsoft.insights/diagnosticSettings/write",
         "Microsoft.KeyVault/vaults/delete",
         "Microsoft.KeyVault/vaults/read",
         "Microsoft.KeyVault/vaults/write",
@@ -83,33 +75,14 @@ custom_role_definitions = {
         "Microsoft.Network/virtualNetworks/write",
       ]
     }
-
   }
-
-  test-client2 = {
-    name        = "test-client2"
-    useprefix   = true
-    description = "more permissions"
-    permissions = {
-      actions = [
-        "Microsoft.Authorization/roleAssignments/delete",
-        "Microsoft.Authorization/roleAssignments/read",
-        "Microsoft.Authorization/roleAssignments/write",
-        "Microsoft.Authorization/roleDefinitions/delete",
-        "Microsoft.Authorization/roleDefinitions/read",
-        "Microsoft.Authorization/roleDefinitions/write",
-        "Microsoft.Resources/subscriptions/providers/read"
-      ]
-    }
-  }
-
 }
 
 
 azuread_apps = {
   test_client = {
     useprefix                    = true
-    application_name             = "test-client"
+    application_name             = "test_client"
     password_expire_in_days      = 1
     app_role_assignment_required = true
     keyvaults = {
@@ -126,7 +99,7 @@ role_mapping = {
   custom_role_mapping = {
     subscriptions = {
       logged_in_subscription = {
-        "test_client" = {
+        "test_role" = {
           azuread_apps = {
             keys = ["test_client"]
           }
@@ -134,6 +107,6 @@ role_mapping = {
       }
     }
   }
-}
 
+}
 

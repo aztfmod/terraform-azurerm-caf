@@ -280,6 +280,10 @@ variable azuread_users {
   default = {}
 }
 
+variable custom_role_definitions {
+  default = {}
+}
+
 variable azurerm_firewalls {
   default = {}
 }
