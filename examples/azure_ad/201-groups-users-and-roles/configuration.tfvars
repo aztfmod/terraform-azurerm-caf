@@ -1,0 +1,86 @@
+resource_groups = {
+  test = {
+    name = "test"
+  }
+}
+
+keyvaults = {
+  test_kv = {
+    name                = "testkv"
+    resource_group_key  = "test"
+    sku_name            = "standard"
+    soft_delete_enabled = true
+    creation_policies = {
+      logged_in_user = {
+        # if the key is set to "logged_in_user" add the user running terraform in the keyvault policy
+        # More examples in /examples/keyvault
+        secret_permissions = ["Set", "Get", "List", "Delete", "Purge", "Recover"]
+      }
+    }
+  }
+}
+
+azuread_apps = {
+  app1= {
+    useprefix                    = true
+    application_name             = "app1"
+    password_expire_in_days      = 180
+    app_role_assignment_required = true
+    keyvaults = {
+      test_client = {
+        secret_prefix = "app1"
+      }
+    }
+  }
+  app2= {
+    useprefix                    = true
+    application_name             = "app2"
+    password_expire_in_days      = 180
+    app_role_assignment_required = true
+    keyvaults = {
+      test_client = {
+        secret_prefix = "app2"
+      }
+    }
+  }  
+}
+
+azuread_groups = {
+  group1= {
+    name        = "group1"
+    description = "Apps with permissions"
+    members = {
+      user_principal_names = []
+      group_names = []
+      object_ids  = []
+      group_keys  = []
+      service_principal_keys = [
+        "app1"
+      ]
+
+    }
+    owners = {
+      user_principal_names = []
+      service_principal_keys = [
+        "app2"
+      ]
+    }
+    prevent_duplicate_name = false
+  }
+
+}
+
+role_mapping = {
+  built_in_role_mapping = {
+    subscriptions = {
+      # subcription level access
+      logged_in_subscription = {
+        "Contributor" = {
+          azuread_groups= {
+            keys = ["group1"]
+           }
+        }
+      }
+    }
+  }
+}

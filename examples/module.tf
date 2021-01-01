@@ -19,6 +19,7 @@ module "caf" {
   keyvault_certificate_issuers = var.keyvault_certificate_issuers
   managed_identities           = var.managed_identities
   role_mapping                 = var.role_mapping
+  custom_role_definitions      = var.custom_role_definitions
   log_analytics                = var.log_analytics
   event_hub_namespaces         = var.event_hub_namespaces
 

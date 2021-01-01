@@ -1,5 +1,5 @@
 resource_groups = {
-  test = {
+  test = {  #resource_group_key
     name = "test"
   }
 }
@@ -45,7 +45,7 @@ azuread_apps = {
   }
 }
 
-
+#complete list of built-in-roles : https://docs.microsoft.com/en-us/azure/role-based-access-control/built-in-roles
 
 role_mapping = {
   built_in_role_mapping = {
