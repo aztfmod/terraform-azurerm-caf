@@ -78,7 +78,7 @@ module "azurerm_data_factory_linked_service_azure_sql_database" {
   annotations              = try(each.value.annotations, null)
   parameters               = try(each.value.parameters, null)
   additional_properties    = try(each.value.additional_properties, null)
-  connection_string        = module.storage_accounts[each.value.storage_account_key].primary_connection_string
+  connection_string        = each.value.connection_string //Should reference sql_database output
 }
 
 output "azurerm_data_factory_linked_service_azure_sql_database" {
@@ -100,7 +100,11 @@ module "azurerm_data_factory_linked_service_cosmosdb" {
   annotations              = try(each.value.annotations, null)
   parameters               = try(each.value.parameters, null)
   additional_properties    = try(each.value.additional_properties, null)
-  connection_string        = module.storage_accounts[each.value.storage_account_key].primary_connection_string
+  // Below should be changed to output references
+  connection_string        = each.value.connection_string
+  account_endpoint         = each.value.account_endpoint
+  account_key              = each.value.account_key
+  database                 = each.value.database
 }
 
 output "azurerm_data_factory_linked_service_cosmosdb" {
@@ -121,7 +125,12 @@ module "azurerm_data_factory_linked_service_data_lake_storage_gen2" {
   annotations              = try(each.value.annotations, null)
   parameters               = try(each.value.parameters, null)
   additional_properties    = try(each.value.additional_properties, null)
-  connection_string        = module.storage_accounts[each.value.storage_account_key].primary_connection_string
+  // Below may need to be reviewed 
+  url                      = each.value.url
+  use_managed_identity     = try(each.value.use_managed_identity, false)
+  service_principal_id     = try(each.value.use_managed_identity, false) == true ? local.client_config.client_id : null
+  service_principal_key    = try(each.value.service_principal_key, null)
+  tenant                   = local.client_config.tenant_id
 }
 
 output "azurerm_data_factory_linked_service_data_lake_storage_gen2" {
@@ -143,6 +152,7 @@ module "azurerm_data_factory_linked_service_key_vault" {
   parameters               = try(each.value.parameters, null)
   additional_properties    = try(each.value.additional_properties, null)
   connection_string        = module.storage_accounts[each.value.storage_account_key].primary_connection_string
+  key_vault_id             = module.keyvaults[each.value.key_vault_key].id
 }
 
 output "azurerm_data_factory_linked_service_key_vault" {
@@ -164,7 +174,7 @@ module "azurerm_data_factory_linked_service_mysql" {
   annotations              = try(each.value.annotations, null)
   parameters               = try(each.value.parameters, null)
   additional_properties    = try(each.value.additional_properties, null)
-  connection_string        = module.storage_accounts[each.value.storage_account_key].primary_connection_string
+  connection_string        = each.value.connection_string //Might should reference module output
 }
 
 output "azurerm_data_factory_linked_service_mysql" {
@@ -186,7 +196,7 @@ module "azurerm_data_factory_linked_service_postgresql" {
   annotations              = try(each.value.annotations, null)
   parameters               = try(each.value.parameters, null)
   additional_properties    = try(each.value.additional_properties, null)
-  connection_string        = module.storage_accounts[each.value.storage_account_key].primary_connection_string
+  connection_string        = each.value.connection_string //Might should reference module output
 }
 
 output "azurerm_data_factory_linked_service_postgresql" {
@@ -208,7 +218,12 @@ module "azurerm_data_factory_linked_service_sftp" {
   annotations              = try(each.value.annotations, null)
   parameters               = try(each.value.parameters, null)
   additional_properties    = try(each.value.additional_properties, null)
-  connection_string        = module.storage_accounts[each.value.storage_account_key].primary_connection_string
+  //Below possibly should reference module output
+  authentication_type      = each.value.authentication_type
+  host                     = each.value.host
+  port                     = each.value.port
+  username                 = each.value.username
+  password                 = each.value.password
 }
 
 output "azurerm_data_factory_linked_service_sftp" {
@@ -229,7 +244,7 @@ module "azurerm_data_factory_linked_service_sql_server" {
   annotations              = try(each.value.annotations, null)
   parameters               = try(each.value.parameters, null)
   additional_properties    = try(each.value.additional_properties, null)
-  connection_string        = module.storage_accounts[each.value.storage_account_key].primary_connection_string
+  connection_string        = each.value.connection_string //Might should reference module output
 }
 
 output "azurerm_data_factory_linked_service_sql_server" {
@@ -251,7 +266,9 @@ module "azurerm_data_factory_linked_service_web" {
   annotations              = try(each.value.annotations, null)
   parameters               = try(each.value.parameters, null)
   additional_properties    = try(each.value.additional_properties, null)
-  connection_string        = module.storage_accounts[each.value.storage_account_key].primary_connection_string
+  //Below possibly should reference module output
+  authentication_type      = each.value.authentication_type
+  url                      = each.value.url
 }
 
 output "azurerm_data_factory_linked_service_web" {
