@@ -1,15 +1,20 @@
 output id {
-  value = azurerm_application_insights.appinsights.id
+  description = "The ID of the Application Insights component."
+  value       = azurerm_application_insights.appinsights.id
 }
 
 output app_id {
-  value = azurerm_application_insights.appinsights.app_id
+  description = "The App ID associated with this Application Insights component."
+  value       = azurerm_application_insights.appinsights.app_id
 }
 
 output instrumentation_key {
-  value = azurerm_application_insights.appinsights.instrumentation_key
+  description = "The Instrumentation Key for this Application Insights component."
+  value       = azurerm_application_insights.appinsights.instrumentation_key
 }
 
 output connection_string {
-  value = azurerm_application_insights.appinsights.connection_string
+  description = "The Connection String for this Application Insights component. (Sensitive)"
+  sensitive   = true
+  value       = azurerm_application_insights.appinsights.connection_string
 }

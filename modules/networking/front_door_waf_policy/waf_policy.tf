@@ -1,5 +1,5 @@
 resource "azurerm_frontdoor_firewall_policy" "wafpolicy" {
-  
+
   name                              = var.settings.name
   resource_group_name               = var.resource_group_name
   enabled                           = try(var.settings.enabled, true)

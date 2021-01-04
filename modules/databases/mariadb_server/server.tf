@@ -5,7 +5,7 @@ resource "azurerm_mariadb_server" "mariadb" {
 
   administrator_login          = var.settings.administrator_login
   administrator_login_password = try(var.settings.administrator_login_password, azurerm_key_vault_secret.mariadb_admin_password.0.value)
-  
+
   sku_name   = var.settings.sku_name
   storage_mb = var.settings.storage_mb
   version    = var.settings.version
@@ -22,13 +22,13 @@ resource "azurerm_mariadb_server" "mariadb" {
 
 # Generate mariadb server random admin password if not provided in the attribute administrator_login_password
 resource "random_password" "mariadb_admin" {
-  count = try(var.settings.administrator_login_password, null) == null ? 1 : 0
+  count            = try(var.settings.administrator_login_password, null) == null ? 1 : 0
   length           = 32
   special          = true
   upper            = true
   number           = true
   override_special = "_%@"
-    
+
 }
 
 # Store the generated password into keyvault
