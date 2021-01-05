@@ -15,9 +15,7 @@ variable access_policies {
   }
 }
 
-variable client_config {
-  default = {}
-}
+variable client_config {}
 variable azuread_groups {
   default = {}
 }

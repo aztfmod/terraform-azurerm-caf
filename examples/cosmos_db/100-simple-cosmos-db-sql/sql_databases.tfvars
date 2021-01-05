@@ -61,7 +61,7 @@ cosmos_dbs = {
             partition_key_path = "/definition/id"
             throughput         = 400
             unique_key = {
-              path     = ["/definition/idlong", "/definition/idshort"]
+              path = ["/definition/idlong", "/definition/idshort"]
             }
           }
         }

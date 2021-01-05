@@ -1,11 +1,11 @@
 module "caf" {
   source = "../../../"
 
-  global_settings             = var.global_settings
-  resource_groups             = var.resource_groups
-  azuread_groups              = var.azuread_groups
-  azuread_roles               = var.azuread_roles
-  
+  global_settings = var.global_settings
+  resource_groups = var.resource_groups
+  azuread_groups  = var.azuread_groups
+  azuread_roles   = var.azuread_roles
+
   networking = {
     vnets                             = var.vnets
     vnet_peerings                     = var.vnet_peerings

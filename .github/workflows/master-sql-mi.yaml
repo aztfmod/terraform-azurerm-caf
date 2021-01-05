@@ -46,7 +46,7 @@ jobs:
         with:
           repository: Azure/caf-terraform-landingzones
           path: public
-          ref: '2012.0.0'
+          ref: '2012.1.0'
 
       - name: Login azure
         run: |
@@ -133,7 +133,7 @@ jobs:
         with:
           repository: Azure/caf-terraform-landingzones
           path: public
-          ref: "2012.0.0"
+          ref: "2012.1.0"
 
       - name: Login azure
         run: |
