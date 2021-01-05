@@ -162,7 +162,7 @@ mssql_servers = {
     private_endpoints = {
       # Require enforce_private_link_endpoint_network_policies set to true on the subnet
       private-link-level4 = {
-        name = "sales-sql-rg1"
+        name               = "sales-sql-rg1"
         lz_key             = "launchpad"
         vnet_key           = "devops_region1"
         subnet_key         = "private_endpoints"
