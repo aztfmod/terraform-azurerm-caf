@@ -10,6 +10,6 @@ module dns_zones {
 }
 
 output dns_zones {
-  value       = module.dns_zones
+  value = module.dns_zones
 }
 

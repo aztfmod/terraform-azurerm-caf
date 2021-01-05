@@ -8,6 +8,9 @@ variable global_settings {}
 variable keyvault_id {
   default = {}
 }
+variable keyvault_certificate_requests {
+  default = {}
+}
 variable resource_group_name {}
 variable settings {}
 variable tags {

@@ -8,5 +8,13 @@ output mssql_managed_instances {
 }
 
 output dns_zones {
-  value       = module.caf.dns_zones
+  value = module.caf.dns_zones
+}
+
+output keyvault_certificates {
+  value = module.caf.keyvault_certificates
+}
+
+output keyvault_certificate_requests {
+  value = module.caf.keyvault_certificate_requests
 }
