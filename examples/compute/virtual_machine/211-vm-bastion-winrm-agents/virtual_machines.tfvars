@@ -93,7 +93,7 @@ virtual_machines = {
         admin_password_key = "vm-win-admin-password"
 
         # Value of the nic keys to attach the VM. The first one in the list is the default nic
-        network_interface_keys = ["nic0","nic1"]
+        network_interface_keys = ["nic0", "nic1"]
 
         zone = "1"
 

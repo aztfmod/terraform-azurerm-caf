@@ -1,8 +1,8 @@
 dns_zones = {
   dns_zone1 = {
-    name                = ""                    // When left empty generate a random domain name. Mainly used in CI
-    region              = "region1"
-    resource_group_key  = "front_door"
+    name               = "" // When left empty generate a random domain name. Mainly used in CI
+    region             = "region1"
+    resource_group_key = "front_door"
 
     contract = {
       name_first   = "John"

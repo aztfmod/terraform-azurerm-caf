@@ -3,5 +3,5 @@ output id {
 }
 
 output name {
-  value       = azurerm_key_vault_certificate_issuer.keycertisr.name
+  value = azurerm_key_vault_certificate_issuer.keycertisr.name
 }
