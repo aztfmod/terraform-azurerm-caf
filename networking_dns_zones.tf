@@ -9,4 +9,7 @@ module dns_zones {
   base_tags           = try(local.global_settings.inherit_tags, false) ? module.resource_groups[each.value.resource_group_key].tags : {}
 }
 
+output dns_zones {
+  value       = module.dns_zones
+}
 
