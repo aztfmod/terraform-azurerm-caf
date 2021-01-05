@@ -106,13 +106,13 @@ front_doors = {
           #
           #### Or if created from CAF module
           #
-          certificate = {
-            key = "crm_application"
-            # lz_key = ""
-          }
+          # certificate = {
+          #   key = "sales_application"
+          #   # lz_key = ""
+          # }
         }
         front_door_waf_policy_key = "wp1"
-        lz_key                    = ""
+        # lz_key                    = ""
       }
     }
 
