@@ -13,10 +13,27 @@ resource "azurerm_virtual_network_gateway" "vngw" {
   location            = var.location
   resource_group_name = var.resource_group_name
   type                = var.settings.type #ExpressRoute or VPN
-  sku                 = var.settings.sku
+  # ExpressRoute SKUs : Basic, Standard, HighPerformance, UltraPerformance
+  # VPN SKUs : Basic, VpnGw1, VpnGw2, VpnGw3, VpnGw4,VpnGw5, VpnGw1AZ, VpnGw2AZ, VpnGw3AZ,VpnGw4AZ and VpnGw5AZ
+  # SKUs are subject to change. Check Documentation page for updated information
+  # The following options may change depending upon SKU type. Check product documentation
+  sku = var.settings.sku
+
+  #Create multiple IPs only if active-active mode is enabled.
+  dynamic "ip_configuration" {
+    for_each = try(var.settings.ip_configuration, {})
+    content {
+      name                          = ip_configuration.value.ipconfig_name
+      public_ip_address_id          = lookup(ip_configuration.value, "public_ip_address_key", null) == null ? null : try(var.public_ip_addresses[var.client_config.landingzone_key][ip_configuration.value.public_ip_address_key].id, var.public_ip_addresses[ip_configuration.value.lz_key][ip_configuration.value.public_ip_address_key].id)
+      private_ip_address_allocation = ip_configuration.value.private_ip_address_allocation
+      subnet_id                     = try(var.vnets[var.client_config.landingzone_key][ip_configuration.value.vnet_key].subnets["GatewaySubnet"].id, var.vnets[ip_configuration.value.lz_key][ip_configuration.value.vnet_key].subnets["GatewaySubnet"].id)
+    }
+  }
 
   active_active = try(var.settings.active_active, null)
   enable_bgp    = try(var.settings.enable_bgp, null)
+  #vpn_type defaults to 'RouteBased'. Type 'PolicyBased' supported only by Basic SKU
+  vpn_type = try(var.settings.vpn_type, null)
 
   dynamic "bgp_settings" {
     for_each = try(var.settings.bgp_settings, {})
@@ -24,16 +41,6 @@ resource "azurerm_virtual_network_gateway" "vngw" {
       asn             = each.value.asn
       peering_address = each.value.peering_address
       peer_weight     = each.value.peer_weight
-    }
-  }
-
-  dynamic "ip_configuration" {
-    for_each = try(var.settings.ip_configuration, {})
-    content {
-      name                          = ip_configuration.value.ipconfig_name
-      public_ip_address_id          = try(var.public_ip_addresses[var.client_config.landingzone_key][ip_configuration.value.public_ip_address_key].id, var.public_ip_addresses[ip_configuration.value.lz_key][ip_configuration.value.public_ip_address_key].id)
-      private_ip_address_allocation = ip_configuration.value.private_ip_address_allocation
-      subnet_id                     = try(var.vnets[var.client_config.landingzone_key][ip_configuration.value.vnet_key].subnets["GatewaySubnet"].id, var.vnets[ip_configuration.value.lz_key][ip_configuration.value.vnet_key].subnets["GatewaySubnet"].id)
     }
   }
 
@@ -45,19 +52,3 @@ resource "azurerm_virtual_network_gateway" "vngw" {
   tags = local.tags
 
 }
-#### In development. VPN Type will be supported soon ####
-#
-#   vpn_type = " "
-#   vpn_client_configuration {
-#     address_space = [" "]
-#     root_certificate {
-#       name = " "
-#       public_cert_data = <<EOF
-#       EOF
-#     }
-#     revoked_certificate {
-#       name       = " "
-#       thumbprint = " "
-#     }
-#   }
-# }
