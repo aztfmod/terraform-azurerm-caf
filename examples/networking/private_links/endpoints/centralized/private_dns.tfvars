@@ -10,11 +10,6 @@ private_dns = {
         vnet_key = "vnet_01"
       }
 
-      # launchpad = {
-      #   name     = "launchpad-devops_region1"
-      #   vnet_key = "devops_region1"
-      #   lz_key   = "launchpad"
-      # }
     }
   }
 }

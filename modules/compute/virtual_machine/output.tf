@@ -13,21 +13,21 @@ output internal_fqdns {
 }
 
 output admin_username {
-  value       = try(local.admin_user, null) == null ? var.settings.virtual_machine_settings[local.os_type].admin_username : local.admin_user
+  value       = try(local.admin_username, null) == null ? var.settings.virtual_machine_settings[local.os_type].admin_username : local.admin_username
   description = "Local admin username"
 }
 
 
 output winrm {
   value = local.os_type == "windows" ? {
-    keyvault_id     = local.keyvault_id
+    keyvault_id     = local.keyvault.id
     certificate_url = try(azurerm_key_vault_certificate.self_signed_winrm[local.os_type].secret_id, null)
   } : null
 }
 
 output ssh_keys {
   value = local.os_type == "linux" ? {
-    keyvault_id              = local.keyvault_id
+    keyvault_id              = local.keyvault.id
     ssh_private_key_pem      = azurerm_key_vault_secret.ssh_private_key[local.os_type].name
     ssh_private_key_open_ssh = azurerm_key_vault_secret.ssh_public_key_openssh[local.os_type].name
   } : null
