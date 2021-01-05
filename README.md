@@ -15,7 +15,7 @@ It can be invoked from the [Terraform registry](https://registry.terraform.io/mo
 ```terraform
 module "caf" {
   source  = "aztfmod/caf/azurerm"
-  version = "~>0.4"
+  version = "~>4.21"
   # insert the 7 required variables here
 }
 ```

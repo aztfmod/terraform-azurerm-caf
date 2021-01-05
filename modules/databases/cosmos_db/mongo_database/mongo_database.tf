@@ -42,7 +42,7 @@ resource "azurerm_cosmosdb_mongo_collection" "collection" {
     for_each = try(each.value.indexes, {})
 
     content {
-      keys = index.value.keys
+      keys   = index.value.keys
       unique = try(index.value.unique, false)
     }
   }

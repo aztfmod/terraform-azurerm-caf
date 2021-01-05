@@ -26,6 +26,7 @@ rover \
   -lz /tf/caf/aztfmod/examples \
   -var-folder /tf/caf/aztfmod/examples/compute/virtual_machine/211-vm-bastion-winrm-agents \
   -var var_folder_path="/tf/caf/aztfmod/examples/compute/virtual_machine/211-vm-bastion-winrm-agents" \
+  -level level1 \
   -a plan
-  
+
 ```
