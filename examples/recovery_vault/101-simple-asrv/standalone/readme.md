@@ -1,7 +1,7 @@
 You can test this module outside of a landingzone using
 
 ```bash
-cd /tf/caf/examples/mysql_server/100-simple-mysql/standalone
+cd /tf/caf/examples/recovery_vault/101-simple-asrv/standalone
 
 terraform init
 
@@ -16,7 +16,7 @@ To test this deployment in the example landingzone. Make sure the launchpad has 
 
 rover \
   -lz /tf/caf/aztfmod/examples \
-  -var-folder  /tf/caf/examples/mysql_server/100-simple-mysql/standalone/ \
+  -var-folder  /tf/caf/examples/recovery_vault/101-simple-asrv/ \
   -level level1 \
   -a plan
 
