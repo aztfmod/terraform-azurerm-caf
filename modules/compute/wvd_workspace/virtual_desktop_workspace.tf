@@ -1,5 +1,5 @@
-# resource "azurecaf_name" "wvd" {
-
+# TODO: pending support of this resource type: https://github.com/aztfmod/terraform-provider-azurecaf/issues/76
+# resource "azurecaf_name" "wvdws" {
 #   name          = var.name
 #   resource_type = "azurerm_virtual_desktop_workspace"
 #   prefixes      = [var.global_settings.prefix]
@@ -9,13 +9,15 @@
 #   use_slug      = var.global_settings.use_slug
 # }
 
-resource "azurerm_virtual_desktop_workspace" "wvd" {
+resource "azurerm_virtual_desktop_workspace" "wvdws" {
+  #TODO: pending support of this resource type: https://github.com/aztfmod/terraform-provider-azurecaf/issues/76
+  #name = azurecaf_name.wvdws.result
   name                = var.settings.name
   location            = var.location
   resource_group_name = var.resource_group_name
 
   friendly_name = try(var.settings.friendly_name, null)
   description   = try(var.settings.description, null)
-  tags = local.tags
+  tags          = local.tags
 }
 
