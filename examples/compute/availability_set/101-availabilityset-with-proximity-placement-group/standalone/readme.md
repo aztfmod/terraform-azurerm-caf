@@ -8,8 +8,6 @@ terraform init
 terraform plan \
   -var-file ../configuration.tfvars 
 
-Note : Change the custom_data path in the configuration file, relative to the path currently you are in. It wil error out otherwise.
-
 ```
 
 To test this deployment in the example landingzone. Make sure the launchpad has been deployed first

@@ -13,7 +13,6 @@ terraform plan \
   -var-file ../networking.tfvars  \
   -var-file ../vm.tfvars
 
-Note : Change the custom_data path in the configuration file of the VM, relative to the path currently you are in. It wil error out otherwise.
 ```
 
 To test this deployment in the example landingzone. Make sure the launchpad has been deployed first
