@@ -1,5 +1,6 @@
 # Global settings
 variable global_settings {
+  description = "Global settings object for the current deployment."
   default = {
     passthrough    = false
     random_length  = 4
@@ -12,23 +13,33 @@ variable global_settings {
 }
 
 variable tenant_id {
-  default = null
+  description = "Azure AD Tenant ID for the current deployment."
+  default     = null
 }
 
 variable current_landingzone_key {
-  default = "standalone"
+  description = "Key for the current landing zones where the deployment is executed. Used in the context of landing zone deployment."
+  default     = "standalone"
+  type        = string
 }
 
 variable tfstates {
-  default = {}
+  description = "Terraform states configuration object. Used in the context of landing zone deployment."
+  default     = {}
 }
 
 variable enable {
-  description = "Map of services defined in the configuration file you want to disable during a deployment"
-  default     = {}
+  description = "Map of services defined in the configuration file you want to disable during a deployment."
+  default = {
+    # bastion_hosts    = true
+    # virtual_machines = true
+  }
 }
+
 variable environment {
-  default = "sandpit"
+  description = "Name of the CAF environment."
+  type        = string
+  default     = "sandpit"
 }
 
 variable logged_user_objectId {
@@ -41,16 +52,19 @@ variable logged_aad_app_objectId {
 }
 
 variable use_msi {
-  default = false
+  description = "Deployment using an MSI for authentication."
+  default     = false
+  type        = bool
 }
 
 variable tags {
-  type    = map
-  default = null
+  description = "Tags to be used for this resource deployment."
+  type        = map
+  default     = null
 }
 
 variable resource_groups {
-  description = "Name of the existing resource group to deploy the virtual machine"
+  description = "Resource groups configuration objects"
   default     = {}
 }
 
@@ -117,25 +131,33 @@ variable azuread_api_permissions {
 
 ## Compute variables
 variable compute {
-  description = "Compute object"
+  description = "Compute configuration objects"
   default = {
     virtual_machines = {}
   }
 }
 
 variable webapp {
-  default = {}
+  description = "Web applications configuration objects"
+  default = {
+    # app_services                 = {}
+    # app_service_environments     = {}
+    # app_service_plans            = {}
+    # azurerm_application_insights = {}
+  }
 }
 
 
 ## Databases variables
 variable database {
-  default = {}
+  description = "Database configuration objects"
+  default     = {}
 }
 
 ## Networking variables
 variable networking {
-  default = {}
+  description = "Networking configuration objects"
+  default     = {}
 }
 
 ## Security variables
@@ -144,11 +166,13 @@ variable security {
 }
 
 variable managed_identities {
-  default = {}
+  description = "Managed Identity configuration objects"
+  default     = {}
 }
 
 variable keyvaults {
-  default = {}
+  description = "Key Vault configuration objects"
+  default     = {}
 }
 
 variable keyvault_access_policies {
@@ -160,7 +184,8 @@ variable keyvault_access_policies_azuread_apps {
 }
 
 variable custom_role_definitions {
-  default = {}
+  description = "Custom role definitions configuration objects"
+  default     = {}
 }
 variable role_mapping {
   default = {
@@ -178,7 +203,8 @@ variable storage_accounts {
   default = {}
 }
 variable storage {
-  default = {}
+  description = "Storage configuration objects"
+  default     = {}
 }
 variable diagnostic_storage_accounts {
   default = {}
@@ -186,19 +212,14 @@ variable diagnostic_storage_accounts {
 
 # Shared services
 variable shared_services {
-  default = {}
+  description = "Shared services configuration objects"
+  default = {
+    # automations = {}
+    # monitoring = {}
+    # recovery_vaults = {}
+  }
 }
 
-variable monitoring {
-  default = {}
-}
 variable keyvault_certificate_issuers {
-  default = {}
-}
-variable cosmos_dbs {
-  default = {}
-}
-
-variable local_network_gateways {
   default = {}
 }
