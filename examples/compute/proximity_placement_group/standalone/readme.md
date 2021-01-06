@@ -1,7 +1,7 @@
 You can test this module outside of a landingzone using
 
 ```
-cd /tf/caf/examples/compute/availability_set/101-availabilityset-with-proximity-placement-group/standalone
+cd /tf/caf/examples/compute/proximity_placement_group/standalone
 
 terraform init
 
@@ -18,7 +18,7 @@ To test this deployment in the example landingzone. Make sure the launchpad has 
 
 rover \
   -lz /tf/caf/aztfmod/examples \
-  -var-folder  /tf/caf/examples/compute/availability_set/101-availabilityset-with-proximity-placement-group/ \
+  -var-folder  /tf/caf/examples/compute/proximity_placement_group/ \
   -level level1 \
   -a plan
 
