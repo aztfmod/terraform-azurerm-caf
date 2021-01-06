@@ -10,15 +10,11 @@ variable vnets {
   default = {}
 }
 
-variable keyvaults {
-  default = {}
-}
-
 variable tags {
   default = {}
 }
 
-variable availability_sets  {
+variable proximity_placement_groups {
   default = {}
 }
 
@@ -26,7 +22,7 @@ variable virtual_machines {
   default = {}
 }
 
-variable proximity_placement_groups {
+variable keyvaults  {
   default = {}
 }
 
