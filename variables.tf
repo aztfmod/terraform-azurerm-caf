@@ -188,9 +188,6 @@ variable shared_services {
 variable monitoring {
   default = {}
 }
-variable keyvault_certificate_issuers {
-  default = {}
-}
 variable cosmos_dbs {
   default = {}
 }

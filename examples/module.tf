@@ -13,7 +13,6 @@ module "caf" {
   azuread_roles                = var.azuread_roles
   keyvaults                    = var.keyvaults
   keyvault_access_policies     = var.keyvault_access_policies
-  keyvault_certificate_issuers = var.keyvault_certificate_issuers
   managed_identities           = var.managed_identities
   role_mapping                 = var.role_mapping
   log_analytics                = var.log_analytics
@@ -82,6 +81,7 @@ module "caf" {
   security = {
     dynamic_keyvault_secrets      = var.dynamic_keyvault_secrets
     keyvault_certificate_requests = var.keyvault_certificate_requests
+    keyvault_certificate_issuers  = var.keyvault_certificate_issuers
   }
 
   remote_objects = {

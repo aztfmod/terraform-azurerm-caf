@@ -5,14 +5,9 @@ locals {
   front_door_application_id = "ad0e1c7e-6d38-4ba4-9efd-0bc77ba9f037"
 }
 
-
-resource "null_resource" "front_door_service_principal" {
-
-  provisioner "local-exec" {
-    command    = format("az ad sp create --id %s", local.front_door_application_id)
-    on_failure = continue
-  }
-}
+# Execute the SP creation before from the AZ cli
+# It will register the Azure FrontDoor global application ID with a service principal into your azure AD tenant
+#   "az ad sp create --id ad0e1c7e-6d38-4ba4-9efd-0bc77ba9f037"
 
 data "azuread_service_principal" "front_door" {
   application_id = local.front_door_application_id
