@@ -5,8 +5,8 @@ variable settings {
   #   name                    = string
   #   resource_group_key      = string
   #   application_insights_id = string
-  #   key_vault_id            = (string)
-  #   storage_account_id      = (string)
+  #   key_vault_id            = optional(string)
+  #   storage_account_id      = optional(string)
   #   tags                    = optional(map(string))
   #   sku_name                = string
   #   #identity {}

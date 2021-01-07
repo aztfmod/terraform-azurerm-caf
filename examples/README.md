@@ -17,7 +17,6 @@ rover login
 rover login --tenant <tenant_name>.onmicrosoft.com -s <subscription_id>
 ```
 
-
 2. Deploy the basic launchpad
 
 ```bash

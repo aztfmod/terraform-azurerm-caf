@@ -136,7 +136,7 @@ No requirements.
 | Name | Description | Type | Default | Required |
 |------|-------------|------|---------|:--------:|
 | application\_insights\_id | The ID of the App Insights to be used by the nachine learning workspace. | `string` | n/a | yes |
-| base\_tags | Base tags for the resource to be inherited from the resource group. | `map` | n/a | yes |
+| base\_tags | Base tags for the resource to be inherited from the resource group. | `map(any)` | n/a | yes |
 | client\_config | Client configuration object (see module README.md). | `any` | n/a | yes |
 | global\_settings | Global settings object (see module README.md) | `any` | n/a | yes |
 | keyvault\_id | The ID of the Key Vault to be used by the machine learning workspace. | `string` | n/a | yes |
