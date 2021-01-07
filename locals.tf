@@ -136,6 +136,17 @@ locals {
     azurerm_application_insights = try(var.webapp.azurerm_application_insights, {})
   }
 
+  logic_app = {
+    integration_service_environment = try(var.logic_app.integration_service_environment, {})
+    logic_app_action_custom         = try(var.logic_app.logic_app_action_custom, {})
+    logic_app_action_http           = try(var.logic_app.logic_app_action_http, {})
+    logic_app_integration_account   = try(var.logic_app.logic_app_integration_account, {})
+    logic_app_trigger_custom        = try(var.logic_app.logic_app_trigger_custom, {})
+    logic_app_trigger_http_request  = try(var.logic_app.logic_app_trigger_http_request, {})
+    logic_app_trigger_recurrence    = try(var.logic_app.logic_app_trigger_recurrence, {})
+    logic_app_workflow              = try(var.logic_app.logic_app_workflow, {})
+  }
+
   shared_services = {
     automations     = try(var.shared_services.automations, {})
     monitoring      = try(var.shared_services.monitoring, {})

@@ -131,12 +131,7 @@ variable data_factory {
   default = {}
 }
 
-## Data Factory Linked Services
-variable linked_services {
-  default = []
-}
-
-variable linked_service_azure_blob_storage {
+variable logic_app {
   default = {}
 }
 
