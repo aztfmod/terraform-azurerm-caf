@@ -4,7 +4,7 @@ resource "azurerm_key_vault_certificate" "csr" {
 
   certificate_policy {
     issuer_parameters {
-      name = try(var.certificate_issuers[var.settings.certificate_policy.issuer_key_or_name].name, var.settings.certificate_policy.issuer_key_or_name)
+      name = try(var.certificate_issuers[var.settings.certificate_policy.issuer_key_or_name].issuer_name, var.settings.certificate_policy.issuer_key_or_name)
     }
     key_properties {
       exportable = var.settings.certificate_policy.exportable
