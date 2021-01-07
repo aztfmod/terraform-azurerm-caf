@@ -99,17 +99,6 @@ locals {
     }
     linked_services = {
       azure_blob_storage = try(var.data_factory.linked_services.azure_blob_storage, {})
-      azure_file_storage = try(var.data_factory.linked_services.azure_file_storage, {})
-      azure_function = try(var.data_factory.linked_services.azure_function, {})
-      azure_sql_database = try(var.data_factory.linked_services.azure_sql_database, {})
-      cosmosdb = try(var.data_factory.linked_services.cosmosdb, {})
-      data_lake_storage_gen2 = try(var.data_factory.linked_services.data_lake_storage_gen2, {})
-      key_vault = try(var.data_factory.linked_services.key_vault, {})
-      mysql = try(var.data_factory.linked_services.mysql, {})
-      postgresql = try(var.data_factory.linked_services.postgresql, {})
-      sftp = try(var.data_factory.linked_services.sftp, {})
-      sql_server = try(var.data_factory.linked_services.sql_server, {})
-      web = try(var.data_factory.linked_services.web, {})
     }
   }
 
