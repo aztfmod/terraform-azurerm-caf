@@ -61,7 +61,7 @@ cosmos_dbs = {
         name       = "cosmos-table-ex1"
         throughput = 400
         # autoscale_settings = {
-        #   max_throughput = 4000  
+        #   max_throughput = 4000
         # }
       }
     }

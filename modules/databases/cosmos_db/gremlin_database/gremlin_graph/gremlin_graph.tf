@@ -21,8 +21,8 @@ resource "azurerm_cosmosdb_gremlin_graph" "graph" {
     for_each = var.settings.index_policies
 
     content {
-      automatic   = try(index_policy.value.automatic, true)
-      indexing_mode = index_policy.value.indexing_mode
+      automatic      = try(index_policy.value.automatic, true)
+      indexing_mode  = index_policy.value.indexing_mode
       included_paths = try(index_policy.value.included_paths, [])
       excluded_paths = try(index_policy.value.excluded_paths, [])
     }
@@ -32,7 +32,7 @@ resource "azurerm_cosmosdb_gremlin_graph" "graph" {
     for_each = var.settings.conflict_resolution_policies
 
     content {
-      mode = conflict_resolution_policy.value.mode
+      mode                     = conflict_resolution_policy.value.mode
       conflict_resolution_path = try(conflict_resolution_policy.value.conflict_resolution_path, "/_ts")
     }
   }

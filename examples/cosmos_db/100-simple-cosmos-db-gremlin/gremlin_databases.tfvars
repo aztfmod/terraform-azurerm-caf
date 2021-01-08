@@ -66,13 +66,13 @@ cosmos_dbs = {
         # }
         graphs = {
           graph_1 = {
-            name                = "cosmos-gremlin-exgph"
-            partition_key_path  = "/user_id"
-            
+            name               = "cosmos-gremlin-exgph"
+            partition_key_path = "/user_id"
+
             index_policies = {
               index_policy_1 = {
-                automatic = true
-                indexing_mode = "Consistent"
+                automatic      = true
+                indexing_mode  = "Consistent"
                 included_paths = ["/*"]
                 excluded_paths = ["/\"_etag\"/?"]
               }
@@ -80,7 +80,7 @@ cosmos_dbs = {
 
             conflict_resolution_policies = {
               cr_policy_1 = {
-                mode = "LastWriterWins"
+                mode                     = "LastWriterWins"
                 conflict_resolution_path = "/_ts"
               }
             }
