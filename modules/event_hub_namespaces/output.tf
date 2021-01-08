@@ -1,11 +1,13 @@
 output id {
-  value     = azurerm_eventhub_namespace.evh.id
-  sensitive = true
+  description = "The EventHub Namespace ID."
+  value       = azurerm_eventhub_namespace.evh.id
+  sensitive   = true
 }
 
 output name {
-  value     = azurerm_eventhub_namespace.evh.name
-  sensitive = true
+  description = "The EventHub Namespace name."
+  value       = azurerm_eventhub_namespace.evh.name
+  sensitive   = true
 }
 
 output location {
@@ -27,4 +29,7 @@ output primary_key {
 
 output secondary_key {
   value = azurerm_eventhub_namespace.evh.default_secondary_key
+  description = "The EventHub Namespace location."
+  value       = azurerm_eventhub_namespace.evh.location
+  sensitive   = true
 }
