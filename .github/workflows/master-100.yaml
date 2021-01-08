@@ -108,7 +108,7 @@ jobs:
             "mariadb_server/103-private-endpoint-with-fw-rule-mariadb",
             "machine_learning/100-aml",
             "machine_learning/101-aml-vnet",
-            "monitoring/service_health_alerts",
+            "monitoring/100-service-health-alerts",
             "mssql_server/elastic_pools",
             "mysql_server/100-simple-mysql",
             "mysql_server/101-vnet-rule-mysql",
