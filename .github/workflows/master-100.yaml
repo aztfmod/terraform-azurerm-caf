@@ -95,6 +95,8 @@ jobs:
             "cosmos_db/100-simple-cosmos-db-mongo",
             "cosmos_db/100-simple-cosmos-db-sql",
             "cosmos_db/100-simple-cosmos-db-gremlin",
+            "cosmos_db/100-simple-cosmos-db-table",
+            "cosmos_db/100-simple-cosmos-db-cassandra",
             "databricks/100-simple-databricks",
             "datalake/101-datalake-storage",
             "eventhub_namespace/100-simple-evh",

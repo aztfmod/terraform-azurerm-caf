@@ -41,6 +41,11 @@ variable application_insight {
 
 variable settings {}
 
-variable global_settings {}
+variable global_settings {
+  description = "Global settings object (see module README.md)"
+}
 
-variable base_tags {}
+variable base_tags {
+  description = "Base tags for the resource to be inherited from the resource group."
+  type        = map
+}
