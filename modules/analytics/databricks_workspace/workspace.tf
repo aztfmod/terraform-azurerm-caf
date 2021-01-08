@@ -1,5 +1,6 @@
 # naming convention
-resource "azurecaf_name" "ws" {
+#TODO rename object from wp to ws for consistency
+resource "azurecaf_name" "wp" {
   name          = var.settings.name
   resource_type = "azurerm_databricks_workspace"
   prefixes      = [var.global_settings.prefix]
@@ -11,7 +12,7 @@ resource "azurecaf_name" "ws" {
 
 # Databricks workspace
 resource "azurerm_databricks_workspace" "ws" {
-  name                        = azurecaf_name.ws.result
+  name                        = azurecaf_name.wp.result
   resource_group_name         = var.resource_group_name
   location                    = var.location
   sku                         = try(var.settings.sku, "standard")
