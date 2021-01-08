@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 global_settings = {
   default_region = "region1"
   regions = {
@@ -6,11 +5,9 @@ global_settings = {
   }
 }
 
-=======
 #
 # Resource groups to be created
 #
->>>>>>> 1d8f0c897b7e2e43c5f66441ca4d100b6e648856
 resource_groups = {
   dap_azure_ml_re1 = {
     name = "azure-ml"
