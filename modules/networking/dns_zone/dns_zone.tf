@@ -1,5 +1,5 @@
 resource "random_string" "domain_zone_name" {
-  count = var.settings.name == "" ? 1 : 0
+  count   = var.settings.name == "" ? 1 : 0
   length  = 16
   special = false
   upper   = false
@@ -24,7 +24,7 @@ resource "azurerm_template_deployment" "domain" {
     ignore_changes = [parameters]
   }
   parameters = {
-    "Name"          = local.domain_zone_name 
+    "Name"          = local.domain_zone_name
     "key1"          = lookup(var.settings.contract, "agreement_key1", "DNRA"),
     "key2"          = lookup(var.settings.contract, "agreement_key2", "DNRA"),
     "AgreedBy"      = lookup(var.settings.contract, "agree_by", "100.5.150.200:52212"), #Change to DevOps Agent IP
