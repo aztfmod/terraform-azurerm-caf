@@ -1,5 +1,9 @@
-variable global_settings {}
-variable client_config {}
+variable global_settings {
+  description = "Global settings object (see module README.md)"
+}
+variable client_config {
+  description = "Client configuration object (see module README.md)."
+}
 variable resource_groups {}
 variable settings {}
 variable vnets {
@@ -15,4 +19,7 @@ variable managed_identities {
 variable diagnostics {
   default = {}
 }
-variable base_tags {}
+variable base_tags {
+  description = "Base tags for the resource to be inherited from the resource group."
+  type        = map
+}
