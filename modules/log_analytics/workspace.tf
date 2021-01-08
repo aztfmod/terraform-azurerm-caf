@@ -1,4 +1,3 @@
-
 # naming convention
 resource "azurecaf_name" "law" {
   name          = var.log_analytics.name
