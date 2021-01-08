@@ -1,3 +1,16 @@
+# Azure Machine learning workspace
+
+This submodule is part of Cloud Adoption Framework landing zones for Azure on Terraform.
+
+You can instantiate this submodule directly using the following parameters:
+
+```
+module "caf_machine_learning" {
+  source  = "aztfmod/caf/azurerm//modules/analytics/machine_learning"
+  version = "4.21.2"
+  # insert the 10 required variables here
+}
+```
 *** Location Allowed Values ***
 ```
         "australiaeast",
@@ -105,3 +118,39 @@
         "Standard_NV24s_v3",
         "Standard_NV48s_v3"
 ```
+
+<!-- BEGINNING OF PRE-COMMIT-TERRAFORM DOCS HOOK -->
+## Requirements
+
+No requirements.
+
+## Providers
+
+| Name | Version |
+|------|---------|
+| azurecaf | n/a |
+| azurerm | n/a |
+
+## Inputs
+
+| Name | Description | Type | Default | Required |
+|------|-------------|------|---------|:--------:|
+| application\_insights\_id | The ID of the App Insights to be used by the nachine learning workspace. | `string` | n/a | yes |
+| base\_tags | Base tags for the resource to be inherited from the resource group. | `map` | n/a | yes |
+| client\_config | Client configuration object (see module README.md). | `any` | n/a | yes |
+| global\_settings | Global settings object (see module README.md) | `any` | n/a | yes |
+| keyvault\_id | The ID of the Key Vault to be used by the machine learning workspace. | `string` | n/a | yes |
+| location | (Required) Specifies the supported Azure location where to create the resource. Changing this forces a new resource to be created. | `string` | n/a | yes |
+| resource\_group\_name | (Required) The name of the resource group where to create the resource. | `string` | n/a | yes |
+| settings | Configuration object for the machine learning workspace. | `any` | n/a | yes |
+| storage\_account\_id | The ID of the Storage Account to be used by the nachine learning workspace. | `string` | n/a | yes |
+| vnets | Virtual networks objects - contains all virtual networks that could potentially be used by the module. | `any` | n/a | yes |
+
+## Outputs
+
+| Name | Description |
+|------|-------------|
+| id | The ID of the Machine Learning Workspace. |
+| identity | An identity block exports the following: - principal\_id: The (Client) ID of the Service Principal, -tenant\_id: The ID of the Tenant the Service Principal is assigned in. |
+
+<!-- END OF PRE-COMMIT-TERRAFORM DOCS HOOK -->

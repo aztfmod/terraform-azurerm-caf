@@ -1,22 +1,26 @@
-
 variable prefix {
-  description = "(Optional) You can use a prefix to add to the list of resource groups you want to create"
+  description = "You can use a prefix to add to the list of resource groups you want to create"
+  type        = string
 }
 
 variable tags {
-  description = "(Required) map of tags for the deployment"
+  description = "(Required) Map of tags to be applied to the resource"
+  type        = map
 }
 
 variable name {
   description = "(Required) Specifies the name of the Application Insights component. Changing this forces a new resource to be created."
+  type        = string
 }
 
 variable resource_group_name {
-  description = "(Required) The name of the resource group in which to create the Application Insights component."
+  description = "(Required) The name of the resource group where to create the resource."
+  type        = string
 }
 
 variable location {
-  description = "(Required) Specifies the supported Azure location where the resource exists. Changing this forces a new resource to be created."
+  description = "(Required) Specifies the supported Azure location where to create the resource. Changing this forces a new resource to be created."
+  type        = string
 }
 
 variable application_type {
@@ -32,32 +36,45 @@ variable application_type {
 variable daily_data_cap_in_gb {
   description = "(Optional) Specifies the Application Insights component daily data volume cap in GB."
   default     = null
+  type        = number
 }
 
 variable daily_data_cap_notifications_disabled {
   description = "(Optional) Specifies if a notification email will be send when the daily data volume cap is met. (set to false to enable)"
   default     = true
+  type        = bool
 }
 
 variable retention_in_days {
   description = "(Optional) Specifies the retention period in days. Possible values are 30, 60, 90, 120, 180, 270, 365, 550 or 730. Defaults to 90."
-  default     = "90"
+  default     = 90
+  type        = number
 
   validation {
-    condition     = contains(["30", "60", "90", "120", "180", "270", "365", "550", "730"], var.retention_in_days)
-    error_message = "Provide a valid value."
+    condition     = contains([30, 60, 90, 120, 180, 270, 365, 550, 730], var.retention_in_days)
+    error_message = "Provide a valid value for retention period in days."
   }
 }
 
 variable sampling_percentage {
   description = "(Optional) Specifies the percentage of the data produced by the monitored application that is sampled for Application Insights telemetry."
   default     = null
+  type        = number
 }
 
 variable disable_ip_masking {
   description = "(Optional) By default the real client ip is masked as 0.0.0.0 in the logs. Use this argument to disable masking and log the real client ip. Defaults to false."
   default     = false
+  type        = bool
 }
 
-variable global_settings {}
-variable base_tags {}
+variable global_settings {
+  description = "Global settings object when the resource is deploye in landing zones context."
+  default     = null
+  type        = any
+}
+
+variable base_tags {
+  description = "Base tags for the resource to be inherited from the resource group."
+  type        = map
+}

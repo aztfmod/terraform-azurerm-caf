@@ -1,5 +1,6 @@
-
-
+#
+# Global settings
+#
 global_settings = {
   default_region = "region1"
   regions = {
@@ -7,6 +8,9 @@ global_settings = {
   }
 }
 
+#
+# Resource groups to be created
+#
 resource_groups = {
   databricks_re1 = {
     name   = "databricks-re1"
@@ -14,7 +18,9 @@ resource_groups = {
   }
 }
 
-
+#
+# Databricks workspace settings
+#
 databricks_workspaces = {
   sales_workspaces = {
     name               = "sales_workspace"
@@ -29,25 +35,9 @@ databricks_workspaces = {
   }
 }
 
-keyvaults = {
-  secrets_re1 = {
-    name               = "secrets"
-    resource_group_key = "databricks_re1"
-    sku_name           = "standard"
-
-    creation_policies = {
-      logged_in_user = {
-        # if the key is set to "logged_in_user" add the user running terraform in the keyvault policy
-        # More examples in /examples/keyvault
-        secret_permissions = ["Set", "Get", "List", "Delete", "Purge", "Recover"]
-      }
-      logged_in_aad_app = {
-        secret_permissions = ["Set", "Get", "List", "Delete", "Purge"]
-      }
-    }
-  }
-}
-
+#
+# Virtual network for Databricks resources
+#
 vnets = {
   vnet_region1 = {
     resource_group_key = "databricks_re1"
@@ -76,9 +66,8 @@ vnets = {
   }
 }
 
-
 #
-# Definition of the networking security groups
+# Definition of the security groups for the virtual subnets
 #
 network_security_group_definition = {
   # This entry is applied to all subnets with no NSG defined

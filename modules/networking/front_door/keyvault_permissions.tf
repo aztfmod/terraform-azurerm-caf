@@ -9,8 +9,8 @@ locals {
 resource "null_resource" "front_door_service_principal" {
 
   provisioner "local-exec" {
-    command     = format("az ad sp create --id %s", local.front_door_application_id)
-    on_failure  = continue
+    command    = format("az ad sp create --id %s", local.front_door_application_id)
+    on_failure = continue
   }
 }
 
@@ -22,7 +22,7 @@ module access_policy {
   source = "../../security/keyvault_access_policies"
 
   client_config = var.client_config
-  keyvault_id = var.keyvault_id
+  keyvault_id   = var.keyvault_id
 
   access_policies = {
     front_door_certificate = {
