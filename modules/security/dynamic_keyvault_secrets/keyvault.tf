@@ -1,5 +1,5 @@
 module secret {
-  source = "./secret"
+  source     = "./secret"
   depends_on = [data.external.purge_secret]
   for_each = {
     for key, value in var.settings : key => value
@@ -12,7 +12,7 @@ module secret {
 }
 
 module secret_value {
-  source = "./secret"
+  source     = "./secret"
   depends_on = [data.external.purge_secret]
   for_each = {
     for key, value in var.settings : key => value
@@ -25,7 +25,7 @@ module secret_value {
 }
 
 module secret_immutable {
-  source = "./secret_immutable"
+  source     = "./secret_immutable"
   depends_on = [data.external.purge_secret]
   for_each = {
     for key, value in var.settings : key => value

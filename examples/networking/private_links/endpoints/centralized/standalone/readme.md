@@ -27,5 +27,5 @@ rover \
   -var-folder /tf/caf/examples/networking/private_links/endpoints/centralized \
   -level level1 \
   -a plan
-  
+
 ```

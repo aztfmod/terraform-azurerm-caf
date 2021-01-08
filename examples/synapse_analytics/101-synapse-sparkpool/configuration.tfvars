@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 # Requires:
 # - caf_launchpad scenario 200+
 # - caf_foundations
@@ -11,12 +12,20 @@ global_settings = {
   }
 }
 
+=======
+#
+# Resource groups to be created
+#
+>>>>>>> 1d8f0c897b7e2e43c5f66441ca4d100b6e648856
 resource_groups = {
   dap_synapse_re1 = {
     name = "dap-synapse"
   }
 }
 
+#
+# Synapse workspace settings
+#
 synapse_workspaces = {
   synapse_wrkspc_re1 = {
     name                    = "synapsewpc"
@@ -62,6 +71,9 @@ synapse_workspaces = {
   }
 }
 
+#
+# Storage account settings
+#
 storage_accounts = {
   synapsestorage_re1 = {
     name                     = "synapsere1"
@@ -83,6 +95,9 @@ storage_accounts = {
   }
 }
 
+#
+# Key Vault settings
+#
 keyvaults = {
   synapse_secrets = {
     name                = "synapsesecrets"
@@ -114,7 +129,6 @@ keyvaults = {
 #
 # IAM
 #
-
 role_mapping = {
   built_in_role_mapping = {
     storage_accounts = {

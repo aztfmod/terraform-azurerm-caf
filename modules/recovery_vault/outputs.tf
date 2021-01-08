@@ -17,7 +17,6 @@ output "backup_policies" {
     virtual_machines = azurerm_backup_policy_vm.vm
     file_shares      = azurerm_backup_policy_file_share.fs
   }
-
 }
 
 output "replication_policies" {
@@ -26,12 +25,13 @@ output "replication_policies" {
 }
 
 output "resource_group_name" {
-  description = "Output the object ID"
+  description = "Output the resource group name"
   value       = var.resource_group_name
 }
 
 output soft_delete_enabled {
-  value = try(var.settings.soft_delete_enabled, true)
+  description = "Boolean indicating if soft deleted is enabled on the vault."
+  value       = try(var.settings.soft_delete_enabled, true)
 }
 
 # output rbac_id {

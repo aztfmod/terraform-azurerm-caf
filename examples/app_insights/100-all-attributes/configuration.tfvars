@@ -17,10 +17,10 @@ azurerm_application_insights = {
     name                                  = "tf-test-appinsights-web"
     resource_group_key                    = "rg1"
     application_type                      = "web"
-    daily_data_cap_in_gb                  = "100"
+    daily_data_cap_in_gb                  = 100
     daily_data_cap_notifications_disabled = false
-    retention_in_days                     = "180"
-    sampling_percentage                   = "50"
+    retention_in_days                     = 180
+    sampling_percentage                   = 50
     disable_ip_masking                    = true
   }
   ios = {
