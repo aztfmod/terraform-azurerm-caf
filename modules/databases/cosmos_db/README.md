@@ -38,8 +38,11 @@ No requirements.
 
 | Name | Description |
 |------|-------------|
+| cassandra\_keyspaces | n/a |
 | cosmos\_account | n/a |
+| gremlin\_databases | n/a |
 | mongo\_databases | n/a |
 | sql\_databases | n/a |
+| tables | n/a |
 
 <!-- END OF PRE-COMMIT-TERRAFORM DOCS HOOK -->

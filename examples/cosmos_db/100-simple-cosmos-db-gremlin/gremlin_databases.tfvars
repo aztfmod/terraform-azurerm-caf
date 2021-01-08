@@ -15,7 +15,7 @@ resource_groups = {
 
 cosmos_dbs = {
   cosmosdb_account_re1 = {
-    name                      = "cosmosdbtable-ex101"
+    name                      = "cosmosdbgremlin-ex102"
     resource_group_key        = "cosmosdb_region1"
     offer_type                = "Standard"
     kind                      = "GlobalDocumentDB"
@@ -26,6 +26,7 @@ cosmos_dbs = {
       max_interval_in_seconds = "300"
       max_staleness_prefix    = "100000"
     }
+
     # Primary location (Write Region)
     geo_locations = {
       primary_geo_location = {
@@ -52,17 +53,45 @@ cosmos_dbs = {
     }
 
     capabilities = [
-      "EnableTable",
+      "EnableGremlin",
       #"EnableServerless"
     ]
 
-    tables = {
-      table_re1 = {
-        name       = "cosmos-table-ex1"
+    gremlin_databases = {
+      database_1 = {
+        name       = "cosmos-gremlin-exdb"
         throughput = 400
         # autoscale_settings = {
         #   max_throughput = 4000
         # }
+        graphs = {
+          graph_1 = {
+            name               = "cosmos-gremlin-exgph"
+            partition_key_path = "/user_id"
+
+            index_policies = {
+              index_policy_1 = {
+                automatic      = true
+                indexing_mode  = "Consistent"
+                included_paths = ["/*"]
+                excluded_paths = ["/\"_etag\"/?"]
+              }
+            }
+
+            conflict_resolution_policies = {
+              cr_policy_1 = {
+                mode                     = "LastWriterWins"
+                conflict_resolution_path = "/_ts"
+              }
+            }
+
+            unique_keys = {
+              unique_key_1 = {
+                paths = ["/user_id"]
+              }
+            }
+          }
+        }
       }
     }
   }
