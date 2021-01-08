@@ -29,5 +29,7 @@ variable service_endpoints {
   # }
 }
 
-variable global_settings {}
+variable global_settings {
+  description = "Global settings object (see module README.md)"
+}
 variable settings {}
