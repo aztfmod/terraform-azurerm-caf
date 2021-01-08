@@ -36,6 +36,7 @@ jobs:
           config_files: [
             "compute/virtual_machine/105-single-windows-vm-kv-admin-secrets",
             "compute/virtual_machine/211-vm-bastion-winrm-agents",
+            "cosmos_db/100-simple-cosmos-db-gremlin",
             "networking/private_links/endpoints/centralized"
           ]
 
