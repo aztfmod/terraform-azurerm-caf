@@ -107,6 +107,12 @@ variable mssql_managed_databases_restore {
 variable mssql_elastic_pools {
   default = {}
 }
+variable mariadb_servers {
+  default = {}
+}
+variable mariadb_databases {
+  default = {}
+}
 variable mssql_failover_groups {
   default = {}
 }
@@ -194,6 +200,12 @@ variable application_gateways {
 variable application_gateway_applications {
   default = {}
 }
+variable mysql_servers {
+  default = {}
+}
+variable postgresql_servers {
+  default = {}
+}
 variable cosmos_db {
   default = {}
 }
@@ -245,11 +257,9 @@ variable front_door_waf_policies {
 variable dns_zones {
   default = {}
 }
-
 variable private_endpoints {
   default = {}
 }
-
 variable local_network_gateways {
   default = {}
 }

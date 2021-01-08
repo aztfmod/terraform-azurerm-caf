@@ -7,7 +7,7 @@ resource "azurerm_key_vault_access_policy" "policy" {
   secret_permissions      = try(var.access_policy.secret_permissions, null)
   certificate_permissions = try(var.access_policy.certificate_permissions, null)
   storage_permissions     = try(var.access_policy.storage_permissions, null)
-  
+
   timeouts {
     delete = "60m"
 
