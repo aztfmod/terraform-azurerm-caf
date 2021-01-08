@@ -1,8 +1,9 @@
-
 variable global_settings {
   default = {}
 }
-
+variable var_folder_path {
+  default = {}
+}
 variable tags {
   default = null
   type    = map
@@ -103,7 +104,6 @@ variable application_gateways {
 variable application_gateway_applications {
   default = {}
 }
-
 variable cosmos_dbs {
   default = {}
 }
