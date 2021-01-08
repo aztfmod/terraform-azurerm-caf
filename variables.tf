@@ -223,7 +223,6 @@ variable shared_services {
 variable keyvault_certificate_issuers {
   default = {}
 }
-<<<<<<< HEAD
 variable cosmos_dbs {
   default = {}
 }
@@ -235,5 +234,3 @@ variable local_network_gateways {
 variable automations {
   default = {}
 }
-=======
->>>>>>> 1d8f0c897b7e2e43c5f66441ca4d100b6e648856

@@ -36,7 +36,6 @@ jobs:
           config_files: [
             "compute/virtual_machine/105-single-windows-vm-kv-admin-secrets",
             "compute/virtual_machine/211-vm-bastion-winrm-agents",
-<<<<<<< HEAD
             "networking/private_links/endpoints/centralized",
             "app_gateway/100-simple-app-gateway",
             "app_gateway/101-private-public",
@@ -111,12 +110,10 @@ jobs:
             "webapps/appservice/102-appservice-slots",
             "webapps/appservice/103-appservice-extend",
             "webapps/appservice/104-appservice-appinsight"
-=======
             "cosmos_db/100-simple-cosmos-db-gremlin",
             "cosmos_db/100-simple-cosmos-db-table",
             "cosmos_db/100-simple-cosmos-db-cassandra",
             "networking/private_links/endpoints/centralized"
->>>>>>> 1d8f0c897b7e2e43c5f66441ca4d100b6e648856
           ]
 
     container:
