@@ -42,19 +42,19 @@ private_endpoints = {
       }
 
       # Create in the launchpad scenario 200
-      # As it is a global object, no lz_key is required 
-      diaglogs_region1 = {
-        private_service_connection = {
-          name              = "psc-stg-diag-diaglogs_region1"
-          subresource_names = ["blob"]
-        }
+      # As it is a global object, no lz_key is required
+      # diaglogs_region1 = {
+      #   private_service_connection = {
+      #     name              = "psc-stg-diag-diaglogs_region1"
+      #     subresource_names = ["blob"]
+      #   }
 
-        private_dns = {
-          zone_group_name = "default"
-          # lz_key          = ""   # If the DNS keys are deployed in a remote landingzone
-          keys = ["dns1"]
-        }
-      }
+      #   private_dns = {
+      #     zone_group_name = "default"
+      #     # lz_key          = ""   # If the DNS keys are deployed in a remote landingzone
+      #     keys = ["dns1"]
+      #   }
+      # }
     }
 
     diagnostic_event_hub_namespaces = {
@@ -109,6 +109,19 @@ private_endpoints = {
           zone_group_name = "default"
           # lz_key          = ""   # If the DNS keys are deployed in a remote landingzone
           keys = ["dns1"]
+        }
+      }
+    }
+
+    mysql_servers = {
+      sales-re1 = {
+        private_service_connection = {
+          name = "psc-myssql-sales-re1"
+        }
+
+        private_dns = {
+          zone_group_name = "default"
+          keys            = ["dns1"]
         }
       }
     }

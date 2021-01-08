@@ -18,7 +18,7 @@ output public_ip_addresses {
 
 module "networking" {
   source   = "./modules/networking/virtual_network"
-  for_each = try(var.networking.vnets, {})
+  for_each = local.networking.vnets
 
   location                          = lookup(each.value, "region", null) == null ? module.resource_groups[each.value.resource_group_key].location : local.global_settings.regions[each.value.region]
   resource_group_name               = module.resource_groups[each.value.resource_group_key].name

@@ -12,6 +12,8 @@ data "terraform_remote_state" "remote" {
 }
 
 locals {
+  tags = merge(var.tags, { "rover_version" = var.rover_version })
+
   landingzone = {
     current = {
       storage_account_name = var.tfstate_storage_account_name
