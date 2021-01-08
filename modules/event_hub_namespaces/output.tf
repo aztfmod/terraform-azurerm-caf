@@ -30,6 +30,5 @@ output primary_key {
 output secondary_key {
   value = azurerm_eventhub_namespace.evh.default_secondary_key
   description = "The EventHub Namespace location."
-  value       = azurerm_eventhub_namespace.evh.location
   sensitive   = true
 }
