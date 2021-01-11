@@ -5,7 +5,7 @@ cd /tf/caf/examples/automation/100-simple-automation-account/standalone
 
 terraform init
 
-terraform plan \
+terraform [plan | apply | destroy]\
   -var-file ../configuration.tfvars
 
 
@@ -19,6 +19,6 @@ rover \
   -lz /tf/caf/aztfmod/examples \
   -var-folder  /tf/caf/examples/automation/100-simple-automation-account/standalone \
   -level level1 \
-  -a plan
+  -a [plan | apply | destroy]
 
 ```

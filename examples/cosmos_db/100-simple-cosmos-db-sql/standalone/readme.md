@@ -5,7 +5,7 @@ cd /tf/caf/examples/cosmos_db/100-simple-cosmos-db-sql/standalone
 
 terraform init
 
-terraform plan \
+terraform [plan | apply | destroy]\
   -var-file ../sql_databases.tfvars
 
 
@@ -19,6 +19,6 @@ rover \
   -lz /tf/caf/aztfmod/examples \
   -var-folder  /tf/caf/examples/cosmos_db/100-simple-cosmos-db-sql/ \
   -level level1 \
-  -a plan
+  -a [plan | apply | destroy]
 
 ```

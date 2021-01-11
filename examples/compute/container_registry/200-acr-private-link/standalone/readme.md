@@ -5,7 +5,7 @@ cd /tf/caf/examples/compute/container_registry/200-acr-private-link/standalone
 
 terraform init
 
-terraform plan \
+terraform [plan | apply | destroy] \
   -var-file ../configuration.tfvars 
 
 
@@ -19,6 +19,6 @@ rover \
   -lz /tf/caf/aztfmod/examples \
   -var-folder  /tf/caf/examples/compute/container_registry/200-acr-private-link/ \
   -level level1 \
-  -a plan
+  -a [plan | apply | destroy]
 
 ```

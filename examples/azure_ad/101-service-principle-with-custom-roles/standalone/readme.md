@@ -5,7 +5,7 @@ cd /tf/caf/examples/azure_ad/101-service-principle-with-custom-roles/standalone
 
 terraform init
 
-terraform plan \
+terraform [plan | apply | destroy] \
   -var-file ../configuration.tfvars 
 
 
@@ -19,6 +19,6 @@ rover \
   -lz /tf/caf/aztfmod/examples \
   -var-folder  /tf/caf/examples/azure_ad/101-service-principle-with-custom-roles/ \
   -level level1 \
-  -a plan
+  -a [plan | apply | destroy]
 
 ```

@@ -5,7 +5,7 @@ cd /tf/caf/examples/compute/kubernetes_services/102-multi-nodepools/standalone
 
 terraform init
 
-terraform plan \
+terraform [plan | apply | destroy] \
   -var-file ../aks.tfvars \
   -var-file ../configuration.tfvars \
   -var-file ../networking.tfvars
@@ -21,6 +21,6 @@ rover \
   -lz /tf/caf/aztfmod/examples \
   -var-folder  /tf/caf/examples/compute/kubernetes_services/102-multi-nodepools/ \
   -level level1 \
-  -a plan
+  -a [plan | apply | destroy]
 
 ```
