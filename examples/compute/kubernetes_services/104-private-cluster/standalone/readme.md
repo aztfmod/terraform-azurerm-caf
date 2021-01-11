@@ -5,7 +5,7 @@ cd /tf/caf/examples/compute/kubernetes_services/104-private-cluster/standalone
 
 terraform init
 
-terraform plan \
+terraform [plan | apply | destroy] \
   -var-file ../acr.tfvars \
   -var-file ../aks.tfvars \
   -var-file ../configuration.tfvars \
@@ -23,6 +23,6 @@ rover \
   -lz /tf/caf/aztfmod/examples \
   -var-folder  /tf/caf/examples/compute/kubernetes_services/104-private-cluster/ \
   -level level1 \
-  -a plan
+  -a [plan | apply | destroy]
 
 ```

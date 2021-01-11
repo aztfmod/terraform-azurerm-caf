@@ -28,7 +28,6 @@ terraform destroy \
   -var-file ../keyvault.tfvars \
   -var-file ../vm.tfvars \
   -var tags='{testing_job_id="${1}"}' \
-  -var tags='{testing_job_id="${1}"}' \
   -var var_folder_path=${current_folder} \
   -input=false \
   -auto-approve

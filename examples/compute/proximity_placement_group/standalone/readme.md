@@ -5,7 +5,7 @@ cd /tf/caf/examples/compute/proximity_placement_group/standalone
 
 terraform init
 
-terraform plan \
+terraform [plan | apply | destroy] \
   -var-file ../configuration.tfvars 
 
 Note : Change the custom_data path in the configuration file, relative to the path currently you are in. It wil error out otherwise.
@@ -20,6 +20,6 @@ rover \
   -lz /tf/caf/aztfmod/examples \
   -var-folder  /tf/caf/examples/compute/proximity_placement_group/ \
   -level level1 \
-  -a plan
+  -a [plan | apply | destroy]
 
 ```
