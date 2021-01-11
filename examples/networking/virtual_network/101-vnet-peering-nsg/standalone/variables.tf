@@ -34,6 +34,8 @@ variable vnet_peerings {
   default = {}
 }
 
-
+variable var_folder_path {
+  default = {}
+}
 
 

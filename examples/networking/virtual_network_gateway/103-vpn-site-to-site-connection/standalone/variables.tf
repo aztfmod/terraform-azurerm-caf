@@ -30,5 +30,7 @@ variable virtual_network_gateway_connections  {
   default = {}
 }
 
-
+variable var_folder_path {
+  default = {}
+}
 

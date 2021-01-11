@@ -17,3 +17,7 @@ variable event_hub_namespaces  {
 variable vnets {
   default = {}
 }
+
+variable var_folder_path {
+  default = {}
+}

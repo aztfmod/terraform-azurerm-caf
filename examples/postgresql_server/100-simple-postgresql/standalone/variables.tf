@@ -28,3 +28,6 @@ variable tags {
 
 
 
+variable var_folder_path {
+  default = {}
+}

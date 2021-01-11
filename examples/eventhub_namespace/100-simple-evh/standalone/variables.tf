@@ -14,3 +14,6 @@ variable event_hub_namespaces  {
   default = {}
 }
 
+variable var_folder_path {
+  default = {}
+}

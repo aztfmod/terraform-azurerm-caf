@@ -23,3 +23,6 @@ variable azurerm_application_insights {
 }
 
 
+variable var_folder_path {
+  default = {}
+}

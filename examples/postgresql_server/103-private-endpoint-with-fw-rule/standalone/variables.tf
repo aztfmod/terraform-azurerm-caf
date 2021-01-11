@@ -30,3 +30,6 @@ variable azuread_groups {
   default = {}
 }
 
+variable var_folder_path {
+  default = {}
+}

@@ -24,7 +24,6 @@ terraform destroy \
   -var-file ../public-ip-addresses.tfvars \
   -var-file ../routes.tfvars \
   -var tags='{testing_job_id="${1}"}' \
-  -var tags='{testing_job_id="${1}"}' \
   -var var_folder_path=${current_folder} \
   -input=false \
   -auto-approve

@@ -62,3 +62,6 @@ variable keyvault_certificate_issuers  {
   default = {}
 }
 
+variable var_folder_path {
+  default = {}
+}

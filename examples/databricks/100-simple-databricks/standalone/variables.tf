@@ -30,5 +30,7 @@ variable keyvaults {
   default = {}
 }
 
-
+variable var_folder_path {
+  default = {}
+}
 

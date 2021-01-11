@@ -13,3 +13,7 @@ variable azurerm_application_insights {
 variable tags {
   default = {}
 }
+
+variable var_folder_path {
+  default = {}
+}

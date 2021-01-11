@@ -26,6 +26,8 @@ variable machine_learning_workspaces  {
   default = {}
 }
 
-
+variable var_folder_path {
+  default = {}
+}
 
 
