@@ -26,11 +26,20 @@ storage_accounts = {
   }
 }
 
+event_hub_namespaces = {
+  evh1 = {
+    name               = "evh1"
+    resource_group_key = "evh_examples"
+    sku                = "Standard"
+    region             = "region1"
+  }
+}
+
 event_hub = {
   ev = {
     name = "ev"
     resource_group_key = "sec_center"
-    eventhub_namespace_key = "central_logs_region1"
+    eventhub_namespace_key = "evh1"
     destination_key        = "central_logs"
     storage_account_key = "evh1"
     blob_container_name = "evh"
