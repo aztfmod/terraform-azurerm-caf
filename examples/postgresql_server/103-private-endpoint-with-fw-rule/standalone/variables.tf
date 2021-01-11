@@ -23,7 +23,8 @@ variable vnets {
 }
 
 variable tags {
-  default = {}
+  default = null
+  type    = map
 }
 
 variable azuread_groups {

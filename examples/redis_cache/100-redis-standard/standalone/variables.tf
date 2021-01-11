@@ -16,7 +16,8 @@ variable var_folder_path {
 }
 
 variable tags {
-  default = {}
+  default = null
+  type    = map
 }
 
 

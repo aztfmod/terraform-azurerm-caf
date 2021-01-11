@@ -19,7 +19,8 @@ variable mariadb_servers {
 }
 
 variable tags {
-  default = {}
+  default = null
+  type    = map
 }
 
 variable var_folder_path {

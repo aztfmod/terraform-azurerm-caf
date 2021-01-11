@@ -7,7 +7,8 @@ variable resource_groups {
 }
 
 variable tags {
-  default = {}
+  default = null
+  type    = map
 }
 
 variable event_hub_namespaces  {

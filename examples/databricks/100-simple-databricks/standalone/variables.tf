@@ -23,7 +23,8 @@ variable public_ip_addresses {
 }
 
 variable tags {
-  default = {}
+  default = null
+  type    = map
 }
 
 variable keyvaults {

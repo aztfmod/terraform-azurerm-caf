@@ -11,7 +11,8 @@ variable storage_accounts {
 }
 
 variable tags {
-  default = {}
+  default = null
+  type    = map
 }
 
 variable var_folder_path {

@@ -27,7 +27,8 @@ variable application_gateway_applications {
 }
 
 variable tags {
-  default = {}
+  default = null
+  type    = map
 }
 
 variable var_folder_path {

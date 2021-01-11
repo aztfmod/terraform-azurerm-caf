@@ -16,7 +16,8 @@ variable private_dns {
 }
 
 variable tags {
-  default = {}
+  default = null
+  type    = map
 }
 
 variable private_endpoints {

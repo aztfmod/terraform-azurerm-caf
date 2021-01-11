@@ -21,9 +21,9 @@ variable postgresql_servers {
 variable vnets {
   default = {}
 }
-
 variable tags {
-  default = {}
+  default = null
+  type    = map
 }
 
 

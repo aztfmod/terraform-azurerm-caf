@@ -21,3 +21,8 @@ variable private_dns {
 variable var_folder_path {
   default = {}
 }
+
+variable tags {
+  default = null
+  type    = map
+}

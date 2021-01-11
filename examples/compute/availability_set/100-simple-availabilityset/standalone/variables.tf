@@ -15,7 +15,8 @@ variable keyvaults {
 }
 
 variable tags {
-  default = {}
+  default = null
+  type    = map
 }
 
 variable availability_sets  {
