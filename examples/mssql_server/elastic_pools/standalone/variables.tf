@@ -49,3 +49,7 @@ variable keyvaults {
 variable storage_accounts {
   default = {}
 }
+
+variable var_folder_path {
+  default = {}
+}

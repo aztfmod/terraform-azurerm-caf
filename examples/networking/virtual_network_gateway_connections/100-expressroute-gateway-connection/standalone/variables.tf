@@ -38,5 +38,7 @@ variable express_route_circuit_authorizations  {
   default = {}
 }
 
-
+variable var_folder_path {
+  default = {}
+}
 

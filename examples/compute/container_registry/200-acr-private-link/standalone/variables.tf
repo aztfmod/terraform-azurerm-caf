@@ -25,3 +25,7 @@ variable diagnostics_destinations  {
 variable diagnostics_definition   {
   default = {}
 }
+
+variable var_folder_path {
+  default = {}
+}

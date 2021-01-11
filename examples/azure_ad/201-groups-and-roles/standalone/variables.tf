@@ -46,3 +46,6 @@ variable custom_role_definitions {
   default = {}
 }
 
+variable var_folder_path {
+  default = {}
+}

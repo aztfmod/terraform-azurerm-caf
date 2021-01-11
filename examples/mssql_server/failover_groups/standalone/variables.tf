@@ -23,3 +23,6 @@ variable mssql_servers {
   default = {}
 }
 
+variable var_folder_path {
+  default = {}
+}

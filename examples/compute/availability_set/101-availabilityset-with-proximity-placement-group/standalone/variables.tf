@@ -30,3 +30,6 @@ variable proximity_placement_groups {
   default = {}
 }
 
+variable var_folder_path {
+  default = {}
+}

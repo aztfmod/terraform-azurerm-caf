@@ -26,3 +26,6 @@ variable virtual_machines {
   default = {}
 }
 
+variable var_folder_path {
+  default = {}
+}

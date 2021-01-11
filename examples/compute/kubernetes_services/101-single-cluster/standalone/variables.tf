@@ -26,3 +26,6 @@ variable network_security_group_definition {
   default = {}
 }
 
+variable var_folder_path {
+  default = {}
+}
