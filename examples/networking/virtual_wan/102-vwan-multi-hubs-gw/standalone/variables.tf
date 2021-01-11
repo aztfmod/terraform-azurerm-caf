@@ -15,7 +15,8 @@ variable virtual_wans {
 }
 
 variable tags {
-  default = {}
+  default = null
+  type    = map
 }
 variable var_folder_path {
   default = {}

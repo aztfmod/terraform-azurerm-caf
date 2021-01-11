@@ -15,7 +15,8 @@ variable route_tables {
 }
 
 variable tags {
-  default = {}
+  default = null
+  type    = map
 }
 
 variable mssql_databases {

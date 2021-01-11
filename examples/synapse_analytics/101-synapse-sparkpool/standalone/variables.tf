@@ -11,7 +11,8 @@ variable synapse_workspaces{
 }
 
 variable tags {
-  default = {}
+  default = null
+  type    = map
 }
 
 variable storage_accounts {

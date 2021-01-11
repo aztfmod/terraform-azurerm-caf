@@ -14,9 +14,9 @@ variable recovery_vaults  {
 
 
 variable tags {
-  default = {}
+  default = null
+  type    = map
 }
-
 
 variable var_folder_path {
   default = {}

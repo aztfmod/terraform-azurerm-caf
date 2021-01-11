@@ -11,7 +11,8 @@ variable role_mapping {
 }
 
 variable tags {
-  default = {}
+  default = null
+  type    = map
 }
 
 variable aks_clusters  {

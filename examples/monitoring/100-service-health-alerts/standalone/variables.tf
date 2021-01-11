@@ -11,7 +11,8 @@ variable monitoring {
 }
 
 variable tags {
-  default = {}
+  default = null
+  type    = map
 }
 
 variable var_folder_path {

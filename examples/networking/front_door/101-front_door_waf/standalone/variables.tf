@@ -7,9 +7,9 @@ variable resource_groups {
 }
 
 variable tags {
-  default = {}
+  default = null
+  type    = map
 }
-
 
 variable front_door_waf_policies {
   default = {}
