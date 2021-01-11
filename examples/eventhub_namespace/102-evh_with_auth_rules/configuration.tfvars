@@ -1,3 +1,5 @@
+#scenario 200 has to be deployed
+
 global_settings = {
   default_region = "region1"
   regions = {
