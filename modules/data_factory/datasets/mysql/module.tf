@@ -11,7 +11,7 @@ resource "azurerm_data_factory_dataset_mysql" "dataset" {
   additional_properties = try(var.additional_properties, null)
 
   dynamic "schema_column" {
-    for_each = try(var.schema_column, null) != null ? [1] : []
+    for_each = try(var.schema_column, null) != null ? [var.schema_column] : []
 
     content {
       name        = schema_column.value.name

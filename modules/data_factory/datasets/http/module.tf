@@ -13,7 +13,7 @@ resource "azurerm_data_factory_dataset_http" "dataset" {
   request_method        = var.request_method
 
   dynamic "schema_column" {
-    for_each = try(var.schema_column, null) != null ? [1] : []
+    for_each = try(var.schema_column, null) != null ? [var.schema_column] : []
 
     content {
       name        = schema_column.value.name

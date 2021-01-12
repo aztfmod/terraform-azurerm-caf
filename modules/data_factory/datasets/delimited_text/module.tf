@@ -17,7 +17,7 @@ resource "azurerm_data_factory_dataset_delimited_text" "dataset" {
   null_value            = var.null_value
 
   dynamic "http_server_location" {
-    for_each = try(var.http_server_location, null) != null ? [1] : []
+    for_each = try(var.http_server_location, null) != null ? [var.http_server_location] : []
 
     content {
       relative_url = http_server_location.value.relative_url
@@ -27,7 +27,7 @@ resource "azurerm_data_factory_dataset_delimited_text" "dataset" {
   }
 
   dynamic "azure_blob_storage_location" {
-    for_each = try(var.azure_blob_storage_location, null) != null ? [1] : []
+    for_each = try(var.azure_blob_storage_location, null) != null ? [var.azure_blob_storage_location] : []
 
     content {
       container = azure_blob_storage_location.value.container
@@ -37,7 +37,7 @@ resource "azurerm_data_factory_dataset_delimited_text" "dataset" {
   }
 
   dynamic "schema_column" {
-    for_each = try(var.schema_column, null) != null ? [1] : []
+    for_each = try(var.schema_column, null) != null ? [var.schema_column] : []
 
     content {
       name        = schema_column.value.name
