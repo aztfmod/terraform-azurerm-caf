@@ -16,7 +16,6 @@ terraform apply \
   -input=false \
   -auto-approve
 
-
 terraform destroy \
    -var-file ../configuration.tfvars \
   -var-file ../application.tfvars \
