@@ -14,7 +14,7 @@ resource "azurerm_data_factory" "df" {
   location            = var.location
 
   dynamic "github_configuration" {
-    for_each = try(var.github_configuration, null) != null ? [1] : []
+    for_each = try(var.github_configuration, null) != null ? [var.github_configuration] : []
 
     content {
       account_name    = github_configuration.value.account_name
@@ -26,7 +26,7 @@ resource "azurerm_data_factory" "df" {
   }
 
   dynamic "identity" {
-    for_each = try(var.identity, null) != null ? [1] : []
+    for_each = try(var.identity, null) != null ? [var.identity] : []
 
     content {
       type = identity.value.type
@@ -34,7 +34,7 @@ resource "azurerm_data_factory" "df" {
   }
 
   dynamic "vsts_configuration" {
-    for_each = try(var.vsts_configuration, null) != null ? [1] : []
+    for_each = try(var.vsts_configuration, null) != null ? [var.vsts_configuration] : []
 
     content {
       account_name    = vsts_configuration.value.account_name

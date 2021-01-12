@@ -12,7 +12,7 @@ resource "azurerm_data_factory_dataset_azure_blob" "dataset" {
   filename              = var.filename
 
   dynamic "schema_column" {
-    for_each = try(var.schema_column, null) != null ? [1] : []
+    for_each = try(var.schema_column, null) != null ? [var.schema_column] : []
 
     content {
       name        = schema_column.value.name
