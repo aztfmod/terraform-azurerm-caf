@@ -28,7 +28,7 @@ variable settings {}
 variable vnets {}
 
 # Security
-variable public_key_pem_file {
+variable public_key_pem_file { 
   default     = ""
   description = "If disable_password_authentication is set to true, ssh authentication is enabled. You can provide a list of file path of the public ssh key in PEM format. If left blank a new RSA/4096 key is created and the key is stored in the keyvault_id. The secret name being the {computer name}-ssh-public and {computer name}-ssh-private"
 }
