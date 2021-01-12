@@ -15,3 +15,7 @@ variable resource_groups {
 variable cosmos_dbs {
   default = {}
 }
+
+variable var_folder_path {
+  default = {}
+}
