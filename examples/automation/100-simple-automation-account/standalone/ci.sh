@@ -21,4 +21,3 @@ terraform destroy \
   -var var_folder_path=${current_folder} \
   -input=false \
   -auto-approve
-
