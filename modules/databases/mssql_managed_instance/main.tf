@@ -76,5 +76,14 @@ locals {
     resourceGroupName = {
       value = var.resource_group_name
     }
+    serverKeyType = {
+      value = try(var.settings.serverKeyUri, null) == null ? "ServiceManaged" : "AzureKeyVault"
+    }
+    serverKeyName = {
+      value = try(var.settings.serverKeyName, "ServiceManaged") //TODO, automate keyvault keys creation and retrieval
+    }
+    serverKeyUri = {
+      value = try(var.settings.serverKeyUri, "")
+    }
   }
 }
