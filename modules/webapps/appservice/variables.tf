@@ -41,6 +41,12 @@ variable application_insight {
 
 variable settings {}
 
+variable client_config {}
+
 variable global_settings {}
 
 variable base_tags {}
+
+variable managed_identities {
+  default = {}
+}
