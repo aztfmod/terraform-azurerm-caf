@@ -50,6 +50,10 @@ variable application_insight {
   default = null
 }
 
-
-
 variable base_tags {}
+
+variable managed_identities {
+  default = {}
+}
+
+variable client_config {}
