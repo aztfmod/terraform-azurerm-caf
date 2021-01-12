@@ -39,6 +39,17 @@ public_ip_addresses = {
     ip_version              = "IPv4"
     idle_timeout_in_minutes = "4"
   }
+
+    vngw_pip2 = {
+    name               = "vngw_pip2"
+    resource_group_key = "vgnw"
+    sku                = "Basic"
+    # Note: For UltraPerformance ExpressRoute Virtual Network gateway, the associated Public IP needs to be sku "Basic" not "Standard"
+    allocation_method = "Dynamic"
+    # allocation method needs to be Dynamic
+    ip_version              = "IPv4"
+    idle_timeout_in_minutes = "4"
+  }
 }
 
 virtual_network_gateways = {
@@ -59,6 +70,14 @@ virtual_network_gateways = {
       ipconfig1 = {
         ipconfig_name         = "gatewayIp1"
         public_ip_address_key = "vngw_pip"
+        #lz_key                        = "examples"
+        #lz_key optional, only needed if the vnet_key is inside another landing zone
+        vnet_key                      = "vnet_gw"
+        private_ip_address_allocation = "Dynamic"
+      }
+      ipconfig2 = {
+        ipconfig_name         = "gatewayIp2"
+        public_ip_address_key = "vngw_pip2"
         #lz_key                        = "examples"
         #lz_key optional, only needed if the vnet_key is inside another landing zone
         vnet_key                      = "vnet_gw"

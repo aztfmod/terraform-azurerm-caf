@@ -20,7 +20,7 @@ azure_container_registries = {
         name               = "acr-private-link-spoke_aks-re1"
         resource_group_key = "aks_re1"
 
-        lz_key     = "networking_spoke_aks"
+        #lz_key     = "networking_spoke_aks"
         vnet_key   = "spoke_aks_re1"
         subnet_key = "private_endpoints"
 
@@ -34,7 +34,7 @@ azure_container_registries = {
         name               = "acr-private-link-spoke_aks-re2"
         resource_group_key = "aks_re2"
 
-        lz_key     = "networking_spoke_aks"
+        #lz_key     = "networking_spoke_aks"
         vnet_key   = "spoke_aks_re2"
         subnet_key = "private_endpoints"
 
