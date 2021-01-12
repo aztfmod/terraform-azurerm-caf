@@ -14,7 +14,6 @@ terraform apply \
   -input=false \
   -auto-approve
 
-
 terraform destroy \
   -var-file ../configuration.tfvars \
   -var tags='{testing_job_id="${1}"}' \
