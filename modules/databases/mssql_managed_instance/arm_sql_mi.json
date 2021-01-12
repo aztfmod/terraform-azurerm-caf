@@ -176,6 +176,16 @@
     },
     "resourceGroupName": {
         "type": "string"
+    },
+    "serverKeyName": {
+        "type": "string"
+    },
+    "serverKeyType": {
+        "type": "string"
+    },
+    "serverKeyUri": {
+        "type": "string",
+        "defaultValue": ""
     }
   },
   "resources": [
@@ -209,6 +219,30 @@
               "storageAccountType": "[parameters('storageAccountType')]",
               "backupStorageRedundancy": "[parameters('storageAccountType')]"
           }
+      },
+      {
+        "type": "Microsoft.Sql/managedInstances/encryptionProtector",
+        "apiVersion": "2017-10-01-preview",
+        "name": "[concat(parameters('managedInstanceName'), '/current')]",
+        "dependsOn": [
+            "[resourceId('Microsoft.Sql/managedInstances', parameters('managedInstanceName'))]"
+        ],
+        "properties": {
+            "serverKeyName": "[parameters('serverKeyName')]", 
+            "serverKeyType": "[parameters('serverKeyType')]" 
+        }
+      },
+      {
+        "type": "Microsoft.Sql/managedInstances/keys",
+        "apiVersion": "2017-10-01-preview",
+        "name": "[concat(parameters('managedInstanceName'), '/', parameters('serverKeyName'))]",
+        "dependsOn": [
+            "[resourceId('Microsoft.Sql/managedInstances', parameters('managedInstanceName'))]"
+        ],
+        "properties": {
+            "serverKeyType": "[parameters('serverKeyType')]", 
+            "uri": "[if(equals(parameters('serverKeyUri'), ''), json('null'), parameters('serverKeyUri'))]"
+        }
       }
   ],
   "outputs": {

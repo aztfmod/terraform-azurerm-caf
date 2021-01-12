@@ -131,6 +131,11 @@ mssql_managed_instances = {
 
     storageSizeInGB = 32
     vCores          = 8
+
+    //TDE
+    serverKeyName = "example-mi-kv_ExampleKey_41bb190a3d4b4af3aa7037555e279488"
+    serverKeyUri  = "https://example-mi-kv.vault.azure.net/keys/ExampleKey/41bb190a3d4b4af3aa7037555e279488"
+
   }
 }
 
@@ -192,18 +197,18 @@ mssql_managed_databases = {
 #   }
 # }
 
-# mssql_managed_databases_backup_ltr = {
-#   sqlmi1 = {
-#     resource_group_key  = "sqlmi_region1"
-#     mi_server_key       = "sqlmi1"
-#     database_key        = "managed_db1"
+mssql_managed_databases_backup_ltr = {
+  sqlmi1 = {
+    resource_group_key  = "sqlmi_region1"
+    mi_server_key       = "sqlmi1"
+    database_key        = "managed_db1"
 
-#     weeklyRetention     = "P12W" 
-#     monthlyRetention    = "P12M"
-#     yearlyRetention     = "P5Y"
-#     weekOfYear          = 16
-#   }
-# }
+    weeklyRetention     = "P12W" 
+    monthlyRetention    = "P12M"
+    yearlyRetention     = "P5Y"
+    weekOfYear          = 16
+  }
+}
 
 mssql_mi_failover_groups = {
   failover-mi = {
