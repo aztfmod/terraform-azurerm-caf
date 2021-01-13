@@ -1,4 +1,4 @@
-module secret {
+module "secret" {
   source     = "./secret"
   depends_on = [data.external.purge_secret]
   for_each = {
@@ -11,7 +11,7 @@ module secret {
   keyvault_id = var.keyvault.id
 }
 
-module secret_value {
+module "secret_value" {
   source     = "./secret"
   depends_on = [data.external.purge_secret]
   for_each = {
@@ -24,7 +24,7 @@ module secret_value {
   keyvault_id = var.keyvault.id
 }
 
-module secret_immutable {
+module "secret_immutable" {
   source     = "./secret_immutable"
   depends_on = [data.external.purge_secret]
   for_each = {
