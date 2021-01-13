@@ -1,6 +1,5 @@
 module "secret" {
-  source     = "./secret"
-  depends_on = [data.external.purge_secret]
+  source = "./secret"
   for_each = {
     for key, value in var.settings : key => value
     if try(value.value, null) == null
@@ -12,8 +11,7 @@ module "secret" {
 }
 
 module "secret_value" {
-  source     = "./secret"
-  depends_on = [data.external.purge_secret]
+  source = "./secret"
   for_each = {
     for key, value in var.settings : key => value
     if try(value.value, null) != null && try(value.value, null) != ""
@@ -25,8 +23,7 @@ module "secret_value" {
 }
 
 module "secret_immutable" {
-  source     = "./secret_immutable"
-  depends_on = [data.external.purge_secret]
+  source = "./secret_immutable"
   for_each = {
     for key, value in var.settings : key => value
     if try(value.value, null) == ""
