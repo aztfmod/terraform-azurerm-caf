@@ -18,6 +18,7 @@ module container_registry {
   private_endpoints        = try(each.value.private_endpoints, {})
   resource_groups          = module.resource_groups
   base_tags                = try(local.global_settings.inherit_tags, false) ? module.resource_groups[each.value.resource_group_key].tags : {}
+  private_dns              = local.combined_objects_private_dns
 }
 
 output azure_container_registries {
