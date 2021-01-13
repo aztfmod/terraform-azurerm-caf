@@ -25,7 +25,7 @@ aks_clusters = {
     kubernetes_version = "1.17.11"
     vnet_key           = "spoke_aks_re1"
 
-    network_policy = {
+    network_profile = {
       network_plugin    = "azure"
       load_balancer_sku = "Standard"
     }
