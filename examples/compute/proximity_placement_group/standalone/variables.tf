@@ -23,7 +23,7 @@ variable virtual_machines {
   default = {}
 }
 
-variable keyvaults  {
+variable keyvaults {
   default = {}
 }
 

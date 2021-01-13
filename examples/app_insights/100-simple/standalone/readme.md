@@ -6,7 +6,7 @@ cd /tf/caf/examples/app_insights/100-simple/standalone
 terraform init
 
 terraform [plan | apply | destroy] \
-  -var-file ../configuration.tfvars 
+  -var-file ../configuration.tfvars
 
 ```
 

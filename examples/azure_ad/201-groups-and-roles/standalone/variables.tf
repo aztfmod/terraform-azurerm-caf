@@ -11,23 +11,23 @@ variable tags {
   type    = map
 }
 
-variable keyvaults  {
+variable keyvaults {
   default = {}
 }
 
-variable azuread_apps   {
+variable azuread_apps {
   default = {}
 }
 
-variable azuread_users   {
+variable azuread_users {
   default = {}
 }
 
-variable azuread_roles     {
+variable azuread_roles {
   default = {}
 }
 
-variable azuread_groups   {
+variable azuread_groups {
   default = {}
 }
 
@@ -39,7 +39,7 @@ variable keyvault_access_policies_azuread_apps {
   default = {}
 }
 
-variable role_mapping  {
+variable role_mapping {
   default = {}
 }
 

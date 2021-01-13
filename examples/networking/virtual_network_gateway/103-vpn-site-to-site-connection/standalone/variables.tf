@@ -15,7 +15,7 @@ variable tags {
   type    = map
 }
 
-variable public_ip_addresses  {
+variable public_ip_addresses {
   default = {}
 }
 
@@ -23,11 +23,11 @@ variable virtual_network_gateways {
   default = {}
 }
 
-variable local_network_gateways  {
+variable local_network_gateways {
   default = {}
 }
 
-variable virtual_network_gateway_connections  {
+variable virtual_network_gateway_connections {
   default = {}
 }
 

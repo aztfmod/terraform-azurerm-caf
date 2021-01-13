@@ -11,19 +11,19 @@ variable tags {
   type    = map
 }
 
-variable azurerm_application_insights  {
+variable azurerm_application_insights {
   default = {}
 }
 
-variable storage_accounts{
+variable storage_accounts {
   default = {}
 }
 
-variable keyvaults  {
+variable keyvaults {
   default = {}
 }
 
-variable machine_learning_workspaces  {
+variable machine_learning_workspaces {
   default = {}
 }
 

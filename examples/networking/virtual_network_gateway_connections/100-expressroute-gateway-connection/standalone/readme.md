@@ -1,5 +1,5 @@
 
-Note : The Virtual Network Gateway Connection requires an ExpressRoute Circuit. 
+Note : The Virtual Network Gateway Connection requires an ExpressRoute Circuit.
 
 You can test this module outside of a landingzone using
 

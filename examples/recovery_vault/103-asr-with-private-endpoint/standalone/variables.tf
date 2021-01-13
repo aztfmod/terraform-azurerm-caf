@@ -7,7 +7,7 @@ variable resource_groups {
 }
 
 
-variable recovery_vaults  {
+variable recovery_vaults {
   default = {}
 }
 

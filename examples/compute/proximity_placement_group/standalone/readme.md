@@ -6,7 +6,7 @@ cd /tf/caf/examples/compute/proximity_placement_group/standalone
 terraform init
 
 terraform [plan | apply | destroy] \
-  -var-file ../configuration.tfvars 
+  -var-file ../configuration.tfvars
 
 Note : Change the custom_data path in the configuration file, relative to the path currently you are in. It wil error out otherwise.
 

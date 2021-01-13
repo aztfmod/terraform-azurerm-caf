@@ -28,8 +28,8 @@ keyvaults = {
 }
 
 keyvault_access_policies_azuread_apps = {
-  test_client  = {
-    test_client = {  #KeyVault Key
+  test_client = {
+    test_client = { #KeyVault Key
       azuread_app_key    = "test_client"
       secret_permissions = ["Set", "Get", "List", "Delete"]
     }

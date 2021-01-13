@@ -19,7 +19,7 @@ variable tags {
   type    = map
 }
 
-variable availability_sets  {
+variable availability_sets {
   default = {}
 }
 

@@ -6,7 +6,7 @@ cd /tf/caf/examples/postgresql_server/103-private-endpoint-with-fw-rule/standalo
 terraform init
 
 terraform plan \
-  -var-file ../configuration.tfvars 
+  -var-file ../configuration.tfvars
 
 ```
 

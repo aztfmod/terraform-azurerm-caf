@@ -15,7 +15,7 @@ variable tags {
   type    = map
 }
 
-variable public_ip_addresses  {
+variable public_ip_addresses {
   default = {}
 }
 

@@ -1,13 +1,13 @@
 module "caf" {
-  source = "../../../../../"
-  global_settings    = var.global_settings
-  resource_groups  = var.resource_groups
-  tags               = var.tags
+  source          = "../../../../../"
+  global_settings = var.global_settings
+  resource_groups = var.resource_groups
+  tags            = var.tags
   networking = {
-    vnets  = var.vnets
+    vnets        = var.vnets
     virtual_wans = var.virtual_wans
 
 
   }
 }
-  
+

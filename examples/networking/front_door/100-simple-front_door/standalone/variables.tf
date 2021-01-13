@@ -11,15 +11,15 @@ variable tags {
   type    = map
 }
 
-variable keyvault_certificate_requests  {
+variable keyvault_certificate_requests {
   default = {}
 }
 
-variable keyvaults  {
+variable keyvaults {
   default = {}
 }
 
-variable dynamic_keyvault_secrets  {
+variable dynamic_keyvault_secrets {
   default = {}
 }
 
@@ -31,7 +31,7 @@ variable network_security_group_definition {
   default = {}
 }
 
-variable public_ip_addresses  {
+variable public_ip_addresses {
   default = {}
 }
 
@@ -43,11 +43,11 @@ variable front_door_waf_policies {
   default = {}
 }
 
-variable front_doors  {
+variable front_doors {
   default = {}
 }
 
-variable diagnostic_storage_accounts  {
+variable diagnostic_storage_accounts {
   default = {}
 }
 
@@ -59,7 +59,7 @@ variable diagnostics_destinations {
   default = {}
 }
 
-variable keyvault_certificate_issuers  {
+variable keyvault_certificate_issuers {
   default = {}
 }
 

@@ -15,12 +15,12 @@ variable front_door_waf_policies {
   default = {}
 }
 
-variable front_doors  {
+variable front_doors {
   default = {}
 }
 
 variable keyvaults {
-  default = {}  
+  default = {}
 }
 
 variable var_folder_path {

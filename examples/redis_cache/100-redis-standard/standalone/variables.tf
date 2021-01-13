@@ -7,7 +7,7 @@ variable resource_groups {
 }
 
 
-variable azurerm_redis_caches  {
+variable azurerm_redis_caches {
   default = {}
 }
 

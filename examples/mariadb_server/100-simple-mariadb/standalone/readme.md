@@ -6,7 +6,7 @@ cd /tf/caf/examples/mariadb_server/100-simple-mariadb/standalone
 terraform init
 
 terraform plan \
-  -var-file ../configuration.tfvars 
+  -var-file ../configuration.tfvars
 
 ```
 

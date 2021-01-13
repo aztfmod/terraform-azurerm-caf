@@ -15,7 +15,7 @@ variable app_service_plans {
   default = {}
 }
 
-variable app_services  {
+variable app_services {
   default = {}
 }
 

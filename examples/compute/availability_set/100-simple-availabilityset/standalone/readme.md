@@ -6,7 +6,7 @@ cd /tf/caf/examples/compute/availability_set/100-simple-availabilityset/standalo
 terraform init
 
 terraform [plan | apply | destroy] \
-  -var-file ../configuration.tfvars 
+  -var-file ../configuration.tfvars
 
 ```
 

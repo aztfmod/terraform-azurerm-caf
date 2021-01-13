@@ -31,16 +31,16 @@ variable mssql_servers {
   default = {}
 }
 
-variable network_security_group_definition  {
-  default ={}
+variable network_security_group_definition {
+  default = {}
 }
 
-variable azuread_roles  {
-  default ={}
+variable azuread_roles {
+  default = {}
 }
 
 variable azuread_groups {
-  default ={}
+  default = {}
 }
 
 variable keyvaults {

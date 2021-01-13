@@ -6,7 +6,7 @@ cd /tf/caf/examples/keyvault/102-keyvault-cert-issuer/standalone
 terraform init
 
 terraform plan \
-  -var-file ../configuration.tfvars 
+  -var-file ../configuration.tfvars
 
 ```
 
