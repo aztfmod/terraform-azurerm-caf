@@ -41,58 +41,60 @@ resource "azurerm_kubernetes_cluster" "aks" {
   name                    = azurecaf_name.aks.result
   location                = var.resource_group.location
   resource_group_name     = var.resource_group.name
+
+  default_node_pool {
+    name                  = var.settings.default_node_pool.name //azurecaf_name.default_node_pool.result
+    vm_size               = var.settings.default_node_pool.vm_size
+    type                  = try(var.settings.default_node_pool.type, "VirtualMachineScaleSets")
+    os_disk_size_gb       = try(var.settings.default_node_pool.os_disk_size_gb, null)
+    availability_zones    = try(var.settings.default_node_pool.availability_zones, null)
+    enable_auto_scaling   = try(var.settings.default_node_pool.enable_auto_scaling, false)
+    enable_node_public_ip = try(var.settings.default_node_pool.enable_node_public_ip, false)
+    node_count            = try(var.settings.default_node_pool.node_count, 1)
+    max_pods              = try(var.settings.default_node_pool.max_pods, 30)
+    node_labels           = try(var.settings.default_node_pool.node_labels, null)
+    node_taints           = try(var.settings.default_node_pool.node_taints, null)
+    vnet_subnet_id        = var.subnets[var.settings.default_node_pool.subnet_key].id
+    orchestrator_version  = try(var.settings.default_node_pool.orchestrator_version, var.settings.kubernetes_version)
+    tags                  = merge(try(var.settings.default_node_pool.tags, {}), local.tags)
+  }
+
   dns_prefix              = try(var.settings.dns_prefix, random_string.prefix.result)
-  kubernetes_version      = try(var.settings.kubernetes_version, null)
-  node_resource_group     = azurecaf_name.rg_node.result
-  private_cluster_enabled = try(var.settings.private_cluster_enabled, false)
 
-  network_profile {
+  # dynamic "addon_profile" {
+  #   for_each = var.settings.addon_profile == null ? [0] : [1]
+    
+  #   content {
+  #     aci_connector_linux      = try(var.settings.addon_profile.aci_connector_linux,null)
+  #     azure_policy             = try(var.settings.addon_profile.azure_policy,null)
+  #     http_application_routing = try(var.settings.addon_profile.http_application_routing,null)
+  #     kube_dashboard           = try(var.settings.addon_profile.kube_dashboard,null)
+  #     oms_agent                = try(var.settings.addon_profile.oms_agent,null)
+  #   }
+  # }
 
-    network_plugin    = var.settings.network_policy.network_plugin
-    load_balancer_sku = var.settings.network_policy.load_balancer_sku
+  api_server_authorized_ip_ranges = try(var.settings.api_server_authorized_ip_ranges,null)
 
-    # load_balancer_profile {
-    #   managed_outbound_ip_count = lookup(var.settings.load_balancer_profile, "managed_outbound_ip_count", null)
-    #   outbound_ip_prefix_ids    = lookup(var.settings.load_balancer_profile, "outbound_ip_prefix_ids", null)
-    #   outbound_ip_address_ids   = lookup(var.settings.load_balancer_profile, "outbound_ip_address_ids", null)
-    # }
-
-    outbound_type = try(var.settings.outbound_type, "loadBalancer")
-  }
-
-  addon_profile {
-    aci_connector_linux      = try(var.settings.addon_profile,aci_connector_linux,null)
-    azure_policy             = try(var.settings.addon_profile,azure_policy,null)
-    http_application_routing = try(var.settings.addon_profile,http_application_routing,null)
-    kube_dashboard           = try(var.settings.addon_profile,kube_dashboard,null)
-    oms_agent                = try(var.settings.addon_profile,oms_agent,null)
-  }
-
-  dynamic "default_node_pool" {
-
-    for_each = var.settings.default_node_pool == null ? [0] : [1]
-
+  dynamic "auto_scaler_profile" {
+    for_each = try(var.settings.auto_scaler_profile, null) == null ? [0] : [1]
+    
     content {
-      name                  = var.settings.default_node_pool.name //azurecaf_name.default_node_pool.result
-      vm_size               = var.settings.default_node_pool.vm_size
-      type                  = try(var.settings.default_node_pool.type, "VirtualMachineScaleSets")
-      os_disk_size_gb       = try(var.settings.default_node_pool.os_disk_size_gb, null)
-      availability_zones    = try(var.settings.default_node_pool.availability_zones, null)
-      enable_auto_scaling   = try(var.settings.default_node_pool.enable_auto_scaling, false)
-      enable_node_public_ip = try(var.settings.default_node_pool.enable_node_public_ip, false)
-      node_count            = try(var.settings.default_node_pool.node_count, 1)
-      max_pods              = try(var.settings.default_node_pool.max_pods, 30)
-      node_labels           = try(var.settings.default_node_pool.node_labels, null)
-      node_taints           = try(var.settings.default_node_pool.node_taints, null)
-      vnet_subnet_id        = var.subnets[var.settings.default_node_pool.subnet_key].id
-      orchestrator_version  = try(var.settings.default_node_pool.orchestrator_version, var.settings.kubernetes_version)
-      tags                  = merge(try(var.settings.default_node_pool.tags, {}), local.tags)
+      balance_similar_node_groups           = try(var.settings.auto_scaler_profile.balance_similar_node_groups,null)
+      max_graceful_termination_sec          = try(var.settings.auto_scaler_profile.max_graceful_termination_sec,null)
+      scale_down_delay_after_add            = try(var.settings.auto_scaler_profile.scale_down_delay_after_add,null)
+      scale_down_delay_after_delete         = try(var.settings.auto_scaler_profile.scale_down_delay_after_delete,null)
+      scale_down_delay_after_failure        = try(var.settings.auto_scaler_profile.scale_down_delay_after_failure,null)
+      scan_interval                         = try(var.settings.auto_scaler_profile.scan_interval,null)
+      scale_down_unneeded                   = try(var.settings.auto_scaler_profile.scale_down_unneeded,null)
+      scale_down_unready                    = try(var.settings.auto_scaler_profile.scale_down_unready,null)
+      scale_down_utilization_threshold      = try(var.settings.auto_scaler_profile.scale_down_utilization_threshold,null)
     }
-
   }
+
+  disk_encryption_set_id = try(var.settings.disk_encryption_set_id, null)
 
   dynamic "identity" {
-    for_each = lookup(var.settings, "identity", null) == null ? [] : [1]
+    for_each = var.settings.identity == null ? [] : [1]
 
     content {
       type = var.settings.identity.type
@@ -101,21 +103,58 @@ resource "azurerm_kubernetes_cluster" "aks" {
 
   # Enabled RBAC
   role_based_access_control {
-    enabled = lookup(var.settings, "enable_rbac", true)
+    enabled = try(var.settings.enable_rbac, true)
     azure_active_directory {
       managed                = true
       admin_group_object_ids = var.admin_group_ids
     }
   }
 
+  kubernetes_version      = try(var.settings.kubernetes_version, null)
+
+  # dynamic "linux_profile" {
+  #   for_each = var.settings.linux_profile == null ? [] : [1]
+
+  #   content {
+  #     admin_username  = try(var.settings.linux_profile.admin_username,null)
+  #     ssh_key         = try(var.settings.linux_profile.ssh_key,null)
+  #   }
+  # }
+  
+  dynamic "network_profile" {
+    for_each = try(var.settings.network_profile, null) == null ? [] : [1]
+
+    content {
+      network_plugin        = try(var.settings.network_profile.network_plugin,null)
+      network_mode          = try(var.settings.network_profile.network_mode, null)
+      network_policy        = try(var.settings.network_profile.network_policy, null)
+      dns_service_ip        = try(var.settings.network_profile.dns_service_ip, null)
+      docker_bridge_cidr    = try(var.settings.network_profile.docker_bridge_cidr, null)
+      outbound_type         = try(var.settings.outbound_type, null)
+      pod_cidr              = try(var.settings.network_profile.pod_cidr, null)
+      service_cidr          = try(var.settings.network_profile.service_cidr, null)
+      load_balancer_sku     = try(var.settings.network_profile.load_balancer_sku, null)
+      # load_balancer_profile = try(var.settings.network_profile.load_balancer_profile, null)
+      dynamic "load_balancer_profile"{
+        for_each = try(var.settings.network_profile.load_balancer_profile, null) == null ? [] : [1]
+        content {
+          managed_outbound_ip_count = lookup(var.settings.network_profile.load_balancer_profile, "managed_outbound_ip_count", null)
+          outbound_ip_prefix_ids    = lookup(var.settings.network_profile.load_balancer_profile, "outbound_ip_prefix_ids", null)
+          outbound_ip_address_ids   = lookup(var.settings.network_profile.load_balancer_profile, "outbound_ip_address_ids", null)
+        }
+      }
+    }
+  }
+
+  node_resource_group     = azurecaf_name.rg_node.result
+  private_cluster_enabled = try(var.settings.private_cluster_enabled, false)
+
   lifecycle {
     ignore_changes = [
       windows_profile,
     ]
   }
-
   tags = merge(local.tags, lookup(var.settings, "tags", {}))
-
 }
 
 resource "random_string" "prefix" {
@@ -124,7 +163,6 @@ resource "random_string" "prefix" {
   upper   = false
   number  = false
 }
-
 
 #
 # Node pools
