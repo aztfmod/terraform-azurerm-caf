@@ -67,6 +67,8 @@ resource "azurerm_linux_virtual_machine" "vm" {
   zone                            = try(each.value.zone, null)
   disable_password_authentication = try(each.value.disable_password_authentication, true)
   custom_data                     = try(each.value.custom_data, null) == null ? null : filebase64(format("%s/%s", path.cwd, each.value.custom_data))
+  availability_set_id             = try(var.availability_sets[var.client_config.landingzone_key][each.value.availability_set_key].id, var.availability_sets[each.value.availability_sets].id, null)
+  proximity_placement_group_id    = try(var.proximity_placement_groups[var.client_config.landingzone_key][each.value.proximity_placement_group_key].id, var.proximity_placement_groups[each.value.proximity_placement_groups].id, null)
 
   dynamic "admin_ssh_key" {
     for_each = lookup(each.value, "disable_password_authentication", true) == true ? [1] : []
@@ -120,7 +122,7 @@ resource "azurerm_key_vault_secret" "ssh_private_key" {
 
   name         = format("%s-ssh-private-key", azurecaf_name.linux_computer_name[each.key].result)
   value        = tls_private_key.ssh[each.key].private_key_pem
-  key_vault_id = local.keyvault_id
+  key_vault_id = local.keyvault.id
 
   lifecycle {
     ignore_changes = [
@@ -135,7 +137,7 @@ resource "azurerm_key_vault_secret" "ssh_public_key_openssh" {
 
   name         = format("%s-ssh-public-key-openssh", azurecaf_name.linux_computer_name[each.key].result)
   value        = tls_private_key.ssh[each.key].public_key_openssh
-  key_vault_id = local.keyvault_id
+  key_vault_id = local.keyvault.id
 
   lifecycle {
     ignore_changes = [

@@ -15,7 +15,7 @@ It can be invoked from the [Terraform registry](https://registry.terraform.io/mo
 ```terraform
 module "caf" {
   source  = "aztfmod/caf/azurerm"
-  version = "~>0.4"
+  version = "~>4.21"
   # insert the 7 required variables here
 }
 ```
@@ -50,6 +50,8 @@ In case you have any question, you can reach out to tf-landingzones at microsoft
 You can also reach us on [Gitter](https://gitter.im/aztfmod/community?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge)
 
 ## Contributing
+
+In order to contribute to the project, please review the module contribution and [conventions guidelines](./documentation/conventions.md)
 
 This project welcomes contributions and suggestions.  Most contributions require you to agree to a
 Contributor License Agreement (CLA) declaring that you have the right to, and actually do, grant us

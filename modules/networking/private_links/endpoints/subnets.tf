@@ -1,5 +1,5 @@
 module subnet {
-  source = "./subnet"
+  source   = "./subnet"
   for_each = toset(try(var.settings.subnet_keys, []))
 
   global_settings          = var.global_settings
