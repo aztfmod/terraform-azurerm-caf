@@ -5,16 +5,19 @@ repos:
     rev: v1.45.0
     hooks:
     - id: terraform_fmt
-    # - id: terraform_docs
+    - id: terraform_docs
     # - id: terraform_tflint
+    # - id: terraform_validate
     # - id: terraform_tfsec
+    # - id: checkov
   - repo: git://github.com/pre-commit/pre-commit-hooks
-    rev: v3.3.0
+    rev: v3.4.0
     hooks:
       - id: check-merge-conflict
       - id: trailing-whitespace
       - id: check-yaml
       - id: check-added-large-files
+      - id: detect-private-key
   # - repo: git://github.com/markdownlint/markdownlint
   #   rev: v0.9.0
   #   hooks:

@@ -41,10 +41,10 @@ virtual_machines = {
 
     virtual_machine_settings = {
       windows = {
-        name           = "example_vm2"
-        size           = "Standard_F2"
-        
-        admin_user_key     = "vmadmin-username"
+        name = "example_vm2"
+        size = "Standard_F2"
+
+        admin_username_key = "vmadmin-username"
         admin_password_key = "vmadmin-password"
 
         # Spot VM to save money
@@ -75,7 +75,7 @@ virtual_machines = {
 
 # Store output attributes into keyvault secret
 dynamic_keyvault_secrets = {
-  example_vm_rg1 = {      # Key of the keyvault
+  example_vm_rg1 = { # Key of the keyvault
     vmadmin-username = {
       secret_name = "vmadmin-username"
       value       = "vmadmin"

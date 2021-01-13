@@ -12,6 +12,8 @@ data "terraform_remote_state" "remote" {
 }
 
 locals {
+  tags = merge(var.tags, { "rover_version" = var.rover_version })
+
   landingzone = {
     current = {
       storage_account_name = var.tfstate_storage_account_name
@@ -24,16 +26,16 @@ locals {
       resource_group_name  = var.lower_resource_group_name
     }
   }
-  
+
   remote = {
     diagnostics = {
       # Get the diagnostics settings of services to create
-      diagnostic_event_hub_namespaces     = var.diagnostic_event_hub_namespaces
-      diagnostic_log_analytics            = var.diagnostic_log_analytics
-      diagnostic_storage_accounts         = var.diagnostic_storage_accounts
-      
+      diagnostic_event_hub_namespaces = var.diagnostic_event_hub_namespaces
+      diagnostic_log_analytics        = var.diagnostic_log_analytics
+      diagnostic_storage_accounts     = var.diagnostic_storage_accounts
+
       # Combine the diagnostics definitions
-      diagnostics_definition   = merge(data.terraform_remote_state.remote[var.landingzone.global_settings_key].outputs.diagnostics.diagnostics_definition, var.diagnostics_definition)
+      diagnostics_definition = merge(data.terraform_remote_state.remote[var.landingzone.global_settings_key].outputs.diagnostics.diagnostics_definition, var.diagnostics_definition)
       diagnostics_destinations = {
         event_hub_namespaces = merge(
           try(data.terraform_remote_state.remote[var.landingzone.global_settings_key].outputs.diagnostics.diagnostics_destinations.event_hub_namespaces, {}),
@@ -49,9 +51,13 @@ locals {
         )
       }
       # Get the remote existing diagnostics objects
-      storage_accounts         = data.terraform_remote_state.remote[var.landingzone.global_settings_key].outputs.diagnostics.storage_accounts
-      log_analytics            = data.terraform_remote_state.remote[var.landingzone.global_settings_key].outputs.diagnostics.log_analytics
-      event_hub_namespaces     = data.terraform_remote_state.remote[var.landingzone.global_settings_key].outputs.diagnostics.event_hub_namespaces
+      storage_accounts     = data.terraform_remote_state.remote[var.landingzone.global_settings_key].outputs.diagnostics.storage_accounts
+      log_analytics        = data.terraform_remote_state.remote[var.landingzone.global_settings_key].outputs.diagnostics.log_analytics
+      event_hub_namespaces = data.terraform_remote_state.remote[var.landingzone.global_settings_key].outputs.diagnostics.event_hub_namespaces
+    }
+
+    keyvaults = {
+      for key, value in try(var.landingzone.tfstates, {}) : key => merge(try(data.terraform_remote_state.remote[key].outputs.keyvaults[key], {}))
     }
   }
 }
