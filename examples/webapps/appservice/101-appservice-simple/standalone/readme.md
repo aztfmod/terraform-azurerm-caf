@@ -6,7 +6,7 @@ cd /tf/caf/examples/webapps/appservice/101-appservice-simple/standalone
 terraform init
 
 terraform plan \
-  -var-file ../configuration.tfvars 
+  -var-file ../configuration.tfvars
 
 ```
 

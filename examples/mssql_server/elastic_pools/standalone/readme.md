@@ -6,7 +6,7 @@ cd /tf/caf/examples/mssql_server/elastic_pools/standalone
 terraform init
 
 terraform plan \
-  -var-file ../configuration.tfvars 
+  -var-file ../configuration.tfvars
 
 ```
 

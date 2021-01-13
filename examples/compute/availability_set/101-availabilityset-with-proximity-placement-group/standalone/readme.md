@@ -6,7 +6,7 @@ cd /tf/caf/examples/compute/availability_set/101-availabilityset-with-proximity-
 terraform init
 
 terraform [plan | apply | destroy] \
-  -var-file ../configuration.tfvars 
+  -var-file ../configuration.tfvars
 
 ```
 

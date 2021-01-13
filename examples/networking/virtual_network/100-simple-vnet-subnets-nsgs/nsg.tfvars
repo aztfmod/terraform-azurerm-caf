@@ -74,7 +74,7 @@ network_security_group_definition = {
         destination_port_range     = "22"
         source_address_prefix      = "10.1.1.0/24"
         destination_address_prefix = "VirtualNetwork"
-      },            
+      },
     ]
   }
 
@@ -102,7 +102,7 @@ network_security_group_definition = {
         destination_port_range     = "22"
         source_address_prefix      = "10.1.1.0/24"
         destination_address_prefix = "VirtualNetwork"
-      },            
+      },
     ]
   }
 
@@ -130,7 +130,7 @@ network_security_group_definition = {
         destination_port_range     = "22"
         source_address_prefix      = "10.1.1.0/24"
         destination_address_prefix = "VirtualNetwork"
-      },            
+      },
     ]
-  }  
+  }
 }

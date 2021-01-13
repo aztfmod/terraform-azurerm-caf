@@ -11,7 +11,7 @@ variable tags {
   type    = map
 }
 
-variable keyvaults  {
+variable keyvaults {
   default = {}
 }
 
@@ -23,7 +23,7 @@ variable dynamic_keyvault_secrets {
   default = {}
 }
 
-variable keyvault_certificate_issuers{
+variable keyvault_certificate_issuers {
   default = {}
 }
 

@@ -6,7 +6,7 @@ cd /tf/caf/examples/compute/container_registry/200-acr-private-link/standalone
 terraform init
 
 terraform [plan | apply | destroy] \
-  -var-file ../configuration.tfvars 
+  -var-file ../configuration.tfvars
 
 
 ```

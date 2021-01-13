@@ -40,7 +40,7 @@ public_ip_addresses = {
     idle_timeout_in_minutes = "4"
   }
 
-    vngw_pip2 = {
+  vngw_pip2 = {
     name               = "vngw_pip2"
     resource_group_key = "vgnw"
     sku                = "Basic"

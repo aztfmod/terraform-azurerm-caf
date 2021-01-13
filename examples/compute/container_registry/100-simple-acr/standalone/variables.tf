@@ -11,7 +11,7 @@ variable tags {
   type    = map
 }
 
-variable azure_container_registries  {
+variable azure_container_registries {
   default = {}
 }
 

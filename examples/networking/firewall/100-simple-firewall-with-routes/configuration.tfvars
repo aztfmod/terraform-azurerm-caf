@@ -30,10 +30,10 @@ vnets = {
 
 public_ip_addresses = {
   pip1 = {
-    name               = "pip1"
-    resource_group_key = "test"
-    sku                = "Standard"  # must be 'Standard' SKU
-    allocation_method = "Static"
+    name                    = "pip1"
+    resource_group_key      = "test"
+    sku                     = "Standard" # must be 'Standard' SKU
+    allocation_method       = "Static"
     ip_version              = "IPv4"
     idle_timeout_in_minutes = "4"
   }
@@ -41,9 +41,9 @@ public_ip_addresses = {
 
 azurerm_firewalls = {
   firewall1 = {
-    name = "test-firewall"
-    resource_group_key =  "test"
-    vnet_key = "vnet1"
-    public_ip_key = "pip1"
+    name               = "test-firewall"
+    resource_group_key = "test"
+    vnet_key           = "vnet1"
+    public_ip_key      = "pip1"
   }
 }

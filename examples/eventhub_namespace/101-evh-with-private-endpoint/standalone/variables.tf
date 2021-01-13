@@ -11,7 +11,7 @@ variable tags {
   type    = map
 }
 
-variable event_hub_namespaces  {
+variable event_hub_namespaces {
   default = {}
 }
 

@@ -6,7 +6,7 @@ cd /tf/caf/examples/recovery_vault/101-simple-asrv/standalone
 terraform init
 
 terraform plan \
-  -var-file ../configuration.tfvars 
+  -var-file ../configuration.tfvars
 
 ```
 

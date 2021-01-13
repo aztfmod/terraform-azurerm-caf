@@ -1,11 +1,11 @@
 module "caf" {
-  source = "../../../../"
-  global_settings    = var.global_settings
-  tags               = var.tags
-  resource_groups    = var.resource_groups
+  source          = "../../../../"
+  global_settings = var.global_settings
+  tags            = var.tags
+  resource_groups = var.resource_groups
 
   database = {
-    azurerm_redis_caches  = var.azurerm_redis_caches
+    azurerm_redis_caches = var.azurerm_redis_caches
   }
 }
-  
+

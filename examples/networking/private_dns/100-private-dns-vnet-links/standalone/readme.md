@@ -6,7 +6,7 @@ cd /tf/caf/examples/networking/private_dns/100-private-dns-vnet-links/standalone
 terraform init
 
 terraform plan \
-  -var-file ../configuration.tfvars 
+  -var-file ../configuration.tfvars
 
 ```
 

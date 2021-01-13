@@ -6,7 +6,7 @@ variable resource_groups {
   default = null
 }
 
-variable synapse_workspaces{
+variable synapse_workspaces {
   default = {}
 }
 

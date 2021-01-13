@@ -6,7 +6,7 @@ cd /tf/caf/examples/networking/dns_zones/100-simple-dns_zone/standalone
 terraform init
 
 terraform plan \
-  -var-file ../configuration.tfvars 
+  -var-file ../configuration.tfvars
 
 ```
 

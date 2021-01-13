@@ -6,7 +6,7 @@ cd /tf/caf/examples/mysql_server/103-private-endpoint-with-fw-rule-mysql/standal
 terraform init
 
 terraform plan \
-  -var-file ../configuration.tfvars 
+  -var-file ../configuration.tfvars
 
 ```
 

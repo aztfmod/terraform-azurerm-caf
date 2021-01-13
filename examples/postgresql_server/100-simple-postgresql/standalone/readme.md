@@ -6,7 +6,7 @@ cd /tf/caf/examples/postgresql_server/100-simple-postgresql/standalone
 terraform init
 
 terraform plan \
-  -var-file ../configuration.tfvars 
+  -var-file ../configuration.tfvars
 
 ```
 

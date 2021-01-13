@@ -1,8 +1,8 @@
 module "caf" {
-  source = "../../../../../"
-  global_settings    = var.global_settings
-  tags               = var.tags
-  resource_groups    = var.resource_groups
+  source          = "../../../../../"
+  global_settings = var.global_settings
+  tags            = var.tags
+  resource_groups = var.resource_groups
 
   networking = {
     vnets                             = var.vnets
@@ -10,8 +10,8 @@ module "caf" {
   }
 
   compute = {
-    aks_clusters= var.aks_clusters
-    virtual_machines  = var.virtual_machines
+    aks_clusters     = var.aks_clusters
+    virtual_machines = var.virtual_machines
   }
-  
+
 }

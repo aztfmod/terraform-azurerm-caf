@@ -6,7 +6,7 @@ cd /tf/caf/examples/azure_ad/100-sevice-principle-with-builtin-roles/standalone
 terraform init
 
 terraform [plan | apply | destroy] \
-  -var-file ../configuration.tfvars 
+  -var-file ../configuration.tfvars
 
 
 

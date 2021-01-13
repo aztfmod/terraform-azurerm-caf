@@ -6,7 +6,7 @@ cd /tf/caf/examples/mariadb_server/103-private-endpoint-with-fw-rule-mariadb/sta
 terraform init
 
 terraform plan \
-  -var-file ../configuration.tfvars 
+  -var-file ../configuration.tfvars
 
 ```
 

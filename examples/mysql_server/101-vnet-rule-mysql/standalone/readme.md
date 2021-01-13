@@ -6,7 +6,7 @@ cd /tf/caf/examples/mysql_server/101-vnet-rule-mysql/standalone
 terraform init
 
 terraform plan \
-  -var-file ../configuration.tfvars 
+  -var-file ../configuration.tfvars
 
 ```
 

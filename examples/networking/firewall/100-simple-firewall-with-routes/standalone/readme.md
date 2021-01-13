@@ -6,7 +6,7 @@ cd /tf/caf/examples/networking/firewall/100-simple-firewall-with-routes/standalo
 terraform init
 
 terraform plan \
-  -var-file ../configuration.tfvars 
+  -var-file ../configuration.tfvars
 
 ```
 

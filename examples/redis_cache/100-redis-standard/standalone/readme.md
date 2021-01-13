@@ -6,7 +6,7 @@ cd /tf/caf/examples/redis_cache/100-redis-standard/standalone
 terraform init
 
 terraform plan \
-  -var-file ../configuration.tfvars 
+  -var-file ../configuration.tfvars
 
 ```
 

@@ -6,7 +6,7 @@ cd /tf/caf/examples/mariadb_server/101-vnet-rule-mariadb/standalone
 terraform init
 
 terraform plan \
-  -var-file ../configuration.tfvars 
+  -var-file ../configuration.tfvars
 
 ```
 

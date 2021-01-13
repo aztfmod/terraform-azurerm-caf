@@ -15,11 +15,11 @@ variable tags {
   type    = map
 }
 
-variable aks_clusters  {
+variable aks_clusters {
   default = {}
 }
 
-variable azure_container_registries  {
+variable azure_container_registries {
   default = {}
 }
 

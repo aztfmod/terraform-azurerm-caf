@@ -6,7 +6,7 @@ cd /tf/caf/examples/azure_ad/201-groups-and-roles/standalone
 terraform init
 
 terraform plan \
-  -var-file ../configuration.tfvars 
+  -var-file ../configuration.tfvars
 
 
 ```

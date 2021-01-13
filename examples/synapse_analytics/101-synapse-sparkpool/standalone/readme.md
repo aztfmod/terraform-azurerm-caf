@@ -6,7 +6,7 @@ cd /tf/caf/examples/synapse_analytics/101-synapse-sparkpool/standalone
 terraform init
 
 terraform plan \
-  -var-file ../configuration.tfvars 
+  -var-file ../configuration.tfvars
 
 ```
 

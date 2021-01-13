@@ -6,7 +6,7 @@ global_settings = {
 }
 
 resource_groups = {
-  test = {  #resource_group_key
+  test = { #resource_group_key
     name = "test"
   }
 }
@@ -28,7 +28,7 @@ keyvaults = {
 }
 
 keyvault_access_policies_azuread_apps = {
-  test_client  = {
+  test_client = {
     test_client = {
       azuread_app_key    = "test_client"
       secret_permissions = ["Set", "Get", "List", "Delete"]
@@ -62,7 +62,7 @@ role_mapping = {
         "Contributor" = {
           azuread_apps = {
             keys = ["test_client"]
-           }
+          }
         }
       }
     }

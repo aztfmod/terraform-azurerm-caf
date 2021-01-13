@@ -28,7 +28,7 @@ keyvaults = {
 }
 
 azuread_apps = {
-  app1= {
+  app1 = {
     useprefix                    = true
     application_name             = "app1"
     password_expire_in_days      = 180
@@ -39,7 +39,7 @@ azuread_apps = {
       }
     }
   }
-  app2= {
+  app2 = {
     useprefix                    = true
     application_name             = "app2"
     password_expire_in_days      = 180
@@ -49,18 +49,18 @@ azuread_apps = {
         secret_prefix = "app2"
       }
     }
-  }  
+  }
 }
 
 azuread_groups = {
-  group1= {
+  group1 = {
     name        = "group1"
     description = "Apps with permissions"
     members = {
       user_principal_names = []
-      group_names = []
-      object_ids  = []
-      group_keys  = []
+      group_names          = []
+      object_ids           = []
+      group_keys           = []
       service_principal_keys = [
         "app1"
       ]
@@ -83,9 +83,9 @@ role_mapping = {
       # subcription level access
       logged_in_subscription = {
         "Contributor" = {
-          azuread_groups= {
+          azuread_groups = {
             keys = ["group1"]
-           }
+          }
         }
       }
     }

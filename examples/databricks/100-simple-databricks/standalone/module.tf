@@ -1,8 +1,8 @@
 module "caf" {
-  source = "../../../../"
-  global_settings    = var.global_settings
-  tags               = var.tags
-  resource_groups    = var.resource_groups
+  source          = "../../../../"
+  global_settings = var.global_settings
+  tags            = var.tags
+  resource_groups = var.resource_groups
   keyvaults       = var.keyvaults
   database = {
     databricks_workspaces = var.databricks_workspaces
@@ -13,4 +13,4 @@ module "caf" {
     public_ip_addresses               = var.public_ip_addresses
   }
 }
-  
+

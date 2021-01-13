@@ -15,7 +15,7 @@ variable tags {
   type    = map
 }
 
-variable aks_clusters  {
+variable aks_clusters {
   default = {}
 }
 
