@@ -1,27 +1,26 @@
 
-resource "azurecaf_name" "plan" {
-  name          = var.name
-  resource_type = "azurerm_function_app"
-  prefixes      = [var.global_settings.prefix]
-  random_length = var.global_settings.random_length
-  clean_input   = true
-  passthrough   = var.global_settings.passthrough
-  use_slug      = var.global_settings.use_slug
-}
+# resource "azurecaf_name" "plan" {
+#   name          = var.name
+#   resource_type = "azurerm_function_app"
+#   prefixes      = [var.global_settings.prefix]
+#   random_length = var.global_settings.random_length
+#   clean_input   = true
+#   passthrough   = var.global_settings.passthrough
+#   use_slug      = var.global_settings.use_slug
+# }
 
 resource "azurerm_function_app" "function_app" {
-  name                       = azurecaf_name.plan.result
-  location                   = var.location
-  resource_group_name        = var.resource_group_name
-  app_service_plan_id        = var.app_service_plan_id
-  client_affinity_enabled    = lookup(var.settings, "client_affinity_enabled", null)
-  enabled                    = lookup(var.settings, "enabled", null)
-  https_only                 = lookup(var.settings, "https_only", null)
-  os_type                    = "linux"
-  storage_account_name       = var.storage_account_name
-  storage_account_access_key = var.storage_account_access_key
-  tags                       = local.tags
-
+  name                        = var.name
+  location                    = var.location
+  resource_group_name         = var.resource_group_name
+  app_service_plan_id         = var.app_service_plan_id
+  client_affinity_enabled     = lookup(var.settings, "client_affinity_enabled", null)
+  enabled                     = lookup(var.settings, "enabled", null)
+  https_only                  = lookup(var.settings, "https_only", null)
+  storage_account_name        = var.storage_account_name
+  storage_account_access_key  = var.storage_account_access_key
+  tags                        = local.tags
+  
   app_settings = local.app_settings
 
   dynamic "auth_settings" {
@@ -98,13 +97,19 @@ resource "azurerm_function_app" "function_app" {
       value = connection_string.value.value
     }
   }
+<<<<<<< HEAD
+ 
+  dynamic identity {
+    for_each = try(var.identity, null) == null ? [] : [1]
+=======
 
   dynamic "identity" {
     for_each = try(var.identity, null) != null ? [1] : []
+>>>>>>> e023feb6654f2c8a604e3c6dc54770d3423db94c
 
     content {
-      type         = try(var.identity.type, null)
-      identity_ids = try(var.identity.identity_ids, null)
+      type         = "UserAssigned"
+      identity_ids = local.managed_identities
     }
   }
 
