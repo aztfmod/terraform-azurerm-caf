@@ -19,5 +19,5 @@ module "azurerm_application_insights" {
 
 output application_insights {
   value     = module.azurerm_application_insights
-  sensitive = true
+  
 }

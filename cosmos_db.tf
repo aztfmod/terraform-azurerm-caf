@@ -11,5 +11,5 @@ module cosmos_db {
 
 output cosmos_db_id {
   value     = module.cosmos_db
-  sensitive = true
+  
 }

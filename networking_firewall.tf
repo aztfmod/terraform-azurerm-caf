@@ -62,5 +62,5 @@ module azurerm_firewall_nat_rule_collections {
 
 output azurerm_firewalls {
   value     = module.azurerm_firewalls
-  sensitive = true
+  
 }

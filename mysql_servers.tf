@@ -1,7 +1,7 @@
 
 output mysql_servers {
   value     = module.mysql_servers
-  sensitive = true
+  
 }
 
 module "mysql_servers" {
