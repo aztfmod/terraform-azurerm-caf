@@ -1,3 +1,16 @@
+# Requires:
+# - caf_launchpad scenario 200+
+# - caf_foundations
+# - caf_neworking with 200-multi-region-hub
+# - 200-basic-ml networking_spoke
+
+global_settings = {
+  default_region = "region1"
+  regions = {
+    region1 = "southeastasia"
+  }
+}
+
 #
 # Resource groups to be created
 #
@@ -84,10 +97,10 @@ storage_accounts = {
 #
 keyvaults = {
   synapse_secrets = {
-    name                = "synapsesecrets"
-    resource_group_key  = "dap_synapse_re1"
-    sku_name            = "premium"
-    soft_delete_enabled = true
+    name               = "synapsesecrets"
+    resource_group_key = "dap_synapse_re1"
+    sku_name           = "premium"
+    #soft_delete_enabled = true
 
     creation_policies = {
       logged_in_user = {

@@ -53,7 +53,7 @@ cosmos_dbs = {
 
     capabilities = [
       "EnableMongo",
-      #"EnableServerless", 
+      #"EnableServerless",
       #"DisableRateLimitingResponses"
     ]
 

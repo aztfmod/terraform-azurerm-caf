@@ -54,12 +54,12 @@ locals {
     resource_groups            = local.combined_objects_resource_groups
     storage_accounts           = local.combined_objects_storage_accounts
     synapse_workspaces         = local.combined_objects_synapse_workspaces
-    subscriptions              = map(var.current_landingzone_key, merge(try(var.subscriptions, {}), { "logged_in_subscription" = { id = data.azurerm_subscription.primary.id } }))
+    subscriptions              = tomap({ (var.current_landingzone_key) = merge(try(var.subscriptions, {}), { "logged_in_subscription" = { id = data.azurerm_subscription.primary.id } }) })
 
   }
 
-  logged_in = map(
-    var.current_landingzone_key, {
+  logged_in = tomap({
+    (var.current_landingzone_key) = {
       user = {
         rbac_id = local.client_config.logged_user_objectId
       }
@@ -67,7 +67,7 @@ locals {
         rbac_id = local.client_config.logged_aad_app_objectId
       }
     }
-  )
+  })
 
   roles_to_process = {
     for mapping in
