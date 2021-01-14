@@ -38,6 +38,8 @@ module event_hub_namespaces_private_endpoints {
   settings            = each.value.settings
   global_settings     = local.global_settings
   base_tags           = each.value.base_tags
+  private_dns         = local.combined_objects_private_dns
+  client_config       = local.client_config
 }
 
 locals {

@@ -89,6 +89,7 @@ module "caf" {
   }
 
   remote_objects = {
+    vnets     = local.remote.vnets
     keyvaults = local.remote.keyvaults
   }
 }
