@@ -11,6 +11,7 @@ module "function_apps" {
   location                    = lookup(each.value, "region", null) == null ? module.resource_groups[each.value.resource_group_key].location : local.global_settings.regions[each.value.region]
   app_service_plan_id         = try(each.value.lz_key, null) == null ? local.combined_objects_app_service_plans[local.client_config.landingzone_key][each.value.app_service_plan_key].id : local.combined_objects_app_service_plans[each.value.lz_key][each.value.app_service_plan_key].id
   settings                    = each.value.settings
+  application_insight         = try(each.value.application_insight_key, null) == null ? null : module.azurerm_application_insights[each.value.application_insight_key]
   identity                    = try(each.value.identity, null)
   connection_strings          = try(each.value.connection_strings, {})
   storage_account_name        = try(each.value.storage_account_key) == null ? null : module.storage_accounts[each.value.storage_account_key].name
