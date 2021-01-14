@@ -122,18 +122,18 @@ resource "azurerm_kubernetes_cluster" "aks" {
   api_server_authorized_ip_ranges = try(var.settings.api_server_authorized_ip_ranges,null)
 
   dynamic "auto_scaler_profile" {
-    for_each = try(var.settings.auto_scaler_profile, {})
+    for_each = try(var.settings.auto_scaler_profile[*], {})
     
     content {
-      balance_similar_node_groups           = try(var.settings.auto_scaler_profile.balance_similar_node_groups,null)
-      max_graceful_termination_sec          = try(var.settings.auto_scaler_profile.max_graceful_termination_sec,null)
-      scale_down_delay_after_add            = try(var.settings.auto_scaler_profile.scale_down_delay_after_add,null)
-      scale_down_delay_after_delete         = try(var.settings.auto_scaler_profile.scale_down_delay_after_delete,null)
-      scale_down_delay_after_failure        = try(var.settings.auto_scaler_profile.scale_down_delay_after_failure,null)
-      scan_interval                         = try(var.settings.auto_scaler_profile.scan_interval,null)
-      scale_down_unneeded                   = try(var.settings.auto_scaler_profile.scale_down_unneeded,null)
-      scale_down_unready                    = try(var.settings.auto_scaler_profile.scale_down_unready,null)
-      scale_down_utilization_threshold      = try(var.settings.auto_scaler_profile.scale_down_utilization_threshold,null)
+      balance_similar_node_groups           = try(auto_scaler_profile.value.balance_similar_node_groups,null)
+      max_graceful_termination_sec          = try(auto_scaler_profile.value.max_graceful_termination_sec,null)
+      scale_down_delay_after_add            = try(auto_scaler_profile.value.scale_down_delay_after_add,null)
+      scale_down_delay_after_delete         = try(auto_scaler_profile.value.scale_down_delay_after_delete,null)
+      scale_down_delay_after_failure        = try(auto_scaler_profile.value.scale_down_delay_after_failure,null)
+      scan_interval                         = try(auto_scaler_profile.value.scan_interval,null)
+      scale_down_unneeded                   = try(auto_scaler_profile.value.scale_down_unneeded,null)
+      scale_down_unready                    = try(auto_scaler_profile.value.scale_down_unready,null)
+      scale_down_utilization_threshold      = try(auto_scaler_profile.value.scale_down_utilization_threshold,null)
     }
   }
 

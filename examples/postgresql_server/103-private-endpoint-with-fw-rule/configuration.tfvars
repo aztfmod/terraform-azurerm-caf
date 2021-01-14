@@ -1,3 +1,10 @@
+global_settings = {
+  default_region = "region1"
+  regions = {
+    region1 = "southeastasia"
+  }
+}
+
 resource_groups = {
   postgresql_region1 = {
     name   = "postgresql-re1"

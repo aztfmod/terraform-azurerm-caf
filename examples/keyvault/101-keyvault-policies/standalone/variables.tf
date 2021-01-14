@@ -17,3 +17,12 @@ variable keyvault_access_policies {
 variable private_dns {
   default = {}
 }
+
+variable var_folder_path {
+  default = {}
+}
+
+variable tags {
+  default = null
+  type    = map
+}
