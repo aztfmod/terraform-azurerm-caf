@@ -84,6 +84,7 @@ You can customize the examples execution by modifying the variables as follow:
 | terraform | >= 0.13 |
 | azuread | ~> 1.0.0 |
 | azurecaf | ~> 1.1.0 |
+| azurerm | ~> 2.40.0 |
 | external | ~> 1.2.0 |
 | null | ~> 2.1.0 |
 | random | ~> 2.2.1 |
