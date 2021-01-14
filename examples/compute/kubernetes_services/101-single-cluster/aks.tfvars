@@ -30,8 +30,20 @@ aks_clusters = {
       load_balancer_sku = "Standard"
     }
 
-    enable_rbac = true
+    # enable_rbac = true
+    role_based_access_control = {
+      enabled = true
+      azure_active_directory = {
+        managed = true
+      }
+    }
 
+    addon_profile = {
+      oms_agent = {
+        enabled = true
+        log_analytics_workspace_id = "/subscriptions/30e02b61-1190-4a13-9a5e-1303a1e5f87b/resourcegroups/defaultresourcegroup-sea/providers/microsoft.operationalinsights/workspaces/defaultworkspace-30e02b61-1190-4a13-9a5e-1303a1e5f87b-sea"
+      }
+    }
     # admin_groups = {
     #   # ids = []
     #   # azuread_groups = {

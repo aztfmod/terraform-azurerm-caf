@@ -1,3 +1,4 @@
+## https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/resources/kubernetes_cluster
 ### Naming convention
 
 resource "azurecaf_name" "aks" {
@@ -61,22 +62,67 @@ resource "azurerm_kubernetes_cluster" "aks" {
 
   dns_prefix              = try(var.settings.dns_prefix, random_string.prefix.result)
 
-  # dynamic "addon_profile" {
-  #   for_each = var.settings.addon_profile == null ? [0] : [1]
+  dynamic "addon_profile" {
+    for_each = try(var.settings.addon_profile, {})
     
-  #   content {
-  #     aci_connector_linux      = try(var.settings.addon_profile.aci_connector_linux,null)
-  #     azure_policy             = try(var.settings.addon_profile.azure_policy,null)
-  #     http_application_routing = try(var.settings.addon_profile.http_application_routing,null)
-  #     kube_dashboard           = try(var.settings.addon_profile.kube_dashboard,null)
-  #     oms_agent                = try(var.settings.addon_profile.oms_agent,null)
-  #   }
-  # }
+    content {
+      dynamic "aci_connector_linux" {
+        for_each = try(var.settings.addon_profile.aci_connector_linux[*], {})
+        
+        content {
+          enabled     = aci_connector_linux.value.enabled
+          subnet_name = aci_connector_linux.value.subnet_name
+        }
+      }
+      
+      dynamic "azure_policy" {
+        for_each = try(var.settings.addon_profile.azure_policy[*], {})
+        
+        content {
+          enabled     = azure_policy.value.enabled
+        }
+      }
+
+      dynamic "http_application_routing" {
+        for_each = try(var.settings.addon_profile.http_application_routing[*], {})
+        
+        content {
+          enabled     = http_application_routing.value.enabled
+        }
+      }
+
+      dynamic "kube_dashboard" {
+        for_each = try(var.settings.addon_profile.kube_dashboard[*], {})
+        
+        content {
+          enabled     = kube_dashboard.value.enabled
+        }
+      }
+
+      dynamic "oms_agent" {
+        for_each = try(var.settings.addon_profile.oms_agent[*], {})
+        
+        content {
+          enabled                       = oms_agent.value.enabled
+          log_analytics_workspace_id    = try(oms_agent.value.log_analytics_workspace_id, null)
+          dynamic "oms_agent_identity" {
+            for_each = try(oms_agent.value.oms_agent_identity[*],{})
+
+            content {
+              client_id                 = oms_agent_identity.value.client_id
+              object_id                 = oms_agent_identity.valueclient_id
+              user_assigned_identity_id = oms_agent_identity.value.user_assigned_identity_id
+            }
+          }
+        }
+      }
+    }
+  }
 
   api_server_authorized_ip_ranges = try(var.settings.api_server_authorized_ip_ranges,null)
 
   dynamic "auto_scaler_profile" {
-    for_each = try(var.settings.auto_scaler_profile, null) == null ? [0] : [1]
+    for_each = try(var.settings.auto_scaler_profile, {})
     
     content {
       balance_similar_node_groups           = try(var.settings.auto_scaler_profile.balance_similar_node_groups,null)
@@ -94,19 +140,32 @@ resource "azurerm_kubernetes_cluster" "aks" {
   disk_encryption_set_id = try(var.settings.disk_encryption_set_id, null)
 
   dynamic "identity" {
-    for_each = var.settings.identity == null ? [] : [1]
+    for_each = try(var.settings.identity[*],{})
 
     content {
-      type = var.settings.identity.type
+      type = identity.value.type
     }
   }
 
   # Enabled RBAC
-  role_based_access_control {
-    enabled = try(var.settings.enable_rbac, true)
-    azure_active_directory {
-      managed                = true
-      admin_group_object_ids = var.admin_group_ids
+  dynamic "role_based_access_control" {
+    for_each = try(var.settings.role_based_access_control[*],{})
+
+    content {
+      enabled = try(role_based_access_control.value.enabled, true)
+      
+      dynamic "azure_active_directory" {
+        for_each = try(var.settings.role_based_access_control.azure_active_directory[*],{})
+        
+        content {
+          managed                = azure_active_directory.value.managed
+          tenant_id              = try(azure_active_directory.value.tenant_id, null)
+          admin_group_object_ids = try(azure_active_directory.value.admin_group_object_ids, try(var.admin_group_object_ids, null))
+          client_app_id          = try(azure_active_directory.value.client_app_id, null)
+          server_app_id          = try(azure_active_directory.value.server_app_id, null)
+          server_app_secret      = try(azure_active_directory.value.server_app_secret, null)
+        }
+      }
     }
   }
 
@@ -122,25 +181,24 @@ resource "azurerm_kubernetes_cluster" "aks" {
   # }
   
   dynamic "network_profile" {
-    for_each = try(var.settings.network_profile, null) == null ? [] : [1]
-
+    for_each = try(var.settings.network_profile[*], {})
     content {
-      network_plugin        = try(var.settings.network_profile.network_plugin,null)
-      network_mode          = try(var.settings.network_profile.network_mode, null)
-      network_policy        = try(var.settings.network_profile.network_policy, null)
-      dns_service_ip        = try(var.settings.network_profile.dns_service_ip, null)
-      docker_bridge_cidr    = try(var.settings.network_profile.docker_bridge_cidr, null)
-      outbound_type         = try(var.settings.outbound_type, null)
-      pod_cidr              = try(var.settings.network_profile.pod_cidr, null)
-      service_cidr          = try(var.settings.network_profile.service_cidr, null)
-      load_balancer_sku     = try(var.settings.network_profile.load_balancer_sku, null)
-      # load_balancer_profile = try(var.settings.network_profile.load_balancer_profile, null)
+      network_plugin        = try(network_profile.value.network_plugin,null)
+      network_mode          = try(network_profile.value.network_mode, null)
+      network_policy        = try(network_profile.value.network_policy, null)
+      dns_service_ip        = try(network_profile.value.dns_service_ip, null)
+      docker_bridge_cidr    = try(network_profile.value.docker_bridge_cidr, null)
+      outbound_type         = try(network_profile.value.outbound_type, null)
+      pod_cidr              = try(network_profile.value.network_profile.pod_cidr, null)
+      service_cidr          = try(network_profile.value.network_profile.service_cidr, null)
+      load_balancer_sku     = try(network_profile.value.network_profile.load_balancer_sku, null)
+
       dynamic "load_balancer_profile"{
-        for_each = try(var.settings.network_profile.load_balancer_profile, null) == null ? [] : [1]
+        for_each = try(network_profile.value.load_balancer_profile[*], {})
         content {
-          managed_outbound_ip_count = lookup(var.settings.network_profile.load_balancer_profile, "managed_outbound_ip_count", null)
-          outbound_ip_prefix_ids    = lookup(var.settings.network_profile.load_balancer_profile, "outbound_ip_prefix_ids", null)
-          outbound_ip_address_ids   = lookup(var.settings.network_profile.load_balancer_profile, "outbound_ip_address_ids", null)
+          managed_outbound_ip_count = try(load_balancer_profile.value.managed_outbound_ip_count, null)
+          outbound_ip_prefix_ids    = try(load_balancer_profile.value.outbound_ip_prefix_ids, null)
+          outbound_ip_address_ids   = try(load_balancer_profile.value.outbound_ip_address_ids, null)
         }
       }
     }
