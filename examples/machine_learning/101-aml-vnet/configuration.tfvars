@@ -1,3 +1,11 @@
+global_settings = {
+  default_region = "region1"
+  regions = {
+    region1 = "southeastasia"
+  }
+}
+
+
 #
 # Resource groups to be created
 #
@@ -62,9 +70,9 @@ storage_accounts = {
 #
 keyvaults = {
   aml_secrets = {
-    name                = "amlsecrets"
-    resource_group_key  = "dap_azure_ml_re1"
-    sku_name            = "premium"
-    soft_delete_enabled = true
+    name               = "amlsecrets"
+    resource_group_key = "dap_azure_ml_re1"
+    sku_name           = "premium"
+    #soft_delete_enabled = true
   }
 }

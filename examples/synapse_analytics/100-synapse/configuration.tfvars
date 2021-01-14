@@ -1,3 +1,11 @@
+
+global_settings = {
+  default_region = "region1"
+  regions = {
+    region1 = "southeastasia"
+  }
+}
+
 #
 # Resource groups to be created
 #
@@ -58,10 +66,10 @@ storage_accounts = {
 #
 keyvaults = {
   synapse_secrets = {
-    name                = "synapsesecrets"
-    resource_group_key  = "dap_synapse_re1"
-    sku_name            = "premium"
-    soft_delete_enabled = true
+    name               = "synapsesecrets"
+    resource_group_key = "dap_synapse_re1"
+    sku_name           = "premium"
+    #soft_delete_enabled = true
 
     creation_policies = {
       logged_in_user = {

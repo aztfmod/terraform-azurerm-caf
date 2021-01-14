@@ -1,3 +1,10 @@
+global_settings = {
+  default_region = "region1"
+  regions = {
+    region1 = "southeastasia"
+  }
+}
+
 resource_groups = {
   hub_re1 = {
     name   = "vnet-hub-re1"
