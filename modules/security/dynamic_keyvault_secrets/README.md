@@ -19,7 +19,9 @@ No requirements.
 
 ## Providers
 
-No provider.
+| Name | Version |
+|------|---------|
+| external | n/a |
 
 ## Inputs
 
