@@ -19,7 +19,7 @@ resource "azurerm_function_app" "function_app" {
   https_only                  = lookup(var.settings, "https_only", null)
   storage_account_name        = var.storage_account_name
   storage_account_access_key  = var.storage_account_access_key
-  tags                = local.tags
+  tags                        = local.tags
   
   app_settings = local.app_settings
 
@@ -97,9 +97,15 @@ resource "azurerm_function_app" "function_app" {
       value = connection_string.value.value
     }
   }
+<<<<<<< HEAD
  
   dynamic identity {
     for_each = try(var.identity, null) == null ? [] : [1]
+=======
+
+  dynamic "identity" {
+    for_each = try(var.identity, null) != null ? [1] : []
+>>>>>>> e023feb6654f2c8a604e3c6dc54770d3423db94c
 
     content {
       type         = "UserAssigned"
@@ -112,20 +118,20 @@ resource "azurerm_function_app" "function_app" {
 
     content {
       # numberOfWorkers           = lookup(each.value.site_config, "numberOfWorkers", 1)  # defined in ARM template below
-      always_on                 = lookup(var.settings.site_config, "always_on", false)
+      always_on = lookup(var.settings.site_config, "always_on", false)
       #app_command_line          = lookup(var.settings.site_config, "app_command_line", null)
       #default_documents         = lookup(var.settings.site_config, "default_documents", null)
       #dotnet_framework_version  = lookup(var.settings.site_config, "dotnet_framework_version", null)
-      ftps_state                = lookup(var.settings.site_config, "ftps_state", "FtpsOnly")
-      http2_enabled             = lookup(var.settings.site_config, "http2_enabled", false)
+      ftps_state    = lookup(var.settings.site_config, "ftps_state", "FtpsOnly")
+      http2_enabled = lookup(var.settings.site_config, "http2_enabled", false)
       #java_version              = lookup(var.settings.site_config, "java_version", null)
       #java_container            = lookup(var.settings.site_config, "java_container", null)
       #java_container_version    = lookup(var.settings.site_config, "java_container_version", null)
       #local_mysql_enabled       = lookup(var.settings.site_config, "local_mysql_enabled", null)
-      linux_fx_version          = lookup(var.settings.site_config, "linux_fx_version", null)
+      linux_fx_version = lookup(var.settings.site_config, "linux_fx_version", null)
       #windows_fx_version        = lookup(var.settings.site_config, "windows_fx_version", null)
       #managed_pipeline_mode     = lookup(var.settings.site_config, "managed_pipeline_mode", null)
-      min_tls_version           = lookup(var.settings.site_config, "min_tls_version", "1.2")
+      min_tls_version = lookup(var.settings.site_config, "min_tls_version", "1.2")
       #php_version               = lookup(var.settings.site_config, "php_version", null)
       #python_version            = lookup(var.settings.site_config, "python_version", null)
       #remote_debugging_enabled  = lookup(var.settings.site_config, "remote_debugging_enabled", null)

@@ -83,6 +83,25 @@ locals {
     synapse_workspaces                = try(var.database.synapse_workspaces, {})
   }
 
+  data_factory = {
+    data_factory                  = try(var.data_factory.data_factory, {})
+    data_factory_trigger_schedule = try(var.data_factory.data_factory_trigger_schedule, {})
+    data_factory_pipeline         = try(var.data_factory.data_factory_pipeline, {})
+    datasets = {
+      azure_blob       = try(var.data_factory.datasets.azure_blob, {})
+      cosmosdb_sqlapi  = try(var.data_factory.datasets.cosmosdb_sqlapi, {})
+      delimited_text   = try(var.data_factory.datasets.delimited_text, {})
+      http             = try(var.data_factory.datasets.http, {})
+      json             = try(var.data_factory.datasets.json, {})
+      mysql            = try(var.data_factory.datasets.mysql, {})
+      postgresql       = try(var.data_factory.datasets.postgresql, {})
+      sql_server_table = try(var.data_factory.datasets.sql_server_table, {})
+    }
+    linked_services = {
+      azure_blob_storage = try(var.data_factory.linked_services.azure_blob_storage, {})
+    }
+  }
+
   client_config = {
     client_id               = data.azurerm_client_config.current.client_id
     tenant_id               = var.tenant_id == null ? data.azurerm_client_config.current.tenant_id : var.tenant_id
