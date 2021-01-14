@@ -31,5 +31,5 @@ module mongo_collections {
 
 output mongo_collections {
   value     = module.mongo_collections
-  sensitive = true
+  
 }

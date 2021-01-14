@@ -1,7 +1,7 @@
 
 output postgresql_servers {
   value     = module.postgresql_servers
-  sensitive = true
+  
 }
 
 module "postgresql_servers" {
