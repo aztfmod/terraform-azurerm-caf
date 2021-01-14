@@ -13,6 +13,7 @@ module recovery_vaults {
   location            = lookup(each.value, "region", null) == null ? module.resource_groups[each.value.resource_group_key].location : var.global_settings.regions[each.value.region]
   vnets               = try(local.combined_objects_networking, {})
   private_endpoints   = try(each.value.private_endpoints, {})
+  private_dns         = local.combined_objects_private_dns
   base_tags           = try(local.global_settings.inherit_tags, false) ? module.resource_groups[each.value.resource_group_key].tags : {}
 }
 
