@@ -22,4 +22,5 @@ module "mysql_servers" {
   private_endpoints   = try(each.value.private_endpoints, {})
   resource_groups     = try(each.value.private_endpoints, {}) == {} ? null : module.resource_groups
   base_tags           = try(local.global_settings.inherit_tags, false) ? module.resource_groups[each.value.resource_group_key].tags : {}
-} 
+  private_dns         = local.combined_objects_private_dns
+}

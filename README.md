@@ -4,7 +4,7 @@
 
 Microsoft [Cloud Adoption Framework for Azure](https://aka.ms/caf) provides you with guidance and best practices to adopt Azure.
 
-This module is used by the CAF landing zones to provision resources in an Azure subscription.
+This module allows you to create resources on Microsoft Azure, is used by the Cloud Adoption Framework for Azure (CAF) landing zones to provision resources in an Azure subscription and can deploy resources being directly invoked from the Terraform registry.
 
 ## Getting started
 
@@ -50,6 +50,8 @@ In case you have any question, you can reach out to tf-landingzones at microsoft
 You can also reach us on [Gitter](https://gitter.im/aztfmod/community?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge)
 
 ## Contributing
+
+In order to contribute to the project, please review the module contribution and [conventions guidelines](./documentation/conventions.md)
 
 This project welcomes contributions and suggestions.  Most contributions require you to agree to a
 Contributor License Agreement (CLA) declaring that you have the right to, and actually do, grant us
