@@ -127,6 +127,10 @@ variable webapp {
   default = {}
 }
 
+variable data_factory {
+  default = {}
+}
+
 variable logic_app {
   default = {}
 }
