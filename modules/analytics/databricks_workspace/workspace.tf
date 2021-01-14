@@ -1,4 +1,5 @@
 # naming convention
+#TODO rename object from wp to ws for consistency
 resource "azurecaf_name" "wp" {
   name          = var.settings.name
   resource_type = "azurerm_databricks_workspace"

@@ -13,9 +13,10 @@ module "storage_accounts" {
   resource_groups     = try(each.value.private_endpoints, {}) == {} ? null : module.resource_groups
   recovery_vaults     = local.combined_objects_recovery_vaults
   base_tags           = try(local.global_settings.inherit_tags, false) ? module.resource_groups[each.value.resource_group_key].tags : {}
-
+  private_dns         = local.combined_objects_private_dns
 }
 
 output storage_accounts {
-  value = module.storage_accounts
+  value     = module.storage_accounts
+  sensitive = true
 }

@@ -11,4 +11,6 @@ variable rule_collections {
 }
 
 variable azurerm_firewall_nat_rule_collection_definition {}
-variable global_settings {}
+variable global_settings {
+  description = "Global settings object (see module README.md)"
+}
