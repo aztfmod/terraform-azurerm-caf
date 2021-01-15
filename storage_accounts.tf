@@ -18,5 +18,5 @@ module "storage_accounts" {
 
 output storage_accounts {
   value     = module.storage_accounts
-  sensitive = true
+  
 }

@@ -11,5 +11,5 @@ module sql_databases {
 
 output sql_databases {
   value     = module.sql_databases
-  sensitive = true
+  
 }
