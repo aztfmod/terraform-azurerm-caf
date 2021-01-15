@@ -54,7 +54,7 @@ resource "null_resource" "grant_admin_consent" {
 
   provisioner "local-exec" {
     command     = format("%s/scripts/grant_consent.sh", path.module)
-    interpreter = ["/bin/bash"]
+    interpreter = ["/bin/sh"]
     on_failure  = fail
 
     environment = {
