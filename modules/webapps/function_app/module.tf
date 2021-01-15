@@ -97,15 +97,9 @@ resource "azurerm_function_app" "function_app" {
       value = connection_string.value.value
     }
   }
-<<<<<<< HEAD
  
   dynamic identity {
     for_each = try(var.identity, null) == null ? [] : [1]
-=======
-
-  dynamic "identity" {
-    for_each = try(var.identity, null) != null ? [1] : []
->>>>>>> e023feb6654f2c8a604e3c6dc54770d3423db94c
 
     content {
       type         = "UserAssigned"
