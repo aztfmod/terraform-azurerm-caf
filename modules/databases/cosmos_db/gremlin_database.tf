@@ -11,5 +11,5 @@ module gremlin_databases {
 
 output gremlin_databases {
   value     = module.gremlin_databases
-  sensitive = true
+  
 }

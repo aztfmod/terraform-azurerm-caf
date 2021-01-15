@@ -17,7 +17,7 @@ module azuread_applications {
 
 output aad_apps {
   value     = module.azuread_applications
-  sensitive = true
+  
 }
 
 #
@@ -35,7 +35,7 @@ module azuread_groups {
 
 output azuread_groups {
   value     = module.azuread_groups
-  sensitive = true
+  
 }
 
 module azuread_groups_members {
@@ -65,5 +65,5 @@ module azuread_users {
 
 output azuread_users {
   value     = module.azuread_users
-  sensitive = true
+  
 }
