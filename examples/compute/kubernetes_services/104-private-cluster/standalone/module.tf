@@ -11,6 +11,7 @@ module "caf" {
   networking = {
     vnets                             = var.vnets
     network_security_group_definition = var.network_security_group_definition
+    vnet_peerings                     = var.vnet_peerings
   }
 
   compute = {

@@ -50,3 +50,7 @@ variable virtual_machines {
 variable var_folder_path {
   default = {}
 }
+
+variable vnet_peerings {
+  default = {}
+}

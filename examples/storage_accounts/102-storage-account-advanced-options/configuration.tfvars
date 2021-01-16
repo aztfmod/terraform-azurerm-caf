@@ -22,11 +22,12 @@ storage_accounts = {
     min_tls_version          = "TLS1_2" # Possible values are TLS1_0, TLS1_1, and TLS1_2. Defaults to TLS1_0 for new storage accounts.
     allow_blob_public_access = false
     is_hns_enabled           = false
-
-    custom_domain = {
-      name          = "any-valid-domain.name" #will be validated by Azure
-      use_subdomain = true
-    }
+    
+    # Enable this block, if you have a valid domain name
+    # custom_domain = {
+    #   name          = "any-valid-domain.name" #will be validated by Azure
+    #   use_subdomain = true
+    # }
 
     enable_system_msi = {
       type = "SystemAssigned"
