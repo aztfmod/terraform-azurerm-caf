@@ -26,7 +26,7 @@ vnets = {
       AzureBastionSubnet = {
         name    = "AzureBastionSubnet" #Must be called AzureBastionSubnet
         cidr    = ["100.64.51.64/27"]
-        nsg_key = "azure_bastion_nsg"
+        nsg_key = "azure_bastion_nsg1"
       }
       private_endpoints = {
         name                                           = "private_endpoints"
@@ -36,7 +36,7 @@ vnets = {
       jumpbox = {
         name    = "jumpbox"
         cidr    = ["100.64.51.128/27"]
-        nsg_key = "azure_bastion_nsg"
+        nsg_key = "azure_bastion_nsg1"
       }
     }
 
@@ -79,7 +79,7 @@ vnets = {
       jumpbox = {
         name    = "jumpbox"
         cidr    = ["100.65.51.128/27"]
-        nsg_key = "azure_bastion_nsg"
+        nsg_key = "azure_bastion_nsg1"
       }
     }
 
@@ -106,7 +106,7 @@ vnets = {
       AzureBastionSubnet = {
         name    = "AzureBastionSubnet" #Must be called AzureBastionSubnet
         cidr    = ["100.64.101.64/26"]
-        nsg_key = "azure_bastion_nsg"
+        nsg_key = "azure_bastion_nsg1"
       }
       jumpbox = {
         name    = "jumpbox"
@@ -143,7 +143,7 @@ vnets = {
       AzureBastionSubnet = {
         name    = "AzureBastionSubnet" #Must be called AzureBastionSubnet
         cidr    = ["100.65.101.64/26"]
-        nsg_key = "azure_bastion_nsg"
+        nsg_key = "azure_bastion_nsg1"
       }
       jumpbox = {
         name    = "jumpbox"
@@ -233,7 +233,7 @@ network_security_group_definition = {
       },
     ]
   }
-  azure_bastion_nsg = {
+  azure_bastion_nsg1 = {
 
     nsg = [
       {
