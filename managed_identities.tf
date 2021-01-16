@@ -12,5 +12,5 @@ module managed_identities {
 
 output managed_identities {
   value     = module.managed_identities
-  sensitive = true
+  
 }

@@ -13,10 +13,10 @@ resource_groups = {
 
 keyvaults = {
   test_client = { #KeyVault Key
-    name               = "testkv"
-    resource_group_key = "test"
-    sku_name           = "standard"
-    #soft_delete_enabled = true
+    name                = "testkv"
+    resource_group_key  = "test"
+    sku_name            = "standard"
+    soft_delete_enabled = true
     creation_policies = {
       logged_in_user = {
         # if the key is set to "logged_in_user" add the user running terraform in the keyvault policy
