@@ -1,5 +1,5 @@
-module "secret" {
-  source = "./secret"
+module secret {
+  source     = "./secret"
   for_each = {
     for key, value in var.settings : key => value
     if try(value.value, null) == null
@@ -10,8 +10,8 @@ module "secret" {
   keyvault_id = var.keyvault.id
 }
 
-module "secret_value" {
-  source = "./secret"
+module secret_value {
+  source     = "./secret"
   for_each = {
     for key, value in var.settings : key => value
     if try(value.value, null) != null && try(value.value, null) != ""
@@ -22,8 +22,8 @@ module "secret_value" {
   keyvault_id = var.keyvault.id
 }
 
-module "secret_immutable" {
-  source = "./secret_immutable"
+module secret_immutable {
+  source     = "./secret_immutable"
   for_each = {
     for key, value in var.settings : key => value
     if try(value.value, null) == ""
