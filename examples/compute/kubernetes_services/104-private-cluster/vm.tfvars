@@ -16,7 +16,7 @@ virtual_machines = {
       nic0 = {
         # AKS rely on a remote network and need the details of the tfstate to connect (tfstate_key), assuming RBAC authorization.
 
-        lz_key                  = "networking_spoke_aks"
+        #lz_key                  = "networking_spoke_aks"
         vnet_key                = "spoke_aks_re1"
         subnet_key              = "jumpbox"
         name                    = "0"

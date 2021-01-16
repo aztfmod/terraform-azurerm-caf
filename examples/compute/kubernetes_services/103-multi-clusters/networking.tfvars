@@ -1,6 +1,6 @@
 vnets = {
   spoke_aks_re1 = {
-    resource_group_key = "aks_spoke_re1"
+    resource_group_key = "aks_re1"
     region             = "region1"
     vnet = {
       name          = "aks-re1"
@@ -43,7 +43,7 @@ vnets = {
   }
 
   spoke_aks_re2 = {
-    resource_group_key = "aks_spoke_re2"
+    resource_group_key = "aks_re2"
     region             = "region2"
     vnet = {
       name          = "aks-re2"
@@ -84,6 +84,80 @@ vnets = {
     }
 
   }
+
+  hub_re1 = {
+    resource_group_key = "aks_re1"
+    region             = "region1"
+    vnet = {
+      name          = "hub-re1"
+      address_space = ["100.64.100.0/22"]
+    }
+    specialsubnets = {
+      GatewaySubnet = {
+        name = "GatewaySubnet" #Must be called GateWaySubnet in order to host a Virtual Network Gateway
+        cidr = ["100.64.100.0/27"]
+      }
+      AzureFirewallSubnet = {
+        name = "AzureFirewallSubnet" #Must be called AzureFirewallSubnet
+        cidr = ["100.64.101.0/26"]
+      }
+    }
+    subnets = {
+      AzureBastionSubnet = {
+        name    = "AzureBastionSubnet" #Must be called AzureBastionSubnet
+        cidr    = ["100.64.101.64/26"]
+        nsg_key = "azure_bastion_nsg"
+      }
+      jumpbox = {
+        name    = "jumpbox"
+        cidr    = ["100.64.102.0/27"]
+        nsg_key = "jumpbox"
+      }
+      private_endpoints = {
+        name                                           = "private_endpoints"
+        cidr                                           = ["100.64.103.128/25"]
+        enforce_private_link_endpoint_network_policies = true
+      }
+    }
+
+  }
+
+  hub_re2 = {
+    resource_group_key = "aks_re2"
+    region             = "region2"
+    vnet = {
+      name          = "hub-re2"
+      address_space = ["100.65.100.0/22"]
+    }
+    specialsubnets = {
+      GatewaySubnet = {
+        name = "GatewaySubnet" #Must be called GateWaySubnet in order to host a Virtual Network Gateway
+        cidr = ["100.65.100.0/27"]
+      }
+      AzureFirewallSubnet = {
+        name = "AzureFirewallSubnet" #Must be called AzureFirewallSubnet
+        cidr = ["100.65.101.0/26"]
+      }
+    }
+    subnets = {
+      AzureBastionSubnet = {
+        name    = "AzureBastionSubnet" #Must be called AzureBastionSubnet
+        cidr    = ["100.65.101.64/26"]
+        nsg_key = "azure_bastion_nsg"
+      }
+      jumpbox = {
+        name    = "jumpbox"
+        cidr    = ["100.65.102.0/27"]
+        nsg_key = "jumpbox"
+      }
+      private_endpoints = {
+        name                                           = "private_endpoints"
+        cidr                                           = ["100.65.103.128/25"]
+        enforce_private_link_endpoint_network_policies = true
+      }
+    }
+
+  }  
 }
 
 network_security_group_definition = {
@@ -230,6 +304,23 @@ network_security_group_definition = {
       }
     ]
   }
+
+  jumpbox = {
+
+    nsg = [
+      {
+        name                       = "ssh-inbound-22",
+        priority                   = "200"
+        direction                  = "Inbound"
+        access                     = "Allow"
+        protocol                   = "tcp"
+        source_port_range          = "*"
+        destination_port_range     = "22"
+        source_address_prefix      = "*"
+        destination_address_prefix = "VirtualNetwork"
+      },
+    ]
+  }  
 }
 
 
@@ -243,7 +334,7 @@ vnet_peerings = {
       vnet_key = "spoke_aks_re1"
     }
     to = {
-      lz_key     = "networking_hub"
+      #lz_key     = "networking_hub"
       output_key = "vnets"
       vnet_key   = "hub_re1"
     }
@@ -256,7 +347,7 @@ vnet_peerings = {
   hub_re1_TO_spoke_aks_re1 = {
     name = "hub_re1_TO_spoke_aks_re1"
     from = {
-      lz_key     = "networking_hub"
+      #lz_key     = "networking_hub"
       output_key = "vnets"
       vnet_key   = "hub_re1"
     }
@@ -278,7 +369,7 @@ vnet_peerings = {
       vnet_key = "spoke_aks_re2"
     }
     to = {
-      lz_key     = "networking_hub"
+      #lz_key     = "networking_hub"
       output_key = "vnets"
       vnet_key   = "hub_re2"
     }
@@ -291,7 +382,7 @@ vnet_peerings = {
   hub_re2_TO_spoke_aks_re2 = {
     name = "hub_re2_TO_spoke_aks_re2"
     from = {
-      lz_key     = "networking_hub"
+      #lz_key     = "networking_hub"
       output_key = "vnets"
       vnet_key   = "hub_re2"
     }
