@@ -17,6 +17,7 @@ locals {
   combined_objects_mssql_servers              = merge(map(local.client_config.landingzone_key, module.mssql_servers), try(var.remote_objects.mssql_servers, {}))
   combined_objects_mssql_databases            = merge(map(local.client_config.landingzone_key, module.mssql_databases), try(var.remote_objects.mssql_databases, {}))
   combined_objects_mssql_managed_instances    = merge(map(local.client_config.landingzone_key, module.mssql_managed_instances), try(var.remote_objects.mssql_managed_instances, {}))
+  combined_objects_mssql_managed_instances_secondary    = merge(map(local.client_config.landingzone_key, module.mssql_managed_instances_secondary), try(var.remote_objects.mssql_managed_instances_secondary, {}))
   combined_objects_mssql_managed_databases    = merge(map(local.client_config.landingzone_key, module.mssql_managed_databases), try(var.remote_objects.mssql_managed_databases, {}))
   combined_objects_mssql_elastic_pools        = merge(map(local.client_config.landingzone_key, module.mssql_elastic_pools), try(var.remote_objects.mssql_elastic_pools, {}))
   combined_objects_proximity_placement_groups = merge(map(local.client_config.landingzone_key, module.proximity_placement_groups), try(var.remote_objects.proximity_placement_groups, {}))

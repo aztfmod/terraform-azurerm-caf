@@ -119,6 +119,12 @@ variable mssql_mi_failover_groups {
 variable mssql_mi_administrators {
   default = {}
 }
+variable mssql_mi_tdes {
+  default = {}
+}
+variable mssql_mi_secondary_tdes {
+  default = {}
+}
 variable storage_accounts {
   default = {}
 }
@@ -135,6 +141,9 @@ variable keyvault_access_policies {
   default = {}
 }
 variable keyvault_certificate_issuers {
+  default = {}
+}
+variable keyvault_keys {
   default = {}
 }
 variable virtual_machines {

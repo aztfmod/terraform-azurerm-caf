@@ -132,10 +132,6 @@ mssql_managed_instances = {
     storageSizeInGB = 32
     vCores          = 8
 
-    //TDE
-    serverKeyName = "example-mi-kv_ExampleKey_41bb190a3d4b4af3aa7037555e279488"
-    serverKeyUri  = "https://example-mi-kv.vault.azure.net/keys/ExampleKey/41bb190a3d4b4af3aa7037555e279488"
-
   }
 }
 
@@ -274,5 +270,86 @@ mssql_mi_administrators = {
 
     # group key or upn supported
     # user_principal_name = ""
+  }
+}
+
+keyvaults = {
+  tde_primary = {
+    name               = "mi-tde-primary"
+    resource_group_key = "sqlmi_region1"
+    sku_name           = "standard"
+
+    creation_policies = {
+      logged_in_user = {
+        key_permissions = ["get", "list", "update", "create", "import", "delete", "recover", "backup", "restore", "purge"]
+      }
+    }
+  }
+  tde_secondary = {
+    name               = "mi-tde-secondary"
+    resource_group_key = "sqlmi_region2"
+    sku_name           = "standard"
+
+    creation_policies = {
+      logged_in_user = {
+        key_permissions = ["get", "list", "update", "create", "import", "delete", "recover", "backup", "restore", "purge"]
+      }
+    }
+  }
+}
+
+keyvault_access_policies = {
+  # A maximum of 16 access policies per keyvault
+  tde_primary = {
+    sqlmi1 = {
+      mssql_managed_instance_key  = "sqlmi1"
+      key_permissions             = ["get", "unwrapKey", "wrapKey"]
+    }
+    sqlmi2 = {
+      mssql_managed_instance_secondary_key  = "sqlmi2"
+      key_permissions             = ["get", "unwrapKey", "wrapKey"]
+    }
+  }
+  tde_secondary = {
+    sqlmi1 = {
+      mssql_managed_instance_key  = "sqlmi1"
+      key_permissions             = ["get", "unwrapKey", "wrapKey"]
+    }
+    sqlmi2 = {
+      mssql_managed_instance_secondary_key  = "sqlmi2"
+      key_permissions             = ["get", "unwrapKey", "wrapKey"]
+    }
+  }
+}
+
+keyvault_keys = {
+  tde_mi = {
+    keyvault_key = "tde_primary"
+    name         = "TDE"
+    key_type     = "RSA"
+    key_opts     = ["encrypt", "decrypt", "sign", "verify", "wrapKey", "unwrapKey"]
+    key_size     = 2048
+  }
+  #TODO need to manually backup and restore key from priamry to secondary
+  # tde_mi_secondary = {
+  # }
+}
+
+//TDE
+mssql_mi_secondary_tdes = {
+  sqlmi2 = {
+    resource_group_key = "sqlmi_region2"
+    mi_server_key = "sqlmi2"
+    #TODO use keyvault key output
+    key_uri  = "https://dzqy-kv-mi-tde-secondary.vault.azure.net/keys/TDE/56a0cd1b216345a1a32b7d5545f66388"
+  }
+}
+
+mssql_mi_tdes = {
+  sqlmi1 = {
+    resource_group_key = "sqlmi_region1"
+    mi_server_key = "sqlmi1"
+    #TODO use keyvault key output
+    key_uri  = "https://dzqy-kv-mi-tde-primary.vault.azure.net/keys/TDE/56a0cd1b216345a1a32b7d5545f66388"
   }
 }

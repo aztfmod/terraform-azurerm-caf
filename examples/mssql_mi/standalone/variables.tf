@@ -51,6 +51,12 @@ variable mssql_mi_failover_groups {
 variable mssql_mi_administrators {
   default = {}
 }
+variable mssql_mi_tdes {
+  default = {}
+}
+variable mssql_mi_secondary_tdes {
+  default = {}
+}
 variable azuread_groups {
   default = {}
 }
