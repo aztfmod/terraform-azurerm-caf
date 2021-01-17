@@ -66,6 +66,8 @@ module "caf" {
     mssql_failover_groups             = var.mssql_failover_groups
     mssql_mi_failover_groups          = var.mssql_mi_failover_groups
     mssql_mi_administrators           = var.mssql_mi_administrators
+    mssql_mi_tdes                     = var.mssql_mi_tdes
+    mssql_mi_secondary_tdes            = var.mssql_mi_secondary_tdes
     synapse_workspaces                = var.synapse_workspaces
     databricks_workspaces             = var.databricks_workspaces
     machine_learning_workspaces       = var.machine_learning_workspaces
@@ -78,6 +80,7 @@ module "caf" {
 
   security = {
     dynamic_keyvault_secrets    = var.dynamic_keyvault_secrets
+    keyvault_keys               = var.keyvault_keys
   }
 
   remote_objects = {

@@ -30,6 +30,7 @@ locals {
 
   security = {
     keyvault_certificates = try(var.security.keyvault_certificates, {})
+    keyvault_keys         = try(var.security.keyvault_keys, {})
   }
 
   networking = {
@@ -68,6 +69,8 @@ locals {
     mssql_failover_groups             = try(var.database.mssql_failover_groups, {})
     mssql_mi_failover_groups          = try(var.database.mssql_mi_failover_groups, {})
     mssql_mi_administrators           = try(var.database.mssql_mi_administrators, {})
+    mssql_mi_tdes                     = try(var.database.mssql_mi_tdes, {})
+    mssql_mi_secondary_tdes            = try(var.database.mssql_mi_secondary_tdes, {})
     azurerm_redis_caches              = try(var.database.azurerm_redis_caches, {})
     synapse_workspaces                = try(var.database.synapse_workspaces, {})
     databricks_workspaces             = try(var.database.databricks_workspaces, {})

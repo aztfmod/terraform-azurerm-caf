@@ -22,5 +22,7 @@ module "caf" {
     mssql_managed_databases_backup_ltr= var.mssql_managed_databases_backup_ltr
     mssql_mi_failover_groups          = var.mssql_mi_failover_groups
     mssql_mi_administrators           = var.mssql_mi_administrators
+    mssql_mi_tdes                     = var.mssql_mi_tdes
+    mssql_mi_secondary_tdes           = var.mssql_mi_secondary_tdes
   }
 }
