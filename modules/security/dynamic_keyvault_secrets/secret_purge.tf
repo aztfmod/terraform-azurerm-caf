@@ -1,8 +1,6 @@
-#
-# Workaround until
-#
-
-# Commenting for azurerm 2.42 as secrets purge part of the provider.
+# #
+# # Workaround until
+# #
 
 # data external deleted_secrets {
 #   for_each = var.settings

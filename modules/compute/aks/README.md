@@ -1,16 +1,9 @@
 # Azure Kubernetes Services
 
-This sub module is part of Cloud Adoption Framework landing zones for Azure on Terraform.
+This submodule is part of Cloud Adoption Framework landing zones for Azure on Terraform.
 
-You can instantiate this module inside your Terraform code either as a module or as a sub module directly from the [Terraform Registry](https://registry.terraform.io/modules/aztfmod/caf/azurerm/latest) using the following calls:
+You can instantiate this submodule directly using the following parameters:
 
-Complete module:
-```hcl
-module "caf" {
-  source  = "aztfmod/caf/azurerm"
-  version = "4.21.2"
-  # insert the 6 required variables here
-}
 ```
 ## Example scenarios
 
