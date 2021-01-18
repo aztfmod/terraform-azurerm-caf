@@ -13,5 +13,5 @@ module automations {
 
 output automations {
   value     = module.automations
-  sensitive = false
+  
 }
