@@ -41,7 +41,6 @@ aks_clusters = {
     addon_profile = {
       oms_agent = {
         enabled = true
-        # log_analytics_workspace_id = "/subscriptions/30e02b61-1190-4a13-9a5e-1303a1e5f87b/resourcegroups/defaultresourcegroup-sea/providers/microsoft.operationalinsights/workspaces/defaultworkspace-30e02b61-1190-4a13-9a5e-1303a1e5f87b-sea"
         log_analytics_key = "central_logs_region1"
       }
     }
