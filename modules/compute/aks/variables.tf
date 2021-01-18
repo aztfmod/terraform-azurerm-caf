@@ -2,6 +2,7 @@
 variable global_settings {
   description = "Global settings object (see module README.md)"
 }
+variable client_config {}
 variable diagnostics {}
 variable settings {}
 variable subnets {}
