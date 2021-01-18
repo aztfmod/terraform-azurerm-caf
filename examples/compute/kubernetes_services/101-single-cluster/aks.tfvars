@@ -22,7 +22,7 @@ aks_clusters = {
       type = "SystemAssigned"
     }
 
-    kubernetes_version = "1.17.11"
+    kubernetes_version = "1.19.6"
     vnet_key           = "spoke_aks_re1"
 
     network_profile = {
@@ -41,7 +41,8 @@ aks_clusters = {
     addon_profile = {
       oms_agent = {
         enabled = true
-        log_analytics_workspace_id = "/subscriptions/30e02b61-1190-4a13-9a5e-1303a1e5f87b/resourcegroups/defaultresourcegroup-sea/providers/microsoft.operationalinsights/workspaces/defaultworkspace-30e02b61-1190-4a13-9a5e-1303a1e5f87b-sea"
+        # log_analytics_workspace_id = "/subscriptions/30e02b61-1190-4a13-9a5e-1303a1e5f87b/resourcegroups/defaultresourcegroup-sea/providers/microsoft.operationalinsights/workspaces/defaultworkspace-30e02b61-1190-4a13-9a5e-1303a1e5f87b-sea"
+        log_analytics_key = "central_logs_region1"
       }
     }
     # admin_groups = {
@@ -67,7 +68,7 @@ aks_clusters = {
       max_pods              = 30
       node_count            = 1
       os_disk_size_gb       = 512
-      orchestrator_version  = "1.17.11"
+      orchestrator_version  = "1.19.6"
       tags = {
         "project" = "system services"
       }

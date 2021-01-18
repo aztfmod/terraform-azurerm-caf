@@ -104,7 +104,7 @@ resource "azurerm_kubernetes_cluster" "aks" {
         
         content {
           enabled                       = oms_agent.value.enabled
-          log_analytics_workspace_id    = try(oms_agent.value.log_analytics_workspace_id, null)
+          log_analytics_workspace_id    = try(oms_agent.value.log_analytics_workspace_id, var.diagnostics.log_analytics[oms_agent.value.log_analytics_key].id)
           dynamic "oms_agent_identity" {
             for_each = try(oms_agent.value.oms_agent_identity[*],{})
 
