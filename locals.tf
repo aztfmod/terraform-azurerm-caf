@@ -63,6 +63,7 @@ locals {
 
   database = {
     azurerm_redis_caches              = try(var.database.azurerm_redis_caches, {})
+    app_config                        = try(var.database.app_config, {})
     cosmos_dbs                        = try(var.database.cosmos_dbs, {})
     databricks_workspaces             = try(var.database.databricks_workspaces, {})
     machine_learning_workspaces       = try(var.database.machine_learning_workspaces, {})
