@@ -8,7 +8,7 @@ resource "null_resource" "set_kv_tde" {
 
   provisioner "local-exec" {
     command     = format("%s/scripts/set_keyvault_tde.sh", path.module)
-    interpreter = ["/bin/sh"]
+    interpreter = ["/bin/bash"]
     on_failure  = fail
 
     environment = {
@@ -31,7 +31,7 @@ resource "null_resource" "reset_tde" {
   provisioner "local-exec" {
     command     = format("%s/scripts/reset_tde.sh", path.module)
     when        = destroy
-    interpreter = ["/bin/sh"]
+    interpreter = ["/bin/bash"]
     on_failure  = fail
 
     environment = {

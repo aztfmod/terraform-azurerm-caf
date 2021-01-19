@@ -24,7 +24,7 @@ resource "null_resource" "clear_backupltr" {
   provisioner "local-exec" {
     command     = format("%s/scripts/clear_backup_ltr.sh", path.module)
     when        = destroy
-    interpreter = ["/bin/sh"]
+    interpreter = ["/bin/bash"]
     on_failure  = fail
 
     environment = {
