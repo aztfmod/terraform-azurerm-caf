@@ -9,7 +9,13 @@ module cosmos_dbs {
   base_tags           = try(local.global_settings.inherit_tags, false) ? module.resource_groups[each.value.resource_group_key].tags : {}
 }
 
+<<<<<<< HEAD
 output cosmos_dbs {
   value     = module.cosmos_dbs
   sensitive = true
+=======
+output cosmos_db_id {
+  value     = module.cosmos_db
+  
+>>>>>>> 46dfc77c632a31f1351a4087c7a0efb62e509361
 }

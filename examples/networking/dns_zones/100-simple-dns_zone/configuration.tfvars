@@ -15,9 +15,9 @@ resource_groups = {
 
 dns_zones = {
   dns_zone1 = {
-    name                = ""                  // Set as empty for CI. this will creation a random_domain_name.com
-    region              = "region1"
-    resource_group_key  = "dns_re1"
+    name               = "" // Set as empty for CI. this will creation a random_domain_name.com
+    region             = "region1"
+    resource_group_key = "dns_re1"
 
     contract = {
       name_first   = "John"
@@ -35,4 +35,4 @@ dns_zones = {
       auto_renew   = true
     }
   }
-}  
+}

@@ -13,7 +13,7 @@ var.virtual_machines/<key>/virtual_machine_settings/windows/
 Example of the updated sturcture
 /examples/compute/virtual_machine/211-vm-bastion-winrm-agents/virtual_machines.tfvars
 
-Replace 
+Replace
 ```hcl
 admin_user_key = "vm-win-admin-username"
 ```

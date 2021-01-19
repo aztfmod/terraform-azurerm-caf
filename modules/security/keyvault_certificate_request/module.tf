@@ -1,5 +1,5 @@
 resource "azurerm_key_vault_certificate" "csr" {
-  name = var.settings.name
+  name         = var.settings.name
   key_vault_id = var.keyvault_id
 
   certificate_policy {
@@ -10,7 +10,7 @@ resource "azurerm_key_vault_certificate" "csr" {
       exportable = var.settings.certificate_policy.exportable
       key_size   = var.settings.certificate_policy.key_size
       key_type   = try(var.settings.certificate_policy.key_type, "RSA")
-      reuse_key  = var.settings.certificate_policy. reuse_key
+      reuse_key  = var.settings.certificate_policy.reuse_key
     }
     lifetime_action {
       action {
@@ -26,7 +26,7 @@ resource "azurerm_key_vault_certificate" "csr" {
     }
 
     dynamic x509_certificate_properties {
-      for_each           = try(var.settings.certificate_policy.x509_certificate_properties, null) == null ? [] : [1]
+      for_each = try(var.settings.certificate_policy.x509_certificate_properties, null) == null ? [] : [1]
 
       content {
         extended_key_usage = try(var.settings.certificate_policy.x509_certificate_properties.extended_key_usage, null)
@@ -35,8 +35,8 @@ resource "azurerm_key_vault_certificate" "csr" {
         validity_in_months = var.settings.certificate_policy.x509_certificate_properties.validity_in_months
 
         dynamic subject_alternative_names {
-          for_each  = try(var.settings.certificate_policy.x509_certificate_properties.subject_alternative_names, null) == null ? [] : [1]
-          
+          for_each = try(var.settings.certificate_policy.x509_certificate_properties.subject_alternative_names, null) == null ? [] : [1]
+
           content {
             dns_names = try(var.settings.certificate_policy.x509_certificate_properties.subject_alternative_names.dns_names)
             emails    = try(var.settings.certificate_policy.x509_certificate_properties.subject_alternative_names.emails)

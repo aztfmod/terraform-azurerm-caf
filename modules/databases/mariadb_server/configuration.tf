@@ -2,7 +2,7 @@
 #
 
 resource "azurerm_mariadb_configuration" "mariadb_configuration" {
-  
+
   for_each = var.settings.mariadb_configuration
 
   name                = each.value.name

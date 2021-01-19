@@ -36,13 +36,13 @@ module hubs {
 
 output virtual_hubs {
   value       = module.hubs
-  sensitive   = false
+  
   description = "Virtual Hubs object"
 }
 
 output virtual_wan {
   value       = azurerm_virtual_wan.vwan
-  sensitive   = false
+  
   description = "Virtual WAN object"
 }
 
