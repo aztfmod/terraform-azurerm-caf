@@ -139,6 +139,11 @@ keyvaults = {
     name               = "vmsecrets"
     resource_group_key = "vm_sg"
     sku_name           = "standard"
+    creation_policies = {
+      logged_in_user = {
+        secret_permissions = ["Set", "Get", "List", "Delete", "Purge", "Recover"]
+      }
+    } 
   }
 }
 

@@ -34,9 +34,9 @@ vnets = {
         enforce_private_link_endpoint_network_policies = true
       }
       jumpbox = {
-        name    = "jumpbox"
+        name    = "jumpbox2"
         cidr    = ["100.64.51.128/27"]
-        nsg_key = "azure_bastion_nsg"
+        nsg_key = "azure_bastion_nsg2"
       }
     }
 
@@ -71,7 +71,7 @@ vnets = {
       jumpbox = {
         name    = "jumpbox"
         cidr    = ["100.64.102.0/27"]
-        nsg_key = "jumpbox"
+        nsg_key = "jumpbox2"
       }
       private_endpoints = {
         name                                           = "private_endpoints"
@@ -230,7 +230,7 @@ network_security_group_definition = {
     ]
   }
 
-  jumpbox = {
+  jumpbox2 = {
 
     nsg = [
       {
