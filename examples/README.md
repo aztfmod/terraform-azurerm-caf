@@ -36,8 +36,12 @@ rover -lz /tf/caf/examples \
 ```
 
 rover -lz /tf/caf/examples \
--var-folder /tf/caf//tf/caf/examples/mssql_mi/200-mi-two-regions \
+-tfstate example_mi.tfstate \
+-var-folder /tf/caf/examples/mssql_mi/200-mi-two-regions \
+-level level1 \
+-env khairi \
 -a plan|apply
+
 
 
 ## Developing and testing module for landing zones
