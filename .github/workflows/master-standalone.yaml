@@ -49,7 +49,6 @@ jobs:
             "compute/container_registry/100-simple-acr",
             "compute/kubernetes_services/101-single-cluster",
             "compute/kubernetes_services/102-multi-nodepools",
-            "compute/kubernetes_services/103-multi-clusters",
             "compute/kubernetes_services/104-private-cluster",
             "compute/proximity_placement_group",
             "cosmos_db/100-simple-cosmos-db-sql",

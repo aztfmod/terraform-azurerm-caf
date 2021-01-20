@@ -3,25 +3,28 @@ vnets = {
     resource_group_key = "aks_re1"
     region             = "region1"
     vnet = {
-      name          = "aks-re1"
+      name          = "aks"
       address_space = ["100.64.48.0/22"]
     }
     specialsubnets = {}
     subnets = {
       aks_nodepool_system = {
-        name    = "aks_nodepool_system"
-        cidr    = ["100.64.48.0/24"]
-        nsg_key = "azure_kubernetes_cluster_nsg"
+        name            = "aks_nodepool_system"
+        cidr            = ["100.64.48.0/24"]
+        nsg_key         = "azure_kubernetes_cluster_nsg"
+        route_table_key = "default_to_firewall_re1"
       }
       aks_nodepool_user1 = {
-        name    = "aks_nodepool_user1"
-        cidr    = ["100.64.49.0/24"]
-        nsg_key = "azure_kubernetes_cluster_nsg"
+        name            = "aks_nodepool_user1"
+        cidr            = ["100.64.49.0/24"]
+        nsg_key         = "azure_kubernetes_cluster_nsg"
+        route_table_key = "default_to_firewall_re1"
       }
       aks_nodepool_user2 = {
-        name    = "aks_nodepool_user2"
-        cidr    = ["100.64.50.0/24"]
-        nsg_key = "azure_kubernetes_cluster_nsg"
+        name            = "aks_nodepool_user2"
+        cidr            = ["100.64.50.0/24"]
+        nsg_key         = "azure_kubernetes_cluster_nsg"
+        route_table_key = "default_to_firewall_re1"
       }
       AzureBastionSubnet = {
         name    = "AzureBastionSubnet" #Must be called AzureBastionSubnet
@@ -34,56 +37,88 @@ vnets = {
         enforce_private_link_endpoint_network_policies = true
       }
       jumpbox = {
-        name    = "jumpbox2"
-        cidr    = ["100.64.51.128/27"]
-        nsg_key = "azure_bastion_nsg"
-      }
-    }
-
-  }
-
-
-
-
-  hub_re1 = {
-    resource_group_key = "aks_re1"
-    region             = "region1"
-    vnet = {
-      name          = "hub-re1"
-      address_space = ["100.64.100.0/22"]
-    }
-    specialsubnets = {
-      GatewaySubnet = {
-        name = "GatewaySubnet" #Must be called GateWaySubnet in order to host a Virtual Network Gateway
-        cidr = ["100.64.100.0/27"]
-      }
-      AzureFirewallSubnet = {
-        name = "AzureFirewallSubnet" #Must be called AzureFirewallSubnet
-        cidr = ["100.64.101.0/26"]
-      }
-    }
-    subnets = {
-      AzureBastionSubnet = {
-        name    = "AzureBastionSubnet" #Must be called AzureBastionSubnet
-        cidr    = ["100.64.101.64/26"]
-        nsg_key = "azure_bastion_nsg"
-      }
-      jumpbox = {
         name    = "jumpbox"
-        cidr    = ["100.64.102.0/27"]
+        cidr    = ["100.64.51.128/27"]
         nsg_key = "jumpbox"
       }
-      private_endpoints = {
-        name                                           = "private_endpoints"
-        cidr                                           = ["100.64.103.128/25"]
-        enforce_private_link_endpoint_network_policies = true
-      }
     }
 
   }
-
-  
 }
+
+route_tables = {
+  default_to_firewall_re1 = {
+    name               = "default_to_firewall_re1"
+    resource_group_key = "aks_re1"
+  }
+}
+
+azurerm_routes = {
+
+  default_to_firewall_re1 = {
+    name               = "through-firewall-re1"
+    resource_group_key = "aks_re1"
+    route_table_key    = "default_to_firewall_re1"
+    address_prefix     = "0.0.0.0/0"
+    next_hop_type      = "VirtualAppliance"
+    next_hop_type_key  = "azurerm_firewall"
+    next_hop_in_ip_address  = "100.64.51.128"
+    #lz_key             = "networking_hub"
+
+    # To be set when next_hop_type = "VirtualAppliance"
+    private_ip_keys = {
+      azurerm_firewall = {
+        key             = "fw_re1"
+        interface_index = 0
+      }
+      # virtual_machine = {
+      #   key = ""
+      #   nic_key = ""
+      # }
+    }
+  }
+}
+
+bastion_hosts = {
+  bastion_hub_re1 = {
+    name               = "bastion-rg1"
+    region             = "region1"
+    resource_group_key = "aks_re1"
+    vnet_key           = "spoke_aks_re1"
+    subnet_key         = "AzureBastionSubnet"
+    public_ip_key      = "bastion_host_re1"
+
+    # you can setup up to 5 profiles
+    diagnostic_profiles = {
+      operations = {
+        definition_key   = "bastion_host"
+        destination_type = "log_analytics"
+        destination_key  = "central_logs"
+      }
+    }
+  }
+}
+
+public_ip_addresses = {
+  bastion_host_re1 = {
+    name                    = "bastion-pip1"
+    resource_group_key      = "aks_re1"
+    sku                     = "Standard"
+    allocation_method       = "Static"
+    ip_version              = "IPv4"
+    idle_timeout_in_minutes = "4"
+
+    # you can setup up to 5 key
+    # diagnostic_profiles = {
+    #   bastion_host_rg1 = {
+    #     definition_key   = "public_ip_address"
+    #     destination_type = "log_analytics"
+    #     destination_key  = "central_logs"
+    #   }
+    # }
+  }
+}
+
 
 network_security_group_definition = {
   # This entry is applied to all subnets with no NSG defined
@@ -155,11 +190,11 @@ network_security_group_definition = {
         destination_port_range     = "443"
         source_address_prefix      = "*"
         destination_address_prefix = "*"
-      },
+      }
     ]
   }
-  azure_bastion_nsg = {
 
+  azure_bastion_nsg = {
     nsg = [
       {
         name                       = "bastion-in-allow",
@@ -231,7 +266,6 @@ network_security_group_definition = {
   }
 
   jumpbox = {
-
     nsg = [
       {
         name                       = "ssh-inbound-22",
@@ -243,48 +277,7 @@ network_security_group_definition = {
         destination_port_range     = "22"
         source_address_prefix      = "*"
         destination_address_prefix = "VirtualNetwork"
-      },
+      }
     ]
   }  
-}
-
-
-vnet_peerings = {
-  #
-  # Peering Region1
-  #
-  spoke_aks_re1_TO_hub_re1 = {
-    name = "spoke_aks_re1_TO_hub_re1"
-    from = {
-      vnet_key = "spoke_aks_re1"
-    }
-    to = {
-      #lz_key     = "networking_hub"
-      output_key = "vnets"
-      vnet_key   = "hub_re1"
-    }
-    allow_virtual_network_access = true
-    allow_forwarded_traffic      = true
-    allow_gateway_transit        = false
-    use_remote_gateways          = false
-  }
-
-  hub_re1_TO_spoke_aks_re1 = {
-    name = "hub_re1_TO_spoke_aks_re1"
-    from = {
-      #lz_key     = "networking_hub"
-      output_key = "vnets"
-      vnet_key   = "hub_re1"
-    }
-    to = {
-      vnet_key = "spoke_aks_re1"
-    }
-    allow_virtual_network_access = true
-    allow_forwarded_traffic      = true
-    allow_gateway_transit        = true
-    use_remote_gateways          = false
-  }
-
-  
-
 }
