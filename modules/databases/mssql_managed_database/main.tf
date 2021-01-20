@@ -39,7 +39,7 @@ locals {
     }
     longTermRetentionBackupResourceId = {
       value = try(var.settings.longTermRetentionBackupResourceId, "")
-    } 
+    }
     retentionDays = {
       value = try(var.settings.retentionDays, 7)
     }

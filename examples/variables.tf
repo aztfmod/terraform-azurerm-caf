@@ -240,7 +240,7 @@ variable vnet_peerings {
   default = {}
 }
 variable cosmos_dbs {
-    default = {}
+  default = {}
 }
 variable dynamic_keyvault_secrets {
   default = {}

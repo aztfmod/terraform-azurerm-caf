@@ -1,9 +1,9 @@
 module secondary_tde {
   source = "./secondary"
-  count = var.is_secondary_tde == true ? 1 : 0
+  count  = var.is_secondary_tde == true ? 1 : 0
 
-  key       = var.keyvault_key
-  keyvault  = var.secondary_keyvault
+  key      = var.keyvault_key
+  keyvault = var.secondary_keyvault
 }
 
 resource "null_resource" "set_kv_tde" {

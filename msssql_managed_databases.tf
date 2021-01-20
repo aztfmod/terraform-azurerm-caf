@@ -30,7 +30,7 @@ module "mssql_managed_databases_restore" {
 }
 
 module "mssql_managed_databases_backup_ltr" {
-  source   = "./modules/databases/mssql_managed_database/backup_ltr" 
+  source   = "./modules/databases/mssql_managed_database/backup_ltr"
   for_each = local.database.mssql_managed_databases_backup_ltr
 
   settings            = each.value

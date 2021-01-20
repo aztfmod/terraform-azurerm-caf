@@ -195,14 +195,14 @@ mssql_managed_databases = {
 
 mssql_managed_databases_backup_ltr = {
   sqlmi1 = {
-    resource_group_key  = "sqlmi_region1"
-    mi_server_key       = "sqlmi1"
-    database_key        = "managed_db1"
+    resource_group_key = "sqlmi_region1"
+    mi_server_key      = "sqlmi1"
+    database_key       = "managed_db1"
 
-    weeklyRetention     = "P12W" 
-    monthlyRetention    = "P12M"
-    yearlyRetention     = "P5Y"
-    weekOfYear          = 16
+    weeklyRetention  = "P12W"
+    monthlyRetention = "P12M"
+    yearlyRetention  = "P5Y"
+    weekOfYear       = 16
   }
 }
 
@@ -302,22 +302,22 @@ keyvault_access_policies = {
   # A maximum of 16 access policies per keyvault
   tde_primary = {
     sqlmi1 = {
-      mssql_managed_instance_key  = "sqlmi1"
-      key_permissions             = ["get", "unwrapKey", "wrapKey"]
+      mssql_managed_instance_key = "sqlmi1"
+      key_permissions            = ["get", "unwrapKey", "wrapKey"]
     }
     sqlmi2 = {
-      mssql_managed_instance_secondary_key  = "sqlmi2"
-      key_permissions             = ["get", "unwrapKey", "wrapKey"]
+      mssql_managed_instance_secondary_key = "sqlmi2"
+      key_permissions                      = ["get", "unwrapKey", "wrapKey"]
     }
   }
   tde_secondary = {
     sqlmi1 = {
-      mssql_managed_instance_key  = "sqlmi1"
-      key_permissions             = ["get", "unwrapKey", "wrapKey"]
+      mssql_managed_instance_key = "sqlmi1"
+      key_permissions            = ["get", "unwrapKey", "wrapKey"]
     }
     sqlmi2 = {
-      mssql_managed_instance_secondary_key  = "sqlmi2"
-      key_permissions             = ["get", "unwrapKey", "wrapKey"]
+      mssql_managed_instance_secondary_key = "sqlmi2"
+      key_permissions                      = ["get", "unwrapKey", "wrapKey"]
     }
   }
 }
@@ -335,17 +335,17 @@ keyvault_keys = {
 //TDE
 mssql_mi_secondary_tdes = {
   sqlmi2 = {
-    resource_group_key      = "sqlmi_region2"
-    mi_server_key           = "sqlmi2"
-    keyvault_key_key        = "tde_mi"
-    secondary_keyvault_key  = "tde_secondary"
+    resource_group_key     = "sqlmi_region2"
+    mi_server_key          = "sqlmi2"
+    keyvault_key_key       = "tde_mi"
+    secondary_keyvault_key = "tde_secondary"
   }
 }
 
 mssql_mi_tdes = {
   sqlmi1 = {
-    resource_group_key  = "sqlmi_region1"
-    mi_server_key       = "sqlmi1"
-    keyvault_key_key    = "tde_mi"
+    resource_group_key = "sqlmi_region1"
+    mi_server_key      = "sqlmi1"
+    keyvault_key_key   = "tde_mi"
   }
 }
