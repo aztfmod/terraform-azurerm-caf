@@ -26,7 +26,7 @@ vnets = {
       AzureBastionSubnet = {
         name    = "AzureBastionSubnet" #Must be called AzureBastionSubnet
         cidr    = ["100.64.51.64/27"]
-        #nsg_key = "azure_bastion_nsg2"
+        nsg_key = "azure_bastion_nsg2"
       }
       private_endpoints = {
         name                                           = "private_endpoints"
@@ -66,7 +66,7 @@ vnets = {
       AzureBastionSubnet = {
         name    = "AzureBastionSubnet" #Must be called AzureBastionSubnet
         cidr    = ["100.64.101.64/26"]
-        #nsg_key = "azure_bastion_nsg2"
+        nsg_key = "azure_bastion_nsg2"
       }
       jumpbox = {
         name    = "jumpbox"
