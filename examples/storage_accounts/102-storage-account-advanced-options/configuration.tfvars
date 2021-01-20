@@ -48,16 +48,16 @@ storage_accounts = {
       days = "7"
     }
 
-    queue_properties = {
-      cors_rule = {
-        # https://docs.microsoft.com/en-us/rest/api/storageservices/cross-origin-resource-sharing--cors--support-for-the-azure-storage-services
-        allowed_headers    = ["x-ms-meta-data*", "x-ms-meta-target*", "x-ms-meta-abc"]
-        allowed_methods    = ["POST", "GET"]
-        allowed_origins    = ["http://www.contoso.com", "http://www.fabrikam.com"]
-        exposed_headers    = ["x-ms-meta-*"]
-        max_age_in_seconds = "200"
-      }
-    }
+    # queue_properties = {
+    #   cors_rule = {
+    #     # https://docs.microsoft.com/en-us/rest/api/storageservices/cross-origin-resource-sharing--cors--support-for-the-azure-storage-services
+    #     allowed_headers    = ["x-ms-meta-data*", "x-ms-meta-target*", "x-ms-meta-abc"]
+    #     allowed_methods    = ["POST", "GET"]
+    #     allowed_origins    = ["http://www.contoso.com", "http://www.fabrikam.com"]
+    #     exposed_headers    = ["x-ms-meta-*"]
+    #     max_age_in_seconds = "200"
+    #   }
+    # }
 
     logging = {
       delete                = true

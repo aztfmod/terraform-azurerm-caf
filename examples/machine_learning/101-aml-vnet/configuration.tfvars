@@ -25,8 +25,14 @@ machine_learning_workspaces = {
     keyvault_key             = "aml_secrets"
     storage_account_key      = "amlstorage_re1"
     application_insights_key = "ml_app_insight"
+    vnet_key                 = "spoke_dap_re1"
+    subnet_key               = "AmlSubnet"
     sku_name                 = "Enterprise" # disabling this will set up Basic
-    compute_instances = {
+
+  }
+}
+
+compute_instances = {
       compute_instance_re1 = {
         computeInstanceName   = "inst25"
         vmSize                = "Standard_DS3_v2" #[For allowed value - refer Readme.md]
@@ -37,8 +43,6 @@ machine_learning_workspaces = {
         subnet_key            = "AmlSubnet"
       }
     }
-  }
-}
 
 #
 # App insights settings
