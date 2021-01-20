@@ -13,7 +13,7 @@ resource "null_resource" "create_sec_tde_key" {
 
     environment = {
       PRIMARY_KEY_ID = var.key.id
-      KEYVAULT_NAME   = var.keyvault.name
+      KEYVAULT_NAME  = var.keyvault.name
     }
   }
 }

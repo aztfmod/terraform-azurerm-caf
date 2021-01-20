@@ -18,7 +18,7 @@ resource "null_resource" "clear_backupltr" {
   triggers = {
     resource_group_name = var.resource_group_name
     server_name         = var.server_name
-    db_name              = var.db_name
+    db_name             = var.db_name
   }
 
   provisioner "local-exec" {
@@ -29,8 +29,8 @@ resource "null_resource" "clear_backupltr" {
 
     environment = {
       RESOURCE_GROUP_NAME = self.triggers.resource_group_name
-      SERVER_NAME = self.triggers.server_name
-      DB_NAME = self.triggers.db_name
+      SERVER_NAME         = self.triggers.server_name
+      DB_NAME             = self.triggers.db_name
     }
   }
 

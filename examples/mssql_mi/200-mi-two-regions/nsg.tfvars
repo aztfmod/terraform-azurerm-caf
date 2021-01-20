@@ -13,7 +13,7 @@ network_security_group_definition = {
         access                     = "Allow"
         priority                   = "100"
         direction                  = "Inbound"
-        destination_port_ranges    = ["9000","9003","1438","1440","1452"]
+        destination_port_ranges    = ["9000", "9003", "1438", "1440", "1452"]
       },
       {
         name                       = "Microsoft.Sql-managedInstances_UseOnly_mi-corpsaw-in-172-25-88-0-24-v9"
@@ -24,7 +24,7 @@ network_security_group_definition = {
         access                     = "Allow"
         priority                   = "101"
         direction                  = "Inbound"
-        destination_port_ranges    = ["9000","9003","1440"]
+        destination_port_ranges    = ["9000", "9003", "1440"]
       },
       {
         name                       = "Microsoft.Sql-managedInstances_UseOnly_mi-corppublic-in-172-25-88-0-24-v9"
@@ -35,7 +35,7 @@ network_security_group_definition = {
         access                     = "Allow"
         priority                   = "102"
         direction                  = "Inbound"
-        destination_port_ranges    = ["9000","9003"]
+        destination_port_ranges    = ["9000", "9003"]
       },
       {
         name                       = "Microsoft.Sql-managedInstances_UseOnly_mi-healthprobe-in-172-25-88-0-24-v9"
@@ -68,7 +68,7 @@ network_security_group_definition = {
         access                     = "Allow"
         priority                   = "100"
         direction                  = "Outbound"
-        destination_port_ranges    = ["443","12000"]
+        destination_port_ranges    = ["443", "12000"]
       },
       {
         name                       = "Microsoft.Sql-managedInstances_UseOnly_mi-internal-out-172-25-88-0-24-v9"
@@ -140,7 +140,7 @@ network_security_group_definition = {
         access                     = "Allow"
         priority                   = "100"
         direction                  = "Inbound"
-        destination_port_ranges    = ["9000","9003","1438","1440","1452"]
+        destination_port_ranges    = ["9000", "9003", "1438", "1440", "1452"]
       },
       {
         name                       = "Microsoft.Sql-managedInstances_UseOnly_mi-corpsaw-in-172-25-96-0-24-v9"
@@ -151,7 +151,7 @@ network_security_group_definition = {
         access                     = "Allow"
         priority                   = "101"
         direction                  = "Inbound"
-        destination_port_ranges    = ["9000","9003","1440"]
+        destination_port_ranges    = ["9000", "9003", "1440"]
       },
       {
         name                       = "Microsoft.Sql-managedInstances_UseOnly_mi-corppublic-in-172-25-96-0-24-v9"
@@ -162,7 +162,7 @@ network_security_group_definition = {
         access                     = "Allow"
         priority                   = "102"
         direction                  = "Inbound"
-        destination_port_ranges    = ["9000","9003"]
+        destination_port_ranges    = ["9000", "9003"]
       },
       {
         name                       = "Microsoft.Sql-managedInstances_UseOnly_mi-healthprobe-in-172-25-96-0-24-v9"
@@ -195,7 +195,7 @@ network_security_group_definition = {
         access                     = "Allow"
         priority                   = "100"
         direction                  = "Outbound"
-        destination_port_ranges    = ["443","12000"]
+        destination_port_ranges    = ["443", "12000"]
       },
       {
         name                       = "Microsoft.Sql-managedInstances_UseOnly_mi-internal-out-172-25-96-0-24-v9"

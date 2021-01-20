@@ -65,7 +65,7 @@ module "mssql_mi_secondary_tde" {
   source = "./modules/databases/mssql_managed_instance/tde"
 
   //depends_on = 
-  for_each   = local.database.mssql_mi_secondary_tdes
+  for_each = local.database.mssql_mi_secondary_tdes
 
   resource_group_name = local.combined_objects_resource_groups[try(each.value.lz_key, local.client_config.landingzone_key)][each.value.resource_group_key].name
   mi_name             = module.mssql_managed_instances_secondary[each.value.mi_server_key].name
@@ -76,11 +76,11 @@ module "mssql_mi_secondary_tde" {
 
 #Both initial setup and rotation of the TDE protector must be done on the secondary first, and then on primary.
 module "mssql_mi_tde" {
-  source = "./modules/databases/mssql_managed_instance/tde"
+  source     = "./modules/databases/mssql_managed_instance/tde"
   depends_on = [module.mssql_mi_secondary_tde]
 
   //depends_on = 
-  for_each   = local.database.mssql_mi_tdes
+  for_each = local.database.mssql_mi_tdes
 
   resource_group_name = local.combined_objects_resource_groups[try(each.value.lz_key, local.client_config.landingzone_key)][each.value.resource_group_key].name
   mi_name             = module.mssql_managed_instances[each.value.mi_server_key].name
