@@ -64,7 +64,7 @@ vnets = {
       aks_nodepool_user2 = {
         name    = "aks_nodepool_user2"
         cidr    = ["100.65.50.0/24"]
-        nsg_key = "azure_kubernetes_cluster_nsg"1
+        nsg_key = "azure_kubernetes_cluster_nsg1"
       }
       AzureBastionSubnet = {
         name    = "AzureBastionSubnet" #Must be called AzureBastionSubnet

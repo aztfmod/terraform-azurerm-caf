@@ -16,8 +16,8 @@ storage_accounts = {
   sa1 = {
     name                     = "sa1dev"
     resource_group_key       = "test"
-    account_kind             = "BlobStorage"
-    account_tier             = "Standard"
+    account_kind             = "StorageV2" #Valid options are BlobStorage, BlockBlobStorage, FileStorage, Storage and StorageV2. Defaults to StorageV2
+    account_tier             = "Standard"  #Valid options are Standard and Premium. For BlockBlobStorage and FileStorage accounts only Premium is valid
     account_replication_type = "LRS"    # https://docs.microsoft.com/en-us/azure/storage/common/storage-redundancy
     min_tls_version          = "TLS1_2" # Possible values are TLS1_0, TLS1_1, and TLS1_2. Defaults to TLS1_0 for new storage accounts.
     allow_blob_public_access = false
@@ -81,7 +81,7 @@ storage_accounts = {
       retention_policy_days = "7"
     }
 
-    static_website = {
+    static_website = { # supported only with BlockBlobStorage and StorageV2
       index_document     = "index.html"
       error_404_document = "error.html"
     }
