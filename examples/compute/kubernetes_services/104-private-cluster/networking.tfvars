@@ -11,22 +11,22 @@ vnets = {
       aks_nodepool_system = {
         name    = "aks_nodepool_system"
         cidr    = ["100.64.48.0/24"]
-        nsg_key = "azure_kubernetes_cluster_nsg3"
+        nsg_key = "azure_kubernetes_cluster_nsg"
       }
       aks_nodepool_user1 = {
         name    = "aks_nodepool_user1"
         cidr    = ["100.64.49.0/24"]
-        nsg_key = "azure_kubernetes_cluster_nsg3"
+        nsg_key = "azure_kubernetes_cluster_nsg"
       }
       aks_nodepool_user2 = {
         name    = "aks_nodepool_user2"
         cidr    = ["100.64.50.0/24"]
-        nsg_key = "azure_kubernetes_cluster_nsg3"
+        nsg_key = "azure_kubernetes_cluster_nsg"
       }
       AzureBastionSubnet = {
         name    = "AzureBastionSubnet" #Must be called AzureBastionSubnet
         cidr    = ["100.64.51.64/27"]
-        nsg_key = "azure_bastion_nsg2"
+        nsg_key = "azure_bastion_nsg"
       }
       private_endpoints = {
         name                                           = "private_endpoints"
@@ -36,7 +36,7 @@ vnets = {
       jumpbox = {
         name    = "jumpbox2"
         cidr    = ["100.64.51.128/27"]
-        nsg_key = "azure_bastion_nsg2"
+        nsg_key = "azure_bastion_nsg"
       }
     }
 
@@ -66,12 +66,12 @@ vnets = {
       AzureBastionSubnet = {
         name    = "AzureBastionSubnet" #Must be called AzureBastionSubnet
         cidr    = ["100.64.101.64/26"]
-        nsg_key = "azure_bastion_nsg2"
+        nsg_key = "azure_bastion_nsg"
       }
       jumpbox = {
         name    = "jumpbox"
         cidr    = ["100.64.102.0/27"]
-        nsg_key = "jumpbox2"
+        nsg_key = "jumpbox"
       }
       private_endpoints = {
         name                                           = "private_endpoints"
@@ -88,7 +88,7 @@ vnets = {
 network_security_group_definition = {
   # This entry is applied to all subnets with no NSG defined
   empty_nsg = {}
-  azure_kubernetes_cluster_nsg3 = {
+  azure_kubernetes_cluster_nsg = {
     nsg = [
       {
         name                       = "aks-http-in-allow",
@@ -158,7 +158,7 @@ network_security_group_definition = {
       },
     ]
   }
-  azure_bastion_nsg2 = {
+  azure_bastion_nsg = {
 
     nsg = [
       {
@@ -230,7 +230,7 @@ network_security_group_definition = {
     ]
   }
 
-  jumpbox2 = {
+  jumpbox = {
 
     nsg = [
       {
@@ -264,7 +264,7 @@ vnet_peerings = {
       vnet_key   = "hub_re1"
     }
     allow_virtual_network_access = true
-    allow_forwarded_traffic      = false
+    allow_forwarded_traffic      = true
     allow_gateway_transit        = false
     use_remote_gateways          = false
   }
