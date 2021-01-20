@@ -32,6 +32,7 @@ vnets = {
         name                                           = "private_endpoints"
         cidr                                           = ["100.64.51.0/27"]
         enforce_private_link_endpoint_network_policies = true
+        nsg_key = "azure_bastion_nsg"
       }
       jumpbox = {
         name    = "jumpbox"
@@ -230,7 +231,7 @@ network_security_group_definition = {
         destination_port_range     = "443"
         source_address_prefix      = "*"
         destination_address_prefix = "*"
-      },
+      }
     ]
   }
   azure_bastion_nsg = {
@@ -318,7 +319,7 @@ network_security_group_definition = {
         destination_port_range     = "22"
         source_address_prefix      = "*"
         destination_address_prefix = "VirtualNetwork"
-      },
+      }
     ]
   }  
 }

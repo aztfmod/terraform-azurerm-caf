@@ -58,3 +58,19 @@ variable vnet_peerings {
 variable random_length {
   default = {}
 }
+
+variable bastion_hosts {
+  default = {}
+}
+
+variable public_ip_addresses {
+  default ={}
+}
+
+variable azurerm_routes {
+  default = {}
+}
+
+variable route_tables {
+  default = {}
+}
