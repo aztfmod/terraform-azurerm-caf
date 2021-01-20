@@ -14,6 +14,7 @@ terraform apply \
   -var-file ../networking.tfvars \
   -var tags='{testing_job_id="${1}"}' \
   -var var_folder_path=${current_folder} \
+  -var random_length=5
   -input=false \
   -auto-approve
 
