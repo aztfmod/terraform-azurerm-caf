@@ -69,7 +69,9 @@ module "mssql_mi_secondary_tde" {
 
   resource_group_name = local.combined_objects_resource_groups[try(each.value.lz_key, local.client_config.landingzone_key)][each.value.resource_group_key].name
   mi_name             = module.mssql_managed_instances_secondary[each.value.mi_server_key].name
-  key_uri             = each.value.key_uri
+  keyvault_key        = try(local.combined_objects_keyvault_keys[try(each.value.lz_key, local.client_config.landingzone_key)][each.value.keyvault_key_key], null)
+  is_secondary_tde    = true
+  secondary_keyvault  = try(local.combined_objects_keyvaults[try(each.value.lz_key, local.client_config.landingzone_key)][each.value.secondary_keyvault_key], null)
 }
 
 #Both initial setup and rotation of the TDE protector must be done on the secondary first, and then on primary.
@@ -82,5 +84,5 @@ module "mssql_mi_tde" {
 
   resource_group_name = local.combined_objects_resource_groups[try(each.value.lz_key, local.client_config.landingzone_key)][each.value.resource_group_key].name
   mi_name             = module.mssql_managed_instances[each.value.mi_server_key].name
-  key_uri             = each.value.key_uri
+  keyvault_key        = try(local.combined_objects_keyvault_keys[try(each.value.lz_key, local.client_config.landingzone_key)][each.value.keyvault_key_key], null)
 }

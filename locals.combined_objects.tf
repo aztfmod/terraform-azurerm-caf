@@ -13,6 +13,7 @@ locals {
   combined_objects_availability_sets          = merge(map(local.client_config.landingzone_key, module.availability_sets), try(var.remote_objects.availability_sets, {}))
   combined_objects_event_hub_namespaces       = merge(map(local.client_config.landingzone_key, module.event_hub_namespaces), try(var.remote_objects.event_hub_namespaces, {}))
   combined_objects_keyvaults                  = merge(map(local.client_config.landingzone_key, module.keyvaults), try(var.remote_objects.keyvaults, {}))
+  combined_objects_keyvault_keys              = merge(map(local.client_config.landingzone_key, module.keyvault_keys), try(var.remote_objects.keyvault_keys, {}))
   combined_objects_managed_identities         = merge(map(local.client_config.landingzone_key, module.managed_identities), try(var.remote_objects.managed_identities, {}))
   combined_objects_mssql_servers              = merge(map(local.client_config.landingzone_key, module.mssql_servers), try(var.remote_objects.mssql_servers, {}))
   combined_objects_mssql_databases            = merge(map(local.client_config.landingzone_key, module.mssql_databases), try(var.remote_objects.mssql_databases, {}))

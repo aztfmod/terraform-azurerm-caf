@@ -330,26 +330,22 @@ keyvault_keys = {
     key_opts     = ["encrypt", "decrypt", "sign", "verify", "wrapKey", "unwrapKey"]
     key_size     = 2048
   }
-  #TODO need to manually backup and restore key from priamry to secondary
-  # tde_mi_secondary = {
-  # }
 }
 
 //TDE
 mssql_mi_secondary_tdes = {
   sqlmi2 = {
-    resource_group_key = "sqlmi_region2"
-    mi_server_key = "sqlmi2"
-    #TODO use keyvault key output
-    key_uri  = "https://dzqy-kv-mi-tde-secondary.vault.azure.net/keys/TDE/56a0cd1b216345a1a32b7d5545f66388"
+    resource_group_key      = "sqlmi_region2"
+    mi_server_key           = "sqlmi2"
+    keyvault_key_key        = "tde_mi"
+    secondary_keyvault_key  = "tde_secondary"
   }
 }
 
 mssql_mi_tdes = {
   sqlmi1 = {
-    resource_group_key = "sqlmi_region1"
-    mi_server_key = "sqlmi1"
-    #TODO use keyvault key output
-    key_uri  = "https://dzqy-kv-mi-tde-primary.vault.azure.net/keys/TDE/56a0cd1b216345a1a32b7d5545f66388"
+    resource_group_key  = "sqlmi_region1"
+    mi_server_key       = "sqlmi1"
+    keyvault_key_key    = "tde_mi"
   }
 }

@@ -1,9 +1,15 @@
+module secondary_tde {
+  source = "./secondary"
+  count = var.is_secondary_tde == true ? 1 : 0
 
+  key       = var.keyvault_key
+  keyvault  = var.secondary_keyvault
+}
 
 resource "null_resource" "set_kv_tde" {
 
   triggers = {
-    key_uri = var.key_uri
+    key_id = var.is_secondary_tde == true ? module.secondary_tde[0].key_id : var.keyvault_key.id
   }
 
   provisioner "local-exec" {
@@ -12,7 +18,7 @@ resource "null_resource" "set_kv_tde" {
     on_failure  = fail
 
     environment = {
-      KEY_URI = var.key_uri
+      KEY_ID  = var.is_secondary_tde == true ? module.secondary_tde[0].key_id : var.keyvault_key.id
       RG_NAME = var.resource_group_name
       MI_NAME = var.mi_name
     }
