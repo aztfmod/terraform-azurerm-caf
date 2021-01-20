@@ -4,6 +4,8 @@ global_settings = {
     region1 = "southeastasia"
     region2 = "eastasia"
   }
+  random_length = "6"
+  prefix        = "abcd"
 }
 
 resource_groups = {
