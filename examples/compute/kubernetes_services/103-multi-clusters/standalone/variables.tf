@@ -38,3 +38,7 @@ variable var_folder_path {
 variable vnet_peerings  {
   default = {}
 }
+
+variable random_length {
+  default = {}
+}
