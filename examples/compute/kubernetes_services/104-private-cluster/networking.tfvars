@@ -11,22 +11,22 @@ vnets = {
       aks_nodepool_system = {
         name    = "aks_nodepool_system"
         cidr    = ["100.64.48.0/24"]
-        nsg_key = "azure_kubernetes_cluster_nsg"
+        nsg_key = "azure_kubernetes_cluster_nsg3"
       }
       aks_nodepool_user1 = {
         name    = "aks_nodepool_user1"
         cidr    = ["100.64.49.0/24"]
-        nsg_key = "azure_kubernetes_cluster_nsg"
+        nsg_key = "azure_kubernetes_cluster_nsg3"
       }
       aks_nodepool_user2 = {
         name    = "aks_nodepool_user2"
         cidr    = ["100.64.50.0/24"]
-        nsg_key = "azure_kubernetes_cluster_nsg"
+        nsg_key = "azure_kubernetes_cluster_nsg3"
       }
       AzureBastionSubnet = {
         name    = "AzureBastionSubnet" #Must be called AzureBastionSubnet
         cidr    = ["100.64.51.64/27"]
-        nsg_key = "azure_bastion_nsg2"
+        #nsg_key = "azure_bastion_nsg2"
       }
       private_endpoints = {
         name                                           = "private_endpoints"
@@ -66,7 +66,7 @@ vnets = {
       AzureBastionSubnet = {
         name    = "AzureBastionSubnet" #Must be called AzureBastionSubnet
         cidr    = ["100.64.101.64/26"]
-        nsg_key = "azure_bastion_nsg2"
+        #nsg_key = "azure_bastion_nsg2"
       }
       jumpbox = {
         name    = "jumpbox"
@@ -88,7 +88,7 @@ vnets = {
 network_security_group_definition = {
   # This entry is applied to all subnets with no NSG defined
   empty_nsg = {}
-  azure_kubernetes_cluster_nsg = {
+  azure_kubernetes_cluster_nsg3 = {
     nsg = [
       {
         name                       = "aks-http-in-allow",

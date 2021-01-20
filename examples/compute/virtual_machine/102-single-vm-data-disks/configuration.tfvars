@@ -26,6 +26,7 @@ virtual_machines = {
   bastion_host = {
     resource_group_key = "vm_sg"
     os_type            = "linux"
+    keyvault_key = "example_vm_rg1"
     # Define the number of networking cards to attach the virtual machine
     networking_interfaces = {
       nic0 = {
