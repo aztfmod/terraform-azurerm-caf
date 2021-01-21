@@ -1,35 +1,3 @@
-# resource "azurerm_virtual_machine_extension" "LogAnalytics" {
-#   count                      = "${var.extension_loganalytics ? var.rdsh_count : 0}"
-#   name                       = "${var.vm_prefix}${count.index +1}-LogAnalytics"
-#   location                   = "${var.region}"
-#   resource_group_name        = "${var.resource_group_name}"
-#   virtual_machine_name       = "${azurerm_virtual_machine.main.*.name[count.index]}"
-#   publisher                  = "Microsoft.EnterpriseCloud.Monitoring"
-#   type                       = "MicrosoftMonitoringAgent"
-#   type_handler_version       = "1.0"
-#   auto_upgrade_minor_version = true
-
-#   settings = <<SETTINGS
-# 	{
-# 	    "workspaceId": "${var.log_analytics_workspace_id}"
-# 	}
-# SETTINGS
-
-#   protected_settings = <<protectedsettings
-#   {
-#       "workspaceKey": "${var.log_analytics_workspace_primary_shared_key}"
-#   }
-# protectedsettings
-
-#   tags {
-#     BUC             = "${var.tagBUC}"
-#     SupportGroup    = "${var.tagSupportGroup}"
-#     AppGroupEmail   = "${var.tagAppGroupEmail}"
-#     EnvironmentType = "${var.tagEnvironmentType}"
-#     CustomerCRMID   = "${var.tagCustomerCRMID}"
-#   }
-# }
-
 resource "azurerm_virtual_machine_extension" "domainJoin" {
   for_each = var.extension_name == "microsoft_azure_domainJoin" ? toset(["enabled"]) : toset([])
   name                       = "microsoft_azure_domainJoin"
@@ -53,10 +21,11 @@ resource "azurerm_virtual_machine_extension" "domainJoin" {
     {
         "Name": "${var.domain_name}",
         "OUPath": "${var.ou_path}",
-        "User": "${var.domain_user_upn}@${var.domain_name}",
+        "User": "domainadmin@contoso.com",
         "Restart": "true",
         "Options": "3"
     }
+    
 SETTINGS
 
   protected_settings = <<PROTECTED_SETTINGS
@@ -131,16 +100,16 @@ resource "azurerm_virtual_machine_extension" "additional_session_host_dscextensi
     "configurationFunction": "Configuration.ps1\\RegisterSessionHost",
      "properties": {
         "TenantAdminCredentials":{
-          "userName":"${var.tenant_app_id}",
+          "userName":"${var.svcprincipal_app_id}",
           "password":"PrivateSettingsRef:tenantAdminPassword"
         },
         "RDBrokerURL":"${var.RDBrokerURL}",
         "DefinedTenantGroupName":"${var.existing_tenant_group_name}",
-        "TenantName":"${var.tenant_name}",
+        "TenantName":"${var.wvd_tenant_name}",
         "HostPoolName":"${var.host_pool_name}",
         "Hours":"${var.registration_expiration_hours}",
         "isServicePrincipal":"${var.is_service_principal}",
-        "AadTenantId":"${var.aad_tenant_id}"
+        "AadTenantId":"${var.aad_tenant_id}"        
   }
 }
 SETTINGS
@@ -148,7 +117,7 @@ SETTINGS
   protected_settings = <<PROTECTED_SETTINGS
 {
   "items":{
-    "tenantAdminPassword":"${var.tenant_app_password}"
+    "tenantAdminPassword":"${var.svcprincipal_creds_value}"
   }
 }
 PROTECTED_SETTINGS
