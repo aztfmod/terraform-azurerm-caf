@@ -1,22 +1,22 @@
 module "caf" {
   source = "../"
 
-  global_settings              = var.global_settings
-  diagnostics                  = local.remote.diagnostics
-  current_landingzone_key      = var.landingzone.key
-  tenant_id                    = var.tenant_id
-  logged_user_objectId         = var.logged_user_objectId
-  logged_aad_app_objectId      = var.logged_aad_app_objectId
-  resource_groups              = var.resource_groups
-  storage_accounts             = var.storage_accounts
-  azuread_groups               = var.azuread_groups
-  azuread_roles                = var.azuread_roles
-  keyvaults                    = var.keyvaults
-  keyvault_access_policies     = var.keyvault_access_policies
-  managed_identities           = var.managed_identities
-  role_mapping                 = var.role_mapping
-  log_analytics                = var.log_analytics
-  event_hub_namespaces         = var.event_hub_namespaces
+  global_settings          = var.global_settings
+  diagnostics              = local.remote.diagnostics
+  current_landingzone_key  = var.landingzone.key
+  tenant_id                = var.tenant_id
+  logged_user_objectId     = var.logged_user_objectId
+  logged_aad_app_objectId  = var.logged_aad_app_objectId
+  resource_groups          = var.resource_groups
+  storage_accounts         = var.storage_accounts
+  azuread_groups           = var.azuread_groups
+  azuread_roles            = var.azuread_roles
+  keyvaults                = var.keyvaults
+  keyvault_access_policies = var.keyvault_access_policies
+  managed_identities       = var.managed_identities
+  role_mapping             = var.role_mapping
+  log_analytics            = var.log_analytics
+  event_hub_namespaces     = var.event_hub_namespaces
 
   webapp = {
     azurerm_application_insights = var.azurerm_application_insights
@@ -35,6 +35,7 @@ module "caf" {
     proximity_placement_groups = var.proximity_placement_groups
   }
   networking = {
+    domain_name_registrations            = var.domain_name_registrations
     vnets                                = var.vnets
     network_security_group_definition    = var.network_security_group_definition
     public_ip_addresses                  = var.public_ip_addresses
