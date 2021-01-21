@@ -17,7 +17,8 @@ resource "azurerm_virtual_network" "vnet" {
   address_space       = var.settings.vnet.address_space
   tags                = local.tags
 
-  dns_servers = lookup(var.settings.vnet, "dns", null)
+  # dns_servers = lookup(var.settings.vnet, "dns", null)
+  dns_servers = lookup(var.settings.vnet, "dns_servers", null)
 
   dynamic "ddos_protection_plan" {
     for_each = var.ddos_id != "" ? [1] : []

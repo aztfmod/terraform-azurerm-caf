@@ -16,16 +16,16 @@ variable "rdsh_count" {
 
 variable "host_pool_name" {
   description = "Name of the RDS host pool"
-  default     = ""
+  default     = "firsthp"
 }
 
 # variable "vm_prefix" {
 #   description = "Prefix of the name of the WVD machine(s)"
 # }
 
-variable "tenant_name" {
+variable "wvd_tenant_name" {
   description = "Name of the RDS tenant associated with the machines"
-  default = ""
+  default = "wvd-tenant"
 }
 
 variable "local_admin_username" {
@@ -45,17 +45,17 @@ variable "domain_joined" {
 
 variable "domain_name" {
   description = "**OPTIONAL**: Name of the domain to join"
-  default     = ""
+  default     = "dns.contoso.com"
 }
 
 variable "domain_user_upn" {
   description = "**OPTIONAL**: UPN of the user to authenticate with the domain"
-  default     = ""
+  default     = "domainadmin@contoso.com"
 }
 
 variable "domain_password" {
   description = "**OPTIONAL**: Password of the user to authenticate with the domain"
-  default     = ""
+  default     = "@@Acomplex173Password#%@#"
 }
 
 variable "tenantLocation" {
@@ -98,23 +98,19 @@ variable "nsg_id" {
   default     = ""
 }
 
-# variable "subnet_id" {
-#   description = "ID of the Subnet in which the machines will exist"
-# }
-
 variable "RDBrokerURL" {
   description = "**OPTIONAL**: URL of the RD Broker"
   default     = "https://rdbroker.wvd.microsoft.com"
 }
 
-variable "tenant_app_id" {
+variable "svcprincipal_app_id" {
   description = "ID of the tenant app"
-  default = "vmadmin-username"
+  default = "000000a-0000-0000-0000-000000dc009f"
 }
 
-variable "tenant_app_password" {
+variable "svcprincipal_creds_value" {
   description = "Password of the tenant app"
-  default = ""
+  default = "00000000000"
 }
 
 variable "is_service_principal" {
@@ -124,7 +120,7 @@ variable "is_service_principal" {
 
 variable "aad_tenant_id" {
   description = "ID of the AD tenant"
-  default = ""
+  default = "0000000-0000-0000-0000-000000000"
 }
 
 variable "ou_path" {
@@ -171,11 +167,6 @@ variable "as_platform_fault_domain_count" {
   description = "https://github.com/MicrosoftDocs/azure-docs/blob/master/includes/managed-disks-common-fault-domain-region-list.md"
   default     = 3
 }
-
-# variable "log_analytics_workspace_id" {
-#   description = "Workspace ID of the Log Analytics Workspace to associate the VMs with"
-#   default = ""
-# }
 
 variable "log_analytics_workspace_primary_shared_key" {
   description = "Primary Shared Key of the Log Analytics Workspace to associate the VMs with"
