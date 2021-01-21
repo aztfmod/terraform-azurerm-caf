@@ -253,3 +253,7 @@ variable private_endpoints {
 variable local_network_gateways {
   default = {}
 }
+
+variable domain_name_registrations {
+  default = {}
+}

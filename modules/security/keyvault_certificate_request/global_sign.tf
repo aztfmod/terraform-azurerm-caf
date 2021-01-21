@@ -1,20 +1,20 @@
 data "azurerm_key_vault_secret" "password" {
-  count        = lower( var.settings.certificate_policy.issuer_key_or_name) == "self" ? 0 : 1
+  count        = lower(var.settings.certificate_policy.issuer_key_or_name) == "self" ? 0 : 1
   name         = var.certificate_issuers[var.settings.certificate_policy.issuer_key_or_name].cert_password_key
   key_vault_id = var.keyvault_id
 }
 
 locals {
-  soap_get_certificate_orders = lower( var.settings.certificate_policy.issuer_key_or_name) == "self" ? null : templatefile(
+  soap_get_certificate_orders = lower(var.settings.certificate_policy.issuer_key_or_name) == "self" ? null : templatefile(
     format("%s/GlobalSign_GetCertificateOrders.tpl", path.module),
     {
       UserName = var.certificate_issuers[var.settings.certificate_policy.issuer_key_or_name].account_id,
       Password = data.azurerm_key_vault_secret.password[0].value,
-      FQDN     = regex("[^CN=]+", var.settings.certificate_policy.x509_certificate_properties.subject)      # regex("[^CN=]+", "CN=crm.test.com") ==> crm.test.com
+      FQDN     = regex("[^CN=]+", var.settings.certificate_policy.x509_certificate_properties.subject) # regex("[^CN=]+", "CN=crm.test.com") ==> crm.test.com
     }
   )
 
-  soap_cancel_order = lower( var.settings.certificate_policy.issuer_key_or_name) == "self" ? null : templatefile(
+  soap_cancel_order = lower(var.settings.certificate_policy.issuer_key_or_name) == "self" ? null : templatefile(
     format("%s/GlobalSign_cancel_order.tpl", path.module),
     {
       UserName = var.certificate_issuers[var.settings.certificate_policy.issuer_key_or_name].account_id,
