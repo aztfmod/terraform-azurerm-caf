@@ -39,6 +39,8 @@ module "caf_private_endpoint" {
 | settings | n/a | `any` | n/a | yes |
 | subnet\_id | n/a | `any` | n/a | yes |
 | subresource\_names | n/a | `list` | `[]` | no |
+| client\_config | Client configuration object (see module README.md). | `any` | n/a | yes |
+| private\_dns | n/a | `any` | n/a | yes |
 
 ## Outputs
 

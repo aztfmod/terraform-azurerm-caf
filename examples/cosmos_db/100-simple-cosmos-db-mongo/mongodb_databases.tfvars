@@ -53,7 +53,7 @@ cosmos_dbs = {
 
     capabilities = [
       "EnableMongo",
-      #"EnableServerless", 
+      #"EnableServerless",
       #"DisableRateLimitingResponses"
     ]
 
@@ -69,7 +69,7 @@ cosmos_dbs = {
             default_ttl_seconds = 0
             indexes = {
               index_1 = {
-                keys   = ["user_id"]
+                keys = ["user_id"]
               }
               index_2 = {
                 keys   = ["_id"]

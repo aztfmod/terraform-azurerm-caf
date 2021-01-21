@@ -233,5 +233,6 @@ variable local_network_gateways {
 }
 
 variable event_hub {
+variable automations {
   default = {}
 }

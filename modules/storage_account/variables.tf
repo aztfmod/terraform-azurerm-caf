@@ -28,3 +28,6 @@ variable base_tags {
 variable recovery_vaults {
   default = {}
 }
+variable private_dns {
+  default = {}
+}

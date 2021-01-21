@@ -14,7 +14,7 @@ module synapse_workspaces {
 
 output synapse_workspaces {
   value     = module.synapse_workspaces
-  sensitive = true
+  
 }
 
 
