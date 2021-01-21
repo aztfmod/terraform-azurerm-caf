@@ -52,8 +52,12 @@ variable application_insight {
 
 variable base_tags {}
 
-variable managed_identities {
+variable combined_objects {
   default = {}
 }
 
 variable client_config {}
+
+variable dynamic_app_settings {
+  default = {}
+}

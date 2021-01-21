@@ -31,6 +31,10 @@ variable app_settings {
   default = null
 }
 
+variable dynamic_app_settings {
+  default = {}
+}
+
 variable slots {
   default = {}
 }
@@ -52,6 +56,6 @@ variable base_tags {
   type        = map
 }
 
-variable managed_identities {
+variable combined_objects {
   default = {}
 }
