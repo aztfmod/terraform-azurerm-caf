@@ -12,6 +12,7 @@ module "keyvaults" {
   azuread_groups     = local.combined_objects_azuread_groups
   managed_identities = local.combined_objects_managed_identities
   base_tags          = try(local.global_settings.inherit_tags, false) ? module.resource_groups[each.value.resource_group_key].tags : {}
+  private_dns        = local.combined_objects_private_dns
 }
 
 #
@@ -48,5 +49,5 @@ module "keyvault_access_policies_azuread_apps" {
 
 output keyvaults {
   value     = module.keyvaults
-  sensitive = true
+  
 }

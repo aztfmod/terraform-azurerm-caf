@@ -84,7 +84,7 @@ You can customize the examples execution by modifying the variables as follow:
 | terraform | >= 0.13 |
 | azuread | ~> 1.0.0 |
 | azurecaf | ~> 1.1.0 |
-| azurerm | ~> 2.40.0 |
+| azurerm | ~> 2.43.0 |
 | external | ~> 1.2.0 |
 | null | ~> 2.1.0 |
 | random | ~> 2.2.1 |
@@ -107,15 +107,23 @@ You can customize the examples execution by modifying the variables as follow:
 | app\_services | n/a | `map` | `{}` | no |
 | application\_gateway\_applications | n/a | `map` | `{}` | no |
 | application\_gateways | n/a | `map` | `{}` | no |
+| automations | n/a | `map` | `{}` | no |
 | availability\_sets | n/a | `map` | `{}` | no |
+| azuread\_apps | n/a | `map` | `{}` | no |
 | azuread\_groups | n/a | `map` | `{}` | no |
 | azuread\_roles | n/a | `map` | `{}` | no |
+| azuread\_users | n/a | `map` | `{}` | no |
 | azurerm\_application\_insights | n/a | `map` | `{}` | no |
+| azurerm\_firewall\_application\_rule\_collection\_definition | n/a | `map` | `{}` | no |
+| azurerm\_firewall\_nat\_rule\_collection\_definition | n/a | `map` | `{}` | no |
+| azurerm\_firewall\_network\_rule\_collection\_definition | n/a | `map` | `{}` | no |
+| azurerm\_firewalls | n/a | `map` | `{}` | no |
 | azurerm\_redis\_caches | n/a | `map` | `{}` | no |
 | azurerm\_routes | n/a | `map` | `{}` | no |
 | bastion\_hosts | n/a | `map` | `{}` | no |
 | cosmos\_db | n/a | `map` | `{}` | no |
 | cosmos\_dbs | n/a | `map` | `{}` | no |
+| custom\_role\_definitions | n/a | `map` | `{}` | no |
 | databricks\_workspaces | n/a | `map` | `{}` | no |
 | diagnostic\_event\_hub\_namespaces | n/a | `map` | `{}` | no |
 | diagnostic\_log\_analytics | n/a | `map` | `{}` | no |
@@ -132,6 +140,7 @@ You can customize the examples execution by modifying the variables as follow:
 | front\_doors | n/a | `map` | `{}` | no |
 | global\_settings | n/a | `map` | <pre>{<br>  "default_region": "region1",<br>  "regions": {<br>    "region1": "southeastasia",<br>    "region2": "eastasia"<br>  }<br>}</pre> | no |
 | keyvault\_access\_policies | n/a | `map` | `{}` | no |
+| keyvault\_access\_policies\_azuread\_apps | n/a | `map` | `{}` | no |
 | keyvault\_certificate\_issuers | n/a | `map` | `{}` | no |
 | keyvault\_certificate\_requests | n/a | `map` | `{}` | no |
 | keyvaults | n/a | `map` | `{}` | no |

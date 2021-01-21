@@ -25,10 +25,10 @@ module application_gateways {
 
 output application_gateways {
   value     = module.application_gateways
-  sensitive = true
+  
 }
 
 output application_gateway_applications {
   value     = local.networking.application_gateway_applications
-  sensitive = true
+  
 }

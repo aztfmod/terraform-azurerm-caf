@@ -11,5 +11,5 @@ module tables {
 
 output tables {
   value     = module.tables
-  sensitive = true
+  
 }

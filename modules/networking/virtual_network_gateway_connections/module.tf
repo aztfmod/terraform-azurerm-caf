@@ -43,4 +43,11 @@ resource "azurerm_virtual_network_gateway_connection" "vngw_connection" {
       sa_lifetime      = try(ipsec_policy.value.sa_lifetime, null) #Must be at least 300 seconds. Defaults to 27000 seconds.
     }
   }
+
+  timeouts {
+    create = "60m"
+    delete = "60m"
+  }
+
+
 }

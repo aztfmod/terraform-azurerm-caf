@@ -22,6 +22,10 @@ variable idle_timeout_in_minutes {
 variable domain_name_label {
   default = null
 }
+# if set to true, automatically generate a domain name label with the name
+variable generate_domain_name_label {
+  default = false
+}
 variable reverse_fqdn {
   default = null
 }
