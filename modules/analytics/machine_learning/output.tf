@@ -9,3 +9,7 @@ output identity {
   value       = azurerm_machine_learning_workspace.ws.identity
   
 }
+
+output rbac_id {
+  value = azurerm_machine_learning_workspace.ws.identity[0].principal_id
+}

@@ -2,6 +2,13 @@ locals {
 
   prefix = lookup(var.global_settings, "prefix", null) == null ? random_string.prefix.result : var.global_settings.prefix
 
+  dynamic_app_settings_combined_objects = {
+      app_config                  = local.combined_objects_app_config
+      keyvaults                   = local.combined_objects_keyvaults
+      machine_learning_workspaces = local.combined_objects_machine_learning
+      managed_identities          = local.combined_objects_managed_identities
+  }
+
   global_settings = {
     prefix             = local.prefix
     prefix_with_hyphen = local.prefix == "" ? "" : "${local.prefix}-"
