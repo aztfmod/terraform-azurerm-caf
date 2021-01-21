@@ -11,7 +11,7 @@ terraform apply \
   -var-file ../aks.tfvars \
   -var-file ../configuration.tfvars \
   -var-file ../networking.tfvars \
-  -var-file ../dianostics.tfvars \
+  -var-file ../diagnostics.tfvars \
   -var tags='{testing_job_id="${1}"}' \
   -var var_folder_path=${current_folder} \
   -input=false \
@@ -22,7 +22,7 @@ terraform destroy \
   -var-file ../aks.tfvars \
   -var-file ../configuration.tfvars \
   -var-file ../networking.tfvars \
-  -var-file ../dianostics.tfvars \
+  -var-file ../diagnostics.tfvars \
   -var tags='{testing_job_id="${1}"}' \
   -var var_folder_path=${current_folder} \
   -input=false \
