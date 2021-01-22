@@ -2,6 +2,13 @@ locals {
 
   prefix = lookup(var.global_settings, "prefix", null) == null ? random_string.prefix.result : var.global_settings.prefix
 
+  dynamic_app_settings_combined_objects = {
+      app_config                  = local.combined_objects_app_config
+      keyvaults                   = local.combined_objects_keyvaults
+      machine_learning_workspaces = local.combined_objects_machine_learning
+      managed_identities          = local.combined_objects_managed_identities
+  }
+
   global_settings = {
     prefix             = local.prefix
     prefix_with_hyphen = local.prefix == "" ? "" : "${local.prefix}-"
@@ -63,6 +70,7 @@ locals {
 
   database = {
     azurerm_redis_caches              = try(var.database.azurerm_redis_caches, {})
+    app_config                        = try(var.database.app_config, {})
     cosmos_dbs                        = try(var.database.cosmos_dbs, {})
     databricks_workspaces             = try(var.database.databricks_workspaces, {})
     machine_learning_workspaces       = try(var.database.machine_learning_workspaces, {})

@@ -6,7 +6,8 @@ module "function_apps" {
 
   name                        = each.value.name
   client_config               = local.client_config
-  managed_identities          = local.combined_objects_managed_identities
+  dynamic_app_settings        = try(each.value.dynamic_app_settings, {})
+  combined_objects            = local.dynamic_app_settings_combined_objects
   resource_group_name         = module.resource_groups[each.value.resource_group_key].name
   location                    = lookup(each.value, "region", null) == null ? module.resource_groups[each.value.resource_group_key].location : local.global_settings.regions[each.value.region]
   app_service_plan_id         = try(each.value.lz_key, null) == null ? local.combined_objects_app_service_plans[local.client_config.landingzone_key][each.value.app_service_plan_key].id : local.combined_objects_app_service_plans[each.value.lz_key][each.value.app_service_plan_key].id
