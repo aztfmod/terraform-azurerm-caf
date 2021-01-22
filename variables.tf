@@ -234,6 +234,10 @@ variable cosmos_dbs {
   default = {}
 }
 
+variable app_config {
+  default = {}
+}
+
 variable local_network_gateways {
   default = {}
 }

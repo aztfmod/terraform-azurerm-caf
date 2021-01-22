@@ -1,6 +1,7 @@
 locals {
   # CAF landing zones can retrieve remote objects from a different landing zone and the
   # combined_objects will merge it with the local objects
+  combined_objects_app_config                 = merge(tomap({ (local.client_config.landingzone_key) = module.app_config }), try(var.remote_objects.app_config, {}))
   combined_objects_aks_clusters               = merge(tomap({ (local.client_config.landingzone_key) = module.aks_clusters }), try(var.remote_objects.aks_clusters, {}))
   combined_objects_app_service_environments   = merge(tomap({ (local.client_config.landingzone_key) = module.app_service_environments }), try(var.remote_objects.app_service_environments, {}))
   combined_objects_app_service_plans          = merge(tomap({ (local.client_config.landingzone_key) = module.app_service_plans }), try(var.remote_objects.app_service_plans, {}))
@@ -14,6 +15,7 @@ locals {
   combined_objects_event_hub_namespaces       = merge(tomap({ (local.client_config.landingzone_key) = module.event_hub_namespaces }), try(var.remote_objects.event_hub_namespaces, {}))
   combined_objects_front_door_waf_policies    = merge(tomap({ (local.client_config.landingzone_key) = module.front_door_waf_policies }), try(var.remote_objects.front_door_waf_policies, {}))
   combined_objects_keyvaults                  = merge(tomap({ (local.client_config.landingzone_key) = module.keyvaults }), try(var.remote_objects.keyvaults, {}))
+  combined_objects_machine_learning           = merge(tomap({ (local.client_config.landingzone_key) = module.machine_learning_workspaces }), try(var.remote_objects.machine_learning_workspaces, {}))
   combined_objects_managed_identities         = merge(tomap({ (local.client_config.landingzone_key) = module.managed_identities }), try(var.remote_objects.managed_identities, {}))
   combined_objects_mssql_databases            = merge(tomap({ (local.client_config.landingzone_key) = module.mssql_databases }), try(var.remote_objects.mssql_databases, {}))
   combined_objects_mssql_elastic_pools        = merge(tomap({ (local.client_config.landingzone_key) = module.mssql_elastic_pools }), try(var.remote_objects.mssql_elastic_pools, {}))
