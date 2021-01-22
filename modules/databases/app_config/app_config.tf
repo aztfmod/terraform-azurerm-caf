@@ -16,6 +16,7 @@ resource "azurerm_app_configuration" "config" {
   resource_group_name = var.resource_group_name
   sku                 = try(var.settings.sku_name, "standard")
   location            = var.location
+  tags                = local.tags
 
   dynamic "identity" {
     for_each = lookup(var.settings, "identity", {}) == {} ? [] : [1]

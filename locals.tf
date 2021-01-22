@@ -9,6 +9,16 @@ locals {
       managed_identities          = local.combined_objects_managed_identities
   }
 
+  dynamic_app_config_combined_objects = {
+      keyvaults                    = local.combined_objects_keyvaults
+      machine_learning_workspaces  = local.combined_objects_machine_learning
+      azure_container_registries   = local.combined_objects_azure_container_registries
+      logic_app_workflow           = local.combined_objects_logic_app_workflow
+      resource_groups              = local.combined_objects_resource_groups
+      client_config                = tomap({ (local.client_config.landingzone_key) = {config = local.client_config} })
+      azurerm_application_insights = tomap({ (local.client_config.landingzone_key) = module.azurerm_application_insights })
+  }
+
   global_settings = {
     prefix             = local.prefix
     prefix_with_hyphen = local.prefix == "" ? "" : "${local.prefix}-"
