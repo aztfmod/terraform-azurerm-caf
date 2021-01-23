@@ -29,13 +29,9 @@ locals {
   }
 
   security = {
-<<<<<<< HEAD
-    keyvault_certificates = try(var.security.keyvault_certificates, {})
-    keyvault_keys         = try(var.security.keyvault_keys, {})
-=======
     keyvault_certificates         = try(var.security.keyvault_certificates, {})
     keyvault_certificate_requests = try(var.security.keyvault_certificate_requests, {})
->>>>>>> master
+    keyvault_keys                 = try(var.security.keyvault_keys, {})
   }
 
   networking = {
