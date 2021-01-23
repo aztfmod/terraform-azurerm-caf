@@ -6,7 +6,7 @@ locals {
     diagnostic_storage_accounts     = try(var.diagnostics.diagnostic_storage_accounts, {})
   }
 
-  # Remote amd locally created diagnostics  objects 
+  # Remote amd locally created diagnostics  objects
   combined_diagnostics = {
     diagnostics_definition   = try(var.diagnostics.diagnostics_definition, {})
     diagnostics_destinations = try(var.diagnostics.diagnostics_destinations, {})
@@ -19,7 +19,7 @@ locals {
 # Output diagnostics
 output diagnostics {
   value     = local.combined_diagnostics
-  sensitive = true
+  
 }
 
 module diagnostic_storage_accounts {

@@ -1,7 +1,7 @@
 
 output mssql_databases {
   value     = module.mssql_databases
-  sensitive = true
+  
 }
 
 module "mssql_databases" {
