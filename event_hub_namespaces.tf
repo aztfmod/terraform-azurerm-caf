@@ -21,7 +21,7 @@ module event_hub_namespaces_diagnostics {
 }
 
 #
-# Event_hub_namespace is one of the three diagnostics destination objects and for that reason requires the 
+# Event_hub_namespace is one of the three diagnostics destination objects and for that reason requires the
 # private endpoint to be done at the root module to prevent circular references
 #
 
@@ -38,6 +38,8 @@ module event_hub_namespaces_private_endpoints {
   settings            = each.value.settings
   global_settings     = local.global_settings
   base_tags           = each.value.base_tags
+  private_dns         = local.combined_objects_private_dns
+  client_config       = local.client_config
 }
 
 locals {
