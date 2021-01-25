@@ -1,4 +1,5 @@
 resource "azurerm_netapp_pool" "pool" {
+  # The capacity pool name must be unique for each NetApp account
   name                = var.settings.name
   account_name        = var.account_name
   resource_group_name = var.resource_group_name

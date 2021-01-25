@@ -1,4 +1,5 @@
 resource "azurerm_netapp_volume" "volume" {
+  # A volume name must be unique within each capacity pool. It must be at least three characters long. You can use any alphanumeric characters.
   name                = var.settings.name
   resource_group_name = var.resource_group_name
   location            = var.location
