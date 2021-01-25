@@ -31,6 +31,7 @@ locals {
   security = {
     keyvault_certificates         = try(var.security.keyvault_certificates, {})
     keyvault_certificate_requests = try(var.security.keyvault_certificate_requests, {})
+    keyvault_keys                 = try(var.security.keyvault_keys, {})
   }
 
   networking = {
@@ -62,26 +63,29 @@ locals {
   }
 
   database = {
-    azurerm_redis_caches              = try(var.database.azurerm_redis_caches, {})
-    cosmos_dbs                        = try(var.database.cosmos_dbs, {})
-    databricks_workspaces             = try(var.database.databricks_workspaces, {})
-    machine_learning_workspaces       = try(var.database.machine_learning_workspaces, {})
-    mariadb_servers                   = try(var.database.mariadb_servers, {})
-    mariadb_databases                 = try(var.database.mariadb_databases, {})
-    mssql_servers                     = try(var.database.mssql_servers, {})
-    mssql_managed_instances           = try(var.database.mssql_managed_instances, {})
-    mssql_managed_instances_secondary = try(var.database.mssql_managed_instances_secondary, {})
-    mssql_databases                   = try(var.database.mssql_databases, {})
-    mssql_managed_databases           = try(var.database.mssql_managed_databases, {})
-    mssql_managed_databases_restore   = try(var.database.mssql_managed_databases_restore, {})
-    mssql_elastic_pools               = try(var.database.mssql_elastic_pools, {})
-    mssql_failover_groups             = try(var.database.mssql_failover_groups, {})
-    mssql_mi_failover_groups          = try(var.database.mssql_mi_failover_groups, {})
-    mssql_mi_administrators           = try(var.database.mssql_mi_administrators, {})
+    mssql_servers                      = try(var.database.mssql_servers, {})
+    mssql_managed_instances            = try(var.database.mssql_managed_instances, {})
+    mssql_managed_instances_secondary  = try(var.database.mssql_managed_instances_secondary, {})
+    mssql_databases                    = try(var.database.mssql_databases, {})
+    mssql_managed_databases            = try(var.database.mssql_managed_databases, {})
+    mssql_managed_databases_restore    = try(var.database.mssql_managed_databases_restore, {})
+    mssql_managed_databases_backup_ltr = try(var.database.mssql_managed_databases_backup_ltr, {})
+    mssql_elastic_pools                = try(var.database.mssql_elastic_pools, {})
+    mssql_failover_groups              = try(var.database.mssql_failover_groups, {})
+    mssql_mi_failover_groups           = try(var.database.mssql_mi_failover_groups, {})
+    mssql_mi_administrators            = try(var.database.mssql_mi_administrators, {})
+    mssql_mi_tdes                      = try(var.database.mssql_mi_tdes, {})
+    mssql_mi_secondary_tdes            = try(var.database.mssql_mi_secondary_tdes, {})
+    azurerm_redis_caches               = try(var.database.azurerm_redis_caches, {})
+    synapse_workspaces                 = try(var.database.synapse_workspaces, {})
+    databricks_workspaces              = try(var.database.databricks_workspaces, {})
+    machine_learning_workspaces        = try(var.database.machine_learning_workspaces, {})
+    cosmos_dbs                         = try(var.database.cosmos_dbs, {})
+    mariadb_servers                    = try(var.database.mariadb_servers, {})
+    mariadb_databases                  = try(var.database.mariadb_databases, {})
     mysql_servers                     = try(var.database.mysql_servers, {})
     mysql_databases                   = try(var.database.mysql_databases, {})
     postgresql_servers                = try(var.database.postgresql_servers, {})
-    synapse_workspaces                = try(var.database.synapse_workspaces, {})
   }
 
   client_config = {
