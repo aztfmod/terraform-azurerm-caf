@@ -22,7 +22,7 @@ module container_registry {
 }
 
 output azure_container_registries {
-  value     = module.container_registry
-  
+  value = module.container_registry
+
 }
 

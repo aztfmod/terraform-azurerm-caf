@@ -24,6 +24,6 @@ module "app_service_environments" {
 
 
 output "app_service_environments" {
-  value     = module.app_service_environments
-  
+  value = module.app_service_environments
+
 }

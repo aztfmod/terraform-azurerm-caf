@@ -18,6 +18,6 @@ module recovery_vaults {
 }
 
 output recovery_vaults {
-  value     = module.recovery_vaults
-  
+  value = module.recovery_vaults
+
 }

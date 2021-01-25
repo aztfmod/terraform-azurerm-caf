@@ -32,5 +32,5 @@ output "soa_record" {
 }
 
 output "records" {
-  value       = module.records
+  value = module.records
 }

@@ -1,6 +1,6 @@
 output id {
-  value     = azurerm_application_gateway.agw.id
-  
+  value = azurerm_application_gateway.agw.id
+
 }
 
 output private_ip_address {
