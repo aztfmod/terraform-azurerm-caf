@@ -15,8 +15,35 @@ resource_groups = {
 dns_zones = {
   dns_zone1 = {
     name               = "" // Set as empty for CI. this will creation a random_domain_name.com
+    resource_group_key = "rg1"
+
+    # You can create dns records using the following nested structure
+    records = {
+      cname = {
+        www_com = {
+          name   = "www"
+          record = "www.bing.com"
+        }
+        ftp_co_uk = {
+          name   = "ftp"
+          record = "www.bing.co.uk"
+        }
+      }
+    }
+  }
+  dns_zone2 = {
+    name               = "" // Set as empty for CI. this will creation a random_domain_name.com
     region             = "region1"
     resource_group_key = "rg1"
+
+    records = {
+      cname = {
+        www_co_uk = {
+          name   = "www"
+          record = "www.bing.co.uk"
+        }
+      }
+    }
   }
 }
 
