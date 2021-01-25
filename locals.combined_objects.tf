@@ -11,7 +11,7 @@ locals {
   combined_objects_azure_container_registries    = merge(map(local.client_config.landingzone_key, module.container_registry), try(var.remote_objects.container_registry, {}))
   combined_objects_azurerm_firewalls             = merge(map(local.client_config.landingzone_key, module.azurerm_firewalls), try(var.remote_objects.azurerm_firewalls, {}))
   combined_objects_availability_sets             = merge(map(local.client_config.landingzone_key, module.availability_sets), try(var.remote_objects.availability_sets, {}))
-  combined_object_dns_zones                      = merge(map(local.client_config.landingzone_key, module.dns_zones), try(var.remote_objects.dns_zones, {}))
+  combined_objects_dns_zones                     = merge(map(local.client_config.landingzone_key, module.dns_zones), try(var.remote_objects.dns_zones, {}))
   combined_objects_event_hub_namespaces          = merge(map(local.client_config.landingzone_key, module.event_hub_namespaces), try(var.remote_objects.event_hub_namespaces, {}))
   combined_objects_keyvaults                     = merge(map(local.client_config.landingzone_key, module.keyvaults), try(var.remote_objects.keyvaults, {}))
   combined_objects_keyvault_certificate_requests = merge(map(local.client_config.landingzone_key, module.keyvault_certificate_requests), try(var.remote_objects.keyvault_certificate_requests, {}))

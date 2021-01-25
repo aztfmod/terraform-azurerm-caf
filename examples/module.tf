@@ -54,6 +54,7 @@ module "caf" {
     front_doors                          = var.front_doors
     front_door_waf_policies              = var.front_door_waf_policies
     dns_zones                            = var.dns_zones
+    dns_zone_records                     = var.dns_zone_records
     private_endpoints                    = var.private_endpoints
     local_network_gateways               = var.local_network_gateways
   }

@@ -10,6 +10,12 @@ output "name" {
   value = regex("(.+).", azurerm_dns_zone.dns_zone.soa_record[0].fqdn)[0]
 }
 
+output resource_group_name {
+  value       = var.resource_group_name
+  description = "Resource group name of the dns_zone"
+}
+
+
 output "max_number_of_record_sets" {
   description = "Maximum number of Records in the zone."
   value       = azurerm_dns_zone.dns_zone.max_number_of_record_sets

@@ -11,6 +11,10 @@ output dns_zones {
   value = module.caf.dns_zones
 }
 
+output dns_zone_records {
+  value = module.caf.dns_zone_records
+}
+
 output keyvault_certificates {
   value = module.caf.keyvault_certificates
 }
