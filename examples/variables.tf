@@ -245,6 +245,9 @@ variable front_door_waf_policies {
 variable dns_zones {
   default = {}
 }
+variable dns_zone_records {
+  default = {}
+}
 
 variable private_endpoints {
   default = {}

@@ -24,3 +24,7 @@ output "soa_record" {
   description = "The SOA record."
   value       = azurerm_dns_zone.dns_zone.soa_record
 }
+
+output "records" {
+  value       = module.records
+}

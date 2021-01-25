@@ -1,19 +1,23 @@
 resource "random_string" "domain_zone_name" {
-  count   = var.name == "" ? 1 : 0
   length  = 16
   special = false
   upper   = false
 }
 
 locals {
-  dns_domain_name = var.name == "" ? format("%s.com", random_string.domain_zone_name[0].result) : var.name
+  dns_domain_name = var.name == "" ? format("%s.com", random_string.domain_zone_name.result) : var.name
 }
 
 resource "azurerm_resource_group_template_deployment" "domain" {
   name                = local.dns_domain_name
   resource_group_name = var.resource_group_name
-
-  template_content = templatefile(
+  lifecycle {
+    ignore_changes = [
+      template_content,
+      name
+    ]
+  }
+  template_content    = templatefile(
     local.arm_filename,
     {
       "name" = local.dns_domain_name
