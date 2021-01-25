@@ -40,8 +40,8 @@ module "caf" {
     proximity_placement_groups = var.proximity_placement_groups
   }
   networking = {
-    domain_name_registrations            = var.domain_name_registrations
-    dns_zone_records                     = var.dns_zone_records
+    domain_name_registrations                               = var.domain_name_registrations
+    dns_zone_records                                        = var.dns_zone_records
     vnets                                                   = var.vnets
     network_security_group_definition                       = var.network_security_group_definition
     public_ip_addresses                                     = var.public_ip_addresses

@@ -9,6 +9,6 @@ module mongo_databases {
 }
 
 output mongo_databases {
-  value     = module.mongo_databases
-  
+  value = module.mongo_databases
+
 }

@@ -17,7 +17,7 @@ resource "azurerm_resource_group_template_deployment" "domain" {
       name
     ]
   }
-  template_content    = templatefile(
+  template_content = templatefile(
     local.arm_filename,
     {
       "name" = local.dns_domain_name
