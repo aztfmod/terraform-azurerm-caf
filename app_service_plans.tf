@@ -16,5 +16,5 @@ module "app_service_plans" {
 
 output app_service_plans {
   value     = module.app_service_plans
-  sensitive = true
+  
 }

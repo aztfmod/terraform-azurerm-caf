@@ -54,7 +54,6 @@ domain_name_registrations = {
   #
   random_domain = {
     name               = "" // Set as empty for CI. this will creation a random_domain_name.com
-    region             = "region1"
     resource_group_key = "rg1"
 
     auto_renew    = true

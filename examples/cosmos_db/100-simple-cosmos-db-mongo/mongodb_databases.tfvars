@@ -35,7 +35,7 @@ cosmos_dbs = {
         failover_priority = 0
       }
 
-      # failover location
+      # failover location; note that Serverless accounts cannot currently have multiple regions
       failover_geo_location = {
         region            = "region2"
         zone_redundant    = false
@@ -69,8 +69,7 @@ cosmos_dbs = {
             default_ttl_seconds = 0
             indexes = {
               index_1 = {
-                keys   = ["user_id", "user_address"]
-                unique = true
+                keys = ["user_id"]
               }
               index_2 = {
                 keys   = ["_id"]

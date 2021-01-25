@@ -1,7 +1,5 @@
 variable resource_group_name {}
-variable location {}
 variable settings {}
-variable global_settings {}
 variable base_tags {}
 variable dns_zone_id {
   description = "Resource ID of the Azure DNS global zone."

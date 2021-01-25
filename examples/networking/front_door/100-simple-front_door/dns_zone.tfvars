@@ -20,4 +20,4 @@ dns_zones = {
       auto_renew   = true
     }
   }
-}  
+}

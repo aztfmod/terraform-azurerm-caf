@@ -4,6 +4,13 @@
 #
 # rover -lz /tf/caf/solutions/ -var-file /tf/caf/solutions/examples/redis_cache/redis-std.tfvars -a apply
 
+global_settings = {
+  default_region = "region1"
+  regions = {
+    region1 = "southeastasia"
+  }
+}
+
 resource_groups = {
   redis_region1 = {
     name   = "redis-std-rg"

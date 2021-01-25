@@ -31,7 +31,9 @@ variable link_nsg_to_subnet {
   default = true
 }
 
-variable global_settings {}
+variable global_settings {
+  description = "Global settings object (see module README.md)"
+}
 
 variable network_watchers {
   default = {}

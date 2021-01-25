@@ -1,0 +1,44 @@
+# Azure Route Table
+
+This submodule is part of Cloud Adoption Framework landing zones for Azure on Terraform.
+
+You can instantiate this submodule directly using the following parameters:
+
+```
+module "caf_route_tables" {
+  source  = "aztfmod/caf/azurerm//modules/networking/route_tables"
+  version = "4.21.2"
+  # insert the 6 required variables here
+}
+```
+
+<!-- BEGINNING OF PRE-COMMIT-TERRAFORM DOCS HOOK -->
+## Requirements
+
+No requirements.
+
+## Providers
+
+| Name | Version |
+|------|---------|
+| azurerm | n/a |
+
+## Inputs
+
+| Name | Description | Type | Default | Required |
+|------|-------------|------|---------|:--------:|
+| base\_tags | Base tags for the resource to be inherited from the resource group. | `map` | n/a | yes |
+| disable\_bgp\_route\_propagation | n/a | `any` | n/a | yes |
+| location | (Required) Specifies the supported Azure location where to create the resource. Changing this forces a new resource to be created. | `string` | n/a | yes |
+| name | n/a | `any` | n/a | yes |
+| resource\_group\_name | (Required) The name of the resource group where to create the resource. | `string` | n/a | yes |
+| tags | (Required) Map of tags to be applied to the resource | `map` | n/a | yes |
+
+## Outputs
+
+| Name | Description |
+|------|-------------|
+| id | n/a |
+| name | n/a |
+
+<!-- END OF PRE-COMMIT-TERRAFORM DOCS HOOK -->
