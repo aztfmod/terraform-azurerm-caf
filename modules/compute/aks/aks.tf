@@ -110,7 +110,7 @@ resource "azurerm_kubernetes_cluster" "aks" {
 
             content {
               client_id                 = oms_agent_identity.value.client_id
-              object_id                 = oms_agent_identity.valueclient_id
+              object_id                 = oms_agent_identity.value.object_id
               user_assigned_identity_id = oms_agent_identity.value.user_assigned_identity_id
             }
           }
