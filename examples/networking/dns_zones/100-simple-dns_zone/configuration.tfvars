@@ -156,31 +156,31 @@ dns_zone_records = {
   #
   # Example to reference an existing dns_zone in the target subscription
   #
-  record2 = {
-    dns_zone = {
-      name                = "sfjcnwejcwejvwe.com"
-      resource_group_name = "example-resources"
-    }
+  # record2 = {
+  #   dns_zone = {
+  #     name                = "sfjcnwejcwejvwe.com"
+  #     resource_group_name = "example-resources"
+  #   }
 
-    records = {
+  #   records = {
 
-      cname = {
-        www_fr = {
-          name   = "www-fr"
-          record = "www.bing.fr"
-        }
-      } //cname
+  #     cname = {
+  #       www_fr = {
+  #         name   = "www-fr"
+  #         record = "www.bing.fr"
+  #       }
+  #     } //cname
 
-      a = {
-        dns = {
-          name = "dns"
-          records = [
-            "10.10.1.1", "172.10.2.2"
-          ]
-        }
-      } //a
-    }   //record2
-  }
+  #     a = {
+  #       dns = {
+  #         name = "dns"
+  #         records = [
+  #           "10.10.1.1", "172.10.2.2"
+  #         ]
+  #       }
+  #     } //a
+  #   }   //record2
+  # }
 }
 
 # IAM
