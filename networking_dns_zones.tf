@@ -13,6 +13,9 @@ output dns_zones {
   value = module.dns_zones
 }
 
+#
+# Create records on remote DNS zones
+#
 module dns_zone_records {
   source     = "./modules/networking/dns_zone/records"
   for_each   = try(local.networking.dns_zone_records, {})
