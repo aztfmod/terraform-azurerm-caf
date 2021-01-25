@@ -15,7 +15,7 @@ resource "azurerm_dns_aaaa_record" "aaaa" {
 resource "azurerm_dns_aaaa_record" "aaaa_dns_zone_record" {
   for_each = {
     for key, value in try(var.records.aaaa, {}) : key => value
-    if try(value.resource_id, null) != null
+    if try(value.resource_id.dns_zone_record, null) != null
   }
 
   name                = each.value.name
