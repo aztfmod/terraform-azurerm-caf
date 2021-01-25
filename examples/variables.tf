@@ -107,6 +107,12 @@ variable mssql_managed_databases_restore {
 variable mssql_elastic_pools {
   default = {}
 }
+variable mariadb_servers {
+  default = {}
+}
+variable mariadb_databases {
+  default = {}
+}
 variable mssql_failover_groups {
   default = {}
 }
@@ -194,6 +200,12 @@ variable application_gateways {
 variable application_gateway_applications {
   default = {}
 }
+variable mysql_servers {
+  default = {}
+}
+variable postgresql_servers {
+  default = {}
+}
 variable cosmos_db {
   default = {}
 }
@@ -252,11 +264,37 @@ variable dns_zone_records {
 variable private_endpoints {
   default = {}
 }
-
 variable local_network_gateways {
   default = {}
 }
 
 variable domain_name_registrations {
+  default = {}
+}
+
+variable azuread_apps {
+  default = {}
+  type    = map
+}
+variable azuread_users {
+  default = {}
+  type    = map
+}
+variable custom_role_definitions {
+  default = {}
+}
+variable azurerm_firewalls {
+  default = {}
+}
+variable azurerm_firewall_network_rule_collection_definition {
+  default = {}
+}
+variable azurerm_firewall_application_rule_collection_definition {
+  default = {}
+}
+variable azurerm_firewall_nat_rule_collection_definition {
+  default = {}
+}
+variable automations {
   default = {}
 }

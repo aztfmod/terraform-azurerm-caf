@@ -1,3 +1,10 @@
+global_settings = {
+  default_region = "region1"
+  regions = {
+    region1 = "southeastasia"
+  }
+}
+
 resource_groups = {
   # Default to var.global_settings.default_region. You can overwrite it by setting the attribute region = "region2"
   evh_examples = {

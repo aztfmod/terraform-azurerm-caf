@@ -1,9 +1,22 @@
+global_settings = {
+  default_region = "region1"
+  regions = {
+    region1 = "southeastasia"
+  }
+}
+
+#
+# Resource groups to be created
+#
 resource_groups = {
   dap_azure_ml_re1 = {
     name = "azure-ml"
   }
 }
 
+#
+# Machine learning workspace settings
+#
 machine_learning_workspaces = {
   ml_workspace_re1 = {
     name                     = "amlwrkspc"
@@ -15,6 +28,9 @@ machine_learning_workspaces = {
   }
 }
 
+#
+# App insights settings
+#
 azurerm_application_insights = {
   ml_app_insight = {
     name               = "ml-app-insight"
@@ -23,6 +39,9 @@ azurerm_application_insights = {
   }
 }
 
+#
+# Storage account settings
+#
 storage_accounts = {
   amlstorage_re1 = {
     name                     = "amlwrkspcstg"
@@ -34,6 +53,9 @@ storage_accounts = {
   }
 }
 
+#
+# Key Vault settings
+#
 keyvaults = {
   aml_secrets = {
     name                = "amlsecrets"

@@ -53,7 +53,9 @@ variable front_end_count {
   default     = "2"
 }
 
-variable global_settings {}
+variable global_settings {
+  description = "Global settings object (see module README.md)"
+}
 
 variable private_dns {
   default = {}
@@ -61,4 +63,7 @@ variable private_dns {
 
 variable settings {}
 
-variable base_tags {}
+variable base_tags {
+  description = "Base tags for the resource to be inherited from the resource group."
+  type        = map
+}
