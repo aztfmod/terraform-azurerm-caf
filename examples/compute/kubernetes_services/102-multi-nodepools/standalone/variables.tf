@@ -23,6 +23,14 @@ variable azure_container_registries {
   default = {}
 }
 
+variable diagnostic_log_analytics{
+  default = {}
+}
+
+variable virtual_machines {
+  default = {}
+}
+
 variable network_security_group_definition {
   default = {}
 }
