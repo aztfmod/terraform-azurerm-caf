@@ -14,7 +14,7 @@ module "front_doors" {
 }
 
 output front_doors {
-  value       = module.front_doors
+  value = module.front_doors
 }
 
 

@@ -86,9 +86,9 @@ locals {
     cosmos_dbs                         = try(var.database.cosmos_dbs, {})
     mariadb_servers                    = try(var.database.mariadb_servers, {})
     mariadb_databases                  = try(var.database.mariadb_databases, {})
-    mysql_servers                     = try(var.database.mysql_servers, {})
-    mysql_databases                   = try(var.database.mysql_databases, {})
-    postgresql_servers                = try(var.database.postgresql_servers, {})
+    mysql_servers                      = try(var.database.mysql_servers, {})
+    mysql_databases                    = try(var.database.mysql_databases, {})
+    postgresql_servers                 = try(var.database.postgresql_servers, {})
   }
 
   client_config = {

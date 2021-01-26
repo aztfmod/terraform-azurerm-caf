@@ -88,8 +88,8 @@ module "caf" {
     machine_learning_workspaces        = var.machine_learning_workspaces
     cosmos_dbs                         = var.cosmos_dbs
     mariadb_servers                    = var.mariadb_servers
-    mysql_servers                     = var.mysql_servers
-    postgresql_servers                = var.postgresql_servers
+    mysql_servers                      = var.mysql_servers
+    postgresql_servers                 = var.postgresql_servers
   }
   shared_services = {
     monitoring      = var.monitoring
@@ -98,8 +98,8 @@ module "caf" {
   }
 
   security = {
-    dynamic_keyvault_secrets = var.dynamic_keyvault_secrets
-    keyvault_keys            = var.keyvault_keys
+    dynamic_keyvault_secrets      = var.dynamic_keyvault_secrets
+    keyvault_keys                 = var.keyvault_keys
     keyvault_certificate_requests = var.keyvault_certificate_requests
     dynamic_keyvault_secrets      = var.dynamic_keyvault_secrets
     keyvault_certificate_requests = var.keyvault_certificate_requests
