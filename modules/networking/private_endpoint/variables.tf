@@ -25,3 +25,9 @@ variable base_tags {
 variable subresource_names {
   default = []
 }
+variable client_config {
+  default = {}
+}
+variable private_dns {
+  default = {}
+}

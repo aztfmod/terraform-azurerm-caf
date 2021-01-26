@@ -24,6 +24,6 @@ data "azurerm_key_vault_secret" "certificate_issuer_password" {
 }
 
 output keyvault_certificate_issuers {
-  value     = module.keyvault_certificate_issuers
-  sensitive = true
+  value = module.keyvault_certificate_issuers
+
 }

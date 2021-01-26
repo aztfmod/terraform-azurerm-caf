@@ -29,7 +29,7 @@ resource "null_resource" "destroy_manageddb" {
   provisioner "local-exec" {
     command     = format("%s/scripts/destroy_resource.sh", path.module)
     when        = destroy
-    interpreter = ["/bin/sh"]
+    interpreter = ["/bin/bash"]
     on_failure  = fail
 
     environment = {

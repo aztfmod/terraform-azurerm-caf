@@ -1,3 +1,16 @@
+# Requires:
+# - caf_launchpad scenario 200+
+# - caf_foundations
+# - caf_neworking with 200-multi-region-hub
+# - 200-basic-ml networking_spoke
+
+global_settings = {
+  default_region = "region1"
+  regions = {
+    region1 = "southeastasia"
+  }
+}
+
 #
 # Resource groups to be created
 #

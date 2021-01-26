@@ -22,6 +22,7 @@ output dns_servers {
 output resource_group_name {
   value       = azurerm_virtual_network.vnet.resource_group_name
   description = "Virutal Network resource_group_name"
+  
 }
 
 output location {
@@ -32,4 +33,5 @@ output location {
 output "subnets" {
   description = "Returns all the subnets objects in the Virtual Network. As a map of keys, ID"
   value       = merge(module.special_subnets, module.subnets)
+  
 }

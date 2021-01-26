@@ -35,6 +35,7 @@ No requirements.
 | global\_settings | Global settings object (see module README.md) | `any` | n/a | yes |
 | identity | n/a | `any` | `null` | no |
 | location | (Required) Specifies the supported Azure location where to create the resource. Changing this forces a new resource to be created. | `string` | n/a | yes |
+| private\_dns | n/a | `map` | `{}` | no |
 | private\_endpoints | n/a | `any` | n/a | yes |
 | resource\_group\_name | (Required) The name of the resource group where to create the resource. | `string` | n/a | yes |
 | resource\_groups | n/a | `any` | n/a | yes |
