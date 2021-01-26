@@ -114,6 +114,7 @@ jobs:
             "mysql_server/101-vnet-rule-mysql",
             "mysql_server/102-private-endpoint-mysql",
             "mysql_server/103-private-endpoint-with-fw-rule-mysql",
+            "netapp/101-nfs",
             "networking/dns_zones/100-simple-dns_zone",
             "networking/front_door/100-simple-front_door",
             "networking/private_dns/100-private-dns-vnet-links",
