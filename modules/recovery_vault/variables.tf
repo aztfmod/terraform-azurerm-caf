@@ -24,3 +24,6 @@ variable resource_groups {}
 variable identity {
   default = null
 }
+variable private_dns {
+  default = {}
+}

@@ -10,7 +10,7 @@ output "dns_zone_id" {
 
 output "dns_zone_object" {
   description = "DNS Zone resource object"
-  sensitive   = true
+  
   value       = azurerm_dns_zone.domain_zone
 }
 

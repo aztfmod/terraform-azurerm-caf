@@ -22,16 +22,28 @@ aks_clusters = {
       type = "SystemAssigned"
     }
 
-    kubernetes_version = "1.17.11"
+    kubernetes_version = "1.19.6"
     vnet_key           = "spoke_aks_re1"
 
-    network_policy = {
+    network_profile = {
       network_plugin    = "azure"
       load_balancer_sku = "Standard"
     }
 
-    enable_rbac = true
+    # enable_rbac = true
+    role_based_access_control = {
+      enabled = true
+      azure_active_directory = {
+        managed = true
+      }
+    }
 
+    addon_profile = {
+      oms_agent = {
+        enabled = true
+        log_analytics_key = "central_logs_region1"
+      }
+    }
     # admin_groups = {
     #   # ids = []
     #   # azuread_groups = {
@@ -55,7 +67,7 @@ aks_clusters = {
       max_pods              = 30
       node_count            = 1
       os_disk_size_gb       = 512
-      orchestrator_version  = "1.17.11"
+      orchestrator_version  = "1.19.6"
       tags = {
         "project" = "system services"
       }

@@ -27,3 +27,9 @@ variable azuread_apps {
 variable managed_identities {
   default = {}
 }
+variable mssql_managed_instances {
+  default = {}
+}
+variable mssql_managed_instances_secondary {
+  default = {}
+}
