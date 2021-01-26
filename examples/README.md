@@ -143,6 +143,7 @@ You can customize the examples execution by modifying the variables as follow:
 | keyvault\_access\_policies\_azuread\_apps | n/a | `map` | `{}` | no |
 | keyvault\_certificate\_issuers | n/a | `map` | `{}` | no |
 | keyvault\_certificate\_requests | n/a | `map` | `{}` | no |
+| keyvault\_keys | n/a | `map` | `{}` | no |
 | keyvaults | n/a | `map` | `{}` | no |
 | landingzone | n/a | `map` | <pre>{<br>  "backend_type": "azurerm",<br>  "global_settings_key": "launchpad",<br>  "key": "examples",<br>  "level": "level0",<br>  "tfstates": {<br>    "launchpad": {<br>      "level": "lower",<br>      "tfstate": "caf_launchpad.tfstate"<br>    }<br>  }<br>}</pre> | no |
 | local\_network\_gateways | n/a | `map` | `{}` | no |
@@ -161,13 +162,17 @@ You can customize the examples execution by modifying the variables as follow:
 | mssql\_elastic\_pools | n/a | `map` | `{}` | no |
 | mssql\_failover\_groups | n/a | `map` | `{}` | no |
 | mssql\_managed\_databases | n/a | `map` | `{}` | no |
+| mssql\_managed\_databases\_backup\_ltr | n/a | `map` | `{}` | no |
 | mssql\_managed\_databases\_restore | n/a | `map` | `{}` | no |
 | mssql\_managed\_instances | n/a | `map` | `{}` | no |
 | mssql\_managed\_instances\_secondary | n/a | `map` | `{}` | no |
 | mssql\_mi\_administrators | n/a | `map` | `{}` | no |
 | mssql\_mi\_failover\_groups | n/a | `map` | `{}` | no |
+| mssql\_mi\_secondary\_tdes | n/a | `map` | `{}` | no |
+| mssql\_mi\_tdes | n/a | `map` | `{}` | no |
 | mssql\_servers | n/a | `map` | `{}` | no |
 | mysql\_servers | n/a | `map` | `{}` | no |
+| netapp\_accounts | n/a | `map` | `{}` | no |
 | network\_security\_group\_definition | n/a | `any` | `null` | no |
 | network\_watchers | n/a | `map` | `{}` | no |
 | postgresql\_servers | n/a | `map` | `{}` | no |
@@ -202,6 +207,7 @@ You can customize the examples execution by modifying the variables as follow:
 | Name | Description |
 |------|-------------|
 | mssql\_managed\_instances | n/a |
+| mssql\_managed\_instances\_secondary | n/a |
 | virtual\_machines | n/a |
 
 <!-- END OF PRE-COMMIT-TERRAFORM DOCS HOOK -->
