@@ -37,6 +37,9 @@ locals {
     restorePointInTime = {
       value = try(var.settings.createMode, null) == "PointInTimeRestore" ? var.settings.restorePointInTime : ""
     }
+    longTermRetentionBackupResourceId = {
+      value = try(var.settings.longTermRetentionBackupResourceId, "")
+    }
     retentionDays = {
       value = try(var.settings.retentionDays, 7)
     }
