@@ -13,7 +13,7 @@ variable global_settings {
   description = "Global settings object (see module README.md)"
 }
 variable keyvault_id {
-  default = {}
+  default = null
 }
 variable keyvault_certificate_requests {
   default = {}
