@@ -11,7 +11,8 @@ terraform [plan | apply | destroy] \
   -var-file ../configuration.tfvars \
   -var-file ../keyvault.tfvars  \
   -var-file ../networking.tfvars  \
-  -var-file ../vm.tfvars
+  -var-file ../vm.tfvars \
+  -var-file ../diagnostics.tfvars
 
 ```
 
