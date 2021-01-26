@@ -40,7 +40,7 @@ resource "null_resource" "arm_template_vhub_firewall" {
   provisioner "local-exec" {
     command     = format("%s/scripts/destroy_resource.sh", path.module)
     when        = destroy
-    interpreter = ["/bin/sh"]
+    interpreter = ["/bin/bash"]
     on_failure  = continue
 
     environment = {
