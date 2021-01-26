@@ -111,8 +111,10 @@ front_doors = {
           #   # lz_key = ""
           # }
         }
-        front_door_waf_policy_key = "wp1"
-        # lz_key                    = ""
+        front_door_waf_policy = {
+          key = "wp1"
+          # lz_key                    = ""
+        }
       }
     }
 

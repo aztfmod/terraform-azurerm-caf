@@ -116,7 +116,7 @@ resource "azurerm_frontdoor" "frontdoor" {
       session_affinity_enabled                = frontend_endpoint.value.session_affinity_enabled
       session_affinity_ttl_seconds            = frontend_endpoint.value.session_affinity_ttl_seconds
       custom_https_provisioning_enabled       = try(frontend_endpoint.value.custom_https_provisioning_enabled, false)
-      web_application_firewall_policy_link_id = try(var.front_door_waf_policies[var.client_config.landingzone_key][frontend_endpoint.value.front_door_waf_policy_key].id, var.front_door_waf_policies[frontend_endpoint.value.lz_key][frontend_endpoint.value.front_door_waf_policy_key].id)
+      web_application_firewall_policy_link_id = try(frontend_endpoint.value.front_door_waf_policy.key, null) == null ? null : var.front_door_waf_policies[try(frontend_endpoint.value.front_door_waf_policy.lz_key, var.client_config.landingzone_key)][frontend_endpoint.value.front_door_waf_policy.key].id
 
       dynamic "custom_https_configuration" {
         for_each = try(frontend_endpoint.value.custom_https_provisioning_enabled, false) == true ? [frontend_endpoint.value.custom_https_configuration] : []
