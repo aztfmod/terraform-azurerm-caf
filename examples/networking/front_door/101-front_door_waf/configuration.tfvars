@@ -118,8 +118,10 @@ front_doors = {
           # azure_key_vault_certificate_secret_version = ""
           # lz_key                                     = ""
         }
-        web_application_firewall_policy_key = "wp1"
-        # lz_key                              = ""
+        front_door_waf_policy = {
+          key = "wp1"
+          # lz_key                              = ""
+        }
       }
     }
 
