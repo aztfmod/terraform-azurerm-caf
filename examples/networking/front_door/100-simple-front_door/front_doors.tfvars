@@ -100,14 +100,21 @@ front_doors = {
         custom_https_configuration = {
           certificate_source = "AzureKeyVault"
           #If certificate source is AzureKeyVault the below are required:
-          azure_key_vault_certificate_vault_id       = "/subscriptions/fed745fc-818a-4b9f-8338-22368e098c5c/resourceGroups/inos-rg-front-door-rg-guinc/providers/Microsoft.KeyVault/vaults/kv-certsecrets-ccmcj"
-          azure_key_vault_certificate_secret_name    = "test"
-          azure_key_vault_certificate_secret_version = "b672b38ce10245b8bd3ba75924c80d3d"
-          # Or if created from CAF module
-          # keyvault_certificate_key = ""
+          # azure_key_vault_certificate_vault_id       = "/subscriptions/[subscription_id]/resourceGroups/[resource_group_name]/providers/Microsoft.KeyVault/vaults/kv-certsecrets-ccmcj"
+          # azure_key_vault_certificate_secret_name    = "test"
+          # azure_key_vault_certificate_secret_version = "b672b38ce10245b8bd3ba75924c80d3d"
+          #
+          #### Or if created from CAF module
+          #
+          # certificate = {
+          #   key = "sales_application"
+          #   # lz_key = ""
+          # }
         }
-        front_door_waf_policy_key = "wp1"
-        lz_key                    = ""
+        front_door_waf_policy = {
+          key = "wp1"
+          # lz_key                    = ""
+        }
       }
     }
 

@@ -42,10 +42,19 @@ variable mssql_managed_databases {
 variable mssql_managed_databases_restore {
   default = {}
 }
+variable mssql_managed_databases_backup_ltr {
+  default = {}
+}
 variable mssql_mi_failover_groups {
   default = {}
 }
 variable mssql_mi_administrators {
+  default = {}
+}
+variable mssql_mi_tdes {
+  default = {}
+}
+variable mssql_mi_secondary_tdes {
   default = {}
 }
 variable azuread_groups {
