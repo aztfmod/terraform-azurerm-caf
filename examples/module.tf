@@ -74,7 +74,6 @@ module "caf" {
     mssql_managed_instances            = var.mssql_managed_instances
     mssql_managed_instances_secondary  = var.mssql_managed_instances_secondary
     mssql_databases                    = var.mssql_databases
-    mssql_managed_databases            = var.mssql_managed_databases
     mssql_managed_databases_restore    = var.mssql_managed_databases_restore
     mssql_managed_databases_backup_ltr = var.mssql_managed_databases_backup_ltr
     mssql_elastic_pools                = var.mssql_elastic_pools
@@ -100,8 +99,6 @@ module "caf" {
   security = {
     dynamic_keyvault_secrets      = var.dynamic_keyvault_secrets
     keyvault_keys                 = var.keyvault_keys
-    keyvault_certificate_requests = var.keyvault_certificate_requests
-    dynamic_keyvault_secrets      = var.dynamic_keyvault_secrets
     keyvault_certificate_requests = var.keyvault_certificate_requests
     keyvault_certificate_issuers  = var.keyvault_certificate_issuers
   }
