@@ -1,7 +1,7 @@
 You can test this module outside of a landingzone using
 
 ```bash
-cd /tf/caf/examples/eventhub_namespace/102-evh_with_auth_rules/standalone
+cd /tf/caf/examples/eventhub/102-namespace-and-evh-with-auth-rules/standalone
 
 terraform init
 
@@ -16,7 +16,7 @@ To test this deployment in the example landingzone. Make sure the launchpad has 
 
 rover \
   -lz /tf/caf/aztfmod/examples \
-  -var-folder  /tf/caf/examples/eventhub_namespace/102-evh_with_auth_rules/ \
+  -var-folder  /tf/caf/examples/eventhub/102-namespace-and-evh-with-auth-rules/ \
   -level level1 \
   -a plan
 
