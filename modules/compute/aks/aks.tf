@@ -70,7 +70,7 @@ resource "azurerm_kubernetes_cluster" "aks" {
         for_each = try(var.settings.addon_profile.aci_connector_linux[*], {})
         
         content {
-          enabled     = aci_connector_linux.value.enabled
+          enabled     = (aci_connector_linux.value.enabled == null) ? false : aci_connector_linux.value.enabled
           subnet_name = aci_connector_linux.value.subnet_name
         }
       }
@@ -79,7 +79,7 @@ resource "azurerm_kubernetes_cluster" "aks" {
         for_each = try(var.settings.addon_profile.azure_policy[*], {})
         
         content {
-          enabled     = azure_policy.value.enabled
+          enabled     = (azure_policy.value.enabled == null) ? false : azure_policy.value.enabled
         }
       }
 
@@ -87,7 +87,7 @@ resource "azurerm_kubernetes_cluster" "aks" {
         for_each = try(var.settings.addon_profile.http_application_routing[*], {})
         
         content {
-          enabled     = http_application_routing.value.enabled
+          enabled     = (http_application_routing.value.enabled == null) ? false : http_application_routing.value.enabled
         }
       }
 
@@ -95,7 +95,7 @@ resource "azurerm_kubernetes_cluster" "aks" {
         for_each = try(var.settings.addon_profile.kube_dashboard[*], {})
         
         content {
-          enabled     = kube_dashboard.value.enabled
+          enabled     = (kube_dashboard.value.enabled == null) ? false : kube_dashboard.value.enabled
         }
       }
 
@@ -103,7 +103,7 @@ resource "azurerm_kubernetes_cluster" "aks" {
         for_each = try(var.settings.addon_profile.oms_agent[*], {})
         
         content {
-          enabled                       = oms_agent.value.enabled
+          enabled                       = (oms_agent.value.enabled == null) ? false : oms_agent.value.enabled
           log_analytics_workspace_id    = try(oms_agent.value.log_analytics_workspace_id, try(var.diagnostics.log_analytics[oms_agent.value.log_analytics_key].id,null))
           dynamic "oms_agent_identity" {
             for_each = try(oms_agent.value.oms_agent_identity[*],{})
