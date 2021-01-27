@@ -1,6 +1,6 @@
 
 module "event_hub_namespaces" {
-  source   = "./modules/event_hub_namespaces"
+  source   = "./modules/event_hub/event_hub_namespaces" 
   for_each = var.event_hub_namespaces
 
   global_settings = local.global_settings
@@ -8,6 +8,21 @@ module "event_hub_namespaces" {
   resource_groups = module.resource_groups
   client_config   = local.client_config
   base_tags       = try(local.global_settings.inherit_tags, false) ? module.resource_groups[each.value.resource_group_key].tags : {}
+}
+
+module event_hub_namespace_auth_rules {
+  source     = "./modules/event_hub/event_hub_namespaces/auth_rules"
+  for_each   = try(var.event_hub_namespace_auth_rules, {})
+
+  resource_group_name = module.resource_groups[each.value.resource_group_key].name
+  client_config       = local.client_config
+  global_settings     = local.global_settings
+  settings            = each.value
+  namespace_name      = module.event_hub_namespaces[each.value.event_hub_namespace_key].name
+  
+  depends_on = [
+    module.event_hub_namespaces
+  ]
 }
 
 module event_hub_namespaces_diagnostics {
@@ -66,7 +81,7 @@ locals {
 
 
 module event_hub {
-  source     = "./modules/event_hub_namespaces/event_hub"
+  source     = "./modules/event_hub/event_hub"
   depends_on = [module.event_hub_namespaces]
   for_each   = try(var.event_hub, {})
 
@@ -74,7 +89,42 @@ module event_hub {
   client_config       = local.client_config
   global_settings     = local.global_settings
   settings            = each.value
-  namespace_name      = var.diagnostics.event_hub_namespaces[var.diagnostics.diagnostics_destinations.event_hub_namespaces[each.value.destination_key].event_hub_namespace_key].name
+  namespace_name      = module.event_hub_namespaces[each.value.event_hub_namespace_key].name
+  #namespace_name      = var.diagnostics.event_hub_namespaces[var.diagnostics.diagnostics_destinations.event_hub_namespaces[each.value.destination_key].event_hub_namespace_key].name
   storage_account_id  = try(module.storage_accounts[each.value.storage_account_key].id, null)
   base_tags           = try(local.global_settings.inherit_tags, false) ? module.resource_groups[each.value.resource_group_key].tags : {}
+}
+
+module event_hub_auth_rules {
+  source     = "./modules/event_hub/event_hub/auth_rules"
+  for_each   = try(var.event_hub_auth_rules, {})
+
+  resource_group_name = module.resource_groups[each.value.resource_group_key].name
+  client_config       = local.client_config
+  global_settings     = local.global_settings
+  settings            = each.value
+  namespace_name      = module.event_hub_namespaces[each.value.event_hub_namespace_key].name
+  eventhub_name       = module.event_hub[each.value.event_hub_name_key].name
+
+  depends_on = [
+    module.event_hub_namespaces,
+    module.event_hub
+  ]
+}
+
+module event_hub_consumer_groups {
+  source     = "./modules/event_hub/event_hub_consumer_groups"
+  for_each   = try(var.event_hub_consumer_groups, {})
+
+  resource_group_name = module.resource_groups[each.value.resource_group_key].name
+  client_config       = local.client_config
+  global_settings     = local.global_settings
+  settings            = each.value
+  namespace_name      = module.event_hub_namespaces[each.value.event_hub_namespace_key].name
+  eventhub_name       = module.event_hub[each.value.event_hub_name_key].name
+
+  depends_on = [
+    module.event_hub_namespaces,
+    module.event_hub
+  ]
 }

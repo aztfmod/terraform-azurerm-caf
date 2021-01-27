@@ -8,15 +8,15 @@ global_settings = {
 }
 
 resource_groups = {
-  sec_center = {
-    name = "sec-center"
+  evh_examples = {
+    name = "evh_examples"
   }
 }
 
 storage_accounts = {
   evh1 = {
     name                     = "evh1"
-    resource_group_key       = "sec_center"
+    resource_group_key       = "evh_examples"
     account_kind             = "BlobStorage"
     account_tier             = "Standard"
     account_replication_type = "LRS"
@@ -40,13 +40,21 @@ event_hub_namespaces = {
 event_hub = {
   ev = {
     name = "ev"
-    resource_group_key = "sec_center"
+    resource_group_key = "evh_examples"
     event_hub_namespace_key = "evh1"
-    destination_key        = "central_logs"
+    #destination_key        = "central_logs"
     storage_account_key = "evh1"
     blob_container_name = "evh"
     partition_count = "2"
     message_retention = "2"
+  }
+}
+
+event_hub_auth_rules  = {
+  rule1 = {
+    resource_group_key = "evh_examples"
+    event_hub_namespace_key = "evh1"
+    event_hub_name_key  = "ev"
     rule_name = "ev-rule"
     listen = true
     send =  true

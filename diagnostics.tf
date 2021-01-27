@@ -35,7 +35,7 @@ module diagnostic_storage_accounts {
 }
 
 module "diagnostic_event_hub_namespaces" {
-  source   = "./modules/event_hub_namespaces"
+  source   = "./modules/event_hub/event_hub_namespaces"
   for_each = local.diagnostics.diagnostic_event_hub_namespaces
 
   global_settings = local.global_settings
