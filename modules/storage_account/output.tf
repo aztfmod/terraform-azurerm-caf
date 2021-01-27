@@ -1,26 +1,26 @@
 output id {
-  value     = azurerm_storage_account.stg.id
-  
+  value = azurerm_storage_account.stg.id
+
 }
 
 output name {
-  value     = azurerm_storage_account.stg.name
-  
+  value = azurerm_storage_account.stg.name
+
 }
 
 output location {
-  value     = var.location
-  
+  value = var.location
+
 }
 
 output resource_group_name {
-  value     = var.resource_group_name
-  
+  value = var.resource_group_name
+
 }
 
 output primary_blob_endpoint {
-  value     = azurerm_storage_account.stg.primary_blob_endpoint
-  
+  value = azurerm_storage_account.stg.primary_blob_endpoint
+
 }
 
 output containers {

@@ -28,3 +28,13 @@ module "mssql_managed_databases_restore" {
   resource_group_name = local.combined_objects_resource_groups[try(each.value.lz_key, local.client_config.landingzone_key)][each.value.resource_group_key].name
   base_tags           = try(local.global_settings.inherit_tags, false) ? module.resource_groups[each.value.resource_group_key].tags : {}
 }
+
+module "mssql_managed_databases_backup_ltr" {
+  source   = "./modules/databases/mssql_managed_database/backup_ltr"
+  for_each = local.database.mssql_managed_databases_backup_ltr
+
+  settings            = each.value
+  server_name         = local.combined_objects_mssql_managed_instances[try(each.value.lz_key, local.client_config.landingzone_key)][each.value.mi_server_key].name
+  db_name             = try(module.mssql_managed_databases[each.value.database_key].name, module.mssql_managed_databases_restore[each.value.database_key].name)
+  resource_group_name = local.combined_objects_resource_groups[try(each.value.lz_key, local.client_config.landingzone_key)][each.value.resource_group_key].name
+}

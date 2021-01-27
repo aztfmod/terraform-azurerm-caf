@@ -6,7 +6,6 @@ module "caf" {
   diagnostic_storage_accounts  = var.diagnostic_storage_accounts
   diagnostics_definition       = var.diagnostics_definition
   diagnostics_destinations     = var.diagnostics_destinations
-  keyvault_certificate_issuers = var.keyvault_certificate_issuers
   keyvaults                    = var.keyvaults
   networking = {
     vnets                             = var.vnets
@@ -18,6 +17,7 @@ module "caf" {
   }
   security = {
     dynamic_keyvault_secrets      = var.dynamic_keyvault_secrets
+    keyvault_certificate_issuers  = var.keyvault_certificate_issuers
     keyvault_certificate_requests = var.keyvault_certificate_requests
   }
 }
