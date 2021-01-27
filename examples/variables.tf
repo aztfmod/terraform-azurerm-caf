@@ -269,6 +269,10 @@ variable front_door_waf_policies {
 variable dns_zones {
   default = {}
 }
+variable dns_zone_records {
+  default = {}
+}
+
 variable private_endpoints {
   default = {}
 }
@@ -276,42 +280,33 @@ variable local_network_gateways {
   default = {}
 }
 
-variable automations {
-  default = {}
-}
-
-variable keyvault_access_policies_azuread_apps {
+variable domain_name_registrations {
   default = {}
 }
 
 variable azuread_apps {
   default = {}
+  type    = map
 }
-
 variable azuread_users {
   default = {}
+  type    = map
 }
-
 variable custom_role_definitions {
   default = {}
 }
-
 variable azurerm_firewalls {
   default = {}
 }
-
 variable azurerm_firewall_network_rule_collection_definition {
   default = {}
 }
-
 variable azurerm_firewall_application_rule_collection_definition {
   default = {}
 }
-
 variable azurerm_firewall_nat_rule_collection_definition {
   default = {}
 }
-
 variable netapp_accounts {
   default = {}
 }

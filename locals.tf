@@ -32,6 +32,7 @@ locals {
   security = {
     keyvault_certificates         = try(var.security.keyvault_certificates, {})
     keyvault_certificate_requests = try(var.security.keyvault_certificate_requests, {})
+    keyvault_certificate_issuers  = try(var.security.keyvault_certificate_issuers, {})
     keyvault_keys                 = try(var.security.keyvault_keys, {})
   }
 
@@ -45,6 +46,8 @@ locals {
     azurerm_routes                                          = try(var.networking.azurerm_routes, {})
     ddos_services                                           = try(var.networking.ddos_services, {})
     dns_zones                                               = try(var.networking.dns_zones, {})
+    dns_zone_records                                        = try(var.networking.dns_zone_records, {})
+    domain_name_registrations                               = try(var.networking.domain_name_registrations, {})
     express_route_circuits                                  = try(var.networking.express_route_circuits, {})
     express_route_circuit_authorizations                    = try(var.networking.express_route_circuit_authorizations, {})
     front_doors                                             = try(var.networking.front_doors, {})
