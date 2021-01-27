@@ -48,6 +48,6 @@ module "keyvault_access_policies_azuread_apps" {
 
 
 output keyvaults {
-  value     = module.keyvaults
-  
+  value = module.keyvaults
+
 }
