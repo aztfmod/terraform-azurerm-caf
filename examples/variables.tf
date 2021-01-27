@@ -302,3 +302,15 @@ variable azurerm_firewall_application_rule_collection_definition {
 variable azurerm_firewall_nat_rule_collection_definition {
   default = {}
 }
+
+variable event_hub_auth_rules {
+  default = {}
+}
+
+variable event_hub_namespace_auth_rules {
+  default = {}
+}
+
+variable event_hub_consumer_groups {
+  default = {}
+}

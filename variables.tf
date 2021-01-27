@@ -239,3 +239,15 @@ variable event_hub {
 variable automations {
   default = {}
 }
+
+variable event_hub_auth_rules {
+  default = {}
+}
+
+variable event_hub_namespace_auth_rules {
+  default = {}
+}
+
+variable event_hub_consumer_groups {
+  default = {}
+}
