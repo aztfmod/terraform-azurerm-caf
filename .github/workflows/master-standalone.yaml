@@ -56,6 +56,7 @@ jobs:
             "eventhub/100-simple-eventhub-namespace",
             "eventhub/101-evh-namespace-with-private-endpoint",
             "eventhub/102-namespace-and-evh-with-auth-rules",
+            "eventhub/103-eventhub-consumer-groups",
             "keyvault/101-keyvault-policies",
             "machine_learning/100-aml",
             "mariadb_server/100-simple-mariadb",
