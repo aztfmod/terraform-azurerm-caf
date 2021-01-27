@@ -1,7 +1,7 @@
 
 output mssql_elastic_pools {
-  value     = module.mssql_elastic_pools
-  
+  value = module.mssql_elastic_pools
+
 }
 
 module "mssql_elastic_pools" {

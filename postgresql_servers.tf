@@ -1,7 +1,7 @@
 
 output postgresql_servers {
-  value     = module.postgresql_servers
-  
+  value = module.postgresql_servers
+
 }
 
 module "postgresql_servers" {
