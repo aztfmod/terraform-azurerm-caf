@@ -1,7 +1,7 @@
 
 output mariadb_servers {
-  value     = module.mariadb_servers
-  
+  value = module.mariadb_servers
+
 }
 
 module "mariadb_servers" {

@@ -18,8 +18,8 @@ locals {
 
 # Output diagnostics
 output diagnostics {
-  value     = local.combined_diagnostics
-  
+  value = local.combined_diagnostics
+
 }
 
 module diagnostic_storage_accounts {
