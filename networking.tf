@@ -1,12 +1,12 @@
 output vnets {
   depends_on = [azurerm_virtual_network_peering.peering]
   value      = module.networking
-  
+
 }
 
 output public_ip_addresses {
-  value     = module.public_ip_addresses
-  
+  value = module.public_ip_addresses
+
 }
 
 

@@ -22,6 +22,6 @@ module "storage_account_blobs" {
 }
 
 output storage_account_blobs {
-  value     = module.storage_account_blobs
-  
+  value = module.storage_account_blobs
+
 }
