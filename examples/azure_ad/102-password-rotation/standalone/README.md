@@ -1,7 +1,7 @@
 You can test this module outside of a landingzone using
 
 ```bash
-cd /tf/caf/examples/azure_ad/102-sevice-principle-with-builtin-roles/standalone
+cd /tf/caf/examples/azure_ad/102-password-rotation/standalone
 
 terraform init
 

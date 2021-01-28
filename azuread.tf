@@ -58,10 +58,11 @@ module azuread_users {
   depends_on = [module.keyvault_access_policies]
   for_each   = var.azuread_users
 
-  global_settings = local.global_settings
+  azuread_user    = each.value
   client_config   = local.client_config
-  azuread_users   = each.value
+  global_settings = local.global_settings
   keyvaults       = local.combined_objects_keyvaults
+  password_policy = try(each.value.password_policy, null)
 }
 
 output azuread_users {
