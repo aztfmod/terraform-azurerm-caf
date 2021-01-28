@@ -3,6 +3,7 @@ global_settings = {
   regions = {
     region1 = "southeastasia"
   }
+  random_length = 5
 }
 
 resource_groups = {
