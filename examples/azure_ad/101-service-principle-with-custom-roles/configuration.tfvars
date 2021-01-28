@@ -90,7 +90,6 @@ azuread_apps = {
   test_client = {
     useprefix                    = true
     application_name             = "test_client"
-    password_expire_in_days      = 1
     app_role_assignment_required = true
     keyvaults = {
       test_client = {

@@ -19,13 +19,13 @@ resource "azurerm_key_vault_secret" "client_secret" {
   name            = format("%s-client-secret", each.value.secret_prefix)
   value           = azuread_service_principal_password.app.value
   key_vault_id    = try(each.value.lz_key, null) == null ? var.keyvaults[var.client_config.landingzone_key][each.key].id : var.keyvaults[each.value.lz_key][each.key].id
-  expiration_date = timeadd(timestamp(), format("%sh", try(var.settings.password_expire_in_days, 180) * 24))
+  expiration_date = timeadd(time_rotating.pwd.id, format("%sh", var.password_policy.expire_in_days * 24))
 
-  lifecycle {
-    ignore_changes = [
-      expiration_date, value
-    ]
-  }
+  # lifecycle {
+  #   ignore_changes = [
+  #     expiration_date, value
+  #   ]
+  # }
 }
 
 resource "azurerm_key_vault_secret" "tenant_id" {
