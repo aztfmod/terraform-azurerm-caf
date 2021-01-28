@@ -41,6 +41,7 @@ jobs:
             "automation/100-simple-automation-account",
             "azure_ad/100-sevice-principle-with-builtin-roles",
             "azure_ad/101-service-principle-with-custom-roles",
+            "azure_ad/102-password-rotation",
             "compute/availability_set/100-simple-availabilityset",
             "compute/availability_set/101-availabilityset-with-proximity-placement-group",
             "compute/container_registry/100-simple-acr",

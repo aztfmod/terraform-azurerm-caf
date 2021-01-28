@@ -1,12 +1,12 @@
 module "caf" {
-  source                       = "../../../../../"
-  global_settings              = var.global_settings
-  tags                         = var.tags
-  resource_groups              = var.resource_groups
-  diagnostic_storage_accounts  = var.diagnostic_storage_accounts
-  diagnostics_definition       = var.diagnostics_definition
-  diagnostics_destinations     = var.diagnostics_destinations
-  keyvaults                    = var.keyvaults
+  source                      = "../../../../../"
+  global_settings             = var.global_settings
+  tags                        = var.tags
+  resource_groups             = var.resource_groups
+  diagnostic_storage_accounts = var.diagnostic_storage_accounts
+  diagnostics_definition      = var.diagnostics_definition
+  diagnostics_destinations    = var.diagnostics_destinations
+  keyvaults                   = var.keyvaults
   networking = {
     vnets                             = var.vnets
     network_security_group_definition = var.network_security_group_definition
