@@ -310,3 +310,6 @@ variable azurerm_firewall_nat_rule_collection_definition {
 variable netapp_accounts {
   default = {}
 }
+variable automations {
+  default = {}
+}

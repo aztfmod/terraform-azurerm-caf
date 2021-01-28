@@ -130,7 +130,9 @@ You can customize the examples execution by modifying the variables as follow:
 | diagnostic\_storage\_accounts | n/a | `map` | `{}` | no |
 | diagnostics\_definition | n/a | `any` | `null` | no |
 | diagnostics\_destinations | n/a | `map` | `{}` | no |
+| dns\_zone\_records | n/a | `map` | `{}` | no |
 | dns\_zones | n/a | `map` | `{}` | no |
+| domain\_name\_registrations | n/a | `map` | `{}` | no |
 | dynamic\_keyvault\_secrets | n/a | `map` | `{}` | no |
 | environment | n/a | `string` | `"sandpit"` | no |
 | event\_hub\_namespaces | n/a | `map` | `{}` | no |
@@ -140,7 +142,6 @@ You can customize the examples execution by modifying the variables as follow:
 | front\_doors | n/a | `map` | `{}` | no |
 | global\_settings | n/a | `map` | <pre>{<br>  "default_region": "region1",<br>  "regions": {<br>    "region1": "southeastasia",<br>    "region2": "eastasia"<br>  }<br>}</pre> | no |
 | keyvault\_access\_policies | n/a | `map` | `{}` | no |
-| keyvault\_access\_policies\_azuread\_apps | n/a | `map` | `{}` | no |
 | keyvault\_certificate\_issuers | n/a | `map` | `{}` | no |
 | keyvault\_certificate\_requests | n/a | `map` | `{}` | no |
 | keyvault\_keys | n/a | `map` | `{}` | no |
@@ -206,6 +207,10 @@ You can customize the examples execution by modifying the variables as follow:
 
 | Name | Description |
 |------|-------------|
+| dns\_zone\_records | n/a |
+| dns\_zones | n/a |
+| keyvault\_certificate\_requests | n/a |
+| keyvault\_certificates | n/a |
 | mssql\_managed\_instances | n/a |
 | mssql\_managed\_instances\_secondary | n/a |
 | virtual\_machines | n/a |
