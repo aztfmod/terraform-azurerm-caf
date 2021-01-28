@@ -10,10 +10,10 @@ variable password_policy {
   description = "Map to define the password policy to apply"
   default = {
     # Length of the password
-    length         = 250
-    special        = false
-    upper          = true
-    number         = true
+    length  = 250
+    special = false
+    upper   = true
+    number  = true
 
     # Define the number of days the password is valid. It must be more than the rotation frequency
     expire_in_days = 180

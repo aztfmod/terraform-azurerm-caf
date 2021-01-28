@@ -38,7 +38,7 @@ keyvault_access_policies_azuread_apps = {
 
 azuread_users = {
   user1 = {
-    user_name = "demo-user"
+    user_name    = "demo-user"
     keyvault_key = "test_client"
     password_policy = {
       # Length of the password
@@ -55,7 +55,7 @@ azuread_users = {
         # Only set one of the value
         #
 
-        mins   = 1     # only recommended for CI and demo
+        mins = 1 # only recommended for CI and demo
         # days = 7
         # months = 1
       }
@@ -82,7 +82,7 @@ azuread_apps = {
         # Only set one of the value
         #
 
-        mins   = 2     # only recommended for CI and demo
+        mins = 2 # only recommended for CI and demo
         # days = 7
         # months = 1
       }
