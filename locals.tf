@@ -25,6 +25,7 @@ locals {
   }
 
   storage = {
+    netapp_accounts       = try(var.storage.netapp_accounts, {})
     storage_account_blobs = try(var.storage.storage_account_blobs, {})
   }
 
