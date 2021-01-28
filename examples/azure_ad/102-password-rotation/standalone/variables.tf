@@ -6,39 +6,40 @@ variable resource_groups {
   default = null
 }
 
-variable role_mapping {
-  default = {}
-}
-
 variable tags {
   default = null
   type    = map
 }
 
-variable aks_clusters {
+variable keyvaults {
   default = {}
 }
 
-variable azure_container_registries {
+variable azuread_apps {
   default = {}
 }
 
-variable diagnostic_log_analytics {
+variable azuread_users {
   default = {}
 }
 
-variable virtual_machines {
+variable azuread_roles {
   default = {}
 }
 
-variable network_security_group_definition {
+variable keyvault_access_policies {
   default = {}
 }
 
-variable vnets {
+variable keyvault_access_policies_azuread_apps {
+  default = {}
+}
+
+variable role_mapping {
   default = {}
 }
 
 variable var_folder_path {
   default = {}
 }
+

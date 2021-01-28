@@ -11,7 +11,7 @@ module "caf" {
 
   diagnostics = {
     # Get the diagnostics settings of services to create
-    diagnostic_log_analytics    = var.diagnostic_log_analytics
+    diagnostic_log_analytics = var.diagnostic_log_analytics
   }
 
   compute = {
