@@ -92,7 +92,7 @@ resource "azurerm_kubernetes_cluster" "aks" {
       }
 
       dynamic "kube_dashboard" {
-        for_each = try(var.settings.addon_profile.kube_dashboard[*], [{enable = false}])
+        for_each = try(var.settings.addon_profile.kube_dashboard[*], [{enabled = false}])
         
         content {
           enabled     = kube_dashboard.value.enabled
