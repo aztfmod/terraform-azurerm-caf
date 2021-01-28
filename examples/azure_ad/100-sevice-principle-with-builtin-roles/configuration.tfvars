@@ -38,14 +38,14 @@ keyvault_access_policies_azuread_apps = {
 
 azuread_apps = {
   test_client = {
-    useprefix                    = true
-    application_name             = "test-client"
+    useprefix        = true
+    application_name = "test-client"
     password_policy = {
       # Length of the password
-      length         = 250
-      special        = false
-      upper          = true
-      number         = true
+      length  = 250
+      special = false
+      upper   = true
+      number  = true
 
       # Define the number of days the password is valid. It must be more than the rotation frequency
       expire_in_days = 10
@@ -56,7 +56,7 @@ azuread_apps = {
         #
 
         # mins   = 10     # only recommended for CI and demo
-        days   = 7
+        days = 7
         # months = 1
       }
     }
