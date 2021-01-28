@@ -3,7 +3,7 @@ resource "azurecaf_name" "account" {
   name          = local.user_name
   resource_type = "azurerm_resource_group"
   #TODO: need to be changed to appropriate resource (no caf reference for now)
-  prefixes      = [local.prefix]
+  prefixes      = local.prefix
   random_length = var.global_settings.random_length
   clean_input   = true
   passthrough   = var.global_settings.passthrough
@@ -15,7 +15,7 @@ resource "azurecaf_name" "account" {
 resource "azuread_user" "account" {
   user_principal_name = format("%s@%s", azurecaf_name.account.result, local.tenant_name)
   display_name        = azurecaf_name.account.result
-  password            = random_password.account.result
+  password            = random_password.pwd.result
 
   lifecycle {
     ignore_changes = [user_principal_name]
@@ -23,11 +23,22 @@ resource "azuread_user" "account" {
 }
 
 
-resource "random_password" "account" {
-  length  = 250
-  special = false
-  upper   = true
-  number  = true
+resource "time_rotating" "pwd" {
+  rotation_minutes = try(var.password_policy.rotation.mins, null)
+  rotation_days    = try(var.password_policy.rotation.days, null)
+  rotation_months  = try(var.password_policy.rotation.months, null)
+  rotation_years   = try(var.password_policy.rotation.years, null)
+}
+
+# Will force the password to change every month
+resource "random_password" "pwd" {
+  keepers = {
+    frequency = time_rotating.pwd.id
+  }
+  length  = var.password_policy.length
+  special = try(var.password_policy.special, false)
+  upper   = try(var.password_policy.upper, true)
+  number  = try(var.password_policy.number, true)
 }
 
 
@@ -39,13 +50,7 @@ resource "azurerm_key_vault_secret" "aad_user_name" {
 
 resource "azurerm_key_vault_secret" "aad_user_password" {
   name            = format("%s%s-password", local.secret_prefix, local.user_name)
-  value           = random_password.account.result
-  expiration_date = timeadd(timestamp(), format("%sh", local.password_expire_in_days * 24))
+  value           = random_password.pwd.result
+  expiration_date = timeadd(time_rotating.pwd.id, format("%sh", var.password_policy.expire_in_days * 24))
   key_vault_id    = local.keyvault_id
-
-  lifecycle {
-    ignore_changes = [
-      expiration_date, value
-    ]
-  }
 }
