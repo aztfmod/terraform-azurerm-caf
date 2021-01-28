@@ -11,7 +11,6 @@ module azuread_applications {
   client_config           = local.client_config
   global_settings         = local.global_settings
   keyvaults               = local.combined_objects_keyvaults
-  password_policy         = try(each.value.password_policy, null)
   settings                = each.value
   user_type               = var.user_type
 }
@@ -62,7 +61,6 @@ module azuread_users {
   client_config   = local.client_config
   global_settings = local.global_settings
   keyvaults       = local.combined_objects_keyvaults
-  password_policy = try(each.value.password_policy, null)
 }
 
 output azuread_users {
