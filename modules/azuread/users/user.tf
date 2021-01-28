@@ -24,10 +24,10 @@ resource "azuread_user" "account" {
 
 
 resource "time_rotating" "pwd" {
-  rotation_minutes = try(var.password_policy.rotation.mins, null)
-  rotation_days    = try(var.password_policy.rotation.days, null)
-  rotation_months  = try(var.password_policy.rotation.months, null)
-  rotation_years   = try(var.password_policy.rotation.years, null)
+  rotation_minutes = try(var.settings.password_policy.rotation.mins, lookup(var.password_policy.rotation, "mins", null))
+  rotation_days    = try(var.settings.password_policy.rotation.days, lookup(var.password_policy.rotation, "days", null))
+  rotation_months  = try(var.settings.password_policy.rotation.months, lookup(var.password_policy.rotation, "months", null))
+  rotation_years   = try(var.settings.password_policy.rotation.years, lookup(var.password_policy.rotation, "years", null))
 }
 
 # Will force the password to change every month
@@ -35,10 +35,10 @@ resource "random_password" "pwd" {
   keepers = {
     frequency = time_rotating.pwd.id
   }
-  length  = var.password_policy.length
-  special = try(var.password_policy.special, false)
-  upper   = try(var.password_policy.upper, true)
-  number  = try(var.password_policy.number, true)
+  length  = try(var.settings.password_policy.length, var.password_policy.length)
+  special = try(var.settings.password_policy.special, var.password_policy.special)
+  upper   = try(var.settings.password_policy.upper, var.password_policy.upper)
+  number  = try(var.settings.password_policy.number, var.password_policy.number)
 }
 
 
@@ -51,6 +51,6 @@ resource "azurerm_key_vault_secret" "aad_user_name" {
 resource "azurerm_key_vault_secret" "aad_user_password" {
   name            = format("%s%s-password", local.secret_prefix, local.user_name)
   value           = random_password.pwd.result
-  expiration_date = timeadd(time_rotating.pwd.id, format("%sh", var.password_policy.expire_in_days * 24))
+  expiration_date = timeadd(time_rotating.pwd.id, format("%sh", try(var.settings.password_policy.expire_in_days, var.password_policy.expire_in_days) * 24))
   key_vault_id    = local.keyvault_id
 }
