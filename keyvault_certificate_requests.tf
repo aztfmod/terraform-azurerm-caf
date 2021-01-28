@@ -8,7 +8,7 @@ module keyvault_certificate_requests {
   for_each   = local.security.keyvault_certificate_requests
 
   keyvault_id         = try(local.combined_objects_keyvaults[each.value.lz_key][each.value.keyvault_key].id, local.combined_objects_keyvaults[local.client_config.landingzone_key][each.value.keyvault_key].id)
-  certificate_issuers = var.security.keyvault_certificate_issuers
+  certificate_issuers = try(var.security.keyvault_certificate_issuers, {})
   settings            = each.value
 }
 
