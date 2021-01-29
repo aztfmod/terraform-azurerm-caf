@@ -232,7 +232,7 @@ variable local_network_gateways {
   default = {}
 }
 
-variable event_hub {
+variable event_hubs {
   default = {}
 }
 

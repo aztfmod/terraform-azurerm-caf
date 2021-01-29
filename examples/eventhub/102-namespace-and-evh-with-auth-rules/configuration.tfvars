@@ -37,27 +37,27 @@ event_hub_namespaces = {
   }
 }
 
-event_hub = {
+event_hubs = {
   ev = {
-    name = "ev"
-    resource_group_key = "evh_examples"
+    name                    = "ev"
+    resource_group_key      = "evh_examples"
     event_hub_namespace_key = "evh1"
     #destination_key        = "central_logs"
     storage_account_key = "evh1"
     blob_container_name = "evh"
-    partition_count = "2"
-    message_retention = "2"
+    partition_count     = "2"
+    message_retention   = "2"
   }
 }
 
-event_hub_auth_rules  = {
+event_hub_auth_rules = {
   rule1 = {
-    resource_group_key = "evh_examples"
+    resource_group_key      = "evh_examples"
     event_hub_namespace_key = "evh1"
-    event_hub_name_key  = "ev"
-    rule_name = "ev-rule"
-    listen = true
-    send =  true
-    manage  = false
+    event_hub_name_key      = "ev"
+    rule_name               = "ev-rule"
+    listen                  = true
+    send                    = true
+    manage                  = false
   }
 }

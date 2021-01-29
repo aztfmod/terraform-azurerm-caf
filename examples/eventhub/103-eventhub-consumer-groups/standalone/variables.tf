@@ -16,18 +16,21 @@ variable tags {
 }
 
 variable event_hub_namespaces {
-  default ={}
+  default = {}
 }
 
 variable event_hub_auth_rules {
   default = {}
 }
 
-variable event_hub {
-  default ={}
+variable event_hubs {
+  default = {}
 }
 
 variable var_folder_path {
   default = {}
 }
 
+variable event_hub_consumer_groups {
+  default = {}
+}

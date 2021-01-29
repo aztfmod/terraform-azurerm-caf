@@ -23,15 +23,15 @@ resource "azurerm_eventhub" "evhub" {
       interval_in_seconds = try(capture_description.value.interval_in_seconds, null)
       size_limit_in_bytes = try(capture_description.value.size_limit_in_bytes, null)
       skip_empty_archives = try(capture_description.value.skip_empty_archives, null)
-      dynamic "destination" {  # required if capture_description is set
-      for_each = try(var.settings.capture_description.destination, {})
-      content {
-        name                = destination.value.name  # At this time(12/2020), the only supported value is EventHubArchive.AzureBlockBlob
-        archive_name_format = destination.value.archive_name_format  # e.g. {Namespace}/{EventHub}/{PartitionId}/{Year}/{Month}/{Day}/{Hour}/{Minute}/{Second}
-        blob_container_name = destination.value.blob_container_name
-        storage_account_id  = var.storage_account_id
-      }   
-     }
+      dynamic "destination" { # required if capture_description is set
+        for_each = try(var.settings.capture_description.destination, {})
+        content {
+          name                = destination.value.name                # At this time(12/2020), the only supported value is EventHubArchive.AzureBlockBlob
+          archive_name_format = destination.value.archive_name_format # e.g. {Namespace}/{EventHub}/{PartitionId}/{Year}/{Month}/{Day}/{Hour}/{Minute}/{Second}
+          blob_container_name = destination.value.blob_container_name
+          storage_account_id  = var.storage_account_id
+        }
+      }
     }
   }
 }
