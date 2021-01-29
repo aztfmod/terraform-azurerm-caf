@@ -1,7 +1,8 @@
 output a {
   value = merge(
     azurerm_dns_a_record.a,
-    azurerm_dns_a_record.a_dns_zone_record
+    azurerm_dns_a_record.a_dns_zone_record,
+    azurerm_dns_a_record.a_public_ip_address
   )
 }
 
