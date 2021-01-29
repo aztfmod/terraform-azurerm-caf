@@ -63,7 +63,7 @@ resource "azurerm_kubernetes_cluster" "aks" {
   dns_prefix              = try(var.settings.dns_prefix, random_string.prefix.result)
 
   dynamic "addon_profile" {
-    for_each = try(var.settings.addon_profile, {})
+    for_each = lookup(var.settings, "addon_profile", null) == null ? [] : [1]
     
     content {
       dynamic "aci_connector_linux" {
