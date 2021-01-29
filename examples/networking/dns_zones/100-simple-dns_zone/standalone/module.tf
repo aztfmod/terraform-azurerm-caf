@@ -15,3 +15,6 @@ module "caf" {
   }
 }
 
+output dns_zones {
+  value       = module.caf.dns_zones
+}
