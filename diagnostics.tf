@@ -35,12 +35,13 @@ module diagnostic_storage_accounts {
 }
 
 module "diagnostic_event_hub_namespaces" {
-  source   = "./modules/event_hub/event_hub_namespaces"
+  source   = "./modules/event_hubs/namespaces"
   for_each = local.diagnostics.diagnostic_event_hub_namespaces
 
   global_settings = local.global_settings
   settings        = each.value
-  resource_groups = module.resource_groups
+  resource_group_name = module.resource_groups[each.value.resource_group_key].name
+  location            = lookup(each.value, "region", null) == null ? module.resource_groups[each.value.resource_group_key].location : local.global_settings.regions[each.value.region]
   client_config   = local.client_config
   base_tags       = try(local.global_settings.inherit_tags, false) ? module.resource_groups[each.value.resource_group_key].tags : {}
 }
