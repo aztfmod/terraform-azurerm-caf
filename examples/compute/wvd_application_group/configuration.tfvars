@@ -26,7 +26,7 @@ wvd_application_groups = {
     friendly_name      = "Myappgroup"
     description        = "A description of my workspace"
     #Type of Virtual Desktop Application Group. Valid options are RemoteApp or Desktop.
-    type          = "Desktop"
+    type          = "RemoteApp"
     
   }
 }
@@ -40,7 +40,7 @@ wvd_host_pools = {
     validate_environment     = true
     type                     = "Pooled"
     #Option to specify the preferred Application Group type for the Virtual Desktop Host Pool. Valid options are None, Desktop or RailApplications.
-    preferred_app_group_type = "Desktop"
+    preferred_app_group_type = "RailApplications"
     maximum_sessions_allowed = 1000
     load_balancer_type       = "DepthFirst"
     #Expiration value should be between 1 hour and 30 days.

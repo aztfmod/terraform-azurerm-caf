@@ -43,7 +43,7 @@ module "vm_extension_diagnostics" {
 
 module "additional_session_host_dscextension" {
   source     = "../modules/compute/virtual_machine_extensions"
-  depends_on = [module.caf]
+  depends_on = [module.caf, module.microsoft_azure_domainJoin]
 
   for_each = {
     for key, value in try(var.virtual_machines, {}) : key => value

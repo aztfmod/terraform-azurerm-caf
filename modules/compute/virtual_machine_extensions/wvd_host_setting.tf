@@ -21,7 +21,7 @@ resource "azurerm_virtual_machine_extension" "domainJoin" {
     {
         "Name": "${var.domain_name}",
         "OUPath": "${var.ou_path}",
-        "User": "domainadmin@contoso.com",
+        "User": "adminaad@demos.llc",
         "Restart": "true",
         "Options": "3"
     }
