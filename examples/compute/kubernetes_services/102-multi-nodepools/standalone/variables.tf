@@ -23,7 +23,7 @@ variable azure_container_registries {
   default = {}
 }
 
-variable diagnostic_log_analytics{
+variable diagnostic_log_analytics {
   default = {}
 }
 
