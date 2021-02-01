@@ -1,6 +1,7 @@
 module "application_gateways" {
-  source   = "./modules/networking/application_gateway"
-  for_each = local.networking.application_gateways
+  depends_on = [module.keyvault_certificate_requests]
+  source     = "./modules/networking/application_gateway"
+  for_each   = local.networking.application_gateways
 
   global_settings       = local.global_settings
   client_config         = local.client_config
