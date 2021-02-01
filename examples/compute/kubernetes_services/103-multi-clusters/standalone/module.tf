@@ -9,10 +9,10 @@ module "caf" {
     vnets                             = var.vnets
     network_security_group_definition = var.network_security_group_definition
   }
-  
+
   diagnostics = {
     # Get the diagnostics settings of services to create
-    diagnostic_log_analytics    = var.diagnostic_log_analytics
+    diagnostic_log_analytics = var.diagnostic_log_analytics
   }
 
   compute = {

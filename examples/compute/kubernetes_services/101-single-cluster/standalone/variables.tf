@@ -19,7 +19,7 @@ variable aks_clusters {
   default = {}
 }
 
-variable diagnostic_log_analytics{
+variable diagnostic_log_analytics {
   default = {}
 }
 
