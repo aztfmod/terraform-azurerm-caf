@@ -69,8 +69,9 @@ No requirements.
 
 | Name | Description | Type | Default | Required |
 |------|-------------|------|---------|:--------:|
-| admin\_group\_ids | n/a | `any` | n/a | yes |
+| admin\_group\_object\_ids | n/a | `any` | n/a | yes |
 | base\_tags | Base tags for the resource to be inherited from the resource group. | `map` | n/a | yes |
+| client\_config | n/a | `any` | n/a | yes |
 | diagnostic\_profiles | n/a | `any` | `null` | no |
 | diagnostics | n/a | `any` | n/a | yes |
 | global\_settings | Global settings object (see module README.md) | `any` | n/a | yes |
