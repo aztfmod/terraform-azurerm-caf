@@ -30,7 +30,7 @@ module dns_zone_records {
   resource_group_name = try(each.value.dns_zone.resource_group_name, null) == null ? local.combined_objects_dns_zones[lookup(each.value.dns_zone, "lz_key", local.client_config.landingzone_key)][each.value.dns_zone.key].resource_group_name : each.value.dns_zone.resource_group_name
   records             = each.value.records
   zone_name           = try(each.value.dns_zone.name, null) == null ? local.combined_objects_dns_zones[lookup(each.value.dns_zone, "lz_key", local.client_config.landingzone_key)][each.value.dns_zone.key].name : each.value.dns_zone.name
-  
+
   resource_ids = {
     public_ip_addresses = local.combined_objects_public_ip_addresses
   }
