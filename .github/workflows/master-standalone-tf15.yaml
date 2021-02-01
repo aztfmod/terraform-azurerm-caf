@@ -3,19 +3,11 @@
 # Licensed under the MIT License.
 #
 
-name: standalone-scenario
+name: standalone-scenario-tf15
 
 on:
-
-  pull_request:
-    paths-ignore:
-      - .github/workflows/master-100.yaml
-      - 'documentation/**'
-      - '_pictures/**'
-      - 'README.md'
-      - 'CHANGELOG.md'
   schedule:
-    - cron:  '0 8 * * *'
+    - cron:  '0 5 * * 0' #1 AM on Sunday
 
 env:
   TF_CLI_ARGS: '-no-color'
@@ -104,7 +96,7 @@ jobs:
           ]
 
     container:
-      image: aztfmod/rover:2102.0100
+      image: aztfmod/roveralpha:2102.011041
       options: --user 0
 
     steps:
