@@ -230,3 +230,7 @@ variable cosmos_dbs {
 variable local_network_gateways {
   default = {}
 }
+
+variable load_balancers {
+  default = {}
+}
