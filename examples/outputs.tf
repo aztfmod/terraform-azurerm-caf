@@ -27,3 +27,12 @@ output mssql_managed_instances_secondary {
   sensitive = false
 }
 
+output storage_accounts {
+  value     = module.caf.storage_accounts
+  sensitive = false
+}
+
+output app_services {
+  value     = module.caf.app_services
+  sensitive = false
+}
