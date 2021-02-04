@@ -252,3 +252,4 @@ variable wvd_host_pools {
 variable wvd_workspaces {
   default = {}
 }
+

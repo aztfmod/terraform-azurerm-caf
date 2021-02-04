@@ -141,15 +141,32 @@ virtual_machines = {
     virtual_machine_extensions = {
       additional_session_host_dscextension = {
         name                       = "additional_session_host_dscextension"
+        svcprincipal_app_id        = "37c2a35a-042f-436a-9216-54f1c72cc69d"
+        svcprincipal_creds_value   = "2KcGffYBBCeyIu48Et/tzw2RfbAY/yy/+hBbOakLZKo="
+        is_service_principal       = "true"
+        aad_tenant_id              = "0873a9b0-a78c-47e6-b937-5a1c3053f4a7"
+        wvd_tenant_name            = "new-wvd"
+        RDBrokerURL                = "https://rdbroker.wvd.microsoft.com"
+        registration_expiration_hours = "48"
+        host_pool_name                = "firsthp"
+        existing_tenant_group_name    = "Default Tenant Group"
+        base_url = "https://raw.githubusercontent.com/Azure/RDS-Templates/master/wvd-templates"
       }
 
       microsoft_azure_domainJoin = {
         name = "microsoft_azure_domainJoin"
+        domain_name = "dns.demos.llc"
+        domain_password = "@@lhftfjknbh88AABBKKJHKJHlljj#"
+        ou_path = ""
+        user = "adminaad@demos.llc"
+        restart = "true"
+        options = "3"
+
       }
 
-      custom_script_extensions = {
-        name = "custom_script_extensions"
-      }
+      # custom_script_extensions = {
+      #   name = "custom_script_extensions"
+      # }
     }
   
   }
