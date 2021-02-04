@@ -6,7 +6,7 @@ module "app_service_environments" {
 
   settings                  = each.value
   resource_group_name       = module.resource_groups[each.value.resource_group_key].name
-  location                  = lookup(each.value, "region", null) == null ? module.resource_groups[each.value.resource_group_key].location : var.global_settings.regions[each.value.region]
+  location                  = lookup(each.value, "region", null) == null ? module.resource_groups[each.value.resource_group_key].location : local.global_settings.regions[each.value.region]
   tags                      = try(each.value.tags, null)
   base_tags                 = try(local.global_settings.inherit_tags, false) ? module.resource_groups[each.value.resource_group_key].tags : {}
   name                      = each.value.name
@@ -24,6 +24,6 @@ module "app_service_environments" {
 
 
 output "app_service_environments" {
-  value     = module.app_service_environments
-  sensitive = true
+  value = module.app_service_environments
+
 }

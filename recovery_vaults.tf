@@ -10,13 +10,14 @@ module recovery_vaults {
   identity            = try(each.value.identity, null)
   resource_groups     = module.resource_groups
   resource_group_name = module.resource_groups[each.value.resource_group_key].name
-  location            = lookup(each.value, "region", null) == null ? module.resource_groups[each.value.resource_group_key].location : var.global_settings.regions[each.value.region]
+  location            = lookup(each.value, "region", null) == null ? module.resource_groups[each.value.resource_group_key].location : local.global_settings.regions[each.value.region]
   vnets               = try(local.combined_objects_networking, {})
   private_endpoints   = try(each.value.private_endpoints, {})
+  private_dns         = local.combined_objects_private_dns
   base_tags           = try(local.global_settings.inherit_tags, false) ? module.resource_groups[each.value.resource_group_key].tags : {}
 }
 
 output recovery_vaults {
-  value     = module.recovery_vaults
-  sensitive = true
+  value = module.recovery_vaults
+
 }

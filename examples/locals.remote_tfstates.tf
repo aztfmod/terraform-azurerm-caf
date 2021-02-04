@@ -12,6 +12,8 @@ data "terraform_remote_state" "remote" {
 }
 
 locals {
+  tags = merge(var.tags, { "rover_version" = var.rover_version })
+
   landingzone = {
     current = {
       storage_account_name = var.tfstate_storage_account_name
@@ -54,6 +56,9 @@ locals {
       event_hub_namespaces = data.terraform_remote_state.remote[var.landingzone.global_settings_key].outputs.diagnostics.event_hub_namespaces
     }
 
+    vnets = {
+      for key, value in try(var.landingzone.tfstates, {}) : key => merge(try(data.terraform_remote_state.remote[key].outputs.vnets[key], {}))
+    }
     keyvaults = {
       for key, value in try(var.landingzone.tfstates, {}) : key => merge(try(data.terraform_remote_state.remote[key].outputs.keyvaults[key], {}))
     }

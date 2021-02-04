@@ -1,5 +1,5 @@
 output id {
-  value     = azurerm_virtual_network_gateway.vngw.id
-  sensitive = false
+  value = azurerm_virtual_network_gateway.vngw.id
+
 }
 

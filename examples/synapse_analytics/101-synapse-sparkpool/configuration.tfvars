@@ -4,12 +4,25 @@
 # - caf_neworking with 200-multi-region-hub
 # - 200-basic-ml networking_spoke
 
+global_settings = {
+  default_region = "region1"
+  regions = {
+    region1 = "southeastasia"
+  }
+}
+
+#
+# Resource groups to be created
+#
 resource_groups = {
   dap_synapse_re1 = {
     name = "dap-synapse"
   }
 }
 
+#
+# Synapse workspace settings
+#
 synapse_workspaces = {
   synapse_wrkspc_re1 = {
     name                    = "synapsewpc"
@@ -55,6 +68,9 @@ synapse_workspaces = {
   }
 }
 
+#
+# Storage account settings
+#
 storage_accounts = {
   synapsestorage_re1 = {
     name                     = "synapsere1"
@@ -76,6 +92,9 @@ storage_accounts = {
   }
 }
 
+#
+# Key Vault settings
+#
 keyvaults = {
   synapse_secrets = {
     name                = "synapsesecrets"
@@ -107,7 +126,6 @@ keyvaults = {
 #
 # IAM
 #
-
 role_mapping = {
   built_in_role_mapping = {
     storage_accounts = {

@@ -8,6 +8,15 @@ resource "azurecaf_name" "agw" {
   use_slug      = var.global_settings.use_slug
 }
 
+data "azurerm_key_vault_certificate" "trustedcas" {
+  for_each = {
+    for key, value in try(var.settings.trusted_root_certificate, {}) : key => value
+    if try(value.keyvault_key, null) != null
+  }
+  name         = each.value.name
+  key_vault_id = var.keyvaults[try(each.value.lz_key, var.client_config.landingzone_key)][each.value.keyvault_key].id
+}
+
 resource "azurerm_application_gateway" "agw" {
   name                = azurecaf_name.agw.result
   resource_group_name = var.resource_group_name
@@ -29,7 +38,7 @@ resource "azurerm_application_gateway" "agw" {
     subnet_id = local.ip_configuration["gateway"].subnet_id
   }
 
-  dynamic autoscale_configuration {
+  dynamic "autoscale_configuration" {
     for_each = try(var.settings.capacity.autoscale, null) == null ? [] : [1]
 
     content {
@@ -38,7 +47,7 @@ resource "azurerm_application_gateway" "agw" {
     }
   }
 
-  dynamic frontend_ip_configuration {
+  dynamic "frontend_ip_configuration" {
     for_each = var.settings.front_end_ip_configurations
 
     content {
@@ -50,7 +59,7 @@ resource "azurerm_application_gateway" "agw" {
     }
   }
 
-  dynamic frontend_port {
+  dynamic "frontend_port" {
     for_each = var.settings.front_end_ports
 
     content {
@@ -59,7 +68,7 @@ resource "azurerm_application_gateway" "agw" {
     }
   }
 
-  dynamic http_listener {
+  dynamic "http_listener" {
     for_each = local.listeners
 
     content {
@@ -67,14 +76,14 @@ resource "azurerm_application_gateway" "agw" {
       frontend_ip_configuration_name = var.settings.front_end_ip_configurations[http_listener.value.front_end_ip_configuration_key].name
       frontend_port_name             = var.settings.front_end_ports[http_listener.value.front_end_port_key].name
       protocol                       = var.settings.front_end_ports[http_listener.value.front_end_port_key].protocol
-      host_name                      = try(http_listener.value.host_names, null) == null ? http_listener.value.host_name : null
-      host_names                     = try(http_listener.value.host_name, null) == null ? http_listener.value.host_names : null
+      host_name                      = try(regex("(.+).", (try(http_listener.value.host_names, null) == null ? try(var.dns_zones[try(http_listener.value.dns_zone.lz_key, var.client_config.landingzone_key)][http_listener.value.dns_zone.key].records[0][http_listener.value.dns_zone.record_type][http_listener.value.dns_zone.record_key].fqdn, http_listener.value.host_name) : null))[0], null)
+      host_names                     = try(http_listener.value.host_name, null) == null ? try(http_listener.value.host_names, null) : null
       require_sni                    = try(http_listener.value.require_sni, false)
       ssl_certificate_name           = try(http_listener.value.keyvault_certificate.certificate_key, null)
     }
   }
 
-  dynamic request_routing_rule {
+  dynamic "request_routing_rule" {
     for_each = local.listeners
 
     content {
@@ -87,7 +96,7 @@ resource "azurerm_application_gateway" "agw" {
     }
   }
 
-  dynamic backend_http_settings {
+  dynamic "backend_http_settings" {
     for_each = local.backend_http_settings
 
     content {
@@ -97,10 +106,11 @@ resource "azurerm_application_gateway" "agw" {
       protocol                            = backend_http_settings.value.protocol
       request_timeout                     = try(backend_http_settings.value.request_timeout, 30)
       pick_host_name_from_backend_address = try(backend_http_settings.value.pick_host_name_from_backend_address, false)
+      trusted_root_certificate_names      = try(backend_http_settings.value.trusted_root_certificate_names, null)
     }
   }
 
-  dynamic backend_address_pool {
+  dynamic "backend_address_pool" {
     for_each = local.backend_pools
 
     content {
@@ -110,7 +120,7 @@ resource "azurerm_application_gateway" "agw" {
     }
   }
 
-  dynamic identity {
+  dynamic "identity" {
     for_each = try(var.settings.identity, null) == null ? [] : [1]
 
     content {
@@ -124,9 +134,17 @@ resource "azurerm_application_gateway" "agw" {
 
   # }
 
-  # trusted_root_certificate {
 
-  # }
+
+  dynamic "trusted_root_certificate" {
+    for_each = {
+      for key, value in try(var.settings.trusted_root_certificate, {}) : key => value
+    }
+    content {
+      name = trusted_root_certificate.value.name
+      data = try(trusted_root_certificate.value.data, data.azurerm_key_vault_certificate.trustedcas[trusted_root_certificate.key].certificate_data_base64)
+    }
+  }
 
   # ssl_policy {
 
@@ -136,7 +154,7 @@ resource "azurerm_application_gateway" "agw" {
 
   # }
 
-  dynamic ssl_certificate {
+  dynamic "ssl_certificate" {
     for_each = local.certificate_keys
 
     content {
