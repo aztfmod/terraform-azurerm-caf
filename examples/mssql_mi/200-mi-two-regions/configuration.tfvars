@@ -131,6 +131,7 @@ mssql_managed_instances = {
 
     storageSizeInGB = 32
     vCores          = 8
+
   }
 }
 
@@ -172,6 +173,13 @@ mssql_managed_databases = {
     name               = "lz-sql-managed-db2"
     mi_server_key      = "sqlmi1"
   }
+  # managed_db_ltr = {
+  #   resource_group_key                = "sqlmi_region1"
+  #   name                              = "lz-sql-managed-db-ltr"
+  #   mi_server_key                     = "sqlmi1"
+  #   createMode                        = "RestoreLongTermRetentionBackup"
+  #   longTermRetentionBackupResourceId = "/subscriptions/1d53e782-9f46-4720-b6b3-cff29106e9f6/resourceGroups/whdz-rg-sqlmi-rg1/providers/Microsoft.Sql/locations/southeastasia/longTermRetentionManagedInstances/whdz-sql-lz-sql-mi/longTermRetentionDatabases/whdz-sqldb-lz-sql-managed-db1/longTermRetentionManagedInstanceBackups/7b19016e-3f85-46c0-b4bd-dd5c8f5624f3;132512472960000000"
+  # }
 }
 
 # mssql_managed_databases_restore = {
@@ -184,6 +192,19 @@ mssql_managed_databases = {
 #     restorePointInTime  = "2020-11-11T10:00:00Z"
 #   }
 # }
+
+mssql_managed_databases_backup_ltr = {
+  sqlmi1 = {
+    resource_group_key = "sqlmi_region1"
+    mi_server_key      = "sqlmi1"
+    database_key       = "managed_db1"
+
+    weeklyRetention  = "P12W"
+    monthlyRetention = "P12M"
+    yearlyRetention  = "P5Y"
+    weekOfYear       = 16
+  }
+}
 
 mssql_mi_failover_groups = {
   failover-mi = {
@@ -251,3 +272,80 @@ mssql_mi_administrators = {
     # user_principal_name = ""
   }
 }
+
+# keyvaults = {
+#   tde_primary = {
+#     name               = "mi-tde-primary"
+#     resource_group_key = "sqlmi_region1"
+#     sku_name           = "standard"
+
+#     creation_policies = {
+#       logged_in_user = {
+#         key_permissions = ["get", "list", "update", "create", "import", "delete", "recover", "backup", "restore", "purge"]
+#       }
+#     }
+#   }
+#   tde_secondary = {
+#     name               = "mi-tde-secondary"
+#     resource_group_key = "sqlmi_region2"
+#     sku_name           = "standard"
+
+#     creation_policies = {
+#       logged_in_user = {
+#         key_permissions = ["get", "list", "update", "create", "import", "delete", "recover", "backup", "restore", "purge"]
+#       }
+#     }
+#   }
+# }
+
+# keyvault_access_policies = {
+#   # A maximum of 16 access policies per keyvault
+#   tde_primary = {
+#     sqlmi1 = {
+#       mssql_managed_instance_key = "sqlmi1"
+#       key_permissions            = ["get", "unwrapKey", "wrapKey"]
+#     }
+#     sqlmi2 = {
+#       mssql_managed_instance_secondary_key = "sqlmi2"
+#       key_permissions                      = ["get", "unwrapKey", "wrapKey"]
+#     }
+#   }
+#   tde_secondary = {
+#     sqlmi1 = {
+#       mssql_managed_instance_key = "sqlmi1"
+#       key_permissions            = ["get", "unwrapKey", "wrapKey"]
+#     }
+#     sqlmi2 = {
+#       mssql_managed_instance_secondary_key = "sqlmi2"
+#       key_permissions                      = ["get", "unwrapKey", "wrapKey"]
+#     }
+#   }
+# }
+
+# keyvault_keys = {
+#   tde_mi = {
+#     keyvault_key = "tde_primary"
+#     name         = "TDE"
+#     key_type     = "RSA"
+#     key_opts     = ["encrypt", "decrypt", "sign", "verify", "wrapKey", "unwrapKey"]
+#     key_size     = 2048
+#   }
+# }
+
+//TDE
+# mssql_mi_secondary_tdes = {
+#   sqlmi2 = {
+#     resource_group_key     = "sqlmi_region2"
+#     mi_server_key          = "sqlmi2"
+#     keyvault_key_key       = "tde_mi"
+#     secondary_keyvault_key = "tde_secondary"
+#   }
+# }
+
+# mssql_mi_tdes = {
+#   sqlmi1 = {
+#     resource_group_key = "sqlmi_region1"
+#     mi_server_key      = "sqlmi1"
+#     keyvault_key_key   = "tde_mi"
+#   }
+# }

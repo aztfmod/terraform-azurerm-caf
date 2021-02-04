@@ -173,6 +173,12 @@ mssql_servers = {
           is_manual_connection = false
           subresource_names    = ["sqlServer"]
         }
+
+        private_dns = {
+          zone_group_name = "privatelink_database_windows_net"
+          # lz_key          = ""   # If the DNS keys are deployed in a remote landingzone
+          keys = ["privatelink"]
+        }
       }
     }
   }
@@ -236,6 +242,22 @@ mssql_servers = {
       }
     }
 
+  }
+}
+
+private_dns = {
+  privatelink = {
+    name               = "privatelink.database.windows.net"
+    resource_group_key = "sql_region1"
+
+    vnet_links = {
+      devops = {
+        name     = "devops"
+        lz_key   = "launchpad"
+        vnet_key = "devops_region1"
+      }
+
+    }
   }
 }
 
