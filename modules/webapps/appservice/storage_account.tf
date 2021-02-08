@@ -1,36 +1,29 @@
-data "azurerm_storage_account_sas" "backup" {
+data "azurerm_storage_account_blob_container_sas" "backup" {
   count            = try(var.settings.backup, null) != null ? 1 : 0
 
   connection_string = local.backup_storage_account.primary_connection_string
+  container_name    = local.backup_storage_account.containers[var.settings.backup.container_key].name
   https_only        = true
-  signed_version    = "2019-12-12"
 
-  resource_types {
-    service   = true
-    container = true
-    object    = true
-  }
-
-  services {
-    blob  = true
-    queue = false
-    table = false
-    file  = false
-  }
+  #ip_address = "168.1.5.65"
 
   start  = time_rotating.sas[0].id
   expiry = timeadd(time_rotating.sas[0].id, format("%sh", var.settings.backup.sas_policy.expire_in_days * 24))
 
   permissions {
-    read    = true
-    write   = true
-    delete  = false
-    list    = false
-    add     = true
-    create  = true
-    update  = false
-    process = false
+    read   = true
+    add    = true
+    create = true
+    write  = true
+    delete = true
+    list   = true
   }
+
+  # cache_control       = "max-age=5"
+  # content_disposition = "inline"
+  # content_encoding    = "deflate"
+  # content_language    = "en-US"
+  # content_type        = "application/json"
 }
 
 resource "time_rotating" "sas" {
