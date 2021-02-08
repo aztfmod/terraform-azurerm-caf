@@ -28,3 +28,62 @@ resource "azurerm_lb" "lb" {
     }
   }
 }
+
+
+module backend_address_pool {
+  source   = "./backend_address_pool"
+  for_each = try(var.settings.backend_address_pool, {})
+
+  resource_group_name = var.resource_group_name
+  loadbalancer_id     = azurerm_lb.lb.id
+  settings            = each.value
+}
+
+module load_balancer_probe {
+  source   = "./load_balancer_probe"
+  for_each = try(var.settings.probe, {})
+
+  resource_group_name = var.resource_group_name
+  location            = var.location
+  loadbalancer_id     = azurerm_lb.lb.id
+  settings            = each.value
+}
+
+module load_balancer_rules {
+  source   = "./load_balancer_rules"
+  for_each = try(var.settings.lb_rules, {})
+
+  resource_group_name = var.resource_group_name
+  location            = var.location
+  loadbalancer_id     = azurerm_lb.lb.id
+  settings            = each.value
+}
+
+module lb_outbound_rules {
+  source   = "./outbound_rules"
+  for_each = try(var.settings.outbound_rules, {})
+
+  resource_group_name = var.resource_group_name
+  loadbalancer_id     = azurerm_lb.lb.id
+  backend_address_pool_id  = module.backend_address_pool.id
+  settings            = each.value
+}
+
+module lb_nat_rules {
+  source   = "./nat_rules"
+  for_each = try(var.settings.nat_rules, {})
+
+  resource_group_name = var.resource_group_name
+  loadbalancer_id     = azurerm_lb.lb.id
+  backend_address_pool_id  = module.backend_address_pool.id
+  settings            = each.value
+}
+
+module lb_nat_pool {
+  source   = "./nat_pool"
+  for_each = try(var.settings.nat_pool, {})
+
+  resource_group_name = var.resource_group_name
+  loadbalancer_id     = azurerm_lb.lb.id
+  settings            = each.value
+}

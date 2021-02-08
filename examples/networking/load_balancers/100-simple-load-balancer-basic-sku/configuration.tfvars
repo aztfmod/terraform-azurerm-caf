@@ -11,23 +11,6 @@ resource_groups = {
   }
 }
 
-vnets = {
-  vnet1 = {
-    resource_group_key = "lb"
-    vnet = {
-      name          = "test-vn"
-      address_space = ["10.2.0.0/16"]
-    }
-    specialsubnets = {}
-    
-    subnets = {
-      lb = {
-        name = "test"
-        cidr = ["10.2.1.0/24"]
-      }
-    }
-  }
-}
 
 public_ip_addresses = {
   lb_pip = {
@@ -47,13 +30,13 @@ load_balancers = {
     name="lb-test"
     sku = "basic"
     resource_group_key = "lb"
+    backend_address_pool_name = "web-app"
     frontend_ip_configuration = {
      config1 = {
        name= "config1"
        public_ip_address_key = "lb_pip"
-      #  vnet_key  = "vnet1"
-      #  subnet_key = "lb"
     }
    }
   }
 }
+
