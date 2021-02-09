@@ -246,35 +246,3 @@ resource "azurerm_kubernetes_cluster_node_pool" "nodepools" {
   tags                  = merge(try(each.value.tags, {}), try(var.settings.default_node_pool.tags, {}))
 
 }
-
-#
-# Preview features
-#
-# locals {
-#   register_aks_msi_preview_feature_command = <<EOT
-#     az feature register -n AAD-V2 --namespace Microsoft.ContainerService
-
-#     isRegistered=$(az feature list --query properties.state=="Registered")
-
-#     while [ ! $isRegistered == true ]
-#     do
-#       echo "waiting for the provider to register"
-#       sleep 20
-#       isRegistered=$(az feature list --query properties.state=="Registered")
-#     done
-#     echo "Feature registered"
-#     az provider register -n Microsoft.ContainerService
-#   EOT
-# }
-
-
-# Can take around 30 mins to register the feature
-# resource "null_resource" "register_aks_msi_preview_feature" {
-#   provisioner "local-exec" {
-#     command = local.register_aks_msi_preview_feature_command
-#   }
-
-#   triggers = {
-#     command = sha256(local.register_aks_msi_preview_feature_command)
-#   }
-# }
