@@ -48,6 +48,7 @@ resource "azurerm_kubernetes_cluster" "aks" {
     vm_size               = var.settings.default_node_pool.vm_size
     type                  = try(var.settings.default_node_pool.type, "VirtualMachineScaleSets")
     os_disk_size_gb       = try(var.settings.default_node_pool.os_disk_size_gb, null)
+    os_disk_type          = try(var.settings.default_node_pool.os_disk_type, null)
     availability_zones    = try(var.settings.default_node_pool.availability_zones, null)
     enable_auto_scaling   = try(var.settings.default_node_pool.enable_auto_scaling, false)
     enable_node_public_ip = try(var.settings.default_node_pool.enable_node_public_ip, false)
@@ -235,6 +236,7 @@ resource "azurerm_kubernetes_cluster_node_pool" "nodepools" {
   vnet_subnet_id        = var.subnets[var.settings.default_node_pool.subnet_key].id
   vm_size               = each.value.vm_size
   os_disk_size_gb       = try(each.value.os_disk_size_gb, null)
+  os_disk_type          = try(each.value.os_disk_type, null)
   availability_zones    = try(each.value.availability_zones, null)
   enable_auto_scaling   = try(each.value.enable_auto_scaling, false)
   enable_node_public_ip = try(each.value.enable_node_public_ip, false)
