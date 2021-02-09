@@ -9,5 +9,5 @@ resource "azurerm_key_vault_key" "key" {
   not_before_date = try(var.settings.not_before_date, null)
   expiration_date = try(var.settings.expiration_date, null)
 
-  tags = merge(try(var.settings.tags, {}), var.keyvault.base_tags)
+  tags = merge(var.keyvault.base_tags, try(var.settings.tags, null))
 }
