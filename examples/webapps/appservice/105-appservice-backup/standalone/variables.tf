@@ -22,3 +22,7 @@ variable app_services {
 variable var_folder_path {
   default = {}
 }
+
+variable storage_accounts {
+  default = {}
+}
