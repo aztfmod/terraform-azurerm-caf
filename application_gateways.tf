@@ -20,6 +20,7 @@ module "application_gateways" {
   keyvaults             = local.combined_objects_keyvaults
   dns_zones             = local.combined_objects_dns_zones
   keyvault_certificates = module.keyvault_certificates
+  keyvault_certificate_requests = module.keyvault_certificate_requests
   application_gateway_applications = {
     for key, value in local.networking.application_gateway_applications : key => value
     if value.application_gateway_key == each.key
