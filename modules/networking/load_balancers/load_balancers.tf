@@ -29,61 +29,85 @@ resource "azurerm_lb" "lb" {
   }
 }
 
-
-module backend_address_pool {
-  source   = "./backend_address_pool"
-  for_each = try(var.settings.backend_address_pool, {})
+resource "azurerm_lb_backend_address_pool" "backend_address_pool" {
+  for_each = try(var.settings.backend_address_pools, {})
 
   resource_group_name = var.resource_group_name
   loadbalancer_id     = azurerm_lb.lb.id
-  settings            = each.value
+  name                = each.value.backend_address_pool_name
 }
 
-module load_balancer_probe {
-  source   = "./load_balancer_probe"
-  for_each = try(var.settings.probe, {})
+resource "azurerm_lb_probe" "lb_probe" {
+  for_each = try(var.settings.lb_probes, {})
 
   resource_group_name = var.resource_group_name
-  location            = var.location
   loadbalancer_id     = azurerm_lb.lb.id
-  settings            = each.value
+  name                = each.value.probe_name
+  port                = each.value.port
+  protocol            = try(each.value.protocol, null) #Possible values are Http, Https or Tcp
+  request_path        = try(each.value.request_path, null) #Required if protocol is set to Http or Https. Otherwise, it is not allowed.
+  interval_in_seconds = try(each.value.interval_in_seconds, null) #The default value is 15, the minimum value is 5.
+  number_of_probes    = try(each.value.number_of_probes, null) # The default value is 2.
 }
 
-module load_balancer_rules {
-  source   = "./load_balancer_rules"
+resource "azurerm_lb_rule" "lb_rule" {
   for_each = try(var.settings.lb_rules, {})
 
-  resource_group_name = var.resource_group_name
-  location            = var.location
-  loadbalancer_id     = azurerm_lb.lb.id
-  settings            = each.value
+  resource_group_name            = var.resource_group_name
+  loadbalancer_id                = azurerm_lb.lb.id
+  name                           = each.value.lb_rule_name
+  protocol                       = each.value.protocol
+  frontend_port                  = each.value.frontend_port
+  backend_port                   = each.value.backend_port
+  frontend_ip_configuration_name = each.value.frontend_ip_configuration_name
 }
 
-module lb_outbound_rules {
-  source   = "./outbound_rules"
+resource "azurerm_lb_nat_pool" "nat_pool" {
+  for_each = try(var.settings.nat_pools, {})
+
+  resource_group_name            = var.resource_group_name
+  loadbalancer_id                = azurerm_lb.lb.id
+  name                           = each.value.name
+  protocol                       = each.value.protocol
+  frontend_port_start            = each.value.frontend_port_end
+  frontend_port_end              = each.value.frontend_port_end
+  backend_port                   = each.value.backend_port
+  frontend_ip_configuration_name = each.value.frontend_ip_configuration
+}
+
+resource "azurerm_lb_nat_rule" "nat_rule" {
+  for_each = try(var.settings.nat_pools, {})
+
+  resource_group_name            = var.resource_group_name
+  loadbalancer_id                = azurerm_lb.lb.id
+  name                           = each.value.name
+  protocol                       = each.value.protocol
+  frontend_port                  = each.value.frontend_port
+  backend_port                   = each.value.backend_port
+  frontend_ip_configuration_name = each.value.frontend_ip_configuration_name
+  idle_timeout_in_minutes        = try(each.value.idle_timeout_in_minutes, null)
+  enable_floating_ip             = try(each.value.enable_floating_ip, null)
+  enable_tcp_reset               = try(each.value.enable_tcp_reset, null)
+}
+
+resource "azurerm_lb_outbound_rule" "outbound_rule" {
   for_each = try(var.settings.outbound_rules, {})
 
-  resource_group_name = var.resource_group_name
-  loadbalancer_id     = azurerm_lb.lb.id
-  backend_address_pool_id  = module.backend_address_pool.id
-  settings            = each.value
+  resource_group_name     = var.resource_group_name
+  loadbalancer_id         = azurerm_lb.lb.id
+  name                    = each.value.name
+  protocol                = each.value.protocol
+  backend_address_pool_id = azurerm_lb_backend_address_pool.backend_address_pool[each.value.backend_address_pool_key].id
+  enable_tcp_reset        = try(each.value.enable_tcp_reset, null)
+  allocated_outbound_ports  = try(each.value.allocated_outbound_ports, null)
+  idle_timeout_in_minutes  = try(each.value.idle_timeout_in_minutes, null)
+
+
+  dynamic "frontend_ip_configuration" {
+    for_each = try(var.settings.outbound_rules.frontend_ip_configuration, {})
+    content {
+      name = frontend_ip_configuration.value.name
+    }
+  }
 }
 
-module lb_nat_rules {
-  source   = "./nat_rules"
-  for_each = try(var.settings.nat_rules, {})
-
-  resource_group_name = var.resource_group_name
-  loadbalancer_id     = azurerm_lb.lb.id
-  backend_address_pool_id  = module.backend_address_pool.id
-  settings            = each.value
-}
-
-module lb_nat_pool {
-  source   = "./nat_pool"
-  for_each = try(var.settings.nat_pool, {})
-
-  resource_group_name = var.resource_group_name
-  loadbalancer_id     = azurerm_lb.lb.id
-  settings            = each.value
-}
