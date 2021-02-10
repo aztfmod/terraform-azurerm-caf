@@ -5,3 +5,6 @@ variable settings {}
 variable client_config {
   description = "Client configuration object (see module README.md)."
 }
+variable keyvault_id {
+  default = null
+}

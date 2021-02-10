@@ -18,3 +18,6 @@ variable workspace_id {
   default = {}
 }
 
+variable key_vault_id {
+  default = {}
+}
