@@ -48,7 +48,3 @@ resource "azurerm_key_vault_certificate" "csr" {
     }
   }
 }
-
-output x509 {
-  value = var.settings.certificate_policy.x509_certificate_properties[*]
-}
