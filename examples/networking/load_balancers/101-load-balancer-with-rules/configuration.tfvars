@@ -16,9 +16,9 @@ public_ip_addresses = {
   lb_pip = {
     name               = "lb_pip1"
     resource_group_key = "lb"
-    sku                = "Basic"
+    sku                = "Standard"
     # Note: For UltraPerformance ExpressRoute Virtual Network gateway, the associated Public IP needs to be sku "Basic" not "Standard"
-    allocation_method = "Dynamic"
+    allocation_method = "Static"
     # allocation method needs to be Dynamic
     ip_version              = "IPv4"
     idle_timeout_in_minutes = "4"
@@ -28,12 +28,13 @@ public_ip_addresses = {
 load_balancers = {
   lb1 = {
     name="lb-test"
-    sku = "basic"
+    sku = "Standard"
     resource_group_key = "lb"
 
-    backend_address_pool = {
+    backend_address_pools = {
       pool1 = {
         backend_address_pool_name = "web-app"
+        load_balancer_key  = "lb1"
       }
     }
 
@@ -44,7 +45,7 @@ load_balancers = {
       }
      } 
 
-    probe ={
+    probes ={
       probe1 = {
        resource_group_key = "lb"
        load_balancer_key  = "lb1"
@@ -57,6 +58,7 @@ load_balancers = {
       rule1 = {
         resource_group_key = "lb"
         load_balancer_key = "lb1"
+        backend_address_pool_key = "pool1"
         lb_rule_name = "rule1"
         protocol = "tcp"
         frontend_port = "3389"
@@ -65,9 +67,10 @@ load_balancers = {
       }
     }
 
-    outbound_rule = {
+    outbound_rules = {
       rule1 ={
         name = "outbound-rule"
+        backend_address_pool_key = "pool1"
         protocol = "All"
         frontend_ip_configuration = {
           config1 = {
