@@ -1,6 +1,5 @@
 global_settings = {
   default_region = "region1"
-  environment    = "test"
   regions = {
     region1 = "East US"
     region2 = "southeastasia"
@@ -8,13 +7,28 @@ global_settings = {
   }
 }
 
-
 resource_groups = {
   # Default to var.global_settings.default_region. You can overwrite it by setting the attribute region = "region2"
   wvd_region1 = {
     name = "wvd"
   }
   
+}
+
+landingzone = {  
+  backend_type        = "azurerm"
+  global_settings_key = "launchpad"
+  level               = "level1"
+  key                 = "wvd_post"
+  tfstates = {
+    examples = {
+      tfstate = "wvd-pre.tfstate"
+    }
+    launchpad = {
+      level   = "lower"
+      tfstate = "caf_launchpad.tfstate"
+    }
+  }  
 }
 
 wvd_application_groups = {
@@ -72,7 +86,7 @@ virtual_machines = {
     os_type = "windows"
 
     # when not set the password is auto-generated and stored into the keyvault
-    keyvault_key = "test_client"
+    keyvault_key = "ssh_keys"
 
     # Define the number of networking cards to attach the virtual machine
     networking_interfaces = {
@@ -141,32 +155,30 @@ virtual_machines = {
     virtual_machine_extensions = {
       additional_session_host_dscextension = {
         name                       = "additional_session_host_dscextension"
-        svcprincipal_app_id        = "37c2a35a-042f-436a-9216-54f1c72cc69d"
-        svcprincipal_creds_value   = "2KcGffYBBCeyIu48Et/tzw2RfbAY/yy/+hBbOakLZKo="
         is_service_principal       = "true"
-        aad_tenant_id              = "0873a9b0-a78c-47e6-b937-5a1c3053f4a7"
-        wvd_tenant_name            = "new-wvd"
+        wvd_tenant_name            = "test-wvd"
         RDBrokerURL                = "https://rdbroker.wvd.microsoft.com"
         registration_expiration_hours = "48"
         host_pool_name                = "firsthp"
+        secret_prefix = "wvd-tenant"
         existing_tenant_group_name    = "Default Tenant Group"
         base_url = "https://raw.githubusercontent.com/Azure/RDS-Templates/master/wvd-templates"
+        lz_key = "examples"
+        keyvault_key = "wvd_kv"
       }
 
       microsoft_azure_domainJoin = {
         name = "microsoft_azue_dromainJoin"
-        domain_name = "dns.demos.llc"
-        domain_password = "@@lhftfjknbh88AABBKKJHKJHlljj#"
+        domain_name = "dns.contoso.com"
         ou_path = ""
-        user = "adminaad@demos.llc"
+        user = "user@contoso.com"
         restart = "true"
         options = "3"
-
+        secret_prefix = "wvd-tenant"
+        lz_key = "examples"
+        keyvault_key = "wvd_kv"
       }
-
-      # custom_script_extensions = {
-      #   name = "custom_script_extensions"
-      # }
+      
     }
   
   }
@@ -186,9 +198,6 @@ dynamic_keyvault_secrets = {
     }
   }
 }
-
-
-
 
 # ## Networking configuration
 vnets = {
@@ -211,6 +220,7 @@ vnets = {
 
   }
 }
+
 
 public_ip_addresses = {
   example_vm_pip1_rg1 = {
@@ -237,106 +247,19 @@ availability_sets = {
   }
 }
 
-# keyvaults = {
-#   ssh_keys = {
-#     name               = "vmsecrets"
-#     resource_group_key = "wvd_region1"
-#     sku_name           = "standard"
-#     enabled_for_deployment = true
-
-#     creation_policies = {
-#       logged_in_user = {
-#         certificate_permissions = ["Get", "List", "Update", "Create", "Import", "Delete", "Purge", "Recover"]
-#         secret_permissions      = ["Set", "Get", "List", "Delete", "Purge", "Recover"]
-#       }
-#     }
-#   }
-# }
-
 keyvaults = {
-  test_client = {
-    name                = "testkv"
-    resource_group_key  = "wvd_region1"
-    sku_name            = "standard"
-    soft_delete_enabled = true
+  ssh_keys = {
+    name               = "vmsecrets"
+    resource_group_key = "wvd_region1"
+    sku_name           = "standard"
     enabled_for_deployment = true
+
     creation_policies = {
       logged_in_user = {
-        # if the key is set to "logged_in_user" add the user running terraform in the keyvault policy
-        # More examples in /examples/keyvault
         certificate_permissions = ["Get", "List", "Update", "Create", "Import", "Delete", "Purge", "Recover"]
-        secret_permissions = ["Set", "Get", "List", "Delete", "Purge", "Recover"]
+        secret_permissions      = ["Set", "Get", "List", "Delete", "Purge", "Recover"]
       }
     }
-  }
-}
-
-keyvault_access_policies_azuread_apps = {
-  test_client = {
-    test_client = {
-      azuread_app_key    = "test_client"
-      secret_permissions = ["Set", "Get", "List", "Delete"]
-    }
-  }
-}
-
-azuread_apps = {
-  test_client = {
-    useprefix        = true
-    application_name = "test-client"
-    password_policy = {
-      # Length of the password
-      length  = 250
-      special = false
-      upper   = true
-      number  = true
-
-      # Define the number of days the password is valid. It must be more than the rotation frequency
-      expire_in_days = 10
-      rotation = {
-        #
-        # Set how often the password must be rotated. When passed the renewal time, running the terraform plan / apply will change to a new password
-        # Only set one of the value
-        #
-
-        # mins   = 10     # only recommended for CI and demo
-        days = 7
-        # months = 1
-      }
-    }
-    app_role_assignment_required = true
-    keyvaults = {
-      test_client = {
-        secret_prefix = "test-client"
-      }
-    }
-    # Store the ${secret_prefix}-client-id, ${secret_prefix}-client-secret...
-    # Set the policy during the creation process of the launchpad
-  }
-}
-
-#complete list of built-in-roles : https://docs.microsoft.com/en-us/azure/role-based-access-control/built-in-roles
-
-role_mapping = {
-  built_in_role_mapping = {
-    subscriptions = {
-      # subcription level access
-      logged_in_subscription = {
-        "Contributor" = {
-          azuread_apps = {
-            keys = ["test_client"]
-          }
-        }
-      }
-    }
-  }
-}
-
-azuread_roles = {
-  packer_client = {
-    roles = [
-      "Contributor"
-    ]
   }
 }
 

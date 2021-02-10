@@ -1,23 +1,47 @@
+
 global_settings = {
   default_region = "region1"
+  environment    = "test"
   regions = {
-    region1 = "southeastasia"
+    region1 = "East US"
+    region2 = "southeastasia"
+    
   }
-  random_length = 5
 }
 
+
 resource_groups = {
-  test = {
-    name = "test"
+  # Default to var.global_settings.default_region. You can overwrite it by setting the attribute region = "region2"
+  wvd_region = {
+    name = "wvd-pre"
+  }
+  
+}
+
+
+azuread_apps = {
+  wvd_tenant = {
+    useprefix                    = true
+    application_name             = "wvd-tenant"
+    password_expire_in_days      = 1
+    app_role_assignment_required = true
+    keyvaults = {
+      wvd_kv = {
+        secret_prefix = "wvd-tenant"
+      }
+    }
+    # Store the ${secret_prefix}-client-id, ${secret_prefix}-client-secret...
+    # Set the policy during the creation process of the launchpad
   }
 }
 
 keyvaults = {
-  test_kv = {
+  wvd_kv = {
     name                = "testkv"
-    resource_group_key  = "test"
+    resource_group_key  = "wvd_region"
     sku_name            = "standard"
     soft_delete_enabled = true
+    lz_key = "wvd_pre"
     creation_policies = {
       logged_in_user = {
         # if the key is set to "logged_in_user" add the user running terraform in the keyvault policy
@@ -28,65 +52,12 @@ keyvaults = {
   }
 }
 
-azuread_apps = {
-  app1 = {
-    useprefix                    = true
-    application_name             = "app1"
-    app_role_assignment_required = true
-    keyvaults = {
-      test_client = {
-        secret_prefix = "app1"
-      }
-    }
-  }
-  app2 = {
-    useprefix                    = true
-    application_name             = "app2"
-    app_role_assignment_required = true
-    keyvaults = {
-      test_client = {
-        secret_prefix = "app2"
-      }
-    }
-  }
-}
-
-azuread_groups = {
-  group1 = {
-    name        = "group1"
-    description = "Apps with permissions"
-    members = {
-      user_principal_names = []
-      group_names          = []
-      object_ids           = []
-      group_keys           = []
-      service_principal_keys = [
-        "app1"
-      ]
-
-    }
-    owners = {
-      user_principal_names = []
-      service_principal_keys = [
-        "app2"
-      ]
-    }
-    prevent_duplicate_name = false
-  }
-
-}
-
-role_mapping = {
-  built_in_role_mapping = {
-    subscriptions = {
-      # subcription level access
-      logged_in_subscription = {
-        "Contributor" = {
-          azuread_groups = {
-            keys = ["group1"]
-          }
-        }
-      }
+# Store output attributes into keyvault secret
+dynamic_keyvault_secrets = {
+  wvd_kv = { # Key of the keyvault    
+    domain-password = {
+      secret_name = "wvd-domain-password"
+      value       = ""  #Insert manually for AD Domain Join extension to use
     }
   }
 }

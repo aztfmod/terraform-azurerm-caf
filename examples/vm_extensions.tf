@@ -52,6 +52,7 @@ module "additional_session_host_dscextension" {
 
   client_config      = module.caf.client_config
   virtual_machine_id = module.caf.virtual_machines[each.key].id
+  keyvault_id        = local.combined.keyvaults[try(each.value.virtual_machine_extensions.additional_session_host_dscextension.lz_key, module.caf.client_config.landingzone_key)][each.value.virtual_machine_extensions.additional_session_host_dscextension.keyvault_key].id
   extension          = each.value.virtual_machine_extensions.additional_session_host_dscextension
   extension_name     = "additional_session_host_dscextension"
   settings = {
@@ -71,6 +72,7 @@ module "microsoft_azure_domainJoin" {
 
   client_config      = module.caf.client_config
   virtual_machine_id = module.caf.virtual_machines[each.key].id
+  keyvault_id        = local.combined.keyvaults[try(each.value.virtual_machine_extensions.microsoft_azure_domainJoin.lz_key, module.caf.client_config.landingzone_key)][each.value.virtual_machine_extensions.microsoft_azure_domainJoin.keyvault_key].id
   extension          = each.value.virtual_machine_extensions.microsoft_azure_domainJoin
   extension_name     = "microsoft_azure_domainJoin"
   settings = {
@@ -79,23 +81,24 @@ module "microsoft_azure_domainJoin" {
 }
 
 
-module "custom_script_extensions" {
-  source     = "../modules/compute/virtual_machine_extensions"
-  depends_on = [module.caf]
+# module "custom_script_extensions" {
+#   source     = "../modules/compute/virtual_machine_extensions"
+#   depends_on = [module.caf]
 
-  for_each = {
-    for key, value in try(var.virtual_machines, {}) : key => value
-    if try(value.virtual_machine_extensions.custom_script_extensions, null) != null
-  }
+#   for_each = {
+#     for key, value in try(var.virtual_machines, {}) : key => value
+#     if try(value.virtual_machine_extensions.custom_script_extensions, null) != null
+#   }
 
-  client_config      = module.caf.client_config
-  virtual_machine_id = module.caf.virtual_machines[each.key].id
-  extension          = each.value.virtual_machine_extensions.custom_script_extensions
-  extension_name     = "custom_script_extensions"
-  settings = {
-    diagnostics = module.caf.diagnostics
-  }
-}
+#   client_config      = module.caf.client_config
+#   virtual_machine_id = module.caf.virtual_machines[each.key].id
+#   keyvault_id        = local.combined.keyvaults[try(each.value.lz_key, var.client_config.landingzone_key)][var.keyvault_key].id
+#   extension          = each.value.virtual_machine_extensions.custom_script_extensions
+#   extension_name     = "custom_script_extensions"
+#   settings = {
+#     diagnostics = module.caf.diagnostics
+#   }
+# }
 
 
 

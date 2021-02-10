@@ -325,3 +325,13 @@ variable netapp_accounts {
 variable automations {
   default = {}
 }
+variable keyvault_id {
+  default = {}
+}
+variable keyvault_key {
+  default = {}
+}
+
+variable client_config {
+  default = {}
+}

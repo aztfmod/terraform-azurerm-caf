@@ -1,15 +1,12 @@
 resource "azurerm_virtual_machine_extension" "domainJoin" {
   for_each = var.extension_name == "microsoft_azure_domainJoin" ? toset(["enabled"]) : toset([])
   name                       = "microsoft_azure_domainJoin"
-  # location                   = "${var.region}"
-  # resource_group_name        = var.resource_group_name
   virtual_machine_id         = var.virtual_machine_id
   publisher                  = "Microsoft.Compute"
   type                       = "JsonADDomainExtension"
   type_handler_version       = try(var.extension.type_handler_version, "1.3")
   auto_upgrade_minor_version = try(var.extension.auto_upgrade_minor_version, true)
-  # depends_on                 = ["azurerm_virtual_machine_extension.LogAnalytics"]
-
+  
   lifecycle {
     ignore_changes = [
       "settings",
@@ -30,7 +27,7 @@ SETTINGS
 
   protected_settings = <<PROTECTED_SETTINGS
   {
-         "Password": "${var.extension.domain_password}"
+         "Password": "${data.azurerm_key_vault_secret.wvd_client_secret.value}"
   }
 PROTECTED_SETTINGS
 
@@ -63,7 +60,7 @@ resource "azurerm_virtual_machine_extension" "additional_session_host_dscextensi
     "configurationFunction": "Configuration.ps1\\RegisterSessionHost",
      "properties": {
         "TenantAdminCredentials":{
-          "userName":"${var.extension.svcprincipal_app_id}",
+          "userName":"${data.azurerm_key_vault_secret.wvd_client_id.value}",
           "password":"PrivateSettingsRef:tenantAdminPassword"
         },
         "RDBrokerURL":"${var.extension.RDBrokerURL}",
@@ -72,7 +69,8 @@ resource "azurerm_virtual_machine_extension" "additional_session_host_dscextensi
         "HostPoolName":"${var.extension.host_pool_name}",
         "Hours":"${var.extension.registration_expiration_hours}",
         "isServicePrincipal":"${var.extension.is_service_principal}",
-        "AadTenantId":"${var.extension.aad_tenant_id}"        
+        "AadTenantId":"${data.azurerm_key_vault_secret.wvd_tenant_id.value}"
+                        
   }
 }
 SETTINGS
@@ -80,7 +78,7 @@ SETTINGS
   protected_settings = <<PROTECTED_SETTINGS
 {
   "items":{
-    "tenantAdminPassword":"${var.extension.svcprincipal_creds_value}"
+    "tenantAdminPassword":"${data.azurerm_key_vault_secret.wvd_domain_password.value}"
   }
 }
 PROTECTED_SETTINGS
@@ -94,37 +92,23 @@ PROTECTED_SETTINGS
   # }
 }
 
+data "azurerm_key_vault_secret" "wvd_client_id" {
+name = format("%s-client-id", var.extension.secret_prefix)
+key_vault_id = var.keyvault_id
+}
 
-# resource "azurerm_virtual_machine_extension" "custom_script_extensions" {
-#   for_each = var.extension_name == "extension_custom_script" ? toset(["enabled"]) : toset([])
-#   name                 = "custom_script_extensions"
-#   # location             = "${var.region}"
-#   # resource_group_name  = "${var.resource_group_name}"
-#   virtual_machine_id   = var.virtual_machine_id
-#   publisher            = "Microsoft.Compute"
-#   type                 = "CustomScriptExtension"
-#   depends_on           = ["azurerm_virtual_machine_extension.domainJoin"]
-#   type_handler_version = "1.9"
+data "azurerm_key_vault_secret" "wvd_client_secret" {
+name = format("%s-client-secret", var.extension.secret_prefix)
+key_vault_id = var.keyvault_id
+}
 
-#   lifecycle {
-#     ignore_changes = [
-#       "settings",
-#     ]
-#   }
+data "azurerm_key_vault_secret" "wvd_tenant_id" {
+name = format("%s-tenant-id", var.extension.secret_prefix)
+key_vault_id = var.keyvault_id
+}
 
-#   settings = <<SETTINGS
-#     {
-#       "fileUris": ["${join("\",\"", var.extensions_custom_script_fileuris)}"],
-#       "commandToExecute": "${var.extensions_custom_command}"
-#     }
-# SETTINGS
-
-#   # tags {
-#   #   BUC             = "${var.tagBUC}"
-#   #   SupportGroup    = "${var.tagSupportGroup}"
-#   #   AppGroupEmail   = "${var.tagAppGroupEmail}"
-#   #   EnvironmentType = "${var.tagEnvironmentType}"
-#   #   CustomerCRMID   = "${var.tagCustomerCRMID}"
-#   # }
-# }
+data "azurerm_key_vault_secret" "wvd_domain_password" {
+name = "wvd-domain-password"
+key_vault_id = var.keyvault_id
+}
 
