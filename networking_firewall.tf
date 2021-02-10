@@ -10,8 +10,8 @@ module azurerm_firewalls {
   base_tags           = try(local.global_settings.inherit_tags, false) ? module.resource_groups[each.value.resource_group_key].tags : {}
   subnet_id           = module.networking[each.value.vnet_key].subnets["AzureFirewallSubnet"].id
   public_ip_id        = try(module.public_ip_addresses[each.value.public_ip_key].id, null)
-  public_ip_addresses = module.public_ip_addresses
-  public_ip_keys      = each.value.public_ip_keys
+  public_ip_addresses = try(module.public_ip_addresses, null)
+  public_ip_keys      = try(each.value.public_ip_keys, null)
   diagnostics         = local.combined_diagnostics
   settings            = each.value
 }
