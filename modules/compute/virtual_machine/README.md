@@ -54,6 +54,7 @@ module "caf_virtual_machine" {
 
 | Name | Description |
 |------|-------------|
+| admin\_password\_secret\_id | Local admin password Key Vault secret id |
 | admin\_username | Local admin username |
 | id | n/a |
 | internal\_fqdns | n/a |
