@@ -12,6 +12,6 @@ module automations {
 }
 
 output automations {
-  value     = module.automations
-  sensitive = false
+  value = module.automations
+
 }

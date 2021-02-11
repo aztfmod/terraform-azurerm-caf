@@ -3,6 +3,7 @@ global_settings = {
   regions = {
     region1 = "southeastasia"
   }
+  random_length = 5
 }
 
 resource_groups = {
@@ -13,10 +14,10 @@ resource_groups = {
 
 keyvaults = {
   test_kv = {
-    name               = "testkv"
-    resource_group_key = "test"
-    sku_name           = "standard"
-    #soft_delete_enabled = true
+    name                = "testkv"
+    resource_group_key  = "test"
+    sku_name            = "standard"
+    soft_delete_enabled = true
     creation_policies = {
       logged_in_user = {
         # if the key is set to "logged_in_user" add the user running terraform in the keyvault policy
@@ -31,7 +32,6 @@ azuread_apps = {
   app1 = {
     useprefix                    = true
     application_name             = "app1"
-    password_expire_in_days      = 180
     app_role_assignment_required = true
     keyvaults = {
       test_client = {
@@ -42,7 +42,6 @@ azuread_apps = {
   app2 = {
     useprefix                    = true
     application_name             = "app2"
-    password_expire_in_days      = 180
     app_role_assignment_required = true
     keyvaults = {
       test_client = {

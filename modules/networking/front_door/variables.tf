@@ -13,12 +13,12 @@ variable global_settings {
   description = "Global settings object (see module README.md)"
 }
 variable keyvault_id {
+  default = null
+}
+variable keyvault_certificate_requests {
   default = {}
 }
-variable resource_group_name {
-  description = "(Required) The name of the resource group where to create the resource."
-  type        = string
-}
+variable resource_group_name {}
 variable settings {}
 variable tags {
   default = {}

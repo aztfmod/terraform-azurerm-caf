@@ -1,7 +1,7 @@
 
 output mssql_servers {
-  value     = module.mssql_servers
-  sensitive = true
+  value = module.mssql_servers
+
 }
 
 module "mssql_servers" {

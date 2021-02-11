@@ -10,6 +10,6 @@ module cassandra_keyspaces {
 }
 
 output cassandra_keyspaces {
-  value     = module.cassandra_keyspaces
-  sensitive = true
+  value = module.cassandra_keyspaces
+
 }

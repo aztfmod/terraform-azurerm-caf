@@ -20,6 +20,13 @@ resource "azurerm_role_assignment" "for" {
   role_definition_name = each.value.mode == "built_in_role_mapping" ? each.value.role_definition_name : null
   role_definition_id   = each.value.mode == "custom_role_mapping" ? module.custom_roles[each.value.role_definition_name].role_definition_resource_id : null
   principal_id         = each.value.object_id_resource_type == "object_ids" ? each.value.object_id_key_resource : try(local.services_roles[each.value.object_id_resource_type][each.value.lz_key][each.value.object_id_key_resource].rbac_id, local.services_roles[each.value.object_id_resource_type][var.current_landingzone_key][each.value.object_id_key_resource].rbac_id)
+
+  lifecycle {
+    ignore_changes = [
+      principal_id
+    ]
+  }
+
 }
 
 locals {
@@ -33,6 +40,7 @@ locals {
     azuread_groups             = local.combined_objects_azuread_groups
     azuread_apps               = local.combined_objects_azuread_applications
     azuread_users              = local.combined_objects_azuread_users
+    dns_zones                  = local.combined_objects_dns_zones
     azurerm_firewalls          = local.combined_objects_azurerm_firewalls
     event_hub_namespaces       = local.combined_objects_event_hub_namespaces
     keyvaults                  = local.combined_objects_keyvaults
