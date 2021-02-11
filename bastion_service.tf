@@ -27,8 +27,6 @@ resource "azurerm_bastion_host" "host" {
     name                 = each.value.name
     subnet_id            = local.combined_objects_networking[try(each.value.vnet.lz_key, local.client_config.landingzone_key)][try(each.value.vnet.vnet_key, each.value.vnet_key)].subnets[try(each.value.vnet.subnet_key, each.value.subnet_key)].id
     public_ip_address_id = local.combined_objects_public_ip_addresses[try(each.value.public_ip.lz_key, local.client_config.landingzone_key)][try(each.value.public_ip.public_ip_key, each.value.public_ip_key)].id
-    # subnet_id            = try(each.value.vnet.lz_key, null) == null ? try(local.combined_objects_networking[local.client_config.landingzone_key][each.value.vnet.vnet_key].subnets[each.value.vnet.subnet_key].id, local.combined_objects_networking[local.client_config.landingzone_key][each.value.vnet_key].subnets[each.value.subnet_key].id) : local.combined_objects_networking[each.value.vnet.lz_key][each.value.vnet.vnet_key].subnets[each.value.vnet.subnet_key].id
-    # public_ip_address_id = try(each.value.public_ip.lz_key, null) == null ? try(local.combined_objects_public_ip_addresses[local.client_config.landingzone_key][each.value.public_ip.public_ip_key].id, local.combined_objects_public_ip_addresses[local.client_config.landingzone_key][each.value.public_ip_key].id) : local.combined_objects_public_ip_addresses[each.value.public_ip.lz_key][each.value.public_ip.public_ip_key].id
   }
   timeouts {
     create = "60m"
