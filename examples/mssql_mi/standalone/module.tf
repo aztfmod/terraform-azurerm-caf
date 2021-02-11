@@ -15,11 +15,14 @@ module "caf" {
   }
 
   database = {
-    mssql_managed_instances           = var.mssql_managed_instances
-    mssql_managed_instances_secondary = var.mssql_managed_instances_secondary
-    mssql_managed_databases           = var.mssql_managed_databases
-    mssql_managed_databases_restore   = var.mssql_managed_databases_restore
-    mssql_mi_failover_groups          = var.mssql_mi_failover_groups
-    mssql_mi_administrators           = var.mssql_mi_administrators
+    mssql_managed_instances            = var.mssql_managed_instances
+    mssql_managed_instances_secondary  = var.mssql_managed_instances_secondary
+    mssql_managed_databases            = var.mssql_managed_databases
+    mssql_managed_databases_restore    = var.mssql_managed_databases_restore
+    mssql_managed_databases_backup_ltr = var.mssql_managed_databases_backup_ltr
+    mssql_mi_failover_groups           = var.mssql_mi_failover_groups
+    mssql_mi_administrators            = var.mssql_mi_administrators
+    mssql_mi_tdes                      = var.mssql_mi_tdes
+    mssql_mi_secondary_tdes            = var.mssql_mi_secondary_tdes
   }
 }

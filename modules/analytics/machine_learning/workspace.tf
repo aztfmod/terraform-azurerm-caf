@@ -21,7 +21,7 @@ resource "azurerm_machine_learning_workspace" "ws" {
   sku_name                = try(var.settings.sku_name, "basic")
 
   identity {
-    #Hardcoded as the only supported value is SystemAssigned as per azurerm 2.42
+    #Hardcoded as the only supported value is SystemAssigned as per azurerm 2.40
     type = "SystemAssigned"
   }
 }

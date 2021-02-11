@@ -1,16 +1,9 @@
 # Azure Kubernetes Services
 
-This sub module is part of Cloud Adoption Framework landing zones for Azure on Terraform.
+This submodule is part of Cloud Adoption Framework landing zones for Azure on Terraform.
 
-You can instantiate this module inside your Terraform code either as a module or as a sub module directly from the [Terraform Registry](https://registry.terraform.io/modules/aztfmod/caf/azurerm/latest) using the following calls:
+You can instantiate this submodule directly using the following parameters:
 
-Complete module:
-```hcl
-module "caf" {
-  source  = "aztfmod/caf/azurerm"
-  version = "4.21.2"
-  # insert the 6 required variables here
-}
 ```
 ## Example scenarios
 
@@ -76,8 +69,9 @@ No requirements.
 
 | Name | Description | Type | Default | Required |
 |------|-------------|------|---------|:--------:|
-| admin\_group\_ids | n/a | `any` | n/a | yes |
+| admin\_group\_object\_ids | n/a | `any` | n/a | yes |
 | base\_tags | Base tags for the resource to be inherited from the resource group. | `map` | n/a | yes |
+| client\_config | n/a | `any` | n/a | yes |
 | diagnostic\_profiles | n/a | `any` | `null` | no |
 | diagnostics | n/a | `any` | n/a | yes |
 | global\_settings | Global settings object (see module README.md) | `any` | n/a | yes |

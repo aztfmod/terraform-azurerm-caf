@@ -30,7 +30,7 @@ module gremlin_graphs {
 }
 
 output gremlin_graphs {
-  value     = module.gremlin_graphs
-  sensitive = true
+  value = module.gremlin_graphs
+
 }
 

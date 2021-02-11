@@ -38,9 +38,9 @@ resource "azurerm_virtual_network_gateway" "vngw" {
   dynamic "bgp_settings" {
     for_each = try(var.settings.bgp_settings, {})
     content {
-      asn             = each.value.asn
-      peering_address = each.value.peering_address
-      peer_weight     = each.value.peer_weight
+      asn             = bgp_settings.value.asn
+      peering_address = bgp_settings.value.peering_address
+      peer_weight     = bgp_settings.value.peer_weight
     }
   }
 

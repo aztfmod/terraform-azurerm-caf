@@ -16,6 +16,6 @@ output rbac_id {
 }
 
 output base_tags {
-  value     = var.base_tags
-  sensitive = true
+  value = var.base_tags
+
 }

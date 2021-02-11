@@ -1,7 +1,7 @@
 
 module resource_groups {
   source   = "./modules/resource_group"
-  for_each = var.resource_groups
+  for_each = try(var.resource_groups, {})
 
   resource_group_name = each.value.name
   settings            = each.value
@@ -10,6 +10,6 @@ module resource_groups {
 }
 
 output resource_groups {
-  value     = module.resource_groups
-  sensitive = true
+  value = module.resource_groups
+
 }

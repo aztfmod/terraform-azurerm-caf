@@ -1,6 +1,7 @@
-module application_gateways {
-  source   = "./modules/networking/application_gateway"
-  for_each = local.networking.application_gateways
+module "application_gateways" {
+  depends_on = [module.keyvault_certificate_requests]
+  source     = "./modules/networking/application_gateway"
+  for_each   = local.networking.application_gateways
 
   global_settings       = local.global_settings
   client_config         = local.client_config
@@ -16,6 +17,8 @@ module application_gateways {
   public_ip_addresses   = local.combined_objects_public_ip_addresses
   app_services          = local.combined_objects_app_services
   managed_identities    = local.combined_objects_managed_identities
+  keyvaults             = local.combined_objects_keyvaults
+  dns_zones             = local.combined_objects_dns_zones
   keyvault_certificates = module.keyvault_certificates
   application_gateway_applications = {
     for key, value in local.networking.application_gateway_applications : key => value
@@ -23,12 +26,12 @@ module application_gateways {
   }
 }
 
-output application_gateways {
-  value     = module.application_gateways
-  sensitive = true
+output "application_gateways" {
+  value = module.application_gateways
+
 }
 
-output application_gateway_applications {
-  value     = local.networking.application_gateway_applications
-  sensitive = true
+output "application_gateway_applications" {
+  value = local.networking.application_gateway_applications
+
 }

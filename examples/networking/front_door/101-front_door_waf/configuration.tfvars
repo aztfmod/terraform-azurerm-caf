@@ -109,17 +109,19 @@ front_doors = {
         session_affinity_enabled          = false
         session_affinity_ttl_seconds      = 0
         custom_https_provisioning_enabled = false
-        #Required if custom_https_provisioning_enabled is true
+        # Required if custom_https_provisioning_enabled is true
         custom_https_configuration = {
           certificate_source = "FrontDoor"
           #If certificate source is AzureKeyVault the below are required:
-          azure_key_vault_certificate_vault_id       = ""
-          azure_key_vault_certificate_secret_name    = ""
-          azure_key_vault_certificate_secret_version = ""
-          lz_key                                     = ""
+          # azure_key_vault_certificate_vault_id       = ""
+          # azure_key_vault_certificate_secret_name    = ""
+          # azure_key_vault_certificate_secret_version = ""
+          # lz_key                                     = ""
         }
-        web_application_firewall_policy_key = "wp1"
-        lz_key                              = ""
+        front_door_waf_policy = {
+          key = "wp1"
+          # lz_key                              = ""
+        }
       }
     }
 

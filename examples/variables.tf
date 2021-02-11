@@ -104,6 +104,9 @@ variable mssql_managed_databases {
 variable mssql_managed_databases_restore {
   default = {}
 }
+variable mssql_managed_databases_backup_ltr {
+  default = {}
+}
 variable mssql_elastic_pools {
   default = {}
 }
@@ -122,6 +125,12 @@ variable mssql_mi_failover_groups {
 variable mssql_mi_administrators {
   default = {}
 }
+variable mssql_mi_tdes {
+  default = {}
+}
+variable mssql_mi_secondary_tdes {
+  default = {}
+}
 variable storage_accounts {
   default = {}
 }
@@ -138,6 +147,9 @@ variable keyvault_access_policies {
   default = {}
 }
 variable keyvault_certificate_issuers {
+  default = {}
+}
+variable keyvault_keys {
   default = {}
 }
 variable keyvault_certificate_requests {
@@ -257,6 +269,10 @@ variable front_door_waf_policies {
 variable dns_zones {
   default = {}
 }
+variable dns_zone_records {
+  default = {}
+}
+
 variable private_endpoints {
   default = {}
 }
@@ -264,38 +280,36 @@ variable local_network_gateways {
   default = {}
 }
 
-variable automations {
-  default = {}
-}
-
-variable keyvault_access_policies_azuread_apps {
+variable domain_name_registrations {
   default = {}
 }
 
 variable azuread_apps {
   default = {}
+  type    = map
 }
-
 variable azuread_users {
   default = {}
+  type    = map
 }
-
 variable custom_role_definitions {
   default = {}
 }
-
 variable azurerm_firewalls {
   default = {}
 }
-
 variable azurerm_firewall_network_rule_collection_definition {
   default = {}
 }
-
 variable azurerm_firewall_application_rule_collection_definition {
   default = {}
 }
-
 variable azurerm_firewall_nat_rule_collection_definition {
+  default = {}
+}
+variable netapp_accounts {
+  default = {}
+}
+variable automations {
   default = {}
 }

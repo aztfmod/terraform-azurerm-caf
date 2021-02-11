@@ -30,7 +30,7 @@ module virtual_machines {
 
 
 output virtual_machines {
-  value     = module.virtual_machines
-  sensitive = true
+  value = module.virtual_machines
+
 }
 

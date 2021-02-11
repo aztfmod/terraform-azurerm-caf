@@ -9,7 +9,8 @@ terraform [plan | apply | destroy] \
   -var-file ../acr.tfvars \
   -var-file ../aks.tfvars \
   -var-file ../configuration.tfvars \
-  -var-file ../networking.tfvars
+  -var-file ../networking.tfvars \
+  -var-file ../diagnostics.tfvars
 
 
 ```
