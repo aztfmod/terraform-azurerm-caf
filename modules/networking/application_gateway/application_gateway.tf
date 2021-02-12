@@ -79,7 +79,7 @@ resource "azurerm_application_gateway" "agw" {
       host_name                      = try(regex("(.+).", (try(http_listener.value.host_names, null) == null ? try(var.dns_zones[try(http_listener.value.dns_zone.lz_key, var.client_config.landingzone_key)][http_listener.value.dns_zone.key].records[0][http_listener.value.dns_zone.record_type][http_listener.value.dns_zone.record_key].fqdn, http_listener.value.host_name) : null))[0], null)
       host_names                     = try(http_listener.value.host_name, null) == null ? try(http_listener.value.host_names, null) : null
       require_sni                    = try(http_listener.value.require_sni, false)
-      ssl_certificate_name           = try(http_listener.value.keyvault_certificate.certificate_key, null)
+      ssl_certificate_name           = try(try(http_listener.value.keyvault_certificate_request.key,http_listener.value.keyvault_certificate.certificate_key), null)
     }
   }
 
@@ -155,7 +155,7 @@ resource "azurerm_application_gateway" "agw" {
   # }
 
   dynamic "ssl_certificate" {
-    for_each = local.certificate_keys
+    for_each = try(local.certificate_keys)
 
     content {
       name                = ssl_certificate.value
@@ -165,6 +165,14 @@ resource "azurerm_application_gateway" "agw" {
     }
   }
 
+ dynamic "ssl_certificate" {
+    for_each = try(local.certificate_request_keys)
+
+    content {
+      name                = ssl_certificate.value
+      key_vault_secret_id = var.keyvault_certificate_requests[ssl_certificate.value].secret_id
+    }
+  }
   # url_path_map {}
 
   # waf_configuration {}
@@ -179,3 +187,7 @@ resource "azurerm_application_gateway" "agw" {
 
 
 }
+
+ output "certificate_keys" {
+    value = local.certificate_keys
+  }
