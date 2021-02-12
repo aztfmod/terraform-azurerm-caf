@@ -3,7 +3,8 @@ resource "azurecaf_name" "disk" {
 
   name          = each.value.name
   resource_type = "azurerm_managed_disk"
-  prefixes      = [var.global_settings.prefix]
+  prefixes      = var.global_settings.prefix == null ? null : [var.global_settings.prefix]
+  suffixes      = var.global_settings.suffix == null ? null : [var.global_settings.suffix]
   random_length = var.global_settings.random_length
   clean_input   = true
   passthrough   = var.global_settings.passthrough

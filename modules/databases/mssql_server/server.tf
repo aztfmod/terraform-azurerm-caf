@@ -33,7 +33,8 @@ resource "azurerm_mssql_server" "mssql" {
 resource "azurecaf_name" "mssql" {
   name          = var.settings.name
   resource_type = "azurerm_sql_server"
-  prefixes      = [var.global_settings.prefix]
+  prefixes      = var.global_settings.prefix == null ? null : [var.global_settings.prefix]
+  suffixes      = var.global_settings.suffix == null ? null : [var.global_settings.suffix]
   random_length = var.global_settings.random_length
   clean_input   = true
   passthrough   = var.global_settings.passthrough

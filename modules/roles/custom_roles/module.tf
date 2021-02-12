@@ -3,7 +3,8 @@ resource "azurecaf_name" "custom_role" {
   name          = var.custom_role.name
   resource_type = "azurerm_resource_group"
   #TODO: need to be changed to appropriate resource (no caf reference for now)
-  prefixes      = [var.global_settings.prefix]
+  prefixes      = var.global_settings.prefix == null ? null : [var.global_settings.prefix]
+  suffixes      = var.global_settings.suffix == null ? null : [var.global_settings.suffix]
   random_length = var.global_settings.random_length
   clean_input   = true
   passthrough   = var.global_settings.passthrough

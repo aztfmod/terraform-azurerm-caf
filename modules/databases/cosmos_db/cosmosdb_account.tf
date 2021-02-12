@@ -1,7 +1,8 @@
 ## Naming Convention
 resource "azurecaf_name" "cdb" {
   name          = var.settings.name
-  prefixes      = [var.global_settings.prefix]
+  prefixes      = var.global_settings.prefix == null ? null : [var.global_settings.prefix]
+  suffixes      = var.global_settings.suffix == null ? null : [var.global_settings.suffix]
   resource_type = "azurerm_cosmosdb_account"
   random_length = var.global_settings.random_length
   clean_input   = true

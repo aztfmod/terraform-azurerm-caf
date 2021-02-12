@@ -1,14 +1,15 @@
 locals {
-
-  prefix = lookup(var.global_settings, "prefix", null) == null ? random_string.prefix.result : var.global_settings.prefix
+  // if prefix AND suffix are null use random.string.prefix for prefix.
+  prefix = lookup(var.global_settings, "prefix", null) == null ? lookup(var.global_settings, "suffix", null) == null ? random_string.prefix.result : var.global_settings.prefix : var.global_settings.prefix
 
   global_settings = {
+    suffix             = lookup(var.global_settings, "suffix", null)
     prefix             = local.prefix
-    prefix_with_hyphen = local.prefix == "" ? "" : "${local.prefix}-"
-    prefix_start_alpha = local.prefix == "" ? "" : "${random_string.alpha1.result}${local.prefix}"
+    prefix_with_hyphen = local.prefix == null ? "" : "${local.prefix}-"
+    prefix_start_alpha = local.prefix == null ? "" : "${random_string.alpha1.result}${local.prefix}" 
     default_region     = lookup(var.global_settings, "default_region", "region1")
     environment        = lookup(var.global_settings, "environment", var.environment)
-    random_length      = try(var.global_settings.random_length, 0)
+    random_length      =  try(var.global_settings.random_length, 0)
     regions            = var.global_settings.regions
     passthrough        = try(var.global_settings.passthrough, false)
     inherit_tags       = try(var.global_settings.inherit_tags, false)
