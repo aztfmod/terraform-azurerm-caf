@@ -15,7 +15,7 @@ resource "azurerm_lb" "lb" {
   sku                 = var.settings.sku #Accepted values are Basic and Standard. Defaults to Basic
 
   dynamic "frontend_ip_configuration" {
-    for_each = try(var.settings.frontend_ip_configuration, {})
+    for_each = try(var.settings.frontend_ip_configurations, {})
     content {
       name = frontend_ip_configuration.value.name
       subnet_id = try(var.vnets[var.client_config.landingzone_key][frontend_ip_configuration.value.vnet_key].subnets[frontend_ip_configuration.value.subnet_key].id, null)
@@ -27,18 +27,19 @@ resource "azurerm_lb" "lb" {
       zones = try(frontend_ip_configuration.value.zones, null)  
     }
   }
+
+  tags  = local.tags
 }
 
 resource "azurerm_lb_backend_address_pool" "backend_address_pool" {
-  for_each = try(var.settings.backend_address_pools, {})
 
   resource_group_name = var.resource_group_name
   loadbalancer_id     = azurerm_lb.lb.id
-  name                = each.value.backend_address_pool_name
+  name                = var.settings.backend_address_pool_name
 }
 
 resource "azurerm_lb_probe" "lb_probe" {
-  for_each = try(var.settings.lb_probes, {})
+  for_each = try(var.settings.probes, {})
 
   resource_group_name = var.resource_group_name
   loadbalancer_id     = azurerm_lb.lb.id
@@ -60,6 +61,11 @@ resource "azurerm_lb_rule" "lb_rule" {
   frontend_port                  = each.value.frontend_port
   backend_port                   = each.value.backend_port
   frontend_ip_configuration_name = each.value.frontend_ip_configuration_name
+
+  depends_on = [
+    azurerm_lb_backend_address_pool.backend_address_pool,
+    azurerm_lb_probe.lb_probe
+  ]
 }
 
 resource "azurerm_lb_nat_pool" "nat_pool" {
@@ -76,7 +82,7 @@ resource "azurerm_lb_nat_pool" "nat_pool" {
 }
 
 resource "azurerm_lb_nat_rule" "nat_rule" {
-  for_each = try(var.settings.nat_pools, {})
+  for_each = try(var.settings.nat_rules, {})
 
   resource_group_name            = var.resource_group_name
   loadbalancer_id                = azurerm_lb.lb.id
@@ -90,24 +96,5 @@ resource "azurerm_lb_nat_rule" "nat_rule" {
   enable_tcp_reset               = try(each.value.enable_tcp_reset, null)
 }
 
-resource "azurerm_lb_outbound_rule" "outbound_rule" {
-  for_each = try(var.settings.outbound_rules, {})
 
-  resource_group_name     = var.resource_group_name
-  loadbalancer_id         = azurerm_lb.lb.id
-  name                    = each.value.name
-  protocol                = each.value.protocol
-  backend_address_pool_id = azurerm_lb_backend_address_pool.backend_address_pool[each.value.backend_address_pool_key].id
-  enable_tcp_reset        = try(each.value.enable_tcp_reset, null)
-  allocated_outbound_ports  = try(each.value.allocated_outbound_ports, null)
-  idle_timeout_in_minutes  = try(each.value.idle_timeout_in_minutes, null)
-
-
-  dynamic "frontend_ip_configuration" {
-    for_each = try(var.settings.outbound_rules.frontend_ip_configuration, {})
-    content {
-      name = frontend_ip_configuration.value.name
-    }
-  }
-}
 
