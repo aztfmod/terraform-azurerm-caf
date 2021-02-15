@@ -31,7 +31,7 @@ To run this example from TFC
 - Set ARM_SUBSCRIPTION_ID and ARM_TENANT_ID
 
 From the rover go to folder
-cd /tf/caf/examples/networking/private_dns/100-private-dns-vnet-links/standalone
+cd /tf/caf/aztfmod/examples/networking/private_dns/100-private-dns-vnet-links/standalone
 terraform login
-terraform init
+terraform init -backend-config=backend.hcl
 terraform plan / apply
