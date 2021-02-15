@@ -7,7 +7,7 @@ module load_balancers {
   public_ip_addresses = local.combined_objects_public_ip_addresses
   diagnostics         = local.combined_diagnostics
   client_config       = local.client_config
-  vnets               = try(local.combined_objects_networking, null)
+  vnets               = local.combined_objects_networking
   global_settings     = local.global_settings
   settings            = each.value
   base_tags           = try(local.global_settings.inherit_tags, false) ? module.resource_groups[each.value.resource_group_key].tags : {}
