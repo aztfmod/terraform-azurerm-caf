@@ -17,6 +17,10 @@ output admin_username {
   description = "Local admin username"
 }
 
+output admin_password_secret_id {
+  value       = try(azurerm_key_vault_secret.admin_password[local.os_type].id, null)
+  description = "Local admin password Key Vault secret id"
+}
 
 output winrm {
   value = local.os_type == "windows" ? {
