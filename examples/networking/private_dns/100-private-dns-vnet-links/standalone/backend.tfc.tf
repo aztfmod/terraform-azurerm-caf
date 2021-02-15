@@ -3,7 +3,7 @@ terraform {
     organization = "aztfmod"
 
     workspaces {
-      name = "laurent"
+      name = "example_standalone_private-dns_100-private-dns-vnet-links"
     }
   }
 }
