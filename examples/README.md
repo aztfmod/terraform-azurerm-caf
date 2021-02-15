@@ -1,8 +1,22 @@
-[![VScodespaces](https://img.shields.io/endpoint?url=https%3A%2F%2Faka.ms%2Fvso-badge)](https://online.visualstudio.com/environments/new?name=terraform-azurerm-caf-landingzone-modules&repo=aztfmod/terraform-azurerm-caf)
-
 # Cloud Adoption Framework for Azure - Terraform module examples
 
 Getting started with examples, once you have cloned this repository locally
+
+## Deploying examples with Terraform
+
+Each module can be deployed outside of the rover using native Terraform.
+
+You can instantiate this directly using the following syntax:
+
+```hcl
+module "caf" {
+  source  = "aztfmod/caf/azurerm"
+  version = "5.1.0"
+  # insert the 7 required variables here
+}
+```
+
+Please refer to the instructions within each example directory, whenever you have a /standalone subdirectory.
 
 
 ## Deploying examples with rover
@@ -33,11 +47,6 @@ rover -lz /tf/caf/examples \
 -var-folder /tf/caf/examples/<path of the example> \
 -a plan|apply
 ```
-
-## Deploying examples with Terraform
-
-Each module can be deployed outside of the rover using native Terraform, please refer to the instructions within each example directory, whenver you have a /standalone subdirectory.
-
 
 ## Developing and testing module for landing zones
 
