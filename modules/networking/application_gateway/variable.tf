@@ -57,6 +57,9 @@ variable "private_dns" {
 variable "keyvault_certificates" {
   default = {}
 }
+variable "keyvault_certificate_requests"{
+  default = {}
+}
 variable "managed_identities" {
   default = {}
 }

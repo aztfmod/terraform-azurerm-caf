@@ -48,6 +48,7 @@ resource "azurerm_kubernetes_cluster" "aks" {
     vm_size               = var.settings.default_node_pool.vm_size
     type                  = try(var.settings.default_node_pool.type, "VirtualMachineScaleSets")
     os_disk_size_gb       = try(var.settings.default_node_pool.os_disk_size_gb, null)
+    os_disk_type          = try(var.settings.default_node_pool.os_disk_type, null)
     availability_zones    = try(var.settings.default_node_pool.availability_zones, null)
     enable_auto_scaling   = try(var.settings.default_node_pool.enable_auto_scaling, false)
     enable_node_public_ip = try(var.settings.default_node_pool.enable_node_public_ip, false)
@@ -235,6 +236,7 @@ resource "azurerm_kubernetes_cluster_node_pool" "nodepools" {
   vnet_subnet_id        = var.subnets[var.settings.default_node_pool.subnet_key].id
   vm_size               = each.value.vm_size
   os_disk_size_gb       = try(each.value.os_disk_size_gb, null)
+  os_disk_type          = try(each.value.os_disk_type, null)
   availability_zones    = try(each.value.availability_zones, null)
   enable_auto_scaling   = try(each.value.enable_auto_scaling, false)
   enable_node_public_ip = try(each.value.enable_node_public_ip, false)
@@ -245,36 +247,4 @@ resource "azurerm_kubernetes_cluster_node_pool" "nodepools" {
   orchestrator_version  = try(each.value.orchestrator_version, var.settings.kubernetes_version)
   tags                  = merge(try(each.value.tags, {}), try(var.settings.default_node_pool.tags, {}))
 
-}
-
-#
-# Preview features
-#
-locals {
-  register_aks_msi_preview_feature_command = <<EOT
-    az feature register -n AAD-V2 --namespace Microsoft.ContainerService
-
-    isRegistered=$(az feature list --query properties.state=="Registered")
-
-    while [ ! $isRegistered == true ]
-    do
-      echo "waiting for the provider to register"
-      sleep 20
-      isRegistered=$(az feature list --query properties.state=="Registered")
-    done
-    echo "Feature registered"
-    az provider register -n Microsoft.ContainerService
-  EOT
-}
-
-
-# Can take around 30 mins to register the feature
-resource "null_resource" "register_aks_msi_preview_feature" {
-  provisioner "local-exec" {
-    command = local.register_aks_msi_preview_feature_command
-  }
-
-  triggers = {
-    command = sha256(local.register_aks_msi_preview_feature_command)
-  }
 }

@@ -1,6 +1,5 @@
 output aks_clusters {
   value = module.aks_clusters
-
 }
 
 module aks_clusters {
