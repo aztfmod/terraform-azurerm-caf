@@ -20,6 +20,7 @@ locals {
     availability_sets          = try(var.compute.availability_sets, {})
     azure_container_registries = try(var.compute.azure_container_registries, {})
     bastion_hosts              = try(var.compute.bastion_hosts, {})
+    container_groups           = try(var.compute.container_groups, {})
     proximity_placement_groups = try(var.compute.proximity_placement_groups, {})
     virtual_machines           = try(var.compute.virtual_machines, {})
   }
@@ -92,7 +93,7 @@ locals {
     synapse_workspaces                 = try(var.database.synapse_workspaces, {})
   }
 
-  client_config = {
+  client_config = var.client_config == {} ? {
     client_id               = data.azurerm_client_config.current.client_id
     landingzone_key         = var.current_landingzone_key
     logged_aad_app_objectId = local.object_id
@@ -100,7 +101,7 @@ locals {
     object_id               = local.object_id
     subscription_id         = data.azurerm_client_config.current.subscription_id
     tenant_id               = var.tenant_id == null ? data.azurerm_client_config.current.tenant_id : var.tenant_id
-  }
+  } : var.client_config
 
   object_id = coalesce(var.logged_user_objectId, var.logged_aad_app_objectId, try(data.azurerm_client_config.current.object_id, null), try(data.azuread_service_principal.logged_in_app.0.object_id, null))
 
