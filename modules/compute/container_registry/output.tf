@@ -8,6 +8,11 @@ output login_server {
   sensitive = true
 }
 
+output login_server_url {
+  value     = "https://${azurerm_container_registry.acr.login_server}"
+  sensitive = true
+}
+
 output admin_username {
   value     = azurerm_container_registry.acr.admin_username
   sensitive = true
