@@ -1,14 +1,14 @@
-#Reference: https://www.terraform.io/docs/providers/azurerm/r/firewall.html
+#Reference: https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/resources/ip_group
 
-# resource "azurecaf_name" "ip_group" {
-#   name          = var.name
-#   resource_type = "azurerm_ip_group"
-#   prefixes      = [var.global_settings.prefix]
-#   random_length = var.global_settings.random_length
-#   clean_input   = true
-#   passthrough   = var.global_settings.passthrough
-#   use_slug      = var.global_settings.use_slug
-# }
+resource "azurecaf_name" "ip_group" {
+  name          = var.name
+  resource_type = "azurerm_ip_group"
+  prefixes      = [var.global_settings.prefix]
+  random_length = var.global_settings.random_length
+  clean_input   = true
+  passthrough   = var.global_settings.passthrough
+  use_slug      = var.global_settings.use_slug
+}
 
 locals {
   cidrs = try(var.settings.cidrs, try(var.settings.subnet_keys, []) == [] ? var.vnet.address_space : flatten([
@@ -21,7 +21,7 @@ output "cidrs" {
 }
 resource "azurerm_ip_group" "ip_group" {
 
-  name                = var.name #azurecaf_name.ip_group.result
+  name                = azurecaf_name.ip_group.result
   location            = var.resource_group.location
   resource_group_name = var.resource_group.name
   tags                = local.tags

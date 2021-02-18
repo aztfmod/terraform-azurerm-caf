@@ -22,7 +22,8 @@ variable "subnet_id" {
 }
 
 variable "public_ip_id" {
-  description = "(Required) Public IP address identifier. IP address must be of type static and standard."
+  description = "(Optional) Public IP address identifier. IP address must be of type static and standard."
+  default     = null
 }
 
 variable "diagnostics" {
