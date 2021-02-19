@@ -76,7 +76,7 @@ resource "azurerm_application_gateway" "agw" {
       frontend_ip_configuration_name = var.settings.front_end_ip_configurations[http_listener.value.front_end_ip_configuration_key].name
       frontend_port_name             = var.settings.front_end_ports[http_listener.value.front_end_port_key].name
       protocol                       = var.settings.front_end_ports[http_listener.value.front_end_port_key].protocol
-      host_name                      = try(regex("(.+).", (try(http_listener.value.host_names, null) == null ? try(var.dns_zones[try(http_listener.value.dns_zone.lz_key, var.client_config.landingzone_key)][http_listener.value.dns_zone.key].records[0][http_listener.value.dns_zone.record_type][http_listener.value.dns_zone.record_key].fqdn, http_listener.value.host_name) : null))[0], null)
+      host_name                      = try(trimsuffix((try(http_listener.value.host_names, null) == null ? try(var.dns_zones[try(http_listener.value.dns_zone.lz_key, var.client_config.landingzone_key)][http_listener.value.dns_zone.key].records[0][http_listener.value.dns_zone.record_type][http_listener.value.dns_zone.record_key].fqdn, http_listener.value.host_name) : null),"."), null)
       host_names                     = try(http_listener.value.host_name, null) == null ? try(http_listener.value.host_names, null) : null
       require_sni                    = try(http_listener.value.require_sni, false)
       ssl_certificate_name           = try(try(http_listener.value.keyvault_certificate_request.key,http_listener.value.keyvault_certificate.certificate_key), null)
@@ -87,12 +87,35 @@ resource "azurerm_application_gateway" "agw" {
     for_each = local.listeners
 
     content {
-      name                       = request_routing_rule.value.name
+      name                       = "${try(local.request_routing_rules[format("%s-%s", request_routing_rule.value.app_key, request_routing_rule.value.request_routing_rule_key)].rule.prefix,"")}${request_routing_rule.value.name}" 
       rule_type                  = try(local.request_routing_rules[format("%s-%s", request_routing_rule.value.app_key, request_routing_rule.value.request_routing_rule_key)].rule.rule_type, "Basic")
       http_listener_name         = request_routing_rule.value.name
       backend_http_settings_name = local.backend_http_settings[request_routing_rule.value.app_key].name
       backend_address_pool_name  = local.backend_pools[request_routing_rule.value.app_key].name
-      # WIP url_path_map_name          = request_routing_rule.value.rule_type == "PathBasedRouting" ? request_routing_rule.value.url_path_map_name : null
+      url_path_map_name          = try(local.request_routing_rules[format("%s-%s", request_routing_rule.value.app_key, request_routing_rule.value.request_routing_rule_key)].rule.url_path_map_name, try(local.url_path_maps[format("%s-%s", request_routing_rule.value.app_key, 
+      local.request_routing_rules[format("%s-%s", request_routing_rule.value.app_key, request_routing_rule.value.request_routing_rule_key)].rule.url_path_map_key)].name,null))
+      
+      
+    }
+  }
+
+  dynamic "url_path_map" {
+    for_each = try(local.url_path_maps)
+    content {
+      default_backend_address_pool_name  = try(url_path_map.value.default_backend_address_pool_name, var.application_gateway_applications[url_path_map.value.app_key].name)
+      default_backend_http_settings_name = try(url_path_map.value.default_backend_http_settings_name, var.application_gateway_applications[url_path_map.value.app_key].name)
+      name                               = url_path_map.value.name
+
+      dynamic "path_rule" {
+        for_each = try(url_path_map.value.path_rules, []) 
+
+        content{
+          backend_address_pool_name  = try(var.application_gateway_applications[path_rule.value.backend_pool.app_key].name, var.application_gateway_applications[path_rule.value.backend_pool.app_key].name)
+          backend_http_settings_name = try(var.application_gateway_applications[path_rule.value.backend_http_setting.app_key].name, var.application_gateway_applications[url_path_map.value.app_key].name)
+          name                       = path_rule.value.name
+          paths                      = path_rule.value.paths
+        }
+      }
     }
   }
 
@@ -146,6 +169,7 @@ resource "azurerm_application_gateway" "agw" {
     }
   }
 
+  
   # ssl_policy {
 
   # }
@@ -165,7 +189,7 @@ resource "azurerm_application_gateway" "agw" {
     }
   }
 
- dynamic "ssl_certificate" {
+  dynamic "ssl_certificate" {
     for_each = try(local.certificate_request_keys)
 
     content {
@@ -173,7 +197,7 @@ resource "azurerm_application_gateway" "agw" {
       key_vault_secret_id = var.keyvault_certificate_requests[ssl_certificate.value].secret_id
     }
   }
-  # url_path_map {}
+
 
   # waf_configuration {}
 
