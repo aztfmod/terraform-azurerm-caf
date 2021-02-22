@@ -15,8 +15,19 @@ variable location {
 
 variable subnet_id {}
 variable settings {}
-variable global_settings {}
-variable base_tags {}
+variable global_settings {
+  description = "Global settings object (see module README.md)"
+}
+variable base_tags {
+  description = "Base tags for the resource to be inherited from the resource group."
+  type        = map
+}
 variable subresource_names {
   default = []
+}
+variable client_config {
+  default = {}
+}
+variable private_dns {
+  default = {}
 }

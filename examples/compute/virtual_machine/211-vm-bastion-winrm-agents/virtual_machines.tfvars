@@ -75,6 +75,14 @@ virtual_machines = {
         internal_dns_name_label = "server1-nic0"
 
       }
+      nic1 = {
+        vnet_key                = "vnet_region1"
+        subnet_key              = "servers"
+        name                    = "1-server1"
+        enable_ip_forwarding    = false
+        internal_dns_name_label = "server1-nic1"
+
+      }
     }
 
     virtual_machine_settings = {
@@ -85,7 +93,7 @@ virtual_machines = {
         admin_password_key = "vm-win-admin-password"
 
         # Value of the nic keys to attach the VM. The first one in the list is the default nic
-        network_interface_keys = ["nic0"]
+        network_interface_keys = ["nic0", "nic1"]
 
         zone = "1"
 
@@ -122,6 +130,15 @@ virtual_machines = {
         create_option = "Empty"
         disk_size_gb  = "10"
         lun           = 1
+        zones         = ["1"]
+      }
+      data2 = {
+        name                 = "server1-data2"
+        storage_account_type = "Standard_LRS"
+        # Only Empty is supported. More community contributions required to cover other scenarios
+        create_option = "Empty"
+        disk_size_gb  = "30"
+        lun           = 2
         zones         = ["1"]
       }
     }

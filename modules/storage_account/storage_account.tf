@@ -66,7 +66,7 @@ resource "azurerm_storage_account" "stg" {
         for_each = lookup(var.storage_account.blob_properties, "delete_retention_policy", false) == false ? [] : [1]
 
         content {
-          days = lookup(var.storage_account.blob_properties.delete_retention_policy, "days", 7)
+          days = lookup(var.storage_account.blob_properties.delete_retention_policy, "delete_retention_policy", 7)
         }
       }
     }

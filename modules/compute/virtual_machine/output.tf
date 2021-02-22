@@ -17,6 +17,10 @@ output admin_username {
   description = "Local admin username"
 }
 
+output admin_password_secret_id {
+  value       = try(azurerm_key_vault_secret.admin_password[local.os_type].id, null)
+  description = "Local admin password Key Vault secret id"
+}
 
 output winrm {
   value = local.os_type == "windows" ? {
@@ -26,7 +30,7 @@ output winrm {
 }
 
 output ssh_keys {
-  value = local.os_type == "linux" ? {
+  value = local.create_sshkeys ? {
     keyvault_id              = local.keyvault.id
     ssh_private_key_pem      = azurerm_key_vault_secret.ssh_private_key[local.os_type].name
     ssh_private_key_open_ssh = azurerm_key_vault_secret.ssh_public_key_openssh[local.os_type].name

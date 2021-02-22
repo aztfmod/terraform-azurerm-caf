@@ -1,4 +1,6 @@
-variable global_settings {}
+variable global_settings {
+  description = "Global settings object (see module README.md)"
+}
 variable name {
   description = "(Required) Name of the Azure Firewall to be created"
 }
@@ -21,6 +23,7 @@ variable subnet_id {
 
 variable public_ip_id {
   description = "(Required) Public IP address identifier. IP address must be of type static and standard."
+  default = null
 }
 
 variable diagnostics {
@@ -32,4 +35,15 @@ variable diagnostic_profiles {
   default = {}
 }
 
-variable base_tags {}
+variable base_tags {
+  description = "Base tags for the resource to be inherited from the resource group."
+  type        = map
+}
+
+variable public_ip_addresses {
+  
+}
+
+variable public_ip_keys {
+  
+}
