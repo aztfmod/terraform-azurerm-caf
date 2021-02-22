@@ -8,6 +8,7 @@ resource "azurerm_mssql_server" "mssql" {
   administrator_login_password  = try(var.settings.administrator_login_password, azurerm_key_vault_secret.sql_admin_password.0.value)
   public_network_access_enabled = try(var.settings.public_network_access_enabled, true)
   connection_policy             = try(var.settings.connection_policy, null)
+  minimum_tls_version           = try(var.settings.minimum_tls_version, null)
   tags                          = local.tags
   dynamic "azuread_administrator" {
     for_each = lookup(var.settings, "azuread_administrator", {}) == {} ? [] : [1]

@@ -4,7 +4,6 @@ output virtual_machines {
 
 output mssql_managed_instances {
   value = module.caf.mssql_managed_instances
-
 }
 
 output dns_zones {
@@ -28,3 +27,12 @@ output mssql_managed_instances_secondary {
   sensitive = false
 }
 
+output storage_accounts {
+  value     = module.caf.storage_accounts
+  sensitive = false
+}
+
+output app_services {
+  value     = module.caf.app_services
+  sensitive = false
+}

@@ -9,7 +9,10 @@ terraform init
 
 terraform apply \
   -var-file ../configuration.tfvars \
-  -var tags='{testing_job_id="${1}"}' \
+  -var-file ../dns_zone_records.tfvars \
+  -var-file ../dns_zones.tfvars \
+  -var-file ../public_ip_addresses.tfvars \
+  -var tags='{testing_job_id='"${1}"'}' \
   -var var_folder_path=${current_folder} \
   -input=false \
   -auto-approve
@@ -17,8 +20,10 @@ terraform apply \
 
 terraform destroy \
   -var-file ../configuration.tfvars \
-  -var tags='{testing_job_id="${1}"}' \
+  -var-file ../dns_zone_records.tfvars \
+  -var-file ../dns_zones.tfvars \
+  -var-file ../public_ip_addresses.tfvars \
+  -var tags='{testing_job_id='"${1}"'}' \
   -var var_folder_path=${current_folder} \
   -input=false \
   -auto-approve
-

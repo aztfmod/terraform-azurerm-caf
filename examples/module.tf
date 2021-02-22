@@ -111,4 +111,8 @@ module "caf" {
     vnets     = local.remote.vnets
     keyvaults = local.remote.keyvaults
   }
+
+  storage = {
+    netapp_accounts = var.netapp_accounts
+  }
 }

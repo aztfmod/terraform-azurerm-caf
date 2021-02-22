@@ -46,19 +46,28 @@ resource "azuread_service_principal" "app" {
 
 resource "azuread_service_principal_password" "app" {
   service_principal_id = azuread_service_principal.app.id
-  value                = random_password.app.result
-  end_date_relative    = format("%sh", try(var.settings.password_expire_in_days, 180) * 24)
+  value                = random_password.pwd.result
+  end_date             = timeadd(time_rotating.pwd.id, format("%sh", try(var.settings.password_policy.expire_in_days, var.password_policy.expire_in_days) * 24))
 
   lifecycle {
-    ignore_changes = [
-      end_date_relative, value
-    ]
+    create_before_destroy = true
   }
 }
 
-resource "random_password" "app" {
-  length  = 250
-  special = false
-  upper   = true
-  number  = true
+resource "time_rotating" "pwd" {
+  rotation_minutes = try(var.settings.password_policy.rotation.mins, lookup(var.password_policy.rotation, "mins", null))
+  rotation_days    = try(var.settings.password_policy.rotation.days, lookup(var.password_policy.rotation, "days", null))
+  rotation_months  = try(var.settings.password_policy.rotation.months, lookup(var.password_policy.rotation, "months", null))
+  rotation_years   = try(var.settings.password_policy.rotation.years, lookup(var.password_policy.rotation, "years", null))
+}
+
+# Will force the password to change every month
+resource "random_password" "pwd" {
+  keepers = {
+    frequency = time_rotating.pwd.id
+  }
+  length  = try(var.settings.password_policy.length, var.password_policy.length)
+  special = try(var.settings.password_policy.special, var.password_policy.special)
+  upper   = try(var.settings.password_policy.upper, var.password_policy.upper)
+  number  = try(var.settings.password_policy.number, var.password_policy.number)
 }
