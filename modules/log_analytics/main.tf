@@ -12,5 +12,6 @@ locals {
   module_tag = {
     "module" = basename(abspath(path.module))
   }
-  tags = merge(local.module_tag, lookup(var.log_analytics, "tags", {}), var.base_tags)
+  tags = merge(var.base_tags, local.module_tag, try(var.log_analytics.tags, null))
 }
+

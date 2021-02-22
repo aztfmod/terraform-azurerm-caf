@@ -16,7 +16,7 @@ variable access_policies {
 }
 
 variable client_config {
-  default = {}
+  description = "Client configuration object (see module README.md)."
 }
 variable azuread_groups {
   default = {}
@@ -25,5 +25,11 @@ variable azuread_apps {
   default = {}
 }
 variable managed_identities {
+  default = {}
+}
+variable mssql_managed_instances {
+  default = {}
+}
+variable mssql_managed_instances_secondary {
   default = {}
 }

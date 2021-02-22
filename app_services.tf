@@ -4,6 +4,7 @@ module "app_services" {
 
   for_each = local.webapp.app_services
 
+  client_config       = local.client_config
   name                = each.value.name
   resource_group_name = module.resource_groups[each.value.resource_group_key].name
   location            = lookup(each.value, "region", null) == null ? module.resource_groups[each.value.resource_group_key].location : local.global_settings.regions[each.value.region]
@@ -17,6 +18,7 @@ module "app_services" {
   base_tags           = try(local.global_settings.inherit_tags, false) ? module.resource_groups[each.value.resource_group_key].tags : {}
   application_insight = try(each.value.application_insight_key, null) == null ? null : module.azurerm_application_insights[each.value.application_insight_key]
   tags                = try(each.value.tags, null)
+  storage_accounts    = local.combined_objects_storage_accounts
 }
 
 output "app_services" {
