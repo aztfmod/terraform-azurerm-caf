@@ -30,10 +30,14 @@ locals {
 #   "az ad sp create --id ad0e1c7e-6d38-4ba4-9efd-0bc77ba9f037"
 
 data "azuread_service_principal" "front_door" {
+  for_each = {
+    for key, value in local.networking.front_doors : key => value
+    if try(value.keyvault_key, null) != null
+  }
   application_id = local.front_door_application_id
 }
 
-module front_doors_keyvault_access_policy {
+module "front_doors_keyvault_access_policy" {
   source = "./modules/security/keyvault_access_policies"
   for_each = {
     for key, value in local.networking.front_doors : key => value
@@ -45,7 +49,7 @@ module front_doors_keyvault_access_policy {
 
   access_policies = {
     front_door_certificate = {
-      object_id               = data.azuread_service_principal.front_door.object_id
+      object_id               = data.azuread_service_principal.front_door[each.key].object_id
       certificate_permissions = ["Get"]
       secret_permissions      = ["Get"]
     }

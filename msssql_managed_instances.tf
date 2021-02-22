@@ -5,7 +5,6 @@ output mssql_managed_instances {
 }
 output mssql_managed_instances_secondary {
   value     = module.mssql_managed_instances_secondary
-  sensitive = true
 }
 
 module "mssql_managed_instances" {
@@ -64,7 +63,7 @@ module "mssql_mi_administrators" {
 module "mssql_mi_secondary_tde" {
   source = "./modules/databases/mssql_managed_instance/tde"
 
-  //depends_on = 
+  //depends_on =
   for_each = local.database.mssql_mi_secondary_tdes
 
   resource_group_name = local.combined_objects_resource_groups[try(each.value.lz_key, local.client_config.landingzone_key)][each.value.resource_group_key].name
@@ -79,7 +78,7 @@ module "mssql_mi_tde" {
   source     = "./modules/databases/mssql_managed_instance/tde"
   depends_on = [module.mssql_mi_secondary_tde]
 
-  //depends_on = 
+  //depends_on =
   for_each = local.database.mssql_mi_tdes
 
   resource_group_name = local.combined_objects_resource_groups[try(each.value.lz_key, local.client_config.landingzone_key)][each.value.resource_group_key].name

@@ -7,12 +7,12 @@ module azuread_applications {
   depends_on = [module.keyvault_access_policies]
   for_each   = var.azuread_apps
 
-  client_config           = local.client_config
-  settings                = each.value
   azuread_api_permissions = try(var.azuread_api_permissions[each.key], {})
+  client_config           = local.client_config
   global_settings         = local.global_settings
-  user_type               = var.user_type
   keyvaults               = local.combined_objects_keyvaults
+  settings                = each.value
+  user_type               = var.user_type
 }
 
 output aad_apps {
@@ -57,10 +57,10 @@ module azuread_users {
   depends_on = [module.keyvault_access_policies]
   for_each   = var.azuread_users
 
-  global_settings = local.global_settings
   client_config   = local.client_config
-  azuread_users   = each.value
+  global_settings = local.global_settings
   keyvaults       = local.combined_objects_keyvaults
+  settings        = each.value
 }
 
 output azuread_users {

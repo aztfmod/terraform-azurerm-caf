@@ -18,7 +18,19 @@ variable tags {
 variable dns_zones {
   default = {}
 }
-
+variable dns_zone_records {
+  default = {}
+}
 variable var_folder_path {
+  default = {}
+}
+
+variable public_ip_addresses {
+  default = {}
+}
+variable managed_identities {
+  default = {}
+}
+variable role_mapping {
   default = {}
 }

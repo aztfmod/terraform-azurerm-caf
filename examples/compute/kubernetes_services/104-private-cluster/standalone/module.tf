@@ -15,9 +15,9 @@ module "caf" {
 
   diagnostics = {
     # Get the diagnostics settings of services to create
-    diagnostic_log_analytics    = var.diagnostic_log_analytics
+    diagnostic_log_analytics = var.diagnostic_log_analytics
   }
-  
+
   compute = {
     aks_clusters               = var.aks_clusters
     azure_container_registries = var.azure_container_registries
