@@ -1,7 +1,7 @@
 packer_managed_identity = {
   build1 = {
-    packer_template_filepath             = "./shared_image_gallery/packer_managed_identity/packer_files/packer_template_msi.json"
-    packer_config_filepath               = "./shared_image_gallery/packer_managed_identity/packer_files/packer_config_msi.json"
+    packer_template_filepath             = "./shared_image_gallery/100-packer_managed_identity/packer_files/packer_template_msi.json"
+    packer_config_filepath               = "./shared_image_gallery/100-packer_managed_identity/packer_files/packer_config_msi.json"
     packer_configuration_remote_filepath = "/tmp/packer/packer_config_msi.json"
     vm_key                               = "packer_vm"
     admin_username                       = "adminuser"
