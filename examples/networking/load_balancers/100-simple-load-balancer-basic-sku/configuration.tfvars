@@ -27,16 +27,16 @@ public_ip_addresses = {
 
 load_balancers = {
   lb1 = {
-    name="lb-test"
-    sku = "basic"
-    resource_group_key = "lb"
+    name                      = "lb-test"
+    sku                       = "basic"
+    resource_group_key        = "lb"
     backend_address_pool_name = "web-app"
     frontend_ip_configurations = {
-     config1 = {
-       name= "config1"
-       public_ip_address_key = "lb_pip"
+      config1 = {
+        name                  = "config1"
+        public_ip_address_key = "lb_pip"
+      }
     }
-   }
   }
 }
 

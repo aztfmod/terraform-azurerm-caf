@@ -5,7 +5,6 @@ output mssql_managed_instances {
 }
 output mssql_managed_instances_secondary {
   value     = module.mssql_managed_instances_secondary
-  sensitive = true
 }
 
 module "mssql_managed_instances" {
