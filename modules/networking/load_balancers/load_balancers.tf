@@ -32,23 +32,31 @@ resource "azurerm_lb" "lb" {
 }
 
 resource "azurerm_lb_backend_address_pool" "backend_address_pool" {
-
-  resource_group_name = var.resource_group_name
+count = try(var.settings.backend_address_pool_name, null) == null ? 0 : 1
   loadbalancer_id     = azurerm_lb.lb.id
   name                = var.settings.backend_address_pool_name
 }
 
+resource "azurerm_lb_backend_address_pool_address" "backend_address_pool_address" {
+  for_each = try(var.settings.backend_address_pool_addresses, {})
+
+  name                    = each.value.backend_address_pool_address_name
+  backend_address_pool_id = azurerm_lb_backend_address_pool.backend_address_pool.0.id
+  virtual_network_id      = var.vnets[var.client_config.landingzone_key][each.value.vnet_key].id
+  ip_address              = each.value.ip_address
+ }
+
 resource "azurerm_lb_probe" "lb_probe" {
-  for_each = try(var.settings.probes, {})
+  count = try(var.settings.probe, null) == null ? 0 : 1
 
   resource_group_name = var.resource_group_name
   loadbalancer_id     = azurerm_lb.lb.id
-  name                = each.value.probe_name
-  port                = each.value.port
-  protocol            = try(each.value.protocol, null) #Possible values are Http, Https or Tcp
-  request_path        = try(each.value.request_path, null) #Required if protocol is set to Http or Https. Otherwise, it is not allowed.
-  interval_in_seconds = try(each.value.interval_in_seconds, null) #The default value is 15, the minimum value is 5.
-  number_of_probes    = try(each.value.number_of_probes, null) # The default value is 2.
+  name                = var.settings.probe.probe_name
+  port                = var.settings.probe.port
+  protocol            = try(var.settings.probe.protocol, null) #Possible values are Http, Https or Tcp
+  request_path        = try(var.settings.probe.request_path, null) #Required if protocol is set to Http or Https. Otherwise, it is not allowed.
+  interval_in_seconds = try(var.settings.probe.interval_in_seconds, null) #The default value is 15, the minimum value is 5.
+  number_of_probes    = try(var.settings.probe.number_of_probes, null) # The default value is 2.
 }
 
 resource "azurerm_lb_rule" "lb_rule" {
@@ -61,12 +69,48 @@ resource "azurerm_lb_rule" "lb_rule" {
   frontend_port                  = each.value.frontend_port
   backend_port                   = each.value.backend_port
   frontend_ip_configuration_name = each.value.frontend_ip_configuration_name
+  backend_address_pool_id = try(azurerm_lb_backend_address_pool.backend_address_pool.0.id, null)
+  probe_id   = try(azurerm_lb_probe.lb_probe.0.id, null)
+  enable_floating_ip  = try(each.value.enable_floating_ip, null)
+  idle_timeout_in_minutes  = try(each.value.idle_timeout_in_minutes, null)
+  load_distribution  = try(each.value.load_distribution, null)
+  disable_outbound_snat  = try(each.value.disable_outbound_snat, null)
+  enable_tcp_reset  = try(each.value.enable_tcp_reset, null)
 
   depends_on = [
     azurerm_lb_backend_address_pool.backend_address_pool,
     azurerm_lb_probe.lb_probe
   ]
 }
+
+# will be fixed with 2.49.0
+# https://github.com/terraform-providers/terraform-provider-azurerm/issues/10543
+# resource "azurerm_lb_outbound_rule" "outbound_rule" {
+#   for_each = try(var.settings.outbound_rules, {})
+
+#   resource_group_name     = var.resource_group_name
+#   loadbalancer_id         = azurerm_lb.lb.id
+#   name                    = each.value.name
+#   protocol                = each.value.protocol
+#   backend_address_pool_id = azurerm_lb_backend_address_pool.backend_address_pool.id
+#   enable_tcp_reset        = try(each.value.enable_tcp_reset, null)
+#   allocated_outbound_ports = try(each.value.allocated_outbound_ports, null)
+#   idle_timeout_in_minutes  = try(each.value.idle_timeout_in_minutes, null)
+
+
+#   dynamic "frontend_ip_configuration" {
+#     for_each = try(var.settings.outbound_rules.frontend_ip_configuration, {})
+#     content {
+#       name = frontend_ip_configuration.value.name
+#     }
+#   }
+
+#   depends_on = [
+#     azurerm_lb_backend_address_pool.backend_address_pool,
+#     azurerm_lb_probe.lb_probe
+#   ]
+# }
+
 
 resource "azurerm_lb_nat_pool" "nat_pool" {
   for_each = try(var.settings.nat_pools, {})
@@ -78,7 +122,7 @@ resource "azurerm_lb_nat_pool" "nat_pool" {
   frontend_port_start            = each.value.frontend_port_end
   frontend_port_end              = each.value.frontend_port_end
   backend_port                   = each.value.backend_port
-  frontend_ip_configuration_name = each.value.frontend_ip_configuration
+  frontend_ip_configuration_name = each.value.frontend_ip_configuration_name
 }
 
 resource "azurerm_lb_nat_rule" "nat_rule" {
