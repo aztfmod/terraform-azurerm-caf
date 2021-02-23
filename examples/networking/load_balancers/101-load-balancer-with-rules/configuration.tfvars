@@ -11,6 +11,22 @@ resource_groups = {
   }
 }
 
+vnets = {
+  vnet_test = {
+    resource_group_key = "lb"
+    vnet = {
+      name          = "vnet-test"
+      address_space = ["10.1.0.0/16"]
+    }
+    specialsubnets = {}
+    subnets = {
+      subnet1 = {
+        name = "test-sn"
+        cidr = ["10.1.1.0/24"]
+      }
+    }
+  }
+}
 
 public_ip_addresses = {
   lb_pip = {
@@ -28,8 +44,8 @@ load_balancers = {
     name="lb-test"
     sku = "Standard"
     resource_group_key = "lb"
-    backend_address_pool_name = "web-app"
-
+    backend_address_pool_name ="web-app"
+    
     frontend_ip_configurations = {
      config1 = {
        name= "config1"
@@ -37,15 +53,36 @@ load_balancers = {
        public_ip_address_key = "lb_pip"
       }
      } 
+    
+    backend_address_pool_addresses = {
+      address1 = {
+        backend_address_pool_address_name = "address1"
+        vnet_key = "vnet_test"
+        ip_address = "10.1.1.1"
+      }
+    }
 
-    probes ={
-      probe1 = {
+    probe ={
        resource_group_key = "lb"
        load_balancer_key  = "lb1"
        probe_name         = "probe1"
        port               = "22"
-      }
+   
     }
+
+    # outbound_rules = {
+    #   rule1 ={
+    #     name = "outbound-rule"
+    #     protocol = "Tcp"
+    #     resource_group_key = "lb"
+    #     backend_address_pool_key = "pool1"
+    #     frontend_ip_configuration = {
+    #       config1 = {
+    #         name = "config1"
+    #       }
+    #     }
+    #   }
+    # }
 
     lb_rules = {
       rule1 = {
@@ -58,7 +95,6 @@ load_balancers = {
         frontend_ip_configuration_name = "config1"  #name must match the configuration that's defined in the load_balancers block.
       }
     }
-
 
   }
 }
