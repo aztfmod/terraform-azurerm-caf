@@ -113,7 +113,6 @@ jobs:
             "monitoring/100-service-health-alerts",
             "mssql_server/101-sqlserver-simple",
             "mssql_server/102-sqlserver-extend",
-            "mssql_server/103-sqlserver-two-regions",
             "mssql_server/104-sqlserver-elastic_pools",
             "mssql_server/105-sqlserver-failover_groups",
             "mysql_server/100-simple-mysql",
