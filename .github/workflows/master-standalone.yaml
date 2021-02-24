@@ -66,7 +66,7 @@ jobs:
             "mariadb_server/103-private-endpoint-with-fw-rule-mariadb",
             "monitoring/100-service-health-alerts",
             "mssql_server/104-sqlserver-elastic_pools",
-            "mssql_server/failover_groups",
+            "mssql_server/105-sqlserver-failover_groups",
             "mysql_server/100-simple-mysql",
             "mysql_server/101-vnet-rule-mysql",
             "mysql_server/102-private-endpoint-mysql",
