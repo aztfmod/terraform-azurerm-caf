@@ -64,6 +64,7 @@ locals {
     virtual_wans                                            = try(var.networking.virtual_wans, {})
     vnet_peerings                                           = try(var.networking.vnet_peerings, {})
     vnets                                                   = try(var.networking.vnets, {})
+    ip_groups                                               = try(var.networking.ip_groups, {})
   }
 
   database = {
