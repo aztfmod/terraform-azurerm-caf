@@ -10,7 +10,8 @@ terraform [plan|apply|destroy] \
   -var-file ../nsg_definitions.tfvars \
   -var-file ../virtual_networks.tfvars \
   -var-file ../public_ip_addresses.tfvars \
-  -var-file ../virtual_machines.tfvars
+  -var-file ../virtual_machines.tfvars \
+  -var-file ../application_security_groups.tfvars
 
 
 ```
