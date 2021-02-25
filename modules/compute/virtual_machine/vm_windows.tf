@@ -78,12 +78,18 @@ resource "azurerm_windows_virtual_machine" "vm" {
     }
   }
 
-  source_image_reference {
-    publisher = try(each.value.source_image_reference.publisher, null)
-    offer     = try(each.value.source_image_reference.offer, null)
-    sku       = try(each.value.source_image_reference.sku, null)
-    version   = try(each.value.source_image_reference.version, null)
+  dynamic "source_image_reference" {
+    for_each = try(each.value.source_image_reference, null) != null ? [1]: []
+
+    content {
+      publisher = try(each.value.source_image_reference.publisher, null)
+      offer     = try(each.value.source_image_reference.offer, null)
+      sku       = try(each.value.source_image_reference.sku, null)
+      version   = try(each.value.source_image_reference.version, null)      
+    }
   }
+  
+  source_image_id = try(each.value.custom_image_id, var.custom_image_ids[each.value.lz_key][each.value.custom_image_key].id ,null)
 
   dynamic "additional_capabilities" {
     for_each = try(each.value.additional_capabilities, false) == false ? [] : [1]
