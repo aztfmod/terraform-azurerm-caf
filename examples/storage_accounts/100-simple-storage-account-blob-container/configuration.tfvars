@@ -32,6 +32,8 @@ storage_accounts = {
         name = "random"
       }
     }
+
+    enable_system_msi = true
   }
 
 }
