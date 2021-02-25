@@ -85,12 +85,18 @@ resource "azurerm_linux_virtual_machine" "vm" {
     write_accelerator_enabled = try(each.value.os_disk.write_accelerator_enabled, false)
   }
 
-  source_image_reference {
-    publisher = try(each.value.source_image_reference.publisher, null)
-    offer     = try(each.value.source_image_reference.offer, null)
-    sku       = try(each.value.source_image_reference.sku, null)
-    version   = try(each.value.source_image_reference.version, null)
+  dynamic "source_image_reference" {
+    for_each = try(each.value.source_image_reference, null) != null ? [1]: []
+
+    content {
+      publisher = try(each.value.source_image_reference.publisher, null)
+      offer     = try(each.value.source_image_reference.offer, null)
+      sku       = try(each.value.source_image_reference.sku, null)
+      version   = try(each.value.source_image_reference.version, null)      
+    }
   }
+  
+  source_image_id = try(each.value.custom_image_id, var.custom_image_ids[each.value.lz_key][each.value.custom_image_key].id ,null)
 
   dynamic "identity" {
     for_each = try(each.value.identity, false) == false ? [] : [1]
