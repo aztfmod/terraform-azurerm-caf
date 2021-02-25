@@ -14,6 +14,11 @@ module "storage_accounts" {
   recovery_vaults     = local.combined_objects_recovery_vaults
   base_tags           = try(local.global_settings.inherit_tags, false) ? module.resource_groups[each.value.resource_group_key].tags : {}
   private_dns         = local.combined_objects_private_dns
+
+  customer_managed_key = try(each.value.customer_managed_key, null) == null ? {} : {
+    key_vault_id = module.keyvaults[each.value.customer_managed_key.keyvault_key].id
+    key_name     = module.keyvault_keys[each.value.customer_managed_key.keyvault_key_key].name
+  }
 }
 
 output storage_accounts {

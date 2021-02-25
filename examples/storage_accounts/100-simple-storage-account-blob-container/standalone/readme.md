@@ -5,8 +5,9 @@ cd /tf/caf/examples/storage_accounts/100-simple-storage-account-blob-container/s
 
 terraform init
 
-terraform plan \
-  -var-file ../configuration.tfvars
+terraform apply \
+  -var-file ../configuration.tfvars \
+  -var-file ../keyvaults.tfvars
 
 
 ```
