@@ -103,3 +103,15 @@ module mssql_managed_instances_secondary {
   object_id     = try(each.value.lz_key, null) == null ? var.mssql_managed_instances_secondary[var.client_config.landingzone_key][each.value.mssql_managed_instance_secondary_key].principal_id : var.mssql_managed_instances_secondary[each.value.lz_key][each.value.mssql_managed_instance_secondary_key].principal_id
 }
 
+module disk_encryption_set {
+  source = "./access_policy"
+  for_each = {
+    for key, access_policy in var.access_policies : key => access_policy
+    if try(access_policy.disk_encryption_set_key, null) != null
+  }
+
+  keyvault_id   = var.keyvault_id == null ? try(var.keyvaults[var.client_config.landingzone_key][var.keyvault_key].id, var.keyvaults[each.value.lz_key][var.keyvault_key].id) : var.keyvault_id
+  access_policy = each.value
+  tenant_id     = var.client_config.tenant_id
+  object_id     = try(each.value.lz_key, null) == null ? var.disk_encryption_sets[var.client_config.landingzone_key][each.value.disk_encryption_set_key].principal_id : var.disk_encryption_sets[each.value.lz_key][each.value.disk_encryption_set_key].principal_id
+}

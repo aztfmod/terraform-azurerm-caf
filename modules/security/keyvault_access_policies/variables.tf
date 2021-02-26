@@ -33,3 +33,6 @@ variable mssql_managed_instances {
 variable mssql_managed_instances_secondary {
   default = {}
 }
+variable disk_encryption_sets {
+  default = {}
+}
