@@ -39,6 +39,8 @@ public_ip_addresses = {
   }
 }
 
+# Public Load Balancer will be created. For Internal/Private Load Balancer config, please refer 102-internal-load-balancer example.
+
 load_balancers = {
   lb1 = {
     name                      = "lb-test"
@@ -70,19 +72,19 @@ load_balancers = {
 
     }
 
-    # outbound_rules = {
-    #   rule1 ={
-    #     name = "outbound-rule"
-    #     protocol = "Tcp"
-    #     resource_group_key = "lb"
-    #     backend_address_pool_key = "pool1"
-    #     frontend_ip_configuration = {
-    #       config1 = {
-    #         name = "config1"
-    #       }
-    #     }
-    #   }
-    # }
+    outbound_rules = {
+      rule1 ={
+        name = "outbound-rule"
+        protocol = "Tcp"
+        resource_group_key = "lb"
+        backend_address_pool_key = "pool1"
+        frontend_ip_configuration = {
+          config1 = {
+            name = "config1"
+          }
+        }
+      }
+    }
 
     lb_rules = {
       rule1 = {
