@@ -83,33 +83,31 @@ resource "azurerm_lb_rule" "lb_rule" {
   ]
 }
 
-# will be fixed with 2.49.0
-# https://github.com/terraform-providers/terraform-provider-azurerm/issues/10543
-# resource "azurerm_lb_outbound_rule" "outbound_rule" {
-#   for_each = try(var.settings.outbound_rules, {})
+resource "azurerm_lb_outbound_rule" "outbound_rule" {
+  for_each = try(var.settings.outbound_rules, {})
 
-#   resource_group_name     = var.resource_group_name
-#   loadbalancer_id         = azurerm_lb.lb.id
-#   name                    = each.value.name
-#   protocol                = each.value.protocol
-#   backend_address_pool_id = azurerm_lb_backend_address_pool.backend_address_pool.id
-#   enable_tcp_reset        = try(each.value.enable_tcp_reset, null)
-#   allocated_outbound_ports = try(each.value.allocated_outbound_ports, null)
-#   idle_timeout_in_minutes  = try(each.value.idle_timeout_in_minutes, null)
+  resource_group_name     = var.resource_group_name
+  loadbalancer_id         = azurerm_lb.lb.id
+  name                    = each.value.name
+  protocol                = each.value.protocol
+  backend_address_pool_id = azurerm_lb_backend_address_pool.backend_address_pool.0.id
+  enable_tcp_reset        = try(each.value.enable_tcp_reset, null)
+  allocated_outbound_ports = try(each.value.allocated_outbound_ports, null)
+  idle_timeout_in_minutes  = try(each.value.idle_timeout_in_minutes, null)
 
 
-#   dynamic "frontend_ip_configuration" {
-#     for_each = try(var.settings.outbound_rules.frontend_ip_configuration, {})
-#     content {
-#       name = frontend_ip_configuration.value.name
-#     }
-#   }
+  dynamic "frontend_ip_configuration" {
+    for_each = try(var.settings.outbound_rules.frontend_ip_configuration, {})
+    content {
+      name = frontend_ip_configuration.value.name
+    }
+  }
 
-#   depends_on = [
-#     azurerm_lb_backend_address_pool.backend_address_pool,
-#     azurerm_lb_probe.lb_probe
-#   ]
-# }
+  depends_on = [
+    azurerm_lb_backend_address_pool.backend_address_pool,
+    azurerm_lb_probe.lb_probe
+  ]
+}
 
 
 resource "azurerm_lb_nat_pool" "nat_pool" {

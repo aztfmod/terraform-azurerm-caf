@@ -25,6 +25,8 @@ public_ip_addresses = {
   }
 }
 
+# Public Load Balancer will be created. For Internal/Private Load Balancer config, please refer 102-internal-load-balancer example.
+
 load_balancers = {
   lb1 = {
     name                      = "lb-test"
