@@ -35,4 +35,5 @@ locals {
   combined_objects_resource_groups                   = merge(tomap({ (local.client_config.landingzone_key) = module.resource_groups }), try(var.remote_objects.resource_groups, {}))
   combined_objects_storage_accounts                  = merge(tomap({ (local.client_config.landingzone_key) = module.storage_accounts }), try(var.remote_objects.storage_accounts, {}))
   combined_objects_synapse_workspaces                = merge(tomap({ (local.client_config.landingzone_key) = module.synapse_workspaces }), try(var.remote_objects.synapse_workspaces, {}))
+  combined_objects_disk_encryption_sets              = merge(tomap({ (local.client_config.landingzone_key) = module.disk_encryption_sets }), try(var.remote_objects.disk_encryption_sets, {}))
 }
