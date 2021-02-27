@@ -6,6 +6,7 @@ current_folder=$(pwd)
 cd standalone
 
 parameter_files=$(find .. | grep .tfvars | sed 's/.*/-var-file &/' | xargs)
+echo $parameter_files
 
 terraform init
 

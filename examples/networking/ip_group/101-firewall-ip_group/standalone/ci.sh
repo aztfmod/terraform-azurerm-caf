@@ -8,8 +8,7 @@ cd standalone
 terraform init
 
 parameter_files=$(find .. | grep .tfvars | sed 's/.*/-var-file &/' | xargs)
-
-# Trigger the deployment of the resources
+echo $parameter_files
 
 eval terraform apply ${parameter_files} \
   -var tags='{testing_job_id='"${1}"'}' \
