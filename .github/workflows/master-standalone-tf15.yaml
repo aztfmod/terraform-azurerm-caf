@@ -79,7 +79,7 @@ jobs:
             "networking/virtual_wan/100-vwan-multi-hubs",
             "networking/virtual_wan/101-vwan-multi-hubs-firewalls",
             "networking/ip_group/100-simple-ip_group",
-            "networking/ip_group/200-firewall-ip_group",
+            "networking/ip_group/101-firewall-ip_group",
             "postgresql_server/100-simple-postgresql",
             "postgresql_server/101-vnet-rule-postgresql",
             "postgresql_server/102-private-endpoint-postgresql",
