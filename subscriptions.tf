@@ -1,6 +1,7 @@
 
 module "subscriptions" {
   source = "./modules/subscriptions"
+  depends_on = [azurerm_role_assignment.for]
 
   for_each = var.subscriptions
 
