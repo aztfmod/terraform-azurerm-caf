@@ -10,7 +10,6 @@ module "caf" {
   azuread_users                = var.azuread_users
   current_landingzone_key      = var.landingzone.key
   custom_role_definitions      = var.custom_role_definitions
-  diagnostics                  = local.diagnostics
   event_hub_namespaces         = var.event_hub_namespaces
   global_settings              = local.global_settings
   keyvault_access_policies     = var.keyvault_access_policies
@@ -27,6 +26,12 @@ module "caf" {
   tenant_id                    = var.tenant_id
   tfstates                     = local.tfstates
   user_type                    = var.user_type
+  
+  diagnostics                  = {
+    diagnostic_event_hub_namespaces = try(local.diagnostics.diagnostic_event_hub_namespaces, var.diagnostic_event_hub_namespaces)
+    diagnostic_log_analytics        = try(local.diagnostics.diagnostic_log_analytics, var.diagnostic_log_analytics)
+    diagnostic_storage_accounts     = try(local.diagnostics.diagnostic_storage_accounts, var.diagnostic_storage_accounts)
+  }
 
   compute = {
     aks_clusters               = var.aks_clusters
