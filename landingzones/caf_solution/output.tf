@@ -81,7 +81,7 @@ output aks_clusters_kubeconfig {
       aks_kubeconfig_admin_cmd = aks_cluster.aks_kubeconfig_admin_cmd
     }
   }
-  sensitive = false
+  sensitive = true
 }
 
 output aks_clusters {
@@ -90,8 +90,8 @@ output aks_clusters {
 }
 
 output virtual_machines {
-  value     = module.caf.virtual_machines
-  sensitive = false
+  value     = tomap({ (var.landingzone.key) = module.caf.virtual_machines })
+  sensitive = true
 }
 
 # Data and AI outputs
