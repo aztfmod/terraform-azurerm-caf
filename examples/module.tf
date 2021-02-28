@@ -13,6 +13,7 @@ module "caf" {
   azuread_apps                 = var.azuread_apps
   azuread_users                = var.azuread_users
   azuread_roles                = var.azuread_roles
+  azure_devops_projects        = var.azure_devops_projects
   tags                         = local.tags
   keyvaults                    = var.keyvaults
   keyvault_access_policies     = var.keyvault_access_policies

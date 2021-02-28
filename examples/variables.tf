@@ -313,3 +313,6 @@ variable netapp_accounts {
 variable automations {
   default = {}
 }
+variable azure_devops_projects {
+  default = {}
+}

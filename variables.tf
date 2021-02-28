@@ -234,3 +234,7 @@ variable "local_network_gateways" {
 variable "ip_groups" {
   default = {}
 }
+
+variable azure_devops_projects {
+  default = {}
+}

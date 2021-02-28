@@ -122,6 +122,7 @@ You can customize the examples execution by modifying the variables as follow:
 | azuread\_groups | n/a | `map` | `{}` | no |
 | azuread\_roles | n/a | `map` | `{}` | no |
 | azuread\_users | n/a | `map` | `{}` | no |
+| azure\_devops\_projects | n/a | `map` | `{}` | no |
 | azurerm\_application\_insights | n/a | `map` | `{}` | no |
 | azurerm\_firewall\_application\_rule\_collection\_definition | n/a | `map` | `{}` | no |
 | azurerm\_firewall\_nat\_rule\_collection\_definition | n/a | `map` | `{}` | no |
