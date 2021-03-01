@@ -1,4 +1,4 @@
-variable subscription {}
+variable settings {}
 variable subscription_key {}
 variable primary_subscription_id {}
 variable global_settings {
