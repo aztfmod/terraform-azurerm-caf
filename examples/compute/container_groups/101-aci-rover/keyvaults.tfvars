@@ -11,24 +11,11 @@ keyvaults = {
         certificate_permissions = ["Get", "List", "Update", "Create", "Import", "Delete", "Purge", "Recover"]
         secret_permissions      = ["Set", "Get", "List", "Delete", "Purge", "Recover"]
       }
-      rover_msi = {
-        managed_identity_key    = "rover"
+      nginx = {
+        managed_identity_key    = "nginx"
         secret_permissions      = ["Get"]
       }
     }
   }
 }
 
-# Store output attributes into keyvault secret
-dynamic_keyvault_secrets = {
-  secrets = { 
-    admin = {
-      secret_name = "azdo-pat-admin"
-      value       = ""
-    }
-    agent = {
-      secret_name = "azdo-pat-agent"
-      value       = "vbhv2gwmtjo6owsxeehxlm3ivuv6wqu2pubyrhlckde3su2dtsdq"
-    }
-  }
-}

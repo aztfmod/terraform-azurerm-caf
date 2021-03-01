@@ -21,9 +21,9 @@ module "caf" {
     dynamic_keyvault_secrets = var.dynamic_keyvault_secrets
   }
 
-  # compute = {
-  #   container_groups = var.container_groups
-  # }
+  compute = {
+    container_groups = var.container_groups
+  }
 
 }
 

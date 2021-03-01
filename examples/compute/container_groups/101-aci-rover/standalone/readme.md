@@ -7,9 +7,10 @@ terraform init
 
 terraform [plan | apply | destroy] \
   -var-file ../container_groups.tfvars \
-  -var-file ../diagnostics.tfvars \
   -var-file ../global_settings.tfvars \
-  -var-file ../resource_groups.tfvars
+  -var-file ../resource_groups.tfvars \
+  -var-file ../keyvaults.tfvars \
+  -var-file ../managed_identities.tfvars
 
 
 ```
