@@ -1,15 +1,31 @@
+resource "random_string" "prefix" {
+  count = try(var.global_settings.prefix, null) == null ? 1 : 0
+  length  = 4
+  special = false
+  upper   = false
+  number  = false
+}
+
+resource "random_string" "alpha1" {
+  count = try(var.global_settings.prefix, null) == null ? 1 : 0
+  length  = 1
+  special = false
+  upper   = false
+  number  = false
+}
+
 locals {
 
-  prefix = lookup(var.global_settings, "prefix", null) == null ? random_string.prefix.result : var.global_settings.prefix
+  prefix = lookup(var.global_settings, "prefix", null) == null ? random_string.prefix.0.result : var.global_settings.prefix
 
   global_settings = {
     default_region     = lookup(var.global_settings, "default_region", "region1")
     environment        = lookup(var.global_settings, "environment", var.environment)
     inherit_tags       = try(var.global_settings.inherit_tags, false)
     passthrough        = try(var.global_settings.passthrough, false)
-    prefix             = local.prefix
-    prefix_start_alpha = local.prefix == "" ? "" : "${random_string.alpha1.result}${local.prefix}"
-    prefix_with_hyphen = local.prefix == "" ? "" : "${local.prefix}-"
+    prefix             = local.prefix == "" ? null : [local.prefix]
+    prefix_start_alpha = local.prefix == "" ? null : "${random_string.alpha1.0.result}${local.prefix}"
+    prefix_with_hyphen = local.prefix == "" ? null : "${local.prefix}-"
     random_length      = try(var.global_settings.random_length, 0)
     regions            = var.global_settings.regions
     use_slug           = try(var.global_settings.use_slug, true)
