@@ -7,7 +7,7 @@ name: scenarios-100-tf14
 
 on:
   schedule:
-    - cron:  '0 0 * * 0' #0 AM on Sunday
+    - cron:  '0 0 * * *'
 
 env:
   TF_CLI_ARGS: '-no-color'
@@ -30,7 +30,7 @@ jobs:
           random_length: ['5']
 
     container:
-      image: aztfmod/roverdev:2101.301237
+      image: aztfmod/rover:0.14.7-2103.0105
       options: --user 0
 
     steps:
@@ -104,7 +104,10 @@ jobs:
             "mariadb_server/102-private-endpoint-mariadb",
             "mariadb_server/103-private-endpoint-with-fw-rule-mariadb",
             "monitoring/100-service-health-alerts",
-            "mssql_server/elastic_pools",
+            "mssql_server/101-sqlserver-simple",
+            "mssql_server/102-sqlserver-extend",
+            "mssql_server/104-sqlserver-elastic_pools",
+            "mssql_server/105-sqlserver-failover_groups",
             "mysql_server/100-simple-mysql",
             "mysql_server/101-vnet-rule-mysql",
             "mysql_server/102-private-endpoint-mysql",
@@ -121,6 +124,8 @@ jobs:
             "networking/virtual_network/101-vnet-peering-nsg",
             "networking/virtual_wan/100-vwan-multi-hubs",
             "networking/virtual_wan/101-vwan-multi-hubs-firewalls",
+            "networking/ip_group/100-simple-ip_group",
+            "networking/ip_group/101-firewall-ip_group",
             "postgresql_server/100-simple-postgresql",
             "postgresql_server/101-vnet-rule-postgresql",
             "postgresql_server/102-private-endpoint-postgresql",
@@ -140,7 +145,7 @@ jobs:
           ]
 
     container:
-      image: aztfmod/roverdev:2101.301237
+      image: aztfmod/rover:0.14.7-2103.0105
       options: --user 0
 
     steps:
@@ -185,7 +190,7 @@ jobs:
           region: ["southeastasia"]
 
     container:
-      image: aztfmod/roverdev:2101.301237
+      image: aztfmod/rover:0.14.7-2103.0105
       options: --user 0
 
     steps:
