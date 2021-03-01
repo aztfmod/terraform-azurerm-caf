@@ -37,7 +37,7 @@ jobs:
           random_length: ['5']
 
     container:
-      image: aztfmod/rover:2102.0100
+      image: aztfmod/rover:0.13.6-2103.0105
       options: --user 0
 
     steps:
@@ -131,6 +131,8 @@ jobs:
             "networking/virtual_network/101-vnet-peering-nsg",
             "networking/virtual_wan/100-vwan-multi-hubs",
             "networking/virtual_wan/101-vwan-multi-hubs-firewalls",
+            "networking/ip_group/100-simple-ip_group",
+            "networking/ip_group/101-firewall-ip_group",
             "postgresql_server/100-simple-postgresql",
             "postgresql_server/101-vnet-rule-postgresql",
             "postgresql_server/102-private-endpoint-postgresql",
@@ -150,7 +152,7 @@ jobs:
           ]
 
     container:
-      image: aztfmod/rover:2102.0100
+      image: aztfmod/rover:0.13.6-2103.0105
       options: --user 0
 
     steps:
@@ -195,7 +197,7 @@ jobs:
           region: ["southeastasia"]
 
     container:
-      image: aztfmod/rover:2102.0100
+      image: aztfmod/rover:0.13.6-2103.0105
       options: --user 0
 
     steps:
