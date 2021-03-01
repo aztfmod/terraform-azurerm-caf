@@ -7,7 +7,7 @@ name: scenarios-100-tf14
 
 on:
   schedule:
-    - cron:  '0 0 * * 0' #0 AM on Sunday
+    - cron:  '0 0 * * *'
 
 env:
   TF_CLI_ARGS: '-no-color'
@@ -30,7 +30,7 @@ jobs:
           random_length: ['5']
 
     container:
-      image: aztfmod/roverdev:2101.301237
+      image: aztfmod/rover:0.14.7-2103.0105
       options: --user 0
 
     steps:
@@ -145,7 +145,7 @@ jobs:
           ]
 
     container:
-      image: aztfmod/roverdev:2101.301237
+      image: aztfmod/rover:0.14.7-2103.0105
       options: --user 0
 
     steps:
@@ -190,7 +190,7 @@ jobs:
           region: ["southeastasia"]
 
     container:
-      image: aztfmod/roverdev:2101.301237
+      image: aztfmod/rover:0.14.7-2103.0105
       options: --user 0
 
     steps:
