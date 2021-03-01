@@ -1,5 +1,5 @@
 variable project {
-  description = "(REQUIRED) The Project model."
+  description = "The object representative of the ado project entity to update."
   type        = map
 }
 variable global_settings {

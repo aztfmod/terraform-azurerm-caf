@@ -10,9 +10,3 @@ resource_groups = {
     name = "ado_test"
   }
 }
-
-azure_devops_projects = {
-  test = {
-    name = "Test Project"
-  }
-}
