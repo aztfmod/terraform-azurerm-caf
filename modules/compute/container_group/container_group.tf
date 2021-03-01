@@ -18,8 +18,9 @@ resource "azurerm_container_group" "acg" {
   ip_address_type     = try(var.settings.ip_address_type, "Public")
   restart_policy      = try(var.settings.restart_policy, "Always")
 
+  # Create containers based on for_each
   dynamic "container" {
-    for_each = var.settings.containers
+    for_each = local.combined_containers
 
     content {
       name                         = container.value.name
@@ -60,7 +61,7 @@ resource "azurerm_container_group" "acg" {
           timeout_seconds       = try(readiness_probe.value.timeout_seconds, 1)
 
           dynamic "http_get" {
-            for_each = try(readiness_probe.value.http_get, null) == null ? [] : [1]
+            for_each = try(readiness_probe.value.http_get, {}) == {} ? [] : [1]
 
             content {
               path   = try(http_get.value.path, null)
@@ -83,7 +84,7 @@ resource "azurerm_container_group" "acg" {
           timeout_seconds       = try(liveness_probe.value.timeout_seconds, 1)
 
           dynamic "http_get" {
-            for_each = try(liveness_probe.value.http_get, null) == null ? [] : [1]
+            for_each = try(liveness_probe.value.http_get, {}) == {} ? [] : [1]
 
             content {
               path   = try(http_get.value.path, null)
@@ -121,7 +122,7 @@ resource "azurerm_container_group" "acg" {
     }   //container_content
   }     //container
 
-  dynamic "identity" {
+   dynamic "identity" {
     for_each = try(var.settings.identity, false) == false ? [] : [1]
 
     content {
@@ -149,36 +150,4 @@ resource "azurerm_container_group" "acg" {
   #     }
   #   }
   # }
-}
-
-locals {
-  environment_variables_from_resources = {
-    for key, value in local.environment_variables_from_resources_list : key => {
-      for item in value : item.env_key => item.value
-    }
-  }
-
-  environment_variables_from_resources_list = {
-    for mapping in
-      flatten(
-      [
-        for container_key, container_value in try(var.settings.containers, {}) : [
-          for env_key, env_value in try(container_value.environment_variables_from_resources, {}) :
-          {
-            container_key = container_key
-            env_key = env_key
-            value = var.combined_resources[env_value.output_key][try(env_value.lz_key, var.client_config.landingzone_key)][env_value.resource_key][env_value.attribute_key]
-          }
-        ]
-      ]
-    ) : mapping.container_key => mapping ...
-  } 
-}
-
-output environment_variables_from_resources_list {
-  value = local.environment_variables_from_resources_list
-}
-
-output environment_variables_from_resources {
-  value = local.environment_variables_from_resources
 }
