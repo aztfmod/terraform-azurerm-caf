@@ -36,6 +36,9 @@ variable resource_groups {
 variable azurerm_redis_caches {
   default = {}
 }
+variable subscriptions {
+  default = {}
+}
 variable mssql_servers {
   default = {}
 }
