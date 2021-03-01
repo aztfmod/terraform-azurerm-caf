@@ -68,7 +68,7 @@ resource "azurerm_windows_virtual_machine" "vm" {
     name                      = azurecaf_name.os_disk_windows[each.key].result
     storage_account_type      = each.value.os_disk.storage_account_type
     write_accelerator_enabled = try(each.value.os_disk.write_accelerator_enabled, false)
-    disk_encryption_set_id    = try(each.value.os_disk.lz_key, null) == null ? var.disk_encryption_sets[var.client_config.landingzone_key][each.value.os_disk.disk_encryption_set_key].id : var.disk_encryption_sets[each.value.os_disk.lz_key][each.value.os_disk.disk_encryption_set_key].id
+    disk_encryption_set_id    = try(each.value.os_disk.disk_encryption_set_key, null) == null ? null : try(var.disk_encryption_sets[var.client_config.landingzone_key][each.value.os_disk.disk_encryption_set_key], var.disk_encryption_sets[each.value.os_disk.lz_key][each.value.os_disk.disk_encryption_set_key] ,null)
 
     dynamic "diff_disk_settings" {
       for_each = try(each.value.diff_disk_settings, false) == false ? [] : [1]
