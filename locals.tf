@@ -63,6 +63,7 @@ locals {
     virtual_network_gateways                                = try(var.networking.virtual_network_gateways, {})
     virtual_wans                                            = try(var.networking.virtual_wans, {})
     vnet_peerings                                           = try(var.networking.vnet_peerings, {})
+    load_balancers                                          = try(var.networking.load_balancers, {})
     vnets                                                   = try(var.networking.vnets, {})
     ip_groups                                               = try(var.networking.ip_groups, {})
   }
