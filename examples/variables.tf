@@ -316,3 +316,6 @@ variable "automations" {
 variable "ip_groups" {
   default = {}
 }
+variable container_groups {
+  default = {}
+}
