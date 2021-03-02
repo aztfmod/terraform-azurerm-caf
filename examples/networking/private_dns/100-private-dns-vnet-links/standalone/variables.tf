@@ -24,3 +24,7 @@ variable tags {
 variable logged_aad_app_objectId {
   default = {}
 }
+
+variable var_folder_path {
+  default = {}
+}
