@@ -38,3 +38,6 @@ variable load_balancer_rules {
 variable load_balancer_probe {
   default = {}
 }
+variable var_folder_path {
+  default = {}
+}
