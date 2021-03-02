@@ -8,9 +8,11 @@ cd standalone
 terraform init
 
 terraform apply \
-  -var-file ../aks.tfvars \
-  -var-file ../networking.tfvars \
-  -var-file ../diagnostics.tfvars \
+  -var-file ../container_groups.tfvars \
+  -var-file ../global_settings.tfvars \
+  -var-file ../resource_groups.tfvars \
+  -var-file ../keyvaults.tfvars \
+  -var-file ../managed_identities.tfvars \
   -var tags='{testing_job_id='"${1}"'}' \
   -var var_folder_path=${current_folder} \
   -input=false \
@@ -18,9 +20,11 @@ terraform apply \
 
 
 terraform destroy \
-  -var-file ../aks.tfvars \
-  -var-file ../networking.tfvars \
-  -var-file ../diagnostics.tfvars \
+  -var-file ../container_groups.tfvars \
+  -var-file ../global_settings.tfvars \
+  -var-file ../resource_groups.tfvars \
+  -var-file ../keyvaults.tfvars \
+  -var-file ../managed_identities.tfvars \
   -var tags='{testing_job_id='"${1}"'}' \
   -var var_folder_path=${current_folder} \
   -input=false \
