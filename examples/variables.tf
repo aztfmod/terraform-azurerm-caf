@@ -313,6 +313,11 @@ variable "netapp_accounts" {
 variable "automations" {
   default = {}
 }
+
+variable load_balancers {
+  default ={}
+}
+
 variable "ip_groups" {
   default = {}
 }
