@@ -238,3 +238,8 @@ variable "local_network_gateways" {
 variable "ip_groups" {
   default = {}
 }
+
+variable load_balancers {
+  default = {}
+}
+
