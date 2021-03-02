@@ -15,27 +15,28 @@ variable tags {
   type    = map
 }
 
-variable public_ip_addresses {
+variable diagnostic_log_analytics {
   default = {}
 }
 
-variable virtual_network_gateways {
+variable network_security_group_definition {
   default = {}
 }
 
-# variable var_folder_path {
-#   default = {}
-# }
-
-variable load_balancers {
+variable container_groups {
   default = {}
 }
 
-variable load_balancer_rules {
+variable managed_identities {
   default = {}
 }
-
-variable load_balancer_probe {
+variable keyvaults {
+  default = {}
+}
+variable dynamic_keyvault_secrets {
+  default = {}
+}
+variable role_mapping {
   default = {}
 }
 variable var_folder_path {
