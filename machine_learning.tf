@@ -15,7 +15,7 @@ module machine_learning_workspaces {
 }
 
 output machine_learning_workspaces {
-  value     = module.machine_learning_workspaces
-  
+  value = module.machine_learning_workspaces
+
 }
 

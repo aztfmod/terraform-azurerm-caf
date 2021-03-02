@@ -174,7 +174,7 @@ resource "azurerm_app_service" "app_service" {
     content {
       name                = var.settings.backup.name
       enabled             = var.settings.backup.enabled
-      storage_account_url = lookup(var.settings.backup, "storage_account_url ", null)
+      storage_account_url = try(var.settings.backup.storage_account_url, local.backup_sas_url)
 
       dynamic "schedule" {
         for_each = lookup(var.settings.backup, "schedule", {}) != {} ? [1] : []

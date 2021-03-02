@@ -13,7 +13,7 @@ resource "null_resource" "set_mi_ad_admin" {
 
   provisioner "local-exec" {
     command     = format("%s/scripts/set_mi_ad_admin.sh", path.module)
-    interpreter = ["/bin/sh"]
+    interpreter = ["/bin/bash"]
     on_failure  = fail
 
     environment = {
@@ -37,7 +37,7 @@ resource "null_resource" "remove_mi_ad_admin" {
   provisioner "local-exec" {
     command     = format("%s/scripts/remove_mi_ad_admin.sh", path.module)
     when        = destroy
-    interpreter = ["/bin/sh"]
+    interpreter = ["/bin/bash"]
     on_failure  = fail
 
     environment = {

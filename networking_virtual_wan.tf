@@ -37,7 +37,7 @@ resource "azurerm_virtual_hub_connection" "vhub_connection" {
 
 # Outputs
 output virtual_wans {
-  value       = module.virtual_wans
-  
+  value = module.virtual_wans
+
   description = "Virtual WAN output"
 }

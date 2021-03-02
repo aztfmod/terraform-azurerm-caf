@@ -10,7 +10,7 @@ resource "null_resource" "set_azure_ad_roles" {
 
   provisioner "local-exec" {
     command     = format("%s/scripts/set_ad_role.sh", path.module)
-    interpreter = ["/bin/sh"]
+    interpreter = ["/bin/bash"]
     on_failure  = fail
 
     environment = {
@@ -23,7 +23,7 @@ resource "null_resource" "set_azure_ad_roles" {
   provisioner "local-exec" {
     command     = format("%s/scripts/set_ad_role.sh", path.module)
     when        = destroy
-    interpreter = ["/bin/sh"]
+    interpreter = ["/bin/bash"]
     on_failure  = fail
 
     environment = {

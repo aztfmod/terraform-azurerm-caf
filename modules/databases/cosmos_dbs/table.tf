@@ -10,6 +10,6 @@ module tables {
 }
 
 output tables {
-  value     = module.tables
-  
+  value = module.tables
+
 }

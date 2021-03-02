@@ -10,6 +10,10 @@ terraform [plan | apply | destroy] \
   -var-file ../networking.tfvars
 
 
+terraform apply \
+  -var-file ../aks.tfvars \
+  -var-file ../networking.tfvars \
+  -var-file ../diagnostics.tfvars
 ```
 
 To test this deployment in the example landingzone. Make sure the launchpad has been deployed first
