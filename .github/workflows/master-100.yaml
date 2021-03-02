@@ -88,6 +88,7 @@ jobs:
             "azure_ad/102-password-rotation",
             "compute/availability_set/100-simple-availabilityset",
             "compute/availability_set/101-availabilityset-with-proximity-placement-group",
+            "compute/container_groups/101-aci-rover",
             "compute/container_registry/100-simple-acr",
             "compute/kubernetes_services/101-single-cluster",
             "compute/proximity_placement_group",

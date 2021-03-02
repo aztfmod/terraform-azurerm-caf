@@ -321,3 +321,6 @@ variable load_balancers {
 variable "ip_groups" {
   default = {}
 }
+variable container_groups {
+  default = {}
+}
