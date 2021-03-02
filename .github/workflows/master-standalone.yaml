@@ -6,7 +6,6 @@
 name: standalone-scenario
 
 on:
-
   pull_request:
     paths-ignore:
       - .github/workflows/master-100.yaml
@@ -24,6 +23,7 @@ env:
   ARM_CLIENT_ID: ${{ secrets.ARM_CLIENT_ID }}
   ARM_SUBSCRIPTION_ID: ${{ secrets.ARM_SUBSCRIPTION_ID }}
   ARM_TENANT_ID: ${{ secrets.ARM_TENANT_ID }}
+  ROVER_RUNNER: true
 
 jobs:
   examples:
@@ -106,6 +106,8 @@ jobs:
             "webapps/appservice/102-appservice-slots",
             "webapps/appservice/103-appservice-extend",
             "webapps/appservice/104-appservice-appinsight",
+            "networking/load_balancers/100-simple-load-balancer-basic-sku",
+            "networking/load_balancers/101-load-balancer-with-rules",
             "webapps/appservice/105-appservice-backup"
             # "mssql_mi/200-mi",
           ]
