@@ -24,8 +24,8 @@ locals {
     inherit_tags       = try(var.global_settings.inherit_tags, false)
     passthrough        = try(var.global_settings.passthrough, false)
     prefix             = local.prefix == "" ? null : [local.prefix]
-    prefix_start_alpha = local.prefix == "" ? null : "${random_string.alpha1.0.result}${local.prefix}"
-    prefix_with_hyphen = local.prefix == "" ? null : "${local.prefix}-"
+    prefix_start_alpha = local.prefix == "" ? null : format("%s%s", try(random_string.alpha1.0.result, ""), local.prefix)
+    prefix_with_hyphen = local.prefix == "" ? null : format("%s-", local.prefix)
     random_length      = try(var.global_settings.random_length, 0)
     regions            = var.global_settings.regions
     use_slug           = try(var.global_settings.use_slug, true)
