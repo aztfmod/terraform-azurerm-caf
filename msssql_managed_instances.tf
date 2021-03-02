@@ -1,7 +1,10 @@
 
 output mssql_managed_instances {
-  value     = module.mssql_managed_instances
-  
+  value = module.mssql_managed_instances
+
+}
+output mssql_managed_instances_secondary {
+  value     = module.mssql_managed_instances_secondary
 }
 
 module "mssql_managed_instances" {
@@ -55,4 +58,30 @@ module "mssql_mi_administrators" {
   user_principal_name = try(each.value.user_principal_name, null)
   group_id            = try(local.combined_objects_azuread_groups[try(each.value.lz_key, local.client_config.landingzone_key)][each.value.azuread_group_key].id, null)
   group_name          = try(local.combined_objects_azuread_groups[try(each.value.lz_key, local.client_config.landingzone_key)][each.value.azuread_group_key].name, null)
+}
+
+module "mssql_mi_secondary_tde" {
+  source = "./modules/databases/mssql_managed_instance/tde"
+
+  //depends_on =
+  for_each = local.database.mssql_mi_secondary_tdes
+
+  resource_group_name = local.combined_objects_resource_groups[try(each.value.lz_key, local.client_config.landingzone_key)][each.value.resource_group_key].name
+  mi_name             = module.mssql_managed_instances_secondary[each.value.mi_server_key].name
+  keyvault_key        = try(local.combined_objects_keyvault_keys[try(each.value.lz_key, local.client_config.landingzone_key)][each.value.keyvault_key_key], null)
+  is_secondary_tde    = true
+  secondary_keyvault  = try(local.combined_objects_keyvaults[try(each.value.lz_key, local.client_config.landingzone_key)][each.value.secondary_keyvault_key], null)
+}
+
+#Both initial setup and rotation of the TDE protector must be done on the secondary first, and then on primary.
+module "mssql_mi_tde" {
+  source     = "./modules/databases/mssql_managed_instance/tde"
+  depends_on = [module.mssql_mi_secondary_tde]
+
+  //depends_on =
+  for_each = local.database.mssql_mi_tdes
+
+  resource_group_name = local.combined_objects_resource_groups[try(each.value.lz_key, local.client_config.landingzone_key)][each.value.resource_group_key].name
+  mi_name             = module.mssql_managed_instances[each.value.mi_server_key].name
+  keyvault_key        = try(local.combined_objects_keyvault_keys[try(each.value.lz_key, local.client_config.landingzone_key)][each.value.keyvault_key_key], null)
 }

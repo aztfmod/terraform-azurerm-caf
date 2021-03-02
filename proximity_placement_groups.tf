@@ -14,6 +14,6 @@ module proximity_placement_groups {
 
 
 output proximity_placement_groups {
-  value     = module.proximity_placement_groups
-  
+  value = module.proximity_placement_groups
+
 }
