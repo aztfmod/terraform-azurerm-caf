@@ -1,6 +1,6 @@
 keyvaults = {
   stg_byok = {
-    name               = "vmsecrets00012120"
+    name               = "vmsecrets"
     resource_group_key = "test"
     sku_name           = "standard"
 
