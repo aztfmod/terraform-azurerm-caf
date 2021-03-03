@@ -14,7 +14,7 @@ resource_groups = {
 # https://docs.microsoft.com/en-us/azure/storage/
 storage_accounts = {
   sa1 = {
-    name               = "sa1dev0012120"
+    name               = "sa1dev"
     resource_group_key = "test"
     # Account types are BlobStorage, BlockBlobStorage, FileStorage, Storage and StorageV2. Defaults to StorageV2
     account_kind = "BlobStorage"
