@@ -1,16 +1,16 @@
 # Map of the remote data state for lower level
-variable lower_storage_account_name {}
-variable lower_container_name {}
-variable lower_resource_group_name {}
+variable "lower_storage_account_name" {}
+variable "lower_container_name" {}
+variable "lower_resource_group_name" {}
 
-variable tfstate_storage_account_name {}
-variable tfstate_container_name {}
-variable tfstate_key {}
-variable tfstate_resource_group_name {}
+variable "tfstate_storage_account_name" {}
+variable "tfstate_container_name" {}
+variable "tfstate_key" {}
+variable "tfstate_resource_group_name" {}
 
-variable tfstate_subscription_id {}
+variable "tfstate_subscription_id" {}
 
-variable global_settings {
+variable "global_settings" {
   default = {
     default_region = "region1"
     regions = {
@@ -20,7 +20,7 @@ variable global_settings {
   }
 }
 
-variable landingzone {
+variable "landingzone" {
   default = {
     backend_type        = "azurerm"
     global_settings_key = "launchpad"
@@ -35,282 +35,293 @@ variable landingzone {
   }
 }
 
-variable var_folder_path {
+variable "var_folder_path" {
   default = {}
 }
-variable tenant_id {}
+variable "tenant_id" {}
 
-variable environment {
+variable "environment" {
   default = "sandpit"
 }
-variable rover_version {
+variable "rover_version" {
   default = null
 }
-variable logged_user_objectId {
+variable "logged_user_objectId" {
   default = null
 }
-variable logged_aad_app_objectId {
+variable "logged_aad_app_objectId" {
   default = null
 }
-variable tags {
+variable "tags" {
   default = null
-  type    = map
+  type    = map(any)
 }
-variable app_service_environments {
+variable "app_service_environments" {
   default = {}
 }
-variable app_service_plans {
+variable "app_service_plans" {
   default = {}
 }
-variable app_services {
+variable "app_services" {
   default = {}
 }
-variable diagnostics_definition {
-  default = null
-}
-variable resource_groups {
+variable "diagnostics_definition" {
   default = null
 }
-variable network_security_group_definition {
+variable "resource_groups" {
   default = null
 }
-variable route_tables {
+variable "network_security_group_definition" {
+  default = null
+}
+variable "route_tables" {
   default = {}
 }
-variable azurerm_routes {
+variable "azurerm_routes" {
   default = {}
 }
-variable vnets {
+variable "vnets" {
   default = {}
 }
-variable azurerm_redis_caches {
+variable "azurerm_redis_caches" {
   default = {}
 }
-variable mssql_servers {
+variable "mssql_servers" {
   default = {}
 }
-variable mssql_managed_instances {
+variable "mssql_managed_instances" {
   default = {}
 }
-variable mssql_managed_instances_secondary {
+variable "mssql_managed_instances_secondary" {
   default = {}
 }
-variable mssql_databases {
+variable "mssql_databases" {
   default = {}
 }
-variable mssql_managed_databases {
+variable "mssql_managed_databases" {
   default = {}
 }
-variable mssql_managed_databases_restore {
+variable "mssql_managed_databases_restore" {
   default = {}
 }
-variable mssql_managed_databases_backup_ltr {
+variable "mssql_managed_databases_backup_ltr" {
   default = {}
 }
-variable mssql_elastic_pools {
+variable "mssql_elastic_pools" {
   default = {}
 }
-variable mariadb_servers {
+variable "mariadb_servers" {
   default = {}
 }
-variable mariadb_databases {
+variable "mariadb_databases" {
   default = {}
 }
-variable mssql_failover_groups {
+variable "mssql_failover_groups" {
   default = {}
 }
-variable mssql_mi_failover_groups {
+variable "mssql_mi_failover_groups" {
   default = {}
 }
-variable mssql_mi_administrators {
+variable "mssql_mi_administrators" {
   default = {}
 }
-variable mssql_mi_tdes {
+variable "mssql_mi_tdes" {
   default = {}
 }
-variable mssql_mi_secondary_tdes {
+variable "mssql_mi_secondary_tdes" {
   default = {}
 }
-variable storage_accounts {
+variable "storage_accounts" {
   default = {}
 }
-variable azuread_groups {
+variable "azuread_groups" {
   default = {}
 }
-variable azuread_roles {
+variable "azuread_roles" {
   default = {}
 }
-variable keyvaults {
+variable "keyvaults" {
   default = {}
 }
-variable keyvault_access_policies {
+variable "keyvault_access_policies" {
   default = {}
 }
-variable keyvault_certificate_issuers {
+variable "keyvault_certificate_issuers" {
   default = {}
 }
-variable keyvault_keys {
+variable "keyvault_keys" {
   default = {}
 }
-variable keyvault_certificate_requests {
+variable "keyvault_certificate_requests" {
   default = {}
 }
-variable virtual_machines {
+variable "virtual_machines" {
   default = {}
 }
-variable bastion_hosts {
+variable "bastion_hosts" {
   default = {}
 }
-variable public_ip_addresses {
+variable "public_ip_addresses" {
   default = {}
 }
-variable diagnostic_storage_accounts {
+variable "diagnostic_storage_accounts" {
   default = {}
 }
-variable diagnostic_event_hub_namespaces {
+variable "diagnostic_event_hub_namespaces" {
   default = {}
 }
-variable diagnostic_log_analytics {
+variable "diagnostic_log_analytics" {
   default = {}
 }
-variable managed_identities {
+variable "managed_identities" {
   default = {}
 }
-variable private_dns {
+variable "private_dns" {
   default = {}
 }
-variable synapse_workspaces {
+variable "synapse_workspaces" {
   default = {}
 }
-variable azurerm_application_insights {
+variable "azurerm_application_insights" {
   default = {}
 }
-variable role_mapping {
+variable "role_mapping" {
   default = {}
 }
-variable aks_clusters {
+variable "aks_clusters" {
   default = {}
 }
-variable databricks_workspaces {
+variable "databricks_workspaces" {
   default = {}
 }
-variable machine_learning_workspaces {
+variable "machine_learning_workspaces" {
   default = {}
 }
-variable monitoring {
+variable "monitoring" {
   default = {}
 }
-variable virtual_wans {
+variable "virtual_wans" {
   default = {}
 }
-variable event_hub_namespaces {
+variable "event_hub_namespaces" {
   default = {}
 }
-variable application_gateways {
+variable "application_gateways" {
   default = {}
 }
-variable application_gateway_applications {
+variable "application_gateway_applications" {
   default = {}
 }
-variable mysql_servers {
+variable "mysql_servers" {
   default = {}
 }
-variable postgresql_servers {
+variable "postgresql_servers" {
   default = {}
 }
-variable cosmos_db {
+variable "cosmos_db" {
   default = {}
 }
-variable log_analytics {
+variable "log_analytics" {
   default = {}
 }
-variable recovery_vaults {
+variable "recovery_vaults" {
   default = {}
 }
-variable availability_sets {
+variable "availability_sets" {
   default = {}
 }
-variable proximity_placement_groups {
+variable "proximity_placement_groups" {
   default = {}
 }
-variable network_watchers {
+variable "network_watchers" {
   default = {}
 }
-variable virtual_network_gateways {
+variable "virtual_network_gateways" {
   default = {}
 }
-variable virtual_network_gateway_connections {
+variable "virtual_network_gateway_connections" {
   default = {}
 }
-variable express_route_circuits {
+variable "express_route_circuits" {
   default = {}
 }
-variable express_route_circuit_authorizations {
+variable "express_route_circuit_authorizations" {
   default = {}
 }
-variable diagnostics_destinations {
+variable "diagnostics_destinations" {
   default = {}
 }
-variable vnet_peerings {
+variable "vnet_peerings" {
   default = {}
 }
-variable cosmos_dbs {
+variable "cosmos_dbs" {
   default = {}
 }
-variable dynamic_keyvault_secrets {
+variable "dynamic_keyvault_secrets" {
   default = {}
 }
-variable front_doors {
+variable "front_doors" {
   default = {}
 }
-variable front_door_waf_policies {
+variable "front_door_waf_policies" {
   default = {}
 }
-variable dns_zones {
+variable "dns_zones" {
   default = {}
 }
-variable dns_zone_records {
+variable "dns_zone_records" {
   default = {}
 }
 
-variable private_endpoints {
+variable "private_endpoints" {
   default = {}
 }
-variable local_network_gateways {
-  default = {}
-}
-
-variable domain_name_registrations {
+variable "local_network_gateways" {
   default = {}
 }
 
-variable azuread_apps {
-  default = {}
-  type    = map
-}
-variable azuread_users {
-  default = {}
-  type    = map
-}
-variable custom_role_definitions {
+variable "domain_name_registrations" {
   default = {}
 }
-variable azurerm_firewalls {
+
+variable "azuread_apps" {
+  default = {}
+  type    = map(any)
+}
+variable "azuread_users" {
+  default = {}
+  type    = map(any)
+}
+variable "custom_role_definitions" {
   default = {}
 }
-variable azurerm_firewall_network_rule_collection_definition {
+variable "azurerm_firewalls" {
   default = {}
 }
-variable azurerm_firewall_application_rule_collection_definition {
+variable "azurerm_firewall_network_rule_collection_definition" {
   default = {}
 }
-variable azurerm_firewall_nat_rule_collection_definition {
+variable "azurerm_firewall_application_rule_collection_definition" {
   default = {}
 }
-variable netapp_accounts {
+variable "azurerm_firewall_nat_rule_collection_definition" {
   default = {}
 }
-variable automations {
+variable "netapp_accounts" {
+  default = {}
+}
+variable "automations" {
+  default = {}
+}
+
+variable load_balancers {
+  default ={}
+}
+
+variable "ip_groups" {
+  default = {}
+}
+variable container_groups {
   default = {}
 }
 variable azure_devops_projects {

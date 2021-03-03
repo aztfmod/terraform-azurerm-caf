@@ -12,6 +12,10 @@ variable "global_settings" {
   }
 }
 
+variable "client_config" {
+  default = {}
+}
+
 variable "tenant_id" {
   description = "Azure AD Tenant ID for the current deployment."
   default     = null
@@ -19,7 +23,7 @@ variable "tenant_id" {
 
 variable "current_landingzone_key" {
   description = "Key for the current landing zones where the deployment is executed. Used in the context of landing zone deployment."
-  default     = "standalone"
+  default     = "local"
   type        = string
 }
 
@@ -232,6 +236,10 @@ variable "local_network_gateways" {
 }
 
 variable "ip_groups" {
+  default = {}
+}
+
+variable load_balancers {
   default = {}
 }
 
