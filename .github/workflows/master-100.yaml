@@ -28,7 +28,7 @@ env:
 jobs:
   foundations:
     name: foundations
-    runs-on: ubuntu-latest
+    runs-on: self-hosted
 
     strategy:
       fail-fast: true
@@ -48,7 +48,7 @@ jobs:
         with:
           repository: Azure/caf-terraform-landingzones
           path: public
-          ref: '2101.0.0'
+          ref: '2102.0.0'
 
       - name: Login azure
         run: |
@@ -73,7 +73,7 @@ jobs:
 
   examples:
     name: examples
-    runs-on: ubuntu-latest
+    runs-on: self-hosted
 
     needs: foundations
 
@@ -193,7 +193,7 @@ jobs:
 
   foundations_destroy:
     name: foundations_destroy
-    runs-on: ubuntu-latest
+    runs-on: self-hosted
     if: always()
     needs: examples
 
@@ -211,7 +211,7 @@ jobs:
         with:
           repository: Azure/caf-terraform-landingzones
           path: public
-          ref: '2101.0.0'
+          ref: '2102.0.0'
 
       - name: Login azure
         run: |
