@@ -11,10 +11,6 @@ resource_groups = {
     name   = "sharedsvc_re1"
     region = "region1"
   }
-  secondary = {
-    name   = "sharedsvc_re2"
-    region = "region2"
-  }
 }
 
 recovery_vaults = {
@@ -34,21 +30,21 @@ recovery_vaults = {
       }
     }
 
-    recovery_fabrics = {
-      fabric1 = {
-        name               = "fabric-primary"
-        resource_group_key = "primary"
-        region             = "region1"
-      }
-    }
+    # recovery_fabrics = {
+    #   fabric1 = {
+    #     name               = "fabric-primary"
+    #     resource_group_key = "primary"
+    #     region             = "region1"
+    #   }
+    # }
 
-    protection_containers = {
-      container1 = {
-        name                = "protection_container1"
-        resource_group_key  = "primary"
-        recovery_fabric_key = "fabric1"
-      }
-    }
+    # protection_containers = {
+    #   container1 = {
+    #     name                = "protection_container1"
+    #     resource_group_key  = "primary"
+    #     recovery_fabric_key = "fabric1"
+    #   }
+    # }
 
   }
 }
