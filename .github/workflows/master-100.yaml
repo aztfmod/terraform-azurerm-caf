@@ -28,7 +28,7 @@ env:
 jobs:
   foundations:
     name: foundations
-    runs-on: self-hosted
+    runs-on: ubuntu-latest
 
     strategy:
       fail-fast: true
@@ -73,7 +73,7 @@ jobs:
 
   examples:
     name: examples
-    runs-on: self-hosted
+    runs-on: ubuntu-latest
 
     needs: foundations
 
@@ -193,7 +193,7 @@ jobs:
 
   foundations_destroy:
     name: foundations_destroy
-    runs-on: self-hosted
+    runs-on: ubuntu-latest
     if: always()
     needs: examples
 
