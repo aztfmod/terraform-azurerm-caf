@@ -197,12 +197,6 @@ disk_encryption_sets = {
 }
 keyvault_access_policies = {
  example_vm_rg1 = {
-   /*
-  logged_in_user = {
-    secret_permissions = ["Get","List","Set","Delete","Recover","Backup","Restore","Purge"]
-      key_permissions = ["Get","List","Update","Create","Import","Delete","Recover","Backup","Restore","Decrypt","Encrypt","UnwrapKey","WrapKey","Verify","Sign","Purge"]
-  }
-  */
   disk_encryption_sets = {
     disk_encryption_set_key = "set1"
       key_permissions = ["Get","List","Update","Create","Import","Delete","Recover","Backup","Restore","Decrypt","Encrypt","UnwrapKey","WrapKey","Verify","Sign","Purge"]

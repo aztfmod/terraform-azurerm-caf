@@ -45,7 +45,7 @@ virtual_machines = {
         size                            = "Standard_F2"
         admin_username                  = "adminuser"
         disable_password_authentication = true
-        custom_data                     = "scripts/cloud-init/install-rover-tools.config"
+        #custom_data                     = "scripts/cloud-init/install-rover-tools.config"
 
         # Spot VM to save money
         priority        = "Spot"
@@ -58,6 +58,7 @@ virtual_machines = {
           name                 = "example_vm1-os"
           caching              = "ReadWrite"
           storage_account_type = "Standard_LRS"
+          disk_encryption_set_key = "set1"
         }
 
         source_image_reference = {
@@ -69,7 +70,18 @@ virtual_machines = {
 
       }
     }
-
+    data_disks = {
+      data1 = {
+        name                 = "server1-data1"
+        storage_account_type = "Standard_LRS"
+        # Only Empty is supported. More community contributions required to cover other scenarios
+        create_option = "Empty"
+        disk_size_gb  = "10"
+        lun           = 1
+        zones         = ["1"]
+        disk_encryption_set_key = "set1"
+      }
+    }
   }
 }
 
@@ -90,24 +102,50 @@ diagnostic_storage_accounts = {
 
 keyvaults = {
   example_vm_rg1 = {
-    name               = "vmsecrets"
+    name               = "vmlinuxakv"
     resource_group_key = "vm_region1"
     sku_name           = "standard"
+    soft_delete_enabled = true
+    purge_protection_enabled    = true
+    enabled_for_disk_encryption = true
+    creation_policies = {
+      logged_in_user = {
+        secret_permissions = ["Set", "Get", "List", "Delete", "Purge", "Recover"]
+        key_permissions = ["Get","List","Update","Create","Import","Delete","Recover","Backup","Restore","Decrypt","Encrypt","UnwrapKey","WrapKey","Verify","Sign","Purge"]
+      }
+    }
   }
 }
 
 keyvault_access_policies = {
-  # A maximum of 16 access policies per keyvault
-  example_vm_rg1 = {
-    logged_in_user = {
-      secret_permissions = ["Set", "Get", "List", "Delete", "Purge", "Recover"]
-    }
-    logged_in_aad_app = {
-      secret_permissions = ["Set", "Get", "List", "Delete", "Purge", "Recover"]
+ example_vm_rg1 = {
+  disk_encryption_sets = {
+    disk_encryption_set_key = "set1"
+      key_permissions = ["Get","List","Update","Create","Import","Delete","Recover","Backup","Restore","Decrypt","Encrypt","UnwrapKey","WrapKey","Verify","Sign","Purge"]
+  }
+  example_vm1 = {
+    secret_permissions = ["Get","List","Set","Delete","Recover","Backup","Restore","Purge"]
+      key_permissions = ["Get","List","Update","Create","Import","Delete","Recover","Backup","Restore","Decrypt","Encrypt","UnwrapKey","WrapKey","Verify","Sign","Purge"]
     }
   }
 }
+keyvault_keys = {
+ key1 = {
+  keyvault_key = "example_vm_rg1"
+  name = "disk-key"
+  key_type = "RSA"
+  key_size = "2048"
+  key_opts = ["encrypt","decrypt","sign","verify","wrapKey","unwrapKey"]
+  }
+}
 
+disk_encryption_sets = {
+  set1 = {
+    name = "deskey1"
+    resource_group_key = "vm_region1"
+    key_vault_key_key = "key1"
+  }
+}
 vnets = {
   vnet_region1 = {
     resource_group_key = "vm_region1"
