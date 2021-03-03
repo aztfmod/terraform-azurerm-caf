@@ -31,6 +31,3 @@ variable recovery_vaults {
 variable private_dns {
   default = {}
 }
-variable customer_managed_key {
-  default = {}
-}
