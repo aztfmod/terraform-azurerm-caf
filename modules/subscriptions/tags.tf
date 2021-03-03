@@ -1,5 +1,5 @@
 resource "null_resource" "tags" {
-  count = try(var.settings.tags, null) == null ? 0 : 1
+  count = (try(var.settings.tags, null) == null) || (try(var.settings.subscription_id, null)) == null ? 0 : 1
 
   triggers = {
     subscription_id = var.settings.subscription_id
