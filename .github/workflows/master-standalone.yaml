@@ -94,6 +94,7 @@ jobs:
             "recovery_vault/102-asr-protection",
             "recovery_vault/103-asr-with-private-endpoint",
             "redis_cache/100-redis-standard",
+            "storage_accounts/100-simple-storage-account-blob-container",
             "synapse_analytics/100-synapse",
             "synapse_analytics/101-synapse-sparkpool",
             "webapps/appservice/101-appservice-simple",

@@ -1,6 +1,6 @@
 keyvaults = {
   stg_byok = {
-    name               = "vmsecrets"
+    name               = "vmsecrets00012120"
     resource_group_key = "test"
     sku_name           = "standard"
 
@@ -8,7 +8,7 @@ keyvaults = {
 
     creation_policies = {
       logged_in_user = {
-        key_permissions    = ["get", "create", "delete", "list", "restore", "recover", "unwrapkey", "wrapkey", "purge", "encrypt", "decrypt", "sign", "verify", "update"]
+        key_permissions    = ["get", "create", "delete", "list", "restore", "recover", "unwrapkey", "wrapkey", "purge", "encrypt", "decrypt", "sign", "verify"]
         secret_permissions = ["get"]
       }
     }
