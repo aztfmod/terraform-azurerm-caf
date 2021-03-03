@@ -19,7 +19,7 @@ virtual_machines = {
   example_vm1 = {
     resource_group_key                   = "vm_region1"
     provision_vm_agent                   = true
-    boot_diagnostics_storage_account_key = "bootdiag_region1"
+    boot_diagnostics_storage_account_key = "sa1"
 
     os_type = "windows"
 
@@ -43,6 +43,7 @@ virtual_machines = {
       windows = {
         name = "example_vm2"
         size = "Standard_F2"
+        zone = "1"
 
         admin_username_key = "vmadmin-username"
         admin_password_key = "vmadmin-password"
@@ -58,7 +59,12 @@ virtual_machines = {
           name                 = "example_vm1-os"
           caching              = "ReadWrite"
           storage_account_type = "Standard_LRS"
+          managed_disk_type    = "StandardSSD_LRS"
+          disk_size_gb         = "128"
+          create_option        = "FromImage"
+          disk_encryption_set_key = "set1"
         }
+        
 
         source_image_reference = {
           publisher = "MicrosoftWindowsServer"
@@ -69,7 +75,18 @@ virtual_machines = {
 
       }
     }
-
+    data_disks = {
+      data1 = {
+        name                 = "server1-data1"
+        storage_account_type = "Standard_LRS"
+        # Only Empty is supported. More community contributions required to cover other scenarios
+        create_option = "Empty"
+        disk_size_gb  = "10"
+        lun           = 1
+        zones         = ["1"]
+        disk_encryption_set_key = "set1"
+      }
+    }
   }
 }
 
@@ -89,20 +106,20 @@ dynamic_keyvault_secrets = {
 
 keyvaults = {
   example_vm_rg1 = {
-    name               = "vmsecrets"
+    name               = "vmsecretskv"
     resource_group_key = "vm_region1"
     sku_name           = "standard"
-
+    soft_delete_enabled = true
+    purge_protection_enabled    = true
+    enabled_for_disk_encryption = true
     creation_policies = {
       logged_in_user = {
-        certificate_permissions = ["Get", "List", "Update", "Create", "Import", "Delete", "Purge", "Recover"]
-        secret_permissions      = ["Set", "Get", "List", "Delete", "Purge", "Recover"]
+        secret_permissions = ["Set", "Get", "List", "Delete", "Purge", "Recover"]
+        key_permissions = ["Get","List","Update","Create","Import","Delete","Recover","Backup","Restore","Decrypt","Encrypt","UnwrapKey","WrapKey","Verify","Sign","Purge"]
       }
     }
   }
 }
-
-
 vnets = {
   vnet_region1 = {
     resource_group_key = "vm_region1"
@@ -131,4 +148,68 @@ public_ip_addresses = {
     idle_timeout_in_minutes = "4"
 
   }
+}
+
+storage_accounts = {
+  sa1 = {
+    name               = "sa1dev"
+    resource_group_key = "vm_region1"
+    # Account types are BlobStorage, BlockBlobStorage, FileStorage, Storage and StorageV2. Defaults to StorageV2
+    account_kind = "BlobStorage"
+    # Account Tier options are Standard and Premium. For BlockBlobStorage and FileStorage accounts only Premium is valid.
+    account_tier = "Standard"
+    #  Valid options are LRS, GRS, RAGRS, ZRS, GZRS and RAGZRS
+    account_replication_type = "LRS" # https://docs.microsoft.com/en-us/azure/storage/common/storage-redundancy
+    min_tls_version          = "TLS1_2"
+    allow_blob_public_access = true
+    tags = {
+      environment = "dev"
+      team        = "IT"
+      ##
+    }
+    enable_system_msi = {
+      type = "SystemAssigned"
+    }
+    containers = {
+      dev = {
+        name = "random"
+      }
+    }
+  }
+
+}
+keyvault_keys = {
+ key1 = {
+  keyvault_key = "example_vm_rg1"
+  name = "disk-key"
+  key_type = "RSA"
+  key_size = "2048"
+  key_opts = ["encrypt","decrypt","sign","verify","wrapKey","unwrapKey"]
+  }
+}
+
+disk_encryption_sets = {
+  set1 = {
+    name = "deskey1"
+    resource_group_key = "vm_region1"
+    key_vault_key_key = "key1"
+  }
+}
+keyvault_access_policies = {
+ example_vm_rg1 = {
+   /*
+  logged_in_user = {
+    secret_permissions = ["Get","List","Set","Delete","Recover","Backup","Restore","Purge"]
+      key_permissions = ["Get","List","Update","Create","Import","Delete","Recover","Backup","Restore","Decrypt","Encrypt","UnwrapKey","WrapKey","Verify","Sign","Purge"]
+  }
+  */
+  disk_encryption_sets = {
+    disk_encryption_set_key = "set1"
+      key_permissions = ["Get","List","Update","Create","Import","Delete","Recover","Backup","Restore","Decrypt","Encrypt","UnwrapKey","WrapKey","Verify","Sign","Purge"]
+  }
+  example_vm1 = {
+    secret_permissions = ["Get","List","Set","Delete","Recover","Backup","Restore","Purge"]
+      key_permissions = ["Get","List","Update","Create","Import","Delete","Recover","Backup","Restore","Decrypt","Encrypt","UnwrapKey","WrapKey","Verify","Sign","Purge"]
+  }
+ }
 }

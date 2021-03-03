@@ -110,3 +110,9 @@ variable application_gateway_applications {
 variable dynamic_keyvault_secrets {
   default = {}
 }
+variable disk_encryption_sets {
+  default = {}
+}
+variable keyvault_keys {
+  default = {}
+}
