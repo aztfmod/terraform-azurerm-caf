@@ -34,6 +34,11 @@ storage_accounts = {
     }
 
     enable_system_msi = true
-  }
+    customer_managed_key = {
+      keyvault_key = "stg_byok"
 
+      # Reference to the var.keyvault_keys
+      keyvault_key_key = "byok"
+    }
+  }
 }
