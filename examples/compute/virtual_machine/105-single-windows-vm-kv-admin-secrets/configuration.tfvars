@@ -5,10 +5,16 @@ global_settings = {
     region1 = "southeastasia"
   }
 }
+tags = {
+ level = "100"
+}
 
 resource_groups = {
   vm_region1 = {
     name = "example-virtual-machine-rg1"
+    tags = {
+      env = "standalone"
+    }
   }
 }
 
