@@ -73,7 +73,7 @@ jobs:
 
   examples:
     name: examples
-    runs-on: ubuntu-latest
+    runs-on: self-hosted
 
     needs: foundations
 
@@ -192,7 +192,7 @@ jobs:
 
   foundations_destroy:
     name: foundations_destroy
-    runs-on: ubuntu-latest
+    runs-on: self-hosted
     if: always()
     needs: examples
 
