@@ -114,6 +114,9 @@ keyvaults = {
     soft_delete_enabled = true
     purge_protection_enabled    = true
     enabled_for_disk_encryption = true
+    tags                        = {
+      env = "Standalone"
+    }
     creation_policies = {
       logged_in_user = {
         secret_permissions = ["Set", "Get", "List", "Delete", "Purge", "Recover"]
