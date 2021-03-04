@@ -45,6 +45,7 @@ virtual_machines = {
         size                            = "Standard_F2"
         admin_username                  = "adminuser"
         disable_password_authentication = true
+    
         #custom_data                     = "scripts/cloud-init/install-rover-tools.config"
 
         # Spot VM to save money
@@ -60,7 +61,9 @@ virtual_machines = {
           storage_account_type = "Standard_LRS"
           disk_encryption_set_key = "set1"
         }
-
+        identity = {
+          type = "SystemAssigned"
+       }
         source_image_reference = {
           publisher = "Canonical"
           offer     = "UbuntuServer"

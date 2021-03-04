@@ -65,7 +65,9 @@ virtual_machines = {
           disk_encryption_set_key = "set1"
         }
         
-
+        identity = {
+          type = "SystemAssigned"
+       }
         source_image_reference = {
           publisher = "MicrosoftWindowsServer"
           offer     = "WindowsServer"

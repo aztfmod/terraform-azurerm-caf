@@ -134,12 +134,8 @@ resource "azurerm_windows_virtual_machine" "vm" {
     for_each = try(each.value.identity, false) == false ? [] : [1]
 
     content {
-     /*
       type         = each.value.identity.type
       identity_ids = local.managed_identities
-    }
-    */
-     type = "SystemAssigned"
     }
   }
 
