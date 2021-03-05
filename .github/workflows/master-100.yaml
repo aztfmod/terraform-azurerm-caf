@@ -79,6 +79,7 @@ jobs:
 
     strategy:
       fail-fast: false
+      max-parallel: 20
       matrix:
           config_files: [
             "app_gateway/100-simple-app-gateway",
