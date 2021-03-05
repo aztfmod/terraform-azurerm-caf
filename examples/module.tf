@@ -22,7 +22,7 @@ module "caf" {
   custom_role_definitions      = var.custom_role_definitions
   log_analytics                = var.log_analytics
   event_hub_namespaces         = var.event_hub_namespaces
-  event_hub                    = var.event_hub
+  event_hubs                    = var.event_hubs
   event_hub_auth_rules         = var.event_hub_auth_rules
   event_hub_namespace_auth_rules = var.event_hub_namespace_auth_rules
   event_hub_consumer_groups    = var.event_hub_consumer_groups
