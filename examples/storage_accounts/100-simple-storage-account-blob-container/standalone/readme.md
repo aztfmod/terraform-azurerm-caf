@@ -1,7 +1,7 @@
 You can test this module outside of a landingzone using
 
 ```bash
-cd /tf/caf/examples/storage_accounts/100-simple-storage-account-blob-container/standalone
+cd /tf/caf/aztfmod/examples/storage_accounts/100-simple-storage-account-blob-container/standalone
 
 terraform init
 
@@ -18,7 +18,7 @@ To test this deployment in the example landingzone. Make sure the launchpad has 
 
 rover \
   -lz /tf/caf/aztfmod/examples \
-  -var-folder  /tf/caf/examples/storage_accounts/100-simple-storage-account-blob-container \
+  -var-folder  /tf/caf/aztfmod/examples/storage_accounts/100-simple-storage-account-blob-container \
   -level level1 \
   -a plan
 
