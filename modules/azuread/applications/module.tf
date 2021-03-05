@@ -1,7 +1,7 @@
 
 resource "azuread_application" "app" {
 
-  name = var.global_settings.passthrough ? format("%s", var.settings.application_name) : format("%s-%s", var.global_settings.prefix, var.settings.application_name)
+  name = var.global_settings.passthrough ? format("%s", var.settings.application_name) : format("%s-%s", var.global_settings.prefix.0, var.settings.application_name)
 
   owners = [
     var.client_config.object_id
@@ -44,7 +44,7 @@ resource "azuread_service_principal" "app" {
   tags                         = try(var.settings.tags, null)
 }
 
-resource "azuread_service_principal_password" "app" {
+resource "azuread_service_principal_password" "pwd" {
   service_principal_id = azuread_service_principal.app.id
   value                = random_password.pwd.result
   end_date             = timeadd(time_rotating.pwd.id, format("%sh", try(var.settings.password_policy.expire_in_days, var.password_policy.expire_in_days) * 24))

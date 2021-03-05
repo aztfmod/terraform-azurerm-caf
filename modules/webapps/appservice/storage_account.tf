@@ -5,8 +5,6 @@ data "azurerm_storage_account_blob_container_sas" "backup" {
   container_name    = local.backup_storage_account.containers[var.settings.backup.container_key].name
   https_only        = true
 
-  #ip_address = "168.1.5.65"
-
   start  = time_rotating.sas[0].id
   expiry = timeadd(time_rotating.sas[0].id, format("%sh", var.settings.backup.sas_policy.expire_in_days * 24))
 
@@ -18,12 +16,6 @@ data "azurerm_storage_account_blob_container_sas" "backup" {
     delete = true
     list   = true
   }
-
-  # cache_control       = "max-age=5"
-  # content_disposition = "inline"
-  # content_encoding    = "deflate"
-  # content_language    = "en-US"
-  # content_type        = "application/json"
 }
 
 resource "time_rotating" "sas" {

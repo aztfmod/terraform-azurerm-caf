@@ -16,6 +16,7 @@ env:
   ARM_CLIENT_ID: ${{ secrets.ARM_CLIENT_ID }}
   ARM_SUBSCRIPTION_ID: ${{ secrets.ARM_SUBSCRIPTION_ID }}
   ARM_TENANT_ID: ${{ secrets.ARM_TENANT_ID }}
+  ROVER_RUNNER: true
 
 jobs:
   examples:
@@ -36,6 +37,7 @@ jobs:
             "azure_ad/102-password-rotation",
             "compute/availability_set/100-simple-availabilityset",
             "compute/availability_set/101-availabilityset-with-proximity-placement-group",
+            "compute/container_groups/101-aci-rover",
             "compute/container_registry/100-simple-acr",
             "compute/kubernetes_services/101-single-cluster",
             "compute/kubernetes_services/102-multi-nodepools",
@@ -57,8 +59,8 @@ jobs:
             "mariadb_server/102-private-endpoint-mariadb",
             "mariadb_server/103-private-endpoint-with-fw-rule-mariadb",
             "monitoring/100-service-health-alerts",
-            "mssql_server/elastic_pools",
-            "mssql_server/failover_groups",
+            "mssql_server/104-sqlserver-elastic_pools",
+            "mssql_server/105-sqlserver-failover_groups",
             "mysql_server/100-simple-mysql",
             "mysql_server/101-vnet-rule-mysql",
             "mysql_server/102-private-endpoint-mysql",
@@ -78,6 +80,8 @@ jobs:
             "networking/virtual_network/101-vnet-peering-nsg",
             "networking/virtual_wan/100-vwan-multi-hubs",
             "networking/virtual_wan/101-vwan-multi-hubs-firewalls",
+            "networking/ip_group/100-simple-ip_group",
+            "networking/ip_group/101-firewall-ip_group",
             "postgresql_server/100-simple-postgresql",
             "postgresql_server/101-vnet-rule-postgresql",
             "postgresql_server/102-private-endpoint-postgresql",

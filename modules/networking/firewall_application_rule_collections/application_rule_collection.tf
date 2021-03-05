@@ -3,7 +3,7 @@ resource "azurecaf_name" "rule" {
 
   name          = var.azurerm_firewall_application_rule_collection_definition[each.key].name
   resource_type = "azurerm_firewall_application_rule_collection"
-  prefixes      = [var.global_settings.prefix]
+  prefixes      = var.global_settings.prefix
   random_length = var.global_settings.random_length
   clean_input   = true
   passthrough   = var.global_settings.passthrough
@@ -25,9 +25,14 @@ resource "azurerm_firewall_application_rule_collection" "rule" {
     content {
       name             = rule.value.name
       description      = try(rule.value.description, null)
-      source_addresses = rule.value.source_addresses
-      fqdn_tags        = try(rule.value.fqdn_tags, null)
-      target_fqdns     = try(rule.value.target_fqdns, null)
+      source_addresses = try(rule.value.source_addresses, null)
+      source_ip_groups = try(rule.value.source_ip_groups, try(flatten([
+        for key, value in var.ip_groups : value.id
+        if contains(rule.value.source_ip_groups_keys, key)
+        ]), null)
+      )
+      fqdn_tags    = try(rule.value.fqdn_tags, null)
+      target_fqdns = try(rule.value.target_fqdns, null)
 
       dynamic "protocol" {
         for_each = try(rule.value.protocol, {})
