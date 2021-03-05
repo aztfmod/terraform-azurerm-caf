@@ -31,9 +31,7 @@ storage_accounts = {
 event_hub_namespaces = {
   evh1 = {
     name = "evh1"
-    resource_group = {
-      key = "evh_examples"
-    }
+    resource_group_key = "evh_examples"
     sku    = "Standard"
     region = "region1"
 
