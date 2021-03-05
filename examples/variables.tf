@@ -277,7 +277,7 @@ variable "private_endpoints" {
   default = {}
 }
 
-variable event_hub {
+variable event_hubs {
   default = {}
 }
 variable automations {
