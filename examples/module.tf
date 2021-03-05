@@ -42,6 +42,7 @@ module "caf" {
     bastion_hosts              = var.bastion_hosts
     aks_clusters               = var.aks_clusters
     proximity_placement_groups = var.proximity_placement_groups
+    container_groups = var.container_groups
   }
   networking = {
     domain_name_registrations                               = var.domain_name_registrations
@@ -70,7 +71,8 @@ module "caf" {
     azurerm_firewall_network_rule_collection_definition     = var.azurerm_firewall_network_rule_collection_definition
     azurerm_firewall_application_rule_collection_definition = var.azurerm_firewall_application_rule_collection_definition
     azurerm_firewall_nat_rule_collection_definition         = var.azurerm_firewall_nat_rule_collection_definition
-
+    load_balancers                                          = var.load_balancers
+    ip_groups                                               = var.ip_groups
   }
   database = {
     azurerm_redis_caches               = var.azurerm_redis_caches
