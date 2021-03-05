@@ -151,6 +151,13 @@ variable "webapp" {
   }
 }
 
+variable data_factory {
+  default = {}
+}
+
+variable logic_app {
+  default = {}
+}
 
 ## Databases variables
 variable "database" {
@@ -231,7 +238,11 @@ variable "cosmos_dbs" {
   default = {}
 }
 
-variable "local_network_gateways" {
+variable app_config {
+  default = {}
+}
+
+variable local_network_gateways {
   default = {}
 }
 
