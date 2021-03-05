@@ -3,7 +3,7 @@ resource "azurecaf_name" "rule" {
 
   name          = var.azurerm_firewall_network_rule_collection_definition[each.key].name
   resource_type = "azurerm_firewall_network_rule_collection"
-  prefixes      = [var.global_settings.prefix]
+  prefixes      = var.global_settings.prefix
   random_length = var.global_settings.random_length
   clean_input   = true
   passthrough   = var.global_settings.passthrough
