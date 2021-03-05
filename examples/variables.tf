@@ -322,9 +322,6 @@ variable "event_hub_auth_rules" {
 variable "netapp_accounts" {
   default = {}
 }
-variable "automations" {
-  default = {}
-}
 
 variable "load_balancers" {
   default ={}
