@@ -16,20 +16,6 @@ terraform {
 data "azurerm_subscription" "primary" {}
 data "azurerm_client_config" "current" {}
 
-resource "random_string" "prefix" {
-  length  = 4
-  special = false
-  upper   = false
-  number  = false
-}
-
-resource "random_string" "alpha1" {
-  length  = 1
-  special = false
-  upper   = false
-  number  = false
-}
-
 # The rover handle the identity management transition to cover interactive run and execution on pipelines using azure ad applications or managed identities
 # There are different scenrios are considered:
 #

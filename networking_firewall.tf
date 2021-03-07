@@ -28,7 +28,7 @@ module "azurerm_firewall_network_rule_collections" {
   rule_collections                                    = each.value.azurerm_firewall_network_rule_collections
   azurerm_firewall_network_rule_collection_definition = local.networking.azurerm_firewall_network_rule_collection_definition
   global_settings                                     = local.global_settings
-  ip_groups                                           = module.ip_groups
+  ip_groups                                           = try(module.ip_groups, null)
 }
 
 module "azurerm_firewall_application_rule_collections" {
@@ -43,7 +43,7 @@ module "azurerm_firewall_application_rule_collections" {
   rule_collections                                        = each.value.azurerm_firewall_application_rule_collections
   azurerm_firewall_application_rule_collection_definition = local.networking.azurerm_firewall_application_rule_collection_definition
   global_settings                                         = local.global_settings
-  ip_groups                                               = module.ip_groups
+  ip_groups                                               = try(module.ip_groups, null)
 }
 
 
@@ -59,7 +59,8 @@ module "azurerm_firewall_nat_rule_collections" {
   rule_collections                                = each.value.azurerm_firewall_nat_rule_collections
   azurerm_firewall_nat_rule_collection_definition = local.networking.azurerm_firewall_nat_rule_collection_definition
   global_settings                                 = local.global_settings
-  ip_groups                                       = module.ip_groups
+  ip_groups                                       = try(module.ip_groups, null)
+  public_ip_addresses                             = try(module.public_ip_addresses, null)
 }
 
 output "azurerm_firewalls" {

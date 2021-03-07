@@ -1,6 +1,6 @@
 variable prefix {
   description = "You can use a prefix to add to the list of resource groups you want to create"
-  type        = string
+  default     = null
 }
 
 variable tags {
