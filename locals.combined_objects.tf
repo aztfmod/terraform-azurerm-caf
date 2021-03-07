@@ -18,7 +18,6 @@ locals {
   combined_objects_keyvault_keys                     = merge(tomap({ (local.client_config.landingzone_key) = module.keyvault_keys }), try(var.remote_objects.keyvault_keys, {}))
   combined_objects_keyvaults                         = merge(tomap({ (local.client_config.landingzone_key) = module.keyvaults }), try(var.remote_objects.keyvaults, {}))
   combined_objects_managed_identities                = merge(tomap({ (local.client_config.landingzone_key) = module.managed_identities }), try(var.remote_objects.managed_identities, {}))
-  combined_objects_microsoft_billing_enrollment_accounts                 = tomap({ (local.client_config.landingzone_key) = try(var.billing.microsoft_billing_enrollment_accounts, {})})
   combined_objects_mssql_databases                   = merge(tomap({ (local.client_config.landingzone_key) = module.mssql_databases }), try(var.remote_objects.mssql_databases, {}))
   combined_objects_mssql_elastic_pools               = merge(tomap({ (local.client_config.landingzone_key) = module.mssql_elastic_pools }), try(var.remote_objects.mssql_elastic_pools, {}))
   combined_objects_mssql_managed_databases           = merge(tomap({ (local.client_config.landingzone_key) = module.mssql_managed_databases }), try(var.remote_objects.mssql_managed_databases, {}))
