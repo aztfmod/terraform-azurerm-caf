@@ -46,7 +46,6 @@ locals {
     keyvaults                  = local.combined_objects_keyvaults
     logged_in                  = local.logged_in
     managed_identities         = local.combined_objects_managed_identities
-    microsoft_billing_enrollment_accounts          = local.combined_objects_microsoft_billing_enrollment_accounts
     mssql_databases            = local.combined_objects_mssql_databases
     mssql_elastic_pools        = local.combined_objects_mssql_elastic_pools
     mssql_managed_databases    = local.combined_objects_mssql_managed_databases

@@ -1,8 +1,10 @@
 resource "null_resource" "tags" {
-  count = (try(var.settings.tags, null) == null) || (try(var.settings.subscription_id, null)) == null ? 0 : 1
+  depends_on = [null_resource.refresh_access_token]
+
+  count = try(var.settings.tags, null) == null ? 0 : 1
 
   triggers = {
-    subscription_id = var.settings.subscription_id
+    subscription_id = try(azurerm_subscription.sub.0.subscription_id, var.settings.subscription_id)
     tags            = jsonencode(
         {
           properties = {
@@ -19,7 +21,7 @@ resource "null_resource" "tags" {
 
     environment = {
       METHOD          = "PUT"
-      SUBSCRIPTION_ID = var.settings.subscription_id
+      SUBSCRIPTION_ID = try(azurerm_subscription.sub.0.subscription_id, var.settings.subscription_id)
       TAGS            = jsonencode(
         {
           properties = {
