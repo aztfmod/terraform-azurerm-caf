@@ -122,7 +122,7 @@ resource "azurerm_container_group" "acg" {
     }   //container_content
   }     //container
 
-   dynamic "identity" {
+  dynamic "identity" {
     for_each = try(var.settings.identity, false) == false ? [] : [1]
 
     content {

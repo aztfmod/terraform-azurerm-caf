@@ -4,9 +4,9 @@ module "caf" {
   resource_groups = var.resource_groups
   tags            = var.tags
   networking = {
-    vnets                    = var.vnets
-    public_ip_addresses      = var.public_ip_addresses
-    load_balancers           = var.load_balancers
+    vnets               = var.vnets
+    public_ip_addresses = var.public_ip_addresses
+    load_balancers      = var.load_balancers
   }
 }
 
