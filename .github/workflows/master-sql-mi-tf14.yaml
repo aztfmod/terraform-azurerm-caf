@@ -16,6 +16,7 @@ env:
   ARM_CLIENT_ID: ${{ secrets.ARM_CLIENT_ID }}
   ARM_SUBSCRIPTION_ID: ${{ secrets.ARM_SUBSCRIPTION_ID }}
   ARM_TENANT_ID: ${{ secrets.ARM_TENANT_ID }}
+  ROVER_RUNNER: true
 
 jobs:
   foundations:
@@ -30,7 +31,7 @@ jobs:
           random_length: ['5']
 
     container:
-      image: aztfmod/roverdev:2101.301237
+      image: aztfmod/rover:0.14.7-2103.0105
       options: --user 0
 
     steps:
@@ -40,7 +41,7 @@ jobs:
         with:
           repository: Azure/caf-terraform-landingzones
           path: public
-          ref: '2012.1.0'
+          ref: '2101.0.0'
 
       - name: Login azure
         run: |
@@ -77,7 +78,7 @@ jobs:
           ]
 
     container:
-      image: aztfmod/roverdev:2101.301237
+      image: aztfmod/rover:0.14.7-2103.0105
       options: --user 0
 
     steps:
@@ -119,7 +120,7 @@ jobs:
           region: ["southeastasia"]
 
     container:
-      image: aztfmod/roverdev:2101.301237
+      image: aztfmod/rover:0.14.7-2103.0105
       options: --user 0
 
     steps:
@@ -127,7 +128,7 @@ jobs:
         with:
           repository: Azure/caf-terraform-landingzones
           path: public
-          ref: "2012.1.0"
+          ref: '2101.0.0'
 
       - name: Login azure
         run: |
