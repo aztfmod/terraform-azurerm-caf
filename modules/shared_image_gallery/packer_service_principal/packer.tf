@@ -76,7 +76,7 @@ resource "null_resource" "delete_image" {
   provisioner "local-exec" {
     when        = destroy
     interpreter = ["/bin/bash"]
-    command     = format("%s/shared_image_gallery/packer_service_principal/destroy_image.sh", ".")
+    command     = format("%s/destroy_image.sh", path.module)
     on_failure  = fail
     environment = {
       RESOURCE_IDS = self.triggers.resource_id
