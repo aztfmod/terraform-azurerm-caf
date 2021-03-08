@@ -248,10 +248,6 @@ variable packer_managed_identity {
   default = {}
 }
 
-variable keyvault_certificate_issuers {
-  default = {}
-}
-
 variable "keyvault_certificate_issuers" {
   default = {}
 }
