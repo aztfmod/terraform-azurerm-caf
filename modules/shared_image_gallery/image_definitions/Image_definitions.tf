@@ -9,8 +9,6 @@ resource "azurecaf_name" "image_name" {
   use_slug      = var.global_settings.use_slug
 }
 
-
-
 resource "azurerm_shared_image" "image" {
   name                = azurecaf_name.image_name.result
   gallery_name        = var.gallery_name
