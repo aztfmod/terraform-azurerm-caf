@@ -324,3 +324,6 @@ variable "ip_groups" {
 variable container_groups {
   default = {}
 }
+variable azure_devops_projects {
+  default = {}
+}

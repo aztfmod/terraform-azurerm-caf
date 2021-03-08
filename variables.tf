@@ -243,3 +243,6 @@ variable load_balancers {
   default = {}
 }
 
+variable azure_devops_projects {
+  default = {}
+}
