@@ -23,6 +23,7 @@ env:
   ARM_CLIENT_ID: ${{ secrets.ARM_CLIENT_ID }}
   ARM_SUBSCRIPTION_ID: ${{ secrets.ARM_SUBSCRIPTION_ID }}
   ARM_TENANT_ID: ${{ secrets.ARM_TENANT_ID }}
+  ROVER_RUNNER: true
 
 jobs:
   foundations:
@@ -37,7 +38,7 @@ jobs:
           random_length: ['5']
 
     container:
-      image: aztfmod/rover:2102.0100
+      image: aztfmod/rover:0.13.6-2103.0105
       options: --user 0
 
     steps:
@@ -47,7 +48,7 @@ jobs:
         with:
           repository: Azure/caf-terraform-landingzones
           path: public
-          ref: '2012.1.0'
+          ref: '2101.0.0'
 
       - name: Login azure
         run: |
@@ -78,6 +79,7 @@ jobs:
 
     strategy:
       fail-fast: false
+      max-parallel: 20
       matrix:
           config_files: [
             "app_gateway/100-simple-app-gateway",
@@ -87,6 +89,7 @@ jobs:
             "azure_ad/102-password-rotation",
             "compute/availability_set/100-simple-availabilityset",
             "compute/availability_set/101-availabilityset-with-proximity-placement-group",
+            "compute/container_groups/101-aci-rover",
             "compute/container_registry/100-simple-acr",
             "compute/kubernetes_services/101-single-cluster",
             "compute/proximity_placement_group",
@@ -111,7 +114,10 @@ jobs:
             "mariadb_server/102-private-endpoint-mariadb",
             "mariadb_server/103-private-endpoint-with-fw-rule-mariadb",
             "monitoring/100-service-health-alerts",
-            "mssql_server/elastic_pools",
+            "mssql_server/101-sqlserver-simple",
+            "mssql_server/102-sqlserver-extend",
+            "mssql_server/104-sqlserver-elastic_pools",
+            "mssql_server/105-sqlserver-failover_groups",
             "mysql_server/100-simple-mysql",
             "mysql_server/101-vnet-rule-mysql",
             "mysql_server/102-private-endpoint-mysql",
@@ -121,6 +127,11 @@ jobs:
             "networking/domain_name_registrations/100-register-domain-default_domain_registrar_dns",
             "networking/front_door/100-simple-front_door",
             "networking/front_door/101-front_door_waf",
+            "networking/ip_group/100-simple-ip_group",
+            "networking/ip_group/101-firewall-ip_group",
+            "networking/load_balancers/100-simple-load-balancer-basic-sku",
+            "networking/load_balancers/101-load-balancer-with-rules",
+            "networking/load_balancers/102-internal-load-balancer",
             "networking/private_dns/100-private-dns-vnet-links",
             "networking/private_links/endpoints/centralized",
             "networking/virtual_network_gateway/103-vpn-site-to-site-connection",
@@ -147,7 +158,7 @@ jobs:
           ]
 
     container:
-      image: aztfmod/rover:2102.0100
+      image: aztfmod/rover:0.13.6-2103.0105
       options: --user 0
 
     steps:
@@ -192,7 +203,7 @@ jobs:
           region: ["southeastasia"]
 
     container:
-      image: aztfmod/rover:2102.0100
+      image: aztfmod/rover:0.13.6-2103.0105
       options: --user 0
 
     steps:
@@ -200,7 +211,7 @@ jobs:
         with:
           repository: Azure/caf-terraform-landingzones
           path: public
-          ref: '2012.1.0'
+          ref: '2101.0.0'
 
       - name: Login azure
         run: |
