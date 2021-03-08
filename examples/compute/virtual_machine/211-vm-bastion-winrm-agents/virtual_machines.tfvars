@@ -28,7 +28,7 @@ virtual_machines = {
     virtual_machine_settings = {
       linux = {
         name                            = "bastion_host"
-        size                            = "Standard_F2s"
+        size                            = "Standard_DS2_v2"
         admin_username                  = "adminuser"
         disable_password_authentication = true
 
@@ -88,7 +88,7 @@ virtual_machines = {
     virtual_machine_settings = {
       windows = {
         name               = "server1"
-        size               = "Standard_F2s_v2"
+        size               = "Standard_DS2_v2"
         admin_username_key = "vm-win-admin-username"
         admin_password_key = "vm-win-admin-password"
 
