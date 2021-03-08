@@ -1,6 +1,6 @@
 resource "azurecaf_name" "sig_name" {
   name          = var.settings.name
-  prefixes      = [var.global_settings.prefix]
+  prefixes      = var.global_settings.prefix
   resource_type = "azurerm_shared_image_gallery"
   random_length = var.global_settings.random_length
   clean_input   = true

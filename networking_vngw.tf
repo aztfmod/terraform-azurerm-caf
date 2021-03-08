@@ -11,13 +11,9 @@ module virtual_network_gateways {
   global_settings     = local.global_settings
   settings            = each.value
   base_tags           = try(local.global_settings.inherit_tags, false) ? module.resource_groups[each.value.resource_group_key].tags : {}
-<<<<<<< HEAD
-
-=======
   depends_on = [
     module.networking.public_ip_addresses
   ]
->>>>>>> 96d7afea85feea5b1c1d63ad2d57db3a6f7491cd
 }
 
 module virtual_network_gateway_connections {
