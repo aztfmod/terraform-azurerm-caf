@@ -75,7 +75,7 @@ resource "null_resource" "delete_image" {
   }
   provisioner "local-exec" {
     when        = destroy
-    interpreter = ["/bin/sh"]
+    interpreter = ["/bin/bash"]
     command     = format("%s/shared_image_gallery/packer_service_principal/destroy_image.sh", ".")
     on_failure  = fail
     environment = {
