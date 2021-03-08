@@ -48,7 +48,7 @@ jobs:
             "compute/kubernetes_services/101-single-cluster",
             "compute/kubernetes_services/102-multi-nodepools",
             "compute/proximity_placement_group",
-            "compute/virtual_machine/100-single-linux-vm"
+            "compute/virtual_machine/100-single-linux-vm",
             "compute/virtual_machine/105-single-windows-vm-kv-admin-secrets",
             "compute/virtual_machine/211-vm-bastion-winrm-agents",
             "cosmos_db/100-simple-cosmos-db-cassandra",
