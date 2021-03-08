@@ -324,7 +324,7 @@ variable "netapp_accounts" {
 }
 
 variable "load_balancers" {
-  default ={}
+  default = {}
 }
 
 variable "ip_groups" {

@@ -8,12 +8,12 @@ vnets = {
     }
     subnets = {
       subnet1 = {
-        name            = "subnet1"
-        cidr            = ["10.100.81.0/24"]
+        name = "subnet1"
+        cidr = ["10.100.81.0/24"]
       }
       subnet2 = {
-        name            = "subnet2"
-        cidr            = ["10.100.82.0/24"]
+        name = "subnet2"
+        cidr = ["10.100.82.0/24"]
       }
     } //subnets
 

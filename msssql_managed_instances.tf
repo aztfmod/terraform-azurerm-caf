@@ -4,7 +4,7 @@ output mssql_managed_instances {
 
 }
 output mssql_managed_instances_secondary {
-  value     = module.mssql_managed_instances_secondary
+  value = module.mssql_managed_instances_secondary
 }
 
 module "mssql_managed_instances" {
