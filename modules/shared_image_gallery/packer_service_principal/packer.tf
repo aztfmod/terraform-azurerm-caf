@@ -48,7 +48,7 @@ resource "null_resource" "packer_configuration_generator" {
 
 resource "null_resource" "create_image" {
   provisioner "local-exec" {
-    command = "packer build ${var.settings.packer_configuration_filepath}"
+    command = "packer build ${var.settings.packer_config_filepath}"
   }
   depends_on = [
     null_resource.packer_configuration_generator
