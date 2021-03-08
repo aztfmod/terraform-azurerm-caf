@@ -73,10 +73,10 @@ load_balancers = {
     }
 
     outbound_rules = {
-      rule1 ={
-        name = "outbound-rule"
-        protocol = "Tcp"
-        resource_group_key = "lb"
+      rule1 = {
+        name                     = "outbound-rule"
+        protocol                 = "Tcp"
+        resource_group_key       = "lb"
         backend_address_pool_key = "pool1"
         frontend_ip_configuration = {
           config1 = {
