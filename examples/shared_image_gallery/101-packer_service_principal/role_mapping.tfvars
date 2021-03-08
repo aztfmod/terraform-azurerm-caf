@@ -12,7 +12,7 @@ role_mapping = {
       logged_in_subscription = {
         "Contributor" = {
           azuread_apps = {
-            keys = ["packer_client"]
+            keys   = ["packer_client"]
             lz_key = "examples"
           }
         }

@@ -38,7 +38,7 @@ module "caf" {
     bastion_hosts              = var.bastion_hosts
     aks_clusters               = var.aks_clusters
     proximity_placement_groups = var.proximity_placement_groups
-    container_groups = var.container_groups
+    container_groups           = var.container_groups
   }
   networking = {
     domain_name_registrations                               = var.domain_name_registrations

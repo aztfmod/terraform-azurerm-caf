@@ -341,7 +341,7 @@ variable "automations" {
 }
 
 variable load_balancers {
-  default ={}
+  default = {}
 }
 
 variable "ip_groups" {

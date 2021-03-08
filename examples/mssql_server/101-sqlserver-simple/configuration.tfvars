@@ -14,10 +14,10 @@ resource_groups = {
 
 mssql_servers = {
   sql_rg1 = {
-    name                          = "sql-rg1"
-    region                        = "region1"
-    resource_group_key            = "sql_region1"
-    administrator_login           = "sqladmin"
+    name                = "sql-rg1"
+    region              = "region1"
+    resource_group_key  = "sql_region1"
+    administrator_login = "sqladmin"
   }
 }
 
