@@ -23,9 +23,9 @@ data "template_file" "packer_template" {
     location                          = var.location
     vm_size                           = var.settings.vm_size
     managed_image_resource_group_name = var.resource_group_name
-        
-    managed_image_name                = var.settings.managed_image_name
-    ansible_playbook_path             = var.settings.ansible_playbook_path
+
+    managed_image_name    = var.settings.managed_image_name
+    ansible_playbook_path = var.settings.ansible_playbook_path
 
     //shared_image_gallery destination values. If publishing to a different Subscription, change the following arguments and supply the values as variables
     subscription        = var.subscription
@@ -43,7 +43,7 @@ resource "null_resource" "packer_configuration_generator" {
   }
   depends_on = [
     data.template_file.packer_template
-  ]  
+  ]
 }
 
 resource "null_resource" "create_image" {
