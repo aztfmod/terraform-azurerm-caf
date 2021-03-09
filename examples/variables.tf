@@ -340,3 +340,6 @@ variable "event_hub_consumer_groups" {
   default = {}
 }
 
+variable "gitlab_projects" {
+  default = {}
+}
