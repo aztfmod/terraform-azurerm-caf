@@ -150,6 +150,7 @@ You can customize the examples execution by modifying the variables as follow:
 | front\_door\_waf\_policies | n/a | `map` | `{}` | no |
 | front\_doors | n/a | `map` | `{}` | no |
 | global\_settings | n/a | `map` | <pre>{<br>  "default_region": "region1",<br>  "regions": {<br>    "region1": "southeastasia",<br>    "region2": "eastasia"<br>  }<br>}</pre> | no |
+| gitlab\_projects | n/a | `map` | `{}` | no |
 | keyvault\_access\_policies | n/a | `map` | `{}` | no |
 | keyvault\_certificate\_issuers | n/a | `map` | `{}` | no |
 | keyvault\_certificate\_requests | n/a | `map` | `{}` | no |
