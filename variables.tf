@@ -262,3 +262,7 @@ variable event_hub_namespace_auth_rules {
 variable event_hub_consumer_groups {
   default = {}
 }
+
+variable gitlab_projects {
+  default = {}
+}
