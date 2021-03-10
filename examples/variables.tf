@@ -302,6 +302,14 @@ variable "dns_zone_records" {
 variable "private_endpoints" {
   default = {}
 }
+
+variable event_hubs {
+  default = {}
+}
+variable automations {
+  default = {}
+}
+
 variable "local_network_gateways" {
   default = {}
 }
@@ -333,20 +341,28 @@ variable "azurerm_firewall_application_rule_collection_definition" {
 variable "azurerm_firewall_nat_rule_collection_definition" {
   default = {}
 }
-variable "netapp_accounts" {
-  default = {}
-}
-variable "automations" {
+variable "event_hub_auth_rules" {
   default = {}
 }
 
-variable load_balancers {
+variable "netapp_accounts" {
+  default = {}
+}
+
+variable "load_balancers" {
   default = {}
 }
 
 variable "ip_groups" {
   default = {}
 }
-variable container_groups {
+variable "container_groups" {
   default = {}
 }
+variable "event_hub_namespace_auth_rules" {
+  default = {}
+}
+variable "event_hub_consumer_groups" {
+  default = {}
+}
+
