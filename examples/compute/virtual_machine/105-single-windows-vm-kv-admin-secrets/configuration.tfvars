@@ -1,4 +1,3 @@
-
 global_settings = {
   default_region = "region1"
   regions = {
@@ -6,7 +5,7 @@ global_settings = {
   }
 }
 tags = {
- level = "100"
+  level = "100"
 }
 
 resource_groups = {
@@ -62,18 +61,18 @@ virtual_machines = {
         network_interface_keys = ["nic0"]
 
         os_disk = {
-          name                 = "example_vm1-os"
-          caching              = "ReadWrite"
-          storage_account_type = "Standard_LRS"
-          managed_disk_type    = "StandardSSD_LRS"
-          disk_size_gb         = "128"
-          create_option        = "FromImage"
+          name                    = "example_vm1-os"
+          caching                 = "ReadWrite"
+          storage_account_type    = "Standard_LRS"
+          managed_disk_type       = "StandardSSD_LRS"
+          disk_size_gb            = "128"
+          create_option           = "FromImage"
           disk_encryption_set_key = "set1"
         }
-        
+
         identity = {
           type = "SystemAssigned"
-       }
+        }
         source_image_reference = {
           publisher = "MicrosoftWindowsServer"
           offer     = "WindowsServer"
@@ -88,10 +87,10 @@ virtual_machines = {
         name                 = "server1-data1"
         storage_account_type = "Standard_LRS"
         # Only Empty is supported. More community contributions required to cover other scenarios
-        create_option = "Empty"
-        disk_size_gb  = "10"
-        lun           = 1
-        zones         = ["1"]
+        create_option           = "Empty"
+        disk_size_gb            = "10"
+        lun                     = 1
+        zones                   = ["1"]
         disk_encryption_set_key = "set1"
       }
     }
@@ -114,19 +113,19 @@ dynamic_keyvault_secrets = {
 
 keyvaults = {
   example_vm_rg1 = {
-    name               = "vmsecretskv"
-    resource_group_key = "vm_region1"
-    sku_name           = "standard"
-    soft_delete_enabled = true
+    name                        = "vmsecretskv"
+    resource_group_key          = "vm_region1"
+    sku_name                    = "standard"
+    soft_delete_enabled         = true
     purge_protection_enabled    = true
     enabled_for_disk_encryption = true
-    tags                        = {
+    tags = {
       env = "Standalone"
     }
     creation_policies = {
       logged_in_user = {
         secret_permissions = ["Set", "Get", "List", "Delete", "Purge", "Recover"]
-        key_permissions = ["Get","List","Update","Create","Import","Delete","Recover","Backup","Restore","Decrypt","Encrypt","UnwrapKey","WrapKey","Verify","Sign","Purge"]
+        key_permissions    = ["Get", "List", "Update", "Create", "Import", "Delete", "Recover", "Backup", "Restore", "Decrypt", "Encrypt", "UnwrapKey", "WrapKey", "Verify", "Sign", "Purge"]
       }
     }
   }
@@ -190,31 +189,31 @@ storage_accounts = {
 
 }
 keyvault_keys = {
- key1 = {
-  keyvault_key = "example_vm_rg1"
-  name = "disk-key"
-  key_type = "RSA"
-  key_size = "2048"
-  key_opts = ["encrypt","decrypt","sign","verify","wrapKey","unwrapKey"]
+  key1 = {
+    keyvault_key = "example_vm_rg1"
+    name         = "disk-key"
+    key_type     = "RSA"
+    key_size     = "2048"
+    key_opts     = ["encrypt", "decrypt", "sign", "verify", "wrapKey", "unwrapKey"]
   }
 }
 
 disk_encryption_sets = {
   set1 = {
-    name = "deskey1"
+    name               = "deskey1"
     resource_group_key = "vm_region1"
-    key_vault_key_key = "key1"
+    key_vault_key_key  = "key1"
   }
 }
 keyvault_access_policies = {
- example_vm_rg1 = {
-  disk_encryption_sets = {
-    disk_encryption_set_key = "set1"
-      key_permissions = ["Get","List","Update","Create","Import","Delete","Recover","Backup","Restore","Decrypt","Encrypt","UnwrapKey","WrapKey","Verify","Sign","Purge"]
-  }
-  example_vm1 = {
-    secret_permissions = ["Get","List","Set","Delete","Recover","Backup","Restore","Purge"]
-      key_permissions = ["Get","List","Update","Create","Import","Delete","Recover","Backup","Restore","Decrypt","Encrypt","UnwrapKey","WrapKey","Verify","Sign","Purge"]
+  example_vm_rg1 = {
+    disk_encryption_sets = {
+      disk_encryption_set_key = "set1"
+      key_permissions         = ["Get", "List", "Update", "Create", "Import", "Delete", "Recover", "Backup", "Restore", "Decrypt", "Encrypt", "UnwrapKey", "WrapKey", "Verify", "Sign", "Purge"]
+    }
+    example_vm1 = {
+      secret_permissions = ["Get", "List", "Set", "Delete", "Recover", "Backup", "Restore", "Purge"]
+      key_permissions    = ["Get", "List", "Update", "Create", "Import", "Delete", "Recover", "Backup", "Restore", "Decrypt", "Encrypt", "UnwrapKey", "WrapKey", "Verify", "Sign", "Purge"]
     }
   }
 }
