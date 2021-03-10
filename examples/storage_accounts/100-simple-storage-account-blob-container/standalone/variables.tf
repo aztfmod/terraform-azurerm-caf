@@ -16,3 +16,6 @@ variable keyvault_keys {
 variable keyvault_access_policies {
   default = {}
 }
+variable var_folder_path {
+  default = {}
+}
