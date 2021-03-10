@@ -12,9 +12,7 @@ module custom_roles {
 #
 # Require the modules output an rbac_id that is set to the principal_id
 #
-resource "time_sleep" "time_delay_00" {
-  create_duration = "300s"
-}
+
 resource "azurerm_role_assignment" "for" {
   for_each = try(local.roles_to_process, {})
 
