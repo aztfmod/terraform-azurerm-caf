@@ -19,3 +19,7 @@ variable keyvault_access_policies {
 variable var_folder_path {
   default = {}
 }
+variable tags {
+  default = null
+  type    = map
+}
