@@ -28,10 +28,10 @@ container_groups = {
 
         # for demo purposes
         environment_variables = {
-          URL="https://www.microsoft.com"
+          URL = "https://www.microsoft.com"
         }
         secure_environment_variables = {
-          TOKEN="token from tfvars"
+          TOKEN = "token from tfvars"
         }
         environment_variables_from_resources = {
           AGENT_KEYVAULT_NAME = {
@@ -47,7 +47,7 @@ container_groups = {
         }
       }
 
-    }   //containers
+    } //containers
 
     tags = {
       environment = "testing"
@@ -71,7 +71,7 @@ container_groups = {
     restart_policy     = "Never" // Possible values are 'Always'(default) 'Never' 'OnFailure'
 
     containers = {
-      
+
       # You can also deploy the name container multiple times based on the count number
       httpd = {
         name   = "httpd"
@@ -87,7 +87,7 @@ container_groups = {
         }
       }
 
-    }   //containers
+    } //containers
 
     tags = {
       environment = "testing"

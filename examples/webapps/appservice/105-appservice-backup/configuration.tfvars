@@ -57,7 +57,7 @@ app_services = {
         name                = "test"
         enabled             = true
         storage_account_key = "sa1"
-        container_key       =  "backup"
+        container_key       = "backup"
         //storage_account_url = "https://cindstsabackup.blob.core.windows.net/webapp-backup?sv=2018-11-09&sr=c&st=2021-02-08T07%3A07%3A42Z&se=2021-03-10T07%3A07%3A42Z&sp=racwdl&spr=https&sig=5LX%2ByDoE4YQsf%2F0L5f42eML9mk%2Fu5ejjZYVIs81Keng%3D"
 
         sas_policy = {
@@ -75,11 +75,11 @@ app_services = {
         }
 
         schedule = {
-          frequency_interval = 1
-          frequency_unit = "Day"
+          frequency_interval       = 1
+          frequency_unit           = "Day"
           keep_at_least_one_backup = true
           retention_period_in_days = 1
-          start_time = "2021-02-08T00:00:00Z"
+          start_time               = "2021-02-08T00:00:00Z"
         }
       }
     }
