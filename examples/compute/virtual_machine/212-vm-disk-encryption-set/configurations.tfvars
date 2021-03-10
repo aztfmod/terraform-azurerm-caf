@@ -8,7 +8,7 @@ global_settings = {
 
 resource_groups = {
   rg1 = {
-    name = "example-disk-cmk"
+    name   = "example-disk-cmk"
     region = "region1"
   }
 }
@@ -45,9 +45,9 @@ public_ip_addresses = {
 # keyvaults
 keyvaults = {
   kv1 = {
-    name               = "examplesecrets"
-    resource_group_key = "rg1"
-    sku_name           = "standard"
+    name                     = "examplesecrets"
+    resource_group_key       = "rg1"
+    sku_name                 = "standard"
     purge_protection_enabled = true
   }
 }
@@ -57,16 +57,16 @@ keyvault_access_policies = {
   kv1 = {
     logged_in_user = {
       secret_permissions = ["Set", "Get", "List", "Delete", "Purge", "Recover"]
-      key_permissions = ["decrypt", "encrypt", "sign", "unwrapKey", "verify", "wrapKey","List","Get","Create","Purge"]
+      key_permissions    = ["decrypt", "encrypt", "sign", "unwrapKey", "verify", "wrapKey", "List", "Get", "Create", "Purge"]
     }
     logged_in_aad_app = {
       secret_permissions = ["Set", "Get", "List", "Delete", "Purge", "Recover"]
-      key_permissions = ["decrypt", "encrypt", "sign", "unwrapKey", "verify", "wrapKey","List","Get","Create","Purge"]
+      key_permissions    = ["decrypt", "encrypt", "sign", "unwrapKey", "verify", "wrapKey", "List", "Get", "Create", "Purge"]
     }
     disk_encryption_sets = {
       disk_encryption_set_key = "set1"
       # lz_key = "example" # for remote disk_encryption_set
-      key_permissions = ["decrypt", "encrypt", "sign", "unwrapKey", "verify", "wrapKey","List","Get","Create","Purge"]
+      key_permissions = ["decrypt", "encrypt", "sign", "unwrapKey", "verify", "wrapKey", "List", "Get", "Create", "Purge"]
     }
   }
 }
@@ -74,11 +74,11 @@ keyvault_access_policies = {
 keyvault_keys = {
   key1 = {
     keyvault_key = "kv1"
-    name = "disk-key"
-    key_type = "RSA"
-    key_size = 2048
-    key_opts = ["decrypt", "encrypt", "sign", "unwrapKey", "verify", "wrapKey"]
-    
+    name         = "disk-key"
+    key_type     = "RSA"
+    key_size     = 2048
+    key_opts     = ["decrypt", "encrypt", "sign", "unwrapKey", "verify", "wrapKey"]
+
     # curve = ""
     # not_before_date = ""
     # expiration_date = ""
@@ -88,9 +88,9 @@ keyvault_keys = {
 disk_encryption_sets = {
   # dependency on key_vault_key_key
   set1 = {
-    name = "diskencryptset1"
+    name               = "diskencryptset1"
     resource_group_key = "rg1"
-    key_vault_key_key = "key1"
+    key_vault_key_key  = "key1"
   }
 }
 
@@ -102,9 +102,9 @@ virtual_machines = {
 
   # Configuration to deploy a bastion host linux virtual machine
   vm1 = {
-    resource_group_key                   = "rg1"
-    provision_vm_agent                   = true
-    os_type = "linux"
+    resource_group_key = "rg1"
+    provision_vm_agent = true
+    os_type            = "linux"
 
     # the auto-generated ssh key in keyvault secret. Secret name being {VM name}-ssh-public and {VM name}-ssh-private
     keyvault_key = "kv1"
@@ -140,17 +140,17 @@ virtual_machines = {
           name                 = "vm-example-os-disk"
           caching              = "ReadWrite"
           storage_account_type = "Standard_LRS"
-          
+
           disk_encryption_set_key = "set1"
           # lz_key = "" # for remote disk_encryption_set
         }
-        
+
         source_image_reference = {
           publisher = "Canonical"
           offer     = "UbuntuServer"
           sku       = "18.04-LTS"
           version   = "latest"
-        } 
+        }
       }
     }
 
