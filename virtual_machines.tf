@@ -26,6 +26,7 @@ module virtual_machines {
   base_tags                        = try(local.global_settings.inherit_tags, false) ? module.resource_groups[each.value.resource_group_key].tags : {}
   availability_sets                = local.combined_objects_availability_sets
   proximity_placement_groups       = local.combined_objects_proximity_placement_groups
+  network_security_groups          = try(module.network_security_groups, {})
 }
 
 
