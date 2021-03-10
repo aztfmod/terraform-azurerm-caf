@@ -71,15 +71,6 @@ variable tf_name {
 variable resource_groups {}
 
 variable storage_accounts {}
-variable diagnostic_storage_accounts {
-  default = {}
-}
-variable diagnostic_event_hub_namespaces {
-  default = {}
-}
-variable diagnostic_log_analytics {
-  default = {}
-}
 variable keyvaults {}
 variable keyvault_access_policies {
   default = {}
@@ -107,12 +98,11 @@ variable managed_identities {
   default = {}
 }
 
-variable virtual_machines {
-  description = "Virtual machine object"
-  default     = {}
+variable networking {
+  default = {}
 }
 
-variable bastion_hosts {
+variable compute {
   default = {}
 }
 
@@ -161,28 +151,7 @@ variable environment {
   description = "This variable is set by the rover during the deployment based on the -env or -environment flags. Default to sandpit"
 }
 
-variable diagnostics_definition {
-  default = {}
-}
-variable diagnostics_destinations {
-  default = {}
-}
-
-variable vnets {
-  default = {}
-}
-
-variable network_security_group_definition {
-  default = {}
-}
-
-variable public_ip_addresses {
-  default = {}
-}
-variable route_tables {
-  default = {}
-}
-variable azurerm_routes {
+variable diagnostics {
   default = {}
 }
 
