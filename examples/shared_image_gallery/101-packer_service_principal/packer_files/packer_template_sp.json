@@ -1,0 +1,39 @@
+{
+  "builders" : [{
+  "type": "azure-arm",
+
+  "client_id": "${client_id}",
+  "client_secret": "${client_secret}",
+  "tenant_id": "${tenant_id}",
+  "subscription_id": "${subscription_id}",
+
+  "os_type": "${os_type}",
+  "image_publisher": "${image_publisher}",
+  "image_offer": "${image_offer}",
+  "image_sku": "${image_sku}",
+
+  "location": "${location}",
+  "vm_size": "${vm_size}",
+
+  "managed_image_resource_group_name": "${managed_image_resource_group_name}",
+  "managed_image_name": "${managed_image_name}",
+
+  "shared_image_gallery_destination": {
+    "subscription": "${subscription_id}",
+    "resource_group": "${resource_group}",
+    "gallery_name": "${gallery_name}",
+    "image_name": "${image_name}",
+    "image_version": "${image_version}",
+    "replication_regions": "${replication_regions}"
+    }
+ }
+],
+
+  "provisioners": [
+   {
+    "type": "ansible",
+    "playbook_file": "${ansible_playbook_path}"
+   }
+ ]
+}
+

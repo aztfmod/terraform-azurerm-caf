@@ -97,9 +97,12 @@ module "caf" {
     postgresql_servers                 = var.postgresql_servers
   }
   shared_services = {
-    monitoring      = var.monitoring
-    recovery_vaults = var.recovery_vaults
-    automations     = var.automations
+    monitoring               = var.monitoring
+    recovery_vaults          = var.recovery_vaults
+    shared_image_galleries   = var.shared_image_galleries
+    image_definitions        = var.image_definitions
+    packer_service_principal = var.packer_service_principal
+    packer_managed_identity  = var.packer_managed_identity
   }
 
   security = {
