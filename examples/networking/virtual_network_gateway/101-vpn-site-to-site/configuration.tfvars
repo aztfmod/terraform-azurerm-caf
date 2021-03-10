@@ -86,10 +86,10 @@ virtual_network_gateways = {
     }
     bgp_settings = {
       bpgsettings1 = {
-      asn = 65512
-      peering_address = "10.0.0.5"
-      peer_weight = 0
+        asn             = 65512
+        peering_address = "10.0.0.5"
+        peer_weight     = 0
+      }
     }
-   }
   }
 }
