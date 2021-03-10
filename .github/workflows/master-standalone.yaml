@@ -109,8 +109,6 @@ jobs:
             "webapps/appservice/102-appservice-slots",
             "webapps/appservice/103-appservice-extend",
             "webapps/appservice/104-appservice-appinsight",
-            "networking/load_balancers/100-simple-load-balancer-basic-sku",
-            "networking/load_balancers/101-load-balancer-with-rules",
             "webapps/appservice/105-appservice-backup"
             # "mssql_mi/200-mi",
           ]
