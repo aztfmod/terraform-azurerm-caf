@@ -3,6 +3,7 @@ module "caf" {
 
   global_settings                = var.global_settings
   diagnostics                    = local.remote.diagnostics
+  gitlab_projects                = var.gitlab_projects
   current_landingzone_key        = var.landingzone.key
   tenant_id                      = var.tenant_id
   logged_user_objectId           = var.logged_user_objectId
