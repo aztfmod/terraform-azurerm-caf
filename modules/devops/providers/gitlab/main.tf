@@ -1,7 +1,3 @@
-provider "gitlab" {
-    token = var.token
-}
-
 terraform {
   required_providers {
     gitlab = {
