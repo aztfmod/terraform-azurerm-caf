@@ -3,6 +3,7 @@ module "caf" {
 
   global_settings                = var.global_settings
   diagnostics                    = local.remote.diagnostics
+  gitlab_projects                = var.gitlab_projects
   current_landingzone_key        = var.landingzone.key
   tenant_id                      = var.tenant_id
   logged_user_objectId           = var.logged_user_objectId
@@ -27,9 +28,6 @@ module "caf" {
   event_hub_namespace_auth_rules = var.event_hub_namespace_auth_rules
   event_hub_consumer_groups      = var.event_hub_consumer_groups
 
-  devops = {
-    gitlab_projects              = var.gitlab_projects
-  }
   webapp = {
     azurerm_application_insights = var.azurerm_application_insights
     app_service_environments     = var.app_service_environments

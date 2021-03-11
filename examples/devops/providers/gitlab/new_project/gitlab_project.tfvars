@@ -1,5 +1,9 @@
 gitlab_projects = {
-  test_project = {
-    name = "Test Project"
+  project   = {
+    name        = "test_project_2"
+    description = "updated test project description"
+    visibility  = "private"
   }
+  
+  token = "<GITLAB_TOKEN_HERE>"
 }
