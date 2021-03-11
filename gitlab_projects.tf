@@ -1,8 +1,7 @@
 module "gitlab_projects" {
   source          = "./modules/devops/providers/gitlab"
-  for_each        = var.gitlab_projects
-  project         = each.value
-  gitlab_token    = local.gitlab_token
+  project         = local.shared_services.gitlab_projects.project
+  token           = local.shared_services.gitlab_projects.token
 }
 
 output gitlab_projects {
