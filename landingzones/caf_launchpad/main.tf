@@ -34,40 +34,13 @@ terraform {
 
 
 provider "azurerm" {
-  features {
-    key_vault {
-      purge_soft_delete_on_destroy = true
-    }
-  }
-}
-
-
-resource "random_string" "prefix" {
-  length  = 4
-  special = false
-  upper   = false
-  number  = false
-}
-
-resource "random_string" "alpha1" {
-  length  = 1
-  special = false
-  upper   = false
-  number  = false
+  features {}
 }
 
 locals {
-  landingzone_tag = {
-    landingzone = var.landingzone.key
-  }
-  tags = merge(local.landingzone_tag, { "level" = var.landingzone.level }, { "environment" = var.environment }, { "rover_version" = var.rover_version }, var.tags)
-
-  prefix = var.prefix == null ? random_string.prefix.result : var.prefix
-
+  
   global_settings = {
-    prefix             = local.prefix
-    prefix_with_hyphen = local.prefix == "" ? "" : "${local.prefix}-"
-    prefix_start_alpha = local.prefix == "" ? "" : "${random_string.alpha1.result}${local.prefix}"
+    prefix             = var.prefix
     default_region     = var.default_region
     environment        = var.environment
     regions            = var.regions
@@ -75,7 +48,6 @@ locals {
     random_length      = var.random_length
     inherit_tags       = var.inherit_tags
     use_slug           = var.use_slug
-    tags               = var.tags
   }
 
   tfstates = map(
