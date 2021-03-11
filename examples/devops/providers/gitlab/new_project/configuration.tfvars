@@ -4,9 +4,3 @@ global_settings = {
     region1 = "southeastasia"
   }
 }
-
-resource_groups = {
-  ado_test = {
-    name = "ado_test"
-  }
-}
