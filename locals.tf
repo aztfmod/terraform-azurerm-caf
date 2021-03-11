@@ -16,7 +16,7 @@ resource "random_string" "alpha1" {
 
 locals {
 
-  prefix = lookup(var.global_settings, "prefix", null) == null ? random_string.prefix.0.result : var.global_settings.prefix
+  prefix = try(var.global_settings.prefix, null) == null ? random_string.prefix.0.result : var.global_settings.prefix
 
   global_settings = {
     default_region     = lookup(var.global_settings, "default_region", "region1")
