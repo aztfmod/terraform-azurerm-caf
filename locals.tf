@@ -1,15 +1,31 @@
+resource "random_string" "prefix" {
+  count   = try(var.global_settings.prefix, null) == null ? 1 : 0
+  length  = 4
+  special = false
+  upper   = false
+  number  = false
+}
+
+resource "random_string" "alpha1" {
+  count   = try(var.global_settings.prefix, null) == null ? 1 : 0
+  length  = 1
+  special = false
+  upper   = false
+  number  = false
+}
+
 locals {
 
-  prefix = lookup(var.global_settings, "prefix", null) == null ? random_string.prefix.result : var.global_settings.prefix
+  prefix = lookup(var.global_settings, "prefix", null) == null ? random_string.prefix.0.result : var.global_settings.prefix
 
   global_settings = {
     default_region     = lookup(var.global_settings, "default_region", "region1")
     environment        = lookup(var.global_settings, "environment", var.environment)
     inherit_tags       = try(var.global_settings.inherit_tags, false)
     passthrough        = try(var.global_settings.passthrough, false)
-    prefix             = local.prefix
-    prefix_start_alpha = local.prefix == "" ? "" : "${random_string.alpha1.result}${local.prefix}"
-    prefix_with_hyphen = local.prefix == "" ? "" : "${local.prefix}-"
+    prefix             = local.prefix == "" ? null : [local.prefix]
+    prefix_start_alpha = local.prefix == "" ? null : format("%s%s", try(random_string.alpha1.0.result, ""), local.prefix)
+    prefix_with_hyphen = local.prefix == "" ? null : format("%s-", local.prefix)
     random_length      = try(var.global_settings.random_length, 0)
     regions            = var.global_settings.regions
     use_slug           = try(var.global_settings.use_slug, true)
@@ -20,6 +36,7 @@ locals {
     availability_sets          = try(var.compute.availability_sets, {})
     azure_container_registries = try(var.compute.azure_container_registries, {})
     bastion_hosts              = try(var.compute.bastion_hosts, {})
+    container_groups           = try(var.compute.container_groups, {})
     proximity_placement_groups = try(var.compute.proximity_placement_groups, {})
     virtual_machines           = try(var.compute.virtual_machines, {})
   }
@@ -63,6 +80,7 @@ locals {
     virtual_network_gateways                                = try(var.networking.virtual_network_gateways, {})
     virtual_wans                                            = try(var.networking.virtual_wans, {})
     vnet_peerings                                           = try(var.networking.vnet_peerings, {})
+    load_balancers                                          = try(var.networking.load_balancers, {})
     vnets                                                   = try(var.networking.vnets, {})
     ip_groups                                               = try(var.networking.ip_groups, {})
   }
@@ -93,15 +111,15 @@ locals {
     synapse_workspaces                 = try(var.database.synapse_workspaces, {})
   }
 
-  client_config = {
+  client_config = var.client_config == {} ? {
     client_id               = data.azurerm_client_config.current.client_id
     landingzone_key         = var.current_landingzone_key
     logged_aad_app_objectId = local.object_id
     logged_user_objectId    = local.object_id
     object_id               = local.object_id
     subscription_id         = data.azurerm_client_config.current.subscription_id
-    tenant_id               = var.tenant_id == null ? data.azurerm_client_config.current.tenant_id : var.tenant_id
-  }
+    tenant_id               = data.azurerm_client_config.current.tenant_id
+  } : map(var.client_config)
 
   object_id = coalesce(var.logged_user_objectId, var.logged_aad_app_objectId, try(data.azurerm_client_config.current.object_id, null), try(data.azuread_service_principal.logged_in_app.0.object_id, null))
 
@@ -113,9 +131,14 @@ locals {
   }
 
   shared_services = {
-    automations     = try(var.shared_services.automations, {})
-    monitoring      = try(var.shared_services.monitoring, {})
-    recovery_vaults = try(var.shared_services.recovery_vaults, {})
+    recovery_vaults          = try(var.shared_services.recovery_vaults, {})
+    automations              = try(var.shared_services.automations, {})
+    monitoring               = try(var.shared_services.monitoring, {})
+    shared_image_galleries   = try(var.shared_services.shared_image_galleries, {})
+    image_definitions        = try(var.shared_services.image_definitions, {})
+    packer_service_principal = try(var.shared_services.packer_service_principal, {})
+    packer_managed_identity  = try(var.shared_services.packer_managed_identity, {})
+
   }
 
   enable = {
