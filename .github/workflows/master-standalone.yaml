@@ -102,14 +102,13 @@ jobs:
             "recovery_vault/102-asr-protection",
             "recovery_vault/103-asr-with-private-endpoint",
             "redis_cache/100-redis-standard",
+            "storage_accounts/100-simple-storage-account-blob-container",
             "synapse_analytics/100-synapse",
             "synapse_analytics/101-synapse-sparkpool",
             "webapps/appservice/101-appservice-simple",
             "webapps/appservice/102-appservice-slots",
             "webapps/appservice/103-appservice-extend",
             "webapps/appservice/104-appservice-appinsight",
-            "networking/load_balancers/100-simple-load-balancer-basic-sku",
-            "networking/load_balancers/101-load-balancer-with-rules",
             "webapps/appservice/105-appservice-backup"
             # "mssql_mi/200-mi",
           ]
