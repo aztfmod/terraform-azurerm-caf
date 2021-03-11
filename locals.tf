@@ -132,7 +132,6 @@ locals {
 
   shared_services = {
     automations     = try(var.shared_services.automations, {})
-    gitlab_projects = try(var.shared_services.gitlab_projects, {})
     monitoring      = try(var.shared_services.monitoring, {})
     recovery_vaults = try(var.shared_services.recovery_vaults, {})
   }

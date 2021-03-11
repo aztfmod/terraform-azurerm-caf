@@ -3,6 +3,3 @@ variable project {
   type        = map
 }
 
-variable token {
-  description = "Token that has permission to create-update-delete projects"
-}
