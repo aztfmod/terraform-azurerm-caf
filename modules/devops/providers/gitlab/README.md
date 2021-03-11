@@ -28,7 +28,6 @@ module "gitlab_projects" {
 
 | Name | Description | Type | Default | Required |
 |------|-------------|------|---------|:--------:|
-| gitlab\_token | Client configuration object (see module README.md). | `any` | n/a | yes |
 | project | The project configuration map | `map` | n/a | yes |
 
 ## Outputs
