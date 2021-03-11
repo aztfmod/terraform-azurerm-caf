@@ -60,3 +60,11 @@ variable base_tags {
 variable proximity_placement_groups {
   default = {}
 }
+
+variable application_security_groups {
+  default = {}
+}
+
+variable virtual_machines {
+  default = {}
+}

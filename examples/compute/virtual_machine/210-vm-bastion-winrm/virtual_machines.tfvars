@@ -73,7 +73,14 @@ virtual_machines = {
         name                    = "0-server1"
         enable_ip_forwarding    = false
         internal_dns_name_label = "server1-nic0"
+        networking_interface_asg_associations_key = "nic0"
 
+      }
+    }
+
+    networking_interface_asg_associations = {
+      nic0 = {
+        application_security_group_key = "bastion"
       }
     }
 

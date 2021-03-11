@@ -74,6 +74,9 @@ variable resource_groups {
 variable network_security_group_definition {
   default = null
 }
+variable networking_interface_asg_associations {
+  default = {}
+}
 variable route_tables {
   default = {}
 }

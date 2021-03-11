@@ -44,6 +44,7 @@ module "caf" {
     dns_zone_records                                        = var.dns_zone_records
     vnets                                                   = var.vnets
     network_security_group_definition                       = var.network_security_group_definition
+    networking_interface_asg_associations                   = var.networking_interface_asg_associations
     public_ip_addresses                                     = var.public_ip_addresses
     route_tables                                            = var.route_tables
     azurerm_routes                                          = var.azurerm_routes
