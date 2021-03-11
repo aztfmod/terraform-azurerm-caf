@@ -5,13 +5,6 @@ keyvaults = {
     sku_name           = "standard"
 
     purge_protection_enabled = true
-
-    creation_policies = {
-      logged_in_user = {
-        key_permissions    = ["get", "create", "delete", "list", "restore", "recover", "unwrapkey", "wrapkey", "purge", "encrypt", "decrypt", "sign", "verify"]
-        secret_permissions = ["Set", "Get", "List", "Delete", "Purge", "Recover"]
-      }
-    }
   }
 }
 
@@ -22,6 +15,10 @@ keyvault_access_policies = {
       storage_account_key = "sa1"
       key_permissions     = ["get", "create", "list", "restore", "recover", "unwrapkey", "wrapkey", "purge", "encrypt", "decrypt", "sign", "verify"]
       secret_permissions  = ["Set", "Get", "List", "Delete", "Purge", "Recover"]
+    }
+    logged_in_user = {
+      key_permissions    = ["get", "create", "delete", "list", "restore", "recover", "unwrapkey", "wrapkey", "purge", "encrypt", "decrypt", "sign", "verify"]
+      secret_permissions = ["Set", "Get", "List", "Delete", "Purge", "Recover"]
     }
   }
 }
