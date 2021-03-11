@@ -34,3 +34,7 @@ output data_lake_filesystems {
 output primary_connection_string {
   value = azurerm_storage_account.stg.primary_connection_string
 }
+
+output identity {
+  value = azurerm_storage_account.stg.identity
+}

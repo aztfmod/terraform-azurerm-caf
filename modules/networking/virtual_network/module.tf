@@ -3,7 +3,7 @@ resource "azurecaf_name" "caf_name_vnet" {
 
   name          = var.settings.vnet.name
   resource_type = "azurerm_virtual_network"
-  prefixes      = [var.global_settings.prefix]
+  prefixes      = var.global_settings.prefix
   random_length = var.global_settings.random_length
   clean_input   = true
   passthrough   = var.global_settings.passthrough
@@ -17,7 +17,7 @@ resource "azurerm_virtual_network" "vnet" {
   address_space       = var.settings.vnet.address_space
   tags                = local.tags
 
-  dns_servers = lookup(var.settings.vnet, "dns", null)
+  dns_servers = lookup(var.settings.vnet, "dns_servers", null)
 
   dynamic "ddos_protection_plan" {
     for_each = var.ddos_id != "" ? [1] : []
