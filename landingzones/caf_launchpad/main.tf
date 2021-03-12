@@ -37,16 +37,35 @@ provider "azurerm" {
   features {}
 }
 
+resource "random_string" "prefix" {
+  count   = var.prefix == null ? 1 : 0
+  length  = 4
+  special = false
+  upper   = false
+  number  = false
+}
+
+resource "random_string" "alpha1" {
+  count   = var.prefix == null ? 1 : 0
+  length  = 1
+  special = false
+  upper   = false
+  number  = false
+}
+
 locals {
   
   global_settings = {
-    prefix             = var.prefix
     default_region     = var.default_region
     environment        = var.environment
-    regions            = var.regions
-    passthrough        = var.passthrough
-    random_length      = var.random_length
     inherit_tags       = var.inherit_tags
+    passthrough        = var.passthrough
+    prefix             = var.prefix
+    prefixes           = var.prefix == "" ? null : [try(var.prefix,random_string.prefix.0.result)]
+    prefix_with_hyphen = var.prefix == "" ? null : format("%s-", try(var.prefix,random_string.prefix.0.result))
+    random_length      = var.random_length
+    regions            = var.regions
+    tags               = var.tags
     use_slug           = var.use_slug
   }
 
