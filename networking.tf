@@ -45,7 +45,7 @@ resource "azurecaf_name" "public_ip_addresses" {
 
   name          = try(each.value.name, null)
   resource_type = "azurerm_public_ip"
-  prefixes      = local.global_settings.prefix
+  prefixes      = local.global_settings.prefixes
   random_length = local.global_settings.random_length
   clean_input   = true
   passthrough   = local.global_settings.passthrough

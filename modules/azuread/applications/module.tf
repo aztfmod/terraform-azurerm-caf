@@ -1,7 +1,7 @@
 
 resource "azuread_application" "app" {
 
-  name = var.global_settings.passthrough ? format("%s", var.settings.application_name) : format("%s-%s", var.global_settings.prefix.0, var.settings.application_name)
+  display_name = var.global_settings.passthrough ? format("%s", var.settings.application_name) : format("%s-%s", var.global_settings.prefix.0, var.settings.application_name)
 
   owners = [
     var.client_config.object_id
@@ -14,7 +14,6 @@ resource "azuread_application" "app" {
   public_client              = try(var.settings.public_client, false)
   oauth2_allow_implicit_flow = try(var.settings.oauth2_allow_implicit_flow, false)
   group_membership_claims    = try(var.settings.group_membership_claims, "All")
-  type                       = try(var.settings.type, null)
   prevent_duplicate_names    = try(var.settings.identifier_uris, false)
 
   dynamic "required_resource_access" {
