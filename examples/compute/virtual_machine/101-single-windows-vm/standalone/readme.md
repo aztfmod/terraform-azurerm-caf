@@ -1,4 +1,4 @@
-You can test this module outside of a landingzone using
+You can test this module outside of a landingzone using:
 
 ```bash
 cd /tf/caf/examples/compute/virtual_machine/101-single-windows-vm/standalone
