@@ -54,15 +54,15 @@ resource "random_string" "alpha1" {
 }
 
 locals {
-  
+
   global_settings = {
     default_region     = var.default_region
     environment        = var.environment
     inherit_tags       = var.inherit_tags
     passthrough        = var.passthrough
     prefix             = var.prefix
-    prefixes           = var.prefix == "" ? null : [try(var.prefix,random_string.prefix.0.result)]
-    prefix_with_hyphen = var.prefix == "" ? null : format("%s-", try(var.prefix,random_string.prefix.0.result))
+    prefixes           = var.prefix == "" ? null : [try(var.prefix, random_string.prefix.0.result)]
+    prefix_with_hyphen = var.prefix == "" ? null : format("%s-", try(var.prefix, random_string.prefix.0.result))
     random_length      = var.random_length
     regions            = var.regions
     tags               = var.tags

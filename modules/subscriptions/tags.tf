@@ -5,13 +5,13 @@ resource "null_resource" "tags" {
 
   triggers = {
     subscription_id = try(azurerm_subscription.sub.0.subscription_id, var.settings.subscription_id)
-    tags            = jsonencode(
-        {
-          properties = {
-            tags = var.settings.tags
-          }
+    tags = jsonencode(
+      {
+        properties = {
+          tags = var.settings.tags
         }
-      )
+      }
+    )
   }
 
   provisioner "local-exec" {
@@ -22,7 +22,7 @@ resource "null_resource" "tags" {
     environment = {
       METHOD          = "PUT"
       SUBSCRIPTION_ID = try(azurerm_subscription.sub.0.subscription_id, var.settings.subscription_id)
-      TAGS            = jsonencode(
+      TAGS = jsonencode(
         {
           properties = {
             tags = var.settings.tags
@@ -41,7 +41,7 @@ resource "null_resource" "tags" {
     environment = {
       METHOD          = "PUT"
       SUBSCRIPTION_ID = self.triggers.subscription_id
-      TAGS            = jsonencode(
+      TAGS = jsonencode(
         {
           properties = {
             tags = {}

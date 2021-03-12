@@ -1,7 +1,7 @@
 #Core outputs
 
 output objects {
-  value = tomap({(var.landingzone.key) = module.solution})
+  value     = tomap({ (var.landingzone.key) = module.solution })
   sensitive = true
 }
 

@@ -86,7 +86,7 @@ variable "subscriptions" {
 
 variable "billing" {
   description = "Billing information"
-  default = {}
+  default     = {}
 }
 
 variable "remote_objects" {
