@@ -12,9 +12,7 @@ module custom_roles {
 #
 # Require the modules output an rbac_id that is set to the principal_id
 #
-resource "time_sleep" "time_delay_00" {
-  create_duration = "300s"
-}
+
 resource "azurerm_role_assignment" "for" {
   for_each = try(local.roles_to_process, {})
 
@@ -22,9 +20,6 @@ resource "azurerm_role_assignment" "for" {
   role_definition_name = each.value.mode == "built_in_role_mapping" ? each.value.role_definition_name : null
   role_definition_id   = each.value.mode == "custom_role_mapping" ? module.custom_roles[each.value.role_definition_name].role_definition_resource_id : null
   principal_id         = each.value.object_id_resource_type == "object_ids" ? each.value.object_id_key_resource : try(local.services_roles[each.value.object_id_resource_type][each.value.lz_key][each.value.object_id_key_resource].rbac_id, local.services_roles[each.value.object_id_resource_type][var.current_landingzone_key][each.value.object_id_key_resource].rbac_id)
-  depends_on = [
-    time_sleep.time_delay_00
-  ]
 
   lifecycle {
     ignore_changes = [
