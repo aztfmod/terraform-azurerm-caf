@@ -224,22 +224,34 @@ variable "shared_services" {
   }
 }
 
+variable virtual_network_gateways {
+  default = {}
+}
+
+variable virtual_network_gateway_connections {
+  default = {}
+}
+
+variable shared_image_galleries {
+  default = {}
+}
+
+variable image_definitions {
+  default = {}
+}
+
+variable packer_service_principal {
+  default = {}
+}
+
+variable packer_managed_identity {
+  default = {}
+}
+
 variable "keyvault_certificate_issuers" {
   default = {}
 }
 variable "cosmos_dbs" {
-  default = {}
-}
-
-variable "local_network_gateways" {
-  default = {}
-}
-
-variable "ip_groups" {
-  default = {}
-}
-
-variable load_balancers {
   default = {}
 }
 

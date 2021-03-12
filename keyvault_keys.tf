@@ -1,4 +1,6 @@
 module keyvault_keys {
+  depends_on = [module.keyvaults, module.keyvault_access_policies]
+
   source = "./modules/security/keyvault_key"
 
   for_each = local.security.keyvault_keys
