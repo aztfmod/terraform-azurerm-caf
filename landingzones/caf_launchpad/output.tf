@@ -1,6 +1,6 @@
 
 output objects {
-  value = tomap({(var.landingzone.key) = module.launchpad})
+  value     = tomap({ (var.landingzone.key) = module.launchpad })
   sensitive = true
 }
 
