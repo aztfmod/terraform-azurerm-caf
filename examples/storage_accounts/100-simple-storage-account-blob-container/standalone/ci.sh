@@ -9,6 +9,7 @@ terraform init
 
 terraform apply \
   -var-file ../configuration.tfvars \
+  -var-file ../keyvaults.tfvars \
   -var tags='{testing_job_id='"${1}"'}' \
   -var var_folder_path=${current_folder} \
   -input=false \
@@ -17,6 +18,7 @@ terraform apply \
 
 terraform destroy \
   -var-file ../configuration.tfvars \
+  -var-file ../keyvaults.tfvars \
   -var tags='{testing_job_id='"${1}"'}' \
   -var var_folder_path=${current_folder} \
   -input=false \
