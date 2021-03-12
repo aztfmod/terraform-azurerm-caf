@@ -1,7 +1,7 @@
 resource "azurecaf_name" "vwan" {
   name          = var.settings.name
   resource_type = "azurerm_virtual_wan"
-  prefixes      = [var.global_settings.prefix]
+  prefixes      = var.global_settings.prefix
   random_length = var.global_settings.random_length
   clean_input   = true
   passthrough   = var.global_settings.passthrough
@@ -35,14 +35,14 @@ module hubs {
 }
 
 output virtual_hubs {
-  value       = module.hubs
-  
+  value = module.hubs
+
   description = "Virtual Hubs object"
 }
 
 output virtual_wan {
-  value       = azurerm_virtual_wan.vwan
-  
+  value = azurerm_virtual_wan.vwan
+
   description = "Virtual WAN object"
 }
 

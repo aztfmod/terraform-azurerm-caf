@@ -1,7 +1,7 @@
 
 output mssql_databases {
-  value     = module.mssql_databases
-  
+  value = module.mssql_databases
+
 }
 
 module "mssql_databases" {

@@ -2,7 +2,7 @@ resource "azurecaf_name" "mssqldb" {
 
   name          = var.settings.name
   resource_type = "azurerm_mssql_database"
-  prefixes      = [var.global_settings.prefix]
+  prefixes      = var.global_settings.prefix
   random_length = var.global_settings.random_length
   clean_input   = true
   passthrough   = var.global_settings.passthrough
@@ -25,6 +25,7 @@ resource "azurerm_mssql_database" "mssqldb" {
   read_scale                  = try(var.settings.read_scale, null)
   sample_name                 = try(var.settings.sample_name, null)
   sku_name                    = try(var.settings.sku_name, null)
+  storage_account_type        = try(var.settings.storage_account_type, null)
   zone_redundant              = try(var.settings.zone_redundant, null)
   tags                        = local.tags
 

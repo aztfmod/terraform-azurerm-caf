@@ -1,7 +1,7 @@
 
 output tenant_id {
-  value     = var.client_config.tenant_id
-  
+  value = var.client_config.tenant_id
+
 }
 
 output azuread_application {
@@ -11,7 +11,7 @@ output azuread_application {
     application_id = azuread_application.app.application_id
     name           = azuread_application.app.name
   }
-  
+
 }
 
 output azuread_service_principal {
@@ -19,7 +19,7 @@ output azuread_service_principal {
     id        = azuread_service_principal.app.id
     object_id = azuread_service_principal.app.object_id
   }
-  
+
 }
 
 output keyvaults {

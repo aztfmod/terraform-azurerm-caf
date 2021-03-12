@@ -10,6 +10,6 @@ module resource_groups {
 }
 
 output resource_groups {
-  value     = module.resource_groups
-  
+  value = module.resource_groups
+
 }

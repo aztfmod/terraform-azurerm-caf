@@ -2,7 +2,7 @@ resource "azurecaf_name" "subnet" {
 
   name          = var.name
   resource_type = "azurerm_subnet"
-  prefixes      = [var.global_settings.prefix]
+  prefixes      = var.global_settings.prefix
   random_length = var.global_settings.random_length
   clean_input   = true
   passthrough   = (var.name == "AzureBastionSubnet") || (var.name == "AzureFirewallSubnet") || (var.name == "GatewaySubnet") ? true : var.global_settings.passthrough

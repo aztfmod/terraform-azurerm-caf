@@ -4,7 +4,7 @@ resource "azurecaf_name" "virtualhub_fw" {
 
   name          = try(var.virtual_hub_config.firewall_name, null)
   resource_type = "azurerm_firewall"
-  prefixes      = [var.global_settings.prefix]
+  prefixes      = var.global_settings.prefix
   random_length = var.global_settings.random_length
   clean_input   = true
   passthrough   = var.global_settings.passthrough
@@ -40,7 +40,7 @@ resource "null_resource" "arm_template_vhub_firewall" {
   provisioner "local-exec" {
     command     = format("%s/scripts/destroy_resource.sh", path.module)
     when        = destroy
-    interpreter = ["/bin/sh"]
+    interpreter = ["/bin/bash"]
     on_failure  = continue
 
     environment = {

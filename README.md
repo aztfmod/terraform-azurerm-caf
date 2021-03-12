@@ -1,5 +1,3 @@
-[![VScodespaces](https://img.shields.io/endpoint?url=https%3A%2F%2Faka.ms%2Fvso-badge)](https://online.visualstudio.com/environments/new?name=terraform-azurerm-caf-landingzone-modules&repo=aztfmod/terraform-azurerm-caf)
-
 # Cloud Adoption Framework for Azure - Terraform module
 
 Microsoft [Cloud Adoption Framework for Azure](https://aka.ms/caf) provides you with guidance and best practices to adopt Azure.
@@ -15,7 +13,7 @@ It can be invoked from the [Terraform registry](https://registry.terraform.io/mo
 ```terraform
 module "caf" {
   source  = "aztfmod/caf/azurerm"
-  version = "~>4.21"
+  version = "~>5.1.0"
   # insert the 7 required variables here
 }
 ```
@@ -24,8 +22,7 @@ module "caf" {
 
 - Setup your **environment** using the following guide [Getting Started](https://github.com/Azure/caf-terraform-landingzones/blob/master/documentation/getting_started/getting_started.md) or you can alternatively use [Visual Studio Code Online]((https://online.visualstudio.com/environments/new?name=terraform-azurerm-caf&repo=aztfmod/terraform-azurerm-caf)
 ) or GitHub Codespaces.
-- Access to an **Azure subscription** where you have **Owner** role.
-
+- Access to an **Azure subscription**.
 
 ## Deploying examples
 
@@ -40,7 +37,6 @@ We categorize the various examples in this repo as follow:
 | 300   | advanced functionalities, includes RBAC features, virtual network and private link scenario and reduced portal view for hardened items | need custom AAD permissions                        |
 | 400   | advanced functionalities, includes RBAC features and security hardening                                                                | need custom AAD permissions                        |
 
-
 ## Community
 
 Feel free to open an issue for feature or bug, or to submit a PR.
@@ -51,7 +47,7 @@ You can also reach us on [Gitter](https://gitter.im/aztfmod/community?utm_source
 
 ## Contributing
 
-In order to contribute to the project, please review the module contribution and [conventions guidelines](./documentation/conventions.md)
+In order to contribute to the project, [please review the module contribution and conventions guidelines](./documentation/conventions.md)
 
 This project welcomes contributions and suggestions.  Most contributions require you to agree to a
 Contributor License Agreement (CLA) declaring that you have the right to, and actually do, grant us

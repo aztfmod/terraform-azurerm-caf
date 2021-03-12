@@ -1,6 +1,17 @@
-[![Gitter](https://badges.gitter.im/aztfmod/community.svg)](https://gitter.im/aztfmod/community?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge)
-
 # Deploys Service Health Alerts
+
+This module is part of Cloud Adoption Framework landing zones for Azure on Terraform.
+
+You can instantiate this directly using the following parameters:
+
+```hcl
+module "caf" {
+  source  = "aztfmod/caf/azurerm"
+  version = "5.1.0"
+  # insert the 7 required variables here
+}
+```
+
 This module tracks the following types of health events (subscription wide) and send alerts:
 
 1. Service issues - Problems in the Azure services that affect you right now.

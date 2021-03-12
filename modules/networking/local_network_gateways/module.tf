@@ -1,7 +1,7 @@
 resource "azurecaf_name" "lngw" {
   name          = var.settings.name
   resource_type = "azurerm_local_network_gateway"
-  prefixes      = [var.global_settings.prefix]
+  prefixes      = var.global_settings.prefix
   random_length = var.global_settings.random_length
   clean_input   = true
   passthrough   = var.global_settings.passthrough
@@ -19,9 +19,9 @@ resource "azurerm_local_network_gateway" "lngw" {
   dynamic "bgp_settings" {
     for_each = try(var.settings.bgp_settings, {})
     content {
-      asn                 = each.value.asn
-      bgp_peering_address = each.value.peering_address
-      peer_weight         = try(each.value.peer_weight, null)
+      asn                 = bgp_settings.value.asn
+      bgp_peering_address = bgp_settings.value.peering_address
+      peer_weight         = try(bgp_settings.value.peer_weight, null)
     }
   }
 }

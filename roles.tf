@@ -40,6 +40,7 @@ locals {
     azuread_groups             = local.combined_objects_azuread_groups
     azuread_apps               = local.combined_objects_azuread_applications
     azuread_users              = local.combined_objects_azuread_users
+    dns_zones                  = local.combined_objects_dns_zones
     azurerm_firewalls          = local.combined_objects_azurerm_firewalls
     event_hub_namespaces       = local.combined_objects_event_hub_namespaces
     keyvaults                  = local.combined_objects_keyvaults

@@ -2,7 +2,6 @@ global_settings = {
   default_region = "region1"
   regions = {
     region1 = "southeastasia"
-    region2 = "eastasia"
   }
 }
 
@@ -13,26 +12,27 @@ resource_groups = {
   }
 }
 
-dns_zones = {
-  dns_zone1 = {
-    name               = "" // Set as empty for CI. this will creation a random_domain_name.com
-    region             = "region1"
-    resource_group_key = "dns_re1"
+# IAM
 
-    contract = {
-      name_first   = "John"
-      name_last    = "Doe"
-      email        = "test@contoso.com"
-      phone        = "+65.12345678"
-      organization = "Sandpit"
-      job_title    = "Engineer"
-      address1     = "Singapore"
-      address2     = ""
-      postal_code  = "018898"
-      state        = "Singapore"
-      city         = "Singapore"
-      country      = "SG"
-      auto_renew   = true
-    }
+managed_identities = {
+  msi1 = {
+    name               = "msi1"
+    resource_group_key = "dns_re1"
   }
+}
+
+role_mapping = {
+  built_in_role_mapping = {
+    dns_zones = {
+      dns_zone1 = {
+        "DNS Zone Contributor" = {
+          managed_identities = {
+            keys = [
+              "msi1"
+            ]
+          } //managed_identities
+        }   //"DNS Zone Contributor"
+      }     //dns_zone1
+    }       //dns_zones
+  }         //built_in_role_mapping
 }

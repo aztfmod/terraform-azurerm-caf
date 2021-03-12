@@ -1,11 +1,11 @@
 resource "azurecaf_name" "frontdoor" {
   name          = var.settings.name
   resource_type = "azurerm_frontdoor"
-  prefixes      = [var.global_settings.prefix]
-  random_length = var.global_settings.random_length
+  prefixes      = try(var.settings.global_settings.prefix, var.global_settings.prefix)
+  random_length = try(var.settings.global_settings.random_lenght, var.global_settings.random_length)
   clean_input   = true
-  passthrough   = var.global_settings.passthrough
-  use_slug      = var.global_settings.use_slug
+  passthrough   = try(var.settings.global_settings.passthrough, var.global_settings.passthrough)
+  use_slug      = try(var.settings.global_settings.use_slug, var.global_settings.use_slug)
 }
 
 resource "azurerm_frontdoor" "frontdoor" {
@@ -112,19 +112,19 @@ resource "azurerm_frontdoor" "frontdoor" {
 
     content {
       name                                    = frontend_endpoint.value.name
-      host_name                               = format("%s.azurefd.net", azurecaf_name.frontdoor.result)
+      host_name                               = try(frontend_endpoint.value.host_name, format("%s.azurefd.net", azurecaf_name.frontdoor.result))
       session_affinity_enabled                = frontend_endpoint.value.session_affinity_enabled
       session_affinity_ttl_seconds            = frontend_endpoint.value.session_affinity_ttl_seconds
-      custom_https_provisioning_enabled       = frontend_endpoint.value.custom_https_provisioning_enabled
-      web_application_firewall_policy_link_id = try(var.front_door_waf_policies[var.client_config.landingzone_key][frontend_endpoint.value.front_door_waf_policy_key].id, var.front_door_waf_policies[frontend_endpoint.value.lz_key][frontend_endpoint.value.front_door_waf_policy_key].id)
+      custom_https_provisioning_enabled       = try(frontend_endpoint.value.custom_https_provisioning_enabled, false)
+      web_application_firewall_policy_link_id = try(frontend_endpoint.value.front_door_waf_policy.key, null) == null ? null : var.front_door_waf_policies[try(frontend_endpoint.value.front_door_waf_policy.lz_key, var.client_config.landingzone_key)][frontend_endpoint.value.front_door_waf_policy.key].id
 
       dynamic "custom_https_configuration" {
-        for_each = frontend_endpoint.value.custom_https_provisioning_enabled == true ? [frontend_endpoint.value.custom_https_configuration] : []
+        for_each = try(frontend_endpoint.value.custom_https_provisioning_enabled, false) == true ? [frontend_endpoint.value.custom_https_configuration] : []
         content {
           certificate_source                         = custom_https_configuration.value.certificate_source
-          azure_key_vault_certificate_vault_id       = custom_https_configuration.value.azure_key_vault_certificate_vault_id
-          azure_key_vault_certificate_secret_name    = custom_https_configuration.value.azure_key_vault_certificate_secret_name
-          azure_key_vault_certificate_secret_version = custom_https_configuration.value.azure_key_vault_certificate_secret_version
+          azure_key_vault_certificate_vault_id       = lookup(custom_https_configuration.value, "azure_key_vault_certificate_vault_id", null) == null ? try(var.keyvault_certificate_requests[var.client_config.landingzone_key][custom_https_configuration.value.certificate.key].keyvault_id, var.keyvault_certificate_requests[custom_https_configuration.value.certificate.lz_key][custom_https_configuration.value.certificate.key].keyvault_id) : custom_https_configuration.value.azure_key_vault_certificate_vault_id
+          azure_key_vault_certificate_secret_name    = lookup(custom_https_configuration.value, "azure_key_vault_certificate_secret_name", null) == null ? try(var.keyvault_certificate_requests[var.client_config.landingzone_key][custom_https_configuration.value.certificate.key].name, var.keyvault_certificate_requests[custom_https_configuration.value.certificate.lz_key][custom_https_configuration.value.certificate.key].name) : custom_https_configuration.value.azure_key_vault_certificate_secret_name
+          azure_key_vault_certificate_secret_version = lookup(custom_https_configuration.value, "azure_key_vault_certificate_secret_version", null) == null ? try(var.keyvault_certificate_requests[var.client_config.landingzone_key][custom_https_configuration.value.certificate.key].version, var.keyvault_certificate_requests[custom_https_configuration.value.certificate.lz_key][custom_https_configuration.value.certificate.key].version) : custom_https_configuration.value.azure_key_vault_certificate_secret_version
         }
       }
 

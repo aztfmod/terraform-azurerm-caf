@@ -15,6 +15,6 @@ output instrumentation_key {
 
 output connection_string {
   description = "The Connection String for this Application Insights component. (Sensitive)"
-  
-  value       = azurerm_application_insights.appinsights.connection_string
+
+  value = azurerm_application_insights.appinsights.connection_string
 }
