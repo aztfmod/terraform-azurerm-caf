@@ -12,261 +12,284 @@ variable tfstate_key {}
 variable tfstate_resource_group_name {}
 
 variable landingzone {}
-variable tenant_id {}
 
 variable global_settings {
   default = {}
 }
 variable rover_version {
-  default = null
-}
-variable logged_user_objectId {
-  default = null
-}
-variable logged_aad_app_objectId {
-  default = null
-}
-variable tags {
-  type    = map
-  default = {}
-}
-variable resource_groups {
-  default = {}
-}
-variable azurerm_redis_caches {
-  default = {}
-}
-variable subscriptions {
-  default = {}
-}
-variable mssql_servers {
-  default = {}
-}
-variable mssql_databases {
-  default = {}
-}
-variable mssql_elastic_pools {
-  default = {}
-}
-variable storage_accounts {
-  default = {}
-}
-variable azuread_groups {
-  default = {}
-}
-variable keyvaults {
-  default = {}
-}
-variable keyvault_access_policies {
-  default = {}
-}
-variable keyvault_certificates {
-  default = {}
-}
-variable managed_identities {
-  default = {}
-}
-variable azurerm_application_insights {
-  default = {}
-}
-variable role_mapping {
-  default = {}
-}
-variable custom_role_definitions {
-  default = {}
-}
-variable dynamic_keyvault_secrets {
-  default = {}
-}
-variable app_service_environments {
-  default = {}
-}
-variable app_service_plans {
-  default = {}
-}
-variable app_services {
-  default = {}
-}
-variable diagnostics_definition {
-  default = null
-}
-variable network_security_group_definition {
-  default = null
-}
-variable route_tables {
-  default = {}
-}
-variable azurerm_routes {
-  default = {}
-}
-variable vnets {
-  default = {}
-}
-variable mssql_managed_instances {
-  default = {}
-}
-variable mssql_managed_instances_secondary {
   default = {}
 }
 
-variable mssql_managed_databases {
-  default = {}
-}
-variable mssql_managed_databases_restore {
+variable "client_config" {
   default = {}
 }
 
-variable mariadb_servers {
+variable "tenant_id" {
+  description = "Azure AD Tenant ID for the current deployment."
+  default     = null
+}
+
+variable "current_landingzone_key" {
+  description = "Key for the current landing zones where the deployment is executed. Used in the context of landing zone deployment."
+  default     = "local"
+  type        = string
+}
+
+variable "tfstates" {
+  description = "Terraform states configuration object. Used in the context of landing zone deployment."
+  default     = {}
+}
+
+variable "enable" {
+  description = "Map of services defined in the configuration file you want to disable during a deployment."
+  default = {
+    # bastion_hosts    = true
+    # virtual_machines = true
+  }
+}
+
+variable "environment" {
+  description = "Name of the CAF environment."
+  type        = string
+  default     = "sandpit"
+}
+
+variable "logged_user_objectId" {
+  description = "Used to set access policies based on the value 'logged_in_user'. Can only be used in interactive execution with vscode."
+  default     = null
+}
+variable "logged_aad_app_objectId" {
+  description = "Used to set access policies based on the value 'logged_in_aad_app'"
+  default     = null
+}
+
+variable "use_msi" {
+  description = "Deployment using an MSI for authentication."
+  default     = false
+  type        = bool
+}
+
+variable "tags" {
+  description = "Tags to be used for this resource deployment."
+  type        = map(any)
+  default     = null
+}
+
+variable "resource_groups" {
+  description = "Resource groups configuration objects"
+  default     = {}
+}
+
+variable "subscriptions" {
   default = {}
 }
-variable mariadb_databases {
+
+variable "billing" {
+  description = "Billing information"
   default = {}
 }
-variable mssql_failover_groups {
+
+variable "remote_objects" {
+  description = "Remote objects is used to allow the landing zone to retrieve remote tfstate objects and pass them to the caf module"
+  default     = {}
+}
+
+## Diagnostics settings
+variable "diagnostics_definition" {
+  default     = null
+  description = "Shared diadgnostics settings that can be used by the services to enable diagnostics"
+}
+
+variable "diagnostics_destinations" {
+  default = null
+}
+
+variable "log_analytics" {
   default = {}
 }
-variable mssql_mi_failover_groups {
+
+variable "diagnostics" {
   default = {}
 }
-variable mssql_mi_administrators {
+
+variable "event_hub_namespaces" {
   default = {}
 }
-variable azuread_roles {
+
+variable "subnet_id" {
   default = {}
 }
-variable keyvault_certificate_issuers {
+
+variable "user_type" {
+  description = "The rover set this value to user or serviceprincipal. It is used to handle Azure AD api consents."
+  default     = {}
+}
+
+## Azure AD
+variable "azuread_apps" {
   default = {}
 }
-variable keyvault_certificate_requests {
+
+variable "azuread_groups" {
   default = {}
 }
-variable virtual_machines {
+
+variable "azuread_roles" {
   default = {}
 }
-variable bastion_hosts {
+
+variable "azuread_users" {
   default = {}
 }
-variable public_ip_addresses {
+
+variable "azuread_api_permissions" {
   default = {}
 }
-variable diagnostic_storage_accounts {
+
+## Compute variables
+variable "compute" {
+  description = "Compute configuration objects"
+  default = {
+    virtual_machines = {}
+  }
+}
+
+variable "webapp" {
+  description = "Web applications configuration objects"
+  default = {
+    # app_services                 = {}
+    # app_service_environments     = {}
+    # app_service_plans            = {}
+    # azurerm_application_insights = {}
+  }
+}
+
+
+## Databases variables
+variable "database" {
+  description = "Database configuration objects"
+  default     = {}
+}
+
+## Networking variables
+variable "networking" {
+  description = "Networking configuration objects"
+  default     = {}
+}
+
+## Security variables
+variable "security" {
   default = {}
 }
+
+variable "managed_identities" {
+  description = "Managed Identity configuration objects"
+  default     = {}
+}
+
+variable "keyvaults" {
+  description = "Key Vault configuration objects"
+  default     = {}
+}
+
+variable "keyvault_access_policies" {
+  default = {}
+}
+
+variable "keyvault_access_policies_azuread_apps" {
+  default = {}
+}
+
+variable "custom_role_definitions" {
+  description = "Custom role definitions configuration objects"
+  default     = {}
+}
+variable "role_mapping" {
+  default = {
+    built_in_role_mapping = {}
+    custom_role_mapping   = {}
+  }
+}
+
+variable "dynamic_keyvault_secrets" {
+  default = {}
+}
+
+## Storage variables
+variable "storage_accounts" {
+  default = {}
+}
+variable "storage" {
+  description = "Storage configuration objects"
+  default     = {}
+}
+variable "diagnostic_storage_accounts" {
+  default = {}
+}
+
+# Shared services
+variable "shared_services" {
+  description = "Shared services configuration objects"
+  default = {
+    # automations = {}
+    # monitoring = {}
+    # recovery_vaults = {}
+  }
+}
+
+variable virtual_network_gateways {
+  default = {}
+}
+
+variable virtual_network_gateway_connections {
+  default = {}
+}
+
+variable shared_image_galleries {
+  default = {}
+}
+
+variable image_definitions {
+  default = {}
+}
+
+variable packer_service_principal {
+  default = {}
+}
+
+variable packer_managed_identity {
+  default = {}
+}
+
+variable "keyvault_certificate_issuers" {
+  default = {}
+}
+variable "cosmos_dbs" {
+  default = {}
+}
+variable event_hubs {
+  default = {}
+}
+
+variable automations {
+  default = {}
+}
+
+variable event_hub_auth_rules {
+  default = {}
+}
+
+variable event_hub_namespace_auth_rules {
+  default = {}
+}
+
+variable event_hub_consumer_groups {
+  default = {}
+}
+
 variable diagnostic_event_hub_namespaces {
   default = {}
 }
 variable diagnostic_log_analytics {
-  default = {}
-}
-variable private_dns {
-  default = {}
-}
-variable synapse_workspaces {
-  default = {}
-}
-variable aks_clusters {
-  default = {}
-}
-variable databricks_workspaces {
-  default = {}
-}
-variable machine_learning_workspaces {
-  default = {}
-}
-variable monitoring {
-  default = {}
-}
-variable virtual_wans {
-  default = {}
-}
-variable event_hub_namespaces {
-  default = {}
-}
-variable application_gateways {
-  default = {}
-}
-variable application_gateway_applications {
-  default = {}
-}
-variable mysql_servers {
-  default = {}
-}
-variable postgresql_servers {
-  default = {}
-}
-variable cosmos_db {
-  default = {}
-}
-variable log_analytics {
-  default = {}
-}
-variable recovery_vaults {
-  default = {}
-}
-variable availability_sets {
-  default = {}
-}
-variable proximity_placement_groups {
-  default = {}
-}
-variable network_watchers {
-  default = {}
-}
-variable virtual_network_gateways {
-  default = {}
-}
-variable virtual_network_gateway_connections {
-  default = {}
-}
-variable express_route_circuits {
-  default = {}
-}
-variable express_route_circuit_authorizations {
-  default = {}
-}
-variable diagnostics_destinations {
-  default = {}
-}
-variable vnet_peerings {
-  default = {}
-}
-variable cosmos_dbs {
-  default = {}
-}
-variable front_doors {
-  default = {}
-}
-variable front_door_waf_policies {
-  default = {}
-}
-variable dns_zones {
-  default = {}
-}
-variable private_endpoints {
-  default = {}
-}
-variable local_network_gateways {
-  default = {}
-}
-variable azure_container_registries {
-  default = {}
-}
-variable azuread_api_permissions {
-  default = {}
-}
-variable azuread_apps {
-  default = {}
-}
-variable azuread_users {
-  default = {}
-}
-variable user_type {}
-variable domain_name_registrations {
-  default = {}
-}
-variable dns_zone_records {
-  default = {}
-}
-variable keyvault_keys {
   default = {}
 }
