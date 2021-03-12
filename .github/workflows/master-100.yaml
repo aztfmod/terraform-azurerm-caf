@@ -48,7 +48,7 @@ jobs:
         with:
           repository: Azure/caf-terraform-landingzones
           path: public
-          ref: '2101.0.0'
+          ref: '2102.0.0'
 
       - name: Login azure
         run: |
@@ -149,6 +149,8 @@ jobs:
             "recovery_vault/102-asr-protection",
             "recovery_vault/103-asr-with-private-endpoint",
             "redis_cache/100-redis-standard",
+            "storage_accounts/100-simple-storage-account-blob-container",
+            "shared_image_gallery/101-packer_service_principal",
             "synapse_analytics/100-synapse",
             "synapse_analytics/101-synapse-sparkpool",
             "webapps/appservice/101-appservice-simple",
@@ -213,7 +215,7 @@ jobs:
         with:
           repository: Azure/caf-terraform-landingzones
           path: public
-          ref: '2101.0.0'
+          ref: '2102.0.0'
 
       - name: Login azure
         run: |
