@@ -21,7 +21,10 @@ variable tags {
   type    = map
 }
 
-variable var_folder_path {
+variable logged_aad_app_objectId {
   default = {}
 }
 
+variable var_folder_path {
+  default = {}
+}

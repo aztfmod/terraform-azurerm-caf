@@ -24,6 +24,6 @@ variable azuread_groups {
 variable azuread_apps {
   default = {}
 }
-variable managed_identities {
+variable resources {
   default = {}
 }

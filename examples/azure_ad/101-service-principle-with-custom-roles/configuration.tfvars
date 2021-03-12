@@ -3,6 +3,7 @@ global_settings = {
   regions = {
     region1 = "southeastasia"
   }
+  random_length = 5
 }
 
 resource_groups = {
@@ -90,7 +91,6 @@ azuread_apps = {
   test_client = {
     useprefix                    = true
     application_name             = "test_client"
-    password_expire_in_days      = 1
     app_role_assignment_required = true
     keyvaults = {
       test_client = {

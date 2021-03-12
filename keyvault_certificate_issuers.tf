@@ -1,7 +1,7 @@
 module keyvault_certificate_issuers {
   source     = "./modules/security/keyvault_certificate_issuer"
   depends_on = [module.keyvaults]
-  for_each   = var.keyvault_certificate_issuers
+  for_each   = local.security.keyvault_certificate_issuers
 
   resource_group_name = module.resource_groups[each.value.resource_group_key].name
   location            = module.resource_groups[each.value.resource_group_key].location
@@ -15,7 +15,7 @@ module keyvault_certificate_issuers {
 data "azurerm_key_vault_secret" "certificate_issuer_password" {
   depends_on = [module.dynamic_keyvault_secrets]
   for_each = {
-    for key, value in var.keyvault_certificate_issuers : key => value
+    for key, value in local.security.keyvault_certificate_issuers : key => value
     if try(value.cert_password_key, null) != null
   }
 
@@ -24,6 +24,6 @@ data "azurerm_key_vault_secret" "certificate_issuer_password" {
 }
 
 output keyvault_certificate_issuers {
-  value     = module.keyvault_certificate_issuers
-  
+  value = module.keyvault_certificate_issuers
+
 }

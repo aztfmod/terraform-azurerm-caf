@@ -62,7 +62,7 @@ virtual_network_gateways = {
     # enable active_active only with VPN Type
     active_active = true
     # enable_bpg defaults to false. If set, true, input the necessary parameters as well. VPN Type only
-    enable_bgp = false
+    enable_bgp = true
     vpn_type   = "RouteBased"
     # multiple IP configs are needed for active_active state. VPN Type only.
     # do not create multiple IP configuration for ExpressRoute type.
@@ -82,6 +82,13 @@ virtual_network_gateways = {
         #lz_key optional, only needed if the vnet_key is inside another landing zone
         vnet_key                      = "vnet_gw"
         private_ip_address_allocation = "Dynamic"
+      }
+    }
+    bgp_settings = {
+      bpgsettings1 = {
+        asn             = 65512
+        peering_address = "10.0.0.5"
+        peer_weight     = 0
       }
     }
   }

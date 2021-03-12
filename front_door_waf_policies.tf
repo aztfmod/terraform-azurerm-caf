@@ -9,6 +9,6 @@ module "front_door_waf_policies" {
 }
 
 output front_door_waf_policies {
-  value     = module.front_door_waf_policies
-  
+  value = module.front_door_waf_policies
+
 }

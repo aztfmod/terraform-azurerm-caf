@@ -60,3 +60,7 @@ variable base_tags {
 variable proximity_placement_groups {
   default = {}
 }
+
+variable custom_image_ids {
+  default = {}
+}
