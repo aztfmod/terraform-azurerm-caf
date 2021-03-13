@@ -26,7 +26,7 @@ virtual_machines = {
   bastion_host = {
     resource_group_key = "vm_sg"
     os_type            = "linux"
-    keyvault_key = "example_vm_rg1"
+    keyvault_key       = "example_vm_rg1"
     # Define the number of networking cards to attach the virtual machine
     networking_interfaces = {
       nic0 = {
@@ -61,7 +61,7 @@ virtual_machines = {
 
         # Value of the nic keys to attach the VM. The first one in the list is the primary nic
         network_interface_keys = ["nic0", "nic1"]
-        keyvault_key = "example_vm_rg1"
+        keyvault_key           = "example_vm_rg1"
 
         os_disk = {
           name                 = "bastion-os"
@@ -144,7 +144,7 @@ keyvaults = {
       logged_in_user = {
         secret_permissions = ["Set", "Get", "List", "Delete", "Purge", "Recover"]
       }
-    } 
+    }
   }
 }
 
