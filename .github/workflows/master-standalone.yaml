@@ -84,6 +84,7 @@ jobs:
             "networking/load_balancers/100-simple-load-balancer-basic-sku",
             "networking/load_balancers/101-load-balancer-with-rules",
             "networking/load_balancers/102-internal-load-balancer",
+            "networking/load_balancers/103-load-balancer-nic-association",
             "networking/private_dns/100-private-dns-vnet-links",
             "networking/private_links/endpoints/centralized",
             "networking/virtual_network_gateway/101-vpn-site-to-site",

@@ -36,3 +36,13 @@ output ssh_keys {
     ssh_private_key_open_ssh = azurerm_key_vault_secret.ssh_public_key_openssh[local.os_type].name
   } : null
 }
+
+output "nics" {
+  value = {
+    for key, value in var.settings.networking_interfaces : key => {
+      id   = azurerm_network_interface.nic[key].id
+      name = azurerm_network_interface.nic[key].name
+    }
+  }
+}
+
