@@ -34,7 +34,7 @@ azuread_apps = {
     application_name             = "app1"
     app_role_assignment_required = true
     keyvaults = {
-      test_kv= {
+      test_kv = {
         secret_prefix = "app1"
       }
     }

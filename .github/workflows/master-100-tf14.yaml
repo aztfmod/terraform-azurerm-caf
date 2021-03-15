@@ -41,7 +41,7 @@ jobs:
         with:
           repository: Azure/caf-terraform-landingzones
           path: public
-          ref: '2101.0.0'
+          ref: '2102.0.0'
 
       - name: Login azure
         run: |
@@ -72,6 +72,7 @@ jobs:
 
     strategy:
       fail-fast: false
+      max-parallel: 20
       matrix:
           config_files: [
             "app_gateway/100-simple-app-gateway",
@@ -96,8 +97,10 @@ jobs:
             "cosmos_db/100-simple-cosmos-db-table",
             "databricks/100-simple-databricks",
             "datalake/101-datalake-storage",
-            "eventhub_namespace/100-simple-evh",
-            "eventhub_namespace/101-evh-with-private-endpoint",
+            "eventhub/100-simple-eventhub-namespace",
+            "eventhub/101-evh-namespace-with-private-endpoint",
+            "eventhub/102-namespace-and-evh-with-auth-rules",
+            "eventhub/103-eventhub-consumer-groups",
             "keyvault/102-keyvault-cert-issuer",
             "machine_learning/100-aml",
             "machine_learning/101-aml-vnet",
@@ -203,7 +206,7 @@ jobs:
         with:
           repository: Azure/caf-terraform-landingzones
           path: public
-          ref: '2101.0.0'
+          ref: '2102.0.0'
 
       - name: Login azure
         run: |
