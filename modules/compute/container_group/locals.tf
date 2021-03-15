@@ -8,19 +8,19 @@ locals {
     if try(value.count, null) == null
   }
 
-   # Get the containers with count
+  # Get the containers with count
   countainers_count = {
     for key, value in var.settings.containers : key => value
     if try(value.count, null) != null
   }
 
   # Expand the count countainer and add the iterator in the key and name
-  countainers_count_expanded = { 
-    for container in 
+  countainers_count_expanded = {
+    for container in
     flatten(
       [
         for key, value in local.countainers_count : [
-          for number in range(value.count) : 
+          for number in range(value.count) :
           {
             key                          = format("%s-%s", key, number)
             iterator                     = number
@@ -56,17 +56,17 @@ locals {
 
   environment_variables_from_resources_list = {
     for mapping in
-      flatten(
+    flatten(
       [
         for container_key, container_value in try(var.settings.containers, {}) : [
           for env_key, env_value in try(container_value.environment_variables_from_resources, {}) :
           {
             container_key = container_key
-            env_key = env_key
-            value = var.combined_resources[env_value.output_key][try(env_value.lz_key, var.client_config.landingzone_key)][env_value.resource_key][env_value.attribute_key]
+            env_key       = env_key
+            value         = var.combined_resources[env_value.output_key][try(env_value.lz_key, var.client_config.landingzone_key)][env_value.resource_key][env_value.attribute_key]
           }
         ]
       ]
-    ) : mapping.container_key => mapping ...
-  } 
+    ) : mapping.container_key => mapping...
+  }
 }

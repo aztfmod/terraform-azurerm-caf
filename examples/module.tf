@@ -1,27 +1,31 @@
 module "caf" {
   source = "../"
 
-  global_settings              = var.global_settings
-  diagnostics                  = local.remote.diagnostics
-  current_landingzone_key      = var.landingzone.key
-  tenant_id                    = var.tenant_id
-  logged_user_objectId         = var.logged_user_objectId
-  logged_aad_app_objectId      = var.logged_aad_app_objectId
-  resource_groups              = var.resource_groups
-  storage_accounts             = var.storage_accounts
-  azuread_groups               = var.azuread_groups
-  azuread_apps                 = var.azuread_apps
-  azuread_users                = var.azuread_users
-  azuread_roles                = var.azuread_roles
-  tags                         = local.tags
-  keyvaults                    = var.keyvaults
-  keyvault_access_policies     = var.keyvault_access_policies
-  keyvault_certificate_issuers = var.keyvault_certificate_issuers
-  managed_identities           = var.managed_identities
-  role_mapping                 = var.role_mapping
-  custom_role_definitions      = var.custom_role_definitions
-  log_analytics                = var.log_analytics
-  event_hub_namespaces         = var.event_hub_namespaces
+  global_settings                = var.global_settings
+  diagnostics                    = local.remote.diagnostics
+  current_landingzone_key        = var.landingzone.key
+  tenant_id                      = var.tenant_id
+  logged_user_objectId           = var.logged_user_objectId
+  logged_aad_app_objectId        = var.logged_aad_app_objectId
+  resource_groups                = var.resource_groups
+  storage_accounts               = var.storage_accounts
+  azuread_groups                 = var.azuread_groups
+  azuread_apps                   = var.azuread_apps
+  azuread_users                  = var.azuread_users
+  azuread_roles                  = var.azuread_roles
+  tags                           = local.tags
+  keyvaults                      = var.keyvaults
+  keyvault_access_policies       = var.keyvault_access_policies
+  keyvault_certificate_issuers   = var.keyvault_certificate_issuers
+  managed_identities             = var.managed_identities
+  role_mapping                   = var.role_mapping
+  custom_role_definitions        = var.custom_role_definitions
+  log_analytics                  = var.log_analytics
+  event_hub_namespaces           = var.event_hub_namespaces
+  event_hubs                     = var.event_hubs
+  event_hub_auth_rules           = var.event_hub_auth_rules
+  event_hub_namespace_auth_rules = var.event_hub_namespace_auth_rules
+  event_hub_consumer_groups      = var.event_hub_consumer_groups
 
   webapp = {
     azurerm_application_insights = var.azurerm_application_insights
@@ -38,7 +42,7 @@ module "caf" {
     bastion_hosts              = var.bastion_hosts
     aks_clusters               = var.aks_clusters
     proximity_placement_groups = var.proximity_placement_groups
-    container_groups = var.container_groups
+    container_groups           = var.container_groups
   }
   networking = {
     domain_name_registrations                               = var.domain_name_registrations
@@ -93,9 +97,12 @@ module "caf" {
     postgresql_servers                 = var.postgresql_servers
   }
   shared_services = {
-    monitoring      = var.monitoring
-    recovery_vaults = var.recovery_vaults
-    automations     = var.automations
+    monitoring               = var.monitoring
+    recovery_vaults          = var.recovery_vaults
+    shared_image_galleries   = var.shared_image_galleries
+    image_definitions        = var.image_definitions
+    packer_service_principal = var.packer_service_principal
+    packer_managed_identity  = var.packer_managed_identity
   }
 
   security = {

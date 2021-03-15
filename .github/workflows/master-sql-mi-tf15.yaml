@@ -31,7 +31,7 @@ jobs:
           random_length: ['5']
 
     container:
-      image: aztfmod/roveralpha:2102.011041
+      image: aztfmod/rover:0.15.0-alpha20210210-2103.0304
       options: --user 0
 
     steps:
@@ -41,7 +41,7 @@ jobs:
         with:
           repository: Azure/caf-terraform-landingzones
           path: public
-          ref: '2101.0.0'
+          ref: '2102.0.0'
 
       - name: Login azure
         run: |
@@ -120,7 +120,7 @@ jobs:
           region: ["southeastasia"]
 
     container:
-      image: aztfmod/roveralpha:2102.011041
+      image: aztfmod/rover:0.15.0-alpha20210210-2103.0304
       options: --user 0
 
     steps:

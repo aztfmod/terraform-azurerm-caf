@@ -12,8 +12,8 @@ keyvaults = {
         secret_permissions      = ["Set", "Get", "List", "Delete", "Purge", "Recover"]
       }
       nginx = {
-        managed_identity_key    = "nginx"
-        secret_permissions      = ["Get"]
+        managed_identity_key = "nginx"
+        secret_permissions   = ["Get"]
       }
     }
   }
