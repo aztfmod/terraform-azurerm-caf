@@ -81,9 +81,11 @@ virtual_machines = {
     networking_interface_asg_associations = {
       nic0 = {
         application_security_group_key = "bastion"
+        resource_group_key = "vm_region1"
       }
     }
-
+    
+   
     virtual_machine_settings = {
       windows = {
         name           = "server1"
