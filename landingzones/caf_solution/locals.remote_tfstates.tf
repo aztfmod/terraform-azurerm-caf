@@ -19,7 +19,7 @@ data "terraform_remote_state" "remote" {
   backend = var.landingzone.backend_type
   config = {
     storage_account_name = local.landingzone[try(each.value.level, "current")].storage_account_name
-    container_name       = local.landingzone[try(each.value.level, "current")].container_name
+    container_name       = try(each.value.workspace, local.landingzone[try(each.value.level, "current")].container_name)
     resource_group_name  = local.landingzone[try(each.value.level, "current")].resource_group_name
     subscription_id      = var.tfstate_subscription_id
     key                  = each.value.tfstate
