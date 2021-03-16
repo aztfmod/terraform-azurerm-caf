@@ -138,5 +138,14 @@ resource "azurerm_lb_nat_rule" "nat_rule" {
   enable_tcp_reset               = try(each.value.enable_tcp_reset, null)
 }
 
+resource "azurerm_network_interface_backend_address_pool_association" "vm_nic_bap_association" {
+  for_each = {
+    for key, value in try(var.settings.nic_bap_association, {}) : key => value
+    if try(value.vm_key, null) != null
+  }
 
+  network_interface_id    = var.existing_resources.virtual_machines[each.value.vm_key].nics[each.value.nic_key].id
+  ip_configuration_name   = var.existing_resources.virtual_machines[each.value.vm_key].nics[each.value.nic_key].name # The Name of the IP Configuration within the Network Interface
+  backend_address_pool_id = azurerm_lb_backend_address_pool.backend_address_pool.0.id
+}
 
