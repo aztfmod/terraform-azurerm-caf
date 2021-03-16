@@ -17,6 +17,6 @@ locals {
   secret_prefix = lookup(var.settings, "secret_prefix", "")
 
   # Global settings can be overwritten
-  prefix = lookup(var.settings, "useprefix", null) == true ? var.global_settings.prefix : []
+  prefixes = lookup(var.settings, "useprefix", null) == true ? var.global_settings.prefixes : []
 
 }

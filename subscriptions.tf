@@ -8,6 +8,6 @@ module "subscriptions" {
   global_settings         = local.global_settings
   subscription_key        = each.key
   settings                = each.value
-  primary_subscription_id = data.azurerm_subscription.primary.subscription_id
+  client_config           = local.client_config
   diagnostics             = local.combined_diagnostics
 }

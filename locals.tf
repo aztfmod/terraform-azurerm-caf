@@ -23,7 +23,7 @@ locals {
     passthrough        = try(var.global_settings.passthrough, false)
     prefix             = var.global_settings.prefix
     prefixes           = var.global_settings.prefix == "" ? null : try(var.global_settings.prefixes, [random_string.prefix.0.result])
-    prefix_with_hyphen = var.global_settings.prefix == "" ? null : try(var.global_settings.prefix_with_hyphen, format("%s-", random_string.prefix.0.result))
+    prefix_with_hyphen = try(var.global_settings.prefix_with_hyphen, format("%s-", random_string.prefix.0.result))
     random_length      = try(var.global_settings.random_length, 0)
     regions            = var.global_settings.regions
     use_slug           = try(var.global_settings.use_slug, true)
