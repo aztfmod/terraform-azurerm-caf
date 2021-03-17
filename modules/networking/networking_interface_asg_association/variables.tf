@@ -33,3 +33,7 @@ variable network_interface_id {
 variable application_security_group_id {
   default = {}
 }
+
+variable existing_resources {
+  default = {}
+}

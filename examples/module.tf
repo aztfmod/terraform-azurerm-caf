@@ -67,6 +67,7 @@ module "caf" {
     azurerm_firewall_network_rule_collection_definition     = var.azurerm_firewall_network_rule_collection_definition
     azurerm_firewall_application_rule_collection_definition = var.azurerm_firewall_application_rule_collection_definition
     azurerm_firewall_nat_rule_collection_definition         = var.azurerm_firewall_nat_rule_collection_definition
+    application_security_groups                             = var.application_security_groups
 
   }
   database = {
