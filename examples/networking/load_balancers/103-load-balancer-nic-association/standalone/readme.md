@@ -1,13 +1,13 @@
 You can test this module outside of a landingzone using
 
 ```bash
-cd /tf/caf/examples/machine_learning/101-aml-vnet/standalone
+cd /tf/caf/examples/networking/load_balancers/103-load-balancer-nic-association/standalone
 
 terraform init
 
 terraform plan \
-  -var-file ../configuration.tfvars \
-  -var-file ../networking_spoke.tfvars
+  -var-file ../configuration.tfvars
+
 
 ```
 
@@ -17,7 +17,7 @@ To test this deployment in the example landingzone. Make sure the launchpad has 
 
 rover \
   -lz /tf/caf/aztfmod/examples \
-  -var-folder  /tf/caf/examples/machine_learning/101-aml-vnet/\
+  -var-folder  /tf/caf/examples/networking/load_balancers/103-load-balancer-nic-association/ \
   -level level1 \
   -a plan
 
