@@ -61,6 +61,7 @@ virtual_machines = {
     provision_vm_agent                   = true
 
     os_type = "windows"
+    
 
     # when not set the password is auto-generated and stored into the keyvault
     keyvault_key = "ssh_keys"
@@ -74,7 +75,7 @@ virtual_machines = {
         enable_ip_forwarding    = false
         internal_dns_name_label = "server1-nic0"
         networking_interface_asg_associations_key = "nic0"
-
+        
       }
     }
 
@@ -82,6 +83,8 @@ virtual_machines = {
       nic0 = {
         application_security_group_key = "bastion"
         resource_group_key = "vm_region1"
+        vm_key  = "windows_server1"
+        nic_key = "nic0"
       }
     }
     

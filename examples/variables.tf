@@ -316,3 +316,7 @@ variable netapp_accounts {
 variable automations {
   default = {}
 }
+
+variable application_security_groups {
+  default = {}
+}

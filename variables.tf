@@ -230,3 +230,10 @@ variable cosmos_dbs {
 variable local_network_gateways {
   default = {}
 }
+
+variable application_security_groups {
+  default = {}
+}
+variable networking_interface_asg_associations {
+  default = {}
+}
