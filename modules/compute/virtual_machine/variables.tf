@@ -64,3 +64,6 @@ variable proximity_placement_groups {
 variable disk_encryption_sets {
   default = {}
 }
+variable custom_image_ids {
+  default = {}
+}

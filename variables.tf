@@ -12,6 +12,10 @@ variable "global_settings" {
   }
 }
 
+variable "client_config" {
+  default = {}
+}
+
 variable "tenant_id" {
   description = "Azure AD Tenant ID for the current deployment."
   default     = null
@@ -19,7 +23,7 @@ variable "tenant_id" {
 
 variable "current_landingzone_key" {
   description = "Key for the current landing zones where the deployment is executed. Used in the context of landing zone deployment."
-  default     = "standalone"
+  default     = "local"
   type        = string
 }
 
@@ -220,6 +224,30 @@ variable "shared_services" {
   }
 }
 
+variable virtual_network_gateways {
+  default = {}
+}
+
+variable virtual_network_gateway_connections {
+  default = {}
+}
+
+variable shared_image_galleries {
+  default = {}
+}
+
+variable image_definitions {
+  default = {}
+}
+
+variable packer_service_principal {
+  default = {}
+}
+
+variable packer_managed_identity {
+  default = {}
+}
+
 variable "keyvault_certificate_issuers" {
   default = {}
 }
@@ -227,10 +255,22 @@ variable "cosmos_dbs" {
   default = {}
 }
 
-variable "local_network_gateways" {
+variable event_hubs {
   default = {}
 }
 
-variable "ip_groups" {
+variable automations {
+  default = {}
+}
+
+variable event_hub_auth_rules {
+  default = {}
+}
+
+variable event_hub_namespace_auth_rules {
+  default = {}
+}
+
+variable event_hub_consumer_groups {
   default = {}
 }
