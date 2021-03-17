@@ -4,7 +4,6 @@ global_settings = {
   regions = {
     region1 = "southeastasia"
   }
-  prefix = ""
 }
 
 resource_groups = {
