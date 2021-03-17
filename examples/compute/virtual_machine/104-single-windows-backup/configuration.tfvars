@@ -97,17 +97,13 @@ keyvaults = {
     name               = "vmsecrets"
     resource_group_key = "vm_region1"
     sku_name           = "standard"
-  }
-}
-
-keyvault_access_policies = {
-  # A maximum of 16 access policies per keyvault
-  example_vm_rg1 = {
-    logged_in_user = {
-      secret_permissions = ["Set", "Get", "List", "Delete", "Purge", "Recover"]
-    }
-    logged_in_aad_app = {
-      secret_permissions = ["Set", "Get", "List", "Delete", "Purge", "Recover"]
+    creation_policies = {
+      logged_in_user = {
+        secret_permissions = ["Set", "Get", "List", "Delete", "Purge", "Recover"]
+      }
+      logged_in_aad_app = {
+        secret_permissions = ["Set", "Get", "List", "Delete", "Purge", "Recover"]
+      }
     }
   }
 }
