@@ -116,7 +116,7 @@ jobs:
         run: |
           cd ${GITHUB_WORKSPACE}/examples/${{ matrix.config_files }}
 
-          ${GITHUB_WORKSPACE}/landingzones/caf_example/standalone/ci.sh ${{ github.run_id }} ${GITHUB_WORKSPACE}/landingzones/caf_example
+          ${GITHUB_WORKSPACE}/landingzones/caf_example/ci.sh ${{ github.run_id }} ${GITHUB_WORKSPACE}/landingzones/caf_example
 
       - name: Complete purge
         if: ${{ always() }}
