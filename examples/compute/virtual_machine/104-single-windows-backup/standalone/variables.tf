@@ -110,3 +110,7 @@ variable "application_gateway_applications" {
 variable "dynamic_keyvault_secrets" {
   default = {}
 }
+
+variable "recovery_vaults" {
+  default = {}
+}
