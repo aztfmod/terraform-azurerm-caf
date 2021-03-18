@@ -1,4 +1,10 @@
-location = "southeastasia"
+global_settings = {
+  default_region = "region1"
+  regions = {
+    region1 = "southeastasia"
+  }
+}
+
 
 resource_groups = {
   vm_sg = {
@@ -20,6 +26,7 @@ virtual_machines = {
   bastion_host = {
     resource_group_key = "vm_sg"
     os_type            = "linux"
+    keyvault_key       = "example_vm_rg1"
     # Define the number of networking cards to attach the virtual machine
     networking_interfaces = {
       nic0 = {
@@ -54,6 +61,7 @@ virtual_machines = {
 
         # Value of the nic keys to attach the VM. The first one in the list is the primary nic
         network_interface_keys = ["nic0", "nic1"]
+        keyvault_key           = "example_vm_rg1"
 
         os_disk = {
           name                 = "bastion-os"
@@ -93,7 +101,7 @@ virtual_machines = {
 }
 
 ## Networking configuration
-networking = {
+vnets = {
   hub_sg = {
     resource_group_key = "vnet_sg"
     location           = "southeastasia"
@@ -124,4 +132,30 @@ networking = {
     }
   }
 
+}
+
+
+keyvaults = {
+  example_vm_rg1 = {
+    name               = "vmsecrets"
+    resource_group_key = "vm_sg"
+    sku_name           = "standard"
+    creation_policies = {
+      logged_in_user = {
+        secret_permissions = ["Set", "Get", "List", "Delete", "Purge", "Recover"]
+      }
+    }
+  }
+}
+
+keyvault_access_policies = {
+  # A maximum of 16 access policies per keyvault
+  example_vm_rg1 = {
+    logged_in_user = {
+      secret_permissions = ["Set", "Get", "List", "Delete", "Purge", "Recover"]
+    }
+    logged_in_aad_app = {
+      secret_permissions = ["Set", "Get", "List", "Delete", "Purge", "Recover"]
+    }
+  }
 }
