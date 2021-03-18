@@ -1,14 +1,11 @@
 module "caf" {
-  source  = "aztfmod/caf/azurerm"
-  version = "5.2.2"
+  source = "../../../../../"
 
-  global_settings    = var.global_settings
-  tags               = var.tags
-  resource_groups    = var.resource_groups
-  storage_accounts   = var.storage_accounts
-  keyvaults          = var.keyvaults
-  managed_identities = var.managed_identities
-  role_mapping       = var.role_mapping
+  global_settings  = var.global_settings
+  tags             = var.tags
+  resource_groups  = var.resource_groups
+  storage_accounts = var.storage_accounts
+  keyvaults        = var.keyvaults
 
   diagnostics = {
     # Get the diagnostics settings of services to create
@@ -28,6 +25,10 @@ module "caf" {
 
   security = {
     dynamic_keyvault_secrets = var.dynamic_keyvault_secrets
+  }
+
+  shared_services = {
+    recovery_vaults = var.recovery_vaults
   }
 }
 
