@@ -155,6 +155,54 @@ variable diagnostics {
   default = {}
 }
 
+variable diagnostics_definition {
+  default = {}
+}
+
+variable diagnostics_destinations {
+  default = {}
+}
+
+variable diagnostic_event_hub_namespaces {
+  default = {}
+}
+
+variable diagnostic_log_analytics {
+  default = {}
+}
+
+variable diagnostic_storage_accounts {
+  default = {}
+}
+
 variable keyvault_access_policies_azuread_apps {
+  default = {}
+}
+
+variable virtual_machines {
+  default = {}
+}
+
+variable bastion_hosts {
+  default = {}
+}
+
+variable vnets {
+  default = {}
+}
+
+variable network_security_group_definition {
+  default = {}
+}
+
+variable public_ip_addresses {
+  default = {}
+}
+
+variable azurerm_routes {
+  default = {}
+}
+
+variable route_tables {
   default = {}
 }
