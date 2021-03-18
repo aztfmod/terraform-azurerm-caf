@@ -27,23 +27,23 @@ module "launchpad" {
   user_type                             = var.user_type
 
   diagnostics = {
-    diagnostics_definition          = var.diagnostics.diagnostics_definition
-    diagnostics_destinations        = var.diagnostics.diagnostics_destinations
-    diagnostic_event_hub_namespaces = var.diagnostics.diagnostic_event_hub_namespaces
-    diagnostic_log_analytics        = var.diagnostics.diagnostic_log_analytics
-    diagnostic_storage_accounts     = var.diagnostics.diagnostic_storage_accounts
+    diagnostics_definition          = try(var.diagnostics.diagnostics_definition, var.diagnostics_definition)
+    diagnostics_destinations        = try(var.diagnostics.diagnostics_destinations, var.diagnostics_destinations)
+    diagnostic_event_hub_namespaces = try(var.diagnostics.diagnostic_event_hub_namespaces, var.diagnostic_event_hub_namespaces)
+    diagnostic_log_analytics        = try(var.diagnostics.diagnostic_log_analytics, var.diagnostic_log_analytics)
+    diagnostic_storage_accounts     = try(var.diagnostics.diagnostic_storage_accounts, var.diagnostic_storage_accounts)
   }
 
   compute = {
-    virtual_machines = var.compute.virtual_machines
-    bastion_hosts    = var.compute.bastion_hosts
+    virtual_machines = try(var.compute.virtual_machines, var.virtual_machines)
+    bastion_hosts    = try(var.compute.bastion_hosts, var.bastion_hosts)
   }
 
   networking = {
-    vnets                             = var.networking.vnets
-    network_security_group_definition = var.networking.network_security_group_definition
-    public_ip_addresses               = var.networking.public_ip_addresses
-    azurerm_routes                    = var.networking.azurerm_routes
-    route_tables                      = var.networking.route_tables
+    vnets                             = try(var.networking.vnets, var.vnets)
+    network_security_group_definition = try(var.networking.network_security_group_definition, var.network_security_group_definition)
+    public_ip_addresses               = try(var.networking.public_ip_addresses, var.public_ip_addresses)
+    azurerm_routes                    = try(var.networking.azurerm_routes, var.azurerm_routes)
+    route_tables                      = try(var.networking.route_tables, var.route_tables)
   }
 }

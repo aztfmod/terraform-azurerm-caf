@@ -101,7 +101,7 @@ jobs:
           ]
 
     container:
-      image: aztfmod/rover:0.14.7-2103.0105
+      image: aztfmod/rover:0.14.8-2103.1601
       options: --user 0
 
     steps:
@@ -116,7 +116,7 @@ jobs:
         run: |
           cd ${GITHUB_WORKSPACE}/examples/${{ matrix.config_files }}
 
-          ./standalone/ci.sh ${{ github.run_id }}
+          ${GITHUB_WORKSPACE}/landingzones/caf_example/ci.sh ${{ github.run_id }} ${GITHUB_WORKSPACE}/landingzones/caf_example
 
       - name: Complete purge
         if: ${{ always() }}

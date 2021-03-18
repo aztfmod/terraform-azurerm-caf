@@ -1,6 +1,7 @@
 
 global_settings = {
   default_region = "region1"
+  prefix         = null
   regions = {
     region1 = "southeastasia"
   }
@@ -45,7 +46,7 @@ virtual_machines = {
         size                            = "Standard_F2"
         admin_username                  = "adminuser"
         disable_password_authentication = true
-        custom_data                     = "scripts/cloud-init/install-rover-tools.config"
+        custom_data                     = "../../examples/compute/virtual_machine/100-single-linux-vm/scripts/cloud-init/install-rover-tools.config"
 
         # Spot VM to save money
         priority        = "Spot"
@@ -93,17 +94,13 @@ keyvaults = {
     name               = "vmsecrets"
     resource_group_key = "vm_region1"
     sku_name           = "standard"
-  }
-}
-
-keyvault_access_policies = {
-  # A maximum of 16 access policies per keyvault
-  example_vm_rg1 = {
-    logged_in_user = {
-      secret_permissions = ["Set", "Get", "List", "Delete", "Purge", "Recover"]
-    }
-    logged_in_aad_app = {
-      secret_permissions = ["Set", "Get", "List", "Delete", "Purge", "Recover"]
+    creation_policies = {
+      logged_in_user = {
+        secret_permissions = ["Set", "Get", "List", "Delete", "Purge", "Recover"]
+      }
+      logged_in_aad_app = {
+        secret_permissions = ["Set", "Get", "List", "Delete", "Purge", "Recover"]
+      }
     }
   }
 }
