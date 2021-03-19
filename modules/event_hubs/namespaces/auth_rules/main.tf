@@ -12,5 +12,4 @@ locals {
   module_tag = {
     "module" = basename(abspath(path.module))
   }
-  #tags = merge(local.module_tag, lookup(var.settings, "tags", {}), var.base_tags)
 }
