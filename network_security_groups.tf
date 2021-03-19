@@ -2,7 +2,7 @@ module network_security_groups {
   source = "./modules/networking/network_security_group"
 
   for_each = {
-    for key, value in try(local.networking.network_security_group_definition, {}) : key => value
+    for key, value in local.networking.network_security_group_definition : key => value
     if try(value.version, 0) == 1
   }
 
