@@ -1,0 +1,4 @@
+[SQLSERVER]
+Driver = ODBC Driver 17 for SQL Server
+Server = tcp:,1433
+Authentication = ActiveDirectoryMsi /etc/odbc.ini
