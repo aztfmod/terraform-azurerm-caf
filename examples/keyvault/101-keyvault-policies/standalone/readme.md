@@ -17,7 +17,7 @@ To test this deployment in the example landingzone. Make sure the launchpad has 
 ```bash
 
 rover \
-  -lz /tf/caf/aztfmod/examples \
+  -lz /tf/caf/landingzones/caf_example \
   -tfstate example-101-keyvault-policies.tfstate \
   -var-folder /tf/caf/aztfmod/examples/keyvault/101-keyvault-policies \
   -level level1 \

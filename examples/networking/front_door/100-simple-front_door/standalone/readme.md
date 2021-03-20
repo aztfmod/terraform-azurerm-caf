@@ -24,7 +24,7 @@ To test this deployment in the example landingzone. Make sure the launchpad has 
 ```bash
 
 rover \
-  -lz /tf/caf/aztfmod/examples \
+  -lz /tf/caf/landingzones/caf_example \
   -var-folder  /tf/caf/examples/networking/front_door/100-simple-front_door/ \
   -level level1 \
   -a plan

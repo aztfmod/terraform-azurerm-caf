@@ -2,7 +2,7 @@
 resource "azurecaf_name" "vwan_hub" {
   name          = var.virtual_hub_config.hub_name
   resource_type = "azurerm_virtual_hub"
-  prefixes      = var.global_settings.prefix
+  prefixes      = var.global_settings.prefixes
   random_length = var.global_settings.random_length
   clean_input   = true
   passthrough   = var.global_settings.passthrough
@@ -22,8 +22,8 @@ resource "azurerm_virtual_hub" "vwan_hub" {
     for_each = try(var.virtual_hub_config.routes, {})
 
     content {
-      address_prefixes    = each.value.address_prefixes
-      next_hop_ip_address = each.value.next_hop_ip_address
+      address_prefixes    = route.value.address_prefixes
+      next_hop_ip_address = route.value.next_hop_ip_address
     }
   }
 

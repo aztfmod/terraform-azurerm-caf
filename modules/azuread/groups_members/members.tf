@@ -33,7 +33,7 @@ module object_id {
 data "azuread_group" "name" {
   for_each = toset(try(var.settings.members.group_names, []))
 
-  name = each.value
+  display_name = each.value
 }
 
 module group_name {

@@ -76,6 +76,11 @@ variable "subscriptions" {
   default = {}
 }
 
+variable "billing" {
+  description = "Billing information"
+  default     = {}
+}
+
 variable "remote_objects" {
   description = "Remote objects is used to allow the landing zone to retrieve remote tfstate objects and pass them to the caf module"
   default     = {}
