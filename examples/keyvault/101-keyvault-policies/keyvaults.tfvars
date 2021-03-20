@@ -66,12 +66,12 @@ keyvaults = {
           subresource_names    = ["vault"]
         }
 
-        private_dns = {
-          dns1 = {
-            lz_key          = ""
-            private_dns_key = ""
-          }
-        }
+        # private_dns = {
+        #   dns1 = {
+        #     lz_key          = ""
+        #     private_dns_key = ""
+        #   }
+        # }
       }
     }
 
