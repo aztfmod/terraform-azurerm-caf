@@ -22,7 +22,7 @@ module "launchpad" {
   role_mapping                          = var.role_mapping
   storage_accounts                      = var.storage_accounts
   subscriptions                         = var.subscriptions
-  tags                                  = var.tags
+  tags                                  = local.tags
   tenant_id                             = var.tenant_id
   user_type                             = var.user_type
 
