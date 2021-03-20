@@ -45,24 +45,21 @@ resource "random_string" "prefix" {
   number  = false
 }
 
-resource "random_string" "alpha1" {
-  count   = var.prefix == null ? 1 : 0
-  length  = 1
-  special = false
-  upper   = false
-  number  = false
-}
-
 locals {
+  landingzone_tag = {
+    "landingzone" = var.landingzone.key
+  }
 
+  tags            = merge(local.global_settings.tags, local.landingzone_tag, { "level" = var.landingzone.level }, { "environment" = local.global_settings.environment }, { "rover_version" = var.rover_version }, var.tags)
+  
   global_settings = {
     default_region     = var.default_region
     environment        = var.environment
     inherit_tags       = var.inherit_tags
     passthrough        = var.passthrough
     prefix             = var.prefix
-    prefixes           = var.prefix == "" ? null : [try(var.prefix, random_string.prefix.0.result)]
-    prefix_with_hyphen = var.prefix == "" ? null : format("%s-", try(var.prefix, random_string.prefix.0.result))
+    prefixes           = var.prefix == "" ? null : [try(random_string.prefix.0.result, var.prefix)]
+    prefix_with_hyphen = var.prefix == "" ? null : format("%s",try(random_string.prefix.0.result, var.prefix))
     random_length      = var.random_length
     regions            = var.regions
     tags               = var.tags

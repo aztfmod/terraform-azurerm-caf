@@ -1,14 +1,6 @@
 resource "random_string" "prefix" {
-  count   = try(var.global_settings.prefix, null) == null ? 1 : 0
+  count   = try(var.global_settings.prefix, null) == null && var.global_settings.prefixes != null ? 1 : 0
   length  = 4
-  special = false
-  upper   = false
-  number  = false
-}
-
-resource "random_string" "alpha1" {
-  count   = var.global_settings.prefix == null ? 1 : 0
-  length  = 1
   special = false
   upper   = false
   number  = false
