@@ -6,8 +6,15 @@
 name: scenarios-100-tf14
 
 on:
+  pull_request:
+    paths-ignore:
+      - .github/workflows/master-200.yaml
+      - 'documentation/**'
+      - '_pictures/**'
+      - 'README.md'
+      - 'CHANGELOG.md'
   schedule:
-    - cron:  '0 0 * * *'
+    - cron:  '0 3 * * *'
 
 env:
   TF_CLI_ARGS: '-no-color'
