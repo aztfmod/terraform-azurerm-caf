@@ -34,7 +34,6 @@ app_services = {
 
     identity = {
       type         = "SystemAssigned"
-      identity_ids = null
     }
 
     settings = {

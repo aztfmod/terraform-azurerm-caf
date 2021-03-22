@@ -18,7 +18,7 @@ resource "azurerm_machine_learning_workspace" "ws" {
   key_vault_id            = var.keyvault_id
   storage_account_id      = var.storage_account_id
   tags                    = try(local.tags, null)
-  sku_name                = try(var.settings.sku_name, "basic")
+  sku_name                = try(var.settings.sku_name, "Basic")
 
   identity {
     #Hardcoded as the only supported value is SystemAssigned as per azurerm 2.40
