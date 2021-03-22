@@ -38,4 +38,6 @@ locals {
   combined_objects_logic_app_workflow                = merge(map(local.client_config.landingzone_key, module.logic_app_workflow), try(var.remote_objects.logic_app_workflow, {}))
   combined_objects_integration_service_environment   = merge(map(local.client_config.landingzone_key, module.integration_service_environment), try(var.remote_objects.integration_service_environment, {}))
   combined_objects_logic_app_integration_account     = merge(map(local.client_config.landingzone_key, module.logic_app_integration_account), try(var.remote_objects.logic_app_integration_account, {}))
+  combined_objects_keyvault_keys                     = merge(tomap({ (local.client_config.landingzone_key) = module.keyvault_keys }), try(var.remote_objects.keyvault_keys, {}))
+  combined_objects_keyvaults                         = merge(tomap({ (local.client_config.landingzone_key) = module.keyvaults }), try(var.remote_objects.keyvaults, {}))
 }
