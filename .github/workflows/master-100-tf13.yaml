@@ -6,15 +6,8 @@
 name: scenarios-100
 
 on:
-  pull_request:
-    paths-ignore:
-      - .github/workflows/master-200.yaml
-      - 'documentation/**'
-      - '_pictures/**'
-      - 'README.md'
-      - 'CHANGELOG.md'
   schedule:
-    - cron:  '0 3 * * *'
+    - cron:  '0 0 * * *'
 
 env:
   TF_CLI_ARGS: '-no-color'

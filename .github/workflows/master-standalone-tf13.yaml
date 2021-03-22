@@ -6,15 +6,8 @@
 name: standalone-scenario
 
 on:
-  pull_request:
-    paths-ignore:
-      - .github/workflows/master-100.yaml
-      - 'documentation/**'
-      - '_pictures/**'
-      - 'README.md'
-      - 'CHANGELOG.md'
   schedule:
-    - cron:  '0 8 * * *'
+    - cron:  '0 1 * * 0' #1 AM on Sunday
 
 env:
   TF_CLI_ARGS: '-no-color'
