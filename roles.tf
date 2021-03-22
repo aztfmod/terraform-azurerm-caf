@@ -31,39 +31,40 @@ resource "azurerm_role_assignment" "for" {
 
 locals {
   services_roles = {
-    aks_clusters               = local.combined_objects_aks_clusters
-    app_service_environments   = local.combined_objects_app_service_environments
-    app_service_plans          = local.combined_objects_app_service_plans
-    app_services               = local.combined_objects_app_services
-    availability_sets          = local.combined_objects_availability_sets
-    azure_container_registries = local.combined_objects_azure_container_registries
-    azuread_apps               = local.combined_objects_azuread_applications
-    azuread_groups             = local.combined_objects_azuread_groups
-    azuread_users              = local.combined_objects_azuread_users
-    azurerm_firewalls          = local.combined_objects_azurerm_firewalls
-    dns_zones                  = local.combined_objects_dns_zones
-    event_hub_namespaces       = local.combined_objects_event_hub_namespaces
-    keyvaults                  = local.combined_objects_keyvaults
-    logged_in                  = local.logged_in
-    managed_identities         = local.combined_objects_managed_identities
-    mssql_databases            = local.combined_objects_mssql_databases
-    mssql_elastic_pools        = local.combined_objects_mssql_elastic_pools
-    mssql_managed_databases    = local.combined_objects_mssql_managed_databases
-    mssql_managed_instances    = local.combined_objects_mssql_managed_instances
-    mssql_servers              = local.combined_objects_mssql_servers
-    mysql_servers              = local.combined_objects_mysql_servers
-    network_watchers           = local.combined_objects_network_watchers
-    networking                 = local.combined_objects_networking
-    postgresql_servers         = local.combined_objects_postgresql_servers
-    private_dns                = local.combined_objects_private_dns
-    proximity_placement_groups = local.combined_objects_proximity_placement_groups
-    public_ip_addresses        = local.combined_objects_public_ip_addresses
-    recovery_vaults            = local.combined_objects_recovery_vaults
-    resource_groups            = local.combined_objects_resource_groups
-    storage_accounts           = local.combined_objects_storage_accounts
-    subscriptions              = tomap({ (var.current_landingzone_key) = merge(try(var.subscriptions, {}), { "logged_in_subscription" = { id = data.azurerm_subscription.primary.id } }) })
-    synapse_workspaces         = local.combined_objects_synapse_workspaces
-
+    aks_clusters                = local.combined_objects_aks_clusters
+    app_config                  = local.combined_objects_app_config
+    app_services                = local.combined_objects_app_services
+    app_service_plans           = local.combined_objects_app_service_plans
+    app_service_environments    = local.combined_objects_app_service_environments
+    availability_sets           = local.combined_objects_availability_sets
+    azure_container_registries  = local.combined_objects_azure_container_registries
+    azuread_groups              = local.combined_objects_azuread_groups
+    azuread_apps                = local.combined_objects_azuread_applications
+    azuread_users               = local.combined_objects_azuread_users
+    azurerm_firewalls           = local.combined_objects_azurerm_firewalls
+    dns_zones                   = local.combined_objects_dns_zones
+    event_hub_namespaces        = local.combined_objects_event_hub_namespaces
+    keyvaults                   = local.combined_objects_keyvaults
+    logged_in                   = local.logged_in
+    machine_learning_workspaces = local.combined_objects_machine_learning
+    managed_identities          = local.combined_objects_managed_identities
+    mssql_databases             = local.combined_objects_mssql_databases
+    mssql_elastic_pools         = local.combined_objects_mssql_elastic_pools
+    mssql_managed_databases     = local.combined_objects_mssql_managed_databases
+    mssql_managed_instances     = local.combined_objects_mssql_managed_instances
+    mssql_servers               = local.combined_objects_mssql_servers
+    mysql_servers               = local.combined_objects_mysql_servers
+    networking                  = local.combined_objects_networking
+    network_watchers            = local.combined_objects_network_watchers
+    postgresql_servers          = local.combined_objects_postgresql_servers
+    private_dns                 = local.combined_objects_private_dns
+    proximity_placement_groups  = local.combined_objects_proximity_placement_groups
+    public_ip_addresses         = local.combined_objects_public_ip_addresses
+    recovery_vaults             = local.combined_objects_recovery_vaults
+    resource_groups             = local.combined_objects_resource_groups
+    storage_accounts            = local.combined_objects_storage_accounts
+    synapse_workspaces          = local.combined_objects_synapse_workspaces
+    subscriptions               = tomap({ (var.current_landingzone_key) = merge(try(var.subscriptions, {}), { "logged_in_subscription" = { id = data.azurerm_subscription.primary.id } }) })
   }
 
   logged_in = tomap({

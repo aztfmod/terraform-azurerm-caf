@@ -30,3 +30,11 @@ module azuread_roles_sql_mi_secondary {
   object_id     = module.mssql_managed_instances_secondary[each.key].principal_id
   azuread_roles = each.value.roles
 }
+
+module azuread_roles_mssql_server {
+  source   = "./modules/azuread/roles"
+  for_each = try(var.azuread_roles.mssql_servers, {})
+
+  object_id     = module.mssql_servers[each.key].rbac_id
+  azuread_roles = each.value.roles
+}
