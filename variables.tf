@@ -151,6 +151,13 @@ variable "webapp" {
   }
 }
 
+variable data_factory {
+  default = {}
+}
+
+variable logic_app {
+  default = {}
+}
 
 ## Databases variables
 variable "database" {
@@ -252,6 +259,14 @@ variable "keyvault_certificate_issuers" {
   default = {}
 }
 variable "cosmos_dbs" {
+  default = {}
+}
+
+variable app_config {
+  default = {}
+}
+
+variable local_network_gateways {
   default = {}
 }
 
