@@ -1,5 +1,5 @@
 module "caf" {
-  source          = "../../.."
+  source          = "../../../../"
   resource_groups = var.resource_groups
   tags             = var.tags
   diagnostics = {
