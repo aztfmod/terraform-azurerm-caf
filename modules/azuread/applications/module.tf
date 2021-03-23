@@ -45,18 +45,22 @@ resource "azuread_service_principal" "app" {
 resource "azuread_service_principal_password" "pwd" {
   service_principal_id = azuread_service_principal.app.id
   value                = random_password.pwd.result
-  end_date             = timeadd(time_rotating.pwd.id, format("%sh", try(var.settings.password_policy.expire_in_days, var.password_policy.expire_in_days) * 24))
+  end_date             = timeadd(time_rotating.pwd.id, format("%sh", local.password_policy.expire_in_days * 24))
 
   lifecycle {
     create_before_destroy = true
   }
 }
 
+locals {
+  password_policy = try(var.settings.password_policy, var.password_policy)
+}
+
 resource "time_rotating" "pwd" {
-  rotation_minutes = try(var.settings.password_policy.rotation.mins, lookup(var.password_policy.rotation, "mins", null))
-  rotation_days    = try(var.settings.password_policy.rotation.days, lookup(var.password_policy.rotation, "days", null))
-  rotation_months  = try(var.settings.password_policy.rotation.months, lookup(var.password_policy.rotation, "months", null))
-  rotation_years   = try(var.settings.password_policy.rotation.years, lookup(var.password_policy.rotation, "years", null))
+  rotation_minutes = try(local.password_policy.rotation.mins, null)
+  rotation_days    = try(local.password_policy.rotation.days, null)
+  rotation_months  = try(local.password_policy.rotation.months, null)
+  rotation_years   = try(local.password_policy.rotation.years, null)
 }
 
 # Will force the password to change every month
@@ -64,8 +68,8 @@ resource "random_password" "pwd" {
   keepers = {
     frequency = time_rotating.pwd.id
   }
-  length  = try(var.settings.password_policy.length, var.password_policy.length)
-  special = try(var.settings.password_policy.special, var.password_policy.special)
-  upper   = try(var.settings.password_policy.upper, var.password_policy.upper)
-  number  = try(var.settings.password_policy.number, var.password_policy.number)
+  length  = local.password_policy.length
+  special = local.password_policy.special
+  upper   = local.password_policy.upper
+  number  = local.password_policy.number
 }

@@ -23,7 +23,7 @@ module "example" {
   resource_groups                = var.resource_groups
   role_mapping                   = var.role_mapping
   storage_accounts               = var.storage_accounts
-  tags                           = var.tags
+  tags                           = local.tags
 
   webapp = {
     azurerm_application_insights = var.azurerm_application_insights

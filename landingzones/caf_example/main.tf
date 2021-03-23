@@ -13,3 +13,10 @@ provider "azurerm" {
   }
 }
 
+locals {
+  landingzone_tag = {
+    "landingzone" = var.landingzone.key
+  }
+
+  tags = merge(local.landingzone_tag, var.tags, { "rover_version" = var.rover_version })
+}
