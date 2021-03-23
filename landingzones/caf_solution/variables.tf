@@ -1,22 +1,22 @@
 # Map of the remote data state for lower level
-variable lower_storage_account_name {}
-variable lower_container_name {}
-variable lower_resource_group_name {}
+variable "lower_storage_account_name" {}
+variable "lower_container_name" {}
+variable "lower_resource_group_name" {}
 
-variable tfstate_subscription_id {
+variable "tfstate_subscription_id" {
   description = "This value is propulated by the rover. subscription id hosting the remote tfstates"
 }
-variable tfstate_storage_account_name {}
-variable tfstate_container_name {}
-variable tfstate_key {}
-variable tfstate_resource_group_name {}
+variable "tfstate_storage_account_name" {}
+variable "tfstate_container_name" {}
+variable "tfstate_key" {}
+variable "tfstate_resource_group_name" {}
 
-variable landingzone {}
+variable "landingzone" {}
 
-variable global_settings {
+variable "global_settings" {
   default = {}
 }
-variable rover_version {
+variable "rover_version" {
   default = {}
 }
 
@@ -81,6 +81,10 @@ variable "resource_groups" {
 }
 
 variable "subscriptions" {
+  default = {}
+}
+
+variable "subscription_billing_role_assignments" {
   default = {}
 }
 
@@ -237,27 +241,27 @@ variable "shared_services" {
   }
 }
 
-variable virtual_network_gateways {
+variable "virtual_network_gateways" {
   default = {}
 }
 
-variable virtual_network_gateway_connections {
+variable "virtual_network_gateway_connections" {
   default = {}
 }
 
-variable shared_image_galleries {
+variable "shared_image_galleries" {
   default = {}
 }
 
-variable image_definitions {
+variable "image_definitions" {
   default = {}
 }
 
-variable packer_service_principal {
+variable "packer_service_principal" {
   default = {}
 }
 
-variable packer_managed_identity {
+variable "packer_managed_identity" {
   default = {}
 }
 
@@ -267,29 +271,29 @@ variable "keyvault_certificate_issuers" {
 variable "cosmos_dbs" {
   default = {}
 }
-variable event_hubs {
+variable "event_hubs" {
   default = {}
 }
 
-variable automations {
+variable "automations" {
   default = {}
 }
 
-variable event_hub_auth_rules {
+variable "event_hub_auth_rules" {
   default = {}
 }
 
-variable event_hub_namespace_auth_rules {
+variable "event_hub_namespace_auth_rules" {
   default = {}
 }
 
-variable event_hub_consumer_groups {
+variable "event_hub_consumer_groups" {
   default = {}
 }
 
-variable diagnostic_event_hub_namespaces {
+variable "diagnostic_event_hub_namespaces" {
   default = {}
 }
-variable diagnostic_log_analytics {
+variable "diagnostic_log_analytics" {
   default = {}
 }

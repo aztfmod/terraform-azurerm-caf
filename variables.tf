@@ -76,6 +76,10 @@ variable "subscriptions" {
   default = {}
 }
 
+variable "subscription_billing_role_assignments" {
+  default = {}
+}
+
 variable "billing" {
   description = "Billing information"
   default     = {}

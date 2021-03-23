@@ -15,6 +15,7 @@ variable keyvaults {
   default = {}
 }
 variable password_policy {
+  description = "Default password policy applies when not set in tfvars."
   default = {
     # Length of the password
     length  = 250
