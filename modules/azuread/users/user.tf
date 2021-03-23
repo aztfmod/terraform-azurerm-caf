@@ -1,13 +1,27 @@
+locals {
+  global_settings = {
+    prefixes      = lookup(var.settings, "useprefix", null) == true ? try(var.settings.global_settings.prefixes, var.global_settings.prefixes) : []
+    random_length = try(var.settings.global_settings.random_length, var.global_settings.random_length)
+    passthrough   = try(var.settings.global_settings.passthrough, var.global_settings.passthrough)
+    use_slug      = try(var.settings.global_settings.use_slug, var.global_settings.use_slug)
+  }
+
+  password_policy = try(var.settings.password_policy, var.password_policy)
+  user_name       = var.settings.user_name
+  tenant_name     = lookup(var.settings, "tenant_name", data.azuread_domains.aad_domains.domains[0].domain_name)
+  keyvault_id     = var.keyvaults[var.client_config.landingzone_key][var.settings.keyvault_key].id
+  secret_prefix   = lookup(var.settings, "secret_prefix", "")
+}
 
 resource "azurecaf_name" "account" {
   name          = local.user_name
   resource_type = "azurerm_resource_group"
   #TODO: need to be changed to appropriate resource (no caf reference for now)
-  prefixes      = local.prefixes
-  random_length = var.global_settings.random_length
+  prefixes      = local.global_settings.prefixes
+  random_length = local.global_settings.random_length
   clean_input   = true
-  passthrough   = var.global_settings.passthrough
-  use_slug      = var.global_settings.use_slug
+  passthrough   = local.global_settings.passthrough
+  use_slug      = local.global_settings.use_slug
 }
 
 #
@@ -24,10 +38,10 @@ resource "azuread_user" "account" {
 
 
 resource "time_rotating" "pwd" {
-  rotation_minutes = try(var.settings.password_policy.rotation.mins, lookup(var.password_policy.rotation, "mins", null))
-  rotation_days    = try(var.settings.password_policy.rotation.days, lookup(var.password_policy.rotation, "days", null))
-  rotation_months  = try(var.settings.password_policy.rotation.months, lookup(var.password_policy.rotation, "months", null))
-  rotation_years   = try(var.settings.password_policy.rotation.years, lookup(var.password_policy.rotation, "years", null))
+  rotation_minutes = try(local.password_policy.rotation.mins, null)
+  rotation_days    = try(local.password_policy.rotation.days, null)
+  rotation_months  = try(local.password_policy.rotation.months, null)
+  rotation_years   = try(local.password_policy.rotation.years, null)
 }
 
 # Will force the password to change every month
@@ -35,10 +49,10 @@ resource "random_password" "pwd" {
   keepers = {
     frequency = time_rotating.pwd.id
   }
-  length  = try(var.settings.password_policy.length, var.password_policy.length)
-  special = try(var.settings.password_policy.special, var.password_policy.special)
-  upper   = try(var.settings.password_policy.upper, var.password_policy.upper)
-  number  = try(var.settings.password_policy.number, var.password_policy.number)
+  length  = local.password_policy.length
+  special = local.password_policy.special
+  upper   = local.password_policy.upper
+  number  = local.password_policy.number
 }
 
 
@@ -51,6 +65,6 @@ resource "azurerm_key_vault_secret" "aad_user_name" {
 resource "azurerm_key_vault_secret" "aad_user_password" {
   name            = format("%s%s-password", local.secret_prefix, local.user_name)
   value           = random_password.pwd.result
-  expiration_date = timeadd(time_rotating.pwd.id, format("%sh", try(var.settings.password_policy.expire_in_days, var.password_policy.expire_in_days) * 24))
+  expiration_date = timeadd(time_rotating.pwd.id, format("%sh", local.password_policy.expire_in_days * 24))
   key_vault_id    = local.keyvault_id
 }
