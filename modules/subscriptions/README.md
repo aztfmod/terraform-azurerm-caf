@@ -46,8 +46,9 @@ tenantId=$(az account show --query tenantId -o tsv)
 # Set the principalID of the MSI
 principalId=""
 
+billing_role_definition_id=$(az rest --method GET --url https://management.azure.com${enrollmentAccount}/billingRoleDefinitions?api-version=2019-10-01-preview --query "value[?properties.roleName=='Enrollment account subscription creator'].{id:id}" -o tsv)
 
-az rest --method PUT --url https://management.azure.com/${enrollmentAccount}/billingRoleAssignments/0525cbc2-c84e-4279-b639-adab918a96b8?api-version=2019-10-01-preview --body "{\"properties\": {\"principalId\": \"${principalId}\",\"principalTenantId\": \"${tenantId}\",\"roleDefinitionId\": \"${enrollmentAccount}/billingRoleDefinitions/a0bcee42-bf30-4d1b-926a-48d21664ef71\"}}
+az rest --method PUT --url https://management.azure.com/${enrollmentAccount}/billingRoleAssignments/0525cbc2-c84e-4279-b639-adab918a96b8?api-version=2019-10-01-preview --body "{\"properties\": {\"principalId\": \"${principalId}\",\"principalTenantId\": \"${tenantId}\",\"roleDefinitionId\": \"${enrollmentAccount}/billingRoleDefinitions/${billing_role_definition_id}\"}}
 
 # Login as the principalId and create a subscription to confirm the delegation of permission is effective.
 
