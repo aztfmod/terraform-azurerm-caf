@@ -1,7 +1,7 @@
 module "caf" {
   source          = "../../.."
   resource_groups = var.resource_groups
-
+  tags             = var.tags
   diagnostics = {
     diagnostics_definition   = var.diagnostics_definition
     diagnostics_destinations = var.diagnostics_destinations
