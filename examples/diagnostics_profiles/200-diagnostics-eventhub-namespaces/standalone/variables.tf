@@ -18,3 +18,7 @@ variable diagnostics_destinations {
   default = {}
 }
 
+variable tags {
+  default = null
+  type    = map
+}
