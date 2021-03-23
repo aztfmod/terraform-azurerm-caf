@@ -6,8 +6,15 @@
 name: standalone-scenario-tf14
 
 on:
+  pull_request:
+    paths-ignore:
+      - .github/workflows/master-100.yaml
+      - 'documentation/**'
+      - '_pictures/**'
+      - 'README.md'
+      - 'CHANGELOG.md'
   schedule:
-    - cron:  '0 1 * * 0' #1 AM on Sunday
+    - cron:  '0 8 * * *'
 
 env:
   TF_CLI_ARGS: '-no-color'

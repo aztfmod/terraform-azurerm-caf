@@ -6,14 +6,8 @@
 name: scenarios-sql-mi
 
 on:
-  pull_request:
-    paths:
-      - msssql_managed_instances.tf
-      - msssql_managed_databases.tf
-      - modules/databases/mssql_managed_instance/**
-      - modules/databases/mssql_managed_database/**
   schedule:
-    - cron:  '0 3 * * 0' #3 AM on sunday
+    - cron:  '0 2 * * 0' #2 AM on Sunday
 
 env:
   TF_CLI_ARGS: '-no-color'

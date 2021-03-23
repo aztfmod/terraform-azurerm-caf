@@ -1,7 +1,7 @@
 # resource "azurecaf_name" "integration_account" {
 #   name          = var.name
 #   resource_type = "azurerm_logic_app_integration_account"
-#   prefixes      = [var.global_settings.prefix]
+#   prefixes      = var.global_settings.prefixes
 #   random_length = var.global_settings.random_length
 #   clean_input   = true
 #   passthrough   = var.global_settings.passthrough
