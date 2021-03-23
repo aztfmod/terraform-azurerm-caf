@@ -8,6 +8,7 @@ module "disk_encryption_sets" {
   resource_groups   = module.resource_groups
   base_tags         = try(local.global_settings.inherit_tags, false) ? module.resource_groups[each.value.resource_group_key].tags : {}
   key_vault_key_ids = module.keyvault_keys
+  keyvault_id       = local.combined_objects_keyvaults[try(each.value.keyvault.lz_key, local.client_config.landingzone_key)][each.value.keyvault.key].id
 }
 
 output disk_encryption_sets {

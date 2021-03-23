@@ -27,6 +27,3 @@ variable azuread_apps {
 variable resources {
   default = {}
 }
-variable disk_encryption_sets {
-  default = {}
-}
