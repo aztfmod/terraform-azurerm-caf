@@ -18,10 +18,11 @@ To test this deployment in the example landingzone. Make sure the launchpad has 
 
 ```bash
 
+configuration_folder=/tf/caf/examples/compute/virtual_machine/211-vm-bastion-winrm-agents
 rover \
   -lz /tf/caf/landingzones/caf_example \
-  -var-folder /tf/caf/aztfmod/examples/compute/virtual_machine/211-vm-bastion-winrm-agents \
-  -var var_folder_path="/tf/caf/aztfmod/examples/compute/virtual_machine/211-vm-bastion-winrm-agents" \
+  -var-folder ${configuration_folder} \
+  -var var_folder_path="${configuration_folder}" \
   -level level1 \
   -a plan
 

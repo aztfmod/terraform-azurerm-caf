@@ -102,9 +102,6 @@ keyvaults = {
       logged_in_user = {
         secret_permissions = ["Set", "Get", "List", "Delete", "Purge", "Recover"]
       }
-      logged_in_aad_app = {
-        secret_permissions = ["Set", "Get", "List", "Delete", "Purge", "Recover"]
-      }
     }
   }
 }
