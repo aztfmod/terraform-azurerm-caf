@@ -1,4 +1,4 @@
-output cluster {
+output "cluster" {
   value = {
     id           = databricks_cluster.cluster.id
     default_tags = databricks_cluster.cluster.default_tags
