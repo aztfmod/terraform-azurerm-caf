@@ -15,7 +15,7 @@ module private_endpoint {
   subnet_id           = try(var.vnets[var.client_config.landingzone_key][each.value.vnet_key].subnets[each.value.subnet_key].id, var.vnets[each.value.lz_key][each.value.vnet_key].subnets[each.value.subnet_key].id)
   settings            = each.value
   global_settings     = var.global_settings
-  base_tags           = try(merge(each.value.tags, var.base_tags), {})
+  base_tags           = try(merge(var.base_tags, each.value.tags), {})
   private_dns         = var.private_dns
   client_config       = var.client_config
 }

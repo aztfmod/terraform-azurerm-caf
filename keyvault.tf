@@ -29,10 +29,11 @@ module "keyvault_access_policies" {
   access_policies                   = each.value
   azuread_groups                    = local.combined_objects_azuread_groups
   client_config                     = local.client_config
-  managed_identities                = local.combined_objects_managed_identities
-  mssql_managed_instances           = local.combined_objects_mssql_managed_instances
-  mssql_managed_instances_secondary = local.combined_objects_mssql_managed_instances_secondary
-  disk_encryption_sets              = local.combined_objects_disk_encryption_sets
+  resources = {
+    managed_identities                = local.combined_objects_managed_identities
+    mssql_managed_instances           = local.combined_objects_mssql_managed_instances
+    mssql_managed_instances_secondary = local.combined_objects_mssql_managed_instances_secondary
+  }
 }
 
 
