@@ -1,6 +1,7 @@
 
 global_settings = {
   default_region = "region1"
+  prefix         = null
   regions = {
     region1 = "southeastasia"
   }
@@ -73,9 +74,6 @@ keyvaults = {
 
     creation_policies = {
       logged_in_user = {
-        secret_permissions = ["Set", "Get", "List", "Delete", "Purge", "Recover"]
-      }
-      logged_in_aad_app = {
         secret_permissions = ["Set", "Get", "List", "Delete", "Purge", "Recover"]
       }
     }

@@ -1,7 +1,7 @@
 resource "azurecaf_name" "settings" {
   name          = format("app-config-%s", var.config_name)
   resource_type = "azurerm_template_deployment"
-  prefixes      = [var.global_settings.prefix]
+  prefixes      = var.global_settings.prefixes
   random_length = var.global_settings.random_length
   clean_input   = true
   passthrough   = var.global_settings.passthrough
