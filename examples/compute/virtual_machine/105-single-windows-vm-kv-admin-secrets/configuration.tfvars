@@ -204,17 +204,8 @@ disk_encryption_sets = {
     name               = "deskey1"
     resource_group_key = "vm_region1"
     key_vault_key_key  = "key1"
-  }
-}
-keyvault_access_policies = {
-  example_vm_rg1 = {
-    disk_encryption_sets = {
-      disk_encryption_set_key = "set1"
-      key_permissions         = ["Get", "List", "Update", "Create", "Import", "Delete", "Recover", "Backup", "Restore", "Decrypt", "Encrypt", "UnwrapKey", "WrapKey", "Verify", "Sign", "Purge"]
-    }
-    example_vm1 = {
-      secret_permissions = ["Get", "List", "Set", "Delete", "Recover", "Backup", "Restore", "Purge"]
-      key_permissions    = ["Get", "List", "Update", "Create", "Import", "Delete", "Recover", "Backup", "Restore", "Decrypt", "Encrypt", "UnwrapKey", "WrapKey", "Verify", "Sign", "Purge"]
+    keyvault           = {
+      key = "example_vm_rg1"
     }
   }
 }
