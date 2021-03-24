@@ -15,7 +15,7 @@ To test this deployment in the example landingzone. Make sure the launchpad has 
 ```bash
 
 rover \
-  -lz /tf/caf/aztfmod/examples \
+  -lz /tf/caf/landingzones/caf_example \
   -var-folder  /tf/caf/examples/networking/private_dns/100-private-dns-vnet-links/ \
   -level level1 \
   -a plan
