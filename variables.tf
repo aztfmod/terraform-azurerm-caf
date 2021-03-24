@@ -1,5 +1,5 @@
 # Global settings
-variable global_settings {
+variable "global_settings" {
   description = "Global settings object for the current deployment."
   default = {
     passthrough    = false
@@ -12,23 +12,27 @@ variable global_settings {
   }
 }
 
-variable tenant_id {
+variable "client_config" {
+  default = {}
+}
+
+variable "tenant_id" {
   description = "Azure AD Tenant ID for the current deployment."
   default     = null
 }
 
-variable current_landingzone_key {
+variable "current_landingzone_key" {
   description = "Key for the current landing zones where the deployment is executed. Used in the context of landing zone deployment."
-  default     = "standalone"
+  default     = "local"
   type        = string
 }
 
-variable tfstates {
+variable "tfstates" {
   description = "Terraform states configuration object. Used in the context of landing zone deployment."
   default     = {}
 }
 
-variable enable {
+variable "enable" {
   description = "Map of services defined in the configuration file you want to disable during a deployment."
   default = {
     # bastion_hosts    = true
@@ -36,108 +40,117 @@ variable enable {
   }
 }
 
-variable environment {
+variable "environment" {
   description = "Name of the CAF environment."
   type        = string
   default     = "sandpit"
 }
 
-variable logged_user_objectId {
+variable "logged_user_objectId" {
   description = "Used to set access policies based on the value 'logged_in_user'. Can only be used in interactive execution with vscode."
   default     = null
 }
-variable logged_aad_app_objectId {
+variable "logged_aad_app_objectId" {
   description = "Used to set access policies based on the value 'logged_in_aad_app'"
   default     = null
 }
 
-variable use_msi {
+variable "use_msi" {
   description = "Deployment using an MSI for authentication."
   default     = false
   type        = bool
 }
 
-variable tags {
+variable "tags" {
   description = "Tags to be used for this resource deployment."
-  type        = map
+  type        = map(any)
   default     = null
 }
 
-variable resource_groups {
+variable "resource_groups" {
   description = "Resource groups configuration objects"
   default     = {}
 }
 
-variable subscriptions {
+variable "subscriptions" {
   default = {}
 }
 
-variable remote_objects {
+variable "subscription_billing_role_assignments" {
+  default = {}
+}
+
+variable "billing" {
+  description = "Billing information"
+  default     = {}
+}
+
+variable "remote_objects" {
   description = "Remote objects is used to allow the landing zone to retrieve remote tfstate objects and pass them to the caf module"
   default     = {}
 }
 
 ## Diagnostics settings
-variable diagnostics_definition {
+variable "diagnostics_definition" {
   default     = null
   description = "Shared diadgnostics settings that can be used by the services to enable diagnostics"
 }
 
-variable diagnostics_destinations {
+variable "diagnostics_destinations" {
   default = null
 }
 
-variable log_analytics {
+variable "log_analytics" {
   default = {}
 }
 
-variable diagnostics {
+variable "diagnostics" {
   default = {}
 }
 
-variable event_hub_namespaces {
+variable "event_hub_namespaces" {
   default = {}
 }
 
-variable subnet_id {
+variable "subnet_id" {
   default = {}
 }
 
-variable user_type {
+variable "user_type" {
   description = "The rover set this value to user or serviceprincipal. It is used to handle Azure AD api consents."
   default     = {}
 }
 
 ## Azure AD
-variable azuread_apps {
+variable "azuread_apps" {
   default = {}
 }
 
-variable azuread_groups {
+variable "azuread_groups" {
   default = {}
 }
 
-variable azuread_roles {
+variable "azuread_roles" {
   default = {}
 }
 
-variable azuread_users {
+variable "azuread_users" {
   default = {}
 }
 
-variable azuread_api_permissions {
+variable "azuread_api_permissions" {
   default = {}
 }
 
 ## Compute variables
-variable compute {
+variable "compute" {
   description = "Compute configuration objects"
   default = {
     virtual_machines = {}
   }
 }
 
-variable webapp {
+variable "webapp" {
   description = "Web applications configuration objects"
   default = {
     # app_services                 = {}
@@ -147,71 +160,78 @@ variable webapp {
   }
 }
 
+variable data_factory {
+  default = {}
+}
+
+variable logic_app {
+  default = {}
+}
 
 ## Databases variables
-variable database {
+variable "database" {
   description = "Database configuration objects"
   default     = {}
 }
 
 ## Networking variables
-variable networking {
+variable "networking" {
   description = "Networking configuration objects"
   default     = {}
 }
 
 ## Security variables
-variable security {
+variable "security" {
   default = {}
 }
 
-variable managed_identities {
+variable "managed_identities" {
   description = "Managed Identity configuration objects"
   default     = {}
 }
 
-variable keyvaults {
+variable "keyvaults" {
   description = "Key Vault configuration objects"
   default     = {}
 }
 
-variable keyvault_access_policies {
+variable "keyvault_access_policies" {
   default = {}
 }
 
-variable keyvault_access_policies_azuread_apps {
+variable "keyvault_access_policies_azuread_apps" {
   default = {}
 }
 
-variable custom_role_definitions {
+variable "custom_role_definitions" {
   description = "Custom role definitions configuration objects"
   default     = {}
 }
-variable role_mapping {
+variable "role_mapping" {
   default = {
     built_in_role_mapping = {}
     custom_role_mapping   = {}
   }
 }
 
-variable dynamic_keyvault_secrets {
+variable "dynamic_keyvault_secrets" {
   default = {}
 }
 
 ## Storage variables
-variable storage_accounts {
+variable "storage_accounts" {
   default = {}
 }
-variable storage {
+variable "storage" {
   description = "Storage configuration objects"
   default     = {}
 }
-variable diagnostic_storage_accounts {
+variable "diagnostic_storage_accounts" {
   default = {}
 }
 
 # Shared services
-variable shared_services {
+variable "shared_services" {
   description = "Shared services configuration objects"
   default = {
     # automations = {}
@@ -220,10 +240,38 @@ variable shared_services {
   }
 }
 
-variable keyvault_certificate_issuers {
+variable virtual_network_gateways {
   default = {}
 }
-variable cosmos_dbs {
+
+variable virtual_network_gateway_connections {
+  default = {}
+}
+
+variable shared_image_galleries {
+  default = {}
+}
+
+variable image_definitions {
+  default = {}
+}
+
+variable packer_service_principal {
+  default = {}
+}
+
+variable packer_managed_identity {
+  default = {}
+}
+
+variable "keyvault_certificate_issuers" {
+  default = {}
+}
+variable "cosmos_dbs" {
+  default = {}
+}
+
+variable app_config {
   default = {}
 }
 
@@ -235,5 +283,20 @@ variable application_security_groups {
   default = {}
 }
 variable networking_interface_asg_associations {
+  default = {}
+}
+variable event_hubs {
+  default = {}
+}
+
+variable event_hub_auth_rules {
+  default = {}
+}
+
+variable event_hub_namespace_auth_rules {
+  default = {}
+}
+
+variable event_hub_consumer_groups {
   default = {}
 }

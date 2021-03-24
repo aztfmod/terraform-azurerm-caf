@@ -6,5 +6,5 @@ resource "azurerm_dns_ptr_record" "ptr" {
   resource_group_name = var.resource_group_name
   ttl                 = try(each.value.ttl, 300)
   records             = each.value.records
-  tags                = merge(try(each.value.tags, {}), var.base_tags)
+  tags                = merge(var.base_tags, try(each.value.tags, {}))
 }

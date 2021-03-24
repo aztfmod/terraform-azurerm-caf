@@ -7,7 +7,7 @@ locals {
 resource "azurecaf_name" "keyvault" {
   name          = var.settings.name
   resource_type = "azurerm_key_vault"
-  prefixes      = [var.global_settings.prefix]
+  prefixes      = var.global_settings.prefixes
   random_length = var.global_settings.random_length
   clean_input   = true
   passthrough   = var.global_settings.passthrough
@@ -21,7 +21,7 @@ resource "azurerm_key_vault" "keyvault" {
   resource_group_name             = var.resource_groups[var.settings.resource_group_key].name
   tenant_id                       = var.client_config.tenant_id
   sku_name                        = try(var.settings.sku_name, "standard")
-  tags                            = try(merge(local.tags, var.base_tags), {})
+  tags                            = try(merge(var.base_tags, local.tags), {})
   enabled_for_deployment          = try(var.settings.enabled_for_deployment, false)
   enabled_for_disk_encryption     = try(var.settings.enabled_for_disk_encryption, false)
   enabled_for_template_deployment = try(var.settings.enabled_for_template_deployment, false)

@@ -68,3 +68,6 @@ variable application_security_groups {
 variable virtual_machines {
   default = {}
 }
+variable custom_image_ids {
+  default = {}
+}
