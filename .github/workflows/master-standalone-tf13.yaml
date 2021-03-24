@@ -57,6 +57,7 @@ jobs:
             "cosmos_db/100-simple-cosmos-db-table",
             "databricks/100-simple-databricks",
             "datalake/101-datalake-storage",
+            "diagnostics_profiles/200-diagnostics-eventhub-namespaces",
             "eventhub/100-simple-eventhub-namespace",
             "eventhub/101-evh-namespace-with-private-endpoint",
             "eventhub/102-namespace-and-evh-with-auth-rules",
