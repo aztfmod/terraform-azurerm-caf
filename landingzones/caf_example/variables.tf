@@ -351,3 +351,6 @@ variable "event_hub_consumer_groups" {
   default = {}
 }
 
+variable "disk_encryption_sets" {
+  default = {}
+}
