@@ -8,7 +8,7 @@ resource "azurecaf_name" "host" {
 
   name          = try(each.value.name, "")
   resource_type = "azurerm_bastion_host"
-  prefixes      = [local.global_settings.prefix]
+  prefixes      = local.global_settings.prefixes
   random_length = local.global_settings.random_length
   clean_input   = true
   passthrough   = local.global_settings.passthrough
@@ -18,8 +18,8 @@ resource "azurecaf_name" "host" {
 resource "azurerm_bastion_host" "host" {
   for_each = try(local.compute.bastion_hosts, {})
 
-  name     = azurecaf_name.host[each.key].result
-  location = lookup(each.value, "region", null) == null ? module.resource_groups[each.value.resource_group_key].location : local.global_settings.regions[each.value.region]
+  name                = azurecaf_name.host[each.key].result
+  location            = lookup(each.value, "region", null) == null ? module.resource_groups[each.value.resource_group_key].location : local.global_settings.regions[each.value.region]
   resource_group_name = module.resource_groups[each.value.resource_group_key].name
   tags                = try(local.global_settings.inherit_tags, false) ? merge(module.resource_groups[each.value.resource_group_key].tags, try(each.value.tags, null)) : try(each.value.tags, null)
 

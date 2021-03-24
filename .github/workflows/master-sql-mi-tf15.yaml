@@ -16,6 +16,7 @@ env:
   ARM_CLIENT_ID: ${{ secrets.ARM_CLIENT_ID }}
   ARM_SUBSCRIPTION_ID: ${{ secrets.ARM_SUBSCRIPTION_ID }}
   ARM_TENANT_ID: ${{ secrets.ARM_TENANT_ID }}
+  ROVER_RUNNER: true
 
 jobs:
   foundations:
@@ -30,17 +31,11 @@ jobs:
           random_length: ['5']
 
     container:
-      image: aztfmod/roveralpha:2102.011041
+      image: aztfmod/rover:0.15.0-beta1-2103.1601
       options: --user 0
 
     steps:
       - uses: actions/checkout@v2
-
-      - uses: actions/checkout@v2
-        with:
-          repository: Azure/caf-terraform-landingzones
-          path: public
-          ref: '2012.1.0'
 
       - name: Login azure
         run: |
@@ -51,8 +46,8 @@ jobs:
 
       - name: launchpad
         run: |
-          /tf/rover/rover.sh -lz ${GITHUB_WORKSPACE}/public/landingzones/caf_launchpad -a apply \
-            -var-folder ${GITHUB_WORKSPACE}/public/landingzones/caf_launchpad/scenario/100 \
+          /tf/rover/rover.sh -lz ${GITHUB_WORKSPACE}/landingzones/caf_launchpad -a apply \
+            -var-folder ${GITHUB_WORKSPACE}/landingzones/caf_launchpad/scenario/100 \
             -level level0 \
             -launchpad \
             -parallelism=30 \
@@ -90,7 +85,7 @@ jobs:
 
       - name: deploy example
         run: |
-          /tf/rover/rover.sh -lz ${GITHUB_WORKSPACE}/examples -a apply \
+          /tf/rover/rover.sh -lz ${GITHUB_WORKSPACE}/landingzones/caf_solution -a apply \
             -level level1 \
             -tfstate $(basename ${{ matrix.config_files }}).tfstate \
             -var-folder ${GITHUB_WORKSPACE}/${{ matrix.config_files }} \
@@ -99,7 +94,7 @@ jobs:
       - name: destroy example
         if: always()
         run: |
-          /tf/rover/rover.sh -lz ${GITHUB_WORKSPACE}/examples -a destroy \
+          /tf/rover/rover.sh -lz ${GITHUB_WORKSPACE}/landingzones/caf_solution -a destroy \
             -level level1 \
             -tfstate $(basename ${{ matrix.config_files }}).tfstate \
             -var-folder ${GITHUB_WORKSPACE}/${{ matrix.config_files }} \
@@ -119,16 +114,11 @@ jobs:
           region: ["southeastasia"]
 
     container:
-      image: aztfmod/roveralpha:2102.011041
+      image: aztfmod/rover:0.15.0-beta1-2103.1601
       options: --user 0
 
     steps:
       - uses: actions/checkout@v2
-        with:
-          repository: Azure/caf-terraform-landingzones
-          path: public
-          ref: "2012.1.0"
-
       - name: Login azure
         run: |
           az login --service-principal -u '${{ env.ARM_CLIENT_ID }}' -p '${{ env.ARM_CLIENT_SECRET }}' --tenant '${{ env.ARM_TENANT_ID }}'
@@ -139,9 +129,9 @@ jobs:
       - name: Remove launchpad
         run: |
 
-          /tf/rover/rover.sh -lz ${GITHUB_WORKSPACE}/public/landingzones/caf_launchpad/ -a destroy \
+          /tf/rover/rover.sh -lz ${GITHUB_WORKSPACE}/landingzones/caf_launchpad/ -a destroy \
             -level level0 \
-            -var-folder ${GITHUB_WORKSPACE}/public/landingzones/caf_launchpad/scenario/100 \
+            -var-folder ${GITHUB_WORKSPACE}/landingzones/caf_launchpad/scenario/100 \
             -launchpad \
             --environment ${{ github.run_id }} \
             -parallelism=30 \

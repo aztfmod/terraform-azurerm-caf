@@ -1,5 +1,6 @@
 global_settings = {
   default_region = "region1"
+  prefix         = null
   regions = {
     region1 = "southeastasia"
   }
@@ -32,6 +33,13 @@ storage_accounts = {
         name = "random"
       }
     }
-  }
 
+    enable_system_msi = true
+    customer_managed_key = {
+      keyvault_key = "stg_byok"
+
+      # Reference to the var.keyvault_keys
+      keyvault_key_key = "byok"
+    }
+  }
 }
