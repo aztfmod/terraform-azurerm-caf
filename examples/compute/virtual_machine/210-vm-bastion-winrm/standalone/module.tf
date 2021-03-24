@@ -19,11 +19,11 @@ module "caf" {
   }
 
   networking = {
-    vnets                             = var.vnets
-    network_security_group_definition = var.network_security_group_definition
-    public_ip_addresses               = var.public_ip_addresses
-    application_security_groups       = var.application_security_groups
+    application_security_groups           = var.application_security_groups
+    network_security_group_definition     = var.network_security_group_definition
     networking_interface_asg_associations = var.networking_interface_asg_associations
+    public_ip_addresses                   = var.public_ip_addresses
+    vnets                                 = var.vnets
    
   }
 }

@@ -11,8 +11,12 @@ network_security_group_definition = {
         protocol                   = "tcp"
         source_port_range          = "*"
         destination_port_range     = "5985"
-        source_address_prefix      = "VirtualNetwork"
-        destination_address_prefix = "VirtualNetwork"
+        source_application_security_groups = {
+          keys = ["bastion"]
+        }
+        destination_application_security_groups = {
+          keys = ["app_server"]
+        }
       },
       {
         name                       = "winrms",
@@ -22,8 +26,12 @@ network_security_group_definition = {
         protocol                   = "tcp"
         source_port_range          = "*"
         destination_port_range     = "5986"
-        source_address_prefix      = "VirtualNetwork"
-        destination_address_prefix = "VirtualNetwork"
+        source_application_security_groups = {
+          keys = ["bastion"]
+        }
+        destination_application_security_groups = {
+          keys = ["app_server"]
+        }
       },
       {
         name                       = "rdp-inbound-3389",
@@ -33,8 +41,12 @@ network_security_group_definition = {
         protocol                   = "tcp"
         source_port_range          = "*"
         destination_port_range     = "3389"
-        source_address_prefix      = "VirtualNetwork"
-        destination_address_prefix = "VirtualNetwork"
+        source_application_security_groups = {
+          keys = ["bastion"]
+        }
+        destination_application_security_groups = {
+          keys = ["app_server"]
+        }
       },
     ]
   }
@@ -51,7 +63,12 @@ network_security_group_definition = {
         source_port_range          = "*"
         destination_port_range     = "22"
         source_address_prefix      = "*"
-        destination_address_prefix = "VirtualNetwork"
+        source_application_security_groups = {
+          keys = ["bastion"]
+        }
+        destination_application_security_groups = {
+          keys = ["app_server"]
+        }
       },
     ]
   }

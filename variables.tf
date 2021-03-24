@@ -282,9 +282,6 @@ variable local_network_gateways {
 variable application_security_groups {
   default = {}
 }
-variable networking_interface_asg_associations {
-  default = {}
-}
 variable event_hubs {
   default = {}
 }
