@@ -22,6 +22,12 @@ virtual_machines = {
         enable_ip_forwarding    = false
         internal_dns_name_label = "bastion-host-nic0"
         public_ip_address_key   = "bastion_host_pip1"
+        
+        networking_interface_asg_associations = {
+          bastion = {
+            key = "bastion"
+          }
+        } 
       }
     }
 
@@ -74,20 +80,16 @@ virtual_machines = {
         name                    = "0-server1"
         enable_ip_forwarding    = false
         internal_dns_name_label = "server1-nic0"
-        networking_interface_asg_associations_key = "nic0"
-        
+
+        networking_interface_asg_associations = {
+          app_server = {
+            key = "app_server"
+          }
+        } 
       }
     }
 
-    networking_interface_asg_associations = {
-      nic0 = {
-        application_security_group_key = "bastion"
-        resource_group_key = "vm_region1"
-        vm_key  = "windows_server1"
-        nic_key = "nic0"
-      }
-    }
-    
+
    
     virtual_machine_settings = {
       windows = {

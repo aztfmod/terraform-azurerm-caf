@@ -106,8 +106,5 @@ variable "application_gateway_applications" {
 variable application_security_groups {
   default = {}
 }
-variable networking_interface_asg_associations {
-  default = {}
-}
 
 

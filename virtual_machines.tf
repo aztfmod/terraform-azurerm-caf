@@ -27,7 +27,6 @@ module virtual_machines {
   availability_sets                = local.combined_objects_availability_sets
   proximity_placement_groups       = local.combined_objects_proximity_placement_groups
   application_security_groups      = local.combined_objects_application_security_groups
-  
 }
 
 

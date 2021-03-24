@@ -63,7 +63,6 @@ module "example" {
     local_network_gateways                                  = var.local_network_gateways
     network_security_group_definition                       = var.network_security_group_definition
     network_watchers                                        = var.network_watchers
-    networking_interface_asg_associations                   = var.networking_interface_asg_associations
     private_dns                                             = var.private_dns
     private_endpoints                                       = var.private_endpoints
     public_ip_addresses                                     = var.public_ip_addresses
