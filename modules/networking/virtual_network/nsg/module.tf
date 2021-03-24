@@ -33,8 +33,57 @@ resource "azurerm_network_security_group" "nsg_obj" {
       source_address_prefixes                    = lookup(security_rule.value, "source_address_prefixes", null)
       destination_address_prefix                 = lookup(security_rule.value, "destination_address_prefix", null)
       destination_address_prefixes               = lookup(security_rule.value, "destination_address_prefixes", null)
-      source_application_security_group_ids      = lookup(security_rule.value, "source_application_security_group_ids ", null)
-      destination_application_security_group_ids = lookup(security_rule.value, "destination_application_security_group_ids ", null)
+
+      # source_application_security_groups = {
+      #   keys = ["app_server"]
+      # }
+      # or
+      # source_application_security_groups = {
+      #   ids = ["resource_id"]
+      # }
+      
+      source_application_security_group_ids = coalescelist(
+        flatten(
+          [
+            for key in try(security_rule.value.source_application_security_groups.keys, [""]) : [
+              var.application_security_groups[try(security_rule.value.lz_key, var.client_config.landingzone_key)][key].id
+            ]
+          ]
+        ),
+        flatten(
+          [
+            for asg_id in try(security_rule.value.source_application_security_groups.ids, [""]) : [
+              asg_id
+            ]
+          ]
+        )
+      ) //coalescelist
+
+      
+      # destination_application_security_groups = {
+      #   keys = ["app_server"]
+      # }
+      # or
+      # destination_application_security_groups = {
+      #   ids = ["resource_id"]
+      # }
+      
+      destination_application_security_group_ids = coalescelist(
+        flatten(
+          [
+            for key in try(security_rule.value.destination_application_security_groups.keys, [""]) : [
+              var.application_security_groups[try(security_rule.value.lz_key, var.client_config.landingzone_key)][key].id
+            ]
+          ]
+        ),
+        flatten(
+          [
+            for asg_id in try(security_rule.value.destination_application_security_groups.ids, [""]) : [
+              asg_id
+            ]
+          ]
+        )
+      ) //coalescelist
     }
   }
 }

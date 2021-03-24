@@ -1,4 +1,4 @@
-
+variable client_config {}
 variable resource_group {
   description = "(Required) Map of the resource groups to create"
   type        = string
@@ -21,6 +21,10 @@ variable location {
 
 variable diagnostics {
 
+}
+
+variable application_security_groups {
+  default = {}
 }
 
 variable network_security_group_definition {

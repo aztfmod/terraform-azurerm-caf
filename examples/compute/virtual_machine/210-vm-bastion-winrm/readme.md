@@ -9,7 +9,7 @@ cd /tf/caf/landingzones/caf_example
 terraform init
 
 eval terraform plan ${parameter_files} \
-  tfstate 210-vm-bastion-winrm.tfstate \
+  -state 210-vm-bastion-winrm.tfstate \
   -var var_folder_path="${configuration_folder}"
 
 
