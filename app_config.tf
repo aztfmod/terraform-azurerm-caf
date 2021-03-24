@@ -15,5 +15,4 @@ module app_config {
 
 output app_config {
   value     = module.app_config
-  sensitive = true
 }
