@@ -6,8 +6,15 @@
 name: scenarios-100-tf14
 
 on:
+  pull_request:
+    paths-ignore:
+      - .github/workflows/master-200.yaml
+      - 'documentation/**'
+      - '_pictures/**'
+      - 'README.md'
+      - 'CHANGELOG.md'
   schedule:
-    - cron:  '0 0 * * *'
+    - cron:  '0 3 * * *'
 
 env:
   TF_CLI_ARGS: '-no-color'
@@ -31,17 +38,11 @@ jobs:
           random_length: ['5']
 
     container:
-      image: aztfmod/rover:0.14.7-2103.0105
+      image: aztfmod/rover:0.14.8-2103.1601
       options: --user 0
 
     steps:
       - uses: actions/checkout@v2
-
-      - uses: actions/checkout@v2
-        with:
-          repository: Azure/caf-terraform-landingzones
-          path: public
-          ref: '2102.0.0'
 
       - name: Login azure
         run: |
@@ -52,8 +53,8 @@ jobs:
 
       - name: launchpad
         run: |
-          /tf/rover/rover.sh -lz ${GITHUB_WORKSPACE}/public/landingzones/caf_launchpad -a apply \
-            -var-folder ${GITHUB_WORKSPACE}/public/landingzones/caf_launchpad/scenario/100 \
+          /tf/rover/rover.sh -lz ${GITHUB_WORKSPACE}/landingzones/caf_launchpad -a apply \
+            -var-folder ${GITHUB_WORKSPACE}/landingzones/caf_launchpad/scenario/100 \
             -level level0 \
             -launchpad \
             -parallelism=30 \
@@ -143,6 +144,8 @@ jobs:
             "recovery_vault/102-asr-protection",
             "recovery_vault/103-asr-with-private-endpoint",
             "redis_cache/100-redis-standard",
+            "storage_accounts/100-simple-storage-account-blob-container",
+            "shared_image_gallery/101-packer_service_principal",
             "synapse_analytics/100-synapse",
             "synapse_analytics/101-synapse-sparkpool",
             "webapps/appservice/101-appservice-simple",
@@ -150,11 +153,10 @@ jobs:
             "webapps/appservice/103-appservice-extend",
             "webapps/appservice/104-appservice-appinsight",
             "webapps/appservice/105-appservice-backup"
-            # "networking/virtual_wan/102-vwan-multi-hubs-gw",
           ]
 
     container:
-      image: aztfmod/rover:0.14.7-2103.0105
+      image: aztfmod/rover:0.14.8-2103.1601
       options: --user 0
 
     steps:
@@ -167,7 +169,7 @@ jobs:
 
       - name: deploy example
         run: |
-          /tf/rover/rover.sh -lz ${GITHUB_WORKSPACE}/examples -a apply \
+          /tf/rover/rover.sh -lz ${GITHUB_WORKSPACE}/landingzones/caf_example -a apply \
             -level level1 \
             -tfstate $(basename ${{ matrix.config_files }}).tfstate \
             -var-folder ${GITHUB_WORKSPACE}/examples/${{ matrix.config_files }} \
@@ -178,7 +180,7 @@ jobs:
       - name: destroy example
         if: always()
         run: |
-          /tf/rover/rover.sh -lz ${GITHUB_WORKSPACE}/examples -a destroy \
+          /tf/rover/rover.sh -lz ${GITHUB_WORKSPACE}/landingzones/caf_example -a destroy \
             -level level1 \
             -tfstate $(basename ${{ matrix.config_files }}).tfstate \
             -var-folder ${GITHUB_WORKSPACE}/examples/${{ matrix.config_files }} \
@@ -199,16 +201,11 @@ jobs:
           region: ["southeastasia"]
 
     container:
-      image: aztfmod/rover:0.14.7-2103.0105
+      image: aztfmod/rover:0.14.8-2103.1601
       options: --user 0
 
     steps:
       - uses: actions/checkout@v2
-        with:
-          repository: Azure/caf-terraform-landingzones
-          path: public
-          ref: '2102.0.0'
-
       - name: Login azure
         run: |
           az login --service-principal -u '${{ env.ARM_CLIENT_ID }}' -p '${{ env.ARM_CLIENT_SECRET }}' --tenant '${{ env.ARM_TENANT_ID }}'
@@ -219,9 +216,9 @@ jobs:
       - name: Remove launchpad
         run: |
 
-          /tf/rover/rover.sh -lz ${GITHUB_WORKSPACE}/public/landingzones/caf_launchpad/ -a destroy \
+          /tf/rover/rover.sh -lz ${GITHUB_WORKSPACE}/landingzones/caf_launchpad/ -a destroy \
             -level level0 \
-            -var-folder ${GITHUB_WORKSPACE}/public/landingzones/caf_launchpad/scenario/100 \
+            -var-folder ${GITHUB_WORKSPACE}/landingzones/caf_launchpad/scenario/100 \
             -launchpad \
             --environment ${{ github.run_id }} \
             -parallelism=30 \

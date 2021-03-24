@@ -14,5 +14,4 @@ module keyvault_keys {
 
 output keyvault_keys {
   value     = module.keyvault_keys
-  sensitive = true
 }
