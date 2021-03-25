@@ -1,5 +1,37 @@
 network_security_group_definition = {
 
+  data = {
+
+    version            = 1
+    resource_group_key = "nsg_region1"
+    name               = "data"
+
+    nsg = [
+      {
+        name                       = "data-inbound",
+        priority                   = "103"
+        direction                  = "Inbound"
+        access                     = "Allow"
+        protocol                   = "tcp"
+        source_port_range          = "*"
+        destination_port_range     = "5233"
+        source_address_prefix      = "10.0.1.0/24"
+        destination_address_prefix = "VirtualNetwork"
+      },
+      {
+        name                       = "data-from-jump-host",
+        priority                   = "104"
+        direction                  = "Inbound"
+        access                     = "Allow"
+        protocol                   = "tcp"
+        source_port_range          = "*"
+        destination_port_range     = "22"
+        source_address_prefix      = "10.1.1.0/24"
+        destination_address_prefix = "VirtualNetwork"
+      },
+    ]
+  }
+
   windows_server = {
 
     nsg = [

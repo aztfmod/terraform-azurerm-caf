@@ -53,8 +53,8 @@ variable diagnostics_definition {
 variable resource_groups {
   default = null
 }
-variable network_security_group_definition {
-  default = null
+variable "network_security_group_definition" {
+  default = {}
 }
 variable vnets {
   default = {}

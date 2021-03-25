@@ -27,6 +27,7 @@ module virtual_machines {
   availability_sets                = local.combined_objects_availability_sets
   proximity_placement_groups       = local.combined_objects_proximity_placement_groups
   disk_encryption_sets             = local.combined_objects_disk_encryption_sets
+  network_security_groups          = try(module.network_security_groups, {})
 }
 
 

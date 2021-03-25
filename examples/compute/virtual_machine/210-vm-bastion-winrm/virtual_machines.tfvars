@@ -22,6 +22,16 @@ virtual_machines = {
         enable_ip_forwarding    = false
         internal_dns_name_label = "bastion-host-nic0"
         public_ip_address_key   = "bastion_host_pip1"
+        nsg_key                 = "data"
+        primary                 = true
+
+        ip_configurations = {
+          conf2 = {
+            name       = "nic0-conf2"
+            vnet_key   = "vnet_region1"
+            subnet_key = "bastion"
+          }
+        }
       }
     }
 
