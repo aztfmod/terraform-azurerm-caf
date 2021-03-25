@@ -1,5 +1,5 @@
 resource "random_string" "prefix" {
-  count   = try(var.global_settings.prefix, null) == null || try(var.global_settings.prefix, null) == ""  || try(var.global_settings.prefixes, null) == null ? 1 : 0
+  count   = try(var.global_settings.prefix, null) == null ? 1 : 0
   length  = 4
   special = false
   upper   = false
