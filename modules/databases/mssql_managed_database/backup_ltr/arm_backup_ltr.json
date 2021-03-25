@@ -46,7 +46,7 @@
             "weeklyRetention": "[if(equals(parameters('weeklyRetention'), ''), json('null'), parameters('weeklyRetention'))]",
             "monthlyRetention": "[if(equals(parameters('monthlyRetention'), ''), json('null'), parameters('monthlyRetention'))]",
             "yearlyRetention": "[if(equals(parameters('yearlyRetention'), ''), json('null'), parameters('yearlyRetention'))]",
-            "weekOfYear": "[if(equals(parameters('weekOfYear'), 0), json('null'), parameters('weekOfYear'))]" 
+            "weekOfYear": "[if(equals(parameters('weekOfYear'), 0), json('null'), parameters('weekOfYear'))]"
         }
     }
   ]

@@ -1,4 +1,4 @@
-module event_hubs {
+module "event_hubs" {
   source   = "../hubs"
   for_each = try(var.settings.event_hubs, {})
 

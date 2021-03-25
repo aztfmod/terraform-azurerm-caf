@@ -1,4 +1,4 @@
-module secondary_tde {
+module "secondary_tde" {
   source = "./secondary"
   count  = var.is_secondary_tde == true ? 1 : 0
 

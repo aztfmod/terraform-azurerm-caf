@@ -1,4 +1,4 @@
-module keyvault_keys {
+module "keyvault_keys" {
   depends_on = [module.keyvaults, module.keyvault_access_policies]
 
   source = "./modules/security/keyvault_key"
@@ -12,6 +12,6 @@ module keyvault_keys {
 }
 
 
-output keyvault_keys {
-  value     = module.keyvault_keys
+output "keyvault_keys" {
+  value = module.keyvault_keys
 }

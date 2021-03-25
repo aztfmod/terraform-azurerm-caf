@@ -1,10 +1,10 @@
-output vnets {
+output "vnets" {
   depends_on = [azurerm_virtual_network_peering.peering]
   value      = module.networking
 
 }
 
-output public_ip_addresses {
+output "public_ip_addresses" {
   value = module.public_ip_addresses
 
 }
@@ -54,7 +54,7 @@ resource "azurecaf_name" "public_ip_addresses" {
   use_slug      = local.global_settings.use_slug
 }
 
-module public_ip_addresses {
+module "public_ip_addresses" {
   source   = "./modules/networking/public_ip_addresses"
   for_each = local.networking.public_ip_addresses
 

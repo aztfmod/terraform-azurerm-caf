@@ -205,7 +205,7 @@ locals {
 #
 # With for_each it is not possible to change the provider's subscription at runtime so using the following pattern.
 #
-data external windows_admin_username {
+data "external" "windows_admin_username" {
   count = try(var.settings.virtual_machine_settings["windows"].admin_username_key, null) == null ? 0 : 1
   program = [
     "bash", "-c",
@@ -217,7 +217,7 @@ data external windows_admin_username {
   ]
 }
 
-data external windows_admin_password {
+data "external" "windows_admin_password" {
   count = try(var.settings.virtual_machine_settings["windows"].admin_password_key, null) == null ? 0 : 1
   program = [
     "bash", "-c",

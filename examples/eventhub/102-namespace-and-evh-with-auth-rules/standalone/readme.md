@@ -6,7 +6,7 @@ cd /tf/caf/examples/eventhub/102-namespace-and-evh-with-auth-rules/standalone
 terraform init
 
 terraform plan \
-  -var-file ../configuration.tfvars 
+  -var-file ../configuration.tfvars
 
 ```
 

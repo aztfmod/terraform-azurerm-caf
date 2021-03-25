@@ -1,4 +1,4 @@
-module shared_image_galleries {
+module "shared_image_galleries" {
   source   = "./modules/shared_image_gallery/image_galleries"
   for_each = try(local.shared_services.shared_image_galleries, {})
 
@@ -14,7 +14,7 @@ module shared_image_galleries {
   ]
 }
 
-module image_definitions {
+module "image_definitions" {
   source   = "./modules/shared_image_gallery/image_definitions"
   for_each = try(local.shared_services.image_definitions, {})
 
@@ -29,7 +29,7 @@ module image_definitions {
 
 }
 
-module packer_service_principal {
+module "packer_service_principal" {
   source   = "./modules/shared_image_gallery/packer_service_principal"
   for_each = try(local.shared_services.packer_service_principal, {})
 

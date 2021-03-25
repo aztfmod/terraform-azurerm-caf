@@ -1,4 +1,4 @@
-module event_hub_namespace_auth_rules {
+module "event_hub_namespace_auth_rules" {
   source   = "./auth_rules"
   for_each = try(var.settings.auth_rules, {})
 

@@ -1,4 +1,4 @@
-module compute_instance {
+module "compute_instance" {
   source   = "./compute_instance"
   for_each = try(var.settings.compute_instances, {})
 

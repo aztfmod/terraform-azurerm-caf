@@ -24,11 +24,11 @@ module "keyvault_access_policies" {
   source   = "./modules/security/keyvault_access_policies"
   for_each = var.keyvault_access_policies
 
-  keyvault_key                      = each.key
-  keyvaults                         = local.combined_objects_keyvaults
-  access_policies                   = each.value
-  azuread_groups                    = local.combined_objects_azuread_groups
-  client_config                     = local.client_config
+  keyvault_key    = each.key
+  keyvaults       = local.combined_objects_keyvaults
+  access_policies = each.value
+  azuread_groups  = local.combined_objects_azuread_groups
+  client_config   = local.client_config
   resources = {
     managed_identities                = local.combined_objects_managed_identities
     mssql_managed_instances           = local.combined_objects_mssql_managed_instances
@@ -52,7 +52,7 @@ module "keyvault_access_policies_azuread_apps" {
 }
 
 
-output keyvaults {
+output "keyvaults" {
   value = module.keyvaults
 
 }
