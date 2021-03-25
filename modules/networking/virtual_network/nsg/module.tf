@@ -45,18 +45,19 @@ resource "azurerm_network_security_group" "nsg_obj" {
       source_application_security_group_ids = coalescelist(
         flatten(
           [
-            for key in try(security_rule.value.source_application_security_groups.keys, [""]) : [
+            for key in try(security_rule.value.source_application_security_groups.keys, []) : [
               var.application_security_groups[try(security_rule.value.lz_key, var.client_config.landingzone_key)][key].id
             ]
           ]
         ),
         flatten(
           [
-            for asg_id in try(security_rule.value.source_application_security_groups.ids, [""]) : [
+            for asg_id in try(security_rule.value.source_application_security_groups.ids, []) : [
               asg_id
             ]
           ]
-        )
+        ),
+        [""]
       ) //coalescelist
 
       
@@ -71,18 +72,19 @@ resource "azurerm_network_security_group" "nsg_obj" {
       destination_application_security_group_ids = coalescelist(
         flatten(
           [
-            for key in try(security_rule.value.destination_application_security_groups.keys, [""]) : [
+            for key in try(security_rule.value.destination_application_security_groups.keys, []) : [
               var.application_security_groups[try(security_rule.value.lz_key, var.client_config.landingzone_key)][key].id
             ]
           ]
         ),
         flatten(
           [
-            for asg_id in try(security_rule.value.destination_application_security_groups.ids, [""]) : [
+            for asg_id in try(security_rule.value.destination_application_security_groups.ids, []) : [
               asg_id
             ]
           ]
-        )
+        ),
+        [""]
       ) //coalescelist
     }
   }
