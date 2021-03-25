@@ -1,4 +1,4 @@
-
+variable client_config {}
 variable resource_group_name {
   description = "(Required) Name of the resource group where to create the resource. Changing this forces a new resource to be created. "
   type        = string
@@ -19,6 +19,10 @@ variable diagnostics {
 
 variable settings {
   description = "(Required) configuration object describing the networking configuration, as described in README"
+}
+
+variable application_security_groups {
+  default = {}
 }
 
 variable network_security_group_definition {}

@@ -65,6 +65,13 @@ variable disk_encryption_sets {
   default = {}
 }
 
+variable application_security_groups {
+  default = {}
+}
+
+variable virtual_machines {
+  default = {}
+}
 variable custom_image_ids {
   default = {}
 }
