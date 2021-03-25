@@ -16,7 +16,7 @@ module "storage_accounts" {
   private_dns         = local.combined_objects_private_dns
 }
 
-output storage_accounts {
+output "storage_accounts" {
   value = module.storage_accounts
 
 }

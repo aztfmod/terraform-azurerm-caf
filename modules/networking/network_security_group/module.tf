@@ -36,6 +36,6 @@ resource "azurerm_network_security_group" "nsg" {
   }
 }
 
-output id {
+output "id" {
   value = azurerm_network_security_group.nsg.id
 }

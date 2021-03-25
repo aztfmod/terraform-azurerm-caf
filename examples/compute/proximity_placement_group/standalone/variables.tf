@@ -1,32 +1,32 @@
-variable global_settings {
+variable "global_settings" {
   default = {}
 }
 
-variable resource_groups {
+variable "resource_groups" {
   default = null
 }
 
-variable vnets {
+variable "vnets" {
   default = {}
 }
 
-variable tags {
+variable "tags" {
   default = null
-  type    = map
+  type    = map(any)
 }
 
-variable proximity_placement_groups {
+variable "proximity_placement_groups" {
   default = {}
 }
 
-variable virtual_machines {
+variable "virtual_machines" {
   default = {}
 }
 
-variable keyvaults {
+variable "keyvaults" {
   default = {}
 }
 
-variable var_folder_path {
+variable "var_folder_path" {
   default = {}
 }

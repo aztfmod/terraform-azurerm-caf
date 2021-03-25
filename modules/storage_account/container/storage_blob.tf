@@ -1,4 +1,4 @@
-module blob {
+module "blob" {
   source     = "../blob"
   depends_on = [azurerm_storage_container.stg]
   for_each   = try(var.settings.storage_blobs, {})

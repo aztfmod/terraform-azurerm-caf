@@ -1,5 +1,5 @@
 
-module recovery_vaults {
+module "recovery_vaults" {
   source   = "./modules/recovery_vault"
   for_each = local.shared_services.recovery_vaults
 
@@ -17,7 +17,7 @@ module recovery_vaults {
   base_tags           = try(local.global_settings.inherit_tags, false) ? module.resource_groups[each.value.resource_group_key].tags : {}
 }
 
-output recovery_vaults {
+output "recovery_vaults" {
   value = module.recovery_vaults
 
 }

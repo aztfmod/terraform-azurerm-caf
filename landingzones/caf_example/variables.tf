@@ -234,34 +234,34 @@ variable "express_route_circuit_authorizations" {
   default = {}
 }
 
-variable shared_image_galleries {
+variable "shared_image_galleries" {
   default = {}
 }
 
-variable image_definitions {
+variable "image_definitions" {
   default = {}
 }
 
-variable diagnostics_destinations {
+variable "diagnostics_destinations" {
   default = {}
 }
 variable "vnet_peerings" {
   default = {}
 }
 
-variable packer_service_principal {
+variable "packer_service_principal" {
   default = {}
 }
 
-variable packer_managed_identity {
+variable "packer_managed_identity" {
   default = {}
 }
 
-variable azuread_api_permissions {
+variable "azuread_api_permissions" {
   default = {}
 }
 
-variable keyvault_access_policies_azuread_apps {
+variable "keyvault_access_policies_azuread_apps" {
   default = {}
 }
 
@@ -288,10 +288,10 @@ variable "private_endpoints" {
   default = {}
 }
 
-variable event_hubs {
+variable "event_hubs" {
   default = {}
 }
-variable automations {
+variable "automations" {
   default = {}
 }
 

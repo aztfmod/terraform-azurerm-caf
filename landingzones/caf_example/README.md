@@ -91,20 +91,22 @@ You can customize the examples execution by modifying the variables as follow:
 | Name | Version |
 |------|---------|
 | terraform | >= 0.13 |
-| azuread | ~> 1.0.0 |
-| azurecaf | ~> 1.1.0 |
-| azurerm | ~> 2.47.0 |
-| external | ~> 1.2.0 |
-| null | ~> 2.1.0 |
-| random | ~> 2.2.1 |
-| time | ~> 0.6.0 |
-| tls | ~> 2.2.0 |
 
 ## Providers
 
-| Name | Version |
-|------|---------|
-| terraform | n/a |
+No provider.
+
+## Modules
+
+| Name | Source | Version |
+|------|--------|---------|
+| example | ../.. |  |
+| vm_extension_diagnostics | ../../modules/compute/virtual_machine_extensions |  |
+| vm_extension_monitoring_agent | ../../modules/compute/virtual_machine_extensions |  |
+
+## Resources
+
+No resources.
 
 ## Inputs
 
@@ -116,12 +118,15 @@ You can customize the examples execution by modifying the variables as follow:
 | app\_services | n/a | `map` | `{}` | no |
 | application\_gateway\_applications | n/a | `map` | `{}` | no |
 | application\_gateways | n/a | `map` | `{}` | no |
+| application\_security\_groups | n/a | `map` | `{}` | no |
 | automations | n/a | `map` | `{}` | no |
 | availability\_sets | n/a | `map` | `{}` | no |
-| azuread\_apps | n/a | `map` | `{}` | no |
+| azure\_container\_registries | n/a | `map` | `{}` | no |
+| azuread\_api\_permissions | n/a | `map` | `{}` | no |
+| azuread\_apps | n/a | `map(any)` | `{}` | no |
 | azuread\_groups | n/a | `map` | `{}` | no |
 | azuread\_roles | n/a | `map` | `{}` | no |
-| azuread\_users | n/a | `map` | `{}` | no |
+| azuread\_users | n/a | `map(any)` | `{}` | no |
 | azurerm\_application\_insights | n/a | `map` | `{}` | no |
 | azurerm\_firewall\_application\_rule\_collection\_definition | n/a | `map` | `{}` | no |
 | azurerm\_firewall\_nat\_rule\_collection\_definition | n/a | `map` | `{}` | no |
@@ -130,6 +135,7 @@ You can customize the examples execution by modifying the variables as follow:
 | azurerm\_redis\_caches | n/a | `map` | `{}` | no |
 | azurerm\_routes | n/a | `map` | `{}` | no |
 | bastion\_hosts | n/a | `map` | `{}` | no |
+| container\_groups | n/a | `map` | `{}` | no |
 | cosmos\_db | n/a | `map` | `{}` | no |
 | cosmos\_dbs | n/a | `map` | `{}` | no |
 | custom\_role\_definitions | n/a | `map` | `{}` | no |
@@ -139,30 +145,36 @@ You can customize the examples execution by modifying the variables as follow:
 | diagnostic\_storage\_accounts | n/a | `map` | `{}` | no |
 | diagnostics\_definition | n/a | `any` | `null` | no |
 | diagnostics\_destinations | n/a | `map` | `{}` | no |
+| disk\_encryption\_sets | n/a | `map` | `{}` | no |
 | dns\_zone\_records | n/a | `map` | `{}` | no |
 | dns\_zones | n/a | `map` | `{}` | no |
 | domain\_name\_registrations | n/a | `map` | `{}` | no |
 | dynamic\_keyvault\_secrets | n/a | `map` | `{}` | no |
 | environment | n/a | `string` | `"sandpit"` | no |
+| event\_hub\_auth\_rules | n/a | `map` | `{}` | no |
+| event\_hub\_consumer\_groups | n/a | `map` | `{}` | no |
+| event\_hub\_namespace\_auth\_rules | n/a | `map` | `{}` | no |
 | event\_hub\_namespaces | n/a | `map` | `{}` | no |
+| event\_hubs | n/a | `map` | `{}` | no |
 | express\_route\_circuit\_authorizations | n/a | `map` | `{}` | no |
 | express\_route\_circuits | n/a | `map` | `{}` | no |
 | front\_door\_waf\_policies | n/a | `map` | `{}` | no |
 | front\_doors | n/a | `map` | `{}` | no |
-| global\_settings | n/a | `map` | <pre>{<br>  "default_region": "region1",<br>  "regions": {<br>    "region1": "southeastasia",<br>    "region2": "eastasia"<br>  }<br>}</pre> | no |
+| global\_settings | n/a | `map` | <pre>{<br>  "default_region": "region1",<br>  "prefix": null,<br>  "regions": {<br>    "region1": "southeastasia",<br>    "region2": "eastasia"<br>  }<br>}</pre> | no |
+| image\_definitions | n/a | `map` | `{}` | no |
+| ip\_groups | n/a | `map` | `{}` | no |
 | keyvault\_access\_policies | n/a | `map` | `{}` | no |
+| keyvault\_access\_policies\_azuread\_apps | n/a | `map` | `{}` | no |
 | keyvault\_certificate\_issuers | n/a | `map` | `{}` | no |
 | keyvault\_certificate\_requests | n/a | `map` | `{}` | no |
 | keyvault\_keys | n/a | `map` | `{}` | no |
 | keyvaults | n/a | `map` | `{}` | no |
-| landingzone | n/a | `map` | <pre>{<br>  "backend_type": "azurerm",<br>  "global_settings_key": "launchpad",<br>  "key": "examples",<br>  "level": "level0",<br>  "tfstates": {<br>    "launchpad": {<br>      "level": "lower",<br>      "tfstate": "caf_launchpad.tfstate"<br>    }<br>  }<br>}</pre> | no |
+| landingzone | n/a | `map` | <pre>{<br>  "backend_type": "azurerm",<br>  "global_settings_key": "launchpad",<br>  "key": "examples",<br>  "level": "level0"<br>}</pre> | no |
+| load\_balancers | n/a | `map` | `{}` | no |
 | local\_network\_gateways | n/a | `map` | `{}` | no |
 | log\_analytics | n/a | `map` | `{}` | no |
 | logged\_aad\_app\_objectId | n/a | `any` | `null` | no |
 | logged\_user\_objectId | n/a | `any` | `null` | no |
-| lower\_container\_name | n/a | `any` | n/a | yes |
-| lower\_resource\_group\_name | n/a | `any` | n/a | yes |
-| lower\_storage\_account\_name | Map of the remote data state for lower level | `any` | n/a | yes |
 | machine\_learning\_workspaces | n/a | `map` | `{}` | no |
 | managed\_identities | n/a | `map` | `{}` | no |
 | mariadb\_databases | n/a | `map` | `{}` | no |
@@ -183,8 +195,10 @@ You can customize the examples execution by modifying the variables as follow:
 | mssql\_servers | n/a | `map` | `{}` | no |
 | mysql\_servers | n/a | `map` | `{}` | no |
 | netapp\_accounts | n/a | `map` | `{}` | no |
-| network\_security\_group\_definition | n/a | `any` | `null` | no |
+| network\_security\_group\_definition | n/a | `map` | `{}` | no |
 | network\_watchers | n/a | `map` | `{}` | no |
+| packer\_managed\_identity | n/a | `map` | `{}` | no |
+| packer\_service\_principal | n/a | `map` | `{}` | no |
 | postgresql\_servers | n/a | `map` | `{}` | no |
 | private\_dns | n/a | `map` | `{}` | no |
 | private\_endpoints | n/a | `map` | `{}` | no |
@@ -195,15 +209,10 @@ You can customize the examples execution by modifying the variables as follow:
 | role\_mapping | n/a | `map` | `{}` | no |
 | route\_tables | n/a | `map` | `{}` | no |
 | rover\_version | n/a | `any` | `null` | no |
+| shared\_image\_galleries | n/a | `map` | `{}` | no |
 | storage\_accounts | n/a | `map` | `{}` | no |
 | synapse\_workspaces | n/a | `map` | `{}` | no |
-| tags | n/a | `map` | `null` | no |
-| tenant\_id | n/a | `any` | n/a | yes |
-| tfstate\_container\_name | n/a | `any` | n/a | yes |
-| tfstate\_key | n/a | `any` | n/a | yes |
-| tfstate\_resource\_group\_name | n/a | `any` | n/a | yes |
-| tfstate\_storage\_account\_name | n/a | `any` | n/a | yes |
-| tfstate\_subscription\_id | n/a | `any` | n/a | yes |
+| tags | n/a | `map(any)` | `null` | no |
 | var\_folder\_path | n/a | `map` | `{}` | no |
 | virtual\_machines | n/a | `map` | `{}` | no |
 | virtual\_network\_gateway\_connections | n/a | `map` | `{}` | no |
@@ -216,12 +225,5 @@ You can customize the examples execution by modifying the variables as follow:
 
 | Name | Description |
 |------|-------------|
-| dns\_zone\_records | n/a |
-| dns\_zones | n/a |
-| keyvault\_certificate\_requests | n/a |
-| keyvault\_certificates | n/a |
-| mssql\_managed\_instances | n/a |
-| mssql\_managed\_instances\_secondary | n/a |
-| virtual\_machines | n/a |
-
+| objects | n/a |
 <!-- END OF PRE-COMMIT-TERRAFORM DOCS HOOK -->

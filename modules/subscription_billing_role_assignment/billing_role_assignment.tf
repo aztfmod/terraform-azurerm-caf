@@ -5,7 +5,7 @@ data "azurerm_billing_enrollment_account_scope" "sub" {
 
 data "external" "role_definition" {
   program = [
-    "bash", "-c", 
+    "bash", "-c",
     "az rest --method GET --url https://management.azure.com${local.billing_scope_id}/billingRoleDefinitions?api-version=2019-10-01-preview --query \"value[?properties.roleName=='${var.billing_role_definition_name}'].{id:id}[0]\" -o json"
   ]
 
@@ -20,7 +20,7 @@ locals {
   billing_scope_id = data.azurerm_billing_enrollment_account_scope.sub.id
 }
 
-module role_assignment_azuread_users {
+module "role_assignment_azuread_users" {
   source   = "./role_assignment"
   for_each = try(var.settings.principals.azuread_users, {})
 
@@ -32,7 +32,7 @@ module role_assignment_azuread_users {
 }
 
 
-module role_assignment_msi {
+module "role_assignment_msi" {
   source     = "./role_assignment"
   for_each   = try(var.settings.principals.managed_identities, {})
   depends_on = [module.role_assignment_azuread_users]

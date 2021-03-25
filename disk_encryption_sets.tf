@@ -11,6 +11,6 @@ module "disk_encryption_sets" {
   keyvault_id       = local.combined_objects_keyvaults[try(each.value.keyvault.lz_key, local.client_config.landingzone_key)][each.value.keyvault.key].id
 }
 
-output disk_encryption_sets {
+output "disk_encryption_sets" {
   value = module.disk_encryption_sets
 }

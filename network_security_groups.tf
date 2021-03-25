@@ -1,4 +1,4 @@
-module network_security_groups {
+module "network_security_groups" {
   source = "./modules/networking/network_security_group"
 
   for_each = {

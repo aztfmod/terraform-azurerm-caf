@@ -1,4 +1,4 @@
-output id {
+output "id" {
   value = azurerm_lb.lb.id
 }
 

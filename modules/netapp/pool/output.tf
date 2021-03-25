@@ -1,7 +1,7 @@
-output pool {
+output "pool" {
   value = azurerm_netapp_pool.pool
 }
 
-output volumes {
+output "volumes" {
   value = module.volumes
 }

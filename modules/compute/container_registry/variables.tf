@@ -1,74 +1,74 @@
-variable global_settings {
+variable "global_settings" {
   description = "Global settings object (see module README.md)"
 }
-variable client_config {
+variable "client_config" {
   description = "Client configuration object (see module README.md)."
 }
 
-variable name {
+variable "name" {
   type        = string
   description = "(Required) Specifies the name of the Container Registry. Changing this forces a new resource to be created."
 }
 
-variable resource_group_name {
+variable "resource_group_name" {
   description = "(Required) The name of the resource group in which to create the Container Registry. Changing this forces a new resource to be created."
 }
 
-variable location {
+variable "location" {
   description = "(Required) Specifies the supported Azure location where the resource exists. Changing this forces a new resource to be created."
 }
 
-variable admin_enabled {
+variable "admin_enabled" {
   description = "(Optional) Specifies whether the admin user is enabled. Defaults to false."
   default     = false
 }
 
-variable sku {
+variable "sku" {
   description = "(Optional) The SKU name of the container registry. Possible values are Basic, Standard and Premium. Defaults to Basic"
   default     = "Basic"
 }
 
-variable tags {
-  type        = map
+variable "tags" {
+  type        = map(any)
   description = "(Optional) A mapping of tags to assign to the resource."
   default     = {}
 }
 
-variable georeplication_locations {
+variable "georeplication_locations" {
   description = "(Optional) A list of Azure locations where the container registry should be geo-replicated."
   default     = null
 }
 
-variable vnets {
+variable "vnets" {
   default = {}
 }
 
-variable network_rule_set {
+variable "network_rule_set" {
   description = " (Optional) A network_rule_set block as documented https://www.terraform.io/docs/providers/azurerm/r/container_registry.html"
   default     = {}
 }
 
-variable diagnostic_profiles {
+variable "diagnostic_profiles" {
   default = {}
 }
 
-variable diagnostics {
+variable "diagnostics" {
   default = {}
 }
 
-variable private_endpoints {
+variable "private_endpoints" {
   default = {}
 }
 
-variable resource_groups {
+variable "resource_groups" {
   default = {}
 }
 
-variable base_tags {
+variable "base_tags" {
   description = "Base tags for the resource to be inherited from the resource group."
-  type        = map
+  type        = map(any)
 }
 
-variable private_dns {
+variable "private_dns" {
   default = {}
 }

@@ -204,7 +204,7 @@ disk_encryption_sets = {
     name               = "deskey1"
     resource_group_key = "vm_region1"
     key_vault_key_key  = "key1"
-    keyvault           = {
+    keyvault = {
       key = "example_vm_rg1"
     }
   }

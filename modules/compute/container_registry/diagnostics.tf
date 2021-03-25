@@ -1,4 +1,4 @@
-module diagnostics {
+module "diagnostics" {
   source = "../../diagnostics"
 
   resource_id       = azurerm_container_registry.acr.id

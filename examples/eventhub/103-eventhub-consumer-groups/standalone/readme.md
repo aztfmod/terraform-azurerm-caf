@@ -6,7 +6,7 @@ cd /tf/caf/examples/eventhub/103-eventhub-consumer-groups/standalone
 terraform init
 
 terraform plan \
-  -var-file ../configuration.tfvars 
+  -var-file ../configuration.tfvars
 
 ```
 

@@ -10,18 +10,18 @@
 # }
 
 resource "azurerm_function_app" "function_app" {
-  name                        = var.name
-  location                    = var.location
-  resource_group_name         = var.resource_group_name
-  app_service_plan_id         = var.app_service_plan_id
-  client_affinity_enabled     = lookup(var.settings, "client_affinity_enabled", null)
-  enabled                     = lookup(var.settings, "enabled", null)
-  https_only                  = lookup(var.settings, "https_only", null)
-  os_type                     = lookup(var.settings, "os_type", "linux")
-  storage_account_name        = var.storage_account_name
-  storage_account_access_key  = var.storage_account_access_key
-  tags                        = local.tags
-  
+  name                       = var.name
+  location                   = var.location
+  resource_group_name        = var.resource_group_name
+  app_service_plan_id        = var.app_service_plan_id
+  client_affinity_enabled    = lookup(var.settings, "client_affinity_enabled", null)
+  enabled                    = lookup(var.settings, "enabled", null)
+  https_only                 = lookup(var.settings, "https_only", null)
+  os_type                    = lookup(var.settings, "os_type", "linux")
+  storage_account_name       = var.storage_account_name
+  storage_account_access_key = var.storage_account_access_key
+  tags                       = local.tags
+
   app_settings = local.app_settings
 
   dynamic "auth_settings" {
@@ -98,8 +98,8 @@ resource "azurerm_function_app" "function_app" {
       value = connection_string.value.value
     }
   }
- 
-  dynamic identity {
+
+  dynamic "identity" {
     for_each = try(var.identity, null) == null ? [] : [1]
 
     content {

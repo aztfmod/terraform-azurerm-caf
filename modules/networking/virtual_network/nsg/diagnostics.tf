@@ -1,5 +1,5 @@
 
-module diagnostics {
+module "diagnostics" {
   source = "../../../diagnostics"
   for_each = {
     for key, subnet in var.subnets : key => subnet
