@@ -36,5 +36,9 @@ output primary_connection_string {
 }
 
 output identity {
-  value = azurerm_storage_account.stg.identity
+  value = azurerm_storage_account.stg.identity.0
+}
+
+output rbac_id {
+  value = azurerm_storage_account.stg.identity.0
 }
