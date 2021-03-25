@@ -20,17 +20,19 @@ module "networking" {
   source   = "./modules/networking/virtual_network"
   for_each = local.networking.vnets
 
-  location                          = lookup(each.value, "region", null) == null ? module.resource_groups[each.value.resource_group_key].location : local.global_settings.regions[each.value.region]
-  resource_group_name               = module.resource_groups[each.value.resource_group_key].name
-  settings                          = each.value
-  network_security_group_definition = local.networking.network_security_group_definition
-  route_tables                      = module.route_tables
-  tags                              = try(each.value.tags, null)
+  application_security_groups       = local.combined_objects_application_security_groups
+  base_tags                         = try(local.global_settings.inherit_tags, false) ? module.resource_groups[each.value.resource_group_key].tags : {}
+  client_config                     = local.client_config
+  ddos_id                           = try(azurerm_network_ddos_protection_plan.ddos_protection_plan[each.value.ddos_services_key].id, "")
   diagnostics                       = local.combined_diagnostics
   global_settings                   = local.global_settings
-  ddos_id                           = try(azurerm_network_ddos_protection_plan.ddos_protection_plan[each.value.ddos_services_key].id, "")
-  base_tags                         = try(local.global_settings.inherit_tags, false) ? module.resource_groups[each.value.resource_group_key].tags : {}
+  location                          = lookup(each.value, "region", null) == null ? module.resource_groups[each.value.resource_group_key].location : local.global_settings.regions[each.value.region]
+  network_security_group_definition = local.networking.network_security_group_definition
   network_watchers                  = try(local.combined_objects_network_watchers, null)
+  resource_group_name               = module.resource_groups[each.value.resource_group_key].name
+  route_tables                      = module.route_tables
+  settings                          = each.value
+  tags                              = try(each.value.tags, null)
 }
 
 #

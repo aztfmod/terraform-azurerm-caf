@@ -61,12 +61,18 @@ variable proximity_placement_groups {
   default = {}
 }
 
+variable application_security_groups {
+  default = {}
+}
+
+variable virtual_machines {
+  default = {}
+}
+variable custom_image_ids {
+  default = {}
+}
 variable network_security_groups {
   default = {}
   description = "Require a version 1 NSG definition to be attached to a nic."
-}
-
-variable custom_image_ids {
-  default = {}
 }
 
