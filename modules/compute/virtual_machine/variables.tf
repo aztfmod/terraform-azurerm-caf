@@ -64,6 +64,14 @@ variable proximity_placement_groups {
 variable disk_encryption_sets {
   default = {}
 }
+
 variable custom_image_ids {
   default = {}
 }
+
+variable network_security_groups {
+  default = {}
+  description = "Require a version 1 NSG definition to be attached to a nic."
+}
+
+

@@ -16,7 +16,7 @@ variable resource_groups {
   default = null
 }
 variable network_security_group_definition {
-  default = null
+  default = {}
 }
 variable route_tables {
   default = {}
