@@ -1,7 +1,6 @@
 module "example" {
   source = "../.."
 
-  azure_devops_projects          = var.azure_devops_projects
   azuread_apps                   = var.azuread_apps
   azuread_groups                 = var.azuread_groups
   azuread_roles                  = var.azuread_roles
@@ -25,7 +24,6 @@ module "example" {
   role_mapping                   = var.role_mapping
   storage_accounts               = var.storage_accounts
   tags                           = local.tags
-  tenant_id                      = var.tenant_id
 
   webapp = {
     azurerm_application_insights = var.azurerm_application_insights
