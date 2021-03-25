@@ -1,13 +1,14 @@
 module "caf" {
   source = "../../../../../"
 
-  global_settings    = var.global_settings
-  tags               = var.tags
-  resource_groups    = var.resource_groups
-  storage_accounts   = var.storage_accounts
-  keyvaults          = var.keyvaults
-  managed_identities = var.managed_identities
-  role_mapping       = var.role_mapping
+  global_settings          = var.global_settings
+  tags                     = var.tags
+  resource_groups          = var.resource_groups
+  storage_accounts         = var.storage_accounts
+  keyvaults                = var.keyvaults
+  managed_identities       = var.managed_identities
+  role_mapping             = var.role_mapping
+  keyvault_access_policies = var.keyvault_access_policies
 
   diagnostics = {
     # Get the diagnostics settings of services to create
@@ -27,6 +28,8 @@ module "caf" {
 
   security = {
     dynamic_keyvault_secrets = var.dynamic_keyvault_secrets
+    keyvault_keys            = var.keyvault_keys
+    disk_encryption_sets     = var.disk_encryption_sets
   }
 }
 
