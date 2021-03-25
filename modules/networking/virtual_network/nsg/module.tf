@@ -42,23 +42,25 @@ resource "azurerm_network_security_group" "nsg_obj" {
       #   ids = ["resource_id"]
       # }
 
-      source_application_security_group_ids = coalescelist(
-        flatten(
-          [
-            for key in try(security_rule.value.source_application_security_groups.keys, []) : [
-              var.application_security_groups[try(security_rule.value.lz_key, var.client_config.landingzone_key)][key].id
+      source_application_security_group_ids = try(
+        coalescelist(
+          flatten(
+            [
+              for key in try(security_rule.value.source_application_security_groups.keys, []) : [
+                var.application_security_groups[try(security_rule.value.lz_key, var.client_config.landingzone_key)][key].id
+              ]
             ]
-          ]
-        ),
-        flatten(
-          [
-            for asg_id in try(security_rule.value.source_application_security_groups.ids, []) : [
-              asg_id
+          ),
+          flatten(
+            [
+              for asg_id in try(security_rule.value.source_application_security_groups.ids, []) : [
+                asg_id
+              ]
             ]
-          ]
-        ),
-        [""]
-      ) //coalescelist
+          )
+        ),//coalescelist
+        []
+       )
 
 
       # destination_application_security_groups = {
@@ -69,23 +71,25 @@ resource "azurerm_network_security_group" "nsg_obj" {
       #   ids = ["resource_id"]
       # }
 
-      destination_application_security_group_ids = coalescelist(
-        flatten(
-          [
-            for key in try(security_rule.value.destination_application_security_groups.keys, []) : [
-              var.application_security_groups[try(security_rule.value.lz_key, var.client_config.landingzone_key)][key].id
+      destination_application_security_group_ids = try(
+        coalescelist(
+          flatten(
+            [
+              for key in try(security_rule.value.destination_application_security_groups.keys, []) : [
+                var.application_security_groups[try(security_rule.value.lz_key, var.client_config.landingzone_key)][key].id
+              ]
             ]
-          ]
-        ),
-        flatten(
-          [
-            for asg_id in try(security_rule.value.destination_application_security_groups.ids, []) : [
-              asg_id
+          ),
+          flatten(
+            [
+              for asg_id in try(security_rule.value.destination_application_security_groups.ids, []) : [
+                asg_id
+              ]
             ]
-          ]
+          )
         ),
-        [""]
-      ) //coalescelist
+        []
+      )
     }
   }
 }
