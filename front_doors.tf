@@ -13,7 +13,7 @@ module "front_doors" {
   settings                      = each.value
 }
 
-output front_doors {
+output "front_doors" {
   value = module.front_doors
 }
 

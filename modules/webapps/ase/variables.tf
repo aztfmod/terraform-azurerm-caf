@@ -1,44 +1,44 @@
-variable tags {
+variable "tags" {
   description = "(Required) map of tags for the deployment"
 }
 
-variable name {
+variable "name" {
   description = "(Required) Name of the App Service Environment"
 }
 
-variable kind {
+variable "kind" {
   description = "(Required) Kind of resource. Possible value are ASEV2"
 }
 
-variable zone {
+variable "zone" {
   description = "(Required) Availability Zone of resource. Possible value are 1, 2 or 3"
 }
 
-variable location {
+variable "location" {
   description = "(Required) Resource Location"
 }
 
-variable resource_group_name {
+variable "resource_group_name" {
   description = "(Required) Resource group of the ASE"
 }
 
-variable subnet_id {
+variable "subnet_id" {
   description = "(Required) Name of the Virtual Network for the ASE"
 }
 
-variable subnet_name {}
+variable "subnet_name" {}
 
-variable internalLoadBalancingMode {}
+variable "internalLoadBalancingMode" {}
 
-variable diagnostics {
+variable "diagnostics" {
   default = null
 }
 
-variable diagnostic_profiles {
+variable "diagnostic_profiles" {
   default = null
 }
 
-variable front_end_size {
+variable "front_end_size" {
   description = "Instance size for the front-end pool."
   default     = "Standard_D1_V2"
 
@@ -48,22 +48,22 @@ variable front_end_size {
   }
 }
 
-variable front_end_count {
+variable "front_end_count" {
   description = "Number of instances in the front-end pool.  Minimum of two."
   default     = "2"
 }
 
-variable global_settings {
+variable "global_settings" {
   description = "Global settings object (see module README.md)"
 }
 
-variable private_dns {
+variable "private_dns" {
   default = {}
 }
 
-variable settings {}
+variable "settings" {}
 
-variable base_tags {
+variable "base_tags" {
   description = "Base tags for the resource to be inherited from the resource group."
-  type        = map
+  type        = map(any)
 }

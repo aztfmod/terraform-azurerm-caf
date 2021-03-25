@@ -1,4 +1,4 @@
-module diagnostics {
+module "diagnostics" {
   source = "../../diagnostics"
   count  = var.diagnostic_profiles == null ? 0 : 1
 

@@ -1,4 +1,4 @@
-output a {
+output "a" {
   value = merge(
     azurerm_dns_a_record.a,
     azurerm_dns_a_record.a_dns_zone_record,
@@ -6,40 +6,40 @@ output a {
   )
 }
 
-output aaaa {
+output "aaaa" {
   value = merge(
     azurerm_dns_aaaa_record.aaaa,
     azurerm_dns_aaaa_record.aaaa_dns_zone_record
   )
 }
 
-output caa {
+output "caa" {
   value = azurerm_dns_caa_record.caa
 }
 
-output cname {
+output "cname" {
   value = merge(
     azurerm_dns_cname_record.cname,
     azurerm_dns_cname_record.cname_dns_zone_record
   )
 }
 
-output mx {
+output "mx" {
   value = azurerm_dns_mx_record.mx
 }
 
-output ns {
+output "ns" {
   value = azurerm_dns_ns_record.ns
 }
 
-output ptr {
+output "ptr" {
   value = azurerm_dns_ptr_record.ptr
 }
 
-output srv {
+output "srv" {
   value = azurerm_dns_srv_record.srv
 }
 
-output txt {
+output "txt" {
   value = azurerm_dns_txt_record.txt
 }

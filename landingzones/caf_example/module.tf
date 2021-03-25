@@ -73,7 +73,7 @@ module "example" {
     vnet_peerings                                           = var.vnet_peerings
     vnets                                                   = var.vnets
   }
-  
+
   diagnostics = {
     diagnostic_event_hub_namespaces = var.diagnostic_event_hub_namespaces
     diagnostic_log_analytics        = var.diagnostic_log_analytics

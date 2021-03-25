@@ -1,4 +1,4 @@
-module keyvault_certificate_issuers {
+module "keyvault_certificate_issuers" {
   source     = "./modules/security/keyvault_certificate_issuer"
   depends_on = [module.keyvaults]
   for_each   = local.security.keyvault_certificate_issuers
@@ -23,7 +23,7 @@ data "azurerm_key_vault_secret" "certificate_issuer_password" {
   key_vault_id = try(local.combined_objects_keyvaults[each.value.lz_key][each.value.keyvault_key].id, local.combined_objects_keyvaults[local.client_config.landingzone_key][each.value.keyvault_key].id)
 }
 
-output keyvault_certificate_issuers {
+output "keyvault_certificate_issuers" {
   value = module.keyvault_certificate_issuers
 
 }

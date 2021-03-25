@@ -17,12 +17,12 @@ locals {
 }
 
 # Output diagnostics
-output diagnostics {
+output "diagnostics" {
   value = local.combined_diagnostics
 
 }
 
-module diagnostic_storage_accounts {
+module "diagnostic_storage_accounts" {
   source   = "./modules/storage_account"
   for_each = local.diagnostics.diagnostic_storage_accounts
 
@@ -46,7 +46,7 @@ module "diagnostic_event_hub_namespaces" {
   base_tags           = try(local.global_settings.inherit_tags, false) ? module.resource_groups[each.value.resource_group_key].tags : {}
 }
 
-module diagnostic_event_hub_namespaces_diagnostics {
+module "diagnostic_event_hub_namespaces_diagnostics" {
   source   = "./modules/diagnostics"
   for_each = local.diagnostics.diagnostic_event_hub_namespaces
 
@@ -66,7 +66,7 @@ module "diagnostic_log_analytics" {
   base_tags       = try(local.global_settings.inherit_tags, false) ? module.resource_groups[each.value.resource_group_key].tags : {}
 }
 
-module diagnostic_log_analytics_diagnostics {
+module "diagnostic_log_analytics_diagnostics" {
   source   = "./modules/diagnostics"
   for_each = local.diagnostics.diagnostic_log_analytics
 

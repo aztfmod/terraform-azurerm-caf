@@ -54,7 +54,7 @@ resource "azurerm_network_interface" "nic" {
     public_ip_address_id          = lookup(each.value, "public_ip_address_key", null) == null ? null : try(var.public_ip_addresses[var.client_config.landingzone_key][each.value.public_ip_address_key].id, var.public_ip_addresses[each.value.lz_key][each.value.public_ip_address_key].id)
   }
 
-  dynamic ip_configuration {
+  dynamic "ip_configuration" {
     for_each = try(each.value.ip_configurations, {})
 
     content {

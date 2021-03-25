@@ -1,4 +1,4 @@
-module load_balancers {
+module "load_balancers" {
   source   = "./modules/networking/load_balancers"
   for_each = try(local.networking.load_balancers, {})
 

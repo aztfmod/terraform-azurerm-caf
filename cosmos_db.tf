@@ -1,4 +1,4 @@
-module cosmos_dbs {
+module "cosmos_dbs" {
   source   = "./modules/databases/cosmos_dbs"
   for_each = local.database.cosmos_dbs
 
@@ -9,6 +9,6 @@ module cosmos_dbs {
   base_tags           = try(local.global_settings.inherit_tags, false) ? module.resource_groups[each.value.resource_group_key].tags : {}
 }
 
-output cosmos_dbs {
-  value     = module.cosmos_dbs
+output "cosmos_dbs" {
+  value = module.cosmos_dbs
 }

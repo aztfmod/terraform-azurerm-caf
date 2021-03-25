@@ -40,7 +40,7 @@ public_ip_addresses = {
   pip = {
     name                    = "lb_pip1"
     resource_group_key      = "lb"
-    sku                     = "Basic"  #SKU must match with the SKU of the LB
+    sku                     = "Basic" #SKU must match with the SKU of the LB
     allocation_method       = "Static"
     ip_version              = "IPv4"
     idle_timeout_in_minutes = "4"
@@ -50,8 +50,8 @@ public_ip_addresses = {
 virtual_machines = {
 
   vm1 = {
-    resource_group_key                   = "lb"
-    os_type = "linux"
+    resource_group_key = "lb"
+    os_type            = "linux"
 
     # the auto-generated ssh key in keyvault secret. Secret name being {VM name}-ssh-public and {VM name}-ssh-private
     keyvault_key = "example_vm_rg1"
@@ -112,7 +112,7 @@ load_balancers = {
     resource_group_key        = "lb"
     backend_address_pool_name = "web-app"
     nic_key                   = "nic0"
-    
+
     frontend_ip_configurations = {
       config1 = {
         name                          = "config1"
@@ -121,7 +121,7 @@ load_balancers = {
         private_ip_address_allocation = "Dynamic"
       }
     }
-    
+
     #multiple VMs and NICs can be attached to the Load Balancer. Specify the respective VMs and NICs in the following syntac
     nic_bap_association = {
       bap0 = {
