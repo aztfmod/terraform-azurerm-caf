@@ -1,7 +1,7 @@
 locals {
   backend_http_settings = {
     for key, value in var.application_gateway_applications : key => merge({ name = value.name }, value.backend_http_setting)
-    if lookup(value,"backend_http_setting",false) != false
+    if lookup(value, "backend_http_setting", false) != false
   }
 
   listeners = {
@@ -9,7 +9,7 @@ locals {
     flatten(
       [
         for app_key, config in var.application_gateway_applications : [
-          for listener_key, value in try(config.listeners,[]) : {
+          for listener_key, value in try(config.listeners, []) : {
             listener_key = listener_key
             app_key      = app_key
             value        = merge({ app_key = app_key }, value)
@@ -24,7 +24,7 @@ locals {
     flatten(
       [
         for app_key, config in var.application_gateway_applications : [
-          for request_key, value in try(config.request_routing_rules,[]) : {
+          for request_key, value in try(config.request_routing_rules, []) : {
             name        = config.name
             request_key = request_key
             app_key     = app_key
@@ -40,8 +40,8 @@ locals {
     flatten(
       [
         for app_key, config in var.application_gateway_applications : [
-          for key, value in try(config.url_path_maps,[]) : {
-            value       = merge({ app_key = app_key, url_path_map_key = key }, value)
+          for key, value in try(config.url_path_maps, []) : {
+            value = merge({ app_key = app_key, url_path_map_key = key }, value)
           }
         ]
       ]

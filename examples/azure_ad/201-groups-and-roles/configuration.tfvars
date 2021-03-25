@@ -1,5 +1,6 @@
 global_settings = {
   default_region = "region1"
+  prefix         = null
   regions = {
     region1 = "southeastasia"
   }
@@ -34,7 +35,7 @@ azuread_apps = {
     application_name             = "app1"
     app_role_assignment_required = true
     keyvaults = {
-      test_kv= {
+      test_kv = {
         secret_prefix = "app1"
       }
     }

@@ -49,7 +49,7 @@ To test this deployment in the example landingzone, make sure the launchpad has 
 
 ```bash
 rover \
-  -lz /tf/caf/aztfmod/examples \
+  -lz /tf/caf/landingzones/caf_example \
   -var-folder  /tf/caf/modules/aks/examples/101-single-cluster/ \
   -level level1 \
   -a [plan | apply | destroy]

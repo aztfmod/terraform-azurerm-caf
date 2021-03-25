@@ -1,29 +1,29 @@
-variable global_settings {
+variable "global_settings" {
   description = "Global settings object (see module README.md)"
 }
-variable client_config {
+variable "client_config" {
   description = "Client configuration object (see module README.md)."
 }
-variable name {
+variable "name" {
 }
 
-variable resource_group_name {
+variable "resource_group_name" {
 }
 
-variable records {
+variable "records" {
 }
 
-variable vnet_links {
+variable "vnet_links" {
   default = {}
 }
 
-variable vnets {
+variable "vnets" {
   default = {}
 }
-variable base_tags {
+variable "base_tags" {
   description = "Base tags for the resource to be inherited from the resource group."
-  type        = map
+  type        = map(any)
 }
-variable tags {
+variable "tags" {
   default = {}
 }

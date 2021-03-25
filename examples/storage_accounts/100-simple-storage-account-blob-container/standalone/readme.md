@@ -5,8 +5,9 @@ cd /tf/caf/aztfmod/examples/storage_accounts/100-simple-storage-account-blob-con
 
 terraform init
 
-terraform plan \
-  -var-file ../configuration.tfvars
+terraform apply \
+  -var-file ../configuration.tfvars \
+  -var-file ../keyvaults.tfvars
 
 
 ```
@@ -16,7 +17,7 @@ To test this deployment in the example landingzone. Make sure the launchpad has 
 ```bash
 
 rover \
-  -lz /tf/caf/aztfmod/examples \
+  -lz /tf/caf/landingzones/caf_example \
   -var-folder  /tf/caf/aztfmod/examples/storage_accounts/100-simple-storage-account-blob-container \
   -level level1 \
   -a plan

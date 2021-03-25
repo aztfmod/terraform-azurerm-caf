@@ -1,4 +1,4 @@
-module domain_name_registrations {
+module "domain_name_registrations" {
   source   = "./modules/networking/domain_name_registrations"
   for_each = try(local.networking.domain_name_registrations, {})
 
@@ -9,7 +9,7 @@ module domain_name_registrations {
   settings            = each.value
 }
 
-output domain_name_registrations {
+output "domain_name_registrations" {
   value = module.domain_name_registrations
 }
 

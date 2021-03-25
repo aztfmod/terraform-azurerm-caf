@@ -1,5 +1,6 @@
 global_settings = {
   default_region = "region1"
+  prefix         = null
   regions = {
     region1 = "southeastasia" # You can adjust the Azure Region you want to use to deploy AKS and the related services
     # region2 = "eastasia"            # Optional - Add additional regions
@@ -21,9 +22,9 @@ resource_groups = {
 
 ip_groups = {
   ip_group1 = {
-    name = "ip_group1"
+    name               = "ip_group1"
     resource_group_key = "spoke_re1"
-    vnet_key = "vnet_spoke_re1"
-    subnet_keys = ["subnet1","subnet2"]  # can be either unclared or empty, will take vnet cidr instead
+    vnet_key           = "vnet_spoke_re1"
+    subnet_keys        = ["subnet1", "subnet2"] # can be either unclared or empty, will take vnet cidr instead
   }
 }

@@ -1,7 +1,7 @@
-output project_id {
+output "project_id" {
   value = azuredevops_project.project.id
 }
 
-output project_name {
-  value     = azuredevops_project.project.name 
+output "project_name" {
+  value = azuredevops_project.project.name
 }

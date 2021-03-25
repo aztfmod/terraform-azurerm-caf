@@ -1,5 +1,5 @@
 
-output mssql_servers {
+output "mssql_servers" {
   value = module.mssql_servers
 
 }

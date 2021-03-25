@@ -4,7 +4,7 @@
 #
 #
 
-module virtual_wans {
+module "virtual_wans" {
   source   = "./modules/networking/virtual_wan"
   for_each = local.networking.virtual_wans
 
@@ -36,7 +36,7 @@ resource "azurerm_virtual_hub_connection" "vhub_connection" {
 }
 
 # Outputs
-output virtual_wans {
+output "virtual_wans" {
   value = module.virtual_wans
 
   description = "Virtual WAN output"

@@ -4,7 +4,7 @@ data "azuread_user" "upn" {
   user_principal_name = each.value
 }
 
-module user_principal_names {
+module "user_principal_names" {
   source   = "./member"
   for_each = toset(try(var.settings.members.user_principal_names, []))
 
@@ -13,7 +13,7 @@ module user_principal_names {
 }
 
 
-module service_principals {
+module "service_principals" {
   source   = "./member"
   for_each = toset(try(var.settings.members.service_principal_keys, []))
 
@@ -22,7 +22,7 @@ module service_principals {
 }
 
 
-module object_id {
+module "object_id" {
   source   = "./member"
   for_each = toset(try(var.settings.members.object_ids, []))
 
@@ -33,10 +33,10 @@ module object_id {
 data "azuread_group" "name" {
   for_each = toset(try(var.settings.members.group_names, []))
 
-  name = each.value
+  display_name = each.value
 }
 
-module group_name {
+module "group_name" {
   source   = "./member"
   for_each = toset(try(var.settings.members.group_names, []))
 
@@ -44,7 +44,7 @@ module group_name {
   member_object_id = data.azuread_group.name[each.key].id
 }
 
-module group_keys {
+module "group_keys" {
   source   = "./member"
   for_each = toset(try(var.settings.members.group_keys, []))
 

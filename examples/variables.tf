@@ -74,6 +74,9 @@ variable "resource_groups" {
 variable "network_security_group_definition" {
   default = null
 }
+variable "networking_interface_asg_associations" {
+  default = {}
+}
 variable "route_tables" {
   default = {}
 }
@@ -314,16 +317,9 @@ variable "automations" {
   default = {}
 }
 
-variable load_balancers {
-  default ={}
-}
-
-variable "ip_groups" {
+variable "application_security_groups" {
   default = {}
 }
-variable container_groups {
-  default = {}
-}
-variable azure_devops_projects {
+variable "azure_devops_projects" {
   default = {}
 }

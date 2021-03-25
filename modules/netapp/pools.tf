@@ -1,4 +1,4 @@
-module pools {
+module "pools" {
   source   = "./pool"
   for_each = try(var.settings.pools, {})
 

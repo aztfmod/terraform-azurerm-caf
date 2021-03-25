@@ -76,6 +76,15 @@ variable "subscriptions" {
   default = {}
 }
 
+variable "subscription_billing_role_assignments" {
+  default = {}
+}
+
+variable "billing" {
+  description = "Billing information"
+  default     = {}
+}
+
 variable "remote_objects" {
   description = "Remote objects is used to allow the landing zone to retrieve remote tfstate objects and pass them to the caf module"
   default     = {}
@@ -151,6 +160,13 @@ variable "webapp" {
   }
 }
 
+variable "data_factory" {
+  default = {}
+}
+
+variable "logic_app" {
+  default = {}
+}
 
 ## Databases variables
 variable "database" {
@@ -224,6 +240,30 @@ variable "shared_services" {
   }
 }
 
+variable "virtual_network_gateways" {
+  default = {}
+}
+
+variable "virtual_network_gateway_connections" {
+  default = {}
+}
+
+variable "shared_image_galleries" {
+  default = {}
+}
+
+variable "image_definitions" {
+  default = {}
+}
+
+variable "packer_service_principal" {
+  default = {}
+}
+
+variable "packer_managed_identity" {
+  default = {}
+}
+
 variable "keyvault_certificate_issuers" {
   default = {}
 }
@@ -231,18 +271,32 @@ variable "cosmos_dbs" {
   default = {}
 }
 
+variable "app_config" {
+  default = {}
+}
+
 variable "local_network_gateways" {
   default = {}
 }
 
-variable "ip_groups" {
+variable "application_security_groups" {
+  default = {}
+}
+variable "event_hubs" {
   default = {}
 }
 
-variable load_balancers {
+variable "event_hub_auth_rules" {
   default = {}
 }
 
-variable azure_devops_projects {
+variable "azure_devops_projects" {
+  default = {}
+}
+variable "event_hub_namespace_auth_rules" {
+  default = {}
+}
+
+variable "event_hub_consumer_groups" {
   default = {}
 }

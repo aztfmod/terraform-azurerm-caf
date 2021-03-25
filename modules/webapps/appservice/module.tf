@@ -2,7 +2,7 @@
 resource "azurecaf_name" "app_service" {
   name          = var.name
   resource_type = "azurerm_app_service"
-  prefixes      = var.global_settings.prefix
+  prefixes      = var.global_settings.prefixes
   random_length = var.global_settings.random_length
   clean_input   = true
   passthrough   = var.global_settings.passthrough
@@ -25,11 +25,11 @@ resource "azurerm_app_service" "app_service" {
   https_only              = lookup(var.settings, "https_only", null)
 
   dynamic "identity" {
-    for_each = try(var.identity, null) != null ? [1] : []
+    for_each = try(var.identity, null) == null ? [] : [1]
 
     content {
-      type         = try(var.identity.type, null)
-      identity_ids = try(var.identity.identity_ids, null)
+      type         = var.identity.type
+      identity_ids = lower(var.identity.type) == "userassigned" ? local.managed_identities : null
     }
   }
 

@@ -31,6 +31,6 @@ module "caf" {
   }
 }
 
-output diagnostics {
+output "diagnostics" {
   value = module.caf.diagnostics
 }

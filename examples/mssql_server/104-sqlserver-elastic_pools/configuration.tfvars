@@ -1,6 +1,7 @@
 
 global_settings = {
   default_region = "region1"
+  prefix         = null
   regions = {
     region1 = "southeastasia"
   }
@@ -43,9 +44,6 @@ keyvaults = {
     sku_name           = "standard"
     creation_policies = {
       logged_in_user = {
-        secret_permissions = ["Set", "Get", "List", "Delete", "Purge"]
-      }
-      logged_in_aad_app = {
         secret_permissions = ["Set", "Get", "List", "Delete", "Purge"]
       }
     }

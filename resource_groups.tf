@@ -1,5 +1,5 @@
 
-module resource_groups {
+module "resource_groups" {
   source   = "./modules/resource_group"
   for_each = try(var.resource_groups, {})
 
@@ -9,7 +9,7 @@ module resource_groups {
   tags                = var.tags
 }
 
-output resource_groups {
+output "resource_groups" {
   value = module.resource_groups
 
 }

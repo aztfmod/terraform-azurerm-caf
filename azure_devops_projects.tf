@@ -6,6 +6,6 @@ module "azure_devops_projects" {
   client_config   = local.client_config
 }
 
-output azure_devops_projects {
+output "azure_devops_projects" {
   value = module.azure_devops_projects
 }

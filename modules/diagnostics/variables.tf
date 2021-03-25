@@ -1,17 +1,17 @@
 
-variable resource_id {
+variable "resource_id" {
   description = "(Required) Fully qualified Azure resource identifier for which you enable diagnostics."
 }
 
-variable resource_location {
+variable "resource_location" {
   description = "(Required) location of the resource"
 }
 
-variable diagnostics {
+variable "diagnostics" {
   description = "(Required) Contains the diagnostics setting object."
 }
 
-variable profiles {
+variable "profiles" {
 
   validation {
     condition     = length(var.profiles) < 6
@@ -19,6 +19,6 @@ variable profiles {
   }
 }
 
-variable global_settings {
+variable "global_settings" {
   default = {}
 }
