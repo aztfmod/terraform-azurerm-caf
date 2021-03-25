@@ -279,11 +279,10 @@ variable local_network_gateways {
   default = {}
 }
 
-variable event_hubs {
+variable application_security_groups {
   default = {}
 }
-
-variable automations {
+variable event_hubs {
   default = {}
 }
 

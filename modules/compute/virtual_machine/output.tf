@@ -2,6 +2,10 @@ output id {
   value = local.os_type == "linux" ? try(azurerm_linux_virtual_machine.vm["linux"].id, null) : try(azurerm_windows_virtual_machine.vm["windows"].id, null)
 }
 
+# output nic_id {
+#   value = azurerm_network_interface.nic.id
+# }
+
 output os_type {
   value = local.os_type
 }
@@ -37,6 +41,12 @@ output ssh_keys {
   } : null
 }
 
+output nic_id {
+  value = flatten([
+    for nic_key in var.settings.virtual_machine_settings[local.os_type].network_interface_keys : format("%s.%s", try(azurerm_network_interface.nic[nic_key].id, try(azurerm_linux_virtual_machine.vm["linux"].name, azurerm_windows_virtual_machine.vm["windows"].name)), azurerm_network_interface.nic[nic_key].id)
+  ])
+}
+
 output "nics" {
   value = {
     for key, value in var.settings.networking_interfaces : key => {
@@ -45,4 +55,5 @@ output "nics" {
     }
   }
 }
+
 
