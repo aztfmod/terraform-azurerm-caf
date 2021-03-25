@@ -1,15 +1,11 @@
+
 variable "global_settings" {
   default = {}
 }
-variable "var_folder_path" {
-  default = {}
-}
+
 variable "tags" {
   default = null
   type    = map(any)
-}
-variable "diagnostic_log_analytics" {
-  default = {}
 }
 variable "app_service_environments" {
   default = {}
@@ -105,8 +101,5 @@ variable "application_gateways" {
   default = {}
 }
 variable "application_gateway_applications" {
-  default = {}
-}
-variable "dynamic_keyvault_secrets" {
   default = {}
 }
