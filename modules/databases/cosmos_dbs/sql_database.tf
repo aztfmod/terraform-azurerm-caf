@@ -1,4 +1,4 @@
-module sql_databases {
+module "sql_databases" {
   source   = "./sql_database"
   for_each = try(var.settings.sql_databases, {})
 
@@ -9,7 +9,7 @@ module sql_databases {
   cosmosdb_account_name = azurerm_cosmosdb_account.cosmos_account.name
 }
 
-output sql_databases {
+output "sql_databases" {
   value = module.sql_databases
 
 }

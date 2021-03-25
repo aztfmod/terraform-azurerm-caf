@@ -51,7 +51,7 @@ dns_zones = {
 domain_name_registrations = {
   #
   # Register for a random domain name
-  # As dnsType as not be set 
+  # As dnsType as not be set
   #
   random_domain = {
     name               = "" // Set as empty for CI. this will creation a random_domain_name.com
@@ -97,4 +97,4 @@ domain_name_registrations = {
       }
     }
   }
-}  
+}

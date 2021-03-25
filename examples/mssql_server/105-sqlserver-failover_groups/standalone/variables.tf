@@ -1,29 +1,29 @@
-variable global_settings {
+variable "global_settings" {
   default = {}
 }
 
-variable resource_groups {
+variable "resource_groups" {
   default = null
 }
 
 
-variable tags {
+variable "tags" {
   default = null
-  type    = map
+  type    = map(any)
 }
 
-variable mssql_databases {
+variable "mssql_databases" {
   default = {}
 }
 
-variable mssql_failover_groups {
+variable "mssql_failover_groups" {
   default = {}
 }
 
-variable mssql_servers {
+variable "mssql_servers" {
   default = {}
 }
 
-variable var_folder_path {
+variable "var_folder_path" {
   default = {}
 }

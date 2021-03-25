@@ -1,28 +1,28 @@
-variable global_settings {
+variable "global_settings" {
   default = {}
 }
 
-variable resource_groups {
+variable "resource_groups" {
   default = null
 }
 
-variable diagnostic_event_hub_namespaces {
+variable "diagnostic_event_hub_namespaces" {
   default = {}
 }
 
-variable diagnostics_definition {
+variable "diagnostics_definition" {
   default = {}
 }
 
-variable diagnostics_destinations {
+variable "diagnostics_destinations" {
   default = {}
 }
 
-variable tags {
+variable "tags" {
   default = null
-  type    = map
+  type    = map(any)
 }
 
-variable var_folder_path {
+variable "var_folder_path" {
   default = {}
 }

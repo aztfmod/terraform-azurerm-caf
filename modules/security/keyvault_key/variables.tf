@@ -1,9 +1,9 @@
-variable settings {}
-variable keyvault {}
-variable base_tags {
+variable "settings" {}
+variable "keyvault" {}
+variable "base_tags" {
   description = "Base tags for the resource to be inherited from the resource group."
-  type        = map
+  type        = map(any)
 }
-variable tags {
+variable "tags" {
   default = null
 }

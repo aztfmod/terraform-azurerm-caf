@@ -1,5 +1,5 @@
 
-module diagnostics {
+module "diagnostics" {
   source = "../../diagnostics"
   count  = lookup(var.settings, "diagnostic_profiles", null) == null ? 0 : 1
 

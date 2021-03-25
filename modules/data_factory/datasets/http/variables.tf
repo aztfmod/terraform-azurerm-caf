@@ -1,51 +1,51 @@
-variable name {
+variable "name" {
   description = "(Required) Specifies the name of the Data Factory Dataset"
 }
 
-variable resource_group_name {
+variable "resource_group_name" {
   description = "(Required) The name of the resource group in which to create the Data Factory Dataset"
 }
 
-variable data_factory_name {
+variable "data_factory_name" {
   description = "(Required) The Data Factory name in which to associate the Dataset with"
 }
 
-variable linked_service_name {
+variable "linked_service_name" {
   description = "(Required) The Data Factory Linked Service name in which to associate the Dataset with"
 }
 
-variable folder {
+variable "folder" {
   description = "(Optional) The folder that this Dataset is in. If not specified, the Dataset will appear at the root level"
 }
 
-variable schema_column {
+variable "schema_column" {
   description = "(Optional) A schema_column block"
 }
 
-variable description {
+variable "description" {
   description = "(Optional) The description for the Data Factory Dataset"
 }
 
-variable annotations {
+variable "annotations" {
   description = "(Optional) List of tags that can be used for describing the Data Factory Dataset"
 }
 
-variable parameters {
+variable "parameters" {
   description = "(Optional) A map of parameters to associate with the Data Factory Dataset"
 }
 
-variable additional_properties {
+variable "additional_properties" {
   description = "(Optional) A map of additional properties to associate with the Data Factory Dataset"
 }
 
-variable relative_url {
+variable "relative_url" {
   description = "(Required) The relative URL based on the URL in the HTTP Linked Service"
 }
 
-variable request_body {
+variable "request_body" {
   description = "(Required) The body for the HTTP request"
 }
 
-variable request_method {
+variable "request_method" {
   description = "(Required) The HTTP method for the HTTP request. (e.g. GET, POST)"
 }

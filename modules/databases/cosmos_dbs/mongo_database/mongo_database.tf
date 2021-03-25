@@ -18,7 +18,7 @@ resource "azurerm_cosmosdb_mongo_database" "database" {
 }
 
 # Iterate through collections using sub-module
-module mongo_collections {
+module "mongo_collections" {
   source   = "./mongo_collection"
   for_each = try(var.settings.collections, {})
 
@@ -29,7 +29,7 @@ module mongo_collections {
   database_name         = azurerm_cosmosdb_mongo_database.database.name
 }
 
-output mongo_collections {
+output "mongo_collections" {
   value = module.mongo_collections
 
 }

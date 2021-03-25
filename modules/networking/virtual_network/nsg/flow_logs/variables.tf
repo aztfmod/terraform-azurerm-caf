@@ -1,24 +1,24 @@
 
-variable resource_id {
+variable "resource_id" {
   description = "(Required) Fully qualified Azure resource identifier for which you enable diagnostics."
 }
 
-variable resource_location {
+variable "resource_location" {
   description = "(Required) location of the resource"
 }
 
-variable diagnostics {
+variable "diagnostics" {
   description = "(Required) Contains the diagnostics setting object."
 }
 
-variable settings {
+variable "settings" {
   default = {}
 }
 
-variable global_settings {
+variable "global_settings" {
   default = {}
 }
 
-variable network_watchers {
+variable "network_watchers" {
   default = {}
 }

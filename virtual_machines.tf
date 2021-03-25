@@ -1,6 +1,6 @@
 
 
-module virtual_machines {
+module "virtual_machines" {
   source = "./modules/compute/virtual_machine"
   depends_on = [
     module.availability_sets,
@@ -32,7 +32,7 @@ module virtual_machines {
 }
 
 
-output virtual_machines {
+output "virtual_machines" {
   value = module.virtual_machines
 
 }

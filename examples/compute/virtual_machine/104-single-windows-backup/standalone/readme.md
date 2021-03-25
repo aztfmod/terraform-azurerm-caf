@@ -19,6 +19,6 @@ rover \
   -lz /tf/caf/landingzones/caf_example \
   -var-folder  /tf/caf/examples/compute/virtual_machine/104-single-windows-backup/ \
   -level level1 \
-  -a [plan | apply | destroy ] 
+  -a [plan | apply | destroy ]
 
 ```

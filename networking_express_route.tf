@@ -4,7 +4,7 @@
 #
 #
 
-module express_route_circuits {
+module "express_route_circuits" {
   source   = "./modules/networking/express_route_circuit"
   for_each = local.networking.express_route_circuits
 
@@ -22,7 +22,7 @@ module express_route_circuits {
 #
 #
 
-module express_route_circuit_authorizations {
+module "express_route_circuit_authorizations" {
   source   = "./modules/networking/express_route_circuit_authorization"
   for_each = local.networking.express_route_circuit_authorizations
 
@@ -33,13 +33,13 @@ module express_route_circuit_authorizations {
 
 
 # Outputs
-output express_route_circuits {
+output "express_route_circuits" {
   value = module.express_route_circuits
 
   description = "Express Route Circuit output"
 }
 
-output express_route_circuit_authorizations {
+output "express_route_circuit_authorizations" {
   value = module.express_route_circuit_authorizations
 
   description = "Express Route Circuit Authorizations Keys output"

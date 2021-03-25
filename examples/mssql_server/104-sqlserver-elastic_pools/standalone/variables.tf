@@ -1,56 +1,56 @@
-variable global_settings {
+variable "global_settings" {
   default = {}
 }
 
-variable resource_groups {
+variable "resource_groups" {
   default = null
 }
 
-variable vnets {
+variable "vnets" {
   default = {}
 }
 
-variable route_tables {
+variable "route_tables" {
   default = {}
 }
 
-variable tags {
+variable "tags" {
   default = null
-  type    = map
+  type    = map(any)
 }
 
-variable mssql_databases {
+variable "mssql_databases" {
   default = {}
 }
 
-variable mssql_elastic_pools {
+variable "mssql_elastic_pools" {
   default = {}
 }
 
-variable mssql_servers {
+variable "mssql_servers" {
   default = {}
 }
 
-variable network_security_group_definition {
+variable "network_security_group_definition" {
   default = {}
 }
 
-variable azuread_roles {
+variable "azuread_roles" {
   default = {}
 }
 
-variable azuread_groups {
+variable "azuread_groups" {
   default = {}
 }
 
-variable keyvaults {
+variable "keyvaults" {
   default = {}
 }
 
-variable storage_accounts {
+variable "storage_accounts" {
   default = {}
 }
 
-variable var_folder_path {
+variable "var_folder_path" {
   default = {}
 }

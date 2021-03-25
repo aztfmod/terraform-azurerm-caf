@@ -21,7 +21,7 @@ resource "azurerm_virtual_wan" "vwan" {
   office365_local_breakout_category = try(var.settings.office365_local_breakout_category, "None")
 }
 
-module hubs {
+module "hubs" {
   source = "./virtual_hub"
 
   for_each = try(var.settings.hubs, {})
@@ -34,13 +34,13 @@ module hubs {
   tags                = merge(try(each.value.tags, null), local.tags)
 }
 
-output virtual_hubs {
+output "virtual_hubs" {
   value = module.hubs
 
   description = "Virtual Hubs object"
 }
 
-output virtual_wan {
+output "virtual_wan" {
   value = azurerm_virtual_wan.vwan
 
   description = "Virtual WAN object"
