@@ -114,7 +114,7 @@ module storage_accounts {
 
   keyvault_id   = var.keyvault_id == null ? try(var.keyvaults[var.client_config.landingzone_key][var.keyvault_key].id, var.keyvaults[each.value.lz_key][var.keyvault_key].id) : var.keyvault_id
   access_policy = each.value
-  tenant_id     = var.resources.storage_accounts[try(each.value.lz_key, var.client_config.landingzone_key)][each.value.storage_account_key].identity.tenant_id
-  object_id     = var.resources.storage_accounts[try(each.value.lz_key, var.client_config.landingzone_key)][each.value.storage_account_key].identity.principal_id
+  tenant_id     = var.resources.storage_accounts[try(each.value.lz_key, var.client_config.landingzone_key)][each.value.storage_account_key].identity.0.tenant_id
+  object_id     = var.resources.storage_accounts[try(each.value.lz_key, var.client_config.landingzone_key)][each.value.storage_account_key].identity.0.principal_id
 }
 
