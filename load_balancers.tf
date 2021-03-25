@@ -12,7 +12,7 @@ module load_balancers {
   settings            = each.value
   base_tags           = try(local.global_settings.inherit_tags, false) ? module.resource_groups[each.value.resource_group_key].tags : {}
   existing_resources = {
-    virtual_machines    = try(module.virtual_machines, {})
+    virtual_machines = try(module.virtual_machines, {})
     #vm scale set will be added later
   }
 }

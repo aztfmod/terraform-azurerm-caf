@@ -17,6 +17,7 @@ module virtual_machines {
   boot_diagnostics_storage_account = try(local.combined_diagnostics.storage_accounts[each.value.boot_diagnostics_storage_account_key].primary_blob_endpoint, {})
   client_config                    = local.client_config
   diagnostics                      = local.combined_diagnostics
+  disk_encryption_sets             = local.combined_objects_disk_encryption_sets
   global_settings                  = local.global_settings
   keyvaults                        = local.combined_objects_keyvaults
   location                         = lookup(each.value, "region", null) == null ? module.resource_groups[each.value.resource_group_key].location : local.global_settings.regions[each.value.region]

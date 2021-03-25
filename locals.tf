@@ -64,6 +64,7 @@ locals {
     keyvault_certificate_requests = try(var.security.keyvault_certificate_requests, {})
     keyvault_certificates         = try(var.security.keyvault_certificates, {})
     keyvault_keys                 = try(var.security.keyvault_keys, {})
+    disk_encryption_sets          = try(var.security.disk_encryption_sets, {})
   }
 
   networking = {

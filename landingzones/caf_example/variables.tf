@@ -354,3 +354,6 @@ variable "application_security_groups" {
   default = {}
 }
 
+variable "disk_encryption_sets" {
+  default = {}
+}
