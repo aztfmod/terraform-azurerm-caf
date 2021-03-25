@@ -69,6 +69,7 @@ locals {
   networking = {
     application_gateway_applications                        = try(var.networking.application_gateway_applications, {})
     application_gateways                                    = try(var.networking.application_gateways, {})
+    application_security_groups                             = try(var.networking.application_security_groups, {})
     azurerm_firewall_application_rule_collection_definition = try(var.networking.azurerm_firewall_application_rule_collection_definition, {})
     azurerm_firewall_nat_rule_collection_definition         = try(var.networking.azurerm_firewall_nat_rule_collection_definition, {})
     azurerm_firewall_network_rule_collection_definition     = try(var.networking.azurerm_firewall_network_rule_collection_definition, {})
@@ -83,6 +84,7 @@ locals {
     front_door_waf_policies                                 = try(var.networking.front_door_waf_policies, {})
     front_doors                                             = try(var.networking.front_doors, {})
     local_network_gateways                                  = try(var.networking.local_network_gateways, {})
+    networking_interface_asg_associations                   = try(var.networking.networking_interface_asg_associations, {})
     network_security_group_definition                       = try(var.networking.network_security_group_definition, {})
     network_watchers                                        = try(var.networking.network_watchers, {})
     private_dns                                             = try(var.networking.private_dns, {})
