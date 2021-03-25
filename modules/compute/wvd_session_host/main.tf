@@ -15,131 +15,152 @@ locals {
   arm_filename = "${path.module}/arm_sessionhosts.json"
 
   # this is the format required by ARM templates
+  
   parameters_body = {
     hostpoolName = {
-      value = var.location
+      value = var.settings.hostpoolName
     }
     hostpoolToken = {
-      value = var.location
+      value = var.settings.hostpoolToken
     }
     hostpoolResourceGroup = {
-      value = var.location
+      value = var.settings.hostpoolResourceGroup
     }
     hostpoolLocation = {
-      value = var.location
+      value = var.settings.hostpoolLocation
     }
     hostpoolProperties = {
-      value = var.location
+      value = var.settings.hostpoolProperties
     }
     vmTemplate = {
-      value = var.location
+      value = var.settings.vmTemplate
     }
     administratorAccountUsername = {
-      value = var.location
+      value = var.settings.administratorAccountUsername
     }
     administratorAccountPassword = {
-      value = var.location
+      value = var.settings.administratorAccountPassword
     }
     vmAdministratorAccountUsername = {
-      value = var.location
+      value = var.settings.vmAdministratorAccountUsername
     }
     vmAdministratorAccountPassword = {
-      value = var.location
+      value = var.settings.vmAdministratorAccountPassword
+    }
+    availabilityOption = {
+      value = var.settings.availabilityOption
+    }
+    availabilitySetName = {
+      value = var.settings.availabilitySetName
     }
     createAvailabilitySet = {
-      value = var.location
+      value = var.settings.createAvailabilitySet
+    }
+    availabilitySetUpdateDomainCount = {
+      value = var.settings.availabilitySetUpdateDomainCount
+    }
+    availabilitySetFaultDomainCount = {
+      value = var.settings.availabilitySetFaultDomainCount
+    }
+    availabilityZone = {
+      value = var.settings.availabilityZone
     }
     vmResourceGroup = {
-      value = var.location
+      value = var.settings.vmResourceGroup
     }
     vmLocation = {
-      value = var.location
+      value = var.settings.vmLocation
     }
     vmSize = {
-      value = var.location
+      value = var.settings.vmSize
     }
     vmInitialNumber = {
-      value = var.location
+      value = var.settings.vmInitialNumber
     }
     vmNumberOfInstances = {
-      value = var.location
+      value = var.settings.vmNumberOfInstances
     }
     vmNamePrefix = {
-      value = var.location
+      value = var.settings.vmNamePrefix
     }
     vmImageType = {
-      value = var.location
+      value = var.settings.vmImageType
     }
     vmGalleryImageOffer = {
-      value = var.location
+      value = var.settings.vmGalleryImageOffer
     }
     vmGalleryImagePublisher = {
-      value = var.location
+      value = var.settings.vmGalleryImagePublisher
     }
     vmGalleryImageSKU = {
-      value = var.location
+      value = var.settings.vmGalleryImageSKU
     }
     vmImageVhdUri = {
-      value = var.location
+      value = var.settings.vmImageVhdUri
     }
     vmCustomImageSourceId = {
-      value = var.location
+      value = var.settings.vmCustomImageSourceId
     }
     vmDiskType = {
-      value = var.location
+      value = var.settings.vmDiskType
     }
     vmUseManagedDisks = {
-      value = var.location
+      value = var.settings.vmUseManagedDisks
     }
     storageAccountResourceGroupName = {
-      value = var.location
+      value = var.settings.storageAccountResourceGroupName
     }
     existingVnetName = {
-      value = var.location
+      value = var.settings.existingVnetName
     }
     existingSubnetName = {
-      value = var.location
+      value = var.settings.existingSubnetName
     }
     virtualNetworkResourceGroupName = {
-      value = var.location
+      value = var.settings.virtualNetworkResourceGroupName
     }
     createNetworkSecurityGroup = {
-      value = var.location
+      value = var.settings.createNetworkSecurityGroup
     }
     networkSecurityGroupId = {
-      value = var.location
+      value = var.settings.networkSecurityGroupId
     }
     networkSecurityGroupRules = {
-      value = var.location
+      value = var.settings.networkSecurityGroupRules
     }
     availabilitySetTags = {
-      value = var.location
+      value = var.settings.availabilitySetTags
     }
     networkInterfaceTags = {
-      value = var.location
+      value = var.settings.networkInterfaceTags
     }
     networkSecurityGroupTags = {
-      value = var.location
+      value = var.settings.networkSecurityGroupTags
     }
     virtualMachineTags = {
-      value = var.location
+      value = var.settings.virtualMachineTags
     }
     imageTags = {
-      value = var.location
+      value = var.settings.imageTags
     }
     deploymentId = {
-      value = var.location
+      value = var.settings.deploymentId
     }
     apiVersion = {
-      value = var.location
+      value = var.settings.apiVersion
     }
     ouPath = {
-      value = var.location
+      value = var.settings.ouPath
     }
     domain = {
-      value = var.location
+      value = var.settings.domain
     }
-
+    aadJoin = {
+      value = var.settings.aadJoin
+    }
+    intune = {
+      value = var.settings.intune
+    }
     # serverName = {
     #   value = var.server_name
     # }
@@ -169,6 +190,6 @@ locals {
     # }
     # tags = {
     #   value = local.tags
-    }
+    
   }
 }

@@ -23,6 +23,7 @@ locals {
     proximity_placement_groups = try(var.compute.proximity_placement_groups, {})
     wvd_application_groups     = try(var.compute.wvd_application_groups, {})
     wvd_host_pools             = try(var.compute.wvd_host_pools, {})
+    wvd_session_hosts          = try(var.compute.wvd_session_hosts, {})
     wvd_workspaces             = try(var.compute.wvd_workspaces, {})
     virtual_machines           = try(var.compute.virtual_machines, {})
   }
