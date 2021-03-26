@@ -52,6 +52,7 @@ locals {
     container_groups           = try(var.compute.container_groups, {})
     proximity_placement_groups = try(var.compute.proximity_placement_groups, {})
     virtual_machines           = try(var.compute.virtual_machines, {})
+    virtual_machine_scale_sets = try(var.compute.virtual_machine_scale_sets, {})
   }
 
   storage = {
