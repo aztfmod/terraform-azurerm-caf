@@ -77,10 +77,7 @@ resource "azurerm_linux_virtual_machine_scale_set" "vmss" {
     }
   }
 
-  # extension {}
-
-  #TODO: network_interface block to handle multiple entry
-  dynamic network_interface {
+  dynamic "network_interface" {
     for_each = each.value.networking_interfaces
     
     content {
@@ -94,16 +91,6 @@ resource "azurerm_linux_virtual_machine_scale_set" "vmss" {
       }
     }
   }
-
-  # network_interface {
-  #   name = "test_nic" # for_each network_interfaces
-  #   primary = true
-  #   ip_configuration {
-  #     name = "internal" 
-  #     primary = true
-  #     subnet_id = try(var.vnets[var.client_config.landingzone_key][each.value.vnet_key].subnets[each.value.subnet_key].id, var.vnets[each.value.lz_key][each.value.vnet_key].subnets[each.value.subnet_key].id)
-  #   }
-  # }
 
   os_disk {
     caching                   = try(each.value.os_disk.caching, null)
@@ -139,6 +126,22 @@ resource "azurerm_linux_virtual_machine_scale_set" "vmss" {
 
     content {
       storage_account_uri = var.boot_diagnostics_storage_account
+    }
+  }
+
+  dynamic "extension" {
+    for_each  = try(each.value.extensions, {})
+
+    content {
+      name = try(extension.value.name, null)
+      publisher = try(extension.value.publisher, null)
+      type = try(extension.value.type, null)
+      type_handler_version = try(extension.value.type_handler_version, null)
+      auto_upgrade_minor_version = try(extension.value.auto_upgrade_minor_version, null)
+      force_update_tag = try(extension.value.force_update_tag, null)
+      protected_settings = try(extension.value.protected_settings, null)
+      provision_after_extensions = try(extension.value.provision_after_extensions, null)
+      settings = try(extension.value.settings, null)
     }
   }
 
