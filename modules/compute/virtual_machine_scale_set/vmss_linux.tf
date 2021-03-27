@@ -48,14 +48,14 @@ resource "azurecaf_name" "os_disk_linux" {
 resource "azurerm_linux_virtual_machine_scale_set" "vmss" {
   for_each = local.os_type == "linux" ? var.settings.vmss_settings : {}
 
-  name                  = azurecaf_name.linux[each.key].result
-  location              = var.location
-  resource_group_name   = var.resource_group_name
-  sku                   = each.value.sku
-  instances             = each.value.instances
-  admin_username        = each.value.admin_username
+  name                = azurecaf_name.linux[each.key].result
+  location            = var.location
+  resource_group_name = var.resource_group_name
+  sku                 = each.value.sku
+  instances           = each.value.instances
+  admin_username      = each.value.admin_username
   # network_interface_ids = local.nic_ids
-  tags                  = merge(local.tags, try(each.value.tags, null))
+  tags = merge(local.tags, try(each.value.tags, null))
 
 
   computer_name_prefix            = azurecaf_name.linux_computer_name_prefix[each.key].result
@@ -63,7 +63,7 @@ resource "azurerm_linux_virtual_machine_scale_set" "vmss" {
   max_bid_price                   = try(each.value.max_bid_price, null)
   priority                        = try(each.value.priority, null)
   provision_vm_agent              = try(each.value.provision_vm_agent, true)
-  zones                            = try(each.value.zones, null)
+  zones                           = try(each.value.zones, null)
   disable_password_authentication = try(each.value.disable_password_authentication, true)
   custom_data                     = try(each.value.custom_data, null) == null ? null : filebase64(format("%s/%s", path.cwd, each.value.custom_data))
   proximity_placement_group_id    = try(var.proximity_placement_groups[var.client_config.landingzone_key][each.value.proximity_placement_group_key].id, var.proximity_placement_groups[each.value.proximity_placement_groups].id, null)
@@ -79,15 +79,15 @@ resource "azurerm_linux_virtual_machine_scale_set" "vmss" {
 
   dynamic "network_interface" {
     for_each = each.value.networking_interfaces
-    
+
     content {
-      name = "${azurecaf_name.linux_computer_name_prefix[each.key].result}-nic-${network_interface.value.name}"
+      name    = "${azurecaf_name.linux_computer_name_prefix[each.key].result}-nic-${network_interface.value.name}"
       primary = try(network_interface.value.primary, false)
 
       ip_configuration {
-        name = "${azurecaf_name.linux_computer_name_prefix[each.key].result}-nic-${network_interface.value.name}-ipconfig"
-        primary = try(network_interface.value.primary, false)
-        subnet_id = try(var.vnets[var.client_config.landingzone_key][network_interface.value.vnet_key].subnets[network_interface.value.subnet_key].id, var.vnets[network_interface.value.lz_key][network_interface.value.vnet_key].subnets[network_interface.value.subnet_key].id)  
+        name      = "${azurecaf_name.linux_computer_name_prefix[each.key].result}-nic-${network_interface.value.name}-ipconfig"
+        primary   = try(network_interface.value.primary, false)
+        subnet_id = try(var.vnets[var.client_config.landingzone_key][network_interface.value.vnet_key].subnets[network_interface.value.subnet_key].id, var.vnets[network_interface.value.lz_key][network_interface.value.vnet_key].subnets[network_interface.value.subnet_key].id)
       }
     }
   }
@@ -100,17 +100,17 @@ resource "azurerm_linux_virtual_machine_scale_set" "vmss" {
   }
 
   dynamic "source_image_reference" {
-    for_each = try(each.value.source_image_reference, null) != null ? [1]: []
+    for_each = try(each.value.source_image_reference, null) != null ? [1] : []
 
     content {
       publisher = try(each.value.source_image_reference.publisher, null)
       offer     = try(each.value.source_image_reference.offer, null)
       sku       = try(each.value.source_image_reference.sku, null)
-      version   = try(each.value.source_image_reference.version, null)      
+      version   = try(each.value.source_image_reference.version, null)
     }
   }
-  
-  source_image_id = try(each.value.custom_image_id, var.custom_image_ids[each.value.lz_key][each.value.custom_image_key].id ,null)
+
+  source_image_id = try(each.value.custom_image_id, var.custom_image_ids[each.value.lz_key][each.value.custom_image_key].id, null)
 
   dynamic "identity" {
     for_each = try(each.value.identity, false) == false ? [] : [1]
@@ -130,18 +130,18 @@ resource "azurerm_linux_virtual_machine_scale_set" "vmss" {
   }
 
   dynamic "extension" {
-    for_each  = try(each.value.extensions, {})
+    for_each = try(each.value.extensions, {})
 
     content {
-      name = try(extension.value.name, null)
-      publisher = try(extension.value.publisher, null)
-      type = try(extension.value.type, null)
-      type_handler_version = try(extension.value.type_handler_version, null)
+      name                       = try(extension.value.name, null)
+      publisher                  = try(extension.value.publisher, null)
+      type                       = try(extension.value.type, null)
+      type_handler_version       = try(extension.value.type_handler_version, null)
       auto_upgrade_minor_version = try(extension.value.auto_upgrade_minor_version, null)
-      force_update_tag = try(extension.value.force_update_tag, null)
-      protected_settings = try(extension.value.protected_settings, null)
+      force_update_tag           = try(extension.value.force_update_tag, null)
+      protected_settings         = try(extension.value.protected_settings, null)
       provision_after_extensions = try(extension.value.provision_after_extensions, null)
-      settings = try(extension.value.settings, null)
+      settings                   = try(extension.value.settings, null)
     }
   }
 

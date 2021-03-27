@@ -2,7 +2,7 @@
 #   value = local.os_type == "linux" ? try(azurerm_linux_virtual_machine_scale_set.vm["linux"].id, null) : try(azurerm_linux_virtual_machine_scale_set.vm["windows"].id, null)
 # }
 
-output os_type {
+output "os_type" {
   value = local.os_type
 }
 
@@ -29,7 +29,7 @@ output os_type {
 #   } : null
 # }
 
-output ssh_keys {
+output "ssh_keys" {
   value = local.create_sshkeys ? {
     keyvault_id              = local.keyvault.id
     ssh_private_key_pem      = azurerm_key_vault_secret.ssh_private_key[local.os_type].name
