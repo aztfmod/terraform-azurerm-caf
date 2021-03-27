@@ -88,7 +88,7 @@ resource "azurerm_linux_virtual_machine_scale_set" "vmss" {
       primary = try(network_interface.value.primary, false)
 
       ip_configuration {
-        name = "${azurecaf_name.linux_computer_name_prefix[each.key].result}-ipconfig"
+        name = "${azurecaf_name.linux_computer_name_prefix[each.key].result}-nic-${network_interface.value.name}-ipconfig"
         primary = try(network_interface.value.primary, false)
         subnet_id = try(var.vnets[var.client_config.landingzone_key][network_interface.value.vnet_key].subnets[network_interface.value.subnet_key].id, var.vnets[network_interface.value.lz_key][network_interface.value.vnet_key].subnets[network_interface.value.subnet_key].id)  
       }
