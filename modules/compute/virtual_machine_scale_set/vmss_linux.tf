@@ -80,15 +80,30 @@ resource "azurerm_linux_virtual_machine_scale_set" "vmss" {
   # extension {}
 
   #TODO: network_interface block to handle multiple entry
-  network_interface {
-    name = "test_nic"
-    primary = true
-    ip_configuration {
-      name = "internal"
-      primary = true
-      subnet_id = try(var.vnets[var.client_config.landingzone_key][each.value.vnet_key].subnets[each.value.subnet_key].id, var.vnets[each.value.lz_key][each.value.vnet_key].subnets[each.value.subnet_key].id)
+  dynamic network_interface {
+    for_each = each.value.networking_interfaces
+    
+    content {
+      name = "${azurecaf_name.linux_computer_name_prefix[each.key].result}-nic-${network_interface.value.name}"
+      primary = try(network_interface.value.primary, false)
+
+      ip_configuration {
+        name = "${azurecaf_name.linux_computer_name_prefix[each.key].result}-ipconfig"
+        primary = try(network_interface.value.primary, false)
+        subnet_id = try(var.vnets[var.client_config.landingzone_key][network_interface.value.vnet_key].subnets[network_interface.value.subnet_key].id, var.vnets[network_interface.value.lz_key][network_interface.value.vnet_key].subnets[network_interface.value.subnet_key].id)  
+      }
     }
   }
+
+  # network_interface {
+  #   name = "test_nic" # for_each network_interfaces
+  #   primary = true
+  #   ip_configuration {
+  #     name = "internal" 
+  #     primary = true
+  #     subnet_id = try(var.vnets[var.client_config.landingzone_key][each.value.vnet_key].subnets[each.value.subnet_key].id, var.vnets[each.value.lz_key][each.value.vnet_key].subnets[each.value.subnet_key].id)
+  #   }
+  # }
 
   os_disk {
     caching                   = try(each.value.os_disk.caching, null)
