@@ -72,7 +72,7 @@ resource "azurerm_key_vault_secret" "synapse_rg_name" {
 
 # for backwards compatibility to create single firewall rule
 resource "azurerm_synapse_firewall_rule" "wrkspc_firewall" {
-  count = try(var.settings.workspace_firewall, null) == null ? 1 : 
+  count = try(var.settings.workspace_firewall, null) == null ? 0 : 1
 
   name                 = var.settings.workspace_firewall.name
   synapse_workspace_id = azurerm_synapse_workspace.ws.id
