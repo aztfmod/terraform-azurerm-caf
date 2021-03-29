@@ -1,4 +1,4 @@
-module synapse_workspaces {
+module "synapse_workspaces" {
   source     = "./modules/analytics/synapse"
   depends_on = [module.keyvault_access_policies, module.keyvault_access_policies_azuread_apps]
   for_each   = local.database.synapse_workspaces
@@ -12,7 +12,7 @@ module synapse_workspaces {
   base_tags                            = try(local.global_settings.inherit_tags, false) ? module.resource_groups[each.value.resource_group_key].tags : {}
 }
 
-output synapse_workspaces {
+output "synapse_workspaces" {
   value = module.synapse_workspaces
 
 }

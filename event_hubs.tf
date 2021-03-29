@@ -12,7 +12,7 @@ module "event_hub_namespaces" {
   base_tags           = try(local.global_settings.inherit_tags, false) ? local.combined_objects_resource_groups[try(each.value.resource_group.lz_key, local.client_config.landingzone_key)][each.value.resource_group.key].tags : {}
 }
 
-module event_hub_namespace_auth_rules {
+module "event_hub_namespace_auth_rules" {
   source   = "./modules/event_hubs/namespaces/auth_rules"
   for_each = try(var.event_hub_namespace_auth_rules, {})
 
@@ -27,7 +27,7 @@ module event_hub_namespace_auth_rules {
   ]
 }
 
-module event_hub_namespaces_diagnostics {
+module "event_hub_namespaces_diagnostics" {
   source   = "./modules/diagnostics"
   for_each = var.event_hub_namespaces
 
@@ -42,7 +42,7 @@ module event_hub_namespaces_diagnostics {
 # private endpoint to be done at the root module to prevent circular references
 #
 
-module event_hub_namespaces_private_endpoints {
+module "event_hub_namespaces_private_endpoints" {
   depends_on = [module.event_hub_namespaces]
   source     = "./modules/networking/private_endpoint"
   for_each   = local.event_hub_namespaces_private_endpoints
@@ -82,7 +82,7 @@ locals {
 }
 
 
-module event_hubs {
+module "event_hubs" {
   source     = "./modules/event_hubs/hubs"
   depends_on = [module.event_hub_namespaces]
   for_each   = try(var.event_hubs, {})
@@ -96,7 +96,7 @@ module event_hubs {
   base_tags           = try(local.global_settings.inherit_tags, false) ? module.resource_groups[each.value.resource_group_key].tags : {}
 }
 
-module event_hub_auth_rules {
+module "event_hub_auth_rules" {
   source   = "./modules/event_hubs/hubs/auth_rules"
   for_each = try(var.event_hub_auth_rules, {})
 
@@ -113,7 +113,7 @@ module event_hub_auth_rules {
   ]
 }
 
-module event_hub_consumer_groups {
+module "event_hub_consumer_groups" {
   source   = "./modules/event_hubs/consumer_groups"
   for_each = try(var.event_hub_consumer_groups, {})
 

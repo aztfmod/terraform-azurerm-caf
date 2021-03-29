@@ -1,4 +1,4 @@
-module virtual_network_gateways {
+module "virtual_network_gateways" {
   source   = "./modules/networking/virtual_network_gateways"
   for_each = try(local.networking.virtual_network_gateways, {})
 
@@ -16,7 +16,7 @@ module virtual_network_gateways {
   ]
 }
 
-module virtual_network_gateway_connections {
+module "virtual_network_gateway_connections" {
   source   = "./modules/networking/virtual_network_gateway_connections"
   for_each = try(local.networking.virtual_network_gateway_connections, {})
 
@@ -33,7 +33,7 @@ module virtual_network_gateway_connections {
   base_tags                  = try(local.global_settings.inherit_tags, false) ? module.resource_groups[each.value.resource_group_key].tags : {}
 }
 
-module local_network_gateways {
+module "local_network_gateways" {
   source              = "./modules/networking/local_network_gateways"
   for_each            = try(local.networking.local_network_gateways, {})
   resource_group_name = module.resource_groups[each.value.resource_group_key].name

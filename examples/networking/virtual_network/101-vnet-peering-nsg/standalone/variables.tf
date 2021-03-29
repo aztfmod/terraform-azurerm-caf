@@ -1,41 +1,41 @@
-variable global_settings {
+variable "global_settings" {
   default = {}
 }
 
-variable resource_groups {
+variable "resource_groups" {
   default = null
 }
 
-variable vnets {
+variable "vnets" {
   default = {}
 }
 
-variable tags {
+variable "tags" {
   default = null
-  type    = map
+  type    = map(any)
 }
 
-variable public_ip_addresses {
+variable "public_ip_addresses" {
   default = {}
 }
 
-variable azurerm_routes {
+variable "azurerm_routes" {
   default = {}
 }
 
-variable route_tables {
+variable "route_tables" {
   default = {}
 }
 
-variable network_security_group_definition {
+variable "network_security_group_definition" {
   default = {}
 }
 
-variable vnet_peerings {
+variable "vnet_peerings" {
   default = {}
 }
 
-variable var_folder_path {
+variable "var_folder_path" {
   default = {}
 }
 

@@ -29,7 +29,7 @@ output "resource_group_name" {
   value       = var.resource_group_name
 }
 
-output soft_delete_enabled {
+output "soft_delete_enabled" {
   description = "Boolean indicating if soft deleted is enabled on the vault."
   value       = try(var.settings.soft_delete_enabled, true)
 }

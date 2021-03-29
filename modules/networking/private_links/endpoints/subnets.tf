@@ -1,4 +1,4 @@
-module subnet {
+module "subnet" {
   source   = "./subnet"
   for_each = toset(try(var.settings.subnet_keys, []))
 

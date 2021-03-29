@@ -2,7 +2,7 @@
 module "storage_accounts" {
   source   = "./modules/storage_account"
   for_each = var.storage_accounts
-  
+
   global_settings     = local.global_settings
   client_config       = local.client_config
   storage_account     = each.value
@@ -16,13 +16,13 @@ module "storage_accounts" {
   private_dns         = local.combined_objects_private_dns
 }
 
-output storage_accounts {
+output "storage_accounts" {
   value = module.storage_accounts
 
 }
 
 resource "azurerm_storage_account_customer_managed_key" "cmk" {
-  depends_on = [ module.keyvault_access_policies]
+  depends_on = [module.keyvault_access_policies]
   for_each = {
     for key, value in var.storage_accounts : key => value
     if try(value.customer_managed_key, null) != null

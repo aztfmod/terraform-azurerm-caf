@@ -42,8 +42,10 @@ jobs:
             "compute/kubernetes_services/101-single-cluster",
             "compute/kubernetes_services/102-multi-nodepools",
             "compute/proximity_placement_group",
-            "compute/virtual_machine/105-single-windows-vm-kv-admin-secrets",
+            "compute/virtual_machine/100-single-linux-vm",
             "compute/virtual_machine/211-vm-bastion-winrm-agents",
+            "compute/virtual_machine/105-single-windows-vm-kv-admin-secrets",
+            "compute/virtual_machine/210-vm-bastion-winrm",
             "cosmos_db/100-simple-cosmos-db-cassandra",
             "cosmos_db/100-simple-cosmos-db-gremlin",
             "cosmos_db/100-simple-cosmos-db-sql",
@@ -101,7 +103,7 @@ jobs:
           ]
 
     container:
-      image: aztfmod/rover:0.15.0-alpha20210210-2103.0304
+      image: aztfmod/rover:0.15.0-beta1-2103.1601
       options: --user 0
 
     steps:
@@ -116,7 +118,7 @@ jobs:
         run: |
           cd ${GITHUB_WORKSPACE}/examples/${{ matrix.config_files }}
 
-          ./standalone/ci.sh ${{ github.run_id }}
+          ${GITHUB_WORKSPACE}/landingzones/caf_example/ci.sh ${{ github.run_id }} ${GITHUB_WORKSPACE}/landingzones/caf_example
 
       - name: Complete purge
         if: ${{ always() }}

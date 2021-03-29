@@ -1,32 +1,32 @@
-variable global_settings {
+variable "global_settings" {
   default = {}
 }
 
-variable resource_groups {
+variable "resource_groups" {
   default = null
 }
 
-variable synapse_workspaces {
+variable "synapse_workspaces" {
   default = {}
 }
 
-variable tags {
+variable "tags" {
   default = null
-  type    = map
+  type    = map(any)
 }
 
-variable storage_accounts {
+variable "storage_accounts" {
   default = {}
 }
 
-variable keyvaults {
+variable "keyvaults" {
   default = {}
 }
 
-variable role_mapping {
+variable "role_mapping" {
   default = {}
 }
 
-variable var_folder_path {
+variable "var_folder_path" {
   default = {}
 }

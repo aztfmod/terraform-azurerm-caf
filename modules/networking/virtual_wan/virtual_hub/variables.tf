@@ -35,6 +35,6 @@ variable "vwan_id" {
 }
 
 variable "tags" {
-  type    = map
+  type    = map(any)
   default = {}
 }

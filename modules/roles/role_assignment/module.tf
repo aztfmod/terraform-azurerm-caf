@@ -1,6 +1,6 @@
 
 
-module assignment {
+module "assignment" {
   source   = "./assignment"
   for_each = var.role_mappings
 
