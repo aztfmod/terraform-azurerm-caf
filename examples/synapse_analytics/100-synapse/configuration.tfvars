@@ -30,10 +30,18 @@ synapse_workspaces = {
       storage_account_key = "synapsestorage_re1"
       container_key       = "synaspe_filesystem"
     }
-    workspace_firewall = {
-      name     = "AllowAll"
-      start_ip = "0.0.0.0"
-      end_ip   = "255.255.255.255"
+    workspace_firewalls = {
+      AllowAll = {
+        name     = "AllowAll"
+        start_ip = "0.0.0.0"
+        end_ip   = "255.255.255.255"
+      }
+      # example of defining multiple firewall rules; although in this example, makes no sense b/c AllowAll opens to all possible IPs
+      AllowSome = {
+        # if name attribute is not defined here, key will be used as name ("AllowSome")
+        start_ip = "0.0.0.0"
+        end_ip   = "10.255.255.255"
+      }
     }
   }
 }

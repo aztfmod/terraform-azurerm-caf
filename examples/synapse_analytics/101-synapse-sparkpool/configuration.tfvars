@@ -35,6 +35,7 @@ synapse_workspaces = {
       storage_account_key = "synapsestorage_re1"
       container_key       = "synaspe_filesystem"
     }
+    # only defining a single firewall rule in this example
     workspace_firewall = {
       name     = "AllowAll"
       start_ip = "0.0.0.0"
