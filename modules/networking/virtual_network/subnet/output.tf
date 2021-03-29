@@ -1,15 +1,15 @@
 
-output id {
+output "id" {
   value = azurerm_subnet.subnet.id
 
 }
 
-output name {
+output "name" {
   value = azurerm_subnet.subnet.name
 
 }
 
-output cidr {
+output "cidr" {
   value = var.address_prefixes
 
 }

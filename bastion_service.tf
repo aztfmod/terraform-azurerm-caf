@@ -8,7 +8,7 @@ resource "azurecaf_name" "host" {
 
   name          = try(each.value.name, "")
   resource_type = "azurerm_bastion_host"
-  prefixes      = local.global_settings.prefix
+  prefixes      = local.global_settings.prefixes
   random_length = local.global_settings.random_length
   clean_input   = true
   passthrough   = local.global_settings.passthrough
@@ -33,7 +33,7 @@ resource "azurerm_bastion_host" "host" {
   }
 }
 
-module bastion_host_diagnostics {
+module "bastion_host_diagnostics" {
   source   = "./modules/diagnostics"
   for_each = try(local.compute.bastion_hosts, {})
 

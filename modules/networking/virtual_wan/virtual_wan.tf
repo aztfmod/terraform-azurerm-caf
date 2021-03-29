@@ -1,7 +1,7 @@
 resource "azurecaf_name" "vwan" {
   name          = var.settings.name
   resource_type = "azurerm_virtual_wan"
-  prefixes      = var.global_settings.prefix
+  prefixes      = var.global_settings.prefixes
   random_length = var.global_settings.random_length
   clean_input   = true
   passthrough   = var.global_settings.passthrough
@@ -21,7 +21,7 @@ resource "azurerm_virtual_wan" "vwan" {
   office365_local_breakout_category = try(var.settings.office365_local_breakout_category, "None")
 }
 
-module hubs {
+module "hubs" {
   source = "./virtual_hub"
 
   for_each = try(var.settings.hubs, {})
@@ -34,13 +34,13 @@ module hubs {
   tags                = merge(try(each.value.tags, null), local.tags)
 }
 
-output virtual_hubs {
+output "virtual_hubs" {
   value = module.hubs
 
   description = "Virtual Hubs object"
 }
 
-output virtual_wan {
+output "virtual_wan" {
   value = azurerm_virtual_wan.vwan
 
   description = "Virtual WAN object"

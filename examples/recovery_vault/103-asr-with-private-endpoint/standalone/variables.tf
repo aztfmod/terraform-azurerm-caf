@@ -1,33 +1,33 @@
-variable global_settings {
+variable "global_settings" {
   default = {}
 }
 
-variable resource_groups {
+variable "resource_groups" {
   default = null
 }
 
 
-variable recovery_vaults {
+variable "recovery_vaults" {
   default = {}
 }
 
-variable private_dns {
+variable "private_dns" {
   default = {}
 }
 
-variable tags {
+variable "tags" {
   default = null
-  type    = map
+  type    = map(any)
 }
 
-variable private_endpoints {
+variable "private_endpoints" {
   default = {}
 }
 
-variable vnets {
+variable "vnets" {
   default = {}
 }
 
-variable var_folder_path {
+variable "var_folder_path" {
   default = {}
 }

@@ -1,0 +1,48 @@
+{
+  "$schema": "https://schema.management.azure.com/schemas/2019-04-01/deploymentTemplate.json#",
+  "contentVersion": "1.0.0.0",
+  "parameters": {
+    "configName": {
+      "type": "string",
+      "metadata": {
+        "description": "App Config Resource Name."
+      }
+    },
+    "keyValueNames": {
+      "type": "array",
+      "metadata": {
+        "description": "Specifies the names of the key-value resources. The name is a combination of key and label with $ as delimiter."
+      }
+    },
+    "keyValueValues": {
+      "type": "array",
+      "metadata": {
+        "description": "Specifies the values of the key-value resources."
+      }
+    },
+    "tags": {
+      "type": "object",
+      "defaultValue": {},
+      "metadata": {
+        "description": "Adds tags for the key-value resources. It's optional"
+      }
+    }
+  },
+  "resources": [
+    {
+      "type": "Microsoft.AppConfiguration/configurationStores/keyValues",
+      "apiVersion": "2020-07-01-preview",
+      "name": "[concat(parameters('configName'), '/', parameters('keyValueNames')[copyIndex()])]",
+      "copy": {
+        "name": "keyValueCopy",
+        "count": "[length(parameters('keyValueNames'))]"
+      },
+      "dependsOn": [],
+      "properties": {
+        "value": "[parameters('keyValueValues')[copyIndex()]]",
+        "tags": "[parameters('tags')]"
+      }
+    }
+  ],
+  "outputs": {}
+}

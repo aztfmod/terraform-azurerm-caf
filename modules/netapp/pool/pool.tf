@@ -9,7 +9,7 @@ resource "azurerm_netapp_pool" "pool" {
   tags                = merge(var.base_tags, try(var.settings.tags, {}))
 }
 
-module volumes {
+module "volumes" {
   source   = "../volume"
   for_each = try(var.settings.volumes, {})
   settings = each.value

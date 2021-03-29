@@ -1,5 +1,5 @@
 
-output postgresql_servers {
+output "postgresql_servers" {
   value = module.postgresql_servers
 
 }

@@ -6,6 +6,17 @@ locals {
       ]
     ]
   )
+  # network_subnets = flatten([
+  #   for network_key, network in var.networks : [
+  #     for subnet_key, subnet in network.subnets : {
+  #       network_key = network_key
+  #       subnet_key  = subnet_key
+  #       network_id  = aws_vpc.example[network_key].id
+  #       cidr_block  = subnet.cidr_block
+  #     }
+  #   ]
+  # ])
+  # element(flatten(...),count.index)
 }
 
 resource "azurecaf_name" "nic" {
@@ -13,7 +24,7 @@ resource "azurecaf_name" "nic" {
 
   name          = each.value.name
   resource_type = "azurerm_network_interface"
-  prefixes      = var.global_settings.prefix
+  prefixes      = var.global_settings.prefixes
   random_length = var.global_settings.random_length
   clean_input   = true
   passthrough   = var.global_settings.passthrough
@@ -42,6 +53,20 @@ resource "azurerm_network_interface" "nic" {
     primary                       = lookup(each.value, "primary", null)
     public_ip_address_id          = lookup(each.value, "public_ip_address_key", null) == null ? null : try(var.public_ip_addresses[var.client_config.landingzone_key][each.value.public_ip_address_key].id, var.public_ip_addresses[each.value.lz_key][each.value.public_ip_address_key].id)
   }
+
+  dynamic "ip_configuration" {
+    for_each = try(each.value.ip_configurations, {})
+
+    content {
+      name                          = ip_configuration.value.name
+      subnet_id                     = try(var.vnets[var.client_config.landingzone_key][each.value.vnet_key].subnets[each.value.subnet_key].id, var.vnets[each.value.lz_key][each.value.vnet_key].subnets[each.value.subnet_key].id)
+      private_ip_address_allocation = try(ip_configuration.value.private_ip_address_allocation, "Dynamic")
+      private_ip_address_version    = lookup(ip_configuration.value, "private_ip_address_version", null)
+      private_ip_address            = lookup(ip_configuration.value, "private_ip_address", null)
+      primary                       = lookup(ip_configuration.value, "primary", null)
+      public_ip_address_id          = lookup(ip_configuration.value, "public_ip_address_key", null)
+    }
+  }
 }
 
 # Example of a nic configuration with vnet on a remote state
@@ -50,13 +75,24 @@ resource "azurerm_network_interface" "nic" {
 # networking_interfaces = {
 #   nic0 = {
 #     # AKS rely on a remote network and need the details of the tfstate to connect (tfstate_key), assuming RBAC authorization.
-#     lz_key      = "networking_aks"
-#     vnet_key    = "hub_rg1"
-#     subnet_key  = "jumpbox"
+#     lz_key                  = "networking_aks"
+#     vnet_key                = "hub_rg1"
+#     subnet_key              = "jumpbox"
 #     name                    = "0"
 #     enable_ip_forwarding    = false
 #     internal_dns_name_label = "nic0"
-
+#     nsg_key                 = "data"       // requires a version 1 nsg definition (see compute/vm/210-vm-bastion-winrm example)
+#     ip_configurations = {
+#       conf2 = {
+#         name                    = "nic0-conf2"
+#         vnet_key                = "vnet_region1"
+#         subnet_key              = "bastion"
+#         name                    = "0-bastion_host"
+#         enable_ip_forwarding    = false
+#         internal_dns_name_label = "bastion-host-nic0"
+#         public_ip_address_key   = "bastion_host_pip1"
+#       }
+#    }
 #     # you can setup up to 5 profiles
 #     diagnostic_profiles = {
 #       operations = {
@@ -65,6 +101,15 @@ resource "azurerm_network_interface" "nic" {
 #         destination_key  = "central_logs"
 #       }
 #     }
-
 #   }
 # }
+
+resource "azurerm_network_interface_security_group_association" "nic" {
+  for_each = {
+    for key, value in try(var.settings.networking_interfaces, {}) : key => value
+    if try(value.nsg_key, null) != null
+  }
+
+  network_interface_id      = azurerm_network_interface.nic[each.key].id
+  network_security_group_id = var.network_security_groups[each.value.nsg_key].id
+}

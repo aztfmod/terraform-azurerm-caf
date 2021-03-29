@@ -1,5 +1,5 @@
 
-module nics {
+module "nics" {
   source   = "../../diagnostics"
   for_each = var.settings.networking_interfaces
 

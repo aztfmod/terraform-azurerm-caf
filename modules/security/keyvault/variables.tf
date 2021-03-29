@@ -1,28 +1,28 @@
-variable global_settings {
+variable "global_settings" {
   description = "Global settings object (see module README.md)"
 }
-variable client_config {
+variable "client_config" {
   description = "Client configuration object (see module README.md)."
 }
-variable resource_groups {}
-variable settings {}
-variable vnets {
+variable "resource_groups" {}
+variable "settings" {}
+variable "vnets" {
   default = {}
 }
-variable azuread_groups {
+variable "azuread_groups" {
   default = {}
 }
-variable managed_identities {
+variable "managed_identities" {
   default = {}
 }
 # For diagnostics settings
-variable diagnostics {
+variable "diagnostics" {
   default = {}
 }
-variable base_tags {
+variable "base_tags" {
   description = "Base tags for the resource to be inherited from the resource group."
-  type        = map
+  type        = map(any)
 }
-variable private_dns {
+variable "private_dns" {
   default = {}
 }
