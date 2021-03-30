@@ -54,7 +54,6 @@ resource "azurerm_linux_virtual_machine_scale_set" "vmss" {
   sku                 = each.value.sku
   instances           = each.value.instances
   admin_username      = each.value.admin_username
-  # network_interface_ids = local.nic_ids
   tags = merge(local.tags, try(each.value.tags, null))
 
 
