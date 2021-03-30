@@ -1,33 +1,33 @@
-variable global_settings {
+variable "global_settings" {
   default = {}
 }
 
-variable resource_groups {
+variable "resource_groups" {
   default = null
 }
 
-variable tags {
+variable "tags" {
   default = null
-  type    = map
+  type    = map(any)
 }
 
-variable azurerm_application_insights {
+variable "azurerm_application_insights" {
   default = {}
 }
 
-variable storage_accounts {
+variable "storage_accounts" {
   default = {}
 }
 
-variable keyvaults {
+variable "keyvaults" {
   default = {}
 }
 
-variable machine_learning_workspaces {
+variable "machine_learning_workspaces" {
   default = {}
 }
 
-variable var_folder_path {
+variable "var_folder_path" {
   default = {}
 }
 

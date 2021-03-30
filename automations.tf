@@ -1,5 +1,5 @@
 
-module automations {
+module "automations" {
   source   = "./modules/automation"
   for_each = local.shared_services.automations
 
@@ -11,7 +11,7 @@ module automations {
   base_tags           = try(local.global_settings.inherit_tags, false) ? module.resource_groups[each.value.resource_group_key].tags : {}
 }
 
-output automations {
+output "automations" {
   value = module.automations
 
 }

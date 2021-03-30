@@ -1,2 +1,2 @@
-variable object_id {}
-variable azuread_roles {}
+variable "object_id" {}
+variable "azuread_roles" {}

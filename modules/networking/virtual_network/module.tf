@@ -3,7 +3,7 @@ resource "azurecaf_name" "caf_name_vnet" {
 
   name          = var.settings.vnet.name
   resource_type = "azurerm_virtual_network"
-  prefixes      = var.global_settings.prefix
+  prefixes      = var.global_settings.prefixes
   random_length = var.global_settings.random_length
   clean_input   = true
   passthrough   = var.global_settings.passthrough
@@ -62,14 +62,16 @@ module "subnets" {
 module "nsg" {
   source = "./nsg"
 
-  resource_group                    = var.resource_group_name
-  virtual_network_name              = azurerm_virtual_network.vnet.name
-  subnets                           = var.settings.subnets
-  tags                              = local.tags
-  location                          = var.location
-  network_security_group_definition = var.network_security_group_definition
+  application_security_groups       = var.application_security_groups
+  client_config                     = var.client_config
   diagnostics                       = var.diagnostics
   global_settings                   = var.global_settings
+  location                          = var.location
+  network_security_group_definition = var.network_security_group_definition
+  resource_group                    = var.resource_group_name
+  subnets                           = var.settings.subnets
+  tags                              = local.tags
+  virtual_network_name              = azurerm_virtual_network.vnet.name
 }
 
 resource "azurerm_subnet_route_table_association" "rt" {

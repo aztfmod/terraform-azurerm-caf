@@ -18,7 +18,7 @@ resource "azurerm_cosmosdb_gremlin_database" "database" {
 }
 
 # Create graphs
-module gremlin_graphs {
+module "gremlin_graphs" {
   source   = "./gremlin_graph"
   for_each = try(var.settings.graphs, {})
 
@@ -29,7 +29,7 @@ module gremlin_graphs {
   gremlin_database_name = azurerm_cosmosdb_gremlin_database.database.name
 }
 
-output gremlin_graphs {
+output "gremlin_graphs" {
   value = module.gremlin_graphs
 
 }

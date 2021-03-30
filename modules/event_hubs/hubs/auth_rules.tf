@@ -1,4 +1,4 @@
-module authorization_rules {
+module "authorization_rules" {
   source   = "./auth_rules"
   for_each = try(var.settings.auth_rules, {})
 

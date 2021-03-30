@@ -1,109 +1,109 @@
-variable global_settings {
+variable "global_settings" {
   default = {}
 }
-variable var_folder_path {
+variable "var_folder_path" {
   default = {}
 }
-variable tags {
+variable "tags" {
   default = null
-  type    = map
+  type    = map(any)
 }
-variable app_service_environments {
+variable "app_service_environments" {
   default = {}
 }
-variable app_service_plans {
+variable "app_service_plans" {
   default = {}
 }
-variable app_services {
+variable "app_services" {
   default = {}
 }
-variable diagnostics_definition {
-  default = null
-}
-variable resource_groups {
+variable "diagnostics_definition" {
   default = null
 }
-variable network_security_group_definition {
+variable "resource_groups" {
   default = null
 }
-variable vnets {
+variable "network_security_group_definition" {
   default = {}
 }
-variable azurerm_redis_caches {
+variable "vnets" {
   default = {}
 }
-variable mssql_servers {
+variable "azurerm_redis_caches" {
   default = {}
 }
-variable mssql_databases {
+variable "mssql_servers" {
   default = {}
 }
-variable mssql_elastic_pools {
+variable "mssql_databases" {
   default = {}
 }
-variable storage_accounts {
+variable "mssql_elastic_pools" {
   default = {}
 }
-variable azuread_groups {
+variable "storage_accounts" {
   default = {}
 }
-variable keyvaults {
+variable "azuread_groups" {
   default = {}
 }
-variable keyvault_access_policies {
+variable "keyvaults" {
   default = {}
 }
-variable virtual_machines {
+variable "keyvault_access_policies" {
   default = {}
 }
-variable bastion_hosts {
+variable "virtual_machines" {
   default = {}
 }
-variable public_ip_addresses {
+variable "bastion_hosts" {
   default = {}
 }
-variable diagnostic_storage_accounts {
+variable "public_ip_addresses" {
   default = {}
 }
-variable managed_identities {
+variable "diagnostic_storage_accounts" {
   default = {}
 }
-variable private_dns {
+variable "managed_identities" {
   default = {}
 }
-variable synapse_workspaces {
+variable "private_dns" {
   default = {}
 }
-variable azurerm_application_insights {
+variable "synapse_workspaces" {
   default = {}
 }
-variable role_mapping {
+variable "azurerm_application_insights" {
   default = {}
 }
-variable aks_clusters {
+variable "role_mapping" {
   default = {}
 }
-variable databricks_workspaces {
+variable "aks_clusters" {
   default = {}
 }
-variable machine_learning_workspaces {
+variable "databricks_workspaces" {
   default = {}
 }
-variable monitoring {
+variable "machine_learning_workspaces" {
   default = {}
 }
-variable virtual_wans {
+variable "monitoring" {
   default = {}
 }
-variable event_hub_namespaces {
+variable "virtual_wans" {
   default = {}
 }
-variable application_gateways {
+variable "event_hub_namespaces" {
   default = {}
 }
-variable application_gateway_applications {
+variable "application_gateways" {
   default = {}
 }
-variable cosmos_dbs {
+variable "application_gateway_applications" {
+  default = {}
+}
+variable "cosmos_dbs" {
   default = {}
 }

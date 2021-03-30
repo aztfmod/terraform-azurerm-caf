@@ -74,6 +74,9 @@ variable "resource_groups" {
 variable "network_security_group_definition" {
   default = null
 }
+variable "networking_interface_asg_associations" {
+  default = {}
+}
 variable "route_tables" {
   default = {}
 }
@@ -248,38 +251,12 @@ variable "express_route_circuits" {
 variable "express_route_circuit_authorizations" {
   default = {}
 }
-
-variable shared_image_galleries {
-  default = {}
-}
-
-variable image_definitions {
-  default = {}
-}
-
-variable diagnostics_destinations {
+variable "diagnostics_destinations" {
   default = {}
 }
 variable "vnet_peerings" {
   default = {}
 }
-
-variable packer_service_principal {
-  default = {}
-}
-
-variable packer_managed_identity {
-  default = {}
-}
-
-variable azuread_api_permissions {
-  default = {}
-}
-
-variable keyvault_access_policies_azuread_apps {
-  default = {}
-}
-
 variable "cosmos_dbs" {
   default = {}
 }
@@ -302,14 +279,6 @@ variable "dns_zone_records" {
 variable "private_endpoints" {
   default = {}
 }
-
-variable event_hubs {
-  default = {}
-}
-variable automations {
-  default = {}
-}
-
 variable "local_network_gateways" {
   default = {}
 }
@@ -341,28 +310,13 @@ variable "azurerm_firewall_application_rule_collection_definition" {
 variable "azurerm_firewall_nat_rule_collection_definition" {
   default = {}
 }
-variable "event_hub_auth_rules" {
-  default = {}
-}
-
 variable "netapp_accounts" {
   default = {}
 }
-
-variable "load_balancers" {
+variable "automations" {
   default = {}
 }
 
-variable "ip_groups" {
+variable "application_security_groups" {
   default = {}
 }
-variable "container_groups" {
-  default = {}
-}
-variable "event_hub_namespace_auth_rules" {
-  default = {}
-}
-variable "event_hub_consumer_groups" {
-  default = {}
-}
-

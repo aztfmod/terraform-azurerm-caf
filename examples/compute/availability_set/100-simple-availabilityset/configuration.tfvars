@@ -1,5 +1,6 @@
 global_settings = {
   default_region = "region1"
+  prefix         = null
   regions = {
     region1 = "eastasia"
   }
@@ -57,7 +58,7 @@ virtual_machines = {
         size                            = "Standard_F2"
         admin_username                  = "adminuser"
         disable_password_authentication = true
-        custom_data                     = "scripts/cloud-init/install-rover-tools.config"
+        custom_data                     = "../../examples/compute/availability_set/100-simple-availabilityset/scripts/cloud-init/install-rover-tools.config"
 
         # Value of the nic keys to attach the VM. The first one in the list is the default nic
         network_interface_keys = ["nic0"]
@@ -108,7 +109,7 @@ virtual_machines = {
         size                            = "Standard_F2"
         admin_username                  = "adminuser"
         disable_password_authentication = true
-        custom_data                     = "/scripts/cloud-init/install-rover-tools.config"
+        custom_data                     = "../../examples/compute/availability_set/100-simple-availabilityset/scripts/cloud-init/install-rover-tools.config"
 
         # Value of the nic keys to attach the VM. The first one in the list is the default nic
         network_interface_keys = ["nic0"]

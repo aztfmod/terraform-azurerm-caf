@@ -1,5 +1,5 @@
 
-module azuread_roles_applications {
+module "azuread_roles_applications" {
   source   = "./modules/azuread/roles"
   for_each = try(var.azuread_roles.azuread_apps, {})
 
@@ -7,7 +7,7 @@ module azuread_roles_applications {
   azuread_roles = each.value.roles
 }
 
-module azuread_roles_msi {
+module "azuread_roles_msi" {
   source   = "./modules/azuread/roles"
   for_each = try(var.azuread_roles.managed_identities, {})
 
@@ -15,7 +15,7 @@ module azuread_roles_msi {
   azuread_roles = each.value.roles
 }
 
-module azuread_roles_sql_mi {
+module "azuread_roles_sql_mi" {
   source   = "./modules/azuread/roles"
   for_each = try(var.azuread_roles.mssql_managed_instances, {})
 
@@ -23,7 +23,7 @@ module azuread_roles_sql_mi {
   azuread_roles = each.value.roles
 }
 
-module azuread_roles_sql_mi_secondary {
+module "azuread_roles_sql_mi_secondary" {
   source   = "./modules/azuread/roles"
   for_each = try(var.azuread_roles.mssql_managed_instances_secondary, {})
 
@@ -31,7 +31,7 @@ module azuread_roles_sql_mi_secondary {
   azuread_roles = each.value.roles
 }
 
-module azuread_roles_mssql_server {
+module "azuread_roles_mssql_server" {
   source   = "./modules/azuread/roles"
   for_each = try(var.azuread_roles.mssql_servers, {})
 

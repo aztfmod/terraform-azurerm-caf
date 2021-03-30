@@ -12,6 +12,6 @@ module "caf" {
   }
 }
 
-output storage_accounts {
+output "storage_accounts" {
   value = module.caf.storage_accounts
 }

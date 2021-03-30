@@ -1,5 +1,6 @@
 global_settings = {
   default_region = "region1"
+  prefix         = null
   regions = {
     region1 = "southeastasia"
   }
@@ -18,11 +19,11 @@ storage_accounts = {
     resource_group_key       = "test"
     account_kind             = "StorageV2" #Valid options are BlobStorage, BlockBlobStorage, FileStorage, Storage and StorageV2. Defaults to StorageV2
     account_tier             = "Standard"  #Valid options are Standard and Premium. For BlockBlobStorage and FileStorage accounts only Premium is valid
-    account_replication_type = "LRS"    # https://docs.microsoft.com/en-us/azure/storage/common/storage-redundancy
-    min_tls_version          = "TLS1_2" # Possible values are TLS1_0, TLS1_1, and TLS1_2. Defaults to TLS1_0 for new storage accounts.
+    account_replication_type = "LRS"       # https://docs.microsoft.com/en-us/azure/storage/common/storage-redundancy
+    min_tls_version          = "TLS1_2"    # Possible values are TLS1_0, TLS1_1, and TLS1_2. Defaults to TLS1_0 for new storage accounts.
     allow_blob_public_access = false
     is_hns_enabled           = false
-    
+
     # Enable this block, if you have a valid domain name
     # custom_domain = {
     #   name          = "any-valid-domain.name" #will be validated by Azure

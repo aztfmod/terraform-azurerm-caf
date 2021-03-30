@@ -1,4 +1,4 @@
-module machine_learning_workspaces {
+module "machine_learning_workspaces" {
   source   = "./modules/analytics/machine_learning"
   for_each = local.database.machine_learning_workspaces
 
@@ -14,7 +14,7 @@ module machine_learning_workspaces {
   base_tags               = try(local.global_settings.inherit_tags, false) ? module.resource_groups[each.value.resource_group_key].tags : {}
 }
 
-output machine_learning_workspaces {
+output "machine_learning_workspaces" {
   value = module.machine_learning_workspaces
 
 }
