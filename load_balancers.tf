@@ -1,4 +1,4 @@
-module load_balancers {
+module "load_balancers" {
   source   = "./modules/networking/load_balancers"
   for_each = try(local.networking.load_balancers, {})
 
@@ -12,7 +12,7 @@ module load_balancers {
   settings            = each.value
   base_tags           = try(local.global_settings.inherit_tags, false) ? module.resource_groups[each.value.resource_group_key].tags : {}
   existing_resources = {
-    virtual_machines    = try(module.virtual_machines, {})
+    virtual_machines = try(module.virtual_machines, {})
     #vm scale set will be added later
   }
 }

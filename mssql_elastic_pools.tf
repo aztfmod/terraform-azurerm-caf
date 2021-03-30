@@ -1,5 +1,5 @@
 
-output mssql_elastic_pools {
+output "mssql_elastic_pools" {
   value = module.mssql_elastic_pools
 
 }

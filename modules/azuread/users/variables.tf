@@ -1,12 +1,12 @@
-variable global_settings {
+variable "global_settings" {
   description = "Global settings object (see module README.md)"
 }
-variable client_config {
+variable "client_config" {
   description = "Client configuration object (see module README.md)."
 }
-variable settings {}
-variable keyvaults {}
-variable password_policy {
+variable "settings" {}
+variable "keyvaults" {}
+variable "password_policy" {
   description = "Map to define the password policy to apply"
   default = {
     # Length of the password

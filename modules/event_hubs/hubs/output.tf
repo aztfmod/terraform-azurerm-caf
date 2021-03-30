@@ -1,9 +1,8 @@
-output id {
-  value     = azurerm_eventhub.evhub.id
-  sensitive = true
+output "id" {
+  value = azurerm_eventhub.evhub.id
 }
 
-output name {
+output "name" {
   description = "The EventHub name."
   value       = azurerm_eventhub.evhub.name
 }

@@ -1,8 +1,8 @@
-output blobs {
+output "blobs" {
   value = module.blob
 }
 
 
-output name {
+output "name" {
   value = azurerm_storage_container.stg.name
 }

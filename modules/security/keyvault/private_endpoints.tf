@@ -4,7 +4,7 @@
 # Private endpoint
 #
 
-module private_endpoint {
+module "private_endpoint" {
   source   = "../../networking/private_endpoint"
   for_each = try(var.settings.private_endpoints, {})
 

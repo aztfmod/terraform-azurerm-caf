@@ -1,36 +1,36 @@
-variable global_settings {
+variable "global_settings" {
   default = {}
 }
 
-variable resource_groups {
+variable "resource_groups" {
   default = null
 }
 
-variable storage_accounts {
+variable "storage_accounts" {
   default = {}
 }
 
-variable tags {
+variable "tags" {
   default = null
-  type    = map
+  type    = map(any)
 }
 
-variable event_hub_namespaces {
+variable "event_hub_namespaces" {
   default = {}
 }
 
-variable event_hub_auth_rules {
+variable "event_hub_auth_rules" {
   default = {}
 }
 
-variable event_hubs {
+variable "event_hubs" {
   default = {}
 }
 
-variable var_folder_path {
+variable "var_folder_path" {
   default = {}
 }
 
-variable event_hub_consumer_groups {
+variable "event_hub_consumer_groups" {
   default = {}
 }
