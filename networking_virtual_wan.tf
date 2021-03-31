@@ -4,6 +4,13 @@
 #
 #
 
+# Outputs
+output "virtual_wans" {
+  value = module.virtual_wans
+
+  description = "Virtual WAN output"
+}
+
 module "virtual_wans" {
   source   = "./modules/networking/virtual_wan"
   for_each = local.networking.virtual_wans
@@ -20,27 +27,3 @@ module "virtual_wans" {
   public_ip_addresses = local.combined_objects_public_ip_addresses
 }
 
-
-#
-#
-# Virtual WAN peerings with vnets
-#
-#
-
-# Peering
-resource "azurerm_virtual_hub_connection" "vhub_connection" {
-  depends_on = [module.networking, module.virtual_wans]
-  for_each   = local.networking.vhub_peerings
-
-  name                      = each.value.name
-  virtual_hub_id            = module.virtual_wans[each.value.vhub.virtual_wan_key].virtual_hubs[each.value.vhub.virtual_hub_key].id
-  remote_virtual_network_id = lookup(each.value.vnet, "lz_key", null) == null ? local.combined_objects_networking[local.client_config.landingzone_key][each.value.vnet.vnet_key].id : local.combined_objects_networking[each.value.vnet.lz_key][each.value.vnet.vnet_key].id
-  internet_security_enabled = try(each.value.internet_security_enabled, null)
-}
-
-# Outputs
-output "virtual_wans" {
-  value = module.virtual_wans
-
-  description = "Virtual WAN output"
-}
