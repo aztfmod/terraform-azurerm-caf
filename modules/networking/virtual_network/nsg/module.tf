@@ -58,9 +58,9 @@ resource "azurerm_network_security_group" "nsg_obj" {
               ]
             ]
           )
-        ),//coalescelist
+        ), //coalescelist
         []
-       )
+      )
 
 
       # destination_application_security_groups = {

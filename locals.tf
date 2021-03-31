@@ -27,7 +27,7 @@ locals {
     proximity_placement_groups = try(var.compute.proximity_placement_groups, {})
     virtual_machines           = try(var.compute.virtual_machines, {})
   }
-  
+
   database = {
     app_config                         = try(var.database.app_config, {})
     azurerm_redis_caches               = try(var.database.azurerm_redis_caches, {})
@@ -108,7 +108,7 @@ locals {
     regions            = var.global_settings.regions
     tags               = try(var.global_settings.tags, null)
     use_slug           = try(var.global_settings.use_slug, true)
-  } 
+  }
 
   logic_app = {
     integration_service_environment = try(var.logic_app.integration_service_environment, {})
@@ -182,7 +182,7 @@ locals {
     netapp_accounts       = try(var.storage.netapp_accounts, {})
     storage_account_blobs = try(var.storage.storage_account_blobs, {})
   }
-  
+
   webapp = {
     app_service_environments     = try(var.webapp.app_service_environments, {})
     app_service_plans            = try(var.webapp.app_service_plans, {})

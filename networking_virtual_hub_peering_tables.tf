@@ -5,19 +5,19 @@
 #
 #
 
-output azurerm_virtual_hub_connection {
-  value       = azurerm_virtual_hub_connection.vhub_connection
+output "azurerm_virtual_hub_connection" {
+  value = azurerm_virtual_hub_connection.vhub_connection
 }
 
-output azurerm_virtual_hub_route_table {
-  value       = azurerm_virtual_hub_route_table.route_table
+output "azurerm_virtual_hub_route_table" {
+  value = azurerm_virtual_hub_route_table.route_table
 }
 
 
 
 # Virtual Hub Peerings to virtual networks
 resource "azurerm_virtual_hub_connection" "vhub_connection" {
-  for_each   = local.networking.virtual_hub_connections
+  for_each = local.networking.virtual_hub_connections
 
   name                      = each.value.name
   virtual_hub_id            = local.combined_objects_virtual_wans[try(each.value.lz_key, local.client_config.landingzone_key)][each.value.vhub.virtual_wan_key].virtual_hubs[each.value.vhub.virtual_hub_key].id
@@ -36,7 +36,7 @@ resource "azurerm_virtual_hub_connection" "vhub_connection" {
         ),
         null
       )
-      
+
       dynamic "propagated_route_table" {
         for_each = try(routing.value.propagated_route_table, null) == null ? [] : [1]
 
@@ -71,7 +71,7 @@ resource "azurerm_virtual_hub_connection" "vhub_connection" {
           next_hop_ip_address = static_vnet_route.value.next_hop_ip_address
         }
       }
-      
+
     }
   }
 }
@@ -79,8 +79,8 @@ resource "azurerm_virtual_hub_connection" "vhub_connection" {
 resource "azurerm_virtual_hub_route_table" "route_table" {
   for_each = local.networking.virtual_hub_route_tables
 
-  name           = each.value.name
-  labels         = each.value.labels
+  name   = each.value.name
+  labels = each.value.labels
 
   virtual_hub_id = coalesce(
     try(local.combined_objects_virtual_wans[try(each.value.lz_key, local.client_config.landingzone_key)][each.value.virtual_wan_key].virtual_hubs[each.value.virtual_hub_key].id, ""),
@@ -117,14 +117,14 @@ resource "azurerm_virtual_hub_route_table" "route_table" {
 module "azurerm_virtual_hub_route_table" {
   depends_on = [azurerm_virtual_hub_connection.vhub_connection, azurerm_virtual_hub_route_table.route_table]
   source     = "./modules/networking/virtual_hub_route_tables"
-  for_each    = {
+  for_each = {
     for key, value in local.networking.virtual_hub_route_tables : key => value
     if try(value.routes, null) != null
   }
 
-  client_config           = local.client_config
-  name                    = each.value.name
-  settings                = each.value
+  client_config = local.client_config
+  name          = each.value.name
+  settings      = each.value
 
   virtual_hub_id = coalesce(
     try(local.combined_objects_virtual_wans[try(each.value.lz_key, local.client_config.landingzone_key)][each.value.virtual_wan_key].virtual_hubs[each.value.virtual_hub_key].id, ""),

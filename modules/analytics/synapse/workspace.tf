@@ -83,12 +83,12 @@ resource "azurerm_synapse_firewall_rule" "wrkspc_firewall" {
 # supports adding multiple synapse firewall rules
 resource "azurerm_synapse_firewall_rule" "wrkspc_firewalls" {
   for_each = try(var.settings.workspace_firewalls, {})
-  
+
   # use key as firewall name if name attribute not defined
   name                 = try(each.value.name, each.key)
   synapse_workspace_id = azurerm_synapse_workspace.ws.id
   # start_ip and end_ip must be specified in each individual workspace_firewall_rule
-  start_ip_address     = each.value.start_ip
-  end_ip_address       = each.value.end_ip
+  start_ip_address = each.value.start_ip
+  end_ip_address   = each.value.end_ip
 }
 

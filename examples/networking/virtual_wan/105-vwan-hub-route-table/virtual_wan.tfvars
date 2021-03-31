@@ -38,8 +38,8 @@ virtual_wans = {
 
 virtual_hub_route_tables = {
   routetable1 = {
-    name   = "example-vhubroutetable1"
-    
+    name = "example-vhubroutetable1"
+
     virtual_wan_key = "vwan_re1"
     virtual_hub_key = "hub_re1"
 
@@ -52,7 +52,7 @@ virtual_hub_route_tables = {
         next_hop = {
           # lz_key if the connection is in a different deployment
           resource_type = "virtual_hub_connection"
-          resource_key      = "con2"
+          resource_key  = "con2"
         }
         #to cather for external object
         #next_hop_id       = "Azure_Resource_ID"
@@ -64,7 +64,7 @@ virtual_hub_route_tables = {
         next_hop = {
           # lz_key if the connection is in a different deployment
           resource_type = "virtual_hub_connection"
-          resource_key      = "con2"
+          resource_key  = "con2"
         }
         #to cather for external object
         #next_hop_id       = "Azure_Resource_ID"
@@ -72,7 +72,7 @@ virtual_hub_route_tables = {
     }
   }
   routetable2 = {
-    name   = "example-vhubroutetable2"
+    name = "example-vhubroutetable2"
 
     virtual_wan_key = "vwan_re1"
     virtual_hub_key = "hub_re1"
@@ -86,7 +86,7 @@ virtual_hub_route_tables = {
         next_hop = {
           # lz_key if the connection is in a different deployment
           resource_type = "virtual_hub_connection"
-          resource_key      = "con2"
+          resource_key  = "con2"
           # id = "resource_id"
         }
         #to cather for external object
@@ -99,10 +99,10 @@ virtual_hub_route_tables = {
 virtual_hub_connections = {
 
   # Establish the peering with Virtual Hubs
-  
+
   con1 = {
-    name                                           = "vnet1-con1"
-    internet_security_enabled                      = true
+    name                      = "vnet1-con1"
+    internet_security_enabled = true
 
     vhub = {
       virtual_wan_key = "vwan_re1"
@@ -143,8 +143,8 @@ virtual_hub_connections = {
   }
 
   con2 = {
-    name                                           = "vnet2-con2"
-    internet_security_enabled                      = true
+    name                      = "vnet2-con2"
+    internet_security_enabled = true
 
     vhub = {
       virtual_wan_key = "vwan_re1"

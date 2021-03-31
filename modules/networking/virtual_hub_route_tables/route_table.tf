@@ -6,7 +6,7 @@ locals {
         destinationType = try(upper(value.destinations_type), "CIDR")
         destinations    = value.destinations
         nextHopType     = "ResourceId"
-        nextHop         = coalesce(
+        nextHop = coalesce(
           try(value.next_hop_id, ""),
           try(var.resource_ids[value.next_hop.resource_type][try(value.next_hop.lz_key, var.client_config.landingzone_key)][value.next_hop.resource_key].id, "")
         )
@@ -20,8 +20,8 @@ resource "null_resource" "virtual_hub_route_table" {
 
   triggers = {
     URL = format(
-      "https://management.azure.com%s/hubRouteTables/%s?api-version=2020-11-01", 
-      var.virtual_hub_id, 
+      "https://management.azure.com%s/hubRouteTables/%s?api-version=2020-11-01",
+      var.virtual_hub_id,
       var.name
     )
     PROPERTIES = jsonencode(
