@@ -7,7 +7,6 @@ resource "random_string" "prefix" {
 }
 
 locals {
-
   client_config = var.client_config == {} ? {
     client_id               = data.azurerm_client_config.current.client_id
     landingzone_key         = var.current_landingzone_key
@@ -28,48 +27,7 @@ locals {
     proximity_placement_groups = try(var.compute.proximity_placement_groups, {})
     virtual_machines           = try(var.compute.virtual_machines, {})
   }
-
-  dynamic_app_settings_combined_objects = {
-    app_config                  = local.combined_objects_app_config
-    azure_container_registries  = local.combined_objects_azure_container_registries
-    client_config               = tomap({ (local.client_config.landingzone_key) = { config = local.client_config } })
-    keyvaults                   = local.combined_objects_keyvaults
-    machine_learning_workspaces = local.combined_objects_machine_learning
-    managed_identities          = local.combined_objects_managed_identities
-    storage_accounts            = local.combined_objects_storage_accounts
-  }
-
-  dynamic_app_config_combined_objects = {
-    azure_container_registries   = local.combined_objects_azure_container_registries
-    azurerm_application_insights = tomap({ (local.client_config.landingzone_key) = module.azurerm_application_insights })
-    client_config                = tomap({ (local.client_config.landingzone_key) = { config = local.client_config } })
-    keyvaults                    = local.combined_objects_keyvaults
-    logic_app_workflow           = local.combined_objects_logic_app_workflow
-    machine_learning_workspaces  = local.combined_objects_machine_learning
-    managed_identities           = local.combined_objects_managed_identities
-    resource_groups              = local.combined_objects_resource_groups
-    storage_accounts             = local.combined_objects_storage_accounts
-  }
-
-  data_factory = {
-    data_factory                  = try(var.data_factory.data_factory, {})
-    data_factory_pipeline         = try(var.data_factory.data_factory_pipeline, {})
-    data_factory_trigger_schedule = try(var.data_factory.data_factory_trigger_schedule, {})
-    datasets = {
-      azure_blob       = try(var.data_factory.datasets.azure_blob, {})
-      cosmosdb_sqlapi  = try(var.data_factory.datasets.cosmosdb_sqlapi, {})
-      delimited_text   = try(var.data_factory.datasets.delimited_text, {})
-      http             = try(var.data_factory.datasets.http, {})
-      json             = try(var.data_factory.datasets.json, {})
-      mysql            = try(var.data_factory.datasets.mysql, {})
-      postgresql       = try(var.data_factory.datasets.postgresql, {})
-      sql_server_table = try(var.data_factory.datasets.sql_server_table, {})
-    }
-    linked_services = {
-      azure_blob_storage = try(var.data_factory.linked_services.azure_blob_storage, {})
-    }
-  }
-
+  
   database = {
     app_config                         = try(var.database.app_config, {})
     azurerm_redis_caches               = try(var.database.azurerm_redis_caches, {})
@@ -97,6 +55,47 @@ locals {
     synapse_workspaces                 = try(var.database.synapse_workspaces, {})
   }
 
+  data_factory = {
+    data_factory                  = try(var.data_factory.data_factory, {})
+    data_factory_pipeline         = try(var.data_factory.data_factory_pipeline, {})
+    data_factory_trigger_schedule = try(var.data_factory.data_factory_trigger_schedule, {})
+    datasets = {
+      azure_blob       = try(var.data_factory.datasets.azure_blob, {})
+      cosmosdb_sqlapi  = try(var.data_factory.datasets.cosmosdb_sqlapi, {})
+      delimited_text   = try(var.data_factory.datasets.delimited_text, {})
+      http             = try(var.data_factory.datasets.http, {})
+      json             = try(var.data_factory.datasets.json, {})
+      mysql            = try(var.data_factory.datasets.mysql, {})
+      postgresql       = try(var.data_factory.datasets.postgresql, {})
+      sql_server_table = try(var.data_factory.datasets.sql_server_table, {})
+    }
+    linked_services = {
+      azure_blob_storage = try(var.data_factory.linked_services.azure_blob_storage, {})
+    }
+  }
+
+  dynamic_app_settings_combined_objects = {
+    app_config                  = local.combined_objects_app_config
+    azure_container_registries  = local.combined_objects_azure_container_registries
+    client_config               = tomap({ (local.client_config.landingzone_key) = { config = local.client_config } })
+    keyvaults                   = local.combined_objects_keyvaults
+    machine_learning_workspaces = local.combined_objects_machine_learning
+    managed_identities          = local.combined_objects_managed_identities
+    storage_accounts            = local.combined_objects_storage_accounts
+  }
+
+  dynamic_app_config_combined_objects = {
+    azure_container_registries   = local.combined_objects_azure_container_registries
+    azurerm_application_insights = tomap({ (local.client_config.landingzone_key) = module.azurerm_application_insights })
+    client_config                = tomap({ (local.client_config.landingzone_key) = { config = local.client_config } })
+    keyvaults                    = local.combined_objects_keyvaults
+    logic_app_workflow           = local.combined_objects_logic_app_workflow
+    machine_learning_workspaces  = local.combined_objects_machine_learning
+    managed_identities           = local.combined_objects_managed_identities
+    resource_groups              = local.combined_objects_resource_groups
+    storage_accounts             = local.combined_objects_storage_accounts
+  }
+
   global_settings = {
     default_region     = try(var.global_settings.default_region, "region1")
     environment        = try(var.global_settings.environment, var.environment)
@@ -109,7 +108,7 @@ locals {
     regions            = var.global_settings.regions
     tags               = try(var.global_settings.tags, null)
     use_slug           = try(var.global_settings.use_slug, true)
-  }
+  } 
 
   logic_app = {
     integration_service_environment = try(var.logic_app.integration_service_environment, {})
@@ -129,6 +128,8 @@ locals {
     azurerm_firewall_application_rule_collection_definition = try(var.networking.azurerm_firewall_application_rule_collection_definition, {})
     azurerm_firewall_nat_rule_collection_definition         = try(var.networking.azurerm_firewall_nat_rule_collection_definition, {})
     azurerm_firewall_network_rule_collection_definition     = try(var.networking.azurerm_firewall_network_rule_collection_definition, {})
+    azurerm_firewall_policies                               = try(var.networking.azurerm_firewall_policies, {})
+    azurerm_firewall_policy_rule_collection_groups          = try(var.networking.azurerm_firewall_policy_rule_collection_groups, {})
     azurerm_firewalls                                       = try(var.networking.azurerm_firewalls, {})
     azurerm_routes                                          = try(var.networking.azurerm_routes, {})
     ddos_services                                           = try(var.networking.ddos_services, {})
@@ -144,7 +145,6 @@ locals {
     local_network_gateways                                  = try(var.networking.local_network_gateways, {})
     network_security_group_definition                       = try(var.networking.network_security_group_definition, {})
     network_watchers                                        = try(var.networking.network_watchers, {})
-    networking_interface_asg_associations                   = try(var.networking.networking_interface_asg_associations, {})
     private_dns                                             = try(var.networking.private_dns, {})
     public_ip_addresses                                     = try(var.networking.public_ip_addresses, {})
     route_tables                                            = try(var.networking.route_tables, {})
