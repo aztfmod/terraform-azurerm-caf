@@ -13,16 +13,18 @@ resource "azurecaf_name" "disk" {
 resource "azurerm_managed_disk" "disk" {
   for_each = lookup(var.settings, "data_disks", {})
 
-  name                 = azurecaf_name.disk[each.key].result
-  location             = var.location
-  resource_group_name  = var.resource_group_name
-  storage_account_type = each.value.storage_account_type
-  create_option        = each.value.create_option
-  disk_size_gb         = each.value.disk_size_gb
-  zones                = try(each.value.zones, null)
-  disk_iops_read_write = try(each.value.disk_iops_read_write, null)
-  disk_mbps_read_write = try(each.value.disk.disk_mbps_read_write, null)
-  tags                 = local.tags
+  name                   = azurecaf_name.disk[each.key].result
+  location               = var.location
+  resource_group_name    = var.resource_group_name
+  storage_account_type   = each.value.storage_account_type
+  create_option          = each.value.create_option
+  disk_size_gb           = each.value.disk_size_gb
+  zones                  = try(each.value.zones, null)
+  disk_iops_read_write   = try(each.value.disk_iops_read_write, null)
+  disk_mbps_read_write   = try(each.value.disk.disk_mbps_read_write, null)
+  tags                   = local.tags
+  disk_encryption_set_id = try(each.value.disk_encryption_set_key, null) == null ? null : var.disk_encryption_sets[try(var.client_config.landingzone_key, each.value.lz_key)][each.value.disk_encryption_set_key].id
+
 }
 
 resource "azurerm_virtual_machine_data_disk_attachment" "disk" {

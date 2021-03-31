@@ -1,5 +1,5 @@
 resource "random_string" "prefix" {
-  count   = try(var.global_settings.prefix, null) == null || try(var.global_settings.prefix, null) == "" || try(var.global_settings.prefixes, null) == null ? 1 : 0
+  count   = try(var.global_settings.prefix, null) == null ? 1 : 0
   length  = 4
   special = false
   upper   = false
@@ -7,42 +7,16 @@ resource "random_string" "prefix" {
 }
 
 locals {
-
-  dynamic_app_settings_combined_objects = {
-    app_config                  = local.combined_objects_app_config
-    keyvaults                   = local.combined_objects_keyvaults
-    machine_learning_workspaces = local.combined_objects_machine_learning
-    managed_identities          = local.combined_objects_managed_identities
-    storage_accounts            = local.combined_objects_storage_accounts
-    azure_container_registries  = local.combined_objects_azure_container_registries
-    client_config               = tomap({ (local.client_config.landingzone_key) = { config = local.client_config } })
-  }
-
-  dynamic_app_config_combined_objects = {
-    keyvaults                    = local.combined_objects_keyvaults
-    machine_learning_workspaces  = local.combined_objects_machine_learning
-    azure_container_registries   = local.combined_objects_azure_container_registries
-    logic_app_workflow           = local.combined_objects_logic_app_workflow
-    resource_groups              = local.combined_objects_resource_groups
-    storage_accounts             = local.combined_objects_storage_accounts
-    client_config                = tomap({ (local.client_config.landingzone_key) = { config = local.client_config } })
-    managed_identities           = local.combined_objects_managed_identities
-    azurerm_application_insights = tomap({ (local.client_config.landingzone_key) = module.azurerm_application_insights })
-  }
-
-  global_settings = {
-    default_region     = try(var.global_settings.default_region, "region1")
-    environment        = try(var.global_settings.environment, var.environment)
-    inherit_tags       = try(var.global_settings.inherit_tags, false)
-    passthrough        = try(var.global_settings.passthrough, false)
-    prefix             = var.global_settings.prefix
-    prefixes           = var.global_settings.prefix == "" ? null : try(var.global_settings.prefixes, [random_string.prefix.0.result])
-    prefix_with_hyphen = try(var.global_settings.prefix_with_hyphen, format("%s-", try(var.global_settings.prefixes[0], random_string.prefix.0.result)))
-    random_length      = try(var.global_settings.random_length, 0)
-    regions            = var.global_settings.regions
-    use_slug           = try(var.global_settings.use_slug, true)
-    tags               = try(var.global_settings.tags, null)
-  }
+  client_config = var.client_config == {} ? {
+    client_id               = data.azurerm_client_config.current.client_id
+    landingzone_key         = var.current_landingzone_key
+    landingzone_key         = var.current_landingzone_key
+    logged_aad_app_objectId = local.object_id
+    logged_user_objectId    = local.object_id
+    object_id               = local.object_id
+    subscription_id         = data.azurerm_client_config.current.subscription_id
+    tenant_id               = data.azurerm_client_config.current.tenant_id
+  } : map(var.client_config)
 
   compute = {
     aks_clusters               = try(var.compute.aks_clusters, {})
@@ -53,22 +27,104 @@ locals {
     proximity_placement_groups = try(var.compute.proximity_placement_groups, {})
     virtual_machines           = try(var.compute.virtual_machines, {})
   }
-
-  storage = {
-    netapp_accounts       = try(var.storage.netapp_accounts, {})
-    storage_account_blobs = try(var.storage.storage_account_blobs, {})
+  
+  database = {
+    app_config                         = try(var.database.app_config, {})
+    azurerm_redis_caches               = try(var.database.azurerm_redis_caches, {})
+    cosmos_dbs                         = try(var.database.cosmos_dbs, {})
+    databricks_workspaces              = try(var.database.databricks_workspaces, {})
+    machine_learning_workspaces        = try(var.database.machine_learning_workspaces, {})
+    mariadb_databases                  = try(var.database.mariadb_databases, {})
+    mariadb_servers                    = try(var.database.mariadb_servers, {})
+    mssql_databases                    = try(var.database.mssql_databases, {})
+    mssql_elastic_pools                = try(var.database.mssql_elastic_pools, {})
+    mssql_failover_groups              = try(var.database.mssql_failover_groups, {})
+    mssql_managed_databases            = try(var.database.mssql_managed_databases, {})
+    mssql_managed_databases_backup_ltr = try(var.database.mssql_managed_databases_backup_ltr, {})
+    mssql_managed_databases_restore    = try(var.database.mssql_managed_databases_restore, {})
+    mssql_managed_instances            = try(var.database.mssql_managed_instances, {})
+    mssql_managed_instances_secondary  = try(var.database.mssql_managed_instances_secondary, {})
+    mssql_mi_administrators            = try(var.database.mssql_mi_administrators, {})
+    mssql_mi_failover_groups           = try(var.database.mssql_mi_failover_groups, {})
+    mssql_mi_secondary_tdes            = try(var.database.mssql_mi_secondary_tdes, {})
+    mssql_mi_tdes                      = try(var.database.mssql_mi_tdes, {})
+    mssql_servers                      = try(var.database.mssql_servers, {})
+    mysql_databases                    = try(var.database.mysql_databases, {})
+    mysql_servers                      = try(var.database.mysql_servers, {})
+    postgresql_servers                 = try(var.database.postgresql_servers, {})
+    synapse_workspaces                 = try(var.database.synapse_workspaces, {})
   }
 
-  security = {
-    keyvault_certificate_issuers  = try(var.security.keyvault_certificate_issuers, {})
-    keyvault_certificate_requests = try(var.security.keyvault_certificate_requests, {})
-    keyvault_certificates         = try(var.security.keyvault_certificates, {})
-    keyvault_keys                 = try(var.security.keyvault_keys, {})
+  data_factory = {
+    data_factory                  = try(var.data_factory.data_factory, {})
+    data_factory_pipeline         = try(var.data_factory.data_factory_pipeline, {})
+    data_factory_trigger_schedule = try(var.data_factory.data_factory_trigger_schedule, {})
+    datasets = {
+      azure_blob       = try(var.data_factory.datasets.azure_blob, {})
+      cosmosdb_sqlapi  = try(var.data_factory.datasets.cosmosdb_sqlapi, {})
+      delimited_text   = try(var.data_factory.datasets.delimited_text, {})
+      http             = try(var.data_factory.datasets.http, {})
+      json             = try(var.data_factory.datasets.json, {})
+      mysql            = try(var.data_factory.datasets.mysql, {})
+      postgresql       = try(var.data_factory.datasets.postgresql, {})
+      sql_server_table = try(var.data_factory.datasets.sql_server_table, {})
+    }
+    linked_services = {
+      azure_blob_storage = try(var.data_factory.linked_services.azure_blob_storage, {})
+    }
+  }
+
+  dynamic_app_settings_combined_objects = {
+    app_config                  = local.combined_objects_app_config
+    azure_container_registries  = local.combined_objects_azure_container_registries
+    client_config               = tomap({ (local.client_config.landingzone_key) = { config = local.client_config } })
+    keyvaults                   = local.combined_objects_keyvaults
+    machine_learning_workspaces = local.combined_objects_machine_learning
+    managed_identities          = local.combined_objects_managed_identities
+    storage_accounts            = local.combined_objects_storage_accounts
+  }
+
+  dynamic_app_config_combined_objects = {
+    azure_container_registries   = local.combined_objects_azure_container_registries
+    azurerm_application_insights = tomap({ (local.client_config.landingzone_key) = module.azurerm_application_insights })
+    client_config                = tomap({ (local.client_config.landingzone_key) = { config = local.client_config } })
+    keyvaults                    = local.combined_objects_keyvaults
+    logic_app_workflow           = local.combined_objects_logic_app_workflow
+    machine_learning_workspaces  = local.combined_objects_machine_learning
+    managed_identities           = local.combined_objects_managed_identities
+    resource_groups              = local.combined_objects_resource_groups
+    storage_accounts             = local.combined_objects_storage_accounts
+  }
+
+  global_settings = {
+    default_region     = try(var.global_settings.default_region, "region1")
+    environment        = try(var.global_settings.environment, var.environment)
+    inherit_tags       = try(var.global_settings.inherit_tags, false)
+    passthrough        = try(var.global_settings.passthrough, false)
+    prefix             = var.global_settings.prefix
+    prefix_with_hyphen = try(var.global_settings.prefix_with_hyphen, format("%s-", try(var.global_settings.prefixes[0], random_string.prefix.0.result)))
+    prefixes           = var.global_settings.prefix == "" ? null : try(var.global_settings.prefixes, [random_string.prefix.0.result])
+    random_length      = try(var.global_settings.random_length, 0)
+    regions            = var.global_settings.regions
+    tags               = try(var.global_settings.tags, null)
+    use_slug           = try(var.global_settings.use_slug, true)
+  } 
+
+  logic_app = {
+    integration_service_environment = try(var.logic_app.integration_service_environment, {})
+    logic_app_action_custom         = try(var.logic_app.logic_app_action_custom, {})
+    logic_app_action_http           = try(var.logic_app.logic_app_action_http, {})
+    logic_app_integration_account   = try(var.logic_app.logic_app_integration_account, {})
+    logic_app_trigger_custom        = try(var.logic_app.logic_app_trigger_custom, {})
+    logic_app_trigger_http_request  = try(var.logic_app.logic_app_trigger_http_request, {})
+    logic_app_trigger_recurrence    = try(var.logic_app.logic_app_trigger_recurrence, {})
+    logic_app_workflow              = try(var.logic_app.logic_app_workflow, {})
   }
 
   networking = {
     application_gateway_applications                        = try(var.networking.application_gateway_applications, {})
     application_gateways                                    = try(var.networking.application_gateways, {})
+    application_security_groups                             = try(var.networking.application_security_groups, {})
     azurerm_firewall_application_rule_collection_definition = try(var.networking.azurerm_firewall_application_rule_collection_definition, {})
     azurerm_firewall_nat_rule_collection_definition         = try(var.networking.azurerm_firewall_nat_rule_collection_definition, {})
     azurerm_firewall_network_rule_collection_definition     = try(var.networking.azurerm_firewall_network_rule_collection_definition, {})
@@ -100,93 +156,37 @@ locals {
     vnets                                                   = try(var.networking.vnets, {})
   }
 
-  database = {
-    azurerm_redis_caches               = try(var.database.azurerm_redis_caches, {})
-    app_config                         = try(var.database.app_config, {})
-    cosmos_dbs                         = try(var.database.cosmos_dbs, {})
-    databricks_workspaces              = try(var.database.databricks_workspaces, {})
-    machine_learning_workspaces        = try(var.database.machine_learning_workspaces, {})
-    mariadb_databases                  = try(var.database.mariadb_databases, {})
-    mariadb_servers                    = try(var.database.mariadb_servers, {})
-    mssql_databases                    = try(var.database.mssql_databases, {})
-    mssql_elastic_pools                = try(var.database.mssql_elastic_pools, {})
-    mssql_failover_groups              = try(var.database.mssql_failover_groups, {})
-    mssql_managed_databases            = try(var.database.mssql_managed_databases, {})
-    mssql_managed_databases_backup_ltr = try(var.database.mssql_managed_databases_backup_ltr, {})
-    mssql_managed_databases_restore    = try(var.database.mssql_managed_databases_restore, {})
-    mssql_managed_instances            = try(var.database.mssql_managed_instances, {})
-    mssql_managed_instances_secondary  = try(var.database.mssql_managed_instances_secondary, {})
-    mssql_mi_administrators            = try(var.database.mssql_mi_administrators, {})
-    mssql_mi_failover_groups           = try(var.database.mssql_mi_failover_groups, {})
-    mssql_mi_secondary_tdes            = try(var.database.mssql_mi_secondary_tdes, {})
-    mssql_mi_tdes                      = try(var.database.mssql_mi_tdes, {})
-    mssql_servers                      = try(var.database.mssql_servers, {})
-    mysql_databases                    = try(var.database.mysql_databases, {})
-    mysql_servers                      = try(var.database.mysql_servers, {})
-    postgresql_servers                 = try(var.database.postgresql_servers, {})
-    synapse_workspaces                 = try(var.database.synapse_workspaces, {})
-  }
-
-  data_factory = {
-    data_factory                  = try(var.data_factory.data_factory, {})
-    data_factory_trigger_schedule = try(var.data_factory.data_factory_trigger_schedule, {})
-    data_factory_pipeline         = try(var.data_factory.data_factory_pipeline, {})
-    datasets = {
-      azure_blob       = try(var.data_factory.datasets.azure_blob, {})
-      cosmosdb_sqlapi  = try(var.data_factory.datasets.cosmosdb_sqlapi, {})
-      delimited_text   = try(var.data_factory.datasets.delimited_text, {})
-      http             = try(var.data_factory.datasets.http, {})
-      json             = try(var.data_factory.datasets.json, {})
-      mysql            = try(var.data_factory.datasets.mysql, {})
-      postgresql       = try(var.data_factory.datasets.postgresql, {})
-      sql_server_table = try(var.data_factory.datasets.sql_server_table, {})
-    }
-    linked_services = {
-      azure_blob_storage = try(var.data_factory.linked_services.azure_blob_storage, {})
-    }
-  }
-
-  client_config = var.client_config == {} ? {
-    client_id               = data.azurerm_client_config.current.client_id
-    landingzone_key         = var.current_landingzone_key
-    logged_aad_app_objectId = local.object_id
-    logged_user_objectId    = local.object_id
-    landingzone_key         = var.current_landingzone_key
-    object_id               = local.object_id
-    subscription_id         = data.azurerm_client_config.current.subscription_id
-    tenant_id               = data.azurerm_client_config.current.tenant_id
-  } : map(var.client_config)
-
   object_id = coalesce(var.logged_user_objectId, var.logged_aad_app_objectId, try(data.azurerm_client_config.current.object_id, null), try(data.azuread_service_principal.logged_in_app.0.object_id, null))
 
+  security = {
+    disk_encryption_sets          = try(var.security.disk_encryption_sets, {})
+    keyvault_certificate_issuers  = try(var.security.keyvault_certificate_issuers, {})
+    keyvault_certificate_requests = try(var.security.keyvault_certificate_requests, {})
+    keyvault_certificates         = try(var.security.keyvault_certificates, {})
+    keyvault_keys                 = try(var.security.keyvault_keys, {})
+  }
+
+  shared_services = {
+    automations              = try(var.shared_services.automations, {})
+    image_definitions        = try(var.shared_services.image_definitions, {})
+    monitoring               = try(var.shared_services.monitoring, {})
+    packer_managed_identity  = try(var.shared_services.packer_managed_identity, {})
+    packer_service_principal = try(var.shared_services.packer_service_principal, {})
+    recovery_vaults          = try(var.shared_services.recovery_vaults, {})
+    shared_image_galleries   = try(var.shared_services.shared_image_galleries, {})
+  }
+
+  storage = {
+    netapp_accounts       = try(var.storage.netapp_accounts, {})
+    storage_account_blobs = try(var.storage.storage_account_blobs, {})
+  }
+  
   webapp = {
     app_service_environments     = try(var.webapp.app_service_environments, {})
     app_service_plans            = try(var.webapp.app_service_plans, {})
     app_services                 = try(var.webapp.app_services, {})
-    function_apps                = try(var.webapp.function_apps, {})
     azurerm_application_insights = try(var.webapp.azurerm_application_insights, {})
-  }
-
-  logic_app = {
-    integration_service_environment = try(var.logic_app.integration_service_environment, {})
-    logic_app_action_custom         = try(var.logic_app.logic_app_action_custom, {})
-    logic_app_action_http           = try(var.logic_app.logic_app_action_http, {})
-    logic_app_integration_account   = try(var.logic_app.logic_app_integration_account, {})
-    logic_app_trigger_custom        = try(var.logic_app.logic_app_trigger_custom, {})
-    logic_app_trigger_http_request  = try(var.logic_app.logic_app_trigger_http_request, {})
-    logic_app_trigger_recurrence    = try(var.logic_app.logic_app_trigger_recurrence, {})
-    logic_app_workflow              = try(var.logic_app.logic_app_workflow, {})
-  }
-
-  shared_services = {
-    recovery_vaults          = try(var.shared_services.recovery_vaults, {})
-    automations              = try(var.shared_services.automations, {})
-    monitoring               = try(var.shared_services.monitoring, {})
-    shared_image_galleries   = try(var.shared_services.shared_image_galleries, {})
-    image_definitions        = try(var.shared_services.image_definitions, {})
-    packer_service_principal = try(var.shared_services.packer_service_principal, {})
-    packer_managed_identity  = try(var.shared_services.packer_managed_identity, {})
-
+    function_apps                = try(var.webapp.function_apps, {})
   }
 
   enable = {

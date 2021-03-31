@@ -12,7 +12,7 @@ function cancel_order {
 orderIDs=$(echo ${orders} | xq -r '."soap:Envelope"."soap:Body"."ns2:GetCertificateOrdersResponse".Response.SearchOrderDetails.SearchOrderDetail | if type == "array" then .[] else . end | select( .OrderStatus != "3" and .OrderStatus != "5") | .OrderID' 2>/dev/null)
 
 if [[ ! -z "${orderIDs}" ]]; then
-  
+
   # Process the order cancellation
   for orderID in ${orderIDs}; do
     echo "Cancelling orderID: ${orderID}"

@@ -33,7 +33,7 @@ resource "azurerm_bastion_host" "host" {
   }
 }
 
-module bastion_host_diagnostics {
+module "bastion_host_diagnostics" {
   source   = "./modules/diagnostics"
   for_each = try(local.compute.bastion_hosts, {})
 

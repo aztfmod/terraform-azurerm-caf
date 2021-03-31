@@ -1,40 +1,44 @@
-output id {
+output "id" {
   value = azurerm_storage_account.stg.id
 }
 
-output name {
+output "name" {
   value = azurerm_storage_account.stg.name
 }
 
-output location {
+output "location" {
   value = var.location
 
 }
 
-output resource_group_name {
+output "resource_group_name" {
   value = var.resource_group_name
 }
 
-output primary_blob_endpoint {
+output "primary_blob_endpoint" {
   value = azurerm_storage_account.stg.primary_blob_endpoint
 }
 
-output containers {
+output "containers" {
   value = module.container
 }
 
-output data_lake_filesystems {
+output "data_lake_filesystems" {
   value = module.data_lake_filesystem
 }
 
-output primary_access_key {
+output "primary_access_key" {
   value = azurerm_storage_account.stg.primary_access_key
 }
 
-output primary_connection_string {
+output "primary_connection_string" {
   value = azurerm_storage_account.stg.primary_connection_string
 }
 
-output identity {
-  value = azurerm_storage_account.stg.identity
+output "identity" {
+  value = try(azurerm_storage_account.stg.identity, null)
+}
+
+output "rbac_id" {
+  value = try(azurerm_storage_account.stg.identity.0, null)
 }

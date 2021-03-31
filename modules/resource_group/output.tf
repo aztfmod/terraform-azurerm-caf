@@ -1,22 +1,22 @@
-output name {
+output "name" {
   value = azurerm_resource_group.rg.name
 
 }
 
-output location {
+output "location" {
   value = azurerm_resource_group.rg.location
 
 }
 
-output tags {
+output "tags" {
   value = azurerm_resource_group.rg.tags
 
 }
 
-output rbac_id {
+output "rbac_id" {
   value = azurerm_resource_group.rg.id
 }
 
-output id {
+output "id" {
   value = azurerm_resource_group.rg.id
 }

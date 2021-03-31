@@ -11,7 +11,7 @@ subscription_id=$(az account show --query id -o tsv)
 if [ ${user_type} == "user" ]; then
 
   az login --tenant ${tenant_id} --use-device-code --allow-no-subscriptions > /dev/null
-  
+
 else
 
   user_name=$(az account show --query user.name -o tsv)
@@ -19,7 +19,7 @@ else
 
   case "${user_name}" in
     "systemAssignedIdentity")
-      az login --identity --allow-no-subscription 
+      az login --identity --allow-no-subscription
       ;;
     "userAssignedIdentity")
       msi=$(az account show --query user.assignedIdentityInfo -o tsv)

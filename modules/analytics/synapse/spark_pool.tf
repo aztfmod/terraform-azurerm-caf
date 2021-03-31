@@ -1,4 +1,4 @@
-module spark_pool {
+module "spark_pool" {
   source   = "./spark_pool"
   for_each = try(var.settings.synapse_spark_pools, {})
 

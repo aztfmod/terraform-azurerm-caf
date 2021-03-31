@@ -1,20 +1,20 @@
-variable global_settings {
+variable "global_settings" {
   default = {}
 }
-variable settings {
+variable "settings" {
   default = {}
 }
-variable azuread_api_permissions {
+variable "azuread_api_permissions" {
   default = {}
 }
-variable client_config {
+variable "client_config" {
   description = "Client configuration object (see module README.md)."
 }
-variable user_type {}
-variable keyvaults {
+variable "user_type" {}
+variable "keyvaults" {
   default = {}
 }
-variable password_policy {
+variable "password_policy" {
   description = "Default password policy applies when not set in tfvars."
   default = {
     # Length of the password

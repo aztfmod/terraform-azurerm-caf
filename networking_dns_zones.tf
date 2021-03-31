@@ -1,4 +1,4 @@
-module dns_zones {
+module "dns_zones" {
   source   = "./modules/networking/dns_zone"
   for_each = try(local.networking.dns_zones, {})
 
@@ -13,14 +13,14 @@ module dns_zones {
   }
 }
 
-output dns_zones {
+output "dns_zones" {
   value = module.dns_zones
 }
 
 #
 # Create records on remote DNS zones
 #
-module dns_zone_records {
+module "dns_zone_records" {
   source     = "./modules/networking/dns_zone/records"
   for_each   = try(local.networking.dns_zone_records, {})
   depends_on = [module.dns_zones]
@@ -37,6 +37,6 @@ module dns_zone_records {
 }
 
 
-output dns_zone_records {
+output "dns_zone_records" {
   value = module.dns_zone_records
 }

@@ -1,36 +1,36 @@
-variable global_settings {
+variable "global_settings" {
   default = {}
 }
 
-variable resource_groups {
+variable "resource_groups" {
   default = null
 }
 
-variable network_security_group_definition {
+variable "network_security_group_definition" {
   default = {}
 }
 
-variable application_gateways {
+variable "application_gateways" {
   default = {}
 }
 
-variable vnets {
+variable "vnets" {
   default = {}
 }
 
-variable public_ip_addresses {
+variable "public_ip_addresses" {
   default = {}
 }
 
-variable application_gateway_applications {
+variable "application_gateway_applications" {
   default = {}
 }
 
-variable tags {
+variable "tags" {
   default = null
-  type    = map
+  type    = map(any)
 }
 
-variable var_folder_path {
+variable "var_folder_path" {
   default = {}
 }

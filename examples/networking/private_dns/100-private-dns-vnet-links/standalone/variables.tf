@@ -1,30 +1,30 @@
-variable global_settings {
+variable "global_settings" {
   default = {}
 }
 
-variable resource_groups {
+variable "resource_groups" {
   default = null
 }
 
 
-variable vnets {
+variable "vnets" {
   default = {}
 }
 
-variable private_dns {
+variable "private_dns" {
   default = {}
 }
 
 
-variable tags {
+variable "tags" {
   default = null
-  type    = map
+  type    = map(any)
 }
 
-variable logged_aad_app_objectId {
+variable "logged_aad_app_objectId" {
   default = {}
 }
 
-variable var_folder_path {
+variable "var_folder_path" {
   default = {}
 }
