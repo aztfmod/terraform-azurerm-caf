@@ -37,7 +37,7 @@ module "virtual_network_gateway_connections" {
   express_route_circuit_id = try(coalesce(
       try(module.express_route_circuits[each.value.express_route_circuit_key].id, null),
       try(module.express_route_circuits[each.value.express_route_circuit.key].id, null),
-      try(module.express_route_circuits[each.value.express_route_circuit.id], null)
+      try(each.value.express_route_circuit.id, null)
     ),
     null
   )
