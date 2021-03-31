@@ -13,7 +13,7 @@ resource "azurerm_virtual_network_gateway_connection" "vngw_connection" {
   location            = var.location
   resource_group_name = var.resource_group_name
   #only ExpressRoute and IPSec are supported. Vnet2Vnet is excluded.
-  type                       = var.express_route_circuit_id != null ? "ExpressRoute" : var.settings.type
+  type                       = var.settings.type
   virtual_network_gateway_id = var.virtual_network_gateway_id
 
   # The following arguments are applicable only if the type is ExpressRoute
