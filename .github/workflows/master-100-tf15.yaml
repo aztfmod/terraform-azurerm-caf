@@ -31,11 +31,17 @@ jobs:
           random_length: ['5']
 
     container:
-      image: aztfmod/rover:0.15.0-beta1-2103.1601
+      image: aztfmod/rover:0.15.0-beta2-2103.3107
       options: --user 0
 
     steps:
       - uses: actions/checkout@v2
+
+      - uses: actions/checkout@v2
+        with:
+          repository: Azure/caf-terraform-landingzones
+          path: public
+          ref: '5.3.0.preview3'
 
       - name: Login azure
         run: |
@@ -46,8 +52,8 @@ jobs:
 
       - name: launchpad
         run: |
-          /tf/rover/rover.sh -lz ${GITHUB_WORKSPACE}/landingzones/caf_launchpad -a apply \
-            -var-folder ${GITHUB_WORKSPACE}/landingzones/caf_launchpad/scenario/100 \
+          /tf/rover/rover.sh -lz ${GITHUB_WORKSPACE}/public/caf_launchpad -a apply \
+            -var-folder ${GITHUB_WORKSPACE}/public/caf_launchpad/scenario/100 \
             -level level0 \
             -launchpad \
             -parallelism=30 \
@@ -125,7 +131,12 @@ jobs:
             "networking/virtual_network/100-subnet-delegation",
             "networking/virtual_network/101-vnet-peering-nsg",
             "networking/virtual_wan/100-vwan-multi-hubs",
-            "networking/virtual_wan/101-vwan-multi-hubs-firewalls",
+            "networking/virtual_wan/101-vwan-hub-firewall-legacy",
+            "networking/virtual_wan/102-vwan-hub-firewall-new",
+            "networking/virtual_wan/103-vwan-hub-gw",
+            "networking/virtual_wan/104-vwan-hub-gw-spp",
+            "networking/virtual_wan/105-vwan-hub-route-table",
+            "networking/virtual_wan/106-vwan-hub-routes",
             "postgresql_server/100-simple-postgresql",
             "postgresql_server/101-vnet-rule-postgresql",
             "postgresql_server/102-private-endpoint-postgresql",
@@ -145,7 +156,7 @@ jobs:
           ]
 
     container:
-      image: aztfmod/rover:0.15.0-beta1-2103.1601
+      image: aztfmod/rover:0.15.0-beta2-2103.3107
       options: --user 0
 
     steps:
@@ -190,11 +201,18 @@ jobs:
           region: ["southeastasia"]
 
     container:
-      image: aztfmod/rover:0.15.0-beta1-2103.1601
+      image: aztfmod/rover:0.15.0-beta2-2103.3107
       options: --user 0
 
     steps:
       - uses: actions/checkout@v2
+
+      - uses: actions/checkout@v2
+        with:
+          repository: Azure/caf-terraform-landingzones
+          path: public
+          ref: '5.3.0.preview3'
+
       - name: Login azure
         run: |
           az login --service-principal -u '${{ env.ARM_CLIENT_ID }}' -p '${{ env.ARM_CLIENT_SECRET }}' --tenant '${{ env.ARM_TENANT_ID }}'
@@ -205,9 +223,9 @@ jobs:
       - name: Remove launchpad
         run: |
 
-          /tf/rover/rover.sh -lz ${GITHUB_WORKSPACE}/landingzones/caf_launchpad/ -a destroy \
+          /tf/rover/rover.sh -lz ${GITHUB_WORKSPACE}/public/caf_launchpad/ -a destroy \
             -level level0 \
-            -var-folder ${GITHUB_WORKSPACE}/landingzones/caf_launchpad/scenario/100 \
+            -var-folder ${GITHUB_WORKSPACE}/public/caf_launchpad/scenario/100 \
             -launchpad \
             --environment ${{ github.run_id }} \
             -parallelism=30 \

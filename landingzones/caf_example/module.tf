@@ -49,6 +49,8 @@ module "example" {
     azurerm_firewall_application_rule_collection_definition = var.azurerm_firewall_application_rule_collection_definition
     azurerm_firewall_nat_rule_collection_definition         = var.azurerm_firewall_nat_rule_collection_definition
     azurerm_firewall_network_rule_collection_definition     = var.azurerm_firewall_network_rule_collection_definition
+    azurerm_firewall_policies                               = var.azurerm_firewall_policies
+    azurerm_firewall_policy_rule_collection_groups          = var.azurerm_firewall_policy_rule_collection_groups
     azurerm_firewalls                                       = var.azurerm_firewalls
     azurerm_routes                                          = var.azurerm_routes
     dns_zone_records                                        = var.dns_zone_records

@@ -354,6 +354,13 @@ variable "application_security_groups" {
   default = {}
 }
 
+variable "azurerm_firewall_policies" {
+  default = {}
+}
+
+variable "azurerm_firewall_policy_rule_collection_groups" {
+  default = {}
+}
 variable "disk_encryption_sets" {
   default = {}
 }
