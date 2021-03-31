@@ -137,6 +137,9 @@ variable "keyvault_keys" {
 variable "keyvault_certificate_requests" {
   default = {}
 }
+variable "keyvault_certificates" {
+  default = {}
+}
 variable "virtual_machines" {
   default = {}
 }
