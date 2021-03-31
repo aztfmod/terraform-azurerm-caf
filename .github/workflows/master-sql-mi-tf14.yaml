@@ -37,7 +37,7 @@ jobs:
           random_length: ['5']
 
     container:
-      image: aztfmod/rover-preview:0.14.8-2103.242218
+      image: aztfmod/rover:0.14.9-2103.3107
       options: --user 0
 
     steps:
@@ -78,7 +78,7 @@ jobs:
           ]
 
     container:
-      image: aztfmod/rover-preview:0.14.8-2103.242218
+      image: aztfmod/rover:0.14.9-2103.3107
       options: --user 0
 
     steps:
@@ -91,7 +91,7 @@ jobs:
 
       - name: deploy example
         run: |
-          /tf/rover/rover.sh -lz ${GITHUB_WORKSPACE}/landingzones/caf_solution -a apply \
+          /tf/rover/rover.sh -lz ${GITHUB_WORKSPACE}/landingzones/caf_example -a apply \
             -level level1 \
             -tfstate $(basename ${{ matrix.config_files }}).tfstate \
             -var-folder ${GITHUB_WORKSPACE}/${{ matrix.config_files }} \
@@ -100,7 +100,7 @@ jobs:
       - name: destroy example
         if: always()
         run: |
-          /tf/rover/rover.sh -lz ${GITHUB_WORKSPACE}/landingzones/caf_solution -a destroy \
+          /tf/rover/rover.sh -lz ${GITHUB_WORKSPACE}/landingzones/caf_example -a destroy \
             -level level1 \
             -tfstate $(basename ${{ matrix.config_files }}).tfstate \
             -var-folder ${GITHUB_WORKSPACE}/${{ matrix.config_files }} \
@@ -120,7 +120,7 @@ jobs:
           region: ["southeastasia"]
 
     container:
-      image: aztfmod/rover-preview:0.14.8-2103.242218
+      image: aztfmod/rover:0.14.9-2103.3107
       options: --user 0
 
     steps:

@@ -3,6 +3,7 @@ global_settings = {
   prefix         = null
   regions = {
     region1 = "southeastasia"
+    region2 = "eastasia"
   }
 }
 
@@ -33,18 +34,18 @@ virtual_wans = {
         er_config          = {}
       }
 
-      # hub_re2 = {
-      #   hub_name                    = "hub-re2"
-      #   region                      = "region2"
-      #   hub_address_prefix          = "10.0.4.0/24"
-      #   deploy_firewall             = false
-      #   deploy_p2s                  = false
-      #   p2s_config                  = {}
-      #   deploy_s2s                  = false
-      #   s2s_config                  = {}
-      #   deploy_er                   = false
-      #   er_config                   = {}
-      # }
+      hub_re2 = {
+        hub_name           = "hub-re2"
+        region             = "region2"
+        hub_address_prefix = "10.0.4.0/24"
+        deploy_firewall    = false
+        deploy_p2s         = false
+        p2s_config         = {}
+        deploy_s2s         = false
+        s2s_config         = {}
+        deploy_er          = false
+        er_config          = {}
+      }
     }
   }
 }

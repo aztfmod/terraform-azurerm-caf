@@ -137,6 +137,9 @@ variable "keyvault_keys" {
 variable "keyvault_certificate_requests" {
   default = {}
 }
+variable "keyvault_certificates" {
+  default = {}
+}
 variable "virtual_machines" {
   default = {}
 }
@@ -354,6 +357,23 @@ variable "application_security_groups" {
   default = {}
 }
 
+variable "azurerm_firewall_policies" {
+  default = {}
+}
+
+variable "azurerm_firewall_policy_rule_collection_groups" {
+  default = {}
+}
 variable "disk_encryption_sets" {
+  default = {}
+}
+variable "vhub_peerings" {
+  default     = {}
+  description = "Use virtual_hub_connections instead of vhub_peerings. It will be removed in version 6.0"
+}
+variable "virtual_hub_connections" {
+  default = {}
+}
+variable "virtual_hub_route_tables" {
   default = {}
 }

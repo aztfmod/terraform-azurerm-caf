@@ -20,6 +20,9 @@ application_gateway_applications = {
         request_routing_rule_key       = "default"
         keyvault_certificate = {
           certificate_key = "demoapp1.cafdemo.com"
+          // To use manual uploaded cert
+          # certificate_name = "testkhairi"
+          # keyvault_key     = "certificates"
         }
       }
       public_ssl = {
@@ -30,6 +33,9 @@ application_gateway_applications = {
         request_routing_rule_key       = "default"
         keyvault_certificate = {
           certificate_key = "demoapp1.cafdemo.com"
+          // To use manual uploaded cert
+          # certificate_name = "testkhairi"
+          # keyvault_key     = "certificates"
         }
       }
     }
