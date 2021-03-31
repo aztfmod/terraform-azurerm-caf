@@ -31,15 +31,6 @@ virtual_wans = {
         s2s_config         = {}
         deploy_er          = false
         er_config          = {}
-        vnet_connections = {
-          con1 = {
-            name     = "vnet-con1"
-            vnet_key = "vnet_region1"
-            #lz_key = "lzkey"
-            #to cather for external object
-            #vnet_id = "Azure_Resource_ID"
-          }
-        }
         hub_ip = {
           ip1 = {
             name                         = "example-vhubipconfig"
@@ -93,3 +84,28 @@ vnets = {
 
   }
 }
+
+
+virtual_hub_connections = {
+
+  # Establish the peering with Virtual Hubs
+
+  con1 = {
+    name                      = "vnet1-con1"
+    internet_security_enabled = true
+
+    vhub = {
+      virtual_wan_key = "vwan_re1"
+      virtual_hub_key = "hub_re1"
+    }
+
+    vnet = {
+      # If the virtual network is stored in another another landing zone, use the following attributes to refer the state file:
+      vnet_key = "vnet_region1"
+    }
+
+  }
+
+
+}
+
