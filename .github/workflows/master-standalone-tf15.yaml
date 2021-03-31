@@ -112,7 +112,7 @@ jobs:
           ]
 
     container:
-      image: aztfmod/rover:0.15.0-beta1-2103.1601
+      image: aztfmod/rover:0.15.0-beta2-2103.3107
       options: --user 0
 
     steps:
