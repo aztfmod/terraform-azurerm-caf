@@ -90,7 +90,6 @@ jobs:
             "networking/virtual_wan/104-vwan-hub-gw-spp",
             "networking/virtual_wan/105-vwan-hub-route-table",
             "networking/virtual_wan/106-vwan-hub-routes",
-            "networking/virtual_wan/107-vwan-hub-public-ip",
             "networking/ip_group/100-simple-ip_group",
             "networking/ip_group/101-firewall-ip_group",
             "postgresql_server/100-simple-postgresql",

@@ -106,7 +106,6 @@ jobs:
             "networking/virtual_wan/104-vwan-hub-gw-spp",
             "networking/virtual_wan/105-vwan-hub-route-table",
             "networking/virtual_wan/106-vwan-hub-routes",
-            "networking/virtual_wan/107-vwan-hub-public-ip",
             "postgresql_server/100-simple-postgresql",
             "postgresql_server/101-vnet-rule-postgresql",
             "postgresql_server/102-private-endpoint-postgresql",
