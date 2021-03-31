@@ -34,7 +34,7 @@ module "virtual_network_gateway_connections" {
   virtual_network_gateway_id = {
     coalesce(
       try(module.virtual_network_gateways[each.value.virtual_network_gateway_key].id, null),
-      try(module.virtual_wans[each.value.vwan_key].virtual_hubs[each.value.vhub_key].er_gateway.id, null)
+      try(module.virtual_wans[each.value.virtual_wan_key].virtual_hubs[each.value.virtual_hub_key].er_gateway.id, null)
     )
   }
   express_route_circuit_id = {
