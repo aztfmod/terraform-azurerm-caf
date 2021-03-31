@@ -37,16 +37,6 @@ virtual_wans = {
   }
 }
 
-public_ip_addresses = {
-  pip1 = {
-    name                    = "pip1"
-    resource_group_key      = "hub_re1"
-    sku                     = "Standard" # must be 'Standard' SKU
-    allocation_method       = "Static"
-    ip_version              = "IPv4"
-    idle_timeout_in_minutes = "4"
-  }
-}
 
 azurerm_firewalls = {
   firewall1 = {
@@ -55,7 +45,6 @@ azurerm_firewalls = {
     sku_tier           = "Premium"
     resource_group_key = "hub_re1"
     vnet_key           = "vnet1"
-    public_ip_key      = "pip1"
     virtual_hub = {
       hub1 = {
         virtual_wan_key = "vwan_re1"

@@ -1,6 +1,7 @@
 module "azurerm_firewalls" {
   depends_on = [
-    module.azurerm_firewall_policies
+    module.azurerm_firewall_policies,
+    module.azurerm_firewall_policy_rule_collection_groups
   ]
   source   = "./modules/networking/firewall"
   for_each = local.networking.azurerm_firewalls
