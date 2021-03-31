@@ -367,3 +367,13 @@ variable "azurerm_firewall_policy_rule_collection_groups" {
 variable "disk_encryption_sets" {
   default = {}
 }
+variable "vhub_peerings" {
+  default = {}
+  description = "Use virtual_hub_connections instead of vhub_peerings. It will be removed in version 6.0"
+}
+variable "virtual_hub_connections" {
+  default = {}
+}
+variable "virtual_hub_route_tables" {
+  default = {}
+}
