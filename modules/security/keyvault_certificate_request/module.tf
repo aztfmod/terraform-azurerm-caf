@@ -25,7 +25,7 @@ resource "azurerm_key_vault_certificate" "csr" {
       content_type = var.settings.certificate_policy.content_type
     }
 
-    dynamic x509_certificate_properties {
+    dynamic "x509_certificate_properties" {
       for_each = try(var.settings.certificate_policy.x509_certificate_properties[*], {})
 
       content {
@@ -35,7 +35,7 @@ resource "azurerm_key_vault_certificate" "csr" {
         subject            = try(x509_certificate_properties.value.subject, "CN=${try("${x509_certificate_properties.value.domain_name_registration.subdomain}.", "")}${var.domain_name_registrations[x509_certificate_properties.value.domain_name_registration.key].dns_domain_registration_name}")
         validity_in_months = x509_certificate_properties.value.validity_in_months
 
-        dynamic subject_alternative_names {
+        dynamic "subject_alternative_names" {
           for_each = try(x509_certificate_properties.value.subject_alternative_names, null) == null ? [] : [1]
 
           content {

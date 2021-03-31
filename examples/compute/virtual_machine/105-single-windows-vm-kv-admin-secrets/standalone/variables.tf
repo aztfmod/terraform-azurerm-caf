@@ -27,7 +27,7 @@ variable "resource_groups" {
   default = null
 }
 variable "network_security_group_definition" {
-  default = null
+  default = {}
 }
 variable "vnets" {
   default = {}
@@ -108,5 +108,11 @@ variable "application_gateway_applications" {
   default = {}
 }
 variable "dynamic_keyvault_secrets" {
+  default = {}
+}
+variable "disk_encryption_sets" {
+  default = {}
+}
+variable "keyvault_keys" {
   default = {}
 }

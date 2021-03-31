@@ -45,6 +45,7 @@ module "example" {
   networking = {
     application_gateway_applications                        = var.application_gateway_applications
     application_gateways                                    = var.application_gateways
+    application_security_groups                             = var.application_security_groups
     azurerm_firewall_application_rule_collection_definition = var.azurerm_firewall_application_rule_collection_definition
     azurerm_firewall_nat_rule_collection_definition         = var.azurerm_firewall_nat_rule_collection_definition
     azurerm_firewall_network_rule_collection_definition     = var.azurerm_firewall_network_rule_collection_definition
@@ -113,6 +114,7 @@ module "example" {
   }
 
   security = {
+    disk_encryption_sets          = var.disk_encryption_sets
     dynamic_keyvault_secrets      = var.dynamic_keyvault_secrets
     keyvault_certificate_issuers  = var.keyvault_certificate_issuers
     keyvault_certificate_requests = var.keyvault_certificate_requests

@@ -1,68 +1,68 @@
-variable global_settings {
+variable "global_settings" {
   default = {}
 }
 
-variable resource_groups {
+variable "resource_groups" {
   default = null
 }
 
-variable tags {
+variable "tags" {
   default = null
-  type    = map
+  type    = map(any)
 }
 
-variable keyvault_certificate_requests {
+variable "keyvault_certificate_requests" {
   default = {}
 }
 
-variable keyvaults {
+variable "keyvaults" {
   default = {}
 }
 
-variable dynamic_keyvault_secrets {
+variable "dynamic_keyvault_secrets" {
   default = {}
 }
 
-variable vnets {
+variable "vnets" {
   default = {}
 }
 
-variable network_security_group_definition {
+variable "network_security_group_definition" {
   default = {}
 }
 
-variable public_ip_addresses {
+variable "public_ip_addresses" {
   default = {}
 }
 
-variable dns_zones {
+variable "dns_zones" {
   default = {}
 }
 
-variable front_door_waf_policies {
+variable "front_door_waf_policies" {
   default = {}
 }
 
-variable front_doors {
+variable "front_doors" {
   default = {}
 }
 
-variable diagnostic_storage_accounts {
+variable "diagnostic_storage_accounts" {
   default = {}
 }
 
-variable diagnostics_definition {
+variable "diagnostics_definition" {
   default = {}
 }
 
-variable diagnostics_destinations {
+variable "diagnostics_destinations" {
   default = {}
 }
 
-variable keyvault_certificate_issuers {
+variable "keyvault_certificate_issuers" {
   default = {}
 }
 
-variable var_folder_path {
+variable "var_folder_path" {
   default = {}
 }

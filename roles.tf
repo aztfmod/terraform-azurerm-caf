@@ -1,4 +1,4 @@
-module custom_roles {
+module "custom_roles" {
   source   = "./modules/roles/custom_roles"
   for_each = var.custom_role_definitions
 

@@ -1,3 +1,3 @@
 
-variable key {}
-variable keyvault {}
+variable "key" {}
+variable "keyvault" {}

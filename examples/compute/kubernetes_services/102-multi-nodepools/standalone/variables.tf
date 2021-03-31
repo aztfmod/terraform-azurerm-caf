@@ -1,44 +1,44 @@
-variable global_settings {
+variable "global_settings" {
   default = {}
 }
 
-variable resource_groups {
+variable "resource_groups" {
   default = null
 }
 
-variable role_mapping {
+variable "role_mapping" {
   default = {}
 }
 
-variable tags {
+variable "tags" {
   default = null
-  type    = map
+  type    = map(any)
 }
 
-variable aks_clusters {
+variable "aks_clusters" {
   default = {}
 }
 
-variable azure_container_registries {
+variable "azure_container_registries" {
   default = {}
 }
 
-variable diagnostic_log_analytics {
+variable "diagnostic_log_analytics" {
   default = {}
 }
 
-variable virtual_machines {
+variable "virtual_machines" {
   default = {}
 }
 
-variable network_security_group_definition {
+variable "network_security_group_definition" {
   default = {}
 }
 
-variable vnets {
+variable "vnets" {
   default = {}
 }
 
-variable var_folder_path {
+variable "var_folder_path" {
   default = {}
 }

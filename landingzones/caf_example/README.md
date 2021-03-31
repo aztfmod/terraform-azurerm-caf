@@ -118,6 +118,7 @@ No resources.
 | app\_services | n/a | `map` | `{}` | no |
 | application\_gateway\_applications | n/a | `map` | `{}` | no |
 | application\_gateways | n/a | `map` | `{}` | no |
+| application\_security\_groups | n/a | `map` | `{}` | no |
 | automations | n/a | `map` | `{}` | no |
 | availability\_sets | n/a | `map` | `{}` | no |
 | azure\_container\_registries | n/a | `map` | `{}` | no |
@@ -146,6 +147,7 @@ No resources.
 | diagnostic\_storage\_accounts | n/a | `map` | `{}` | no |
 | diagnostics\_definition | n/a | `any` | `null` | no |
 | diagnostics\_destinations | n/a | `map` | `{}` | no |
+| disk\_encryption\_sets | n/a | `map` | `{}` | no |
 | dns\_zone\_records | n/a | `map` | `{}` | no |
 | dns\_zones | n/a | `map` | `{}` | no |
 | domain\_name\_registrations | n/a | `map` | `{}` | no |

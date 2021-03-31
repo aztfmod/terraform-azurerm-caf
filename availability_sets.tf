@@ -1,4 +1,4 @@
-module availability_sets {
+module "availability_sets" {
   source   = "./modules/compute/availability_set"
   for_each = local.compute.availability_sets
 
@@ -17,7 +17,7 @@ module availability_sets {
 
 
 
-output availability_sets {
+output "availability_sets" {
   value = module.availability_sets
 
 }

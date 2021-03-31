@@ -1,4 +1,4 @@
-module cassandra_keyspaces {
+module "cassandra_keyspaces" {
   source   = "./cassandra_keyspace"
   for_each = try(var.settings.cassandra_keyspaces, {})
 
@@ -9,7 +9,7 @@ module cassandra_keyspaces {
   cosmosdb_account_name = azurerm_cosmosdb_account.cosmos_account.name
 }
 
-output cassandra_keyspaces {
+output "cassandra_keyspaces" {
   value = module.cassandra_keyspaces
 
 }

@@ -1,5 +1,5 @@
 
-module nsg_flows {
+module "nsg_flows" {
   source = "./flow_logs"
   for_each = {
     for key, subnet in var.subnets : key => subnet

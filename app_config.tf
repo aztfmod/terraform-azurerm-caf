@@ -1,4 +1,4 @@
-module app_config {
+module "app_config" {
   source   = "./modules/databases/app_config"
   for_each = local.database.app_config
   name     = each.value.name
@@ -13,6 +13,6 @@ module app_config {
   tags                = try(each.value.tags, {})
 }
 
-output app_config {
-  value     = module.app_config
+output "app_config" {
+  value = module.app_config
 }

@@ -1,2 +1,2 @@
-variable settings {}
-variable storage_account_id {}
+variable "settings" {}
+variable "storage_account_id" {}

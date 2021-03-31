@@ -1,5 +1,5 @@
 
-output client_config {
+output "client_config" {
   value = {
     tenant_id       = local.client_config.tenant_id
     subscription_id = local.client_config.subscription_id
@@ -8,6 +8,6 @@ output client_config {
 
 }
 
-output global_settings {
+output "global_settings" {
   value = local.global_settings
 }

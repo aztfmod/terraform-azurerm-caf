@@ -1,25 +1,25 @@
-variable global_settings {
+variable "global_settings" {
   default = {}
 }
 
-variable resource_groups {
+variable "resource_groups" {
   default = null
 }
 
-variable vnets {
+variable "vnets" {
   default = {}
 }
 
-variable tags {
+variable "tags" {
   default = null
-  type    = map
+  type    = map(any)
 }
 
-variable public_ip_addresses {
+variable "public_ip_addresses" {
   default = {}
 }
 
-variable virtual_network_gateways {
+variable "virtual_network_gateways" {
   default = {}
 }
 
@@ -27,17 +27,17 @@ variable virtual_network_gateways {
 #   default = {}
 # }
 
-variable load_balancers {
+variable "load_balancers" {
   default = {}
 }
 
-variable load_balancer_rules {
+variable "load_balancer_rules" {
   default = {}
 }
 
-variable load_balancer_probe {
+variable "load_balancer_probe" {
   default = {}
 }
-variable var_folder_path {
+variable "var_folder_path" {
   default = {}
 }
