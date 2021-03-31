@@ -131,6 +131,8 @@ No resources.
 | azurerm\_firewall\_application\_rule\_collection\_definition | n/a | `map` | `{}` | no |
 | azurerm\_firewall\_nat\_rule\_collection\_definition | n/a | `map` | `{}` | no |
 | azurerm\_firewall\_network\_rule\_collection\_definition | n/a | `map` | `{}` | no |
+| azurerm\_firewall\_policies | n/a | `map` | `{}` | no |
+| azurerm\_firewall\_policy\_rule\_collection\_groups | n/a | `map` | `{}` | no |
 | azurerm\_firewalls | n/a | `map` | `{}` | no |
 | azurerm\_redis\_caches | n/a | `map` | `{}` | no |
 | azurerm\_routes | n/a | `map` | `{}` | no |

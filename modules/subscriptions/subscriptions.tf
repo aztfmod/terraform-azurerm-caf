@@ -25,7 +25,7 @@ resource "null_resource" "refresh_access_token" {
   }
 
   provisioner "local-exec" {
-    command     = format("%s/modules/subscriptions/scripts/refresh_access_token.sh", path.module)
+    command     = format("%s/scripts/refresh_access_token.sh", path.module)
     interpreter = ["/bin/bash"]
     on_failure  = fail
   }

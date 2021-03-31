@@ -18,7 +18,8 @@ variable "resource_group_name" {
 }
 
 variable "subnet_id" {
-  description = "(Required) ID for the subnet where to deploy the Azure Firewall "
+  description = "(Required) ID for the subnet where to deploy the Azure Firewall"
+  default     = null
 }
 
 variable "public_ip_id" {
@@ -45,5 +46,21 @@ variable "public_ip_addresses" {
 }
 
 variable "public_ip_keys" {
+  default = {}
+}
 
+variable "virtual_wans" {
+  default = {}
+}
+
+variable "virtual_networks" {
+
+}
+
+variable "client_config" {
+  default = {}
+}
+
+variable "firewall_policies" {
+  default = {}
 }
