@@ -1,5 +1,5 @@
 resource "random_string" "prefix" {
-  count   = try(var.global_settings.prefix, null) == null || try(var.global_settings.prefix, null) == ""  || try(var.global_settings.prefixes, null) == null ? 1 : 0
+  count   = try(var.global_settings.prefix, null) == null || try(var.global_settings.prefix, null) == "" || try(var.global_settings.prefixes, null) == null ? 1 : 0
   length  = 4
   special = false
   upper   = false
@@ -9,25 +9,25 @@ resource "random_string" "prefix" {
 locals {
 
   dynamic_app_settings_combined_objects = {
-      app_config                  = local.combined_objects_app_config
-      keyvaults                   = local.combined_objects_keyvaults
-      machine_learning_workspaces = local.combined_objects_machine_learning
-      managed_identities          = local.combined_objects_managed_identities
-      storage_accounts            = local.combined_objects_storage_accounts
-      azure_container_registries   = local.combined_objects_azure_container_registries
-      client_config               = tomap({ (local.client_config.landingzone_key) = {config = local.client_config} })
+    app_config                  = local.combined_objects_app_config
+    keyvaults                   = local.combined_objects_keyvaults
+    machine_learning_workspaces = local.combined_objects_machine_learning
+    managed_identities          = local.combined_objects_managed_identities
+    storage_accounts            = local.combined_objects_storage_accounts
+    azure_container_registries  = local.combined_objects_azure_container_registries
+    client_config               = tomap({ (local.client_config.landingzone_key) = { config = local.client_config } })
   }
 
   dynamic_app_config_combined_objects = {
-      keyvaults                    = local.combined_objects_keyvaults
-      machine_learning_workspaces  = local.combined_objects_machine_learning
-      azure_container_registries   = local.combined_objects_azure_container_registries
-      logic_app_workflow           = local.combined_objects_logic_app_workflow
-      resource_groups              = local.combined_objects_resource_groups
-      storage_accounts             = local.combined_objects_storage_accounts
-      client_config                = tomap({ (local.client_config.landingzone_key) = {config = local.client_config} })
-      managed_identities           = local.combined_objects_managed_identities
-      azurerm_application_insights = tomap({ (local.client_config.landingzone_key) = module.azurerm_application_insights })
+    keyvaults                    = local.combined_objects_keyvaults
+    machine_learning_workspaces  = local.combined_objects_machine_learning
+    azure_container_registries   = local.combined_objects_azure_container_registries
+    logic_app_workflow           = local.combined_objects_logic_app_workflow
+    resource_groups              = local.combined_objects_resource_groups
+    storage_accounts             = local.combined_objects_storage_accounts
+    client_config                = tomap({ (local.client_config.landingzone_key) = { config = local.client_config } })
+    managed_identities           = local.combined_objects_managed_identities
+    azurerm_application_insights = tomap({ (local.client_config.landingzone_key) = module.azurerm_application_insights })
   }
 
   global_settings = {
@@ -72,6 +72,8 @@ locals {
     azurerm_firewall_application_rule_collection_definition = try(var.networking.azurerm_firewall_application_rule_collection_definition, {})
     azurerm_firewall_nat_rule_collection_definition         = try(var.networking.azurerm_firewall_nat_rule_collection_definition, {})
     azurerm_firewall_network_rule_collection_definition     = try(var.networking.azurerm_firewall_network_rule_collection_definition, {})
+    azurerm_firewall_policies                               = try(var.networking.azurerm_firewall_policies, {})
+    azurerm_firewall_policy_rule_collection_groups          = try(var.networking.azurerm_firewall_policy_rule_collection_groups, {})
     azurerm_firewalls                                       = try(var.networking.azurerm_firewalls, {})
     azurerm_routes                                          = try(var.networking.azurerm_routes, {})
     ddos_services                                           = try(var.networking.ddos_services, {})
@@ -82,6 +84,8 @@ locals {
     express_route_circuits                                  = try(var.networking.express_route_circuits, {})
     front_door_waf_policies                                 = try(var.networking.front_door_waf_policies, {})
     front_doors                                             = try(var.networking.front_doors, {})
+    ip_groups                                               = try(var.networking.ip_groups, {})
+    load_balancers                                          = try(var.networking.load_balancers, {})
     local_network_gateways                                  = try(var.networking.local_network_gateways, {})
     network_security_group_definition                       = try(var.networking.network_security_group_definition, {})
     network_watchers                                        = try(var.networking.network_watchers, {})
@@ -93,14 +97,12 @@ locals {
     virtual_network_gateways                                = try(var.networking.virtual_network_gateways, {})
     virtual_wans                                            = try(var.networking.virtual_wans, {})
     vnet_peerings                                           = try(var.networking.vnet_peerings, {})
-    load_balancers                                          = try(var.networking.load_balancers, {})
     vnets                                                   = try(var.networking.vnets, {})
-    ip_groups                                               = try(var.networking.ip_groups, {})
   }
 
   database = {
     azurerm_redis_caches               = try(var.database.azurerm_redis_caches, {})
-    app_config                        = try(var.database.app_config, {})
+    app_config                         = try(var.database.app_config, {})
     cosmos_dbs                         = try(var.database.cosmos_dbs, {})
     databricks_workspaces              = try(var.database.databricks_workspaces, {})
     machine_learning_workspaces        = try(var.database.machine_learning_workspaces, {})
@@ -149,7 +151,7 @@ locals {
     landingzone_key         = var.current_landingzone_key
     logged_aad_app_objectId = local.object_id
     logged_user_objectId    = local.object_id
-    landingzone_key = var.current_landingzone_key
+    landingzone_key         = var.current_landingzone_key
     object_id               = local.object_id
     subscription_id         = data.azurerm_client_config.current.subscription_id
     tenant_id               = data.azurerm_client_config.current.tenant_id
