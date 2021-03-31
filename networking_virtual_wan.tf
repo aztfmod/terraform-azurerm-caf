@@ -4,10 +4,11 @@
 #
 #
 
-module virtual_wans {
+module "virtual_wans" {
   source   = "./modules/networking/virtual_wan"
   for_each = local.networking.virtual_wans
 
+  client_config       = local.client_config
   settings            = each.value
   resource_group_name = module.resource_groups[each.value.resource_group_key].name
   resource_groups     = module.resource_groups
@@ -15,6 +16,8 @@ module virtual_wans {
   diagnostics         = local.combined_diagnostics
   global_settings     = local.global_settings
   base_tags           = try(local.global_settings.inherit_tags, false) ? module.resource_groups[each.value.resource_group_key].tags : {}
+  virtual_networks    = local.combined_objects_networking
+  public_ip_addresses = local.combined_objects_public_ip_addresses
 }
 
 
@@ -36,7 +39,7 @@ resource "azurerm_virtual_hub_connection" "vhub_connection" {
 }
 
 # Outputs
-output virtual_wans {
+output "virtual_wans" {
   value = module.virtual_wans
 
   description = "Virtual WAN output"
