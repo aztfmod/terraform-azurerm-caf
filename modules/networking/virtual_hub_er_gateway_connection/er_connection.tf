@@ -30,6 +30,7 @@ locals {
         try(var.settings.route_table.id, "")
       )
     }
+  , {}
   )
 
   propagated_route_tables = {
