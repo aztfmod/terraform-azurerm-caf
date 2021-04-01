@@ -47,16 +47,16 @@ resource "azurerm_lb_backend_address_pool_address" "backend_address_pool_address
 }
 
 resource "azurerm_lb_probe" "lb_probe" {
-  count = try(var.settings.probe, null) == null ? 0 : 1
+  for_each = try(var.settings.probes, {})
 
   resource_group_name = var.resource_group_name
   loadbalancer_id     = azurerm_lb.lb.id
-  name                = var.settings.probe.probe_name
-  port                = var.settings.probe.port
-  protocol            = try(var.settings.probe.protocol, null)            #Possible values are Http, Https or Tcp
-  request_path        = try(var.settings.probe.request_path, null)        #Required if protocol is set to Http or Https. Otherwise, it is not allowed.
-  interval_in_seconds = try(var.settings.probe.interval_in_seconds, null) #The default value is 15, the minimum value is 5.
-  number_of_probes    = try(var.settings.probe.number_of_probes, null)    # The default value is 2.
+  name                = each.value.probe_name
+  port                = each.value.port
+  protocol            = try(each.value.protocol, null)            #Possible values are Http, Https or Tcp
+  request_path        = try(each.value.request_path, null)        #Required if protocol is set to Http or Https. Otherwise, it is not allowed.
+  interval_in_seconds = try(each.value.interval_in_seconds, null) #The default value is 15, the minimum value is 5.
+  number_of_probes    = try(each.value.number_of_probes, null)    # The default value is 2.
 }
 
 resource "azurerm_lb_rule" "lb_rule" {
