@@ -31,7 +31,7 @@ locals {
   associated_route_table =  try({
       id = coalesce(
         try(var.settings.route_table.id, ""),
-        try(var.virtual_hub_route_tables[try(var.settings.route_table.lz_key, var.client_config.landingzone_key)][var.settings.route_table.key].id), "")
+        try(var.virtual_hub_route_tables[try(var.settings.route_table.lz_key, var.client_config.landingzone_key)][var.settings.route_table.key].id, "")
       )
     },null)
 
