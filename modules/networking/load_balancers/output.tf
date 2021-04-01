@@ -9,3 +9,4 @@ output "bap" {
       name = azurerm_lb_backend_address_pool.backend_address_pool.0.name
     }
   }
+}
