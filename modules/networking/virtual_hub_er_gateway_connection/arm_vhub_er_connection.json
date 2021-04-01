@@ -22,7 +22,7 @@
   "outputs": {
     "Id": {
     "type": "string",
-    "value": "[resourceId('Microsoft.Network/expressRouteGateways/expressRouteConnections', parameters('name'))]"
+    "value": "[resourceId('Microsoft.Network/expressRouteGateways/expressRouteConnections', ${resource_name})]"
     }
   }
 }
