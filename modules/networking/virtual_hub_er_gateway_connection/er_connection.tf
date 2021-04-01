@@ -66,3 +66,15 @@ locals {
   }
 
 }
+
+resource "azurerm_resource_group_template_deployment" "vhub_er_gw_connection" {
+  name                = local.express_route_connection_name
+  resource_group_name = var.resource_group_name
+  lifecycle {
+    ignore_changes = [
+      name
+    ]
+  }
+  template_content = local.template_content
+  deployment_mode  = "Incremental"
+}
