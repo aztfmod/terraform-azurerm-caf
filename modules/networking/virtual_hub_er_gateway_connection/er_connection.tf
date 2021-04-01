@@ -16,7 +16,7 @@ locals {
   )
 
 
-  express_route_gateway_name = var.settings.express_route_gateway_name
+  express_route_gateway_name = var.express_route_gateway_name
   express_route_connection_name = var.settings.name
   express_route_circuit_peering_id = var.express_route_circuit_id
   authorization_key = var.authorization_key
@@ -53,7 +53,7 @@ locals {
   vnet_routes = {
     staticRoutes = flatten(
       [
-        for key, value in var.settings.vnet_routes : {
+        for key, value in try(var.settings.vnet_routes, []) : {
           name = value.name
           addressPrefixes = value.address_prefixes
           nextHopIpAddress = value.next_hop_ip_address
