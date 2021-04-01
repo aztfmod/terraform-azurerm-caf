@@ -47,7 +47,6 @@ resource "azurerm_lb_backend_address_pool_address" "backend_address_pool_address
 }
 
 resource "azurerm_lb_probe" "lb_probe" {
-  #count = try(var.settings.probe, null) == null ? 0 : 1
   for_each = try(var.settings.probes, {})
 
   resource_group_name = var.resource_group_name
