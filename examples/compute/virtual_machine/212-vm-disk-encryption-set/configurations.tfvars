@@ -59,10 +59,6 @@ keyvault_access_policies = {
       secret_permissions = ["Set", "Get", "List", "Delete", "Purge", "Recover"]
       key_permissions    = ["decrypt", "encrypt", "sign", "unwrapKey", "verify", "wrapKey", "List", "Get", "Create", "Purge"]
     }
-    logged_in_aad_app = {
-      secret_permissions = ["Set", "Get", "List", "Delete", "Purge", "Recover"]
-      key_permissions    = ["decrypt", "encrypt", "sign", "unwrapKey", "verify", "wrapKey", "List", "Get", "Create", "Purge"]
-    }
     disk_encryption_sets = {
       disk_encryption_set_key = "set1"
       # lz_key = "example" # for remote disk_encryption_set
@@ -73,11 +69,12 @@ keyvault_access_policies = {
 
 keyvault_keys = {
   key1 = {
-    keyvault_key = "kv1"
-    name         = "disk-key"
-    key_type     = "RSA"
-    key_size     = 2048
-    key_opts     = ["decrypt", "encrypt", "sign", "unwrapKey", "verify", "wrapKey"]
+    keyvault_key       = "kv1"
+    resource_group_key = "rg1"
+    name               = "disk-key"
+    key_type           = "RSA"
+    key_size           = 2048
+    key_opts           = ["decrypt", "encrypt", "sign", "unwrapKey", "verify", "wrapKey"]
 
     # curve = ""
     # not_before_date = ""
@@ -91,6 +88,9 @@ disk_encryption_sets = {
     name               = "diskencryptset1"
     resource_group_key = "rg1"
     key_vault_key_key  = "key1"
+    keyvault = {
+      key = "kv1"
+    }
   }
 }
 
