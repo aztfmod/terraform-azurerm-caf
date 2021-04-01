@@ -30,7 +30,7 @@ locals {
 
   associated_route_table =  try({
       id = coalesce(
-        try(local.virtual_hub_er_gateway_connections.sgp-er-1.route_table.id, "")
+        try(lvar.settings.route_table.id, "")
       )
     },null)
 
