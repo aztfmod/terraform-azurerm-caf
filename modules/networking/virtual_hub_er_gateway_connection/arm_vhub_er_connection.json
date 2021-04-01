@@ -19,10 +19,5 @@
       }
     }
   ],
-  "outputs": {
-    "Id": {
-    "type": "string",
-    "value": "[resourceId('Microsoft.Network/expressRouteGateways/expressRouteConnections', ${resource_name})]"
-    }
-  }
+  "outputs": {}
 }
