@@ -71,7 +71,7 @@ module "virtual_hub_er_gateway_connections" {
   base_tags                = try(local.global_settings.inherit_tags, false) ? module.resource_groups[each.value.resource_group_key].tags : {}
 
   virtual_network_gateway_id = coalesce(
-    try(module.virtual_wans[each.value.virtual_wan.key].virtual_hubs[each.value.virtual_wan.virtual_hub.key].er_gateway.id, null),
+    try(local.combined_objects_virtual_wans[try(each.value.virtual_wan.lz_key, local.client_config.landingzone_key)][each.value.virtual_wan.key].virtual_hubs[each.value.virtual_wan.virtual_hub.key].er_gateway.id, null),
     try(each.value.express_route_gateway_id, null)
   )
 
