@@ -4,24 +4,26 @@ locals {
   template_content = templatefile(
     local.arm_filename,
     {
-      resource_name = format("%s/%s",local.express_route_gateway_name, local.express_route_connection_name)
+      resource_name                    = format("%s/%s", local.express_route_gateway_name, local.express_route_connection_name)
       express_route_circuit_peering_id = local.express_route_circuit_peering_id
-      authorization_key = local.authorization_key
-      routing_weight = local.routing_weight
-      enable_internet_security = local.enable_internet_security
-      associatedRouteTable = jsonencode(local.associatedRouteTable)
-      propagated_route_tables = jsonencode(local.propagated_route_tables)
-      vnet_routes = jsonencode(local.vnet_routes)
+      authorization_key                = local.authorization_key
+      routing_weight                   = local.routing_weight
+      enable_internet_security         = local.enable_internet_security
+      routingConfiguration = jsonencode({
+        associatedRouteTable  = local.associatedRouteTable
+        propagatedRouteTables = local.propagated_route_tables
+        vnetRoutes            = local.vnet_routes
+      })
     }
   )
 
 
-  express_route_gateway_name = var.express_route_gateway_name
-  express_route_connection_name = var.settings.name
+  express_route_gateway_name       = var.express_route_gateway_name
+  express_route_connection_name    = var.settings.name
   express_route_circuit_peering_id = var.express_route_circuit_id
-  authorization_key = var.authorization_key
-  routing_weight = try(var.settings.routing_weight, 0)
-  enable_internet_security = try(var.settings.enable_internet_security, false)
+  authorization_key                = var.authorization_key
+  routing_weight                   = try(var.settings.routing_weight, 0)
+  enable_internet_security         = try(var.settings.enable_internet_security, false)
 
   associatedRouteTable = try(
     {
@@ -30,7 +32,7 @@ locals {
         try(var.settings.route_table.id, "")
       )
     }
-  , {}
+    , {}
   )
 
   propagated_route_tables = {
@@ -57,8 +59,8 @@ locals {
     staticRoutes = flatten(
       [
         for key, value in try(var.settings.vnet_routes, []) : {
-          name = value.name
-          addressPrefixes = value.address_prefixes
+          name             = value.name
+          addressPrefixes  = value.address_prefixes
           nextHopIpAddress = value.next_hop_ip_address
         }
       ]

@@ -15,11 +15,7 @@
         "authorizationKey": "${authorization_key}",
         "routingWeight": ${routing_weight},
         "enableInternetSecurity": ${enable_internet_security},
-        "routingConfiguration": {
-          "associatedRouteTable": "${associatedRouteTable}",
-          "propagatedRouteTables": ${propagated_route_tables},
-          "vnetRoutes": ${vnet_routes}
-        }
+        "routingConfiguration": "${routingConfiguration}"
       }
     }
   ],

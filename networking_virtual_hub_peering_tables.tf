@@ -18,7 +18,7 @@ output "azurerm_virtual_hub_route_table" {
 # Virtual Hub Peerings to virtual networks
 resource "azurerm_virtual_hub_connection" "vhub_connection" {
   depends_on = [azurerm_virtual_hub_route_table.route_table]
-  for_each = local.networking.virtual_hub_connections
+  for_each   = local.networking.virtual_hub_connections
 
   name                      = each.value.name
   virtual_hub_id            = local.combined_objects_virtual_wans[try(each.value.lz_key, local.client_config.landingzone_key)][each.value.vhub.virtual_wan_key].virtual_hubs[each.value.vhub.virtual_hub_key].id

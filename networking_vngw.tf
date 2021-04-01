@@ -17,7 +17,7 @@ module "virtual_network_gateways" {
 }
 
 module "virtual_network_gateway_connections" {
-  source = "./modules/networking/virtual_network_gateway_connections"
+  source   = "./modules/networking/virtual_network_gateway_connections"
   for_each = try(local.networking.virtual_network_gateway_connections, {})
 
   resource_group_name      = module.resource_groups[each.value.resource_group_key].name
