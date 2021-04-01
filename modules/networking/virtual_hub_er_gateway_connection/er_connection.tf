@@ -23,12 +23,14 @@ locals {
   routing_weight = try(var.settings.routing_weight, 0)
   enable_internet_security = try(var.settings.enable_internet_security, false)
 
-  associatedRouteTable = {
-    id = coalesce(
-      try(var.virtual_hub_route_tables[try(var.settings.route_table.lz_key, var.client_config.landingzone_key)][var.settings.route_table.key].id, ""),
-      try(var.settings.route_table.id, "")
-    )
-  }
+  associatedRouteTable = try(
+    {
+      id = coalesce(
+        try(var.virtual_hub_route_tables[try(var.settings.route_table.lz_key, var.client_config.landingzone_key)][var.settings.route_table.key].id, ""),
+        try(var.settings.route_table.id, "")
+      )
+    }
+  )
 
   propagated_route_tables = {
     Labels = try(var.settings.propagated_route_tables.labels, [])
