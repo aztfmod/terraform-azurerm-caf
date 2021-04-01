@@ -37,7 +37,7 @@ locals {
 
   propagated_route_tables = {
     Labels = try(var.settings.propagated_route_tables.labels, [])
-    Ids = coalesce(
+    Ids = coalescelist(
       flatten(
         [
           for key in try(var.settings.propagated_route_tables.ids, []) : {
@@ -51,7 +51,8 @@ locals {
             Id = var.virtual_hub_route_tables[try(var.settings.propagated_route_tables.lz_key, var.client_config.landingzone_key)][key].id
           }
         ]
-      )
+      ),
+      {}
     )
   }
 
