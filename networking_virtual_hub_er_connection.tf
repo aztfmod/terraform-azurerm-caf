@@ -1,6 +1,6 @@
 
 module "virtual_hub_er_gateway_connections" {
-  source = "./modules/networking/virtual_hub_er_gateway_connection"
+  source   = "./modules/networking/virtual_hub_er_gateway_connection"
   for_each = try(local.networking.virtual_hub_er_gateway_connections, {})
 
   client_config            = local.client_config
