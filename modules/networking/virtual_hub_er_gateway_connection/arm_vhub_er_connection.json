@@ -15,7 +15,7 @@
         "authorizationKey": "${authorization_key}",
         "routingWeight": ${routing_weight},
         "enableInternetSecurity": ${enable_internet_security},
-        "routingConfiguration": "${routingConfiguration}"
+        "routingConfiguration": ${routingConfiguration}
       }
     }
   ],
