@@ -1,0 +1,32 @@
+{
+  "$schema": "https://schema.management.azure.com/schemas/2019-04-01/deploymentTemplate.json#",
+  "contentVersion": "1.0.0.0",
+  "parameters": {},
+  "variables": {},
+  "resources": [
+    {
+      "name": "${resource_name}",
+      "type": "Microsoft.Network/expressRouteGateways/expressRouteConnections",
+      "apiVersion": "2020-07-01",
+      "properties": {
+        "expressRouteCircuitPeering": {
+          "id": "${express_route_circuit_peering_id}"
+        },
+        "authorizationKey": "${authorization_key}",
+        "routingWeight": ${routing_weight},
+        "enableInternetSecurity": ${enable_internet_security},
+        "routingConfiguration": {
+          "associatedRouteTable": "${associatedRouteTable}",
+          "propagatedRouteTables": ${propagated_route_tables},
+          "vnetRoutes": ${vnet_routes}
+        }
+      }
+    }
+  ],
+  "outputs": {
+    "Id": {
+    "type": "string",
+    "value": "[resourceId('Microsoft.Network/expressRouteGateways/expressRouteConnections', parameters('name'))]"
+    }
+  }
+}
