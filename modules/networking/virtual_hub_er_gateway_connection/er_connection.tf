@@ -4,7 +4,7 @@ locals {
   template_content = templatefile(
     local.arm_filename,
     {
-      resource_name                    = format("%s/%s/peerings/AzurePrivatePeering", local.express_route_gateway_name, local.express_route_connection_name)
+      resource_name                    = format("%s/%s", local.express_route_gateway_name, local.express_route_connection_name)
       express_route_circuit_peering_id = local.express_route_circuit_peering_id
       authorization_key                = local.authorization_key
       routing_weight                   = local.routing_weight
@@ -23,7 +23,7 @@ locals {
 
   express_route_gateway_name       = var.express_route_gateway_name
   express_route_connection_name    = var.settings.name
-  express_route_circuit_peering_id = var.express_route_circuit_id
+  express_route_circuit_peering_id = format("%s/peerings/AzurePrivatePeering", var.express_route_circuit_id)
   authorization_key                = var.authorization_key
   routing_weight                   = try(var.settings.routing_weight, 0)
   enable_internet_security         = try(var.settings.enable_internet_security, false)
