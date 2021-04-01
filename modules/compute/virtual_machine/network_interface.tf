@@ -118,7 +118,7 @@ resource "azurerm_network_interface_security_group_association" "nic" {
   }
 
   network_interface_id      = azurerm_network_interface.nic[each.key].id
-  network_security_group_id = var.network_security_groups[var.][each.value.nsg_key].id
+  network_security_group_id = var.network_security_groups[var.client_config.landingzone_key][each.value.nsg_key].id
 }
 
 
