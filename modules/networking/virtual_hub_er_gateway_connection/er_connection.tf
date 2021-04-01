@@ -30,7 +30,7 @@ locals {
 
   associated_route_table =  try({
       id = coalesce(
-        try(lvar.settings.route_table.id, "")
+        try(var.settings.route_table.id, "")
       )
     },null)
 
