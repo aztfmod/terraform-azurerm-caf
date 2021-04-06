@@ -77,8 +77,12 @@ mssql_servers = {
     administrator_login           = "sqlsalesadmin"
     keyvault_key                  = "sql-rg1"
     connection_policy             = "Default"
-    system_msi                    = true
     public_network_access_enabled = false
+
+    
+    identity = { 
+      type = "SystemAssigned" 
+    }
 
     extended_auditing_policy = {
       storage_account = {
