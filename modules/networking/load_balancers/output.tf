@@ -3,12 +3,12 @@ output "id" {
 }
 
 output "private_ip_addresses" {
-  value = azurerm_lb.lb.private_ip_addresses
+  value       = azurerm_lb.lb.private_ip_addresses
   description = "The list of private IP address assigned to the load balancer in frontend_ip_configuration blocks, if any"
 }
 
 output "private_ip_address" {
-  value = azurerm_lb.lb.private_ip_address
+  value       = azurerm_lb.lb.private_ip_address
   description = "The first private IP address assigned to the load balancer in frontend_ip_configuration"
 }
 
