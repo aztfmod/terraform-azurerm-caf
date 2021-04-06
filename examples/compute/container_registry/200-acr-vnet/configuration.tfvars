@@ -64,9 +64,9 @@ vnets = {
     specialsubnets = {}
     subnets = {
       jumphost = {
-        name             = "jumphost"
-        cidr             = ["100.64.103.0/27"]
-        service_endpoint = ["Microsoft.ContainerRegistry"]
+        name              = "jumphost"
+        cidr              = ["100.64.103.0/27"]
+        service_endpoints = ["Microsoft.ContainerRegistry"]
       }
     }
   }
