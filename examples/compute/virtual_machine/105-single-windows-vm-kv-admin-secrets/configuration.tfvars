@@ -5,6 +5,12 @@ global_settings = {
     region1 = "southeastasia"
   }
 }
+
+provider_azurerm_features_keyvault = {
+  // set to true to cleanup the CI
+  purge_soft_delete_on_destroy = true
+}
+
 tags = {
   level = "100"
 }

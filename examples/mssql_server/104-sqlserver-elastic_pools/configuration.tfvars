@@ -52,9 +52,10 @@ keyvaults = {
 
 mssql_databases = {
   sales-db1-rg1 = {
-    mssql_server_key = "sales-rg1"
-    elastic_pool_key = "sales-ep1-rg1"
-    name             = "salesdb1rg1"
+    resource_group_key = "sql_region1"
+    mssql_server_key   = "sales-rg1"
+    elastic_pool_key   = "sales-ep1-rg1"
+    name               = "salesdb1rg1"
   }
 }
 
