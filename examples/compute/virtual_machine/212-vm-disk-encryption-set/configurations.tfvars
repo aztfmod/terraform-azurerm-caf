@@ -6,6 +6,11 @@ global_settings = {
   }
 }
 
+provider_azurerm_features_keyvault = {
+  // set to true to cleanup the CI
+  purge_soft_delete_on_destroy = true
+}
+
 resource_groups = {
   rg1 = {
     name   = "example-disk-cmk"
