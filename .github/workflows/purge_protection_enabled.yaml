@@ -3,7 +3,7 @@
 # Licensed under the MIT License.
 #
 
-name: scenarios-100-tf14
+name: purge_enabled_resource
 
 on:
   pull_request:
