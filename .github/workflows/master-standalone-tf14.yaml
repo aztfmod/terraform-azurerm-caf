@@ -56,6 +56,7 @@ jobs:
             "compute/virtual_machine/105-single-windows-vm-kv-admin-secrets",
             "compute/virtual_machine/210-vm-bastion-winrm",
             "compute/virtual_machine/211-vm-bastion-winrm-agents",
+            "compute/virtual_machine/212-vm-disk-encryption-set",
             "cosmos_db/100-simple-cosmos-db-cassandra",
             "cosmos_db/100-simple-cosmos-db-gremlin",
             "cosmos_db/100-simple-cosmos-db-sql",

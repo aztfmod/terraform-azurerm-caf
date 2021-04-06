@@ -16,7 +16,7 @@ locals {
           vnetRoutes            = local.vnet_routes
         }
       )
-      
+
     }
   )
 
@@ -28,12 +28,12 @@ locals {
   routing_weight                   = try(var.settings.routing_weight, 0)
   enable_internet_security         = try(var.settings.enable_internet_security, false)
 
-  associated_route_table =  try({
-      id = coalesce(
-        try(var.settings.route_table.id, ""),
-        try(var.virtual_hub_route_tables[try(var.settings.route_table.lz_key, var.client_config.landingzone_key)][var.settings.route_table.key].id, "")
-      )
-    },null)
+  associated_route_table = try({
+    id = coalesce(
+      try(var.settings.route_table.id, ""),
+      try(var.virtual_hub_route_tables[try(var.settings.route_table.lz_key, var.client_config.landingzone_key)][var.settings.route_table.key].id, "")
+    )
+  }, null)
 
   propagated_route_tables = {
     Labels = try(var.settings.propagated_route_tables.labels, [])

@@ -66,17 +66,17 @@ load_balancers = {
     }
 
     probes = {
-      probe1= {
-          resource_group_key = "lb"
-          load_balancer_key  = "lb1"
-          probe_name         = "probe1"
-          port               = "22"
+      probe1 = {
+        resource_group_key = "lb"
+        load_balancer_key  = "lb1"
+        probe_name         = "probe1"
+        port               = "22"
       }
-      probe2= {
-          resource_group_key = "lb"
-          load_balancer_key  = "lb1"
-          probe_name         = "probe2"
-          port               = "22"
+      probe2 = {
+        resource_group_key = "lb"
+        load_balancer_key  = "lb1"
+        probe_name         = "probe2"
+        port               = "22"
       }
     }
 
