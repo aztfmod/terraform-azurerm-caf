@@ -96,7 +96,7 @@ locals {
     storage_accounts             = local.combined_objects_storage_accounts
   }
 
-  global_settings = var.global_settings == {} ?  {
+  global_settings = merge( {
       default_region     = try(var.global_settings.default_region, "region1")
       environment        = try(var.global_settings.environment, var.environment)
       inherit_tags       = try(var.global_settings.inherit_tags, false)
@@ -110,7 +110,7 @@ locals {
       regions            = var.global_settings.regions
       tags               = try(var.global_settings.tags, null)
       use_slug           = try(var.global_settings.use_slug, true)
-    } : var.global_settings
+    }, var.global_settings)
 
   logic_app = {
     integration_service_environment = try(var.logic_app.integration_service_environment, {})
