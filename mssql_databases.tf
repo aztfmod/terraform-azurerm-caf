@@ -18,7 +18,7 @@ module "mssql_databases" {
 }
 
 
-# Server auditing
+# Database auditing
 
 data "azurerm_storage_account" "mssqldb_auditing" {
   for_each = {
