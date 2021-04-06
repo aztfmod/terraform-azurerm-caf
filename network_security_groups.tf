@@ -18,3 +18,7 @@ module "network_security_groups" {
   // version 1 requires the name and resource_group_key as additional mandatory attributes
   // If version = 1 is not present, the nsg can onle attached to a subnet
 }
+
+output "network_security_groups" {
+  value = module.network_security_groups
+}
