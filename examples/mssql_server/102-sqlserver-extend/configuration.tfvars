@@ -156,3 +156,18 @@ azuread_groups = {
     prevent_duplicate_name = false
   }
 }
+
+# The role mapping is a required permission for mssql server identity to use audit_policy
+role_mapping = {
+  built_in_role_mapping = {
+    storage_accounts = {
+      auditing-rg1 = {
+        "Storage Blob Data Contributor" = {
+          mssql_servers = {
+            keys = ["sales-rg1"]
+          }
+        }
+      }
+    }
+  }
+}
