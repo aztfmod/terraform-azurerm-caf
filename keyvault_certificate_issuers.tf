@@ -19,8 +19,8 @@ data "azurerm_key_vault_secret" "certificate_issuer_password" {
     if try(value.cert_password_key, null) != null
   }
 
-  name         = each.value.cert_password_key
-  key_vault_id = try(local.combined_objects_keyvaults[each.value.lz_key][each.value.keyvault_key].id, local.combined_objects_keyvaults[local.client_config.landingzone_key][each.value.keyvault_key].id)
+  name         = var.security.dynamic_keyvault_secrets[each.value.keyvault_key][each.value.cert_password_key].secret_name
+  key_vault_id = local.combined_objects_keyvaults[try(each.value.lz_key, local.client_config.landingzone_key)][each.value.keyvault_key].id
 }
 
 output "keyvault_certificate_issuers" {

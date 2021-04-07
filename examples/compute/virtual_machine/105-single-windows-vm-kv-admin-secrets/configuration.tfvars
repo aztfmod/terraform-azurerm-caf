@@ -124,7 +124,6 @@ keyvaults = {
     sku_name                    = "standard"
     soft_delete_enabled         = true
     purge_protection_enabled    = true
-    enabled_for_disk_encryption = true
     tags = {
       env = "Standalone"
     }
