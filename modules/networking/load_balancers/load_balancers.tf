@@ -18,7 +18,7 @@ resource "azurerm_lb" "lb" {
     for_each = try(var.settings.frontend_ip_configurations, {})
     content {
       name                          = frontend_ip_configuration.value.name
-      subnet_id                     = var.vnets[try(frontend_ip_configuration.value.lz_key, var.client_config.landingzone_key)][frontend_ip_configuration.value.vnet_key].subnets[frontend_ip_configuration.value.subnet_key].id
+      subnet_id                     = try(var.vnets[try(frontend_ip_configuration.value.lz_key, var.client_config.landingzone_key)][frontend_ip_configuration.value.vnet_key].subnets[frontend_ip_configuration.value.subnet_key].id, null)
       private_ip_address            = try(frontend_ip_configuration.value.private_ip_address, null)
       private_ip_address_allocation = try(frontend_ip_configuration.value.private_ip_address_allocation, null) #Possible values as Dynamic and Static.
       private_ip_address_version    = try(frontend_ip_configuration.value.private_ip_address_version, null)    #Possible values are IPv4 or IPv6.

@@ -32,6 +32,11 @@ resource "null_resource" "virtual_hub_route_table" {
         }
       }
     )
+    PROPERTIES_DESTROY = jsonencode(
+      {
+        properties = {}
+      }
+    )
   }
 
   provisioner "local-exec" {
@@ -46,16 +51,16 @@ resource "null_resource" "virtual_hub_route_table" {
     }
   }
 
-  # provisioner "local-exec" {
-  #   command     = format("%s/scripts/hub_route_table.sh", path.module)
-  #   when        = destroy
-  #   interpreter = ["/bin/bash"]
-  #   on_failure  = fail
+  provisioner "local-exec" {
+    command     = format("%s/scripts/hub_route_table.sh", path.module)
+    when        = destroy
+    interpreter = ["/bin/bash"]
+    on_failure  = fail
 
-  #   environment = {
-  #     METHOD     = "DELETE"
-  #     PROPERTIES = self.triggers.PROPERTIES
-  #     URL        = self.triggers.URL
-  #   }
-  # }
+    environment = {
+      METHOD     = "PUT"
+      PROPERTIES = self.triggers.PROPERTIES_DESTROY
+      URL        = self.triggers.URL
+    }
+  }
 }

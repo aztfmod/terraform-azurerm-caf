@@ -38,6 +38,7 @@ resource "azurecaf_name" "os_disk_windows" {
 }
 
 resource "azurerm_windows_virtual_machine" "vm" {
+  depends_on = [azurerm_network_interface.nic, azurerm_network_interface_security_group_association.nic_nsg]
   for_each = local.os_type == "windows" ? var.settings.virtual_machine_settings : {}
 
   name                         = azurecaf_name.windows[each.key].result
