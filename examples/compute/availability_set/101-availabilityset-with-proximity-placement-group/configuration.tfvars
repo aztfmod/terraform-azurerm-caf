@@ -146,7 +146,7 @@ virtual_machines = {
 
 keyvaults = {
   example_vm_rg1 = {
-    name               = "examplevmsecrets"
+    name               = "vmsecrets"
     resource_group_key = "avset"
     sku_name           = "standard"
     creation_policies = {

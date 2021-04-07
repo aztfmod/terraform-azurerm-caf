@@ -15,7 +15,7 @@ resource_groups = {
 
 cosmos_dbs = {
   cosmosdb_account_re1 = {
-    name                      = "cosmosdbcassandra-ex102"
+    name                      = "ex102"
     resource_group_key        = "cosmosdb_region1"
     offer_type                = "Standard"
     kind                      = "GlobalDocumentDB"
