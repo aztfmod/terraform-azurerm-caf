@@ -165,6 +165,7 @@ locals {
 
   security = {
     disk_encryption_sets          = try(var.security.disk_encryption_sets, {})
+    dynamic_keyvault_secrets      = try(var.security.dynamic_keyvault_secrets, {})
     keyvault_certificate_issuers  = try(var.security.keyvault_certificate_issuers, {})
     keyvault_certificate_requests = try(var.security.keyvault_certificate_requests, {})
     keyvault_certificates         = try(var.security.keyvault_certificates, {})
