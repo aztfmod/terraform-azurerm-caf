@@ -32,11 +32,6 @@ resource "null_resource" "virtual_hub_route_table" {
         }
       }
     )
-    PROPERTIES_DESTROY = jsonencode(
-      {
-        properties = {}
-      }
-    )
   }
 
   provisioner "local-exec" {
@@ -59,8 +54,12 @@ resource "null_resource" "virtual_hub_route_table" {
 
     environment = {
       METHOD     = "PUT"
-      PROPERTIES = self.triggers.PROPERTIES_DESTROY
       URL        = self.triggers.URL
+      PROPERTIES = jsonencode(
+        {
+          properties = {}
+        }
+      )
     }
   }
 }
