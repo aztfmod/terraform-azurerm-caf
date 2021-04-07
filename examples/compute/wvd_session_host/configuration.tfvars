@@ -37,29 +37,29 @@ wvd_application_groups = {
     host_pool_key       = "wvd_hp1"
     wvd_workspace_key   = "wvd_ws1"
     name                = "firstapp"
-    friendly_name      = "Myappgroup"
-    description        = "A description of my workspace"
+    friendly_name       = "Myappgroup"
+    description         = "A description of my workspace"
     #Type of Virtual Desktop Application Group. Valid options are RemoteApp or Desktop.
-    type          = "RemoteApp"
+    type          = "Desktop"
     
   }
 }
 
 wvd_host_pools = {
   wvd_hp1 = {
-    resource_group_key  = "wvd_region1"
-    name                = "firsthp"
-    friendly_name      = "Myhostpool"
-    description        = "A description of my workspace"
-    validate_environment     = true
-    type                     = "Pooled"
+    resource_group_key   = "wvd_region1"
+    name                 = "armhp"
+    friendly_name        = "Myhostpool"
+    description          = "A description of my workspace"
+    validate_environment = false
+    type                 = "Pooled"
     #Option to specify the preferred Application Group type for the Virtual Desktop Host Pool. Valid options are None, Desktop or RailApplications.
-    preferred_app_group_type = "RailApplications"
+    preferred_app_group_type = "Desktop"
     maximum_sessions_allowed = 1000
     load_balancer_type       = "DepthFirst"
     #Expiration value should be between 1 hour and 30 days.
     registration_info = {
-      expiration_date = "2021-03-29T07:20:50.52Z"
+      expiration_date = "2021-04-10T07:20:50Z"
     }
   }
 }
@@ -68,146 +68,61 @@ wvd_workspaces = {
 
   wvd_ws1 = {
     resource_group_key  = "wvd_region1"
-    name                = "firstws"
-    friendly_name      = "Myworkspace"
-    description        = "A description of my workspace"
+    name                = "myws"
+    friendly_name       = "Myworkspace"
+    description         = "A description of my workspace"
   }
 }
 
 wvd_session_hosts = {
-
   wvd_sh1 = {
     resource_group_key  = "wvd_region1"
-    name                = "firstsession"
+    name                = "armsession8"
+    wvd_host_pool_key   =  "wvd_hp1"
+    keyvault_key        = "wvd_kv"    
+    hostpoolProperties = {}    
+    vmTemplate = ""
+    administratorAccountUsername = "wvduser@test.onmicrosoft.com"
+    vmAdministratorAccountUsername = "vmadmin-username"
+    availabilityOption = "AvailabilitySet"
+    availabilitySetName = "arm-avset8"
+    createAvailabilitySet = true
+    availabilitySetUpdateDomainCount = 5
+    availabilitySetFaultDomainCount = 2
+    availabilityZone = 2
+    vmSize = "Standard_F2s_v2"
+    vmInitialNumber = 1
+    vmNumberOfInstances = 1
+    vmNamePrefix = "armvm10"
+    vmImageType = "Gallery"
+    vmGalleryImageOffer = "WindowsServer"
+    vmGalleryImagePublisher = "MicrosoftWindowsServer"
+    vmGalleryImageSKU = "2019-Datacenter"
+    vmImageVhdUri = ""
+    vmCustomImageSourceId = ""
+    vmDiskType = "StandardSSD_LRS"
+    vmUseManagedDisks = true
+    storageAccountResourceGroupName = ""
+    existingVnetName = "zsjy-vnet-virtual_machines"
+    # vnet_key = "vnet_region1"
+    existingSubnetName = "zsjy-snet-examples"
+    createNetworkSecurityGroup = false
+    networkSecurityGroupId = ""
+    networkSecurityGroupRules = []
+    availabilitySetTags = {}
+    networkInterfaceTags = {}
+    networkSecurityGroupTags = {}
+    virtualMachineTags = {}
+    imageTags = {}
+    deploymentId = ""
+    apiVersion = "2019-12-10-preview"
+    ouPath = ""
+    domain = "test.onmicrosoft.com"
+    aadJoin = true
+    intune = false      
     
   }
 }
-
-
-
-# Virtual machines
-# virtual_machines = {
-  
-#   windows_server1 = {
-#     resource_group_key                   = "wvd_region1"
-#     boot_diagnostics_storage_account_key = "bootdiag_region1"
-#     provision_vm_agent                   = true
-
-#     os_type = "windows"
-
-#     # when not set the password is auto-generated and stored into the keyvault
-#     keyvault_key = "ssh_keys"
-
-#     # Define the number of networking cards to attach the virtual machine
-#     networking_interfaces = {
-#       nic0 = {
-#         vnet_key                = "vnet_region1"
-#         subnet_key              = "example"
-#         name                    = "0-server1"
-#         enable_ip_forwarding    = false
-#         internal_dns_name_label = "server1-nic0"
-#         public_ip_address_key   = "example_vm_pip1_rg1"
-
-#       }
-#     }
-
-#     virtual_machine_settings = {
-#       windows = {
-#         name               = "wvdserver"
-#         availability_set_key = "avset1"
-#         size               = "Standard_F2s_v2"
-#         admin_username_key = "vmadmin-username"
-#         admin_password_key = "vmadmin-password"
-        
-
-#         # Value of the nic keys to attach the VM. The first one in the list is the default nic
-#         network_interface_keys = ["nic0"]
-
-#         # zone = "1"
-
-#         os_disk = {
-#           name                 = "server1-os"
-#           caching              = "ReadWrite"
-#           create_option        = "FromImage"
-#           storage_account_type = "Standard_LRS"
-#           managed_disk_type    = "StandardSSD_LRS"
-#           disk_size_gb         = "128"
-#         }
-
-#         source_image_reference = {
-#           publisher = "MicrosoftWindowsServer"
-#           offer     = "WindowsServer"
-#           sku       = "2019-Datacenter"
-#           version   = "latest"
-#         }
-
-#         winrm = {
-#           enable_self_signed = true
-#         }
-
-#       }
-#     }
-
-
-
-#     # data_disks = {
-#     #   data1 = {
-#     #     name                 = "server1-data1"
-#     #     storage_account_type = "Standard_LRS"
-#     #     # Only Empty is supported. More community contributions required to cover other scenarios
-#     #     create_option = "Empty"
-#     #     disk_size_gb  = "10"
-#     #     lun           = 1
-#     #     zones         = ["1"]
-#     #   }
-#     # }
-
-#     # virtual_machine_extensions = {
-#     #   additional_session_host_dscextension = {
-#     #     name                       = "additional_session_host_dscextension"
-#     #     is_service_principal       = "true"
-#     #     wvd_tenant_name            = "test-wvd"
-#     #     RDBrokerURL                = "https://rdbroker.wvd.microsoft.com"
-#     #     registration_expiration_hours = "48"
-#     #     host_pool_name                = "firsthp"
-#     #     secret_prefix = "wvd-tenant"
-#     #     existing_tenant_group_name    = "Default Tenant Group"
-#     #     base_url = "https://raw.githubusercontent.com/Azure/RDS-Templates/master/wvd-templates"
-#     #     lz_key = "examples"
-#     #     keyvault_key = "wvd_kv"
-#     #   }
-
-#     #   microsoft_azure_domainJoin = {
-#     #     name = "microsoft_azue_dromainJoin"
-#     #     domain_name = "dns.contoso.com"
-#     #     ou_path = ""
-#     #     user = "user@contoso.com"
-#     #     restart = "true"
-#     #     options = "3"
-#     #     secret_prefix = "wvd-tenant"
-#     #     lz_key = "examples"
-#     #     keyvault_key = "wvd_kv"
-#     #   }
-      
-#     }
-  
-#   }
-
-# }
-
-# Store output attributes into keyvault secret
-# dynamic_keyvault_secrets = {
-#   ssh_keys = { # Key of the keyvault
-#     vmadmin-username = {
-#       secret_name = "vmadmin-username"
-#       value       = "vmadmin"
-#     }
-#     vmadmin-password = {
-#       secret_name = "vmadmin-password"
-#       value       = "Very@Str5ngP!44w0rdToChaNge#"
-#     }
-#   }
-# }
 
 # ## Networking configuration
 vnets = {
@@ -224,6 +139,7 @@ vnets = {
       example = {
         name = "examples"
         cidr = ["10.100.100.0/25"]
+        nsg_key = "azure_wvd_nsg"
       }
       
     }
@@ -231,47 +147,39 @@ vnets = {
   }
 }
 
+network_security_group_definition = {
+  # This entry is applied to all subnets with no NSG defined
+  empty_nsg = {}  
+  azure_wvd_nsg = {
 
-# public_ip_addresses = {
-#   example_vm_pip1_rg1 = {
-#     name                    = "example_vm_pip1"
-#     resource_group_key      = "wvd_region1"
-#     sku                     = "Standard"
-#     allocation_method       = "Static"
-#     ip_version              = "IPv4"
-#     idle_timeout_in_minutes = "4"
+    nsg = [
+      {
+        name                       = "web-in-allow",
+        priority                   = "100"
+        direction                  = "Inbound"
+        access                     = "Allow"
+        protocol                   = "tcp"
+        source_port_range          = "*"
+        destination_port_range     = "443"
+        source_address_prefix      = "*"
+        destination_address_prefix = "*"
+      },      
+      {
+        name                       = "web-out-allow",
+        priority                   = "120"
+        direction                  = "Outbound"
+        access                     = "Allow"
+        protocol                   = "tcp"
+        source_port_range          = "*"
+        destination_port_range     = "443"
+        source_address_prefix      = "*"
+        destination_address_prefix = "AzureCloud"
+      }
+    ]
+  }
+}
 
-#   }
-# }
 
-# availability_sets = {
-#   avset1 = {
-#     name               = "example_avset"
-#     region             = "region1"
-#     resource_group_key = "wvd_region1"
-#     # Depends on the region, update and fault domain count availability varies.
-#     platform_update_domain_count = 2
-#     platform_fault_domain_count  = 2
-#     # By default availability set is configured as managed. Below can be used to change it to unmanged.
-#     # managed                      = false
-#   }
-# }
-
-# keyvaults = {
-#   ssh_keys = {
-#     name               = "vmsecrets"
-#     resource_group_key = "wvd_region1"
-#     sku_name           = "standard"
-#     enabled_for_deployment = true
-
-#     creation_policies = {
-#       logged_in_user = {
-#         certificate_permissions = ["Get", "List", "Update", "Create", "Import", "Delete", "Purge", "Recover"]
-#         secret_permissions      = ["Set", "Get", "List", "Delete", "Purge", "Recover"]
-#       }
-#     }
-#   }
-# }
 
 
 

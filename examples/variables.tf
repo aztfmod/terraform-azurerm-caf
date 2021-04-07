@@ -335,3 +335,6 @@ variable keyvault_key {
 variable client_config {
   default = {}
 }
+variable wvd_session_hosts {
+  default = {}
+}

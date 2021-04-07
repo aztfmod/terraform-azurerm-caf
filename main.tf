@@ -8,6 +8,15 @@ terraform {
     azurecaf = {
       source = "aztfmod/azurecaf"
     }
+    azuread = {
+      source = "hashicorp/azuread"
+    }
+    null = {
+      source = "hashicorp/null"
+    }
+    random = {
+      source = "hashicorp/random"
+    }
   }
   required_version = ">= 0.13"
 }

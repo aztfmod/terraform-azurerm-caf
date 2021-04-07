@@ -1,7 +1,9 @@
 variable global_settings {
   description = "Global settings object (see module README.md)"
 }
-
+variable client_config {
+  default = {}
+}
 variable settings {}
 variable base_tags {
   description = "Base tags for the resource to be inherited from the resource group."
@@ -15,4 +17,28 @@ variable location {
   description = "(Required) Specifies the supported Azure location where to create the resource. Changing this forces a new resource to be created."
   type        = string
 }
+
+
+variable key_vault_id {
+  default = {}
+}
+
+# variable vnet_name {
+#   default = {}
+# }
+
+# variable vnets {}
+
+variable host_pool_name {}
+  
+
+# variable host_pool_token {
+#   type        = string
+# }
+
+# variable hostpool_resource_group {
+#   type        = string
+# }
+
+
 
