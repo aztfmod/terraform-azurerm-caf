@@ -24,7 +24,7 @@ resource "null_resource" "mg" {
     command     = format("%s/scripts/assign_subscription_to_mg.sh", path.module)
     when        = destroy
     interpreter = ["/bin/bash"]
-    on_failure  = fail
+    on_failure  = continue
 
     environment = {
       METHOD          = "DELETE"
