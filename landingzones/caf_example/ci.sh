@@ -9,12 +9,12 @@ cd ${2}
 
 terraform init
 
-# terraform apply \
-#   ${parameter_files} \
-#   -var tags='{testing_job_id='"${1}"'}' \
-#   -var var_folder_path=${current_folder} \
-#   -input=false \
-#   -auto-approve
+terraform apply \
+  ${parameter_files} \
+  -var tags='{testing_job_id='"${1}"'}' \
+  -var var_folder_path=${current_folder} \
+  -input=false \
+  -auto-approve
 
 
 terraform destroy \
