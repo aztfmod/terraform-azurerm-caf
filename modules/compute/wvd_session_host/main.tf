@@ -18,16 +18,16 @@ locals {
   
   parameters_body = {
     hostpoolName = {
-      value = var.settings.hostpoolName
+      value = var.host_pool_name
     }
     hostpoolToken = {
-      value = var.settings.hostpoolToken
+      value = var.settings.var.key_vault_id
     }
     hostpoolResourceGroup = {
-      value = var.settings.hostpoolResourceGroup
+      value = var.resource_group_name
     }
     hostpoolLocation = {
-      value = var.settings.hostpoolLocation
+      value = var.location
     }
     hostpoolProperties = {
       value = var.settings.hostpoolProperties
@@ -38,15 +38,25 @@ locals {
     administratorAccountUsername = {
       value = var.settings.administratorAccountUsername
     }
+    # hostPoolKeyvaultId = {
+    #   value = var.key_vaults[try(var.settings.host_pool.lz_key, local.client_config.landingzone_key)][var.settings.host_pool.keyvault_key].id
+    # }
+    # vmKeyvaultId = {
+    #   value = var.key_vaults[try(var.settings.session_vm.lz_key, local.client_config.landingzone_key)][var.settings.session_vm.keyvault_key].id
+    # }
     administratorAccountPassword = {
-      value = var.settings.administratorAccountPassword
+      value = var.key_vault_id
+    }
+    vmAdministratorAccountPassword = {
+      value = var.key_vault_id
     }
     vmAdministratorAccountUsername = {
       value = var.settings.vmAdministratorAccountUsername
     }
-    vmAdministratorAccountPassword = {
-      value = var.settings.vmAdministratorAccountPassword
-    }
+    # vmAdministratorAccountPassword = {        
+    #   value = var.key_vaults[try(var.settings.session_vm.lz_key, local.client_config.landingzone_key)][var.settings.session_vm.keyvault_key].id
+    # }
+    # vmAdministratorAccountPassword = data.azurerm_key_vault_secret.wvd-vm-password.value
     availabilityOption = {
       value = var.settings.availabilityOption
     }
@@ -66,10 +76,10 @@ locals {
       value = var.settings.availabilityZone
     }
     vmResourceGroup = {
-      value = var.settings.vmResourceGroup
+      value = var.resource_group_name
     }
     vmLocation = {
-      value = var.settings.vmLocation
+      value = var.location
     }
     vmSize = {
       value = var.settings.vmSize
@@ -117,7 +127,7 @@ locals {
       value = var.settings.existingSubnetName
     }
     virtualNetworkResourceGroupName = {
-      value = var.settings.virtualNetworkResourceGroupName
+      value = var.resource_group_name
     }
     createNetworkSecurityGroup = {
       value = var.settings.createNetworkSecurityGroup
@@ -160,36 +170,7 @@ locals {
     }
     intune = {
       value = var.settings.intune
-    }
-    # serverName = {
-    #   value = var.server_name
-    # }
-    # dbName = {
-    #   value = azurecaf_name.manageddb.result
-    # }
-    # location = {
-    #   value = var.location
-    # }
-    # collation = {
-    #   value = try(var.settings.collation, "SQL_Latin1_General_CP1_CI_AS")
-    # }
-    # createMode = {
-    #   value = try(var.settings.createMode, "Default")
-    # }
-    # sourceDatabaseId = {
-    #   value = var.sourceDatabaseId
-    # }
-    # restorePointInTime = {
-    #   value = try(var.settings.createMode, null) == "PointInTimeRestore" ? var.settings.restorePointInTime : ""
-    # }
-    # longTermRetentionBackupResourceId = {
-    #   value = try(var.settings.longTermRetentionBackupResourceId, "")
-    # }
-    # retentionDays = {
-    #   value = try(var.settings.retentionDays, 7)
-    # }
-    # tags = {
-    #   value = local.tags
+    }    
     
   }
 }
