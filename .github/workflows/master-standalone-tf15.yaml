@@ -42,10 +42,8 @@ jobs:
             "compute/kubernetes_services/101-single-cluster",
             "compute/kubernetes_services/102-multi-nodepools",
             "compute/proximity_placement_group",
-            "compute/virtual_machine/100-single-linux-vm",
-            "compute/virtual_machine/211-vm-bastion-winrm-agents",
-            "compute/virtual_machine/105-single-windows-vm-kv-admin-secrets",
             "compute/virtual_machine/210-vm-bastion-winrm",
+            "compute/virtual_machine/211-vm-bastion-winrm-agents",
             "cosmos_db/100-simple-cosmos-db-cassandra",
             "cosmos_db/100-simple-cosmos-db-gremlin",
             "cosmos_db/100-simple-cosmos-db-sql",
@@ -69,9 +67,14 @@ jobs:
             "mysql_server/103-private-endpoint-with-fw-rule-mysql",
             "networking/dns_zones/100-simple-dns_zone",
             "networking/express_routes",
-            "networking/firewall/100-simple-firewall-with-routes",
+            "networking/firewall/100-standard-firewall-legacy-pip",
+            "networking/firewall/101-simple-firewall",
+            "networking/firewall/102-premium-firewall",
+            "networking/firewall/103-firewall-policies",
             "networking/front_door/100-simple-front_door",
             "networking/front_door/101-front_door_waf",
+            "networking/ip_group/100-simple-ip_group",
+            "networking/ip_group/101-firewall-ip_group",
             "networking/private_dns/100-private-dns-vnet-links",
             "networking/private_links/endpoints/centralized",
             "networking/virtual_network_gateway/101-vpn-site-to-site",
@@ -81,9 +84,12 @@ jobs:
             "networking/virtual_network/100-subnet-delegation",
             "networking/virtual_network/101-vnet-peering-nsg",
             "networking/virtual_wan/100-vwan-multi-hubs",
-            "networking/virtual_wan/101-vwan-multi-hubs-firewalls",
-            "networking/ip_group/100-simple-ip_group",
-            "networking/ip_group/101-firewall-ip_group",
+            "networking/virtual_wan/101-vwan-hub-firewall-legacy",
+            "networking/virtual_wan/102-vwan-hub-firewall-new",
+            "networking/virtual_wan/103-vwan-hub-gw",
+            "networking/virtual_wan/104-vwan-hub-gw-spp",
+            "networking/virtual_wan/105-vwan-hub-route-table",
+            "networking/virtual_wan/106-vwan-hub-routes",
             "postgresql_server/100-simple-postgresql",
             "postgresql_server/101-vnet-rule-postgresql",
             "postgresql_server/102-private-endpoint-postgresql",
@@ -103,7 +109,7 @@ jobs:
           ]
 
     container:
-      image: aztfmod/rover:0.15.0-beta1-2103.1601
+      image: aztfmod/rover:0.15.0-beta2-2103.3107
       options: --user 0
 
     steps:

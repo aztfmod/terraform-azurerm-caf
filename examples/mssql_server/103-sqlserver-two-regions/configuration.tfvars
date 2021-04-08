@@ -19,7 +19,6 @@
 
 global_settings = {
   default_region = "region1"
-  prefix         = null
   regions = {
     region1 = "southeastasia"
     region2 = "eastasia"
@@ -190,7 +189,11 @@ mssql_servers = {
     administrator_login = "sqlsalesadmin"
     keyvault_key        = "sql-rg1"
     connection_policy   = "Default"
-    system_msi          = true
+
+    
+    identity = { 
+      type = "SystemAssigned" 
+    }
 
     extended_auditing_policy = {
       storage_account = {
@@ -277,5 +280,20 @@ azuread_groups = {
       object_ids             = []
     }
     prevent_duplicate_name = false
+  }
+}
+
+# The role mapping is a required permission for mssql server identity to use audit_policy
+role_mapping = {
+  built_in_role_mapping = {
+    storage_accounts = {
+      auditing-rg1 = {
+        "Storage Blob Data Contributor" = {
+          mssql_servers = {
+            keys = ["sales-rg1"]
+          }
+        }
+      }
+    }
   }
 }

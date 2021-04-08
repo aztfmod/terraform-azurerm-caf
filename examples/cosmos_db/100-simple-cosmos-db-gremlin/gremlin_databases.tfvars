@@ -1,6 +1,5 @@
 global_settings = {
   default_region = "region1"
-  prefix         = null
   regions = {
     region1 = "northeurope"
     region2 = "westeurope"
@@ -16,7 +15,7 @@ resource_groups = {
 
 cosmos_dbs = {
   cosmosdb_account_re1 = {
-    name                      = "cosmosdbgremlin-ex102"
+    name                      = "gremlin"
     resource_group_key        = "cosmosdb_region1"
     offer_type                = "Standard"
     kind                      = "GlobalDocumentDB"

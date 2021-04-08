@@ -1,7 +1,6 @@
 
 global_settings = {
   default_region = "region1"
-  prefix         = null
   regions = {
     region1 = "southeastasia"
   }
@@ -127,11 +126,12 @@ keyvaults = {
 
 keyvault_keys = {
   key1 = {
-    keyvault_key = "example_vm_rg1"
-    name         = "disk-key"
-    key_type     = "RSA"
-    key_size     = "2048"
-    key_opts     = ["encrypt", "decrypt", "sign", "verify", "wrapKey", "unwrapKey"]
+    keyvault_key       = "example_vm_rg1"
+    resource_group_key = "vm_region1"
+    name               = "disk-key"
+    key_type           = "RSA"
+    key_size           = "2048"
+    key_opts           = ["encrypt", "decrypt", "sign", "verify", "wrapKey", "unwrapKey"]
   }
 }
 

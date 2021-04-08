@@ -1,5 +1,4 @@
 global_settings = {
-  prefix = null
   regions = {
     region1 = "southeastasia"
     region2 = "eastasia"

@@ -35,6 +35,7 @@ locals {
   combined_objects_network_watchers                  = merge(tomap({ (local.client_config.landingzone_key) = module.network_watchers }), try(var.remote_objects.network_watchers, {}))
   combined_objects_networking                        = merge(tomap({ (local.client_config.landingzone_key) = module.networking }), try(var.remote_objects.vnets, {}))
   combined_objects_postgresql_servers                = merge(tomap({ (local.client_config.landingzone_key) = module.postgresql_servers }), try(var.remote_objects.postgresql_servers, {}))
+  combined_objects_network_security_groups           = merge(tomap({ (local.client_config.landingzone_key) = module.network_security_groups }), try(var.remote_objects.network_security_groups, {}))
   combined_objects_private_dns                       = merge(tomap({ (local.client_config.landingzone_key) = module.private_dns }), try(var.remote_objects.private_dns, {}))
   combined_objects_proximity_placement_groups        = merge(tomap({ (local.client_config.landingzone_key) = module.proximity_placement_groups }), try(var.remote_objects.proximity_placement_groups, {}))
   combined_objects_public_ip_addresses               = merge(tomap({ (local.client_config.landingzone_key) = module.public_ip_addresses }), try(var.remote_objects.public_ip_addresses, {}))
@@ -42,4 +43,7 @@ locals {
   combined_objects_resource_groups                   = merge(tomap({ (local.client_config.landingzone_key) = module.resource_groups }), try(var.remote_objects.resource_groups, {}))
   combined_objects_storage_accounts                  = merge(tomap({ (local.client_config.landingzone_key) = module.storage_accounts }), try(var.remote_objects.storage_accounts, {}))
   combined_objects_synapse_workspaces                = merge(tomap({ (local.client_config.landingzone_key) = module.synapse_workspaces }), try(var.remote_objects.synapse_workspaces, {}))
+  combined_objects_virtual_hub_connections           = merge(tomap({ (local.client_config.landingzone_key) = azurerm_virtual_hub_connection.vhub_connection }), try(var.remote_objects.vhub_peerings, {}), try(var.remote_objects.virtual_hub_connections, {}))
+  combined_objects_virtual_hub_route_tables          = merge(tomap({ (local.client_config.landingzone_key) = azurerm_virtual_hub_route_table.route_table }), try(var.remote_objects.virtual_hub_route_tables, {}))
+  combined_objects_virtual_wans                      = merge(tomap({ (local.client_config.landingzone_key) = module.virtual_wans }), try(var.remote_objects.virtual_wans, {}))
 }

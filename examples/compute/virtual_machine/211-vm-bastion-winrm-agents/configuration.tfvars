@@ -2,10 +2,14 @@
 global_settings = {
   random_length  = "5"
   default_region = "region1"
-  prefix         = null
   regions = {
     region1 = "southeastasia"
   }
+}
+
+provider_azurerm_features_keyvault = {
+  // set to true to cleanup the CI
+  purge_soft_delete_on_destroy = true
 }
 
 resource_groups = {
