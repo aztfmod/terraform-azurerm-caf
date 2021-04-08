@@ -81,7 +81,14 @@ resource "azurerm_network_interface" "nic" {
 #     name                    = "0"
 #     enable_ip_forwarding    = false
 #     internal_dns_name_label = "nic0"
+#     // Prefer network_security_group orver nsg_key. Will be removed in version 6
 #     nsg_key                 = "data"       // requires a version 1 nsg definition (see compute/vm/210-vm-bastion-winrm example)
+# 
+#     network_security_group = {
+#       # lz_key = ""
+#      key = "data"
+#     }
+# 
 #     ip_configurations = {
 #       conf2 = {
 #         name                    = "nic0-conf2"
@@ -111,5 +118,16 @@ resource "azurerm_network_interface_security_group_association" "nic" {
   }
 
   network_interface_id      = azurerm_network_interface.nic[each.key].id
-  network_security_group_id = var.network_security_groups[each.value.nsg_key].id
+  network_security_group_id = var.network_security_groups[try(each.value.network_security_group.lz_key, var.client_config.landingzone_key)][each.value.nsg_key].id
+}
+
+
+resource "azurerm_network_interface_security_group_association" "nic_nsg" {
+  for_each = {
+    for key, value in try(var.settings.networking_interfaces, {}) : key => value
+    if try(value.network_security_group, null) != null
+  }
+
+  network_interface_id      = azurerm_network_interface.nic[each.key].id
+  network_security_group_id = var.network_security_groups[try(each.value.network_security_group.lz_key, var.client_config.landingzone_key)][each.value.network_security_group.key].id
 }

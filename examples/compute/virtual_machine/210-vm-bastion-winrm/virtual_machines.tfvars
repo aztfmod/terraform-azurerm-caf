@@ -81,6 +81,10 @@ virtual_machines = {
         enable_ip_forwarding    = false
         internal_dns_name_label = "server1-nic0"
 
+        network_security_group = {
+          key = "data"
+        }
+
         networking_interface_asg_associations = {
           app_server = {
             key = "app_server"

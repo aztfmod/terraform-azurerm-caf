@@ -10,5 +10,6 @@ locals {
   module_tag = {
     "module" = basename(abspath(path.module))
   }
-  tags = merge(var.base_tags, local.module_tag, var.tags)
+  base_tags = try(var.global_settings.inherit_tags, false) ? try(var.keyvault.base_tags, {}) : {}
+  tags = merge(local.base_tags, local.module_tag, try(var.settings.tags, {}))
 }

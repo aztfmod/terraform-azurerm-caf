@@ -1,9 +1,13 @@
 global_settings = {
   default_region = "region1"
-  prefix         = null
   regions = {
     region1 = "eastasia"
   }
+}
+
+provider_azurerm_features_keyvault = {
+  // set to true to cleanup the CI
+  purge_soft_delete_on_destroy = true
 }
 
 availability_sets = {

@@ -1,6 +1,6 @@
 global_settings = {
   default_region = "region1"
-  prefix         = null
+  environment    = "examples"
   regions = {
     region1 = "southeastasia"
   }

@@ -49,6 +49,8 @@ module "example" {
     azurerm_firewall_application_rule_collection_definition = var.azurerm_firewall_application_rule_collection_definition
     azurerm_firewall_nat_rule_collection_definition         = var.azurerm_firewall_nat_rule_collection_definition
     azurerm_firewall_network_rule_collection_definition     = var.azurerm_firewall_network_rule_collection_definition
+    azurerm_firewall_policies                               = var.azurerm_firewall_policies
+    azurerm_firewall_policy_rule_collection_groups          = var.azurerm_firewall_policy_rule_collection_groups
     azurerm_firewalls                                       = var.azurerm_firewalls
     azurerm_routes                                          = var.azurerm_routes
     dns_zone_records                                        = var.dns_zone_records
@@ -67,6 +69,10 @@ module "example" {
     private_endpoints                                       = var.private_endpoints
     public_ip_addresses                                     = var.public_ip_addresses
     route_tables                                            = var.route_tables
+    vhub_peerings                                           = var.vhub_peerings
+    virtual_hub_connections                                 = var.virtual_hub_connections
+    virtual_hub_er_gateway_connections                      = var.virtual_hub_er_gateway_connections
+    virtual_hub_route_tables                                = var.virtual_hub_route_tables
     virtual_network_gateway_connections                     = var.virtual_network_gateway_connections
     virtual_network_gateways                                = var.virtual_network_gateways
     virtual_wans                                            = var.virtual_wans
@@ -117,6 +123,7 @@ module "example" {
     keyvault_certificate_issuers  = var.keyvault_certificate_issuers
     keyvault_certificate_requests = var.keyvault_certificate_requests
     keyvault_keys                 = var.keyvault_keys
+    keyvault_certificates         = var.keyvault_certificates
   }
 
   storage = {

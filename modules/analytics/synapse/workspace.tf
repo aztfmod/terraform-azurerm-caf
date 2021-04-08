@@ -70,9 +70,25 @@ resource "azurerm_key_vault_secret" "synapse_rg_name" {
   key_vault_id = var.keyvault_id
 }
 
+# for backwards compatibility to create single firewall rule
 resource "azurerm_synapse_firewall_rule" "wrkspc_firewall" {
+  count = try(var.settings.workspace_firewall, null) == null ? 0 : 1
+
   name                 = var.settings.workspace_firewall.name
   synapse_workspace_id = azurerm_synapse_workspace.ws.id
   start_ip_address     = var.settings.workspace_firewall.start_ip
   end_ip_address       = var.settings.workspace_firewall.end_ip
 }
+
+# supports adding multiple synapse firewall rules
+resource "azurerm_synapse_firewall_rule" "wrkspc_firewalls" {
+  for_each = try(var.settings.workspace_firewalls, {})
+
+  # use key as firewall name if name attribute not defined
+  name                 = try(each.value.name, each.key)
+  synapse_workspace_id = azurerm_synapse_workspace.ws.id
+  # start_ip and end_ip must be specified in each individual workspace_firewall_rule
+  start_ip_address = each.value.start_ip
+  end_ip_address   = each.value.end_ip
+}
+

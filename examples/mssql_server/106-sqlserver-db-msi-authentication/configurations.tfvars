@@ -1,6 +1,5 @@
 global_settings = {
   default_region = "region1"
-  prefix         = null
   regions = {
     region1 = "southeastasia"
   }
@@ -9,7 +8,7 @@ global_settings = {
 
 resource_groups = {
   rg1 = {
-    name = "example-sqldb"
+    name   = "example-sqldb"
     region = "region1"
   }
 }
@@ -33,7 +32,7 @@ keyvaults = {
 
 managed_identities = {
   webapp_mi = {
-    name = "example_db_mi"
+    name               = "example_db_mi"
     resource_group_key = "rg1"
   }
 }
@@ -68,13 +67,13 @@ azuread_groups = {
 
 mssql_servers = {
   mssqlserver1 = {
-    name                          = "example-mssqlserver"
-    region                        = "region1"
-    resource_group_key            = "rg1"
-    version                       = "12.0"
-    administrator_login           = "sqluseradmin"
-    keyvault_key                  = "kv1"
-    connection_policy             = "Default"
+    name                = "example-mssqlserver"
+    region              = "region1"
+    resource_group_key  = "rg1"
+    version             = "12.0"
+    administrator_login = "sqluseradmin"
+    keyvault_key        = "kv1"
+    connection_policy   = "Default"
 
     public_network_access_enabled = true
 
@@ -83,7 +82,7 @@ mssql_servers = {
       azuread_group_key = "sqlserver_admin"
     }
     identity = {
-      type = "SystemAssigned" 
+      type = "SystemAssigned"
     }
   }
 }
@@ -91,16 +90,16 @@ mssql_servers = {
 mssql_databases = {
 
   mssql_db1 = {
-    name = "exampledb1"
+    name               = "exampledb1"
     resource_group_key = "rg1"
-    mssql_server_key = "mssqlserver1"
-    license_type = "LicenseIncluded"
-    max_size_gb = 4
-    sku_name = "BC_Gen5_2"
-    
+    mssql_server_key   = "mssqlserver1"
+    license_type       = "LicenseIncluded"
+    max_size_gb        = 4
+    sku_name           = "BC_Gen5_2"
+
     db_permissions = {
       group1 = { # group_name
-        db_roles = ["db_owner","db_accessadmin"]
+        db_roles = ["db_owner", "db_accessadmin"]
         managed_identities = {
           examples = { # lz_key
             managed_identity_keys = ["webapp_mi"]

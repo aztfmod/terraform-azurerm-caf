@@ -32,17 +32,7 @@ module "hubs" {
   resource_group_name = var.resource_group_name
   vwan_id             = azurerm_virtual_wan.vwan.id
   tags                = merge(try(each.value.tags, null), local.tags)
+  virtual_networks    = var.virtual_networks
+  public_ip_addresses = var.public_ip_addresses
+  client_config       = var.client_config
 }
-
-output "virtual_hubs" {
-  value = module.hubs
-
-  description = "Virtual Hubs object"
-}
-
-output "virtual_wan" {
-  value = azurerm_virtual_wan.vwan
-
-  description = "Virtual WAN object"
-}
-

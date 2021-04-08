@@ -36,7 +36,7 @@ resource "null_resource" "tags" {
     command     = format("%s/scripts/tags.sh", path.module)
     when        = destroy
     interpreter = ["/bin/bash"]
-    on_failure  = fail
+    on_failure  = continue
 
     environment = {
       METHOD          = "PUT"

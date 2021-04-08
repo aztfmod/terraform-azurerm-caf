@@ -7,7 +7,8 @@ module "virtual_machines" {
     module.dynamic_keyvault_secrets,
     module.keyvault_access_policies,
     module.keyvault_access_policies_azuread_apps,
-    module.proximity_placement_groups
+    module.proximity_placement_groups,
+    module.network_security_groups
   ]
   for_each = local.compute.virtual_machines
 
@@ -22,7 +23,7 @@ module "virtual_machines" {
   keyvaults                        = local.combined_objects_keyvaults
   location                         = lookup(each.value, "region", null) == null ? module.resource_groups[each.value.resource_group_key].location : local.global_settings.regions[each.value.region]
   managed_identities               = local.combined_objects_managed_identities
-  network_security_groups          = try(module.network_security_groups, {})
+  network_security_groups          = local.combined_objects_network_security_groups
   proximity_placement_groups       = local.combined_objects_proximity_placement_groups
   public_ip_addresses              = local.combined_objects_public_ip_addresses
   recovery_vaults                  = local.combined_objects_recovery_vaults

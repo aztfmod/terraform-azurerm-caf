@@ -1,10 +1,15 @@
 global_settings = {
   default_region = "region1"
-  prefix         = null
   regions = {
     region1 = "southeastasia"
   }
 }
+
+provider_azurerm_features_keyvault = {
+  // set to true to cleanup the CI
+  purge_soft_delete_on_destroy = true
+}
+
 tags = {
   level = "100"
 }
@@ -119,7 +124,6 @@ keyvaults = {
     sku_name                    = "standard"
     soft_delete_enabled         = true
     purge_protection_enabled    = true
-    enabled_for_disk_encryption = true
     tags = {
       env = "Standalone"
     }
@@ -191,11 +195,12 @@ storage_accounts = {
 }
 keyvault_keys = {
   key1 = {
-    keyvault_key = "example_vm_rg1"
-    name         = "disk-key"
-    key_type     = "RSA"
-    key_size     = "2048"
-    key_opts     = ["encrypt", "decrypt", "sign", "verify", "wrapKey", "unwrapKey"]
+    keyvault_key       = "example_vm_rg1"
+    resource_group_key = "vm_region1"
+    name               = "disk-key"
+    key_type           = "RSA"
+    key_size           = "2048"
+    key_opts           = ["encrypt", "decrypt", "sign", "verify", "wrapKey", "unwrapKey"]
   }
 }
 

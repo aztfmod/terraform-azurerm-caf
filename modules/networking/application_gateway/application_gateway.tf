@@ -17,6 +17,15 @@ data "azurerm_key_vault_certificate" "trustedcas" {
   key_vault_id = var.keyvaults[try(each.value.lz_key, var.client_config.landingzone_key)][each.value.keyvault_key].id
 }
 
+data "azurerm_key_vault_certificate" "manual_certs" {
+  for_each = {
+    for key, value in local.listeners : key => value
+    if try(value.keyvault_certificate.certificate_name, null) != null
+  }
+  name         = each.value.keyvault_certificate.certificate_name
+  key_vault_id = var.keyvaults[try(each.value.keyvault_certificate.lz_key, var.client_config.landingzone_key)][each.value.keyvault_certificate.keyvault_key].id
+}
+
 resource "azurerm_application_gateway" "agw" {
   name                = azurecaf_name.agw.result
   resource_group_name = var.resource_group_name
@@ -79,7 +88,7 @@ resource "azurerm_application_gateway" "agw" {
       host_name                      = try(trimsuffix((try(http_listener.value.host_names, null) == null ? try(var.dns_zones[try(http_listener.value.dns_zone.lz_key, var.client_config.landingzone_key)][http_listener.value.dns_zone.key].records[0][http_listener.value.dns_zone.record_type][http_listener.value.dns_zone.record_key].fqdn, http_listener.value.host_name) : null), "."), null)
       host_names                     = try(http_listener.value.host_name, null) == null ? try(http_listener.value.host_names, null) : null
       require_sni                    = try(http_listener.value.require_sni, false)
-      ssl_certificate_name           = try(try(http_listener.value.keyvault_certificate_request.key, http_listener.value.keyvault_certificate.certificate_key), null)
+      ssl_certificate_name           = try(try(try(http_listener.value.keyvault_certificate_request.key, http_listener.value.keyvault_certificate.certificate_key), data.azurerm_key_vault_certificate.manual_certs[http_listener.key].name), null)
     }
   }
 
@@ -195,6 +204,15 @@ resource "azurerm_application_gateway" "agw" {
     content {
       name                = ssl_certificate.value
       key_vault_secret_id = var.keyvault_certificate_requests[ssl_certificate.value].secret_id
+    }
+  }
+
+  dynamic "ssl_certificate" {
+    for_each = try(data.azurerm_key_vault_certificate.manual_certs)
+
+    content {
+      name                = ssl_certificate.value.name
+      key_vault_secret_id = ssl_certificate.value.secret_id
     }
   }
 

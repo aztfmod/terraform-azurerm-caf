@@ -17,3 +17,6 @@ module "load_balancers" {
   }
 }
 
+output "load_balancers" {
+  value = module.load_balancers
+}

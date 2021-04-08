@@ -16,3 +16,13 @@ variable "base_tags" {
   description = "Base tags for the resource to be inherited from the resource group."
   type        = map(any)
 }
+
+variable "virtual_networks" {
+  description = "Combined object for Virtual Networks"
+}
+variable "public_ip_addresses" {
+  description = "Combined object for public ip addresses"
+}
+variable "client_config" {
+
+}
