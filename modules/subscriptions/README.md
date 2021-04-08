@@ -9,7 +9,7 @@ The following pre-requisites must be performed before using that module.
 ## Pre-requisites
 
 This module must be executed with
-- An Azure Active Directory user being and EA Account Owner
+- An Azure Active Directory user being an EA Account Owner
 
 ### Enteprise Agreement
 
