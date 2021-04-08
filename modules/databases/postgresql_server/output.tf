@@ -2,6 +2,10 @@ output "id" {
   value = azurerm_postgresql_server.postgresql.id
 }
 
+output "fqdn" {
+  value = azurerm_postgresql_server.postgresql.fqdn
+}
+
 output "rbac_id" {
   value = try(azurerm_postgresql_server.postgresql.identity[0].principal_id, null)
 }
