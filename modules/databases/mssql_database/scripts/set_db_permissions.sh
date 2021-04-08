@@ -1,7 +1,7 @@
 #!/bin/bash
 
 # update rover with odbcinst.ini > sql odbc driver to 17.7.2 / 17.6
-
+set -e
 echo "[SQLSERVER]
 Driver = ODBC Driver 17 for SQL Server
 Server = tcp:${SQLCMDSERVER},1433
