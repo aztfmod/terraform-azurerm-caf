@@ -2,6 +2,10 @@ output "id" {
   value = azurerm_mysql_server.mysql.id
 }
 
+output "fqdn" {
+  value = azurerm_mysql_server.mysql.fqdn
+}
+
 output "rbac_id" {
   value = try(azurerm_mysql_server.mysql.identity[0].principal_id, null)
 }
