@@ -15,8 +15,8 @@ module "function_apps" {
   application_insight        = try(each.value.application_insight_key, null) == null ? null : module.azurerm_application_insights[each.value.application_insight_key]
   identity                   = try(each.value.identity, null)
   connection_strings         = try(each.value.connection_strings, {})
-  storage_account_name       = try(each.value.storage_account_key) == null ? null : module.storage_accounts[each.value.storage_account_key].name
-  storage_account_access_key = try(each.value.storage_account_key) == null ? null : module.storage_accounts[each.value.storage_account_key].primary_access_key
+  storage_account_name       = try(data.azurerm_storage_account.function_apps[each.key].name, null)
+  storage_account_access_key = try(data.azurerm_storage_account.function_apps[each.key].primary_access_key, null)
   global_settings            = local.global_settings
   base_tags                  = try(local.global_settings.inherit_tags, false) ? module.resource_groups[each.value.resource_group_key].tags : {}
   tags                       = try(each.value.tags, null)
@@ -24,4 +24,14 @@ module "function_apps" {
 
 output "function_apps" {
   value = module.function_apps
+}
+
+data "azurerm_storage_account" "function_apps" {
+  for_each = {
+    for key, value in local.webapp.function_apps : key => value
+    if try(value.storage_account_key, null) != null
+  }
+
+  name                = module.storage_accounts[each.value.storage_account_key].name
+  resource_group_name = module.storage_accounts[each.value.storage_account_key].resource_group_name
 }
