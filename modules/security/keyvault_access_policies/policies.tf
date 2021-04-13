@@ -118,3 +118,15 @@ module "storage_accounts" {
   object_id     = var.resources.storage_accounts[try(each.value.lz_key, var.client_config.landingzone_key)][each.value.storage_account_key].identity.0.principal_id
 }
 
+module "diagnostic_storage_accounts" {
+  source = "./access_policy"
+  for_each = {
+    for key, access_policy in var.access_policies : key => access_policy
+    if try(access_policy.dia_storage_account_key, null) != null
+  }
+
+  keyvault_id   = var.keyvault_id == null ? try(var.keyvaults[var.client_config.landingzone_key][var.keyvault_key].id, var.keyvaults[each.value.lz_key][var.keyvault_key].id) : var.keyvault_id
+  access_policy = each.value
+  tenant_id     = var.resources.diagnostic_storage_accounts[try(each.value.lz_key, var.client_config.landingzone_key)][each.value.dia_storage_account_key].identity.0.tenant_id
+  object_id     = var.resources.diagnostic_storage_accounts[try(each.value.lz_key, var.client_config.landingzone_key)][each.value.dia_storage_account_key].identity.0.principal_id
+}
