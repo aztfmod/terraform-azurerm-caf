@@ -1,6 +1,6 @@
 resource "azuread_application" "app" {
 
-  display_name = var.global_settings.passthrough ? format("%s", var.settings.application_name) : format("%v-%s", try(var.global_settings.prefixes, ""), var.settings.application_name)
+  display_name = var.global_settings.passthrough ? format("%s", var.settings.application_name) : format("%v-%s", try(var.global_settings.prefixes[0], ""), var.settings.application_name)
 
   owners = [
     var.client_config.object_id
@@ -48,7 +48,7 @@ resource "azuread_service_principal_password" "pwd" {
   end_date             = timeadd(time_rotating.pwd.id, format("%sh", local.password_policy.expire_in_days * 24))
 
   lifecycle {
-    create_before_destroy = true
+    create_before_destroy = false
   }
 }
 
