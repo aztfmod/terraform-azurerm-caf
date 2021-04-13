@@ -25,3 +25,7 @@ module "subscription_billing_role_assignments" {
     managed_identities = local.combined_objects_managed_identities
   }
 }
+
+output "subscriptions" {
+  value = module.subscriptions
+}
