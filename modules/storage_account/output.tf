@@ -27,14 +27,6 @@ output "data_lake_filesystems" {
   value = module.data_lake_filesystem
 }
 
-output "primary_access_key" {
-  value = azurerm_storage_account.stg.primary_access_key
-}
-
-output "primary_connection_string" {
-  value = azurerm_storage_account.stg.primary_connection_string
-}
-
 output "identity" {
   value = try(azurerm_storage_account.stg.identity, null)
 }
