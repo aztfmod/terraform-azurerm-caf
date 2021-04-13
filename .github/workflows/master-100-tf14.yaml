@@ -53,7 +53,7 @@ jobs:
         with:
           repository: Azure/caf-terraform-landingzones
           path: public
-          ref: '2103.0.0'
+          ref: 'patch.5.3.1'
 
       - name: Login azure
         run: |
@@ -184,7 +184,7 @@ jobs:
         with:
           repository: Azure/caf-terraform-landingzones
           path: public
-          ref: '2103.0.0'
+          ref: 'patch.5.3.1'
 
       - name: Login azure
         run: |
@@ -235,7 +235,7 @@ jobs:
         with:
           repository: Azure/caf-terraform-landingzones
           path: public
-          ref: '2103.0.0'
+          ref: 'patch.5.3.1'
 
       - name: Login azure
         run: |
