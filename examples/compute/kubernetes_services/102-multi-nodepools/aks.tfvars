@@ -8,9 +8,6 @@ aks_clusters = {
       type = "SystemAssigned"
     }
 
-    kubernetes_version = "1.19.6"
-
-    #lz_key   = "networking_spoke_aks"
     vnet_key = "spoke_aks_re1"
 
     network_policy = {
@@ -41,7 +38,6 @@ aks_clusters = {
       max_pods              = 30
       node_count            = 1
       os_disk_size_gb       = 512
-      orchestrator_version  = "1.19.6"
       tags = {
         "project" = "system services"
       }
@@ -59,7 +55,6 @@ aks_clusters = {
         node_count           = 1
         enable_auto_scaling  = false
         os_disk_size_gb      = 512
-        orchestrator_version = "1.19.6"
         tags = {
           "project" = "user services"
         }
