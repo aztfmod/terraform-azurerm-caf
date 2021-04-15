@@ -97,28 +97,16 @@ mssql_databases = {
     max_size_gb        = 4
     sku_name           = "BC_Gen5_2"
 
-    # Only works with SystemAssigned MSI, logged_in users will not be able to provision the db_permission for now.
-    db_permissions = {
-      group1 = { # group_name
-        db_roles = ["db_owner", "db_accessadmin"]
-        managed_identities = {
-          examples = { # lz_key
-            managed_identity_keys = ["webapp_mi"]
-          }
-          # remote_mi = {
-          #   managed_identity_keys = ["mi1"]
-          # }
-        }
-      }
+    short_term_retention_policy = {
+      retention_days = 8    # 7 to 35 days
     }
 
-  }
-}
-
-azuread_roles = {
-  mssql_servers = {
-    mssqlserver1 = {
-      roles = ["Directory Readers"]
+    long_term_retention_policy = {
+      weekly_retention  = "P1W" # 1 to 520 in ISO 8601 format
+      monthly_retention = "P1M" # 1 to 120 in ISO 8601 format
+      yearly_retention  = "P1Y" # 1 to 10 in ISO 8601 format
+      week_of_year      = 1 # 1 to 52
     }
+
   }
 }
