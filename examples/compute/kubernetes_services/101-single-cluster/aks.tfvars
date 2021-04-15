@@ -22,7 +22,7 @@ aks_clusters = {
       type = "SystemAssigned"
     }
 
-    kubernetes_version = "1.19.6"
+    # kubernetes_version = "1.19.6"
     vnet_key           = "spoke_aks_re1"
 
     network_profile = {
