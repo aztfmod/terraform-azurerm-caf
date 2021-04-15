@@ -19,3 +19,6 @@ variable "var_folder_path" {
   default = {}
 }
 
+variable "management_locks" {
+  default = {}
+}

@@ -4,6 +4,8 @@ module "caf" {
   tags             = var.tags
   resource_groups  = var.resource_groups
   storage_accounts = var.storage_accounts
-
+  security = {
+    management_locks = var.management_locks
+  }
 }
 

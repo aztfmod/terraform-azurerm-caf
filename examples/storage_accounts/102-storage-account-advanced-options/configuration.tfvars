@@ -99,3 +99,9 @@ storage_accounts = {
 }
 
 
+management_locks = {
+  lock1= {
+    name = "just_lock"
+    lock_level = "CanNotDelete"
+  }
+}

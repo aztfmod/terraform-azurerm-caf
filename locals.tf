@@ -170,6 +170,7 @@ locals {
     keyvault_certificate_requests = try(var.security.keyvault_certificate_requests, {})
     keyvault_certificates         = try(var.security.keyvault_certificates, {})
     keyvault_keys                 = try(var.security.keyvault_keys, {})
+    management_locks              = try(var.security.management_locks, {})
   }
 
   shared_services = {
