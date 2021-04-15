@@ -22,7 +22,6 @@ aks_clusters = {
       type = "SystemAssigned"
     }
 
-    # kubernetes_version = "1.19.6"
     vnet_key           = "spoke_aks_re1"
 
     network_profile = {
@@ -54,8 +53,6 @@ aks_clusters = {
     load_balancer_profile = {
       # Only one option can be set
       managed_outbound_ip_count = 1
-      # outbound_ip_prefix_ids = []
-      # outbound_ip_address_ids = []
     }
 
     default_node_pool = {
@@ -67,7 +64,6 @@ aks_clusters = {
       max_pods              = 30
       node_count            = 1
       os_disk_size_gb       = 512
-      orchestrator_version  = "1.19.6"
       tags = {
         "project" = "system services"
       }
