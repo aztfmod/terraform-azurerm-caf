@@ -125,6 +125,7 @@ locals {
 
   networking = {
     application_gateway_applications                        = try(var.networking.application_gateway_applications, {})
+    application_gateway_waf_policies                        = try(var.networking.application_gateway_waf_policies, {})
     application_gateways                                    = try(var.networking.application_gateways, {})
     application_security_groups                             = try(var.networking.application_security_groups, {})
     azurerm_firewall_application_rule_collection_definition = try(var.networking.azurerm_firewall_application_rule_collection_definition, {})
