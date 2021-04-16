@@ -34,7 +34,7 @@ resource "azurerm_application_gateway" "agw" {
   zones              = try(var.settings.zones, null)
   enable_http2       = try(var.settings.enable_http2, true)
   tags               = try(local.tags, null)
-  firewall_policy_id = try(var.settings.firewall_policy_id, null)
+  firewall_policy_id = try(var.application_gateway_waf_policies[try(var.settings.waf_policy.lz_key, var.client_config.landingzone_key)][var.settings.waf_policy.key].id)
 
   sku {
     name     = var.sku_name
@@ -89,6 +89,7 @@ resource "azurerm_application_gateway" "agw" {
       host_names                     = try(http_listener.value.host_name, null) == null ? try(http_listener.value.host_names, null) : null
       require_sni                    = try(http_listener.value.require_sni, false)
       ssl_certificate_name           = try(try(try(http_listener.value.keyvault_certificate_request.key, http_listener.value.keyvault_certificate.certificate_key), data.azurerm_key_vault_certificate.manual_certs[http_listener.key].name), null)
+      firewall_policy_id             = try(var.application_gateway_waf_policies[try(http_listener.value.waf_policy.lz_key, var.client_config.landingzone_key)][http_listener.value.waf_policy.key].id)
     }
   }
 
