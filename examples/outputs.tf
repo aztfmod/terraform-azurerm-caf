@@ -28,6 +28,6 @@ output keyvault_certificate_requests {
 
 output mssql_managed_instances_secondary {
   value     = module.caf.mssql_managed_instances_secondary
-  sensitive = false
+  sensitive = true
 }
 

@@ -23,6 +23,10 @@ variable key_vault_id {
   default = {}
 }
 
+variable keyvaults {
+  default = {}
+  
+}
 # variable vnet_name {
 #   default = {}
 # }
