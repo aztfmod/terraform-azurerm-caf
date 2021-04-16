@@ -21,7 +21,7 @@ locals {
       value = var.host_pool_name
     }
     hostpoolToken = {
-      value = var.settings.var.key_vault_id
+      value = var.keyvaults[try(var.settings.hostpoolToken.lz_key, var.client_config.landingzone_key)][var.settings.hostpoolToken.keyvault_key].id
     }
     hostpoolResourceGroup = {
       value = var.resource_group_name
@@ -45,10 +45,10 @@ locals {
     #   value = var.key_vaults[try(var.settings.session_vm.lz_key, local.client_config.landingzone_key)][var.settings.session_vm.keyvault_key].id
     # }
     administratorAccountPassword = {
-      value = var.key_vault_id
+      value = var.keyvaults[var.settings.administrator.lz_key][var.settings.administrator.keyvault_key].id
     }
     vmAdministratorAccountPassword = {
-      value = var.key_vault_id
+      value = var.keyvaults[var.settings.vmadministrator.lz_key][var.settings.vmadministrator.keyvault_key].id
     }
     vmAdministratorAccountUsername = {
       value = var.settings.vmAdministratorAccountUsername

@@ -67,19 +67,19 @@ resource "azurerm_template_deployment" "sessionhost" {
 # }
 
 data "azurerm_key_vault_secret" "wvd_domain_password" {
-  name = "wvd-admin-password"
+  name = "newwvd-admin-password"
   key_vault_id = var.key_vault_id
   #key_vault_id = data.azurerm_key_vault_secret.wvd-domain-password.value
 }
 
 data "azurerm_key_vault_secret" "wvd_hostpool_token" {
-  name = "wvd-hostpool-token"
+  name = "newwvd-hostpool-token"
   key_vault_id = var.key_vault_id
   #key_vault_id = data.azurerm_key_vault_secret.wvd-domain-password.value
 }
 
 data "azurerm_key_vault_secret" "wvd_vm_password" {
-  name = "wvd-vm-password"
+  name = "newwvd-vm-password"
   key_vault_id = var.key_vault_id
   #key_vault_id = data.azurerm_key_vault_secret.wvd-domain-password.value
 }

@@ -43,6 +43,18 @@ wvd_application_groups = {
     type          = "Desktop"
     
   }
+
+  wvd_app2 = {
+    resource_group_key  = "wvd_region1"
+    host_pool_key       = "wvd_hp1"
+    wvd_workspace_key   = "wvd_ws1"
+    name                = "firstremoteapp"
+    friendly_name       = "Myremoteappgroup"
+    description         = "A description of my workspace"
+    #Type of Virtual Desktop Application Group. Valid options are RemoteApp or Desktop.
+    type          = "RemoteApp"
+    
+  }
 }
 
 wvd_host_pools = {
@@ -59,7 +71,24 @@ wvd_host_pools = {
     load_balancer_type       = "DepthFirst"
     #Expiration value should be between 1 hour and 30 days.
     registration_info = {
-      expiration_date = "2021-04-10T07:20:50Z"
+      expiration_date = "2021-05-12T07:20:50Z"
+    }
+  }
+
+  wvd_hp2 = {
+    resource_group_key   = "wvd_region1"
+    name                 = "armremotehp"
+    friendly_name        = "Myremotehostpool"
+    description          = "A description of my workspace"
+    validate_environment = false
+    type                 = "Pooled"
+    #Option to specify the preferred Application Group type for the Virtual Desktop Host Pool. Valid options are None, Desktop or RailApplications.
+    preferred_app_group_type = "RailApplications"
+    maximum_sessions_allowed = 1000
+    load_balancer_type       = "DepthFirst"
+    #Expiration value should be between 1 hour and 30 days.
+    registration_info = {
+      expiration_date = "2021-05-12T07:20:50Z"
     }
   }
 }
@@ -77,9 +106,24 @@ wvd_workspaces = {
 wvd_session_hosts = {
   wvd_sh1 = {
     resource_group_key  = "wvd_region1"
-    name                = "armsession8"
+    name                = "armsession16"
     wvd_host_pool_key   =  "wvd_hp1"
-    keyvault_key        = "wvd_kv"    
+    keyvault_key        = "wvd_kv" 
+    lz_key = "examples"
+    vmadministrator = {
+      keyvault_key        = "wvd_kv2"
+      lz_key = "examples"
+    }
+    administrator = {
+      keyvault_key        = "wvd_kv1"
+      lz_key = "examples"
+    }
+    hostpoolToken = {
+      keyvault_key        = "wvd_kv3"
+      lz_key = "examples"
+
+    }
+
     hostpoolProperties = {}    
     vmTemplate = ""
     administratorAccountUsername = "wvduser@test.onmicrosoft.com"
@@ -93,7 +137,7 @@ wvd_session_hosts = {
     vmSize = "Standard_F2s_v2"
     vmInitialNumber = 1
     vmNumberOfInstances = 1
-    vmNamePrefix = "armvm10"
+    vmNamePrefix = "armvm16"
     vmImageType = "Gallery"
     vmGalleryImageOffer = "WindowsServer"
     vmGalleryImagePublisher = "MicrosoftWindowsServer"
@@ -103,9 +147,9 @@ wvd_session_hosts = {
     vmDiskType = "StandardSSD_LRS"
     vmUseManagedDisks = true
     storageAccountResourceGroupName = ""
-    existingVnetName = "zsjy-vnet-virtual_machines"
+    existingVnetName = "xxx-vnet-virtual_machines"
     # vnet_key = "vnet_region1"
-    existingSubnetName = "zsjy-snet-examples"
+    existingSubnetName = "xxx-snet-examples"
     createNetworkSecurityGroup = false
     networkSecurityGroupId = ""
     networkSecurityGroupRules = []
@@ -117,7 +161,7 @@ wvd_session_hosts = {
     deploymentId = ""
     apiVersion = "2019-12-10-preview"
     ouPath = ""
-    domain = "test.onmicrosoft.com"
+    domain = "test.onmicrosoft.com "
     aadJoin = true
     intune = false      
     
@@ -180,6 +224,76 @@ network_security_group_definition = {
 }
 
 
+keyvaults = {
+  wvd_kv = {
+    name                = "testkv"
+    resource_group_key  = "wvd_region1"
+    sku_name            = "standard"
+    soft_delete_enabled = true
+    creation_policies = {
+      logged_in_user = {
+        # if the key is set to "logged_in_user" add the user running terraform in the keyvault policy
+        # More examples in /examples/keyvault
+        secret_permissions = ["Set", "Get", "List", "Delete", "Purge", "Recover"]
+      }
+    }
+  }
+
+  wvd_kv1 = {
+    name                = "testkv1"
+    resource_group_key  = "wvd_region1"
+    sku_name            = "standard"
+    soft_delete_enabled = true
+    creation_policies = {
+      logged_in_user = {
+        # if the key is set to "logged_in_user" add the user running terraform in the keyvault policy
+        # More examples in /examples/keyvault
+        secret_permissions = ["Set", "Get", "List", "Delete", "Purge", "Recover"]
+      }
+    }
+  }
+
+  wvd_kv2 = {
+    name                = "testkv2"
+    resource_group_key  = "wvd_region1"
+    sku_name            = "standard"
+    soft_delete_enabled = true
+    creation_policies = {
+      logged_in_user = {
+        # if the key is set to "logged_in_user" add the user running terraform in the keyvault policy
+        # More examples in /examples/keyvault
+        secret_permissions = ["Set", "Get", "List", "Delete", "Purge", "Recover"]
+      }
+    }
+  }
+  
+}
+
+
+dynamic_keyvault_secrets = {
+  wvd_kv = { # Key of the keyvault    
+    domain-password = {
+      secret_name = "newwvd-admin-password"
+      value       = ""  #Insert manually 
+    }    
+  }
+
+  wvd_kv1 = { # Key of the keyvault    
+    vm-password = {
+      secret_name = "newwvd-vm-password"
+      value       = ""  #Insert manually 
+    }
+    
+  }
+
+  wvd_kv2 = { # Key of the keyvault    
+    hostpool-token = {
+      secret_name = "newwvd-hostpool-token"
+      value       = ""  #Insert manually 
+    }
+  }  
+  
+}
 
 
 
