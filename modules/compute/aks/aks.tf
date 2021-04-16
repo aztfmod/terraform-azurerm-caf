@@ -170,7 +170,7 @@ resource "azurerm_kubernetes_cluster" "aks" {
       }
     }
   }
-
+  sku_tier           = try(var.settings.sku_tier, null)
   kubernetes_version = try(var.settings.kubernetes_version, null)
 
   # dynamic "linux_profile" {
