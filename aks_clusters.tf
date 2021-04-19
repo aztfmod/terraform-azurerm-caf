@@ -1,5 +1,6 @@
 output "aks_clusters" {
   value = module.aks_clusters
+  sensitive = true
 }
 
 module "aks_clusters" {
