@@ -62,3 +62,9 @@ variable "combined_objects" {
 variable "storage_accounts" {
   default = {}
 }
+variable "diagnostic_profiles" {
+  default = null
+}
+variable "diagnostics" {
+  default = null
+}
