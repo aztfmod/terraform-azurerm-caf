@@ -34,7 +34,7 @@ resource "azurerm_application_gateway" "agw" {
   zones              = try(var.settings.zones, null)
   enable_http2       = try(var.settings.enable_http2, true)
   tags               = try(local.tags, null)
-  firewall_policy_id = try(var.application_gateway_waf_policies[try(var.settings.waf_policy.lz_key, var.client_config.landingzone_key)][var.settings.waf_policy.key].id, null)
+  firewall_policy_id = try(try(var.application_gateway_waf_policies[try(var.settings.waf_policy.lz_key, var.client_config.landingzone_key)][var.settings.waf_policy.key].id, var.settings.firewall_policy_id), null)
 
   sku {
     name     = var.sku_name
