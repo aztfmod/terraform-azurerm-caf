@@ -57,6 +57,11 @@ resource "azurerm_lb_probe" "lb_probe" {
   request_path        = try(each.value.request_path, null)        #Required if protocol is set to Http or Https. Otherwise, it is not allowed.
   interval_in_seconds = try(each.value.interval_in_seconds, null) #The default value is 15, the minimum value is 5.
   number_of_probes    = try(each.value.number_of_probes, null)    # The default value is 2.
+
+  depends_on = [
+    azurerm_lb_backend_address_pool.backend_address_pool,
+    azurerm_lb.lb
+  ]
 }
 
 resource "azurerm_lb_rule" "lb_rule" {
