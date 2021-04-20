@@ -43,6 +43,7 @@ locals {
   combined_objects_recovery_vaults                   = merge(tomap({ (local.client_config.landingzone_key) = module.recovery_vaults }), try(var.remote_objects.recovery_vaults, {}))
   combined_objects_resource_groups                   = merge(tomap({ (local.client_config.landingzone_key) = module.resource_groups }), try(var.remote_objects.resource_groups, {}))
   combined_objects_storage_accounts                  = merge(tomap({ (local.client_config.landingzone_key) = module.storage_accounts }), try(var.remote_objects.storage_accounts, {}))
+  combined_objects_subscriptions                     = merge(tomap({ (local.client_config.landingzone_key) = module.subscriptions }), try(var.remote_objects.subscriptions, {}))
   combined_objects_synapse_workspaces                = merge(tomap({ (local.client_config.landingzone_key) = module.synapse_workspaces }), try(var.remote_objects.synapse_workspaces, {}))
   combined_objects_virtual_hub_connections           = merge(tomap({ (local.client_config.landingzone_key) = azurerm_virtual_hub_connection.vhub_connection }), try(var.remote_objects.vhub_peerings, {}), try(var.remote_objects.virtual_hub_connections, {}))
   combined_objects_virtual_hub_route_tables          = merge(tomap({ (local.client_config.landingzone_key) = azurerm_virtual_hub_route_table.route_table }), try(var.remote_objects.virtual_hub_route_tables, {}))
