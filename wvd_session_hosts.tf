@@ -10,6 +10,7 @@ module "wvd_session_hosts" {
   base_tags           = try(local.global_settings.inherit_tags, false) ? module.resource_groups[each.value.resource_group_key].tags : {}
   host_pool_name      = module.wvd_host_pools[each.value.wvd_host_pool_key].name    
   key_vault_id        = try(each.value.keyvault_key, null) == null ? null : try(local.combined_objects_keyvaults[local.client_config.landingzone_key][each.value.keyvault_key].id, local.combined_objects_keyvaults[each.value.lz_key][each.value.keyvault_key].id)
-  # key_vault_id = try(local.combined_objects_keyvaults[each.value.lz_key][each.value.keyvault_key].id, local.combined_objects_keyvaults[local.client_config.landingzone_key][each.value.keyvault_key].id)
   keyvaults           = local.combined_objects_keyvaults
+  vnets               = local.combined_objects_networking
+  
 }

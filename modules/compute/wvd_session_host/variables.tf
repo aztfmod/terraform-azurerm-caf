@@ -27,22 +27,14 @@ variable keyvaults {
   default = {}
   
 }
-# variable vnet_name {
-#   default = {}
-# }
 
-# variable vnets {}
+variable vnets {
+  default = {}
+}
 
 variable host_pool_name {}
   
 
-# variable host_pool_token {
-#   type        = string
-# }
-
-# variable hostpool_resource_group {
-#   type        = string
-# }
 
 
 
