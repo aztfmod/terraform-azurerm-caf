@@ -54,6 +54,7 @@ jobs:
             "eventhub_namespace/101-evh-with-private-endpoint",
             "keyvault/101-keyvault-policies",
             "machine_learning/100-aml",
+            "managed_service_identity/100-msi-levels",
             "mariadb_server/100-simple-mariadb",
             "mariadb_server/101-vnet-rule-mariadb",
             "mariadb_server/102-private-endpoint-mariadb",
