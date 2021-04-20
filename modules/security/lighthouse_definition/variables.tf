@@ -1,3 +1,3 @@
-variable client_config {}
-variable settings {}
-variable resources {}
+variable "client_config" {}
+variable "settings" {}
+variable "resources" {}
