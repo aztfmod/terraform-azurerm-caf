@@ -18,7 +18,7 @@ To test this deployment in the example landingzone. Make sure the launchpad has 
 
 rover \
   -lz /tf/caf/landingzones/caf_example \
-  -var-folder  /tf/caf/aztfmod/examples/storage_accounts/100-simple-storage-account-blob-container \
+  -var-folder  /tf/caf/examples/storage_accounts/100-simple-storage-account-blob-container/ \
   -level level1 \
   -a plan
 
