@@ -25,6 +25,7 @@ module "application_gateways" {
     for key, value in local.networking.application_gateway_applications : key => value
     if value.application_gateway_key == each.key
   }
+  application_gateway_waf_policies = local.combined_objects_application_gateway_waf_policies
 }
 
 output "application_gateways" {
