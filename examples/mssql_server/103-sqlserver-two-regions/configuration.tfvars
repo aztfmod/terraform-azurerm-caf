@@ -190,9 +190,9 @@ mssql_servers = {
     keyvault_key        = "sql-rg1"
     connection_policy   = "Default"
 
-    
-    identity = { 
-      type = "SystemAssigned" 
+
+    identity = {
+      type = "SystemAssigned"
     }
 
     extended_auditing_policy = {

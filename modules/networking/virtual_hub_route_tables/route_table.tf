@@ -53,8 +53,8 @@ resource "null_resource" "virtual_hub_route_table" {
     on_failure  = fail
 
     environment = {
-      METHOD     = "PUT"
-      URL        = self.triggers.URL
+      METHOD = "PUT"
+      URL    = self.triggers.URL
       PROPERTIES = jsonencode(
         {
           properties = {}

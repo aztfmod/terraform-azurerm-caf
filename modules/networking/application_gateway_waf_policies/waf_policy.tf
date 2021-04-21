@@ -1,17 +1,17 @@
 resource "azurerm_web_application_firewall_policy" "wafpolicy" {
 
-  name                              = var.settings.name
-  resource_group_name               = var.resource_group_name
-  location                          = var.location
-  tags                              = local.tags
+  name                = var.settings.name
+  resource_group_name = var.resource_group_name
+  location            = var.location
+  tags                = local.tags
 
   dynamic "custom_rules" {
     for_each = try(var.settings.custom_rules, {})
     content {
-      name                           = custom_rules.value.name
-      priority                       = custom_rules.value.priority
-      rule_type                      = custom_rules.value.rule_type
-      action                         = custom_rules.value.action
+      name      = custom_rules.value.name
+      priority  = custom_rules.value.priority
+      rule_type = custom_rules.value.rule_type
+      action    = custom_rules.value.action
 
       dynamic "match_conditions" {
         for_each = custom_rules.value.match_conditions
@@ -58,8 +58,8 @@ resource "azurerm_web_application_firewall_policy" "wafpolicy" {
       dynamic "managed_rule_set" {
         for_each = var.settings.managed_rules.managed_rule_set
         content {
-          type                = try(managed_rule_set.value.type, null)
-          version             = managed_rule_set.value.version
+          type    = try(managed_rule_set.value.type, null)
+          version = managed_rule_set.value.version
 
           dynamic "rule_group_override" {
             for_each = try(managed_rule_set.value.rule_group_override, {})
