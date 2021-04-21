@@ -116,6 +116,7 @@ jobs:
             "keyvault/102-keyvault-cert-issuer",
             "machine_learning/100-aml",
             "machine_learning/101-aml-vnet",
+            "managed_service_identity/100-msi-levels",
             "mariadb_server/100-simple-mariadb",
             "mariadb_server/101-vnet-rule-mariadb",
             "mariadb_server/102-private-endpoint-mariadb",
