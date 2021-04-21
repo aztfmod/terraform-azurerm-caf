@@ -18,8 +18,8 @@ keyvault_access_policies = {
     }
     diastg = {
       diagnostic_storage_account_key = "dsa1"
-      key_permissions     = ["get", "create", "list", "restore", "recover", "unwrapkey", "wrapkey", "purge", "encrypt", "decrypt", "sign", "verify"]
-      secret_permissions  = ["Set", "Get", "List", "Delete", "Purge", "Recover"]
+      key_permissions                = ["get", "create", "list", "restore", "recover", "unwrapkey", "wrapkey", "purge", "encrypt", "decrypt", "sign", "verify"]
+      secret_permissions             = ["Set", "Get", "List", "Delete", "Purge", "Recover"]
     }
     logged_in_user = {
       key_permissions    = ["get", "create", "delete", "list", "restore", "recover", "unwrapkey", "wrapkey", "purge", "encrypt", "decrypt", "sign", "verify"]

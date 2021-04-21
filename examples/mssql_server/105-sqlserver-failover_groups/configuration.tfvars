@@ -38,14 +38,14 @@ mssql_servers = {
 
 mssql_databases = {
   db1-rg1 = {
-    mssql_server_key = "sql-server-rg1"
-    resource_group_key           = "sql_region1"
-    name             = "db1rg1"
+    mssql_server_key   = "sql-server-rg1"
+    resource_group_key = "sql_region1"
+    name               = "db1rg1"
   }
   db2-rg1 = {
-    mssql_server_key = "sql-server-rg1"
-    resource_group_key           = "sql_region1"
-    name             = "db2rg1"
+    mssql_server_key   = "sql-server-rg1"
+    resource_group_key = "sql_region1"
+    name               = "db2rg1"
   }
 }
 
