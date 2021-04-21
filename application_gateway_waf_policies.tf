@@ -1,6 +1,6 @@
 module "application_gateway_waf_policies" {
-  source              = "./modules/networking/application_gateway_waf_policies"
-  for_each            = local.networking.application_gateway_waf_policies
+  source   = "./modules/networking/application_gateway_waf_policies"
+  for_each = local.networking.application_gateway_waf_policies
 
   global_settings     = local.global_settings
   settings            = each.value

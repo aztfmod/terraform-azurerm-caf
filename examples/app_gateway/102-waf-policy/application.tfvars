@@ -11,7 +11,7 @@ application_gateway_applications = {
         front_end_port_key             = "80"
         host_name                      = "cafdemo.internal"
         request_routing_rule_key       = "default"
-        waf_policy  = {
+        waf_policy = {
           key = "wp1"
         }
       }
