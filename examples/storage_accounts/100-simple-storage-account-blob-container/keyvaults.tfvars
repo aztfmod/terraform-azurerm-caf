@@ -17,7 +17,7 @@ keyvault_access_policies = {
       secret_permissions  = ["Set", "Get", "List", "Delete", "Purge", "Recover"]
     }
     diastg = {
-      dia_storage_account_key = "dsa1"
+      diagnostic_storage_account_key = "dsa1"
       key_permissions     = ["get", "create", "list", "restore", "recover", "unwrapkey", "wrapkey", "purge", "encrypt", "decrypt", "sign", "verify"]
       secret_permissions  = ["Set", "Get", "List", "Delete", "Purge", "Recover"]
     }
