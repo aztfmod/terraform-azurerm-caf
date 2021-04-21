@@ -96,21 +96,21 @@ locals {
     storage_accounts             = local.combined_objects_storage_accounts
   }
 
-  global_settings = merge( {
-      default_region     = try(var.global_settings.default_region, "region1")
-      environment        = try(var.global_settings.environment, var.environment)
-      inherit_tags       = try(var.global_settings.inherit_tags, false)
-      passthrough        = try(var.global_settings.passthrough, false)
-      prefix             = try(var.global_settings.prefix, null)
-      # prefix_with_hyphen = try(var.global_settings.prefix_with_hyphen, format("%s-", try(var.global_settings.prefixes[0], random_string.prefix.0.result)))
-      # prefixes           = var.global_settings.prefix == "" ? null : try(var.global_settings.prefixes, [random_string.prefix.0.result])
-      prefix_with_hyphen = try(var.global_settings.prefix_with_hyphen, format("%s-", try(var.global_settings.prefix, try(var.global_settings.prefixes[0], random_string.prefix.0.result))))
-      prefixes           = try(var.global_settings.prefix, null) == "" ? null : try([var.global_settings.prefix], try(var.global_settings.prefixes, [random_string.prefix.0.result]))
-      random_length      = try(var.global_settings.random_length, 0)
-      regions            = var.global_settings.regions
-      tags               = try(var.global_settings.tags, null)
-      use_slug           = try(var.global_settings.use_slug, true)
-    }, var.global_settings)
+  global_settings = merge({
+    default_region = try(var.global_settings.default_region, "region1")
+    environment    = try(var.global_settings.environment, var.environment)
+    inherit_tags   = try(var.global_settings.inherit_tags, false)
+    passthrough    = try(var.global_settings.passthrough, false)
+    prefix         = try(var.global_settings.prefix, null)
+    # prefix_with_hyphen = try(var.global_settings.prefix_with_hyphen, format("%s-", try(var.global_settings.prefixes[0], random_string.prefix.0.result)))
+    # prefixes           = var.global_settings.prefix == "" ? null : try(var.global_settings.prefixes, [random_string.prefix.0.result])
+    prefix_with_hyphen = try(var.global_settings.prefix_with_hyphen, format("%s-", try(var.global_settings.prefix, try(var.global_settings.prefixes[0], random_string.prefix.0.result))))
+    prefixes           = try(var.global_settings.prefix, null) == "" ? null : try([var.global_settings.prefix], try(var.global_settings.prefixes, [random_string.prefix.0.result]))
+    random_length      = try(var.global_settings.random_length, 0)
+    regions            = var.global_settings.regions
+    tags               = try(var.global_settings.tags, null)
+    use_slug           = try(var.global_settings.use_slug, true)
+  }, var.global_settings)
 
   logic_app = {
     integration_service_environment = try(var.logic_app.integration_service_environment, {})

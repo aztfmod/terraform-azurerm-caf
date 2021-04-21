@@ -78,9 +78,9 @@ mssql_servers = {
     connection_policy             = "Default"
     public_network_access_enabled = false
 
-    
-    identity = { 
-      type = "SystemAssigned" 
+
+    identity = {
+      type = "SystemAssigned"
     }
 
     extended_auditing_policy = {

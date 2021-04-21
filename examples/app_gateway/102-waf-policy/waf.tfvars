@@ -1,7 +1,7 @@
 application_gateway_waf_policies = {
   wp1 = {
-    name                              = "examplewafpolicy"
-    resource_group_key                = "agw_waf"
+    name               = "examplewafpolicy"
+    resource_group_key = "agw_waf"
 
     custom_rules = {
       rule1 = {
@@ -60,7 +60,7 @@ application_gateway_waf_policies = {
       file_upload_limit_in_mb     = 100
       max_request_body_size_in_kb = 128
     }
-    
+
     managed_rules = {
       exclusion = {
         ex1 = {
