@@ -1,27 +1,20 @@
-# resource "azurerm_lighthouse_assignment" "assignment" {
-#   scope = coalesce(
-#     try(var.settings.assignment_scope.resource_group.id, ""),
-#     try(var.resources["resource_groups"][try(var.settings.assignment_scope.resource_group.lz_key, var.client_config.landingzone_key)][var.settings.scope.resource_group.key].id, ""),
+resource "azurerm_lighthouse_assignment" "subscriptionassignment" {
+  for_each = try(var.settings.assignment_scopes.subscriptions, {})
+  
+  scope = coalesce(
+    try(format("/subscription/%s", var.resources["subscriptions"][try(each.value.lz_key, var.client_config.landingzone_key)][each.value.key].id), ""),
+    try(each.value.id, "")
+  )
+  lighthouse_definition_id = azurerm_lighthouse_definition.definition.id
+}
 
-#     try(format("/subscription/%s", var.resources["subscriptions"][try(var.settings.assignment_scope.subscription.lz_key, var.client_config.landingzone_key)][var.settings.scope.subscription.key].id), ""),
-#     try(var.settings.assignment_scope.subscription.id, "")
-#   )
-
-#   lighthouse_definition_id = azurerm_lighthouse_definition.definition.id
-# }
-
-
-resource "azurerm_lighthouse_assignment" "assignment" {
-  for_each = try(var.settings.assignment_scopes, {})
+resource "azurerm_lighthouse_assignment" "resourcegroupassignment" {
+  for_each = try(var.settings.assignment_scopes.resource_groups, {})
 
   scope = coalesce(
-    try(var.settings.assignment_scope.resource_group.id, ""),
-    try(var.resources["resource_groups"][try(var.settings.assignment_scope.resource_group.lz_key, var.client_config.landingzone_key)][var.settings.scope.resource_group.key].id, ""),
-
-    try(format("/subscription/%s", var.resources["subscriptions"][try(var.settings.assignment_scope.subscription.lz_key, var.client_config.landingzone_key)][var.settings.scope.subscription.key].id), ""),
-    try(var.settings.assignment_scope.subscription.id, "")
+    try(var.resources["resource_groups"][try(each.value.lz_key, var.client_config.landingzone_key)][each.value.key].id, ""),
+    try(each.value.id, "")
   )
-
   lighthouse_definition_id = azurerm_lighthouse_definition.definition.id
 }
 
