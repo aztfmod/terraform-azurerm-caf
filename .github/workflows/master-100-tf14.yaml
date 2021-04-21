@@ -17,7 +17,6 @@
 #       - 'examples/compute/virtual_machine/105-single-windows-vm-kv-admin-secrets'
 #       - 'examples/compute/virtual_machine/212-vm-disk-encryption-set'
 #       - 'examples/storage_accounts/100-simple-storage-account-blob-container'
-      
 #   schedule:
 #     - cron:  '0 3 * * *'
 
