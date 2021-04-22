@@ -60,35 +60,6 @@ app_services = {
       tags = {
         Department = "IT"
       }
-
-      # For diagnostic settings
-      diagnostic_profiles = {
-        app_service = {
-          definition_key   = "app_service"
-          destination_type = "event_hub"      
-          destination_key  = "central_logs"   # Needs to be created in launchpad
-        }
-      }      
-
     }
   }
-}
-
-# For diagnostic settings
-diagnostics_definition = {
-  app_service = {
-    name = "operational_logs_and_metrics"
-
-    categories = {
-      log = [
-        #["Category name",  "Diagnostics Enabled(true/false)", "Retention Enabled(true/false)", Retention_period]
-         ["AppServiceAntivirusScanAuditLogs", true, false, 7],
-      ]
-      metric = [
-        #["Category name",  "Diagnostics Enabled(true/false)", "Retention Enabled(true/false)", Retention_period]
-         ["AllMetrics", true, false, 7],
-      ]
-    }
-  }
-
 }
