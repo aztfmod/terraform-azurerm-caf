@@ -12,6 +12,7 @@ module "caf" {
   # insert the 6 required variables here
 }
 ```
+This is a pre-requisit  for WVD.
 
 ## Run this example
 
@@ -24,8 +25,8 @@ To test this deployment in the example landingzone, make sure the launchpad has 
 
 ```bash
 rover \
-  -lz /tf/caf/aztfmod/examples \
-  -var-folder  /tf/caf/examples/compute/wvd_app_group_pre-requisit \
+  -lz /tf/caf/examples \
+  -var-folder  /tf/caf/examples/compute/wvd_pre-requisit \
   -level level1 \
   -tfstate wvd-pre.tfstate \
   -a [plan | apply | destroy]
