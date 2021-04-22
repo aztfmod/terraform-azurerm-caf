@@ -13,6 +13,58 @@ resource_groups = {
   }
 }
 
+keyvaults = {
+  kv1 = {
+    name               = "examplekv"
+    resource_group_key = "rg1"
+    sku_name           = "standard"
+
+    creation_policies = {
+      logged_in_user = {
+        secret_permissions = ["Set", "Get", "List", "Delete", "Purge"]
+      }
+      logged_in_aad_app = {
+        secret_permissions = ["Set", "Get", "List", "Delete", "Purge"]
+      }
+    }
+  }
+}
+
+managed_identities = {
+  webapp_mi = {
+    name               = "example_db_mi"
+    resource_group_key = "rg1"
+  }
+}
+
+
+
+azuread_groups = {
+  sqlserver_admin = {
+    name        = "example-sqlserver-admins"
+    description = "Administrators of the sales SQL server."
+    members = {
+      user_principal_names = []
+
+      # NOTE: To ensure DB users can be created, sqlserver admin needs to add the rover agent's system assigned identity object ID added
+      # NOTE: since the authentication uses SQLCMD + DSN, UID cannot be supplied to the connection string, thus only system assigned identity is possible at this stage.      
+      object_ids = [
+        # Add object id of rover agent with system assigned identity here.
+      ]
+      group_keys             = []
+      service_principal_keys = []
+    }
+    owners = {
+      user_principal_names = [
+      ]
+      service_principal_keys = []
+      object_ids             = []
+    }
+    prevent_duplicate_name = false
+  }
+}
+
+
 mssql_servers = {
   mssqlserver1 = {
     name                = "example-mssqlserver"
@@ -22,7 +74,16 @@ mssql_servers = {
     administrator_login = "sqluseradmin"
     keyvault_key        = "kv1"
     connection_policy   = "Default"
+
     public_network_access_enabled = true
+
+    azuread_administrator = {
+
+      azuread_group_key = "sqlserver_admin"
+    }
+    identity = {
+      type = "SystemAssigned"
+    }
   }
 }
 
@@ -44,7 +105,11 @@ mssql_databases = {
       weekly_retention  = "P1W" # 1 to 520 in ISO 8601 format
       monthly_retention = "P1M" # 1 to 120 in ISO 8601 format
       yearly_retention  = "P1Y" # 1 to 10 in ISO 8601 format
+<<<<<<< HEAD
       week_of_year      = 1     # 1 to 52
+=======
+      week_of_year      = 1 # 1 to 52
+>>>>>>> b449dcbd6664507b7ee7a9d58a6fdb0fe6bba3a3
     }
 
   }
