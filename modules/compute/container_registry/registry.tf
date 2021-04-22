@@ -36,7 +36,7 @@ resource "azurerm_container_registry" "acr" {
 
         content {
           action    = "Allow"
-          subnet_id = try(var.vnets[try(virtual_network.value.lz_key,var.client_config.landingzone_key)][virtual_network.value.vnet_key].subnets[virtual_network.value.subnet_key].id, {})
+          subnet_id = try(var.vnets[try(virtual_network.value.lz_key, var.client_config.landingzone_key)][virtual_network.value.vnet_key].subnets[virtual_network.value.subnet_key].id, {})
         }
       }
     }

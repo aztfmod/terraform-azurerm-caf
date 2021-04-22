@@ -71,3 +71,7 @@ variable "dns_zones" {
 variable "keyvaults" {
   default = {}
 }
+
+variable "application_gateway_waf_policies" {
+  default = {}
+}
