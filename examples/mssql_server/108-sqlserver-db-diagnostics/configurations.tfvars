@@ -15,7 +15,7 @@ resource_groups = {
 }
 
 diagnostic_event_hub_namespaces = {
-  central_logs_region1 = {
+  event_hub_namespace1 = {
     name               = "security_operation_logs"
     resource_group_key = "rg1"
     sku                = "Standard"
@@ -25,8 +25,8 @@ diagnostic_event_hub_namespaces = {
 
 diagnostics_destinations = {
   event_hub_namespaces = {
-    central_logs = {
-      event_hub_namespace_key = "central_logs_region1"
+    central_logs_example = {
+      event_hub_namespace_key = "event_hub_namespace1"
     }
   }  
 }
@@ -58,7 +58,7 @@ mssql_databases = {
       app_service = {
         definition_key   = "mssql_db"
         destination_type = "event_hub"
-        destination_key  = "central_logs" # Needs to be deployed in launchpad first
+        destination_key  = "central_logs_example" # Needs to be deployed in launchpad first
       }
     }
   
