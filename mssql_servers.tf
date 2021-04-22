@@ -1,5 +1,5 @@
 
-output mssql_servers {
+output "mssql_servers" {
   value = module.mssql_servers
 
 }
@@ -14,7 +14,6 @@ module "mssql_servers" {
   settings            = each.value
   resource_group_name = module.resource_groups[each.value.resource_group_key].name
   location            = lookup(each.value, "region", null) == null ? module.resource_groups[each.value.resource_group_key].location : local.global_settings.regions[each.value.region]
-  keyvault_id         = try(each.value.administrator_login_password, null) != null ? null : try(each.value.lz_key, null) == null ? local.combined_objects_keyvaults[local.client_config.landingzone_key][each.value.keyvault_key].id : local.combined_objects_keyvaults[each.value.lz_key][each.value.keyvault_key].id
   storage_accounts    = module.storage_accounts
   azuread_groups      = local.combined_objects_azuread_groups
   vnets               = local.combined_objects_networking
@@ -22,6 +21,32 @@ module "mssql_servers" {
   resource_groups     = try(each.value.private_endpoints, {}) == {} ? null : module.resource_groups
   base_tags           = try(local.global_settings.inherit_tags, false) ? module.resource_groups[each.value.resource_group_key].tags : {}
   private_dns         = local.combined_objects_private_dns
+}
+
+data "azurerm_storage_account" "mssql_auditing" {
+  for_each = {
+    for key, value in local.database.mssql_servers : key => value
+    if try(value.extended_auditing_policy, null) != null
+  }
+
+  name                = module.storage_accounts[each.value.extended_auditing_policy.storage_account.key].name
+  resource_group_name = module.storage_accounts[each.value.extended_auditing_policy.storage_account.key].resource_group_name
+}
+
+
+resource "azurerm_mssql_server_extended_auditing_policy" "mssql" {
+  depends_on = [azurerm_role_assignment.for]
+  for_each = {
+    for key, value in local.database.mssql_servers : key => value
+    if try(value.extended_auditing_policy, null) != null
+  }
+
+  log_monitoring_enabled                  = try(each.value.extended_auditing_policy.log_monitoring_enabled, false)
+  server_id                               = module.mssql_servers[each.key].id
+  storage_endpoint                        = data.azurerm_storage_account.mssql_auditing[each.key].primary_blob_endpoint
+  storage_account_access_key              = data.azurerm_storage_account.mssql_auditing[each.key].primary_access_key
+  storage_account_access_key_is_secondary = false
+  retention_in_days                       = try(each.value.extended_auditing_policy.retention_in_days, null)
 }
 
 module "mssql_failover_groups" {

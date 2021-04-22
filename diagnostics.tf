@@ -17,12 +17,12 @@ locals {
 }
 
 # Output diagnostics
-output diagnostics {
+output "diagnostics" {
   value = local.combined_diagnostics
 
 }
 
-module diagnostic_storage_accounts {
+module "diagnostic_storage_accounts" {
   source   = "./modules/storage_account"
   for_each = local.diagnostics.diagnostic_storage_accounts
 
@@ -34,18 +34,31 @@ module diagnostic_storage_accounts {
   base_tags           = try(local.global_settings.inherit_tags, false) ? module.resource_groups[each.value.resource_group_key].tags : {}
 }
 
-module "diagnostic_event_hub_namespaces" {
-  source   = "./modules/event_hub_namespaces"
-  for_each = local.diagnostics.diagnostic_event_hub_namespaces
+resource "azurerm_storage_account_customer_managed_key" "diasacmk" {
+  depends_on = [module.keyvault_access_policies]
+  for_each = {
+    for key, value in local.diagnostics.diagnostic_storage_accounts : key => value
+    if try(value.customer_managed_key, null) != null
+  }
 
-  global_settings = local.global_settings
-  settings        = each.value
-  resource_groups = module.resource_groups
-  client_config   = local.client_config
-  base_tags       = try(local.global_settings.inherit_tags, false) ? module.resource_groups[each.value.resource_group_key].tags : {}
+  storage_account_id = module.diagnostic_storage_accounts[each.key].id
+  key_vault_id       = module.keyvaults[each.value.customer_managed_key.keyvault_key].id
+  key_name           = module.keyvault_keys[each.value.customer_managed_key.keyvault_key_key].name
 }
 
-module diagnostic_event_hub_namespaces_diagnostics {
+module "diagnostic_event_hub_namespaces" {
+  source   = "./modules/event_hubs/namespaces"
+  for_each = local.diagnostics.diagnostic_event_hub_namespaces
+
+  global_settings     = local.global_settings
+  settings            = each.value
+  resource_group_name = module.resource_groups[each.value.resource_group_key].name
+  location            = lookup(each.value, "region", null) == null ? module.resource_groups[each.value.resource_group_key].location : local.global_settings.regions[each.value.region]
+  client_config       = local.client_config
+  base_tags           = try(local.global_settings.inherit_tags, false) ? module.resource_groups[each.value.resource_group_key].tags : {}
+}
+
+module "diagnostic_event_hub_namespaces_diagnostics" {
   source   = "./modules/diagnostics"
   for_each = local.diagnostics.diagnostic_event_hub_namespaces
 
@@ -65,7 +78,7 @@ module "diagnostic_log_analytics" {
   base_tags       = try(local.global_settings.inherit_tags, false) ? module.resource_groups[each.value.resource_group_key].tags : {}
 }
 
-module diagnostic_log_analytics_diagnostics {
+module "diagnostic_log_analytics_diagnostics" {
   source   = "./modules/diagnostics"
   for_each = local.diagnostics.diagnostic_log_analytics
 

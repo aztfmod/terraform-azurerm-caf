@@ -57,6 +57,9 @@ variable "private_dns" {
 variable "keyvault_certificates" {
   default = {}
 }
+variable "keyvault_certificate_requests" {
+  default = {}
+}
 variable "managed_identities" {
   default = {}
 }
@@ -66,5 +69,9 @@ variable "dns_zones" {
 }
 
 variable "keyvaults" {
+  default = {}
+}
+
+variable "application_gateway_waf_policies" {
   default = {}
 }

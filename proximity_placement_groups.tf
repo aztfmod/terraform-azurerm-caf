@@ -1,6 +1,6 @@
 
 
-module proximity_placement_groups {
+module "proximity_placement_groups" {
   source   = "./modules/compute/proximity_placement_group"
   for_each = local.compute.proximity_placement_groups
 
@@ -13,7 +13,7 @@ module proximity_placement_groups {
 }
 
 
-output proximity_placement_groups {
+output "proximity_placement_groups" {
   value = module.proximity_placement_groups
 
 }

@@ -3,7 +3,7 @@
 resource "azurecaf_name" "fw" {
   name          = var.name
   resource_type = "azurerm_firewall"
-  prefixes      = [var.global_settings.prefix]
+  prefixes      = var.global_settings.prefixes
   random_length = var.global_settings.random_length
   clean_input   = true
   passthrough   = var.global_settings.passthrough
@@ -15,13 +15,70 @@ resource "azurerm_firewall" "fw" {
   name                = azurecaf_name.fw.result
   resource_group_name = var.resource_group_name
   location            = var.location
-  threat_intel_mode   = try(var.settings.threat_intel_mode, "Alert")
+  threat_intel_mode   = try(var.settings.virtual_hub, null) != null ? "" : try(var.settings.threat_intel_mode, "Alert")
   zones               = try(var.settings.zones, null)
+  sku_name            = try(var.settings.sku_name, "AZFW_VNet")
+  sku_tier            = try(var.settings.sku_tier, "Standard")
+  firewall_policy_id  = try(var.settings.firewall_policy_id, null) != null ? var.settings.firewall_policy_id : try(var.firewall_policies[var.settings.firewall_policy_key].id, null)
+  dns_servers         = try(var.settings.dns_servers, null)
   tags                = local.tags
 
-  ip_configuration {
-    name                 = "configuration"
-    subnet_id            = var.subnet_id
-    public_ip_address_id = var.public_ip_id
+  ## direct subnet_id reference
+  dynamic "ip_configuration" {
+    for_each = try([var.settings.public_ip_id], {})
+
+    content {
+      name                 = "public-ip"
+      public_ip_address_id = ip_configuration.value.public_ip_id
+      subnet_id            = var.subnet_id
+    }
+  }
+
+  ## backward compat with published structures
+  dynamic "ip_configuration" {
+    for_each = try([var.settings.public_ip_key], {})
+
+    content {
+      name                 = ip_configuration.key
+      public_ip_address_id = var.public_ip_addresses[ip_configuration.value].id
+      subnet_id            = try(var.subnet_id, null)
+    }
+  }
+  ## backward compat with published structures
+  dynamic "ip_configuration" {
+    for_each = try(var.settings.public_ip_keys, {})
+
+    content {
+      name                 = ip_configuration.key
+      public_ip_address_id = var.public_ip_addresses[ip_configuration.value].id
+      subnet_id            = ip_configuration.key == 0 ? var.subnet_id : null
+    }
+  }
+  ## new configuration structure for public_ips
+  dynamic "ip_configuration" {
+    for_each = try(var.settings.public_ips, {})
+
+    content {
+      name                 = ip_configuration.value.name
+      public_ip_address_id = try(ip_configuration.value.public_ip_id, null) != null ? ip_configuration.value.public_ip_id : var.public_ip_addresses[ip_configuration.value.public_ip_key].id
+      subnet_id            = try(ip_configuration.value.subnet_id, null) != null ? ip_configuration.value.subnet_id : (lookup(ip_configuration.value, "lz_key", null) == null ? var.virtual_networks[var.client_config.landingzone_key][ip_configuration.value.vnet_key].subnets[ip_configuration.value.subnet_key].id : var.virtual_networks[ip_configuration.value.lz_key][ip_configuration.value.vnet_key].subnets[ip_configuration.value.subnet_key].id)
+    }
+  }
+
+  dynamic "management_ip_configuration" {
+    for_each = try(var.settings.management_ip_configuration, {})
+    content {
+      name                 = management_ip_configuration.value.name
+      public_ip_address_id = try(management_ip_configuration.value.public_ip_address_id, null) != null ? management_ip_configuration.value.public_ip_address_id : var.public_ip_addresses[management_ip_configuration.value.public_ip_key].id
+      subnet_id            = try(management_ip_configuration.value.subnet_id, null) != null ? management_ip_configuration.value.subnet_id : (lookup(management_ip_configuration.value, "lz_key", null) == null ? var.virtual_networks[var.client_config.landingzone_key][management_ip_configuration.value.vnet_key].subnets[management_ip_configuration.value.subnet_key].id : var.virtual_networks[management_ip_configuration.value.lz_key][management_ip_configuration.value.vnet_key].subnets[management_ip_configuration.value.subnet_key].id)
+    }
+  }
+
+  dynamic "virtual_hub" {
+    for_each = try(var.settings.virtual_hub, {})
+    content {
+      virtual_hub_id  = try(virtual_hub.value.virtual_hub_id, null) != null ? virtual_hub.value.virtual_hub_id : var.virtual_wans[virtual_hub.value.virtual_wan_key].virtual_hubs[virtual_hub.value.virtual_hub_key].id
+      public_ip_count = try(virtual_hub.value.public_ip_count, 1)
+    }
   }
 }

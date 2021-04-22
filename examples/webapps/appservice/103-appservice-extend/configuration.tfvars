@@ -32,8 +32,7 @@ app_services = {
     app_service_plan_key = "asp_extend"
 
     identity = {
-      type         = "SystemAssigned"
-      identity_ids = null
+      type = "SystemAssigned"
     }
 
     settings = {

@@ -7,7 +7,7 @@ locals {
 resource "azurecaf_name" "stg" {
   name          = var.storage_account.name
   resource_type = "azurerm_storage_account"
-  prefixes      = [var.global_settings.prefix]
+  prefixes      = var.global_settings.prefixes
   random_length = var.global_settings.random_length
   clean_input   = true
   passthrough   = var.global_settings.passthrough
@@ -26,7 +26,7 @@ resource "azurerm_storage_account" "stg" {
   min_tls_version           = lookup(var.storage_account, "min_tls_version", "TLS1_2")
   allow_blob_public_access  = lookup(var.storage_account, "allow_blob_public_access", false)
   is_hns_enabled            = lookup(var.storage_account, "is_hns_enabled", false)
-  tags                      = merge(local.tags, var.base_tags)
+  tags                      = merge(var.base_tags, local.tags)
 
 
   dynamic "custom_domain" {
@@ -149,7 +149,7 @@ resource "azurerm_storage_account" "stg" {
 
 }
 
-module container {
+module "container" {
   source   = "./container"
   for_each = try(var.storage_account.containers, {})
 
@@ -157,7 +157,7 @@ module container {
   settings             = each.value
 }
 
-module data_lake_filesystem {
+module "data_lake_filesystem" {
   source   = "./data_lake_filesystem"
   for_each = try(var.storage_account.data_lake_filesystems, {})
 

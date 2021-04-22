@@ -1,3 +1,3 @@
-output pools {
+output "pools" {
   value = module.pools
 }

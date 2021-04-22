@@ -10,3 +10,5 @@
 **/*.log
 **/backend.azurerm.tf
 public
+**/.terraform.lock.hcl
+**/*.backup

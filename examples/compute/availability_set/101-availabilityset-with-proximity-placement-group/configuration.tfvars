@@ -5,6 +5,11 @@ global_settings = {
   }
 }
 
+provider_azurerm_features_keyvault = {
+  // set to true to cleanup the CI
+  purge_soft_delete_on_destroy = true
+}
+
 availability_sets = {
   avset1 = {
     name               = "sales-re1"
@@ -63,7 +68,7 @@ virtual_machines = {
         size                            = "Standard_F2"
         admin_username                  = "adminuser"
         disable_password_authentication = true
-        custom_data                     = "scripts/cloud-init/install-rover-tools.config"
+        custom_data                     = "../../examples/compute/availability_set/101-availabilityset-with-proximity-placement-group/scripts/cloud-init/install-rover-tools.config"
 
         # Value of the nic keys to attach the VM. The first one in the list is the default nic
         network_interface_keys = ["nic0"]
@@ -115,7 +120,7 @@ virtual_machines = {
         size                            = "Standard_F2"
         admin_username                  = "adminuser"
         disable_password_authentication = true
-        custom_data                     = "scripts/cloud-init/install-rover-tools.config"
+        custom_data                     = "../../examples/compute/availability_set/101-availabilityset-with-proximity-placement-group/scripts/cloud-init/install-rover-tools.config"
 
         # Value of the nic keys to attach the VM. The first one in the list is the default nic
         network_interface_keys = ["nic0"]
@@ -141,7 +146,7 @@ virtual_machines = {
 
 keyvaults = {
   example_vm_rg1 = {
-    name               = "examplevmsecrets"
+    name               = "vmsecrets"
     resource_group_key = "avset"
     sku_name           = "standard"
     creation_policies = {
