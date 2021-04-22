@@ -18,3 +18,10 @@ variable "sqlcmd_dbname" {
 variable "managed_identities" {
   default = null
 }
+variable "diagnostic_profiles" {
+  default = null
+}
+variable "diagnostics" {
+  default = null
+}
+variable "location" {}
