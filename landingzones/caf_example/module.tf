@@ -82,9 +82,14 @@ module "example" {
   }
 
   diagnostics = {
-    diagnostic_event_hub_namespaces = var.diagnostic_event_hub_namespaces
-    diagnostic_log_analytics        = var.diagnostic_log_analytics
-    diagnostic_storage_accounts     = var.diagnostic_storage_accounts
+    diagnostics_definition          = local.diagnostics.diagnostics_definition
+    diagnostics_destinations        = local.diagnostics.diagnostics_destinations
+    storage_accounts                = local.diagnostics.storage_accounts
+    log_analytics                   = local.diagnostics.log_analytics
+    event_hub_namespaces            = local.diagnostics.event_hub_namespaces
+    diagnostic_event_hub_namespaces = try(local.diagnostics.diagnostic_event_hub_namespaces, var.diagnostic_event_hub_namespaces)
+    diagnostic_log_analytics        = try(local.diagnostics.diagnostic_log_analytics, var.diagnostic_log_analytics)
+    diagnostic_storage_accounts     = try(local.diagnostics.diagnostic_storage_accounts, var.diagnostic_storage_accounts)
   }
 
   database = {
