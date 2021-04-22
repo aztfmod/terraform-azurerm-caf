@@ -23,7 +23,6 @@ mssql_servers = {
     keyvault_key        = "kv1"
     connection_policy   = "Default"
     public_network_access_enabled = true
-
   }
 }
 
