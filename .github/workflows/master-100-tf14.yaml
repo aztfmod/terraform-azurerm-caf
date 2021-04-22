@@ -3,11 +3,23 @@
 # Licensed under the MIT License.
 #
 
-name: standalone-scenario
+name: scenarios-100-tf14
 
 on:
+  pull_request:
+    paths-ignore:
+      - .github/workflows/master-200.yaml
+      - 'documentation/**'
+      - '_pictures/**'
+      - 'README.md'
+      - 'CHANGELOG.md'
+      - 'examples/compute/virtual_machine/100-single-linux-vm'
+      - 'examples/compute/virtual_machine/105-single-windows-vm-kv-admin-secrets'
+      - 'examples/compute/virtual_machine/212-vm-disk-encryption-set'
+      - 'examples/storage_accounts/100-simple-storage-account-blob-container'
+      
   schedule:
-    - cron:  '0 1 * * 0' #1 AM on Sunday
+    - cron:  '0 3 * * *'
 
 env:
   TF_CLI_ARGS: '-no-color'
@@ -19,56 +31,98 @@ env:
   ROVER_RUNNER: true
 
 jobs:
+  foundations:
+    name: foundations
+    runs-on: ubuntu-latest
+
+    strategy:
+      fail-fast: true
+      max-parallel: 1
+      matrix:
+          region: ["southeastasia"]
+          random_length: ['5']
+
+    container:
+      image: aztfmod/rover:0.14.10-2104.0803
+      options: --user 0
+
+    steps:
+      - uses: actions/checkout@v2
+
+      - uses: actions/checkout@v2
+        with:
+          repository: Azure/caf-terraform-landingzones
+          path: public
+          ref: 'patch.5.3.1'
+
+      - name: Login azure
+        run: |
+          az login --service-principal -u '${{ env.ARM_CLIENT_ID }}' -p '${{ env.ARM_CLIENT_SECRET }}' --tenant '${{ env.ARM_TENANT_ID }}'
+          az account set -s  ${{ env.ARM_SUBSCRIPTION_ID }}
+
+          echo "local user: $(whoami)"
+
+      - name: launchpad
+        run: |
+          /tf/rover/rover.sh -lz ${GITHUB_WORKSPACE}/public/caf_launchpad -a apply \
+            -var-folder ${GITHUB_WORKSPACE}/public/caf_launchpad/scenario/100 \
+            -level level0 \
+            -launchpad \
+            -parallelism=30 \
+            --environment ${{ github.run_id }} \
+            '-var random_length=${{ matrix.random_length }}' \
+            '-var prefix=g${{ github.run_id }}' \
+            '-var regions={region1="${{ matrix.region }}"}' \
+            '-var tags={environment="${{ github.run_id }}"}'
+
+
   examples:
     name: examples
     runs-on: ubuntu-latest
 
+    needs: foundations
+
     strategy:
       fail-fast: false
+      max-parallel: 20
       matrix:
           config_files: [
             "app_gateway/100-simple-app-gateway",
-            "app_gateway/101-private-public",
             "app_insights/100-all-attributes",
             "app_insights/100-simple",
             "automation/100-simple-automation-account",
-            "azure_ad/100-sevice-principle-with-builtin-roles",
-            "azure_ad/101-service-principle-with-custom-roles",
             "azure_ad/102-password-rotation",
             "compute/availability_set/100-simple-availabilityset",
             "compute/availability_set/101-availabilityset-with-proximity-placement-group",
             "compute/container_groups/101-aci-rover",
             "compute/container_registry/100-simple-acr",
+            "compute/container_registry/200-acr-vnet",
             "compute/kubernetes_services/101-single-cluster",
-            "compute/kubernetes_services/102-multi-nodepools",
             "compute/proximity_placement_group",
             "compute/virtual_machine/101-single-windows-vm",
-            "compute/virtual_machine/102-single-vm-data-disks",
             "compute/virtual_machine/104-single-windows-backup",
-            "compute/virtual_machine/210-vm-bastion-winrm",
             "compute/virtual_machine/211-vm-bastion-winrm-agents",
             "cosmos_db/100-simple-cosmos-db-cassandra",
-            "cosmos_db/100-simple-cosmos-db-cassandra",
             "cosmos_db/100-simple-cosmos-db-gremlin",
-            "cosmos_db/100-simple-cosmos-db-gremlin",
+            "cosmos_db/100-simple-cosmos-db-mongo",
             "cosmos_db/100-simple-cosmos-db-sql",
-            "cosmos_db/100-simple-cosmos-db-table",
             "cosmos_db/100-simple-cosmos-db-table",
             "databricks/100-simple-databricks",
             "datalake/101-datalake-storage",
-            "diagnostics_profiles/200-diagnostics-eventhub-namespaces",
             "eventhub/100-simple-eventhub-namespace",
             "eventhub/101-evh-namespace-with-private-endpoint",
             "eventhub/102-namespace-and-evh-with-auth-rules",
             "eventhub/103-eventhub-consumer-groups",
-            "keyvault/101-keyvault-policies",
+            "keyvault/102-keyvault-cert-issuer",
             "machine_learning/100-aml",
-            "managed_service_identity/100-msi-levels",
+            "machine_learning/101-aml-vnet",
             "mariadb_server/100-simple-mariadb",
             "mariadb_server/101-vnet-rule-mariadb",
             "mariadb_server/102-private-endpoint-mariadb",
             "mariadb_server/103-private-endpoint-with-fw-rule-mariadb",
             "monitoring/100-service-health-alerts",
+            "mssql_server/101-sqlserver-simple",
+            "mssql_server/102-sqlserver-extend",
             "mssql_server/104-sqlserver-elastic_pools",
             "mssql_server/105-sqlserver-failover_groups",
             # "mssql_server/106-sqlserver-db-msi-authentication",
@@ -77,8 +131,9 @@ jobs:
             "mysql_server/101-vnet-rule-mysql",
             "mysql_server/102-private-endpoint-mysql",
             "mysql_server/103-private-endpoint-with-fw-rule-mysql",
+            "netapp/101-nfs",
             "networking/dns_zones/100-simple-dns_zone",
-            "networking/express_routes",
+            "networking/domain_name_registrations/100-register-domain-default_domain_registrar_dns",
             "networking/firewall/100-standard-firewall-legacy-pip",
             "networking/firewall/101-simple-firewall",
             "networking/firewall/102-premium-firewall",
@@ -90,14 +145,9 @@ jobs:
             "networking/load_balancers/100-simple-load-balancer-basic-sku",
             "networking/load_balancers/101-load-balancer-with-rules",
             "networking/load_balancers/102-internal-load-balancer",
-            "networking/load_balancers/103-load-balancer-nic-association",
             "networking/private_dns/100-private-dns-vnet-links",
             "networking/private_links/endpoints/centralized",
-            "networking/virtual_network_gateway/100-expressroute-gateway",
-            "networking/virtual_network_gateway/101-vpn-site-to-site",
-            "networking/virtual_network_gateway/102-vpn-site-to-site-active-active",
             "networking/virtual_network_gateway/103-vpn-site-to-site-connection",
-            "networking/virtual_network/100-simple-vnet-subnets-nsgs",
             "networking/virtual_network/100-subnet-delegation",
             "networking/virtual_network/101-vnet-peering-nsg",
             "networking/virtual_wan/100-vwan-multi-hubs",
@@ -115,7 +165,7 @@ jobs:
             "recovery_vault/102-asr-protection",
             "recovery_vault/103-asr-with-private-endpoint",
             "redis_cache/100-redis-standard",
-            "storage_accounts/102-storage-account-advanced-options",
+            "shared_image_gallery/101-packer_service_principal",
             "synapse_analytics/100-synapse",
             "synapse_analytics/101-synapse-sparkpool",
             "webapps/appservice/101-appservice-simple",
@@ -126,11 +176,17 @@ jobs:
           ]
 
     container:
-      image: aztfmod/rover:0.13.6-2104.0803
+      image: aztfmod/rover:0.14.10-2104.0803
       options: --user 0
 
     steps:
       - uses: actions/checkout@v2
+
+      - uses: actions/checkout@v2
+        with:
+          repository: Azure/caf-terraform-landingzones
+          path: public
+          ref: 'patch.5.3.1'
 
       - name: Login azure
         run: |
@@ -139,9 +195,71 @@ jobs:
 
       - name: deploy example
         run: |
-          cd ${GITHUB_WORKSPACE}/examples/${{ matrix.config_files }}
+          /tf/rover/rover.sh -lz ${GITHUB_WORKSPACE}/public/caf_solution -a apply \
+            -level level1 \
+            -tfstate $(basename ${{ matrix.config_files }}).tfstate \
+            -var-folder ${GITHUB_WORKSPACE}/examples/${{ matrix.config_files }} \
+            -var var_folder_path="${GITHUB_WORKSPACE}/examples/${{ matrix.config_files }}" \
+            --environment ${{ github.run_id }} \
+            '-var tags={environment="${{ github.run_id }}"}'
 
-          ${GITHUB_WORKSPACE}/landingzones/caf_example/ci.sh ${{ github.run_id }} ${GITHUB_WORKSPACE}/landingzones/caf_example
+      - name: destroy example
+        if: always()
+        run: |
+          /tf/rover/rover.sh -lz ${GITHUB_WORKSPACE}/public/caf_solution -a destroy \
+            -level level1 \
+            -tfstate $(basename ${{ matrix.config_files }}).tfstate \
+            -var-folder ${GITHUB_WORKSPACE}/examples/${{ matrix.config_files }} \
+            -var var_folder_path="${GITHUB_WORKSPACE}/examples/${{ matrix.config_files }}" \
+            --environment ${{ github.run_id }} \
+            -auto-approve
+
+
+  foundations_destroy:
+    name: foundations_destroy
+    runs-on: ubuntu-latest
+    if: always()
+    needs: examples
+
+    strategy:
+      fail-fast: false
+      matrix:
+          region: ["southeastasia"]
+
+    container:
+      image: aztfmod/rover:0.14.10-2104.0803
+      options: --user 0
+
+    steps:
+      - uses: actions/checkout@v2
+
+      - uses: actions/checkout@v2
+        with:
+          repository: Azure/caf-terraform-landingzones
+          path: public
+          ref: 'patch.5.3.1'
+
+      - name: Login azure
+        run: |
+          az login --service-principal -u '${{ env.ARM_CLIENT_ID }}' -p '${{ env.ARM_CLIENT_SECRET }}' --tenant '${{ env.ARM_TENANT_ID }}'
+          az account set -s  ${{ env.ARM_SUBSCRIPTION_ID }}
+
+          echo "local user: $(whoami)"
+
+      - name: Remove launchpad
+        run: |
+
+          /tf/rover/rover.sh -lz ${GITHUB_WORKSPACE}/public/caf_launchpad/ -a destroy \
+            -level level0 \
+            -var-folder ${GITHUB_WORKSPACE}/public/caf_launchpad/scenario/100 \
+            -launchpad \
+            --environment ${{ github.run_id }} \
+            -parallelism=30 \
+            '-var prefix=g${{ github.run_id }}' \
+            '-var regions={region1="${{ matrix.region }}"}' \
+            '-var tags={environment="${{ github.run_id }}"}' \
+            -auto-approve
+
 
       - name: Complete purge
         if: ${{ always() }}

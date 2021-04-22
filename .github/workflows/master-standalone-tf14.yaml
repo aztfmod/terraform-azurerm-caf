@@ -80,6 +80,8 @@ jobs:
             "monitoring/100-service-health-alerts",
             "mssql_server/104-sqlserver-elastic_pools",
             "mssql_server/105-sqlserver-failover_groups",
+            # "mssql_server/106-sqlserver-db-msi-authentication",
+            "mssql_server/107-sqlserver-db-retention-policy",
             "mysql_server/100-simple-mysql",
             "mysql_server/101-vnet-rule-mysql",
             "mysql_server/102-private-endpoint-mysql",
