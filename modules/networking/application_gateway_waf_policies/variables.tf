@@ -3,12 +3,7 @@ variable "resource_group_name" {
   type        = string
 }
 variable "location" {
-  description = "(Required) Specifies the supported Azure location where to create the resource. Changing this forces a new resource to be created."
-  type        = string
-}
-variable "name" {}
-variable "global_settings" {
-  description = "Global settings object (see module README.md)"
+  description = "location of the resource"
 }
 variable "settings" {}
 variable "base_tags" {
@@ -16,5 +11,9 @@ variable "base_tags" {
   type        = map(any)
 }
 variable "tags" {
-  default = null
+  default = {}
 }
+variable "global_settings" {
+  description = "Global settings object (see module README.md)"
+}
+

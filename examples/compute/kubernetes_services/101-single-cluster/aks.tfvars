@@ -22,7 +22,7 @@ aks_clusters = {
       type = "SystemAssigned"
     }
 
-    vnet_key           = "spoke_aks_re1"
+    vnet_key = "spoke_aks_re1"
 
     network_profile = {
       network_plugin    = "azure"

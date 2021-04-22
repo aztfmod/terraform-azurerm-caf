@@ -1,7 +1,14 @@
+data "azurerm_storage_account" "backup_storage_account" {
+  count = try(var.settings.backup, null) != null ? 1 : 0
+
+  name                = local.backup_storage_account.name
+  resource_group_name = local.backup_storage_account.resource_group_name
+}
+
 data "azurerm_storage_account_blob_container_sas" "backup" {
   count = try(var.settings.backup, null) != null ? 1 : 0
 
-  connection_string = local.backup_storage_account.primary_connection_string
+  connection_string = data.azurerm_storage_account.backup_storage_account.0.primary_connection_string
   container_name    = local.backup_storage_account.containers[var.settings.backup.container_key].name
   https_only        = true
 

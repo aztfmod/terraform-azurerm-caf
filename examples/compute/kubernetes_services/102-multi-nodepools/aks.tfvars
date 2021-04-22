@@ -47,14 +47,14 @@ aks_clusters = {
 
     node_pools = {
       pool1 = {
-        name                 = "nodepool1"
-        mode                 = "User"
-        subnet_key           = "aks_nodepool_user1"
-        max_pods             = 30
-        vm_size              = "Standard_DS2_v2"
-        node_count           = 1
-        enable_auto_scaling  = false
-        os_disk_size_gb      = 512
+        name                = "nodepool1"
+        mode                = "User"
+        subnet_key          = "aks_nodepool_user1"
+        max_pods            = 30
+        vm_size             = "Standard_DS2_v2"
+        node_count          = 1
+        enable_auto_scaling = false
+        os_disk_size_gb     = 512
         tags = {
           "project" = "user services"
         }
