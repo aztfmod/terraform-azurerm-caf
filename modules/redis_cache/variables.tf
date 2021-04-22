@@ -15,6 +15,12 @@ variable "tags" {
 
 variable "redis" {}
 
+variable "subnet_id" {
+  description = "The ID of the Subnet within which the Redis Cache should be deployed"
+  type        = string
+  default     = null
+}
+
 variable "global_settings" {
   description = "Global settings object (see module README.md)"
 }
