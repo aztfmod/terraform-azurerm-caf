@@ -22,6 +22,12 @@ virtual_machines = {
         enable_ip_forwarding    = false
         internal_dns_name_label = "bastion-host-nic0"
         public_ip_address_key   = "bastion_host_pip1"
+
+        networking_interface_asg_associations = {
+          bastion = {
+            key = "bastion"
+          }
+        }
       }
     }
 
@@ -62,6 +68,7 @@ virtual_machines = {
 
     os_type = "windows"
 
+
     # when not set the password is auto-generated and stored into the keyvault
     keyvault_key = "ssh_keys"
 
@@ -74,8 +81,19 @@ virtual_machines = {
         enable_ip_forwarding    = false
         internal_dns_name_label = "server1-nic0"
 
+        network_security_group = {
+          key = "data"
+        }
+
+        networking_interface_asg_associations = {
+          app_server = {
+            key = "app_server"
+          }
+        }
       }
     }
+
+
 
     virtual_machine_settings = {
       windows = {

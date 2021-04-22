@@ -4,7 +4,7 @@
 resource "azurecaf_name" "aks" {
   name          = var.settings.name
   resource_type = "azurerm_kubernetes_cluster"
-  prefixes      = [var.global_settings.prefix]
+  prefixes      = var.global_settings.prefixes
   random_length = var.global_settings.random_length
   clean_input   = true
   passthrough   = var.global_settings.passthrough
@@ -14,7 +14,7 @@ resource "azurecaf_name" "aks" {
 resource "azurecaf_name" "default_node_pool" {
   name          = var.settings.default_node_pool.name
   resource_type = "aks_node_pool_linux"
-  prefixes      = [var.global_settings.prefix]
+  prefixes      = var.global_settings.prefixes
   random_length = var.global_settings.random_length
   clean_input   = true
   passthrough   = var.global_settings.passthrough
@@ -28,7 +28,7 @@ resource "azurecaf_name" "default_node_pool" {
 resource "azurecaf_name" "rg_node" {
   name          = var.settings.node_resource_group_name
   resource_type = "azurerm_resource_group"
-  prefixes      = [var.global_settings.prefix]
+  prefixes      = var.global_settings.prefixes
   random_length = var.global_settings.random_length
   clean_input   = true
   passthrough   = var.global_settings.passthrough
@@ -44,20 +44,22 @@ resource "azurerm_kubernetes_cluster" "aks" {
   resource_group_name = var.resource_group.name
 
   default_node_pool {
-    name                  = var.settings.default_node_pool.name //azurecaf_name.default_node_pool.result
-    vm_size               = var.settings.default_node_pool.vm_size
-    type                  = try(var.settings.default_node_pool.type, "VirtualMachineScaleSets")
-    os_disk_size_gb       = try(var.settings.default_node_pool.os_disk_size_gb, null)
-    availability_zones    = try(var.settings.default_node_pool.availability_zones, null)
-    enable_auto_scaling   = try(var.settings.default_node_pool.enable_auto_scaling, false)
-    enable_node_public_ip = try(var.settings.default_node_pool.enable_node_public_ip, false)
-    node_count            = try(var.settings.default_node_pool.node_count, 1)
-    max_pods              = try(var.settings.default_node_pool.max_pods, 30)
-    node_labels           = try(var.settings.default_node_pool.node_labels, null)
-    node_taints           = try(var.settings.default_node_pool.node_taints, null)
-    vnet_subnet_id        = var.subnets[var.settings.default_node_pool.subnet_key].id
-    orchestrator_version  = try(var.settings.default_node_pool.orchestrator_version, var.settings.kubernetes_version)
-    tags                  = merge(try(var.settings.default_node_pool.tags, {}), local.tags)
+    name                         = var.settings.default_node_pool.name //azurecaf_name.default_node_pool.result
+    vm_size                      = var.settings.default_node_pool.vm_size
+    type                         = try(var.settings.default_node_pool.type, "VirtualMachineScaleSets")
+    os_disk_size_gb              = try(var.settings.default_node_pool.os_disk_size_gb, null)
+    os_disk_type                 = try(var.settings.default_node_pool.os_disk_type, null)
+    availability_zones           = try(var.settings.default_node_pool.availability_zones, null)
+    enable_auto_scaling          = try(var.settings.default_node_pool.enable_auto_scaling, false)
+    enable_node_public_ip        = try(var.settings.default_node_pool.enable_node_public_ip, false)
+    only_critical_addons_enabled = try(var.settings.default_node_pool.only_critical_addons_enabled, false)
+    node_count                   = try(var.settings.default_node_pool.node_count, 1)
+    max_pods                     = try(var.settings.default_node_pool.max_pods, 30)
+    node_labels                  = try(var.settings.default_node_pool.node_labels, null)
+    node_taints                  = try(var.settings.default_node_pool.node_taints, null)
+    vnet_subnet_id               = var.subnets[var.settings.default_node_pool.subnet_key].id
+    orchestrator_version         = try(var.settings.default_node_pool.orchestrator_version, try(var.settings.kubernetes_version, null))
+    tags                         = merge(try(var.settings.default_node_pool.tags, {}), local.tags)
   }
 
   dns_prefix = try(var.settings.dns_prefix, random_string.prefix.result)
@@ -168,7 +170,7 @@ resource "azurerm_kubernetes_cluster" "aks" {
       }
     }
   }
-
+  sku_tier           = try(var.settings.sku_tier, null)
   kubernetes_version = try(var.settings.kubernetes_version, null)
 
   # dynamic "linux_profile" {
@@ -235,6 +237,7 @@ resource "azurerm_kubernetes_cluster_node_pool" "nodepools" {
   vnet_subnet_id        = var.subnets[var.settings.default_node_pool.subnet_key].id
   vm_size               = each.value.vm_size
   os_disk_size_gb       = try(each.value.os_disk_size_gb, null)
+  os_disk_type          = try(each.value.os_disk_type, null)
   availability_zones    = try(each.value.availability_zones, null)
   enable_auto_scaling   = try(each.value.enable_auto_scaling, false)
   enable_node_public_ip = try(each.value.enable_node_public_ip, false)
@@ -242,39 +245,7 @@ resource "azurerm_kubernetes_cluster_node_pool" "nodepools" {
   max_pods              = try(each.value.max_pods, 30)
   node_labels           = try(each.value.node_labels, null)
   node_taints           = try(each.value.node_taints, null)
-  orchestrator_version  = try(each.value.orchestrator_version, var.settings.kubernetes_version)
+  orchestrator_version  = try(each.value.orchestrator_version, try(var.settings.kubernetes_version, null))
   tags                  = merge(try(each.value.tags, {}), try(var.settings.default_node_pool.tags, {}))
 
-}
-
-#
-# Preview features
-#
-locals {
-  register_aks_msi_preview_feature_command = <<EOT
-    az feature register -n AAD-V2 --namespace Microsoft.ContainerService
-
-    isRegistered=$(az feature list --query properties.state=="Registered")
-
-    while [ ! $isRegistered == true ]
-    do
-      echo "waiting for the provider to register"
-      sleep 20
-      isRegistered=$(az feature list --query properties.state=="Registered")
-    done
-    echo "Feature registered"
-    az provider register -n Microsoft.ContainerService
-  EOT
-}
-
-
-# Can take around 30 mins to register the feature
-resource "null_resource" "register_aks_msi_preview_feature" {
-  provisioner "local-exec" {
-    command = local.register_aks_msi_preview_feature_command
-  }
-
-  triggers = {
-    command = sha256(local.register_aks_msi_preview_feature_command)
-  }
 }

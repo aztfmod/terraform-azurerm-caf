@@ -1,5 +1,5 @@
 
-module azuread_apps {
+module "azuread_apps" {
   source = "./access_policy"
   for_each = {
     for key, access_policy in var.access_policies : key => access_policy
@@ -12,7 +12,7 @@ module azuread_apps {
   object_id     = try(var.azuread_apps[var.client_config.landingzone_key][each.value.azuread_app_key].azuread_service_principal.object_id, var.azuread_apps[each.value.lz_key][each.value.azuread_app_key].azuread_service_principal.object_id)
 }
 
-module azuread_group {
+module "azuread_group" {
   source = "./access_policy"
   for_each = {
     for key, access_policy in var.access_policies : key => access_policy
@@ -25,7 +25,7 @@ module azuread_group {
   object_id     = try(each.value.lz_key, null) == null ? var.azuread_groups[var.client_config.landingzone_key][each.value.azuread_group_key].id : var.azuread_groups[each.value.lz_key][each.value.azuread_group_key].id
 }
 
-module logged_in_user {
+module "logged_in_user" {
   source = "./access_policy"
   for_each = {
     for key, access_policy in var.access_policies : key => access_policy
@@ -38,7 +38,7 @@ module logged_in_user {
   object_id     = var.client_config.object_id
 }
 
-module logged_in_aad_app {
+module "logged_in_aad_app" {
   source = "./access_policy"
   for_each = {
     for key, access_policy in var.access_policies : key => access_policy
@@ -51,7 +51,7 @@ module logged_in_aad_app {
   object_id     = var.client_config.object_id
 }
 
-module object_id {
+module "object_id" {
   source = "./access_policy"
   for_each = {
     for key, access_policy in var.access_policies : key => access_policy
@@ -64,7 +64,7 @@ module object_id {
   object_id     = each.value.object_id
 }
 
-module managed_identity {
+module "managed_identity" {
   source = "./access_policy"
   for_each = {
     for key, access_policy in var.access_policies : key => access_policy
@@ -74,10 +74,10 @@ module managed_identity {
   keyvault_id   = var.keyvault_id == null ? try(var.keyvaults[var.client_config.landingzone_key][var.keyvault_key].id, var.keyvaults[each.value.lz_key][var.keyvault_key].id) : var.keyvault_id
   access_policy = each.value
   tenant_id     = var.client_config.tenant_id
-  object_id     = try(each.value.lz_key, null) == null ? var.managed_identities[var.client_config.landingzone_key][each.value.managed_identity_key].principal_id : var.managed_identities[each.value.lz_key][each.value.managed_identity_key].principal_id
+  object_id     = try(each.value.lz_key, null) == null ? var.resources.managed_identities[var.client_config.landingzone_key][each.value.managed_identity_key].principal_id : var.resources.managed_identities[each.value.lz_key][each.value.managed_identity_key].principal_id
 }
 
-module mssql_managed_instance {
+module "mssql_managed_instance" {
   source = "./access_policy"
   for_each = {
     for key, access_policy in var.access_policies : key => access_policy
@@ -87,10 +87,10 @@ module mssql_managed_instance {
   keyvault_id   = var.keyvault_id == null ? try(var.keyvaults[var.client_config.landingzone_key][var.keyvault_key].id, var.keyvaults[each.value.lz_key][var.keyvault_key].id) : var.keyvault_id
   access_policy = each.value
   tenant_id     = var.client_config.tenant_id
-  object_id     = try(each.value.lz_key, null) == null ? var.mssql_managed_instances[var.client_config.landingzone_key][each.value.mssql_managed_instance_key].principal_id : var.mssql_managed_instances[each.value.lz_key][each.value.mssql_managed_instance_key].principal_id
+  object_id     = try(each.value.lz_key, null) == null ? var.resources.mssql_managed_instances[var.client_config.landingzone_key][each.value.mssql_managed_instance_key].principal_id : var.resources.mssql_managed_instances[each.value.lz_key][each.value.mssql_managed_instance_key].principal_id
 }
 
-module mssql_managed_instances_secondary {
+module "mssql_managed_instances_secondary" {
   source = "./access_policy"
   for_each = {
     for key, access_policy in var.access_policies : key => access_policy
@@ -100,6 +100,33 @@ module mssql_managed_instances_secondary {
   keyvault_id   = var.keyvault_id == null ? try(var.keyvaults[var.client_config.landingzone_key][var.keyvault_key].id, var.keyvaults[each.value.lz_key][var.keyvault_key].id) : var.keyvault_id
   access_policy = each.value
   tenant_id     = var.client_config.tenant_id
-  object_id     = try(each.value.lz_key, null) == null ? var.mssql_managed_instances_secondary[var.client_config.landingzone_key][each.value.mssql_managed_instance_secondary_key].principal_id : var.mssql_managed_instances_secondary[each.value.lz_key][each.value.mssql_managed_instance_secondary_key].principal_id
+  object_id     = try(each.value.lz_key, null) == null ? var.resources.mssql_managed_instances_secondary[var.client_config.landingzone_key][each.value.mssql_managed_instance_secondary_key].principal_id : var.resources.mssql_managed_instances_secondary[each.value.lz_key][each.value.mssql_managed_instance_secondary_key].principal_id
 }
 
+
+
+module "storage_accounts" {
+  source = "./access_policy"
+  for_each = {
+    for key, access_policy in var.access_policies : key => access_policy
+    if try(access_policy.storage_account_key, null) != null
+  }
+
+  keyvault_id   = var.keyvault_id == null ? try(var.keyvaults[var.client_config.landingzone_key][var.keyvault_key].id, var.keyvaults[each.value.lz_key][var.keyvault_key].id) : var.keyvault_id
+  access_policy = each.value
+  tenant_id     = var.resources.storage_accounts[try(each.value.lz_key, var.client_config.landingzone_key)][each.value.storage_account_key].identity.0.tenant_id
+  object_id     = var.resources.storage_accounts[try(each.value.lz_key, var.client_config.landingzone_key)][each.value.storage_account_key].identity.0.principal_id
+}
+
+module "diagnostic_storage_accounts" {
+  source = "./access_policy"
+  for_each = {
+    for key, access_policy in var.access_policies : key => access_policy
+    if try(access_policy.diagnostic_storage_account_key, null) != null
+  }
+
+  keyvault_id   = var.keyvault_id == null ? try(var.keyvaults[var.client_config.landingzone_key][var.keyvault_key].id, var.keyvaults[each.value.lz_key][var.keyvault_key].id) : var.keyvault_id
+  access_policy = each.value
+  tenant_id     = var.resources.diagnostic_storage_accounts[try(each.value.lz_key, var.client_config.landingzone_key)][each.value.diagnostic_storage_account_key].identity.0.tenant_id
+  object_id     = var.resources.diagnostic_storage_accounts[try(each.value.lz_key, var.client_config.landingzone_key)][each.value.diagnostic_storage_account_key].identity.0.principal_id
+}

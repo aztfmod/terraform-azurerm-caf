@@ -1,11 +1,10 @@
 
-output mssql_managed_instances {
+output "mssql_managed_instances" {
   value = module.mssql_managed_instances
 
 }
-output mssql_managed_instances_secondary {
-  value     = module.mssql_managed_instances_secondary
-  sensitive = true
+output "mssql_managed_instances_secondary" {
+  value = module.mssql_managed_instances_secondary
 }
 
 module "mssql_managed_instances" {

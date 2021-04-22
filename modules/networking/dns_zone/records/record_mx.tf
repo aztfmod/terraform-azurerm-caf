@@ -5,7 +5,7 @@ resource "azurerm_dns_mx_record" "mx" {
   zone_name           = var.zone_name
   resource_group_name = var.resource_group_name
   ttl                 = try(each.value.ttl, 300)
-  tags                = merge(try(each.value.tags, {}), var.base_tags)
+  tags                = merge(var.base_tags, try(each.value.tags, {}))
 
   dynamic "record" {
     for_each = each.value.records

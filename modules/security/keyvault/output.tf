@@ -1,21 +1,21 @@
-output id {
+output "id" {
   value = azurerm_key_vault.keyvault.id
 }
 
-output vault_uri {
+output "vault_uri" {
   value = azurerm_key_vault.keyvault.vault_uri
 }
 
 
-output name {
+output "name" {
   value = azurerm_key_vault.keyvault.name
 }
 
-output rbac_id {
+output "rbac_id" {
   value = azurerm_key_vault.keyvault.id
 }
 
-output base_tags {
+output "base_tags" {
   value = var.base_tags
-
 }
+

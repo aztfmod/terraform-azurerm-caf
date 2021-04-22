@@ -1,4 +1,4 @@
-module container_registry {
+module "container_registry" {
   source   = "./modules/compute/container_registry"
   for_each = local.compute.azure_container_registries
 
@@ -21,7 +21,7 @@ module container_registry {
   private_dns              = local.combined_objects_private_dns
 }
 
-output azure_container_registries {
+output "azure_container_registries" {
   value = module.container_registry
 
 }

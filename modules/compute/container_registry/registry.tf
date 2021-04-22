@@ -1,7 +1,7 @@
 resource "azurecaf_name" "acr" {
   name          = var.name
   resource_type = "azurerm_container_registry"
-  prefixes      = [var.global_settings.prefix]
+  prefixes      = var.global_settings.prefixes
   random_length = var.global_settings.random_length
   clean_input   = true
   passthrough   = var.global_settings.passthrough
@@ -36,7 +36,7 @@ resource "azurerm_container_registry" "acr" {
 
         content {
           action    = "Allow"
-          subnet_id = try(var.vnets[virtual_network.value.vnet_key].subnets[virtual_network.value.subnet_key].id, {})
+          subnet_id = try(var.vnets[try(virtual_network.value.lz_key, var.client_config.landingzone_key)][virtual_network.value.vnet_key].subnets[virtual_network.value.subnet_key].id, {})
         }
       }
     }

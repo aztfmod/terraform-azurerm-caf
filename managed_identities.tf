@@ -1,5 +1,5 @@
 
-module managed_identities {
+module "managed_identities" {
   source   = "./modules/security/managed_identity"
   for_each = var.managed_identities
 
@@ -7,10 +7,11 @@ module managed_identities {
   resource_group_name = module.resource_groups[each.value.resource_group_key].name
   location            = module.resource_groups[each.value.resource_group_key].location
   global_settings     = local.global_settings
+  settings            = each.value
   base_tags           = try(local.global_settings.inherit_tags, false) ? module.resource_groups[each.value.resource_group_key].tags : {}
 }
 
-output managed_identities {
+output "managed_identities" {
   value = module.managed_identities
 
 }

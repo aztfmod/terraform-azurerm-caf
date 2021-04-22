@@ -2,7 +2,7 @@
 # Azure Active Directory Applications
 #
 
-module azuread_applications {
+module "azuread_applications" {
   source     = "./modules/azuread/applications"
   depends_on = [module.keyvault_access_policies]
   for_each   = var.azuread_apps
@@ -15,7 +15,7 @@ module azuread_applications {
   user_type               = var.user_type
 }
 
-output aad_apps {
+output "aad_apps" {
   value = module.azuread_applications
 
 }
@@ -24,7 +24,7 @@ output aad_apps {
 # Azure Active Directory Groups
 #
 
-module azuread_groups {
+module "azuread_groups" {
   source   = "./modules/azuread/groups"
   for_each = var.azuread_groups
 
@@ -33,12 +33,12 @@ module azuread_groups {
   tenant_id       = local.client_config.tenant_id
 }
 
-output azuread_groups {
+output "azuread_groups" {
   value = module.azuread_groups
 
 }
 
-module azuread_groups_members {
+module "azuread_groups_members" {
   source   = "./modules/azuread/groups_members"
   for_each = var.azuread_groups
 
@@ -52,7 +52,7 @@ module azuread_groups_members {
 # Azure Active Directory Users
 #
 
-module azuread_users {
+module "azuread_users" {
   source     = "./modules/azuread/users"
   depends_on = [module.keyvault_access_policies]
   for_each   = var.azuread_users
@@ -63,7 +63,7 @@ module azuread_users {
   settings        = each.value
 }
 
-output azuread_users {
+output "azuread_users" {
   value = module.azuread_users
 
 }
