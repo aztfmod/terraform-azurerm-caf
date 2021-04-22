@@ -89,39 +89,4 @@ dynamic_keyvault_secrets = {
   
 }
 
-# keyvaults = {
-#   wvd_kv = {
-#     name                = "testkv1"
-#     resource_group_key  = "wvd_region1"
-#     sku_name            = "standard"
-#     soft_delete_enabled = true
-#     creation_policies = {
-#       logged_in_user = {
-#         # if the key is set to "logged_in_user" add the user running terraform in the keyvault policy
-#         # More examples in /examples/keyvault
-#         secret_permissions = ["Set", "Get", "List", "Delete", "Purge", "Recover"]
-#       }
-#     }
-#   }
-  
-# }
-
-# # Store output attributes into keyvault secret
-# dynamic_keyvault_secrets = {
-#   wvd_kv = { # Key of the keyvault    
-#     domain-password = {
-#       secret_name = "newwvd-admin-password"
-#       value       = ""  #Insert manually 
-#     }
-#     vm-password = {
-#       secret_name = "newwvd-vm-password"
-#       value       = ""  #Insert manually 
-#     }
-#     hostpool-token = {
-#       secret_name = "newwvd-hostpool-token"
-#       value       = ""  #Insert manually 
-#     }
-#   }  
-  
-# }
 
