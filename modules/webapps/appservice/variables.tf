@@ -62,3 +62,7 @@ variable "combined_objects" {
 variable "storage_accounts" {
   default = {}
 }
+
+variable "subnet_id" {
+  default = null
+}
