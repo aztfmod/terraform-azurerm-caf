@@ -3,17 +3,22 @@ data "azurerm_role_definition" "role" {
   name     = each.value
 }
 
-# locals {
-#   role_id = regex("[^\\/]+$", data.azurerm_role_definition.role.role_definition_id)
+# Need to update after azure rm release
+
+# data "azurerm_role_definition" "delegated_role" {
+#   for_each = toset([for a in var.settings.authorizations : 
+#   {for key, value in try(a.delegated_role_definitions,{}) : key => value }])
+#   name     = each.value
 # }
+
 
 resource "azurerm_lighthouse_definition" "definition" {
   name               = var.settings.name
   description        = var.settings.description
   managing_tenant_id = var.settings.managing_tenant_id
   scope = coalesce(
-    try(format("/subscriptions/%s", var.resources["subscriptions"][try(var.settings.subscription.lz_key, var.client_config.landingzone_key)][var.settings.subscription.key].id), ""),
-    try(var.settings.subscription.id, "")
+    try(format("/subscriptions/%s", var.resources["subscriptions"][try(var.settings.managed_subscription_id.lz_key, var.client_config.landingzone_key)][var.settings.managed_subscription_id.key].id), ""),
+    try(var.settings.managed_subscription_id.id, "")
   )
 
   dynamic "authorization" {
@@ -21,8 +26,7 @@ resource "azurerm_lighthouse_definition" "definition" {
     for_each = try(var.settings.authorizations, {})
 
     content {
-      # role_definition_id     = replace(lower(data.azurerm_role_definition.role[authorization.value.built_in_role_name].id), lower("//providers/Microsoft.Authorization/roleDefinitions//"), "")
-      role_definition_id     = regex("[^\\/]+$", data.azurerm_role_definition.role[authorization.value.built_in_role_name].id)
+      role_definition_id     = replace(lower(data.azurerm_role_definition.role[authorization.value.built_in_role_name].id), lower("//providers/Microsoft.Authorization/roleDefinitions//"), "")
       principal_display_name = authorization.value.principal_display_name
       principal_id = coalesce(
         try(var.resources["azuread_groups"][try(authorization.value.azuread_group.lz_key, var.client_config.landingzone_key)][authorization.value.azuread_group.key].id, ""),
