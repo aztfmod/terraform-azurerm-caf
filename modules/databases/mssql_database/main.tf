@@ -8,7 +8,7 @@ terraform {
 }
 
 locals {
-  server_name = "${var.server_name}.database.windows.net"
+  server_name = format("%s.database.windows.net", var.server_name)
   module_tag = {
     "module" = basename(abspath(path.module))
   }
