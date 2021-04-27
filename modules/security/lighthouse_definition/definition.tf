@@ -3,15 +3,6 @@ data "azurerm_role_definition" "role" {
   name     = each.value
 }
 
-# Need to update after azure rm release
-
-# data "azurerm_role_definition" "delegated_role" {
-#   for_each = toset([for a in var.settings.authorizations : 
-#   {for key, value in try(a.delegated_role_definitions,{}) : key => value }])
-#   name     = each.value
-# }
-
-
 resource "azurerm_lighthouse_definition" "definition" {
   name               = var.settings.name
   description        = var.settings.description
@@ -28,6 +19,13 @@ resource "azurerm_lighthouse_definition" "definition" {
     content {
       role_definition_id     = replace(lower(data.azurerm_role_definition.role[authorization.value.built_in_role_name].id), lower("//providers/Microsoft.Authorization/roleDefinitions//"), "")
       principal_display_name = authorization.value.principal_display_name
+      # delegated_role_definitions = coalesce(
+      #   flatten(
+      #         [
+      #           for key in try(authorization.value.delegated_role_definitions, []) : var.custom_roles[key].role_definition_resource_id
+      #         ]
+      #     )
+      # )
       principal_id = coalesce(
         try(var.resources["azuread_groups"][try(authorization.value.azuread_group.lz_key, var.client_config.landingzone_key)][authorization.value.azuread_group.key].id, ""),
         try(authorization.value.azuread_group.id, ""),
@@ -44,5 +42,4 @@ resource "azurerm_lighthouse_definition" "definition" {
 
     }
   }
-
 }
