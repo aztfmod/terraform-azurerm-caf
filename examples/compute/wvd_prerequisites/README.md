@@ -8,11 +8,11 @@ Complete module:
 ```hcl
 module "caf" {
   source  = "aztfmod/caf/azurerm"
-  version = "4.21.2"
+  version = "5.3.2"
   # insert the 6 required variables here
 }
 ```
-This is a pre-requisit  for WVD.
+This is a pre-requisite for WVD.
 
 ## Run this example
 
