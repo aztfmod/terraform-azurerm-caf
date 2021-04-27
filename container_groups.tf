@@ -1,4 +1,4 @@
-module container_groups {
+module "container_groups" {
   source   = "./modules/compute/container_group"
   for_each = local.compute.container_groups
 
@@ -20,7 +20,7 @@ module container_groups {
   }
 }
 
-output container_groups {
+output "container_groups" {
   value = module.container_groups
 }
 

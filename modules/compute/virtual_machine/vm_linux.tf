@@ -21,7 +21,8 @@ resource "azurecaf_name" "linux" {
 
 # Name of the Linux computer name
 resource "azurecaf_name" "linux_computer_name" {
-  for_each = local.os_type == "linux" ? var.settings.virtual_machine_settings : {}
+  depends_on = [azurerm_network_interface.nic, azurerm_network_interface_security_group_association.nic_nsg]
+  for_each   = local.os_type == "linux" ? var.settings.virtual_machine_settings : {}
 
   name          = try(each.value.computer_name, each.value.name)
   resource_type = "azurerm_linux_virtual_machine"
@@ -83,20 +84,21 @@ resource "azurerm_linux_virtual_machine" "vm" {
     name                      = try(azurecaf_name.os_disk_linux[each.key].result, null)
     storage_account_type      = try(each.value.os_disk.storage_account_type, null)
     write_accelerator_enabled = try(each.value.os_disk.write_accelerator_enabled, false)
+    disk_encryption_set_id    = try(each.value.os_disk.disk_encryption_set_key, null) == null ? null : try(var.disk_encryption_sets[var.client_config.landingzone_key][each.value.os_disk.disk_encryption_set_key].id, var.disk_encryption_sets[each.value.os_disk.lz_key][each.value.os_disk.disk_encryption_set_key].id, null)
   }
 
   dynamic "source_image_reference" {
-    for_each = try(each.value.source_image_reference, null) != null ? [1]: []
+    for_each = try(each.value.source_image_reference, null) != null ? [1] : []
 
     content {
       publisher = try(each.value.source_image_reference.publisher, null)
       offer     = try(each.value.source_image_reference.offer, null)
       sku       = try(each.value.source_image_reference.sku, null)
-      version   = try(each.value.source_image_reference.version, null)      
+      version   = try(each.value.source_image_reference.version, null)
     }
   }
-  
-  source_image_id = try(each.value.custom_image_id, var.custom_image_ids[each.value.lz_key][each.value.custom_image_key].id ,null)
+
+  source_image_id = try(each.value.custom_image_id, var.custom_image_ids[each.value.lz_key][each.value.custom_image_key].id, null)
 
   dynamic "identity" {
     for_each = try(each.value.identity, false) == false ? [] : [1]

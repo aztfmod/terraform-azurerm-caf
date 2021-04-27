@@ -1,4 +1,4 @@
-module network_security_groups {
+module "network_security_groups" {
   source = "./modules/networking/network_security_group"
 
   for_each = {
@@ -17,4 +17,8 @@ module network_security_groups {
   // version = 1 of NSG can be attached to a nic or a subnet
   // version 1 requires the name and resource_group_key as additional mandatory attributes
   // If version = 1 is not present, the nsg can onle attached to a subnet
+}
+
+output "network_security_groups" {
+  value = module.network_security_groups
 }

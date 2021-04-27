@@ -1,4 +1,4 @@
-module tables {
+module "tables" {
   source   = "./table"
   for_each = try(var.settings.tables, {})
 
@@ -9,7 +9,7 @@ module tables {
   cosmosdb_account_name = azurerm_cosmosdb_account.cosmos_account.name
 }
 
-output tables {
+output "tables" {
   value = module.tables
 
 }

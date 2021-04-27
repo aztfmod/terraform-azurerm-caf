@@ -8,12 +8,8 @@ The following pre-requisites must be performed before using that module.
 
 ## Pre-requisites
 
-This module must be executed with 
-- An Azure Active Directory user being and EA Account Owner
-- An Azure Active directory User that has been delegated the subscription creation role
-- An Azure Active directory App SPN that has been delegated the subscription creation role
-- An Azure System Managed Identity (system MSI) that has been delegated the subscription creation role
-- An Azure User Managed Identity (user MSI) that has been delegated the subscription creation role
+This module must be executed with
+- An Azure Active Directory user being an EA Account Owner
 
 ### Enteprise Agreement
 

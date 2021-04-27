@@ -21,6 +21,7 @@ resource "azurerm_network_watcher_flow_log" "flow" {
 
     content {
       enabled               = var.settings.traffic_analytics.enabled
+      interval_in_minutes   = try(var.settings.interval_in_minutes, null)
       workspace_id          = var.diagnostics.log_analytics[var.diagnostics.diagnostics_destinations.log_analytics[var.settings.traffic_analytics.log_analytics_workspace_destination].log_analytics_key].workspace_id
       workspace_region      = var.resource_location
       workspace_resource_id = var.diagnostics.log_analytics[var.diagnostics.diagnostics_destinations.log_analytics[var.settings.traffic_analytics.log_analytics_workspace_destination].log_analytics_key].id

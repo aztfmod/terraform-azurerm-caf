@@ -1,64 +1,70 @@
-variable client_config {
+variable "client_config" {
   description = "Client configuration object (see module README.md)."
 }
 
-variable tags {
+variable "tags" {
   description = "(Required) map of tags for the deployment"
 }
 
-variable name {
+variable "name" {
   description = "(Required) Name of the App Service"
 }
 
-variable location {
+variable "location" {
   description = "(Required) Resource Location"
 }
 
-variable resource_group_name {
+variable "resource_group_name" {
   description = "(Required) Resource group of the App Service"
 }
 
-variable app_service_plan_id {
+variable "app_service_plan_id" {
 }
 
-variable identity {
+variable "identity" {
   default = null
 }
 
-variable connection_strings {
+variable "connection_strings" {
   default = {}
 }
 
-variable app_settings {
+variable "app_settings" {
   default = null
 }
 
-variable dynamic_app_settings {
+variable "dynamic_app_settings" {
   default = {}
 }
 
-variable slots {
+variable "slots" {
   default = {}
 }
 
-variable application_insight {
+variable "application_insight" {
   default = null
 }
 
-variable settings {}
+variable "settings" {}
 
-variable global_settings {
+variable "global_settings" {
   description = "Global settings object (see module README.md)"
 }
 
-variable base_tags {
+variable "base_tags" {
   description = "Base tags for the resource to be inherited from the resource group."
-  type        = map
+  type        = map(any)
 }
 
-variable combined_objects {
+variable "combined_objects" {
   default = {}
 }
-variable storage_accounts {
+variable "storage_accounts" {
   default = {}
+}
+variable "diagnostic_profiles" {
+  default = null
+}
+variable "diagnostics" {
+  default = null
 }

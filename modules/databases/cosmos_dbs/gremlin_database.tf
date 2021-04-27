@@ -1,4 +1,4 @@
-module gremlin_databases {
+module "gremlin_databases" {
   source   = "./gremlin_database"
   for_each = try(var.settings.gremlin_databases, {})
 
@@ -9,7 +9,7 @@ module gremlin_databases {
   cosmosdb_account_name = azurerm_cosmosdb_account.cosmos_account.name
 }
 
-output gremlin_databases {
+output "gremlin_databases" {
   value = module.gremlin_databases
 
 }

@@ -26,7 +26,7 @@ resource "azurerm_private_endpoint" "pep" {
     request_message                = try(var.settings.private_service_connection.request_message, null)
   }
 
-  dynamic private_dns_zone_group {
+  dynamic "private_dns_zone_group" {
     for_each = try(var.settings.private_dns, {}) == {} ? [] : [1]
 
     content {

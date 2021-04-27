@@ -1,4 +1,4 @@
-module databricks_workspaces {
+module "databricks_workspaces" {
   source   = "./modules/analytics/databricks_workspace"
   for_each = local.database.databricks_workspaces
 
@@ -11,7 +11,7 @@ module databricks_workspaces {
   base_tags           = try(local.global_settings.inherit_tags, false) ? module.resource_groups[each.value.resource_group_key].tags : {}
 }
 
-output databricks_workspaces {
+output "databricks_workspaces" {
   value = module.databricks_workspaces
 
 }

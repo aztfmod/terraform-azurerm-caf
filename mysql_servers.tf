@@ -1,5 +1,5 @@
 
-output mysql_servers {
+output "mysql_servers" {
   value = module.mysql_servers
 
 }

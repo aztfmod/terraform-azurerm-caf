@@ -1,8 +1,8 @@
-variable group_id {}
-variable azuread_groups {
+variable "group_id" {}
+variable "azuread_groups" {
   default = {}
 }
-variable azuread_apps {
+variable "azuread_apps" {
   default = {}
 }
-variable settings {}
+variable "settings" {}

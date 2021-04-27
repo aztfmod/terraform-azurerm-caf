@@ -7,14 +7,14 @@ SET @dbusernames = $(DBUSERNAMES)
   WHILE len(@dbusernames) > 0
   BEGIN
     SET @username = left(@dbusernames, charindex(',', @dbusernames+',')-1)
-    
+
     SET @create_user_cmd='CREATE USER [' + @username + '] FROM EXTERNAL PROVIDER'
 
     -- User creation
     IF NOT EXISTS (SELECT NAME FROM sys.database_principals WHERE NAME = @username)
       BEGIN
         EXEC(@create_user_cmd);
-        PRINT 'User ' + @username + ' created.';  
+        PRINT 'User ' + @username + ' created.';
       END
     ELSE
       PRINT 'User ' + @username + ' already exist.';

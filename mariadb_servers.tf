@@ -1,5 +1,5 @@
 
-output mariadb_servers {
+output "mariadb_servers" {
   value = module.mariadb_servers
 
 }

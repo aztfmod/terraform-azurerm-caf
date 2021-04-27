@@ -9,7 +9,7 @@ cd /tf/caf/landingzones/caf_example
 terraform init
 
 eval terraform plan ${parameter_files} \
-  -var var_folder_path="${configuration_folder}" 
+  -var var_folder_path="${configuration_folder}"
 
 ```
 

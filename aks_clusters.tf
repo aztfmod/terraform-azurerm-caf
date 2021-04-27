@@ -1,8 +1,8 @@
-output aks_clusters {
+output "aks_clusters" {
   value = module.aks_clusters
 }
 
-module aks_clusters {
+module "aks_clusters" {
   source     = "./modules/compute/aks"
   depends_on = [module.networking]
   for_each   = local.compute.aks_clusters

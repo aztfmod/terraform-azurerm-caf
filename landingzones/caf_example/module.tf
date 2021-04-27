@@ -45,10 +45,14 @@ module "example" {
   }
   networking = {
     application_gateway_applications                        = var.application_gateway_applications
+    application_gateway_waf_policies                        = var.application_gateway_waf_policies
     application_gateways                                    = var.application_gateways
+    application_security_groups                             = var.application_security_groups
     azurerm_firewall_application_rule_collection_definition = var.azurerm_firewall_application_rule_collection_definition
     azurerm_firewall_nat_rule_collection_definition         = var.azurerm_firewall_nat_rule_collection_definition
     azurerm_firewall_network_rule_collection_definition     = var.azurerm_firewall_network_rule_collection_definition
+    azurerm_firewall_policies                               = var.azurerm_firewall_policies
+    azurerm_firewall_policy_rule_collection_groups          = var.azurerm_firewall_policy_rule_collection_groups
     azurerm_firewalls                                       = var.azurerm_firewalls
     azurerm_routes                                          = var.azurerm_routes
     dns_zone_records                                        = var.dns_zone_records
@@ -67,17 +71,23 @@ module "example" {
     private_endpoints                                       = var.private_endpoints
     public_ip_addresses                                     = var.public_ip_addresses
     route_tables                                            = var.route_tables
+    vhub_peerings                                           = var.vhub_peerings
+    virtual_hub_connections                                 = var.virtual_hub_connections
+    virtual_hub_er_gateway_connections                      = var.virtual_hub_er_gateway_connections
+    virtual_hub_route_tables                                = var.virtual_hub_route_tables
     virtual_network_gateway_connections                     = var.virtual_network_gateway_connections
     virtual_network_gateways                                = var.virtual_network_gateways
     virtual_wans                                            = var.virtual_wans
     vnet_peerings                                           = var.vnet_peerings
     vnets                                                   = var.vnets
   }
-  
+
   diagnostics = {
     diagnostic_event_hub_namespaces = var.diagnostic_event_hub_namespaces
     diagnostic_log_analytics        = var.diagnostic_log_analytics
     diagnostic_storage_accounts     = var.diagnostic_storage_accounts
+    diagnostics_definition          = var.diagnostics_definition
+    diagnostics_destinations        = var.diagnostics_destinations
   }
 
   database = {
@@ -112,10 +122,12 @@ module "example" {
   }
 
   security = {
+    disk_encryption_sets          = var.disk_encryption_sets
     dynamic_keyvault_secrets      = var.dynamic_keyvault_secrets
     keyvault_certificate_issuers  = var.keyvault_certificate_issuers
     keyvault_certificate_requests = var.keyvault_certificate_requests
     keyvault_keys                 = var.keyvault_keys
+    keyvault_certificates         = var.keyvault_certificates
   }
 
   storage = {
