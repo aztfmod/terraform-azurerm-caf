@@ -85,6 +85,8 @@ module "example" {
     diagnostic_event_hub_namespaces = var.diagnostic_event_hub_namespaces
     diagnostic_log_analytics        = var.diagnostic_log_analytics
     diagnostic_storage_accounts     = var.diagnostic_storage_accounts
+    diagnostics_definition          = var.diagnostics_definition
+    diagnostics_destinations        = var.diagnostics_destinations
   }
 
   database = {
