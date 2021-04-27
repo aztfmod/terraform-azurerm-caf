@@ -27,7 +27,7 @@ diagnostics_destinations = {
     central_logs_example = {
       event_hub_namespace_key = "event_hub_namespace1"
     }
-  }  
+  }
 }
 
 # By default asp1 will inherit from the resource group location
@@ -83,10 +83,10 @@ app_services = {
     diagnostic_profiles = {
       app_service = {
         definition_key   = "app_service"
-        destination_type = "event_hub"      
-        destination_key  = "central_logs_example"   # Needs to be created in launchpad
+        destination_type = "event_hub"
+        destination_key  = "central_logs_example" # Needs to be created in launchpad
       }
-    }    
+    }
   }
 }
 
@@ -98,17 +98,17 @@ diagnostics_definition = {
     categories = {
       log = [
         #["Category name",  "Diagnostics Enabled(true/false)", "Retention Enabled(true/false)", Retention_period]
-         ["AppServiceHTTPLogs", true, false, 7],
-         ["AppServiceConsoleLogs", true, false, 7],
-         ["AppServiceAppLogs", true, false, 7],
-         ["AppServiceFileAuditLogs", true, false, 7],
-         ["AppServiceAuditLogs", true, false, 7],
-         ["AppServiceIPSecAuditLogs", true, false, 7],
-         ["AppServicePlatformLogs", true, false, 7],
+        ["AppServiceHTTPLogs", true, false, 7],
+        ["AppServiceConsoleLogs", true, false, 7],
+        ["AppServiceAppLogs", true, false, 7],
+        ["AppServiceFileAuditLogs", true, false, 7],
+        ["AppServiceAuditLogs", true, false, 7],
+        ["AppServiceIPSecAuditLogs", true, false, 7],
+        ["AppServicePlatformLogs", true, false, 7],
       ]
       metric = [
         #["Category name",  "Diagnostics Enabled(true/false)", "Retention Enabled(true/false)", Retention_period]
-         ["AllMetrics", true, false, 7],
+        ["AllMetrics", true, false, 7],
       ]
     }
   }

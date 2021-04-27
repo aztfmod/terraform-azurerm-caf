@@ -25,7 +25,7 @@ diagnostics_destinations = {
     central_logs_example = {
       event_hub_namespace_key = "event_hub_namespace1"
     }
-  }  
+  }
 }
 
 public_ip_addresses = {
@@ -60,7 +60,7 @@ load_balancers = {
         destination_type = "event_hub"
         destination_key  = "central_logs_example" # Needs to be deployed in launchpad first
       }
-    }    
+    }
   }
 }
 
@@ -72,7 +72,7 @@ diagnostics_definition = {
     categories = {
       metric = [
         #["Category name",  "Diagnostics Enabled(true/false)", "Retention Enabled(true/false)", Retention_period]
-         ["AllMetrics", true, false, 7],
+        ["AllMetrics", true, false, 7],
       ]
     }
   }
