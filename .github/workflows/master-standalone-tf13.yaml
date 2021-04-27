@@ -73,6 +73,7 @@ jobs:
             "mssql_server/105-sqlserver-failover_groups",
             # "mssql_server/106-sqlserver-db-msi-authentication",
             "mssql_server/107-sqlserver-db-retention-policy",
+            "mssql_server/108-sqlserver-db-diagnostics",
             "mysql_server/100-simple-mysql",
             "mysql_server/101-vnet-rule-mysql",
             "mysql_server/102-private-endpoint-mysql",
@@ -91,6 +92,7 @@ jobs:
             "networking/load_balancers/101-load-balancer-with-rules",
             "networking/load_balancers/102-internal-load-balancer",
             "networking/load_balancers/103-load-balancer-nic-association",
+            "networking/load_balancers/104-load-balancer-diagnostics",
             "networking/private_dns/100-private-dns-vnet-links",
             "networking/private_links/endpoints/centralized",
             "networking/virtual_network_gateway/100-expressroute-gateway",
@@ -115,6 +117,7 @@ jobs:
             "recovery_vault/102-asr-protection",
             "recovery_vault/103-asr-with-private-endpoint",
             "redis_cache/100-redis-standard",
+            "redis_cache/101-redis-diagnostics",
             "storage_accounts/102-storage-account-advanced-options",
             "synapse_analytics/100-synapse",
             "synapse_analytics/101-synapse-sparkpool",
@@ -122,7 +125,8 @@ jobs:
             "webapps/appservice/102-appservice-slots",
             "webapps/appservice/103-appservice-extend",
             "webapps/appservice/104-appservice-appinsight",
-            "webapps/appservice/105-appservice-backup"
+            "webapps/appservice/105-appservice-backup",
+            "webapps/appservice/106-appservice-diagnostics"
           ]
 
     container:

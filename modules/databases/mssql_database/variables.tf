@@ -1,6 +1,7 @@
 variable "global_settings" {
   description = "Global settings object (see module README.md)"
 }
+variable "location" {}
 variable "settings" {}
 variable "server_id" {}
 variable "server_name" {}
@@ -24,4 +25,3 @@ variable "diagnostic_profiles" {
 variable "diagnostics" {
   default = null
 }
-variable "location" {}
