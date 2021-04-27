@@ -10,7 +10,7 @@ resource "azurecaf_name" "linux" {
   for_each = local.os_type == "linux" ? var.settings.vmss_settings : {}
 
   name          = each.value.name
-  resource_type = "azurerm_linux_virtual_machine_scale_set"
+  resource_type = "azurerm_virtual_machine_scale_set"
   prefixes      = var.global_settings.prefixes
   random_length = var.global_settings.random_length
   clean_input   = true
@@ -24,7 +24,19 @@ resource "azurecaf_name" "linux_computer_name_prefix" {
   for_each = local.os_type == "linux" ? var.settings.vmss_settings : {}
 
   name          = try(each.value.computer_name, each.value.name)
-  resource_type = "azurerm_linux_virtual_machine_scale_set"
+  resource_type = "azurerm_virtual_machine_scale_set"
+  prefixes      = var.global_settings.prefixes
+  random_length = var.global_settings.random_length
+  clean_input   = true
+  passthrough   = var.global_settings.passthrough
+  use_slug      = var.global_settings.use_slug
+}
+
+resource "azurecaf_name" "nic" {
+  for_each = var.settings.vmss_settings.networking_interfaces
+
+  name          = each.value.name
+  resource_type = "azurerm_network_interface"
   prefixes      = var.global_settings.prefixes
   random_length = var.global_settings.random_length
   clean_input   = true
@@ -54,7 +66,7 @@ resource "azurerm_linux_virtual_machine_scale_set" "vmss" {
   sku                 = each.value.sku
   instances           = each.value.instances
   admin_username      = each.value.admin_username
-  tags = merge(local.tags, try(each.value.tags, null))
+  tags                = merge(local.tags, try(each.value.tags, null))
 
 
   computer_name_prefix            = azurecaf_name.linux_computer_name_prefix[each.key].result
@@ -80,21 +92,37 @@ resource "azurerm_linux_virtual_machine_scale_set" "vmss" {
     for_each = each.value.networking_interfaces
 
     content {
-      name    = "${azurecaf_name.linux_computer_name_prefix[each.key].result}-nic-${network_interface.value.name}"
+      # name    = "${azurecaf_name.linux_computer_name_prefix[each.key].result}-nic-${network_interface.value.name}"
+      name    = azurecaf_name.nic[each.key].result
       primary = try(network_interface.value.primary, false)
+      dns_servers = 
+      enable_accelerated_networking = 
+      enable_ip_forwarding = 
+      network_security_group_id = 
 
       ip_configuration {
-        name      = "${azurecaf_name.linux_computer_name_prefix[each.key].result}-nic-${network_interface.value.name}-ipconfig"
+        # name      = "${azurecaf_name.linux_computer_name_prefix[each.key].result}-nic-${network_interface.value.name}-ipconfig"
+        name      = azurecaf_name.nic[each.key].result
         primary   = try(network_interface.value.primary, false)
         subnet_id = try(var.vnets[var.client_config.landingzone_key][network_interface.value.vnet_key].subnets[network_interface.value.subnet_key].id, var.vnets[network_interface.value.lz_key][network_interface.value.vnet_key].subnets[network_interface.value.subnet_key].id)
+        # public_ip_addresses {
+        #   name = 
+        #   domain_name_label = 
+        #   idle_timeout_in_minutes = 
+        #   ip_tag = 
+        #   public_ip_prefix_id = 
+        # }
+
       }
     }
   }
 
   os_disk {
     caching                   = try(each.value.os_disk.caching, null)
-    disk_size_gb              = try(each.value.os_disk.disk_size_gb, null)
     storage_account_type      = try(each.value.os_disk.storage_account_type, null)
+    diff_disk_settings        = try(each.value.os_disk.diff_disk_settings, null)
+    disk_encryption_set_id    = try(each.value.os_disk.disk_encryption_set_id, null)
+    disk_size_gb              = try(each.value.os_disk.disk_size_gb, null)
     write_accelerator_enabled = try(each.value.os_disk.write_accelerator_enabled, false)
   }
 
@@ -111,14 +139,14 @@ resource "azurerm_linux_virtual_machine_scale_set" "vmss" {
 
   source_image_id = try(each.value.custom_image_id, var.custom_image_ids[each.value.lz_key][each.value.custom_image_key].id, null)
 
-  dynamic "identity" {
-    for_each = try(each.value.identity, false) == false ? [] : [1]
+  # dynamic "identity" {
+  #   for_each = try(each.value.identity, false) == false ? [] : [1]
 
-    content {
-      type         = each.value.identity.type
-      identity_ids = local.managed_identities
-    }
-  }
+  #   content {
+  #     type         = each.value.identity.type
+  #     identity_ids = local.managed_identities
+  #   }
+  # }
 
   dynamic "boot_diagnostics" {
     for_each = var.boot_diagnostics_storage_account == {} ? [] : [1]
