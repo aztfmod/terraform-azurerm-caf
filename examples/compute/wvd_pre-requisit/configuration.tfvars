@@ -5,7 +5,7 @@ global_settings = {
   regions = {
     region1 = "East US"
     region2 = "southeastasia"
-    
+
   }
 }
 
@@ -15,7 +15,7 @@ resource_groups = {
   wvd_region1 = {
     name = "wvd-pre"
   }
-  
+
 }
 
 keyvaults = {
@@ -60,7 +60,7 @@ keyvaults = {
       }
     }
   }
-  
+
 }
 
 
@@ -68,25 +68,25 @@ dynamic_keyvault_secrets = {
   wvd_kv1 = { # Key of the keyvault    
     domain-password = {
       secret_name = "newwvd-admin-password"
-      value       = ""  #Insert manually 
-    }    
+      value       = "" #Insert manually 
+    }
   }
 
   wvd_kv2 = { # Key of the keyvault    
     vm-password = {
       secret_name = "newwvd-vm-password"
-      value       = ""  #Insert manually 
+      value       = "" #Insert manually 
     }
-    
+
   }
 
   wvd_kv3 = { # Key of the keyvault    
     hostpool-token = {
       secret_name = "newwvd-hostpool-token"
-      value       = ""  #Insert manually 
+      value       = "" #Insert manually 
     }
-  }  
-  
+  }
+
 }
 
 

@@ -15,7 +15,7 @@ locals {
   arm_filename = "${path.module}/arm_sessionhosts.json"
 
   # this is the format required by ARM templates
-  
+
   parameters_body = {
     hostpoolName = {
       value = var.host_pool_name
@@ -52,10 +52,10 @@ locals {
     administratorAccountPassword = {
       value = data.azurerm_key_vault_secret.wvd_domain_password.value
     }
-    
+
     vmAdministratorAccountPassword = {
       value = data.azurerm_key_vault_secret.wvd_vm_password.value
-      
+
     }
 
     # administratorAccountPassword = {
@@ -64,14 +64,14 @@ locals {
 
     # vmAdministratorAccountPassword = {
     #   value = try(var.keyvaults[var.settings.vmadministrator.landingzone_key][var.settings.vmadministrator.keyvault_key].id, var.keyvaults[var.settings.vmadministrator.lz_key][var.settings.vmadministrator.keyvault_key].id, null)
-      
+
     # }
     vmAdministratorAccountUsername = {
-      value = var.settings.vmAdministratorAccountUsername      
+      value = var.settings.vmAdministratorAccountUsername
     }
     # vmAdministratorAccountPassword = {        
     #   value = var.key_vaults[try(var.settings.session_vm.lz_key, local.client_config.landingzone_key)][var.settings.session_vm.keyvault_key].id
-      # value = var.keyvaults[var.settings.vmadministrator.lz_key][var.settings.vmadministrator.keyvault_key].id
+    # value = var.keyvaults[var.settings.vmadministrator.lz_key][var.settings.vmadministrator.keyvault_key].id
     # }
     # vmAdministratorAccountPassword = data.azurerm_key_vault_secret.wvd-vm-password.value
     availabilityOption = {
@@ -142,9 +142,9 @@ locals {
     # }
     existingVnetName = {
       value = try(var.vnets[var.client_config.landingzone_key][var.settings.vnet_key].name, var.vnets[var.settings.lz_key][var.settings.vnet_key].name)
-      
+
     }
-    
+
 
     # existingSubnetName = {
     #   value = var.settings.existingSubnetName
@@ -198,7 +198,7 @@ locals {
     }
     intune = {
       value = var.settings.intune
-    }    
-    
+    }
+
   }
 }

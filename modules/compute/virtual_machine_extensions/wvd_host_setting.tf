@@ -1,12 +1,12 @@
 resource "azurerm_virtual_machine_extension" "domainJoin" {
-  for_each = var.extension_name == "microsoft_azure_domainJoin" ? toset(["enabled"]) : toset([])
+  for_each                   = var.extension_name == "microsoft_azure_domainJoin" ? toset(["enabled"]) : toset([])
   name                       = "microsoft_azure_domainJoin"
   virtual_machine_id         = var.virtual_machine_id
   publisher                  = "Microsoft.Compute"
   type                       = "JsonADDomainExtension"
   type_handler_version       = try(var.extension.type_handler_version, "1.3")
   auto_upgrade_minor_version = try(var.extension.auto_upgrade_minor_version, true)
-  
+
   lifecycle {
     ignore_changes = [
       "settings",
@@ -44,7 +44,7 @@ PROTECTED_SETTINGS
 
 resource "azurerm_virtual_machine_extension" "additional_session_host_dscextension" {
   for_each = var.extension_name == "additional_session_host_dscextension" ? toset(["enabled"]) : toset([])
-  name                       = "additional_session_host_dscextension"
+  name     = "additional_session_host_dscextension"
   # location                   = "${var.region}"
   # resource_group_name        = "${var.resource_group_name}"
   virtual_machine_id         = var.virtual_machine_id
@@ -93,22 +93,22 @@ PROTECTED_SETTINGS
 }
 
 data "azurerm_key_vault_secret" "wvd_client_id" {
-name = format("%s-client-id", var.extension.secret_prefix)
-key_vault_id = var.keyvault_id
+  name         = format("%s-client-id", var.extension.secret_prefix)
+  key_vault_id = var.keyvault_id
 }
 
 data "azurerm_key_vault_secret" "wvd_client_secret" {
-name = format("%s-client-secret", var.extension.secret_prefix)
-key_vault_id = var.keyvault_id
+  name         = format("%s-client-secret", var.extension.secret_prefix)
+  key_vault_id = var.keyvault_id
 }
 
 data "azurerm_key_vault_secret" "wvd_tenant_id" {
-name = format("%s-tenant-id", var.extension.secret_prefix)
-key_vault_id = var.keyvault_id
+  name         = format("%s-tenant-id", var.extension.secret_prefix)
+  key_vault_id = var.keyvault_id
 }
 
 data "azurerm_key_vault_secret" "wvd_domain_password" {
-name = "wvd-domain-password"
-key_vault_id = var.keyvault_id
+  name         = "wvd-domain-password"
+  key_vault_id = var.keyvault_id
 }
 
