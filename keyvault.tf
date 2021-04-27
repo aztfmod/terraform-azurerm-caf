@@ -33,7 +33,8 @@ module "keyvault_access_policies" {
     managed_identities                = local.combined_objects_managed_identities
     mssql_managed_instances           = local.combined_objects_mssql_managed_instances
     mssql_managed_instances_secondary = local.combined_objects_mssql_managed_instances_secondary
-    storage_accounts                  = module.storage_accounts
+    storage_accounts                  = local.combined_objects_storage_accounts
+    diagnostic_storage_accounts       = local.combined_objects_diagnostic_storage_accounts
   }
 }
 
@@ -52,7 +53,7 @@ module "keyvault_access_policies_azuread_apps" {
 }
 
 
-output keyvaults {
+output "keyvaults" {
   value = module.keyvaults
 
 }

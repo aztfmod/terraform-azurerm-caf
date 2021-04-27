@@ -1,5 +1,5 @@
 
-variable global_settings {
+variable "global_settings" {
   default = {
     default_region = "region1"
     regions = {
@@ -8,58 +8,58 @@ variable global_settings {
     }
   }
 }
-variable tags {
+variable "tags" {
   default = null
-  type    = map
+  type    = map(any)
 }
-variable resource_groups {
+variable "resource_groups" {
   default = null
 }
-variable network_security_group_definition {
+variable "network_security_group_definition" {
   default = {}
 }
-variable route_tables {
+variable "route_tables" {
   default = {}
 }
-variable azurerm_routes {
+variable "azurerm_routes" {
   default = {}
 }
-variable vnets {
+variable "vnets" {
   default = {}
 }
-variable vnet_peerings {
+variable "vnet_peerings" {
   default = {}
 }
-variable mssql_managed_instances {
+variable "mssql_managed_instances" {
   default = {}
 }
-variable mssql_managed_instances_secondary {
+variable "mssql_managed_instances_secondary" {
   default = {}
 }
-variable mssql_managed_databases {
+variable "mssql_managed_databases" {
   default = {}
 }
-variable mssql_managed_databases_restore {
+variable "mssql_managed_databases_restore" {
   default = {}
 }
-variable mssql_managed_databases_backup_ltr {
+variable "mssql_managed_databases_backup_ltr" {
   default = {}
 }
-variable mssql_mi_failover_groups {
+variable "mssql_mi_failover_groups" {
   default = {}
 }
-variable mssql_mi_administrators {
+variable "mssql_mi_administrators" {
   default = {}
 }
-variable mssql_mi_tdes {
+variable "mssql_mi_tdes" {
   default = {}
 }
-variable mssql_mi_secondary_tdes {
+variable "mssql_mi_secondary_tdes" {
   default = {}
 }
-variable azuread_groups {
+variable "azuread_groups" {
   default = {}
 }
-variable azuread_roles {
+variable "azuread_roles" {
   default = {}
 }

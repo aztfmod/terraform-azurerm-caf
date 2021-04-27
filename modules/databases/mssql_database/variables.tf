@@ -1,20 +1,27 @@
-variable global_settings {
+variable "global_settings" {
   description = "Global settings object (see module README.md)"
 }
-variable settings {}
-variable server_id {}
-variable server_name {}
-variable storage_accounts {}
-variable elastic_pool_id {
+variable "location" {}
+variable "settings" {}
+variable "server_id" {}
+variable "server_name" {}
+variable "storage_accounts" {}
+variable "elastic_pool_id" {
   default = null
 }
-variable base_tags {
+variable "base_tags" {
   description = "Base tags for the resource to be inherited from the resource group."
-  type        = map
+  type        = map(any)
 }
-variable sqlcmd_dbname {
+variable "sqlcmd_dbname" {
   default = null
 }
-variable managed_identities {
+variable "managed_identities" {
+  default = null
+}
+variable "diagnostic_profiles" {
+  default = null
+}
+variable "diagnostics" {
   default = null
 }

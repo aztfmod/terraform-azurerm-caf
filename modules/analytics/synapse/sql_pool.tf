@@ -1,4 +1,4 @@
-module sql_pool {
+module "sql_pool" {
   source   = "./sql_pool"
   for_each = try(var.settings.synapse_sql_pools, {})
 

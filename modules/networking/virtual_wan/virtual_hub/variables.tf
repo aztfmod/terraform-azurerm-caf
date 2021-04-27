@@ -35,6 +35,16 @@ variable "vwan_id" {
 }
 
 variable "tags" {
-  type    = map
+  type    = map(any)
   default = {}
+}
+
+variable "virtual_networks" {
+  description = "Combined object for Virtual Networks"
+}
+variable "public_ip_addresses" {
+  description = "Combined object for public ip addresses"
+}
+variable "client_config" {
+
 }

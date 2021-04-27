@@ -22,6 +22,12 @@ variable "var_folder_path" {
   default = {}
 }
 
+variable "provider_azurerm_features_keyvault" {
+  default = {
+    purge_soft_delete_on_destroy = true
+  }
+}
+
 variable "environment" {
   default = "sandpit"
 }
@@ -48,10 +54,10 @@ variable "app_services" {
   default = {}
 }
 variable "diagnostics_definition" {
-  default = null
+  default = {}
 }
 variable "resource_groups" {
-  default = null
+  default = {}
 }
 variable "network_security_group_definition" {
   default = {}
@@ -137,6 +143,9 @@ variable "keyvault_keys" {
 variable "keyvault_certificate_requests" {
   default = {}
 }
+variable "keyvault_certificates" {
+  default = {}
+}
 variable "virtual_machines" {
   default = {}
 }
@@ -200,6 +209,9 @@ variable "application_gateways" {
 variable "application_gateway_applications" {
   default = {}
 }
+variable "application_gateway_waf_policies" {
+  default = {}
+}
 variable "mysql_servers" {
   default = {}
 }
@@ -237,34 +249,34 @@ variable "express_route_circuit_authorizations" {
   default = {}
 }
 
-variable shared_image_galleries {
+variable "shared_image_galleries" {
   default = {}
 }
 
-variable image_definitions {
+variable "image_definitions" {
   default = {}
 }
 
-variable diagnostics_destinations {
+variable "diagnostics_destinations" {
   default = {}
 }
 variable "vnet_peerings" {
   default = {}
 }
 
-variable packer_service_principal {
+variable "packer_service_principal" {
   default = {}
 }
 
-variable packer_managed_identity {
+variable "packer_managed_identity" {
   default = {}
 }
 
-variable azuread_api_permissions {
+variable "azuread_api_permissions" {
   default = {}
 }
 
-variable keyvault_access_policies_azuread_apps {
+variable "keyvault_access_policies_azuread_apps" {
   default = {}
 }
 
@@ -291,10 +303,10 @@ variable "private_endpoints" {
   default = {}
 }
 
-variable event_hubs {
+variable "event_hubs" {
   default = {}
 }
-variable automations {
+variable "automations" {
   default = {}
 }
 
@@ -353,4 +365,30 @@ variable "event_hub_namespace_auth_rules" {
 variable "event_hub_consumer_groups" {
   default = {}
 }
+variable "application_security_groups" {
+  default = {}
+}
 
+variable "azurerm_firewall_policies" {
+  default = {}
+}
+
+variable "azurerm_firewall_policy_rule_collection_groups" {
+  default = {}
+}
+variable "disk_encryption_sets" {
+  default = {}
+}
+variable "vhub_peerings" {
+  default     = {}
+  description = "Use virtual_hub_connections instead of vhub_peerings. It will be removed in version 6.0"
+}
+variable "virtual_hub_connections" {
+  default = {}
+}
+variable "virtual_hub_route_tables" {
+  default = {}
+}
+variable "virtual_hub_er_gateway_connections" {
+  default = {}
+}

@@ -6,7 +6,6 @@
 
 global_settings = {
   default_region = "region1"
-  prefix         = null
   regions = {
     region1 = "southeastasia"
   }
@@ -35,6 +34,7 @@ synapse_workspaces = {
       storage_account_key = "synapsestorage_re1"
       container_key       = "synaspe_filesystem"
     }
+    # only defining a single firewall rule in this example
     workspace_firewall = {
       name     = "AllowAll"
       start_ip = "0.0.0.0"

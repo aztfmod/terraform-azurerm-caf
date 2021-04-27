@@ -149,7 +149,7 @@ resource "azurerm_storage_account" "stg" {
 
 }
 
-module container {
+module "container" {
   source   = "./container"
   for_each = try(var.storage_account.containers, {})
 
@@ -157,7 +157,7 @@ module container {
   settings             = each.value
 }
 
-module data_lake_filesystem {
+module "data_lake_filesystem" {
   source   = "./data_lake_filesystem"
   for_each = try(var.storage_account.data_lake_filesystems, {})
 

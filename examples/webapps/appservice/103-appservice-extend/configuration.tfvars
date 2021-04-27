@@ -1,6 +1,5 @@
 global_settings = {
   default_region = "region1"
-  prefix         = null
   regions = {
     region1 = "southeastasia"
   }
@@ -33,7 +32,7 @@ app_services = {
     app_service_plan_key = "asp_extend"
 
     identity = {
-      type         = "SystemAssigned"
+      type = "SystemAssigned"
     }
 
     settings = {
@@ -61,7 +60,6 @@ app_services = {
       tags = {
         Department = "IT"
       }
-
     }
   }
 }

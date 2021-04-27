@@ -58,7 +58,7 @@ resource "azurerm_kubernetes_cluster" "aks" {
     node_labels                  = try(var.settings.default_node_pool.node_labels, null)
     node_taints                  = try(var.settings.default_node_pool.node_taints, null)
     vnet_subnet_id               = var.subnets[var.settings.default_node_pool.subnet_key].id
-    orchestrator_version         = try(var.settings.default_node_pool.orchestrator_version, var.settings.kubernetes_version)
+    orchestrator_version         = try(var.settings.default_node_pool.orchestrator_version, try(var.settings.kubernetes_version, null))
     tags                         = merge(try(var.settings.default_node_pool.tags, {}), local.tags)
   }
 
@@ -170,7 +170,7 @@ resource "azurerm_kubernetes_cluster" "aks" {
       }
     }
   }
-
+  sku_tier           = try(var.settings.sku_tier, null)
   kubernetes_version = try(var.settings.kubernetes_version, null)
 
   # dynamic "linux_profile" {
@@ -245,7 +245,7 @@ resource "azurerm_kubernetes_cluster_node_pool" "nodepools" {
   max_pods              = try(each.value.max_pods, 30)
   node_labels           = try(each.value.node_labels, null)
   node_taints           = try(each.value.node_taints, null)
-  orchestrator_version  = try(each.value.orchestrator_version, var.settings.kubernetes_version)
+  orchestrator_version  = try(each.value.orchestrator_version, try(var.settings.kubernetes_version, null))
   tags                  = merge(try(each.value.tags, {}), try(var.settings.default_node_pool.tags, {}))
 
 }

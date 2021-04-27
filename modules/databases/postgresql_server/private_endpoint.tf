@@ -1,4 +1,4 @@
-module private_endpoint {
+module "private_endpoint" {
   source   = "../../networking/private_endpoint"
   for_each = try(var.private_endpoints, {})
 

@@ -18,11 +18,11 @@ resource "azurerm_lb" "lb" {
     for_each = try(var.settings.frontend_ip_configurations, {})
     content {
       name                          = frontend_ip_configuration.value.name
-      subnet_id                     = try(var.vnets[var.client_config.landingzone_key][frontend_ip_configuration.value.vnet_key].subnets[frontend_ip_configuration.value.subnet_key].id, null)
+      subnet_id                     = try(var.vnets[try(frontend_ip_configuration.value.lz_key, var.client_config.landingzone_key)][frontend_ip_configuration.value.vnet_key].subnets[frontend_ip_configuration.value.subnet_key].id, null)
       private_ip_address            = try(frontend_ip_configuration.value.private_ip_address, null)
       private_ip_address_allocation = try(frontend_ip_configuration.value.private_ip_address_allocation, null) #Possible values as Dynamic and Static.
       private_ip_address_version    = try(frontend_ip_configuration.value.private_ip_address_version, null)    #Possible values are IPv4 or IPv6.
-      public_ip_address_id          = lookup(frontend_ip_configuration.value, "public_ip_address_key", null) == null ? null : try(var.public_ip_addresses[var.client_config.landingzone_key][frontend_ip_configuration.value.public_ip_address_key].id, var.public_ip_addresses[frontend_ip_configuration.value.lz_key][frontend_ip_configuration.value.public_ip_address_key].id)
+      public_ip_address_id          = lookup(frontend_ip_configuration.value, "public_ip_address_key", null) == null ? null : var.public_ip_addresses[try(frontend_ip_configuration.value.lz_key, var.client_config.landingzone_key)][frontend_ip_configuration.value.public_ip_address_key].id
       public_ip_prefix_id           = try(frontend_ip_configuration.value.public_ip_prefix_id, null)
       zones                         = try(frontend_ip_configuration.value.zones, null)
     }
@@ -47,16 +47,21 @@ resource "azurerm_lb_backend_address_pool_address" "backend_address_pool_address
 }
 
 resource "azurerm_lb_probe" "lb_probe" {
-  count = try(var.settings.probe, null) == null ? 0 : 1
+  for_each = try(var.settings.probes, {})
 
   resource_group_name = var.resource_group_name
   loadbalancer_id     = azurerm_lb.lb.id
-  name                = var.settings.probe.probe_name
-  port                = var.settings.probe.port
-  protocol            = try(var.settings.probe.protocol, null)            #Possible values are Http, Https or Tcp
-  request_path        = try(var.settings.probe.request_path, null)        #Required if protocol is set to Http or Https. Otherwise, it is not allowed.
-  interval_in_seconds = try(var.settings.probe.interval_in_seconds, null) #The default value is 15, the minimum value is 5.
-  number_of_probes    = try(var.settings.probe.number_of_probes, null)    # The default value is 2.
+  name                = each.value.probe_name
+  port                = each.value.port
+  protocol            = try(each.value.protocol, null)            #Possible values are Http, Https or Tcp
+  request_path        = try(each.value.request_path, null)        #Required if protocol is set to Http or Https. Otherwise, it is not allowed.
+  interval_in_seconds = try(each.value.interval_in_seconds, null) #The default value is 15, the minimum value is 5.
+  number_of_probes    = try(each.value.number_of_probes, null)    # The default value is 2.
+
+  depends_on = [
+    azurerm_lb_backend_address_pool.backend_address_pool,
+    azurerm_lb.lb
+  ]
 }
 
 resource "azurerm_lb_rule" "lb_rule" {

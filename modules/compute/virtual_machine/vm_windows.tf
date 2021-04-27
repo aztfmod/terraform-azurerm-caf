@@ -38,7 +38,8 @@ resource "azurecaf_name" "os_disk_windows" {
 }
 
 resource "azurerm_windows_virtual_machine" "vm" {
-  for_each = local.os_type == "windows" ? var.settings.virtual_machine_settings : {}
+  depends_on = [azurerm_network_interface.nic, azurerm_network_interface_security_group_association.nic_nsg]
+  for_each   = local.os_type == "windows" ? var.settings.virtual_machine_settings : {}
 
   name                         = azurecaf_name.windows[each.key].result
   location                     = var.location
@@ -68,6 +69,7 @@ resource "azurerm_windows_virtual_machine" "vm" {
     name                      = azurecaf_name.os_disk_windows[each.key].result
     storage_account_type      = each.value.os_disk.storage_account_type
     write_accelerator_enabled = try(each.value.os_disk.write_accelerator_enabled, false)
+    disk_encryption_set_id    = try(each.value.os_disk.disk_encryption_set_key, null) == null ? null : try(var.disk_encryption_sets[var.client_config.landingzone_key][each.value.os_disk.disk_encryption_set_key].id, var.disk_encryption_sets[each.value.os_disk.lz_key][each.value.os_disk.disk_encryption_set_key].id, null)
 
     dynamic "diff_disk_settings" {
       for_each = try(each.value.diff_disk_settings, false) == false ? [] : [1]
@@ -79,17 +81,17 @@ resource "azurerm_windows_virtual_machine" "vm" {
   }
 
   dynamic "source_image_reference" {
-    for_each = try(each.value.source_image_reference, null) != null ? [1]: []
+    for_each = try(each.value.source_image_reference, null) != null ? [1] : []
 
     content {
       publisher = try(each.value.source_image_reference.publisher, null)
       offer     = try(each.value.source_image_reference.offer, null)
       sku       = try(each.value.source_image_reference.sku, null)
-      version   = try(each.value.source_image_reference.version, null)      
+      version   = try(each.value.source_image_reference.version, null)
     }
   }
-  
-  source_image_id = try(each.value.custom_image_id, var.custom_image_ids[each.value.lz_key][each.value.custom_image_key].id ,null)
+
+  source_image_id = try(each.value.custom_image_id, var.custom_image_ids[each.value.lz_key][each.value.custom_image_key].id, null)
 
   dynamic "additional_capabilities" {
     for_each = try(each.value.additional_capabilities, false) == false ? [] : [1]
@@ -204,7 +206,7 @@ locals {
 #
 # With for_each it is not possible to change the provider's subscription at runtime so using the following pattern.
 #
-data external windows_admin_username {
+data "external" "windows_admin_username" {
   count = try(var.settings.virtual_machine_settings["windows"].admin_username_key, null) == null ? 0 : 1
   program = [
     "bash", "-c",
@@ -216,7 +218,7 @@ data external windows_admin_username {
   ]
 }
 
-data external windows_admin_password {
+data "external" "windows_admin_password" {
   count = try(var.settings.virtual_machine_settings["windows"].admin_password_key, null) == null ? 0 : 1
   program = [
     "bash", "-c",

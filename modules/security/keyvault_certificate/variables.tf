@@ -1,2 +1,2 @@
-variable settings {}
-variable keyvault {}
+variable "settings" {}
+variable "keyvault" {}

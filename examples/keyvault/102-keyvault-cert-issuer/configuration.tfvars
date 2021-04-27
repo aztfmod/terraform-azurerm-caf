@@ -1,9 +1,13 @@
 global_settings = {
   default_region = "region1"
-  prefix         = null
   regions = {
     region1 = "southeastasia"
   }
+}
+
+provider_azurerm_features_keyvault = {
+  // set to true to cleanup the CI
+  purge_soft_delete_on_destroy = true
 }
 
 resource_groups = {
@@ -17,7 +21,7 @@ keyvaults = {
     name               = "certsecrets"
     resource_group_key = "kv_region1"
     sku_name           = "standard"
-    cert_password_key  = "cert-password"
+    # cert_password_key  = "cert-password"
     creation_policies = {
       logged_in_user = {
         certificate_permissions = ["Get", "List", "Update", "Create", "Import", "Delete", "Purge", "Recover", "Getissuers", "Setissuers", "Listissuers", "Deleteissuers", "Manageissuers", "Restore", "Managecontacts"]
@@ -47,6 +51,7 @@ keyvault_certificate_issuers = {
     resource_group_key = "kv_region1"
     keyvault_key       = "cert_secrets"
     cert_password_key  = "cert-password"
+    # cert_issuer_password = "password in clear text. not recommended"
 
     admin_settings = {
       admin1 = {

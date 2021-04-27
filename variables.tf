@@ -160,11 +160,11 @@ variable "webapp" {
   }
 }
 
-variable data_factory {
+variable "data_factory" {
   default = {}
 }
 
-variable logic_app {
+variable "logic_app" {
   default = {}
 }
 
@@ -240,27 +240,27 @@ variable "shared_services" {
   }
 }
 
-variable virtual_network_gateways {
+variable "virtual_network_gateways" {
   default = {}
 }
 
-variable virtual_network_gateway_connections {
+variable "virtual_network_gateway_connections" {
   default = {}
 }
 
-variable shared_image_galleries {
+variable "shared_image_galleries" {
   default = {}
 }
 
-variable image_definitions {
+variable "image_definitions" {
   default = {}
 }
 
-variable packer_service_principal {
+variable "packer_service_principal" {
   default = {}
 }
 
-variable packer_managed_identity {
+variable "packer_managed_identity" {
   default = {}
 }
 
@@ -271,30 +271,29 @@ variable "cosmos_dbs" {
   default = {}
 }
 
-variable app_config {
+variable "app_config" {
   default = {}
 }
 
-variable local_network_gateways {
+variable "local_network_gateways" {
   default = {}
 }
 
-variable event_hubs {
+variable "application_security_groups" {
+  default = {}
+}
+variable "event_hubs" {
   default = {}
 }
 
-variable automations {
+variable "event_hub_auth_rules" {
   default = {}
 }
 
-variable event_hub_auth_rules {
+variable "event_hub_namespace_auth_rules" {
   default = {}
 }
 
-variable event_hub_namespace_auth_rules {
-  default = {}
-}
-
-variable event_hub_consumer_groups {
+variable "event_hub_consumer_groups" {
   default = {}
 }

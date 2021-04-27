@@ -3,7 +3,7 @@
 dns_zone_records = {
   record1 = {
     dns_zone = {
-      # name     = "name of an existing dns_zone" 
+      # name     = "name of an existing dns_zone"
       # resource_group_name = "set the name when the id is provided"
       key = "dns_zone1"
       # lz_key = "name of the remote landingzone"

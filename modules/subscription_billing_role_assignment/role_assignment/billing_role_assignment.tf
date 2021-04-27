@@ -4,7 +4,7 @@ locals {
 
 resource "null_resource" "subscription_creation_role" {
   triggers = {
-    url        = format("https://management.azure.com%s/billingRoleAssignments/%s?api-version=%s", var.billing_scope_id, var.principal_id, local.api_version)
+    url = format("https://management.azure.com%s/billingRoleAssignments/%s?api-version=%s&useCosmos=true", var.billing_scope_id, var.principal_id, local.api_version)
     properties = jsonencode(
       {
         properties = {
@@ -22,7 +22,7 @@ resource "null_resource" "subscription_creation_role" {
     on_failure  = fail
 
     environment = {
-      METHOD          = "PUT"
+      METHOD     = "PUT"
       URL        = self.triggers.url
       PROPERTIES = self.triggers.properties
     }
