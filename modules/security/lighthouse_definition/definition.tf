@@ -13,7 +13,7 @@ resource "azurerm_lighthouse_definition" "definition" {
   )
 
   dynamic "authorization" {
-    
+
     for_each = try(var.settings.authorizations, {})
 
     content {
@@ -29,13 +29,13 @@ resource "azurerm_lighthouse_definition" "definition" {
       principal_id = coalesce(
         try(var.resources["azuread_groups"][try(authorization.value.azuread_group.lz_key, var.client_config.landingzone_key)][authorization.value.azuread_group.key].id, ""),
         try(authorization.value.azuread_group.id, ""),
-        
+
         try(var.resources["managed_identities"][try(authorization.value.managed_identity.lz_key, var.client_config.landingzone_key)][authorization.value.managed_identity.key].id, ""),
         try(authorization.value.managed_identity.id, ""),
-        
+
         try(var.resources["azuread_users"][try(authorization.value.azuread_user.lz_key, var.client_config.landingzone_key)][authorization.value.azuread_user.key].id, ""),
         try(authorization.value.azuread_user.id, ""),
-        
+
         try(var.resources["azuread_apps"][try(authorization.value.azuread_app.lz_key, var.client_config.landingzone_key)][authorization.value.azuread_app.key].id, ""),
         try(authorization.value.azuread_app.id, "")
       )
