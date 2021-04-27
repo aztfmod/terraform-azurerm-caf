@@ -1,12 +1,12 @@
-output id {
+output "id" {
   value = azurerm_virtual_desktop_host_pool.wvdpool.id
 }
 
-output name {
+output "name" {
   value = azurerm_virtual_desktop_host_pool.wvdpool.name
 
 }
 
-output token {
+output "token" {
   value = azurerm_virtual_desktop_host_pool.wvdpool.registration_info[*].token
 }

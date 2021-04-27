@@ -57,7 +57,7 @@ module "additional_session_host_dscextension" {
   extension_name     = "additional_session_host_dscextension"
   settings = {
     diagnostics = module.caf.diagnostics
-    
+
   }
 }
 
