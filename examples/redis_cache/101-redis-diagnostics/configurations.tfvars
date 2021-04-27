@@ -24,7 +24,7 @@ azurerm_redis_caches = {
     tags = {
       test = "AK1"
     }
-    
+
     diagnostic_profiles = {
       redis_cache = {
         definition_key   = "redis_cache"
@@ -49,7 +49,7 @@ diagnostics_destinations = {
     central_logs_example = {
       event_hub_namespace_key = "event_hub_namespace1"
     }
-  }  
+  }
 }
 
 
@@ -60,8 +60,8 @@ diagnostics_definition = {
     categories = {
       metric = [
         #["Category name",  "Diagnostics Enabled(true/false)", "Retention Enabled(true/false)", Retention_period]
-         ["AllMetrics", true, false, 7],
+        ["AllMetrics", true, false, 7],
       ]
-    }    
+    }
   }
 }
