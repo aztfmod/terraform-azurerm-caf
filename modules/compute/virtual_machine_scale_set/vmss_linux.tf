@@ -95,10 +95,9 @@ resource "azurerm_linux_virtual_machine_scale_set" "vmss" {
       # name    = "${azurecaf_name.linux_computer_name_prefix[each.key].result}-nic-${network_interface.value.name}"
       name    = azurecaf_name.nic[each.key].result
       primary = try(network_interface.value.primary, false)
-      dns_servers = 
-      enable_accelerated_networking = 
-      enable_ip_forwarding = 
-      network_security_group_id = 
+      enable_accelerated_networking = try(network_interface.value.enable_accelerated_networking, false)
+      enable_ip_forwarding = try(network_interface.value.enable_ip_forwarding, false)
+      # network_security_group_id = try(network_interface.value.network_security_group_id, null)
 
       ip_configuration {
         # name      = "${azurecaf_name.linux_computer_name_prefix[each.key].result}-nic-${network_interface.value.name}-ipconfig"
