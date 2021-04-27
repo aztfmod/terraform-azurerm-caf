@@ -28,7 +28,7 @@ diagnostics_destinations = {
     central_logs_example = {
       event_hub_namespace_key = "event_hub_namespace1"
     }
-  }  
+  }
 }
 
 mssql_servers = {
@@ -52,7 +52,7 @@ mssql_databases = {
     license_type       = "LicenseIncluded"
     max_size_gb        = 4
     sku_name           = "BC_Gen5_2"
-    
+
 
     diagnostic_profiles = {
       app_service = {
@@ -61,7 +61,7 @@ mssql_databases = {
         destination_key  = "central_logs_example" # Needs to be deployed in launchpad first
       }
     }
-  
+
   }
 }
 
@@ -73,11 +73,11 @@ diagnostics_definition = {
     categories = {
       log = [
         #["Category name",  "Diagnostics Enabled(true/false)", "Retention Enabled(true/false)", Retention_period]
-         ["Errors", true, false, 7],
+        ["Errors", true, false, 7],
       ]
       metric = [
         #["Category name",  "Diagnostics Enabled(true/false)", "Retention Enabled(true/false)", Retention_period]
-         ["Basic", true, false, 7],
+        ["Basic", true, false, 7],
       ]
     }
   }
