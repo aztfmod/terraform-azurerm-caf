@@ -16,7 +16,7 @@ resource "azurecaf_name" "windows" {
 resource "azurecaf_name" "windows_computer_name_prefix" {
   for_each = local.os_type == "windows" ? var.settings.vmss_settings : {}
 
-  name          = try(each.value.computer_name, each.value.name)
+  name          = try(each.value.computer_name_prefix, each.value.name)
   resource_type = "azurerm_virtual_machine_scale_set"
   prefixes      = var.global_settings.prefixes
   random_length = var.global_settings.random_length
@@ -24,6 +24,21 @@ resource "azurecaf_name" "windows_computer_name_prefix" {
   passthrough   = var.global_settings.passthrough
   use_slug      = var.global_settings.use_slug
 }
+
+
+# Name of the Network Interface Cards
+resource "azurecaf_name" "windows_nic" {
+  for_each = local.os_type == "windows" ? var.settings.network_interfaces : {}
+
+  name          = try(each.value.name, null)
+  resource_type = "azurerm_network_interface"
+  prefixes      = var.global_settings.prefixes
+  random_length = var.global_settings.random_length
+  clean_input   = true
+  passthrough   = var.global_settings.passthrough
+  use_slug      = var.global_settings.use_slug
+}
+
 
 # Name for the OS disk
 resource "azurecaf_name" "os_disk_windows" {
@@ -41,45 +56,69 @@ resource "azurecaf_name" "os_disk_windows" {
 resource "azurerm_windows_virtual_machine_scale_set" "vmss" {
   for_each = local.os_type == "windows" ? var.settings.vmss_settings : {}
 
-  name                = azurecaf_name.windows[each.key].result
+  admin_password      = try(each.value.admin_password_key, null) == null ? random_password.admin[local.os_type].result : local.admin_password
+  admin_username      = try(each.value.admin_username_key, null) == null ? each.value.admin_username : local.admin_username
+  instances           = each.value.instances
   location            = var.location
+  name                = azurecaf_name.windows[each.key].result
   resource_group_name = var.resource_group_name
   sku                 = each.value.sku
-  instances           = each.value.instances
-  admin_username      = try(each.value.admin_username_key, null) == null ? each.value.admin_username : local.admin_username
-  admin_password      = try(each.value.admin_password_key, null) == null ? random_password.admin[local.os_type].result : local.admin_password
   tags                = merge(local.tags, try(each.value.tags, null))
 
-  #TODO: Standardize the prefix length?
-  computer_name_prefix            = substr(azurecaf_name.windows_computer_name_prefix[each.key].result,0,6)
-  eviction_policy                 = try(each.value.eviction_policy, null)
-  max_bid_price                   = try(each.value.max_bid_price, null)
-  priority                        = try(each.value.priority, null)
-  provision_vm_agent              = try(each.value.provision_vm_agent, true)
-  zones                           = try(each.value.zones, null)
-  custom_data                     = try(each.value.custom_data, null) == null ? null : filebase64(format("%s/%s", path.cwd, each.value.custom_data))
-  proximity_placement_group_id    = try(var.proximity_placement_groups[var.client_config.landingzone_key][each.value.proximity_placement_group_key].id, var.proximity_placement_groups[each.value.proximity_placement_groups].id, null)
+  # Error: "computer_name_prefix" at most 9 characters, got 13
+  computer_name_prefix         = azurecaf_name.windows_computer_name_prefix[each.key].result
+  custom_data                  = try(each.value.custom_data, null) == null ? null : filebase64(format("%s/%s", path.cwd, each.value.custom_data))
+  eviction_policy              = try(each.value.eviction_policy, null)
+  max_bid_price                = try(each.value.max_bid_price, null)
+  priority                     = try(each.value.priority, null)
+  provision_vm_agent           = try(each.value.provision_vm_agent, true)
+  proximity_placement_group_id = try(var.proximity_placement_groups[var.client_config.landingzone_key][each.value.proximity_placement_group_key].id, var.proximity_placement_groups[each.value.proximity_placement_groups].id, null)
+  scale_in_policy              = try(each.value.scale_in_policy, null)
+  zone_balance                 = try(each.value.zone_balance, null)
+  zones                        = try(each.value.zones, null)
 
   dynamic "network_interface" {
-    for_each = each.value.networking_interfaces
+    for_each = try(var.settings.network_interfaces, {})
 
     content {
-      name    = "${azurecaf_name.windows_computer_name_prefix[each.key].result}-nic-${network_interface.value.name}"
-      primary = try(network_interface.value.primary, false)
+      name                          = azurecaf_name.windows_nic[network_interface.key].result
+      primary                       = try(network_interface.value.primary, false)
+      enable_accelerated_networking = try(network_interface.value.enable_accelerated_networking, false)
+      enable_ip_forwarding          = try(network_interface.value.enable_ip_forwarding, false)
+      network_security_group_id     = try(network_interface.value.network_security_group_id, null)
 
       ip_configuration {
-        name      = "${azurecaf_name.windows_computer_name_prefix[each.key].result}-nic-${network_interface.value.name}-ipconfig"
+        name      = azurecaf_name.windows_nic[network_interface.key].result
         primary   = try(network_interface.value.primary, false)
         subnet_id = try(var.vnets[var.client_config.landingzone_key][network_interface.value.vnet_key].subnets[network_interface.value.subnet_key].id, var.vnets[network_interface.value.lz_key][network_interface.value.vnet_key].subnets[network_interface.value.subnet_key].id)
+        # application_gateway_backend_address_pool_ids = []
+        # load_balancer_backend_address_pool_ids = []        
       }
     }
   }
 
   os_disk {
     caching                   = try(each.value.os_disk.caching, null)
+    disk_encryption_set_id    = try(each.value.os_disk.disk_encryption_set_key, null) == null ? null : try(var.disk_encryption_sets[var.client_config.landingzone_key][each.value.os_disk.disk_encryption_set_key].id, var.disk_encryption_sets[each.value.os_disk.lz_key][each.value.os_disk.disk_encryption_set_key].id, null)
     disk_size_gb              = try(each.value.os_disk.disk_size_gb, null)
     storage_account_type      = try(each.value.os_disk.storage_account_type, null)
     write_accelerator_enabled = try(each.value.os_disk.write_accelerator_enabled, false)
+  }
+
+  dynamic "data_disk" {
+    for_each = try(var.settings.data_disks, {})
+
+    content {
+      caching                   = data_disk.value.caching
+      create_option             = try(data_disk.value.create_option, null)
+      disk_encryption_set_id    = try(data_disk.value.disk_encryption_set_key, null) == null ? null : try(var.disk_encryption_sets[var.client_config.landingzone_key][data_disk.value.disk_encryption_set_key].id, var.disk_encryption_sets[data_disk.value.lz_key][data_disk.value.disk_encryption_set_key].id, null)
+      disk_iops_read_write      = try(data_disk.value.storage_account_type == "UltraSSD_LRS" ? data_disk.value.disk_iops_read_write : null, null)
+      disk_mbps_read_write      = try(data_disk.value.storage_account_type == "UltraSSD_LRS" ? data_disk.value.disk_mbps_read_write : null, null)
+      disk_size_gb              = data_disk.value.disk_size_gb
+      lun                       = data_disk.value.lun
+      storage_account_type      = data_disk.value.storage_account_type
+      write_accelerator_enabled = try(data_disk.value.write_accelerator_enabled, null)
+    }
   }
 
   dynamic "source_image_reference" {
@@ -129,12 +168,32 @@ resource "azurerm_windows_virtual_machine_scale_set" "vmss" {
   }
 
   dynamic "additional_capabilities" {
-    for_each = try(each.value.additional_capabilities, false) == false ? [] : [1]
+    for_each = try(each.value.ultra_ssd_enabled, false) == false ? [] : [1]
 
     content {
-      ultra_ssd_enabled = each.value.additional_capabilities.ultra_ssd_enabled
+      ultra_ssd_enabled = each.value.ultra_ssd_enabled
     }
   }
+
+  dynamic "rolling_upgrade_policy" {
+    for_each = try(each.value.rolling_upgrade_policy, false) == false ? [] : [1]
+
+    content {
+      max_batch_instance_percent              = each.value.rolling_upgrade_policy.max_batch_instance_percent
+      max_unhealthy_instance_percent          = each.value.rolling_upgrade_policy.max_unhealthy_instance_percent
+      max_unhealthy_upgraded_instance_percent = each.value.rolling_upgrade_policy.max_unhealthy_upgraded_instance_percent
+      pause_time_between_batches              = each.value.rolling_upgrade_policy.pause_time_between_batches
+    }
+  }
+
+  dynamic "automatic_os_upgrade_policy" {
+    for_each = try(each.value.automatic_os_upgrade_policy, false) == false ? [] : [1]
+
+    content {
+      disable_automatic_rollback = each.value.automatic_os_upgrade_policy.disable_automatic_rollback
+      enable_automatic_os_upgrade = each.value.automatic_os_upgrade_policy.enable_automatic_os_upgrade
+    }
+  }  
 
   dynamic "additional_unattend_content" {
     for_each = try(each.value.additional_unattend_content, false) == false ? [] : [1]
@@ -226,7 +285,7 @@ locals {
 #
 # With for_each it is not possible to change the provider's subscription at runtime so using the following pattern.
 #
-data external windows_admin_username {
+data "external" "windows_admin_username" {
   count = try(var.settings.vmss_settings["windows"].admin_username_key, null) == null ? 0 : 1
   program = [
     "bash", "-c",
@@ -238,7 +297,7 @@ data external windows_admin_username {
   ]
 }
 
-data external windows_admin_password {
+data "external" "windows_admin_password" {
   count = try(var.settings.vmss_settings["windows"].admin_password_key, null) == null ? 0 : 1
   program = [
     "bash", "-c",
