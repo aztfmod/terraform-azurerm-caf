@@ -9,6 +9,7 @@ module "lighthouse_definitions" {
     azuread_apps       = local.combined_objects_azuread_applications
     azuread_groups     = local.combined_objects_azuread_groups
     azuread_users      = local.combined_objects_azuread_users
+    #custom_roles      = local.
     managed_identities = local.combined_objects_managed_identities
     resource_groups    = local.combined_objects_resource_groups
     subscriptions      = local.combined_objects_subscriptions
