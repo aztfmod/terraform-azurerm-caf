@@ -20,9 +20,6 @@ locals {
     hostpoolName = {
       value = var.host_pool_name
     }
-    # hostpoolToken = {
-    #   value = try(var.keyvaults[var.settings.hostpoolToken.landingzone_key][var.settings.hostpoolToken.keyvault_key].id, var.keyvaults[var.settings.hostpoolToken.lz_key][var.settings.hostpoolToken.keyvault_key].id, null)
-    # }
     hostpoolResourceGroup = {
       value = var.resource_group_name
     }
@@ -37,43 +34,19 @@ locals {
     }
     administratorAccountUsername = {
       value = var.settings.administratorAccountUsername
-    }
-    # hostPoolKeyvaultId = {
-    #   value = var.key_vaults[try(var.settings.host_pool.lz_key, local.client_config.landingzone_key)][var.settings.host_pool.keyvault_key].id
-    # }
-    # vmKeyvaultId = {
-    #   value = var.key_vaults[try(var.settings.session_vm.lz_key, local.client_config.landingzone_key)][var.settings.session_vm.keyvault_key].id
-    # }
-
+    }    
     hostpoolToken = {
       value = data.azurerm_key_vault_secret.wvd_hostpool_token.value
     }
-
     administratorAccountPassword = {
       value = data.azurerm_key_vault_secret.wvd_domain_password.value
     }
-
     vmAdministratorAccountPassword = {
       value = data.azurerm_key_vault_secret.wvd_vm_password.value
-
     }
-
-    # administratorAccountPassword = {
-    #   value = try(var.keyvaults[var.settings.administrator.landingzone_key][var.settings.administrator.keyvault_key].id, var.keyvaults[var.settings.administrator.lz_key][var.settings.administrator.keyvault_key].id, null)
-    # }
-
-    # vmAdministratorAccountPassword = {
-    #   value = try(var.keyvaults[var.settings.vmadministrator.landingzone_key][var.settings.vmadministrator.keyvault_key].id, var.keyvaults[var.settings.vmadministrator.lz_key][var.settings.vmadministrator.keyvault_key].id, null)
-
-    # }
     vmAdministratorAccountUsername = {
       value = var.settings.vmAdministratorAccountUsername
-    }
-    # vmAdministratorAccountPassword = {        
-    #   value = var.key_vaults[try(var.settings.session_vm.lz_key, local.client_config.landingzone_key)][var.settings.session_vm.keyvault_key].id
-    # value = var.keyvaults[var.settings.vmadministrator.lz_key][var.settings.vmadministrator.keyvault_key].id
-    # }
-    # vmAdministratorAccountPassword = data.azurerm_key_vault_secret.wvd-vm-password.value
+    }    
     availabilityOption = {
       value = var.settings.availabilityOption
     }
@@ -137,23 +110,13 @@ locals {
     storageAccountResourceGroupName = {
       value = var.settings.storageAccountResourceGroupName
     }
-    # existingVnetName = {
-    #   value = var.settings.existingVnetName
-    # }
     existingVnetName = {
       value = try(var.vnets[var.client_config.landingzone_key][var.settings.vnet_key].name, var.vnets[var.settings.lz_key][var.settings.vnet_key].name)
 
     }
-
-
-    # existingSubnetName = {
-    #   value = var.settings.existingSubnetName
-    # }
-
     existingSubnetName = {
       value = try(var.vnets[var.client_config.landingzone_key][var.settings.vnet_key].subnets[var.settings.subnet_key].name, var.vnets[var.settings.lz_key][var.settings.vnet_key].subnets[var.settings.subnet_key].name)
     }
-
     virtualNetworkResourceGroupName = {
       value = var.resource_group_name
     }

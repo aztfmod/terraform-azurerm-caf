@@ -19,7 +19,16 @@ module "caf" {
 * Application groups
 * Keyvaults(To store: domain admin password, session host VM password, hostpool token)
 
-Note: It is not recommended to have secrets value in the code base and hence the example will insert an empty value. Once the KV is created, admin has to manually update the KV secrets from the portal. Hostpool token has to be copied to the respective secret from azure portal's Host pools > overview > Registration Key.
+Note: It is not recommended to have secrets value in the code base and hence the example will insert an empty value. Once the KV is created, admin has to manually update the KV secrets from the portal.
+Hostpool token has to be copied to the respective secret from azure portal's Host pools > overview > Registration Key.
+
+
+| Name of the secret      | Value                                                       |
+|-------------------------|-------------------------------------------------------------|
+| newwvd-admin-password   | Existing domain user password for AD Join                   |
+| newwvd-vm-password      | Admin password to be used for session hosts                 |
+| newwvd-hostpool-token   | Host pool token to be used by session hosts                 |
+
 
 ## Run this example
 

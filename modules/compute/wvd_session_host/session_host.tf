@@ -41,30 +41,6 @@ resource "azurerm_template_deployment" "sessionhost" {
 
 # }
 
-# # Generate random admin password if not provided in the attribute administrator_login_password
-# resource "random_password" "mysql_admin" {
-#   count = try(var.settings.administrator_login_password, null) == null ? 1 : 0
-
-#   length           = 32
-#   special          = true
-#   override_special = "_%@"
-
-# }
-
-# # Store the generated password into keyvault
-# resource "azurerm_key_vault_secret" "mysql_admin_password" {
-#   count = try(var.settings.administrator_login_password, null) == null ? 1 : 0
-
-#   name         = format("%s-password", azurerm_template_deployment.sessionhost.result)
-#   value        = random_password.mysql_admin.0.result
-#   key_vault_id = var.keyvault_id
-
-#   lifecycle {
-#     ignore_changes = [
-#       value
-#     ]
-#   }
-# }
 
 data "azurerm_key_vault_secret" "wvd_domain_password" {
   name = "newwvd-admin-password"
@@ -85,14 +61,5 @@ data "azurerm_key_vault_secret" "wvd_vm_password" {
 }
 
 
-# data "azurerm_virtual_network" "wvd_vnet" {
-#   name                = format("%s-virtual_machines", var.extension.secret_prefix)
-#   resource_group_name = "networking"
-# }
-
-# data "azurerm_key_vault_secret" "wvd_client_id" {
-# name = format("%s-client-id", var.extension.secret_prefix)
-# key_vault_id = var.keyvault_id
-# }
 
 

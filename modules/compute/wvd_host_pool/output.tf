@@ -9,4 +9,5 @@ output "name" {
 
 output "token" {
   value = azurerm_virtual_desktop_host_pool.wvdpool.registration_info[*].token
+  sensitive = true
 }
