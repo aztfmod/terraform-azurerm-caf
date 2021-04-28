@@ -97,6 +97,7 @@ mssql_databases = {
     max_size_gb        = 4
     sku_name           = "BC_Gen5_2"
 
+    # Only works with SystemAssigned MSI, logged_in users will not be able to provision the db_permission for now.
     db_permissions = {
       group1 = { # group_name
         db_roles = ["db_owner", "db_accessadmin"]
