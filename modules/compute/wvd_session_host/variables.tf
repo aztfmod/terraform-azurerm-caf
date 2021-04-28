@@ -17,21 +17,15 @@ variable "location" {
   description = "(Required) Specifies the supported Azure location where to create the resource. Changing this forces a new resource to be created."
   type        = string
 }
-
-
 variable "key_vault_id" {
   default = {}
 }
-
 variable "keyvaults" {
   default = {}
-
 }
-
 variable "vnets" {
   default = {}
 }
-
 variable "host_pool_name" {}
 
 

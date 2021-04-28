@@ -26,8 +26,6 @@ Note: Make sure that the secret values are manually update in respective keyvaul
 To test this deployment in the example landingzone, make sure the launchpad has been deployed first, make sure that the hostpool,workspace,application groups and keyvaults are already created as in /tf/caf/examples/compute/wvd_resources folder and then run the following command:
 
 
-For Desktopapp, you may run following 
-
 ```bash
 rover \
   -lz /tf/caf/examples \
@@ -40,5 +38,5 @@ rover \
 ```bash
 
 
-# Note: If your ADDS is in another vnet as WVD VM vNet, you have to update dns servers as in ADDS and peer with AADDS vnet.  
+Note: If your ADDS is in another vnet as WVD VM vNet, you have to update dns servers as in ADDS and peer with AADDS vnet before you create session hosts.  
 
