@@ -9,18 +9,18 @@ lighthouse_definitions = {
   lighthousedef1 = {
     name               = "CAF Maintainers - Reader"
     description        = "Provides Contributor role to the Group CAF Maintainers"
-    managing_tenant_id = "3217d691-edcd-490d-b5ec-dc724087b782" # The ID of the managing tenant
+    managing_tenant_id = "5332f9b1-12d5-4e12-b10f-b99132616023" # The ID of the managing tenant
     managed_subscription_id = {
       key    = ""
       lz_key = ""                                                    # optional
-      id     = "/subscriptions/06abbca2-ec1f-4a7f-9d2c-20355a1ffabe" # The ID of the managed subscription.
+      id     = "/subscriptions/ede4d758-a1da-4031-b27f-2752d719d820" # The ID of the managed subscription.
     }
     # Scope IDs to associate the Lighthouse definition (Subscription ID or Resource Group ID).
     scopes = {
       subscription = {
         key    = ""
-        lz_key = ""                                                    # optiona
-        id     = "/subscriptions/06abbca2-ec1f-4a7f-9d2c-20355a1ffabe" #
+        lz_key = ""                                                    # optional
+        id     = "/subscriptions/ede4d758-a1da-4031-b27f-2752d719d820"
       }
       resource_groups = {
         rg1 = {
@@ -48,8 +48,8 @@ lighthouse_definitions = {
         }
         azuread_group = {
           key    = ""
-          lz_key = ""                                     # optional
-          id     = "8833edce-0f1d-4948-ac11-161be573d7f7" # Group id eg: 8833edce-0f1d-4948-ac11-161be573d7f7
+          lz_key = "" # optional
+          id     = "" 
         }
         azuread_user = {
           key    = ""

@@ -22,7 +22,7 @@ resource "azurerm_lighthouse_definition" "definition" {
       # delegated_role_definitions = coalesce(
       #   flatten(
       #         [
-      #           for key in try(authorization.value.delegated_role_definitions, []) : var.custom_roles[key].role_definition_resource_id
+      #           for key in try(authorization.value.delegated_role_definitions, []) : module.custom_roles[each.value.role_definition_name].role_definition_resource_id : null
       #         ]
       #     )
       # )
