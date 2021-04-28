@@ -69,4 +69,5 @@ variable "network_security_groups" {
 variable "custom_image_ids" {
   default = {}
 }
+variable "disk_encryption_sets" {}
 
