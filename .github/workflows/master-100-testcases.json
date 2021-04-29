@@ -75,6 +75,7 @@
     "recovery_vault/102-asr-protection",
     "recovery_vault/103-asr-with-private-endpoint",
     "redis_cache/100-redis-standard",
+    "redis_cache/101-redis-private",
     "shared_image_gallery/101-packer_service_principal",
     "synapse_analytics/100-synapse",
     "synapse_analytics/101-synapse-sparkpool",
