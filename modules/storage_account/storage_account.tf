@@ -135,18 +135,17 @@ resource "azurerm_storage_account" "stg" {
   }
 
   dynamic "network_rules" {
-    for_each = lookup(var.storage_account, "network", {})
+    for_each = lookup(var.storage_account, "network", {}) 
 
     content {
-      bypass         = network_rules.value.bypass
+      bypass         = try(network_rules.value.bypass, [])
       default_action = try(network_rules.value.default_action, "Deny")
       ip_rules       = try(network_rules.value.ip_rules, null)
-      virtual_network_subnet_ids = [
-        for subnet_key in network_rules.value.subnet_keys : var.vnets[network_rules.key].subnets[subnet_key].id
+      virtual_network_subnet_ids = try(var.storage_account.network.subnets, null) == null ? null : [
+        for key, value in var.storage_account.network.subnets : try(var.vnets[var.client_config.landingzone_key][value.vnet_key].subnets[value.subnet_key].id, var.vnets[value.lz_key][value.vnet_key].subnets[value.subnet_key].id)
       ]
     }
   }
-
 }
 
 module "container" {
