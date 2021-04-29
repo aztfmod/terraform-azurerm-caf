@@ -1,20 +1,17 @@
-# TODO: pending support of this resource type: https://github.com/aztfmod/terraform-provider-azurecaf/issues/76
-# resource "azurecaf_name" "wvdpool" {
-#   name          = var.name
-#   resource_type = "azurerm_virtual_desktop_host_pool"
-#   prefixes      = [var.global_settings.prefix]
-#   random_length = var.global_settings.random_length
-#   clean_input   = true
-#   passthrough   = var.global_settings.passthrough
-#   use_slug      = var.global_settings.use_slug
-# }
+resource "azurecaf_name" "wvdpool" {
+  name          = var.settings.name
+  resource_type = "azurerm_virtual_desktop_host_pool"
+  prefixes      = var.global_settings.prefix
+  random_length = var.global_settings.random_length
+  clean_input   = true
+  passthrough   = var.global_settings.passthrough
+  use_slug      = var.global_settings.use_slug
+}
 
 resource "azurerm_virtual_desktop_host_pool" "wvdpool" {
   location            = var.location
-  resource_group_name = var.resource_group_name
-  #TODO: pending support of this resource type: https://github.com/aztfmod/terraform-provider-azurecaf/issues/76
-  #name = azurecaf_name.wvdpool.result
-  name                             = var.settings.name
+  resource_group_name = var.resource_group_name  
+  name = azurecaf_name.wvdpool.result
   friendly_name                    = try(var.settings.friendly_name, null)
   description                      = try(var.settings.description, null)
   validate_environment             = try(var.settings.validate_environment, null)

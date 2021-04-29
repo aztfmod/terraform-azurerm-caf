@@ -19,7 +19,9 @@ locals {
   parameters_body = {
     hostpoolName = {
       value = var.host_pool_name
+    #   value = try(var.wvd_host_pools[var.settings.hostpool.landingzone_key][var.settings.hostpool.wvd_host_pool_key].name, var.wvd_host_pools[var.settings.hostpool.lz_key][var.settings.hostpool.wvd_host_pool_key].name, null)
     }
+    
     hostpoolResourceGroup = {
       value = var.resource_group_name
     }
