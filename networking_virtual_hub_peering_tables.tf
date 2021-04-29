@@ -42,7 +42,7 @@ resource "azurerm_virtual_hub_connection" "vhub_connection" {
         for_each = try(routing.value.propagated_route_table, null) == null ? [] : [1]
 
         content {
-          labels = try(routing.value.propagated_route_table.labels, null)
+          labels = try(flatten([for label in routing.value.propagated_route_table.labels : label if try(label, "") != ""]), [])
           route_table_ids = coalesce(
             flatten(
               [
