@@ -37,19 +37,21 @@ wvd_session_hosts = {
     name               = "armsession1"
     wvd_host_pool_key  = "wvd_hp1"
     lz_key             = "examples"
-    vmadministrator = {
-      keyvault_key   = "wvd_kv2"
-      lz_key         = "examples"
-      secret_key_key = ""
-    }
+    # hostpool = {
+    #   wvd_host_pool_key  = "wvd_hp1"
+    #   lz_key       = "examples"
+    # }
     administrator = {
       keyvault_key = "wvd_kv1"
       lz_key       = "examples"
     }
+    vmadministrator = {
+      keyvault_key   = "wvd_kv2"
+      lz_key         = "examples"      
+    }    
     hostpoolToken = {
       keyvault_key = "wvd_kv3"
       lz_key       = "examples"
-
     }
 
     hostpoolProperties               = {}
@@ -149,7 +151,4 @@ vnets = {
 #     ]
 #   }
 # }
-
-
-
 

@@ -8,7 +8,7 @@ Complete module:
 ```hcl
 module "caf" {
   source  = "aztfmod/caf/azurerm"
-  version = "4.21.2"
+  version = "5.3.2"
   # insert the 6 required variables here
 }
 ```
