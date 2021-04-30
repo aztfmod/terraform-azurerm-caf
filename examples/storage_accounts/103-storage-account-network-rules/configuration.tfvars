@@ -24,6 +24,7 @@ vnets = {
       subnet1 = {
         name = "test-stg"
         cidr = ["10.100.100.0/29"]
+        service_endpoints = ["Microsoft.Storage"]
       }
     }
 
