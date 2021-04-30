@@ -389,3 +389,6 @@ variable "virtual_hub_route_tables" {
 variable "virtual_hub_er_gateway_connections" {
   default = {}
 }
+variable "lighthouse_definitions" {
+  default = {}
+}
