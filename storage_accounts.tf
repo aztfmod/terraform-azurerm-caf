@@ -8,7 +8,7 @@ module "storage_accounts" {
   storage_account     = each.value
   resource_group_name = module.resource_groups[each.value.resource_group_key].name
   location            = lookup(each.value, "region", null) == null ? module.resource_groups[each.value.resource_group_key].location : local.global_settings.regions[each.value.region]
-  vnets               = try(each.value.private_endpoints, {}) == {} ? null : local.combined_objects_networking
+  vnets               = local.combined_objects_networking
   private_endpoints   = try(each.value.private_endpoints, {})
   resource_groups     = try(each.value.private_endpoints, {}) == {} ? null : module.resource_groups
   recovery_vaults     = local.combined_objects_recovery_vaults
