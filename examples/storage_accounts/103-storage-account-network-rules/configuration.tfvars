@@ -48,13 +48,15 @@ storage_accounts = {
       ##
     }
     network = {
-      bypass = "None"
+      bypass = ["Logging", "Metrics"] #optional. Valid options are any combination of Logging, Metrics, AzureServices, or None
+      ip_rules = ["116.86.27.243", "100.1.1.1"] #optional. The prefix of ip_rules must be between 0 and 30 and only supports public IP addresses.
       subnets = {
         subnet1 = {
           #lz_key = ""
           vnet_key   = "vnet1"
           subnet_key = "subnet1"
         }
+        #add multiple subnets by extending this block
       }
      
     }

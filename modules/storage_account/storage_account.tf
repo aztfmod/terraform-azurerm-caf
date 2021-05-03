@@ -137,9 +137,9 @@ resource "azurerm_storage_account" "stg" {
   dynamic "network_rules" {
     for_each = lookup(var.storage_account, "network", null) == null ? [] : [1]
     content {
-      bypass         = try(network_rules.value.bypass, [])
-      default_action = try(network_rules.value.default_action, "Deny")
-      ip_rules       = try(network_rules.value.ip_rules, null)
+      bypass         = try(var.storage_account.network.bypass, [])
+      default_action = try(var.storage_account.network.default_action, "Deny")
+      ip_rules       = try(var.storage_account.network.ip_rules, [])
       virtual_network_subnet_ids = try(var.storage_account.network.subnets, null) == null ? null : [
         for key , value in var.storage_account.network.subnets : try(var.vnets[var.client_config.landingzone_key][value.vnet_key].subnets[value.subnet_key].id, var.vnets[value.lz_key][value.vnet_key].subnets[value.subnet_key].id)
       ]
