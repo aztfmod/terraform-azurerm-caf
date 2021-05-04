@@ -17,7 +17,7 @@ resource "azurecaf_name" "windows_computer_name_prefix" {
   for_each = local.os_type == "windows" ? var.settings.vmss_settings : {}
 
   name          = try(each.value.computer_name_prefix, each.value.name)
-  resource_type = "azurerm_virtual_machine_scale_set"
+  resource_type = "azurerm_vm_windows_computer_name_prefix" 
   prefixes      = var.global_settings.prefixes
   random_length = var.global_settings.random_length
   clean_input   = true
