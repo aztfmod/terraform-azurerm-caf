@@ -10,7 +10,6 @@ locals {
   client_config = var.client_config == {} ? {
     client_id               = data.azurerm_client_config.current.client_id
     landingzone_key         = var.current_landingzone_key
-    landingzone_key         = var.current_landingzone_key
     logged_aad_app_objectId = local.object_id
     logged_user_objectId    = local.object_id
     object_id               = local.object_id
@@ -172,6 +171,7 @@ locals {
     keyvault_certificate_requests = try(var.security.keyvault_certificate_requests, {})
     keyvault_certificates         = try(var.security.keyvault_certificates, {})
     keyvault_keys                 = try(var.security.keyvault_keys, {})
+    lighthouse_definitions        = try(var.security.lighthouse_definitions, {})
   }
 
   shared_services = {
