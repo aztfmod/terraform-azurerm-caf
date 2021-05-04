@@ -104,6 +104,7 @@ jobs:
             "recovery_vault/103-asr-with-private-endpoint",
             "redis_cache/100-redis-standard",
             "redis_cache/101-redis-diagnostics",
+            "redis_cache/102-redis-private",
             "synapse_analytics/100-synapse",
             "synapse_analytics/101-synapse-sparkpool",
             "webapps/appservice/101-appservice-simple",
