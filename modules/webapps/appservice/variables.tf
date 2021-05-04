@@ -66,3 +66,10 @@ variable "storage_accounts" {
 variable "subnet_id" {
   default = null
 }
+
+variable "diagnostic_profiles" {
+  default = null
+}
+variable "diagnostics" {
+  default = null
+}
