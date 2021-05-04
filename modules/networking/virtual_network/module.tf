@@ -76,7 +76,7 @@ module "nsg" {
 
 resource "azurerm_subnet_route_table_association" "rt" {
   for_each = {
-    for key, subnet in lookup(var.settings, "subnets", {}) : key => subnet
+    for key, subnet in merge(lookup(var.settings, "subnets", {}), lookup(var.settings, "specialsubnets", {}) : key => subnet
     if lookup(subnet, "route_table_key", null) != null
   }
 
