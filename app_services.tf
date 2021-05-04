@@ -1,8 +1,8 @@
 
 module "app_services" {
-  source = "./modules/webapps/appservice"
-
-  for_each = local.webapp.app_services
+  source     = "./modules/webapps/appservice"
+  depends_on = [module.networking]
+  for_each   = local.webapp.app_services
 
   name                 = each.value.name
   client_config        = local.client_config
@@ -22,7 +22,7 @@ module "app_services" {
   diagnostic_profiles  = try(each.value.diagnostic_profiles, null)
   diagnostics          = local.combined_diagnostics
   storage_accounts     = local.combined_objects_storage_accounts
-  subnet_id            = try(each.value.settings.subnet_key, null) == null ? null : try(local.combined_objects_networking[local.client_config.landingzone_key][each.value.settings.vnet_key].subnets[each.value.settings.subnet_key].id, local.combined_objects_networking[each.value.settings.lz_key][each.value.settings.vnet_key].subnets[each.value.settings.subnet_key].id)
+  subnet_id            = try(local.combined_objects_networking[try(each.value.lz_key, local.client_config.landingzone_key)][each.value.vnet_key].subnets[each.value.subnet_key].id, null)
   tags                 = try(each.value.tags, null)
 }
 
