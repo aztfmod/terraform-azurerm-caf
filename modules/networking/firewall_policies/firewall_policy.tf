@@ -23,7 +23,7 @@ resource "azurerm_firewall_policy" "fwpol" {
 
     content {
       servers       = try(dns.value.servers, null)
-      proxy_enabled = try(dns.values.proxy_enabled, false)
+      proxy_enabled = try(dns.value.proxy_enabled, false)
     }
   }
 
