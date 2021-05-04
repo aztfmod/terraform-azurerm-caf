@@ -19,6 +19,8 @@ module "app_services" {
   combined_objects     = local.dynamic_app_settings_combined_objects
   base_tags            = try(local.global_settings.inherit_tags, false) ? module.resource_groups[each.value.resource_group_key].tags : {}
   application_insight  = try(each.value.application_insight_key, null) == null ? null : module.azurerm_application_insights[each.value.application_insight_key]
+  diagnostic_profiles  = try(each.value.diagnostic_profiles, null)
+  diagnostics          = local.combined_diagnostics
   storage_accounts     = local.combined_objects_storage_accounts
   subnet_id            = try(each.value.settings.subnet_key, null) == null ? null : try(local.combined_objects_networking[local.client_config.landingzone_key][each.value.settings.vnet_key].subnets[each.value.settings.subnet_key].id, local.combined_objects_networking[each.value.settings.lz_key][each.value.settings.vnet_key].subnets[each.value.settings.subnet_key].id)
   tags                 = try(each.value.tags, null)
