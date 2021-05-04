@@ -6,6 +6,6 @@ Driver = ODBC Driver 17 for SQL Server
 Server = tcp:${SQLCMDSERVER},1433
 Authentication = ActiveDirectoryMsi" | sudo tee /etc/odbc.ini > /dev/null
 
-echo "verify branch change"
 echo "${DBUSERNAMES}"
+echo "${DBROLES}"
 sqlcmd -v DBUSERNAMES="${DBUSERNAMES}" DBROLES="${DBROLES}" -S SQLSERVER -d "${SQLCMDDBNAME}" -i "${SQLFILEPATH}" -D
