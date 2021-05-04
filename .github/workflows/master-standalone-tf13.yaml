@@ -126,7 +126,8 @@ jobs:
             "webapps/appservice/103-appservice-extend",
             "webapps/appservice/104-appservice-appinsight",
             "webapps/appservice/105-appservice-backup",
-            "webapps/appservice/106-appservice-diagnostics"
+            "webapps/appservice/106-appservice-diagnostics",
+            "webapps/function_app/101-function_app-private"
           ]
 
     container:
