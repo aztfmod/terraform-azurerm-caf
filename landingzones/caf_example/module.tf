@@ -44,6 +44,7 @@ module "example" {
   }
   networking = {
     application_gateway_applications                        = var.application_gateway_applications
+    application_gateway_waf_policies                        = var.application_gateway_waf_policies
     application_gateways                                    = var.application_gateways
     application_security_groups                             = var.application_security_groups
     azurerm_firewall_application_rule_collection_definition = var.azurerm_firewall_application_rule_collection_definition
@@ -84,6 +85,8 @@ module "example" {
     diagnostic_event_hub_namespaces = var.diagnostic_event_hub_namespaces
     diagnostic_log_analytics        = var.diagnostic_log_analytics
     diagnostic_storage_accounts     = var.diagnostic_storage_accounts
+    diagnostics_definition          = var.diagnostics_definition
+    diagnostics_destinations        = var.diagnostics_destinations
   }
 
   database = {
@@ -124,6 +127,7 @@ module "example" {
     keyvault_certificate_requests = var.keyvault_certificate_requests
     keyvault_keys                 = var.keyvault_keys
     keyvault_certificates         = var.keyvault_certificates
+    lighthouse_definitions        = var.lighthouse_definitions
   }
 
   storage = {

@@ -1,6 +1,7 @@
 variable "global_settings" {
   description = "Global settings object (see module README.md)"
 }
+variable "location" {}
 variable "settings" {}
 variable "server_id" {}
 variable "server_name" {}
@@ -16,5 +17,11 @@ variable "sqlcmd_dbname" {
   default = null
 }
 variable "managed_identities" {
+  default = null
+}
+variable "diagnostic_profiles" {
+  default = null
+}
+variable "diagnostics" {
   default = null
 }

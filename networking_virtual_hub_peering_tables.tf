@@ -21,7 +21,7 @@ resource "azurerm_virtual_hub_connection" "vhub_connection" {
   for_each   = local.networking.virtual_hub_connections
 
   name                      = each.value.name
-  virtual_hub_id            = local.combined_objects_virtual_wans[try(each.value.lz_key, local.client_config.landingzone_key)][each.value.vhub.virtual_wan_key].virtual_hubs[each.value.vhub.virtual_hub_key].id
+  virtual_hub_id            = local.combined_objects_virtual_wans[try(each.value.vhub.lz_key, local.client_config.landingzone_key)][each.value.vhub.virtual_wan_key].virtual_hubs[each.value.vhub.virtual_hub_key].id
   remote_virtual_network_id = local.combined_objects_networking[try(each.value.vnet.lz_key, local.client_config.landingzone_key)][each.value.vnet.vnet_key].id
   internet_security_enabled = try(each.value.internet_security_enabled, null)
 
@@ -42,7 +42,7 @@ resource "azurerm_virtual_hub_connection" "vhub_connection" {
         for_each = try(routing.value.propagated_route_table, null) == null ? [] : [1]
 
         content {
-          labels = try(propagated_route_table.value.labels, null)
+          labels = try(flatten([for label in routing.value.propagated_route_table.labels : label if try(label, "") != ""]), [])
           route_table_ids = coalesce(
             flatten(
               [

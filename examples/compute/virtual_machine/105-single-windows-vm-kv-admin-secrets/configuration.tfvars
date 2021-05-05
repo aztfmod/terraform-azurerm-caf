@@ -119,11 +119,11 @@ dynamic_keyvault_secrets = {
 
 keyvaults = {
   example_vm_rg1 = {
-    name                        = "vmsecretskv"
-    resource_group_key          = "vm_region1"
-    sku_name                    = "standard"
-    soft_delete_enabled         = true
-    purge_protection_enabled    = true
+    name                     = "vmsecretskv"
+    resource_group_key       = "vm_region1"
+    sku_name                 = "standard"
+    soft_delete_enabled      = true
+    purge_protection_enabled = true
     tags = {
       env = "Standalone"
     }

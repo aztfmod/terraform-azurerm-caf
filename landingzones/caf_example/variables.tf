@@ -54,10 +54,10 @@ variable "app_services" {
   default = {}
 }
 variable "diagnostics_definition" {
-  default = null
+  default = {}
 }
 variable "resource_groups" {
-  default = null
+  default = {}
 }
 variable "network_security_group_definition" {
   default = {}
@@ -204,6 +204,9 @@ variable "application_gateways" {
   default = {}
 }
 variable "application_gateway_applications" {
+  default = {}
+}
+variable "application_gateway_waf_policies" {
   default = {}
 }
 variable "mysql_servers" {
@@ -384,5 +387,8 @@ variable "virtual_hub_route_tables" {
   default = {}
 }
 variable "virtual_hub_er_gateway_connections" {
+  default = {}
+}
+variable "lighthouse_definitions" {
   default = {}
 }
