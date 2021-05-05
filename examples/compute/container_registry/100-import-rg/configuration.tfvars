@@ -7,22 +7,26 @@ global_settings = {
   passthrough = true
 }
 
-load_resource_groups = {
-  loaded_rg = {
-    name = "example-virtual-machine-rg1"
-  }
-}
+# load_resource_groups = {
+#   loaded_rg = {
+#     name = "example-virtual-machine-rg1"
+#   }
+# }
 
 resource_groups = {
-  vm_region1 = {
-    name = "example-virtual-machine-rg1"
+  reuse = {
+    name  = "example-acr-rg1"
+    reuse = true
+  }
+  new = {
+    name = "example-acr-rg1"
   }
 }
 
 
 vnets = {
   vnet_region1 = {
-    resource_group_key = "loaded_rg"
+    resource_group_key = "reuse"
     vnet = {
       name          = "virtual_machines"
       address_space = ["10.100.100.0/24"]
@@ -41,7 +45,7 @@ vnets = {
 public_ip_addresses = {
   example_vm_pip1_rg1 = {
     name                    = "example_vm_pip1"
-    resource_group_key      = "loaded_rg"
+    resource_group_key      = "reuse"
     sku                     = "Standard"
     allocation_method       = "Static"
     ip_version              = "IPv4"
@@ -52,9 +56,9 @@ public_ip_addresses = {
 
 azure_container_registries = {
   acr1 = {
-    name                       = "acr-test9347982y819208"
-    resource_group_key         = "loaded_rg"
-    sku                        = "Premium"
+    name               = "acr-test9347982y819208"
+    resource_group_key = "new"
+    sku                = "Premium"
   }
 }
 

@@ -1,11 +1,9 @@
 output "name" {
   value = var.settings.name
-
 }
 
 output "location" {
   value = data.azurerm_resource_group.rg.location
-
 }
 
 output "tags" {
