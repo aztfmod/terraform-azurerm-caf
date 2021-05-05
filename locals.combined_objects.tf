@@ -42,7 +42,7 @@ locals {
   combined_objects_proximity_placement_groups        = merge(tomap({ (local.client_config.landingzone_key) = module.proximity_placement_groups }), try(var.remote_objects.proximity_placement_groups, {}))
   combined_objects_public_ip_addresses               = merge(tomap({ (local.client_config.landingzone_key) = module.public_ip_addresses }), try(var.remote_objects.public_ip_addresses, {}))
   combined_objects_recovery_vaults                   = merge(tomap({ (local.client_config.landingzone_key) = module.recovery_vaults }), try(var.remote_objects.recovery_vaults, {}))
-  combined_objects_resource_groups                   = merge(tomap({ (local.client_config.landingzone_key) = module.resource_groups }), try(var.remote_objects.resource_groups, {}))
+  combined_objects_resource_groups                   = merge(tomap({ (local.client_config.landingzone_key) = local.resource_groups }), try(var.remote_objects.resource_groups, {}))
   combined_objects_storage_accounts                  = merge(tomap({ (local.client_config.landingzone_key) = module.storage_accounts }), try(var.remote_objects.storage_accounts, {}))
   combined_objects_subscriptions                     = merge(tomap({ (local.client_config.landingzone_key) = module.subscriptions }), try(var.remote_objects.subscriptions, {}))
   combined_objects_synapse_workspaces                = merge(tomap({ (local.client_config.landingzone_key) = module.synapse_workspaces }), try(var.remote_objects.synapse_workspaces, {}))

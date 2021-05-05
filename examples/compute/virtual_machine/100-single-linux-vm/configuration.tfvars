@@ -37,6 +37,11 @@ virtual_machines = {
         enable_ip_forwarding    = false
         internal_dns_name_label = "nic0"
         public_ip_address_key   = "example_vm_pip1_rg1"
+        # example with external network objects
+        # subnet_id = "/subscriptions/sub-id/resourceGroups/test-manual/providers/Microsoft.Network/virtualNetworks/vnet/subnets/default"
+        # public_address_id = "/subscriptions/sub-id/resourceGroups/test-manual/providers/Microsoft.Network/publicIPAddresses/arnaudip"
+        # nsg_id = "/subscriptions/sub-id/resourceGroups/test-manual/providers/Microsoft.Network/networkSecurityGroups/nsgtest"
+
       }
     }
 

@@ -81,6 +81,8 @@ locals {
     keyvaults                   = local.combined_objects_keyvaults
     machine_learning_workspaces = local.combined_objects_machine_learning
     managed_identities          = local.combined_objects_managed_identities
+    mssql_databases             = local.combined_objects_mssql_databases
+    mssql_servers               = local.combined_objects_mssql_servers
     storage_accounts            = local.combined_objects_storage_accounts
   }
 
