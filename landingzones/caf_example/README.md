@@ -43,7 +43,7 @@ rover -lz /tf/caf/public/landingzones/caf_launchpad \
 3. Test your example
 
 ```bash
-rover -lz /tf/caf/examples \
+rover -lz /tf/caf/landingzones/caf_example \
 -var-folder /tf/caf/examples/<path of the example> \
 -a plan|apply
 ```
