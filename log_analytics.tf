@@ -5,7 +5,7 @@ module "log_analytics" {
 
   global_settings = local.global_settings
   log_analytics   = each.value
-  resource_groups = module.resource_groups
+  resource_groups = local.resource_groups
   base_tags       = try(local.global_settings.inherit_tags, false) ? local.resource_groups[each.value.resource_group_key].tags : {}
 }
 
