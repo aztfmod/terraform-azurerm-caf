@@ -99,6 +99,7 @@ jobs:
             "networking/virtual_network_gateway/101-vpn-site-to-site",
             "networking/virtual_network_gateway/102-vpn-site-to-site-active-active",
             "networking/virtual_network_gateway/103-vpn-site-to-site-connection",
+            "networking/virtual_network/100-import-rg",
             "networking/virtual_network/100-simple-vnet-subnets-nsgs",
             "networking/virtual_network/100-subnet-delegation",
             "networking/virtual_network/101-vnet-peering-nsg",
