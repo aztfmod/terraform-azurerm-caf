@@ -20,12 +20,13 @@ resource "azurerm_redis_cache" "redis" {
   sku_name            = var.redis.sku_name
   tags                = local.tags
 
-  enable_non_ssl_port       = lookup(var.redis, "enable_non_ssl_port", null)
-  minimum_tls_version       = lookup(var.redis, "minimum_tls_version", "1.2")
-  private_static_ip_address = lookup(var.redis, "private_static_ip_address", null)
-  shard_count               = lookup(var.redis, "shard_count", null)
-  subnet_id                 = lookup(var.redis, "subnet_id", null)
-  zones                     = lookup(var.redis, "zones", null)
+  enable_non_ssl_port           = lookup(var.redis, "enable_non_ssl_port", null)
+  minimum_tls_version           = lookup(var.redis, "minimum_tls_version", "1.2")
+  private_static_ip_address     = lookup(var.redis, "private_static_ip_address", null)
+  public_network_access_enabled = lookup(var.redis, "public_network_access_enabled", null)
+  shard_count                   = lookup(var.redis, "shard_count", null)
+  zones                         = lookup(var.redis, "zones", null)
+  subnet_id                     = try(var.subnet_id, null)
 
   dynamic "redis_configuration" {
     for_each = lookup(var.redis, "redis_configuration", {}) != {} ? [var.redis.redis_configuration] : []
