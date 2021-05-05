@@ -9,7 +9,7 @@ module "mssql_databases" {
 
   global_settings     = local.global_settings
   managed_identities  = local.combined_objects_managed_identities
-  location            = lookup(each.value, "region", null) == null ? module.resource_groups[each.value.resource_group_key].location : local.global_settings.regions[each.value.region]
+  location            = lookup(each.value, "region", null) == null ? local.resource_groups[each.value.resource_group_key].location : local.global_settings.regions[each.value.region]
   settings            = each.value
   server_id           = try(local.combined_objects_mssql_servers[local.client_config.landingzone_key][each.value.mssql_server_key].id, local.combined_objects_mssql_servers[each.value.lz_key][each.value.mssql_server_key].id)
   server_name         = try(local.combined_objects_mssql_servers[local.client_config.landingzone_key][each.value.mssql_server_key].name, local.combined_objects_mssql_servers[each.value.lz_key][each.value.mssql_server_key].name)
@@ -17,7 +17,7 @@ module "mssql_databases" {
   storage_accounts    = module.storage_accounts
   diagnostic_profiles = try(each.value.diagnostic_profiles, null)
   diagnostics         = local.combined_diagnostics
-  base_tags           = try(local.global_settings.inherit_tags, false) ? module.resource_groups[each.value.resource_group_key].tags : {}
+  base_tags           = try(local.global_settings.inherit_tags, false) ? local.resource_groups[each.value.resource_group_key].tags : {}
 }
 
 
