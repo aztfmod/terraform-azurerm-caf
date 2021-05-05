@@ -5,9 +5,9 @@ module "netapp_accounts" {
   global_settings     = local.global_settings
   client_config       = local.client_config
   settings            = each.value
-  resource_group_name = local.resource_groups[try(each.value.lz_key, local.client_config.landingzone_key)][each.value.resource_group_key].name
+  resource_group_name = local.combined_objects_resource_groups[try(each.value.lz_key, local.client_config.landingzone_key)][each.value.resource_group_key].name
   vnets               = local.combined_objects_networking
-  location            = try(local.global_settings.regions[each.value.region], local.resource_groups[try(each.value.lz_key, local.client_config.landingzone_key)][each.value.resource_group_key].location)
+  location            = try(local.global_settings.regions[each.value.region], local.combined_objects_resource_groups[try(each.value.lz_key, local.client_config.landingzone_key)][each.value.resource_group_key].location)
   base_tags           = try(local.global_settings.inherit_tags, false) ? local.resource_groups[each.value.resource_group_key].tags : {}
 }
 
