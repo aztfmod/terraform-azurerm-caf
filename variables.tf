@@ -298,6 +298,3 @@ variable "event_hub_consumer_groups" {
   default = {}
 }
 
-variable "load_resource_groups" {
-  default = {}
-}
