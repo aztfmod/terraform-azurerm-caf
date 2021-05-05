@@ -16,8 +16,6 @@ locals {
     subscription_id         = data.azurerm_client_config.current.subscription_id
     tenant_id               = data.azurerm_client_config.current.tenant_id
   } : map(var.client_config)
-  
-  resource_groups = merge(module.resource_groups, module.load_resource_groups)
 
   compute = {
     aks_clusters               = try(var.compute.aks_clusters, {})
