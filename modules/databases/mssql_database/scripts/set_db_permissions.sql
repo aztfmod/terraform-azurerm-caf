@@ -1,3 +1,5 @@
+:on error exit
+
 DECLARE @dbusernames VARCHAR(300), @username VARCHAR(100), @create_user_cmd VARCHAR(200), @check_user_cmd VARCHAR(200)
 DECLARE @dbroles VARCHAR(100), @dbrolename VARCHAR(100), @alter_role_cmd VARCHAR(100)
 
