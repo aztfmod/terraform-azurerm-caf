@@ -392,3 +392,7 @@ variable "virtual_hub_er_gateway_connections" {
 variable "lighthouse_definitions" {
   default = {}
 }
+
+variable "load_resource_groups" {
+  default = {}
+}
