@@ -4,7 +4,7 @@ module "private_endpoints" {
 
   global_settings   = local.global_settings
   client_config     = local.client_config
-  resource_groups   = module.resource_groups
+  resource_groups   = local.resource_groups
   settings          = each.value
   private_endpoints = var.networking.private_endpoints
   private_dns       = local.combined_objects_private_dns
