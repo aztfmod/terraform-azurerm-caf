@@ -8,6 +8,9 @@ resource "azurecaf_name" "sparkpool" {
   use_slug      = var.global_settings.use_slug
 }
 
+# Ref : https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/resources/synapse_spark_pool
+# Tested with: AzureRM provider 2.57.0
+
 resource "azurerm_synapse_spark_pool" "spark_pool" {
   name                 = azurecaf_name.sparkpool.result
   synapse_workspace_id = var.synapse_workspace_id
@@ -28,8 +31,12 @@ resource "azurerm_synapse_spark_pool" "spark_pool" {
   }
 
   dynamic "library_requirement" {
-    content  = var.settings.library_requirement.content 
-    filename = var.settings.library_requirement.filename
+    for_each = try(var.settings.library_requirement, null) == null ? 1 : 0
+
+    content {
+      content  = var.settings.library_requirement.content
+      filename = var.settings.library_requirement.filename 
+    }      
   }
 
   tags = local.tags

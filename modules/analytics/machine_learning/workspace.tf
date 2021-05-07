@@ -9,7 +9,6 @@ resource "azurecaf_name" "ml_ws" {
   use_slug      = var.global_settings.use_slug
 }
 
-# Last review : May 05, 2021
 # Tested with :  AzureRM version 2.57.0
 # Ref : https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/resources/machine_learning_workspace
 
