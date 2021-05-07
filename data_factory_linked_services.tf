@@ -5,7 +5,7 @@ module "data_factory_linked_service_azure_blob_storage" {
   for_each = local.data_factory.linked_services.azure_blob_storage
 
   name                     = each.value.name
-  resource_group_name      = module.resource_groups[each.value.resource_group_key].name
+  resource_group_name      = local.resource_groups[each.value.resource_group_key].name
   data_factory_name        = module.data_factory[each.value.data_factory_key].name
   description              = try(each.value.description, null)
   integration_runtime_name = try(each.value.integration_runtime_name, null)

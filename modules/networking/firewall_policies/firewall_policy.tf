@@ -32,7 +32,7 @@ resource "azurerm_firewall_policy" "fwpol" {
 
     content {
       ip_addresses = try(threat_intelligence_allowlist.value.ip_addresses, null)
-      fqdns        = try(threat_intelligence_allowlist.values.fqdns, false)
+      fqdns        = try(threat_intelligence_allowlist.value.fqdns, false)
     }
   }
 }

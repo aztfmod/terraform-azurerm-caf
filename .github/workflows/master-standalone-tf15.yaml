@@ -85,6 +85,7 @@ jobs:
             "networking/virtual_network_gateway/101-vpn-site-to-site",
             "networking/virtual_network_gateway/102-vpn-site-to-site-active-active",
             "networking/virtual_network_gateway/103-vpn-site-to-site-connection",
+            "networking/virtual_network/100-import-rg",
             "networking/virtual_network/100-simple-vnet-subnets-nsgs",
             "networking/virtual_network/100-subnet-delegation",
             "networking/virtual_network/101-vnet-peering-nsg",
@@ -104,6 +105,7 @@ jobs:
             "recovery_vault/103-asr-with-private-endpoint",
             "redis_cache/100-redis-standard",
             "redis_cache/101-redis-diagnostics",
+            "redis_cache/102-redis-private",
             "synapse_analytics/100-synapse",
             "synapse_analytics/101-synapse-sparkpool",
             "webapps/appservice/101-appservice-simple",
@@ -111,12 +113,13 @@ jobs:
             "webapps/appservice/103-appservice-extend",
             "webapps/appservice/104-appservice-appinsight",
             "webapps/appservice/105-appservice-backup",
-            "webapps/appservice/106-appservice-diagnostics"
+            "webapps/appservice/106-appservice-diagnostics",
+            "webapps/function_app/101-function_app-private"
             # "mssql_mi/200-mi",
           ]
 
     container:
-      image: aztfmod/rover-preview:0.15.0-rc2-2104.131343
+      image: aztfmod/rover:0.15.1-2105.0604
       options: --user 0
 
     steps:
