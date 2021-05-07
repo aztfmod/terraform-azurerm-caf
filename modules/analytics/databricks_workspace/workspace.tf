@@ -1,5 +1,4 @@
 
-# Last review : May 04, 2021
 # Tested with :  AzureRM version 2.57.0
 # Ref : https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/resources/databricks_workspace
 
