@@ -5,7 +5,7 @@ module "data_factory_dataset_azure_blob" {
   for_each = local.data_factory.datasets.azure_blob
 
   name                  = each.value.name
-  resource_group_name   = module.resource_groups[each.value.resource_group_key].name
+  resource_group_name   = local.resource_groups[each.value.resource_group_key].name
   data_factory_name     = module.data_factory[each.value.data_factory_key].name
   linked_service_name   = local.data_factory.linked_services[each.value.linked_service_key]
   folder                = try(each.value.folder, null)
@@ -29,7 +29,7 @@ module "data_factory_dataset_cosmosdb_sqlapi" {
   for_each = local.data_factory.datasets.cosmosdb_sqlapi
 
   name                  = each.value.name
-  resource_group_name   = module.resource_groups[each.value.resource_group_key].name
+  resource_group_name   = local.resource_groups[each.value.resource_group_key].name
   data_factory_name     = module.data_factory[each.value.data_factory_key].name
   linked_service_name   = local.data_factory.linked_services[each.value.linked_service_key].name
   folder                = try(each.value.folder, null)
@@ -52,7 +52,7 @@ module "data_factory_dataset_delimited_text" {
   for_each = local.data_factory.datasets.delimited_text
 
   name                        = each.value.name
-  resource_group_name         = module.resource_groups[each.value.resource_group_key].name
+  resource_group_name         = local.resource_groups[each.value.resource_group_key].name
   data_factory_name           = module.data_factory[each.value.data_factory_key].name
   linked_service_name         = local.data_factory.linked_services[each.value.linked_service_key]
   folder                      = try(each.value.folder, null)
@@ -83,7 +83,7 @@ module "data_factory_dataset_http" {
   for_each = local.data_factory.datasets.http
 
   name                  = each.value.name
-  resource_group_name   = module.resource_groups[each.value.resource_group_key].name
+  resource_group_name   = local.resource_groups[each.value.resource_group_key].name
   data_factory_name     = module.data_factory[each.value.data_factory_key].name
   linked_service_name   = local.data_factory.linked_services[each.value.linked_service_key].name
   folder                = try(each.value.folder, null)
@@ -108,7 +108,7 @@ module "data_factory_dataset_json" {
   for_each = local.data_factory.datasets.json
 
   name                        = each.value.name
-  resource_group_name         = module.resource_groups[each.value.resource_group_key].name
+  resource_group_name         = local.resource_groups[each.value.resource_group_key].name
   data_factory_name           = module.data_factory[each.value.data_factory_key].name
   linked_service_name         = local.data_factory.linked_services[each.value.linked_service_key].name
   folder                      = try(each.value.folder, null)
@@ -133,7 +133,7 @@ module "data_factory_dataset_mysql" {
   for_each = local.data_factory.datasets.mysql
 
   name                  = each.value.name
-  resource_group_name   = module.resource_groups[each.value.resource_group_key].name
+  resource_group_name   = local.resource_groups[each.value.resource_group_key].name
   data_factory_name     = module.data_factory[each.value.data_factory_key].name
   linked_service_name   = local.data_factory.linked_services[each.value.linked_service_key].name
   folder                = try(each.value.folder, null)
@@ -156,7 +156,7 @@ module "data_factory_dataset_postgresql" {
   for_each = local.data_factory.datasets.postgresql
 
   name                  = each.value.name
-  resource_group_name   = module.resource_groups[each.value.resource_group_key].name
+  resource_group_name   = local.resource_groups[each.value.resource_group_key].name
   data_factory_name     = module.data_factory[each.value.data_factory_key].name
   linked_service_name   = local.data_factory.linked_services[each.value.linked_service_key].name
   folder                = try(each.value.folder, null)
@@ -179,7 +179,7 @@ module "data_factory_dataset_sql_server_table" {
   for_each = local.data_factory.datasets.sql_server_table
 
   name                  = each.value.name
-  resource_group_name   = module.resource_groups[each.value.resource_group_key].name
+  resource_group_name   = local.resource_groups[each.value.resource_group_key].name
   data_factory_name     = module.data_factory[each.value.data_factory_key].name
   linked_service_name   = local.data_factory.linked_services[each.value.linked_service_key].name
   folder                = try(each.value.folder, null)

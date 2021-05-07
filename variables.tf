@@ -298,7 +298,3 @@ variable "event_hub_consumer_groups" {
   default = {}
 }
 
-# variable vnets {
-#   default = {}
-# }
-

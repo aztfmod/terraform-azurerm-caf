@@ -54,10 +54,10 @@ variable "app_services" {
   default = {}
 }
 variable "diagnostics_definition" {
-  default = null
+  default = {}
 }
 variable "resource_groups" {
-  default = null
+  default = {}
 }
 variable "network_security_group_definition" {
   default = {}
@@ -399,5 +399,8 @@ variable "wvd_workspaces" {
   default = {}
 }
 variable "wvd_host_pools" {
+  default = {}
+}
+variable "lighthouse_definitions" {
   default = {}
 }
