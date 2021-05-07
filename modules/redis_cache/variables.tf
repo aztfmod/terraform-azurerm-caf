@@ -15,6 +15,12 @@ variable "tags" {
 
 variable "redis" {}
 
+variable "subnet_id" {
+  description = "The ID of the Subnet within which the Redis Cache should be deployed"
+  type        = string
+  default     = null
+}
+
 variable "global_settings" {
   description = "Global settings object (see module README.md)"
 }
@@ -22,4 +28,11 @@ variable "global_settings" {
 variable "base_tags" {
   description = "Base tags for the resource to be inherited from the resource group."
   type        = map(any)
+}
+
+variable "diagnostic_profiles" {
+  default = null
+}
+variable "diagnostics" {
+  default = null
 }
