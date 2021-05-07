@@ -13,7 +13,11 @@ resource "azurerm_synapse_spark_pool" "spark_pool" {
   synapse_workspace_id = var.synapse_workspace_id
   node_size_family     = var.settings.node_size_family
   node_size            = var.settings.node_size
-
+  node_count           = try(var.settings.node_count, null)
+  spark_log_folder     = try(var.settings.spark_log_folder, "/logs")
+  spark_events_folder  = try(var.settings.spark_events_folder, "/events")
+  spark_version        = try(var.settings.spark_version, "2.4")
+  
   auto_scale {
     max_node_count = var.settings.auto_scale.max_node_count
     min_node_count = var.settings.auto_scale.min_node_count
@@ -21,6 +25,11 @@ resource "azurerm_synapse_spark_pool" "spark_pool" {
 
   auto_pause {
     delay_in_minutes = var.settings.auto_pause.delay_in_minutes
+  }
+
+  dynamic "library_requirement" {
+    content  = var.settings.library_requirement.content 
+    filename = var.settings.library_requirement.filename
   }
 
   tags = local.tags

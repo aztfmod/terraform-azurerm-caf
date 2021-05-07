@@ -1,5 +1,5 @@
 # naming convention
-resource "azurecaf_name" "ws" {
+resource "azurecaf_name" "ml_ws" {
   name          = var.settings.name
   prefixes      = var.global_settings.prefixes
   resource_type = "azurerm_machine_learning_workspace"
@@ -9,16 +9,24 @@ resource "azurecaf_name" "ws" {
   use_slug      = var.global_settings.use_slug
 }
 
-# ML Workspace
+# Last review : May 05, 2021
+# Tested with :  AzureRM version 2.57.0
+# Ref : https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/resources/machine_learning_workspace
+
 resource "azurerm_machine_learning_workspace" "ws" {
-  name                    = azurecaf_name.ws.result
+  name                    = azurecaf_name.ml_ws.result
   location                = var.location
   resource_group_name     = var.resource_group_name
   application_insights_id = var.application_insights_id
   key_vault_id            = var.keyvault_id
   storage_account_id      = var.storage_account_id
+  container_registry_id   = var.container_registry_id
   tags                    = try(local.tags, null)
   sku_name                = try(var.settings.sku_name, "Basic")
+  description             = try(var.settings.description, null)
+  discovery_url           = try(var.settings.discovery_url, null)
+  friendly_url            = try(var.settings.friendly_url, null)
+  high_business_impact    = try(var.settings.high_business_impact, null)
 
   identity {
     #Hardcoded as the only supported value is SystemAssigned as per azurerm 2.40
