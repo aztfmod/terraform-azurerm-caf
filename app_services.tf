@@ -22,7 +22,7 @@ module "app_services" {
   diagnostic_profiles  = try(each.value.diagnostic_profiles, null)
   diagnostics          = local.combined_diagnostics
   storage_accounts     = local.combined_objects_storage_accounts
-  subnet_id            = try(local.combined_objects_networking[try(each.value.lz_key, local.client_config.landingzone_key)][each.value.vnet_key].subnets[each.value.subnet_key].id, null)
+  subnet_id            = try(local.combined_objects_networking[try(each.value.vnet_integration.lz_key, local.client_config.landingzone_key)][each.value.vnet_integration.vnet_key].subnets[each.value.vnet_integration.subnet_key].id, null)
   tags                 = try(each.value.tags, null)
 }
 
