@@ -7,5 +7,5 @@ output "objects" {
       }
     }
   )
-  sensitive = false
+  sensitive = true
 }

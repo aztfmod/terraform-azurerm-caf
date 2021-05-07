@@ -234,7 +234,7 @@ resource "azurerm_kubernetes_cluster_node_pool" "nodepools" {
   name                  = each.value.name
   mode                  = try(each.value.mode, "User")
   kubernetes_cluster_id = azurerm_kubernetes_cluster.aks.id
-  vnet_subnet_id        = var.subnets[var.settings.default_node_pool.subnet_key].id
+  vnet_subnet_id        = var.subnets[each.value.subnet_key].id
   vm_size               = each.value.vm_size
   os_disk_size_gb       = try(each.value.os_disk_size_gb, null)
   os_disk_type          = try(each.value.os_disk_type, null)
@@ -246,6 +246,6 @@ resource "azurerm_kubernetes_cluster_node_pool" "nodepools" {
   node_labels           = try(each.value.node_labels, null)
   node_taints           = try(each.value.node_taints, null)
   orchestrator_version  = try(each.value.orchestrator_version, try(var.settings.kubernetes_version, null))
-  tags                  = merge(try(each.value.tags, {}), try(var.settings.default_node_pool.tags, {}))
+  tags                  = merge(try(var.settings.default_node_pool.tags, {}), try(each.value.tags, {}))
 
 }

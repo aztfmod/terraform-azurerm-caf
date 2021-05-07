@@ -75,6 +75,7 @@
     "recovery_vault/102-asr-protection",
     "recovery_vault/103-asr-with-private-endpoint",
     "redis_cache/100-redis-standard",
+    "redis_cache/102-redis-private",
     "shared_image_gallery/101-packer_service_principal",
     "synapse_analytics/100-synapse",
     "synapse_analytics/101-synapse-sparkpool",
@@ -82,6 +83,7 @@
     "webapps/appservice/102-appservice-slots",
     "webapps/appservice/103-appservice-extend",
     "webapps/appservice/104-appservice-appinsight",
-    "webapps/appservice/105-appservice-backup"
+    "webapps/appservice/105-appservice-backup",
+    "webapps/function_app/101-function_app-private"
   ]
 }

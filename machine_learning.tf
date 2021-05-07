@@ -3,8 +3,8 @@ module "machine_learning_workspaces" {
   for_each = local.database.machine_learning_workspaces
 
   client_config           = local.client_config
-  location                = lookup(each.value, "region", null) == null ? module.resource_groups[each.value.resource_group_key].location : local.global_settings.regions[each.value.region]
-  resource_group_name     = module.resource_groups[each.value.resource_group_key].name
+  location                = lookup(each.value, "region", null) == null ? local.resource_groups[each.value.resource_group_key].location : local.global_settings.regions[each.value.region]
+  resource_group_name     = local.resource_groups[each.value.resource_group_key].name
   global_settings         = local.global_settings
   settings                = each.value
   vnets                   = local.combined_objects_networking
@@ -12,7 +12,7 @@ module "machine_learning_workspaces" {
   keyvault_id             = lookup(each.value, "keyvault_key") == null ? null : module.keyvaults[each.value.keyvault_key].id
   application_insights_id = lookup(each.value, "application_insights_key") == null ? null : module.azurerm_application_insights[each.value.application_insights_key].id
   container_registry_id   = lookup(each.value, "container_registry_key") == null ? null : module.container_registry[each.value.container_registry_key].id
-  base_tags               = try(local.global_settings.inherit_tags, false) ? module.resource_groups[each.value.resource_group_key].tags : {}
+  base_tags               = try(local.global_settings.inherit_tags, false) ? local.resource_groups[each.value.resource_group_key].tags : {}
 }
 
 output "machine_learning_workspaces" {
