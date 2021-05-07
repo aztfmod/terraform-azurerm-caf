@@ -43,7 +43,7 @@ rover -lz /tf/caf/public/landingzones/caf_launchpad \
 3. Test your example
 
 ```bash
-rover -lz /tf/caf/examples \
+rover -lz /tf/caf/landingzones/caf_example \
 -var-folder /tf/caf/examples/<path of the example> \
 -a plan|apply
 ```
@@ -169,9 +169,11 @@ No resources.
 | keyvault\_access\_policies\_azuread\_apps | n/a | `map` | `{}` | no |
 | keyvault\_certificate\_issuers | n/a | `map` | `{}` | no |
 | keyvault\_certificate\_requests | n/a | `map` | `{}` | no |
+| keyvault\_certificates | n/a | `map` | `{}` | no |
 | keyvault\_keys | n/a | `map` | `{}` | no |
 | keyvaults | n/a | `map` | `{}` | no |
 | landingzone | n/a | `map` | <pre>{<br>  "backend_type": "azurerm",<br>  "global_settings_key": "launchpad",<br>  "key": "examples",<br>  "level": "level0"<br>}</pre> | no |
+| lighthouse\_definitions | n/a | `map` | `{}` | no |
 | load\_balancers | n/a | `map` | `{}` | no |
 | local\_network\_gateways | n/a | `map` | `{}` | no |
 | log\_analytics | n/a | `map` | `{}` | no |
@@ -204,10 +206,11 @@ No resources.
 | postgresql\_servers | n/a | `map` | `{}` | no |
 | private\_dns | n/a | `map` | `{}` | no |
 | private\_endpoints | n/a | `map` | `{}` | no |
+| provider\_azurerm\_features\_keyvault | n/a | `map` | <pre>{<br>  "purge_soft_delete_on_destroy": true<br>}</pre> | no |
 | proximity\_placement\_groups | n/a | `map` | `{}` | no |
 | public\_ip\_addresses | n/a | `map` | `{}` | no |
 | recovery\_vaults | n/a | `map` | `{}` | no |
-| resource\_groups | n/a | `any` | `null` | no |
+| resource\_groups | n/a | `map` | `{}` | no |
 | role\_mapping | n/a | `map` | `{}` | no |
 | route\_tables | n/a | `map` | `{}` | no |
 | rover\_version | n/a | `any` | `null` | no |
@@ -216,6 +219,10 @@ No resources.
 | synapse\_workspaces | n/a | `map` | `{}` | no |
 | tags | n/a | `map(any)` | `null` | no |
 | var\_folder\_path | n/a | `map` | `{}` | no |
+| vhub\_peerings | Use virtual\_hub\_connections instead of vhub\_peerings. It will be removed in version 6.0 | `map` | `{}` | no |
+| virtual\_hub\_connections | n/a | `map` | `{}` | no |
+| virtual\_hub\_er\_gateway\_connections | n/a | `map` | `{}` | no |
+| virtual\_hub\_route\_tables | n/a | `map` | `{}` | no |
 | virtual\_machines | n/a | `map` | `{}` | no |
 | virtual\_network\_gateway\_connections | n/a | `map` | `{}` | no |
 | virtual\_network\_gateways | n/a | `map` | `{}` | no |
