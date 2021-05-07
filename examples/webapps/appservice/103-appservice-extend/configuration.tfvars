@@ -60,7 +60,6 @@ app_services = {
       tags = {
         Department = "IT"
       }
-
     }
   }
 }

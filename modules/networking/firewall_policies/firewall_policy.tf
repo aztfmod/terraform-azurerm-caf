@@ -23,7 +23,7 @@ resource "azurerm_firewall_policy" "fwpol" {
 
     content {
       servers       = try(dns.value.servers, null)
-      proxy_enabled = try(dns.values.proxy_enabled, false)
+      proxy_enabled = try(dns.value.proxy_enabled, false)
     }
   }
 
@@ -32,7 +32,7 @@ resource "azurerm_firewall_policy" "fwpol" {
 
     content {
       ip_addresses = try(threat_intelligence_allowlist.value.ip_addresses, null)
-      fqdns        = try(threat_intelligence_allowlist.values.fqdns, false)
+      fqdns        = try(threat_intelligence_allowlist.value.fqdns, false)
     }
   }
 }

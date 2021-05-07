@@ -87,6 +87,8 @@ module "example" {
     diagnostic_event_hub_namespaces = var.diagnostic_event_hub_namespaces
     diagnostic_log_analytics        = var.diagnostic_log_analytics
     diagnostic_storage_accounts     = var.diagnostic_storage_accounts
+    diagnostics_definition          = var.diagnostics_definition
+    diagnostics_destinations        = var.diagnostics_destinations
   }
 
   database = {
@@ -128,6 +130,7 @@ module "example" {
     keyvault_certificate_requests = var.keyvault_certificate_requests
     keyvault_keys                 = var.keyvault_keys
     keyvault_certificates         = var.keyvault_certificates
+    lighthouse_definitions        = var.lighthouse_definitions
   }
 
   storage = {
