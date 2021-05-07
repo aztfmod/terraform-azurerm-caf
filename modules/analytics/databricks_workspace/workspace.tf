@@ -1,6 +1,9 @@
-# naming convention
-#TODO rename object from wp to ws for consistency
-resource "azurecaf_name" "wp" {
+
+# Last review : May 04, 2021
+# Tested with :  AzureRM version 2.57.0
+# Ref : https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/resources/databricks_workspace
+
+resource "azurecaf_name" "dbs_ws" {
   name          = var.settings.name
   resource_type = "azurerm_databricks_workspace"
   prefixes      = var.global_settings.prefixes
@@ -10,9 +13,10 @@ resource "azurecaf_name" "wp" {
   use_slug      = var.global_settings.use_slug
 }
 
-# Databricks workspace
+
+
 resource "azurerm_databricks_workspace" "ws" {
-  name                        = azurecaf_name.wp.result
+  name                        = azurecaf_name.dbs_ws.result
   resource_group_name         = var.resource_group_name
   location                    = var.location
   sku                         = try(var.settings.sku, "standard")
