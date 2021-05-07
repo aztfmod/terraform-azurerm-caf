@@ -28,7 +28,7 @@ resource "azurerm_synapse_workspace" "ws" {
     for_each = try(var.settings.aad_admin, null) == null ? 1 : 0
 
     content {
-      login = var.settings.aad_admin.login
+      login     = var.settings.aad_admin.login
       object_id = var.settings.aad_admin.object_id
       tenant_id = var.settings.aad_admin.tenant_id
     }
@@ -38,25 +38,25 @@ resource "azurerm_synapse_workspace" "ws" {
     for_each = try(var.settings.azure_devops_repo, null) == null ? 1 : 0
 
     content {
-      account_name = var.settings.azure_devops_repo.account_name
-      branch_name  = var.settings.azure_devops_repo.branch_name
-      project_name  = var.settings.azure_devops_repo.project_name
-      repository_name= var.settings.azure_devops_repo.branch_name
-      root_folder = var.settings.azure_devops_repo.root_folder
+      account_name    = var.settings.azure_devops_repo.account_name
+      branch_name     = var.settings.azure_devops_repo.branch_name
+      project_name    = var.settings.azure_devops_repo.project_name
+      repository_name = var.settings.azure_devops_repo.branch_name
+      root_folder     = var.settings.azure_devops_repo.root_folder
     }
-  }  
-  
+  }
+
   dynamic "github_repo" {
     for_each = try(var.settings.github_repo, null) == null ? 1 : 0
 
     content {
-      account_name = var.settings.github_repo.account_name
-      project_name  = var.settings.github_repo.project_name
-      repository_name= var.settings.github_repo.branch_name
-      root_folder = var.settings.github_repo.root_folder
-      git_url  = var.settings.github_repo.git_url
+      account_name    = var.settings.github_repo.account_name
+      project_name    = var.settings.github_repo.project_name
+      repository_name = var.settings.github_repo.branch_name
+      root_folder     = var.settings.github_repo.root_folder
+      git_url         = var.settings.github_repo.git_url
     }
-  }   
+  }
 
 }
 
