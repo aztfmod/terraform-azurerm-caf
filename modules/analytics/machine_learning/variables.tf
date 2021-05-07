@@ -53,3 +53,5 @@ variable "base_tags" {
 variable "vnets" {
   description = "Virtual networks objects - contains all virtual networks that could potentially be used by the module."
 }
+
+variable container_registry_id {}
