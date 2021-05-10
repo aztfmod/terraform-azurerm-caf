@@ -31,7 +31,7 @@ jobs:
           random_length: ['5']
 
     container:
-      image: aztfmod/rover:0.13.6-2104.0803
+      image: aztfmod/rover:0.13.7-2105.0604
       options: --user 0
 
     steps:
@@ -41,7 +41,7 @@ jobs:
         with:
           repository: Azure/caf-terraform-landingzones
           path: public
-          ref: 'patch.5.3.1'
+          ref: '2104.3'
 
       - name: Login azure
         run: |
@@ -78,7 +78,7 @@ jobs:
           ]
 
     container:
-      image: aztfmod/rover:0.13.6-2104.0803
+      image: aztfmod/rover:0.13.7-2105.0604
       options: --user 0
 
     steps:
@@ -126,7 +126,7 @@ jobs:
           region: ["southeastasia"]
 
     container:
-      image: aztfmod/rover:0.13.6-2104.0803
+      image: aztfmod/rover:0.13.7-2105.0604
       options: --user 0
 
     steps:
@@ -136,7 +136,7 @@ jobs:
         with:
           repository: Azure/caf-terraform-landingzones
           path: public
-          ref: 'patch.5.3.1'
+          ref: '2104.3'
           
       - name: Login azure
         run: |
