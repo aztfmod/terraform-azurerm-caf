@@ -35,10 +35,12 @@ app_services = {
     name                 = "webapp-simple"
     app_service_plan_key = "asp1"
 
-    settings = {
+    vnet_integration = {
       vnet_key   = "spoke"
       subnet_key = "app"
+    }
 
+    settings = {
       enabled = true
     }
   }
