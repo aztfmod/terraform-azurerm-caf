@@ -84,6 +84,7 @@
     "webapps/appservice/103-appservice-extend",
     "webapps/appservice/104-appservice-appinsight",
     "webapps/appservice/105-appservice-backup",
-    "webapps/appservice/107-appservice-private"
+    "webapps/appservice/107-appservice-private",
+    "webapps/function_app/101-function_app-private"
   ]
 }
