@@ -74,6 +74,7 @@ jobs:
             # "mssql_server/106-sqlserver-db-msi-authentication",
             "mssql_server/107-sqlserver-db-retention-policy",
             "mssql_server/108-sqlserver-db-diagnostics",
+            "mssql_server/109-sqlserver-network-firewall-rule",
             "mysql_server/100-simple-mysql",
             "mysql_server/101-vnet-rule-mysql",
             "mysql_server/102-private-endpoint-mysql",
