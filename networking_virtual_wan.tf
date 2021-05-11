@@ -17,12 +17,12 @@ module "virtual_wans" {
 
   client_config       = local.client_config
   settings            = each.value
-  resource_group_name = module.resource_groups[each.value.resource_group_key].name
-  resource_groups     = module.resource_groups
-  location            = lookup(each.value, "region", null) == null ? module.resource_groups[each.value.resource_group_key].location : local.global_settings.regions[each.value.region]
+  resource_group_name = local.resource_groups[each.value.resource_group_key].name
+  resource_groups     = local.resource_groups
+  location            = lookup(each.value, "region", null) == null ? local.resource_groups[each.value.resource_group_key].location : local.global_settings.regions[each.value.region]
   diagnostics         = local.combined_diagnostics
   global_settings     = local.global_settings
-  base_tags           = try(local.global_settings.inherit_tags, false) ? module.resource_groups[each.value.resource_group_key].tags : {}
+  base_tags           = try(local.global_settings.inherit_tags, false) ? local.resource_groups[each.value.resource_group_key].tags : {}
   virtual_networks    = local.combined_objects_networking
   public_ip_addresses = local.combined_objects_public_ip_addresses
 }
