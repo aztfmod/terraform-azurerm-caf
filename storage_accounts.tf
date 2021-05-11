@@ -10,7 +10,7 @@ module "storage_accounts" {
   location            = lookup(each.value, "region", null) == null ? local.resource_groups[each.value.resource_group_key].location : local.global_settings.regions[each.value.region]
   vnets               = local.combined_objects_networking
   private_endpoints   = try(each.value.private_endpoints, {})
-  resource_groups     = try(each.value.private_endpoints, {}) == {} ? null : module.resource_groups
+  resource_groups     = try(each.value.private_endpoints, {}) == {} ? null : local.resource_groups
   recovery_vaults     = local.combined_objects_recovery_vaults
   base_tags           = try(local.global_settings.inherit_tags, false) ? local.resource_groups[each.value.resource_group_key].tags : {}
   private_dns         = local.combined_objects_private_dns

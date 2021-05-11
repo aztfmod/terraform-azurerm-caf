@@ -142,7 +142,7 @@ jobs:
           ]
 
     container:
-      image: aztfmod/rover:0.14.10-2104.0803
+      image: aztfmod/rover:0.14.11-2105.0604
       options: --user 0
 
     steps:
