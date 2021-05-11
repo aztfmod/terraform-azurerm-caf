@@ -17,5 +17,7 @@ locals {
     ]
   ])
 
-  managed_identities = concat(local.managed_local_identities, local.managed_remote_identities)
+  provided_identities = try(var.settings.virtual_machine_settings[local.os_type].identity.managed_identity_ids, [])
+
+  managed_identities = concat(local.provided_identities, local.managed_local_identities, local.managed_remote_identities)
 }
