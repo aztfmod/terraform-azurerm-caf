@@ -40,7 +40,7 @@ vnets = {
 
 keyvaults = {
   kv1 = {
-    name               = "vmsskv"
+    name               = "vmsskv2"
     resource_group_key = "rg1"
     sku_name           = "standard"
     creation_policies = {
@@ -132,6 +132,7 @@ virtual_machine_scale_sets = {
           }
         }
 
+        # custom_image_id = ""
         source_image_reference = {
           publisher = "Canonical"
           offer     = "UbuntuServer"
@@ -153,6 +154,7 @@ virtual_machine_scale_sets = {
         enable_accelerated_networking = false
         enable_ip_forwarding    = false
         internal_dns_name_label = "nic0"
+
       }
     }
     
@@ -207,7 +209,6 @@ vmss2 = {
         #   enable_automatic_os_upgrade = true
         # }
 
-
         os_disk = {
           caching = "ReadWrite"
           storage_account_type = "Standard_LRS"
@@ -220,9 +221,9 @@ vmss2 = {
         }
 
         source_image_reference = {
-          publisher = "Canonical"
-          offer     = "UbuntuServer"
-          sku       = "18.04-LTS"
+          publisher = "MicrosoftWindowsServer"
+          offer     = "WindowsServer"
+          sku       = "2016-Datacenter"
           version   = "latest"
         }
 

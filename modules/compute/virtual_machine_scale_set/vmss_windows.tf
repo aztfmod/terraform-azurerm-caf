@@ -65,7 +65,6 @@ resource "azurerm_windows_virtual_machine_scale_set" "vmss" {
   sku                 = each.value.sku
   tags                = merge(local.tags, try(each.value.tags, null))
 
-  # Error: "computer_name_prefix" at most 9 characters, got 13
   computer_name_prefix         = azurecaf_name.windows_computer_name_prefix[each.key].result
   custom_data                  = try(each.value.custom_data, null) == null ? null : filebase64(format("%s/%s", path.cwd, each.value.custom_data))
   eviction_policy              = try(each.value.eviction_policy, null)

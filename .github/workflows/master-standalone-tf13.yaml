@@ -123,6 +123,7 @@ jobs:
             "storage_accounts/102-storage-account-advanced-options",
             "synapse_analytics/100-synapse",
             "synapse_analytics/101-synapse-sparkpool",
+            "virtual_machine_scale_set/100-linux-win-vmss",
             "webapps/appservice/101-appservice-simple",
             "webapps/appservice/102-appservice-slots",
             "webapps/appservice/103-appservice-extend",
