@@ -20,7 +20,7 @@ variable "keyvaults" {
 
 variable "boot_diagnostics_storage_account" {
   description = "(Optional) The Primary/Secondary Endpoint for the Azure Storage Account (general purpose) which should be used to store Boot Diagnostics, including Console Output and Screenshots from the Hypervisor."
-  default     = {}
+  default     = null
 }
 
 variable "settings" {}
