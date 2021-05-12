@@ -21,7 +21,7 @@ resource "azurerm_synapse_workspace" "ws" {
   managed_virtual_network_enabled      = try(var.settings.managed_virtual_network_enabled, false)
   sql_identity_control_enabled         = try(var.settings.sql_identity_control_enabled, null)
   managed_resource_group_name          = try(var.settings.managed_resource_group_name, null)
-  customer_managed_key_versionless_id  = try(var.settingscustomer_managed_key_versionless_id, null)
+  customer_managed_key_versionless_id  = try(var.settings.customer_managed_key_versionless_id, null)
   tags                                 = local.tags
 
   dynamic "aad_admin" {
@@ -51,7 +51,7 @@ resource "azurerm_synapse_workspace" "ws" {
 
     content {
       account_name    = var.settings.github_repo.account_name
-      project_name    = var.settings.github_repo.project_name
+      branch_name     = var.settings.github_repo.project_name
       repository_name = var.settings.github_repo.branch_name
       root_folder     = var.settings.github_repo.root_folder
       git_url         = var.settings.github_repo.git_url

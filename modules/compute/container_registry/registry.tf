@@ -14,7 +14,7 @@ resource "azurerm_container_registry" "acr" {
   location                 = var.location
   sku                      = var.sku
   admin_enabled            = var.admin_enabled
-  georeplication_locations = var.georeplication_locations
+  georeplications          = var.georeplications # changes in AzureRM 2.57.0
   tags                     = local.tags
 
   dynamic "network_rule_set" {
@@ -22,7 +22,7 @@ resource "azurerm_container_registry" "acr" {
 
     content {
       default_action = try(var.network_rule_set.default_action, "Allow")
-
+  
       dynamic "ip_rule" {
         for_each = try(network_rule_set.value.ip_rules, {})
 
