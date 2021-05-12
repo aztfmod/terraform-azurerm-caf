@@ -23,8 +23,7 @@ resource "azurerm_machine_learning_workspace" "ws" {
   tags                    = try(local.tags, null)
   sku_name                = try(var.settings.sku_name, "Basic")
   description             = try(var.settings.description, null)
-  discovery_url           = try(var.settings.discovery_url, null)
-  friendly_url            = try(var.settings.friendly_url, null)
+  friendly_name           = try(var.settings.friendly_name, null)
   high_business_impact    = try(var.settings.high_business_impact, null)
 
   identity {

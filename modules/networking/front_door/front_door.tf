@@ -8,6 +8,9 @@ resource "azurecaf_name" "frontdoor" {
   use_slug      = try(var.settings.global_settings.use_slug, var.global_settings.use_slug)
 }
 
+# Ref : https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/resources/frontdoor
+# Tested with AzureRM 2.57.0
+
 resource "azurerm_frontdoor" "frontdoor" {
   name                                         = azurecaf_name.frontdoor.result
   resource_group_name                          = var.resource_group_name
