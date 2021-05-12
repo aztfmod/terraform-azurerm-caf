@@ -25,7 +25,7 @@ resource "azurerm_synapse_workspace" "ws" {
   tags                                 = local.tags
 
   dynamic "aad_admin" {
-    for_each = try(var.settings.aad_admin, null) == null ? 1 : 0
+    for_each = try(var.settings.aad_admin, {})
 
     content {
       login     = var.settings.aad_admin.login
@@ -35,7 +35,7 @@ resource "azurerm_synapse_workspace" "ws" {
   }
 
   dynamic "azure_devops_repo" {
-    for_each = try(var.settings.azure_devops_repo, null) == null ? 1 : 0
+    for_each = try(var.settings.azure_devops_repo, {})
 
     content {
       account_name    = var.settings.azure_devops_repo.account_name
@@ -47,7 +47,7 @@ resource "azurerm_synapse_workspace" "ws" {
   }
 
   dynamic "github_repo" {
-    for_each = try(var.settings.github_repo, null) == null ? 1 : 0
+    for_each = try(var.settings.github_repo, {})
 
     content {
       account_name    = var.settings.github_repo.account_name
