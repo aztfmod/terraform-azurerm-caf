@@ -14,7 +14,7 @@ resource "azurerm_container_registry" "acr" {
   location                 = var.location
   sku                      = var.sku
   admin_enabled            = var.admin_enabled
-  georeplications          = var.georeplications # changes in AzureRM 2.57.0
+  georeplication_locations = var.georeplication_locations
   tags                     = local.tags
 
   dynamic "network_rule_set" {
