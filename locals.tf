@@ -7,6 +7,12 @@ resource "random_string" "prefix" {
 }
 
 locals {
+  azuread = {
+    azuread_applications                = try(var.azuread.azuread_applications, {})
+    azuread_service_principal_passwords = try(var.azuread.azuread_service_principal_passwords, {})
+    azuread_service_principals          = try(var.azuread.azuread_service_principals, {})
+  }
+
   client_config = var.client_config == {} ? {
     client_id               = data.azurerm_client_config.current.client_id
     landingzone_key         = var.current_landingzone_key

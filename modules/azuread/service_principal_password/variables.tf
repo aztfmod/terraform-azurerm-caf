@@ -4,15 +4,19 @@ variable "global_settings" {
 variable "settings" {
   default = {}
 }
-variable "azuread_api_permissions" {
-  default = {}
-}
 variable "client_config" {
   description = "Client configuration object (see module README.md)."
 }
-variable "user_type" {}
 variable "keyvaults" {
   default = {}
+}
+
+variable "service_principal_id" {
+  description = "(Required) The ID of the Service Principal for which this password should be created."
+}
+
+variable "service_principal_application_id" {
+  description = "(Required) The App ID of the Application for which to create a Service Principal."
 }
 
 variable "password_policy" {
