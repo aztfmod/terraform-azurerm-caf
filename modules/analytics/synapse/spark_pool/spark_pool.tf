@@ -31,7 +31,7 @@ resource "azurerm_synapse_spark_pool" "spark_pool" {
   }
 
   dynamic "library_requirement" {
-    for_each = try(var.settings.library_requirement, null) == null ? 1 : 0
+    for_each = try(var.settings.library_requirement, {})
 
     content {
       content  = var.settings.library_requirement.content

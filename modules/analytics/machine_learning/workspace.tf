@@ -1,5 +1,5 @@
 # naming convention
-resource "azurecaf_name" "ml_ws" {
+resource "azurecaf_name" "ws" {
   name          = var.settings.name
   prefixes      = var.global_settings.prefixes
   resource_type = "azurerm_machine_learning_workspace"
@@ -13,7 +13,7 @@ resource "azurecaf_name" "ml_ws" {
 # Ref : https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/resources/machine_learning_workspace
 
 resource "azurerm_machine_learning_workspace" "ws" {
-  name                    = azurecaf_name.ml_ws.result
+  name                    = azurecaf_name.ws.result
   location                = var.location
   resource_group_name     = var.resource_group_name
   application_insights_id = var.application_insights_id
