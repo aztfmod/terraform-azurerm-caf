@@ -76,11 +76,11 @@ module "nsg" {
 
 resource "azurerm_subnet_route_table_association" "rt" {
   for_each = {
-    for key, subnet in lookup(var.settings, "subnets", {}) : key => subnet
+    for key, subnet in merge(lookup(var.settings, "subnets", {}), lookup(var.settings, "specialsubnets", {})) : key => subnet
     if lookup(subnet, "route_table_key", null) != null
   }
 
-  subnet_id      = module.subnets[each.key].id
+  subnet_id      = coalesce(lookup(module.subnets, each.key, null), lookup(module.special_subnets, each.key, null )).id
   route_table_id = var.route_tables[each.value.route_table_key].id
 }
 
