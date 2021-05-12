@@ -2,7 +2,7 @@
 # Tested with :  AzureRM version 2.57.0
 # Ref : https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/resources/databricks_workspace
 
-resource "azurecaf_name" "ws" {
+resource "azurecaf_name" "wp" {
   name          = var.settings.name
   resource_type = "azurerm_databricks_workspace"
   prefixes      = var.global_settings.prefixes
@@ -15,7 +15,7 @@ resource "azurecaf_name" "ws" {
 
 
 resource "azurerm_databricks_workspace" "ws" {
-  name                        = azurecaf_name.ws.result
+  name                        = azurecaf_name.wp.result
   resource_group_name         = var.resource_group_name
   location                    = var.location
   sku                         = try(var.settings.sku, "standard")
