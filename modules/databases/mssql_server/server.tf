@@ -30,6 +30,23 @@ resource "azurerm_mssql_server" "mssql" {
 
 }
 
+resource "azurerm_mssql_firewall_rule" "firewall_rules" {
+  for_each         = try(var.settings.firewall_rules, {})
+
+  name             = each.value.name
+  server_id        = azurerm_mssql_server.mssql.id
+  start_ip_address = each.value.start_ip_address
+  end_ip_address   = each.value.end_ip_address
+}
+
+resource "azurerm_mssql_virtual_network_rule" "network_rules" {
+  for_each  = try(var.settings.network_rules, {})
+
+  name      = each.value.name
+  server_id = azurerm_mssql_server.mssql.id
+  subnet_id = try(each.value.subnet_id, var.vnets[try(var.client_config.landingzone_key, each.value.lz_key)][each.value.vnet_key].subnets[each.value.subnet_key].id)
+}
+
 resource "azurecaf_name" "mssql" {
   name          = var.settings.name
   resource_type = "azurerm_sql_server"
