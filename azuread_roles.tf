@@ -7,6 +7,14 @@ module "azuread_roles_applications" {
   azuread_roles = each.value.roles
 }
 
+module "azuread_roles_service_principals" {
+  source   = "./modules/azuread/roles"
+  for_each = try(var.azuread_roles.azuread_service_principals, {})
+
+  object_id     = module.azuread_applications[each.key].azuread_service_principal.object_id
+  azuread_roles = each.value.roles
+}
+
 module "azuread_roles_msi" {
   source   = "./modules/azuread/roles"
   for_each = try(var.azuread_roles.managed_identities, {})

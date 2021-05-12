@@ -25,11 +25,10 @@ module "example" {
   storage_accounts               = var.storage_accounts
   tags                           = local.tags
 
-  webapp = {
-    azurerm_application_insights = var.azurerm_application_insights
-    app_service_environments     = var.app_service_environments
-    app_service_plans            = var.app_service_plans
-    app_services                 = var.app_services
+  azuread = {
+    azuread_applications                = var.azuread_applications
+    azuread_service_principals          = var.azuread_service_principals
+    azuread_service_principal_passwords = var.azuread_service_principal_passwords
   }
   compute = {
     aks_clusters               = var.aks_clusters
@@ -41,6 +40,35 @@ module "example" {
     container_groups           = var.container_groups
     proximity_placement_groups = var.proximity_placement_groups
     virtual_machines           = var.virtual_machines
+  }
+  database = {
+    azurerm_redis_caches               = var.azurerm_redis_caches
+    cosmos_dbs                         = var.cosmos_dbs
+    databricks_workspaces              = var.databricks_workspaces
+    machine_learning_workspaces        = var.machine_learning_workspaces
+    mariadb_servers                    = var.mariadb_servers
+    mssql_databases                    = var.mssql_databases
+    mssql_elastic_pools                = var.mssql_elastic_pools
+    mssql_failover_groups              = var.mssql_failover_groups
+    mssql_managed_databases_backup_ltr = var.mssql_managed_databases_backup_ltr
+    mssql_managed_databases_restore    = var.mssql_managed_databases_restore
+    mssql_managed_instances            = var.mssql_managed_instances
+    mssql_managed_instances_secondary  = var.mssql_managed_instances_secondary
+    mssql_mi_administrators            = var.mssql_mi_administrators
+    mssql_mi_failover_groups           = var.mssql_mi_failover_groups
+    mssql_mi_secondary_tdes            = var.mssql_mi_secondary_tdes
+    mssql_mi_tdes                      = var.mssql_mi_tdes
+    mssql_servers                      = var.mssql_servers
+    mysql_servers                      = var.mysql_servers
+    postgresql_servers                 = var.postgresql_servers
+    synapse_workspaces                 = var.synapse_workspaces
+  }
+  diagnostics = {
+    diagnostic_event_hub_namespaces = var.diagnostic_event_hub_namespaces
+    diagnostic_log_analytics        = var.diagnostic_log_analytics
+    diagnostic_storage_accounts     = var.diagnostic_storage_accounts
+    diagnostics_definition          = var.diagnostics_definition
+    diagnostics_destinations        = var.diagnostics_destinations
   }
   networking = {
     application_gateway_applications                        = var.application_gateway_applications
@@ -80,46 +108,6 @@ module "example" {
     vnet_peerings                                           = var.vnet_peerings
     vnets                                                   = var.vnets
   }
-
-  diagnostics = {
-    diagnostic_event_hub_namespaces = var.diagnostic_event_hub_namespaces
-    diagnostic_log_analytics        = var.diagnostic_log_analytics
-    diagnostic_storage_accounts     = var.diagnostic_storage_accounts
-    diagnostics_definition          = var.diagnostics_definition
-    diagnostics_destinations        = var.diagnostics_destinations
-  }
-
-  database = {
-    azurerm_redis_caches               = var.azurerm_redis_caches
-    cosmos_dbs                         = var.cosmos_dbs
-    databricks_workspaces              = var.databricks_workspaces
-    machine_learning_workspaces        = var.machine_learning_workspaces
-    mariadb_servers                    = var.mariadb_servers
-    mssql_databases                    = var.mssql_databases
-    mssql_elastic_pools                = var.mssql_elastic_pools
-    mssql_failover_groups              = var.mssql_failover_groups
-    mssql_managed_databases_backup_ltr = var.mssql_managed_databases_backup_ltr
-    mssql_managed_databases_restore    = var.mssql_managed_databases_restore
-    mssql_managed_instances            = var.mssql_managed_instances
-    mssql_managed_instances_secondary  = var.mssql_managed_instances_secondary
-    mssql_mi_administrators            = var.mssql_mi_administrators
-    mssql_mi_failover_groups           = var.mssql_mi_failover_groups
-    mssql_mi_secondary_tdes            = var.mssql_mi_secondary_tdes
-    mssql_mi_tdes                      = var.mssql_mi_tdes
-    mssql_servers                      = var.mssql_servers
-    mysql_servers                      = var.mysql_servers
-    postgresql_servers                 = var.postgresql_servers
-    synapse_workspaces                 = var.synapse_workspaces
-  }
-  shared_services = {
-    image_definitions        = var.image_definitions
-    monitoring               = var.monitoring
-    packer_managed_identity  = var.packer_managed_identity
-    packer_service_principal = var.packer_service_principal
-    recovery_vaults          = var.recovery_vaults
-    shared_image_galleries   = var.shared_image_galleries
-  }
-
   security = {
     disk_encryption_sets          = var.disk_encryption_sets
     dynamic_keyvault_secrets      = var.dynamic_keyvault_secrets
@@ -129,8 +117,21 @@ module "example" {
     keyvault_certificates         = var.keyvault_certificates
     lighthouse_definitions        = var.lighthouse_definitions
   }
-
+  shared_services = {
+    image_definitions        = var.image_definitions
+    monitoring               = var.monitoring
+    packer_managed_identity  = var.packer_managed_identity
+    packer_service_principal = var.packer_service_principal
+    recovery_vaults          = var.recovery_vaults
+    shared_image_galleries   = var.shared_image_galleries
+  }
   storage = {
     netapp_accounts = var.netapp_accounts
+  }
+  webapp = {
+    azurerm_application_insights = var.azurerm_application_insights
+    app_service_environments     = var.app_service_environments
+    app_service_plans            = var.app_service_plans
+    app_services                 = var.app_services
   }
 }
