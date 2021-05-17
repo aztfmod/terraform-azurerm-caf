@@ -13,9 +13,8 @@ on:
       - '_pictures/**'
       - 'README.md'
       - 'CHANGELOG.md'
-      
   schedule:
-    - cron:  '0 8 * * *'
+    - cron:  '0 2 * * 0' #1 AM on Sunday
 
 env:
   TF_CLI_ARGS: '-no-color'
@@ -144,9 +143,20 @@ jobs:
           cd ${GITHUB_WORKSPACE}/examples/${{ matrix.config_files }}
 
           ${GITHUB_WORKSPACE}/landingzones/caf_example/ci.sh ${{ github.run_id }} ${GITHUB_WORKSPACE}/landingzones/caf_example
+  
+  purge:
+    name: purge
+    runs-on: ubuntu-latest
 
+    needs: examples
+
+    container:
+      image: aztfmod/rover:0.15.3-2105.1701
+      options: --user 0
+
+    steps:
       - name: Complete purge
-        if: ${{ always() }}
+        if: ${{ failure() || cancelled() }}
         run: |
           for i in `az monitor diagnostic-settings subscription list -o tsv --query "value[?contains(name, '${{ github.run_id }}' )].name"`; do echo "purging subscription diagnostic-settings: $i" && $(az monitor diagnostic-settings subscription delete --name $i --yes); done
           for i in `az monitor log-profiles list -o tsv --query '[].name'`; do az monitor log-profiles delete --name $i; done
