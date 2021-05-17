@@ -42,8 +42,8 @@ resource "azuread_service_principal" "app" {
   tags                         = try(var.settings.tags, null)
 }
 
-resource "azuread_service_principal_password" "pwd" {
-  service_principal_id = azuread_service_principal.app.id
+resource "azuread_application_password" "pwd" {
+  application_object_id = azuread_application.app.id
   value                = random_password.pwd.result
   end_date             = timeadd(time_rotating.pwd.id, format("%sh", local.password_policy.expire_in_days * 24))
 

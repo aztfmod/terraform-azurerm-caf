@@ -17,7 +17,7 @@ resource "azurerm_key_vault_secret" "client_id" {
 resource "azurerm_key_vault_secret" "client_secret" {
   for_each        = try(var.settings.keyvaults, {})
   name            = format("%s-client-secret", each.value.secret_prefix)
-  value           = azuread_service_principal_password.pwd.value
+  value           = azuread_application_password.pwd.value
   key_vault_id    = try(each.value.lz_key, null) == null ? var.keyvaults[var.client_config.landingzone_key][each.key].id : var.keyvaults[each.value.lz_key][each.key].id
   expiration_date = timeadd(time_rotating.pwd.id, format("%sh", local.password_policy.expire_in_days * 24))
 }

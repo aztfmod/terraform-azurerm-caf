@@ -125,6 +125,7 @@ variable "user_type" {
 variable "azuread" {
   default = {}
 }
+
 variable "azuread_apps" {
   default = {}
 }
