@@ -55,5 +55,5 @@ variable "vnets" {
 }
 
 variable container_registry_id {
-  default = {}
+  default = ""
 }
