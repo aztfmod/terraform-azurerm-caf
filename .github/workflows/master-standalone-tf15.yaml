@@ -158,7 +158,7 @@ jobs:
   purge:
     name: purge
     runs-on: ubuntu-latest
-    if: ${{ failure() || cancel() }}
+    if: ${{ failure() || cancelled() }}
 
     needs: examples
 
@@ -168,7 +168,6 @@ jobs:
 
     steps:
       - name: Complete purge
-        if: ${{ always() }}
         run: |
           for i in `az monitor diagnostic-settings subscription list -o tsv --query "value[?contains(name, '${{ github.run_id }}' )].name"`; do echo "purging subscription diagnostic-settings: $i" && $(az monitor diagnostic-settings subscription delete --name $i --yes); done
           for i in `az monitor log-profiles list -o tsv --query '[].name'`; do az monitor log-profiles delete --name $i; done
