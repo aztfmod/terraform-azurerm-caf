@@ -4,6 +4,13 @@ global_settings = {
   regions = {
     region1 = "southeastasia"
   }
+  resource_defaults = {
+    virtual_machines = {
+        # set the below to enable az managed boot diagostics for vms
+        # this will be override if a user managed storage account is defined for the vm
+        # use_azmanaged_storage_for_boot_diagnostics = true
+    }
+  }
 }
 
 resource_groups = {
@@ -19,6 +26,9 @@ virtual_machines = {
   example_vm1 = {
     resource_group_key                   = "vm_region1"
     provision_vm_agent                   = true
+    # when boot_diagnostics_storage_account_key is empty string "", boot diagnostics will be put on azure managed storage
+    # when boot_diagnostics_storage_account_key is a non-empty string, it needs to point to the key of a user managed storage defined in diagnostic_storage_accounts
+    # if boot_diagnostics_storage_account_key is not defined, but global_settings.resource_defaults.virtual_machines.use_azmanaged_storage_for_boot_diagnostics is true, boot diagnostics will be put on azure managed storage
     boot_diagnostics_storage_account_key = "bootdiag_region1"
 
     os_type = "linux"
