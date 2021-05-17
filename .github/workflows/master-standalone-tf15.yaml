@@ -158,6 +158,7 @@ jobs:
   purge:
     name: purge
     runs-on: ubuntu-latest
+    if: ${{ failure() || cancel() }}
 
     needs: examples
 
