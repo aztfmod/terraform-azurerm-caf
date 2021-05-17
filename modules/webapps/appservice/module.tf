@@ -272,11 +272,3 @@ resource "azurerm_template_deployment" "site_config" {
 
   deployment_mode = "Incremental"
 }
-
-resource "azurerm_app_service_virtual_network_swift_connection" "vnet_config" {
-  depends_on = [azurerm_app_service.app_service]
-  count      = try(var.subnet_id, null) == null ? 0 : 1
-
-  app_service_id = azurerm_app_service.app_service.id
-  subnet_id      = var.subnet_id
-}

@@ -59,6 +59,10 @@ vnets = {
       app = {
         name = "app"
         cidr = ["10.1.0.0/28"]
+        delegation = {
+          name               = "serverFarms"
+          service_delegation = "Microsoft.Web/serverFarms"
+        }
       }
     }
 
