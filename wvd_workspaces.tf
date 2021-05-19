@@ -9,3 +9,7 @@ module "wvd_workspaces" {
   base_tags           = try(local.global_settings.inherit_tags, false) ? module.resource_groups[each.value.resource_group_key].tags : {}
 
 }
+
+output "wvd_workspaces" {
+  value = module.wvd_workspaces
+}

@@ -1,21 +1,17 @@
-
 global_settings = {
   default_region = "region1"
   environment    = "test"
   regions = {
     region1 = "East US"
     region2 = "southeastasia"
-
   }
 }
-
 
 resource_groups = {
   # Default to var.global_settings.default_region. You can overwrite it by setting the attribute region = "region2"
   wvd_region1 = {
     name = "wvd-pre"
   }
-
 }
 
 wvd_application_groups = {
@@ -28,7 +24,6 @@ wvd_application_groups = {
     description        = "A description of my workspace"
     #Type of Virtual Desktop Application Group. Valid options are RemoteApp or Desktop.
     type = "Desktop"
-
   }
 }
 
@@ -52,7 +47,6 @@ wvd_host_pools = {
 }
 
 wvd_workspaces = {
-
   wvd_ws1 = {
     resource_group_key = "wvd_region1"
     name               = "myws"
@@ -119,16 +113,15 @@ dynamic_keyvault_secrets = {
       secret_name = "newwvd-vm-password"
       value       = "" #Insert manually 
     }
-
   }
 
-  wvd_kv3 = { # Key of the keyvault    
+  wvd_kv3 = {
     hostpool-token = {
-      secret_name = "newwvd-hostpool-token"
-      value       = "" #Insert manually 
+      # this secret is retrieved automatically from the module run output
+      secret_name   = "newwvd-hostpool-token"
+      output_key    = "wvd_host_pools"
+      resource_key  = "wvd_hp1"
+      attribute_key = "token"
     }
   }
-
 }
-
-

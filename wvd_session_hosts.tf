@@ -1,4 +1,6 @@
 module "wvd_session_hosts" {
+  depends_on = [module.wvd_host_pools]
+
   source   = "./modules/compute/wvd_session_host"
   for_each = local.compute.wvd_session_hosts
 
@@ -13,4 +15,8 @@ module "wvd_session_hosts" {
   keyvaults           = local.combined_objects_keyvaults
   vnets               = local.combined_objects_networking
   
+}
+
+output "wvd_session_hosts" {
+  value = module.wvd_session_hosts
 }
