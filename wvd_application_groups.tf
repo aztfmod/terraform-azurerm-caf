@@ -11,3 +11,7 @@ module "wvd_application_groups" {
   workspace_id        = try(local.combined_objects_wvd_workspaces[local.client_config.landingzone_key][each.value.wvd_workspace_key].id, local.combined_objects_wvd_workspaces[each.value.lz_key][each.value.wvd_workspace_key].id)
 
 }
+
+output "wvd_application_groups" {
+  value = module.wvd_application_groups
+}
