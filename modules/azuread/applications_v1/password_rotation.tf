@@ -7,7 +7,7 @@
 #
 
 locals {
-  password_type   = var.settings.type
+  password_type   = try(var.settings.type, "password")
   password_policy = try(var.settings.password_policy, var.password_policy)
 
   expiration_date = {
@@ -49,12 +49,12 @@ locals {
 }
 
 resource "time_rotating" "key" {
-  count         = lower(var.settings.type) == "password" && try(var.settings.password_policy, null) == null ? 1 : 0
+  count         = lower(local.password_type) == "password" && try(var.settings.password_policy, null) == null ? 1 : 0
   rotation_days = local.key.days
 }
 
 resource "random_password" "key" {
-  count = lower(var.settings.type) == "password" && try(var.settings.password_policy, null) == null ? 1 : 0
+  count = lower(local.password_type) == "password" && try(var.settings.password_policy, null) == null ? 1 : 0
   keepers = {
     frequency = time_rotating.key.0.id
   }
@@ -70,7 +70,7 @@ resource "time_rotating" "key0" {
 }
 
 resource "random_password" "key0" {
-  count = lower(var.settings.type) == "password" && try(var.settings.password_policy, null) != null ? 1 : 0
+  count = lower(local.password_type) == "password" && try(var.settings.password_policy, null) != null ? 1 : 0
   keepers = {
     frequency = time_rotating.key0.0.id
   }
@@ -87,7 +87,7 @@ resource "time_rotating" "key1" {
 }
 
 resource "random_password" "key1" {
-  count = lower(var.settings.type) == "password" && try(var.settings.password_policy, null) != null ? 1 : 0
+  count = lower(local.password_type) == "password" && try(var.settings.password_policy, null) != null ? 1 : 0
   keepers = {
     frequency = time_rotating.key1.0.id
   }
