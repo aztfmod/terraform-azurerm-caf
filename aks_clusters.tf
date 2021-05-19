@@ -4,7 +4,7 @@ output "aks_clusters" {
 
 module "aks_clusters" {
   source     = "./modules/compute/aks"
-  depends_on = [module.networking]
+  depends_on = [module.networking, module.routes]
   for_each   = local.compute.aks_clusters
 
   global_settings     = local.global_settings
