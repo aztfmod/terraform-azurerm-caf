@@ -36,6 +36,9 @@ virtual_machines = {
   example_vm1 = {
     resource_group_key                   = "avset"
     provision_vm_agent                   = true
+    # when boot_diagnostics_storage_account_key is empty string "", boot diagnostics will be put on azure managed storage
+    # when boot_diagnostics_storage_account_key is a non-empty string, it needs to point to the key of a user managed storage defined in diagnostic_storage_accounts
+    # if boot_diagnostics_storage_account_key is not defined, but global_settings.resource_defaults.virtual_machines.use_azmanaged_storage_for_boot_diagnostics is true, boot diagnostics will be put on azure managed storage
     boot_diagnostics_storage_account_key = "bootdiag_region1"
 
     os_type = "linux"
@@ -87,6 +90,9 @@ virtual_machines = {
   example_vm2 = {
     resource_group_key                   = "avset"
     provision_vm_agent                   = true
+    # when boot_diagnostics_storage_account_key is empty string "", boot diagnostics will be put on azure managed storage
+    # when boot_diagnostics_storage_account_key is a non-empty string, it needs to point to the key of a user managed storage defined in diagnostic_storage_accounts
+    # if boot_diagnostics_storage_account_key is not defined, but global_settings.resource_defaults.virtual_machines.use_azmanaged_storage_for_boot_diagnostics is true, boot diagnostics will be put on azure managed storage
     boot_diagnostics_storage_account_key = "bootdiag_region1"
 
     os_type = "linux"
@@ -165,5 +171,18 @@ vnets = {
       }
     }
 
+  }
+}
+
+
+diagnostic_storage_accounts = {
+  # Stores boot diagnostic for region1
+  bootdiag_region1 = {
+    name                     = "bootrg1"
+    resource_group_key       = "avset"
+    account_kind             = "StorageV2"
+    account_tier             = "Standard"
+    account_replication_type = "LRS"
+    access_tier              = "Cool"
   }
 }
