@@ -14,7 +14,7 @@ module "azuread_service_principals" {
   
   application_id = coalesce(
     try(each.value.azuread_application.application_id, ""),
-    try(local.combined_objects_azuread_applications_v1[try(each.value.azuread_application.lz_key,local.client_config.landingzone_key)][each.value.azuread_application.key].application_id, "")
+    try(local.combined_objects_azuread_applications[try(each.value.azuread_application.lz_key,local.client_config.landingzone_key)][each.value.azuread_application.key].application_id, "")
   )
   
 }
