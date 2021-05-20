@@ -39,6 +39,7 @@ locals {
     availability_sets           = local.combined_objects_availability_sets
     azure_container_registries  = local.combined_objects_azure_container_registries
     azuread_apps                = local.combined_objects_azuread_applications
+    azuread_applications        = local.combined_objects_azuread_applications_v1
     azuread_groups              = local.combined_objects_azuread_groups
     azuread_service_principals  = local.combined_objects_azuread_service_principals
     azuread_users               = local.combined_objects_azuread_users
