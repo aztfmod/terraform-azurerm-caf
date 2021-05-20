@@ -3,7 +3,6 @@ global_settings = {
   regions = {
     region1 = "East US"
     region2 = "southeastasia"
-
   }
 }
 
@@ -11,23 +10,6 @@ resource_groups = {
   # Default to var.global_settings.default_region. You can overwrite it by setting the attribute region = "region2"
   wvd_region1 = {
     name = "wvd"
-  }
-
-}
-
-landingzone = {
-  backend_type        = "azurerm"
-  global_settings_key = "launchpad"
-  level               = "level1"
-  key                 = "wvd_post"
-  tfstates = {
-    examples = {
-      tfstate = "wvd-pre.tfstate"
-    }
-    launchpad = {
-      level   = "lower"
-      tfstate = "caf_launchpad.tfstate"
-    }
   }
 }
 
@@ -46,17 +28,16 @@ wvd_session_hosts = {
       lz_key       = "examples"
     }
     vmadministrator = {
-      keyvault_key   = "wvd_kv2"
-      lz_key         = "examples"      
-    }    
+      keyvault_key = "wvd_kv2"
+      lz_key       = "examples"
+    }
     hostpoolToken = {
       keyvault_key = "wvd_kv3"
       lz_key       = "examples"
     }
 
-    hostpoolProperties               = {}
     vmTemplate                       = ""
-    administratorAccountUsername     = "wvduser@test.onmicrosoft.com"
+    administratorAccountUsername     = "adminuser@contoso.com"
     vmAdministratorAccountUsername   = "vmadmin-username"
     availabilityOption               = "AvailabilitySet"
     availabilitySetName              = "arm-avset8"
@@ -90,7 +71,7 @@ wvd_session_hosts = {
     deploymentId                     = ""
     apiVersion                       = "2019-12-10-preview"
     ouPath                           = ""
-    domain                           = "test.onmicrosoft.com"
+    domain                           = "contoso.com"
     aadJoin                          = false
     intune                           = false
 
@@ -103,15 +84,15 @@ vnets = {
     resource_group_key = "wvd_region1"
     vnet = {
       name          = "virtual_machines"
-      address_space = ["10.100.100.0/24"]
-      dns_servers   = ["10.1.0.4", "10.1.0.5"]
+      address_space = ["10.100.101.0/24"]
+      dns_servers   = ["10.100.100.4"]
     }
     specialsubnets = {}
 
     subnets = {
       example = {
         name = "examples"
-        cidr = ["10.100.100.0/25"]
+        cidr = ["10.100.101.0/25"]
         # nsg_key = "azure_wvd_nsg"
       }
 

@@ -23,8 +23,7 @@ variable "keyvaults" {
 variable "vnets" {
   default = {}
 }
-variable "host_pool_name" {}
-variable "wvd_host_pools" {} 
+variable "wvd_host_pool" {} 
 
 
 
