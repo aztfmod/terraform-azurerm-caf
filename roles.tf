@@ -29,7 +29,17 @@ resource "azurerm_role_assignment" "for" {
 
 }
 
+data "azurerm_management_group" "level" {
+  for_each = {
+    for key, value in try(local.roles_to_process, {}) : key => value
+    if value.scope_resource_key == "management_group"
+  }
+
+  name = lower(each.value.scope_key_resource) == "root" ? local.client_config.tenant_id : each.value.scope_key_resource
+}
+
 locals {
+
   services_roles = {
     aks_clusters                = local.combined_objects_aks_clusters
     app_config                  = local.combined_objects_app_config
@@ -38,8 +48,8 @@ locals {
     app_services                = local.combined_objects_app_services
     availability_sets           = local.combined_objects_availability_sets
     azure_container_registries  = local.combined_objects_azure_container_registries
-    azuread_apps                = local.combined_objects_azuread_applications
     azuread_applications        = local.combined_objects_azuread_applications_v1
+    azuread_apps                = local.combined_objects_azuread_applications
     azuread_groups              = local.combined_objects_azuread_groups
     azuread_service_principals  = local.combined_objects_azuread_service_principals
     azuread_users               = local.combined_objects_azuread_users
@@ -50,6 +60,7 @@ locals {
     logged_in                   = local.logged_in
     machine_learning_workspaces = local.combined_objects_machine_learning
     managed_identities          = local.combined_objects_managed_identities
+    management_group            = local.management_groups
     mssql_databases             = local.combined_objects_mssql_databases
     mssql_elastic_pools         = local.combined_objects_mssql_elastic_pools
     mssql_managed_databases     = local.combined_objects_mssql_managed_databases
@@ -69,16 +80,29 @@ locals {
     synapse_workspaces          = local.combined_objects_synapse_workspaces
   }
 
-  logged_in = tomap({
-    (var.current_landingzone_key) = {
-      user = {
-        rbac_id = local.client_config.logged_user_objectId
-      }
-      app = {
-        rbac_id = local.client_config.logged_aad_app_objectId
+  management_groups = tomap(
+    {
+      (var.current_landingzone_key) = {
+        for key, value in local.roles_to_process : 
+        value.scope_key_resource => {
+          id = data.azurerm_management_group.level[key].id
+        } if try(value.scope_resource_key, null) == "management_group"
       }
     }
-  })
+  )
+
+  logged_in = tomap(
+    {
+      (var.current_landingzone_key) = {
+        user = {
+          rbac_id = local.client_config.logged_user_objectId
+        }
+        app = {
+          rbac_id = local.client_config.logged_aad_app_objectId
+        }
+      }
+    }
+  )
 
   roles_to_process = {
     for mapping in
@@ -107,7 +131,6 @@ locals {
       ]
     ) : format("%s_%s_%s", mapping.scope_key_resource, replace(mapping.role_definition_name, " ", "_"), mapping.object_id_key_resource) => mapping
   }
-
 }
 
 # The code transform this input format to
