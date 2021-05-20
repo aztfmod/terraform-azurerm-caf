@@ -43,6 +43,9 @@ variable "tags" {
   default = null
   type    = map(any)
 }
+variable "subscription_billing_role_assignments" {
+  default = {}
+}
 variable "app_service_environments" {
   default = {}
 }
