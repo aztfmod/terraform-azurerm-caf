@@ -38,5 +38,5 @@ module "azuread_applications_v1" {
 }
 
 output "azuread_applications" {
-  value = module.azuread_applications
+  value = module.azuread_applications_v1
 }
