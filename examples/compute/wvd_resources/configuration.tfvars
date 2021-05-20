@@ -41,7 +41,7 @@ wvd_host_pools = {
     load_balancer_type       = "DepthFirst"
     #Expiration value should be between 1 hour and 30 days.
     registration_info = {
-      expiration_date = "2021-05-20T07:20:50Z"
+      expiration_date = "2021-06-15T07:20:50Z"
     }
   }
 }

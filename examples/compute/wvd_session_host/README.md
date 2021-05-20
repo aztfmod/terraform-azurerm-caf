@@ -28,7 +28,7 @@ To test this deployment in the example landingzone, make sure the launchpad has 
 
 ```bash
 rover \
-  -lz /tf/caf/landingzones/caf_example \
+  -lz /tf/caf/landingzones/caf_solution \
   -var-folder  /tf/caf/examples/compute/wvd_session_host \
   -level level1 \
   -tfstate wvd-post.tfstate \
