@@ -5,11 +5,11 @@
 #
 #
 
-output "azurerm_virtual_hub_connection" {
+output "virtual_hub_connection" {
   value = azurerm_virtual_hub_connection.vhub_connection
 }
 
-output "azurerm_virtual_hub_route_table" {
+output "virtual_hub_route_table" {
   value = azurerm_virtual_hub_route_table.route_table
 }
 
@@ -46,14 +46,19 @@ resource "azurerm_virtual_hub_connection" "vhub_connection" {
           route_table_ids = coalesce(
             flatten(
               [
-                for key in try(routing.value.propagated_route_table.virtual_hub_route_table_keys, []) : azurerm_virtual_hub_route_table.route_table[key].id
+                for key in try(routing.value.propagated_route_table.virtual_hub_route_table_keys, []) : local.combined_objects_virtual_hub_route_tables[try(routing.value.lz_key, local.client_config.landingzone_key)][key].id
               ]
             ),
-            flatten(
-              [
-                for key in try(routing.value.propagated_route_table.keys, []) : var.remote_objects.virtual_hub_route_tables[try(routing.value.propagated_route_table.value.lz_key, local.client_config.landingzone_key)][key].id
-              ]
-            ),
+            # flatten(
+            #   [
+            #     for key in try(routing.value.propagated_route_table.virtual_hub_route_table_keys, []) : azurerm_virtual_hub_route_table.route_table[key].id
+            #   ]
+            # ),
+            # flatten(
+            #   [
+            #     for key in try(routing.value.propagated_route_table.keys, []) : var.remote_objects.virtual_hub_route_tables[try(routing.value.propagated_route_table.value.lz_key, local.client_config.landingzone_key)][key].id
+            #   ]
+            # ),
             flatten(
               [
                 for id in try(routing.value.propagated_route_table.ids, []) : id
@@ -81,7 +86,7 @@ resource "azurerm_virtual_hub_route_table" "route_table" {
   for_each = local.networking.virtual_hub_route_tables
 
   name   = each.value.name
-  labels = each.value.labels
+  labels = try(each.value.labels, null)
 
   virtual_hub_id = coalesce(
     try(local.combined_objects_virtual_wans[try(each.value.lz_key, local.client_config.landingzone_key)][each.value.virtual_wan_key].virtual_hubs[each.value.virtual_hub_key].id, ""),
