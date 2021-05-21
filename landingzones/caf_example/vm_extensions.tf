@@ -40,3 +40,20 @@ module "vm_extension_diagnostics" {
     diagnostics_storage_account_keys = each.value.virtual_machine_extensions.microsoft_azure_diagnostics.diagnostics_storage_account_keys
   }
 }
+
+module "vm_extension_microsoft_azure_domainJoin" {
+  source     = "../../modules/compute/virtual_machine_extensions"
+  depends_on = [module.example] #refer landingzone.tf for the correct module name.
+
+  for_each = {
+    for key, value in try(var.virtual_machines, {}) : key => value
+    if try(value.virtual_machine_extensions.microsoft_azure_domainJoin, null) != null
+  }
+
+  client_config      = module.example.client_config #refer landingzone.tf for the correct module name.
+  virtual_machine_id = module.example.virtual_machines[each.key].id #refer landingzone.tf for the correct module name.
+  extension          = each.value.virtual_machine_extensions.microsoft_azure_domainJoin
+  extension_name     = "microsoft_azure_domainJoin"
+  settings           = each.value.virtual_machine_extensions.microsoft_azure_domainJoin
+  keyvaults          = module.example.keyvaults
+}

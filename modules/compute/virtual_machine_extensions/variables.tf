@@ -8,3 +8,6 @@ variable "client_config" {
 variable "keyvault_id" {
   default = null
 }
+variable "keyvaults" {
+  default = {}
+}
