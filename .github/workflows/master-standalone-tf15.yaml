@@ -155,7 +155,7 @@ jobs:
           cd ${GITHUB_WORKSPACE}/examples/${{ matrix.config_files }}
 
           ${GITHUB_WORKSPACE}/landingzones/caf_example/ci.sh ${{ github.run_id }} ${GITHUB_WORKSPACE}/landingzones/caf_example
-  
+
   purge:
     name: purge
     runs-on: ubuntu-latest
