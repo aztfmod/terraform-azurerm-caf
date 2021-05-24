@@ -18,7 +18,7 @@ resource "azurerm_virtual_machine_extension" "domainjoin" {
     {
       "Name" : var.settings.domain_name,
       "OUPath" : try(var.settings.ou_path, ""),
-      "User" : data.azurerm_key_vault_secret.domain_join_username.value,
+      "User" : data.azurerm_key_vault_secret.domain_join_username["enabled"].value,
       "Restart" : try(var.settings.restart, "false"),
       "Options" : try(var.settings.options, "3")
     }
@@ -26,17 +26,19 @@ resource "azurerm_virtual_machine_extension" "domainjoin" {
 
   protected_settings = jsonencode(
     {
-      "Password" : data.azurerm_key_vault_secret.domain_join_password.value
+      "Password" : data.azurerm_key_vault_secret.domain_join_password["enabled"].value
     }
   )
 }
 
 data "azurerm_key_vault_secret" "domain_join_password" {
+  for_each     = var.extension_name == "microsoft_azure_domainJoin" ? toset(["enabled"]) : toset([])
   name         = var.settings.domain_join_password_keyvault.secret_name
   key_vault_id = try(var.settings.domain_join_password_keyvault.key_vault_id, var.keyvaults[var.settings.domain_join_password_keyvault.keyvault_key].id)
 }
 
 data "azurerm_key_vault_secret" "domain_join_username" {
+  for_each     = var.extension_name == "microsoft_azure_domainJoin" ? toset(["enabled"]) : toset([])
   name         = var.settings.domain_join_username_keyvault.secret_name
   key_vault_id = try(var.settings.domain_join_username_keyvault.key_vault_id, var.keyvaults[var.settings.domain_join_username_keyvault.keyvault_key].id)
 }
