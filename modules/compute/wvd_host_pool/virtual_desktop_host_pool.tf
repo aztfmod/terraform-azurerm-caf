@@ -27,7 +27,7 @@ resource "azurerm_virtual_desktop_host_pool" "wvdpool" {
     for_each = try(var.settings.registration_info, null) == null ? [] : [1]
 
     content {
-      expiration_date = try(var.settings.registration_info.expiration_date, null)
+      expiration_date = try(timeadd(timestamp(),var.settings.registration_info.token_validity), null)
     }
   }
 
