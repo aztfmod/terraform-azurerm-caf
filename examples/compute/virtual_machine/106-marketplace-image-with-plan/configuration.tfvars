@@ -1,3 +1,5 @@
+# As a prerequisite for market place images, user needs to accept the license agreements once per subscription for the image.
+# For more information - https://docs.microsoft.com/en-us/azure/virtual-machines/windows/cli-ps-findimage#accept-purchase-plan-terms
 
 global_settings = {
   default_region = "region1"
