@@ -14,12 +14,20 @@ resource "azurerm_virtual_hub_route_table" "route_table" {
   for_each = local.networking.virtual_hub_route_tables
 
   name   = each.value.name
-  labels = try(each.value.labels, null)
 
   virtual_hub_id = coalesce(
     try(local.combined_objects_virtual_wans[try(each.value.lz_key, local.client_config.landingzone_key)][each.value.virtual_wan_key].virtual_hubs[each.value.virtual_hub_key].id, ""),
     try(each.value.virtual_hub_id, "")
   )
+
+  # Managed by the module.azurerm_virtual_hub_route_table
+  lifecycle {
+    ignore_changes = [
+      labels,
+      route,
+      virtual_hub_id
+    ]
+  }
 
   #
   # Note to prevent a circular rerefence, we need to process the dynamic route in the sub-module.
@@ -51,10 +59,23 @@ module "azurerm_virtual_hub_route_table" {
   name          = each.value.name
   settings      = each.value
 
-  virtual_hub_id = coalesce(
-    try(local.combined_objects_virtual_wans[try(each.value.lz_key, local.client_config.landingzone_key)][each.value.virtual_wan_key].virtual_hubs[each.value.virtual_hub_key].id, ""),
-    try(each.value.virtual_hub_id, "")
-  )
+  virtual_hub = {
+    id = coalesce(
+      try(local.combined_objects_virtual_wans[try(each.value.lz_key, local.client_config.landingzone_key)][each.value.virtual_wan_key].virtual_hubs[each.value.virtual_hub.key].id, ""),
+      try(local.combined_objects_virtual_wans[try(each.value.lz_key, local.client_config.landingzone_key)][each.value.virtual_wan_key].virtual_hubs[each.value.virtual_hub_key].id, ""),
+      try(each.value.virtual_hub.id, "")
+    )
+    name = coalesce(
+      try(local.combined_objects_virtual_wans[try(each.value.lz_key, local.client_config.landingzone_key)][each.value.virtual_wan_key].virtual_hubs[each.value.virtual_hub.key].name, ""),
+      try(local.combined_objects_virtual_wans[try(each.value.lz_key, local.client_config.landingzone_key)][each.value.virtual_wan_key].virtual_hubs[each.value.virtual_hub_key].name, ""),
+      try(each.value.virtual_hub.name, "")
+    )
+    resource_group_name = coalesce(
+      try(local.combined_objects_virtual_wans[try(each.value.lz_key, local.client_config.landingzone_key)][each.value.virtual_wan_key].virtual_hubs[each.value.virtual_hub.key].resource_group_name, ""),
+      try(local.combined_objects_virtual_wans[try(each.value.lz_key, local.client_config.landingzone_key)][each.value.virtual_wan_key].virtual_hubs[each.value.virtual_hub_key].resource_group_name, ""),
+      try(each.value.virtual_hub.resource_group_name, "")
+    )
+  }
 
   resource_ids = {
     #
