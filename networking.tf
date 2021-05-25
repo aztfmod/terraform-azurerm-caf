@@ -27,6 +27,7 @@ module "networking" {
   diagnostics                       = local.combined_diagnostics
   global_settings                   = local.global_settings
   location                          = lookup(each.value, "region", null) == null ? local.resource_groups[each.value.resource_group_key].location : local.global_settings.regions[each.value.region]
+  network_security_groups           = module.network_security_groups
   network_security_group_definition = local.networking.network_security_group_definition
   network_watchers                  = try(local.combined_objects_network_watchers, null)
   resource_group_name               = local.resource_groups[each.value.resource_group_key].name

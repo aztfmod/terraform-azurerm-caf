@@ -13,7 +13,7 @@ module "network_security_groups" {
   base_tags           = try(local.global_settings.inherit_tags, false) ? local.resource_groups[each.value.resource_group_key].tags : {}
   diagnostics         = local.combined_diagnostics
 
-  // Module to suppor tthe NSG creation outside of the a subnet
+  // Module to support the NSG creation outside of the a subnet
   // version = 1 of NSG can be attached to a nic or a subnet
   // version 1 requires the name and resource_group_key as additional mandatory attributes
   // If version = 1 is not present, the nsg can onle attached to a subnet
