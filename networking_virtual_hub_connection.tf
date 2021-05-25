@@ -16,7 +16,7 @@ resource "azurerm_virtual_hub_connection" "vhub_connection" {
   for_each   = local.networking.virtual_hub_connections
 
   name                      = each.value.name
-  virtual_hub_id            = local.combined_objects_virtual_wans[try(each.value.vhub.lz_key, local.client_config.landingzone_key)][each.value.vhub.virtual_wan_key].virtual_hubs[each.value.vhub.virtual_hub_key].id
+  virtual_hub_id            = local.azurerm_virtual_hub_connection[each.key].virtual_hub_id
   remote_virtual_network_id = local.combined_objects_networking[try(each.value.vnet.lz_key, local.client_config.landingzone_key)][each.value.vnet.vnet_key].id
   internet_security_enabled = try(each.value.internet_security_enabled, null)
 
@@ -28,7 +28,8 @@ resource "azurerm_virtual_hub_connection" "vhub_connection" {
         coalesce(
           try(routing.value.id, ""),
           try(azurerm_virtual_hub_route_table.route_table[routing.value.virtual_hub_route_table_key].id, ""),
-          try(var.remote_objects.virtual_hub_route_tables[try(routing.value.lz_key, local.client_config.landingzone_key)][routing.value.virtual_hub_route_table_key].id, "")
+          try(var.remote_objects.virtual_hub_route_tables[try(routing.value.lz_key, local.client_config.landingzone_key)][routing.value.virtual_hub_route_table_key].id, ""),
+          contains(tolist(["defaultRouteTable", "None"]), routing.value.virtual_hub_route_table_key) ? format("%s/hubRouteTables/%s", local.azurerm_virtual_hub_connection[each.key].virtual_hub_id, routing.value.virtual_hub_route_table_key) : "None"
         ),
         null
       )
@@ -41,7 +42,7 @@ resource "azurerm_virtual_hub_connection" "vhub_connection" {
           route_table_ids = coalesce(
             flatten(
               [
-                for key in try(routing.value.propagated_route_table.virtual_hub_route_table_keys, []) : local.combined_objects_virtual_hub_route_tables[try(routing.value.lz_key, local.client_config.landingzone_key)][key].id
+                for key in try(routing.value.propagated_route_table.virtual_hub_route_table_keys, []) : contains(tolist(["defaultRouteTable", "None"]), key) ? format("%s/hubRouteTables/%s", local.azurerm_virtual_hub_connection[each.key].virtual_hub_id, key) : local.combined_objects_virtual_hub_route_tables[try(routing.value.lz_key, local.client_config.landingzone_key)][key].id
               ]
             ),
             flatten(
@@ -63,6 +64,14 @@ resource "azurerm_virtual_hub_connection" "vhub_connection" {
         }
       }
 
+    }
+  }
+}
+
+locals {
+  azurerm_virtual_hub_connection = {
+    for key, value in local.networking.virtual_hub_connections : key => {
+      virtual_hub_id = local.combined_objects_virtual_wans[try(value.vhub.lz_key, local.client_config.landingzone_key)][value.vhub.virtual_wan_key].virtual_hubs[value.vhub.virtual_hub_key].id 
     }
   }
 }
