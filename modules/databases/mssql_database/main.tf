@@ -8,7 +8,8 @@ terraform {
 }
 
 locals {
-  server_name = format("%s.database.windows.net", var.server_name)
+  server_name = "${var.server_name}${var.cloud.sqlServerHostname}"
+
   module_tag = {
     "module" = basename(abspath(path.module))
   }
