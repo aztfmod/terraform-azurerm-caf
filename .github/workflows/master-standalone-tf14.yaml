@@ -46,6 +46,7 @@ jobs:
             "compute/virtual_machine/101-single-windows-vm",
             "compute/virtual_machine/102-single-vm-data-disks",
             "compute/virtual_machine/104-single-windows-backup",
+            "compute/virtual_machine/106-marketplace-image-with-plan",
             "compute/virtual_machine/210-vm-bastion-winrm",
             "compute/virtual_machine/211-vm-bastion-winrm-agents",
             "compute/wvd_resources",
