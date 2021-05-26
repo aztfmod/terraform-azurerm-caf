@@ -9,7 +9,8 @@ resource "azurecaf_name" "ws" {
   use_slug      = var.global_settings.use_slug
 }
 
-# synapse workspace
+# Ref : https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/resources/synapse_workspace
+# Tested with : AzureRM 2.57.0
 resource "azurerm_synapse_workspace" "ws" {
   name                                 = azurecaf_name.ws.result
   resource_group_name                  = var.resource_group_name
@@ -17,7 +18,46 @@ resource "azurerm_synapse_workspace" "ws" {
   storage_data_lake_gen2_filesystem_id = var.storage_data_lake_gen2_filesystem_id
   sql_administrator_login              = var.settings.sql_administrator_login
   sql_administrator_login_password     = try(var.settings.sql_administrator_login_password, random_password.sql_admin.0.result)
+  managed_virtual_network_enabled      = try(var.settings.managed_virtual_network_enabled, false)
+  sql_identity_control_enabled         = try(var.settings.sql_identity_control_enabled, null)
+  managed_resource_group_name          = try(var.settings.managed_resource_group_name, null)
+  customer_managed_key_versionless_id  = try(var.settings.customer_managed_key_versionless_id, null)
   tags                                 = local.tags
+
+  dynamic "aad_admin" {
+    for_each = try(var.settings.aad_admin, {})
+
+    content {
+      login     = var.settings.aad_admin.login
+      object_id = var.settings.aad_admin.object_id
+      tenant_id = var.settings.aad_admin.tenant_id
+    }
+  }
+
+  dynamic "azure_devops_repo" {
+    for_each = try(var.settings.azure_devops_repo, {})
+
+    content {
+      account_name    = var.settings.azure_devops_repo.account_name
+      branch_name     = var.settings.azure_devops_repo.branch_name
+      project_name    = var.settings.azure_devops_repo.project_name
+      repository_name = var.settings.azure_devops_repo.branch_name
+      root_folder     = var.settings.azure_devops_repo.root_folder
+    }
+  }
+
+  dynamic "github_repo" {
+    for_each = try(var.settings.github_repo, {})
+
+    content {
+      account_name    = var.settings.github_repo.account_name
+      branch_name     = var.settings.github_repo.project_name
+      repository_name = var.settings.github_repo.branch_name
+      root_folder     = var.settings.github_repo.root_folder
+      git_url         = var.settings.github_repo.git_url
+    }
+  }
+
 }
 
 # Generate sql server random admin password if not provided in the attribute administrator_login_password
@@ -71,6 +111,8 @@ resource "azurerm_key_vault_secret" "synapse_rg_name" {
 }
 
 # for backwards compatibility to create single firewall rule
+# Ref : https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/resources/synapse_firewall_rule
+# Tested with : AzureRm 2.57.0
 resource "azurerm_synapse_firewall_rule" "wrkspc_firewall" {
   count = try(var.settings.workspace_firewall, null) == null ? 0 : 1
 
@@ -81,6 +123,8 @@ resource "azurerm_synapse_firewall_rule" "wrkspc_firewall" {
 }
 
 # supports adding multiple synapse firewall rules
+# Ref : https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/resources/synapse_firewall_rule
+# Tested with : AzureRm 2.57.0
 resource "azurerm_synapse_firewall_rule" "wrkspc_firewalls" {
   for_each = try(var.settings.workspace_firewalls, {})
 

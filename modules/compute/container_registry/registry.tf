@@ -22,7 +22,7 @@ resource "azurerm_container_registry" "acr" {
 
     content {
       default_action = try(var.network_rule_set.default_action, "Allow")
-
+  
       dynamic "ip_rule" {
         for_each = try(network_rule_set.value.ip_rules, {})
 
