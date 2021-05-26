@@ -37,7 +37,7 @@ jobs:
           random_length: ['5']
 
     container:
-      image: aztfmod/rover:0.14.11-2105.1701
+      image: aztfmod/rover:0.14.11-2105.2603
       options: --user 0
 
     steps:
@@ -84,7 +84,7 @@ jobs:
           ]
 
     container:
-      image: aztfmod/rover:0.14.11-2105.1701
+      image: aztfmod/rover:0.14.11-2105.2603
       options: --user 0
 
     steps:

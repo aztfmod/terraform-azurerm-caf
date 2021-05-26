@@ -136,7 +136,7 @@ jobs:
           ]
 
     container:
-      image: aztfmod/rover:0.13.7-2105.1701
+      image: aztfmod/rover:0.13.7-2105.2603
       options: --user 0
 
     steps:
@@ -161,7 +161,7 @@ jobs:
     needs: examples
 
     container:
-      image: aztfmod/rover:0.13.7-2105.1701
+      image: aztfmod/rover:0.13.7-2105.2603
       options: --user 0
 
     steps:
