@@ -140,7 +140,7 @@ jobs:
           ]
 
     container:
-      image: aztfmod/rover:0.15.3-2105.1701
+      image: aztfmod/rover:0.15.4-2105.2603
       options: --user 0
 
     steps:
@@ -156,7 +156,7 @@ jobs:
           cd ${GITHUB_WORKSPACE}/examples/${{ matrix.config_files }}
 
           ${GITHUB_WORKSPACE}/landingzones/caf_example/ci.sh ${{ github.run_id }} ${GITHUB_WORKSPACE}/landingzones/caf_example
-  
+
   purge:
     name: purge
     runs-on: ubuntu-latest
@@ -165,7 +165,7 @@ jobs:
     needs: examples
 
     container:
-      image: aztfmod/rover:0.15.3-2105.1701
+      image: aztfmod/rover:0.15.4-2105.2603
       options: --user 0
 
     steps:
