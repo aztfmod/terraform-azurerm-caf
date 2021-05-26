@@ -20,7 +20,7 @@ locals {
     hostpoolName = {
       value = var.wvd_host_pool.name
     }
-    
+
     hostpoolResourceGroup = {
       value = var.wvd_host_pool.resource_group_name
     }
@@ -35,7 +35,7 @@ locals {
     }
     administratorAccountUsername = {
       value = var.settings.administratorAccountUsername
-    }    
+    }
     hostpoolToken = {
       value = data.azurerm_key_vault_secret.wvd_hostpool_token.value
     }
@@ -47,7 +47,7 @@ locals {
     }
     vmAdministratorAccountUsername = {
       value = var.settings.vmAdministratorAccountUsername
-    }    
+    }
     availabilityOption = {
       value = var.settings.availabilityOption
     }

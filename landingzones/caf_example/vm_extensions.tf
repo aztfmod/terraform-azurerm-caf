@@ -41,19 +41,37 @@ module "vm_extension_diagnostics" {
   }
 }
 
-module "vm_extension_microsoft_azure_domainJoin" {
+module "vm_extension_microsoft_azure_domainjoin" {
   source     = "../../modules/compute/virtual_machine_extensions"
   depends_on = [module.example] #refer landingzone.tf for the correct module name.
 
   for_each = {
     for key, value in try(var.virtual_machines, {}) : key => value
-    if try(value.virtual_machine_extensions.microsoft_azure_domainJoin, null) != null
+    if try(value.virtual_machine_extensions.microsoft_azure_domainjoin, null) != null
   }
 
-  client_config      = module.example.client_config #refer landingzone.tf for the correct module name.
+  client_config      = module.example.client_config                 #refer landingzone.tf for the correct module name.
   virtual_machine_id = module.example.virtual_machines[each.key].id #refer landingzone.tf for the correct module name.
-  extension          = each.value.virtual_machine_extensions.microsoft_azure_domainJoin
+  extension          = each.value.virtual_machine_extensions.microsoft_azure_domainjoin
   extension_name     = "microsoft_azure_domainJoin"
-  settings           = each.value.virtual_machine_extensions.microsoft_azure_domainJoin
+  settings           = each.value.virtual_machine_extensions.microsoft_azure_domainjoin
   keyvaults          = module.example.keyvaults
+}
+
+module "vm_extension_session_host_dscextension" {
+  source     = "../../modules/compute/virtual_machine_extensions"
+  depends_on = [module.example, module.vm_extension_microsoft_azure_domainjoin] #refer landingzone.tf for the correct module name.
+
+  for_each = {
+    for key, value in try(var.virtual_machines, {}) : key => value
+    if try(value.virtual_machine_extensions.session_host_dscextension, null) != null
+  }
+
+  client_config      = module.example.client_config                 #refer landingzone.tf for the correct module name.
+  virtual_machine_id = module.example.virtual_machines[each.key].id #refer landingzone.tf for the correct module name.
+  extension          = each.value.virtual_machine_extensions.session_host_dscextension
+  extension_name     = "session_host_dscextension"
+  settings           = each.value.virtual_machine_extensions.session_host_dscextension
+  keyvaults          = module.example.keyvaults
+  wvd_host_pools     = module.example.wvd_host_pools
 }

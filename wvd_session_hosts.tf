@@ -13,7 +13,8 @@ module "wvd_session_hosts" {
   wvd_host_pool       = try(local.combined_objects_wvd_host_pools[local.client_config.landingzone_key][each.value.wvd_host_pool_key], local.combined_objects_wvd_host_pools[each.value.lz_key][each.value.wvd_host_pool_key])
   keyvaults           = local.combined_objects_keyvaults
   vnets               = local.combined_objects_networking
-  
+  diagnostics         = local.combined_diagnostics
+  diagnostic_profiles = try(each.value.diagnostic_profiles, {})
 }
 
 output "wvd_session_hosts" {

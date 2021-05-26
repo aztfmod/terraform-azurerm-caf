@@ -10,7 +10,7 @@ terraform {
       version = "~> 1.2.0"
     }
     azuread = {
-      source = "hashicorp/azuread"
+      source  = "hashicorp/azuread"
       version = "~> 1.4.0"
     }
     null = {

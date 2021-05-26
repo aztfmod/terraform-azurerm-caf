@@ -101,17 +101,17 @@ keyvaults = {
 }
 
 dynamic_keyvault_secrets = {
-  wvd_kv1 = { # Key of the keyvault    
+  wvd_kv1 = { # Key of the keyvault
     domain-password = {
       secret_name = "newwvd-admin-password"
-      value       = "" #Insert manually 
+      value       = "" #Insert manually
     }
   }
 
-  wvd_kv2 = { # Key of the keyvault    
+  wvd_kv2 = { # Key of the keyvault
     vm-password = {
       secret_name = "newwvd-vm-password"
-      value       = "" #Insert manually 
+      value       = "" #Insert manually
     }
   }
 

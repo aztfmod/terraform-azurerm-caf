@@ -82,7 +82,7 @@ virtual_machines = {
     }
 
     virtual_machine_extensions = {
-      microsoft_azure_domainJoin = {
+      microsoft_azure_domainjoin = {
         domain_name = "contoso.com"
         ou_path = ""
         restart = "true"

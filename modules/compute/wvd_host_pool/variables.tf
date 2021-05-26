@@ -11,3 +11,7 @@ variable "wvd_host_pools" {
 variable "name" {
   default = {}
 }
+variable "diagnostic_profiles" {
+  default = null
+}
+variable "diagnostics" {}

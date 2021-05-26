@@ -8,8 +8,8 @@ resource "azurecaf_name" "wvdws" {
   use_slug      = var.global_settings.use_slug
 }
 
-resource "azurerm_virtual_desktop_workspace" "wvdws" {  
-  name = azurecaf_name.wvdws.result
+resource "azurerm_virtual_desktop_workspace" "wvdws" {
+  name                = azurecaf_name.wvdws.result
   location            = var.location
   resource_group_name = var.resource_group_name
 
