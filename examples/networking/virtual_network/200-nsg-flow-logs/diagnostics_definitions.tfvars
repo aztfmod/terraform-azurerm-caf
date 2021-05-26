@@ -36,6 +36,9 @@ diagnostics_definition = {
         # ["Category name",  "Diagnostics Enabled(true/false)", "Retention Enabled(true/false)", Retention_period]
         ["BastionAuditLogs", true, false, 7],
       ]
+      metric = [
+        ["AllMetrics", true, true, 7],
+      ]
     }
 
   }
