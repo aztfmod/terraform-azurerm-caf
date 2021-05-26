@@ -117,6 +117,16 @@ resource "azurerm_linux_virtual_machine" "vm" {
     }
   }
 
+  dynamic "plan" {
+    for_each = try(each.value.plan, false) == false ? [] : [1]
+
+    content {
+      name      = each.value.plan.name
+      product   = each.value.plan.product
+      publisher = each.value.plan.publisher
+    }
+  }
+
 }
 
 #
