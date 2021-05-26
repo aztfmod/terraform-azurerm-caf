@@ -99,6 +99,7 @@ load_balancers = {
         load_balancer_key              = "lb1"
         lb_rule_name                   = "rule1"
         protocol                       = "tcp"
+        probe_id_key                   = "probe1"
         frontend_port                  = "3389"
         backend_port                   = "3389"
         frontend_ip_configuration_name = "config1" #name must match the configuration that's defined in the load_balancers block.
