@@ -33,17 +33,17 @@ resource "null_resource" "destroy_sessionhost" {
 
 
 data "azurerm_key_vault_secret" "wvd_domain_password" {
-  name = "newwvd-admin-password"  
+  name         = "newwvd-admin-password"
   key_vault_id = try(var.keyvaults[var.settings.administrator.landingzone_key][var.settings.administrator.keyvault_key].id, var.keyvaults[var.settings.administrator.lz_key][var.settings.administrator.keyvault_key].id, null)
 }
 
 data "azurerm_key_vault_secret" "wvd_hostpool_token" {
-  name = "newwvd-hostpool-token"
+  name         = "newwvd-hostpool-token"
   key_vault_id = try(var.keyvaults[var.settings.hostpoolToken.landingzone_key][var.settings.hostpoolToken.keyvault_key].id, var.keyvaults[var.settings.hostpoolToken.lz_key][var.settings.hostpoolToken.keyvault_key].id, null)
 }
 
 data "azurerm_key_vault_secret" "wvd_vm_password" {
-  name = "newwvd-vm-password"
+  name         = "newwvd-vm-password"
   key_vault_id = try(var.keyvaults[var.settings.vmadministrator.landingzone_key][var.settings.vmadministrator.keyvault_key].id, var.keyvaults[var.settings.vmadministrator.lz_key][var.settings.vmadministrator.keyvault_key].id, null)
 }
 

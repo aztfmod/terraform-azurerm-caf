@@ -11,3 +11,7 @@ variable "wvd_workspaces" {
 variable "name" {
   default = {}
 }
+variable "diagnostic_profiles" {
+  default = null
+}
+variable "diagnostics" {}

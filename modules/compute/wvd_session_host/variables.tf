@@ -23,10 +23,9 @@ variable "keyvaults" {
 variable "vnets" {
   default = {}
 }
-variable "wvd_host_pool" {} 
+variable "wvd_host_pool" {}
 
-
-
-
-
-
+variable "diagnostic_profiles" {
+  default = null
+}
+variable "diagnostics" {}

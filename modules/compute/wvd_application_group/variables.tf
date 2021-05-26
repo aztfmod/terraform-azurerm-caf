@@ -21,3 +21,8 @@ variable "workspace_id" {
 variable "key_vault_id" {
   default = {}
 }
+
+variable "diagnostic_profiles" {
+  default = null
+}
+variable "diagnostics" {}

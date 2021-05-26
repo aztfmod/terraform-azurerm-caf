@@ -113,7 +113,7 @@ module "example" {
     postgresql_servers                 = var.postgresql_servers
     synapse_workspaces                 = var.synapse_workspaces
   }
-  
+
   shared_services = {
     image_definitions        = var.image_definitions
     monitoring               = var.monitoring

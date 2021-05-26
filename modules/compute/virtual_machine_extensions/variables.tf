@@ -11,3 +11,6 @@ variable "keyvault_id" {
 variable "keyvaults" {
   default = {}
 }
+variable "wvd_host_pools" {
+  default = {}
+}

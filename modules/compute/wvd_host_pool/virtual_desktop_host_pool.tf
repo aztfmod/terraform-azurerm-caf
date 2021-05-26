@@ -9,9 +9,9 @@ resource "azurecaf_name" "wvdpool" {
 }
 
 resource "azurerm_virtual_desktop_host_pool" "wvdpool" {
-  location            = var.location
-  resource_group_name = var.resource_group_name  
-  name = azurecaf_name.wvdpool.result
+  location                         = var.location
+  resource_group_name              = var.resource_group_name
+  name                             = azurecaf_name.wvdpool.result
   friendly_name                    = try(var.settings.friendly_name, null)
   description                      = try(var.settings.description, null)
   validate_environment             = try(var.settings.validate_environment, null)
@@ -27,7 +27,7 @@ resource "azurerm_virtual_desktop_host_pool" "wvdpool" {
     for_each = try(var.settings.registration_info, null) == null ? [] : [1]
 
     content {
-      expiration_date = try(timeadd(timestamp(),var.settings.registration_info.token_validity), null)
+      expiration_date = try(var.settings.registration_info.expiration_date, timeadd(timestamp(), var.settings.registration_info.token_validity))
     }
   }
 
