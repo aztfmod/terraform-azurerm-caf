@@ -1,6 +1,7 @@
 variable "global_settings" {
   description = "Global settings object (see module README.md)"
 }
+variable "cloud" {}
 variable "location" {}
 variable "settings" {}
 variable "server_id" {}
