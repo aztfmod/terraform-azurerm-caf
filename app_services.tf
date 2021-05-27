@@ -34,8 +34,8 @@ output "app_services" {
 # Tested with :  AzureRM version 2.55.0
 # Ref : https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/resources/
 resource "azurerm_app_service_virtual_network_swift_connection" "vnet_config" {
-  for_each   = {
-    for key, value in local.webapp.app_services  : key => value
+  for_each = {
+    for key, value in local.webapp.app_services : key => value
     if try(value.vnet_integration, null) != null
   }
 
