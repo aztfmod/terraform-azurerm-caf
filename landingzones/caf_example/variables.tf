@@ -28,7 +28,7 @@ variable "provider_azurerm_features_keyvault" {
   }
 }
 variable "cloud" {
-  default     = {}
+  default = {}
 }
 variable "acrLoginServerEndpoint" {
   default = ".azurecr.io"
