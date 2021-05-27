@@ -51,3 +51,7 @@ variable "base_tags" {
 variable "network_watchers" {
   default = {}
 }
+variable "network_security_groups" {
+  default     = {}
+  description = "Network Security Group cretaed with different Resource Group"
+}

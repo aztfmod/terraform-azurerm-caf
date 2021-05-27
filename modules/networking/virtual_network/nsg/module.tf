@@ -1,5 +1,8 @@
 resource "azurecaf_name" "nsg_obj" {
-  for_each      = var.subnets
+  for_each = {
+    for key, value in var.subnets : key => value
+    if try(value.nsg_key, null) != null && try(var.network_security_group_definition[value.nsg_key].version, 0) == 0
+  }
   name          = try(var.network_security_group_definition[each.value.nsg_key].name, null) == null ? each.value.name : var.network_security_group_definition[each.value.nsg_key].name
   resource_type = "azurerm_network_security_group"
   prefixes      = var.global_settings.prefixes
@@ -11,7 +14,10 @@ resource "azurecaf_name" "nsg_obj" {
 
 resource "azurerm_network_security_group" "nsg_obj" {
 
-  for_each            = var.subnets
+  for_each = {
+    for key, value in var.subnets : key => value
+    if try(value.nsg_key, null) != null && try(var.network_security_group_definition[value.nsg_key].version, 0) == 0
+  }
   name                = azurecaf_name.nsg_obj[each.key].result
   resource_group_name = var.resource_group
   location            = var.location

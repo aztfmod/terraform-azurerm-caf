@@ -105,6 +105,8 @@ jobs:
             "networking/virtual_network/100-simple-vnet-subnets-nsgs",
             "networking/virtual_network/100-subnet-delegation",
             "networking/virtual_network/101-vnet-peering-nsg",
+            "networking/virtual_network/200-nsg-flow-logs",
+            "networking/virtual_network/201-nsg-flow-logs-v1",
             "networking/virtual_wan/100-vwan-multi-hubs",
             "networking/virtual_wan/101-vwan-hub-firewall-legacy",
             "networking/virtual_wan/102-vwan-hub-firewall-new",
@@ -136,7 +138,7 @@ jobs:
           ]
 
     container:
-      image: aztfmod/rover:0.13.7-2105.1701
+      image: aztfmod/rover:0.13.7-2105.2603
       options: --user 0
 
     steps:
@@ -161,7 +163,7 @@ jobs:
     needs: examples
 
     container:
-      image: aztfmod/rover:0.13.7-2105.1701
+      image: aztfmod/rover:0.13.7-2105.2603
       options: --user 0
 
     steps:
