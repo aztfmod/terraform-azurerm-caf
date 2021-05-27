@@ -54,7 +54,6 @@ module "vm_extension_microsoft_azure_domainjoin" {
   virtual_machine_id = module.example.virtual_machines[each.key].id #refer landingzone.tf for the correct module name.
   extension          = each.value.virtual_machine_extensions.microsoft_azure_domainjoin
   extension_name     = "microsoft_azure_domainJoin"
-  settings           = each.value.virtual_machine_extensions.microsoft_azure_domainjoin
   keyvaults          = module.example.keyvaults
 }
 
@@ -71,7 +70,6 @@ module "vm_extension_session_host_dscextension" {
   virtual_machine_id = module.example.virtual_machines[each.key].id #refer landingzone.tf for the correct module name.
   extension          = each.value.virtual_machine_extensions.session_host_dscextension
   extension_name     = "session_host_dscextension"
-  settings           = each.value.virtual_machine_extensions.session_host_dscextension
   keyvaults          = module.example.keyvaults
   wvd_host_pools     = module.example.wvd_host_pools
 }
