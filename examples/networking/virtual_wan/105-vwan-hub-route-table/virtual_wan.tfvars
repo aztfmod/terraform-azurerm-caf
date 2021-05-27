@@ -44,30 +44,18 @@ virtual_hub_route_tables = {
 
     labels = ["label1"]
     routes = {
-      r1 = {
-        name              = "example-route1"
-        destinations_type = "CIDR"
-        destinations      = ["10.0.0.0/16"]
-        next_hop = {
-          # lz_key if the connection is in a different deployment
-          resource_type = "virtual_hub_connection"
-          resource_key  = "con2"
-        }
-        #to cather for external object
-        #next_hop_id       = "Azure_Resource_ID"
-      }
-      r2 = {
-        name              = "example-route-10-1"
-        destinations_type = "CIDR"
-        destinations      = ["10.1.0.0/16"]
-        next_hop = {
-          # lz_key if the connection is in a different deployment
-          resource_type = "virtual_hub_connection"
-          resource_key  = "con2"
-        }
-        #to cather for external object
-        #next_hop_id       = "Azure_Resource_ID"
-      }
+      # r1 = {
+      #   name              = "example-route1"
+      #   destinations_type = "CIDR"
+      #   destinations      = ["10.0.0.0/16"]
+      #   next_hop = {
+      #     # lz_key if the connection is in a different deployment
+      #     resource_type = "azurerm_firewall"
+      #     resource_key  = "con2"
+      #   }
+      #   #to cather for external object
+      #   #next_hop_id       = "Azure_Resource_ID"
+      # }
     }
   }
   routetable2 = {
@@ -77,21 +65,6 @@ virtual_hub_route_tables = {
     virtual_hub_key = "hub_re1"
 
     labels = ["label2"]
-    routes = {
-      r2 = {
-        name              = "example-route2"
-        destinations_type = "CIDR"
-        destinations      = ["1.0.0.0/16"]
-        next_hop = {
-          # lz_key if the connection is in a different deployment
-          resource_type = "virtual_hub_connection"
-          resource_key  = "con2"
-          # id = "resource_id"
-        }
-        #to cather for external object
-        #next_hop_id       = "Azure_Resource_ID"
-      }
-    }
   }
 }
 
@@ -172,15 +145,15 @@ virtual_hub_connections = {
           ]
         }
 
-        # static_vnet_route = {
-        #   # crm = {
-        #   #   name = "crm"
-        #   #   address_prefixes  = [
-        #   #     "10.12.13.0/21"
-        #   #   ]
-        #   #   next_hop_ip_address = "192.34.23.11"
-        #   # }
-        # }
+        static_vnet_route = {
+          # crm = {
+          #   name = "crm"
+          #   address_prefixes  = [
+          #     "10.12.13.0/21"
+          #   ]
+          #   next_hop_ip_address = "192.34.23.11"
+          # }
+        }
 
       }
     }
