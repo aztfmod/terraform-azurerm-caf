@@ -19,6 +19,7 @@ module virtual_machine_scale_sets {
   disk_encryption_sets             = local.combined_objects_disk_encryption_sets
   global_settings                  = local.global_settings
   keyvaults                        = local.combined_objects_keyvaults
+  load_balancers                   = local.combined_objects_load_balancers
   location                         = lookup(each.value, "region", null) == null ? module.resource_groups[each.value.resource_group_key].location : local.global_settings.regions[each.value.region]
   managed_identities               = local.combined_objects_managed_identities
   network_security_groups          = try(module.network_security_groups, {})

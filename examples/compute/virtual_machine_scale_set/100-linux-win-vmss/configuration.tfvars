@@ -76,6 +76,38 @@ diagnostic_storage_accounts = {
   }
 }
 
+# Load Balancer
+public_ip_addresses = {
+  lb_pip = {
+    name               = "lb_pip1"
+    resource_group_key = "rg1"
+    sku                = "Basic"
+    # Note: For UltraPerformance ExpressRoute Virtual Network gateway, the associated Public IP needs to be sku "Basic" not "Standard"
+    allocation_method = "Dynamic"
+    # allocation method needs to be Dynamic
+    ip_version              = "IPv4"
+    idle_timeout_in_minutes = "4"
+  }
+}
+
+# Public Load Balancer will be created. For Internal/Private Load Balancer config, please refer 102-internal-load-balancer example.
+
+load_balancers = {
+  lb1 = {
+    name                      = "lb-vmss"
+    sku                       = "basic"
+    resource_group_key        = "rg1"
+    backend_address_pool_name = "vmss1"
+    frontend_ip_configurations = {
+      config1 = {
+        name                  = "config1"
+        public_ip_address_key = "lb_pip"
+      }
+    }
+  }
+}
+
+
 virtual_machine_scale_sets = {
   vmss1 = {
     resource_group_key = "rg1"
@@ -133,6 +165,7 @@ virtual_machine_scale_sets = {
         }
 
         # custom_image_id = ""
+
         source_image_reference = {
           publisher = "Canonical"
           offer     = "UbuntuServer"
@@ -144,17 +177,26 @@ virtual_machine_scale_sets = {
     }
 
     network_interfaces = {
+      # option to assign each nic to different LB/ App GW
+
       nic0 = {
-        # Value of the keys from networking.tfvars
+
         name                    = "0"
         primary                 = true
         vnet_key                = "vnet1"
         subnet_key              = "subnet1"
+        load_balancer = {
+          lb_key = "lb1"
+          # lz_key = ""
+        }
         
+        # application_gateway = {
+          # appgw_key
+          # lz_key
+        # }
         enable_accelerated_networking = false
         enable_ip_forwarding    = false
         internal_dns_name_label = "nic0"
-
       }
     }
     

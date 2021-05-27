@@ -71,3 +71,4 @@ variable "custom_image_ids" {
 }
 variable "disk_encryption_sets" {}
 
+variable "load_balancers" {}
