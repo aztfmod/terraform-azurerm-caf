@@ -21,14 +21,14 @@ vnets = {
       address_space = ["10.1.0.0/16"]
     }
     specialsubnets = {
-     gateway_subnet = {
-        name    = "GatewaySubnet"
-        cidr    = ["10.1.5.0/24"]
+      gateway_subnet = {
+        name            = "GatewaySubnet"
+        cidr            = ["10.1.5.0/24"]
         route_table_key = "special_rt"
       }
       azure_firewall_subnet = {
-        name    = "AzureFirewallSubnet"
-        cidr    = ["10.1.6.0/24"]
+        name = "AzureFirewallSubnet"
+        cidr = ["10.1.6.0/24"]
       }
     }
     subnets = {
@@ -48,9 +48,9 @@ vnets = {
         nsg_key = "app"
       }
       data = {
-        name    = "data-layer"
-        cidr    = ["10.1.4.0/24"]
-        nsg_key = "data"
+        name            = "data-layer"
+        cidr            = ["10.1.4.0/24"]
+        nsg_key         = "data"
         route_table_key = "no_internet"
       }
     }
