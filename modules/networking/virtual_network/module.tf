@@ -88,7 +88,7 @@ resource "azurerm_subnet_route_table_association" "rt" {
 resource "azurerm_subnet_network_security_group_association" "nsg_vnet_association" {
   for_each = {
     for key, value in try(var.settings.subnets, {}) : key => value
-    if try(var.network_security_group_definition[value.nsg_key].version, 0) == 0
+    if try(var.network_security_group_definition[value.nsg_key].version, 0) == 0 && try(value.nsg_key, null) != null
   }
 
   subnet_id                 = module.subnets[each.key].id
@@ -99,7 +99,7 @@ resource "azurerm_subnet_network_security_group_association" "nsg_vnet_associati
 resource "azurerm_subnet_network_security_group_association" "nsg_vnet_association_version" {
   for_each = {
     for key, value in try(var.settings.subnets, {}) : key => value
-    if try(var.network_security_group_definition[value.nsg_key].version, 0) > 0
+    if try(var.network_security_group_definition[value.nsg_key].version, 0) > 0 && try(value.nsg_key, null) != null
   }
 
   subnet_id                 = module.subnets[each.key].id
