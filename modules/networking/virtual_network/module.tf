@@ -81,17 +81,27 @@ resource "azurerm_subnet_route_table_association" "rt" {
     if try(subnet.route_table_key, null) != null
   }
 
-  subnet_id      = coalesce(lookup(module.subnets, each.key, null), lookup(module.special_subnets, each.key, null )).id
+  subnet_id      = coalesce(lookup(module.subnets, each.key, null), lookup(module.special_subnets, each.key, null)).id
   route_table_id = var.route_tables[each.value.route_table_key].id
 }
 
 resource "azurerm_subnet_network_security_group_association" "nsg_vnet_association" {
   for_each = {
     for key, value in try(var.settings.subnets, {}) : key => value
-    if try(value.nsg_key, null) != null || try(var.network_security_groups[value.nsg_key], null) != null
+    if try(var.network_security_group_definition[value.nsg_key].version, 0) == 0
   }
 
   subnet_id                 = module.subnets[each.key].id
-  network_security_group_id = try(var.network_security_groups[each.value.nsg_key], null) == null ? module.nsg.nsg_obj[each.key].id : var.network_security_groups[each.value.nsg_key].id
+  network_security_group_id = module.nsg.nsg_obj[each.key].id
 }
 
+
+resource "azurerm_subnet_network_security_group_association" "nsg_vnet_association_version" {
+  for_each = {
+    for key, value in try(var.settings.subnets, {}) : key => value
+    if try(var.network_security_group_definition[value.nsg_key].version, 0) > 0
+  }
+
+  subnet_id                 = module.subnets[each.key].id
+  network_security_group_id = var.network_security_groups[each.value.nsg_key].id
+}

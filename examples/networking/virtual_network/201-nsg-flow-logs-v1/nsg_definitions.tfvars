@@ -5,6 +5,7 @@
 network_security_group_definition = {
   # This entry is applied to all subnets with no NSG defined
   empty_nsg = {
+    version            = 1
     resource_group_key = "vnet_hub_re1"
     name               = "empty_nsg"
 
@@ -41,6 +42,7 @@ network_security_group_definition = {
   }
 
   azure_bastion_nsg = {
+    version            = 1
     resource_group_key = "vnet_hub_re1"
     name               = "azure_bastion_nsg"
 
@@ -147,6 +149,7 @@ network_security_group_definition = {
   }
 
   application_gateway = {
+    version            = 1
     resource_group_key = "vnet_hub_re1"
     name               = "application_gateway"
 
@@ -219,6 +222,7 @@ network_security_group_definition = {
   }
 
   api_management = {
+    version            = 1
     resource_group_key = "vnet_hub_re1"
     name               = "api_management"
 
@@ -444,6 +448,7 @@ network_security_group_definition = {
   }
 
   jumpbox = {
+    version            = 1
     resource_group_key = "vnet_hub_re1"
     name               = "jumpbox"
 
