@@ -71,7 +71,7 @@ resource "azurerm_virtual_hub_connection" "vhub_connection" {
 locals {
   azurerm_virtual_hub_connection = {
     for key, value in local.networking.virtual_hub_connections : key => {
-      virtual_hub_id = local.combined_objects_virtual_wans[try(value.vhub.lz_key, local.client_config.landingzone_key)][value.vhub.virtual_wan_key].virtual_hubs[value.vhub.virtual_hub_key].id 
+      virtual_hub_id = local.combined_objects_virtual_wans[try(value.vhub.lz_key, local.client_config.landingzone_key)][value.vhub.virtual_wan_key].virtual_hubs[value.vhub.virtual_hub_key].id
     }
   }
 }

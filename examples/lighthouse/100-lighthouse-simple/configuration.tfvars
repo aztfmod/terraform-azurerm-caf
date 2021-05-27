@@ -19,7 +19,7 @@ lighthouse_definitions = {
     scopes = {
       subscription = {
         key    = ""
-        lz_key = ""                                                    # optional
+        lz_key = "" # optional
         id     = "/subscriptions/ede4d758-a1da-4031-b27f-2752d719d820"
       }
       resource_groups = {
@@ -49,7 +49,7 @@ lighthouse_definitions = {
         azuread_group = {
           key    = ""
           lz_key = "" # optional
-          id     = "" 
+          id     = ""
         }
         azuread_user = {
           key    = ""

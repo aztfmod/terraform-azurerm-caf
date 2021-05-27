@@ -15,13 +15,13 @@ resource_groups = {
 
 mssql_servers = {
   mssqlserver1 = {
-    name                = "example-mssqlserver"
-    region              = "region1"
-    resource_group_key  = "rg1"
-    version             = "12.0"
-    administrator_login = "sqluseradmin"
-    keyvault_key        = "kv1"
-    connection_policy   = "Default"
+    name                          = "example-mssqlserver"
+    region                        = "region1"
+    resource_group_key            = "rg1"
+    version                       = "12.0"
+    administrator_login           = "sqluseradmin"
+    keyvault_key                  = "kv1"
+    connection_policy             = "Default"
     public_network_access_enabled = true
   }
 }
@@ -37,7 +37,7 @@ mssql_databases = {
     sku_name           = "BC_Gen5_2"
 
     short_term_retention_policy = {
-      retention_days = 8    # 7 to 35 days
+      retention_days = 8 # 7 to 35 days
     }
 
     long_term_retention_policy = {

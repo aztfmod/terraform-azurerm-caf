@@ -69,9 +69,9 @@ virtual_machines = {
         network_interface_keys = ["nic0"]
 
         os_disk = {
-          name                    = "example_vm1-os"
-          caching                 = "ReadWrite"
-          storage_account_type    = "Standard_LRS"
+          name                 = "example_vm1-os"
+          caching              = "ReadWrite"
+          storage_account_type = "Standard_LRS"
         }
 
         source_image_reference = {
@@ -97,9 +97,9 @@ virtual_machines = {
 
 keyvaults = {
   example_vm_rg1 = {
-    name                        = "vmlinux_marketplace_akv1"
-    resource_group_key          = "vm_region1"
-    sku_name                    = "standard"
+    name               = "vmlinux_marketplace_akv1"
+    resource_group_key = "vm_region1"
+    sku_name           = "standard"
     tags = {
       env = "Standalone"
     }
