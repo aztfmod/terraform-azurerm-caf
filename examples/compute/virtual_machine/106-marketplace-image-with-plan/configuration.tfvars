@@ -19,7 +19,7 @@ global_settings = {
 
 resource_groups = {
   vm_region1 = {
-    name = "example-virtual-machine-rg1"
+    name = "example-virtual-machine-marketplace-re1"
   }
 }
 
@@ -60,7 +60,7 @@ virtual_machines = {
 
     virtual_machine_settings = {
       linux = {
-        name                            = "example_vm1"
+        name                            = "example_marketplace_vm1"
         size                            = "Standard_F2"
         admin_username                  = "adminuser"
         disable_password_authentication = true
@@ -97,12 +97,9 @@ virtual_machines = {
 
 keyvaults = {
   example_vm_rg1 = {
-    name                        = "vmlinuxakv1"
+    name                        = "vmlinux_marketplace_akv1"
     resource_group_key          = "vm_region1"
     sku_name                    = "standard"
-    soft_delete_enabled         = true
-    purge_protection_enabled    = true
-    enabled_for_disk_encryption = true
     tags = {
       env = "Standalone"
     }

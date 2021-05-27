@@ -1,6 +1,6 @@
 locals {
   # CAF landing zones can retrieve remote objects from a different landing zone and the
-  # combined_objects will merge it with the local objects
+  # combined_objects will merge it with the local objects     
   combined_objects_aks_clusters                      = merge(tomap({ (local.client_config.landingzone_key) = module.aks_clusters }), try(var.remote_objects.aks_clusters, {}))
   combined_objects_app_config                        = merge(tomap({ (local.client_config.landingzone_key) = module.app_config }), try(var.remote_objects.app_config, {}))
   combined_objects_app_service_environments          = merge(tomap({ (local.client_config.landingzone_key) = module.app_service_environments }), try(var.remote_objects.app_service_environments, {}))
@@ -49,4 +49,8 @@ locals {
   combined_objects_virtual_hub_connections           = merge(tomap({ (local.client_config.landingzone_key) = azurerm_virtual_hub_connection.vhub_connection }), try(var.remote_objects.vhub_peerings, {}), try(var.remote_objects.virtual_hub_connections, {}))
   combined_objects_virtual_hub_route_tables          = merge(tomap({ (local.client_config.landingzone_key) = azurerm_virtual_hub_route_table.route_table }), try(var.remote_objects.virtual_hub_route_tables, {}))
   combined_objects_virtual_wans                      = merge(tomap({ (local.client_config.landingzone_key) = module.virtual_wans }), try(var.remote_objects.virtual_wans, {}))
+  combined_objects_wvd_application_groups            = merge(tomap({ (local.client_config.landingzone_key) = module.wvd_application_groups }), try(var.remote_objects.wvd_application_groups, {}))
+  combined_objects_wvd_host_pools                    = merge(tomap({ (local.client_config.landingzone_key) = module.wvd_host_pools }), try(var.remote_objects.wvd_host_pools, {}))
+  combined_objects_wvd_session_hosts                 = merge(tomap({ (local.client_config.landingzone_key) = module.wvd_session_hosts }), try(var.remote_objects.wvd_session_hosts, {}))
+  combined_objects_wvd_workspaces                    = merge(tomap({ (local.client_config.landingzone_key) = module.wvd_workspaces }), try(var.remote_objects.wvd_workspaces, {}))
 }
