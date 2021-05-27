@@ -32,9 +32,8 @@ virtual_machines = {
     networking_interfaces = {
       nic0 = {
         # Value of the keys from networking.tfvars
-        vnet_key   = "vnet_region1"
-        subnet_key = "wvd_hosts"
-        # subnet_id               = "/subscriptions/3b5ba600-67e6-4d71-84aa-54d73e6fc1d4/resourceGroups/xviq-rg-example-virtual-machine-rg1/providers/Microsoft.Network/virtualNetworks/xviq-vnet-virtual_machines/subnets/xviq-snet-examples"
+        vnet_key                = "vnet_region1"
+        subnet_key              = "wvd_hosts"
         name                    = "nic0"
         enable_ip_forwarding    = false
         internal_dns_name_label = "nic0-vm7"
