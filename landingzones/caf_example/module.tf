@@ -68,14 +68,16 @@ module "example" {
   }
   compute = {
     aks_clusters               = var.aks_clusters
-    aks_clusters               = var.aks_clusters
     availability_sets          = var.availability_sets
     azure_container_registries = var.azure_container_registries
-    bastion_hosts              = var.bastion_hosts
     bastion_hosts              = var.bastion_hosts
     container_groups           = var.container_groups
     proximity_placement_groups = var.proximity_placement_groups
     virtual_machines           = var.virtual_machines
+    wvd_application_groups     = var.wvd_application_groups
+    wvd_host_pools             = var.wvd_host_pools
+    wvd_session_hosts          = var.wvd_session_hosts
+    wvd_workspaces             = var.wvd_workspaces
   }
   networking = {
     application_gateway_applications                        = var.application_gateway_applications
@@ -146,6 +148,7 @@ module "example" {
     postgresql_servers                 = var.postgresql_servers
     synapse_workspaces                 = var.synapse_workspaces
   }
+
   shared_services = {
     image_definitions        = var.image_definitions
     monitoring               = var.monitoring

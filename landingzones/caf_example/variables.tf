@@ -490,6 +490,18 @@ variable "virtual_hub_route_tables" {
 variable "virtual_hub_er_gateway_connections" {
   default = {}
 }
+variable "wvd_application_groups" {
+  default = {}
+}
+variable "wvd_session_hosts" {
+  default = {}
+}
+variable "wvd_workspaces" {
+  default = {}
+}
+variable "wvd_host_pools" {
+  default = {}
+}
 variable "lighthouse_definitions" {
   default = {}
 }
