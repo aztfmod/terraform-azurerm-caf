@@ -13,7 +13,7 @@ output "virtual_hub_route_table" {
 resource "azurerm_virtual_hub_route_table" "route_table" {
   for_each = local.networking.virtual_hub_route_tables
 
-  name   = each.value.name
+  name = each.value.name
 
   virtual_hub_id = coalesce(
     try(local.combined_objects_virtual_wans[try(each.value.lz_key, local.client_config.landingzone_key)][each.value.virtual_wan_key].virtual_hubs[each.value.virtual_hub_key].id, ""),
@@ -53,7 +53,7 @@ resource "azurerm_virtual_hub_route_table" "route_table" {
 module "azurerm_virtual_hub_route_table" {
   depends_on = [azurerm_virtual_hub_route_table.route_table]
   source     = "./modules/networking/virtual_hub_route_tables"
-  for_each = local.networking.virtual_hub_route_tables
+  for_each   = local.networking.virtual_hub_route_tables
 
   client_config = local.client_config
   name          = each.value.name
@@ -82,6 +82,6 @@ module "azurerm_virtual_hub_route_table" {
     # Removing support for vhub connection in route table to prevent circula references
     #
     # virtual_hub_connection = local.combined_objects_virtual_hub_connections
-    azurerm_firewall       = local.combined_objects_azurerm_firewalls
+    azurerm_firewall = local.combined_objects_azurerm_firewalls
   }
 }

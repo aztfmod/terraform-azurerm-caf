@@ -45,14 +45,14 @@ resource "azurerm_mssql_database" "mssqldb" {
   }
 
   dynamic "short_term_retention_policy" {
-    for_each = lookup(var.settings,"short_term_retention_policy",{}) == {} ? [] : [1]
+    for_each = lookup(var.settings, "short_term_retention_policy", {}) == {} ? [] : [1]
     content {
       retention_days = try(var.settings.short_term_retention_policy.retention_days, null)
     }
   }
 
   dynamic "long_term_retention_policy" {
-    for_each = lookup(var.settings,"long_term_retention_policy",{}) == {} ? []: [1]
+    for_each = lookup(var.settings, "long_term_retention_policy", {}) == {} ? [] : [1]
     content {
       weekly_retention  = try(var.settings.long_term_retention_policy.weekly_retention, null)
       monthly_retention = try(var.settings.long_term_retention_policy.monthly_retention, null)

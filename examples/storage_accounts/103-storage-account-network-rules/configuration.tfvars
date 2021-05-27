@@ -22,8 +22,8 @@ vnets = {
     specialsubnets = {}
     subnets = {
       subnet1 = {
-        name = "test-stg"
-        cidr = ["10.100.100.0/29"]
+        name              = "test-stg"
+        cidr              = ["10.100.100.0/29"]
         service_endpoints = ["Microsoft.Storage"]
       }
     }
@@ -48,7 +48,7 @@ storage_accounts = {
       ##
     }
     network = {
-      bypass = ["Logging", "Metrics"] #optional. Valid options are any combination of Logging, Metrics, AzureServices, or None
+      bypass   = ["Logging", "Metrics"]         #optional. Valid options are any combination of Logging, Metrics, AzureServices, or None
       ip_rules = ["116.86.27.243", "100.1.1.1"] #optional. The prefix of ip_rules must be between 0 and 30 and only supports public IP addresses.
       subnets = {
         subnet1 = {
@@ -58,7 +58,7 @@ storage_accounts = {
         }
         #add multiple subnets by extending this block
       }
-     
+
     }
   }
 }
