@@ -36,7 +36,7 @@ jobs:
           config_files: [
             "app_gateway/100-simple-app-gateway",
             "app_gateway/101-private-public",
-            "app_gateway/102-waf-policy,
+            "app_gateway/102-waf-policy",
             "app_gateway/210-agw-with-keyvault",
             "app_insights/100-all-attributes",
             "app_insights/100-simple",
