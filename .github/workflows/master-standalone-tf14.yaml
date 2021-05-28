@@ -6,20 +6,8 @@
 name: standalone-scenario-tf14
 
 on:
-  pull_request:
-    paths-ignore:
-      - .github/workflows/master-100.yaml
-      - 'documentation/**'
-      - '_pictures/**'
-      - 'README.md'
-      - 'CHANGELOG.md'
-      - 'examples/compute/virtual_machine/100-single-linux-vm'
-      - 'examples/compute/virtual_machine/105-single-windows-vm-kv-admin-secrets'
-      - 'examples/compute/virtual_machine/212-vm-disk-encryption-set'
-      - 'examples/storage_accounts/100-simple-storage-account-blob-container'
-      
   schedule:
-    - cron:  '0 8 * * *'
+    - cron:  '0 5 * * 0' #1 AM on Sunday
 
 env:
   TF_CLI_ARGS: '-no-color'
@@ -62,8 +50,10 @@ jobs:
             "compute/virtual_machine/101-single-windows-vm",
             "compute/virtual_machine/102-single-vm-data-disks",
             "compute/virtual_machine/104-single-windows-backup",
+            "compute/virtual_machine/106-marketplace-image-with-plan",
             "compute/virtual_machine/210-vm-bastion-winrm",
             "compute/virtual_machine/211-vm-bastion-winrm-agents",
+            "compute/windows_virtual_desktop/wvd_resources",
             "cosmos_db/100-simple-cosmos-db-cassandra",
             "cosmos_db/100-simple-cosmos-db-gremlin",
             "cosmos_db/100-simple-cosmos-db-mongo",
@@ -122,6 +112,8 @@ jobs:
             "networking/virtual_network/100-simple-vnet-subnets-nsgs",
             "networking/virtual_network/100-subnet-delegation",
             "networking/virtual_network/101-vnet-peering-nsg",
+            "networking/virtual_network/200-nsg-flow-logs",
+            "networking/virtual_network/201-nsg-flow-logs-v1",
             "networking/virtual_wan/100-vwan-multi-hubs",
             "networking/virtual_wan/101-vwan-hub-firewall-legacy",
             "networking/virtual_wan/102-vwan-hub-firewall-new",
@@ -150,11 +142,12 @@ jobs:
             "webapps/appservice/104-appservice-appinsight",
             "webapps/appservice/105-appservice-backup",
             "webapps/appservice/106-appservice-diagnostics",
+            "webapps/appservice/107-appservice-private",
             "webapps/function_app/101-function_app-private"
           ]
 
     container:
-      image: aztfmod/rover:0.14.11-2105.0604
+      image: aztfmod/rover:0.14.11-2105.2603
       options: --user 0
 
     steps:
@@ -171,14 +164,30 @@ jobs:
 
           ${GITHUB_WORKSPACE}/landingzones/caf_example/ci.sh ${{ github.run_id }} ${GITHUB_WORKSPACE}/landingzones/caf_example
 
+  purge:
+    name: purge
+    runs-on: ubuntu-latest
+    if: ${{ failure() || cancelled() }}
+
+    needs: examples
+
+    container:
+      image: aztfmod/rover:0.14.11-2105.2603
+      options: --user 0
+
+    steps:
+      - name: Login azure
+        run: |
+          az login --service-principal -u '${{ env.ARM_CLIENT_ID }}' -p '${{ env.ARM_CLIENT_SECRET }}' --tenant '${{ env.ARM_TENANT_ID }}'
+          az account set -s  ${{ env.ARM_SUBSCRIPTION_ID }}
+
       - name: Complete purge
-        if: ${{ always() }}
         run: |
           for i in `az monitor diagnostic-settings subscription list -o tsv --query "value[?contains(name, '${{ github.run_id }}' )].name"`; do echo "purging subscription diagnostic-settings: $i" && $(az monitor diagnostic-settings subscription delete --name $i --yes); done
           for i in `az monitor log-profiles list -o tsv --query '[].name'`; do az monitor log-profiles delete --name $i; done
           for i in `az ad group list --query "[?contains(displayName, '${{ github.run_id }}')].objectId" -o tsv`; do echo "purging Azure AD group: $i" && $(az ad group delete --verbose --group $i || true); done
           for i in `az ad app list --query "[?contains(displayName, '${{ github.run_id }}')].appId" -o tsv`; do echo "purging Azure AD app: $i" && $(az ad app delete --verbose --id $i || true); done
-          for i in `az keyvault list-deleted --query "[?tags.environment=='${{ github.run_id }}'].name" -o tsv`; do az keyvault purge --name $i; done
-          for i in `az group list --query "[?tags.environment=='${{ github.run_id }}'].name" -o tsv`; do echo "purging resource group: $i" && $(az group delete -n $i -y --no-wait || true); done
+          for i in `az keyvault list-deleted --query "[?tags.testing_job_id=='${{ github.run_id }}'].name" -o tsv`; do az keyvault purge --name $i; done
+          for i in `az group list --query "[?tags.testing_job_id=='${{ github.run_id }}'].name" -o tsv`; do echo "purging resource group: $i" && $(az group delete -n $i -y --no-wait || true); done
           for i in `az role assignment list --query "[?contains(roleDefinitionName, '${{ github.run_id }}')].roleDefinitionName" -o tsv`; do echo "purging role assignment: $i" && $(az role assignment delete --role $i || true); done
           for i in `az role definition list --query "[?contains(roleName, '${{ github.run_id }}')].roleName" -o tsv`; do echo "purging custom role definition: $i" && $(az role definition delete --name $i || true); done

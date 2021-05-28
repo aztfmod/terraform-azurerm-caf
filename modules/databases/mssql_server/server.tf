@@ -31,7 +31,7 @@ resource "azurerm_mssql_server" "mssql" {
 }
 
 resource "azurerm_mssql_firewall_rule" "firewall_rules" {
-  for_each         = try(var.settings.firewall_rules, {})
+  for_each = try(var.settings.firewall_rules, {})
 
   name             = each.value.name
   server_id        = azurerm_mssql_server.mssql.id
@@ -40,7 +40,7 @@ resource "azurerm_mssql_firewall_rule" "firewall_rules" {
 }
 
 resource "azurerm_mssql_virtual_network_rule" "network_rules" {
-  for_each  = try(var.settings.network_rules, {})
+  for_each = try(var.settings.network_rules, {})
 
   name      = each.value.name
   server_id = azurerm_mssql_server.mssql.id
