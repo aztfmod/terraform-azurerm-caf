@@ -3,8 +3,8 @@ virtual_machines = {
 
   # Configuration to deploy a bastion host linux virtual machine
   bastion_host = {
-    resource_group_key                   = "vm_region1"
-    provision_vm_agent                   = true
+    resource_group_key = "vm_region1"
+    provision_vm_agent = true
     # when boot_diagnostics_storage_account_key is empty string "", boot diagnostics will be put on azure managed storage
     # when boot_diagnostics_storage_account_key is a non-empty string, it needs to point to the key of a user managed storage defined in diagnostic_storage_accounts
     # if boot_diagnostics_storage_account_key is not defined, but global_settings.resource_defaults.virtual_machines.use_azmanaged_storage_for_boot_diagnostics is true, boot diagnostics will be put on azure managed storage
@@ -59,7 +59,7 @@ virtual_machines = {
   }
 
   windows_server1 = {
-    resource_group_key                   = "vm_region1"
+    resource_group_key = "vm_region1"
     # when boot_diagnostics_storage_account_key is empty string "", boot diagnostics will be put on azure managed storage
     # when boot_diagnostics_storage_account_key is a non-empty string, it needs to point to the key of a user managed storage defined in diagnostic_storage_accounts
     # if boot_diagnostics_storage_account_key is not defined, but global_settings.resource_defaults.virtual_machines.use_azmanaged_storage_for_boot_diagnostics is true, boot diagnostics will be put on azure managed storage

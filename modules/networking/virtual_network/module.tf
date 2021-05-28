@@ -67,6 +67,7 @@ module "nsg" {
   diagnostics                       = var.diagnostics
   global_settings                   = var.global_settings
   location                          = var.location
+  network_security_groups           = var.network_security_groups
   network_security_group_definition = var.network_security_group_definition
   resource_group                    = var.resource_group_name
   subnets                           = var.settings.subnets
@@ -77,17 +78,30 @@ module "nsg" {
 resource "azurerm_subnet_route_table_association" "rt" {
   for_each = {
     for key, subnet in merge(lookup(var.settings, "subnets", {}), lookup(var.settings, "specialsubnets", {})) : key => subnet
-    if lookup(subnet, "route_table_key", null) != null
+    if try(subnet.route_table_key, null) != null
   }
 
-  subnet_id      = coalesce(lookup(module.subnets, each.key, null), lookup(module.special_subnets, each.key, null )).id
+  subnet_id      = coalesce(lookup(module.subnets, each.key, null), lookup(module.special_subnets, each.key, null)).id
   route_table_id = var.route_tables[each.value.route_table_key].id
 }
 
 resource "azurerm_subnet_network_security_group_association" "nsg_vnet_association" {
-  for_each = module.subnets
+  for_each = {
+    for key, value in try(var.settings.subnets, {}) : key => value
+    if try(var.network_security_group_definition[value.nsg_key].version, 0) == 0 && try(value.nsg_key, null) != null
+  }
 
-  subnet_id                 = each.value.id
+  subnet_id                 = module.subnets[each.key].id
   network_security_group_id = module.nsg.nsg_obj[each.key].id
 }
 
+
+resource "azurerm_subnet_network_security_group_association" "nsg_vnet_association_version" {
+  for_each = {
+    for key, value in try(var.settings.subnets, {}) : key => value
+    if try(var.network_security_group_definition[value.nsg_key].version, 0) > 0 && try(value.nsg_key, null) != null
+  }
+
+  subnet_id                 = module.subnets[each.key].id
+  network_security_group_id = var.network_security_groups[each.value.nsg_key].id
+}

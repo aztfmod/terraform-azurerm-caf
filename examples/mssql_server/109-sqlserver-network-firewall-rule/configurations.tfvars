@@ -18,13 +18,13 @@ vnets = {
   vnet1 = {
     resource_group_key = "rg1"
     vnet = {
-      name = "testvnet1"
+      name          = "testvnet1"
       address_space = ["10.0.0.0/16"]
     }
     subnets = {
       web = {
-        name = "web-subnet"
-        cidr = ["10.0.1.0/24"]
+        name              = "web-subnet"
+        cidr              = ["10.0.1.0/24"]
         service_endpoints = ["Microsoft.Sql"] # Required for network rule application
       }
     }
@@ -42,19 +42,19 @@ mssql_servers = {
     connection_policy             = "Default"
     public_network_access_enabled = true # true for firewall rule to be applied
     minimum_tls_version           = "1.2"
-    
+
     firewall_rules = {
       firewall_rule1 = {
-        name = "firewallrule1"
+        name             = "firewallrule1"
         start_ip_address = "124.82.37.221"
-        end_ip_address = "124.82.37.221"
+        end_ip_address   = "124.82.37.221"
       }
     }
 
     network_rules = {
       network_rule1 = {
-        name = "networkrule1"
-        vnet_key = "vnet1"
+        name       = "networkrule1"
+        vnet_key   = "vnet1"
         subnet_key = "web"
         # lz_key = ""
 

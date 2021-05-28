@@ -112,8 +112,18 @@ resource "azurerm_linux_virtual_machine" "vm" {
   dynamic "boot_diagnostics" {
     for_each = try(var.boot_diagnostics_storage_account != null ? [1] : var.global_settings.resource_defaults.virtual_machines.use_azmanaged_storage_for_boot_diagnostics == true ? [1] : [], [])
 
-    content { 
+    content {
       storage_account_uri = var.boot_diagnostics_storage_account == "" ? null : var.boot_diagnostics_storage_account
+    }
+  }
+
+  dynamic "plan" {
+    for_each = try(each.value.plan, false) == false ? [] : [1]
+
+    content {
+      name      = each.value.plan.name
+      product   = each.value.plan.product
+      publisher = each.value.plan.publisher
     }
   }
 
