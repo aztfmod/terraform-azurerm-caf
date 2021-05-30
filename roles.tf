@@ -31,14 +31,24 @@ resource "azurerm_role_assignment" "for" {
 
 data "azurerm_management_group" "level" {
   for_each = {
-    for key, value in try(local.roles_to_process, {}) : key => value
-    if value.scope_resource_key == "management_group"
+    for key, value in try(var.role_mapping.built_in_role_mapping.management_group, {}) : key => value
   }
 
-  name = lower(each.value.scope_key_resource) == "root" ? local.client_config.tenant_id : each.value.scope_key_resource
+  name = lower(each.key) == "root" ? data.azurerm_client_config.current.tenant_id : each.key
 }
 
 locals {
+
+  management_groups = tomap(
+    {
+      (var.current_landingzone_key) = {
+        for key, value in try(var.role_mapping.built_in_role_mapping.management_group, {}) : 
+        key => {
+          id = data.azurerm_management_group.level[key].id
+        } 
+      }
+    }
+  )
 
   services_roles = {
     aks_clusters                = local.combined_objects_aks_clusters
@@ -79,17 +89,6 @@ locals {
     subscriptions               = tomap({ (var.current_landingzone_key) = merge(try(var.subscriptions, {}), { "logged_in_subscription" = { id = data.azurerm_subscription.primary.id } }) })
     synapse_workspaces          = local.combined_objects_synapse_workspaces
   }
-
-  management_groups = tomap(
-    {
-      (var.current_landingzone_key) = {
-        for key, value in local.roles_to_process : 
-        value.scope_key_resource => {
-          id = data.azurerm_management_group.level[key].id
-        } if try(value.scope_resource_key, null) == "management_group"
-      }
-    }
-  )
 
   logged_in = tomap(
     {
