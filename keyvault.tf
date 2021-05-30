@@ -50,7 +50,7 @@ module "keyvault_access_policies_azuread_apps" {
   keyvaults       = local.combined_objects_keyvaults
   access_policies = each.value
   client_config   = local.client_config
-  azuread_apps    = local.combined_objects_azuread_applications
+  azuread_apps    = local.combined_objects_azuread_apps
 }
 
 
