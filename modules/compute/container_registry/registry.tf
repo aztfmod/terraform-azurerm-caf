@@ -9,19 +9,19 @@ resource "azurecaf_name" "acr" {
 }
 
 resource "azurerm_container_registry" "acr" {
-  name                     = azurecaf_name.acr.result
-  resource_group_name      = var.resource_group_name
-  location                 = var.location
-  sku                      = var.sku
-  admin_enabled            = var.admin_enabled
-  tags                     = local.tags
+  name                = azurecaf_name.acr.result
+  resource_group_name = var.resource_group_name
+  location            = var.location
+  sku                 = var.sku
+  admin_enabled       = var.admin_enabled
+  tags                = local.tags
 
   dynamic "network_rule_set" {
     for_each = var.network_rule_set
 
     content {
       default_action = try(var.network_rule_set.default_action, "Allow")
-  
+
       dynamic "ip_rule" {
         for_each = try(network_rule_set.value.ip_rules, {})
 
