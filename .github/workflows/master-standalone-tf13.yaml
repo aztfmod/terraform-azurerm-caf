@@ -90,7 +90,6 @@ jobs:
             "networking/dns_zones/100-simple-dns_zone",
             "networking/express_routes",
             "networking/firewall/100-standard-firewall-legacy-pip",
-            "networking/firewall/100-simple-firewall-with-routes",
             "networking/firewall/101-simple-firewall",
             "networking/firewall/102-premium-firewall",
             "networking/firewall/103-firewall-policies",
