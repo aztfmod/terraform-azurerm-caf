@@ -67,22 +67,26 @@ locals {
     Labels = try(var.settings.propagated_route_tables.labels, [])
     Ids = flatten(
       [
-        try(
-          flatten(
-            [
-              for key in try(var.settings.propagated_route_tables.ids, []) : {
-                Id = key
-              }
-            ]
-          ),
-          flatten(
-            [
-              for key in try(var.settings.propagated_route_tables.keys, []) : {
-                Id = var.virtual_hub_route_tables[try(var.settings.propagated_route_tables.lz_key, var.client_config.landingzone_key)][key].id
-              }
-            ]
-          ),
-          null
+        flatten(
+          [
+            for key in try(var.settings.propagated_route_tables.ids, []) : {
+              Id = key
+            }
+          ]
+        ),
+        flatten(
+          [
+            for key in try(var.settings.propagated_route_tables.keys, []) : {
+              Id = var.virtual_hub_route_tables[try(var.settings.propagated_route_tables.lz_key, var.client_config.landingzone_key)][key].id
+            } if contains(tolist(["defaultRouteTable", "None"]), key) == false
+          ]
+        ),
+        flatten(
+          [
+            for key in try(var.settings.propagated_route_tables.keys, []) : {
+              Id = format("%s/hubRouteTables/%s", var.virtual_hub_id, key)
+            } if contains(tolist(["defaultRouteTable", "None"]), key) == true
+          ]
         )
       ]
     )
