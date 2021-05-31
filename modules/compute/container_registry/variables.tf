@@ -34,8 +34,8 @@ variable "tags" {
   default     = {}
 }
 
-variable "georeplication_locations" {
-  description = "(Optional) A list of Azure locations where the container registry should be geo-replicated."
+variable "georeplications" {
+  description = "(Optional) Updated structure for Azure locations where the container registry should be geo-replicated."
   default     = null
 }
 

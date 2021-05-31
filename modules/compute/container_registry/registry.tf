@@ -14,7 +14,6 @@ resource "azurerm_container_registry" "acr" {
   location                 = var.location
   sku                      = var.sku
   admin_enabled            = var.admin_enabled
-  georeplication_locations = var.georeplication_locations
   tags                     = local.tags
 
   dynamic "network_rule_set" {
@@ -39,6 +38,15 @@ resource "azurerm_container_registry" "acr" {
           subnet_id = try(var.vnets[try(virtual_network.value.lz_key, var.client_config.landingzone_key)][virtual_network.value.vnet_key].subnets[virtual_network.value.subnet_key].id, {})
         }
       }
+    }
+  }
+
+  dynamic "georeplications" {
+    for_each = var.georeplications
+
+    content {
+      location = var.global_settings.regions[georeplications.key]
+      tags     = try(georeplications.value.tags)
     }
   }
 }
