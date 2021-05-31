@@ -8,6 +8,9 @@
     "enable_internet_security": {
       "type": "Bool"
     },
+    "expressRouteGatewayBypass": {
+      "type": "Bool"
+    },
     "express_route_circuit_peering_id": {
       "type": "String"
     },
@@ -40,6 +43,7 @@
         "authorizationKey": "[parameters('authorization_key')]",
         "routingWeight": "[parameters('routing_weight')]",
         "enableInternetSecurity": "[parameters('enable_internet_security')]",
+        "expressRouteGatewayBypass": "[parameters('expressRouteGatewayBypass')]",
         "routingConfiguration": {
           "associatedRouteTable": "[parameters('associatedRouteTable')]",
           "propagatedRouteTables": "[parameters('propagatedRouteTables')]",

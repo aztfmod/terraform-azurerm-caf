@@ -28,6 +28,9 @@ locals {
       routing_weight = {
         value = local.routing_weight
       }
+      expressRouteGatewayBypass = {
+        value = local.express_route_gateway_bypass
+      }
       enable_internet_security = {
         value = local.enable_internet_security
       }
@@ -44,12 +47,12 @@ locals {
   )
 
 
-
   express_route_gateway_name       = var.express_route_gateway_name
   express_route_connection_name    = var.settings.name
   express_route_circuit_peering_id = format("%s/peerings/AzurePrivatePeering", var.express_route_circuit_id)
   authorization_key                = var.authorization_key
   routing_weight                   = try(var.settings.routing_weight, 0)
+  express_route_gateway_bypass     = try(var.settings.express_route_gateway_bypass, false)
   enable_internet_security         = try(var.settings.enable_internet_security, false)
 
   associated_route_table = {
