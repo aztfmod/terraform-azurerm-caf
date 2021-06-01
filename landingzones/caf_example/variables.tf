@@ -493,9 +493,6 @@ variable "virtual_hub_er_gateway_connections" {
 variable "wvd_application_groups" {
   default = {}
 }
-variable "wvd_session_hosts" {
-  default = {}
-}
 variable "wvd_workspaces" {
   default = {}
 }
