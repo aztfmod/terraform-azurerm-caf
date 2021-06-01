@@ -34,7 +34,7 @@ jobs:
       matrix: ${{steps.load_cases.output.matrix}}
     steps:
       - uses: actions/checkout@v2
-      - name: load_cases
+      - id: load_cases
         run: |
           cases=$(cat ./.github/workflows/master-100-testcases.json)
           echo "::set-output name=matrix::$cases"
