@@ -36,7 +36,6 @@ jobs:
       - id: load_cases
         run: |
           cases=$(cat ./.github/workflows/master-100-testcases.json)
-          echo $cases
           echo "::set-output name=matrix::$cases"
   
   examples:
