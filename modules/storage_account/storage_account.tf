@@ -26,6 +26,8 @@ resource "azurerm_storage_account" "stg" {
   min_tls_version           = lookup(var.storage_account, "min_tls_version", "TLS1_2")
   allow_blob_public_access  = lookup(var.storage_account, "allow_blob_public_access", false)
   is_hns_enabled            = lookup(var.storage_account, "is_hns_enabled", false)
+  nfsv3_enabled             = lookup(var.storage_account, "nfsv3_enabled", false)
+  large_file_share_enabled  = lookup(var.storage_account, "large_file_share_enabled", null)
   tags                      = merge(var.base_tags, local.tags)
 
 
@@ -34,7 +36,7 @@ resource "azurerm_storage_account" "stg" {
 
     content {
       name          = var.storage_account.custom_domain.name
-      use_subdomain = var.storage_account.custom_domain.use_subdomain
+      use_subdomain = try(var.storage_account.custom_domain.use_subdomain, null)
     }
   }
 
@@ -67,6 +69,14 @@ resource "azurerm_storage_account" "stg" {
 
         content {
           days = lookup(var.storage_account.blob_properties.delete_retention_policy, "delete_retention_policy", 7)
+        }
+      }
+
+      dynamic "container_delete_retention_policy" {
+        for_each = lookup(var.storage_account.blob_properties, "container_delete_retention_policy", false) == false ? [] : [1]
+
+        content {
+          days = lookup(var.storage_account.blob_properties.container_delete_retention_policy, "container_delete_retention_policy", 7)
         }
       }
     }
@@ -129,8 +139,8 @@ resource "azurerm_storage_account" "stg" {
     for_each = lookup(var.storage_account, "static_website", false) == false ? [] : [1]
 
     content {
-      index_document     = var.storage_account.static_website.index_document
-      error_404_document = var.storage_account.static_website.error_404_document
+      index_document     = try(var.storage_account.static_website.index_document, null)
+      error_404_document = try(var.storage_account.static_website.error_404_document, null)
     }
   }
 
@@ -146,8 +156,6 @@ resource "azurerm_storage_account" "stg" {
     }
   }
 }
-
-
 
 module "container" {
   source   = "./container"
