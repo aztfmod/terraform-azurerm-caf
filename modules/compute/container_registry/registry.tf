@@ -17,7 +17,7 @@ resource "azurerm_container_registry" "acr" {
   tags                = local.tags
 
   dynamic "network_rule_set" {
-    for_each = var.network_rule_set
+    for_each = try(var.network_rule_set, {})
 
     content {
       default_action = try(var.network_rule_set.default_action, "Allow")
@@ -42,7 +42,7 @@ resource "azurerm_container_registry" "acr" {
   }
 
   dynamic "georeplications" {
-    for_each = var.georeplications
+    for_each = try(var.georeplications, {})
 
     content {
       location = var.global_settings.regions[georeplications.key]
