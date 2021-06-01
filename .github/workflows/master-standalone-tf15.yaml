@@ -27,16 +27,16 @@ env:
   ROVER_RUNNER: true
 
 jobs:
-  testcases:
-    name: testcases
+  load_cases:
+    name: load_cases
 
     runs-on: ubuntu-latest
     outputs:
-        matrix: ${{steps.testcases.outputs.matrix}}
+        matrix: ${{steps.load_cases.outputs.matrix}}
 
     steps:
       - uses: actions/checkout@v2
-      - name: testcases
+      - name: load_cases
         run: |
           cases=$(cat ./.github/workflows/master-100-testcases.json)
           echo "::set-output name=matrix::$cases"
@@ -44,7 +44,7 @@ jobs:
   examples:
     name: examples
     runs-on: ubuntu-latest
-    needs: testcases
+    needs: load_cases
 
     strategy:
       fail-fast: false
