@@ -3,7 +3,7 @@ locals {
 }
 
 resource "azurerm_backup_container_storage_account" "container" {
-  count = try(var.storage_account.backup, null) == null ? 0 : 1
+  for_each = try(var.storage_account.backup, null) == null ? toset([]) : toset(["enabled"])
 
   resource_group_name = local.recovery_vault.resource_group_name
   recovery_vault_name = local.recovery_vault.name
