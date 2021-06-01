@@ -36,7 +36,7 @@ variable "tags" {
 
 variable "georeplications" {
   description = "(Optional) Updated structure for Azure locations where the container registry should be geo-replicated."
-  default     = null
+  default     = {}
 }
 
 variable "vnets" {
