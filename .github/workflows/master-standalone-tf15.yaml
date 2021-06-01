@@ -32,7 +32,7 @@ jobs:
 
     runs-on: ubuntu-latest
     outputs:
-        matrix: ${{steps.read-cases.testcases.matrix}}
+        matrix: ${{steps.testcases.matrix}}
 
     steps:
       - uses: actions/checkout@v2
