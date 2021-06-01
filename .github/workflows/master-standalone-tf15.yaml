@@ -70,7 +70,7 @@ jobs:
     runs-on: ubuntu-latest
     if: ${{ failure() || cancelled() }}
 
-    needs: examples
+    needs: [examples, load_cases]
 
     container:
       image: aztfmod/rover:0.15.4-2105.2603
