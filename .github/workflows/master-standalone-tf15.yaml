@@ -28,10 +28,9 @@ env:
 
 jobs:
   load_cases:
-    name: load_cases
     runs-on: ubuntu-latest
     outputs:
-      matrix: ${{steps.load_cases.output.matrix}}
+      matrix: ${{ steps.load_cases.outputs.matrix }}
     steps:
       - uses: actions/checkout@v2
       - id: load_cases
