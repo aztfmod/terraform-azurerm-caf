@@ -25,6 +25,41 @@ module "example" {
   storage_accounts               = var.storage_accounts
   tags                           = local.tags
 
+  cloud = {
+    acrLoginServerEndpoint                      = var.acrLoginServerEndpoint
+    attestationEndpoint                         = var.attestationEndpoint
+    azureDatalakeAnalyticsCatalogAndJobEndpoint = var.azureDatalakeAnalyticsCatalogAndJobEndpoint
+    azureDatalakeStoreFileSystemEndpoint        = var.azureDatalakeStoreFileSystemEndpoint
+    keyvaultDns                                 = var.keyvaultDns
+    mariadbServerEndpoint                       = var.mariadbServerEndpoint
+    mhsmDns                                     = var.mhsmDns
+    mysqlServerEndpoint                         = var.mysqlServerEndpoint
+    postgresqlServerEndpoint                    = var.postgresqlServerEndpoint
+    sqlServerHostname                           = var.sqlServerHostname
+    storageEndpoint                             = var.storageEndpoint
+    storageSyncEndpoint                         = var.storageSyncEndpoint
+    synapseAnalyticsEndpoint                    = var.synapseAnalyticsEndpoint
+    activeDirectory                             = var.activeDirectory
+    activeDirectoryDataLakeResourceId           = var.activeDirectoryDataLakeResourceId
+    activeDirectoryGraphResourceId              = var.activeDirectoryGraphResourceId
+    activeDirectoryResourceId                   = var.activeDirectoryResourceId
+    appInsightsResourceId                       = var.appInsightsResourceId
+    appInsightsTelemetryChannelResourceId       = var.appInsightsTelemetryChannelResourceId
+    attestationResourceId                       = var.attestationResourceId
+    azmirrorStorageAccountResourceId            = var.azmirrorStorageAccountResourceId
+    batchResourceId                             = var.batchResourceId
+    gallery                                     = var.gallery
+    logAnalyticsResourceId                      = var.logAnalyticsResourceId
+    management                                  = var.management
+    mediaResourceId                             = var.mediaResourceId
+    microsoftGraphResourceId                    = var.microsoftGraphResourceId
+    ossrdbmsResourceId                          = var.ossrdbmsResourceId
+    portal                                      = var.portal
+    resourceManager                             = var.resourceManager
+    sqlManagement                               = var.sqlManagement
+    synapseAnalyticsResourceId                  = var.synapseAnalyticsResourceId
+    vmImageAliasDoc                             = var.vmImageAliasDoc
+  }
   webapp = {
     azurerm_application_insights = var.azurerm_application_insights
     app_service_environments     = var.app_service_environments
@@ -33,15 +68,16 @@ module "example" {
   }
   compute = {
     aks_clusters               = var.aks_clusters
-    aks_clusters               = var.aks_clusters
     availability_sets          = var.availability_sets
     azure_container_registries = var.azure_container_registries
-    bastion_hosts              = var.bastion_hosts
     bastion_hosts              = var.bastion_hosts
     container_groups           = var.container_groups
     proximity_placement_groups = var.proximity_placement_groups
     virtual_machines           = var.virtual_machines
     virtual_machine_scale_sets = var.virtual_machine_scale_sets
+    wvd_application_groups     = var.wvd_application_groups
+    wvd_host_pools             = var.wvd_host_pools
+    wvd_workspaces             = var.wvd_workspaces
   }
   networking = {
     application_gateway_applications                        = var.application_gateway_applications
@@ -112,6 +148,7 @@ module "example" {
     postgresql_servers                 = var.postgresql_servers
     synapse_workspaces                 = var.synapse_workspaces
   }
+
   shared_services = {
     image_definitions        = var.image_definitions
     monitoring               = var.monitoring

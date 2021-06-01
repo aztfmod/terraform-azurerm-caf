@@ -26,13 +26,13 @@ module "hubs" {
 
   for_each = try(var.settings.hubs, {})
 
+  client_config       = var.client_config
   global_settings     = var.global_settings
   location            = var.global_settings.regions[each.value.region]
-  virtual_hub_config  = each.value
-  resource_group_name = var.resource_group_name
-  vwan_id             = azurerm_virtual_wan.vwan.id
-  tags                = merge(try(each.value.tags, null), local.tags)
-  virtual_networks    = var.virtual_networks
   public_ip_addresses = var.public_ip_addresses
-  client_config       = var.client_config
+  resource_group_name = var.resource_group_name
+  tags                = merge(try(each.value.tags, null), local.tags)
+  virtual_hub_config  = each.value
+  virtual_networks    = var.virtual_networks
+  vwan_id             = azurerm_virtual_wan.vwan.id
 }

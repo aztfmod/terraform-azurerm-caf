@@ -111,10 +111,10 @@ resource "azurerm_windows_virtual_machine" "vm" {
   }
 
   dynamic "boot_diagnostics" {
-    for_each = var.boot_diagnostics_storage_account == {} ? [] : [1]
+    for_each = try(var.boot_diagnostics_storage_account != null ? [1] : var.global_settings.resource_defaults.virtual_machines.use_azmanaged_storage_for_boot_diagnostics == true ? [1] : [], [])
 
     content {
-      storage_account_uri = var.boot_diagnostics_storage_account
+      storage_account_uri = var.boot_diagnostics_storage_account == "" ? null : var.boot_diagnostics_storage_account
     }
   }
 

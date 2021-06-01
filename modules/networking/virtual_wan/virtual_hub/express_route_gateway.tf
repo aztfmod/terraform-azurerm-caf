@@ -1,6 +1,6 @@
 # naming convention
 resource "azurecaf_name" "er_gateway" {
-  count = var.virtual_hub_config.deploy_er ? 1 : 0
+  count = try(var.virtual_hub_config.deploy_er, false) ? 1 : 0
 
   name          = try(var.virtual_hub_config.er_config.name, null)
   resource_type = "azurerm_express_route_gateway"
@@ -14,7 +14,7 @@ resource "azurecaf_name" "er_gateway" {
 
 ## create the ER Gateway
 resource "azurerm_express_route_gateway" "er_gateway" {
-  count = var.virtual_hub_config.deploy_er ? 1 : 0
+  count = try(var.virtual_hub_config.deploy_er, false) ? 1 : 0
 
   name                = azurecaf_name.er_gateway.0.result
   location            = var.location

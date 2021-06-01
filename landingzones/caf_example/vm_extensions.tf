@@ -40,3 +40,36 @@ module "vm_extension_diagnostics" {
     diagnostics_storage_account_keys = each.value.virtual_machine_extensions.microsoft_azure_diagnostics.diagnostics_storage_account_keys
   }
 }
+
+module "vm_extension_microsoft_azure_domainjoin" {
+  source     = "../../modules/compute/virtual_machine_extensions"
+  depends_on = [module.example] #refer landingzone.tf for the correct module name.
+
+  for_each = {
+    for key, value in try(var.virtual_machines, {}) : key => value
+    if try(value.virtual_machine_extensions.microsoft_azure_domainjoin, null) != null
+  }
+
+  client_config      = module.example.client_config                 #refer landingzone.tf for the correct module name.
+  virtual_machine_id = module.example.virtual_machines[each.key].id #refer landingzone.tf for the correct module name.
+  extension          = each.value.virtual_machine_extensions.microsoft_azure_domainjoin
+  extension_name     = "microsoft_azure_domainJoin"
+  keyvaults          = module.example.keyvaults
+}
+
+module "vm_extension_session_host_dscextension" {
+  source     = "../../modules/compute/virtual_machine_extensions"
+  depends_on = [module.example, module.vm_extension_microsoft_azure_domainjoin] #refer landingzone.tf for the correct module name.
+
+  for_each = {
+    for key, value in try(var.virtual_machines, {}) : key => value
+    if try(value.virtual_machine_extensions.session_host_dscextension, null) != null
+  }
+
+  client_config      = module.example.client_config                 #refer landingzone.tf for the correct module name.
+  virtual_machine_id = module.example.virtual_machines[each.key].id #refer landingzone.tf for the correct module name.
+  extension          = each.value.virtual_machine_extensions.session_host_dscextension
+  extension_name     = "session_host_dscextension"
+  keyvaults          = module.example.keyvaults
+  wvd_host_pools     = module.example.wvd_host_pools
+}
