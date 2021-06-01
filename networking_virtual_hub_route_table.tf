@@ -17,6 +17,7 @@ resource "azurerm_virtual_hub_route_table" "route_table" {
 
   virtual_hub_id = coalesce(
     try(local.combined_objects_virtual_wans[try(each.value.lz_key, local.client_config.landingzone_key)][each.value.virtual_wan_key].virtual_hubs[each.value.virtual_hub_key].id, ""),
+    try(module.virtual_hubs[each.value.virtual_hub.key].id, null),
     try(each.value.virtual_hub_id, "")
   )
 
@@ -63,16 +64,19 @@ module "azurerm_virtual_hub_route_table" {
     id = coalesce(
       try(local.combined_objects_virtual_wans[try(each.value.lz_key, local.client_config.landingzone_key)][each.value.virtual_wan_key].virtual_hubs[each.value.virtual_hub.key].id, ""),
       try(local.combined_objects_virtual_wans[try(each.value.lz_key, local.client_config.landingzone_key)][each.value.virtual_wan_key].virtual_hubs[each.value.virtual_hub_key].id, ""),
+      try(local.combined_objects_virtual_hubs[try(each.value.virtual_hub.lz_key, local.client_config.landingzone_key)][each.value.virtual_hub.key].id, null),
       try(each.value.virtual_hub.id, "")
     )
     name = coalesce(
       try(local.combined_objects_virtual_wans[try(each.value.lz_key, local.client_config.landingzone_key)][each.value.virtual_wan_key].virtual_hubs[each.value.virtual_hub.key].name, ""),
       try(local.combined_objects_virtual_wans[try(each.value.lz_key, local.client_config.landingzone_key)][each.value.virtual_wan_key].virtual_hubs[each.value.virtual_hub_key].name, ""),
+      try(local.combined_objects_virtual_hubs[try(each.value.virtual_hub.lz_key, local.client_config.landingzone_key)][each.value.virtual_hub.key].name, null),
       try(each.value.virtual_hub.name, "")
     )
     resource_group_name = coalesce(
       try(local.combined_objects_virtual_wans[try(each.value.lz_key, local.client_config.landingzone_key)][each.value.virtual_wan_key].virtual_hubs[each.value.virtual_hub.key].resource_group_name, ""),
       try(local.combined_objects_virtual_wans[try(each.value.lz_key, local.client_config.landingzone_key)][each.value.virtual_wan_key].virtual_hubs[each.value.virtual_hub_key].resource_group_name, ""),
+      try(local.combined_objects_virtual_hubs[try(each.value.virtual_hub.lz_key, local.client_config.landingzone_key)][each.value.virtual_hub.key].resource_group_name, null),
       try(each.value.virtual_hub.resource_group_name, "")
     )
   }

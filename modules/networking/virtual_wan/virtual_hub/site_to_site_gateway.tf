@@ -25,11 +25,28 @@ resource "azurerm_vpn_gateway" "s2s_gateway" {
   scale_unit = var.virtual_hub_config.s2s_config.scale_unit
 
   dynamic "bgp_settings" {
-    for_each = lookup(var.virtual_hub_config.s2s_config, "bgp_settings", {}) != {} ? [1] : []
+    for_each = try(var.virtual_hub_config.s2s_config.bgp_settings, null) == null ? [] : [1]
 
     content {
       asn         = var.virtual_hub_config.s2s_config.bgp_settings.asn
       peer_weight = var.virtual_hub_config.s2s_config.bgp_settings.peer_weight
+
+      dynamic "instance_0_bgp_peering_address" {
+        for_each = try(var.virtual_hub_config.s2s_config.bgp_settings.instance_0_bgp_peering_address, null) == null ? [] : [1]
+
+        content {
+          custom_ips = var.virtual_hub_config.s2s_config.bgp_settings.instance_0_bgp_peering_address.custom_ips
+        }
+      }
+      
+      dynamic "instance_1_bgp_peering_address" {
+        for_each = try(var.virtual_hub_config.s2s_config.bgp_settings.instance_1_bgp_peering_address, null) == null ? [] : [1]
+
+        content {
+          custom_ips = var.virtual_hub_config.s2s_config.bgp_settings.instance_1_bgp_peering_address.custom_ips
+        }
+      }
+      
     }
   }
 
