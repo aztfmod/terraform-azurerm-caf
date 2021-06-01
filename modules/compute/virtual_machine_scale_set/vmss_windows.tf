@@ -90,8 +90,8 @@ resource "azurerm_windows_virtual_machine_scale_set" "vmss" {
         name      = azurecaf_name.windows_nic[network_interface.key].result
         primary   = try(network_interface.value.primary, false)
         subnet_id = try(var.vnets[var.client_config.landingzone_key][network_interface.value.vnet_key].subnets[network_interface.value.subnet_key].id, var.vnets[network_interface.value.lz_key][network_interface.value.vnet_key].subnets[network_interface.value.subnet_key].id)
+        load_balancer_backend_address_pool_ids = try([var.load_balancers[try(var.client_config.landingzone_key,network_interface.value.load_balancer.lz_key)][network_interface.value.load_balancer.lb_key].backend_address_pool_id], null)
         # application_gateway_backend_address_pool_ids = []
-        # load_balancer_backend_address_pool_ids = []        
       }
     }
   }
