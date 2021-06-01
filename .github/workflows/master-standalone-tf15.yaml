@@ -48,7 +48,7 @@ jobs:
 
     strategy:
       fail-fast: false
-      matrix: ${{fromJSON(needs.testcases.outputs.matrix)}}
+      matrix: ${{fromJSON(needs.load_cases.outputs.matrix)}}
           
     container:
       image: aztfmod/rover:0.15.4-2105.2603
