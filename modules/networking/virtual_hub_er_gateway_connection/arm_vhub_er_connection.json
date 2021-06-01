@@ -39,7 +39,7 @@
         },
         "authorizationKey": "[parameters('authorization_key')]",
         "routingWeight": "[parameters('routing_weight')]",
-        "enableInternetSecurity": "[parameters('enable_internet_security')]"
+        "enableInternetSecurity": "[parameters('enable_internet_security')]",
         "routingConfiguration": {
           "associatedRouteTable": "[parameters('associatedRouteTable')]",
           "propagatedRouteTables": "[parameters('propagatedRouteTables')]",
