@@ -6,6 +6,7 @@
 name: standalone-scenario-tf15
 
 on:
+  workflow_dispatch:
   pull_request:
     paths-ignore:
       - .github/workflows/master-100.yaml
@@ -38,8 +39,8 @@ jobs:
       - uses: actions/checkout@v2
       - name: testcases
         run: |
-        cases=$(cat ./github/workflows/master-100-testcases.json)
-        echo "::set-output name=matrix::$cases"
+          cases=$(cat ./github/workflows/master-100-testcases.json)
+          echo "::set-output name=matrix::$cases"
   
   examples:
     name: examples
