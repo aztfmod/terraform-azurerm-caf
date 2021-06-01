@@ -3,7 +3,7 @@
 # Licensed under the MIT License.
 #
 
-name: standalone-scenario
+name: standalone-scenario-tf13-longrunners
 
 on:
   pull_request:
