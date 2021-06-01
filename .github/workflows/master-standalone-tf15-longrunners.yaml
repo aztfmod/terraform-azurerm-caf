@@ -8,7 +8,6 @@ name: standalone-scenario-tf15-longrunners
 on:
   pull_request:
     paths:
-      - '/.github/workflows/master-standalone-tf15-longrunners.yaml'
       - msssql_managed_instances.tf
       - msssql_managed_databases.tf
       - modules/databases/mssql_managed_instance/**
