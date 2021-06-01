@@ -43,9 +43,9 @@ jobs:
     runs-on: ubuntu-latest
     needs: load_cases
 
-    strategy:
-      fail-fast: false
-      matrix: ${{fromJSON(needs.load_cases.outputs.matrix)}}
+    # strategy:
+    #   fail-fast: false
+    #   matrix: ${{fromJSON(needs.load_cases.outputs.matrix)}}
           
     container:
       image: aztfmod/rover:0.15.4-2105.2603
@@ -53,9 +53,9 @@ jobs:
 
     steps:
       - uses: actions/checkout@v2
-      # - name: Show
-      #   run: |
-      #     echo ${{fromJSON(needs.load_cases.outputs.matrix)}}
+      - name: Show
+        run: |
+          echo ${{needs.load_cases.outputs.matrix}}
 
       - name: Login azure
         run: |
