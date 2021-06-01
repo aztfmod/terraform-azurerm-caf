@@ -3,7 +3,7 @@
 # Licensed under the MIT License.
 #
 
-name: standalone-scenario-tf14
+name: standalone-scenario-tf14-longrunners
 
 on:
   pull_request:
