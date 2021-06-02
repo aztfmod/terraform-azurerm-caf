@@ -31,16 +31,59 @@ module "example" {
     azuread_service_principals          = var.azuread_service_principals
     azuread_service_principal_passwords = var.azuread_service_principal_passwords
   }
+  cloud = {
+    acrLoginServerEndpoint                      = var.acrLoginServerEndpoint
+    attestationEndpoint                         = var.attestationEndpoint
+    azureDatalakeAnalyticsCatalogAndJobEndpoint = var.azureDatalakeAnalyticsCatalogAndJobEndpoint
+    azureDatalakeStoreFileSystemEndpoint        = var.azureDatalakeStoreFileSystemEndpoint
+    keyvaultDns                                 = var.keyvaultDns
+    mariadbServerEndpoint                       = var.mariadbServerEndpoint
+    mhsmDns                                     = var.mhsmDns
+    mysqlServerEndpoint                         = var.mysqlServerEndpoint
+    postgresqlServerEndpoint                    = var.postgresqlServerEndpoint
+    sqlServerHostname                           = var.sqlServerHostname
+    storageEndpoint                             = var.storageEndpoint
+    storageSyncEndpoint                         = var.storageSyncEndpoint
+    synapseAnalyticsEndpoint                    = var.synapseAnalyticsEndpoint
+    activeDirectory                             = var.activeDirectory
+    activeDirectoryDataLakeResourceId           = var.activeDirectoryDataLakeResourceId
+    activeDirectoryGraphResourceId              = var.activeDirectoryGraphResourceId
+    activeDirectoryResourceId                   = var.activeDirectoryResourceId
+    appInsightsResourceId                       = var.appInsightsResourceId
+    appInsightsTelemetryChannelResourceId       = var.appInsightsTelemetryChannelResourceId
+    attestationResourceId                       = var.attestationResourceId
+    azmirrorStorageAccountResourceId            = var.azmirrorStorageAccountResourceId
+    batchResourceId                             = var.batchResourceId
+    gallery                                     = var.gallery
+    logAnalyticsResourceId                      = var.logAnalyticsResourceId
+    management                                  = var.management
+    mediaResourceId                             = var.mediaResourceId
+    microsoftGraphResourceId                    = var.microsoftGraphResourceId
+    ossrdbmsResourceId                          = var.ossrdbmsResourceId
+    portal                                      = var.portal
+    resourceManager                             = var.resourceManager
+    sqlManagement                               = var.sqlManagement
+    synapseAnalyticsResourceId                  = var.synapseAnalyticsResourceId
+    vmImageAliasDoc                             = var.vmImageAliasDoc
+  }
   compute = {
-    aks_clusters               = var.aks_clusters
     aks_clusters               = var.aks_clusters
     availability_sets          = var.availability_sets
     azure_container_registries = var.azure_container_registries
     bastion_hosts              = var.bastion_hosts
-    bastion_hosts              = var.bastion_hosts
     container_groups           = var.container_groups
     proximity_placement_groups = var.proximity_placement_groups
     virtual_machines           = var.virtual_machines
+    wvd_application_groups     = var.wvd_application_groups
+    wvd_host_pools             = var.wvd_host_pools
+    wvd_workspaces             = var.wvd_workspaces
+  }
+  diagnostics = {
+    diagnostic_event_hub_namespaces = var.diagnostic_event_hub_namespaces
+    diagnostic_log_analytics        = var.diagnostic_log_analytics
+    diagnostic_storage_accounts     = var.diagnostic_storage_accounts
+    diagnostics_definition          = var.diagnostics_definition
+    diagnostics_destinations        = var.diagnostics_destinations
   }
   database = {
     azurerm_redis_caches               = var.azurerm_redis_caches
@@ -63,13 +106,6 @@ module "example" {
     mysql_servers                      = var.mysql_servers
     postgresql_servers                 = var.postgresql_servers
     synapse_workspaces                 = var.synapse_workspaces
-  }
-  diagnostics = {
-    diagnostic_event_hub_namespaces = var.diagnostic_event_hub_namespaces
-    diagnostic_log_analytics        = var.diagnostic_log_analytics
-    diagnostic_storage_accounts     = var.diagnostic_storage_accounts
-    diagnostics_definition          = var.diagnostics_definition
-    diagnostics_destinations        = var.diagnostics_destinations
   }
   networking = {
     application_gateway_applications                        = var.application_gateway_applications
@@ -109,6 +145,16 @@ module "example" {
     vnet_peerings                                           = var.vnet_peerings
     vnets                                                   = var.vnets
   }
+
+  shared_services = {
+    image_definitions        = var.image_definitions
+    monitoring               = var.monitoring
+    packer_managed_identity  = var.packer_managed_identity
+    packer_service_principal = var.packer_service_principal
+    recovery_vaults          = var.recovery_vaults
+    shared_image_galleries   = var.shared_image_galleries
+  }
+
   security = {
     disk_encryption_sets          = var.disk_encryption_sets
     dynamic_keyvault_secrets      = var.dynamic_keyvault_secrets
@@ -135,4 +181,5 @@ module "example" {
     app_service_plans            = var.app_service_plans
     app_services                 = var.app_services
   }
+
 }

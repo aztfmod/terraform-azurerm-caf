@@ -6,8 +6,15 @@
 name: standalone-scenario-tf15
 
 on:
+  pull_request:
+    paths-ignore:
+      - .github/workflows/master-100.yaml
+      - 'documentation/**'
+      - '_pictures/**'
+      - 'README.md'
+      - 'CHANGELOG.md'
   schedule:
-    - cron:  '0 5 * * 0' #1 AM on Sunday
+    - cron:  '0 2 * * 0' #1 AM on Sunday
 
 env:
   TF_CLI_ARGS: '-no-color'
@@ -32,26 +39,34 @@ jobs:
             "app_insights/100-all-attributes",
             "app_insights/100-simple",
             "automation/100-simple-automation-account",
-            "azure_ad/100-azuread-application-with-sevice-principle-with-builtin-roles",
-            "azure_ad/101-azuread-application-with-service-principle-with-custom-roles",
-            "azure_ad/102-password-rotation",
+            "azuread/100-sevice-principle-with-builtin-roles",
+            "azuread/101-service-principle-with-custom-roles",
+            "azuread/102-password-rotation",
             "compute/availability_set/100-simple-availabilityset",
             "compute/availability_set/101-availabilityset-with-proximity-placement-group",
             "compute/container_groups/101-aci-rover",
             "compute/container_registry/100-simple-acr",
+            "compute/container_registry/200-acr-vnet",
             "compute/kubernetes_services/101-single-cluster",
             "compute/kubernetes_services/102-multi-nodepools",
             "compute/proximity_placement_group",
+            "compute/virtual_machine/101-single-windows-vm",
+            "compute/virtual_machine/102-single-vm-data-disks",
+            "compute/virtual_machine/104-single-windows-backup",
+            "compute/virtual_machine/106-marketplace-image-with-plan",
             "compute/virtual_machine/210-vm-bastion-winrm",
             "compute/virtual_machine/211-vm-bastion-winrm-agents",
+            "compute/windows_virtual_desktop/wvd_resources",
             "cosmos_db/100-simple-cosmos-db-cassandra",
             "cosmos_db/100-simple-cosmos-db-gremlin",
             "cosmos_db/100-simple-cosmos-db-sql",
             "cosmos_db/100-simple-cosmos-db-table",
             "databricks/100-simple-databricks",
             "datalake/101-datalake-storage",
-            "eventhub_namespace/100-simple-evh",
-            "eventhub_namespace/101-evh-with-private-endpoint",
+            "eventhub/100-simple-eventhub-namespace",
+            "eventhub/101-evh-namespace-with-private-endpoint",
+            "eventhub/102-namespace-and-evh-with-auth-rules",
+            "eventhub/103-eventhub-consumer-groups",
             "keyvault/101-keyvault-policies",
             "machine_learning/100-aml",
             "managed_service_identity/100-msi-levels",
@@ -65,6 +80,7 @@ jobs:
             # "mssql_server/106-sqlserver-db-msi-authentication",
             "mssql_server/107-sqlserver-db-retention-policy",
             "mssql_server/108-sqlserver-db-diagnostics",
+            "mssql_server/109-sqlserver-network-firewall-rule",
             "mysql_server/100-simple-mysql",
             "mysql_server/101-vnet-rule-mysql",
             "mysql_server/102-private-endpoint-mysql",
@@ -79,9 +95,14 @@ jobs:
             "networking/front_door/101-front_door_waf",
             "networking/ip_group/100-simple-ip_group",
             "networking/ip_group/101-firewall-ip_group",
+            "networking/load_balancers/100-simple-load-balancer-basic-sku",
+            "networking/load_balancers/101-load-balancer-with-rules",
+            "networking/load_balancers/102-internal-load-balancer",
+            "networking/load_balancers/103-load-balancer-nic-association",
             "networking/load_balancers/104-load-balancer-diagnostics",
             "networking/private_dns/100-private-dns-vnet-links",
             "networking/private_links/endpoints/centralized",
+            "networking/virtual_network_gateway/100-expressroute-gateway",
             "networking/virtual_network_gateway/101-vpn-site-to-site",
             "networking/virtual_network_gateway/102-vpn-site-to-site-active-active",
             "networking/virtual_network_gateway/103-vpn-site-to-site-connection",
@@ -89,6 +110,8 @@ jobs:
             "networking/virtual_network/100-simple-vnet-subnets-nsgs",
             "networking/virtual_network/100-subnet-delegation",
             "networking/virtual_network/101-vnet-peering-nsg",
+            "networking/virtual_network/200-nsg-flow-logs",
+            "networking/virtual_network/201-nsg-flow-logs-v1",
             "networking/virtual_wan/100-vwan-multi-hubs",
             "networking/virtual_wan/101-vwan-hub-firewall-legacy",
             "networking/virtual_wan/102-vwan-hub-firewall-new",
@@ -106,6 +129,7 @@ jobs:
             "redis_cache/100-redis-standard",
             "redis_cache/101-redis-diagnostics",
             "redis_cache/102-redis-private",
+            "storage_accounts/102-storage-account-advanced-options",
             "synapse_analytics/100-synapse",
             "synapse_analytics/101-synapse-sparkpool",
             "webapps/appservice/101-appservice-simple",
@@ -114,12 +138,12 @@ jobs:
             "webapps/appservice/104-appservice-appinsight",
             "webapps/appservice/105-appservice-backup",
             "webapps/appservice/106-appservice-diagnostics",
+            "webapps/appservice/107-appservice-private",
             "webapps/function_app/101-function_app-private"
-            # "mssql_mi/200-mi",
           ]
 
     container:
-      image: aztfmod/rover:0.15.1-2105.0604
+      image: aztfmod/rover:0.15.4-2105.2603
       options: --user 0
 
     steps:
@@ -136,14 +160,30 @@ jobs:
 
           ${GITHUB_WORKSPACE}/landingzones/caf_example/ci.sh ${{ github.run_id }} ${GITHUB_WORKSPACE}/landingzones/caf_example
 
+  purge:
+    name: purge
+    runs-on: ubuntu-latest
+    if: ${{ failure() || cancelled() }}
+
+    needs: examples
+
+    container:
+      image: aztfmod/rover:0.15.4-2105.2603
+      options: --user 0
+
+    steps:
+      - name: Login azure
+        run: |
+          az login --service-principal -u '${{ env.ARM_CLIENT_ID }}' -p '${{ env.ARM_CLIENT_SECRET }}' --tenant '${{ env.ARM_TENANT_ID }}'
+          az account set -s  ${{ env.ARM_SUBSCRIPTION_ID }}
+
       - name: Complete purge
-        if: ${{ always() }}
         run: |
           for i in `az monitor diagnostic-settings subscription list -o tsv --query "value[?contains(name, '${{ github.run_id }}' )].name"`; do echo "purging subscription diagnostic-settings: $i" && $(az monitor diagnostic-settings subscription delete --name $i --yes); done
           for i in `az monitor log-profiles list -o tsv --query '[].name'`; do az monitor log-profiles delete --name $i; done
           for i in `az ad group list --query "[?contains(displayName, '${{ github.run_id }}')].objectId" -o tsv`; do echo "purging Azure AD group: $i" && $(az ad group delete --verbose --group $i || true); done
           for i in `az ad app list --query "[?contains(displayName, '${{ github.run_id }}')].appId" -o tsv`; do echo "purging Azure AD app: $i" && $(az ad app delete --verbose --id $i || true); done
-          for i in `az keyvault list-deleted --query "[?tags.environment=='${{ github.run_id }}'].name" -o tsv`; do az keyvault purge --name $i; done
-          for i in `az group list --query "[?tags.environment=='${{ github.run_id }}'].name" -o tsv`; do echo "purging resource group: $i" && $(az group delete -n $i -y --no-wait || true); done
+          for i in `az keyvault list-deleted --query "[?tags.testing_job_id=='${{ github.run_id }}'].name" -o tsv`; do az keyvault purge --name $i; done
+          for i in `az group list --query "[?tags.testing_job_id=='${{ github.run_id }}'].name" -o tsv`; do echo "purging resource group: $i" && $(az group delete -n $i -y --no-wait || true); done
           for i in `az role assignment list --query "[?contains(roleDefinitionName, '${{ github.run_id }}')].roleDefinitionName" -o tsv`; do echo "purging role assignment: $i" && $(az role assignment delete --role $i || true); done
           for i in `az role definition list --query "[?contains(roleName, '${{ github.run_id }}')].roleName" -o tsv`; do echo "purging custom role definition: $i" && $(az role definition delete --name $i || true); done

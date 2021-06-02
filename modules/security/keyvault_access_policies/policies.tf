@@ -9,7 +9,7 @@ module "azuread_apps" {
   keyvault_id   = var.keyvault_id == null ? var.keyvaults[try(each.value.keyvault_lz_key,var.client_config.landingzone_key)][var.keyvault_key].id : var.keyvault_id
   access_policy = each.value
   tenant_id     = var.client_config.tenant_id
-  object_id     = var.azuread_apps[try(try(each.value.azuread_app_lz_key, each.value.lz_key),var.client_config.landingzone_key)][each.value.azuread_app_key].azuread_service_principal.object_id
+  object_id     = var.azuread_apps[try(try(each.value.azuread_app_lz_key, each.value.lz_key), var.client_config.landingzone_key)][each.value.azuread_app_key].azuread_service_principal.object_id
 }
 
 module "azuread_service_principals" {

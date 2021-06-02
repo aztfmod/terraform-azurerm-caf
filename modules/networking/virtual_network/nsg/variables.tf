@@ -42,3 +42,8 @@ variable "global_settings" {
 variable "network_watchers" {
   default = {}
 }
+
+variable "network_security_groups" {
+  default     = {}
+  description = "Network Security Group created with different Resource Group"
+}

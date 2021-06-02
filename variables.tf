@@ -16,6 +16,12 @@ variable "client_config" {
   default = {}
 }
 
+## Cloud variables
+variable "cloud" {
+  description = "Cloud configuration objects"
+  default     = {}
+}
+
 variable "tenant_id" {
   description = "Azure AD Tenant ID for the current deployment."
   default     = null
