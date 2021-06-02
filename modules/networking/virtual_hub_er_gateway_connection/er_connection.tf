@@ -1,22 +1,45 @@
+resource "azurerm_resource_group_template_deployment" "vhub_er_gw_connection" {
+  name                = local.express_route_connection_name
+  resource_group_name = var.resource_group_name
+  lifecycle {
+    ignore_changes = [
+      name
+    ]
+  }
+  template_content   = file(local.arm_filename)
+  parameters_content = local.parameters_content
+  deployment_mode    = "Incremental"
+}
+
 locals {
   arm_filename = "${path.module}/arm_vhub_er_connection.json"
 
-  template_content = templatefile(
-    local.arm_filename,
+  parameters_content = jsonencode(
     {
-      resource_name                    = format("%s/%s", local.express_route_gateway_name, local.express_route_connection_name)
-      express_route_circuit_peering_id = local.express_route_circuit_peering_id
-      authorization_key                = local.authorization_key
-      routing_weight                   = local.routing_weight
-      enable_internet_security         = local.enable_internet_security
-      routingConfiguration = jsonencode(
-        {
-          associatedRouteTable  = local.associated_route_table
-          propagatedRouteTables = local.propagated_route_tables
-          vnetRoutes            = local.vnet_routes
-        }
-      )
-
+      resource_name = {
+        value = format("%s/%s", local.express_route_gateway_name, local.express_route_connection_name)
+      }
+      express_route_circuit_peering_id = {
+        value = local.express_route_circuit_peering_id
+      }
+      authorization_key = {
+        value = local.authorization_key
+      }
+      routing_weight = {
+        value = local.routing_weight
+      }
+      enable_internet_security = {
+        value = local.enable_internet_security
+      }
+      associatedRouteTable = {
+        value = local.associated_route_table
+      }
+      propagatedRouteTables = {
+        value = local.propagated_route_tables
+      }
+      vnetRoutes = {
+        value = local.vnet_routes
+      }
     }
   )
 
@@ -28,31 +51,40 @@ locals {
   routing_weight                   = try(var.settings.routing_weight, 0)
   enable_internet_security         = try(var.settings.enable_internet_security, false)
 
-  associated_route_table = try({
+  associated_route_table = {
     id = coalesce(
       try(var.settings.route_table.id, ""),
-      try(var.virtual_hub_route_tables[try(var.settings.route_table.lz_key, var.client_config.landingzone_key)][var.settings.route_table.key].id, "")
+      try(var.virtual_hub_route_tables[try(var.settings.route_table.lz_key, var.client_config.landingzone_key)][var.settings.route_table.key].id, ""),
+      contains(tolist(["defaultRouteTable", "None"]), try(var.settings.route_table.key, "")) ? format("%s/hubRouteTables/%s", var.virtual_hub_id, var.settings.route_table.key) : ""
     )
-  }, null)
+  }
 
   propagated_route_tables = {
     Labels = try(var.settings.propagated_route_tables.labels, [])
-    Ids = coalescelist(
-      flatten(
-        [
-          for key in try(var.settings.propagated_route_tables.ids, []) : {
-            Id = key
-          }
-        ]
-      ),
-      flatten(
-        [
-          for key in try(var.settings.propagated_route_tables.keys, []) : {
-            Id = var.virtual_hub_route_tables[try(var.settings.propagated_route_tables.lz_key, var.client_config.landingzone_key)][key].id
-          }
-        ]
-      ),
-      []
+    Ids = flatten(
+      [
+        flatten(
+          [
+            for key in try(var.settings.propagated_route_tables.ids, []) : {
+              Id = key
+            }
+          ]
+        ),
+        flatten(
+          [
+            for key in try(var.settings.propagated_route_tables.keys, []) : {
+              Id = var.virtual_hub_route_tables[try(var.settings.propagated_route_tables.lz_key, var.client_config.landingzone_key)][key].id
+            } if contains(tolist(["defaultRouteTable", "None"]), key) == false
+          ]
+        ),
+        flatten(
+          [
+            for key in try(var.settings.propagated_route_tables.keys, []) : {
+              Id = format("%s/hubRouteTables/%s", var.virtual_hub_id, key)
+            } if contains(tolist(["defaultRouteTable", "None"]), key) == true
+          ]
+        )
+      ]
     )
   }
 
@@ -68,16 +100,4 @@ locals {
     )
   }
 
-}
-
-resource "azurerm_resource_group_template_deployment" "vhub_er_gw_connection" {
-  name                = local.express_route_connection_name
-  resource_group_name = var.resource_group_name
-  lifecycle {
-    ignore_changes = [
-      name
-    ]
-  }
-  template_content = local.template_content
-  deployment_mode  = "Incremental"
 }

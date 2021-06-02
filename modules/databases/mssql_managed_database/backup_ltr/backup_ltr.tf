@@ -1,7 +1,7 @@
 
 resource "azurerm_template_deployment" "backupltr" {
 
-  name                = "${var.server_name}-${var.server_name}-LTR"
+  name                = format("%s-%s-LTR", var.server_name, var.server_name)
   resource_group_name = var.resource_group_name
 
   template_body = file(local.arm_filename)

@@ -272,4 +272,3 @@ resource "azurerm_template_deployment" "site_config" {
 
   deployment_mode = "Incremental"
 }
-

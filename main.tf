@@ -13,10 +13,23 @@ terraform {
       source  = "aztfmod/azurecaf"
       version = "~> 1.2.0"
     }
+    null = {
+      source = "hashicorp/null"
+    }
+    random = {
+      source = "hashicorp/random"
+    }
   }
   required_version = ">= 0.13"
 }
 
+provider "azurerm" {
+  features {
+    template_deployment {
+      delete_nested_items_during_deletion = false
+    }
+  }
+}
 
 data "azurerm_subscription" "primary" {}
 data "azurerm_client_config" "current" {}

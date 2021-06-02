@@ -8,6 +8,7 @@ module "mssql_databases" {
   for_each = local.database.mssql_databases
 
   global_settings     = local.global_settings
+  cloud               = local.cloud
   managed_identities  = local.combined_objects_managed_identities
   location            = lookup(each.value, "region", null) == null ? local.resource_groups[each.value.resource_group_key].location : local.global_settings.regions[each.value.region]
   settings            = each.value
