@@ -1,6 +1,6 @@
 global_settings = {
   default_region = "region1"
-  prefix         = "test"
+  prefix         = "example"
   regions = {
     region1 = "southeastasia"
   }
@@ -8,7 +8,7 @@ global_settings = {
 
 resource_groups = {
   rg1 = {
-    name = "example-vmss-rg"
+    name = "vmss-rg"
   }
 }
 
@@ -40,7 +40,7 @@ vnets = {
 
 keyvaults = {
   kv1 = {
-    name               = "vmsskvexample"
+    name               = "vmsskv"
     resource_group_key = "rg1"
     sku_name           = "standard"
     creation_policies = {
