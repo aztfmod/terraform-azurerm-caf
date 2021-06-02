@@ -40,7 +40,7 @@ vnets = {
 
 keyvaults = {
   kv1 = {
-    name               = "vmsskv2"
+    name               = "vmsskvexample"
     resource_group_key = "rg1"
     sku_name           = "standard"
     creation_policies = {
