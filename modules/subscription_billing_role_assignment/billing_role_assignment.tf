@@ -6,7 +6,7 @@ data "azurerm_billing_enrollment_account_scope" "sub" {
 data "external" "role_definition" {
   program = [
     "bash", "-c",
-    "az rest --method GET --url https://management.azure.com${local.billing_scope_id}/billingRoleDefinitions?api-version=2019-10-01-preview --query \"value[?properties.roleName=='${var.billing_role_definition_name}'].{id:id}[0]\" -o json"
+    "az rest --method GET --url ${var.cloud.resourceManager}${local.billing_scope_id}/billingRoleDefinitions?api-version=2019-10-01-preview --query \"value[?properties.roleName=='${var.billing_role_definition_name}'].{id:id}[0]\" -o json"
   ]
 
   #
