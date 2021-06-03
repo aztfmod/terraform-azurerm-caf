@@ -146,15 +146,6 @@ module "example" {
     vnets                                                   = var.vnets
   }
 
-  shared_services = {
-    image_definitions        = var.image_definitions
-    monitoring               = var.monitoring
-    packer_managed_identity  = var.packer_managed_identity
-    packer_service_principal = var.packer_service_principal
-    recovery_vaults          = var.recovery_vaults
-    shared_image_galleries   = var.shared_image_galleries
-  }
-
   security = {
     disk_encryption_sets          = var.disk_encryption_sets
     dynamic_keyvault_secrets      = var.dynamic_keyvault_secrets
