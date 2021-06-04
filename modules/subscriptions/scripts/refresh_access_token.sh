@@ -33,7 +33,7 @@ else
         echo "Subscription creation with Azure AD Application service principal requires ARM_CLIENT_ID, ARM_CLIENT_SECRET and ARM_TENANT_ID to be set in the bash context."
         exit 3000
       else
-        az login --service-identity -u "${ARM_CLIENT_ID}" -p "${ARM_CLIENT_SECRET}" -t "${ARM_TENANT_ID}"
+        az login --service-principal -u "${ARM_CLIENT_ID}" -p "${ARM_CLIENT_SECRET}" -t "${ARM_TENANT_ID}"
       fi
       ;;
   esac
