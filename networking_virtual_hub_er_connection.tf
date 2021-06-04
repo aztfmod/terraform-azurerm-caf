@@ -9,8 +9,11 @@ module "virtual_hub_er_gateway_connections" {
 
 
   virtual_hub_id = coalesce(
+    try(local.combined_objects_virtual_hubs[try(each.value.virtual_hub.lz_key, local.client_config.landingzone_key)][each.value.virtual_hub.key].id, null),
+    try(local.combined_objects_virtual_wans[try(each.value.lz_key, local.client_config.landingzone_key)][each.value.virtual_wan_key].virtual_hubs[each.value.virtual_hub_key].id, null),
     try(local.combined_objects_virtual_wans[try(each.value.vhub.lz_key, local.client_config.landingzone_key)][each.value.vhub.virtual_wan_key].virtual_hubs[each.value.vhub.virtual_hub_key].id, null),
-    try(local.combined_objects_virtual_hubs[try(each.value.virtual_hub.lz_key, local.client_config.landingzone_key)][each.value.virtual_hub.key].id, null)
+    try(each.value.virtual_hub.id, null),
+    try(each.value.virtual_hub_id, null)
   )
 
   location = lookup(each.value, "region", null) == null ? coalesce(
@@ -24,14 +27,18 @@ module "virtual_hub_er_gateway_connections" {
   )
 
   virtual_network_gateway_id = coalesce(
-    try(local.combined_objects_virtual_wans[try(each.value.vhub.lz_key, local.client_config.landingzone_key)][each.value.vhub.virtual_wan_key].virtual_hubs[each.value.vhub.virtual_hub_key].er_gateway.id, null),
     try(local.combined_objects_virtual_hubs[try(each.value.virtual_hub.lz_key, local.client_config.landingzone_key)][each.value.virtual_hub.key].er_gateway.id, null),
+    try(local.combined_objects_virtual_wans[try(each.value.lz_key, local.client_config.landingzone_key)][each.value.virtual_wan_key].virtual_hubs[each.value.virtual_hub_key].er_gateway.id, null),
+    try(local.combined_objects_virtual_wans[try(each.value.vhub.lz_key, local.client_config.landingzone_key)][each.value.vhub.virtual_wan_key].virtual_hubs[each.value.vhub.virtual_hub_key].er_gateway.id, null),
+    try(each.value.express_route_gateway.id, null),
     try(each.value.express_route_gateway_id, null)
   )
 
   express_route_gateway_name = coalesce(
-    try(local.combined_objects_virtual_wans[try(each.value.vhub.lz_key, local.client_config.landingzone_key)][each.value.vhub.virtual_wan_key].virtual_hubs[each.value.vhub.virtual_hub_key].er_gateway.name, null),
     try(local.combined_objects_virtual_hubs[try(each.value.virtual_hub.lz_key, local.client_config.landingzone_key)][each.value.virtual_hub.key].er_gateway.name, null),
+    try(local.combined_objects_virtual_wans[try(each.value.lz_key, local.client_config.landingzone_key)][each.value.virtual_wan_key].virtual_hubs[each.value.virtual_hub_key].er_gateway.name, null),
+    try(local.combined_objects_virtual_wans[try(each.value.vhub.lz_key, local.client_config.landingzone_key)][each.value.vhub.virtual_wan_key].virtual_hubs[each.value.vhub.virtual_hub_key].er_gateway.name, null),
+    try(each.value.express_route_gateway.name, null),
     try(each.value.express_route_gateway_name, null)
   )
 
