@@ -6,7 +6,10 @@ function MG_Subscription {
     # https://docs.microsoft.com/en-us/rest/api/resources/tags/createorupdateatscope
 
     echo "${METHOD} Management Group ${MG_ID} - subscription: ${SUBSCRIPTION_ID}"
-    URI="https://management.azure.com/providers/Microsoft.Management/managementGroups/${MG_ID}/subscriptions/${SUBSCRIPTION_ID}?api-version=2020-02-01"
+
+    microsoft_resource_endpoint=$(az cloud show | jq -r ".endpoints.resourceManager")
+
+    URI="${microsoft_resource_endpoint}providers/Microsoft.Management/managementGroups/${MG_ID}/subscriptions/${SUBSCRIPTION_ID}?api-version=2020-02-01"
 
     az rest --method ${METHOD} --uri $URI
 

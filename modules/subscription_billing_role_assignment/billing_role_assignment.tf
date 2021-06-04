@@ -6,7 +6,7 @@ data "azurerm_billing_enrollment_account_scope" "sub" {
 data "external" "role_definition" {
   program = [
     "bash", "-c",
-    "az rest --method GET --url https://management.azure.com${local.billing_scope_id}/billingRoleDefinitions?api-version=2019-10-01-preview --query \"value[?properties.roleName=='${var.billing_role_definition_name}'].{id:id}[0]\" -o json"
+    "az rest --method GET --url ${var.cloud.resourceManager}${local.billing_scope_id}/billingRoleDefinitions?api-version=2019-10-01-preview --query \"value[?properties.roleName=='${var.billing_role_definition_name}'].{id:id}[0]\" -o json"
   ]
 
   #
@@ -29,6 +29,7 @@ module "role_assignment_azuread_users" {
   principal_id       = var.principals.azuread_users[try(each.value.lz_key, var.client_config.landingzone_key)][each.value.key].rbac_id
   role_definition_id = data.external.role_definition.result.id
   settings           = each.value
+  cloud              = var.cloud
 }
 
 
@@ -43,5 +44,6 @@ module "role_assignment_msi" {
   principal_id         = var.principals.managed_identities[try(each.value.lz_key, var.client_config.landingzone_key)][each.value.key].principal_id
   role_definition_id   = data.external.role_definition.result.id
   settings             = each.value
+  cloud                = var.cloud
 }
 
