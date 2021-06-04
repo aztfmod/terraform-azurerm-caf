@@ -148,7 +148,7 @@ resource "azurerm_application_gateway" "agw" {
 
     content {
       name         = var.application_gateway_applications[backend_address_pool.key].name
-      fqdns        = try(backend_address_pool.value.fqdns, null)
+      fqdns        = backend_address_pool.value.fqdns
       ip_addresses = try(backend_address_pool.value.ip_addresses, null)
     }
   }
