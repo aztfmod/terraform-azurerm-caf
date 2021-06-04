@@ -8,8 +8,6 @@ user_type=$(az account show --query user.type -o tsv)
 tenant_id=$(az account show --query tenantId -o tsv)
 subscription_id=$(az account show --query id -o tsv)
 
-az account clear
-
 if [ ${user_type} == "user" ]; then
 
   az login --tenant ${tenant_id} --use-device-code > /dev/null
