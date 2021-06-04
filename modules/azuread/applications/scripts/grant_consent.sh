@@ -14,7 +14,9 @@ else
     resourceId=$(az ad sp show --id "${resourceAppId}" --query "objectId" -o tsv)
     echo " -resourceId: ${resourceId}"
 
-    URI=$(echo  "https://graph.microsoft.com/beta/servicePrincipals/${resourceId}/appRoleAssignments") && echo " - uri: $URI"
+    microsoft_graph_endpoint=$(az cloud show | jq -r ".endpoints.microsoftGraphResourceId")
+
+    URI=$(echo  "${microsoft_graph_endpoint}beta/servicePrincipals${resourceId}/appRoleAssignments") && echo " - uri: $URI"
 
     # grant consent (Application.ReadWrite.OwnedBy)
     JSON=$( jq -n \
