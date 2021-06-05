@@ -6,10 +6,23 @@ module "azuread_apps" {
     if try(access_policy.azuread_app_key, null) != null
   }
 
-  keyvault_id   = var.keyvault_id == null ? var.keyvaults[try(try(each.value.keyvault_lz_key, each.value.lz_key), var.client_config.landingzone_key)][var.keyvault_key].id : var.keyvault_id
+  keyvault_id   = var.keyvault_id == null ? var.keyvaults[try(each.value.keyvault_lz_key,var.client_config.landingzone_key)][var.keyvault_key].id : var.keyvault_id
   access_policy = each.value
   tenant_id     = var.client_config.tenant_id
   object_id     = var.azuread_apps[try(try(each.value.azuread_app_lz_key, each.value.lz_key), var.client_config.landingzone_key)][each.value.azuread_app_key].azuread_service_principal.object_id
+}
+
+module "azuread_service_principals" {
+  source = "./access_policy"
+  for_each = {
+    for key, access_policy in var.access_policies : key => access_policy
+    if try(access_policy.azuread_service_principal_key, null) != null
+  }
+
+  keyvault_id   = var.keyvault_id == null ? var.keyvaults[try(each.value.keyvault_lz_key,var.client_config.landingzone_key)][var.keyvault_key].id : var.keyvault_id
+  access_policy = each.value
+  tenant_id     = var.resources.azuread_service_principals[try(each.value.lz_key, var.client_config.landingzone_key)][each.value.azuread_service_principal_key].tenant_id
+  object_id     = var.resources.azuread_service_principals[try(each.value.lz_key, var.client_config.landingzone_key)][each.value.azuread_service_principal_key].object_id
 }
 
 module "azuread_group" {
