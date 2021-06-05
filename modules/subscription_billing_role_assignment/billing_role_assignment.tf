@@ -59,5 +59,6 @@ module "role_assignment_azuread_service_principals" {
   principal_id         = var.principals.azuread_service_principals[try(each.value.lz_key, var.client_config.landingzone_key)][each.value.key].object_id
   role_definition_id   = data.external.role_definition.result.id
   settings             = each.value
+  cloud                = var.cloud
 }
 
