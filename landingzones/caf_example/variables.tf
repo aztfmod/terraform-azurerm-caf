@@ -1,7 +1,6 @@
 variable "global_settings" {
   default = {
     default_region = "region1"
-    prefix         = null
     regions = {
       region1 = "southeastasia"
       region2 = "eastasia"
@@ -145,6 +144,9 @@ variable "tags" {
   default = null
   type    = map(any)
 }
+variable "subscription_billing_role_assignments" {
+  default = {}
+}
 variable "app_service_environments" {
   default = {}
 }
@@ -221,6 +223,15 @@ variable "mssql_mi_secondary_tdes" {
   default = {}
 }
 variable "storage_accounts" {
+  default = {}
+}
+variable "azuread_applications" {
+  default = {}
+}
+variable "azuread_service_principals" {
+  default = {}
+}
+variable "azuread_service_principal_passwords" {
   default = {}
 }
 variable "azuread_groups" {
