@@ -8,9 +8,9 @@
 module "azuread_applications" {
   source     = "./modules/azuread/applications"
   depends_on = [module.keyvault_access_policies]
-  for_each   = var.azuread_apps
+  for_each   = local.azuread.azuread_apps
 
-  azuread_api_permissions = try(var.azuread_api_permissions[each.key], {})
+  azuread_api_permissions = try(local.azuread.azuread_api_permissions[each.key], {})
   client_config           = local.client_config
   global_settings         = local.global_settings
   keyvaults               = local.combined_objects_keyvaults
@@ -29,7 +29,7 @@ module "azuread_applications_v1" {
   source     = "./modules/azuread/applications_v1"
   for_each   = local.azuread.azuread_applications
 
-  azuread_api_permissions = try(var.azuread_api_permissions[each.key], {})
+  azuread_api_permissions = try(local.azuread.azuread_api_permissions[each.key], {})
   client_config           = local.client_config
   global_settings         = local.global_settings
   keyvaults               = local.combined_objects_keyvaults
