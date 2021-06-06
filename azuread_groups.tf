@@ -5,7 +5,7 @@
 
 module "azuread_groups" {
   source   = "./modules/azuread/groups"
-  for_each = var.azuread_groups
+  for_each = local.azuread.azuread_groups
 
   global_settings = local.global_settings
   azuread_groups  = each.value
@@ -19,7 +19,7 @@ output "azuread_groups" {
 
 module "azuread_groups_members" {
   source   = "./modules/azuread/groups_members"
-  for_each = var.azuread_groups
+  for_each = local.azuread.azuread_groups
 
   settings       = each.value
   azuread_groups = module.azuread_groups

@@ -1,10 +1,6 @@
 module "example" {
   source = "../.."
 
-  azuread_apps                          = var.azuread_apps
-  azuread_groups                        = var.azuread_groups
-  azuread_roles                         = var.azuread_roles
-  azuread_users                         = var.azuread_users
   current_landingzone_key               = var.landingzone.key
   custom_role_definitions               = var.custom_role_definitions
   event_hub_auth_rules                  = var.event_hub_auth_rules
@@ -27,9 +23,14 @@ module "example" {
   tags                                  = local.tags
 
   azuread = {
+    azuread_api_permissions             = var.azuread_api_permissions
     azuread_applications                = var.azuread_applications
-    azuread_service_principals          = var.azuread_service_principals
+    azuread_apps                        = var.azuread_apps
+    azuread_groups                      = var.azuread_groups
+    azuread_roles                       = var.azuread_roles
     azuread_service_principal_passwords = var.azuread_service_principal_passwords
+    azuread_service_principals          = var.azuread_service_principals
+    azuread_users                       = var.azuread_users
   }
   cloud = {
     acrLoginServerEndpoint                      = var.acrLoginServerEndpoint
