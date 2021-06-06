@@ -131,21 +131,6 @@ variable "user_type" {
 variable "azuread" {
   default = {}
 }
-variable "azuread_apps" {
-  default = {}
-}
-
-variable "azuread_groups" {
-  default = {}
-}
-
-variable "azuread_roles" {
-  default = {}
-}
-
-variable "azuread_users" {
-  default = {}
-}
 
 variable "azuread_api_permissions" {
   default = {}

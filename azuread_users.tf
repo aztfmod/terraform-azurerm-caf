@@ -5,7 +5,7 @@
 module "azuread_users" {
   source     = "./modules/azuread/users"
   depends_on = [module.keyvault_access_policies]
-  for_each   = var.azuread_users
+  for_each   = local.azuread.azuread_users
 
   client_config   = local.client_config
   global_settings = local.global_settings
