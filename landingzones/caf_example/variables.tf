@@ -225,6 +225,9 @@ variable "mssql_mi_secondary_tdes" {
 variable "storage_accounts" {
   default = {}
 }
+variable "azuread_password_policies" {
+  default = {}
+}
 variable "azuread_applications" {
   default = {}
 }
