@@ -32,7 +32,6 @@ module "azuread_applications_v1" {
   azuread_api_permissions = try(local.azuread.azuread_api_permissions[each.key], {})
   client_config           = local.client_config
   global_settings         = local.global_settings
-  keyvaults               = local.combined_objects_keyvaults
   settings                = each.value
   user_type               = var.user_type
 }

@@ -1,10 +1,13 @@
 
 resource "azuread_application_password" "key" {
-  count                 = lower(local.password_type) == "password" && try(var.settings.password_policy, null) == null ? 1 : 0
-  application_object_id = azuread_application.app.id
+  count                 = try(var.settings.azuread_application, null) != null && lower(var.settings.type) == "password" && try(var.settings.policy, null) == null ? 1 : 0
   description           = try(var.settings.description, local.description.key)
   value                 = random_password.key.0.result
   end_date              = local.expiration_date.key
+
+  application_object_id = coalesce(
+    try(var.resources.application.id, null)
+  )
 
   lifecycle {
     create_before_destroy = true
@@ -12,11 +15,14 @@ resource "azuread_application_password" "key" {
 }
 
 resource "azuread_application_password" "key0" {
-  count                 = lower(local.password_type) == "password" && try(var.settings.password_policy, null) != null ? 1 : 0
-  application_object_id = azuread_application.app.id
+  count                 = try(var.settings.azuread_application, null) != null && lower(var.settings.type) == "password" && try(var.settings.policy, null) != null ? 1 : 0
   description           = try(var.settings.description, local.description.key0)
   value                 = random_password.key0.0.result
   end_date              = local.expiration_date.key0
+
+  application_object_id = coalesce(
+    try(var.resources.application.id, null)
+  )
 
   lifecycle {
     create_before_destroy = true
@@ -24,11 +30,14 @@ resource "azuread_application_password" "key0" {
 }
 
 resource "azuread_application_password" "key1" {
-  count                 = lower(local.password_type) == "password" && try(var.settings.password_policy, null) != null ? 1 : 0
-  application_object_id = azuread_application.app.id
+  count                 = try(var.settings.azuread_application, null) != null && lower(var.settings.type) == "password" && try(var.settings.policy, null) != null ? 1 : 0
   description           = try(var.settings.description, local.description.key1)
   value                 = random_password.key1.0.result
   end_date              = local.expiration_date.key1
+  
+  application_object_id = coalesce(
+    try(var.resources.application.id, null)
+  )
 
   lifecycle {
     create_before_destroy = true
@@ -46,7 +55,7 @@ locals {
 resource "azurerm_key_vault_secret" "client_secret" {
   for_each = {
     for key, value in try(var.settings.keyvaults, {}) : key => value
-    if lower(local.password_type) == "password"
+    if try(var.settings.azuread_application, null) != null && lower(local.password_type) == "password"
   }
   name            = format("%s-client-secret", each.value.secret_prefix)
   value           = local.random_key == "key0" ? sensitive(azuread_application_password.key0.0.value) : try(sensitive(azuread_application_password.key1.0.value), sensitive(azuread_application_password.key.0.value))
