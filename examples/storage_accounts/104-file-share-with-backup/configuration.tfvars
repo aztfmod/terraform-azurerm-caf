@@ -20,11 +20,11 @@ storage_accounts = {
     account_tier             = "Standard"  #Valid options are Standard and Premium. For BlockBlobStorage and FileStorage accounts only Premium is valid
     account_replication_type = "LRS"       # https://docs.microsoft.com/en-us/azure/storage/common/storage-redundancy
     min_tls_version          = "TLS1_2"    # Possible values are TLS1_0, TLS1_1, and TLS1_2. Defaults to TLS1_0 for new storage accounts.
-    # large_file_share_enabled = true
+    large_file_share_enabled = true
 
-    # azure_files_authentication = {
-    #   directory_type = "AADDS"
-    # }
+    azure_files_authentication = {
+      directory_type = "AADDS"
+    }
 
     file_shares = {
       share1 = {
@@ -40,6 +40,7 @@ storage_accounts = {
         # backups = {
         #   policy_key = "policy1"
         # }
+        # Issue: https://github.com/terraform-providers/terraform-provider-azurerm/issues/11184 
 
       }
     }
@@ -52,12 +53,6 @@ storage_accounts = {
     tags = {
       environment = "dev"
       team        = "IT"
-    }
-
-    containers = {
-      dev = {
-        name = "random"
-      }
     }
   }
 }

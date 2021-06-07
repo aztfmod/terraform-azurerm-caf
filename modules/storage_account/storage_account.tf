@@ -193,15 +193,7 @@ resource "azurerm_storage_account" "stg" {
       choice                      = try(var.storage_account.routing.choice, "MicrosoftRouting")
     }
   }
-
-  dynamic "static_website" {
-    for_each = lookup(var.storage_account, "static_website", false) == false ? [] : [1]
-
-    content {
-      index_document     = try(var.storage_account.static_website.index_document, null)
-      error_404_document = try(var.storage_account.static_website.error_404_document, null)
-    }
-  }
+  
 }
 
 module "container" {
