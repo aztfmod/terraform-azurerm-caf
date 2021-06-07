@@ -7,11 +7,16 @@ module virtual_machine_scale_sets {
     module.dynamic_keyvault_secrets,
     module.keyvault_access_policies,
     module.keyvault_access_policies_azuread_apps,
-    module.proximity_placement_groups
+    module.proximity_placement_groups,
+    module.load_balancers,
+    module.application_gateways,
+    module.application_security_groups
   ]
   for_each = local.compute.virtual_machine_scale_sets
 
   availability_sets                = local.combined_objects_availability_sets
+  application_gateways             = local.combined_objects_application_gateways
+  application_security_groups      = local.combined_objects_application_security_groups
   base_tags                        = try(local.global_settings.inherit_tags, false) ? module.resource_groups[each.value.resource_group_key].tags : {}
   boot_diagnostics_storage_account = try(local.combined_diagnostics.storage_accounts[each.value.boot_diagnostics_storage_account_key].primary_blob_endpoint, {})
   client_config                    = local.client_config
