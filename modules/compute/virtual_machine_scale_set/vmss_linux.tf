@@ -69,7 +69,6 @@ resource "azurerm_linux_virtual_machine_scale_set" "vmss" {
   sku                 = each.value.sku
   tags                = merge(local.tags, try(each.value.tags, null))
 
-  # Error: "computer_name_prefix" at most 9 characters, got 13
   computer_name_prefix            = azurecaf_name.linux_computer_name_prefix[each.key].result
   custom_data                     = try(each.value.custom_data, null) == null ? null : filebase64(format("%s/%s", path.cwd, each.value.custom_data))
   disable_password_authentication = try(each.value.disable_password_authentication, true)
@@ -106,8 +105,9 @@ resource "azurerm_linux_virtual_machine_scale_set" "vmss" {
         name      = azurecaf_name.linux_nic[network_interface.key].result
         primary   = try(network_interface.value.primary, false)
         subnet_id = try(var.vnets[var.client_config.landingzone_key][network_interface.value.vnet_key].subnets[network_interface.value.subnet_key].id, var.vnets[network_interface.value.lz_key][network_interface.value.vnet_key].subnets[network_interface.value.subnet_key].id)
-        load_balancer_backend_address_pool_ids = try([var.load_balancers[try(var.client_config.landingzone_key,network_interface.value.load_balancer.lz_key)][network_interface.value.load_balancer.lb_key].backend_address_pool_id], null)
-        # application_gateway_backend_address_pool_ids = []
+        load_balancer_backend_address_pool_ids = try(local.load_balancer_backend_address_pool_ids, null)
+        application_gateway_backend_address_pool_ids = try(local.application_gateway_backend_address_pool_ids, null)
+        application_security_group_ids = try(local.application_security_group_ids,null)
       }
     }
   }
@@ -149,6 +149,16 @@ resource "azurerm_linux_virtual_machine_scale_set" "vmss" {
   }
 
   source_image_id = try(each.value.custom_image_id, var.custom_image_ids[each.value.lz_key][each.value.custom_image_key].id, null)
+
+  dynamic "plan" {
+    for_each = try(each.value.plan, null) != null ? [1] : []
+
+    content {
+      name      = each.value.plan.name
+      product   = each.value.plan.product
+      publisher = each.value.plan.publisher
+    }
+  }
 
   dynamic "identity" {
     for_each = try(each.value.identity, {}) == {} ? [] : [1]

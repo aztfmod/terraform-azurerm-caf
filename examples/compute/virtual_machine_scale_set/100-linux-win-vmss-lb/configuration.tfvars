@@ -8,7 +8,7 @@ global_settings = {
 
 resource_groups = {
   rg1 = {
-    name = "vmss-rg"
+    name = "vmss-lb-rg"
   }
 }
 
@@ -40,7 +40,7 @@ vnets = {
 
 keyvaults = {
   kv1 = {
-    name               = "vmsskv"
+    name               = "vmsslbkv"
     resource_group_key = "rg1"
     sku_name           = "standard"
     creation_policies = {
@@ -76,10 +76,29 @@ diagnostic_storage_accounts = {
   }
 }
 
+# Application security groups
+application_security_groups = {
+  app_sg1 = {
+    resource_group_key = "rg1"
+    name = "app_sg1"
+
+  }
+}
+
 # Load Balancer
 public_ip_addresses = {
-  lb_pip = {
+  lb_pip1 = {
     name               = "lb_pip1"
+    resource_group_key = "rg1"
+    sku                = "Basic"
+    # Note: For UltraPerformance ExpressRoute Virtual Network gateway, the associated Public IP needs to be sku "Basic" not "Standard"
+    allocation_method = "Dynamic"
+    # allocation method needs to be Dynamic
+    ip_version              = "IPv4"
+    idle_timeout_in_minutes = "4"
+  }
+  lb_pip2 = {
+    name               = "lb_pip12"
     resource_group_key = "rg1"
     sku                = "Basic"
     # Note: For UltraPerformance ExpressRoute Virtual Network gateway, the associated Public IP needs to be sku "Basic" not "Standard"
@@ -101,7 +120,19 @@ load_balancers = {
     frontend_ip_configurations = {
       config1 = {
         name                  = "config1"
-        public_ip_address_key = "lb_pip"
+        public_ip_address_key = "lb_pip1"
+      }
+    }
+  }
+  lb2 = {
+    name                      = "lb-vmss2"
+    sku                       = "basic"
+    resource_group_key        = "rg1"
+    backend_address_pool_name = "vmss1"
+    frontend_ip_configurations = {
+      config1 = {
+        name                  = "config1"
+        public_ip_address_key = "lb_pip2"
       }
     }
   }
@@ -185,15 +216,20 @@ virtual_machine_scale_sets = {
         primary                 = true
         vnet_key                = "vnet1"
         subnet_key              = "subnet1"
-        load_balancer = {
-          lb_key = "lb1"
-          # lz_key = ""
+        load_balancers = {
+          lb1 = {
+            lb_key = "lb1"
+            # lz_key = ""
+          }
         }
+
+        application_security_groups = {
+          asg1 = {
+            asg_key = "app_sg1"
+            # lz_key = ""
+          }
+        }        
         
-        # application_gateway = {
-          # appgw_key
-          # lz_key
-        # }
         enable_accelerated_networking = false
         enable_ip_forwarding    = false
         internal_dns_name_label = "nic0"
@@ -279,7 +315,21 @@ vmss2 = {
         primary                 = true
         vnet_key                = "vnet1"
         subnet_key              = "subnet1"
-        
+
+        load_balancers = {
+          lb2 = {
+            lb_key = "lb2"
+            # lz_key = ""
+          }
+        }
+
+        application_security_groups = {
+          asg1 = {
+            asg_key = "app_sg1"
+            # lz_key = ""
+          }
+        }
+
         enable_accelerated_networking = false
         enable_ip_forwarding    = false
         internal_dns_name_label = "nic0"
