@@ -120,7 +120,7 @@ jobs:
             "redis_cache/100-redis-standard",
             "redis_cache/101-redis-diagnostics",
             "redis_cache/102-redis-private",
-            "storage_accounts/100-simple-storage-account-blob-container",
+            #"storage_accounts/100-simple-storage-account-blob-container",
             "storage_accounts/101-storage-account-with-protection",
             "storage_accounts/102-storage-account-advanced-options",
             "storage_accounts/103-storage-account-network-rules",

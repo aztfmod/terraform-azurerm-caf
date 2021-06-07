@@ -9,7 +9,6 @@ resource "azurerm_storage_share" "fs" {
 }
 
 resource "azurerm_backup_protected_file_share" "fs_backup" {
-  # depends_on = [azurerm_storage_share.fs]
   for_each = try(var.settings.backups, null) != null ? toset(["enabled"]) : toset([])
 
   resource_group_name       = var.resource_group_name

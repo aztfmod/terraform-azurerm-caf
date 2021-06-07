@@ -58,7 +58,7 @@ resource "azurerm_storage_account" "stg" {
       versioning_enabled       = try(var.storage_account.blob_properties.versioning_enabled, false)
       change_feed_enabled      = try(var.storage_account.blob_properties.change_feed_enabled, false)
       default_service_version  = try(var.storage_account.blob_properties.default_service_version, "2020-06-12")
-      last_access_time_enabled = ry(var.storage_account.blob_properties.last_access_time_enabled, false)
+      last_access_time_enabled = try(var.storage_account.blob_properties.last_access_time_enabled, false)
 
       dynamic "cors_rule" {
         for_each = lookup(var.storage_account.blob_properties, "cors_rule", false) == false ? [] : [1]

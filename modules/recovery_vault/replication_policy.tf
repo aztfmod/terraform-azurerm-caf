@@ -2,7 +2,8 @@
 # Ref : https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/resources/site_recovery_replication_policy
 
 resource "azurerm_site_recovery_replication_policy" "policy" {
-  for_each = try(var.settings.replication_policies, {})
+  depends_on = [time_sleep.delay_create]
+  for_each   = try(var.settings.replication_policies, {})
 
   name                                                 = each.value.name
   resource_group_name                                  = var.resource_group_name
