@@ -6,12 +6,6 @@
 name: standalone-scenario-tf13-longrunners
 
 on:
-  pull_request:
-    paths:
-      - msssql_managed_instances.tf
-      - msssql_managed_databases.tf
-      - modules/databases/mssql_managed_instance/**
-      - modules/databases/mssql_managed_database/**
   schedule:
     - cron:  '0 2 * * 0' #2 AM on Sunday
 
@@ -28,7 +22,7 @@ jobs:
   examples:
     name: examples
     runs-on: ubuntu-latest
-    
+
     strategy:
       fail-fast: false
       matrix:
