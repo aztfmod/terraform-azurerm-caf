@@ -18,6 +18,7 @@ module "subscription_billing_role_assignments" {
 
   billing_role_definition_name = each.value.billing_role_definition_name
   client_config                = local.client_config
+  cloud                        = local.cloud
   keyvaults                    = local.combined_objects_keyvaults
   settings                     = each.value
   principals = {
