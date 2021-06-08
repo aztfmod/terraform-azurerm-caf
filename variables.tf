@@ -304,3 +304,6 @@ variable "event_hub_consumer_groups" {
   default = {}
 }
 
+variable "random_strings" {
+  default = {}
+}
