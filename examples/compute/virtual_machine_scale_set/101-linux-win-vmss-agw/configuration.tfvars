@@ -71,7 +71,7 @@ keyvault_keys = {
 diagnostic_storage_accounts = {
   # Stores boot diagnostic for region1
   bootdiag1 = {
-    name                     = "vmssbootdiag1"
+    name                     = "vmssagwbootdiag1"
     resource_group_key       = "rg1"
     account_kind             = "StorageV2"
     account_tier             = "Standard"
