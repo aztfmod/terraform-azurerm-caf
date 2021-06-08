@@ -8,7 +8,7 @@ global_settings = {
 
 resource_groups = {
   rg1 = {
-    name = "vmss-agw-rg"
+    name = "vmss-agw-example-rg"
   }
 }
 
@@ -44,7 +44,7 @@ vnets = {
 
 keyvaults = {
   kv1 = {
-    name               = "vmssagwkv"
+    name               = "vmssagwkvexmp"
     resource_group_key = "rg1"
     sku_name           = "standard"
     creation_policies = {
@@ -71,7 +71,7 @@ keyvault_keys = {
 diagnostic_storage_accounts = {
   # Stores boot diagnostic for region1
   bootdiag1 = {
-    name                     = "vmssagwbootdiag1"
+    name                     = "vmssagwexmpbootdiag1"
     resource_group_key       = "rg1"
     account_kind             = "StorageV2"
     account_tier             = "Standard"
