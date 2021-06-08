@@ -511,3 +511,6 @@ variable "lighthouse_definitions" {
 variable "vpn_sites" {
   default = {}
 }
+variable "vpn_gateway_connections" {
+  default = {}
+}
