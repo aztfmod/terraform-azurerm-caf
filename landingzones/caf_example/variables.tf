@@ -508,3 +508,6 @@ variable "wvd_host_pools" {
 variable "lighthouse_definitions" {
   default = {}
 }
+variable "vpn_sites" {
+  default = {}
+}
