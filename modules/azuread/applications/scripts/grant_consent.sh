@@ -16,7 +16,7 @@ else
 
     microsoft_graph_endpoint=$(az cloud show | jq -r ".endpoints.microsoftGraphResourceId")
 
-    URI=$(echo  "${microsoft_graph_endpoint}beta/servicePrincipals${resourceId}/appRoleAssignments") && echo " - uri: $URI"
+    URI=$(echo  "${microsoft_graph_endpoint}beta/servicePrincipals/${resourceId}/appRoleAssignments") && echo " - uri: $URI"
 
     # grant consent (Application.ReadWrite.OwnedBy)
     JSON=$( jq -n \
