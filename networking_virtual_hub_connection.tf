@@ -15,9 +15,12 @@ resource "azurerm_virtual_hub_connection" "vhub_connection" {
   depends_on = [azurerm_virtual_hub_route_table.route_table]
   for_each   = local.networking.virtual_hub_connections
 
-  name                      = each.value.name
-  virtual_hub_id            = local.azurerm_virtual_hub_connection[each.key].virtual_hub_id
-  remote_virtual_network_id = local.combined_objects_networking[try(each.value.vnet.lz_key, local.client_config.landingzone_key)][each.value.vnet.vnet_key].id
+  name           = each.value.name
+  virtual_hub_id = local.azurerm_virtual_hub_connection[each.key].virtual_hub_id
+  remote_virtual_network_id = coalesce(
+    try(local.combined_objects_networking[try(each.value.vnet.lz_key, local.client_config.landingzone_key)][each.value.vnet.vnet_key].id, ""),
+    try(each.value.vnet.resource_id, "")
+  )
   internet_security_enabled = try(each.value.internet_security_enabled, null)
 
   dynamic "routing" {
