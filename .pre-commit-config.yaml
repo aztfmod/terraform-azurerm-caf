@@ -11,7 +11,7 @@ repos:
     # - id: terraform_tfsec
     # - id: checkov
   - repo: git://github.com/pre-commit/pre-commit-hooks
-    rev: v3.4.0
+    rev: v4.0.1
     hooks:
       - id: check-merge-conflict
       - id: trailing-whitespace
