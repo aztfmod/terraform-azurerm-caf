@@ -21,8 +21,9 @@ module "azuread_groups_members" {
   source   = "./modules/azuread/groups_members"
   for_each = local.azuread.azuread_groups
 
-  settings       = each.value
-  azuread_groups = module.azuread_groups
-  group_id       = module.azuread_groups[each.key].id
-  azuread_apps   = module.azuread_applications
+  settings                   = each.value
+  azuread_groups             = module.azuread_groups
+  group_id                   = module.azuread_groups[each.key].id
+  azuread_apps               = module.azuread_applications
+  azuread_service_principals = local.combined_objects_azuread_service_principals[try(each.value.lz_key, local.client_config.landingzone_key)]
 }
