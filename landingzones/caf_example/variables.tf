@@ -250,6 +250,9 @@ variable "keyvault_certificates" {
 variable "virtual_machines" {
   default = {}
 }
+variable "virtual_machine_scale_sets" {
+  default = {}
+}
 variable "bastion_hosts" {
   default = {}
 }
