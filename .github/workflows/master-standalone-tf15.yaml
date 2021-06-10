@@ -36,17 +36,21 @@ jobs:
           config_files: [
             "app_gateway/100-simple-app-gateway",
             "app_gateway/101-private-public",
+            "app_gateway/102-waf-policy",
+            "app_gateway/210-agw-with-keyvault",
             "app_insights/100-all-attributes",
             "app_insights/100-simple",
             "automation/100-simple-automation-account",
             "azuread/100-sevice-principle-with-builtin-roles",
             "azuread/101-service-principle-with-custom-roles",
             "azuread/102-password-rotation",
+            "azuread/201-groups-and-roles",
             "compute/availability_set/100-simple-availabilityset",
             "compute/availability_set/101-availabilityset-with-proximity-placement-group",
             "compute/container_groups/101-aci-rover",
             "compute/container_registry/100-simple-acr",
             "compute/container_registry/200-acr-vnet",
+            "compute/container_registry/200-acr-private-link",
             "compute/kubernetes_services/101-single-cluster",
             "compute/kubernetes_services/102-multi-nodepools",
             "compute/proximity_placement_group",
@@ -59,16 +63,20 @@ jobs:
             "compute/windows_virtual_desktop/wvd_resources",
             "cosmos_db/100-simple-cosmos-db-cassandra",
             "cosmos_db/100-simple-cosmos-db-gremlin",
+            "cosmos_db/100-simple-cosmos-db-mongo",
             "cosmos_db/100-simple-cosmos-db-sql",
             "cosmos_db/100-simple-cosmos-db-table",
             "databricks/100-simple-databricks",
             "datalake/101-datalake-storage",
+            "diagnostics_profiles/200-diagnostics-eventhub-namespaces",
             "eventhub/100-simple-eventhub-namespace",
             "eventhub/101-evh-namespace-with-private-endpoint",
             "eventhub/102-namespace-and-evh-with-auth-rules",
             "eventhub/103-eventhub-consumer-groups",
             "keyvault/101-keyvault-policies",
+            "keyvault/102-keyvault-cert-issuer",
             "machine_learning/100-aml",
+            "machine_learning/101-aml-vnet",
             "managed_service_identity/100-msi-levels",
             "mariadb_server/100-simple-mariadb",
             "mariadb_server/101-vnet-rule-mariadb",
@@ -85,6 +93,7 @@ jobs:
             "mysql_server/101-vnet-rule-mysql",
             "mysql_server/102-private-endpoint-mysql",
             "mysql_server/103-private-endpoint-with-fw-rule-mysql",
+            "netapp/101-nfs",
             "networking/dns_zones/100-simple-dns_zone",
             "networking/express_routes",
             "networking/firewall/100-standard-firewall-legacy-pip",
@@ -129,7 +138,11 @@ jobs:
             "redis_cache/100-redis-standard",
             "redis_cache/101-redis-diagnostics",
             "redis_cache/102-redis-private",
+            #"storage_accounts/100-simple-storage-account-blob-container",
+            "storage_accounts/101-storage-account-with-protection",
             "storage_accounts/102-storage-account-advanced-options",
+            "storage_accounts/103-storage-account-network-rules",
+            "storage_accounts/104-file-share-with-backup",
             "synapse_analytics/100-synapse",
             "synapse_analytics/101-synapse-sparkpool",
             "webapps/appservice/101-appservice-simple",
@@ -143,7 +156,7 @@ jobs:
           ]
 
     container:
-      image: aztfmod/rover:0.15.4-2105.2603
+      image: aztfmod/rover:0.15.5-2106.0911
       options: --user 0
 
     steps:
@@ -168,7 +181,7 @@ jobs:
     needs: examples
 
     container:
-      image: aztfmod/rover:0.15.4-2105.2603
+      image: aztfmod/rover:0.15.5-2106.0911
       options: --user 0
 
     steps:
