@@ -33,7 +33,7 @@ locals {
           local.backend_pools_app_services[key],
           local.backend_pools_fqdn[key]
         ]
-      ),null)
+      ), null)
       ip_addresses = try(value.backend_pool.ip_addresses, null)
     }
   }
