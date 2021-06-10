@@ -51,6 +51,7 @@ jobs:
         run: |
           matrix='${{ needs.load_cases.outputs.matrix }}'
           echo $matrix
+          echo $matrix | jq .
 
       - name: Login azure
         run: |
