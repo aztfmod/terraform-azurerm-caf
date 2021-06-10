@@ -42,6 +42,7 @@ jobs:
   examples:
     name: examples
     runs-on: ubuntu-latest
+    needs: load_scenarios
 
     strategy:
       fail-fast: false
