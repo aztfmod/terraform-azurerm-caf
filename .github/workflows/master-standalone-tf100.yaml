@@ -3,11 +3,12 @@
 # Licensed under the MIT License.
 #
 
-name: standalone-scenario-tf13
+name: standalone-scenario-tf100
 
 on:
+  workflow_dispatch:
   schedule:
-    - cron:  '0 1 * * 0' #1 AM on Sunday
+    - cron:  '0 0 * * 0' #1 AM on Sunday
 
 env:
   TF_CLI_ARGS: '-no-color'
@@ -38,9 +39,9 @@ jobs:
     strategy:
       fail-fast: false
       matrix: ${{fromJSON(needs.load_scenarios.outputs.matrix)}}
-      
+
     container:
-      image: aztfmod/rover:0.13.7-2105.2603
+      image: aztfmod/rover:1.0.0-2106.0911
       options: --user 0
 
     steps:
@@ -65,7 +66,7 @@ jobs:
     needs: examples
 
     container:
-      image: aztfmod/rover:0.13.7-2105.2603
+      image: aztfmod/rover:1.0.0-2106.0911
       options: --user 0
 
     steps:
