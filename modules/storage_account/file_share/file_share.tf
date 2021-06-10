@@ -8,6 +8,7 @@ resource "azurerm_storage_share" "fs" {
   metadata             = try(var.settings.metadata, null)
 }
 
+# Issue open in 2.61 : https://github.com/terraform-providers/terraform-provider-azurerm/issues/11184 
 resource "azurerm_backup_protected_file_share" "fs_backup" {
   for_each = try(var.settings.backups, null) != null ? toset(["enabled"]) : toset([])
 
