@@ -7,13 +7,7 @@ name: standalone-scenario-tf15
 
 on:
   workflow_dispatch:
-  pull_request:
-    paths-ignore:
-      - .github/workflows/master-100.yaml
-      - 'documentation/**'
-      - '_pictures/**'
-      - 'README.md'
-      - 'CHANGELOG.md'
+  push:
   schedule:
     - cron:  '0 2 * * 0' #1 AM on Sunday
 
