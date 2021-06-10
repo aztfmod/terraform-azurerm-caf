@@ -29,8 +29,9 @@ jobs:
       - uses: actions/checkout@v2
       - id: load_cases
         run: |
-          cases=$(cat ./.github/workflows/master-100-testcases.json)
-          echo $cases | jq .
+          cases=$((
+            cat ./.github/workflows/master-100-testcases.json) | jq -c .)
+          echo $cases
           echo "::set-output name=matrix::${cases}"
   
   examples:
