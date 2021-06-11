@@ -17,6 +17,14 @@ locals {
     ) if lookup(value, "backend_pool", false) != false
   }
 
+  # backend_pools_vmss = {
+  #   for key, value in var.application_gateway_applications : key = > flatten(
+  #     [
+  #       try(value.backend_pool.vmss,)
+  #     ]
+  #   )
+  # }
+
   backend_pools = {
     for key, value in var.application_gateway_applications : key => {
       name = try(value.backend_pool.name, value.name)
