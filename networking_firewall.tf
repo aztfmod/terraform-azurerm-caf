@@ -21,7 +21,7 @@ module "azurerm_firewalls" {
   settings            = each.value
   virtual_wans        = module.virtual_wans
   virtual_networks    = local.combined_objects_networking
-  firewall_policies   = module.azurerm_firewall_policies
+  firewall_policy_id  = try(local.combined_objects_azurerm_firewall_policies[try(each.value.lz_key,local.client_config.landingzone_key)][each.value.firewall_policy_key].id, null)
 }
 
 module "azurerm_firewall_policies" {
