@@ -49,7 +49,6 @@ locals {
   combined_objects_recovery_vaults                   = merge(tomap({ (local.client_config.landingzone_key) = module.recovery_vaults }), try(var.remote_objects.recovery_vaults, {}))
   combined_objects_resource_groups                   = merge(tomap({ (local.client_config.landingzone_key) = local.resource_groups }), try(var.remote_objects.resource_groups, {}))
   combined_objects_storage_accounts                  = merge(tomap({ (local.client_config.landingzone_key) = module.storage_accounts }), try(var.remote_objects.storage_accounts, {}))
-  combined_objects_subscriptions                     = merge(tomap({ (local.client_config.landingzone_key) = module.subscriptions }), try(var.remote_objects.subscriptions, {}))
   combined_objects_synapse_workspaces                = merge(tomap({ (local.client_config.landingzone_key) = module.synapse_workspaces }), try(var.remote_objects.synapse_workspaces, {}))
   combined_objects_virtual_machines                  = merge(tomap({ (local.client_config.landingzone_key) = module.virtual_machines }), try(var.remote_objects.virtual_machines, {}))
   combined_objects_virtual_machine_scale_sets        = merge(tomap({ (local.client_config.landingzone_key) = module.virtual_machine_scale_sets }), try(var.remote_objects.virtual_machine_scale_sets, {}))
@@ -60,4 +59,21 @@ locals {
   combined_objects_wvd_application_groups            = merge(tomap({ (local.client_config.landingzone_key) = module.wvd_application_groups }), try(var.remote_objects.wvd_application_groups, {}))
   combined_objects_wvd_host_pools                    = merge(tomap({ (local.client_config.landingzone_key) = module.wvd_host_pools }), try(var.remote_objects.wvd_host_pools, {}))
   combined_objects_wvd_workspaces                    = merge(tomap({ (local.client_config.landingzone_key) = module.wvd_workspaces }), try(var.remote_objects.wvd_workspaces, {}))
+
+  combined_objects_subscriptions = merge(
+    tomap(
+      { 
+        (local.client_config.landingzone_key) = merge(
+          try(module.subscriptions, {}),
+          {("logged_in_subscription") = { id = data.azurerm_subscription.primary.id }}
+        )
+      }
+    ), 
+    try(var.remote_objects.subscriptions, {})
+  )
+
+}
+
+output combined_objects_subscriptions {
+  value = local.combined_objects_subscriptions
 }
