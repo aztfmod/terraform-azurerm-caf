@@ -88,9 +88,20 @@ locals {
     recovery_vaults             = local.combined_objects_recovery_vaults
     resource_groups             = local.combined_objects_resource_groups
     storage_accounts            = local.combined_objects_storage_accounts
-    subscriptions               = tomap({ (var.current_landingzone_key) = merge(try(var.subscriptions, {}), { "logged_in_subscription" = { id = data.azurerm_subscription.primary.id } }) })
+    subscriptions               = merge(local.combined_objects_subscriptions, tomap({ "logged_in_subscription" = { id = data.azurerm_subscription.primary.id } }))
     synapse_workspaces          = local.combined_objects_synapse_workspaces
   }
+
+  subscriptions_map = tomap(
+    {
+      (var.current_landingzone_key) = merge(
+        module.subscriptions
+        # try(var.subscriptions, {}), 
+        # tomap({ "logged_in_subscription" = { id = data.azurerm_subscription.primary.id } })
+      ) 
+    }
+  )
+
 
   logged_in = tomap(
     {
