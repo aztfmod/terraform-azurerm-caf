@@ -10,3 +10,7 @@ variable "client_config" {
 variable "application_id" {
   description = "Application ID of the service principal to create."
 }
+variable "azuread_api_permissions" {
+  default = {}
+}
+variable "user_type" {}
