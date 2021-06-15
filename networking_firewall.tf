@@ -49,7 +49,7 @@ module "azurerm_firewall_policy_rule_collection_groups" {
   ip_groups           = module.ip_groups
   policy_settings     = each.value
   public_ip_addresses = module.public_ip_addresses
-  firewall_policies   = try(local.firewall_policies[each.value.firewall_policy_key].id, null)
+  firewall_policies   = try(module.azurerm_firewall_policies[each.value.firewall_policy_key].id, null)
 }
 
 
@@ -102,6 +102,7 @@ module "azurerm_firewall_nat_rule_collections" {
 
 output "azurerm_firewalls" {
   value = module.azurerm_firewalls
+
 }
 
 output "azurerm_firewall_policies" {
@@ -110,4 +111,5 @@ output "azurerm_firewall_policies" {
 
 output "azurerm_firewall_policy_rule_collection_groups" {
   value = module.azurerm_firewall_policy_rule_collection_groups
+
 }
