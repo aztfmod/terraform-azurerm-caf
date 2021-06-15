@@ -42,6 +42,9 @@ variable "azureDatalakeAnalyticsCatalogAndJobEndpoint" {
 variable "azureDatalakeStoreFileSystemEndpoint" {
   default = "azuredatalakestore.net"
 }
+variable "consumption_budgets" {
+  default = {}
+}
 variable "keyvaultDns" {
   default = ".vault.azure.net"
 }
