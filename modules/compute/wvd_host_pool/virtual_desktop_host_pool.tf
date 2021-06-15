@@ -8,6 +8,10 @@ resource "azurecaf_name" "wvdpool" {
   use_slug      = var.global_settings.use_slug
 }
 
+
+# Last review :  AzureRM version 2.63.0
+# Ref : https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/resources/virtual_desktop_host_pool
+
 resource "azurerm_virtual_desktop_host_pool" "wvdpool" {
   location                         = var.location
   resource_group_name              = var.resource_group_name
@@ -21,6 +25,7 @@ resource "azurerm_virtual_desktop_host_pool" "wvdpool" {
   personal_desktop_assignment_type = try(var.settings.personal_desktop_assignment_type, null)
   preferred_app_group_type         = try(var.settings.preferred_app_group_type, null)
   custom_rdp_properties            = try(var.settings.custom_rdp_properties, null)
+  start_vm_on_connect              = try(var.settings.start_vm_on_connect, null)
   tags                             = local.tags
 
   dynamic "registration_info" {
