@@ -7,7 +7,7 @@ When ugrading to a newer version of the CAF module, some configuration structure
 Upgrade to 5.4.0 includes support for:
 - Updated georeplications structure for Azure Container Registry configuration file.
 - Updated structure for Azure Front Door configuration file.
-- Updated parameter for Azure Public IP address
+- Updated parameter for Azure Public IP address.
 
 ### Update for georeplications structure for ACR
 The georeplications argument has replaced georeplication_locations in azurerm 2.57.0. Accordingly you need to change the configuration file from 
@@ -55,7 +55,10 @@ resource "azurerm_frontdoor_custom_https_configuration" "frontdoor" {
 This should not require a restructure of the configuration file.
 
 ### Update for public IP address
-The parameter ```zone``` is deprecated and replaced by ```availability_zone``` in the provider.  This should be transparent as in the variable structure, we keep the ```var.zones``` entry, for more reference on the possible values: https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/resources/public_ip 
+The parameter ```zone``` is deprecated and replaced by ```availability_zone``` in the provider.  
+
+In previous versions, ```var.zones``` was a list, we recommend that you migrate to use ```availability_zone``` as a string parameter. If not, we will try to cast as a string the first element of  ```var.zones```. For more reference on the possible values: https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/resources/public_ip 
+
 
 ## 5.3.0
 
