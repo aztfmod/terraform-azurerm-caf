@@ -24,3 +24,9 @@ variable "base_tags" {}
 
 variable "name" {
 }
+
+variable base_policy_id {
+  type        = string
+  default     = null
+  description = "(Optional) The ID of the base Firewall Policy."
+}
