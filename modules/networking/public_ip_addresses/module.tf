@@ -1,3 +1,6 @@
+# Last review :  AzureRM version 2.63.0
+# Ref : https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/resources/virtual_desktop_host_pool
+
 resource "azurerm_public_ip" "pip" {
   name                    = var.name
   resource_group_name     = var.resource_group_name
@@ -10,4 +13,6 @@ resource "azurerm_public_ip" "pip" {
   reverse_fqdn            = var.reverse_fqdn
   availability_zone       = var.zones
   tags                    = local.tags
+  public_ip_prefix_id     = var.public_ip_prefix_id
+  ip_tags                 = var.ip_tags
 }
