@@ -38,7 +38,7 @@ resource "azurerm_vpn_gateway" "s2s_gateway" {
           custom_ips = var.virtual_hub_config.s2s_config.bgp_settings.instance_0_bgp_peering_address.custom_ips
         }
       }
-      
+
       dynamic "instance_1_bgp_peering_address" {
         for_each = try(var.virtual_hub_config.s2s_config.bgp_settings.instance_1_bgp_peering_address, null) == null ? [] : [1]
 
@@ -46,7 +46,7 @@ resource "azurerm_vpn_gateway" "s2s_gateway" {
           custom_ips = var.virtual_hub_config.s2s_config.bgp_settings.instance_1_bgp_peering_address.custom_ips
         }
       }
-      
+
     }
   }
 
