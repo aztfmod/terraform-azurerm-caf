@@ -17,28 +17,28 @@ locals {
   }
   tags = merge(var.base_tags, local.module_tag, try(var.settings.tags, null))
 
-  application_gateway_backend_address_pool_ids = flatten ([
+  application_gateway_backend_address_pool_ids = flatten([
     for nic, nic_value in var.settings.network_interfaces : [
-      for appgw, appgw_value in try(nic_value.appgw_backend_pools,{}): [
+      for appgw, appgw_value in try(nic_value.appgw_backend_pools, {}) : [
         for pool_name in appgw_value.pool_names : [
-          try(var.application_gateways[try(var.client_config.landingzone_key, appgw_value.lz_key)][appgw_value.appgw_key].backend_address_pools[pool_name],null)
+          try(var.application_gateways[try(var.client_config.landingzone_key, appgw_value.lz_key)][appgw_value.appgw_key].backend_address_pools[pool_name], null)
         ]
       ]
     ]
   ])
 
-  load_balancer_backend_address_pool_ids = flatten ([
+  load_balancer_backend_address_pool_ids = flatten([
     for nic, nic_value in var.settings.network_interfaces : [
-      for lb, lb_value in try(nic_value.load_balancers,{}) : [
-        try(var.load_balancers[try(var.client_config.landingzone_key, lb_value.lz_key)][lb_value.lb_key].backend_address_pool_id,null)
+      for lb, lb_value in try(nic_value.load_balancers, {}) : [
+        try(var.load_balancers[try(var.client_config.landingzone_key, lb_value.lz_key)][lb_value.lb_key].backend_address_pool_id, null)
       ]
     ]
   ])
-  
-  application_security_group_ids = flatten ([
+
+  application_security_group_ids = flatten([
     for nic, nic_value in var.settings.network_interfaces : [
-      for asg, asg_value in try(nic_value.application_security_groups,{}) : [
-        try(var.application_security_groups[try(var.client_config.landingzone_key, asg_value.lz_key)][asg_value.asg_key].id,null)
+      for asg, asg_value in try(nic_value.application_security_groups, {}) : [
+        try(var.application_security_groups[try(var.client_config.landingzone_key, asg_value.lz_key)][asg_value.asg_key].id, null)
       ]
     ]
   ])
