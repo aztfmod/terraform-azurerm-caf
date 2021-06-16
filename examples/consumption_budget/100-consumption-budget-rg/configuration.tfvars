@@ -50,5 +50,15 @@ consumption_budgets = {
         ]
       }
     }
+    filter = {
+      dimensions = {
+        explicit_name = {
+          name = "ResourceGroupName"
+          values = [
+            "example",
+          ]
+        }
+      }
+    }
   }
 }

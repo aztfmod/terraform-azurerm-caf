@@ -22,4 +22,19 @@ resource "azurerm_consumption_budget_resource_group" "this" {
       enabled        = try(notification.value.enabled, true)
     }
   }
+
+  dynamic "filter" {
+    for_each = try(var.settings.filter, null) == null ? [] : [1]
+
+    content {
+      dynamic "dimension" {
+        for_each = var.settings.filter.dimensions
+
+        content {
+          name   = dimension.value.name
+          values = dimension.value.values
+        }
+      }
+    }
+  }
 }
