@@ -31,7 +31,7 @@ module virtual_machine_scale_sets {
   proximity_placement_groups       = local.combined_objects_proximity_placement_groups
   public_ip_addresses              = local.combined_objects_public_ip_addresses
   recovery_vaults                  = local.combined_objects_recovery_vaults
-  resource_group_name              = module.resource_groups[each.value.resource_group_key].name
+  resource_group_name              = local.combined_objects_resource_groups[try(each.value.lz_key, local.client_config.landingzone_key)][each.value.resource_group_key].name
   settings                         = each.value
   vnets                            = local.combined_objects_networking
 }

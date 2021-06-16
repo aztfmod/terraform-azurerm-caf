@@ -12,7 +12,7 @@ module "mssql_servers" {
   global_settings     = local.global_settings
   client_config       = local.client_config
   settings            = each.value
-  resource_group_name = local.resource_groups[each.value.resource_group_key].name
+  resource_group_name = local.combined_objects_resource_groups[try(each.value.lz_key, local.client_config.landingzone_key)][each.value.resource_group_key].name
   location            = lookup(each.value, "region", null) == null ? local.resource_groups[each.value.resource_group_key].location : local.global_settings.regions[each.value.region]
   storage_accounts    = module.storage_accounts
   azuread_groups      = local.combined_objects_azuread_groups

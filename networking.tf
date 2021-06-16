@@ -30,7 +30,7 @@ module "networking" {
   network_security_groups           = module.network_security_groups
   network_security_group_definition = local.networking.network_security_group_definition
   network_watchers                  = try(local.combined_objects_network_watchers, null)
-  resource_group_name               = local.resource_groups[each.value.resource_group_key].name
+  resource_group_name               = local.combined_objects_resource_groups[try(each.value.lz_key, local.client_config.landingzone_key)][each.value.resource_group_key].name
   route_tables                      = module.route_tables
   settings                          = each.value
   tags                              = try(each.value.tags, null)
