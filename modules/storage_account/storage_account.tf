@@ -25,13 +25,14 @@ resource "azurerm_storage_account" "stg" {
   account_replication_type  = try(var.storage_account.account_replication_type, "LRS")
   account_kind              = try(var.storage_account.account_kind, "StorageV2")
   access_tier               = try(var.storage_account.access_tier, "Hot")
-  enable_https_traffic_only = true
-  min_tls_version           = try(var.storage_account.min_tls_version, "TLS1_2")
-  allow_blob_public_access  = try(var.storage_account.allow_blob_public_access, false)
-  is_hns_enabled            = try(var.storage_account.is_hns_enabled, false)
-  nfsv3_enabled             = try(var.storage_account.nfsv3_enabled, false)
-  large_file_share_enabled  = try(var.storage_account.large_file_share_enabled, null)
-  tags                      = merge(var.base_tags, local.tags)
+  enable_https_traffic_only = try(var.storage_account.nfsv3_enabled, false) ? false : true
+  #if using nfsv3_enabled, then https must be disabled
+  min_tls_version          = try(var.storage_account.min_tls_version, "TLS1_2")
+  allow_blob_public_access = try(var.storage_account.allow_blob_public_access, false)
+  is_hns_enabled           = try(var.storage_account.is_hns_enabled, false)
+  nfsv3_enabled            = try(var.storage_account.nfsv3_enabled, false)
+  large_file_share_enabled = try(var.storage_account.large_file_share_enabled, null)
+  tags                     = merge(var.base_tags, local.tags)
 
 
   dynamic "custom_domain" {
@@ -193,7 +194,7 @@ resource "azurerm_storage_account" "stg" {
       choice                      = try(var.storage_account.routing.choice, "MicrosoftRouting")
     }
   }
-  
+
 }
 
 module "container" {
