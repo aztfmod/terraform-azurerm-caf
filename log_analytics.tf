@@ -6,7 +6,7 @@ module "log_analytics" {
   global_settings = local.global_settings
   log_analytics   = each.value
   resource_groups = local.resource_groups
-  base_tags       = try(local.global_settings.inherit_tags, false) ? local.resource_groups[each.value.resource_group_key].tags : {}
+  base_tags       = try(local.global_settings.inherit_tags, false) ? local.combined_objects_resource_groups[try(each.value.lz_key, local.client_config.landingzone_key)][each.value.resource_group_key].tags : {}
 }
 
 module "log_analytics_diagnostics" {

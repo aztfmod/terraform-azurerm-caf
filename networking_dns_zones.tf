@@ -2,10 +2,10 @@ module "dns_zones" {
   source   = "./modules/networking/dns_zone"
   for_each = try(local.networking.dns_zones, {})
 
-  base_tags           = try(local.global_settings.inherit_tags, false) ? local.resource_groups[each.value.resource_group_key].tags : {}
+  base_tags           = try(local.global_settings.inherit_tags, false) ? local.combined_objects_resource_groups[try(each.value.lz_key, local.client_config.landingzone_key)][each.value.resource_group_key].tags : {}
   client_config       = local.client_config
   global_settings     = local.global_settings
-  resource_group_name = local.resource_groups[each.value.resource_group_key].name
+  resource_group_name = local.combined_objects_resource_groups[try(each.value.lz_key, local.client_config.landingzone_key)][each.value.resource_group_key].name
   settings            = each.value
 
   resource_ids = {

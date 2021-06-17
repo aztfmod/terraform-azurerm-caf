@@ -9,10 +9,10 @@ module "azurerm_firewalls" {
   client_config       = local.client_config
   global_settings     = local.global_settings
   name                = each.value.name
-  resource_group_name = local.resource_groups[each.value.resource_group_key].name
-  location            = lookup(each.value, "region", null) == null ? local.resource_groups[each.value.resource_group_key].location : local.global_settings.regions[each.value.region]
+  resource_group_name = local.combined_objects_resource_groups[try(each.value.lz_key, local.client_config.landingzone_key)][each.value.resource_group_key].name
+  location            = lookup(each.value, "region", null) == null ? local.combined_objects_resource_groups[try(each.value.lz_key, local.client_config.landingzone_key)][each.value.resource_group_key].location : local.global_settings.regions[each.value.region]
   tags                = try(each.value.tags, null)
-  base_tags           = try(local.global_settings.inherit_tags, false) ? local.resource_groups[each.value.resource_group_key].tags : {}
+  base_tags           = try(local.global_settings.inherit_tags, false) ? local.combined_objects_resource_groups[try(each.value.lz_key, local.client_config.landingzone_key)][each.value.resource_group_key].tags : {}
   subnet_id           = module.networking[each.value.vnet_key].subnets["AzureFirewallSubnet"].id
   public_ip_id        = try(module.public_ip_addresses[each.value.public_ip_key].id, null)
   public_ip_addresses = try(module.public_ip_addresses, null)
@@ -30,10 +30,10 @@ module "azurerm_firewall_policies" {
 
   global_settings     = local.global_settings
   name                = each.value.name
-  resource_group_name = local.resource_groups[each.value.resource_group_key].name
-  location            = lookup(each.value, "region", null) == null ? local.resource_groups[each.value.resource_group_key].location : local.global_settings.regions[each.value.region]
+  resource_group_name = local.combined_objects_resource_groups[try(each.value.lz_key, local.client_config.landingzone_key)][each.value.resource_group_key].name
+  location            = lookup(each.value, "region", null) == null ? local.combined_objects_resource_groups[try(each.value.lz_key, local.client_config.landingzone_key)][each.value.resource_group_key].location : local.global_settings.regions[each.value.region]
   tags                = try(each.value.tags, null)
-  base_tags           = try(local.global_settings.inherit_tags, false) ? local.resource_groups[each.value.resource_group_key].tags : {}
+  base_tags           = try(local.global_settings.inherit_tags, false) ? local.combined_objects_resource_groups[try(each.value.lz_key, local.client_config.landingzone_key)][each.value.resource_group_key].tags : {}
   policy_settings     = each.value
 }
 

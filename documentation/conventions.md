@@ -136,8 +136,8 @@ module "networking" {
   source   = "./modules/networking/virtual_network"
   for_each = local.networking.vnets
 
-  location                          = lookup(each.value, "region", null) == null ? local.resource_groups[each.value.resource_group_key].location : local.global_settings.regions[each.value.region]
-  resource_group_name               = local.resource_groups[each.value.resource_group_key].name
+  location                          = lookup(each.value, "region", null) == null ? local.combined_objects_resource_groups[try(each.value.lz_key, local.client_config.landingzone_key)][each.value.resource_group_key].location : local.global_settings.regions[each.value.region]
+  resource_group_name               = local.combined_objects_resource_groups[try(each.value.lz_key, local.client_config.landingzone_key)][each.value.resource_group_key].name
   settings                          = each.value
   network_security_group_definition = local.networking.network_security_group_definition
   route_tables                      = module.route_tables
@@ -145,7 +145,7 @@ module "networking" {
   diagnostics                       = local.combined_diagnostics
   global_settings                   = local.global_settings
   ddos_id                           = try(azurerm_network_ddos_protection_plan.ddos_protection_plan[each.value.ddos_services_key].id, "")
-  base_tags                         = try(local.global_settings.inherit_tags, false) ? local.resource_groups[each.value.resource_group_key].tags : {}
+  base_tags                         = try(local.global_settings.inherit_tags, false) ? local.combined_objects_resource_groups[try(each.value.lz_key, local.client_config.landingzone_key)][each.value.resource_group_key].tags : {}
   network_watchers                  = try(local.combined_objects_network_watchers, null)
 }
 ```

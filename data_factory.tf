@@ -5,13 +5,13 @@ module "data_factory" {
   for_each = local.data_factory.data_factory
 
   name                 = each.value.name
-  resource_group_name  = local.resource_groups[each.value.resource_group_key].name
-  location             = lookup(each.value, "region", null) == null ? local.resource_groups[each.value.resource_group_key].location : local.global_settings.regions[each.value.region]
+  resource_group_name  = local.combined_objects_resource_groups[try(each.value.lz_key, local.client_config.landingzone_key)][each.value.resource_group_key].name
+  location             = lookup(each.value, "region", null) == null ? local.combined_objects_resource_groups[try(each.value.lz_key, local.client_config.landingzone_key)][each.value.resource_group_key].location : local.global_settings.regions[each.value.region]
   github_configuration = try(each.value.github_configuration, null)
   identity             = try(each.value.identity, null)
   vsts_configuration   = try(each.value.vsts_configuration, null)
   global_settings      = local.global_settings
-  base_tags            = try(local.global_settings.inherit_tags, false) ? local.resource_groups[each.value.resource_group_key].tags : {}
+  base_tags            = try(local.global_settings.inherit_tags, false) ? local.combined_objects_resource_groups[try(each.value.lz_key, local.client_config.landingzone_key)][each.value.resource_group_key].tags : {}
   tags                 = try(each.value.tags, null)
 }
 
@@ -26,7 +26,7 @@ module "data_factory_pipeline" {
   for_each = local.data_factory.data_factory_pipeline
 
   name                = each.value.name
-  resource_group_name = local.resource_groups[each.value.resource_group_key].name
+  resource_group_name = local.combined_objects_resource_groups[try(each.value.lz_key, local.client_config.landingzone_key)][each.value.resource_group_key].name
   data_factory_name   = module.data_factory[each.value.data_factory_key].name
   description         = try(each.value.description, null)
   annotations         = try(each.value.annotations, null)
@@ -46,7 +46,7 @@ module "data_factory_trigger_schedule" {
   for_each = local.data_factory.data_factory_trigger_schedule
 
   name                = each.value.name
-  resource_group_name = local.resource_groups[each.value.resource_group_key].name
+  resource_group_name = local.combined_objects_resource_groups[try(each.value.lz_key, local.client_config.landingzone_key)][each.value.resource_group_key].name
   data_factory_name   = module.data_factory[each.value.data_factory_key].name
   pipeline_name       = module.data_factory_pipeline[each.value.data_factory_pipeline_key].name
   start_time          = try(each.value.start_time, null)

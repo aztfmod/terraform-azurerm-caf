@@ -27,7 +27,7 @@ module "virtual_machines" {
   disk_encryption_sets       = local.combined_objects_disk_encryption_sets
   global_settings            = local.global_settings
   keyvaults                  = local.combined_objects_keyvaults
-  location                   = lookup(each.value, "region", null) == null ? local.resource_groups[each.value.resource_group_key].location : local.global_settings.regions[each.value.region]
+  location                   = lookup(each.value, "region", null) == null ? local.combined_objects_resource_groups[try(each.value.lz_key, local.client_config.landingzone_key)][each.value.resource_group_key].location : local.global_settings.regions[each.value.region]
   managed_identities         = local.combined_objects_managed_identities
   network_security_groups    = local.combined_objects_network_security_groups
   proximity_placement_groups = local.combined_objects_proximity_placement_groups

@@ -5,13 +5,13 @@ module "integration_service_environment" {
   for_each = local.logic_app.integration_service_environment
 
   name                       = each.value.name
-  resource_group_name        = local.resource_groups[each.value.resource_group_key].name
-  location                   = lookup(each.value, "region", null) == null ? local.resource_groups[each.value.resource_group_key].location : local.global_settings.regions[each.value.region]
+  resource_group_name        = local.combined_objects_resource_groups[try(each.value.lz_key, local.client_config.landingzone_key)][each.value.resource_group_key].name
+  location                   = lookup(each.value, "region", null) == null ? local.combined_objects_resource_groups[try(each.value.lz_key, local.client_config.landingzone_key)][each.value.resource_group_key].location : local.global_settings.regions[each.value.region]
   sku_name                   = each.value.sku_name
   access_endpoint_type       = each.value.access_endpoint_type
   virtual_network_subnet_ids = each.value.virtual_network_subnet_ids
   global_settings            = local.global_settings
-  base_tags                  = try(local.global_settings.inherit_tags, false) ? local.resource_groups[each.value.resource_group_key].tags : {}
+  base_tags                  = try(local.global_settings.inherit_tags, false) ? local.combined_objects_resource_groups[try(each.value.lz_key, local.client_config.landingzone_key)][each.value.resource_group_key].tags : {}
   tags                       = try(each.value.tags, null)
 }
 
@@ -60,11 +60,11 @@ module "logic_app_integration_account" {
   for_each = local.logic_app.logic_app_integration_account
 
   name                = each.value.name
-  resource_group_name = local.resource_groups[each.value.resource_group_key].name
-  location            = lookup(each.value, "region", null) == null ? local.resource_groups[each.value.resource_group_key].location : local.global_settings.regions[each.value.region]
+  resource_group_name = local.combined_objects_resource_groups[try(each.value.lz_key, local.client_config.landingzone_key)][each.value.resource_group_key].name
+  location            = lookup(each.value, "region", null) == null ? local.combined_objects_resource_groups[try(each.value.lz_key, local.client_config.landingzone_key)][each.value.resource_group_key].location : local.global_settings.regions[each.value.region]
   sku_name            = each.value.sku_name
   global_settings     = local.global_settings
-  base_tags           = try(local.global_settings.inherit_tags, false) ? local.resource_groups[each.value.resource_group_key].tags : {}
+  base_tags           = try(local.global_settings.inherit_tags, false) ? local.combined_objects_resource_groups[try(each.value.lz_key, local.client_config.landingzone_key)][each.value.resource_group_key].tags : {}
   tags                = try(each.value.tags, null)
 }
 
@@ -129,15 +129,15 @@ module "logic_app_workflow" {
   for_each = local.logic_app.logic_app_workflow
 
   name                               = each.value.name
-  resource_group_name                = local.resource_groups[each.value.resource_group_key].name
-  location                           = lookup(each.value, "region", null) == null ? local.resource_groups[each.value.resource_group_key].location : local.global_settings.regions[each.value.region]
+  resource_group_name                = local.combined_objects_resource_groups[try(each.value.lz_key, local.client_config.landingzone_key)][each.value.resource_group_key].name
+  location                           = lookup(each.value, "region", null) == null ? local.combined_objects_resource_groups[try(each.value.lz_key, local.client_config.landingzone_key)][each.value.resource_group_key].location : local.global_settings.regions[each.value.region]
   integration_service_environment_id = try(each.value.integration_service_environment_key, null) != null ? try(each.value.lz_key, null) == null ? local.combined_objects_integration_service_environment[local.client_config.landingzone_key][each.value.integration_service_environment_key].id : local.combined_objects_integration_service_environment[each.value.lz_key][each.value.integration_service_environment_key].id : null
   logic_app_integration_account_id   = try(each.value.logic_app_integration_account_key, null) != null ? try(each.value.lz_key, null) == null ? local.combined_objects_logic_app_integration_account[local.client_config.landingzone_key][each.value.logic_app_integration_account_key].id : local.combined_objects_logic_app_integration_account[each.value.lz_key][each.value.logic_app_integration_account_key].id : null
   workflow_schema                    = try(each.value.workflow_schema, null)
   workflow_version                   = try(each.value.workflow_version, null)
   parameters                         = try(each.value.parameters, null)
   global_settings                    = local.global_settings
-  base_tags                          = try(local.global_settings.inherit_tags, false) ? local.resource_groups[each.value.resource_group_key].tags : {}
+  base_tags                          = try(local.global_settings.inherit_tags, false) ? local.combined_objects_resource_groups[try(each.value.lz_key, local.client_config.landingzone_key)][each.value.resource_group_key].tags : {}
   tags                               = try(each.value.tags, null)
 }
 

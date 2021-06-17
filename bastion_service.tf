@@ -19,9 +19,9 @@ resource "azurerm_bastion_host" "host" {
   for_each = try(local.compute.bastion_hosts, {})
 
   name                = azurecaf_name.host[each.key].result
-  location            = lookup(each.value, "region", null) == null ? local.resource_groups[each.value.resource_group_key].location : local.global_settings.regions[each.value.region]
-  resource_group_name = local.resource_groups[each.value.resource_group_key].name
-  tags                = try(local.global_settings.inherit_tags, false) ? merge(local.resource_groups[each.value.resource_group_key].tags, try(each.value.tags, null)) : try(each.value.tags, null)
+  location            = lookup(each.value, "region", null) == null ? local.combined_objects_resource_groups[try(each.value.lz_key, local.client_config.landingzone_key)][each.value.resource_group_key].location : local.global_settings.regions[each.value.region]
+  resource_group_name = local.combined_objects_resource_groups[try(each.value.lz_key, local.client_config.landingzone_key)][each.value.resource_group_key].name
+  tags                = try(local.global_settings.inherit_tags, false) ? merge(local.combined_objects_resource_groups[try(each.value.lz_key, local.client_config.landingzone_key)][each.value.resource_group_key].tags, try(each.value.tags, null)) : try(each.value.tags, null)
 
   ip_configuration {
     name                 = each.value.name
@@ -38,7 +38,7 @@ module "bastion_host_diagnostics" {
   for_each = try(local.compute.bastion_hosts, {})
 
   resource_id       = azurerm_bastion_host.host[each.key].id
-  resource_location = local.resource_groups[each.value.resource_group_key].location
+  resource_location = local.combined_objects_resource_groups[try(each.value.lz_key, local.client_config.landingzone_key)][each.value.resource_group_key].location
   diagnostics       = local.combined_diagnostics
   profiles          = try(each.value.diagnostic_profiles, {})
 }
