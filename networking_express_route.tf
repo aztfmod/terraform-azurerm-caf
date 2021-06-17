@@ -27,7 +27,7 @@ module "express_route_circuit_authorizations" {
   for_each = local.networking.express_route_circuit_authorizations
 
   settings                   = each.value
-  resource_group_name        = try(local.combined_objects_resource_groups[try(each.value.lz_key, local.client_config.landingzone_key)][each.value.resource_group_key].name, null) == null ? module.express_route_circuits[each.value.express_route_key].resource_group_name : local.combined_objects_resource_groups[try(each.value.lz_key, local.client_config.landingzone_key)][each.value.resource_group_key].name
+  resource_group_name        = try(local.combined_objects_resource_groups[try(each.value.lz_key, local.client_config.landingzone_key)][each.value.resource_group_key].name, module.express_route_circuits[each.value.express_route_key].resource_group_name)
   express_route_circuit_name = module.express_route_circuits[each.value.express_route_key].name
 }
 
