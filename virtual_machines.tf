@@ -36,6 +36,7 @@ module "virtual_machines" {
   resource_group_name        = local.resource_groups[each.value.resource_group_key].name
   settings                   = each.value
   vnets                      = local.combined_objects_networking
+  dedicated_hosts            = local.combined_objects_dedicated_hosts
 }
 
 
