@@ -18,7 +18,7 @@ module "mssql_servers" {
   azuread_groups      = local.combined_objects_azuread_groups
   vnets               = local.combined_objects_networking
   private_endpoints   = try(each.value.private_endpoints, {})
-  resource_groups     = try(each.value.private_endpoints, {}) == {} ? null : local.resource_groups
+  resource_groups     = try(each.value.private_endpoints, {}) == {} ? null : local.combined_objects_resource_groups[try(each.value.lz_key, local.client_config.landingzone_key)]
   base_tags           = try(local.global_settings.inherit_tags, false) ? local.combined_objects_resource_groups[try(each.value.lz_key, local.client_config.landingzone_key)][each.value.resource_group_key].tags : {}
   private_dns         = local.combined_objects_private_dns
 }
