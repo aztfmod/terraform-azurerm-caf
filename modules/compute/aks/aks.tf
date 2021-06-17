@@ -57,9 +57,13 @@ resource "azurerm_kubernetes_cluster" "aks" {
     max_pods                     = try(var.settings.default_node_pool.max_pods, 30)
     node_labels                  = try(var.settings.default_node_pool.node_labels, null)
     node_taints                  = try(var.settings.default_node_pool.node_taints, null)
-    vnet_subnet_id               = var.subnets[var.settings.default_node_pool.subnet_key].id
     orchestrator_version         = try(var.settings.default_node_pool.orchestrator_version, try(var.settings.kubernetes_version, null))
     tags                         = merge(try(var.settings.default_node_pool.tags, {}), local.tags)
+    vnet_subnet_id = coalesce(
+      try(var.subnets[var.settings.default_node_pool.subnet_key].id, ""),
+      try(var.subnets[var.settings.default_node_pool.subnet.key].id, ""),
+      try(var.settings.default_node_pool.subnet.resource_id, "")
+    )
   }
 
   dns_prefix = try(var.settings.dns_prefix, random_string.prefix.result)
@@ -234,7 +238,6 @@ resource "azurerm_kubernetes_cluster_node_pool" "nodepools" {
   name                  = each.value.name
   mode                  = try(each.value.mode, "User")
   kubernetes_cluster_id = azurerm_kubernetes_cluster.aks.id
-  vnet_subnet_id        = var.subnets[each.value.subnet_key].id
   vm_size               = each.value.vm_size
   os_disk_size_gb       = try(each.value.os_disk_size_gb, null)
   os_disk_type          = try(each.value.os_disk_type, null)
@@ -247,5 +250,9 @@ resource "azurerm_kubernetes_cluster_node_pool" "nodepools" {
   node_taints           = try(each.value.node_taints, null)
   orchestrator_version  = try(each.value.orchestrator_version, try(var.settings.kubernetes_version, null))
   tags                  = merge(try(var.settings.default_node_pool.tags, {}), try(each.value.tags, {}))
-
+  vnet_subnet_id = coalesce(
+    try(var.subnets[each.value.subnet_key].id, ""),
+    try(var.subnets[each.value.subnet.key].id, ""),
+    try(each.value.subnet.resource_id, "")
+  )
 }
