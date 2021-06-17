@@ -157,17 +157,17 @@ module "routes" {
   source   = "./modules/networking/routes"
   for_each = local.networking.azurerm_routes
 
-  name                      = azurecaf_name.routes[each.key].result
-  resource_group_name       = local.resource_groups[each.value.resource_group_key].name
-  route_table_name          = module.route_tables[each.value.route_table_key].name
-  address_prefix            = each.value.address_prefix
-  next_hop_type             = each.value.next_hop_type
-  next_hop_in_ip_address    = try(lower(each.value.next_hop_type), null) == "virtualappliance" ? try(each.value.next_hop_in_ip_address, null) : null
+  name                   = azurecaf_name.routes[each.key].result
+  resource_group_name    = local.resource_groups[each.value.resource_group_key].name
+  route_table_name       = module.route_tables[each.value.route_table_key].name
+  address_prefix         = each.value.address_prefix
+  next_hop_type          = each.value.next_hop_type
+  next_hop_in_ip_address = try(lower(each.value.next_hop_type), null) == "virtualappliance" ? try(each.value.next_hop_in_ip_address, null) : null
   next_hop_in_ip_address_fw = try(lower(each.value.next_hop_type), null) == "virtualappliance" ? coalesce(
     try(local.combined_objects_azurerm_firewalls[try(each.value.private_ip_keys.azurerm_firewall.lz_key, local.client_config.landingzone_key)][each.value.private_ip_keys.azurerm_firewall.key].ip_configuration[each.value.private_ip_keys.azurerm_firewall.interface_index].private_ip_address, null),
     try(local.combined_objects_azurerm_firewalls[try(each.value.lz_key, local.client_config.landingzone_key)][each.value.private_ip_keys.azurerm_firewall.key].ip_configuration[each.value.private_ip_keys.azurerm_firewall.interface_index].private_ip_address, null)
   ) : null
-    
+
 }
 
 #
