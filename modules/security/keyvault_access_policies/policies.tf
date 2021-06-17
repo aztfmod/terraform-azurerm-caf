@@ -19,10 +19,21 @@ module "azuread_service_principals" {
     if try(access_policy.azuread_service_principal_key, null) != null
   }
 
-  keyvault_id   = var.keyvault_id == null ? var.keyvaults[try(each.value.keyvault_lz_key, each.value.lz_key, var.client_config.landingzone_key)][var.keyvault_key].id : var.keyvault_id
+  keyvault_id = coalesce(
+    var.keyvault_id,
+    try(var.keyvaults[each.value.keyvault_lz_key][var.keyvault_key].id, null),
+    try(var.keyvaults[each.value.lz_key][var.keyvault_key].id, null),
+    try(var.keyvaults[var.client_config.landingzone_key][var.keyvault_key].id, null)
+  )
+
   access_policy = each.value
   tenant_id     = var.resources.azuread_service_principals[try(each.value.lz_key, var.client_config.landingzone_key)][each.value.azuread_service_principal_key].tenant_id
-  object_id     = var.resources.azuread_service_principals[try(each.value.lz_key, var.client_config.landingzone_key)][each.value.azuread_service_principal_key].object_id
+  
+  
+  object_id = coalesce(
+    try(var.resources.azuread_service_principals[each.value.lz_key][each.value.azuread_service_principal_key].object_id, null),
+    try(var.resources.azuread_service_principals[var.client_config.landingzone_key][each.value.azuread_service_principal_key].object_id, null)
+  )
 }
 
 module "azuread_group" {
