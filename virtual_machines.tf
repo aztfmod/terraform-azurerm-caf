@@ -14,7 +14,7 @@ module "virtual_machines" {
 
   application_security_groups = local.combined_objects_application_security_groups
   availability_sets           = local.combined_objects_availability_sets
-  base_tags                   = try(local.global_settings.inherit_tags, false) ? module.resource_groups[each.value.resource_group_key].tags : {}
+  base_tags                   = try(local.global_settings.inherit_tags, false) ? local.combined_objects_resource_groups[try(each.value.lz_key, local.client_config.landingzone_key)][each.value.resource_group_key].tags : {}
   # if boot_diagnostics_storage_account_key is points to a valid storage account, pass the endpoint
   # if boot_diagnostics_storage_account_key is empty string, pass empty string
   # if boot_diagnostics_storage_account_key not defined, pass null
