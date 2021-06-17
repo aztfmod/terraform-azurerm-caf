@@ -29,7 +29,6 @@ module "azuread_service_principals" {
   access_policy = each.value
   tenant_id     = var.resources.azuread_service_principals[try(each.value.lz_key, var.client_config.landingzone_key)][each.value.azuread_service_principal_key].tenant_id
   
-  
   object_id = coalesce(
     try(var.resources.azuread_service_principals[each.value.lz_key][each.value.azuread_service_principal_key].object_id, null),
     try(var.resources.azuread_service_principals[var.client_config.landingzone_key][each.value.azuread_service_principal_key].object_id, null)
@@ -104,7 +103,11 @@ module "managed_identity" {
 
   access_policy = each.value
   tenant_id     = var.client_config.tenant_id
-  object_id     = try(each.value.lz_key, null) == null ? var.resources.managed_identities[var.client_config.landingzone_key][each.value.managed_identity_key].principal_id : var.resources.managed_identities[each.value.lz_key][each.value.managed_identity_key].principal_id
+
+  object_id = coalesce(
+    try(var.resources.managed_identities[each.value.lz_key][each.value.managed_identity_key].principal_id, null),
+    try(var.resources.managed_identities[var.client_config.landingzone_key][each.value.managed_identity_key].principal_id, null)
+  )
 }
 
 module "mssql_managed_instance" {
