@@ -13,7 +13,6 @@ global_settings = {
       # use_azmanaged_storage_for_boot_diagnostics = true
     }
   }
-
 }
 
 resource_groups = {
