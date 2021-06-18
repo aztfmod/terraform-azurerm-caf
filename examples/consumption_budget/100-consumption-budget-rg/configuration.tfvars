@@ -67,6 +67,10 @@ consumption_budgets = {
           ]
         }
       }
+      tags = {
+        level = ["100"]
+        mode  = ["test"]
+      }
     }
   }
 }
