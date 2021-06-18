@@ -17,6 +17,8 @@
     "compute/container_registry/100-simple-acr",
     "compute/container_registry/200-acr-vnet",
     "compute/container_registry/200-acr-private-link",
+    "compute/dedicated_hosts/101-dedicated-host",
+    "compute/dedicated_hosts/102-dedicated-host-vms",
     "compute/kubernetes_services/101-single-cluster",
     "compute/kubernetes_services/102-multi-nodepools",
     "compute/proximity_placement_group",
