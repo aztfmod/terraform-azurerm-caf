@@ -514,3 +514,9 @@ variable "dedicated_host_groups" {
 variable "dedicated_hosts" {
   default = {}
 }
+variable "vpn_sites" {
+  default = {}
+}
+variable "vpn_gateway_connections" {
+  default = {}
+}
