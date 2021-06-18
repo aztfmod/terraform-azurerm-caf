@@ -117,8 +117,6 @@ module "example" {
     virtual_wans                                            = var.virtual_wans
     vnet_peerings                                           = var.vnet_peerings
     vnets                                                   = var.vnets
-    vpn_sites                                               = var.vpn_sites
-    vpn_gateway_connections                                 = var.vpn_gateway_connections
   }
 
   diagnostics = {
