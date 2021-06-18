@@ -17,6 +17,7 @@ consumption_budgets = {
     resource_group = {
       # accepts either id or key to get resource group id
       # id = "/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/resourceGroup1"
+      # lz_key = "examples"
       key = "test"
     }
     name       = "example"
@@ -56,6 +57,13 @@ consumption_budgets = {
           name = "ResourceGroupName"
           values = [
             "example",
+          ]
+        },
+        resource_group_key = {
+          # lz_key = "examples"
+          name = "resource_group_key"
+          values = [
+            "test",
           ]
         }
       }

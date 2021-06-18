@@ -28,11 +28,29 @@ resource "azurerm_consumption_budget_resource_group" "this" {
 
     content {
       dynamic "dimension" {
-        for_each = var.settings.filter.dimensions
+        for_each = {
+          for key, value in try(var.settings.filter.dimensions, {}) : key => value
+          if lower(value.name) != "resource_group_key"
+        }
 
         content {
           name   = dimension.value.name
           values = dimension.value.values
+        }
+      }
+
+      dynamic "dimension" {
+        for_each = {
+          for key, value in try(var.settings.filter.dimensions, {}) : key => value
+          if lower(value.name) == "resource_group_key"
+        }
+
+        content {
+          name = "ResourceId"
+          values = try(flatten([
+            for key, value in var.resource_groups[try(dimension.value.lz_key, var.client_config.landingzone_key)] : value.id
+            if contains(dimension.value.values, key)
+          ]), [])
         }
       }
     }
