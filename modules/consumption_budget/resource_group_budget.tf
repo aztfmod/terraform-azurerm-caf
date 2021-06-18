@@ -53,6 +53,17 @@ resource "azurerm_consumption_budget_resource_group" "this" {
           ]), [])
         }
       }
+
+      dynamic "tag" {
+        for_each = {
+          for key, value in try(var.settings.filter.tags, {}) : key => value
+        }
+
+        content {
+          name   = tag.key
+          values = tag.value
+        }
+      }
     }
   }
 }
