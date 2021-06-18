@@ -43,7 +43,7 @@ vnets = {
 
 keyvaults = {
   kv1 = {
-    name               = "vmssagwexmpkv"
+    name               = "gwexmpkv"
     resource_group_key = "rg1"
     sku_name           = "standard"
     creation_policies = {
@@ -58,7 +58,7 @@ keyvaults = {
 diagnostic_storage_accounts = {
   # Stores boot diagnostic for region1
   bootdiag1 = {
-    name                     = "vmssagwexamplebootdiag1"
+    name                     = "labootdiag1"
     resource_group_key       = "rg1"
     account_kind             = "StorageV2"
     account_tier             = "Standard"
