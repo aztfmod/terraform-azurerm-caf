@@ -19,6 +19,8 @@ locals {
   combined_objects_diagnostic_storage_accounts       = merge(tomap({ (local.client_config.landingzone_key) = module.diagnostic_storage_accounts }), try(var.remote_objects.diagnostic_storage_accounts, {}))
   combined_objects_disk_encryption_sets              = merge(tomap({ (local.client_config.landingzone_key) = module.disk_encryption_sets }), try(var.remote_objects.disk_encryption_sets, {}))
   combined_objects_dns_zones                         = merge(tomap({ (local.client_config.landingzone_key) = module.dns_zones }), try(var.remote_objects.dns_zones, {}))
+  combined_objects_dedicated_hosts                   = merge(tomap({ (local.client_config.landingzone_key) = module.dedicated_hosts }), try(var.remote_objects.dedicated_hosts, {}))
+  combined_objects_dedicated_host_groups             = merge(tomap({ (local.client_config.landingzone_key) = module.dedicated_host_groups }), try(var.remote_objects.dedicated_host_groups, {}))
   combined_objects_event_hub_namespaces              = merge(tomap({ (local.client_config.landingzone_key) = module.event_hub_namespaces }), try(var.remote_objects.event_hub_namespaces, {}))
   combined_objects_front_door_waf_policies           = merge(tomap({ (local.client_config.landingzone_key) = module.front_door_waf_policies }), try(var.remote_objects.front_door_waf_policies, {}))
   combined_objects_integration_service_environment   = merge(tomap({ (local.client_config.landingzone_key) = module.integration_service_environment }), try(var.remote_objects.integration_service_environment, {}))

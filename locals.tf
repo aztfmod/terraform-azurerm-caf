@@ -59,6 +59,8 @@ locals {
     azure_container_registries = try(var.compute.azure_container_registries, {})
     bastion_hosts              = try(var.compute.bastion_hosts, {})
     container_groups           = try(var.compute.container_groups, {})
+    dedicated_hosts            = try(var.compute.dedicated_hosts, {})
+    dedicated_host_groups      = try(var.compute.dedicated_host_groups, {})
     proximity_placement_groups = try(var.compute.proximity_placement_groups, {})
     wvd_application_groups     = try(var.compute.wvd_application_groups, {})
     wvd_host_pools             = try(var.compute.wvd_host_pools, {})
