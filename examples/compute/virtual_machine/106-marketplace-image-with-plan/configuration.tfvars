@@ -14,6 +14,7 @@ global_settings = {
     }
   }
 
+  prefix = "test"
 }
 
 resource_groups = {

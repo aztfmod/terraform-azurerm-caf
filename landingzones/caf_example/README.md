@@ -229,8 +229,6 @@ No resources.
 | virtual\_wans | n/a | `map` | `{}` | no |
 | vnet\_peerings | n/a | `map` | `{}` | no |
 | vnets | n/a | `map` | `{}` | no |
-| vpn_gateway_connections | n/a | `map` | `{}` | no |
-| vpn_sites | n/a | `map` | `{}` | no |
 
 ## Outputs
 

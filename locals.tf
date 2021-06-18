@@ -202,8 +202,6 @@ locals {
     virtual_wans                                            = try(var.networking.virtual_wans, {})
     vnet_peerings                                           = try(var.networking.vnet_peerings, {})
     vnets                                                   = try(var.networking.vnets, {})
-    vpn_gateway_connections                                 = try(var.networking.vpn_gateway_connections, {})
-    vpn_sites                                               = try(var.networking.vpn_sites, {})
   }
 
   object_id = coalesce(var.logged_user_objectId, var.logged_aad_app_objectId, try(data.azurerm_client_config.current.object_id, null), try(data.azuread_service_principal.logged_in_app.0.object_id, null))
