@@ -1,7 +1,6 @@
 resource "azurecaf_name" "dhg" {
   name          = var.settings.name
-  #TODO: replace when module update: resource_type = "azurerm_dedicated_host_group"
-  resource_type = "azurerm_availability_set"
+  resource_type = "azurerm_dedicated_host_group"
   prefixes      = var.global_settings.prefixes
   random_length = var.global_settings.random_length
   clean_input   = true
