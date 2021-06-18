@@ -1,7 +1,19 @@
-## Need to implement naming convention --> check with provider status
+resource "azurecaf_name" "dh" {
+  name          = var.settings.name
+  #TODO: replace when module update: resource_type = "azurerm_dedicated_host"
+  resource_type = "azurerm_availability_set"
+  prefixes      = var.global_settings.prefixes
+  random_length = var.global_settings.random_length
+  clean_input   = true
+  passthrough   = var.global_settings.passthrough
+  use_slug      = var.global_settings.use_slug
+}
+
+# Last review :  AzureRM version 2.63.0
+# Ref : https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/resources/dedicated_host
 
 resource "azurerm_dedicated_host" "dh" {
-  name                    = var.settings.name
+  name                    = azurecaf_name.dh.result
   dedicated_host_group_id = var.dedicated_host_group_id
   location                = var.location
   sku_name                = var.settings.sku_name
