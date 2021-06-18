@@ -17,7 +17,7 @@ resource "azurecaf_name" "windows_computer_name_prefix" {
   for_each = local.os_type == "windows" ? var.settings.vmss_settings : {}
 
   name          = try(each.value.computer_name_prefix, each.value.name)
-  resource_type = "azurerm_vm_windows_computer_name_prefix" 
+  resource_type = "azurerm_vm_windows_computer_name_prefix"
   prefixes      = var.global_settings.prefixes
   random_length = var.global_settings.random_length
   clean_input   = true
@@ -87,12 +87,12 @@ resource "azurerm_windows_virtual_machine_scale_set" "vmss" {
       network_security_group_id     = try(network_interface.value.network_security_group_id, null)
 
       ip_configuration {
-        name      = azurecaf_name.windows_nic[network_interface.key].result
-        primary   = try(network_interface.value.primary, false)
-        subnet_id = try(var.vnets[var.client_config.landingzone_key][network_interface.value.vnet_key].subnets[network_interface.value.subnet_key].id, var.vnets[network_interface.value.lz_key][network_interface.value.vnet_key].subnets[network_interface.value.subnet_key].id)
-        load_balancer_backend_address_pool_ids = try(local.load_balancer_backend_address_pool_ids, null)
+        name                                         = azurecaf_name.windows_nic[network_interface.key].result
+        primary                                      = try(network_interface.value.primary, false)
+        subnet_id                                    = try(var.vnets[var.client_config.landingzone_key][network_interface.value.vnet_key].subnets[network_interface.value.subnet_key].id, var.vnets[network_interface.value.lz_key][network_interface.value.vnet_key].subnets[network_interface.value.subnet_key].id)
+        load_balancer_backend_address_pool_ids       = try(local.load_balancer_backend_address_pool_ids, null)
         application_gateway_backend_address_pool_ids = try(local.application_gateway_backend_address_pool_ids, null)
-        application_security_group_ids = try(local.application_security_group_ids,null)
+        application_security_group_ids               = try(local.application_security_group_ids, null)
       }
     }
   }
@@ -133,7 +133,7 @@ resource "azurerm_windows_virtual_machine_scale_set" "vmss" {
   }
 
   source_image_id = try(each.value.custom_image_id, var.custom_image_ids[each.value.lz_key][each.value.custom_image_key].id, null)
-  
+
   dynamic "plan" {
     for_each = try(each.value.plan, null) != null ? [1] : []
 
@@ -200,10 +200,10 @@ resource "azurerm_windows_virtual_machine_scale_set" "vmss" {
     for_each = try(each.value.automatic_os_upgrade_policy, false) == false ? [] : [1]
 
     content {
-      disable_automatic_rollback = each.value.automatic_os_upgrade_policy.disable_automatic_rollback
+      disable_automatic_rollback  = each.value.automatic_os_upgrade_policy.disable_automatic_rollback
       enable_automatic_os_upgrade = each.value.automatic_os_upgrade_policy.enable_automatic_os_upgrade
     }
-  }  
+  }
 
   dynamic "additional_unattend_content" {
     for_each = try(each.value.additional_unattend_content, false) == false ? [] : [1]

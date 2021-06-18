@@ -1,3 +1,5 @@
+# Tested with :  AzureRM version 2.61.0
+# Ref : https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/resources/recovery_services_vault
 
 resource "azurecaf_name" "asr_rg_vault" {
   name          = var.settings.name

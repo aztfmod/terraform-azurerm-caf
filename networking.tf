@@ -70,7 +70,13 @@ module "public_ip_addresses" {
   reverse_fqdn               = try(each.value.reverse_fqdn, null)
   generate_domain_name_label = try(each.value.generate_domain_name_label, false)
   tags                       = try(each.value.tags, null)
-  zones                      = try(each.value.zones, null)
+  ip_tags                    = try(each.value.ip_tags, null)
+  public_ip_prefix_id        = try(each.value.public_ip_prefix_id, null)
+  zones                      = coalesce(
+    try(each.value.availability_zone, ""), 
+    try(tostring(each.value.zones[0]), ""), 
+    try(each.value.sku, "Basic") == "Basic" ? "No-Zone" : "Zone-Redundant"
+    )
   diagnostic_profiles        = try(each.value.diagnostic_profiles, {})
   diagnostics                = local.combined_diagnostics
   base_tags                  = try(local.global_settings.inherit_tags, false) ? local.resource_groups[each.value.resource_group_key].tags : {}
