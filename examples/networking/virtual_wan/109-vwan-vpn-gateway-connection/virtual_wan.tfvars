@@ -102,7 +102,9 @@ vpn_gateway_connections = {
       # lz_key = "vpns" # Set the 'lz_key' of a VPN Site created in a remote deployment
       key = "vpn-site-1" # Set the 'key' of the VPN Site created in this (or a remote) deployment
     }
-
+    virtual_wan = {
+      key = "vwan_re1"
+    }
     # virtual_hub_gateway_id = "" # Set the Resource ID of an existing Virtual Hub's VPN Gateway
     virtual_hub = {
       # lz_key = "" # Set the 'lz_key' of a Virtual Hub created in a remote deployment
