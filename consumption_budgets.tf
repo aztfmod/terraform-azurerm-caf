@@ -5,7 +5,8 @@ module "consumption_budgets_resource_groups" {
     if try(value.resource_group, null) != null
   }
 
-  client_config = local.client_config
+  client_config         = local.client_config
+  monitor_action_groups = try(module.monitor_action_groups, {})
   resource_group_id = coalesce(
     try(local.combined_objects_resource_groups[try(each.value.resource_group.lz_key, local.client_config.landingzone_key)][each.value.resource_group.key].id, null),
     try(each.value.resource_group.id, null)
