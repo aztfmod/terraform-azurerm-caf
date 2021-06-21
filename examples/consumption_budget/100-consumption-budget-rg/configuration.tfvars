@@ -54,7 +54,8 @@ consumption_budgets = {
     filter = {
       dimensions = {
         explicit_name = {
-          name = "ResourceGroupName"
+          name     = "ResourceGroupName"
+          operator = "In"
           values = [
             "example",
           ]
@@ -83,7 +84,8 @@ consumption_budgets = {
         # dimension = {
         #   # not block supports only one dimension block
         #   # explicit_name = {
-        #   #   name = "ResourceGroupName"
+        #   #   name     = "ResourceGroupName"
+        #   #   operator = "In"
         #   #   values = [
         #   #     "example",
         #   #   ]
