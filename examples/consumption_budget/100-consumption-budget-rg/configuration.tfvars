@@ -68,8 +68,15 @@ consumption_budgets = {
         }
       }
       tags = {
-        level = ["100"]
-        mode  = ["test"]
+        tag_example_default_operator = {
+          name   = "level",
+          values = ["100"]
+        },
+        tag_example_explicit_operator = {
+          name     = "mode",
+          operator = "In"
+          values   = ["test"]
+        }
       }
       not = {
         # dimension and tag block conflicts

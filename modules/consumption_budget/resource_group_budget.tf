@@ -60,8 +60,9 @@ resource "azurerm_consumption_budget_resource_group" "this" {
         }
 
         content {
-          name   = tag.key
-          values = tag.value
+          name     = tag.value.name
+          operator = try(tag.value.operator, "In")
+          values   = tag.value.values
         }
       }
 
@@ -100,8 +101,9 @@ resource "azurerm_consumption_budget_resource_group" "this" {
             for_each = try(var.settings.filter.not.tag, null) == null ? [] : [1]
 
             content {
-              name   = var.settings.filter.not.tag.name
-              values = var.settings.filter.not.tag.values
+              name     = var.settings.filter.not.tag.name
+              operator = try(var.settings.filter.not.tag.operator, "In")
+              values   = var.settings.filter.not.tag.values
             }
           }
         }
