@@ -1,6 +1,9 @@
-module "consumption_budgets" {
-  source   = "./modules/consumption_budget"
-  for_each = local.shared_services.consumption_budgets
+module "consumption_budgets_resource_groups" {
+  source = "./modules/consumption_budget/resource_group"
+  for_each = {
+    for key, value in local.shared_services.consumption_budgets : key => value
+    if try(value.resource_group, null) != null
+  }
 
   client_config = local.client_config
   resource_group_id = coalesce(
