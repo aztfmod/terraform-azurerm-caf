@@ -71,6 +71,29 @@ consumption_budgets = {
         level = ["100"]
         mode  = ["test"]
       }
+      not = {
+        # dimension and tag block conflicts
+        # dimension = {
+        #   # not block supports only one dimension block
+        #   # explicit_name = {
+        #   #   name = "ResourceGroupName"
+        #   #   values = [
+        #   #     "example",
+        #   #   ]
+        #   # },
+        #   resource_group_key = {
+        #     # lz_key = "examples"
+        #     name = "resource_group_key"
+        #     values = [
+        #       "test",
+        #     ]
+        #   }
+        # }
+        tag = {
+          name   = "name"
+          values = ["not-tag"]
+        }
+      }
     }
   }
 }
