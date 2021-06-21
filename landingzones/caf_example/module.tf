@@ -153,6 +153,7 @@ module "example" {
   shared_services = {
     consumption_budgets      = var.consumption_budgets
     image_definitions        = var.image_definitions
+    monitor_action_groups    = var.monitor_action_groups
     monitoring               = var.monitoring
     packer_managed_identity  = var.packer_managed_identity
     packer_service_principal = var.packer_service_principal

@@ -298,6 +298,9 @@ variable "databricks_workspaces" {
 variable "machine_learning_workspaces" {
   default = {}
 }
+variable "monitor_action_groups" {
+  default = {}
+}
 variable "monitoring" {
   default = {}
 }
