@@ -33,8 +33,8 @@ virtual_machines = {
         size           = "Standard_D2S_v3"
         admin_username = "adminuser"
 
-        dedicated_host_group = {
-          dedicated_host_group_key = "dh1"
+        dedicated_host = {
+          key = "dh1"
           # lz_key = "remoteLZKey"
           # id = "full resource ID"
         }
@@ -93,8 +93,8 @@ virtual_machines = {
         admin_username                  = "adminuser"
         disable_password_authentication = true
 
-        dedicated_host_group = {
-          dedicated_host_group_key = "dh1"
+        dedicated_host = {
+          key = "dh1"
           # lz_key = "remoteLZKey"
           # id = "full resource ID"
         }
