@@ -22,6 +22,8 @@ module "vpn_gateway_connections" {
 
   vpn_gateway_id = coalesce(
     try(local.combined_objects_virtual_hubs[try(each.value.virtual_hub.lz_key, local.client_config.landingzone_key)][each.value.virtual_hub.key].s2s_gateway.id, null),
+    try(local.combined_objects_virtual_wans[try(each.value.lz_key, local.client_config.landingzone_key)][each.value.virtual_wan_key].virtual_hubs[each.value.virtual_hub_key].s2s_gateway.id, null),
+    try(local.combined_objects_virtual_wans[try(each.value.vhub.lz_key, local.client_config.landingzone_key)][each.value.vhub.virtual_wan_key].virtual_hubs[each.value.vhub.virtual_hub_key].s2s_gateway.id, null),    
     try(each.value.virtual_hub_gateway_id, null)
   )
 }
