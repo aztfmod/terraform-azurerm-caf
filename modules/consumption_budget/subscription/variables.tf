@@ -2,6 +2,10 @@ variable "client_config" {
   description = "Client configuration object"
 }
 
+variable "monitor_action_groups" {
+  description = "Map of monitor action group keys to monitor action groups group ids"
+}
+
 variable "resource_groups" {
   description = "Map of resource group keys to resource group attributes"
 }

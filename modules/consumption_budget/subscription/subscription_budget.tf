@@ -18,8 +18,13 @@ resource "azurerm_consumption_budget_subscription" "this" {
       threshold = notification.value.threshold
 
       contact_emails = try(notification.value.contact_emails, [])
-      contact_roles  = try(notification.value.contact_roles, [])
-      enabled        = try(notification.value.enabled, true)
+      contact_groups = try(notification.value.contact_groups, try(flatten([
+        for key, value in var.monitor_action_groups : value.id
+        if contains(notification.value.contact_groups_keys, key)
+        ]), [])
+      )
+      contact_roles = try(notification.value.contact_roles, [])
+      enabled       = try(notification.value.enabled, true)
     }
   }
 

@@ -23,7 +23,8 @@ module "consumption_budgets_subscriptions" {
     if try(value.subscription, null) != null
   }
 
-  client_config = local.client_config
+  client_config         = local.client_config
+  monitor_action_groups = try(module.monitor_action_groups, {})
   # lz_key used in dimension to reference remote state
   resource_groups = local.combined_objects_resource_groups
   settings        = each.value
