@@ -14,3 +14,17 @@ module "consumption_budgets_resource_groups" {
   resource_groups = local.combined_objects_resource_groups
   settings        = each.value
 }
+
+module "consumption_budgets_subscriptions" {
+  source = "./modules/consumption_budget/subscription"
+  for_each = {
+    for key, value in local.shared_services.consumption_budgets : key => value
+    if try(value.subscription, null) != null
+  }
+
+  client_config = local.client_config
+  # lz_key used in dimension to reference remote state
+  resource_groups = local.combined_objects_resource_groups
+  settings        = each.value
+  subscription_id = each.value.subscription.id
+}
