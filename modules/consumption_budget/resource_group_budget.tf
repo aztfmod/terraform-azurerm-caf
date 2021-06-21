@@ -34,8 +34,9 @@ resource "azurerm_consumption_budget_resource_group" "this" {
         }
 
         content {
-          name   = dimension.value.name
-          values = dimension.value.values
+          name     = dimension.value.name
+          operator = try(dimension.value.operator, "In")
+          values   = dimension.value.values
         }
       }
 
@@ -46,7 +47,8 @@ resource "azurerm_consumption_budget_resource_group" "this" {
         }
 
         content {
-          name = "ResourceId"
+          name     = "ResourceId"
+          operator = try(dimension.value.operator, "In")
           values = try(flatten([
             for key, value in var.resource_groups[try(dimension.value.lz_key, var.client_config.landingzone_key)] : value.id
             if contains(dimension.value.values, key)
@@ -77,8 +79,9 @@ resource "azurerm_consumption_budget_resource_group" "this" {
             }
 
             content {
-              name   = dimension.value.name
-              values = dimension.value.values
+              name     = dimension.value.name
+              operator = try(dimension.value.operator, "In")
+              values   = dimension.value.values
             }
           }
 
@@ -89,7 +92,8 @@ resource "azurerm_consumption_budget_resource_group" "this" {
             }
 
             content {
-              name = "ResourceId"
+              name     = "ResourceId"
+              operator = try(dimension.value.operator, "In")
               values = try(flatten([
                 for key, value in var.resource_groups[try(dimension.value.lz_key, var.client_config.landingzone_key)] : value.id
                 if contains(dimension.value.values, key)
