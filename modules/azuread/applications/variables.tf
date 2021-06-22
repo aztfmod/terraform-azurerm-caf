@@ -14,6 +14,7 @@ variable "user_type" {}
 variable "keyvaults" {
   default = {}
 }
+
 variable "password_policy" {
   description = "Default password policy applies when not set in tfvars."
   default = {

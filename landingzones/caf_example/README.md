@@ -139,9 +139,14 @@ No resources.
 | <a name="input_azureDatalakeStoreFileSystemEndpoint"></a> [azureDatalakeStoreFileSystemEndpoint](#input\_azureDatalakeStoreFileSystemEndpoint) | n/a | `string` | `"azuredatalakestore.net"` | no |
 | <a name="input_azure_container_registries"></a> [azure\_container\_registries](#input\_azure\_container\_registries) | n/a | `map` | `{}` | no |
 | <a name="input_azuread_api_permissions"></a> [azuread\_api\_permissions](#input\_azuread\_api\_permissions) | n/a | `map` | `{}` | no |
+| <a name="input_azuread_applications"></a> [azuread\_applications](#input\_azuread\_applications) | n/a | `map` | `{}` | no |
 | <a name="input_azuread_apps"></a> [azuread\_apps](#input\_azuread\_apps) | n/a | `map(any)` | `{}` | no |
+| <a name="input_azuread_credential_policies"></a> [azuread\_credential\_policies](#input\_azuread\_credential\_policies) | n/a | `map` | `{}` | no |
+| <a name="input_azuread_credentials"></a> [azuread\_credentials](#input\_azuread\_credentials) | n/a | `map` | `{}` | no |
 | <a name="input_azuread_groups"></a> [azuread\_groups](#input\_azuread\_groups) | n/a | `map` | `{}` | no |
 | <a name="input_azuread_roles"></a> [azuread\_roles](#input\_azuread\_roles) | n/a | `map` | `{}` | no |
+| <a name="input_azuread_service_principal_passwords"></a> [azuread\_service\_principal\_passwords](#input\_azuread\_service\_principal\_passwords) | n/a | `map` | `{}` | no |
+| <a name="input_azuread_service_principals"></a> [azuread\_service\_principals](#input\_azuread\_service\_principals) | n/a | `map` | `{}` | no |
 | <a name="input_azuread_users"></a> [azuread\_users](#input\_azuread\_users) | n/a | `map(any)` | `{}` | no |
 | <a name="input_azurerm_application_insights"></a> [azurerm\_application\_insights](#input\_azurerm\_application\_insights) | n/a | `map` | `{}` | no |
 | <a name="input_azurerm_firewall_application_rule_collection_definition"></a> [azurerm\_firewall\_application\_rule\_collection\_definition](#input\_azurerm\_firewall\_application\_rule\_collection\_definition) | n/a | `map` | `{}` | no |
@@ -183,7 +188,7 @@ No resources.
 | <a name="input_front_door_waf_policies"></a> [front\_door\_waf\_policies](#input\_front\_door\_waf\_policies) | n/a | `map` | `{}` | no |
 | <a name="input_front_doors"></a> [front\_doors](#input\_front\_doors) | n/a | `map` | `{}` | no |
 | <a name="input_gallery"></a> [gallery](#input\_gallery) | n/a | `string` | `"https://gallery.azure.com/"` | no |
-| <a name="input_global_settings"></a> [global\_settings](#input\_global\_settings) | n/a | `map` | <pre>{<br>  "default_region": "region1",<br>  "prefix": null,<br>  "regions": {<br>    "region1": "southeastasia",<br>    "region2": "eastasia"<br>  }<br>}</pre> | no |
+| <a name="input_global_settings"></a> [global\_settings](#input\_global\_settings) | n/a | `map` | <pre>{<br>  "default_region": "region1",<br>  "regions": {<br>    "region1": "southeastasia",<br>    "region2": "eastasia"<br>  }<br>}</pre> | no |
 | <a name="input_image_definitions"></a> [image\_definitions](#input\_image\_definitions) | n/a | `map` | `{}` | no |
 | <a name="input_ip_groups"></a> [ip\_groups](#input\_ip\_groups) | n/a | `map` | `{}` | no |
 | <a name="input_keyvaultDns"></a> [keyvaultDns](#input\_keyvaultDns) | n/a | `string` | `".vault.azure.net"` | no |
@@ -253,6 +258,7 @@ No resources.
 | <a name="input_storageEndpoint"></a> [storageEndpoint](#input\_storageEndpoint) | n/a | `string` | `"core.windows.net"` | no |
 | <a name="input_storageSyncEndpoint"></a> [storageSyncEndpoint](#input\_storageSyncEndpoint) | n/a | `string` | `"afs.azure.net"` | no |
 | <a name="input_storage_accounts"></a> [storage\_accounts](#input\_storage\_accounts) | n/a | `map` | `{}` | no |
+| <a name="input_subscription_billing_role_assignments"></a> [subscription\_billing\_role\_assignments](#input\_subscription\_billing\_role\_assignments) | n/a | `map` | `{}` | no |
 | <a name="input_synapseAnalyticsEndpoint"></a> [synapseAnalyticsEndpoint](#input\_synapseAnalyticsEndpoint) | n/a | `string` | `".dev.azuresynapse.net"` | no |
 | <a name="input_synapseAnalyticsResourceId"></a> [synapseAnalyticsResourceId](#input\_synapseAnalyticsResourceId) | n/a | `string` | `"https://dev.azuresynapse.net"` | no |
 | <a name="input_synapse_workspaces"></a> [synapse\_workspaces](#input\_synapse\_workspaces) | n/a | `map` | `{}` | no |

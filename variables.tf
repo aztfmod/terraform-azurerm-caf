@@ -131,19 +131,7 @@ variable "user_type" {
 }
 
 ## Azure AD
-variable "azuread_apps" {
-  default = {}
-}
-
-variable "azuread_groups" {
-  default = {}
-}
-
-variable "azuread_roles" {
-  default = {}
-}
-
-variable "azuread_users" {
+variable "azuread" {
   default = {}
 }
 
