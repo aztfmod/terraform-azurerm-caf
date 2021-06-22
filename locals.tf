@@ -62,6 +62,7 @@ locals {
     dedicated_hosts            = try(var.compute.dedicated_hosts, {})
     dedicated_host_groups      = try(var.compute.dedicated_host_groups, {})
     proximity_placement_groups = try(var.compute.proximity_placement_groups, {})
+    wvd_applications           = try(var.compute.wvd_applications, {})
     wvd_application_groups     = try(var.compute.wvd_application_groups, {})
     wvd_host_pools             = try(var.compute.wvd_host_pools, {})
     wvd_workspaces             = try(var.compute.wvd_workspaces, {})

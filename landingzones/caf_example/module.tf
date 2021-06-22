@@ -77,6 +77,7 @@ module "example" {
     proximity_placement_groups = var.proximity_placement_groups
     virtual_machine_scale_sets = var.virtual_machine_scale_sets
     virtual_machines           = var.virtual_machines
+    wvd_applications           = var.wvd_applications
     wvd_application_groups     = var.wvd_application_groups
     wvd_host_pools             = var.wvd_host_pools
     wvd_workspaces             = var.wvd_workspaces
