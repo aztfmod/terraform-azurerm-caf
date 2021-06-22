@@ -59,5 +59,10 @@ monitor_action_groups = {
         role_name               = "Owner" #case-sensitive
       }
     }
+
+    tags = {
+      first_tag  = "example1",
+      second_tag = "example2",
+    }
   }
 }
