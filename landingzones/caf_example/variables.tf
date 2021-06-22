@@ -505,6 +505,9 @@ variable "wvd_workspaces" {
 variable "wvd_host_pools" {
   default = {}
 }
+variable "wvd_applications" {
+  default = {}
+}
 variable "lighthouse_definitions" {
   default = {}
 }

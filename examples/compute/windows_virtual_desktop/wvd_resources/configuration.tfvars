@@ -15,15 +15,40 @@ resource_groups = {
 }
 
 wvd_application_groups = {
-  wvd_app1 = {
+  wvd_app_group_1 = {
     resource_group_key = "wvd_region1"
     host_pool_key      = "wvd_hp1"
     wvd_workspace_key  = "wvd_ws1"
-    name               = "firstapp"
-    friendly_name      = "Desktopapp"
+    name               = "desktopgroup"
+    friendly_name      = "Published Desktop"
     description        = "A description of my workspace"
     #Type of Virtual Desktop Application Group. Valid options are RemoteApp or Desktop.
     type = "Desktop"
+  }
+  wvd_app_group_2 = {
+    resource_group_key = "wvd_region1"
+    host_pool_key      = "wvd_hp1"
+    wvd_workspace_key  = "wvd_ws1"
+    name               = "appgroup"
+    friendly_name      = "Published Application"
+    description        = "Acceptance Test: An application group"
+    #Type of Virtual Desktop Application Group. Valid options are RemoteApp or Desktop.
+    type = "RemoteApp"
+  }
+}
+
+wvd_applications = {
+  wvd_app1 = {
+    name                         = "googlechrome"
+    application_group_key        = "wvd_app_group_2"
+    friendly_name                = "Google Chrome"
+    description                  = "Chromium based web browser"
+    path                         = "C:\\Program Files\\Google\\Chrome\\Application\\chrome.exe"
+    command_line_argument_policy = "DoNotAllow"
+    command_line_arguments       = "--incognito"
+    show_in_portal               = false
+    icon_path                    = "C:\\Program Files\\Google\\Chrome\\Application\\chrome.exe"
+    icon_index                   = 0
   }
 }
 
