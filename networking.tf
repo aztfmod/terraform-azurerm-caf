@@ -72,14 +72,14 @@ module "public_ip_addresses" {
   tags                       = try(each.value.tags, null)
   ip_tags                    = try(each.value.ip_tags, null)
   public_ip_prefix_id        = try(each.value.public_ip_prefix_id, null)
-  zones                      = coalesce(
-    try(each.value.availability_zone, ""), 
-    try(tostring(each.value.zones[0]), ""), 
+  zones = coalesce(
+    try(each.value.availability_zone, ""),
+    try(tostring(each.value.zones[0]), ""),
     try(each.value.sku, "Basic") == "Basic" ? "No-Zone" : "Zone-Redundant"
-    )
-  diagnostic_profiles        = try(each.value.diagnostic_profiles, {})
-  diagnostics                = local.combined_diagnostics
-  base_tags                  = try(local.global_settings.inherit_tags, false) ? local.resource_groups[each.value.resource_group_key].tags : {}
+  )
+  diagnostic_profiles = try(each.value.diagnostic_profiles, {})
+  diagnostics         = local.combined_diagnostics
+  base_tags           = try(local.global_settings.inherit_tags, false) ? local.resource_groups[each.value.resource_group_key].tags : {}
 }
 
 

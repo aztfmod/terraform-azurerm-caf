@@ -63,6 +63,7 @@
     "mysql_server/102-private-endpoint-mysql",
     "mysql_server/103-private-endpoint-with-fw-rule-mysql",
     "netapp/101-nfs",
+    "networking/bastion/100-bastion-with-vm",
     "networking/dns_zones/100-simple-dns_zone",
     "networking/express_routes",
     "networking/firewall/100-standard-firewall-legacy-pip",
