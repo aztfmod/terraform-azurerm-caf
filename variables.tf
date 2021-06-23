@@ -18,7 +18,7 @@ variable "client_config" {
 
 ## Cloud variables
 variable "cloud" {
-  description = "Cloud configuration objects"
+  description = "Configuration object - Cloud resources defaults to Azure, allows you to switch to Azure sovereign endpoints."
   default     = {}
 }
 
@@ -77,78 +77,85 @@ variable "tags" {
 }
 
 variable "resource_groups" {
-  description = "Resource groups configuration objects"
+  description = "Configuration object - Resource groups."
   default     = {}
 }
 
 variable "subscriptions" {
+  description = "Configuration object - Subscriptions resources."
   default = {}
 }
 
 variable "subscription_billing_role_assignments" {
+  description = "Configuration object - subscription billing roleassignments."
   default = {}
 }
 
 variable "billing" {
-  description = "Billing information"
+  description = "Configuration object - Billing information."
   default     = {}
 }
 
 variable "remote_objects" {
-  description = "Remote objects is used to allow the landing zone to retrieve remote tfstate objects and pass them to the caf module"
+  description = "Allow the landing zone to retrieve remote tfstate objects and pass them to the CAF module."
   default     = {}
 }
 
 ## Diagnostics settings
 variable "diagnostics_definition" {
   default     = null
-  description = "Shared diadgnostics settings that can be used by the services to enable diagnostics"
+  description = "Configuration object - Shared diadgnostics settings that can be used by the services to enable diagnostics."
 }
 
 variable "diagnostics_destinations" {
+  description = "Configuration object - Describes the destinations for the diagnostics."
   default = null
 }
 
 variable "log_analytics" {
+  description = "Configuration object - Log Analytics resources."
   default = {}
 }
 
 variable "diagnostics" {
+  description = "Configuration object - Diagnostics object."
   default = {}
 }
 
 variable "event_hub_namespaces" {
+  description = "Configuration object - Diagnostics object."
   default = {}
 }
 
-variable "subnet_id" {
-  default = {}
-}
+# variable "subnet_id" {
+#   default = {}
+# }
 
 variable "user_type" {
-  description = "The rover set this value to user or serviceprincipal. It is used to handle Azure AD api consents."
+  description = "The rover set this value to user or serviceprincipal. It is used to handle Azure AD API consents."
   default     = {}
 }
 
 ## Azure AD
 variable "azuread" {
+  description = "Configuration object - Azure Active Directory resources"
   default = {}
 }
 
-variable "azuread_api_permissions" {
-  default = {}
-}
+# variable "azuread_api_permissions" {
+#   default = {}
+# }
 
 ## Compute variables
 variable "compute" {
-  description = "Compute configuration objects"
+  description = "Configuration object - Azure compute resources"
   default = {
     virtual_machines = {}
   }
 }
 
 variable "webapp" {
-  description = "Web applications configuration objects"
+  description = "Configuration object - Web Applications"
   default = {
     # app_services                 = {}
     # app_service_environments     = {}
@@ -158,53 +165,60 @@ variable "webapp" {
 }
 
 variable "data_factory" {
+  description = "Configuration object - Azure Data Factory resources"
   default = {}
 }
 
 variable "logic_app" {
+  description = "Configuration object - Azure Logic App resources"
   default = {}
 }
 
 ## Databases variables
 variable "database" {
-  description = "Database configuration objects"
+  description = "Configuration object - databases resources"
   default     = {}
 }
 
 ## Networking variables
 variable "networking" {
-  description = "Networking configuration objects"
+  description = "Configuration object - networking resources"
   default     = {}
 }
 
 ## Security variables
 variable "security" {
+  description = "Configuration object - security resources"
   default = {}
 }
 
 variable "managed_identities" {
-  description = "Managed Identity configuration objects"
+  description = "Configuration object - Azure managed identity resources"
   default     = {}
 }
 
 variable "keyvaults" {
-  description = "Key Vault configuration objects"
+  description = "Configuration object - Azure Key Vault resources"
   default     = {}
 }
 
 variable "keyvault_access_policies" {
+  description = "Configuration object - Azure Key Vault policies"
   default = {}
 }
 
 variable "keyvault_access_policies_azuread_apps" {
+  description = "Configuration object - Azure Key Vault policy for azure ad applications"
   default = {}
 }
 
 variable "custom_role_definitions" {
-  description = "Custom role definitions configuration objects"
+  description = "Configuration object - Custom role definitions"
   default     = {}
 }
+
 variable "role_mapping" {
+  description = "Configuration object - Role mapping"
   default = {
     built_in_role_mapping = {}
     custom_role_mapping   = {}
@@ -217,19 +231,21 @@ variable "dynamic_keyvault_secrets" {
 
 ## Storage variables
 variable "storage_accounts" {
+  description = "Configuration object - Storage account resources"
   default = {}
 }
 variable "storage" {
-  description = "Storage configuration objects"
+  description = "Configuration object - Storage account resources"
   default     = {}
 }
 variable "diagnostic_storage_accounts" {
+  description = "Configuration object - Storage account for diagnostics resources"
   default = {}
 }
 
 # Shared services
 variable "shared_services" {
-  description = "Shared services configuration objects"
+  description = "Configuration object - Shared services resources"
   default = {
     # automations = {}
     # monitoring = {}
@@ -237,64 +253,70 @@ variable "shared_services" {
   }
 }
 
-variable "virtual_network_gateways" {
-  default = {}
-}
+# variable "virtual_network_gateways" {
+#   default = {}
+# }
 
-variable "virtual_network_gateway_connections" {
-  default = {}
-}
+# variable "virtual_network_gateway_connections" {
+#   default = {}
+# }
 
-variable "shared_image_galleries" {
-  default = {}
-}
+# variable "shared_image_galleries" {
+#   default = {}
+# }
 
-variable "image_definitions" {
-  default = {}
-}
+# variable "image_definitions" {
+#   default = {}
+# }
 
-variable "packer_service_principal" {
-  default = {}
-}
+# variable "packer_service_principal" {
+#   default = {}
+# }
 
-variable "packer_managed_identity" {
-  default = {}
-}
+# variable "packer_managed_identity" {
+#   default = {}
+# }
 
 variable "keyvault_certificate_issuers" {
+  description = "Configuration object - Azure Key Vault Certificate Issuers resources"
   default = {}
 }
-variable "cosmos_dbs" {
-  default = {}
-}
+# variable "cosmos_dbs" {
+#   default = {}
+# }
 
-variable "app_config" {
-  default = {}
-}
+# variable "app_config" {
+#   default = {}
+# }
 
-variable "local_network_gateways" {
-  default = {}
-}
+# variable "local_network_gateways" {
+#   default = {}
+# }
 
-variable "application_security_groups" {
-  default = {}
-}
+# variable "application_security_groups" {
+#   default = {}
+# }
 variable "event_hubs" {
+  description = "Configuration object - Event Hub resources"
   default = {}
 }
 
 variable "event_hub_auth_rules" {
+  description = "Configuration object - Event Hub authentication rules"
   default = {}
 }
 
 variable "event_hub_namespace_auth_rules" {
+  description = "Configuration object - Event Hub namespaces authentication rules"
   default = {}
 }
 
 variable "event_hub_consumer_groups" {
+  description = "Configuration object - Event Hub consumer group rules"
   default = {}
 }
 
 variable "random_strings" {
+  description = "Configuration object - Random string generator resources"
   default = {}
 }
