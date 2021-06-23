@@ -156,7 +156,7 @@ virtual_machine_scale_sets = {
         #   pause_time_between_batches = ""
         # }
         # automatic_os_upgrade_policy = {
-        #   # Only for upgrade mode = "Automatic"          
+        #   # Only for upgrade mode = "Automatic"
         #   disable_automatic_rollback = false
         #   enable_automatic_os_upgrade = true
         # }
@@ -230,7 +230,7 @@ virtual_machine_scale_sets = {
         create_option             = "Empty" # Empty / FromImage (only if source image includes data disks)
         disk_size_gb              = "10"
         lun                       = 1
-        storage_account_type      = "Standard_LRS" # UltraSSD_LRS only possible when > additional_capabilities { ultra_ssd_enabled = true }       
+        storage_account_type      = "Standard_LRS" # UltraSSD_LRS only possible when > additional_capabilities { ultra_ssd_enabled = true }
         disk_iops_read_write      = 100            # only for UltraSSD Disks
         disk_mbps_read_write      = 100            # only for UltraSSD Disks
         write_accelerator_enabled = false          # true requires Premium_LRS and caching = "None"
@@ -269,7 +269,7 @@ virtual_machine_scale_sets = {
         #   pause_time_between_batches = ""
         # }
         # automatic_os_upgrade_policy = {
-        #   # Only for upgrade mode = "Automatic"          
+        #   # Only for upgrade mode = "Automatic"
         #   disable_automatic_rollback = false
         #   enable_automatic_os_upgrade = true
         # }
@@ -330,7 +330,7 @@ virtual_machine_scale_sets = {
         create_option             = "Empty" # Empty / FromImage (only if source image includes data disks)
         disk_size_gb              = "10"
         lun                       = 1
-        storage_account_type      = "Standard_LRS" # UltraSSD_LRS only possible when > additional_capabilities { ultra_ssd_enabled = true }       
+        storage_account_type      = "Standard_LRS" # UltraSSD_LRS only possible when > additional_capabilities { ultra_ssd_enabled = true }
         disk_iops_read_write      = 100            # only for UltraSSD Disks
         disk_mbps_read_write      = 100            # only for UltraSSD Disks
         write_accelerator_enabled = false          # true requires Premium_LRS and caching = "None"

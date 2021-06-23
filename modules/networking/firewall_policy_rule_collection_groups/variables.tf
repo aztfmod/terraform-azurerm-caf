@@ -12,7 +12,7 @@ variable "firewall_policy_id" {
 
 variable "ip_groups" {
   description = "(Optional) Specifies a map of source IP groups."
-  default = {}
+  default     = {}
 }
 
 variable "public_ip_addresses" {

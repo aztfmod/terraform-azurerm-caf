@@ -1,6 +1,6 @@
 # Cloud Adoption Framework for Azure - Standalone module consumption
 
-You can use this module directly from the Terraform registry using a mininalistic ```main.tf``` as follow: 
+You can use this module directly from the Terraform registry using a mininalistic ```main.tf``` as follow:
 
 ```hcl
 module "caf" {
@@ -22,7 +22,7 @@ module "caf" {
 }
 ```
 
-You will need to declare the ```variables.tf```: 
+You will need to declare the ```variables.tf```:
 
 ```hcl
 variable "virtual_machines" {
@@ -196,4 +196,4 @@ public_ip_addresses = {
 }
 ```
 
-For a complete example of standalone consunmption of the module, you can use the example inside [../landingzones/caf_example](../landingzones/caf_example). This example contains the whole variable set to implemente all the examples present in this module. 
+For a complete example of standalone consunmption of the module, you can use the example inside [../landingzones/caf_example](../landingzones/caf_example). This example contains the whole variable set to implemente all the examples present in this module.

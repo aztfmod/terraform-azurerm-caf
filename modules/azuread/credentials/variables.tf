@@ -17,7 +17,7 @@ variable "resources" {
 
 variable "policy" {
   description = "Default credential policy to apply."
-  default     = {
+  default = {
     # Length of the password
     length  = 250
     special = false

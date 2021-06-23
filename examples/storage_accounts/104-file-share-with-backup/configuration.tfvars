@@ -40,7 +40,7 @@ storage_accounts = {
         # backups = {
         #   policy_key = "policy1"
         # }
-        # Issue: https://github.com/terraform-providers/terraform-provider-azurerm/issues/11184 
+        # Issue: https://github.com/terraform-providers/terraform-provider-azurerm/issues/11184
 
       }
     }
