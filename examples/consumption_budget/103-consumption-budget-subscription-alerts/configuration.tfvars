@@ -23,7 +23,9 @@ monitor_action_groups = {
 consumption_budgets = {
   test_budget = {
     subscription = {
-      id = "<subscription_id>"
+      # id     = "<subscription_id>"
+      # lz_key = ""
+      # key    = ""
     }
     name       = "example"
     amount     = 1000

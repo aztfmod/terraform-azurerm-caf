@@ -28,5 +28,9 @@ module "consumption_budgets_subscriptions" {
   # lz_key used in dimension to reference remote state
   resource_groups = local.combined_objects_resource_groups
   settings        = each.value
-  subscription_id = each.value.subscription.id
+  subscription_id = coalesce(
+    try(each.value.subscription.id, null),
+    try(local.combined_objects_subscriptions[try(each.value.subscription.lz_key, local.client_config.landingzone_key)][each.value.subscription.key].subscription_id, null),
+    local.client_config.subscription_id
+  )
 }
