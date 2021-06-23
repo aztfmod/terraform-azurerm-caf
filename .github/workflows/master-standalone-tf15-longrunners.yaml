@@ -47,7 +47,7 @@ jobs:
         run: |
           cd ${GITHUB_WORKSPACE}/examples/${{ matrix.config_files }}
 
-          ${GITHUB_WORKSPACE}/landingzones/caf_example/ci.sh ${{ github.run_id }} ${GITHUB_WORKSPACE}/landingzones/caf_example
+          ${GITHUB_WORKSPACE}/examples/ci.sh ${{ github.run_id }} ${GITHUB_WORKSPACE}/examples
 
   purge:
     name: purge

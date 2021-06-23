@@ -3,7 +3,7 @@
 #
 
 module "vm_extension_monitoring_agent" {
-  source     = "../../modules/compute/virtual_machine_extensions"
+  source     = "../modules/compute/virtual_machine_extensions"
   depends_on = [module.example]
 
   for_each = {
@@ -21,7 +21,7 @@ module "vm_extension_monitoring_agent" {
 }
 
 module "vm_extension_diagnostics" {
-  source     = "../../modules/compute/virtual_machine_extensions"
+  source     = "../modules/compute/virtual_machine_extensions"
   depends_on = [module.example]
 
   for_each = {
@@ -42,7 +42,7 @@ module "vm_extension_diagnostics" {
 }
 
 module "vm_extension_microsoft_azure_domainjoin" {
-  source     = "../../modules/compute/virtual_machine_extensions"
+  source     = "../modules/compute/virtual_machine_extensions"
   depends_on = [module.example] #refer landingzone.tf for the correct module name.
 
   for_each = {
@@ -58,7 +58,7 @@ module "vm_extension_microsoft_azure_domainjoin" {
 }
 
 module "vm_extension_session_host_dscextension" {
-  source     = "../../modules/compute/virtual_machine_extensions"
+  source     = "../modules/compute/virtual_machine_extensions"
   depends_on = [module.example, module.vm_extension_microsoft_azure_domainjoin] #refer landingzone.tf for the correct module name.
 
   for_each = {

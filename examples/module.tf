@@ -1,5 +1,5 @@
 module "example" {
-  source = "../.."
+  source = "../"
 
   current_landingzone_key               = var.landingzone.key
   custom_role_definitions               = var.custom_role_definitions
@@ -34,41 +34,42 @@ module "example" {
     azuread_service_principals          = var.azuread_service_principals
     azuread_users                       = var.azuread_users
   }
-  cloud = {
-    acrLoginServerEndpoint                      = var.acrLoginServerEndpoint
-    attestationEndpoint                         = var.attestationEndpoint
-    azureDatalakeAnalyticsCatalogAndJobEndpoint = var.azureDatalakeAnalyticsCatalogAndJobEndpoint
-    azureDatalakeStoreFileSystemEndpoint        = var.azureDatalakeStoreFileSystemEndpoint
-    keyvaultDns                                 = var.keyvaultDns
-    mariadbServerEndpoint                       = var.mariadbServerEndpoint
-    mhsmDns                                     = var.mhsmDns
-    mysqlServerEndpoint                         = var.mysqlServerEndpoint
-    postgresqlServerEndpoint                    = var.postgresqlServerEndpoint
-    sqlServerHostname                           = var.sqlServerHostname
-    storageEndpoint                             = var.storageEndpoint
-    storageSyncEndpoint                         = var.storageSyncEndpoint
-    synapseAnalyticsEndpoint                    = var.synapseAnalyticsEndpoint
-    activeDirectory                             = var.activeDirectory
-    activeDirectoryDataLakeResourceId           = var.activeDirectoryDataLakeResourceId
-    activeDirectoryGraphResourceId              = var.activeDirectoryGraphResourceId
-    activeDirectoryResourceId                   = var.activeDirectoryResourceId
-    appInsightsResourceId                       = var.appInsightsResourceId
-    appInsightsTelemetryChannelResourceId       = var.appInsightsTelemetryChannelResourceId
-    attestationResourceId                       = var.attestationResourceId
-    azmirrorStorageAccountResourceId            = var.azmirrorStorageAccountResourceId
-    batchResourceId                             = var.batchResourceId
-    gallery                                     = var.gallery
-    logAnalyticsResourceId                      = var.logAnalyticsResourceId
-    management                                  = var.management
-    mediaResourceId                             = var.mediaResourceId
-    microsoftGraphResourceId                    = var.microsoftGraphResourceId
-    ossrdbmsResourceId                          = var.ossrdbmsResourceId
-    portal                                      = var.portal
-    resourceManager                             = var.resourceManager
-    sqlManagement                               = var.sqlManagement
-    synapseAnalyticsResourceId                  = var.synapseAnalyticsResourceId
-    vmImageAliasDoc                             = var.vmImageAliasDoc
-  }
+  # # Defaulted, you can declare an override if you dont target Azure public
+  # cloud = {
+  #   acrLoginServerEndpoint                      = var.acrLoginServerEndpoint
+  #   attestationEndpoint                         = var.attestationEndpoint
+  #   azureDatalakeAnalyticsCatalogAndJobEndpoint = var.azureDatalakeAnalyticsCatalogAndJobEndpoint
+  #   azureDatalakeStoreFileSystemEndpoint        = var.azureDatalakeStoreFileSystemEndpoint
+  #   keyvaultDns                                 = var.keyvaultDns
+  #   mariadbServerEndpoint                       = var.mariadbServerEndpoint
+  #   mhsmDns                                     = var.mhsmDns
+  #   mysqlServerEndpoint                         = var.mysqlServerEndpoint
+  #   postgresqlServerEndpoint                    = var.postgresqlServerEndpoint
+  #   sqlServerHostname                           = var.sqlServerHostname
+  #   storageEndpoint                             = var.storageEndpoint
+  #   storageSyncEndpoint                         = var.storageSyncEndpoint
+  #   synapseAnalyticsEndpoint                    = var.synapseAnalyticsEndpoint
+  #   activeDirectory                             = var.activeDirectory
+  #   activeDirectoryDataLakeResourceId           = var.activeDirectoryDataLakeResourceId
+  #   activeDirectoryGraphResourceId              = var.activeDirectoryGraphResourceId
+  #   activeDirectoryResourceId                   = var.activeDirectoryResourceId
+  #   appInsightsResourceId                       = var.appInsightsResourceId
+  #   appInsightsTelemetryChannelResourceId       = var.appInsightsTelemetryChannelResourceId
+  #   attestationResourceId                       = var.attestationResourceId
+  #   azmirrorStorageAccountResourceId            = var.azmirrorStorageAccountResourceId
+  #   batchResourceId                             = var.batchResourceId
+  #   gallery                                     = var.gallery
+  #   logAnalyticsResourceId                      = var.logAnalyticsResourceId
+  #   management                                  = var.management
+  #   mediaResourceId                             = var.mediaResourceId
+  #   microsoftGraphResourceId                    = var.microsoftGraphResourceId
+  #   ossrdbmsResourceId                          = var.ossrdbmsResourceId
+  #   portal                                      = var.portal
+  #   resourceManager                             = var.resourceManager
+  #   sqlManagement                               = var.sqlManagement
+  #   synapseAnalyticsResourceId                  = var.synapseAnalyticsResourceId
+  #   vmImageAliasDoc                             = var.vmImageAliasDoc
+  # }
   compute = {
     aks_clusters               = var.aks_clusters
     availability_sets          = var.availability_sets

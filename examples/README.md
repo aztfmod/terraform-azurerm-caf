@@ -11,19 +11,51 @@ You can instantiate this directly using the following syntax:
 ```hcl
 module "caf" {
   source  = "aztfmod/caf/azurerm"
-  version = "5.1.0"
+  version = "5.3.11"
   # insert the 7 required variables here
 }
 ```
 
-Please refer to the instructions within each example directory, whenever you have a /standalone subdirectory.
+You can tailor the module to call the variables for the resource you want to create:
 
+```hcl
+module "caf" {
+  source  = "aztfmod/caf/azurerm"
+  version = "5.3.11"
+
+  global_settings = var.global_settings
+  resource_groups = var.resource_groups
+  keyvaults       = var.keyvaults
+
+  compute = {
+    virtual_machines = var.virtual_machines
+  }
+
+  networking = {
+    public_ip_addresses = var.public_ip_addresses
+    vnets               = var.vnets
+  }
+}
+```
+
+Then, you declare the variables using the syntax you can find in examples folder.
+
+You can also use the example file in this directory to run ALL examples in the sub directories:
+
+```bash
+cd /tf/caf/aztfmod/examples
+az login
+terraform init
+terraform plan -var-file <path to variable files>
+terraform apply
+
+```
 
 ## Deploying examples with rover
 
 To get started with the deployment within rover, follow the steps:
 
-1. Log in the subscription with the rover
+### 1. Log in the subscription with the rover
 
 ```bash
 rover login
@@ -31,7 +63,7 @@ rover login
 rover login --tenant <tenant_name>.onmicrosoft.com -s <subscription_id>
 ```
 
-2. Deploy the basic launchpad
+### 2. Deploy the basic launchpad
 
 ```bash
 rover -lz /tf/caf/public/landingzones/caf_launchpad \
@@ -40,7 +72,7 @@ rover -lz /tf/caf/public/landingzones/caf_launchpad \
 -a apply
 ```
 
-3. Test your example
+### 3. Test your example
 
 ```bash
 rover -lz /tf/caf/landingzones/caf_example \
@@ -100,12 +132,12 @@ No providers.
 
 | Name | Source | Version |
 |------|--------|---------|
-| <a name="module_dynamic_keyvault_secrets"></a> [dynamic\_keyvault\_secrets](#module\_dynamic\_keyvault\_secrets) | aztfmod/caf/azurerm//modules/security/dynamic_keyvault_secrets | ~>5.3.2 |
-| <a name="module_example"></a> [example](#module\_example) | ../.. | n/a |
-| <a name="module_vm_extension_diagnostics"></a> [vm\_extension\_diagnostics](#module\_vm\_extension\_diagnostics) | ../../modules/compute/virtual_machine_extensions | n/a |
-| <a name="module_vm_extension_microsoft_azure_domainjoin"></a> [vm\_extension\_microsoft\_azure\_domainjoin](#module\_vm\_extension\_microsoft\_azure\_domainjoin) | ../../modules/compute/virtual_machine_extensions | n/a |
-| <a name="module_vm_extension_monitoring_agent"></a> [vm\_extension\_monitoring\_agent](#module\_vm\_extension\_monitoring\_agent) | ../../modules/compute/virtual_machine_extensions | n/a |
-| <a name="module_vm_extension_session_host_dscextension"></a> [vm\_extension\_session\_host\_dscextension](#module\_vm\_extension\_session\_host\_dscextension) | ../../modules/compute/virtual_machine_extensions | n/a |
+| <a name="module_dynamic_keyvault_secrets"></a> [dynamic\_keyvault\_secrets](#module\_dynamic\_keyvault\_secrets) | ../modules/security/dynamic_keyvault_secrets | n/a |
+| <a name="module_example"></a> [example](#module\_example) | ../ | n/a |
+| <a name="module_vm_extension_diagnostics"></a> [vm\_extension\_diagnostics](#module\_vm\_extension\_diagnostics) | ../modules/compute/virtual_machine_extensions | n/a |
+| <a name="module_vm_extension_microsoft_azure_domainjoin"></a> [vm\_extension\_microsoft\_azure\_domainjoin](#module\_vm\_extension\_microsoft\_azure\_domainjoin) | ../modules/compute/virtual_machine_extensions | n/a |
+| <a name="module_vm_extension_monitoring_agent"></a> [vm\_extension\_monitoring\_agent](#module\_vm\_extension\_monitoring\_agent) | ../modules/compute/virtual_machine_extensions | n/a |
+| <a name="module_vm_extension_session_host_dscextension"></a> [vm\_extension\_session\_host\_dscextension](#module\_vm\_extension\_session\_host\_dscextension) | ../modules/compute/virtual_machine_extensions | n/a |
 
 ## Resources
 

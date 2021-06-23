@@ -18,8 +18,42 @@ variable "client_config" {
 
 ## Cloud variables
 variable "cloud" {
-  description = "Configuration object - Cloud resources defaults to Azure, allows you to switch to Azure sovereign endpoints."
-  default     = {}
+  description = "Configuration object - Cloud resources defaults to Azure public, allows you to switch to other Azure endpoints."
+  default = {
+    acrLoginServerEndpoint                      = ".azurecr.io"
+    attestationEndpoint                         = ".attest.azure.net"
+    azureDatalakeAnalyticsCatalogAndJobEndpoint = "azuredatalakeanalytics.net"
+    azureDatalakeStoreFileSystemEndpoint        = "azuredatalakestore.net"
+    keyvaultDns                                 = ".vault.azure.net"
+    mariadbServerEndpoint                       = ".mariadb.database.azure.com"
+    mhsmDns                                     = ".managedhsm.azure.net"
+    mysqlServerEndpoint                         = ".mysql.database.azure.com"
+    postgresqlServerEndpoint                    = ".postgres.database.azure.com"
+    sqlServerHostname                           = ".database.windows.net"
+    storageEndpoint                             = "core.windows.net"
+    storageSyncEndpoint                         = "afs.azure.net"
+    synapseAnalyticsEndpoint                    = ".dev.azuresynapse.net"
+    activeDirectory                             = "https://login.microsoftonline.com"
+    activeDirectoryDataLakeResourceId           = "https://datalake.azure.net/"
+    activeDirectoryGraphResourceId              = "https://graph.windows.net/"
+    activeDirectoryResourceId                   = "https://management.core.windows.net/"
+    appInsightsResourceId                       = "https://api.applicationinsights.io"
+    appInsightsTelemetryChannelResourceId       = "https://dc.applicationinsights.azure.com/v2/track"
+    attestationResourceId                       = "https://attest.azure.net"
+    azmirrorStorageAccountResourceId            = "null"
+    batchResourceId                             = "https://batch.core.windows.net/"
+    gallery                                     = "https://gallery.azure.com/"
+    logAnalyticsResourceId                      = "https://api.loganalytics.io"
+    management                                  = "https://management.core.windows.net/"
+    mediaResourceId                             = "https://rest.media.azure.net"
+    microsoftGraphResourceId                    = "https://graph.microsoft.com/"
+    ossrdbmsResourceId                          = "https://ossrdbms-aad.database.windows.net"
+    portal                                      = "https://portal.azure.com"
+    resourceManager                             = "https://management.azure.com/"
+    sqlManagement                               = "https://management.core.windows.net:8443/"
+    synapseAnalyticsResourceId                  = "https://dev.azuresynapse.net"
+    vmImageAliasDoc                             = "https://raw.githubusercontent.com/Azure/azure-rest-api-specs/master/arm-compute/quickstart-templates/aliases.json"
+  }
 }
 
 variable "tenant_id" {
@@ -83,12 +117,12 @@ variable "resource_groups" {
 
 variable "subscriptions" {
   description = "Configuration object - Subscriptions resources."
-  default = {}
+  default     = {}
 }
 
 variable "subscription_billing_role_assignments" {
   description = "Configuration object - subscription billing roleassignments."
-  default = {}
+  default     = {}
 }
 
 variable "billing" {
@@ -109,22 +143,22 @@ variable "diagnostics_definition" {
 
 variable "diagnostics_destinations" {
   description = "Configuration object - Describes the destinations for the diagnostics."
-  default = null
+  default     = null
 }
 
 variable "log_analytics" {
   description = "Configuration object - Log Analytics resources."
-  default = {}
+  default     = {}
 }
 
 variable "diagnostics" {
   description = "Configuration object - Diagnostics object."
-  default = {}
+  default     = {}
 }
 
 variable "event_hub_namespaces" {
   description = "Configuration object - Diagnostics object."
-  default = {}
+  default     = {}
 }
 
 # variable "subnet_id" {
@@ -139,7 +173,7 @@ variable "user_type" {
 ## Azure AD
 variable "azuread" {
   description = "Configuration object - Azure Active Directory resources"
-  default = {}
+  default     = {}
 }
 
 # variable "azuread_api_permissions" {
@@ -166,12 +200,12 @@ variable "webapp" {
 
 variable "data_factory" {
   description = "Configuration object - Azure Data Factory resources"
-  default = {}
+  default     = {}
 }
 
 variable "logic_app" {
   description = "Configuration object - Azure Logic App resources"
-  default = {}
+  default     = {}
 }
 
 ## Databases variables
@@ -189,7 +223,7 @@ variable "networking" {
 ## Security variables
 variable "security" {
   description = "Configuration object - security resources"
-  default = {}
+  default     = {}
 }
 
 variable "managed_identities" {
@@ -204,12 +238,12 @@ variable "keyvaults" {
 
 variable "keyvault_access_policies" {
   description = "Configuration object - Azure Key Vault policies"
-  default = {}
+  default     = {}
 }
 
 variable "keyvault_access_policies_azuread_apps" {
   description = "Configuration object - Azure Key Vault policy for azure ad applications"
-  default = {}
+  default     = {}
 }
 
 variable "custom_role_definitions" {
@@ -232,7 +266,7 @@ variable "dynamic_keyvault_secrets" {
 ## Storage variables
 variable "storage_accounts" {
   description = "Configuration object - Storage account resources"
-  default = {}
+  default     = {}
 }
 variable "storage" {
   description = "Configuration object - Storage account resources"
@@ -240,7 +274,7 @@ variable "storage" {
 }
 variable "diagnostic_storage_accounts" {
   description = "Configuration object - Storage account for diagnostics resources"
-  default = {}
+  default     = {}
 }
 
 # Shared services
@@ -279,7 +313,7 @@ variable "shared_services" {
 
 variable "keyvault_certificate_issuers" {
   description = "Configuration object - Azure Key Vault Certificate Issuers resources"
-  default = {}
+  default     = {}
 }
 # variable "cosmos_dbs" {
 #   default = {}
@@ -298,25 +332,25 @@ variable "keyvault_certificate_issuers" {
 # }
 variable "event_hubs" {
   description = "Configuration object - Event Hub resources"
-  default = {}
+  default     = {}
 }
 
 variable "event_hub_auth_rules" {
   description = "Configuration object - Event Hub authentication rules"
-  default = {}
+  default     = {}
 }
 
 variable "event_hub_namespace_auth_rules" {
   description = "Configuration object - Event Hub namespaces authentication rules"
-  default = {}
+  default     = {}
 }
 
 variable "event_hub_consumer_groups" {
   description = "Configuration object - Event Hub consumer group rules"
-  default = {}
+  default     = {}
 }
 
 variable "random_strings" {
   description = "Configuration object - Random string generator resources"
-  default = {}
+  default     = {}
 }
