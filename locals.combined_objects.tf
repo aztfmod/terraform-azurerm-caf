@@ -79,7 +79,3 @@ locals {
   )
 
 }
-
-output "combined_objects_subscriptions" {
-  value = local.combined_objects_subscriptions
-}
