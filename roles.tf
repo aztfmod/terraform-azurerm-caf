@@ -92,16 +92,6 @@ locals {
     synapse_workspaces          = local.combined_objects_synapse_workspaces
   }
 
-  # subscriptions_map = tomap(
-  #   {
-  #     (var.current_landingzone_key) = merge(
-  #       module.subscriptions
-  #       # try(var.subscriptions, {}),
-  #       # tomap({ "logged_in_subscription" = { id = data.azurerm_subscription.primary.id } })
-  #     )
-  #   }
-  # )
-
 
   logged_in = tomap(
     {
