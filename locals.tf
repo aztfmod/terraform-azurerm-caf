@@ -227,8 +227,9 @@ locals {
   }
 
   storage = {
-    netapp_accounts       = try(var.storage.netapp_accounts, {})
-    storage_account_blobs = try(var.storage.storage_account_blobs, {})
+    netapp_accounts        = try(var.storage.netapp_accounts, {})
+    storage_account_blobs  = try(var.storage.storage_account_blobs, {})
+    storage_account_queues = try(var.storage.storage_account_queues, {})
   }
 
   webapp = {
