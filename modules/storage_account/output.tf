@@ -23,6 +23,10 @@ output "containers" {
   value = module.container
 }
 
+output "queues"{
+  value = module.queue
+}
+
 output "data_lake_filesystems" {
   value = module.data_lake_filesystem
 }
@@ -32,5 +36,13 @@ output "identity" {
 }
 
 output "rbac_id" {
-  value = try(azurerm_storage_account.stg.identity.0, null)
+  value = try(azurerm_storage_account.stg.identity.0.principal_id, null)
+}
+
+output "primary_connection_string" {
+  value = try(azurerm_storage_account.stg.primary_connection_string, null)
+}
+
+output "primary_queue_endpoint" {
+  value = try(azurerm_storage_account.stg.primary_queue_endpoint, null)
 }
