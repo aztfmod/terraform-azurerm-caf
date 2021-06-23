@@ -51,7 +51,7 @@ module "role_assignment_msi" {
 module "role_assignment_azuread_service_principals" {
   source     = "./role_assignment"
   for_each   = try(var.settings.principals.azuread_service_principals, {})
-  depends_on = [module.role_assignment_azuread_users,module.role_assignment_msi]
+  depends_on = [module.role_assignment_azuread_users, module.role_assignment_msi]
 
   aad_user_impersonate = try(var.keyvaults[try(each.value.lz_key, var.client_config.landingzone_key)][var.settings.aad_user_impersonate.keyvault.key], null)
   billing_scope_id     = local.billing_scope_id

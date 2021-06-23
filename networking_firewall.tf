@@ -49,7 +49,7 @@ module "azurerm_firewall_policy_rule_collection_groups" {
   ip_groups           = module.ip_groups
   policy_settings     = each.value
   public_ip_addresses = module.public_ip_addresses
-  firewall_policy_id  = coalesce(
+  firewall_policy_id = coalesce(
     try(local.combined_objects_azurerm_firewall_policies[try(each.value.firewall_policy.lz_key, local.client_config.landingzone_key)][each.value.firewall_policy.key].id, null),
     try(local.combined_objects_azurerm_firewall_policies[try(each.value.lz_key, local.client_config.landingzone_key)][each.value.firewall_policy_key].id, null)
   )

@@ -1,4 +1,4 @@
-# Windows Virtual Desktop 
+# Windows Virtual Desktop
 
 This module is part of Cloud Adoption Framework landing zones for Azure on Terraform.
 

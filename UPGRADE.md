@@ -10,12 +10,12 @@ Upgrade to 5.4.0 includes support for:
 - Updated parameter for Azure Public IP address.
 
 ### Update for georeplications structure for ACR
-The georeplications argument has replaced georeplication_locations in azurerm 2.57.0. Accordingly you need to change the configuration file from 
+The georeplications argument has replaced georeplication_locations in azurerm 2.57.0. Accordingly you need to change the configuration file from
 
 ```
 georeplication_region_keys = ["region2", "region3"]
 ```
-to 
+to
 ```
  georeplications = {
        region2 = {
@@ -34,7 +34,7 @@ to
 ```
 
 ### Update structure for Azure Front Door
-The logic has moved out from the nested structure 
+The logic has moved out from the nested structure
 
 ```
 resource "azurerm_frontdoor" "frontdoor" {
@@ -55,9 +55,9 @@ resource "azurerm_frontdoor_custom_https_configuration" "frontdoor" {
 This should not require a restructure of the configuration file.
 
 ### Update for public IP address
-The parameter ```zone``` is deprecated and replaced by ```availability_zone``` in the provider.  
+The parameter ```zone``` is deprecated and replaced by ```availability_zone``` in the provider.
 
-In previous versions, ```var.zones``` was a list, we recommend that you migrate to use ```availability_zone``` as a string parameter. If not, we will try to cast as a string the first element of  ```var.zones```. For more reference on the possible values: https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/resources/public_ip 
+In previous versions, ```var.zones``` was a list, we recommend that you migrate to use ```availability_zone``` as a string parameter. If not, we will try to cast as a string the first element of  ```var.zones```. For more reference on the possible values: https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/resources/public_ip
 
 
 ## 5.3.0
