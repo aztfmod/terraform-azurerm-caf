@@ -7,6 +7,14 @@ name: standalone-scenario-tf100
 
 on:
   workflow_dispatch:
+  pull_request:
+    paths-ignore:
+      - .github/workflows/master-100.yaml
+      - 'documentation/**'
+      - '_pictures/**'
+      - 'README.md'
+      - 'examples/README.md'
+      - 'CHANGELOG.md'
   schedule:
     - cron:  '0 0 * * 0' #1 AM on Sunday
 
@@ -42,7 +50,7 @@ jobs:
       matrix: ${{fromJSON(needs.load_scenarios.outputs.matrix)}}
 
     container:
-      image: aztfmod/rover-preview:1.0.0-2106.181127
+      image: aztfmod/rover-preview:1.0.0-2106.240627
       options: --user 0
 
     steps:
@@ -67,7 +75,7 @@ jobs:
     needs: examples
 
     container:
-      image: aztfmod/rover-preview:1.0.0-2106.181127
+      image: aztfmod/rover-preview:1.0.0-2106.240627
       options: --user 0
 
     steps:
