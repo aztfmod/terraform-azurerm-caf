@@ -196,4 +196,4 @@ public_ip_addresses = {
 }
 ```
 
-For a complete example of standalone consunmption of the module, you can use the example inside [../landingzones/caf_example](../landingzones/caf_example). This example contains the whole variable set to implemente all the examples present in this module.
+For a complete example of standalone consumption of the module, you can use the example inside [./examples](../examples). This example contains the whole variable set to implemente all the examples present in this module.
