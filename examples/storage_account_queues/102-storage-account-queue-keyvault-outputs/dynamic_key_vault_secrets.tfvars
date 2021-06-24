@@ -3,7 +3,7 @@ dynamic_keyvault_secrets = {
     QUEUE-CONN-STRING = {
       secret_name   = "QUEUE-STORAGE-URI"
       output_key    = "storage_accounts"
-      resource_key  = "gears_storage"
+      resource_key  = "sa1"
       attribute_key = "primary_queue_endpoint"
     }
     # Emits the queue name from the queues module to KeyVault
