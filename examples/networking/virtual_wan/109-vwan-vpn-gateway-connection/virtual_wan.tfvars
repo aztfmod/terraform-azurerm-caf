@@ -83,10 +83,10 @@ vpn_sites = {
         fqdn          = "secondary.link.com"
         provider_name = "Microsoft"
         speed_in_mbps = "50"
-        bgp = {
-          asn             = "65534"
-          peering_address = "169.254.1.2"
-        }
+        # bgp = {
+        #   asn             = "65534"
+        #   peering_address = "169.254.1.2"
+        # }
       }
     }
   }
@@ -116,7 +116,7 @@ vpn_gateway_connections = {
         link_index                             = 0 # Index order of VPN Site's Link
         name                                   = "link-1"
         bandwidth_mbps                         = "100"       # Optional
-        bgp_enabled                            = true        # Optional
+        bgp_enabled                            = false        # Optional
         protocol                               = "IKEv2"     # Optional
         ratelimit_enabled                      = true        # Optional
         route_weight                           = "100"       # Optional

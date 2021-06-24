@@ -147,14 +147,7 @@ No resources.
 
 | Name | Description | Type | Default | Required |
 |------|-------------|------|---------|:--------:|
-| <a name="input_acrLoginServerEndpoint"></a> [acrLoginServerEndpoint](#input\_acrLoginServerEndpoint) | n/a | `string` | `".azurecr.io"` | no |
-| <a name="input_activeDirectory"></a> [activeDirectory](#input\_activeDirectory) | n/a | `string` | `"https://login.microsoftonline.com"` | no |
-| <a name="input_activeDirectoryDataLakeResourceId"></a> [activeDirectoryDataLakeResourceId](#input\_activeDirectoryDataLakeResourceId) | n/a | `string` | `"https://datalake.azure.net/"` | no |
-| <a name="input_activeDirectoryGraphResourceId"></a> [activeDirectoryGraphResourceId](#input\_activeDirectoryGraphResourceId) | n/a | `string` | `"https://graph.windows.net/"` | no |
-| <a name="input_activeDirectoryResourceId"></a> [activeDirectoryResourceId](#input\_activeDirectoryResourceId) | n/a | `string` | `"https://management.core.windows.net/"` | no |
 | <a name="input_aks_clusters"></a> [aks\_clusters](#input\_aks\_clusters) | n/a | `map` | `{}` | no |
-| <a name="input_appInsightsResourceId"></a> [appInsightsResourceId](#input\_appInsightsResourceId) | n/a | `string` | `"https://api.applicationinsights.io"` | no |
-| <a name="input_appInsightsTelemetryChannelResourceId"></a> [appInsightsTelemetryChannelResourceId](#input\_appInsightsTelemetryChannelResourceId) | n/a | `string` | `"https://dc.applicationinsights.azure.com/v2/track"` | no |
 | <a name="input_app_service_environments"></a> [app\_service\_environments](#input\_app\_service\_environments) | n/a | `map` | `{}` | no |
 | <a name="input_app_service_plans"></a> [app\_service\_plans](#input\_app\_service\_plans) | n/a | `map` | `{}` | no |
 | <a name="input_app_services"></a> [app\_services](#input\_app\_services) | n/a | `map` | `{}` | no |
@@ -162,13 +155,8 @@ No resources.
 | <a name="input_application_gateway_waf_policies"></a> [application\_gateway\_waf\_policies](#input\_application\_gateway\_waf\_policies) | n/a | `map` | `{}` | no |
 | <a name="input_application_gateways"></a> [application\_gateways](#input\_application\_gateways) | n/a | `map` | `{}` | no |
 | <a name="input_application_security_groups"></a> [application\_security\_groups](#input\_application\_security\_groups) | n/a | `map` | `{}` | no |
-| <a name="input_attestationEndpoint"></a> [attestationEndpoint](#input\_attestationEndpoint) | n/a | `string` | `".attest.azure.net"` | no |
-| <a name="input_attestationResourceId"></a> [attestationResourceId](#input\_attestationResourceId) | n/a | `string` | `"https://attest.azure.net"` | no |
 | <a name="input_automations"></a> [automations](#input\_automations) | n/a | `map` | `{}` | no |
 | <a name="input_availability_sets"></a> [availability\_sets](#input\_availability\_sets) | n/a | `map` | `{}` | no |
-| <a name="input_azmirrorStorageAccountResourceId"></a> [azmirrorStorageAccountResourceId](#input\_azmirrorStorageAccountResourceId) | n/a | `string` | `"null"` | no |
-| <a name="input_azureDatalakeAnalyticsCatalogAndJobEndpoint"></a> [azureDatalakeAnalyticsCatalogAndJobEndpoint](#input\_azureDatalakeAnalyticsCatalogAndJobEndpoint) | n/a | `string` | `"azuredatalakeanalytics.net"` | no |
-| <a name="input_azureDatalakeStoreFileSystemEndpoint"></a> [azureDatalakeStoreFileSystemEndpoint](#input\_azureDatalakeStoreFileSystemEndpoint) | n/a | `string` | `"azuredatalakestore.net"` | no |
 | <a name="input_azure_container_registries"></a> [azure\_container\_registries](#input\_azure\_container\_registries) | n/a | `map` | `{}` | no |
 | <a name="input_azuread_api_permissions"></a> [azuread\_api\_permissions](#input\_azuread\_api\_permissions) | n/a | `map` | `{}` | no |
 | <a name="input_azuread_applications"></a> [azuread\_applications](#input\_azuread\_applications) | n/a | `map` | `{}` | no |
@@ -190,8 +178,6 @@ No resources.
 | <a name="input_azurerm_redis_caches"></a> [azurerm\_redis\_caches](#input\_azurerm\_redis\_caches) | n/a | `map` | `{}` | no |
 | <a name="input_azurerm_routes"></a> [azurerm\_routes](#input\_azurerm\_routes) | n/a | `map` | `{}` | no |
 | <a name="input_bastion_hosts"></a> [bastion\_hosts](#input\_bastion\_hosts) | n/a | `map` | `{}` | no |
-| <a name="input_batchResourceId"></a> [batchResourceId](#input\_batchResourceId) | n/a | `string` | `"https://batch.core.windows.net/"` | no |
-| <a name="input_cloud"></a> [cloud](#input\_cloud) | n/a | `map` | `{}` | no |
 | <a name="input_container_groups"></a> [container\_groups](#input\_container\_groups) | n/a | `map` | `{}` | no |
 | <a name="input_cosmos_db"></a> [cosmos\_db](#input\_cosmos\_db) | n/a | `map` | `{}` | no |
 | <a name="input_cosmos_dbs"></a> [cosmos\_dbs](#input\_cosmos\_dbs) | n/a | `map` | `{}` | no |
@@ -209,7 +195,7 @@ No resources.
 | <a name="input_dns_zones"></a> [dns\_zones](#input\_dns\_zones) | n/a | `map` | `{}` | no |
 | <a name="input_domain_name_registrations"></a> [domain\_name\_registrations](#input\_domain\_name\_registrations) | n/a | `map` | `{}` | no |
 | <a name="input_dynamic_keyvault_secrets"></a> [dynamic\_keyvault\_secrets](#input\_dynamic\_keyvault\_secrets) | n/a | `map` | `{}` | no |
-| <a name="input_environment"></a> [environment](#input\_environment) | n/a | `string` | `"sandpit"` | no |
+| <a name="input_environment"></a> [environment](#input\_environment) | variable "cloud" { default = {} } variable "acrLoginServerEndpoint" { default = ".azurecr.io" } variable "attestationEndpoint" { default = ".attest.azure.net" } variable "azureDatalakeAnalyticsCatalogAndJobEndpoint" { default = "azuredatalakeanalytics.net" } variable "azureDatalakeStoreFileSystemEndpoint" { default = "azuredatalakestore.net" } variable "keyvaultDns" { default = ".vault.azure.net" } variable "mariadbServerEndpoint" { default = ".mariadb.database.azure.com" } variable "mhsmDns" { default = ".managedhsm.azure.net" } variable "mysqlServerEndpoint" { default = ".mysql.database.azure.com" } variable "postgresqlServerEndpoint" { default = ".postgres.database.azure.com" } variable "sqlServerHostname" { default = ".database.windows.net" } variable "storageEndpoint" { default = "core.windows.net" } variable "storageSyncEndpoint" { default = "afs.azure.net" } variable "synapseAnalyticsEndpoint" { default = ".dev.azuresynapse.net" } variable "activeDirectory" { default = "https://login.microsoftonline.com" } variable "activeDirectoryDataLakeResourceId" { default = "https://datalake.azure.net/" } variable "activeDirectoryGraphResourceId" { default = "https://graph.windows.net/" } variable "activeDirectoryResourceId" { default = "https://management.core.windows.net/" } variable "appInsightsResourceId" { default = "https://api.applicationinsights.io" } variable "appInsightsTelemetryChannelResourceId" { default = "https://dc.applicationinsights.azure.com/v2/track" } variable "attestationResourceId" { default = "https://attest.azure.net" } variable "azmirrorStorageAccountResourceId" { default = "null" } variable "batchResourceId" { default = "https://batch.core.windows.net/" } variable "gallery" { default = "https://gallery.azure.com/" } variable "logAnalyticsResourceId" { default = "https://api.loganalytics.io" } variable "management" { default = "https://management.core.windows.net/" } variable "mediaResourceId" { default = "https://rest.media.azure.net" } variable "microsoftGraphResourceId" { default = "https://graph.microsoft.com/" } variable "ossrdbmsResourceId" { default = "https://ossrdbms-aad.database.windows.net" } variable "portal" { default = "https://portal.azure.com" } variable "resourceManager" { default = "https://management.azure.com/" } variable "sqlManagement" { default = "https://management.core.windows.net:8443/" } variable "synapseAnalyticsResourceId" { default = "https://dev.azuresynapse.net" } variable "vmImageAliasDoc" { default = "https://raw.githubusercontent.com/Azure/azure-rest-api-specs/master/arm-compute/quickstart-templates/aliases.json" } | `string` | `"sandpit"` | no |
 | <a name="input_event_hub_auth_rules"></a> [event\_hub\_auth\_rules](#input\_event\_hub\_auth\_rules) | n/a | `map` | `{}` | no |
 | <a name="input_event_hub_consumer_groups"></a> [event\_hub\_consumer\_groups](#input\_event\_hub\_consumer\_groups) | n/a | `map` | `{}` | no |
 | <a name="input_event_hub_namespace_auth_rules"></a> [event\_hub\_namespace\_auth\_rules](#input\_event\_hub\_namespace\_auth\_rules) | n/a | `map` | `{}` | no |
@@ -219,11 +205,9 @@ No resources.
 | <a name="input_express_route_circuits"></a> [express\_route\_circuits](#input\_express\_route\_circuits) | n/a | `map` | `{}` | no |
 | <a name="input_front_door_waf_policies"></a> [front\_door\_waf\_policies](#input\_front\_door\_waf\_policies) | n/a | `map` | `{}` | no |
 | <a name="input_front_doors"></a> [front\_doors](#input\_front\_doors) | n/a | `map` | `{}` | no |
-| <a name="input_gallery"></a> [gallery](#input\_gallery) | n/a | `string` | `"https://gallery.azure.com/"` | no |
 | <a name="input_global_settings"></a> [global\_settings](#input\_global\_settings) | n/a | `map` | <pre>{<br>  "default_region": "region1",<br>  "regions": {<br>    "region1": "southeastasia",<br>    "region2": "eastasia"<br>  }<br>}</pre> | no |
 | <a name="input_image_definitions"></a> [image\_definitions](#input\_image\_definitions) | n/a | `map` | `{}` | no |
 | <a name="input_ip_groups"></a> [ip\_groups](#input\_ip\_groups) | n/a | `map` | `{}` | no |
-| <a name="input_keyvaultDns"></a> [keyvaultDns](#input\_keyvaultDns) | n/a | `string` | `".vault.azure.net"` | no |
 | <a name="input_keyvault_access_policies"></a> [keyvault\_access\_policies](#input\_keyvault\_access\_policies) | n/a | `map` | `{}` | no |
 | <a name="input_keyvault_access_policies_azuread_apps"></a> [keyvault\_access\_policies\_azuread\_apps](#input\_keyvault\_access\_policies\_azuread\_apps) | n/a | `map` | `{}` | no |
 | <a name="input_keyvault_certificate_issuers"></a> [keyvault\_certificate\_issuers](#input\_keyvault\_certificate\_issuers) | n/a | `map` | `{}` | no |
@@ -235,19 +219,13 @@ No resources.
 | <a name="input_lighthouse_definitions"></a> [lighthouse\_definitions](#input\_lighthouse\_definitions) | n/a | `map` | `{}` | no |
 | <a name="input_load_balancers"></a> [load\_balancers](#input\_load\_balancers) | n/a | `map` | `{}` | no |
 | <a name="input_local_network_gateways"></a> [local\_network\_gateways](#input\_local\_network\_gateways) | n/a | `map` | `{}` | no |
-| <a name="input_logAnalyticsResourceId"></a> [logAnalyticsResourceId](#input\_logAnalyticsResourceId) | n/a | `string` | `"https://api.loganalytics.io"` | no |
 | <a name="input_log_analytics"></a> [log\_analytics](#input\_log\_analytics) | n/a | `map` | `{}` | no |
 | <a name="input_logged_aad_app_objectId"></a> [logged\_aad\_app\_objectId](#input\_logged\_aad\_app\_objectId) | n/a | `any` | `null` | no |
 | <a name="input_logged_user_objectId"></a> [logged\_user\_objectId](#input\_logged\_user\_objectId) | n/a | `any` | `null` | no |
 | <a name="input_machine_learning_workspaces"></a> [machine\_learning\_workspaces](#input\_machine\_learning\_workspaces) | n/a | `map` | `{}` | no |
 | <a name="input_managed_identities"></a> [managed\_identities](#input\_managed\_identities) | n/a | `map` | `{}` | no |
-| <a name="input_management"></a> [management](#input\_management) | n/a | `string` | `"https://management.core.windows.net/"` | no |
-| <a name="input_mariadbServerEndpoint"></a> [mariadbServerEndpoint](#input\_mariadbServerEndpoint) | n/a | `string` | `".mariadb.database.azure.com"` | no |
 | <a name="input_mariadb_databases"></a> [mariadb\_databases](#input\_mariadb\_databases) | n/a | `map` | `{}` | no |
 | <a name="input_mariadb_servers"></a> [mariadb\_servers](#input\_mariadb\_servers) | n/a | `map` | `{}` | no |
-| <a name="input_mediaResourceId"></a> [mediaResourceId](#input\_mediaResourceId) | n/a | `string` | `"https://rest.media.azure.net"` | no |
-| <a name="input_mhsmDns"></a> [mhsmDns](#input\_mhsmDns) | n/a | `string` | `".managedhsm.azure.net"` | no |
-| <a name="input_microsoftGraphResourceId"></a> [microsoftGraphResourceId](#input\_microsoftGraphResourceId) | n/a | `string` | `"https://graph.microsoft.com/"` | no |
 | <a name="input_monitoring"></a> [monitoring](#input\_monitoring) | n/a | `map` | `{}` | no |
 | <a name="input_mssql_databases"></a> [mssql\_databases](#input\_mssql\_databases) | n/a | `map` | `{}` | no |
 | <a name="input_mssql_elastic_pools"></a> [mssql\_elastic\_pools](#input\_mssql\_elastic\_pools) | n/a | `map` | `{}` | no |
@@ -262,16 +240,12 @@ No resources.
 | <a name="input_mssql_mi_secondary_tdes"></a> [mssql\_mi\_secondary\_tdes](#input\_mssql\_mi\_secondary\_tdes) | n/a | `map` | `{}` | no |
 | <a name="input_mssql_mi_tdes"></a> [mssql\_mi\_tdes](#input\_mssql\_mi\_tdes) | n/a | `map` | `{}` | no |
 | <a name="input_mssql_servers"></a> [mssql\_servers](#input\_mssql\_servers) | n/a | `map` | `{}` | no |
-| <a name="input_mysqlServerEndpoint"></a> [mysqlServerEndpoint](#input\_mysqlServerEndpoint) | n/a | `string` | `".mysql.database.azure.com"` | no |
 | <a name="input_mysql_servers"></a> [mysql\_servers](#input\_mysql\_servers) | n/a | `map` | `{}` | no |
 | <a name="input_netapp_accounts"></a> [netapp\_accounts](#input\_netapp\_accounts) | n/a | `map` | `{}` | no |
 | <a name="input_network_security_group_definition"></a> [network\_security\_group\_definition](#input\_network\_security\_group\_definition) | n/a | `map` | `{}` | no |
 | <a name="input_network_watchers"></a> [network\_watchers](#input\_network\_watchers) | n/a | `map` | `{}` | no |
-| <a name="input_ossrdbmsResourceId"></a> [ossrdbmsResourceId](#input\_ossrdbmsResourceId) | n/a | `string` | `"https://ossrdbms-aad.database.windows.net"` | no |
 | <a name="input_packer_managed_identity"></a> [packer\_managed\_identity](#input\_packer\_managed\_identity) | n/a | `map` | `{}` | no |
 | <a name="input_packer_service_principal"></a> [packer\_service\_principal](#input\_packer\_service\_principal) | n/a | `map` | `{}` | no |
-| <a name="input_portal"></a> [portal](#input\_portal) | n/a | `string` | `"https://portal.azure.com"` | no |
-| <a name="input_postgresqlServerEndpoint"></a> [postgresqlServerEndpoint](#input\_postgresqlServerEndpoint) | n/a | `string` | `".postgres.database.azure.com"` | no |
 | <a name="input_postgresql_servers"></a> [postgresql\_servers](#input\_postgresql\_servers) | n/a | `map` | `{}` | no |
 | <a name="input_private_dns"></a> [private\_dns](#input\_private\_dns) | n/a | `map` | `{}` | no |
 | <a name="input_private_endpoints"></a> [private\_endpoints](#input\_private\_endpoints) | n/a | `map` | `{}` | no |
@@ -279,20 +253,13 @@ No resources.
 | <a name="input_proximity_placement_groups"></a> [proximity\_placement\_groups](#input\_proximity\_placement\_groups) | n/a | `map` | `{}` | no |
 | <a name="input_public_ip_addresses"></a> [public\_ip\_addresses](#input\_public\_ip\_addresses) | n/a | `map` | `{}` | no |
 | <a name="input_recovery_vaults"></a> [recovery\_vaults](#input\_recovery\_vaults) | n/a | `map` | `{}` | no |
-| <a name="input_resourceManager"></a> [resourceManager](#input\_resourceManager) | n/a | `string` | `"https://management.azure.com/"` | no |
 | <a name="input_resource_groups"></a> [resource\_groups](#input\_resource\_groups) | n/a | `map` | `{}` | no |
 | <a name="input_role_mapping"></a> [role\_mapping](#input\_role\_mapping) | n/a | `map` | `{}` | no |
 | <a name="input_route_tables"></a> [route\_tables](#input\_route\_tables) | n/a | `map` | `{}` | no |
 | <a name="input_rover_version"></a> [rover\_version](#input\_rover\_version) | n/a | `any` | `null` | no |
 | <a name="input_shared_image_galleries"></a> [shared\_image\_galleries](#input\_shared\_image\_galleries) | n/a | `map` | `{}` | no |
-| <a name="input_sqlManagement"></a> [sqlManagement](#input\_sqlManagement) | n/a | `string` | `"https://management.core.windows.net:8443/"` | no |
-| <a name="input_sqlServerHostname"></a> [sqlServerHostname](#input\_sqlServerHostname) | n/a | `string` | `".database.windows.net"` | no |
-| <a name="input_storageEndpoint"></a> [storageEndpoint](#input\_storageEndpoint) | n/a | `string` | `"core.windows.net"` | no |
-| <a name="input_storageSyncEndpoint"></a> [storageSyncEndpoint](#input\_storageSyncEndpoint) | n/a | `string` | `"afs.azure.net"` | no |
 | <a name="input_storage_accounts"></a> [storage\_accounts](#input\_storage\_accounts) | n/a | `map` | `{}` | no |
 | <a name="input_subscription_billing_role_assignments"></a> [subscription\_billing\_role\_assignments](#input\_subscription\_billing\_role\_assignments) | n/a | `map` | `{}` | no |
-| <a name="input_synapseAnalyticsEndpoint"></a> [synapseAnalyticsEndpoint](#input\_synapseAnalyticsEndpoint) | n/a | `string` | `".dev.azuresynapse.net"` | no |
-| <a name="input_synapseAnalyticsResourceId"></a> [synapseAnalyticsResourceId](#input\_synapseAnalyticsResourceId) | n/a | `string` | `"https://dev.azuresynapse.net"` | no |
 | <a name="input_synapse_workspaces"></a> [synapse\_workspaces](#input\_synapse\_workspaces) | n/a | `map` | `{}` | no |
 | <a name="input_tags"></a> [tags](#input\_tags) | n/a | `map(any)` | `null` | no |
 | <a name="input_var_folder_path"></a> [var\_folder\_path](#input\_var\_folder\_path) | n/a | `map` | `{}` | no |
@@ -306,7 +273,6 @@ No resources.
 | <a name="input_virtual_network_gateway_connections"></a> [virtual\_network\_gateway\_connections](#input\_virtual\_network\_gateway\_connections) | n/a | `map` | `{}` | no |
 | <a name="input_virtual_network_gateways"></a> [virtual\_network\_gateways](#input\_virtual\_network\_gateways) | n/a | `map` | `{}` | no |
 | <a name="input_virtual_wans"></a> [virtual\_wans](#input\_virtual\_wans) | n/a | `map` | `{}` | no |
-| <a name="input_vmImageAliasDoc"></a> [vmImageAliasDoc](#input\_vmImageAliasDoc) | n/a | `string` | `"https://raw.githubusercontent.com/Azure/azure-rest-api-specs/master/arm-compute/quickstart-templates/aliases.json"` | no |
 | <a name="input_vnet_peerings"></a> [vnet\_peerings](#input\_vnet\_peerings) | n/a | `map` | `{}` | no |
 | <a name="input_vnets"></a> [vnets](#input\_vnets) | n/a | `map` | `{}` | no |
 | <a name="input_vpn_gateway_connections"></a> [vpn\_gateway\_connections](#input\_vpn\_gateway\_connections) | n/a | `map` | `{}` | no |
