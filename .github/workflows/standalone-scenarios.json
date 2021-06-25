@@ -118,6 +118,7 @@
     "storage_accounts/103-storage-account-network-rules",
     "storage_accounts/104-file-share-with-backup",
     "storage_accounts/105-nfsv3",
+    "storage_accounts/106-storage-account-queue",
     "synapse_analytics/100-synapse",
     "synapse_analytics/101-synapse-sparkpool",
     "webapps/appservice/101-appservice-simple",
