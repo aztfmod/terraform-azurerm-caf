@@ -9,7 +9,7 @@ module "azurerm_firewalls" {
   base_tags           = try(local.global_settings.inherit_tags, false) ? local.resource_groups[each.value.resource_group_key].tags : {}
   client_config       = local.client_config
   diagnostics         = local.combined_diagnostics
-  firewall_policy_id  = try(each.value.firewall_policy_key, null) == null  ? null : local.combined_objects_azurerm_firewall_policies[try(each.value.lz_key,local.client_config.landingzone_key)][each.value.firewall_policy_key].id
+  firewall_policy_id  = try(each.value.firewall_policy_key, null) == null ? null : local.combined_objects_azurerm_firewall_policies[try(each.value.lz_key, local.client_config.landingzone_key)][each.value.firewall_policy_key].id
   global_settings     = local.global_settings
   location            = lookup(each.value, "region", null) == null ? local.resource_groups[each.value.resource_group_key].location : local.global_settings.regions[each.value.region]
   name                = each.value.name
@@ -25,7 +25,7 @@ module "azurerm_firewalls" {
 }
 
 module "azurerm_firewall_policies" {
-  source   = "./modules/networking/firewall_policies"
+  source = "./modules/networking/firewall_policies"
   for_each = {
     for key, value in local.networking.azurerm_firewall_policies : key => value
     if try(value.base_policy, null) == null
@@ -42,14 +42,14 @@ module "azurerm_firewall_policies" {
 
 
 module "azurerm_firewall_policy_rule_collection_groups" {
-  source     = "./modules/networking/firewall_policy_rule_collection_groups"
-  for_each   = local.networking.azurerm_firewall_policy_rule_collection_groups
+  source   = "./modules/networking/firewall_policy_rule_collection_groups"
+  for_each = local.networking.azurerm_firewall_policy_rule_collection_groups
 
   global_settings     = local.global_settings
   ip_groups           = module.ip_groups
   policy_settings     = each.value
   public_ip_addresses = module.public_ip_addresses
-  firewall_policy_id  = coalesce(
+  firewall_policy_id = coalesce(
     try(local.combined_objects_azurerm_firewall_policies[try(each.value.firewall_policy.lz_key, local.client_config.landingzone_key)][each.value.firewall_policy.key].id, null),
     try(local.combined_objects_azurerm_firewall_policies[try(each.value.lz_key, local.client_config.landingzone_key)][each.value.firewall_policy_key].id, null)
   )

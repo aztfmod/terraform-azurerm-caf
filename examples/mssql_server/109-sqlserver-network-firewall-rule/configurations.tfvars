@@ -46,8 +46,9 @@ mssql_servers = {
     firewall_rules = {
       firewall_rule1 = {
         name             = "firewallrule1"
-        start_ip_address = "124.82.37.221"
-        end_ip_address   = "124.82.37.221"
+        start_ip_address = "0.0.0.0"
+        end_ip_address   = "0.0.0.0"
+        # putting it to 0.0.0.0 enables the feature: Allow access to Azure services
       }
     }
 

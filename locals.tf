@@ -72,7 +72,10 @@ locals {
     azure_container_registries = try(var.compute.azure_container_registries, {})
     bastion_hosts              = try(var.compute.bastion_hosts, {})
     container_groups           = try(var.compute.container_groups, {})
+    dedicated_hosts            = try(var.compute.dedicated_hosts, {})
+    dedicated_host_groups      = try(var.compute.dedicated_host_groups, {})
     proximity_placement_groups = try(var.compute.proximity_placement_groups, {})
+    wvd_applications           = try(var.compute.wvd_applications, {})
     wvd_application_groups     = try(var.compute.wvd_application_groups, {})
     wvd_host_pools             = try(var.compute.wvd_host_pools, {})
     wvd_workspaces             = try(var.compute.wvd_workspaces, {})
@@ -213,6 +216,8 @@ locals {
     virtual_wans                                            = try(var.networking.virtual_wans, {})
     vnet_peerings                                           = try(var.networking.vnet_peerings, {})
     vnets                                                   = try(var.networking.vnets, {})
+    vpn_gateway_connections                                 = try(var.networking.vpn_gateway_connections, {})
+    vpn_sites                                               = try(var.networking.vpn_sites, {})
   }
 
   object_id = coalesce(var.logged_user_objectId, var.logged_aad_app_objectId, try(data.azurerm_client_config.current.object_id, null), try(data.azuread_service_principal.logged_in_app.0.object_id, null))
@@ -238,8 +243,9 @@ locals {
   }
 
   storage = {
-    netapp_accounts       = try(var.storage.netapp_accounts, {})
-    storage_account_blobs = try(var.storage.storage_account_blobs, {})
+    netapp_accounts        = try(var.storage.netapp_accounts, {})
+    storage_account_blobs  = try(var.storage.storage_account_blobs, {})
+    storage_account_queues = try(var.storage.storage_account_queues, {})
   }
 
   webapp = {
