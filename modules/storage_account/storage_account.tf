@@ -194,7 +194,14 @@ resource "azurerm_storage_account" "stg" {
       choice                      = try(var.storage_account.routing.choice, "MicrosoftRouting")
     }
   }
+}
 
+module "queue"{
+  source = "./queue"
+  for_each = try(var.storage_account.queues, {})
+  
+  storage_account_name = azurerm_storage_account.stg.name
+  settings             = each.value
 }
 
 module "container" {
