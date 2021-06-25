@@ -70,10 +70,16 @@ module "public_ip_addresses" {
   reverse_fqdn               = try(each.value.reverse_fqdn, null)
   generate_domain_name_label = try(each.value.generate_domain_name_label, false)
   tags                       = try(each.value.tags, null)
-  zones                      = try(each.value.zones, null)
-  diagnostic_profiles        = try(each.value.diagnostic_profiles, {})
-  diagnostics                = local.combined_diagnostics
-  base_tags                  = try(local.global_settings.inherit_tags, false) ? local.resource_groups[each.value.resource_group_key].tags : {}
+  ip_tags                    = try(each.value.ip_tags, null)
+  public_ip_prefix_id        = try(each.value.public_ip_prefix_id, null)
+  zones = coalesce(
+    try(each.value.availability_zone, ""),
+    try(tostring(each.value.zones[0]), ""),
+    try(each.value.sku, "Basic") == "Basic" ? "No-Zone" : "Zone-Redundant"
+  )
+  diagnostic_profiles = try(each.value.diagnostic_profiles, {})
+  diagnostics         = local.combined_diagnostics
+  base_tags           = try(local.global_settings.inherit_tags, false) ? local.resource_groups[each.value.resource_group_key].tags : {}
 }
 
 
@@ -157,17 +163,17 @@ module "routes" {
   source   = "./modules/networking/routes"
   for_each = local.networking.azurerm_routes
 
-  name                      = azurecaf_name.routes[each.key].result
-  resource_group_name       = local.resource_groups[each.value.resource_group_key].name
-  route_table_name          = module.route_tables[each.value.route_table_key].name
-  address_prefix            = each.value.address_prefix
-  next_hop_type             = each.value.next_hop_type
-  next_hop_in_ip_address    = try(lower(each.value.next_hop_type), null) == "virtualappliance" ? try(each.value.next_hop_in_ip_address, null) : null
+  name                   = azurecaf_name.routes[each.key].result
+  resource_group_name    = local.resource_groups[each.value.resource_group_key].name
+  route_table_name       = module.route_tables[each.value.route_table_key].name
+  address_prefix         = each.value.address_prefix
+  next_hop_type          = each.value.next_hop_type
+  next_hop_in_ip_address = try(lower(each.value.next_hop_type), null) == "virtualappliance" ? try(each.value.next_hop_in_ip_address, null) : null
   next_hop_in_ip_address_fw = try(lower(each.value.next_hop_type), null) == "virtualappliance" ? coalesce(
     try(local.combined_objects_azurerm_firewalls[try(each.value.private_ip_keys.azurerm_firewall.lz_key, local.client_config.landingzone_key)][each.value.private_ip_keys.azurerm_firewall.key].ip_configuration[each.value.private_ip_keys.azurerm_firewall.interface_index].private_ip_address, null),
     try(local.combined_objects_azurerm_firewalls[try(each.value.lz_key, local.client_config.landingzone_key)][each.value.private_ip_keys.azurerm_firewall.key].ip_configuration[each.value.private_ip_keys.azurerm_firewall.interface_index].private_ip_address, null)
   ) : null
-    
+
 }
 
 #

@@ -75,7 +75,7 @@ azuread_service_principal_passwords = {
         # Only set one of the value
         #
 
-        mins   = 3     # only recommended for CI and demo
+        mins = 3 # only recommended for CI and demo
         # days = 7
         # months = 1
       }

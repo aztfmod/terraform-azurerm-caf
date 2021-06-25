@@ -1,5 +1,5 @@
 #
-# key is used when 
+# key is used when
 #
 # Keys generated when using the password policy
 #  Key0 password_policy.rotation.days is an odd number

@@ -25,7 +25,7 @@ resource "azurerm_role_assignment" "for" {
     ignore_changes = [
       principal_id
     ]
-    
+
     create_before_destroy = true
   }
 
@@ -44,10 +44,10 @@ locals {
   management_groups = tomap(
     {
       (var.current_landingzone_key) = {
-        for key, value in try(var.role_mapping.built_in_role_mapping.management_group, {}) : 
+        for key, value in try(var.role_mapping.built_in_role_mapping.management_group, {}) :
         key => {
           id = data.azurerm_management_group.level[key].id
-        } 
+        }
       }
     }
   )
@@ -91,16 +91,6 @@ locals {
     subscriptions               = local.combined_objects_subscriptions
     synapse_workspaces          = local.combined_objects_synapse_workspaces
   }
-
-  # subscriptions_map = tomap(
-  #   {
-  #     (var.current_landingzone_key) = merge(
-  #       module.subscriptions
-  #       # try(var.subscriptions, {}), 
-  #       # tomap({ "logged_in_subscription" = { id = data.azurerm_subscription.primary.id } })
-  #     ) 
-  #   }
-  # )
 
 
   logged_in = tomap(

@@ -9,7 +9,7 @@ module "azuread_credentials" {
   keyvaults       = local.combined_objects_keyvaults
   policy          = local.azuread.azuread_credential_policies[each.value.azuread_credential_policy_key]
   settings        = each.value
-  
+
   resources = {
     application = {
       id             = try(local.combined_objects_azuread_applications[try(each.value.azuread_application.lz_key, local.client_config.landingzone_key)][each.value.azuread_application.key].id, {})
