@@ -196,10 +196,10 @@ resource "azurerm_storage_account" "stg" {
   }
 }
 
-module "queue"{
-  source = "./queue"
+module "queue" {
+  source   = "./queue"
   for_each = try(var.storage_account.queues, {})
-  
+
   storage_account_name = azurerm_storage_account.stg.name
   settings             = each.value
 }

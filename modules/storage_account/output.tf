@@ -25,22 +25,22 @@ output "primary_blob_endpoint" {
 
 output "containers" {
   description = "The containers output objects as created by the container submodule."
-  value = module.container
+  value       = module.container
 }
 
-output "queues"{
-description = "The queues output objects as created by the queues submodule."
-  value = module.queue
+output "queues" {
+  description = "The queues output objects as created by the queues submodule."
+  value       = module.queue
 }
 
 output "data_lake_filesystems" {
-description = "The data lake filesystem output objects as created by the data lake filesystem submodule."
-  value = module.data_lake_filesystem
+  description = "The data lake filesystem output objects as created by the data lake filesystem submodule."
+  value       = module.data_lake_filesystem
 }
 
 output "file_share" {
-description = "The file shares output objects as created by the file shares submodule."
-  value = module.file_share
+  description = "The file shares output objects as created by the file shares submodule."
+  value       = module.file_share
 }
 
 output "identity" {
@@ -50,7 +50,7 @@ output "identity" {
 
 output "rbac_id" {
   description = " The Principal ID for the Service Principal associated with the Identity of this Storage Account. (Extracted from the identity block)"
-  value = try(azurerm_storage_account.stg.identity.0.principal_id, null)
+  value       = try(azurerm_storage_account.stg.identity.0.principal_id, null)
 }
 
 output "backup_container_id" {
