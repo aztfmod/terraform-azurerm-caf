@@ -15,3 +15,6 @@ variable "base_tags" {
 variable "diagnostic_profiles" {
   default = null
 }
+variable "private_dns_zone_id" {
+  default = null
+}
