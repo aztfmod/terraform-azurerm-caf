@@ -1,6 +1,6 @@
 # Cloud Adoption Framework for Azure - Terraform module examples
 
-The Cloud Adoption Framework for Azure - Terraform module can be used to deployed all components of CAF and compose those components together. It allows you to create complex architectures and composition relying on community contributions and proven patterns. You can leverage this module within a CAF landing zone, or straight from the Terraform registry. 
+The Cloud Adoption Framework for Azure - Terraform module can be used to deployed all components of CAF and compose those components together. It allows you to create complex architectures and composition relying on community contributions and proven patterns. You can leverage this module within a CAF landing zone, or straight from the Terraform registry.
 
 ## Deploying examples with Terraform
 
@@ -14,9 +14,9 @@ module "caf" {
 }
 ```
 
-### Compose your minimal example 
+### Compose your minimal example
 
-A minimal example could be: 
+A minimal example could be:
 
 ```hcl
 module "caf" {
