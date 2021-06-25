@@ -175,7 +175,9 @@ module "example" {
     shared_image_galleries   = var.shared_image_galleries
   }
   storage = {
-    netapp_accounts = var.netapp_accounts
+    netapp_accounts        = var.netapp_accounts
+    storage_account_blobs  = var.storage_account_blobs
+    storage_account_queues = var.storage_account_queues
   }
   webapp = {
     azurerm_application_insights = var.azurerm_application_insights
