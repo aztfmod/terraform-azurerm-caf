@@ -1,10 +1,10 @@
-#Storage Queue requires a Storage Account to reference 
+#Storage Queue requires a Storage Account to reference
 storage_accounts = {
   sa1 = {
-    name               = "sa1dev"
-    resource_group_key = "test"
-    account_kind = "BlobStorage"
-    account_tier = "Standard"
+    name                     = "sa1dev"
+    resource_group_key       = "test"
+    account_kind             = "BlobStorage"
+    account_tier             = "Standard"
     account_replication_type = "LRS" # https://docs.microsoft.com/en-us/azure/storage/common/storage-redundancy
     tags = {
       environment = "dev"
@@ -19,3 +19,4 @@ storage_account_queues = {
     name                = "samplequeuename"
     storage_account_key = "sa1"
   }
+}
