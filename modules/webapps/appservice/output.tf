@@ -15,6 +15,6 @@ output "possible_outbound_ip_addresses" {
   description = "A comma separated list of outbound IP addresses. not all of which are necessarily in use"
 }
 output "rbac_id" {
-  value       = azurerm_app_service.app_service.identity.*.principal_id
+  value       = try(azurerm_app_service.app_service.identity.0.principal_id, null)
   description = "The Principal ID of the App Service."
 }

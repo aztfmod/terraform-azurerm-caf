@@ -540,3 +540,9 @@ variable "vpn_sites" {
 variable "vpn_gateway_connections" {
   default = {}
 }
+variable "storage_account_queues" {
+  default = {}
+}
+variable "storage_account_blobs" {
+  default = {}
+}
