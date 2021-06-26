@@ -50,7 +50,7 @@ case "${METHOD}" in
         ;;
     DELETE)
         URI=$(echo  "${microsoft_graph_endpoint}v1.0/directoryRoles/${ROLE_AAD}/members/${SERVICE_PRINCIPAL_OBJECT_ID}/\$ref") && echo " - uri: $URI"
-        az rest --method ${METHOD} --uri ${URI} 2>/dev/null
+        az rest --method ${METHOD} --uri ${URI} || true
         echo "Role '${AD_ROLE_NAME}' unassigned to azure ad principal ${SERVICE_PRINCIPAL_OBJECT_ID}"
         ;;
 esac
