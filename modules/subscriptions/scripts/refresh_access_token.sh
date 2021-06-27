@@ -10,7 +10,16 @@ subscription_id=$(az account show --query id -o tsv)
 
 if [ ${user_type} == "user" ]; then
 
-  az login --tenant ${tenant_id} --use-device-code > /dev/null
+  if [ "${ROVER_RUNNER}" == "true" ]; then
+    if [ -z "${account-owner-username}" ] || [ -z "${account-owner-password}" ] || [ -z "${tenant-id}" ]; then
+      echo "Subscription creation from pipeline with AE account owner requires the variables account-owner-username, account-owner-password to be set in the bash pipeline context."
+      exit 3001
+    else
+      az login -u ${account-owner-username} -p "${account-owner-password}" --tenant ${tenant_id} -o table
+    fi
+  else
+    az login --tenant ${tenant_id} --use-device-code > /dev/null
+  fi
 
 else
 
