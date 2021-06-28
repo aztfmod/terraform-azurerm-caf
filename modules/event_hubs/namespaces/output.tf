@@ -17,3 +17,7 @@ output "location" {
   value       = var.location
   description = "Location of the service"
 }
+
+output "event_hubs" {
+  value = module.event_hubs
+}
