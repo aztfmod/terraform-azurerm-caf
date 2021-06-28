@@ -28,6 +28,15 @@ module "azuread_service_principals" {
   member_object_id = var.azuread_service_principals[each.key].object_id
 }
 
+module "azuread_service_principals_membership" {
+  source   = "./membership"
+  for_each = try(var.settings.azuread_service_principals, {})
+
+  group_object_id             = var.group_id
+  azuread_service_principals  = var.azuread_service_principals[try(each.value.lz_key,var.client_config.landingzone_key)]
+  members                     = each.value
+}
+
 module "object_id" {
   source   = "./member"
   for_each = toset(try(var.settings.members.object_ids, []))
