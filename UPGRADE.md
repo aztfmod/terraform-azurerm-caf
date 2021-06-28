@@ -4,7 +4,7 @@ When ugrading to a newer version of the CAF module, some configuration structure
 
 ## 5.4.0
 
-Upgrade to 5.4.0 includes support azurerm 2.65.0 provider and implements the following changes:
+Upgrade to 5.4.0 includes support azurerm 2.64.0 provider and implements the following changes:
 - Updated georeplications structure for Azure Container Registry configuration file.
 - Updated structure for Azure Front Door configuration file.
 - Updated parameter for Azure Public IP address.
