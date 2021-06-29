@@ -1,6 +1,5 @@
 global_settings = {
   default_region = "region1"
-  prefix         = "example"
   regions = {
     region1 = "southeastasia"
   }
@@ -40,26 +39,14 @@ vnets = {
 
 keyvaults = {
   kv1 = {
-    name               = "vmsslbexmpkv"
+    name               = "vmsslbexmpkv1"
     resource_group_key = "rg1"
     sku_name           = "standard"
     creation_policies = {
       logged_in_user = {
         secret_permissions = ["Set", "Get", "List", "Delete", "Purge", "Recover"]
-        key_permissions    = ["Get", "List", "Update", "Create", "Import", "Delete", "Recover", "Backup", "Restore", "Decrypt", "Encrypt", "UnwrapKey", "WrapKey", "Verify", "Sign", "Purge"]
       }
     }
-  }
-}
-
-keyvault_keys = {
-  key1 = {
-    keyvault_key       = "kv1"
-    resource_group_key = "rg1"
-    name               = "vmsskey"
-    key_type           = "RSA"
-    key_size           = "2048"
-    key_opts           = ["encrypt", "decrypt", "sign", "verify", "wrapKey", "unwrapKey"]
   }
 }
 
@@ -67,7 +54,7 @@ keyvault_keys = {
 diagnostic_storage_accounts = {
   # Stores boot diagnostic for region1
   bootdiag1 = {
-    name                     = "vmsslbexamplebootdiag1"
+    name                     = "lebootdiag1"
     resource_group_key       = "rg1"
     account_kind             = "StorageV2"
     account_tier             = "Standard"
