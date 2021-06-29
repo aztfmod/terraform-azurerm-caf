@@ -21,7 +21,12 @@ locals {
 
 
 resource "null_resource" "grant_admin_consent" {
-  depends_on = [azuread_service_principal.app]
+
+  triggers = {
+    resourceAppId = each.value.resource_app_id
+    appRoleId     = each.value.id
+    principalId   = azuread_service_principal.app.object_id
+  }
 
   for_each = {
     for key, permission in local.api_permissions : key => permission
@@ -33,9 +38,9 @@ resource "null_resource" "grant_admin_consent" {
     on_failure  = fail
 
     environment = {
-      resourceAppId = each.value.resource_app_id
-      appRoleId     = each.value.id
-      principalId   = azuread_service_principal.app.object_id
+      resourceAppId = self.triggers.resourceAppId
+      appRoleId     = self.triggers.appRoleId
+      principalId   = self.triggers.principalId
     }
   }
 }
