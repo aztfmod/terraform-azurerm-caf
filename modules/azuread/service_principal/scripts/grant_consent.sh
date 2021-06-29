@@ -9,10 +9,10 @@ microsoft_graph_endpoint=$(az cloud show | jq -r ".endpoints.microsoftGraphResou
 
 URI=$(echo  "${microsoft_graph_endpoint}v1.0/servicePrincipals/${resourceId}/appRoleAssignedTo") && echo " - uri: $URI"
 
-appRoleId=$(az rest --method GET --uri ${URI} \
+existingAppRoleId=$(az rest --method GET --uri ${URI} \
     --query "value[?appRoleId=='${appRoleId}' && principalId=='${principalId}' && resourceId=='${resourceId}'].appRoleId" -o tsv)
 
-if [ -z ${appRoleId} ]; then
+if [ -z ${existingAppRoleId} ]; then
     JSON=$( jq -n \
                 --arg principalId "${principalId}" \
                 --arg resourceId "${resourceId}" \
