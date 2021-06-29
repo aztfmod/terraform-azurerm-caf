@@ -4,11 +4,11 @@ module "azuread_credentials" {
   depends_on = [module.keyvault_access_policies]
   for_each   = local.azuread.azuread_credentials
 
-  client_config   = local.client_config
-  global_settings = local.global_settings
-  keyvaults       = local.combined_objects_keyvaults
-  policy          = local.azuread.azuread_credential_policies[each.value.azuread_credential_policy_key]
-  settings        = each.value
+  client_config     = local.client_config
+  global_settings   = local.global_settings
+  keyvaults         = local.combined_objects_keyvaults
+  credential_policy = try(local.azuread.azuread_credential_policies[each.value.azuread_credential_policy_key], null)
+  settings          = each.value
 
   resources = {
     application = {
