@@ -13,8 +13,6 @@ global_settings = {
       # use_azmanaged_storage_for_boot_diagnostics = true
     }
   }
-
-  prefix = "test"
 }
 
 resource_groups = {
@@ -97,7 +95,7 @@ virtual_machines = {
 
 keyvaults = {
   example_vm_rg1 = {
-    name               = "vmlinux_marketplace_akv1"
+    name               = "akvex"
     resource_group_key = "vm_region1"
     sku_name           = "standard"
     tags = {
