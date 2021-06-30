@@ -8,13 +8,13 @@ diagnostic_event_hub_namespaces = {
     sku                = "Standard"
     region             = "region1"
 
-   event_hubs = {
-     hub1 = {
-       name = "eventhub1"
-       partition_count = 4
-       message_retention = 7
-     }
-   }
+    event_hubs = {
+      hub1 = {
+        name              = "eventhub1"
+        partition_count   = 4
+        message_retention = 7
+      }
+    }
 
   }
 
