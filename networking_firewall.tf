@@ -9,6 +9,7 @@ module "azurerm_firewalls" {
   base_tags           = try(local.global_settings.inherit_tags, false) ? local.resource_groups[each.value.resource_group_key].tags : {}
   client_config       = local.client_config
   diagnostics         = local.combined_diagnostics
+  diagnostic_profiles = try(each.value.diagnostic_profiles, null)
   firewall_policy_id  = try(each.value.firewall_policy_key, null) == null ? null : local.combined_objects_azurerm_firewall_policies[try(each.value.lz_key, local.client_config.landingzone_key)][each.value.firewall_policy_key].id
   global_settings     = local.global_settings
   location            = lookup(each.value, "region", null) == null ? local.resource_groups[each.value.resource_group_key].location : local.global_settings.regions[each.value.region]

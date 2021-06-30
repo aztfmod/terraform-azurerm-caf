@@ -61,5 +61,53 @@ azurerm_firewalls = {
       #   subnet_id = "azure_resource_id"
       # }
     }
+    diagnostic_profiles = {
+      central_logs_region1 = {
+        definition_key   = "azurerm_firewall"
+        destination_type = "event_hub"
+        destination_key  = "central_logs"
+      }
+    }
+  }
+}
+
+diagnostics_definition = {
+  azurerm_firewall = {
+    name = "operational_logs_and_metrics"
+    categories = {
+      log = [
+        # ["Category name",  "Diagnostics Enabled(true/false)", "Retention Enabled(true/false)", Retention_period]
+        ["AzureFirewallApplicationRule", true, false, 7],
+        ["AzureFirewallNetworkRule", true, false, 7],
+        ["AzureFirewallDnsProxy", true, false, 7],
+      ]
+      metric = [
+        #["Category name",  "Diagnostics Enabled(true/false)", "Retention Enabled(true/false)", Retention_period]
+        ["AllMetrics", true, false, 7],
+      ]
+    }
+
+  }
+}
+
+diagnostic_event_hub_namespaces = {
+  central_logs_region1 = {
+    name               = "logs"
+    resource_group_key = "test"
+    sku                = "Standard"
+    region             = "region1"
+  }
+}
+
+diagnostics_destinations = {
+  # Storage keys must reference the azure region name
+  # For storage, reference "all_regions" and we will send the logs to the storage account
+  # in the region of the deployment
+
+
+  event_hub_namespaces = {
+    central_logs = {
+      event_hub_namespace_key = "central_logs_region1"
+    }
   }
 }
