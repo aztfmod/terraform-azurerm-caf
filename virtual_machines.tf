@@ -14,7 +14,7 @@ module "virtual_machines" {
 
   application_security_groups = local.combined_objects_application_security_groups
   availability_sets           = local.combined_objects_availability_sets
-  base_tags                   = try(local.global_settings.inherit_tags, false) ? module.resource_groups[each.value.resource_group_key].tags : {}
+  base_tags                   = try(local.global_settings.inherit_tags, false) ? local.combined_objects_resource_groups[try(each.value.lz_key, local.client_config.landingzone_key)][each.value.resource_group_key].tags : {}
   # if boot_diagnostics_storage_account_key is points to a valid storage account, pass the endpoint
   # if boot_diagnostics_storage_account_key is empty string, pass empty string
   # if boot_diagnostics_storage_account_key not defined, pass null
@@ -27,13 +27,13 @@ module "virtual_machines" {
   disk_encryption_sets       = local.combined_objects_disk_encryption_sets
   global_settings            = local.global_settings
   keyvaults                  = local.combined_objects_keyvaults
-  location                   = lookup(each.value, "region", null) == null ? local.resource_groups[each.value.resource_group_key].location : local.global_settings.regions[each.value.region]
+  location                   = lookup(each.value, "region", null) == null ? local.combined_objects_resource_groups[try(each.value.lz_key, local.client_config.landingzone_key)][each.value.resource_group_key].location : local.global_settings.regions[each.value.region]
   managed_identities         = local.combined_objects_managed_identities
   network_security_groups    = local.combined_objects_network_security_groups
   proximity_placement_groups = local.combined_objects_proximity_placement_groups
   public_ip_addresses        = local.combined_objects_public_ip_addresses
   recovery_vaults            = local.combined_objects_recovery_vaults
-  resource_group_name        = local.resource_groups[each.value.resource_group_key].name
+  resource_group_name        = local.combined_objects_resource_groups[try(each.value.lz_key, local.client_config.landingzone_key)][each.value.resource_group_key].name
   settings                   = each.value
   vnets                      = local.combined_objects_networking
   dedicated_hosts            = local.combined_objects_dedicated_hosts
