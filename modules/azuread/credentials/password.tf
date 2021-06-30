@@ -1,6 +1,6 @@
 
 resource "azuread_application_password" "key" {
-  count       = try(var.settings.azuread_application, null) != null && lower(var.settings.type) == "password" && try(var.settings.policy, null) == null ? 1 : 0
+  count       = try(var.settings.azuread_application, null) != null && lower(var.settings.type) == "password" && try(var.settings.azuread_credential_policy_key, null) == null ? 1 : 0
   description = try(var.settings.description, local.description.key)
   value       = random_password.key.0.result
   end_date    = local.expiration_date.key
@@ -15,7 +15,7 @@ resource "azuread_application_password" "key" {
 }
 
 resource "azuread_application_password" "key0" {
-  count       = try(var.settings.azuread_application, null) != null && lower(var.settings.type) == "password" && try(var.settings.policy, null) != null ? 1 : 0
+  count       = try(var.settings.azuread_application, null) != null && lower(var.settings.type) == "password" && try(var.settings.azuread_credential_policy_key, null) != null ? 1 : 0
   description = try(var.settings.description, local.description.key0)
   value       = random_password.key0.0.result
   end_date    = local.expiration_date.key0
@@ -30,7 +30,7 @@ resource "azuread_application_password" "key0" {
 }
 
 resource "azuread_application_password" "key1" {
-  count       = try(var.settings.azuread_application, null) != null && lower(var.settings.type) == "password" && try(var.settings.policy, null) != null ? 1 : 0
+  count       = try(var.settings.azuread_application, null) != null && lower(var.settings.type) == "password" && try(var.settings.azuread_credential_policy_key, null) != null ? 1 : 0
   description = try(var.settings.description, local.description.key1)
   value       = random_password.key1.0.result
   end_date    = local.expiration_date.key1
@@ -63,6 +63,6 @@ resource "azurerm_key_vault_secret" "client_secret" {
   expiration_date = local.random_key == "key0" ? local.expiration_date.key0 : try(local.expiration_date.key1, local.expiration_date.key)
 
   tags = {
-    key = local.random_key == "key0" ? "key0" : "key1"
+    key = local.random_key
   }
 }

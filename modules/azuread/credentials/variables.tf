@@ -15,6 +15,11 @@ variable "resources" {
   description = "Application ID the credentials will be attached to."
 }
 
+variable "credential_policy" {
+  description = "Custom credential policy to apply."
+  default = null
+}
+
 variable "policy" {
   description = "Default credential policy to apply."
   default = {
