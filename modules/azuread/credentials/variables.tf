@@ -17,7 +17,7 @@ variable "resources" {
 
 variable "credential_policy" {
   description = "Custom credential policy to apply."
-  default = null
+  default     = null
 }
 
 variable "policy" {
