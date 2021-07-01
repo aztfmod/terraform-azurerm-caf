@@ -18,10 +18,23 @@ resource_groups = {
 
 azure_container_registries = {
   acr1 = {
-    name                       = "acr-test"
-    resource_group_key         = "acr_region1"
-    sku                        = "Premium"
-    georeplication_region_keys = ["region2", "region3"]
+    name               = "acr-test"
+    resource_group_key = "acr_region1"
+    sku                = "Premium"
+    # georeplications = {
+    #   region2 = {
+    #     tags = {
+    #       region = "eastasia"
+    #       type   = "acr_replica"
+    #     }
+    #   }
+    #   region3 = {
+    #     tags = {
+    #       region = "westeurope"
+    #       type   = "acr_replica"
+    #     }
+    #   }
+    # }
   }
 }
 

@@ -63,7 +63,7 @@ virtual_machines = {
         disable_password_authentication = true
 
         #custom_data                     = "scripts/cloud-init/install-rover-tools.config"
-        custom_data = "../../examples/compute/virtual_machine/100-single-linux-vm/scripts/cloud-init/install-rover-tools.config"
+        custom_data = "compute/virtual_machine/100-single-linux-vm/scripts/cloud-init/install-rover-tools.config"
 
         # Spot VM to save money
         priority        = "Spot"

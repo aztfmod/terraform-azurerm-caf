@@ -7,6 +7,20 @@ resource "random_string" "prefix" {
 }
 
 locals {
+  azuread = {
+    azuread_api_permissions             = try(var.azuread.azuread_api_permissions, {})
+    azuread_applications                = try(var.azuread.azuread_applications, {})
+    azuread_apps                        = try(var.azuread.azuread_apps, {})
+    azuread_credential_policies         = try(var.azuread.azuread_credential_policies, {})
+    azuread_credentials                 = try(var.azuread.azuread_credentials, {})
+    azuread_groups                      = try(var.azuread.azuread_groups, {})
+    azuread_groups_membership           = try(var.azuread.azuread_groups_membership, {})
+    azuread_roles                       = try(var.azuread.azuread_roles, {})
+    azuread_service_principal_passwords = try(var.azuread.azuread_service_principal_passwords, {})
+    azuread_service_principals          = try(var.azuread.azuread_service_principals, {})
+    azuread_users                       = try(var.azuread.azuread_users, {})
+  }
+
   client_config = var.client_config == {} ? {
     client_id               = data.azurerm_client_config.current.client_id
     landingzone_key         = var.current_landingzone_key
@@ -59,7 +73,10 @@ locals {
     azure_container_registries = try(var.compute.azure_container_registries, {})
     bastion_hosts              = try(var.compute.bastion_hosts, {})
     container_groups           = try(var.compute.container_groups, {})
+    dedicated_hosts            = try(var.compute.dedicated_hosts, {})
+    dedicated_host_groups      = try(var.compute.dedicated_host_groups, {})
     proximity_placement_groups = try(var.compute.proximity_placement_groups, {})
+    wvd_applications           = try(var.compute.wvd_applications, {})
     wvd_application_groups     = try(var.compute.wvd_application_groups, {})
     wvd_host_pools             = try(var.compute.wvd_host_pools, {})
     wvd_workspaces             = try(var.compute.wvd_workspaces, {})
@@ -138,17 +155,15 @@ locals {
   }
 
   global_settings = merge({
-    default_region = try(var.global_settings.default_region, "region1")
-    environment    = try(var.global_settings.environment, var.environment)
-    inherit_tags   = try(var.global_settings.inherit_tags, false)
-    passthrough    = try(var.global_settings.passthrough, false)
-    prefix         = try(var.global_settings.prefix, null)
-    # prefix_with_hyphen = try(var.global_settings.prefix_with_hyphen, format("%s-", try(var.global_settings.prefixes[0], random_string.prefix.0.result)))
-    # prefixes           = var.global_settings.prefix == "" ? null : try(var.global_settings.prefixes, [random_string.prefix.0.result])
+    default_region     = try(var.global_settings.default_region, "region1")
+    environment        = try(var.global_settings.environment, var.environment)
+    inherit_tags       = try(var.global_settings.inherit_tags, false)
+    passthrough        = try(var.global_settings.passthrough, false)
+    prefix             = try(var.global_settings.prefix, null)
     prefix_with_hyphen = try(var.global_settings.prefix_with_hyphen, format("%s-", try(var.global_settings.prefix, try(var.global_settings.prefixes[0], random_string.prefix.0.result))))
     prefixes           = try(var.global_settings.prefix, null) == "" ? null : try([var.global_settings.prefix], try(var.global_settings.prefixes, [random_string.prefix.0.result]))
     random_length      = try(var.global_settings.random_length, 0)
-    regions            = var.global_settings.regions
+    regions            = try(var.global_settings.regions, null)
     tags               = try(var.global_settings.tags, null)
     use_slug           = try(var.global_settings.use_slug, true)
   }, var.global_settings)
@@ -202,6 +217,8 @@ locals {
     virtual_wans                                            = try(var.networking.virtual_wans, {})
     vnet_peerings                                           = try(var.networking.vnet_peerings, {})
     vnets                                                   = try(var.networking.vnets, {})
+    vpn_gateway_connections                                 = try(var.networking.vpn_gateway_connections, {})
+    vpn_sites                                               = try(var.networking.vpn_sites, {})
   }
 
   object_id = coalesce(var.logged_user_objectId, var.logged_aad_app_objectId, try(data.azurerm_client_config.current.object_id, null), try(data.azuread_service_principal.logged_in_app.0.object_id, null))
@@ -227,8 +244,9 @@ locals {
   }
 
   storage = {
-    netapp_accounts       = try(var.storage.netapp_accounts, {})
-    storage_account_blobs = try(var.storage.storage_account_blobs, {})
+    netapp_accounts        = try(var.storage.netapp_accounts, {})
+    storage_account_blobs  = try(var.storage.storage_account_blobs, {})
+    storage_account_queues = try(var.storage.storage_account_queues, {})
   }
 
   webapp = {

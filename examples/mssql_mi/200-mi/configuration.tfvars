@@ -7,11 +7,11 @@ global_settings = {
 
 resource_groups = {
   networking_region1 = {
-    name   = "mi-networking-rg1"
+    name   = "mi-networking-re1"
     region = "region1"
   }
   sqlmi_region1 = {
-    name   = "sqlmi-rg1"
+    name   = "sqlmi-re1"
     region = "region1"
   }
 }

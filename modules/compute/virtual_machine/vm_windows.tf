@@ -62,6 +62,12 @@ resource "azurerm_windows_virtual_machine" "vm" {
   timezone                     = try(each.value.timezone, null)
   availability_set_id          = try(var.availability_sets[var.client_config.landingzone_key][each.value.availability_set_key].id, var.availability_sets[each.value.availability_sets].id, null)
   proximity_placement_group_id = try(var.proximity_placement_groups[var.client_config.landingzone_key][each.value.proximity_placement_group_key].id, var.proximity_placement_groups[each.value.proximity_placement_groups].id, null)
+  dedicated_host_id = try(coalesce(
+    try(each.value.dedicated_host.id, null),
+    var.dedicated_hosts[try(each.value.dedicated_host.lz_key, var.client_config.landingzone_key)][each.value.dedicated_host.key].id,
+    ),
+    null
+  )
 
   os_disk {
     caching                   = each.value.os_disk.caching

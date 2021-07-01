@@ -6,10 +6,33 @@ module "azuread_apps" {
     if try(access_policy.azuread_app_key, null) != null
   }
 
-  keyvault_id   = var.keyvault_id == null ? var.keyvaults[try(try(each.value.keyvault_lz_key, each.value.lz_key), var.client_config.landingzone_key)][var.keyvault_key].id : var.keyvault_id
+  keyvault_id   = var.keyvault_id == null ? var.keyvaults[try(each.value.keyvault_lz_key, each.value.lz_key, var.client_config.landingzone_key)][var.keyvault_key].id : var.keyvault_id
   access_policy = each.value
   tenant_id     = var.client_config.tenant_id
   object_id     = var.azuread_apps[try(try(each.value.azuread_app_lz_key, each.value.lz_key), var.client_config.landingzone_key)][each.value.azuread_app_key].azuread_service_principal.object_id
+}
+
+module "azuread_service_principals" {
+  source = "./access_policy"
+  for_each = {
+    for key, access_policy in var.access_policies : key => access_policy
+    if try(access_policy.azuread_service_principal_key, null) != null
+  }
+
+  keyvault_id = coalesce(
+    var.keyvault_id,
+    try(var.keyvaults[each.value.keyvault_lz_key][var.keyvault_key].id, null),
+    try(var.keyvaults[each.value.lz_key][var.keyvault_key].id, null),
+    try(var.keyvaults[var.client_config.landingzone_key][var.keyvault_key].id, null)
+  )
+
+  access_policy = each.value
+  tenant_id     = var.resources.azuread_service_principals[try(each.value.lz_key, var.client_config.landingzone_key)][each.value.azuread_service_principal_key].tenant_id
+
+  object_id = coalesce(
+    try(var.resources.azuread_service_principals[each.value.lz_key][each.value.azuread_service_principal_key].object_id, null),
+    try(var.resources.azuread_service_principals[var.client_config.landingzone_key][each.value.azuread_service_principal_key].object_id, null)
+  )
 }
 
 module "azuread_group" {
@@ -71,10 +94,20 @@ module "managed_identity" {
     if try(access_policy.managed_identity_key, null) != null
   }
 
-  keyvault_id   = var.keyvault_id == null ? try(var.keyvaults[var.client_config.landingzone_key][var.keyvault_key].id, var.keyvaults[each.value.lz_key][var.keyvault_key].id) : var.keyvault_id
+  keyvault_id = coalesce(
+    var.keyvault_id,
+    try(var.keyvaults[each.value.keyvault_lz_key][var.keyvault_key].id, null),
+    try(var.keyvaults[each.value.lz_key][var.keyvault_key].id, null),
+    try(var.keyvaults[var.client_config.landingzone_key][var.keyvault_key].id, null)
+  )
+
   access_policy = each.value
   tenant_id     = var.client_config.tenant_id
-  object_id     = try(each.value.lz_key, null) == null ? var.resources.managed_identities[var.client_config.landingzone_key][each.value.managed_identity_key].principal_id : var.resources.managed_identities[each.value.lz_key][each.value.managed_identity_key].principal_id
+
+  object_id = coalesce(
+    try(var.resources.managed_identities[each.value.lz_key][each.value.managed_identity_key].principal_id, null),
+    try(var.resources.managed_identities[var.client_config.landingzone_key][each.value.managed_identity_key].principal_id, null)
+  )
 }
 
 module "mssql_managed_instance" {
