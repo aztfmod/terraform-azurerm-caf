@@ -21,19 +21,20 @@ module "networking" {
   for_each = local.networking.vnets
 
   application_security_groups       = local.combined_objects_application_security_groups
-  base_tags                         = try(local.global_settings.inherit_tags, false) ? local.combined_objects_resource_groups[try(each.value.lz_key, local.client_config.landingzone_key)][each.value.resource_group_key].tags : {}
   client_config                     = local.client_config
   ddos_id                           = try(azurerm_network_ddos_protection_plan.ddos_protection_plan[each.value.ddos_services_key].id, "")
   diagnostics                       = local.combined_diagnostics
   global_settings                   = local.global_settings
-  location                          = lookup(each.value, "region", null) == null ? local.combined_objects_resource_groups[try(each.value.lz_key, local.client_config.landingzone_key)][each.value.resource_group_key].location : local.global_settings.regions[each.value.region]
   network_security_groups           = module.network_security_groups
   network_security_group_definition = local.networking.network_security_group_definition
-  network_watchers                  = try(local.combined_objects_network_watchers, null)
-  resource_group_name               = local.combined_objects_resource_groups[try(each.value.lz_key, local.client_config.landingzone_key)][each.value.resource_group_key].name
+  network_watchers                  = try(local.combined_objects_network_watchers, null)  
   route_tables                      = module.route_tables
   settings                          = each.value
   tags                              = try(each.value.tags, null)
+
+  resource_group_name               = local.combined_objects_resource_groups[try(each.value.resource_group.lz_key, local.client_config.landingzone_key)][try(each.value.resource_group.key, each.value.resource_group_key)].name
+  location                          = lookup(each.value, "region", null) == null ? local.combined_objects_resource_groups[try(each.value.resource_group.lz_key, local.client_config.landingzone_key)][try(each.value.resource_group.key, each.value.resource_group_key)].location : local.global_settings.regions[each.value.region]
+  base_tags                         = try(local.global_settings.inherit_tags, false) ? local.combined_objects_resource_groups[try(each.value.resource_group.lz_key, local.client_config.landingzone_key)][try(each.value.resource_group.key, each.value.resource_group_key)].tags : {}
 }
 
 #
@@ -139,11 +140,11 @@ module "route_tables" {
   for_each = local.networking.route_tables
 
   name                          = azurecaf_name.route_tables[each.key].result
-  resource_group_name           = local.combined_objects_resource_groups[try(each.value.lz_key, local.client_config.landingzone_key)][each.value.resource_group_key].name
-  location                      = lookup(each.value, "region", null) == null ? local.combined_objects_resource_groups[try(each.value.lz_key, local.client_config.landingzone_key)][each.value.resource_group_key].location : local.global_settings.regions[each.value.region]
+  resource_group_name           = local.combined_objects_resource_groups[try(each.value.resource_group.lz_key, local.client_config.landingzone_key)][try(each.value.resource_group.key, each.value.resource_group_key)].name
+  location                      = lookup(each.value, "region", null) == null ? local.combined_objects_resource_groups[try(each.value.resource_group.lz_key, local.client_config.landingzone_key)][try(each.value.resource_group.key, each.value.resource_group_key)].location : local.global_settings.regions[each.value.region]
+  base_tags                     = try(local.global_settings.inherit_tags, false) ? local.combined_objects_resource_groups[try(each.value.resource_group.lz_key, local.client_config.landingzone_key)][try(each.value.resource_group.key, each.value.resource_group_key)].tags : {}
   disable_bgp_route_propagation = try(each.value.disable_bgp_route_propagation, null)
   tags                          = try(each.value.tags, null)
-  base_tags                     = try(local.global_settings.inherit_tags, false) ? local.combined_objects_resource_groups[try(each.value.lz_key, local.client_config.landingzone_key)][each.value.resource_group_key].tags : {}
 }
 
 resource "azurecaf_name" "routes" {
@@ -164,7 +165,7 @@ module "routes" {
   for_each = local.networking.azurerm_routes
 
   name                   = azurecaf_name.routes[each.key].result
-  resource_group_name    = local.combined_objects_resource_groups[try(each.value.lz_key, local.client_config.landingzone_key)][each.value.resource_group_key].name
+  resource_group_name    = local.combined_objects_resource_groups[try(each.value.resource_group.lz_key, local.client_config.landingzone_key)][try(each.value.resource_group.key, each.value.resource_group_key)].name
   route_table_name       = module.route_tables[each.value.route_table_key].name
   address_prefix         = each.value.address_prefix
   next_hop_type          = each.value.next_hop_type
@@ -213,10 +214,10 @@ module "network_watchers" {
   source   = "./modules/networking/network_watcher"
   for_each = local.networking.network_watchers
 
-  resource_group_name = local.combined_objects_resource_groups[try(each.value.lz_key, local.client_config.landingzone_key)][each.value.resource_group_key].name
-  location            = lookup(each.value, "region", null) == null ? local.combined_objects_resource_groups[try(each.value.lz_key, local.client_config.landingzone_key)][each.value.resource_group_key].location : local.global_settings.regions[each.value.region]
+  resource_group_name = local.combined_objects_resource_groups[try(each.value.resource_group.lz_key, local.client_config.landingzone_key)][try(each.value.resource_group.key, each.value.resource_group_key)].name
+  location            = lookup(each.value, "region", null) == null ? local.combined_objects_resource_groups[try(each.value.resource_group.lz_key, local.client_config.landingzone_key)][try(each.value.resource_group.key, each.value.resource_group_key)].location : local.global_settings.regions[each.value.region]
+  base_tags           = try(local.global_settings.inherit_tags, false) ? local.combined_objects_resource_groups[try(each.value.resource_group.lz_key, local.client_config.landingzone_key)][try(each.value.resource_group.key, each.value.resource_group_key)].tags : {}
   settings            = each.value
   tags                = try(each.value.tags, null)
-  base_tags           = try(local.global_settings.inherit_tags, false) ? local.combined_objects_resource_groups[try(each.value.lz_key, local.client_config.landingzone_key)][each.value.resource_group_key].tags : {}
   global_settings     = local.global_settings
 }
