@@ -1,18 +1,26 @@
+global_settings = {
+  default_region = "region1"
+  regions = {
+    region1 = "southeastasia"
+    region2 = "eastasia"
+  }
+}
+
 resource_groups = {
   networking_region1 = {
-    name   = "mi-networking-rg1"
+    name   = "mi-networking-re1"
     region = "region1"
   }
   networking_region2 = {
-    name   = "mi-networking-rg2"
+    name   = "mi-networking-re2"
     region = "region2"
   }
   sqlmi_region1 = {
-    name   = "sqlmi-rg1"
+    name   = "sqlmi-re1"
     region = "region1"
   }
   sqlmi_region2 = {
-    name   = "sqlmi-rg2"
+    name   = "sqlmi-re2"
     region = "region2"
   }
 }
@@ -21,7 +29,7 @@ vnets = {
   sqlmi_region1 = {
     resource_group_key = "networking_region1"
     vnet = {
-      name          = "sqlmi-rg1"
+      name          = "sqlmi-re1"
       address_space = ["172.25.88.0/21"]
     }
     subnets = {
@@ -45,7 +53,7 @@ vnets = {
   sqlmi_region2 = {
     resource_group_key = "networking_region2"
     vnet = {
-      name          = "sqlmi-rg2"
+      name          = "sqlmi-re2"
       address_space = ["172.25.96.0/21"]
     }
     subnets = {
@@ -193,18 +201,18 @@ mssql_managed_databases = {
 #   }
 # }
 
-mssql_managed_databases_backup_ltr = {
-  sqlmi1 = {
-    resource_group_key = "sqlmi_region1"
-    mi_server_key      = "sqlmi1"
-    database_key       = "managed_db1"
+# mssql_managed_databases_backup_ltr = {
+#   sqlmi1 = {
+#     resource_group_key = "sqlmi_region1"
+#     mi_server_key      = "sqlmi1"
+#     database_key       = "managed_db1"
 
-    weeklyRetention  = "P12W"
-    monthlyRetention = "P12M"
-    yearlyRetention  = "P5Y"
-    weekOfYear       = 16
-  }
-}
+#     weeklyRetention  = "P12W"
+#     monthlyRetention = "P12M"
+#     yearlyRetention  = "P5Y"
+#     weekOfYear       = 16
+#   }
+# }
 
 mssql_mi_failover_groups = {
   failover-mi = {

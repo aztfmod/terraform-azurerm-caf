@@ -86,7 +86,7 @@ public_ip_addresses = {
     sku                     = "Standard"
     allocation_method       = "Static"
     ip_version              = "IPv4"
-    zones                   = ["1"]
+    availability_zone       = "1"
     idle_timeout_in_minutes = "4"
 
   }

@@ -33,8 +33,8 @@
           "agreedAt": "${consent.agreedAt}",
           "agreedBy": "${consent.agreedBy}"
         },
-        "privacy": ${privacy},
-        "autoRenew": ${autoRenew},
+        "privacy": "${privacy}",
+        "autoRenew": "${autoRenew}",
         "targetDnsType": "[if(empty(parameters('targetDnsType')), variables('empty'), parameters('targetDnsType'))]",
         "dnsType": "[if(empty(parameters('dnsType')), variables('empty'), parameters('dnsType'))]",
         "dnsZoneId": "[if(empty(parameters('dnsZoneId')), variables('empty'), parameters('dnsZoneId'))]",

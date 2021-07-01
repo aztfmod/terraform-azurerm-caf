@@ -15,6 +15,9 @@ resource "azurecaf_name" "host" {
   use_slug      = local.global_settings.use_slug
 }
 
+# Last updated with :  AzureRM version 2.64.0
+# Ref : https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/resources/bastion_host
+
 resource "azurerm_bastion_host" "host" {
   for_each = try(local.compute.bastion_hosts, {})
 

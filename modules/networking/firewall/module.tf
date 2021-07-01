@@ -19,7 +19,7 @@ resource "azurerm_firewall" "fw" {
   zones               = try(var.settings.zones, null)
   sku_name            = try(var.settings.sku_name, "AZFW_VNet")
   sku_tier            = try(var.settings.sku_tier, "Standard")
-  firewall_policy_id  = try(var.settings.firewall_policy_id, null) != null ? var.settings.firewall_policy_id : try(var.firewall_policies[var.settings.firewall_policy_key].id, null)
+  firewall_policy_id  = var.firewall_policy_id
   dns_servers         = try(var.settings.dns_servers, null)
   tags                = local.tags
 
