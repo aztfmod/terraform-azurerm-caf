@@ -10,6 +10,9 @@ resource "azurerm_key_vault_access_policy" "policy" {
 
   timeouts {
     delete = "60m"
+  }
 
+  lifecycle {
+    ignore_changes = [key_vault_id]
   }
 }

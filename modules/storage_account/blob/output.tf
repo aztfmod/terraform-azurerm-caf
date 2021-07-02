@@ -1,7 +1,9 @@
 output "id" {
-  value = azurerm_storage_blob.blob.id
+  description = "The ID of the Storage Blob"
+  value       = azurerm_storage_blob.blob.id
 }
 
 output "url" {
-  value = azurerm_storage_blob.blob.url
+  description = "The URL of the blob"
+  value       = azurerm_storage_blob.blob.url
 }

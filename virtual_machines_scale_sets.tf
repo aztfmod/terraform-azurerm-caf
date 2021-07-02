@@ -1,6 +1,6 @@
 
 
-module virtual_machine_scale_sets {
+module "virtual_machine_scale_sets" {
   source = "./modules/compute/virtual_machine_scale_set"
   depends_on = [
     module.availability_sets,
@@ -37,7 +37,7 @@ module virtual_machine_scale_sets {
 }
 
 
-output virtual_machine_scale_sets {
+output "virtual_machine_scale_sets" {
   value = module.virtual_machine_scale_sets
 }
 

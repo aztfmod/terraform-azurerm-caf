@@ -32,11 +32,11 @@
     // "shutdownAction": "none",
 
     // Uncomment the next line to run commands after the container is created.
-    "postCreateCommand": "sudo cp -R /tmp/.ssh-localhost/* ~/.ssh && sudo chmod 600 ~/.ssh/* && sudo chown -R $(whoami) /tf/caf && git config --global core.editor vi && pre-commit install && pre-commit autoupdate",
+    "postCreateCommand": "sudo cp -R /tmp/.ssh-localhost/* ~/.ssh && sudo chown -R $(whoami):$(whoami) /tf/caf && sudo chmod 400 ~/.ssh/* && git config --global core.editor vi && pre-commit install && pre-commit autoupdate",
 
     // Add the IDs of extensions you want installed when the container is created in the array below.
     "extensions": [
-        "4ops.terraform",
+        "hashicorp.terraform",
         "mutantdino.resourcemonitor",
         "ms-azure-devops.azure-pipelines",
         "omartawfik.github-actions-vscode"

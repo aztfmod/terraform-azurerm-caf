@@ -61,6 +61,6 @@ variable "client_config" {
   default = {}
 }
 
-variable "firewall_policies" {
-  default = {}
+variable "firewall_policy_id" {
+  default = null
 }

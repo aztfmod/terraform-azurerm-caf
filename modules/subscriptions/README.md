@@ -44,14 +44,14 @@ principalId=""
 
 billing_role_definition_id=$(az rest --method GET --url https://management.azure.com${enrollmentAccount}/billingRoleDefinitions?api-version=2019-10-01-preview --query "value[?properties.roleName=='Enrollment account subscription creator'].{id:id}" -o tsv)
 
-az rest --method PUT --url https://management.azure.com/${enrollmentAccount}/billingRoleAssignments/0525cbc2-c84e-4279-b639-adab918a96b8?api-version=2019-10-01-preview --body "{\"properties\": {\"principalId\": \"${principalId}\",\"principalTenantId\": \"${tenantId}\",\"roleDefinitionId\": \"${enrollmentAccount}/billingRoleDefinitions/${billing_role_definition_id}\"}}
+az rest --method PUT --url https://management.azure.com/${enrollmentAccount}/billingRoleAssignments/${principalId}?api-version=2019-10-01-preview --body "{\"properties\": {\"principalId\": \"${principalId}\",\"principalTenantId\": \"${tenantId}\",\"roleDefinitionId\": \"${enrollmentAccount}/billingRoleDefinitions/${billing_role_definition_id}\"}}"
 
 # Login as the principalId and create a subscription to confirm the delegation of permission is effective.
 
 az account alias create \
-  --name "alias_name" \
+  --name "spike1" \
   --billing-scope "${enrollmentAccount}" \
-  --display-name "name of the subscription" \
+  --display-name "spike1" \
   --workload "Production"
 
 ```

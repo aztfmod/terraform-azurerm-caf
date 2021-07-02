@@ -14,19 +14,25 @@ resource "azurecaf_name" "stg" {
   use_slug      = var.global_settings.use_slug
 }
 
+# Tested with :  AzureRM version 2.61.0
+# Ref : https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/resources/storage_account
+
 resource "azurerm_storage_account" "stg" {
   name                      = azurecaf_name.stg.result
   resource_group_name       = var.resource_group_name
   location                  = var.location
-  account_tier              = lookup(var.storage_account, "account_tier", "Standard")
-  account_replication_type  = lookup(var.storage_account, "account_replication_type", "LRS")
-  account_kind              = lookup(var.storage_account, "account_kind", "StorageV2")
-  access_tier               = lookup(var.storage_account, "access_tier", "Hot")
-  enable_https_traffic_only = true
-  min_tls_version           = lookup(var.storage_account, "min_tls_version", "TLS1_2")
-  allow_blob_public_access  = lookup(var.storage_account, "allow_blob_public_access", false)
-  is_hns_enabled            = lookup(var.storage_account, "is_hns_enabled", false)
-  tags                      = merge(var.base_tags, local.tags)
+  account_tier              = try(var.storage_account.account_tier, "Standard")
+  account_replication_type  = try(var.storage_account.account_replication_type, "LRS")
+  account_kind              = try(var.storage_account.account_kind, "StorageV2")
+  access_tier               = try(var.storage_account.access_tier, "Hot")
+  enable_https_traffic_only = try(var.storage_account.nfsv3_enabled, false) ? false : true
+  #if using nfsv3_enabled, then https must be disabled
+  min_tls_version          = try(var.storage_account.min_tls_version, "TLS1_2")
+  allow_blob_public_access = try(var.storage_account.allow_blob_public_access, false)
+  is_hns_enabled           = try(var.storage_account.is_hns_enabled, false)
+  nfsv3_enabled            = try(var.storage_account.nfsv3_enabled, false)
+  large_file_share_enabled = try(var.storage_account.large_file_share_enabled, null)
+  tags                     = merge(var.base_tags, local.tags)
 
 
   dynamic "custom_domain" {
@@ -34,7 +40,7 @@ resource "azurerm_storage_account" "stg" {
 
     content {
       name          = var.storage_account.custom_domain.name
-      use_subdomain = var.storage_account.custom_domain.use_subdomain
+      use_subdomain = try(var.storage_account.custom_domain.use_subdomain, null)
     }
   }
 
@@ -50,6 +56,11 @@ resource "azurerm_storage_account" "stg" {
     for_each = lookup(var.storage_account, "blob_properties", false) == false ? [] : [1]
 
     content {
+      versioning_enabled       = try(var.storage_account.blob_properties.versioning_enabled, false)
+      change_feed_enabled      = try(var.storage_account.blob_properties.change_feed_enabled, false)
+      default_service_version  = try(var.storage_account.blob_properties.default_service_version, "2020-06-12")
+      last_access_time_enabled = try(var.storage_account.blob_properties.last_access_time_enabled, false)
+
       dynamic "cors_rule" {
         for_each = lookup(var.storage_account.blob_properties, "cors_rule", false) == false ? [] : [1]
 
@@ -66,11 +77,18 @@ resource "azurerm_storage_account" "stg" {
         for_each = lookup(var.storage_account.blob_properties, "delete_retention_policy", false) == false ? [] : [1]
 
         content {
-          days = lookup(var.storage_account.blob_properties.delete_retention_policy, "delete_retention_policy", 7)
+          days = try(var.storage_account.blob_properties.delete_retention_policy.delete_retention_policy, 7)
+        }
+      }
+
+      dynamic "container_delete_retention_policy" {
+        for_each = lookup(var.storage_account.blob_properties, "container_delete_retention_policy", false) == false ? [] : [1]
+
+        content {
+          days = try(var.storage_account.blob_properties.container_delete_retention_policy.container_delete_retention_policy, 7)
         }
       }
     }
-
   }
 
   dynamic "queue_properties" {
@@ -97,7 +115,7 @@ resource "azurerm_storage_account" "stg" {
           read                  = var.storage_account.queue_properties.logging.read
           write                 = var.storage_account.queue_properties.logging.write
           version               = var.storage_account.queue_properties.logging.version
-          retention_policy_days = lookup(var.storage_account.queue_properties.logging, "retention_policy_days", 7)
+          retention_policy_days = try(var.storage_account.queue_properties.logging.retention_policy_days, 7)
         }
       }
 
@@ -107,8 +125,8 @@ resource "azurerm_storage_account" "stg" {
         content {
           enabled               = var.storage_account.queue_properties.minute_metrics.enabled
           version               = var.storage_account.queue_properties.minute_metrics.version
-          include_apis          = lookup(var.storage_account.queue_properties.minute_metrics, "include_apis", null)
-          retention_policy_days = lookup(var.storage_account.queue_properties.minute_metrics, "retention_policy_days", 7)
+          include_apis          = try(var.storage_account.queue_properties.minute_metrics.include_apis, null)
+          retention_policy_days = try(var.storage_account.queue_properties.minute_metrics.retention_policy_days, 7)
         }
       }
 
@@ -118,8 +136,8 @@ resource "azurerm_storage_account" "stg" {
         content {
           enabled               = var.storage_account.queue_properties.hour_metrics.enabled
           version               = var.storage_account.queue_properties.hour_metrics.version
-          include_apis          = lookup(var.storage_account.queue_properties.hour_metrics, "include_apis", null)
-          retention_policy_days = lookup(var.storage_account.queue_properties.hour_metrics, "retention_policy_days", 7)
+          include_apis          = try(var.storage_account.queue_properties.hour_metrics.include_apis, null)
+          retention_policy_days = try(var.storage_account.queue_properties.hour_metrics.retention_policy_days, 7)
         }
       }
     }
@@ -129,8 +147,8 @@ resource "azurerm_storage_account" "stg" {
     for_each = lookup(var.storage_account, "static_website", false) == false ? [] : [1]
 
     content {
-      index_document     = var.storage_account.static_website.index_document
-      error_404_document = var.storage_account.static_website.error_404_document
+      index_document     = try(var.storage_account.static_website.index_document, null)
+      error_404_document = try(var.storage_account.static_website.error_404_document, null)
     }
   }
 
@@ -145,9 +163,46 @@ resource "azurerm_storage_account" "stg" {
       ]
     }
   }
+
+  dynamic "azure_files_authentication" {
+    for_each = lookup(var.storage_account, "azure_files_authentication", false) == false ? [] : [1]
+
+    content {
+      directory_type = var.storage_account.azure_files_authentication.directory_type
+
+      dynamic "active_directory" {
+        for_each = lookup(var.storage_account.azure_files_authentication, "active_directory", false) == false ? [] : [1]
+
+        content {
+          storage_sid         = var.storage_account.azure_files_authentication.active_directory.storage_sid
+          domain_name         = var.storage_account.azure_files_authentication.active_directory.domain_name
+          domain_sid          = var.storage_account.azure_files_authentication.active_directory.domain_sid
+          domain_guid         = var.storage_account.azure_files_authentication.active_directory.domain_guid
+          forest_name         = var.storage_account.azure_files_authentication.active_directory.forest_name
+          netbios_domain_name = var.storage_account.azure_files_authentication.active_directory.netbios_domain_name
+        }
+      }
+    }
+  }
+
+  dynamic "routing" {
+    for_each = lookup(var.storage_account, "routing", false) == false ? [] : [1]
+
+    content {
+      publish_internet_endpoints  = try(var.storage_account.routing.publish_internet_endpoints, false)
+      publish_microsoft_endpoints = try(var.storage_account.routing.publish_microsoft_endpoints, false)
+      choice                      = try(var.storage_account.routing.choice, "MicrosoftRouting")
+    }
+  }
 }
 
+module "queue" {
+  source   = "./queue"
+  for_each = try(var.storage_account.queues, {})
 
+  storage_account_name = azurerm_storage_account.stg.name
+  settings             = each.value
+}
 
 module "container" {
   source   = "./container"
@@ -163,4 +218,16 @@ module "data_lake_filesystem" {
 
   storage_account_id = azurerm_storage_account.stg.id
   settings           = each.value
+}
+
+module "file_share" {
+  source     = "./file_share"
+  for_each   = try(var.storage_account.file_shares, {})
+  depends_on = [azurerm_backup_container_storage_account.container]
+
+  storage_account_name = azurerm_storage_account.stg.name
+  storage_account_id   = azurerm_storage_account.stg.id
+  settings             = each.value
+  recovery_vault       = local.recovery_vault
+  resource_group_name  = var.resource_group_name
 }
