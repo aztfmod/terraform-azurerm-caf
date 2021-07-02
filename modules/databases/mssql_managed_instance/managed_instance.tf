@@ -45,3 +45,14 @@ resource "null_resource" "destroy_sqlmi" {
   }
 
 }
+
+# Generate sql server random admin password if not provided in the attribute administrator_login_password
+resource "random_password" "mssqlmi" {
+  count = try(var.settings.administratorLoginPassword, null) == null ? 1 : 0
+
+  length           = 128
+  special          = true
+  upper            = true
+  number           = true
+  override_special = "$#%"
+}

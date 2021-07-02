@@ -32,7 +32,7 @@ locals {
       value = var.settings.administratorLogin
     }
     administratorLoginPassword = {
-      value = var.settings.administratorLoginPassword
+      value = try(var.settings.administratorLoginPassword, random_password.mssqlmi.0.result)
     }
     subnetId = {
       value = var.subnet_id
