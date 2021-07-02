@@ -8,11 +8,8 @@ resource "azuread_service_principal" "app" {
   }
 }
 
-resource "null_resource" "propagate_to_azuread" {
+resource "time_sleep" "propagate_to_azuread" {
   depends_on = [azuread_service_principal.app]
 
-  provisioner "local-exec" {
-    command    = "/bin/bash -c '/usr/bin/sleep 30'"
-    on_failure = fail
-  }
+  create_duration = "30s"
 }
