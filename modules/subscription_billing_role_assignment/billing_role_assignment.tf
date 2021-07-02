@@ -47,3 +47,18 @@ module "role_assignment_msi" {
   cloud                = var.cloud
 }
 
+
+module "role_assignment_azuread_service_principals" {
+  source     = "./role_assignment"
+  for_each   = try(var.settings.principals.azuread_service_principals, {})
+  depends_on = [module.role_assignment_azuread_users, module.role_assignment_msi]
+
+  aad_user_impersonate = try(var.keyvaults[try(each.value.lz_key, var.client_config.landingzone_key)][var.settings.aad_user_impersonate.keyvault.key], null)
+  billing_scope_id     = local.billing_scope_id
+  tenant_id            = try(var.principals.azuread_service_principals[try(each.value.lz_key, var.client_config.landingzone_key)][each.value.key].tenant_id, var.client_config.tenant_id)
+  principal_id         = var.principals.azuread_service_principals[try(each.value.lz_key, var.client_config.landingzone_key)][each.value.key].object_id
+  role_definition_id   = data.external.role_definition.result.id
+  settings             = each.value
+  cloud                = var.cloud
+}
+

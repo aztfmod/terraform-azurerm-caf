@@ -4,11 +4,15 @@ Microsoft [Cloud Adoption Framework for Azure](https://aka.ms/caf) provides you 
 
 This module allows you to create resources on Microsoft Azure, is used by the Cloud Adoption Framework for Azure (CAF) landing zones to provision resources in an Azure subscription and can deploy resources being directly invoked from the Terraform registry.
 
+## Prerequisites
+
+- Setup your **environment** using the following guide [Getting Started](https://github.com/Azure/caf-terraform-landingzones/blob/master/documentation/getting_started/getting_started.md) or you use it online with [GitHub Codespaces](https://github.com/features/codespaces).
+- Access to an **Azure subscription**.
+
+
 ## Getting started
 
-This module can be used to create resources on its own, or can be called from a CAF landing zone.
-
-It can be invoked from the [Terraform registry](https://registry.terraform.io/modules/aztfmod/caf/azurerm/)
+This module can be used inside [Cloud Adoption Framework Landing zones](https://github.com/Azure/caf-terraform-landingzones), or can be used as standalone, directly from the [Terraform registry](https://registry.terraform.io/modules/aztfmod/caf/azurerm/)
 
 ```terraform
 module "caf" {
@@ -18,36 +22,22 @@ module "caf" {
 }
 ```
 
-## Prerequisites
+Fill the variables as needed and documented, there is a [quick example here](./examples/standalone.md).
 
-- Setup your **environment** using the following guide [Getting Started](https://github.com/Azure/caf-terraform-landingzones/blob/master/documentation/getting_started/getting_started.md) or you can alternatively use [Visual Studio Code Online]((https://online.visualstudio.com/environments/new?name=terraform-azurerm-caf&repo=aztfmod/terraform-azurerm-caf)
-) or GitHub Codespaces.
-- Access to an **Azure subscription**.
+For a complete set of examples you can review the [full library here](./examples).
 
-## Deploying examples
+<img src="https://aztfmod.blob.core.windows.net/media/standalone.gif" width="720"/> <br/> <br/>
 
-You can deploy examples either directly from this module or via the Cloud Adoption Framework's rover, to get starter, please refer to the [examples readme](./examples)
-
-We categorize the various examples in this repo as follow:
-
-| level | scenario                                                                                                                               | requirements                                       |
-|-------|----------------------------------------------------------------------------------------------------------------------------------------|----------------------------------------------------|
-| 100   | Start with this one! basic functionalities and features, no RBAC or security hardening - for demo and simple POC                       | working on any subscription with Owner permissions |
-| 200   | intermediate functionalities includes diagnostics features and Azure Active Directory groups                                           | may need custom AAD permissions                    |
-| 300   | advanced functionalities, includes RBAC features, virtual network and private link scenario and reduced portal view for hardened items | need custom AAD permissions                        |
-| 400   | advanced functionalities, includes RBAC features and security hardening                                                                | need custom AAD permissions                        |
 
 ## Community
 
-Feel free to open an issue for feature or bug, or to submit a PR.
+Feel free to open an issue for feature or bug, or to submit a PR, [please review the module contribution and conventions guidelines](./documentation/conventions.md)
 
 In case you have any question, you can reach out to tf-landingzones at microsoft dot com.
 
 You can also reach us on [Gitter](https://gitter.im/aztfmod/community?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge)
 
 ## Contributing
-
-In order to contribute to the project, [please review the module contribution and conventions guidelines](./documentation/conventions.md)
 
 This project welcomes contributions and suggestions.  Most contributions require you to agree to a
 Contributor License Agreement (CLA) declaring that you have the right to, and actually do, grant us

@@ -56,6 +56,7 @@ module "diagnostic_event_hub_namespaces" {
   location            = lookup(each.value, "region", null) == null ? local.resource_groups[each.value.resource_group_key].location : local.global_settings.regions[each.value.region]
   client_config       = local.client_config
   base_tags           = try(local.global_settings.inherit_tags, false) ? local.resource_groups[each.value.resource_group_key].tags : {}
+  # storage_accounts    = local.combined_objects_storage_accounts
 }
 
 module "diagnostic_event_hub_namespaces_diagnostics" {
