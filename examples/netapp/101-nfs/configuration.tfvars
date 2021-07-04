@@ -60,6 +60,7 @@ netapp_accounts = {
                 protocols_enabled = ["NFSv4.2"]
                 unix_read_only    = false
                 unix_read_write   = true
+                root_access_enabled = true
               }
             }
             tags = {
