@@ -39,7 +39,30 @@ netapp_accounts = {
             # Minimum 100
             storage_quota_in_gb = "100"
             # To be defined
-            #export_policy_rule = {}
+            export_policy_rule = {
+              "rule1" = {
+                rule_index        = 1
+                allowed_clients   = ["0.0.0.0/0"]
+                protocols_enabled = ["NFSv4.1"]
+                unix_read_only    = false
+                unix_read_write   = true
+              }
+              "rule2" = {
+                rule_index        = 2
+                allowed_clients   = ["10.0.0.0/8"]
+                protocols_enabled = ["NFSv4.1"]
+                unix_read_only    = false
+                unix_read_write   = true
+              }
+              "rule3" = {
+                rule_index        = 3
+                allowed_clients   = ["192.168.0.0/16"]
+                protocols_enabled = ["NFSv4.1"]
+                unix_read_only    = false
+                unix_read_write   = true
+                root_access_enabled = true
+              }
+            }
             tags = {
               volume = "volume 1"
             }
