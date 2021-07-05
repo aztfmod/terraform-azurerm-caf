@@ -32,3 +32,11 @@ module "consumption_budgets_subscriptions" {
     local.client_config.subscription_id
   )
 }
+
+output "consumption_budgets_resource_groups" {
+  value = module.consumption_budgets_resource_groups
+}
+
+output "consumption_budgets_subscriptions" {
+  value = module.consumption_budgets_subscriptions
+}
