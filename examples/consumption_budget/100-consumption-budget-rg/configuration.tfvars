@@ -30,8 +30,11 @@ consumption_budgets = {
     notifications = {
       default = {
         enabled   = true
-        threshold = 90.0
+        threshold = 95.0
         operator  = "EqualTo"
+        contact_emails = [
+          "default@example.com",
+        ]
       }
       contact_email = {
         enabled   = true
@@ -44,7 +47,7 @@ consumption_budgets = {
       }
       contact_role = {
         enabled   = true
-        threshold = 90.0
+        threshold = 80.0
         operator  = "EqualTo"
         contact_roles = [
           "Owner",
