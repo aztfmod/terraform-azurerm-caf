@@ -32,7 +32,7 @@ resource "azurerm_consumption_budget_resource_group" "this" {
 
       contact_emails = try(notification.value.contact_emails, [])
       contact_groups = try(notification.value.contact_groups, try(flatten([
-        for key, value in var.monitor_action_groups : value.id
+        for key, value in var.monitor_action_groups[try(notification.value.lz_key, var.client_config.landingzone_key)] : value.id
         if contains(notification.value.contact_groups_keys, key)
         ]), [])
       )

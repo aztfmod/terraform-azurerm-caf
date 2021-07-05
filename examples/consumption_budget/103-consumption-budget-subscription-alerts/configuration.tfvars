@@ -56,6 +56,7 @@ consumption_budgets = {
         enabled   = true
         threshold = 85.0
         operator  = "EqualTo"
+        # lz_key    = "examples"
         contact_groups_keys = [
           "subscription_alerts",
         ]

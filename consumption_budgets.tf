@@ -7,7 +7,7 @@ module "consumption_budgets_resource_groups" {
 
   client_config         = local.client_config
   global_settings       = local.global_settings
-  monitor_action_groups = try(module.monitor_action_groups, {})
+  monitor_action_groups = local.combined_objects_monitor_action_groups
   # lz_key used in dimension to reference remote state
   resource_groups = local.combined_objects_resource_groups
   settings        = each.value
@@ -22,7 +22,7 @@ module "consumption_budgets_subscriptions" {
 
   client_config         = local.client_config
   global_settings       = local.global_settings
-  monitor_action_groups = try(module.monitor_action_groups, {})
+  monitor_action_groups = local.combined_objects_monitor_action_groups
   # lz_key used in dimension to reference remote state
   resource_groups = local.combined_objects_resource_groups
   settings        = each.value
