@@ -9,8 +9,11 @@ resource "azurecaf_name" "this_name" {
 }
 
 resource "azurerm_consumption_budget_resource_group" "this" {
-  name              = azurecaf_name.this_name.result
-  resource_group_id = var.resource_group_id
+  name = azurecaf_name.this_name.result
+  resource_group_id = coalesce(
+    try(var.settings.resource_group.id, null),
+    try(var.resource_groups[try(var.settings.resource_group.lz_key, var.client_config.landingzone_key)][var.settings.resource_group.key].id, null)
+  )
 
   amount     = var.settings.amount
   time_grain = var.settings.time_grain
