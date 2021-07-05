@@ -33,7 +33,8 @@ consumption_budgets = {
         threshold = 95.0
         operator  = "EqualTo"
         contact_emails = [
-          "default@example.com",
+          "foo@example.com",
+          "bar@example.com",
         ]
       }
       contact_email = {
