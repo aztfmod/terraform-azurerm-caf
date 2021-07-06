@@ -12,16 +12,17 @@ resource "azurecaf_name" "fw" {
 
 resource "azurerm_firewall" "fw" {
 
-  name                = azurecaf_name.fw.result
-  resource_group_name = var.resource_group_name
+  dns_servers         = try(var.settings.dns_servers, null)
+  firewall_policy_id  = var.firewall_policy_id
   location            = var.location
-  threat_intel_mode   = try(var.settings.virtual_hub, null) != null ? "" : try(var.settings.threat_intel_mode, "Alert")
-  zones               = try(var.settings.zones, null)
+  name                = azurecaf_name.fw.result
+  private_ip_ranges   = try(var.settings.private_ip_ranges, null)
+  resource_group_name = var.resource_group_name
   sku_name            = try(var.settings.sku_name, "AZFW_VNet")
   sku_tier            = try(var.settings.sku_tier, "Standard")
-  firewall_policy_id  = var.firewall_policy_id
-  dns_servers         = try(var.settings.dns_servers, null)
   tags                = local.tags
+  threat_intel_mode   = try(var.settings.virtual_hub, null) != null ? "" : try(var.settings.threat_intel_mode, "Alert")
+  zones               = try(var.settings.zones, null)
 
   ## direct subnet_id reference
   dynamic "ip_configuration" {
@@ -77,7 +78,14 @@ resource "azurerm_firewall" "fw" {
   dynamic "virtual_hub" {
     for_each = try(var.settings.virtual_hub, {})
     content {
-      virtual_hub_id  = try(virtual_hub.value.virtual_hub_id, null) != null ? virtual_hub.value.virtual_hub_id : var.virtual_wans[virtual_hub.value.virtual_wan_key].virtual_hubs[virtual_hub.value.virtual_hub_key].id
+      virtual_hub_id = coalesce(
+        try(virtual_hub.value.virtual_hub_id, null),
+        try(var.virtual_wans[virtual_hub.value.lz_key][virtual_hub.value.virtual_wan_key].virtual_hubs[virtual_hub.value.virtual_hub_key].id, null),
+        try(var.virtual_wans[var.client_config.landingzone_key][virtual_hub.value.virtual_wan_key].virtual_hubs[virtual_hub.value.virtual_hub_key].id, null),
+        try(var.virtual_hubs[virtual_hub.value.lz_key][virtual_hub.value.virtual_hub_key].id, null),
+        try(var.virtual_hubs[var.client_config.landingzone_key][virtual_hub.value.virtual_hub_key].id, null)
+      )
+
       public_ip_count = try(virtual_hub.value.public_ip_count, 1)
     }
   }

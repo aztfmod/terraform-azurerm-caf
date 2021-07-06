@@ -12,7 +12,7 @@ output "virtual_hub_connection" {
 
 # Virtual Hub Peerings to virtual networks
 resource "azurerm_virtual_hub_connection" "vhub_connection" {
-  depends_on = [azurerm_virtual_hub_route_table.route_table]
+  depends_on = [azurerm_virtual_hub_route_table.route_table, module.azurerm_firewalls]
   for_each   = local.networking.virtual_hub_connections
 
   name           = each.value.name
@@ -63,7 +63,13 @@ resource "azurerm_virtual_hub_connection" "vhub_connection" {
         content {
           name                = static_vnet_route.value.name
           address_prefixes    = static_vnet_route.value.address_prefixes
-          next_hop_ip_address = static_vnet_route.value.next_hop_ip_address
+          next_hop_ip_address = coalesce(
+            try(static_vnet_route.value.next_hop_ip_address, null),
+            try(local.combined_objects_azurerm_firewalls[static_vnet_route.value.next_hop.lz_key][static_vnet_route.value.next_hop.key].ip_configuration[static_vnet_route.value.next_hop.interface_index].private_ip_address, null),
+            try(local.combined_objects_azurerm_firewalls[static_vnet_route.value.next_hop.lz_key][static_vnet_route.value.next_hop.key].virtual_hub.private_ip_address, null),
+            try(local.combined_objects_azurerm_firewalls[local.client_config.landingzone_key][static_vnet_route.value.next_hop.key].ip_configuration[static_vnet_route.value.next_hop.interface_index].private_ip_address, null),
+            try(local.combined_objects_azurerm_firewalls[local.client_config.landingzone_key][static_vnet_route.value.next_hop.key].virtual_hub[static_vnet_route.value.next_hop.interface_index].private_ip_address, null)
+          )
         }
       }
 
