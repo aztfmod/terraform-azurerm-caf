@@ -16,7 +16,7 @@ resource_groups = {
 
 netapp_accounts = {
   account1 = {
-    name               = "netapp-name1"
+    name               = "netapp-name2"
     resource_group_key = "netapp_rg1"
     tags = {
       example = "netapp"
