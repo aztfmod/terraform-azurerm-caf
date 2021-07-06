@@ -10,7 +10,7 @@ module "azurerm_firewall_policies" {
   settings        = each.value
   tags            = try(each.value.tags, null)
 
-  resource_group  = coalesce(
+  resource_group = coalesce(
     try(local.combined_objects_resource_groups[each.value.lz_key][each.value.resource_group_key], null),
     try(local.combined_objects_resource_groups[each.value.resource_group.lz_key][each.value.resource_group.key], null),
     try(local.combined_objects_resource_groups[local.client_config.landingzone_key][each.value.resource_group_key], null),
@@ -30,7 +30,7 @@ module "azurerm_firewall_policies_child" {
   settings        = each.value
   tags            = try(each.value.tags, null)
 
-  resource_group      = coalesce(
+  resource_group = coalesce(
     try(local.combined_objects_resource_groups[each.value.lz_key][each.value.resource_group_key], null),
     try(local.combined_objects_resource_groups[each.value.resource_group.lz_key][each.value.resource_group.key], null),
     try(local.combined_objects_resource_groups[local.client_config.landingzone_key][each.value.resource_group_key], null),
@@ -38,7 +38,7 @@ module "azurerm_firewall_policies_child" {
     try(each.value.resource_group.id, null)
   )
 
-  base_policy_id      = coalesce(
+  base_policy_id = coalesce(
     try(local.combined_objects_azurerm_firewall_policies[each.value.base_policy.lz_key][each.value.base_policy.key].id, null),
     try(local.combined_objects_azurerm_firewall_policies[local.client_config.landingzone_key][each.value.base_policy.key].id, null),
     try(each.value.base_policy.id, null)

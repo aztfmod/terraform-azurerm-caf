@@ -39,7 +39,7 @@ cd /tf/caf/examples
 terraform init
 
 terraform [plan | apply | destroy] \
-  -var-file ./consumption_budget/102-consumption-budget-rg-alerts/configuration.tfvars 
+  -var-file ./consumption_budget/102-consumption-budget-rg-alerts/configuration.tfvars
 ```
 
 ### With rover
