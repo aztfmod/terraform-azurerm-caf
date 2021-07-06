@@ -26,7 +26,8 @@ module "azurerm_firewalls" {
   firewall_policy_id  = try(coalesce(
     try(local.combined_objects_azurerm_firewall_policies[each.value.firewall_policy.lz_key][each.value.firewall_policy.key].id,null),
     try(local.combined_objects_azurerm_firewall_policies[local.client_config.landingzone_key][each.value.firewall_policy.key].id,null),
-    try(local.combined_objects_azurerm_firewall_policies[try(each.value.lz_key, local.client_config.landingzone_key)][each.value.firewall_policy_key].id, null)
+    try(local.combined_objects_azurerm_firewall_policies[try(each.value.lz_key, local.client_config.landingzone_key)][each.value.firewall_policy_key].id, null),
+    try(each.value.firewall_policy.id, null)
   ), null)
 }
 
