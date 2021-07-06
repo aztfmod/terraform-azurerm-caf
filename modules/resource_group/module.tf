@@ -13,5 +13,8 @@ resource "azurecaf_name" "rg" {
 resource "azurerm_resource_group" "rg" {
   name     = azurecaf_name.rg.result
   location = var.global_settings.regions[lookup(var.settings, "region", var.global_settings.default_region)]
-  tags     = merge(var.tags, lookup(var.settings, "tags", {}))
+  tags = merge(
+    var.tags,
+    lookup(var.settings, "tags", {})
+  )
 }

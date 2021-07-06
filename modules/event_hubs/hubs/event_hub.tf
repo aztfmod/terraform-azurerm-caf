@@ -8,27 +8,32 @@ resource "azurecaf_name" "evhub" {
   use_slug      = var.global_settings.use_slug
 }
 
+# Last reviewed :  AzureRM version 2.64.0
+# Ref : https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/resources/eventhub_authorization_rule
+
 resource "azurerm_eventhub" "evhub" {
   name                = azurecaf_name.evhub.result
   namespace_name      = var.namespace_name
   resource_group_name = var.resource_group_name
   partition_count     = var.settings.partition_count
   message_retention   = var.settings.message_retention
+  status              = try(var.settings.status, null)
 
   dynamic "capture_description" {
-    for_each = try(var.settings.capture_description, {})
+    for_each = try(var.settings.capture_description, false) == false ? [] : [1]
     content {
-      enabled             = capture_description.value.enabled
-      encoding            = capture_description.value.encoding
-      interval_in_seconds = try(capture_description.value.interval_in_seconds, null)
-      size_limit_in_bytes = try(capture_description.value.size_limit_in_bytes, null)
-      skip_empty_archives = try(capture_description.value.skip_empty_archives, null)
+      enabled             = var.settings.capture_description.enabled
+      encoding            = var.settings.capture_description.encoding
+      interval_in_seconds = try(var.settings.capture_description.interval_in_seconds, null)
+      size_limit_in_bytes = try(var.settings.capture_description.size_limit_in_bytes, null)
+      skip_empty_archives = try(var.settings.capture_description.skip_empty_archives, null)
+
       dynamic "destination" { # required if capture_description is set
-        for_each = try(var.settings.capture_description.destination, {})
+        for_each = try(var.settings.capture_description.destination, false) == false ? [] : [1]
         content {
-          name                = destination.value.name                # At this time(12/2020), the only supported value is EventHubArchive.AzureBlockBlob
-          archive_name_format = destination.value.archive_name_format # e.g. {Namespace}/{EventHub}/{PartitionId}/{Year}/{Month}/{Day}/{Hour}/{Minute}/{Second}
-          blob_container_name = destination.value.blob_container_name
+          name                = var.settings.capture_description.destination.name                # At this time(12/2020), the only supported value is EventHubArchive.AzureBlockBlob
+          archive_name_format = var.settings.capture_description.destination.archive_name_format # e.g. {Namespace}/{EventHub}/{PartitionId}/{Year}/{Month}/{Day}/{Hour}/{Minute}/{Second}
+          blob_container_name = var.settings.capture_description.destination.blob_container_name
           storage_account_id  = var.storage_account_id
         }
       }
