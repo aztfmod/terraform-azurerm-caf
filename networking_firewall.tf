@@ -8,8 +8,8 @@ module "azurerm_firewalls" {
 
   base_tags           = try(local.global_settings.inherit_tags, false) ? local.resource_groups[each.value.resource_group_key].tags : {}
   client_config       = local.client_config
-  diagnostics         = local.combined_diagnostics
   diagnostic_profiles = try(each.value.diagnostic_profiles, null)
+  diagnostics         = local.combined_diagnostics
   global_settings     = local.global_settings
   location            = lookup(each.value, "region", null) == null ? local.resource_groups[each.value.resource_group_key].location : local.global_settings.regions[each.value.region]
   name                = each.value.name
@@ -20,12 +20,13 @@ module "azurerm_firewalls" {
   settings            = each.value
   subnet_id           = module.networking[each.value.vnet_key].subnets["AzureFirewallSubnet"].id
   tags                = try(each.value.tags, null)
+  virtual_hubs        = local.combined_objects_virtual_hubs
   virtual_networks    = local.combined_objects_networking
-  virtual_wans        = module.virtual_wans
+  virtual_wans        = local.combined_objects_virtual_wans
 
-  firewall_policy_id  = try(coalesce(
-    try(local.combined_objects_azurerm_firewall_policies[each.value.firewall_policy.lz_key][each.value.firewall_policy.key].id,null),
-    try(local.combined_objects_azurerm_firewall_policies[local.client_config.landingzone_key][each.value.firewall_policy.key].id,null),
+  firewall_policy_id = try(coalesce(
+    try(local.combined_objects_azurerm_firewall_policies[each.value.firewall_policy.lz_key][each.value.firewall_policy.key].id, null),
+    try(local.combined_objects_azurerm_firewall_policies[local.client_config.landingzone_key][each.value.firewall_policy.key].id, null),
     try(local.combined_objects_azurerm_firewall_policies[try(each.value.lz_key, local.client_config.landingzone_key)][each.value.firewall_policy_key].id, null),
     try(each.value.firewall_policy.id, null)
   ), null)

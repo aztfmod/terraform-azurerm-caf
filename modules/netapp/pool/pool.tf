@@ -1,3 +1,14 @@
+#TODO: Naming convention resources to be implemented
+#resource "azurecaf_name" "pool" {
+#  name          = var.settings.name
+#  prefixes      = var.global_settings.prefixes
+#  resource_type = "azurerm_netapp_pool"
+#  random_length = var.global_settings.random_length
+#  clean_input   = true
+#  passthrough   = var.global_settings.passthrough
+#  use_slug      = var.global_settings.use_slug
+#}
+
 resource "azurerm_netapp_pool" "pool" {
   # The capacity pool name must be unique for each NetApp account
   name                = var.settings.name
@@ -20,7 +31,7 @@ module "volumes" {
   pool_name           = azurerm_netapp_pool.pool.name
   service_level       = azurerm_netapp_pool.pool.service_level
   subnet_id           = try(var.vnets[var.client_config.landingzone_key][each.value.vnet_key].subnets[each.value.subnet_key].id, var.vnets[each.value.lz_key][each.value.vnet_key].subnets[each.value.subnet_key].id)
-  #export_policy_rule  # need to be implemented
-  tags = merge(var.base_tags, try(each.value.tags, {}))
+  export_policy_rule  = try(each.value.export_policy_rule, {})
+  tags                = merge(var.base_tags, try(each.value.tags, {}))
 
 }

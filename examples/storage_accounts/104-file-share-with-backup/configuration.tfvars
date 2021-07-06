@@ -22,9 +22,9 @@ storage_accounts = {
     min_tls_version          = "TLS1_2"    # Possible values are TLS1_0, TLS1_1, and TLS1_2. Defaults to TLS1_0 for new storage accounts.
     large_file_share_enabled = true
 
-    azure_files_authentication = {
-      directory_type = "AADDS"
-    }
+    # azure_files_authentication = {
+    #   directory_type = "AADDS"
+    # }
 
     file_shares = {
       share1 = {
