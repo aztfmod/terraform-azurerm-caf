@@ -1,3 +1,6 @@
+output "id" {
+  value = format("/subscriptions/%s", try(azurerm_subscription.sub.0.subscription_id, var.client_config.subscription_id))
+}
 output "subscription_id" {
   value = try(azurerm_subscription.sub.0.subscription_id, var.client_config.subscription_id)
 }

@@ -70,7 +70,7 @@ virtual_machines = {
       }
     }
 
-    ## REQUIRED EXTENSIONS FOR WVD SESSION HOSTS 
+    ## REQUIRED EXTENSIONS FOR WVD SESSION HOSTS
 
     virtual_machine_extensions = {
       microsoft_azure_domainjoin = {

@@ -8,7 +8,11 @@ resource "azurerm_monitor_diagnostic_setting" "diagnostics" {
   name               = try(format("%s%s", try(var.global_settings.prefix_with_hyphen, ""), each.value.name), format("%s%s", try(var.global_settings.prefix_with_hyphen, ""), var.diagnostics.diagnostics_definition[each.value.definition_key].name))
   target_resource_id = var.resource_id
 
-  eventhub_name                  = each.value.destination_type == "event_hub" ? try(var.diagnostics.event_hub_namespaces[var.diagnostics.diagnostics_destinations.event_hub_namespaces[each.value.destination_key].event_hub_namespace_key].name, null) : null
+  eventhub_name = each.value.destination_type == "event_hub" ? coalesce(
+    try(var.diagnostics.event_hub_namespaces[var.diagnostics.diagnostics_destinations.event_hub_namespaces[each.value.destination_key].event_hub_namespace_key].event_hubs[each.value.event_hub_key].name, null),
+    var.diagnostics.event_hub_namespaces[var.diagnostics.diagnostics_destinations.event_hub_namespaces[each.value.destination_key].event_hub_namespace_key].name
+  ) : null
+
   eventhub_authorization_rule_id = each.value.destination_type == "event_hub" ? format("%s/authorizationRules/RootManageSharedAccessKey", var.diagnostics.event_hub_namespaces[var.diagnostics.diagnostics_destinations.event_hub_namespaces[each.value.destination_key].event_hub_namespace_key].id) : null
 
   log_analytics_workspace_id     = each.value.destination_type == "log_analytics" ? var.diagnostics.log_analytics[var.diagnostics.diagnostics_destinations.log_analytics[each.value.destination_key].log_analytics_key].id : null

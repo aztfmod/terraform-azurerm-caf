@@ -12,7 +12,10 @@ resource "azurerm_virtual_machine_extension" "session_host_dscextension" {
       "modulesURL" : format("%s/DSC/Configuration.zip", var.extension.base_url),
       "configurationFunction" : "Configuration.ps1\\AddSessionHost",
       "properties" : {
-        "HostPoolName" : try(var.extension.host_pool_name, var.wvd_host_pools[var.extension.host_pool.host_pool_key].name)
+        "HostPoolName" : coalesce(
+          try(var.extension.host_pool_name, ""),
+          try(var.wvd_host_pools[var.extension.host_pool.lz_key][var.extension.host_pool.keyvault_key].name, var.wvd_host_pools[var.client_config.landingzone_key][var.extension.host_pool.host_pool_key].name)
+        )
       }
     }
   )
@@ -26,7 +29,11 @@ resource "azurerm_virtual_machine_extension" "session_host_dscextension" {
 }
 
 data "azurerm_key_vault_secret" "host_pool_token" {
-  for_each     = var.extension_name == "session_host_dscextension" && try(var.extension.host_pool_token, null) == null ? toset(["enabled"]) : toset([])
-  name         = var.extension.host_pool.secret_name
-  key_vault_id = try(var.extension.host_pool.key_vault_id, var.keyvaults[var.extension.host_pool.keyvault_key].id)
+  for_each = var.extension_name == "session_host_dscextension" && try(var.extension.host_pool_token, null) == null ? toset(["enabled"]) : toset([])
+  name     = var.extension.host_pool.secret_name
+  key_vault_id = try(
+    var.extension.host_pool.key_vault_id,
+    try(var.keyvaults[var.extension.host_pool.lz_key][var.extension.host_pool.keyvault_key].id, var.keyvaults[var.client_config.landingzone_key][var.extension.host_pool.keyvault_key].id)
+  )
 }
+

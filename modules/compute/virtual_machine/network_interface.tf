@@ -83,12 +83,12 @@ resource "azurerm_network_interface" "nic" {
 #     internal_dns_name_label = "nic0"
 #     // Prefer network_security_group orver nsg_key. Will be removed in version 6
 #     nsg_key                 = "data"       // requires a version 1 nsg definition (see compute/vm/210-vm-bastion-winrm example)
-# 
+#
 #     network_security_group = {
 #       # lz_key = ""
 #      key = "data"
 #     }
-# 
+#
 #     ip_configurations = {
 #       conf2 = {
 #         name                    = "nic0-conf2"

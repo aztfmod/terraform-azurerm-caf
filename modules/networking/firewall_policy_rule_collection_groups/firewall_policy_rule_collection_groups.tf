@@ -48,7 +48,7 @@ resource "azurecaf_name" "nat_rule" {
 resource "azurerm_firewall_policy_rule_collection_group" "polgroup" {
   name               = azurecaf_name.polgroup.result
   priority           = var.policy_settings.priority
-  firewall_policy_id = try(var.policy_settings.firewall_policy_id, null) != null ? var.policy_settings.firewall_policy_id : try(var.firewall_policies[var.policy_settings.firewall_policy_key].id, null)
+  firewall_policy_id = var.firewall_policy_id
 
   dynamic "application_rule_collection" {
     for_each = try(var.policy_settings.application_rule_collections, {})
