@@ -57,12 +57,12 @@ netapp_accounts = {
                 unix_read_write   = true
               }
               "rule3" = {
-                rule_index        = 3
-                allowed_clients   = ["192.168.0.0/16"]
-                protocols_enabled = ["NFSv3"] #["CIFS", "NFSv3", "NFSv3"]
-                unix_read_only    = false #Optional Parameter
-                unix_read_write   = true #Optional Parameter
-                root_access_enabled = true #Optional Parameter
+                rule_index          = 3
+                allowed_clients     = ["192.168.0.0/16"]
+                protocols_enabled   = ["NFSv3"] #["CIFS", "NFSv3", "NFSv3"]
+                unix_read_only      = false     #Optional Parameter
+                unix_read_write     = true      #Optional Parameter
+                root_access_enabled = true      #Optional Parameter
               }
             }
             tags = {
