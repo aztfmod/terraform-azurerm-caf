@@ -156,6 +156,9 @@ variable "app_service_plans" {
 variable "app_services" {
   default = {}
 }
+variable "consumption_budgets" {
+  default = {}
+}
 variable "diagnostics_definition" {
   default = {}
 }
@@ -310,6 +313,9 @@ variable "databricks_workspaces" {
   default = {}
 }
 variable "machine_learning_workspaces" {
+  default = {}
+}
+variable "monitor_action_groups" {
   default = {}
 }
 variable "monitoring" {
