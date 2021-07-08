@@ -8,7 +8,7 @@ locals {
         nextHopType     = "ResourceId"
         nextHop = coalesce(
           try(value.next_hop_id, ""),
-          try(var.resource_ids[value.next_hop.resource_type][try(value.next_hop.lz_key, var.client_config.landingzone_key)][value.next_hop.resource_key].id, "")
+          try(var.resource_ids[value.next_hop.resource_type][value.next_hop.lz_key][value.next_hop.key].id, "")   # Note the virtual_hub_connection must come from a remote tfstate only. PB with circular reference in the object model of vhub tables and connections
         )
       }
     ]
