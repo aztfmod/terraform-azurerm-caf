@@ -86,8 +86,8 @@ module "azurerm_virtual_hub_route_table" {
   resource_ids = {
     #
     # Removing support for vhub connection in route table to prevent circula references
+    # Interim support - Adding only remote virtual_hub_connections. route tables must be deployed in a different tfstate
     #
-    # virtual_hub_connection = local.combined_objects_virtual_hub_connections
-    azurerm_firewall = local.combined_objects_azurerm_firewalls
+    virtual_hub_connection = try(var.remote_objects.virtual_hub_connections, {})
   }
 }
