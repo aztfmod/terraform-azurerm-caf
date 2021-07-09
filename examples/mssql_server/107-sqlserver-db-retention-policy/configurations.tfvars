@@ -49,3 +49,20 @@ mssql_databases = {
 
   }
 }
+
+keyvaults = {
+  kv1 = {
+    name               = "examplekv"
+    resource_group_key = "rg1"
+    sku_name           = "standard"
+
+    creation_policies = {
+      logged_in_user = {
+        secret_permissions = ["Set", "Get", "List", "Delete", "Purge"]
+      }
+      logged_in_aad_app = {
+        secret_permissions = ["Set", "Get", "List", "Delete", "Purge"]
+      }
+    }
+  }
+}
