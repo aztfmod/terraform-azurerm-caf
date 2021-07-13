@@ -22,7 +22,9 @@ storage_accounts = {
     min_tls_version          = "TLS1_2"    # Possible values are TLS1_0, TLS1_1, and TLS1_2. Defaults to TLS1_0 for new storage accounts.
     #enable_https_traffic_only = false    #not needed as toggled automatically when nfsv3_enabled is selected.
     is_hns_enabled = true
-    nfsv3_enabled  = true
+    nfsv3_enabled  = true                 # This can only be true when account_tier is Standard and account_kind is StorageV2, or account_tier is Premium and account_kind is BlockBlobStorage. 
+                                          # Additionally, the is_hns_enabled is true, and enable_https_traffic_only is false
+    
 
     tags = {
       environment = "dev"
@@ -35,7 +37,7 @@ storage_accounts = {
         subnet1 = {
           #lz_key = ""
           vnet_key   = "vnet1"
-          subnet_key = "subnet1"
+          subnet_key = "subnet1" # Ensure that this subnet has service_endpoints = ["Microsoft.Storage"] . Without this you will get 404 storage account not found (non descriptive)
         }
         #add multiple subnets by extending this block
       }
