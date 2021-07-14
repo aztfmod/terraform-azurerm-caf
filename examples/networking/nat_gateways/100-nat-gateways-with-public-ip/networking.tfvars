@@ -25,10 +25,6 @@ vnets = {
         name = "subnet1"
         cidr = ["10.100.81.0/24"]
       }
-      subnet2 = {
-        name = "subnet2"
-        cidr = ["10.100.82.0/24"]
-      }
     } //subnets
 
     specialsubnets = {}
@@ -40,15 +36,6 @@ public_ip_addresses = {
 
   public_ip_nat_gateway1 = {
     name                    = "public_ip_nat_gateway1"
-    region                  = "region1"
-    resource_group_key      = "nat_gateway_re1"
-    sku                     = "Standard"
-    allocation_method       = "Static"
-    ip_version              = "IPv4"
-    idle_timeout_in_minutes = "4"
-  }
-  public_ip_nat_gateway2 = {
-    name                    = "public_ip_nat_gateway2"
     region                  = "region1"
     resource_group_key      = "nat_gateway_re1"
     sku                     = "Standard"
@@ -74,8 +61,8 @@ nat_gateways = {
      idle_timeout_in_minutes = 10 #optional if not defined will default to 4 minutes
      #zones                   = ["1"] #optional need to match public ip zone
      vnet_key = "vnet_nat_gateway_re1"
-     subnet_key = "subnet2"
-     public_ip_key = "public_ip_nat_gateway2"
+     subnet_key = "subnet1"
+     public_ip_key = "public_ip_nat_gateway1"
      resource_group_key = "nat_gateway_re1"
   }
 }
