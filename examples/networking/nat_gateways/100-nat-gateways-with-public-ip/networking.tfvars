@@ -65,8 +65,6 @@ nat_gateways = {
      idle_timeout_in_minutes = 10 #optional if not defined will default to 4 minutes
      #zones                   = ["1"] #optional need to match public ip zone
      vnet_key = "vnet_nat_gateway_re1"
-     subnet_key = "subnet1"
-     public_ip_key = "public_ip_nat_gateway1"
      resource_group_key = "nat_gateway_re1"
     }
 

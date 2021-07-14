@@ -1,7 +1,7 @@
 
 #
 #
-# Nat Gateway
+# Nat Gateways
 #
 #
 
