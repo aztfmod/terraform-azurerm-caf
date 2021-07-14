@@ -1,5 +1,5 @@
-output "nat_gateways" {
-  value       = azurerm_nat_gateway.nat_gateway
+output "nat_gateways_resource_guid" {
+  value       = azurerm_nat_gateway.nat_gateway.resource_guid
   description = "Nat Gateway object"
 }
 output "id" {
