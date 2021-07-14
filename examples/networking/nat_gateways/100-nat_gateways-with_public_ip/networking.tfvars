@@ -58,7 +58,7 @@ public_ip_addresses = {
   }
 }
 
-nat_gateway = {
+nat_gateways = {
   nat_gateway1 = {
      name = "nat_gateway1"
      region = "region1" #we need to use the CAF regions rather than using location value

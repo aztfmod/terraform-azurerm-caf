@@ -1,4 +1,4 @@
-output "nat_gateway" {
+output "nat_gateways" {
   value       = azurerm_nat_gateway.nat_gateway
   description = "Nat Gateway object"
 }
