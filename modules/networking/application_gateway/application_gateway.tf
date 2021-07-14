@@ -151,6 +151,7 @@ resource "azurerm_application_gateway" "agw" {
       request_timeout                     = try(backend_http_settings.value.request_timeout, 30)
       pick_host_name_from_backend_address = try(backend_http_settings.value.pick_host_name_from_backend_address, false)
       trusted_root_certificate_names      = try(backend_http_settings.value.trusted_root_certificate_names, null)
+      host_name                           = try(backend_http_settings.value.host_name, null)
     }
   }
 
