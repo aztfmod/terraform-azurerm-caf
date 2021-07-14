@@ -5,13 +5,13 @@
 #
 #
 
-output "nat_gateway" {
+output "nat_gateways" {
   value = module.nat_gateway
 }
 
-module "nat_gateway" {
-  source   = "./modules/networking/nat_gateway"
-  for_each = try(local.networking.nat_gateway, {})
+module "nat_gateways" {
+  source   = "./modules/networking/nat_gateways"
+  for_each = try(local.networking.nat_gateways, {})
 
   settings                   = each.value
   name                       = try(each.value.name, null)
