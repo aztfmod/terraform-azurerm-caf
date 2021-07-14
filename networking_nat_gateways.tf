@@ -6,7 +6,7 @@
 #
 
 output "nat_gateways" {
-  value = module.nat_gateway
+  value = module.nat_gateways
 }
 
 module "nat_gateways" {
