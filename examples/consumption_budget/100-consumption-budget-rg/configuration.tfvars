@@ -64,9 +64,10 @@ consumption_budgets = {
             "example",
           ]
         },
-        resource_group_key = {
+        resource_key = {
           # lz_key = "examples"
-          name = "resource_group_key"
+          name         = "resource_key"
+          resource_key = "resource_groups"
           values = [
             "test",
           ]
@@ -94,9 +95,10 @@ consumption_budgets = {
         #   #     "example",
         #   #   ]
         #   # },
-        #   resource_group_key = {
+        #   resource_key = {
         #     # lz_key = "examples"
-        #     name = "resource_group_key"
+        #     name         = "resource_key"
+        #     resource_key = "resource_groups"
         #     values = [
         #       "test",
         #     ]
