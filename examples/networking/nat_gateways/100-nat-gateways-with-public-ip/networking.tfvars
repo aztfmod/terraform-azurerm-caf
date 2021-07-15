@@ -51,7 +51,7 @@ nat_gateways = {
      region = "region1" #we need to use the CAF regions rather than using location value
      idle_timeout_in_minutes = 10 #optional if not defined will default to 4 minutes
      #zones                   = ["1"] #optional need to match public ip zone
-     vnet_key = "vnet_nat_gateway_re1"
+     #vnet_key = "vnet_nat_gateway_re1"
      resource_group_key = "nat_gateway_re1"
     }
 
