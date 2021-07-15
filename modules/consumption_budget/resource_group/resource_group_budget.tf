@@ -12,7 +12,7 @@ resource "azurerm_consumption_budget_resource_group" "this" {
   name = azurecaf_name.this_name.result
   resource_group_id = coalesce(
     try(var.settings.resource_group.id, null),
-    try(var.resource_groups[try(var.settings.resource_group.lz_key, var.client_config.landingzone_key)][var.settings.resource_group.key].id, null)
+    try(var.local_combined_resources["resource_groups"][try(var.settings.resource_group.lz_key, var.client_config.landingzone_key)][var.settings.resource_group.key].id, null)
   )
 
   amount     = var.settings.amount
@@ -32,7 +32,7 @@ resource "azurerm_consumption_budget_resource_group" "this" {
 
       contact_emails = try(notification.value.contact_emails, [])
       contact_groups = try(notification.value.contact_groups, try(flatten([
-        for key, value in var.monitor_action_groups[try(notification.value.lz_key, var.client_config.landingzone_key)] : value.id
+        for key, value in var.local_combined_resources["monitor_action_groups"][try(notification.value.lz_key, var.client_config.landingzone_key)] : value.id
         if contains(notification.value.contact_groups_keys, key)
         ]), [])
       )
@@ -48,7 +48,7 @@ resource "azurerm_consumption_budget_resource_group" "this" {
       dynamic "dimension" {
         for_each = {
           for key, value in try(var.settings.filter.dimensions, {}) : key => value
-          if lower(value.name) != "resource_group_key"
+          if lower(value.name) != "resource_key"
         }
 
         content {
@@ -61,14 +61,14 @@ resource "azurerm_consumption_budget_resource_group" "this" {
       dynamic "dimension" {
         for_each = {
           for key, value in try(var.settings.filter.dimensions, {}) : key => value
-          if lower(value.name) == "resource_group_key"
+          if lower(value.name) == "resource_key"
         }
 
         content {
           name     = "ResourceId"
           operator = try(dimension.value.operator, "In")
           values = try(flatten([
-            for key, value in var.resource_groups[try(dimension.value.lz_key, var.client_config.landingzone_key)] : value.id
+            for key, value in var.local_combined_resources[dimension.value.resource_key][try(dimension.value.lz_key, var.client_config.landingzone_key)] : value.id
             if contains(dimension.value.values, key)
           ]), [])
         }
@@ -93,7 +93,7 @@ resource "azurerm_consumption_budget_resource_group" "this" {
           dynamic "dimension" {
             for_each = {
               for key, value in try(var.settings.filter.not.dimension, {}) : key => value
-              if lower(value.name) != "resource_group_key"
+              if lower(value.name) != "resource_key"
             }
 
             content {
@@ -106,14 +106,14 @@ resource "azurerm_consumption_budget_resource_group" "this" {
           dynamic "dimension" {
             for_each = {
               for key, value in try(var.settings.filter.not.dimension, {}) : key => value
-              if lower(value.name) == "resource_group_key"
+              if lower(value.name) == "resource_key"
             }
 
             content {
               name     = "ResourceId"
               operator = try(dimension.value.operator, "In")
               values = try(flatten([
-                for key, value in var.resource_groups[try(dimension.value.lz_key, var.client_config.landingzone_key)] : value.id
+                for key, value in var.local_combined_resources[dimension.value.resource_key][try(dimension.value.lz_key, var.client_config.landingzone_key)] : value.id
                 if contains(dimension.value.values, key)
               ]), [])
             }
