@@ -115,8 +115,7 @@ resource "azurerm_application_gateway" "agw" {
       backend_address_pool_name  = local.backend_pools[request_routing_rule.value.app_key].name
       url_path_map_name = try(local.request_routing_rules[format("%s-%s", request_routing_rule.value.app_key, request_routing_rule.value.request_routing_rule_key)].rule.url_path_map_name, try(local.url_path_maps[format("%s-%s", request_routing_rule.value.app_key,
       local.request_routing_rules[format("%s-%s", request_routing_rule.value.app_key, request_routing_rule.value.request_routing_rule_key)].rule.url_path_map_key)].name, null))
-
-
+      rewrite_rule_set_name      = try(local.rewrite_rule_sets[format("%s-%s", request_routing_rule.value.app_key, local.request_routing_rules[format("%s-%s", request_routing_rule.value.app_key, request_routing_rule.value.request_routing_rule_key)].rule.rewrite_rule_set_key)].name, null)
     }
   }
 
@@ -126,6 +125,7 @@ resource "azurerm_application_gateway" "agw" {
       default_backend_address_pool_name  = try(url_path_map.value.default_backend_address_pool_name, var.application_gateway_applications[url_path_map.value.app_key].name)
       default_backend_http_settings_name = try(url_path_map.value.default_backend_http_settings_name, var.application_gateway_applications[url_path_map.value.app_key].name)
       name                               = url_path_map.value.name
+      default_rewrite_rule_set_name      = try(local.rewrite_rule_sets[format("%s-%s", url_path_map.value.app_key, url_path_map.value.default_rewrite_rule_set_key)].name, null)
 
       dynamic "path_rule" {
         for_each = try(url_path_map.value.path_rules, [])
@@ -135,6 +135,7 @@ resource "azurerm_application_gateway" "agw" {
           backend_http_settings_name = try(var.application_gateway_applications[path_rule.value.backend_http_setting.app_key].name, var.application_gateway_applications[url_path_map.value.app_key].name)
           name                       = path_rule.value.name
           paths                      = path_rule.value.paths
+          rewrite_rule_set_name      = try(local.rewrite_rule_sets[format("%s-%s", url_path_map.value.app_key, path_rule.value.rewrite_rule_set_key)].name, null)
         }
       }
     }
@@ -287,9 +288,50 @@ resource "azurerm_application_gateway" "agw" {
 
   # autoscale_configuration {}
 
-  # rewrite_rule_set {}
+  dynamic "rewrite_rule_set" {
+    for_each = try(local.rewrite_rule_sets)
 
-
+    content {
+      name  = rewrite_rule_set.value.name
+      dynamic "rewrite_rule" {
+        for_each = try(rewrite_rule_set.value.rewrite_rules, {})
+        content {
+          name          = rewrite_rule.value.name
+          rule_sequence = rewrite_rule.value.rule_sequence
+          dynamic "condition" {
+            for_each = try(rewrite_rule.value.conditions, {})
+            content {
+              variable    = condition.value.variable
+              pattern     = condition.value.pattern
+              ignore_case = try(condition.value.ignore_case, false)
+              negate      = try(condition.value.negate, false)
+            }
+          }
+          dynamic "request_header_configuration" {
+            for_each = try(rewrite_rule.value.request_header_configurations, {})
+            content {
+              header_name   = request_header_configuration.value.header_name
+              header_value  = request_header_configuration.value.header_value
+            }
+          }
+          dynamic "response_header_configuration" {
+            for_each = try(rewrite_rule.value.response_header_configurations, {})
+            content {
+              header_name   = response_header_configuration.value.header_name
+              header_value  = response_header_configuration.value.header_value
+            }
+          }
+          dynamic "url" {
+            for_each = try(rewrite_rule.value.url, null) == null ? [] : [1]
+            content {
+              path              = url.value.path
+              query_string      = url.value.query_string
+            }
+          }
+        }
+      }
+    }
+  }
 }
 
 output "certificate_keys" {
