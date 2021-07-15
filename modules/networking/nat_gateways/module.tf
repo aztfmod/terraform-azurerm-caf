@@ -1,3 +1,15 @@
+#TODO: Implement right naming convention
+# resource "azurecaf_name" "nat_gateway" {
+#   name          = var.name
+#   resource_type = "azurerm_nat_gateway"
+#   prefixes      = var.global_settings.prefixes
+#   random_length = var.global_settings.random_length
+#   clean_input   = true
+#   passthrough   = var.global_settings.passthrough
+#   use_slug      = var.global_settings.use_slug
+# }
+
+
 resource "azurerm_nat_gateway" "nat_gateway" {
   name                     = var.name
   location                 = var.location
@@ -7,9 +19,6 @@ resource "azurerm_nat_gateway" "nat_gateway" {
   tags                     = local.tags
 }
 
-
-
-
 module "nat_gateway_subnet" {
   count  = try(var.settings.subnet_key, null) == null ? 0 : 1
   source = "./subnet_association"
@@ -17,9 +26,6 @@ module "nat_gateway_subnet" {
   subnet_id      = var.subnet_id
   nat_gateway_id = azurerm_nat_gateway.nat_gateway.id
 }
-
-
-
 
 module "nat_gateway_public_ip" {
   count  = try(var.settings.public_ip_key, null) == null ? 0 : 1
