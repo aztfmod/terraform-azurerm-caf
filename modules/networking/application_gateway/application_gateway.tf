@@ -324,8 +324,9 @@ resource "azurerm_application_gateway" "agw" {
           dynamic "url" {
             for_each = try(rewrite_rule.value.url, null) == null ? [] : [1]
             content {
-              path              = url.value.path
-              query_string      = url.value.query_string
+              path              = try(url.value.path,null)
+              query_string      = try(url.value.query_string,null)
+              reroute           = try(url.value.reroute,null)
             }
           }
         }
