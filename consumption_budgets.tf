@@ -21,11 +21,12 @@ module "consumption_budgets_subscriptions" {
     if try(value.subscription, null) != null
   }
 
-  client_config         = local.client_config
-  global_settings       = local.global_settings
-  monitor_action_groups = local.combined_objects_monitor_action_groups
-  # lz_key used in dimension to reference remote state
-  resource_groups = local.combined_objects_resource_groups
+  local_combined_resources = {
+    monitor_action_groups = local.combined_objects_monitor_action_groups,
+    resource_groups       = local.combined_objects_resource_groups,
+  }
+  client_config   = local.client_config
+  global_settings = local.global_settings
   settings        = each.value
   subscription_id = coalesce(
     try(each.value.subscription.id, null),
