@@ -24,15 +24,11 @@ module "consumption_budgets_subscriptions" {
   local_combined_resources = {
     monitor_action_groups = local.combined_objects_monitor_action_groups,
     resource_groups       = local.combined_objects_resource_groups,
+    subscriptions         = local.combined_objects_subscriptions,
   }
   client_config   = local.client_config
   global_settings = local.global_settings
   settings        = each.value
-  subscription_id = coalesce(
-    try(each.value.subscription.id, null),
-    try(local.combined_objects_subscriptions[try(each.value.subscription.lz_key, local.client_config.landingzone_key)][each.value.subscription.key].subscription_id, null),
-    local.client_config.subscription_id
-  )
 }
 
 output "consumption_budgets_resource_groups" {

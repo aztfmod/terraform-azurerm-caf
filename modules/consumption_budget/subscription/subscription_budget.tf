@@ -9,8 +9,12 @@ resource "azurecaf_name" "this_name" {
 }
 
 resource "azurerm_consumption_budget_subscription" "this" {
-  name            = azurecaf_name.this_name.result
-  subscription_id = var.subscription_id
+  name = azurecaf_name.this_name.result
+  subscription_id = coalesce(
+    try(var.settings.subscription.id, null),
+    try(var.local_combined_resources["subscriptions"][try(var.settings.subscription.lz_key, var.client_config.landingzone_key)][var.settings.subscription.key].subscription_id, null),
+    var.client_config.subscription_id
+  )
 
   amount     = var.settings.amount
   time_grain = var.settings.time_grain

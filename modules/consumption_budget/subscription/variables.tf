@@ -13,8 +13,3 @@ variable "local_combined_resources" {
 variable "settings" {
   description = "Configuration object for the consumption budget subscription"
 }
-
-variable "subscription_id" {
-  description = "The ID of the Subscription to create the consumption budget for"
-  type        = string
-}
