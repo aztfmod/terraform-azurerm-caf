@@ -131,7 +131,7 @@ resource "azurerm_application_gateway" "agw" {
         for_each = try(url_path_map.value.path_rules, [])
 
         content {
-          backend_address_pool_name  = try(var.application_gateway_applications[path_rule.value.backend_pool.app_key].name, var.application_gateway_applications[path_rule.value.backend_pool.app_key].name)
+          backend_address_pool_name  = try(var.application_gateway_applications[path_rule.value.backend_pool.app_key].name, var.application_gateway_applications[url_path_map.value.app_key].name)
           backend_http_settings_name = try(var.application_gateway_applications[path_rule.value.backend_http_setting.app_key].name, var.application_gateway_applications[url_path_map.value.app_key].name)
           name                       = path_rule.value.name
           paths                      = path_rule.value.paths
