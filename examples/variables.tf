@@ -339,6 +339,9 @@ variable "application_gateway_platforms" {
 variable "application_gateway_applications" {
   default = {}
 }
+variable "application_gateway_applications_v1" {
+  default = {}
+}
 variable "application_gateway_waf_policies" {
   default = {}
 }

@@ -181,6 +181,7 @@ locals {
 
   networking = {
     application_gateway_applications                        = try(var.networking.application_gateway_applications, {})
+    application_gateway_applications_v1                     = try(var.networking.application_gateway_applications_v1, {})
     application_gateway_platforms                           = try(var.networking.application_gateway_platforms, {})
     application_gateway_waf_policies                        = try(var.networking.application_gateway_waf_policies, {})
     application_gateways                                    = try(var.networking.application_gateways, {})
