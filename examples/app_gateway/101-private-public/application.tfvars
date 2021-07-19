@@ -72,7 +72,7 @@ application_gateway_applications = {
 
     rewrite_rule_sets = {
       rule_set_1 = {
-        name = "headers-response-processing"
+        name = "header-rules"
         rewrite_rules = {
           rule_1 = {
             name = "server-header-remove"
@@ -87,8 +87,8 @@ application_gateway_applications = {
             #}
             response_header_configurations = {
               server_header = {
-                  header_name     = "Server"
-                  header_value    = ""  # Use blank value to remove header
+                header_name     = "Server"
+                header_value    = ""  # Use blank value to remove header
               }
             }
             # url = {
@@ -111,8 +111,8 @@ application_gateway_applications = {
             #}
             response_header_configurations = {
               hsts_header = {
-                  header_name     = "Strict-Transport-Security"
-                  header_value    = "max-age=31536000"
+                header_name     = "Strict-Transport-Security"
+                header_value    = "max-age=31536000"
               }
             }
             # url = {
@@ -135,8 +135,8 @@ application_gateway_applications = {
             #}
             request_header_configurations = {
               foo_header = {
-                  header_name     = "foo"
-                  header_value    = "123456"
+                header_name     = "foo"
+                header_value    = "123456"
               }
             }
             # url = {
