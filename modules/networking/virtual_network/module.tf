@@ -71,6 +71,7 @@ module "nsg" {
   network_security_group_definition = var.network_security_group_definition
   resource_group                    = var.resource_group_name
   subnets                           = var.settings.subnets
+  network_watchers                  = var.network_watchers
   tags                              = local.tags
   virtual_network_name              = azurerm_virtual_network.vnet.name
 }

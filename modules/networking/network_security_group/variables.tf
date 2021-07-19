@@ -29,3 +29,7 @@ variable "network_watchers" {
   description = "Optional - Network Watches Object"
   default     = {}
 }
+
+variable "client_config" {
+  description = "client_config object (see module README.md)"
+}
