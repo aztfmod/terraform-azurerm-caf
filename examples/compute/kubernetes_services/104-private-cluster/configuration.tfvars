@@ -8,7 +8,7 @@ global_settings = {
 
 
 resource_groups = {
-  aks1_re1 = {
+  aks_re1 = {
     name   = "aks-re1"
     region = "region1"
   }

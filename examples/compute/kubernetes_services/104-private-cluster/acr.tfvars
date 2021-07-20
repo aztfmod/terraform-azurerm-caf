@@ -1,7 +1,7 @@
 azure_container_registries = {
   acr1 = {
     name               = "acr-test"
-    resource_group_key = "aks1_re1"
+    resource_group_key = "aks_re1"
     sku                = "Premium"
     diagnostic_profiles = {
       operations = {
@@ -17,9 +17,8 @@ azure_container_registries = {
       # Require enforce_private_link_endpoint_network_policies set to true on the subnet
       spoke_aks_re1-aks_nodepool_system = {
         name               = "acr-test-private-link"
-        resource_group_key = "aks1_re1"
+        resource_group_key = "aks_re1"
 
-        lz_key     = "networking_spoke_aks"
         vnet_key   = "spoke_aks_re1"
         subnet_key = "private_endpoints"
 
