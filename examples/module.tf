@@ -70,6 +70,11 @@ module "example" {
   #   synapseAnalyticsResourceId                  = var.synapseAnalyticsResourceId
   #   vmImageAliasDoc                             = var.vmImageAliasDoc
   # }
+
+  cognitive_service = {
+    cognitive_service_account = var.cognitive_service_account
+  }
+
   compute = {
     aks_clusters               = var.aks_clusters
     availability_sets          = var.availability_sets
