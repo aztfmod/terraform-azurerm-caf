@@ -552,3 +552,6 @@ variable "storage_account_queues" {
 variable "storage_account_blobs" {
   default = {}
 }
+variable "cognitive_service_account" {
+  default = {}
+}
