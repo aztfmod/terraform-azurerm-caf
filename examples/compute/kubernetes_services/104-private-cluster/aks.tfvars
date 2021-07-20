@@ -1,7 +1,7 @@
 aks_clusters = {
   cluster_re1 = {
     name               = "akscluster-001"
-    resource_group_key = "aks1_re1"
+    resource_group_key = "aks_re1"
     os_type            = "Linux"
 
     diagnostic_profiles = {
@@ -16,7 +16,6 @@ aks_clusters = {
       type = "SystemAssigned"
     }
 
-    lz_key   = "networking_spoke_aks"
     vnet_key = "spoke_aks_re1"
 
     network_policy = {
