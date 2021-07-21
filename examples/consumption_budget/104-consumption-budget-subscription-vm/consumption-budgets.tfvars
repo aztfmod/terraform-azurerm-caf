@@ -25,13 +25,6 @@ consumption_budgets = {
     }
     filter = {
       dimensions = {
-        # explicit_name = {
-        #   name     = "ResourceGroupName"
-        #   operator = "In"
-        #   values = [
-        #     "example",
-        #   ]
-        # },
         resource_key = {
           # lz_key = "examples"
           name         = "resource_key"
