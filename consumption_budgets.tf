@@ -6,8 +6,10 @@ module "consumption_budgets_resource_groups" {
   }
 
   local_combined_resources = {
+    # Add combined objects that need to be included in the filter
     monitor_action_groups = local.combined_objects_monitor_action_groups,
     resource_groups       = local.combined_objects_resource_groups,
+    virtual_machines      = local.combined_objects_virtual_machines,
   }
   client_config   = local.client_config
   global_settings = local.global_settings
@@ -22,9 +24,11 @@ module "consumption_budgets_subscriptions" {
   }
 
   local_combined_resources = {
+    # Add combined objects that need to be included in the filter
     monitor_action_groups = local.combined_objects_monitor_action_groups,
     resource_groups       = local.combined_objects_resource_groups,
     subscriptions         = local.combined_objects_subscriptions,
+    virtual_machines      = local.combined_objects_virtual_machines,
   }
   client_config   = local.client_config
   global_settings = local.global_settings
