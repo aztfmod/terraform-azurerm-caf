@@ -23,6 +23,7 @@ The following examples are available:
 | [102-consumption-budget-rg-alerts](./102-consumption-budget-rg-alerts) | Simple example for consumption budget deployed at resource group scope, integrated with action groups. |
 | [103-consumption-budget-subscription-alerts](./103-consumption-budget-subscription-alerts) | Simple example for consumption budget deployed at subscription scope, integrated with action groups. |
 | [104-consumption-budget-subscription-vm](./104-consumption-budget-subscription-vm) | Consumption budget deployed at subscription scope, integrated with Azure windows virtual machine. |
+| [105-consumption-budget-subscription-aks](./105-consumption-budget-subscription-vm) | Consumption budget deployed at subscription scope, integrated with Azure Kubernetes Service single cluster |
 
 ## Run this example
 
