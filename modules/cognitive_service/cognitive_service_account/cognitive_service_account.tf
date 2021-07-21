@@ -13,20 +13,20 @@ resource "azurerm_cognitive_account" "service" {
   location            = var.location
   resource_group_name = var.resource_group_name
   kind                = var.settings.kind
-  sku_name = var.settings.sku_name
+  sku_name            = var.settings.sku_name
 
-	qna_runtime_endpoint = var.settings.kind == "QnAMaker" ? var.settings.qna_runtime_endpoint : try(var.settings.qna_runtime_endpoint, null)
-	
-	dynamic "network_acls" {
-		for_each = try(var.settings.network_acls, null) == null ? [] : [1]
-		content {
-			default_action   = var.settings.network_acls.default_action
-			ip_rules = var.settings.network_acls.ip_rules
-			virtual_network_subnet_ids = var.settings.network_acls.virtual_network_subnet_ids
-		}
-	}
+  qna_runtime_endpoint = var.settings.kind == "QnAMaker" ? var.settings.qna_runtime_endpoint : try(var.settings.qna_runtime_endpoint, null)
 
-	custom_subdomain_name = try(var.settings.custom_subdomain_name, null)
+  dynamic "network_acls" {
+    for_each = try(var.settings.network_acls, null) == null ? [] : [1]
+    content {
+      default_action             = var.settings.network_acls.default_action
+      ip_rules                   = try(var.settings.network_acls.ip_rules, null)
+      virtual_network_subnet_ids = try(var.settings.network_acls.virtual_network_subnet_ids, null)
+    }
+  }
+
+  custom_subdomain_name = try(var.settings.custom_subdomain_name, null)
 
   tags = try(var.settings.tags, {})
 }

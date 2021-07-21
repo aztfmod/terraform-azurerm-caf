@@ -26,11 +26,11 @@ cognitive_service_account = {
     tags = {
       env = "test"
     }
-		custom_subdomain_name = "cs-alz-caf-test-1"
-		network_acls = {
-			default_action = "Allow"
-			ip_rules = ["10.10.10.0/16"]
-		}
+    custom_subdomain_name = "cs-alz-caf-test-1"
+    network_acls = {
+      default_action = "Allow"
+      ip_rules       = ["10.10.10.0/16"]
+    }
   }
   test_account-2 = {
     resource_group = {
@@ -45,8 +45,8 @@ cognitive_service_account = {
     tags = {
       env = "test"
     }
-		qna_runtime_endpoint = "https://cs-alz-caf-test-2.azurewebsites.net"
-		
+    qna_runtime_endpoint = "https://cs-alz-caf-test-2.azurewebsites.net"
+
   }
 }
 
