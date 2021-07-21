@@ -19,8 +19,6 @@ managed_identities = {
     # Assign read access to level0
     name = "msi-level0"
     resource_group = {
-      # accepts either id or key to get resource group id
-      # id = "/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/resourceGroup1"
       # lz_key = "examples"
       key = "msi_region1"
     }
@@ -35,8 +33,6 @@ managed_identities = {
     # Assign read access to level0
     name = "msi-level1"
     resource_group = {
-      # accepts either id or key to get resource group id
-      # id = "/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/resourceGroup1"
       # lz_key = "examples"
       key = "msi_region1"
     }
@@ -51,8 +47,6 @@ managed_identities = {
     # Assign read access to level1
     name = "msi-level2"
     resource_group = {
-      # accepts either id or key to get resource group id
-      # id = "/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/resourceGroup1"
       # lz_key = "examples"
       key = "msi_region1"
     }
@@ -67,8 +61,6 @@ managed_identities = {
     # Assign read access to level2
     name = "msi-level3"
     resource_group = {
-      # accepts either id or key to get resource group id
-      # id = "/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/resourceGroup1"
       # lz_key = "examples"
       key = "msi_region1"
     }
@@ -83,8 +75,6 @@ managed_identities = {
     # Assign read access to level3
     name = "msi-level4"
     resource_group = {
-      # accepts either id or key to get resource group id
-      # id = "/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/resourceGroup1"
       # lz_key = "examples"
       key = "msi_region1"
     }
