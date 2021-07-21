@@ -39,7 +39,6 @@ netapp_accounts = {
             # Minimum 100
             storage_quota_in_gb = "100"
             # To be defined
-            #export_policy_rule = {}
             tags = {
               volume = "volume 1"
             }
