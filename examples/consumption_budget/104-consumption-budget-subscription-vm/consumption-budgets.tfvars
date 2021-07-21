@@ -34,8 +34,8 @@ consumption_budgets = {
         # },
         resource_key = {
           # lz_key = "examples"
-          name     = "resource_key"
-          resource = "virtual_machines"
+          name         = "resource_key"
+          resource_key = "virtual_machines"
           values = [
             "example_vm1",
           ]
