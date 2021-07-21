@@ -1,7 +1,7 @@
 resource "azurecaf_name" "ag1_name" {
   name          = var.settings.action_group_name
   prefixes      = var.global_settings.prefixes
-  resource_type = "azurerm_application_insights"
+  resource_type = "azurerm_monitor_action_group"
   random_length = var.global_settings.random_length
   clean_input   = true
   passthrough   = var.global_settings.passthrough

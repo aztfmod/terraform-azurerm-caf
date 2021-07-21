@@ -235,7 +235,9 @@ locals {
 
   shared_services = {
     automations              = try(var.shared_services.automations, {})
+    consumption_budgets      = try(var.shared_services.consumption_budgets, {})
     image_definitions        = try(var.shared_services.image_definitions, {})
+    monitor_action_groups    = try(var.shared_services.monitor_action_groups, {})
     monitoring               = try(var.shared_services.monitoring, {})
     packer_managed_identity  = try(var.shared_services.packer_managed_identity, {})
     packer_service_principal = try(var.shared_services.packer_service_principal, {})

@@ -3,16 +3,16 @@ locals {
   gateway_vnet_local = try(coalesce(
     try(var.vnets[var.client_config.landingzone_key][var.settings.vnet_key], null),
     try(var.vnets[var.client_config.landingzone_key][var.settings.subnet.vnet_key], null)
-  ), null )
-  
+  ), null)
+
   private_vnet_local = try(var.vnets[var.client_config.landingzone_key][var.settings.front_end_ip_configurations.private.vnet_key], null)
   public_vnet_local  = try(var.vnets[var.client_config.landingzone_key][var.settings.front_end_ip_configurations.public.vnet_key], null)
 
   gateway_vnet_remote = try(coalesce(
     try(var.vnets[var.settings.lz_key][var.settings.vnet_key], null),
     try(var.vnets[var.settings.subnet.lz_key][var.settings.subnet.vnet_key], null)
-  ), null )
-  
+  ), null)
+
   private_vnet_remote = try(var.vnets[var.settings.front_end_ip_configurations.private.lz_key][var.settings.front_end_ip_configurations.private.vnet_key], null)
   public_vnet_remote  = try(var.vnets[var.settings.front_end_ip_configurations.public.lz_key][var.settings.front_end_ip_configurations.public.vnet_key], null)
 

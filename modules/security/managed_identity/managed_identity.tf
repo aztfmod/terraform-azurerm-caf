@@ -17,3 +17,9 @@ resource "azurerm_user_assigned_identity" "msi" {
   location            = var.location
   tags                = try(merge(var.base_tags, local.tags), {})
 }
+
+resource "time_sleep" "propagate_to_azuread" {
+  depends_on = [azurerm_user_assigned_identity.msi]
+
+  create_duration = "30s"
+}
