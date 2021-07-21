@@ -7,6 +7,7 @@ module "consumption_budgets_resource_groups" {
 
   local_combined_resources = {
     # Add combined objects that need to be included in the filter
+    aks                   = local.combined_objects_aks_clusters,
     monitor_action_groups = local.combined_objects_monitor_action_groups,
     resource_groups       = local.combined_objects_resource_groups,
     virtual_machines      = local.combined_objects_virtual_machines,
@@ -25,6 +26,7 @@ module "consumption_budgets_subscriptions" {
 
   local_combined_resources = {
     # Add combined objects that need to be included in the filter
+    aks                   = local.combined_objects_aks_clusters,
     monitor_action_groups = local.combined_objects_monitor_action_groups,
     resource_groups       = local.combined_objects_resource_groups,
     subscriptions         = local.combined_objects_subscriptions,
