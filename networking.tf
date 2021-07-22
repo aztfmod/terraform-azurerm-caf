@@ -6,7 +6,10 @@ output "vnets" {
 
 output "public_ip_addresses" {
   value = module.public_ip_addresses
+}
 
+output "network_watchers" {
+  value = module.network_watchers
 }
 
 
@@ -17,6 +20,7 @@ output "public_ip_addresses" {
 #
 
 module "networking" {
+  depends_on = [module.network_watchers]
   source   = "./modules/networking/virtual_network"
   for_each = local.networking.vnets
 
@@ -27,7 +31,7 @@ module "networking" {
   global_settings                   = local.global_settings
   network_security_groups           = module.network_security_groups
   network_security_group_definition = local.networking.network_security_group_definition
-  network_watchers                  = try(local.combined_objects_network_watchers, null)
+  network_watchers                  = local.combined_objects_network_watchers
   route_tables                      = module.route_tables
   settings                          = each.value
   tags                              = try(each.value.tags, null)
@@ -170,10 +174,10 @@ module "routes" {
   address_prefix         = each.value.address_prefix
   next_hop_type          = each.value.next_hop_type
   next_hop_in_ip_address = try(lower(each.value.next_hop_type), null) == "virtualappliance" ? try(each.value.next_hop_in_ip_address, null) : null
-  next_hop_in_ip_address_fw = try(lower(each.value.next_hop_type), null) == "virtualappliance" ? coalesce(
+  next_hop_in_ip_address_fw = try(lower(each.value.next_hop_type), null) == "virtualappliance" ? try(coalesce(
     try(local.combined_objects_azurerm_firewalls[try(each.value.private_ip_keys.azurerm_firewall.lz_key, local.client_config.landingzone_key)][each.value.private_ip_keys.azurerm_firewall.key].ip_configuration[each.value.private_ip_keys.azurerm_firewall.interface_index].private_ip_address, null),
     try(local.combined_objects_azurerm_firewalls[try(each.value.lz_key, local.client_config.landingzone_key)][each.value.private_ip_keys.azurerm_firewall.key].ip_configuration[each.value.private_ip_keys.azurerm_firewall.interface_index].private_ip_address, null)
-  ) : null
+  ), null) : null
 
 }
 
