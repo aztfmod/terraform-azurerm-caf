@@ -553,8 +553,8 @@ variable "storage_account_blobs" {
   default = {}
 }
 variable "nat_gateways" {
-    default = {}
+  default = {}
 }
-variable "cognitive_service_account" {
+variable "cognitive_services_account" {
   default = {}
 }

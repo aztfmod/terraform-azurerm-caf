@@ -3,7 +3,7 @@ global_settings = {
   regions = {
     region1 = "westus"
   }
-  #random_length = 5
+  random_length = 5
 }
 
 resource_groups = {
@@ -12,7 +12,7 @@ resource_groups = {
   }
 }
 
-cognitive_service_account = {
+cognitive_services_account = {
   test_account-1 = {
     resource_group = {
       # accepts either id or key to get resource group id
@@ -26,11 +26,11 @@ cognitive_service_account = {
     tags = {
       env = "test"
     }
-    custom_subdomain_name = "cs-alz-caf-test-1"
-    network_acls = {
-      default_action = "Allow"
-      ip_rules       = ["10.10.10.0/16"]
-    }
+    # custom_subdomain_name = "cs-alz-caf-test-1"
+    # network_acls = {
+    #   default_action = "Allow"
+    #   ip_rules       = ["10.10.10.0/16"]
+    # }
   }
   test_account-2 = {
     resource_group = {
