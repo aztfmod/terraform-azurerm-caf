@@ -71,8 +71,8 @@ module "example" {
   #   vmImageAliasDoc                             = var.vmImageAliasDoc
   # }
 
-  cognitive_service = {
-    cognitive_service_account = var.cognitive_service_account
+  cognitive_services = {
+    cognitive_services_account = var.cognitive_services_account
   }
 
   compute = {

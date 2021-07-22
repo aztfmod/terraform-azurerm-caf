@@ -1,6 +1,6 @@
-module "cognitive_service_account" {
-  source   = "./modules/cognitive_service/cognitive_service_account"
-  for_each = local.cognitive_service.cognitive_service_account
+module "cognitive_services_account" {
+  source   = "./modules/cognitive_services/cognitive_services_account"
+  for_each = local.cognitive_services.cognitive_services_account
 
   client_config       = local.client_config
   global_settings     = local.global_settings
