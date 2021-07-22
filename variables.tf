@@ -354,3 +354,8 @@ variable "random_strings" {
   description = "Configuration object - Random string generator resources"
   default     = {}
 }
+
+variable "cognitive_service" {
+  description = "onfiguration object - Cognitive Service Resource "
+  default     = {}
+}

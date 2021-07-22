@@ -17,6 +17,7 @@ locals {
   combined_objects_azuread_groups                      = merge(tomap({ (local.client_config.landingzone_key) = module.azuread_groups }), try(var.remote_objects.azuread_groups, {}))
   combined_objects_azuread_users                       = merge(tomap({ (local.client_config.landingzone_key) = module.azuread_users }), try(var.remote_objects.azuread_users, {}))
   combined_objects_azurerm_firewalls                   = merge(tomap({ (local.client_config.landingzone_key) = module.azurerm_firewalls }), try(var.remote_objects.azurerm_firewalls, {}))
+  combined_objects_cognitive_service_accounts          = merge(tomap({ (local.client_config.landingzone_key) = module.cognitive_service_account }), try(var.remote_objects.cognitive_service_account, {}))
   combined_objects_consumption_budgets_resource_groups = merge(tomap({ (local.client_config.landingzone_key) = module.consumption_budgets_resource_groups }), try(var.remote_objects.consumption_budgets_resource_groups, {}))
   combined_objects_consumption_budgets_subscriptions   = merge(tomap({ (local.client_config.landingzone_key) = module.consumption_budgets_subscriptions }), try(var.remote_objects.consumption_budgets_subscriptions, {}))
   combined_objects_container_registry                  = merge(tomap({ (local.client_config.landingzone_key) = module.container_registry }), try(var.remote_objects.container_registry, {}))
