@@ -1,4 +1,4 @@
 
-echo "rg: ${RG_NAME} gateway: ${APPLICATION_GATEWAY_NAME} poolname: ${NAME}"
+echo "rg: ${RG_NAME} gateway: ${APPLICATION_GATEWAY_NAME}"
 
-az network application-gateway http-settings delete -g ${RG_NAME} --gateway-name ${APPLICATION_GATEWAY_NAME} -n ${NAME}
+az network application-gateway http-listener delete -g ${RG_NAME} --gateway-name ${APPLICATION_GATEWAY_NAME} -n ${NAME}
