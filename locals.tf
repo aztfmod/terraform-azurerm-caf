@@ -179,6 +179,10 @@ locals {
     logic_app_workflow              = try(var.logic_app.logic_app_workflow, {})
   }
 
+  cognitive_services = {
+    cognitive_services_account = try(var.cognitive_services.cognitive_services_account, {})
+  }
+
   networking = {
     application_gateway_applications                        = try(var.networking.application_gateway_applications, {})
     application_gateway_waf_policies                        = try(var.networking.application_gateway_waf_policies, {})
