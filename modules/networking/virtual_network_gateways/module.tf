@@ -30,6 +30,24 @@ resource "azurerm_virtual_network_gateway" "vngw" {
     }
   }
 
+  dynamic "vpn_client_configuration" {
+    for_each = try(var.settings.vpn_client_configuration, {})
+    content {
+      address_space                          = vpn_client_configuration.value.address_space
+      root_certificate {
+        name = vpn_client_configuration.value.root_certificate.name
+        public_cert_data = vpn_client_configuration.value.root_certificate.public_cert_data
+      }
+      dynamic "revoked_certificate" {
+        for_each = try(vpn_client_configuration.value.revoked_certificate, {})
+        content {
+          name = revoked_certificate.value.name
+          thumbprint = revoked_certificate.value.thumbprint
+        }
+      }
+    }
+  }
+
   active_active = try(var.settings.active_active, null)
   enable_bgp    = try(var.settings.enable_bgp, null)
   #vpn_type defaults to 'RouteBased'. Type 'PolicyBased' supported only by Basic SKU
