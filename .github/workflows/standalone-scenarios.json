@@ -24,6 +24,8 @@
     "compute/dedicated_hosts/102-dedicated-host-vms",
     "compute/kubernetes_services/101-single-cluster",
     "compute/kubernetes_services/102-multi-nodepools",
+    "compute/kubernetes_services/103-multi-clusters",
+    "compute/kubernetes_services/104-private-cluster",
     "compute/proximity_placement_group",
     "compute/virtual_machine/101-single-windows-vm",
     "compute/virtual_machine/102-single-vm-data-disks",
