@@ -12,8 +12,7 @@ on:
       - .github/workflows/master-100.yaml
       - 'documentation/**'
       - '_pictures/**'
-      - 'README.md'
-      - 'examples/README.md'
+      - '**/README.md'
       - 'CHANGELOG.md'
   schedule:
     - cron:  '0 0 * * 0' #1 AM on Sunday
