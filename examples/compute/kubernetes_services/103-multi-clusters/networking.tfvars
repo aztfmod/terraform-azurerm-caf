@@ -1,6 +1,6 @@
 vnets = {
   spoke_aks_re1 = {
-    resource_group_key = "aks_spoke_re1"
+    resource_group_key = "aks_re1"
     region             = "region1"
     vnet = {
       name          = "aks-re1"
@@ -43,7 +43,7 @@ vnets = {
   }
 
   spoke_aks_re2 = {
-    resource_group_key = "aks_spoke_re2"
+    resource_group_key = "aks_re2"
     region             = "region2"
     vnet = {
       name          = "aks-re2"
