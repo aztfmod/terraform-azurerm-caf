@@ -26,6 +26,7 @@
     "compute/kubernetes_services/102-multi-nodepools",
     "compute/kubernetes_services/103-multi-clusters",
     "compute/kubernetes_services/104-private-cluster",
+    "compute/kubernetes_services/105-cluster-usermsi",
     "compute/proximity_placement_group",
     "compute/virtual_machine/101-single-windows-vm",
     "compute/virtual_machine/102-single-vm-data-disks",
