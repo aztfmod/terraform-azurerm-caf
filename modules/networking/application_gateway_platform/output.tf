@@ -6,6 +6,14 @@ output "name" {
   value = azurecaf_name.agw.result
 }
 
+output "frontend_ip_configurations" {
+  value = var.settings.front_end_ip_configurations
+}
+
+output "frontend_ports" {
+  value = var.settings.front_end_ports
+}
+
 output "private_ip_address" {
   value = local.private_ip_address
 }
