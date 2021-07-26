@@ -1,22 +1,25 @@
 
 resource "null_resource" "set_http_settings" {
-  for_each = var.settings.http_settings
+  depends_on = [null_resource.set_backend_pools]
+
+  for_each = try(var.settings.http_settings, {})
 
   triggers = {
     http_settings = jsonencode(each.value)
   }
 
   provisioner "local-exec" {
-    command     = format("%s/scripts/set_http_settings.sh", path.module)
+    command     = format("%s/scripts/set_resource.sh", path.module)
     interpreter = ["/bin/bash"]
     on_failure  = fail
 
     environment = {
+      RESOURCE                    = "HTTPSETTINGS"
       RG_NAME                     = var.application_gateway.resource_group_name
       APPLICATION_GATEWAY_NAME    = var.application_gateway.name
       NAME                        = each.value.name
-      PORT                        = each.value.port
-      PROTOCOL                    = try(each.value.protocol, null)
+      PORT                        = var.application_gateway.frontend_ports[each.value.front_end_port_key].port
+      PROTOCOL                    = try(var.application_gateway.frontend_ports[each.value.front_end_port_key].protocol, null)
       COOKIE_BASED_AFFINITY       = try(each.value.cookie_based_affinity, null)
       TIMEOUT                     = try(each.value.timeout, null)
       AFFINITY_COOKIE_NAME        = try(each.value.affinity_cookie_name, null)
@@ -33,7 +36,9 @@ resource "null_resource" "set_http_settings" {
 }
 
 resource "null_resource" "delete_http_settings" {
-  for_each = var.settings.http_settings
+  depends_on = [null_resource.delete_backend_pool]
+
+  for_each = try(var.settings.http_settings, {})
 
   triggers = {
     http_settings_name       = each.value.name
@@ -42,12 +47,13 @@ resource "null_resource" "delete_http_settings" {
   }
 
   provisioner "local-exec" {
-    command     = format("%s/scripts/delete_http_settings.sh", path.module)
+    command     = format("%s/scripts/delete_resource.sh", path.module)
     when        = destroy
     interpreter = ["/bin/bash"]
     on_failure  = fail
 
     environment = {
+      RESOURCE                 = "HTTPSETTINGS"
       NAME                     = self.triggers.http_settings_name
       RG_NAME                  = self.triggers.resource_group_name
       APPLICATION_GATEWAY_NAME = self.triggers.application_gateway_name
