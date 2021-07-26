@@ -13,26 +13,29 @@ resource "azurecaf_name" "msi" {
 
 resource "azurerm_user_assigned_identity" "msi" {
   name = azurecaf_name.msi.result
-  resource_group_name = coalesce(
-    try(var.resource_groups[var.settings.resource_group.lz_key][var.settings.resource_group.key].name, null),
-    try(var.resource_groups[var.client_config.landingzone_key][var.settings.resource_group.key].name, null),
-    try(var.resource_groups[var.settings.resource_group.lz_key][var.settings.resource_group_key].name, null),
-    try(var.resource_groups[var.client_config.landingzone_key][var.settings.resource_group_key].name, null),
+  resource_group_name = try(
+    var.resource_groups[var.settings.resource_group.lz_key][var.settings.resource_group.key].name,
+    var.resource_groups[var.client_config.landingzone_key][var.settings.resource_group.key].name,
+    var.resource_groups[var.settings.resource_group.lz_key][var.settings.resource_group_key].name,
+    var.resource_groups[var.client_config.landingzone_key][var.settings.resource_group_key].name,
+    null,
   )
-  location = coalesce(
-    try(var.resource_groups[var.settings.resource_group.lz_key][var.settings.resource_group.key].location, null),
-    try(var.resource_groups[var.client_config.landingzone_key][var.settings.resource_group.key].location, null),
-    try(var.resource_groups[var.settings.resource_group.lz_key][var.settings.resource_group_key].location, null),
-    try(var.resource_groups[var.client_config.landingzone_key][var.settings.resource_group_key].location, null),
+  location = try(
+    var.resource_groups[var.settings.resource_group.lz_key][var.settings.resource_group.key].location,
+    var.resource_groups[var.client_config.landingzone_key][var.settings.resource_group.key].location,
+    var.resource_groups[var.settings.resource_group.lz_key][var.settings.resource_group_key].location,
+    var.resource_groups[var.client_config.landingzone_key][var.settings.resource_group_key].location,
+    null,
   )
   tags = try(
     merge(
       try(var.global_settings.inherit_tags, false) ?
-      coalesce(
-        try(var.resource_groups[var.settings.resource_group.lz_key][var.settings.resource_group.key].tags, null),
-        try(var.resource_groups[var.client_config.landingzone_key][var.settings.resource_group.key].tags, null),
-        try(var.resource_groups[var.settings.resource_group.lz_key][var.settings.resource_group_key].tags, null),
-        try(var.resource_groups[var.client_config.landingzone_key][var.settings.resource_group_key].tags, null),
+      try(
+        var.resource_groups[var.settings.resource_group.lz_key][var.settings.resource_group.key].tags,
+        var.resource_groups[var.client_config.landingzone_key][var.settings.resource_group.key].tags,
+        var.resource_groups[var.settings.resource_group.lz_key][var.settings.resource_group_key].tags,
+        var.resource_groups[var.client_config.landingzone_key][var.settings.resource_group_key].tags,
+        null,
       ) : {},
       local.tags
     ),
