@@ -54,9 +54,10 @@ resource "azurerm_virtual_hub_route_table" "route_table" {
 }
 
 module "azurerm_virtual_hub_route_table" {
-  depends_on = [azurerm_virtual_hub_route_table.route_table]
-  source     = "./modules/networking/virtual_hub_route_tables"
-  for_each   = local.networking.virtual_hub_route_tables
+  remote_objects  = var.remote_objects
+  depends_on      = [azurerm_virtual_hub_route_table.route_table]
+  source          = "./modules/networking/virtual_hub_route_tables"
+  for_each        = local.networking.virtual_hub_route_tables
 
   client_config = local.client_config
   name          = each.value.name
