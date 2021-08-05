@@ -44,6 +44,13 @@ resource "azurecaf_name" "os_disk_linux" {
   clean_input   = true
   passthrough   = var.global_settings.passthrough
   use_slug      = var.global_settings.use_slug
+  
+  lifecycle {
+    ignore_changes = [
+      name
+    ]
+  }
+
 }
 
 resource "azurerm_linux_virtual_machine" "vm" {
@@ -133,6 +140,12 @@ resource "azurerm_linux_virtual_machine" "vm" {
     }
   }
 
+  lifecycle {
+    ignore_changes = [
+      os_disk,
+    ]
+  }
+  
 }
 
 #
