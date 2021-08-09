@@ -9,3 +9,12 @@ variable "application_gateway" {}
 variable "app_services" {
   default = {}
 }
+variable "keyvaults" {
+  default = {}
+}
+variable "keyvault_certificates" {
+  default = {}
+}
+variable "keyvault_certificate_requests" {
+  default = {}
+}

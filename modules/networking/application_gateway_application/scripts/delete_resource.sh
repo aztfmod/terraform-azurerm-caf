@@ -14,4 +14,7 @@ case "${RESOURCE}" in
     REQUESTROUTINGRULE)
         az network application-gateway rule delete -g ${RG_NAME} --gateway-name ${APPLICATION_GATEWAY_NAME} -n ${NAME}
         ;;
+    SSLCERT)
+        az network application-gateway ssl-cert delete -g ${RG_NAME} --gateway-name ${APPLICATION_GATEWAY_NAME} -n ${NAME}
+        ;;
 esac
