@@ -49,4 +49,12 @@ case "${RESOURCE}" in
         az network application-gateway rule create -g ${RG_NAME} --gateway-name ${APPLICATION_GATEWAY_NAME} \
         -n ${NAME} ${listener}${addresspool}${httpsettings}${priority}${redirectconfig}${rewriteruleset}${ruletype}${urlpathmap}
         ;;
+    SSLCERT)
+        certfile=$([ -z "${CERT_FILE}" ] && echo "" || echo "--cert-file ${CERT_FILE} ")
+        certpassword=$([ -z "${CERT_PASSWORD}" ] && echo "" || echo "--cert-password ${CERT_PASSWORD} ")
+        keyvaultsecretid=$([ -z "${KEY_VAULT_SECRET_ID}" ] && echo "" || echo "--key-vault-secret-id ${KEY_VAULT_SECRET_ID} ")
+        
+        az network application-gateway ssl-cert create -g ${RG_NAME} --gateway-name ${APPLICATION_GATEWAY_NAME} \
+        -n ${NAME} ${certfile}${certpassword}${keyvaultsecretid}
+        ;;
 esac
