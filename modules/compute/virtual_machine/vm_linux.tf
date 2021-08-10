@@ -54,6 +54,7 @@ resource "azurerm_linux_virtual_machine" "vm" {
   resource_group_name   = var.resource_group_name
   size                  = each.value.size
   admin_username        = each.value.admin_username
+  admin_password        = each.value.disable_password_authentication == false ? each.value.admin_password : null
   network_interface_ids = local.nic_ids
   tags                  = merge(local.tags, try(each.value.tags, null))
 
