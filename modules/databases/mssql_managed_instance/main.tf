@@ -25,9 +25,9 @@ locals {
     skuName = {
       value = var.settings.sku.name
     }
-    # skuEdition = {
-    #   value = try(var.settings.sku.edition, "GeneralPurpose")
-    # }
+    skuEdition = {
+      value = try(var.settings.sku.edition, "GeneralPurpose")
+    }
     administratorLogin = {
       value = var.settings.administratorLogin
     }
