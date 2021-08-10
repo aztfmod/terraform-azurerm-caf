@@ -28,6 +28,9 @@ module "networking" {
   network_security_groups           = module.network_security_groups
   network_security_group_definition = local.networking.network_security_group_definition
   network_watchers                  = try(local.combined_objects_network_watchers, null)
+  remote_dns                        = {
+    firewalls = try(var.remote_objects.azurerm_firewalls, null) #assumed from remote lz only
+  }
   route_tables                      = module.route_tables
   settings                          = each.value
   tags                              = try(each.value.tags, null)
