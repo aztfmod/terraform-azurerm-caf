@@ -17,7 +17,10 @@ resource "azurerm_virtual_network" "vnet" {
   address_space       = var.settings.vnet.address_space
   tags                = local.tags
 
-  dns_servers = lookup(var.settings.vnet, "dns_servers", null)
+  dns_servers = coalesce(
+    try(lookup(var.settings.vnet, "dns_servers", null)),
+    try(local.dns_servers_process, null)
+  )
 
   dynamic "ddos_protection_plan" {
     for_each = var.ddos_id != "" ? [1] : []
@@ -104,4 +107,20 @@ resource "azurerm_subnet_network_security_group_association" "nsg_vnet_associati
 
   subnet_id                 = module.subnets[each.key].id
   network_security_group_id = var.network_security_groups[each.value.nsg_key].id
+}
+
+locals {
+  dns_servers_process = [
+    for obj in try(var.settings.vnet.dns_servers_keys,{}) : #o.ip
+    coalesce(
+      try(var.remote_dns.firewalls[obj.lz_key][obj.resource_key].virtual_hub[obj.interface_index].private_ip_address,null),
+      try(var.remote_dns.firewalls[obj.lz_key][obj.resource_key].virtual_hub.0.private_ip_address,null),
+      try(var.remote_dns.firewalls[obj.lz_key][obj.resource_key].ip_configuration[obj.interface_index].private_ip_address,null),
+      try(var.remote_dns.firewalls[obj.lz_key][obj.resource_key].ip_configuration.0.private_ip_address,null),
+      null
+    )
+    # for ip_key, resouce_ip in var.settings.vnet.dns_servers_keys: [
+    #  resouce_ip.ip
+    # ]
+  ]
 }
