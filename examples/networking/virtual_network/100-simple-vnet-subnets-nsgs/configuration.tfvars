@@ -24,14 +24,14 @@ vnets = {
       #   ip1 = {
       #     lz_key          = "",
       #     key             = "",
-      # .   resource_type   = "firewalls",
+      # .   resource_type   = "azurerm_firewall",
       #     interface_index = 0 #Optional it will take 0.
       #
       #   }
       #   ip2 = {
       #     lz_key          = "",
       #     key             = "",
-      #     resource_type   = "firewalls",
+      #     resource_type   = "azurerm_firewall",
       #   }
       # }
     }
