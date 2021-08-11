@@ -179,6 +179,10 @@ locals {
     logic_app_workflow              = try(var.logic_app.logic_app_workflow, {})
   }
 
+  cognitive_services = {
+    cognitive_services_account = try(var.cognitive_services.cognitive_services_account, {})
+  }
+
   networking = {
     application_gateway_applications                        = try(var.networking.application_gateway_applications, {})
     application_gateway_waf_policies                        = try(var.networking.application_gateway_waf_policies, {})
@@ -202,6 +206,7 @@ locals {
     ip_groups                                               = try(var.networking.ip_groups, {})
     load_balancers                                          = try(var.networking.load_balancers, {})
     local_network_gateways                                  = try(var.networking.local_network_gateways, {})
+    nat_gateways                                            = try(var.networking.nat_gateways, {})
     network_security_group_definition                       = try(var.networking.network_security_group_definition, {})
     network_watchers                                        = try(var.networking.network_watchers, {})
     private_dns                                             = try(var.networking.private_dns, {})
