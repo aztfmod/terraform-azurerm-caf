@@ -1,6 +1,6 @@
 
 resource "null_resource" "set_request_routing_rule" {
-  depends_on = [null_resource.set_http_settings, null_resource.set_backend_pools, null_resource.set_http_listener]
+  depends_on = [null_resource.set_http_settings, null_resource.set_backend_pools, null_resource.set_http_listener, null_resource.set_ssl_cert, null_resource.set_root_cert, null_resource.set_url_path_map, null_resource.set_url_path_rule]
 
   for_each = try(var.settings.request_routing_rules, {})
 
@@ -25,13 +25,13 @@ resource "null_resource" "set_request_routing_rule" {
       RULE_TYPE                 = try(each.value.rule_type, null)
       REDIRECT_CONFIG           = try(each.value.redirect_config, null) //TODO
       REWRITE_RULE_SET          = try(each.value.rewrite_rule_set, null) //TODO
-      URL_PATH_MAP              = try(each.value.url_path_map, null) //TODO
+      URL_PATH_MAP              = try(var.settings.url_path_maps[each.value.url_path_map_key].name, null)
     }
   }
 }
 
 resource "null_resource" "delete_request_routing_rule" {
-  depends_on = [null_resource.delete_http_settings, null_resource.delete_backend_pool, null_resource.delete_http_listener]
+  depends_on = [null_resource.delete_http_settings, null_resource.delete_backend_pool, null_resource.delete_http_listener, null_resource.delete_ssl_cert, null_resource.delete_url_path_map, null_resource.delete_url_path_rule]
 
   for_each = try(var.settings.request_routing_rules, {})
 

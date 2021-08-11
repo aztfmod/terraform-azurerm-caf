@@ -22,8 +22,8 @@ resource "null_resource" "set_http_listener" {
       PUBLIC_IP                   = try(var.application_gateway.frontend_ip_configurations[each.value.front_end_ip_configuration_key].name, null)
       HOST_NAME                   = try(each.value.host_name, null)
       HOST_NAMES                  = try(each.value.host_names, null)
-      SSL_CERT                    = try(each.value.ssl_cert, null)
-      WAF_POLICY                  = try(each.value.waf_policy, null)
+      SSL_CERT                    = try(each.value.ssl_cert, null) //TODO
+      WAF_POLICY                  = try(each.value.waf_policy, null) //TODO
     }
   }
 }

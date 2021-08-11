@@ -17,4 +17,13 @@ case "${RESOURCE}" in
     SSLCERT)
         az network application-gateway ssl-cert delete -g ${RG_NAME} --gateway-name ${APPLICATION_GATEWAY_NAME} -n ${NAME}
         ;;
+    ROOTCERT)
+        az network application-gateway root-cert delete -g ${RG_NAME} --gateway-name ${APPLICATION_GATEWAY_NAME} -n ${NAME}
+        ;;
+    PATHMAP)
+        az network application-gateway url-path-map delete -g ${RG_NAME} --gateway-name ${APPLICATION_GATEWAY_NAME} -n ${NAME}
+        ;;
+    PATHRULE)
+        az network application-gateway url-path-map rule delete -g ${RG_NAME} --gateway-name ${APPLICATION_GATEWAY_NAME} --path-map-name ${PATHMAPNAME} -n ${NAME}
+        ;;
 esac
