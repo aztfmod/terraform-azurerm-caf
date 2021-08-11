@@ -1,10 +1,9 @@
 {
     "files.eol": "\n",
-    "terminal.integrated.shell.linux": "/bin/bash",
     "editor.tabSize": 2,
     "terminal.integrated.scrollback": 32000,
     "terminal.integrated.profiles.linux": {
-        "caf (rover)": {
+        "caf (rover on docker)": {
             "path": "docker-compose",
             "args": ["-f", "rover_on_ssh_host.yml", "run", "-e", "ROVER_RUNNER=true", "--rm", "-w", "/tf/caf" ,"rover", "/bin/bash"],
             "overrideName": true
