@@ -5,7 +5,7 @@ output "id" {
 }
 output "service_key" {
   value = azurerm_express_route_circuit.circuit.service_key
-
+  sensitive = true
   description = "The string needed by the service provider to provision the ExpressRoute circuit."
 }
 output "service_provider_provisioning_state" {
