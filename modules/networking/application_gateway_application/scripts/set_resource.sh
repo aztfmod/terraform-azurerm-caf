@@ -53,8 +53,37 @@ case "${RESOURCE}" in
         certfile=$([ -z "${CERT_FILE}" ] && echo "" || echo "--cert-file ${CERT_FILE} ")
         certpassword=$([ -z "${CERT_PASSWORD}" ] && echo "" || echo "--cert-password ${CERT_PASSWORD} ")
         keyvaultsecretid=$([ -z "${KEY_VAULT_SECRET_ID}" ] && echo "" || echo "--key-vault-secret-id ${KEY_VAULT_SECRET_ID} ")
-        
+
         az network application-gateway ssl-cert create -g ${RG_NAME} --gateway-name ${APPLICATION_GATEWAY_NAME} \
         -n ${NAME} ${certfile}${certpassword}${keyvaultsecretid}
+        ;;
+    ROOTCERT)
+        certfile=$([ -z "${CERT_FILE}" ] && echo "" || echo "--cert-file ${CERT_FILE} ")
+        keyvaultsecretid=$([ -z "${KEY_VAULT_SECRET_ID}" ] && echo "" || echo "--key-vault-secret-id ${KEY_VAULT_SECRET_ID} ")
+
+        az network application-gateway root-cert create --gateway-name ${APPLICATION_GATEWAY_NAME} --resource-group ${RG_NAME} \
+         --name ${NAME} ${certfile}${keyvaultsecretid}
+        ;;
+    PATHMAP)
+        addresspool=$([ -z "${ADDRESS_POOL}" ] && echo "" || echo "--address-pool ${ADDRESS_POOL} ")
+        httpsettings=$([ -z "${HTTP_SETTINGS}" ] && echo "" || echo "--http-settings ${HTTP_SETTINGS} ")
+        redirectconfig=$([ -z "${REDIRECT_CONFIG}" ] && echo "" || echo "--redirect-config ${REDIRECT_CONFIG} ")
+        rewriteruleset=$([ -z "${REWRITE_RULE_SET}" ] && echo "" || echo "--rewrite-rule-set ${REWRITE_RULE_SET} ")
+        rulename=$([ -z "${RULE_NAME}" ] && echo "" || echo "--rule-name ${RULE_NAME} ")
+        wafpolicy=$([ -z "${WAF_POLICY}" ] && echo "" || echo "--waf-policy ${WAF_POLICY} ")
+
+        az network application-gateway url-path-map create -g ${RG_NAME} --gateway-name ${APPLICATION_GATEWAY_NAME} \
+            -n ${NAME} --paths ${PATHS} ${addresspool}${httpsettings}${redirectconfig}${rewriteruleset}${rulename}${wafpolicy} 
+        ;;
+    PATHRULE)
+        addresspool=$([ -z "${ADDRESS_POOL}" ] && echo "" || echo "--address-pool ${ADDRESS_POOL} ")
+        httpsettings=$([ -z "${HTTP_SETTINGS}" ] && echo "" || echo "--http-settings ${HTTP_SETTINGS} ")
+        redirectconfig=$([ -z "${REDIRECT_CONFIG}" ] && echo "" || echo "--redirect-config ${REDIRECT_CONFIG} ")
+        rewriteruleset=$([ -z "${REWRITE_RULE_SET}" ] && echo "" || echo "--rewrite-rule-set ${REWRITE_RULE_SET} ")
+        wafpolicy=$([ -z "${WAF_POLICY}" ] && echo "" || echo "--waf-policy ${WAF_POLICY} ")
+
+        az network application-gateway url-path-map rule create -g ${RG_NAME} \
+            --gateway-name ${APPLICATION_GATEWAY_NAME} -n ${NAME} --path-map-name ${PATHMAPNAME} \
+            --paths ${PATHS} ${addresspool}${httpsettings}${redirectconfig}${rewriteruleset}${wafpolicy} 
         ;;
 esac

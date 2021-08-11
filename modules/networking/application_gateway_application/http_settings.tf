@@ -30,7 +30,7 @@ resource "null_resource" "set_http_settings" {
       HOST_NAME_FROM_BACKEND_POOL = try(each.value.host_name_from_backend_pool, null)
       PATH                        = try(each.value.path, null)
       PROBE                       = try(each.value.probe, null)
-      ROOT_CERTS                  = try(each.value.root_certs, null)
+      ROOT_CERTS                  = try(each.value.root_certs, null) //TODO
     }
   }
 }
