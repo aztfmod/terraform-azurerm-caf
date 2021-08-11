@@ -142,7 +142,7 @@ resource "azurerm_linux_virtual_machine" "vm" {
 
   lifecycle {
     ignore_changes = [
-      os_disk,
+      os_disk[0].name
     ]
   }
   
