@@ -42,6 +42,11 @@ application_gateways = {
         port     = 81
         protocol = "Http"
       }
+      82 = {
+        name     = "http-82"
+        port     = 82
+        protocol = "Http"
+      }
       443 = {
         name     = "https-443"
         port     = 443
