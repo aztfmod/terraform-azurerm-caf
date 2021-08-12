@@ -6,5 +6,9 @@
     "consumption_budget/103-consumption-budget-subscription-alerts",
     "consumption_budget/104-consumption-budget-subscription-vm",
     "consumption_budget/105-consumption-budget-subscription-aks"
+
+
+    // Waiting for support to register arm provider - https://github.com/Azure/caf-terraform-landingzones/pull/238
+    "cognitive_services/100-cognitive-services-account"
   ]
 }

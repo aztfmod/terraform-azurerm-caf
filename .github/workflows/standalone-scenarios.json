@@ -14,7 +14,6 @@
     "azuread/100-azuread-application-with-sevice-principle-with-builtin-roles",
     "azuread/101-azuread-application-with-service-principle-with-custom-roles",
     "azuread/103-service-principal-only",
-    "cognitive_services/100-cognitive-services-account",
     "compute/availability_set/100-simple-availabilityset",
     "compute/availability_set/101-availabilityset-with-proximity-placement-group",
     "compute/container_groups/101-aci-rover",

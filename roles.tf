@@ -16,13 +16,13 @@ module "custom_roles" {
 resource "azurerm_role_assignment" "for" {
   for_each = try(local.roles_to_process, {})
 
-  scope                = coalesce(
+  scope = coalesce(
     try(local.services_roles[each.value.scope_resource_key][each.value.scope_lz_key][each.value.scope_key_resource].id, null),
     try(local.services_roles[each.value.scope_resource_key][var.current_landingzone_key][each.value.scope_key_resource].id, null)
   )
   role_definition_name = each.value.mode == "built_in_role_mapping" ? each.value.role_definition_name : null
   role_definition_id   = each.value.mode == "custom_role_mapping" ? module.custom_roles[each.value.role_definition_name].role_definition_resource_id : null
-  principal_id         = each.value.object_id_resource_type == "object_ids" ? each.value.object_id_key_resource : coalesce(
+  principal_id = each.value.object_id_resource_type == "object_ids" ? each.value.object_id_key_resource : coalesce(
     try(local.services_roles[each.value.object_id_resource_type][each.value.object_id_lz_key][each.value.object_id_key_resource].rbac_id, null),
     try(local.services_roles[each.value.object_id_resource_type][var.current_landingzone_key][each.value.object_id_key_resource].rbac_id, null)
   )
@@ -131,12 +131,12 @@ locals {
                     object_id_resource_type = object_id_key
                     object_id_key_resource  = object_id_key_resource #   "object_id_key_resource" = "aks_admins"
                     object_id_lz_key        = try(object_resources.lz_key, null)
-                  } 
-                ] 
+                  }
+                ]
               ] if role_definition_name != "lz_key"
             ]
           ]
-        ] 
+        ]
       ]
     ) : format("%s_%s_%s_%s", mapping.object_id_resource_type, mapping.scope_key_resource, replace(mapping.role_definition_name, " ", "_"), mapping.object_id_key_resource) => mapping
   }
