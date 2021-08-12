@@ -5,7 +5,7 @@ output "id" {
 }
 output "authorization_key" {
   value = azurerm_express_route_circuit_authorization.circuitauth.authorization_key
-
+  sensitive = true
   description = "The authorization key"
 }
 output "authorization_use_status" {
