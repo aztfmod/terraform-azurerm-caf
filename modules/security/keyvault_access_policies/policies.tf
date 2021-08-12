@@ -15,7 +15,11 @@ module "azuread_apps" {
 
   access_policy = each.value
   tenant_id     = var.client_config.tenant_id
-  object_id     = var.azuread_apps[try(try(each.value.azuread_app_lz_key, each.value.lz_key), var.client_config.landingzone_key)][each.value.azuread_app_key].azuread_service_principal.object_id
+  object_id = coalesce(
+    try(var.azuread_apps[each.value.lz_key][each.value.azuread_app_key].azuread_service_principal.object_id, null),
+    try(var.azuread_apps[each.value.azuread_app_lz_key][each.value.azuread_app_key].azuread_service_principal.object_id, null),
+    try(var.azuread_apps[var.client_config.landingzone_key][each.value.azuread_app_key].azuread_service_principal.object_id, null)
+  )
 }
 
 module "azuread_service_principals" {

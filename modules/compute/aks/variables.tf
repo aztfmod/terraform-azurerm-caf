@@ -18,3 +18,6 @@ variable "diagnostic_profiles" {
 variable "private_dns_zone_id" {
   default = null
 }
+variable "managed_identities" {
+  default = {}
+}
