@@ -21,8 +21,8 @@ output "network_watchers" {
 
 module "networking" {
   depends_on = [module.network_watchers]
-  source   = "./modules/networking/virtual_network"
-  for_each = local.networking.vnets
+  source     = "./modules/networking/virtual_network"
+  for_each   = local.networking.vnets
 
   application_security_groups       = local.combined_objects_application_security_groups
   client_config                     = local.client_config
