@@ -41,6 +41,6 @@ output "express_route_circuits" {
 
 output "express_route_circuit_authorizations" {
   value = module.express_route_circuit_authorizations
-
+  sensitive = true
   description = "Express Route Circuit Authorizations Keys output"
 }
