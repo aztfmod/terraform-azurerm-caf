@@ -54,9 +54,9 @@ resource "azurerm_virtual_hub_route_table" "route_table" {
 }
 
 module "azurerm_virtual_hub_route_table" {
-  depends_on      = [azurerm_virtual_hub_route_table.route_table]
-  source          = "./modules/networking/virtual_hub_route_tables"
-  for_each        = local.networking.virtual_hub_route_tables
+  depends_on = [azurerm_virtual_hub_route_table.route_table]
+  source     = "./modules/networking/virtual_hub_route_tables"
+  for_each   = local.networking.virtual_hub_route_tables
 
   client_config = local.client_config
   name          = each.value.name
@@ -64,9 +64,9 @@ module "azurerm_virtual_hub_route_table" {
 
   remote_objects = {
     virtual_hub_connections = local.combined_objects_virtual_hub_connections
-    azurerm_firewalls       = local.combined_objects_azurerm_firewalls 
+    azurerm_firewalls       = local.combined_objects_azurerm_firewalls
   }
-  
+
   virtual_hub = {
     id = coalesce(
       try(local.combined_objects_virtual_hubs[try(each.value.virtual_hub.lz_key, local.client_config.landingzone_key)][each.value.virtual_hub.key].id, null),
