@@ -1,6 +1,6 @@
 
 resource "null_resource" "set_http_settings" {
-  depends_on = [null_resource.set_backend_pools]
+  depends_on = [null_resource.set_backend_pools, null_resource.set_ssl_cert, null_resource.set_root_cert]
 
   for_each = try(var.settings.http_settings, {})
 
@@ -36,7 +36,7 @@ resource "null_resource" "set_http_settings" {
 }
 
 resource "null_resource" "delete_http_settings" {
-  depends_on = [null_resource.delete_backend_pool]
+  depends_on = [null_resource.delete_backend_pool, null_resource.delete_ssl_cert, null_resource.delete_root_cert]
 
   for_each = try(var.settings.http_settings, {})
 

@@ -9,7 +9,7 @@ data "azurerm_key_vault_certificate" "manual_certs" {
 }
 
 resource "null_resource" "set_ssl_cert" {
-  depends_on = [null_resource.set_http_settings, null_resource.set_backend_pools, null_resource.set_http_listener]
+  depends_on = [null_resource.set_backend_pools]
 
   for_each = try(var.settings.ssl_certs, {})
 
@@ -35,7 +35,7 @@ resource "null_resource" "set_ssl_cert" {
 }
 
 resource "null_resource" "delete_ssl_cert" {
-  depends_on = [null_resource.delete_http_settings, null_resource.delete_backend_pool, null_resource.delete_http_listener]
+  depends_on = [null_resource.delete_backend_pool]
 
   for_each = try(var.settings.ssl_certs, {})
 
