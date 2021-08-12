@@ -10,7 +10,7 @@ module "azurerm_firewall_policies" {
   settings        = each.value
   tags            = try(each.value.tags, null)
 
-  resource_group  = coalesce(
+  resource_group = coalesce(
     try(local.combined_objects_resource_groups[each.value.lz_key][each.value.resource_group_key], null),
     try(local.combined_objects_resource_groups[each.value.resource_group.lz_key][each.value.resource_group.key], null),
     try(local.combined_objects_resource_groups[local.client_config.landingzone_key][each.value.resource_group_key], null),
