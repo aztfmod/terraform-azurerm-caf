@@ -1,6 +1,6 @@
 
 resource "null_resource" "set_http_listener" {
-  depends_on = [null_resource.set_http_settings, null_resource.set_backend_pools]
+  depends_on = [null_resource.set_http_settings, null_resource.set_backend_pools, null_resource.set_ssl_cert, null_resource.set_root_cert]
 
   for_each = try(var.settings.http_listeners, {})
 
@@ -22,14 +22,14 @@ resource "null_resource" "set_http_listener" {
       PUBLIC_IP                   = try(var.application_gateway.frontend_ip_configurations[each.value.front_end_ip_configuration_key].name, null)
       HOST_NAME                   = try(each.value.host_name, null)
       HOST_NAMES                  = try(each.value.host_names, null)
-      SSL_CERT                    = try(each.value.ssl_cert, null) //TODO
+      SSL_CERT                    = try(var.settings.ssl_certs[each.value.ssl_cert_key].name, null) //TODO
       WAF_POLICY                  = try(each.value.waf_policy, null) //TODO
     }
   }
 }
 
 resource "null_resource" "delete_http_listener" {
-  depends_on = [null_resource.delete_http_settings, null_resource.delete_backend_pool]
+  depends_on = [null_resource.delete_http_settings, null_resource.delete_backend_pool, null_resource.delete_ssl_cert, null_resource.delete_root_cert]
 
   for_each = try(var.settings.http_listeners, {})
 
