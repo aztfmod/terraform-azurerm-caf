@@ -9,7 +9,7 @@ data "azurerm_key_vault_certificate" "manual_certs" {
 }
 
 resource "null_resource" "set_ssl_cert" {
-  depends_on = [null_resource.set_backend_pools]
+  depends_on = [time_sleep.set_backend_pools]
 
   for_each = try(var.settings.ssl_certs, {})
 
@@ -34,8 +34,14 @@ resource "null_resource" "set_ssl_cert" {
   }
 }
 
+resource "time_sleep" "set_ssl_cert" {
+  depends_on = [null_resource.set_ssl_cert]
+
+  create_duration = "10s"
+}
+
 resource "null_resource" "delete_ssl_cert" {
-  depends_on = [null_resource.delete_backend_pool]
+  depends_on = [time_sleep.delete_backend_pool]
 
   for_each = try(var.settings.ssl_certs, {})
 
@@ -58,4 +64,10 @@ resource "null_resource" "delete_ssl_cert" {
       APPLICATION_GATEWAY_NAME = self.triggers.application_gateway_name
     }
   }
+}
+
+resource "time_sleep" "delete_ssl_cert" {
+  depends_on = [null_resource.delete_backend_pool]
+
+  create_duration = "10s"
 }

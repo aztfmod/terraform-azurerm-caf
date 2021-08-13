@@ -21,6 +21,12 @@ resource "null_resource" "set_backend_pools" {
   }
 }
 
+resource "time_sleep" "set_backend_pools" {
+  depends_on = [null_resource.set_backend_pools]
+
+  create_duration = "10s"
+}
+
 resource "null_resource" "delete_backend_pool" {
   for_each = try(var.settings.backend_pools, {})
 
@@ -43,4 +49,10 @@ resource "null_resource" "delete_backend_pool" {
       APPLICATION_GATEWAY_NAME = self.triggers.application_gateway_name
     }
   }
+}
+
+resource "time_sleep" "delete_backend_pool" {
+  depends_on = [null_resource.delete_backend_pool]
+
+  create_duration = "10s"
 }

@@ -1,6 +1,6 @@
 #!/bin/bash
 
-echo "rg: ${RG_NAME} gateway: ${APPLICATION_GATEWAY_NAME} name: ${NAME}"
+echo "rg: ${RG_NAME} gateway: ${APPLICATION_GATEWAY_NAME} name: ${NAME} resource: ${RESOURCE}"
 
 case "${RESOURCE}" in
     BACKENDPOOL)       
