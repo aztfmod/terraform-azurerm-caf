@@ -26,8 +26,7 @@ Fill the variables as needed and documented, there is a [quick example here](htt
 
 For a complete set of examples you can review the [full library here](https://github.com/aztfmod/terraform-azurerm-caf/tree/master/examples).
 
-<img src="https://aztfmod.blob.core.windows.net/media/standalone.gif" width="720"/> <br/> <br/>
-
+<img src="https://aztfmod.azureedge.net/media/standalone.gif" width="720"/> <br/> <br/>
 
 ## Community
 
