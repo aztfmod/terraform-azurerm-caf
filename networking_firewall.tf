@@ -18,7 +18,7 @@ module "azurerm_firewalls" {
   public_ip_keys      = try(each.value.public_ip_keys, null)
   resource_group_name = local.resource_groups[each.value.resource_group_key].name
   settings            = each.value
-  subnet_id           = module.networking[each.value.vnet_key].subnets["AzureFirewallSubnet"].id
+  subnet_id           = try(module.networking[each.value.vnet_key].subnets["AzureFirewallSubnet"].id, null)
   tags                = try(each.value.tags, null)
   virtual_hubs        = local.combined_objects_virtual_hubs
   virtual_networks    = local.combined_objects_networking
