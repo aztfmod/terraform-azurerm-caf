@@ -1,6 +1,6 @@
 
 resource "null_resource" "set_http_listener" {
-  depends_on = [null_resource.set_http_settings, null_resource.set_backend_pools, null_resource.set_ssl_cert, null_resource.set_root_cert]
+  depends_on = [time_sleep.set_http_settings, time_sleep.set_backend_pools, time_sleep.set_ssl_cert, time_sleep.set_root_cert]
 
   for_each = try(var.settings.http_listeners, {})
 
@@ -28,8 +28,14 @@ resource "null_resource" "set_http_listener" {
   }
 }
 
+resource "time_sleep" "set_http_listener" {
+  depends_on = [null_resource.set_http_listener]
+
+  create_duration = "10s"
+}
+
 resource "null_resource" "delete_http_listener" {
-  depends_on = [null_resource.delete_http_settings, null_resource.delete_backend_pool, null_resource.delete_ssl_cert, null_resource.delete_root_cert]
+  depends_on = [time_sleep.delete_http_settings, time_sleep.delete_backend_pool, time_sleep.delete_ssl_cert, time_sleep.delete_root_cert]
 
   for_each = try(var.settings.http_listeners, {})
 
@@ -52,4 +58,10 @@ resource "null_resource" "delete_http_listener" {
       APPLICATION_GATEWAY_NAME = self.triggers.application_gateway_name
     }
   }
+}
+
+resource "time_sleep" "delete_http_listener" {
+  depends_on = [null_resource.delete_http_listener]
+
+  create_duration = "10s"
 }
