@@ -13,7 +13,7 @@ else
 
     microsoft_graph_endpoint=$(az cloud show | jq -r ".endpoints.microsoftGraphResourceId")
 
-    URI=$(echo  "${microsoft_graph_endpoint}v1.0/servicePrincipals/${resourceId}/appRoleAssignedTo") && echo " - uri: $URI"
+    URI=$(echo  "${microsoft_graph_endpoint}v1.0/servicePrincipals/${principalId}/appRoleAssignedTo") && echo " - uri: $URI"
 
     existingAppRoleId=$(az rest --method GET --uri ${URI} \
         --query "value[?appRoleId=='${appRoleId}' && principalId=='${principalId}' && resourceId=='${resourceId}'].appRoleId" -o tsv)

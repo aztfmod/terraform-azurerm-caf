@@ -113,10 +113,9 @@ resource "azurerm_application_gateway" "agw" {
       http_listener_name         = request_routing_rule.value.name
       backend_http_settings_name = local.backend_http_settings[request_routing_rule.value.app_key].name
       backend_address_pool_name  = local.backend_pools[request_routing_rule.value.app_key].name
-      url_path_map_name = try(local.request_routing_rules[format("%s-%s", request_routing_rule.value.app_key, request_routing_rule.value.request_routing_rule_key)].rule.url_path_map_name, try(local.url_path_maps[format("%s-%s", request_routing_rule.value.app_key,
-      local.request_routing_rules[format("%s-%s", request_routing_rule.value.app_key, request_routing_rule.value.request_routing_rule_key)].rule.url_path_map_key)].name, null))
-
-
+      url_path_map_name          = try(local.request_routing_rules[format("%s-%s", request_routing_rule.value.app_key, request_routing_rule.value.request_routing_rule_key)].rule.url_path_map_name, 
+                                   try(local.url_path_maps[format("%s-%s", request_routing_rule.value.app_key,local.request_routing_rules[format("%s-%s", request_routing_rule.value.app_key, request_routing_rule.value.request_routing_rule_key)].rule.url_path_map_key)].name, null))
+      rewrite_rule_set_name      = try(local.rewrite_rule_sets[format("%s-%s", request_routing_rule.value.app_key, local.request_routing_rules[format("%s-%s", request_routing_rule.value.app_key, request_routing_rule.value.request_routing_rule_key)].rule.rewrite_rule_set_key)].name, null)
     }
   }
 
@@ -126,15 +125,40 @@ resource "azurerm_application_gateway" "agw" {
       default_backend_address_pool_name  = try(url_path_map.value.default_backend_address_pool_name, var.application_gateway_applications[url_path_map.value.app_key].name)
       default_backend_http_settings_name = try(url_path_map.value.default_backend_http_settings_name, var.application_gateway_applications[url_path_map.value.app_key].name)
       name                               = url_path_map.value.name
+      default_rewrite_rule_set_name      = try(local.rewrite_rule_sets[format("%s-%s", url_path_map.value.app_key, url_path_map.value.default_rewrite_rule_set_key)].name, null)
 
       dynamic "path_rule" {
         for_each = try(url_path_map.value.path_rules, [])
 
         content {
-          backend_address_pool_name  = try(var.application_gateway_applications[path_rule.value.backend_pool.app_key].name, var.application_gateway_applications[path_rule.value.backend_pool.app_key].name)
+          backend_address_pool_name  = try(var.application_gateway_applications[path_rule.value.backend_pool.app_key].name, var.application_gateway_applications[url_path_map.value.app_key].name)
           backend_http_settings_name = try(var.application_gateway_applications[path_rule.value.backend_http_setting.app_key].name, var.application_gateway_applications[url_path_map.value.app_key].name)
           name                       = path_rule.value.name
           paths                      = path_rule.value.paths
+          rewrite_rule_set_name      = try(local.rewrite_rule_sets[format("%s-%s", url_path_map.value.app_key, path_rule.value.rewrite_rule_set_key)].name, null)
+        }
+      }
+    }
+  }
+  dynamic "probe" {
+    for_each = try(local.probes)
+
+    content {
+      name                                      = probe.value.name
+      host                                      = probe.value.host
+      interval                                  = probe.value.interval
+      protocol                                  = probe.value.protocol
+      path                                      = probe.value.path
+      timeout                                   = probe.value.timeout
+      unhealthy_threshold                       = probe.value.unhealthy_threshold
+      port                                      = try(probe.value.port,null)
+      pick_host_name_from_backend_http_settings = try(probe.value.pick_host_name_from_backend_http_settings, false)
+      minimum_servers                           = try(probe.value.minimum_servers, 0)
+      dynamic "match" {
+        for_each = try(probe.value.match, null) == null ? [] : [1]
+        content {
+          body        = try(probe.value.match.body,null)
+          status_code = try(probe.value.match.status_code,null)
         }
       }
     }
@@ -151,6 +175,8 @@ resource "azurerm_application_gateway" "agw" {
       request_timeout                     = try(backend_http_settings.value.request_timeout, 30)
       pick_host_name_from_backend_address = try(backend_http_settings.value.pick_host_name_from_backend_address, false)
       trusted_root_certificate_names      = try(backend_http_settings.value.trusted_root_certificate_names, null)
+      host_name                           = try(backend_http_settings.value.host_name, null)
+      probe_name                          = try(local.probes[format("%s-%s",backend_http_settings.key, backend_http_settings.value.probe_key)].name, null)
     }
   }
 
@@ -159,7 +185,7 @@ resource "azurerm_application_gateway" "agw" {
 
     content {
       name         = var.application_gateway_applications[backend_address_pool.key].name
-      fqdns        = try(backend_address_pool.value.fqdns, null)
+      fqdns        = try(length(backend_address_pool.value.fqdns), 0) == 0 ? null : backend_address_pool.value.fqdns 
       ip_addresses = try(backend_address_pool.value.ip_addresses, null)
     }
   }
@@ -262,9 +288,51 @@ resource "azurerm_application_gateway" "agw" {
 
   # autoscale_configuration {}
 
-  # rewrite_rule_set {}
+  dynamic "rewrite_rule_set" {
+    for_each = try(local.rewrite_rule_sets)
 
-
+    content {
+      name  = rewrite_rule_set.value.name
+      dynamic "rewrite_rule" {
+        for_each = try(rewrite_rule_set.value.rewrite_rules, {})
+        content {
+          name          = rewrite_rule.value.name
+          rule_sequence = rewrite_rule.value.rule_sequence
+          dynamic "condition" {
+            for_each = try(rewrite_rule.value.conditions, {})
+            content {
+              variable    = condition.value.variable
+              pattern     = condition.value.pattern
+              ignore_case = try(condition.value.ignore_case, false)
+              negate      = try(condition.value.negate, false)
+            }
+          }
+          dynamic "request_header_configuration" {
+            for_each = try(rewrite_rule.value.request_header_configurations, {})
+            content {
+              header_name   = request_header_configuration.value.header_name
+              header_value  = request_header_configuration.value.header_value
+            }
+          }
+          dynamic "response_header_configuration" {
+            for_each = try(rewrite_rule.value.response_header_configurations, {})
+            content {
+              header_name   = response_header_configuration.value.header_name
+              header_value  = response_header_configuration.value.header_value
+            }
+          }
+          dynamic "url" {
+            for_each = try(rewrite_rule.value.url, null) == null ? [] : [1]
+            content {
+              path              = try(url.value.path,null)
+              query_string      = try(url.value.query_string,null)
+              reroute           = try(url.value.reroute,null)
+            }
+          }
+        }
+      }
+    }
+  }
 }
 
 output "certificate_keys" {
