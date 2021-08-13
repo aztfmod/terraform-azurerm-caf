@@ -22,18 +22,16 @@ module "caf" {
 }
 ```
 
-Fill the variables as needed and documented, there is a [quick example here](./examples/standalone.md).
+Fill the variables as needed and documented, there is a [quick example here](https://github.com/aztfmod/terraform-azurerm-caf/tree/master/examples/standalone.md).
 
-For a complete set of examples you can review the [full library here](./examples).
+For a complete set of examples you can review the [full library here](https://github.com/aztfmod/terraform-azurerm-caf/tree/master/examples).
 
 <img src="https://aztfmod.blob.core.windows.net/media/standalone.gif" width="720"/> <br/> <br/>
 
 
 ## Community
 
-Feel free to open an issue for feature or bug, or to submit a PR, [please review the module contribution and conventions guidelines](./documentation/conventions.md)
-
-[Please check out the WIKI for coding standards, common patterns and PR checklist.](https://github.com/aztfmod/terraform-azurerm-caf/wiki)
+Feel free to open an issue for feature or bug, or to submit a PR, [Please check out the WIKI for coding standards, common patterns and PR checklist.](https://github.com/aztfmod/terraform-azurerm-caf/wiki)
 
 In case you have any question, you can reach out to tf-landingzones at microsoft dot com.
 
