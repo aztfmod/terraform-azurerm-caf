@@ -29,7 +29,8 @@ resource "azurerm_role_assignment" "for" {
 
   lifecycle {
     ignore_changes = [
-      principal_id
+      principal_id,
+      scope
     ]
 
     create_before_destroy = true
