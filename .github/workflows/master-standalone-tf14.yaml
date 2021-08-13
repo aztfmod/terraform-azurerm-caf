@@ -7,7 +7,7 @@ name: standalone-scenario-tf14
 
 on:
   schedule:
-    - cron:  '0 5 * * 0' #1 AM on Sunday
+    - cron:  '0 5 * * *' #1 AM on Sunday
 
 env:
   TF_CLI_ARGS: '-no-color'
