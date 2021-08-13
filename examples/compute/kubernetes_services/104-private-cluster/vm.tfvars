@@ -3,7 +3,6 @@ virtual_machines = {
   # Configuration to deploy a bastion host linux virtual machine
   bastion_host = {
     resource_group_key                   = "aks_jumpbox_re1"
-    boot_diagnostics_storage_account_key = "bootdiag_re1"
     provision_vm_agent                   = true
 
     os_type = "linux"
@@ -16,7 +15,6 @@ virtual_machines = {
       nic0 = {
         # AKS rely on a remote network and need the details of the tfstate to connect (tfstate_key), assuming RBAC authorization.
 
-        lz_key                  = "networking_spoke_aks"
         vnet_key                = "spoke_aks_re1"
         subnet_key              = "jumpbox"
         name                    = "0"

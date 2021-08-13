@@ -16,7 +16,6 @@ repos:
       - id: check-merge-conflict
       - id: trailing-whitespace
       - id: check-yaml
-      - id: check-json
       - id: check-added-large-files
       - id: detect-private-key
   # - repo: git://github.com/markdownlint/markdownlint

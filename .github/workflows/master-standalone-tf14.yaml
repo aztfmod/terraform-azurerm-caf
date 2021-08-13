@@ -7,7 +7,7 @@ name: standalone-scenario-tf14
 
 on:
   schedule:
-    - cron:  '0 5 * * 0' #1 AM on Sunday
+    - cron:  '0 5 * * *' #1 AM on Sunday
 
 env:
   TF_CLI_ARGS: '-no-color'
@@ -41,7 +41,7 @@ jobs:
       matrix: ${{fromJSON(needs.load_scenarios.outputs.matrix)}}
 
     container:
-      image: aztfmod/rover:0.14.11-2106.3012
+      image: aztfmod/rover:0.14.11-2108.1305
       options: --user 0
 
     steps:
@@ -66,7 +66,7 @@ jobs:
     needs: examples
 
     container:
-      image: aztfmod/rover:0.14.11-2106.3012
+      image: aztfmod/rover:0.14.11-2108.1305
       options: --user 0
 
     steps:
