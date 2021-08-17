@@ -34,7 +34,7 @@ dynamic_keyvault_secrets = {
     }
     secret_key2 = {
       secret_name = "vcenter-password"
-      value       = "12345"
+      value       = "123456789000000"
     }
   }
 }
@@ -52,10 +52,10 @@ vmware_private_clouds = {
     internet_connection_enabled = false
 
     nsxt_password = {
-      password = "1234"
+      password = "123#sadd$saASD"
     }
     vcenter_password = {
-      key_vault_key = "kv1"
+      keyvault_key = "kv_rg1"
       #lzKey= "ejkle" (optional)
       secret_key = "vcenter-password"
     }
