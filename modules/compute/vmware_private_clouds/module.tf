@@ -12,12 +12,12 @@ resource "azurecaf_name" "vwpc" {
 # Ref : https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/resources/dedicated_host
 
 data "azurerm_key_vault_secret" "nsxt_password" {
-  for_each = try(var.settings.nsxt_password.secret_key,null) == null ||  try(var.keyvaults[var.settings.nsxt_password.keyvault_key].id,null) == null ? toset([]) : toset(["enabled"])
+  for_each = try(var.settings.nsxt_password.secret_key,null) == null ||  try(var.settings.nsxt_password.keyvault_key,null) == null ? toset([]) : toset(["enabled"])
   name         =  var.settings.nsxt_password.secret_key
   key_vault_id =  var.keyvaults[var.settings.nsxt_password.keyvault_key].id
 }
 data "azurerm_key_vault_secret" "vcenter_password" {
-  for_each = try(var.settings.vcenter_password.secret_key,null) == null ||  try(var.keyvaults[var.settings.vcenter_password.keyvault_key].id,null) == null ? toset([]) : toset(["enabled"])
+  for_each = try(var.settings.vcenter_password.secret_key,null) == null ||  try(var.settings.vcenter_password.keyvault_key,null) == null ? toset([]) : toset(["enabled"])
   name         =  var.settings.vcenter_password.secret_key
   key_vault_id =  var.keyvaults[var.settings.vcenter_password.keyvault_key].id
 }

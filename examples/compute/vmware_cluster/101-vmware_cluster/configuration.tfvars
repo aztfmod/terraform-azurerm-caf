@@ -12,6 +12,33 @@ resource_groups = {
   }
 }
 
+keyvaults = {
+  kv_rg1 = {
+    name               = "kv1"
+    resource_group_key = "rgvwc"
+    sku_name           = "standard"
+
+    creation_policies = {
+      logged_in_user = {
+        secret_permissions      = ["Set", "Get", "List", "Delete", "Purge"]
+      }
+    }
+  }
+}
+
+dynamic_keyvault_secrets = {
+  kv_rg1 = { # Key of the keyvault
+    secret_key1 = {
+      secret_name = "nsxt-password"
+      value       = ""
+    }
+    secret_key2 = {
+      secret_name = "vcenter-password"
+      value       = "12345"
+    }
+  }
+}
+
 vmware_private_clouds = {
   vwpc1= {
     name                = "example-vmware-private-cloud"
@@ -25,7 +52,7 @@ vmware_private_clouds = {
     internet_connection_enabled = false
 
     nsxt_password = {
-      password = "QazWsx13$Edc"
+      password = "1234"
     }
     vcenter_password = {
       key_vault_key = "kv1"
