@@ -81,6 +81,15 @@ virtual_machines = {
         identity = {
           type = "SystemAssigned"
         }
+        identity = {
+          type                  = "SystemAssigned" #SystemAssigned OR UserAssigned OR SystemAssigned, UserAssigned
+          # remote = {
+          #   remote_kz_key = { # remote lz key
+          #     managed_identity_keys = [""] # remote msi resource key
+          #   }
+          # }
+          # managed_identity_keys = [""] //local msi resource key
+        }
         source_image_reference = {
           publisher = "Canonical"
           offer     = "UbuntuServer"
