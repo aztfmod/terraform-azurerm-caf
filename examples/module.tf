@@ -81,6 +81,8 @@ module "example" {
     proximity_placement_groups = var.proximity_placement_groups
     virtual_machine_scale_sets = var.virtual_machine_scale_sets
     virtual_machines           = var.virtual_machines
+    vmware_private_clouds      = var.vmware_private_clouds
+    vmware_clusters            = var.vmware_clusters
     wvd_applications           = var.wvd_applications
     wvd_application_groups     = var.wvd_application_groups
     wvd_host_pools             = var.wvd_host_pools
