@@ -19,7 +19,10 @@ data "azurerm_key_vault_secret" "nsxt_password" {
 data "azurerm_key_vault_secret" "vcenter_password" {
   for_each = try(var.settings.vcenter_password.secret_key,null) == null ||  try(var.settings.vcenter_password.keyvault_key,null) == null ? toset([]) : toset(["enabled"])
   name         =  var.settings.vcenter_password.secret_key
-  key_vault_id =  var.keyvaults[var.settings.vcenter_password.keyvault_key].id
+  key_vault_id = coalesce(
+    try(var.keyvaults[var.settings.vcenter_password.lz_key][var.settings.vcenter_password.keyvault_key].id, null),
+    try(var.keyvaults[var.client_config.landingzone_key][var.settings.vcenter_password.keyvault_key].id, null)
+  )
 }
 
 resource "azurerm_vmware_private_cloud" "vwpc" {
