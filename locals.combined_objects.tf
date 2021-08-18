@@ -66,6 +66,7 @@ locals {
   combined_objects_vpn_sites                           = merge(tomap({ (local.client_config.landingzone_key) = module.vpn_sites }), try(var.remote_objects.vpn_sites, {}))
   combined_objects_vmware_clusters                     = merge(tomap({ (local.client_config.landingzone_key) = module.vmware_clusters }), try(var.remote_objects.vmware_clusters, {}))
   combined_objects_vmware_private_clouds               = merge(tomap({ (local.client_config.landingzone_key) = module.vmware_private_clouds }), try(var.remote_objects.vmware_private_clouds, {}))
+  combined_objects_vmware_express_route_authorizations = merge(tomap({ (local.client_config.landingzone_key) = module.vmware_express_route_authorizations }), try(var.remote_objects.vmware_express_route_authorizations, {}))
   combined_objects_wvd_applications                    = merge(tomap({ (local.client_config.landingzone_key) = module.wvd_applications }), try(var.remote_objects.wvd_applications, {}))
   combined_objects_wvd_application_groups              = merge(tomap({ (local.client_config.landingzone_key) = module.wvd_application_groups }), try(var.remote_objects.wvd_application_groups, {}))
   combined_objects_wvd_host_pools                      = merge(tomap({ (local.client_config.landingzone_key) = module.wvd_host_pools }), try(var.remote_objects.wvd_host_pools, {}))
