@@ -1,7 +1,6 @@
-#TODO replace with the right resource type
 resource "azurecaf_name" "dmp" {
   name          = var.settings.name
-  resource_type = "azurerm_virtual_desktop_application_group" #azurerm_database_migration_service
+  resource_type = "azurerm_database_migration_project"
   prefixes      = var.global_settings.prefix
   random_length = var.global_settings.random_length
   clean_input   = true
