@@ -43,6 +43,7 @@
     "cosmos_db/100-simple-cosmos-db-sql",
     "cosmos_db/100-simple-cosmos-db-table",
     "databricks/100-simple-databricks",
+    "database_migration_services/100-dms",
     "datalake/101-datalake-storage",
     "diagnostics_profiles/200-diagnostics-eventhub-namespaces",
     "diagnostics_profiles/201-multi-eventhub-diagnostics",

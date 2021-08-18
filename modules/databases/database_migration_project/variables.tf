@@ -18,3 +18,7 @@ variable "base_tags" {
 variable "client_config" {
   description = "Client configuration object (see module README.md)."
 }
+
+variable "database_migration_services" {
+  description = "Combined object with the database migration services."
+}

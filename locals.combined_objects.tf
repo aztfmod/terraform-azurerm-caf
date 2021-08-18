@@ -21,6 +21,7 @@ locals {
   combined_objects_consumption_budgets_resource_groups = merge(tomap({ (local.client_config.landingzone_key) = module.consumption_budgets_resource_groups }), try(var.remote_objects.consumption_budgets_resource_groups, {}))
   combined_objects_consumption_budgets_subscriptions   = merge(tomap({ (local.client_config.landingzone_key) = module.consumption_budgets_subscriptions }), try(var.remote_objects.consumption_budgets_subscriptions, {}))
   combined_objects_container_registry                  = merge(tomap({ (local.client_config.landingzone_key) = module.container_registry }), try(var.remote_objects.container_registry, {}))
+  combined_objects_database_migration_services         = merge(tomap({ (local.client_config.landingzone_key) = module.database_migration_services }), try(var.remote_objects.database_migration_services, {}))
   combined_objects_diagnostic_storage_accounts         = merge(tomap({ (local.client_config.landingzone_key) = module.diagnostic_storage_accounts }), try(var.remote_objects.diagnostic_storage_accounts, {}))
   combined_objects_disk_encryption_sets                = merge(tomap({ (local.client_config.landingzone_key) = module.disk_encryption_sets }), try(var.remote_objects.disk_encryption_sets, {}))
   combined_objects_dns_zones                           = merge(tomap({ (local.client_config.landingzone_key) = module.dns_zones }), try(var.remote_objects.dns_zones, {}))
