@@ -12,16 +12,27 @@ resource "azurecaf_name" "vwpc" {
 # Ref : https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/resources/dedicated_host
 
 data "azurerm_key_vault_secret" "nsxt_password" {
-  for_each = try(var.settings.nsxt_password.secret_key,null) == null ||  try(var.settings.nsxt_password.keyvault_key,null) == null ? toset([]) : toset(["enabled"])
-  name         =  var.settings.nsxt_password.secret_key
-  key_vault_id =  var.keyvaults[var.settings.nsxt_password.keyvault_key].id
+  #depends_on = [module.dynamic_keyvault_secrets]
+  for_each = try(var.settings.nsxt_password.keyvault_key,null) != null &&  (try(var.settings.nsxt_password.secret_key,null) != null || try(var.settings.nsxt_password.secret_name,null) != null)? toset(["enabled"]) : toset([])
+  key_vault_id = coalesce(
+    try(var.keyvaults[var.settings.nsxt_password.lz_key][var.settings.nsxt_password.keyvault_key].id, null),
+    try(var.keyvaults[var.client_config.landingzone_key][var.settings.nsxt_password.keyvault_key].id, null)
+  )
+  name         =  coalesce(
+    try(var.dynamic_keyvault_secrets[var.settings.nsxt_password.keyvault_key][var.settings.nsxt_password.secret_key].secret_name, null),
+    try(var.settings.nsxt_password.secret_name, null)
+  )
 }
 data "azurerm_key_vault_secret" "vcenter_password" {
-  for_each = try(var.settings.vcenter_password.secret_key,null) == null ||  try(var.settings.vcenter_password.keyvault_key,null) == null ? toset([]) : toset(["enabled"])
-  name         =  var.settings.vcenter_password.secret_key
+  #depends_on = [module.dynamic_keyvault_secrets]
+  for_each = try(var.settings.vcenter_password.keyvault_key,null) != null &&  (try(var.settings.vcenter_password.secret_key,null) != null || try(var.settings.vcenter_password.secret_name,null) != null)? toset(["enabled"]) : toset([])
   key_vault_id = coalesce(
     try(var.keyvaults[var.settings.vcenter_password.lz_key][var.settings.vcenter_password.keyvault_key].id, null),
     try(var.keyvaults[var.client_config.landingzone_key][var.settings.vcenter_password.keyvault_key].id, null)
+  )
+  name         =  coalesce(
+    try(var.dynamic_keyvault_secrets[var.settings.vcenter_password.keyvault_key][var.settings.vcenter_password.secret_key].secret_name, null),
+    try(var.settings.vcenter_password.secret_name, null)
   )
 }
 
