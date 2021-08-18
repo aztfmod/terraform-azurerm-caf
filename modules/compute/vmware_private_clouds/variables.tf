@@ -21,4 +21,9 @@ variable "tags" {
 }
 variable "keyvaults" {
   description = "Keyvault to store the nsxt_password and the vcenter_password"
+  default = {}
+}
+variable "dynamic_keyvault_secrets" {
+  description = "Keyvault Secret to store the nsxt_password and the vcenter_password"
+  default = {}
 }
