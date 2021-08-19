@@ -53,11 +53,13 @@ The settings object is a map of maps containing the following attributes:
 
 ### Subnet details
 
+You can specify the subnets details either calling it via its Azure resource identifier (```subnet_id```) or via the composition model (```vnet_key```, ```subnet_key``` and ```lz_key```) if inside by the module.
+
 | Name | Description | Type | Default | Required |
 |------|-------------|------|---------|:--------:|
 | vnet_key | The key of the virtual network. | String | n/a | No |
 | subnet_key | The key of the subnet. | String | n/a | No |
-| lz_key | The remkey of the landing zone for the virtual network. This key should be populated only if the virtual network object is composed from a remote landing zone. | String | n/a | No |
+| lz_key | The key of the remote landing zone for the virtual network. This key should be populated only if the virtual network object is composed from a remote landing zone. | String | n/a | No |
 | subnet_id | The ID of the virtual subnet resource to which the database migration service should be joined. Changing this forces a new resource to be created. | String | n/a | No |
 
 
