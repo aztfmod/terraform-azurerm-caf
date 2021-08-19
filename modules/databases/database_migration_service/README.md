@@ -53,7 +53,7 @@ The settings object is a map of maps containing the following attributes:
 
 ### Subnet details
 
-You can specify the subnets details either calling it via its Azure resource identifier (```subnet_id```) or via the composition model (```vnet_key```, ```subnet_key``` and ```lz_key```) if inside by the module.
+You can specify the subnets details either calling it via its Azure resource identifier (```subnet_id```) or via the composition model (```vnet_key```, ```subnet_key``` and ```lz_key```) if created inside this module.
 
 | Name | Description | Type | Default | Required |
 |------|-------------|------|---------|:--------:|
