@@ -114,8 +114,9 @@ vmware_express_route_authorizations = {
 ## Outputs
 | Name | Description |
 |------|-------------|
-| vmware_clusters | The created vmware_cluster |
-| vmware_clusters.id | The ID of the created vmware_cluster |
+| id | The ID of the created vmware_cluster |
+|cluster_number | A number that identifies this Vmware Cluster in its Vmware Private Cloud. |
+|hosts | A list of host of the Vmware Cluster.
 
 #vmware_private_clouds
 
@@ -142,8 +143,31 @@ vmware_express_route_authorizations = {
 ## Outputs
 | Name | Description |
 |------|-------------|
-| vmware_private_clouds | The created vmware_private_cloud |
-| vmware_private_clouds.id | The ID of the created vmware_private_cloud |
+|id | The ID of the Vmware Private Cloud. |
+|circuit | A circuit block as defined below. |
+|hcx_cloud_manager_endpoint | The endpoint for the HCX Cloud Manager. |
+|nsxt_manager_endpoint | The endpoint for the NSX-T Data Center manager. |
+|vcsa_endpoint | The endpoint for Virtual Center Server Appliance. |
+|nsxt_certificate_thumbprint | The thumbprint of the NSX-T Manager SSL certificate. |
+|vcenter_certificate_thumbprint | The thumbprint of the vCenter Server SSL certificate. |
+|management_subnet_cidr | The network used to access vCenter Server and NSX-T Manager. |
+|provisioning_subnet_cidr | The network which is used for virtual machine cold migration, cloning, and snapshot migration. |
+|vmotion_subnet_cidr | The network which is used for live migration of virtual machines. |
+
+###circuit
+| Name | Description |
+|------|-------------|
+|express_route_id | The ID of the ExpressRoute Circuit.|
+|express_route_private_peering_id | The ID of the ExpressRoute ||Circuit private peering.|
+|primary_subnet_cidr | The CIDR of the primary subnet.|
+|secondary_subnet_cidr | The CIDR of the secondary subnet.|
+
+
+###management_cluster
+| Name | Description |
+|------|-------------|
+|id | The ID of the management cluster.|
+|hosts | A list of hosts in the management cluster.|
 
 #vmware_express_route_authorizations
 ## Inputs
@@ -154,5 +178,6 @@ vmware_express_route_authorizations = {
 ## Outputs
 | Name | Description |
 |------|-------------|
-| vmware_express_route_authorizations | The created vmware_express_route_authorization |
-| vmware_express_route_authorization.id | The ID of the created vmware_private_cloud |
+|id | The ID of the Vmware Authorization.|
+| express_route_authorization_id | The ID of the Express Route Circuit Authorization.|
+| express_route_authorization_key | The key of the Express Route Circuit Authorization.|
