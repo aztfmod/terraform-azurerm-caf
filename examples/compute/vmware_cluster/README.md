@@ -108,8 +108,15 @@ vmware_express_route_authorizations = {
 |name | Resource name | `string` |  | true |
 |vmware_private_cloud_key | Key of the related vmware_private_cloud | `string` |  | true |
 |cluster_node_count | Number of nodes | `number` |  | true |
-|sku_name | Number of nodes (av20,av36,av36t) | `string` |  | true |
+|sku_name | Number of nodes [see below](#vmware_clusterssku_name). | `string` |  | true |
 
+### Input Values
+###vmware_clusters.sku_name
+| Name | Description |
+|------|-------------|
+|av20||
+|av36|Cores: 36	RAM:576GB	All Flash Storage:15.36TB	NVM Cache:3.2TB|
+|av36t||
 
 ## Outputs
 | Name | Description |
@@ -126,26 +133,52 @@ vmware_express_route_authorizations = {
 |name | Resource name | `string` |  | true |
 |resource_group_key | Key of the resource group | `string` |  | true |
 |region | Key of the region to be deployed | `string` |  | true |
-|sku_name | Number of nodes (av20,av36,av36t) | `string` |  | true |
-|management_cluster | Object containing (size `number`) representing the size of the management cluster. | `object` |  | true |
+|sku_name | Number of nodes [see below](#sku_name-input-values).  | `string` |  | true |
+|management_cluster | Object containing [see below](#management_cluster-input-block ) representing the size of the management cluster. | `object` |  | true |
 |network_subnet_cidr | Subnet with mask. | `string` |  | true |
 |internet_connection_enabled | Is the Private Cluster connected to the internet? | `bool` |  | false |
-|nsxt_password |The password of the NSX-T Manager. Changing this forces a new Vmware Private Cloud to be created. | `string` |  | false |
-|vcenter_password |The password of the vCenter admin. Changing this forces a new Vmware Private Cloud to be created. | `string` |  | false |
+|nsxt_password |The password of the NSX-T Manager. Changing this forces a new Vmware Private Cloud to be created.  [see below](#nsxt_password-input-values)| `string` |  | false |
+|vcenter_password |The password of the vCenter admin. Changing this forces a new Vmware Private Cloud to be created.  [see below](#vcenter_password-input-values)| `string` |  | false |
 |tags |A mapping of tags which should be assigned to the Vmware Private Cloud. | `object` |  | false |
 
-###management_cluster
+###nsxt_password input block 
+| Name | Description | Type | Default | Required |
+|------|-------------|------|---------|:--------:|
+|password | Password in plain string | `string` | false |
+|keyvault_key | Key Vault key of the keyvault that the nsxt_password is stored, if this is defined the `secret_name` or `secret_key` is also required. | `string` | false |
+|lzKey | If your Key Vault is in another Landing Zone you should define the Key Vault Landing Zone key here, this also requires the `keyvault_key` to be defined.| `string` | false |
+|secret_name | Secret name of your Key Vault in plain string, this also requires the `keyvault_key` to be defined. | `string` | false |
+|secret_key | The Secret Key of your Key Vault that holds your secret_name, this also requires the `keyvault_key` to be defined. | `string` | false |
 
+
+###vcenter_password input block 
+| Name | Description | Type | Default | Required |
+|------|-------------|------|---------|:--------:|
+|password | Password in plain string | `string` | false |
+|keyvault_key | Key Vault key of the keyvault that the nsxt_password is stored, if this is defined the `secret_name` or `secret_key` is also required. | `string` | false |
+|lzKey | If your Key Vault is in another Landing Zone you should define the Key Vault Landing Zone key here, this also requires the `keyvault_key` to be defined.| `string` | false |
+|secret_name | Secret name of your key Vault in plain string, this also requires the `keyvault_key` to be defined. | `string` | false |
+|secret_key | The Secret Key of your Key Vault that holds your secret_name, this also requires the `keyvault_key` to be defined. | `string` | false |
+
+###management_cluster input block 
 | Name | Description | Type | Default | Required |
 |------|-------------|------|---------|:--------:|
 |size |The size of the management cluster. This field can not updated with `internet_connection_enabled` together. | `number` |  | false |
+
+
+###sku_name input values 
+| Name | Description |
+|------|-------------|
+|av20||
+|av36|Cores: 36	RAM:576GB	All Flash Storage:15.36TB	NVM Cache:3.2TB|
+|av36t||
 
 ## Outputs
 | Name | Description |
 |------|-------------|
 |id | The ID of the Vmware Private Cloud. |
-|circuit | A circuit block as defined below. |
-|management_cluster | A management_cluster block as defined below. |
+|circuit | A circuit block as defined [below](#circuit-block-output) . |
+|management_cluster | A management_cluster block as defined [below](#management_cluster-block-output). |
 |hcx_cloud_manager_endpoint | The endpoint for the HCX Cloud Manager. |
 |nsxt_manager_endpoint | The endpoint for the NSX-T Data Center manager. |
 |vcsa_endpoint | The endpoint for Virtual Center Server Appliance. |
@@ -155,7 +188,7 @@ vmware_express_route_authorizations = {
 |provisioning_subnet_cidr | The network which is used for virtual machine cold migration, cloning, and snapshot migration. |
 |vmotion_subnet_cidr | The network which is used for live migration of virtual machines. |
 
-###circuit
+###circuit block output
 | Name | Description |
 |------|-------------|
 |express_route_id | The ID of the ExpressRoute Circuit.|
@@ -164,7 +197,7 @@ vmware_express_route_authorizations = {
 |secondary_subnet_cidr | The CIDR of the secondary subnet.|
 
 
-###management_cluster
+###management_cluster block output
 | Name | Description |
 |------|-------------|
 |id | The ID of the management cluster.|
