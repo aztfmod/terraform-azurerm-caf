@@ -7,7 +7,7 @@ parameter_files=$(find ${current_folder} | grep .tfvars | sed 's/.*/-var-file &/
 
 cd ${2}
 
-terraform init
+terraform init -upgrade
 
 terraform apply \
   ${parameter_files} \

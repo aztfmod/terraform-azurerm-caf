@@ -44,9 +44,14 @@ locals {
 
 }
 
+resource "time_sleep" "wait_for_directory_propagation" {
+  depends_on = [azuread_service_principal.app]
+
+  create_duration = "65s"
+}
 
 resource "null_resource" "grant_admin_consent" {
-  depends_on = [azuread_service_principal.app]
+  depends_on = [time_sleep.wait_for_directory_propagation]
 
   for_each = {
     for key, permission in local.api_permissions : key => permission

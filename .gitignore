@@ -12,3 +12,4 @@
 public
 **/.terraform.lock.hcl
 **/*.backup
+landingzones

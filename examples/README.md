@@ -9,7 +9,7 @@ You can instantiate this module directly using the following syntax:
 ```hcl
 module "caf" {
   source  = "aztfmod/caf/azurerm"
-  version = "5.3.11"
+  version = "5.4.2"
   # insert the 7 required variables here
 }
 ```
@@ -21,7 +21,7 @@ A minimal example could be:
 ```hcl
 module "caf" {
   source  = "aztfmod/caf/azurerm"
-  version = "5.3.11"
+  version = "5.4.2"
 
   global_settings = var.global_settings
   resource_groups = var.resource_groups
@@ -42,7 +42,7 @@ You can [find here a minimal example](./standalone.md)
 
 ### Run all the examples in this library
 
-The current folder contains an example of module with the whole features set of the module, to run all the examples in the subfolders. You can  leverage it the following way:
+The current folder contains an example of module with the whole features set of the module, to run all the examples in the subfolders. You can leverage it the following way:
 
 ```bash
 cd /tf/caf/examples
@@ -68,9 +68,9 @@ rover login --tenant <tenant_name>.onmicrosoft.com -s <subscription_id>
 ### 2. Deploy the basic launchpad
 
 ```bash
-rover -lz /tf/caf/public/landingzones/caf_launchpad \
+rover -lz /tf/caf/landingzones/caf_launchpad \
 -launchpad \
--var-folder /tf/caf/public/landingzones/caf_launchpad/scenario/100 \
+-var-folder /tf/caf/landingzones/caf_launchpad/scenario/100 \
 -a apply
 ```
 
