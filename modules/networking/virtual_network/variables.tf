@@ -55,3 +55,7 @@ variable "network_security_groups" {
   default     = {}
   description = "Network Security Group cretaed with different Resource Group"
 }
+
+variable "remote_dns" {
+  default = {}
+}
