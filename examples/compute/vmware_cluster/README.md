@@ -100,7 +100,7 @@ vmware_express_route_authorizations = {
   }
 }
 ```
-#vmware_clusters
+# vmware_clusters
 
 ## Inputs
 | Name | Description | Type | Default | Required |
@@ -111,7 +111,8 @@ vmware_express_route_authorizations = {
 |sku_name | Number of nodes [see below](#vmware_clusterssku_name). | `string` |  | true |
 
 ### Input Values
-###vmware_clusters.sku_name
+
+### vmware_clusters.sku_name
 | Name | Description |
 |------|-------------|
 |av20||
@@ -125,7 +126,7 @@ vmware_express_route_authorizations = {
 |cluster_number | A number that identifies this Vmware Cluster in its Vmware Private Cloud. |
 |hosts | A list of host of the Vmware Cluster.
 
-#vmware_private_clouds
+# vmware_private_clouds
 
 ## Inputs
 | Name | Description | Type | Default | Required |
@@ -141,7 +142,7 @@ vmware_express_route_authorizations = {
 |vcenter_password |The password of the vCenter admin. Changing this forces a new Vmware Private Cloud to be created.  [see below](#vcenter_password-input-values)| `block` |  | false |
 |tags |A mapping of tags which should be assigned to the Vmware Private Cloud. | `object` |  | false |
 
-###nsxt_password input block 
+### nsxt_password input block 
 | Name | Description | Type | Default | Required |
 |------|-------------|------|---------|:--------:|
 |password | Password in plain string | `string` |  | false|
@@ -151,7 +152,7 @@ vmware_express_route_authorizations = {
 |secret_key | The Secret Key of your Key Vault that holds your secret_name, this also requires the `keyvault_key` to be defined. | `string` |  | false|
 
 
-###vcenter_password input block 
+### vcenter_password input block 
 | Name | Description | Type | Default | Required |
 |------|-------------|------|---------|:--------:|
 |password | Password in plain string | `string` |  | false |
@@ -160,13 +161,13 @@ vmware_express_route_authorizations = {
 |secret_name | Secret name of your key Vault in plain string, this also requires the `keyvault_key` to be defined. | `string` |  |false|
 |secret_key | The Secret Key of your Key Vault that holds your secret_name, this also requires the `keyvault_key` to be defined. | `string` |  | false|
 
-###management_cluster input block 
+### management_cluster input block 
 | Name | Description | Type | Default | Required |
 |------|-------------|------|---------|:--------:|
 |size |The size of the management cluster. This field can not updated with `internet_connection_enabled` together. | `number` |  | false |
 
 
-###sku_name input values 
+### sku_name input values 
 | Name | Description |
 |------|-------------|
 |av20||
@@ -188,7 +189,7 @@ vmware_express_route_authorizations = {
 |provisioning_subnet_cidr | The network which is used for virtual machine cold migration, cloning, and snapshot migration. |
 |vmotion_subnet_cidr | The network which is used for live migration of virtual machines. |
 
-###circuit block output
+### circuit block output
 | Name | Description |
 |------|-------------|
 |express_route_id | The ID of the ExpressRoute Circuit.|
@@ -197,13 +198,13 @@ vmware_express_route_authorizations = {
 |secondary_subnet_cidr | The CIDR of the secondary subnet.|
 
 
-###management_cluster block output
+### management_cluster block output
 | Name | Description |
 |------|-------------|
 |id | The ID of the management cluster.|
 |hosts | A list of hosts in the management cluster.|
 
-#vmware_express_route_authorizations
+# vmware_express_route_authorizations
 ## Inputs
 | Name | Description | Type | Default | Required |
 |------|-------------|------|---------|:--------:|
