@@ -145,6 +145,7 @@ vmware_express_route_authorizations = {
 |------|-------------|
 |id | The ID of the Vmware Private Cloud. |
 |circuit | A circuit block as defined below. |
+|management_cluster | A management_cluster block as defined below. |
 |hcx_cloud_manager_endpoint | The endpoint for the HCX Cloud Manager. |
 |nsxt_manager_endpoint | The endpoint for the NSX-T Data Center manager. |
 |vcsa_endpoint | The endpoint for Virtual Center Server Appliance. |
