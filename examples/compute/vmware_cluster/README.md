@@ -144,21 +144,21 @@ vmware_express_route_authorizations = {
 ###nsxt_password input block 
 | Name | Description | Type | Default | Required |
 |------|-------------|------|---------|:--------:|
-|password | Password in plain string | `string` | false |
-|keyvault_key | Key Vault key of the keyvault that the nsxt_password is stored, if this is defined the `secret_name` or `secret_key` is also required. | `string` | false |
-|lzKey | If your Key Vault is in another Landing Zone you should define the Key Vault Landing Zone key here, this also requires the `keyvault_key` to be defined.| `string` | false |
-|secret_name | Secret name of your Key Vault in plain string, this also requires the `keyvault_key` to be defined. | `string` | false |
-|secret_key | The Secret Key of your Key Vault that holds your secret_name, this also requires the `keyvault_key` to be defined. | `string` | false |
+|password | Password in plain string | `string` |  | false|
+|keyvault_key | Key Vault key of the keyvault that the nsxt_password is stored, if this is defined the `secret_name` or `secret_key` is also required. | `string` |  | false|
+|lzKey | If your Key Vault is in another Landing Zone you should define the Key Vault Landing Zone key here, this also requires the `keyvault_key` to be defined.| `string` | | false |
+|secret_name | Secret name of your Key Vault in plain string, this also requires the `keyvault_key` to be defined. | `string` | | false |
+|secret_key | The Secret Key of your Key Vault that holds your secret_name, this also requires the `keyvault_key` to be defined. | `string` |  | false|
 
 
 ###vcenter_password input block 
 | Name | Description | Type | Default | Required |
 |------|-------------|------|---------|:--------:|
-|password | Password in plain string | `string` | false |
-|keyvault_key | Key Vault key of the keyvault that the nsxt_password is stored, if this is defined the `secret_name` or `secret_key` is also required. | `string` | false |
-|lzKey | If your Key Vault is in another Landing Zone you should define the Key Vault Landing Zone key here, this also requires the `keyvault_key` to be defined.| `string` | false |
-|secret_name | Secret name of your key Vault in plain string, this also requires the `keyvault_key` to be defined. | `string` | false |
-|secret_key | The Secret Key of your Key Vault that holds your secret_name, this also requires the `keyvault_key` to be defined. | `string` | false |
+|password | Password in plain string | `string` |  | false |
+|keyvault_key | Key Vault key of the keyvault that the nsxt_password is stored, if this is defined the `secret_name` or `secret_key` is also required. | `string` |  | false|
+|lzKey | If your Key Vault is in another Landing Zone you should define the Key Vault Landing Zone key here, this also requires the `keyvault_key` to be defined.| `string` |  | false|
+|secret_name | Secret name of your key Vault in plain string, this also requires the `keyvault_key` to be defined. | `string` |  |false|
+|secret_key | The Secret Key of your Key Vault that holds your secret_name, this also requires the `keyvault_key` to be defined. | `string` |  | false|
 
 ###management_cluster input block 
 | Name | Description | Type | Default | Required |
