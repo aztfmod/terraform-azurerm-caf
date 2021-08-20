@@ -48,6 +48,32 @@ locals {
     ) : format("%s-%s", url_path_map.value.app_key, url_path_map.value.url_path_map_key) => url_path_map.value
   }
 
+  probes = {
+    for probe in
+    flatten(
+      [
+        for app_key, config in var.application_gateway_applications : [
+          for key, value in try(config.probes, []) : {
+            value = merge({ app_key = app_key, probe_key = key }, value)
+          }
+        ]
+      ]
+    ) : format("%s-%s", probe.value.app_key, probe.value.probe_key) => probe.value
+  }
+
+  rewrite_rule_sets = {
+    for rewrite_rule_set in
+    flatten(
+      [
+        for app_key, config in var.application_gateway_applications : [
+          for key, value in try(config.rewrite_rule_sets, []) : {
+            value = merge({ app_key = app_key, rewrite_rule_set_key = key }, value)
+          }
+        ]
+      ]
+    ) : format("%s-%s", rewrite_rule_set.value.app_key, rewrite_rule_set.value.rewrite_rule_set_key) => rewrite_rule_set.value
+  }
+
   certificate_keys = distinct(flatten([
     for key, value in local.listeners : [try(value.keyvault_certificate.certificate_key, [])]
   ]))

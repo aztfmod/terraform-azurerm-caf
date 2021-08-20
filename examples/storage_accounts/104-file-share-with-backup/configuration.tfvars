@@ -36,6 +36,24 @@ storage_accounts = {
             name = "testdirectory"
           }
         }
+        files = {
+          file1 = {
+            name = "fileA"
+            # source = "/tf/caf/examples/storage_accounts/104-file-share-with-backup/fileA"
+            # Prefer the relative path for CI
+            source = "./storage_accounts/104-file-share-with-backup/fileA"
+          }
+          file2 = {
+            name   = "fileB"
+            source = "./storage_accounts/104-file-share-with-backup/fileB"
+            path   = "testdirectory"
+          }
+          file3 = {
+            name   = "fileC"
+            source = "./storage_accounts/104-file-share-with-backup/fileC"
+            path   = "testdirectory"
+          }
+        }
 
         # backups = {
         #   policy_key = "policy1"

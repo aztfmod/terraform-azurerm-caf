@@ -35,6 +35,12 @@ resource "azurecaf_name" "os_disk_windows" {
   clean_input   = true
   passthrough   = var.global_settings.passthrough
   use_slug      = var.global_settings.use_slug
+ 
+  lifecycle {
+    ignore_changes = [
+      name
+    ]
+  }
 }
 
 resource "azurerm_windows_virtual_machine" "vm" {
@@ -169,6 +175,12 @@ resource "azurerm_windows_virtual_machine" "vm" {
       protocol        = try(each.value.winrm.protocol, "Https")
       certificate_url = try(each.value.winrm.enable_self_signed, false) ? azurerm_key_vault_certificate.self_signed_winrm[each.key].secret_id : each.value.winrm.certificate_url
     }
+  }
+
+  lifecycle {
+    ignore_changes = [
+      os_disk[0].name
+    ]
   }
 
 }

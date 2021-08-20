@@ -16,14 +16,21 @@ module "custom_roles" {
 resource "azurerm_role_assignment" "for" {
   for_each = try(local.roles_to_process, {})
 
-  scope                = local.services_roles[each.value.scope_resource_key][var.current_landingzone_key][each.value.scope_key_resource].id
+  scope = coalesce(
+    try(local.services_roles[each.value.scope_resource_key][each.value.scope_lz_key][each.value.scope_key_resource].id, null),
+    try(local.services_roles[each.value.scope_resource_key][var.current_landingzone_key][each.value.scope_key_resource].id, null)
+  )
   role_definition_name = each.value.mode == "built_in_role_mapping" ? each.value.role_definition_name : null
   role_definition_id   = each.value.mode == "custom_role_mapping" ? module.custom_roles[each.value.role_definition_name].role_definition_resource_id : null
-  principal_id         = each.value.object_id_resource_type == "object_ids" ? each.value.object_id_key_resource : try(local.services_roles[each.value.object_id_resource_type][each.value.lz_key][each.value.object_id_key_resource].rbac_id, local.services_roles[each.value.object_id_resource_type][var.current_landingzone_key][each.value.object_id_key_resource].rbac_id)
+  principal_id = each.value.object_id_resource_type == "object_ids" ? each.value.object_id_key_resource : coalesce(
+    try(local.services_roles[each.value.object_id_resource_type][each.value.object_id_lz_key][each.value.object_id_key_resource].rbac_id, null),
+    try(local.services_roles[each.value.object_id_resource_type][var.current_landingzone_key][each.value.object_id_key_resource].rbac_id, null)
+  )
 
   lifecycle {
     ignore_changes = [
-      principal_id
+      principal_id,
+      scope
     ]
 
     create_before_destroy = true
@@ -119,14 +126,15 @@ locals {
                   {                                                     # "seacluster_Azure_Kubernetes_Service_Cluster_Admin_Role_aks_admins" = {
                     mode                    = key_mode                  #   "mode" = "built_in_role_mapping"
                     scope_resource_key      = key
+                    scope_lz_key            = try(role_mapping.lz_key, null)
                     scope_key_resource      = scope_key_resource
                     role_definition_name    = role_definition_name
                     object_id_resource_type = object_id_key
                     object_id_key_resource  = object_id_key_resource #   "object_id_key_resource" = "aks_admins"
-                    lz_key                  = try(object_resources.lz_key, null)
+                    object_id_lz_key        = try(object_resources.lz_key, null)
                   }
                 ]
-              ]
+              ] if role_definition_name != "lz_key"
             ]
           ]
         ]

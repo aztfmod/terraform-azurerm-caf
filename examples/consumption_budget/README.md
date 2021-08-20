@@ -7,7 +7,7 @@ You can instantiate this directly using the following parameters:
 ```hcl
 module "caf" {
   source  = "aztfmod/caf/azurerm"
-  version = "5.4.1"
+  version = "5.4.2"
   # insert the 7 required variables here
 }
 ```
@@ -22,6 +22,8 @@ The following examples are available:
 | [101-consumption-budget-subscription](./101-consumption-budget-subscription) | Simple example for consumption budget deployed at subscription scope. |
 | [102-consumption-budget-rg-alerts](./102-consumption-budget-rg-alerts) | Simple example for consumption budget deployed at resource group scope, integrated with action groups. |
 | [103-consumption-budget-subscription-alerts](./103-consumption-budget-subscription-alerts) | Simple example for consumption budget deployed at subscription scope, integrated with action groups. |
+| [104-consumption-budget-subscription-vm](./104-consumption-budget-subscription-vm) | Consumption budget deployed at subscription scope, integrated with Azure windows virtual machine. |
+| [105-consumption-budget-subscription-aks](./105-consumption-budget-subscription-vm) | Consumption budget deployed at subscription scope, integrated with Azure Kubernetes Service single cluster |
 
 ## Run this example
 

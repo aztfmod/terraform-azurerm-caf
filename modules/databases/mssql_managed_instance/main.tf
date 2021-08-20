@@ -25,14 +25,14 @@ locals {
     skuName = {
       value = var.settings.sku.name
     }
-    # skuEdition = {
-    #   value = try(var.settings.sku.edition, "GeneralPurpose")
-    # }
+    skuEdition = {
+      value = try(var.settings.sku.edition, "GeneralPurpose")
+    }
     administratorLogin = {
       value = var.settings.administratorLogin
     }
     administratorLoginPassword = {
-      value = var.settings.administratorLoginPassword
+      value = try(var.settings.administratorLoginPassword, azurerm_key_vault_secret.sqlmi_admin_password.0.value)
     }
     subnetId = {
       value = var.subnet_id
