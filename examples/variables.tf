@@ -561,3 +561,9 @@ variable "vmware_clusters" {
 variable "vmware_express_route_authorizations" {
   default = {}
 }
+variable "nat_gateways" {
+  default = {}
+}
+variable "cognitive_services_account" {
+  default = {}
+}

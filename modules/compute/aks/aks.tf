@@ -146,10 +146,15 @@ resource "azurerm_kubernetes_cluster" "aks" {
   disk_encryption_set_id = try(var.settings.disk_encryption_set_id, null)
 
   dynamic "identity" {
-    for_each = try(var.settings.identity[*], {})
+    for_each = try(var.settings.identity, null) == null ? [] : [1]
 
     content {
-      type = identity.value.type
+      type = var.settings.identity.type
+      user_assigned_identity_id = lower(var.settings.identity.type) == "userassigned" ? coalesce(
+        try(var.settings.identity.user_assigned_identity_id, null),
+        try(var.managed_identities[var.settings.identity.lz_key][var.settings.identity.managed_identity_key].id, null),
+        try(var.managed_identities[var.client_config.landingzone_key][var.settings.identity.managed_identity_key].id, null)
+      ) : null
     }
   }
 
@@ -212,7 +217,7 @@ resource "azurerm_kubernetes_cluster" "aks" {
 
   node_resource_group     = azurecaf_name.rg_node.result
   private_cluster_enabled = try(var.settings.private_cluster_enabled, false)
-  private_dns_zone_id     = try(var.settings.private_dns_zone_id, null)
+  private_dns_zone_id     = var.private_dns_zone_id
 
   lifecycle {
     ignore_changes = [

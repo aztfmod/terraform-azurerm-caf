@@ -44,6 +44,13 @@ resource "azurecaf_name" "os_disk_linux" {
   clean_input   = true
   passthrough   = var.global_settings.passthrough
   use_slug      = var.global_settings.use_slug
+  
+  lifecycle {
+    ignore_changes = [
+      name
+    ]
+  }
+
 }
 
 resource "azurerm_linux_virtual_machine" "vm" {
@@ -54,6 +61,7 @@ resource "azurerm_linux_virtual_machine" "vm" {
   resource_group_name   = var.resource_group_name
   size                  = each.value.size
   admin_username        = each.value.admin_username
+  admin_password        = each.value.disable_password_authentication == false ? each.value.admin_password : null
   network_interface_ids = local.nic_ids
   tags                  = merge(local.tags, try(each.value.tags, null))
 
@@ -133,6 +141,12 @@ resource "azurerm_linux_virtual_machine" "vm" {
     }
   }
 
+  lifecycle {
+    ignore_changes = [
+      os_disk[0].name
+    ]
+  }
+  
 }
 
 #

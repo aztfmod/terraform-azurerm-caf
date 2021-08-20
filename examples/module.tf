@@ -70,6 +70,11 @@ module "example" {
   #   synapseAnalyticsResourceId                  = var.synapseAnalyticsResourceId
   #   vmImageAliasDoc                             = var.vmImageAliasDoc
   # }
+
+  cognitive_services = {
+    cognitive_services_account = var.cognitive_services_account
+  }
+
   compute = {
     aks_clusters                                   = var.aks_clusters
     availability_sets                              = var.availability_sets
@@ -140,6 +145,7 @@ module "example" {
     ip_groups                                               = var.ip_groups
     load_balancers                                          = var.load_balancers
     local_network_gateways                                  = var.local_network_gateways
+    nat_gateways                                            = var.nat_gateways
     network_security_group_definition                       = var.network_security_group_definition
     network_watchers                                        = var.network_watchers
     private_dns                                             = var.private_dns
