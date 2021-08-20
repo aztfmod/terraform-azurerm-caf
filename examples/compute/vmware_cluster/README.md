@@ -134,11 +134,11 @@ vmware_express_route_authorizations = {
 |resource_group_key | Key of the resource group | `string` |  | true |
 |region | Key of the region to be deployed | `string` |  | true |
 |sku_name | Number of nodes [see below](#sku_name-input-values).  | `string` |  | true |
-|management_cluster | Object containing [see below](#management_cluster-input-block ) representing the size of the management cluster. | `object` |  | true |
+|management_cluster | Object containing [see below](#management_cluster-input-block ) representing the size of the management cluster. | `block` |  | true |
 |network_subnet_cidr | Subnet with mask. | `string` |  | true |
 |internet_connection_enabled | Is the Private Cluster connected to the internet? | `bool` |  | false |
-|nsxt_password |The password of the NSX-T Manager. Changing this forces a new Vmware Private Cloud to be created.  [see below](#nsxt_password-input-values)| `string` |  | false |
-|vcenter_password |The password of the vCenter admin. Changing this forces a new Vmware Private Cloud to be created.  [see below](#vcenter_password-input-values)| `string` |  | false |
+|nsxt_password |The password of the NSX-T Manager. Changing this forces a new Vmware Private Cloud to be created.  [see below](#nsxt_password-input-values)| `block` |  | false |
+|vcenter_password |The password of the vCenter admin. Changing this forces a new Vmware Private Cloud to be created.  [see below](#vcenter_password-input-values)| `block` |  | false |
 |tags |A mapping of tags which should be assigned to the Vmware Private Cloud. | `object` |  | false |
 
 ###nsxt_password input block 
