@@ -1,5 +1,5 @@
 module "vmware_private_clouds" {
-  depends_on = [module.keyvault_certificate_requests]
+  depends_on = [module.dynamic_keyvault_secrets]
   source   = "./modules/compute/vmware_private_clouds"
   for_each = local.compute.vmware_private_clouds
 
@@ -10,7 +10,7 @@ module "vmware_private_clouds" {
   location                    = lookup(each.value, "region", null) == null ? local.resource_groups[each.value.resource_group_key].location : local.global_settings.regions[each.value.region]
   base_tags                   = try(local.global_settings.inherit_tags, false) ? local.resource_groups[each.value.resource_group_key].tags : {}
   keyvaults                   = local.combined_objects_keyvaults
-  dynamic_keyvault_secrets    = local.security.dynamic_keyvault_secrets
+  dynamic_keyvault_secrets    = local.security.dynamic_keyvault_secrets #module.dynamic_keyvault_secrets
 }
 
 output "vmware_private_clouds" {
@@ -18,7 +18,6 @@ output "vmware_private_clouds" {
 }
 
 module "vmware_clusters" {
-  depends_on = [module.vmware_private_clouds]
   source   = "./modules/compute/vmware_clusters"
   for_each = local.compute.vmware_clusters
   global_settings = local.global_settings
@@ -34,7 +33,6 @@ output "vmware_clusters" {
 }
 
 module "vmware_express_route_authorizations" {
-  depends_on = [module.vmware_private_clouds]
   source   = "./modules/compute/vmware_express_route_authorizations"
   for_each = local.compute.vmware_express_route_authorizations
   global_settings = local.global_settings
