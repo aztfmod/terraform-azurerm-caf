@@ -12,6 +12,9 @@ variable "resource_group_name" {
   description = "Resource Group Name"
 }
 
+variable "records" {
+}
+
 variable "vnet_links" {
   default = {}
 }
