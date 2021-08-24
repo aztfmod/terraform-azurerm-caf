@@ -62,6 +62,7 @@ virtual_machines = {
         admin_username                  = "adminuser"
         disable_password_authentication = true
 
+        #custom_data - Users can either reference a local file path or a block of code as seen below.
         #custom_data                     = "scripts/cloud-init/install-rover-tools.config"
         #custom_data = "compute/virtual_machine/100-single-linux-vm/scripts/cloud-init/install-rover-tools.config"
         custom_data = <<CUSTOM_DATA
