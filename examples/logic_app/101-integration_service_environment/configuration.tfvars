@@ -52,33 +52,34 @@ vnets = {
 
 
 integration_service_environment = {
-
-  name   = "example-ise"
-  region = "region1"
-  resource_group_key = "rgise1"
-  sku_name             = "Developer_0"
-  access_endpoint_type = "Internal"
-  subnets = {
-    subnet1 = {
-      #lz_key = ""
-      vnet_key   = "vnetise1"
-      subnet_key = "subnetise1"
+  ise1={
+    name   = "example-ise"
+    region = "region1"
+    resource_group_key = "rgise1"
+    sku_name             = "Developer_0"
+    access_endpoint_type = "Internal"
+    subnets = {
+      subnet1 = {
+        #lz_key = ""
+        vnet_key   = "vnetise1"
+        subnet_key = "subnetise1"
+      }
+      subnet2 = {
+        #lz_key = ""
+        vnet_key   = "vnetise1"
+        subnet_key = "subnetise2"
+      }
+      subnet3 = {
+        #lz_key = ""
+        vnet_key   = "vnetise1"
+        subnet_key = "subnetise3"
+      }
+      subnet4 = {
+        #lz_key = ""
+        vnet_key   = "vnetise1"
+        subnet_key = "subnetise4"
+      }            
+      #add multiple subnets by extending this block
     }
-    subnet2 = {
-      #lz_key = ""
-      vnet_key   = "vnetise1"
-      subnet_key = "subnetise2"
-    }
-    subnet3 = {
-      #lz_key = ""
-      vnet_key   = "vnetise1"
-      subnet_key = "subnetise3"
-    }
-    subnet4 = {
-      #lz_key = ""
-      vnet_key   = "vnetise1"
-      subnet_key = "subnetise4"
-    }            
-    #add multiple subnets by extending this block
   }
 }

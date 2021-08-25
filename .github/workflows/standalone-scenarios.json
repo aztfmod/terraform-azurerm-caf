@@ -55,6 +55,7 @@
     "eventhub/104-namespace-and-evh-with-storage",
     "keyvault/101-keyvault-policies",
     "keyvault/102-keyvault-cert-issuer",
+    "logic_app/101-integration_service_environment",
     "machine_learning/100-aml",
     "machine_learning/101-aml-vnet",
     "managed_service_identity/100-msi-levels",
