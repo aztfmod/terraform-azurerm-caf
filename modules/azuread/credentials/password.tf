@@ -4,7 +4,6 @@ resource "azuread_application_password" "key" {
   description = try(var.settings.description, local.description.key)
   value       = random_password.key.0.result
   end_date    = local.expiration_date.key
-  start_date  = local.start_date
 
   application_object_id = coalesce(
     try(var.resources.application.id, null)
@@ -20,7 +19,6 @@ resource "azuread_application_password" "key0" {
   description = try(var.settings.description, local.description.key0)
   value       = random_password.key0.0.result
   end_date    = local.expiration_date.key0
-  start_date  = local.start_date
 
   application_object_id = coalesce(
     try(var.resources.application.id, null)
@@ -36,7 +34,6 @@ resource "azuread_application_password" "key1" {
   description = try(var.settings.description, local.description.key1)
   value       = random_password.key1.0.result
   end_date    = local.expiration_date.key1
-  start_date  = local.start_date
 
   application_object_id = coalesce(
     try(var.resources.application.id, null)
