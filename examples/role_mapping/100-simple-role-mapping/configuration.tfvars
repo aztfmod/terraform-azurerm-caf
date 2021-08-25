@@ -12,7 +12,7 @@ resource_groups = {
 }
 
 keyvaults = {
-  kv1 = { 
+  kv1 = {
     name                      = "kv1examplemsi"
     resource_group_key        = "rg1"
     sku_name                  = "premium"
@@ -37,13 +37,13 @@ role_mapping = {
     keyvaults = {
       kv1 = {
         # lz_key = "" to be defined when the keyvault is created in a different lz
-        
+
         "Key Vault Secrets User" = {
           managed_identities = {
             # lz_key = "" to be defined when the msi is created in a different lz
             keys = ["example_msi"]
           }
-        } 
+        }
       }
 
     }

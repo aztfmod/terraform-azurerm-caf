@@ -79,7 +79,7 @@ virtual_machines = {
           disk_encryption_set_key = "set1"
         }
         identity = {
-          type                  = "SystemAssigned" #SystemAssigned OR UserAssigned OR SystemAssigned, UserAssigned
+          type = "SystemAssigned" #SystemAssigned OR UserAssigned OR SystemAssigned, UserAssigned
           # remote = {
           #   remote_kz_key = { # remote lz key
           #     managed_identity_keys = [""] # remote msi resource key

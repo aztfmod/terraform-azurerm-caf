@@ -19,8 +19,8 @@ locals {
   description = {
     key = try(format(
       "key-%s-%s",
-      formatdate("YYMMDDhhmmss", time_rotating.key.0.rotation_rfc3339),   // Next rotation date
-      formatdate("YYMMDDhhmmss", local.expiration_date.key)               // Credential expiration date
+      formatdate("YYMMDDhhmmss", time_rotating.key.0.rotation_rfc3339), // Next rotation date
+      formatdate("YYMMDDhhmmss", local.expiration_date.key)             // Credential expiration date
     ), null)
     key0 = try(format(
       "key0-%s-%s",

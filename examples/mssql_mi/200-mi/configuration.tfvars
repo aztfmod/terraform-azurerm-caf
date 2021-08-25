@@ -57,7 +57,7 @@ mssql_managed_instances = {
     sku = {
       name = "GP_Gen5"
     }
-    administratorLogin         = "adminuser"
+    administratorLogin = "adminuser"
     # administratorLoginPassword = "@dm1nu53r@30102020"
 
     //networking
