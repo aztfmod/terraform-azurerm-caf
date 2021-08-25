@@ -1,3 +1,10 @@
+variable "global_settings" {
+  description = "Global settings object (see module README.md)"
+}
+variable "client_config" {
+  description = "Client configuration object (see module README.md)."
+}
+variable "settings" {}
 variable "name" {
   description = "(Required) The name of the Integration Service Environment"
 }
@@ -17,15 +24,15 @@ variable "sku_name" {
 variable "access_endpoint_type" {
   description = "(Required) The type of access endpoint to use for the Integration Service Environment"
 }
-
-variable "virtual_network_subnet_ids" {
+variable "vnets" {
+  default = {}
   description = "(Required) A list of virtual network subnet ids to be used by Integration Service Environment"
 }
-
-variable "tags" {
-  description = "(Optional) A mapping of tags which should be assigned to the Integration Service Environment"
+variable "base_tags" {
+  description = "Base tags for the resource to be inherited from the resource group."
+  type        = map(any)
 }
-
-variable "global_settings" {}
-
-variable "base_tags" {}
+variable "tags" {
+  description = "(Required) map of tags for the deployment"
+  default = null
+}

@@ -4,17 +4,19 @@ module "integration_service_environment" {
 
   for_each = local.logic_app.integration_service_environment
 
+  global_settings             = local.global_settings
+  client_config               = local.client_config
+  settings                    = each.value
   name                       = each.value.name
   resource_group_name        = local.resource_groups[each.value.resource_group_key].name
   location                   = lookup(each.value, "region", null) == null ? local.resource_groups[each.value.resource_group_key].location : local.global_settings.regions[each.value.region]
   sku_name                   = each.value.sku_name
+  vnets                      = local.combined_objects_networking
   access_endpoint_type       = each.value.access_endpoint_type
-  virtual_network_subnet_ids = each.value.virtual_network_subnet_ids
-  global_settings            = local.global_settings
   base_tags                  = try(local.global_settings.inherit_tags, false) ? local.resource_groups[each.value.resource_group_key].tags : {}
-  tags                       = try(each.value.tags, null)
-}
 
+}
+ 
 output "integration_service_environment" {
   value = module.integration_service_environment
 }
