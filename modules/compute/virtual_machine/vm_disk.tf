@@ -1,19 +1,25 @@
 resource "azurecaf_name" "disk" {
   for_each = lookup(var.settings, "data_disks", {})
 
-  name          = each.value.name
+  name          = try(each.value.name, null)
   resource_type = "azurerm_managed_disk"
   prefixes      = var.global_settings.prefixes
   random_length = var.global_settings.random_length
   clean_input   = true
   passthrough   = var.global_settings.passthrough
   use_slug      = var.global_settings.use_slug
+
+  lifecycle {
+    ignore_changes = [
+      name
+    ]
+  }
 }
 
 resource "azurerm_managed_disk" "disk" {
   for_each = lookup(var.settings, "data_disks", {})
 
-  name                   = azurecaf_name.disk[each.key].result
+  name                   = try(azurecaf_name.disk[each.key].result, null)
   location               = var.location
   resource_group_name    = var.resource_group_name
   storage_account_type   = each.value.storage_account_type
@@ -25,6 +31,11 @@ resource "azurerm_managed_disk" "disk" {
   tags                   = local.tags
   disk_encryption_set_id = try(each.value.disk_encryption_set_key, null) == null ? null : var.disk_encryption_sets[try(each.value.lz_key, var.client_config.landingzone_key)][each.value.disk_encryption_set_key].id
 
+  lifecycle {
+    ignore_changes = [
+      name
+    ]
+  }
 }
 
 resource "azurerm_virtual_machine_data_disk_attachment" "disk" {
