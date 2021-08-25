@@ -16,6 +16,8 @@ module "azurerm_application_insights" {
   workspace_id                          = try(local.combined_objects_log_analytics[try(each.value.log_analytics_workspace.lz_key, local.client_config.landingzone_key)][each.value.log_analytics_workspace.key].id, null)
   global_settings                       = local.global_settings
   base_tags                             = try(local.global_settings.inherit_tags, false) ? local.resource_groups[each.value.resource_group_key].tags : {}
+  diagnostic_profiles                   = try(each.value.diagnostic_profiles, null)
+  diagnostics                           = local.combined_diagnostics
 }
 
 output "application_insights" {
