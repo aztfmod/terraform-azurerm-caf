@@ -4,9 +4,9 @@ resource "azuread_application" "app" {
 
   owners = coalescelist(
     [
-      var.client_config.object_id
+      try(var.settings.owners, [])      
     ],
-    try(var.settings.owners, [])
+      var.client_config.object_id
   )
 
   available_to_other_tenants = try(var.settings.available_to_other_tenants, false)
