@@ -6,7 +6,7 @@ case "${RESOURCE}" in
     BACKENDPOOL)       
         servers=$([ -z "${ADDRESS_POOL}" ] && echo "" || echo "--servers ${ADDRESS_POOL} ")
         
-        az network application-gateway address-pool create -g ${RG_NAME} \
+        execute_with_backoff az network application-gateway address-pool create -g ${RG_NAME} \
             --gateway-name ${APPLICATION_GATEWAY_NAME} -n ${NAME} ${servers}
         ;;
     HTTPSETTINGS)
@@ -23,7 +23,7 @@ case "${RESOURCE}" in
         probe=$([ -z "${PROBE}" ] && echo "" || echo "--probe ${PROBE} ")
         rootcerts=$([ -z "${ROOT_CERTS}" ] && echo "" || echo "--root-certs ${ROOT_CERTS} ")
 
-        az network application-gateway http-settings create -g ${RG_NAME} --gateway-name ${APPLICATION_GATEWAY_NAME} -n ${NAME} --port ${PORT} \
+        execute_with_backoff az network application-gateway http-settings create -g ${RG_NAME} --gateway-name ${APPLICATION_GATEWAY_NAME} -n ${NAME} --port ${PORT} \
         ${protocol}${cba}${timeout}${affinitycookiename}${authcerts}${connectiondrainingtimeout}${enableprobe}${hostname}${hostnamefrombackendpool}${path}${probe}${rootcerts}
         ;;
     HTTPLISTENER)
@@ -33,7 +33,7 @@ case "${RESOURCE}" in
         sslcert=$([ -z "${SSL_CERT}" ] && echo "" || echo "--ssl-cert ${SSL_CERT} ")
         wafpolicy=$([ -z "${WAF_POLICY}" ] && echo "" || echo "--waf-policy ${WAF_POLICY} ")
 
-        az network application-gateway http-listener create -g ${RG_NAME} --gateway-name ${APPLICATION_GATEWAY_NAME} \
+        execute_with_backoff az network application-gateway http-listener create -g ${RG_NAME} --gateway-name ${APPLICATION_GATEWAY_NAME} \
         -n ${NAME} --frontend-port ${PORT} ${frontendip}${hostname}${hostnames}${sslcert}${wafpolicy}
         ;;
     REQUESTROUTINGRULE)
@@ -46,7 +46,7 @@ case "${RESOURCE}" in
         ruletype=$([ -z "${RULE_TYPE}" ] && echo "" || echo "--rule-type ${RULE_TYPE} ")
         urlpathmap=$([ -z "${URL_PATH_MAP}" ] && echo "" || echo "--url-path-map ${URL_PATH_MAP} ")
 
-        az network application-gateway rule create -g ${RG_NAME} --gateway-name ${APPLICATION_GATEWAY_NAME} \
+        execute_with_backoff az network application-gateway rule create -g ${RG_NAME} --gateway-name ${APPLICATION_GATEWAY_NAME} \
         -n ${NAME} ${listener}${addresspool}${httpsettings}${priority}${redirectconfig}${rewriteruleset}${ruletype}${urlpathmap}
         ;;
     SSLCERT)
@@ -54,14 +54,14 @@ case "${RESOURCE}" in
         certpassword=$([ -z "${CERT_PASSWORD}" ] && echo "" || echo "--cert-password ${CERT_PASSWORD} ")
         keyvaultsecretid=$([ -z "${KEY_VAULT_SECRET_ID}" ] && echo "" || echo "--key-vault-secret-id ${KEY_VAULT_SECRET_ID} ")
 
-        az network application-gateway ssl-cert create -g ${RG_NAME} --gateway-name ${APPLICATION_GATEWAY_NAME} \
+        execute_with_backoff az network application-gateway ssl-cert create -g ${RG_NAME} --gateway-name ${APPLICATION_GATEWAY_NAME} \
         -n ${NAME} ${certfile}${certpassword}${keyvaultsecretid}
         ;;
     ROOTCERT)
         certfile=$([ -z "${CERT_FILE}" ] && echo "" || echo "--cert-file ${CERT_FILE} ")
         keyvaultsecretid=$([ -z "${KEY_VAULT_SECRET_ID}" ] && echo "" || echo "--key-vault-secret-id ${KEY_VAULT_SECRET_ID} ")
 
-        az network application-gateway root-cert create --gateway-name ${APPLICATION_GATEWAY_NAME} --resource-group ${RG_NAME} \
+        execute_with_backoff az network application-gateway root-cert create --gateway-name ${APPLICATION_GATEWAY_NAME} --resource-group ${RG_NAME} \
          --name ${NAME} ${certfile}${keyvaultsecretid}
         ;;
     PATHMAP)
@@ -72,7 +72,7 @@ case "${RESOURCE}" in
         rulename=$([ -z "${RULE_NAME}" ] && echo "" || echo "--rule-name ${RULE_NAME} ")
         wafpolicy=$([ -z "${WAF_POLICY}" ] && echo "" || echo "--waf-policy ${WAF_POLICY} ")
 
-        az network application-gateway url-path-map create -g ${RG_NAME} --gateway-name ${APPLICATION_GATEWAY_NAME} \
+        execute_with_backoff az network application-gateway url-path-map create -g ${RG_NAME} --gateway-name ${APPLICATION_GATEWAY_NAME} \
             -n ${NAME} --paths ${PATHS} ${addresspool}${httpsettings}${redirectconfig}${rewriteruleset}${rulename}${wafpolicy} 
         ;;
     PATHRULE)
@@ -82,8 +82,43 @@ case "${RESOURCE}" in
         rewriteruleset=$([ -z "${REWRITE_RULE_SET}" ] && echo "" || echo "--rewrite-rule-set ${REWRITE_RULE_SET} ")
         wafpolicy=$([ -z "${WAF_POLICY}" ] && echo "" || echo "--waf-policy ${WAF_POLICY} ")
 
-        az network application-gateway url-path-map rule create -g ${RG_NAME} \
+        execute_with_backoff az network application-gateway url-path-map rule create -g ${RG_NAME} \
             --gateway-name ${APPLICATION_GATEWAY_NAME} -n ${NAME} --path-map-name ${PATHMAPNAME} \
             --paths ${PATHS} ${addresspool}${httpsettings}${redirectconfig}${rewriteruleset}${wafpolicy} 
         ;;
 esac
+
+#
+# Execute a command and re-execute it with a backoff retry logic. This is mainly to handle throttling situations in CI
+#
+function execute_with_backoff {
+  local max_attempts=${ATTEMPTS-5}
+  local timeout=${TIMEOUT-20}
+  local attempt=0
+  local exitCode=0
+
+  while [[ $attempt < $max_attempts ]]
+  do
+    set +e
+    "$@"
+    exitCode=$?
+    set -e
+
+    if [[ $exitCode == 0 ]]
+    then
+      break
+    fi
+
+    echo "Failure! Return code ${exitCode} - Retrying in $timeout.." 1>&2
+    sleep $timeout
+    attempt=$(( attempt + 1 ))
+    timeout=$(( timeout * 2 ))
+  done
+
+  if [[ $exitCode != 0 ]]
+  then
+    echo "Hit the max retry count ($@)" 1>&2
+  fi
+
+  return $exitCode
+}

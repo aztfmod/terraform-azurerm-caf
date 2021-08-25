@@ -1,6 +1,6 @@
 
 resource "null_resource" "set_request_routing_rule" {
-  depends_on = [time_sleep.set_http_settings, time_sleep.set_backend_pools, time_sleep.set_http_listener, time_sleep.set_ssl_cert, time_sleep.set_root_cert, time_sleep.set_url_path_map, time_sleep.set_url_path_rule]
+  depends_on = [null_resource.set_http_settings, null_resource.set_backend_pools, null_resource.set_http_listener, null_resource.set_ssl_cert, null_resource.set_root_cert, null_resource.set_url_path_map, null_resource.set_url_path_rule]
 
   for_each = try(var.settings.request_routing_rules, {})
 
@@ -30,14 +30,8 @@ resource "null_resource" "set_request_routing_rule" {
   }
 }
 
-resource "time_sleep" "set_request_routing_rule" {
-  depends_on = [null_resource.set_request_routing_rule]
-
-  create_duration = "10s"
-}
-
 resource "null_resource" "delete_request_routing_rule" {
-  depends_on = [time_sleep.delete_http_settings, time_sleep.delete_backend_pool, time_sleep.delete_http_listener, time_sleep.delete_ssl_cert, time_sleep.delete_root_cert, time_sleep.delete_url_path_map, time_sleep.delete_url_path_rule]
+  depends_on = [null_resource.delete_http_settings, null_resource.delete_backend_pool, null_resource.delete_http_listener, null_resource.delete_ssl_cert, null_resource.delete_root_cert, null_resource.delete_url_path_map, null_resource.delete_url_path_rule]
 
   for_each = try(var.settings.request_routing_rules, {})
 
@@ -60,10 +54,4 @@ resource "null_resource" "delete_request_routing_rule" {
       APPLICATION_GATEWAY_NAME = self.triggers.application_gateway_name
     }
   }
-}
-
-resource "time_sleep" "delete_request_routing_rule" {
-  depends_on = [null_resource.delete_request_routing_rule]
-
-  create_duration = "10s"
 }
