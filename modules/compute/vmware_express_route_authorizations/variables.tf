@@ -5,7 +5,7 @@ variable "client_config" {
   description = "Client configuration object (see module README.md)."
 }
 variable "settings" {
-    description = "Settings object (see module README.md)"
+  description = "Settings object (see module README.md)"
 }
 
 variable "vmware_cloud_id" {
