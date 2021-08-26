@@ -7,7 +7,7 @@ output "hcx_cloud_manager_endpoint" {
   description = " The endpoint for the HCX Cloud Manager."
 }
 output "nsxt_manager_endpoint" {
-  value       = azurerm_vmware_private_cloud.vwpc.nsxt_manager_endpoint 
+  value       = azurerm_vmware_private_cloud.vwpc.nsxt_manager_endpoint
   description = "The endpoint for the NSX-T Data Center manager."
 }
 output "vcsa_endpoint" {
@@ -27,7 +27,7 @@ output "management_subnet_cidr" {
   description = "The network used to access vCenter Server and NSX-T Manager."
 }
 output "provisioning_subnet_cidr" {
-  value       = azurerm_vmware_private_cloud.vwpc.provisioning_subnet_cidr 
+  value       = azurerm_vmware_private_cloud.vwpc.provisioning_subnet_cidr
   description = "The network which is used for virtual machine cold migration, cloning, and snapshot migration."
 }
 output "vmotion_subnet_cidr" {
@@ -39,7 +39,7 @@ output "circuit" {
   description = "A `circuit` block as defined below."
 }
 output "management_cluster" {
-    value       = azurerm_vmware_private_cloud.vwpc.management_cluster
+  value       = azurerm_vmware_private_cloud.vwpc.management_cluster
   description = "A management_cluster block as defined below."
 }
 # output "management_cluster" {
