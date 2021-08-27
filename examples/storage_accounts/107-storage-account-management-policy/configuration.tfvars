@@ -36,6 +36,50 @@ storage_accounts = {
               prefix_match = ["container1/prefix1"]
               blob_types   = ["blockBlob"]
               # This code can only be used if enable `BlobIndex`
+              # https://azure.microsoft.com/en-us/blog/manage-and-find-data-with-blob-index-for-azure-storage-now-in-preview/
+              #match_blob_index_tag = {
+              #match_blob_index_tag_specs = {
+              #  name      = "tag1"
+              #  operation = "=="
+              #  value     = "val1"
+              #}
+              #}
+            }
+          }
+          actions = {
+            # Only have one blob object
+            base_blob = {
+              blob_specs = {
+                tier_to_cool_after_days_since_modification_greater_than    = 11
+                tier_to_archive_after_days_since_modification_greater_than = 51
+                delete_after_days_since_modification_greater_than          = 101
+              }
+            }
+            snapshot = {
+              snapshot_specs = {
+                change_tier_to_archive_after_days_since_creation = 90
+                change_tier_to_cool_after_days_since_creation    = 23
+                delete_after_days_since_creation_greater_than    = 31
+              }
+            }
+            version = {
+              version_specs = {
+                change_tier_to_archive_after_days_since_creation = 9
+                change_tier_to_cool_after_days_since_creation    = 90
+                delete_after_days_since_creation                 = 3
+              }
+            }
+          }
+        },
+        rule_2 = {
+          name    = "rule2"
+          enabled = true
+          filters = {
+            filter_specs = {
+              prefix_match = ["container1/prefix2"]
+              blob_types   = ["blockBlob"]
+              # This code can only be used if enable `BlobIndex`
+              # https://azure.microsoft.com/en-us/blog/manage-and-find-data-with-blob-index-for-azure-storage-now-in-preview/
               #match_blob_index_tag = {
               #match_blob_index_tag_specs = {
               #  name      = "tag1"
@@ -70,10 +114,6 @@ storage_accounts = {
             }
           }
         }
-        #        rule_2 = {
-        #          name = "rule2"
-        #          enabled = false
-        #        }
       }
     }
 
