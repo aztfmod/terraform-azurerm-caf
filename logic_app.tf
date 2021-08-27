@@ -57,13 +57,12 @@ module "logic_app_integration_account" {
 
   for_each = local.logic_app.logic_app_integration_account
 
-  name                = each.value.name
-  resource_group_name = local.resource_groups[each.value.resource_group_key].name
-  location            = lookup(each.value, "region", null) == null ? local.resource_groups[each.value.resource_group_key].location : local.global_settings.regions[each.value.region]
-  sku_name            = each.value.sku_name
-  global_settings     = local.global_settings
-  base_tags           = try(local.global_settings.inherit_tags, false) ? local.resource_groups[each.value.resource_group_key].tags : {}
-  tags                = try(each.value.tags, null)
+  global_settings                    = local.global_settings
+  client_config                      = local.client_config
+  settings                           = each.value
+  resource_group_name                = local.resource_groups[each.value.resource_group_key].name
+  location                           = lookup(each.value, "region", null) == null ? local.resource_groups[each.value.resource_group_key].location : local.global_settings.regions[each.value.region]
+  base_tags                          = try(local.global_settings.inherit_tags, false) ? local.resource_groups[each.value.resource_group_key].tags : {}
 }
 
 output "logic_app_integration_account" {
