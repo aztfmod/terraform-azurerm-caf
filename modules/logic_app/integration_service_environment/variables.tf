@@ -31,10 +31,10 @@ variable "settings" {}
 #  description = "(Required) The type of access endpoint to use for the Integration Service Environment"
 #}
 variable "vnets" {
-  default = {}
+  default     = {}
   description = "(Required) A list of virtual network subnet ids to be used by Integration Service Environment"
 }
 variable "tags" {
   description = "(Required) map of tags for the deployment"
-  default = null
+  default     = null
 }

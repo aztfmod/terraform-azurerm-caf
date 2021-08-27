@@ -519,6 +519,9 @@ variable "virtual_hub_route_tables" {
 variable "virtual_hub_er_gateway_connections" {
   default = {}
 }
+variable "logic_app_workflow" {
+  default = {}
+}
 variable "wvd_application_groups" {
   default = {}
 }

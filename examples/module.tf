@@ -76,23 +76,23 @@ module "example" {
   }
 
   compute = {
-    aks_clusters                                   = var.aks_clusters
-    availability_sets                              = var.availability_sets
-    azure_container_registries                     = var.azure_container_registries
-    bastion_hosts                                  = var.bastion_hosts
-    container_groups                               = var.container_groups
-    dedicated_host_groups                          = var.dedicated_host_groups
-    dedicated_hosts                                = var.dedicated_hosts
-    proximity_placement_groups                     = var.proximity_placement_groups
-    virtual_machine_scale_sets                     = var.virtual_machine_scale_sets
-    virtual_machines                               = var.virtual_machines
-    vmware_private_clouds                          = var.vmware_private_clouds
-    vmware_clusters                                = var.vmware_clusters
-    vmware_express_route_authorizations            = var.vmware_express_route_authorizations
-    wvd_applications                               = var.wvd_applications
-    wvd_application_groups                         = var.wvd_application_groups
-    wvd_host_pools                                 = var.wvd_host_pools
-    wvd_workspaces                                 = var.wvd_workspaces
+    aks_clusters                        = var.aks_clusters
+    availability_sets                   = var.availability_sets
+    azure_container_registries          = var.azure_container_registries
+    bastion_hosts                       = var.bastion_hosts
+    container_groups                    = var.container_groups
+    dedicated_host_groups               = var.dedicated_host_groups
+    dedicated_hosts                     = var.dedicated_hosts
+    proximity_placement_groups          = var.proximity_placement_groups
+    virtual_machine_scale_sets          = var.virtual_machine_scale_sets
+    virtual_machines                    = var.virtual_machines
+    vmware_private_clouds               = var.vmware_private_clouds
+    vmware_clusters                     = var.vmware_clusters
+    vmware_express_route_authorizations = var.vmware_express_route_authorizations
+    wvd_applications                    = var.wvd_applications
+    wvd_application_groups              = var.wvd_application_groups
+    wvd_host_pools                      = var.wvd_host_pools
+    wvd_workspaces                      = var.wvd_workspaces
   }
   diagnostics = {
     diagnostic_event_hub_namespaces = var.diagnostic_event_hub_namespaces
@@ -198,6 +198,15 @@ module "example" {
   }
   logic_app = {
     integration_service_environment = var.integration_service_environment
+    # logic_app_action_custom  = var.logic_app_action_custom
+    # logic_app_action_http  = var.logic_app_action_http
+    # logic_app_integration_account  = var.logic_app_integration_account
+    # logic_app_integration_account_certificate  = var.logic_app_integration_account_certificate
+    # logic_app_integration_account_session  = var.logic_app_integration_account_session
+    # logic_app_trigger_custom  = var.logic_app_trigger_custom
+    # logic_app_trigger_http_request  = var.logic_app_trigger_http_request
+    # logic_app_trigger_recurrence  = var.logic_app_trigger_recurrence
+    logic_app_workflow = var.logic_app_workflow
   }
 
 }

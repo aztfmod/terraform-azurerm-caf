@@ -4,15 +4,15 @@ module "integration_service_environment" {
 
   for_each = local.logic_app.integration_service_environment
 
-  global_settings            = local.global_settings
-  client_config              = local.client_config
-  settings                   = each.value
-  resource_group_name        = local.resource_groups[each.value.resource_group_key].name
-  location                   = lookup(each.value, "region", null) == null ? local.resource_groups[each.value.resource_group_key].location : local.global_settings.regions[each.value.region]
-  vnets                      = local.combined_objects_networking
-  base_tags                  = try(local.global_settings.inherit_tags, false) ? local.resource_groups[each.value.resource_group_key].tags : {}
+  global_settings     = local.global_settings
+  client_config       = local.client_config
+  settings            = each.value
+  resource_group_name = local.resource_groups[each.value.resource_group_key].name
+  location            = lookup(each.value, "region", null) == null ? local.resource_groups[each.value.resource_group_key].location : local.global_settings.regions[each.value.region]
+  vnets               = local.combined_objects_networking
+  base_tags           = try(local.global_settings.inherit_tags, false) ? local.resource_groups[each.value.resource_group_key].tags : {}
 }
- 
+
 output "integration_service_environment" {
   value = module.integration_service_environment
 }
@@ -122,21 +122,17 @@ output "logic_app_trigger_recurrence" {
 
 ##### azurerm_logic_app_workflow
 module "logic_app_workflow" {
-  source = "./modules/logic_app/workflow"
-
+  source   = "./modules/logic_app/workflow"
   for_each = local.logic_app.logic_app_workflow
 
-  name                               = each.value.name
+  global_settings                    = local.global_settings
+  client_config                      = local.client_config
+  settings                           = each.value
   resource_group_name                = local.resource_groups[each.value.resource_group_key].name
   location                           = lookup(each.value, "region", null) == null ? local.resource_groups[each.value.resource_group_key].location : local.global_settings.regions[each.value.region]
-  integration_service_environment_id = try(each.value.integration_service_environment_key, null) != null ? try(each.value.lz_key, null) == null ? local.combined_objects_integration_service_environment[local.client_config.landingzone_key][each.value.integration_service_environment_key].id : local.combined_objects_integration_service_environment[each.value.lz_key][each.value.integration_service_environment_key].id : null
-  logic_app_integration_account_id   = try(each.value.logic_app_integration_account_key, null) != null ? try(each.value.lz_key, null) == null ? local.combined_objects_logic_app_integration_account[local.client_config.landingzone_key][each.value.logic_app_integration_account_key].id : local.combined_objects_logic_app_integration_account[each.value.lz_key][each.value.logic_app_integration_account_key].id : null
-  workflow_schema                    = try(each.value.workflow_schema, null)
-  workflow_version                   = try(each.value.workflow_version, null)
-  parameters                         = try(each.value.parameters, null)
-  global_settings                    = local.global_settings
   base_tags                          = try(local.global_settings.inherit_tags, false) ? local.resource_groups[each.value.resource_group_key].tags : {}
-  tags                               = try(each.value.tags, null)
+  integration_service_environment_id = try(local.combined_objects_integration_service_environment[try(each.value.lz_key, local.client_config.landingzone_key)][each.value.integration_service_environment_key].id,null)
+  logic_app_integration_account_id   = try(local.combined_objects_logic_app_integration_account[try(each.value.lz_key, local.client_config.landingzone_key)][each.value.logic_app_integration_account_key].id,null)
 }
 
 output "logic_app_workflow" {
