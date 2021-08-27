@@ -47,7 +47,6 @@ storage_accounts = {
             }
           }
           actions = {
-            # Only have one blob object
             base_blob = {
               blob_specs = {
                 tier_to_cool_after_days_since_modification_greater_than    = 11
@@ -90,7 +89,6 @@ storage_accounts = {
             }
           }
           actions = {
-            # Only have one blob object
             base_blob = {
               blob_specs = {
                 tier_to_cool_after_days_since_modification_greater_than    = 11
