@@ -351,6 +351,12 @@ variable "cosmos_db" {
 variable "log_analytics" {
   default = {}
 }
+variable "logic_app_workflow" {
+  default = {}
+}
+variable "logic_app_integration_account" {
+  default = {}
+}
 variable "recovery_vaults" {
   default = {}
 }
@@ -517,9 +523,6 @@ variable "virtual_hub_route_tables" {
   default = {}
 }
 variable "virtual_hub_er_gateway_connections" {
-  default = {}
-}
-variable "logic_app_workflow" {
   default = {}
 }
 variable "wvd_application_groups" {
