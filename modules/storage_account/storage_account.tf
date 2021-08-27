@@ -231,3 +231,10 @@ module "file_share" {
   recovery_vault       = local.recovery_vault
   resource_group_name  = var.resource_group_name
 }
+
+module "management_policy" {
+  source     = "./management_policy"
+  #for_each   = try(var.storage_account.management_policies, {})
+  storage_account_id   = azurerm_storage_account.stg.id
+  settings             = try(var.storage_account.management_policies, {})
+}
