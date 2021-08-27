@@ -9,12 +9,12 @@ resource "azurecaf_name" "ise" {
 }
 
 resource "azurerm_integration_service_environment" "ise" {
-  name                       = azurecaf_name.ise.result
-  resource_group_name        = var.resource_group_name
-  location                   = var.location
-  sku_name                   = var.settings.sku_name
-  access_endpoint_type       = var.settings.access_endpoint_type
-  tags = merge(local.tags, lookup(var.settings, "tags", {}))
+  name                 = azurecaf_name.ise.result
+  resource_group_name  = var.resource_group_name
+  location             = var.location
+  sku_name             = var.settings.sku_name
+  access_endpoint_type = var.settings.access_endpoint_type
+  tags                 = merge(local.tags, lookup(var.settings, "tags", {}))
   virtual_network_subnet_ids = try(var.settings.subnets, null) == null ? null : [
     for key, value in var.settings.subnets : try(var.vnets[var.client_config.landingzone_key][value.vnet_key].subnets[value.subnet_key].id, var.vnets[value.lz_key][value.vnet_key].subnets[value.subnet_key].id)
   ]

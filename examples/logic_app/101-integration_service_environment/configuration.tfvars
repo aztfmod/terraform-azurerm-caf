@@ -7,7 +7,7 @@ global_settings = {
 
 resource_groups = {
   rgise1 = {
-    name     = "exampleRG1"
+    name   = "exampleRG1"
     region = "region1"
   }
 }
@@ -32,30 +32,30 @@ vnets = {
             "Microsoft.Network/virtualNetworks/subnets/prepareNetworkPolicies/action",
             "Microsoft.Network/virtualNetworks/subnets/unprepareNetworkPolicies/action"
           ]
-        }        
+        }
       }
       subnetise2 = {
         name = "isesubnet2"
         cidr = ["10.0.1.64/26"]
-      } 
+      }
       subnetise3 = {
         name = "isesubnet3"
         cidr = ["10.0.1.128/26"]
-      } 
+      }
       subnetise4 = {
         name = "isesubnet4"
         cidr = ["10.0.1.192/26"]
-      }                  
+      }
     }
   }
 }
 
 
 integration_service_environment = {
-  ise1={
-    name   = "example-ise"
-    region = "region1"
-    resource_group_key = "rgise1"
+  ise1 = {
+    name                 = "example-ise"
+    region               = "region1"
+    resource_group_key   = "rgise1"
     sku_name             = "Developer_0"
     access_endpoint_type = "Internal"
     subnets = {
@@ -78,7 +78,7 @@ integration_service_environment = {
         #lz_key = ""
         vnet_key   = "vnetise1"
         subnet_key = "subnetise4"
-      }            
+      }
       #add multiple subnets by extending this block
     }
   }
