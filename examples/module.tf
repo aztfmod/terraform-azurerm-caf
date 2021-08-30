@@ -205,7 +205,7 @@ module "example" {
     # logic_app_integration_account_session  = var.logic_app_integration_account_session
     # logic_app_trigger_custom  = var.logic_app_trigger_custom
     logic_app_trigger_http_request  = var.logic_app_trigger_http_request
-    # logic_app_trigger_recurrence  = var.logic_app_trigger_recurrence
+    logic_app_trigger_recurrence  = var.logic_app_trigger_recurrence
     logic_app_workflow = var.logic_app_workflow
   }
 
