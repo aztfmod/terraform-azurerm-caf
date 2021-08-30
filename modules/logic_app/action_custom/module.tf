@@ -1,6 +1,6 @@
 resource "azurecaf_name" "laac" {
   name          = var.settings.name
-  resource_type = "azurerm_logic_app_workflow"
+  resource_type = "azurerm_logic_app_action_custom"
   prefixes      = var.global_settings.prefixes
   random_length = var.global_settings.random_length
   clean_input   = true
