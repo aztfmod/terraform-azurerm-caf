@@ -8,8 +8,8 @@ resource "azurecaf_name" "vwc" {
   use_slug      = var.global_settings.use_slug
 }
 
-# Last review :  AzureRM version 2.63.0
-# Ref : https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/resources/dedicated_host
+# Last review :  AzureRM version 2.74.0
+# Ref : https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/resources/vmware_cluster
 
 resource "azurerm_vmware_cluster" "vwc" {
   name               = azurecaf_name.vwc.result

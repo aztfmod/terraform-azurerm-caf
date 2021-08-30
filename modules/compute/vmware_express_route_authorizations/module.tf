@@ -8,6 +8,9 @@ resource "azurecaf_name" "vwera" {
   use_slug      = var.global_settings.use_slug
 }
 
+# Last review :  AzureRM version 2.74.0
+# Ref : https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/resources/vmware_express_route_authorization
+
 resource "azurerm_vmware_express_route_authorization" "vwera" {
   name             = azurecaf_name.vwera.result
   private_cloud_id = var.vmware_cloud_id

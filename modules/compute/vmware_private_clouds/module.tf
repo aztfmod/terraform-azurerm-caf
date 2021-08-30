@@ -8,8 +8,8 @@ resource "azurecaf_name" "vwpc" {
   use_slug      = var.global_settings.use_slug
 }
 
-# Last review :  AzureRM version 2.63.0
-# Ref : https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/resources/dedicated_host
+# Last review :  AzureRM version 2.74.0
+# Ref : https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/resources/vmware_private_cloud
 
 data "azurerm_key_vault_secret" "nsxt_password" {
   #depends_on = [module.dynamic_keyvault_secrets]
