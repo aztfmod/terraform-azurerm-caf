@@ -586,3 +586,6 @@ variable "logic_app_action_custom" {
 variable "logic_app_trigger_http_request" {
   default = {}
 }
+variable "logic_app_trigger_recurrence" {
+  default = {}
+}
