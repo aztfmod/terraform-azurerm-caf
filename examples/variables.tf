@@ -583,3 +583,6 @@ variable "logic_app_action_http" {
 variable "logic_app_action_custom" {
   default = {}
 }
+variable "logic_app_trigger_http_request" {
+  default = {}
+}

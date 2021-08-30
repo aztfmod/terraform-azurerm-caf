@@ -88,11 +88,10 @@ module "logic_app_trigger_http_request" {
 
   for_each = local.logic_app.logic_app_trigger_http_request
 
-  name          = each.value.name
-  logic_app_id  = try(each.value.lz_key, null) == null ? local.combined_objects_logic_app_workflow[local.client_config.landingzone_key][each.value.logic_app_workflow_key].id : local.combined_objects_logic_app_workflow[each.value.lz_key][each.value.logic_app_workflow_key].id
-  schema        = each.value.schema
-  method        = each.value.method
-  relative_path = each.value.relative_path
+  global_settings                    = local.global_settings
+  client_config                      = local.client_config
+  settings                           = each.value
+  logic_app_id                       = try(local.combined_objects_logic_app_workflow[try(each.value.lz_key, local.client_config.landingzone_key)][each.value.logic_app_key].id,null)
 }
 
 output "logic_app_trigger_http_request" {
