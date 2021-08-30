@@ -577,3 +577,6 @@ variable "cognitive_services_account" {
 variable "integration_service_environment" {
   default = {}
 }
+variable "logic_app_action_http" {
+  default = {}
+}

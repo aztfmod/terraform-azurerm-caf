@@ -38,13 +38,11 @@ module "logic_app_action_http" {
 
   for_each = local.logic_app.logic_app_action_http
 
-  name         = each.value.name
-  logic_app_id = try(each.value.lz_key, null) == null ? local.combined_objects_logic_app_workflow[local.client_config.landingzone_key][each.value.logic_app_workflow_key].id : local.combined_objects_logic_app_workflow[each.value.lz_key][each.value.logic_app_workflow_key].id
-  method       = each.value.method
-  uri          = each.value.uri
-  body         = each.value.body
-  headers      = each.value.headers
-  run_after    = each.value.run_after
+  global_settings                    = local.global_settings
+  client_config                      = local.client_config
+  settings                           = each.value
+  base_tags                          = try(local.global_settings.inherit_tags, false) ? local.resource_groups[each.value.resource_group_key].tags : {}
+  logic_app_id                       = try(local.combined_objects_logic_app_workflow[try(each.value.lz_key, local.client_config.landingzone_key)][each.value.logic_app_key].id,null)
 }
 
 output "logic_app_action_http" {
