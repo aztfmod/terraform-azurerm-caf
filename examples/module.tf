@@ -198,7 +198,7 @@ module "example" {
   }
   logic_app = {
     integration_service_environment = var.integration_service_environment
-    # logic_app_action_custom  = var.logic_app_action_custom
+    logic_app_action_custom  = var.logic_app_action_custom
     logic_app_action_http  = var.logic_app_action_http
     logic_app_integration_account  = var.logic_app_integration_account
     # logic_app_integration_account_certificate  = var.logic_app_integration_account_certificate

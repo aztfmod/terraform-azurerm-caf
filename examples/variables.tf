@@ -580,3 +580,6 @@ variable "integration_service_environment" {
 variable "logic_app_action_http" {
   default = {}
 }
+variable "logic_app_action_custom" {
+  default = {}
+}
