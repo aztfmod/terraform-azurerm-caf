@@ -41,7 +41,6 @@ module "logic_app_action_http" {
   global_settings                    = local.global_settings
   client_config                      = local.client_config
   settings                           = each.value
-  base_tags                          = try(local.global_settings.inherit_tags, false) ? local.resource_groups[each.value.resource_group_key].tags : {}
   logic_app_id                       = try(local.combined_objects_logic_app_workflow[try(each.value.lz_key, local.client_config.landingzone_key)][each.value.logic_app_key].id,null)
 }
 
