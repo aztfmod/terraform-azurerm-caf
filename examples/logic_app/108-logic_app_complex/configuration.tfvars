@@ -6,7 +6,7 @@ global_settings = {
 }
 
 resource_groups = {
-  rgise1 = {
+  rgwflow1 = {
     name   = "exampleRG1"
     region = "region1"
   }
@@ -14,7 +14,7 @@ resource_groups = {
 
 vnets = {
   vnetise1 = {
-    resource_group_key = "rgise1"
+    resource_group_key = "rgwflow1"
     vnet = {
       name          = "example-vnet1"
       address_space = ["10.0.0.0/22"]
@@ -45,12 +45,11 @@ vnets = {
   }
 }
 
-
 integration_service_environment = {
   ise1 = {
     name                 = "example-ise"
     region               = "region1"
-    resource_group_key   = "rgise1"
+    resource_group_key   = "rgwflow1"
     sku_name             = "Developer_0"
     access_endpoint_type = "Internal"
     subnets = {
@@ -76,5 +75,26 @@ integration_service_environment = {
       }
       #add multiple subnets by extending this block
     }
+  }
+}
+logic_app_integration_account = {
+  laia1 = {
+    name               = "example-ia"
+    region             = "region1"
+    resource_group_key = "rgwflow1"
+    sku_name           = "Standard"
+  }
+}
+logic_app_workflow = {
+  applogic1 = {
+    name               = "workflow1"
+    region             = "region1"
+    resource_group_key = "rgwflow1"
+    integration_service_environment_key = "ise1"
+    logic_app_integration_account_key = "laia1"
+    #workflow_parameters 
+    #workflow_schema 
+    workflow_version = "1.0.0.0"
+    #parameters 
   }
 }
