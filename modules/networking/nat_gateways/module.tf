@@ -11,12 +11,12 @@
 
 
 resource "azurerm_nat_gateway" "nat_gateway" {
-  name                     = var.name
-  location                 = var.location
-  resource_group_name      = var.resource_group_name
-  idle_timeout_in_minutes  = var.idle_timeout_in_minutes
-  zones                    = try(var.settings.zones, null)
-  tags                     = local.tags
+  name                    = var.name
+  location                = var.location
+  resource_group_name     = var.resource_group_name
+  idle_timeout_in_minutes = var.idle_timeout_in_minutes
+  zones                   = try(var.settings.zones, null)
+  tags                    = local.tags
 }
 
 module "nat_gateway_subnet" {
