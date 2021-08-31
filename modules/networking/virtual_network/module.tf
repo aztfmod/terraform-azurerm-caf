@@ -112,12 +112,12 @@ resource "azurerm_subnet_network_security_group_association" "nsg_vnet_associati
 
 locals {
   dns_servers_process = [
-    for obj in try(var.settings.vnet.dns_servers_keys,{}) : #o.ip
+    for obj in try(var.settings.vnet.dns_servers_keys, {}) : #o.ip
     coalesce(
-      try(var.remote_dns[obj.resource_type][obj.lz_key][obj.key].virtual_hub[obj.interface_index].private_ip_address,null),
-      try(var.remote_dns[obj.resource_type][obj.lz_key][obj.key].virtual_hub.0.private_ip_address,null),
-      try(var.remote_dns[obj.resource_type][obj.lz_key][obj.key].ip_configuration[obj.interface_index].private_ip_address,null),
-      try(var.remote_dns[obj.resource_type][obj.lz_key][obj.key].ip_configuration.0.private_ip_address,null),
+      try(var.remote_dns[obj.resource_type][obj.lz_key][obj.key].virtual_hub[obj.interface_index].private_ip_address, null),
+      try(var.remote_dns[obj.resource_type][obj.lz_key][obj.key].virtual_hub.0.private_ip_address, null),
+      try(var.remote_dns[obj.resource_type][obj.lz_key][obj.key].ip_configuration[obj.interface_index].private_ip_address, null),
+      try(var.remote_dns[obj.resource_type][obj.lz_key][obj.key].ip_configuration.0.private_ip_address, null),
       null
     )
     # for ip_key, resouce_ip in var.settings.vnet.dns_servers_keys: [
