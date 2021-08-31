@@ -9,9 +9,10 @@ resource "azurecaf_name" "df" {
 }
 
 resource "azurerm_data_factory" "df" {
-  name                = azurecaf_name.df.result
-  resource_group_name = var.resource_group_name
-  location            = var.location
+  name                            = azurecaf_name.df.result
+  resource_group_name             = var.resource_group_name
+  location                        = var.location
+  managed_virtual_network_enabled = var.managed_virtual_network_enabled
 
   dynamic "github_configuration" {
     for_each = try(var.github_configuration, null) != null ? [var.github_configuration] : []
