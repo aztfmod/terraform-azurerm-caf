@@ -29,3 +29,7 @@ variable "tags" {
 variable "base_tags" {}
 
 variable "global_settings" {}
+
+variable "managed_virtual_network_enabled" {
+  type = bool
+}
