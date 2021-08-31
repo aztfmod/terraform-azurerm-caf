@@ -33,3 +33,18 @@ variable "global_settings" {}
 variable "managed_virtual_network_enabled" {
   type = bool
 }
+variable "private_endpoints" {
+  default = {}
+}
+variable "vnets" {
+  default = {}
+}
+variable "resource_groups" {
+  default = {}
+}
+variable "client_config" {
+  description = "Client configuration object (see module README.md)."
+}
+variable "private_dns" {
+  default = {}
+}
