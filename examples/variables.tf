@@ -552,6 +552,15 @@ variable "storage_account_queues" {
 variable "storage_account_blobs" {
   default = {}
 }
+variable "vmware_private_clouds" {
+  default = {}
+}
+variable "vmware_clusters" {
+  default = {}
+}
+variable "vmware_express_route_authorizations" {
+  default = {}
+}
 variable "nat_gateways" {
   default = {}
 }
