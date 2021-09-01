@@ -6,6 +6,7 @@
 name: standalone-scenario-tf14
 
 on:
+  workflow_dispatch:
   schedule:
     - cron:  '0 5 * * *' #1 AM on Sunday
 
