@@ -39,25 +39,29 @@ logic_app_trigger_custom = {
     logic_app_key = "applogic1"
     body = <<BODY
 {
-    "description": "A variable to configure the auto expiration age in days. Configured in negative number. Default is -30 (30 days old).",
-    "inputs": {
-        "variables": [
-            {
-                "name": "ExpirationAgeInDays",
-                "type": "Integer",
-                "value": -30
-            }
-        ]
-    },
-    "runAfter": {},
-    "type": "InitializeVariable"
+  "recurrence": {
+    "frequency": "Day",
+    "interval": 1
+  },
+  "type": "Recurrence"
 }
 BODY
   }
 }
 ```
 # logic_app_trigger_custom
+Estimated execution time
+|Apply |    Time |
+|------|---------|
+|real  |3m21.696s|
+|user  |3m47.601s|
+|sys   |0m20.386s|
 
+| Destroy|  Time   |
+|--------|---------|
+|real    |4m29.411s|
+|user    |0m39.743s|
+|sys     |0m10.277s|
 ## Inputs
 | Name | Description | Type | Default | Required |
 |------|-------------|------|---------|:--------:|

@@ -55,11 +55,24 @@ logic_app_action_http = {
 }
 ```
 # logic_app_action_http
+Estimated execution time
+|    Apply    |  Time     |
+|------|-------------|
+|real    |3m20.111s|
+|user    |3m47.032s|
+|sys     |0m20.601s|
+
+| Destroy|  Time     |
+|------|-------------|
+|real    |3m1.011s|
+|user    |0m38.128s|
+|sys     |0m9.920s|
+
 
 ## Inputs
 | Name | Description | Type | Default | Required |
 |------|-------------|------|---------|:--------:|
-
+`
 
 ## Outputs
 | Name | Description |

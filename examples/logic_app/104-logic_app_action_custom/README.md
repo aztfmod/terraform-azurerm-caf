@@ -57,6 +57,18 @@ BODY
 }
 ```
 # logic_app_action_custom
+Estimated execution time
+|Apply |    Time |
+|------|---------|
+|real  |3m29.367s|
+|user  |3m49.786s|
+|sys   |0m19.822s|
+
+| Destroy|  Time   |
+|--------|---------|
+|real    |2m18.613s |
+|user    |0m38.746s|
+|sys     |0m9.049s |
 
 ## Inputs
 | Name | Description | Type | Default | Required |
