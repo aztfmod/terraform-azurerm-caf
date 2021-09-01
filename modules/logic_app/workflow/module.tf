@@ -7,7 +7,8 @@ resource "azurecaf_name" "la" {
   passthrough   = var.global_settings.passthrough
   use_slug      = var.global_settings.use_slug
 }
-
+# Last review :  AzureRM version 2.74.0
+# Ref : https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/resources/logic_app_workflow
 resource "azurerm_logic_app_workflow" "la" {
   name                               = azurecaf_name.la.result
   resource_group_name                = var.resource_group_name

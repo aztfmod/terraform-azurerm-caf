@@ -7,6 +7,8 @@ resource "azurecaf_name" "latr" {
   passthrough   = var.global_settings.passthrough
   use_slug      = var.global_settings.use_slug
 }
+# Last review :  AzureRM version 2.74.0
+# Ref : https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/resources/logic_app_trigger_recurrence
 resource "azurerm_logic_app_trigger_recurrence" "latr" {
   name            = azurecaf_name.latr.result
   logic_app_id    = var.logic_app_id
