@@ -41,6 +41,19 @@ logic_app_integration_account = {
 }
 ```
 # logic_app_integration_account
+Estimated execution time
+|    Apply    |  Time     |
+|------|-------------|
+|real    |4m15.726s|
+|user    |3m45.886s|
+|sys     |0m21.019s|
+
+| Destroy|  Time     |
+|------|-------------|
+|real    |2m54.874s|
+|user    |0m38.613s|
+|sys     |0m9.297s|
+
 
 ## Inputs
 | Name | Description | Type | Default | Required |

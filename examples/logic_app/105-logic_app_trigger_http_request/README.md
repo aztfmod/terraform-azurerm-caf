@@ -51,6 +51,19 @@ SCHEMA
 }
 ```
 # logic_app_trigger_http_request
+Estimated execution time
+|Apply |    Time |
+|------|---------|
+|real  |4m53.999s|
+|user  |3m52.805s|
+|sys   |0m20.137s|
+
+| Destroy|  Time   |
+|--------|---------|
+|real    |2m42.343s|
+|user    |0m38.997s|
+|sys     |0m10.361s|
+
 
 ## Inputs
 | Name | Description | Type | Default | Required |

@@ -43,6 +43,18 @@ logic_app_trigger_recurrence = {
 }
 ```
 # logic_app_trigger_recurrence
+Estimated execution time
+|Apply |    Time |
+|------|---------|
+|real  |3m38.887s|
+|user  |3m51.241s|
+|sys   |0m20.950s|
+
+| Destroy|  Time   |
+|--------|---------|
+|real    |2m58.785s|
+|user    |0m40.355s|
+|sys     |0m10.295s|
 
 ## Inputs
 | Name | Description | Type | Default | Required |

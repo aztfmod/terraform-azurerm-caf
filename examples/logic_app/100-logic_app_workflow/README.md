@@ -46,6 +46,18 @@ logic_app_workflow = {
 }
 ```
 # logic_app_workflow
+Estimated execution time
+|    Apply    |  Time     |
+|------|-------------|
+|real    |3m37.529s  |
+|user    |3m47.249s |
+|sys     |0m18.925s |
+
+| Destroy|  Time     |
+|------|-------------|
+|real    |2m52.582s  |
+|user    |0m40.169s |
+|sys     |0m8.247s |
 
 ## Inputs
 | Name | Description | Type | Default | Required |
