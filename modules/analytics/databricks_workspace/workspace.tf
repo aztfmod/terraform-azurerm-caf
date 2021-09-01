@@ -16,7 +16,7 @@ resource "azurerm_databricks_workspace" "ws" {
   resource_group_name         = var.resource_group_name
   location                    = var.location
   sku                         = try(var.settings.sku, "standard")
-  managed_resource_group_name = try(var.settings.managed_resource_group_name, var.resource_group_name)
+  managed_resource_group_name = try(var.settings.managed_resource_group_name, null)
   tags                        = try(local.tags, null)
 
   #todo:
