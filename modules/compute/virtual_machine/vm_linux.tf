@@ -73,7 +73,16 @@ resource "azurerm_linux_virtual_machine" "vm" {
   provision_vm_agent              = try(each.value.provision_vm_agent, true)
   zone                            = try(each.value.zone, null)
   disable_password_authentication = try(each.value.disable_password_authentication, true)
-  custom_data                     = try(each.value.custom_data, null) == null ? null : try(filebase64(format("%s/%s", path.cwd, each.value.custom_data)), base64encode(each.value.custom_data))
+  #custom_data                     = try(each.value.custom_data, null) == null ? null : try(filebase64(format("%s/%s", path.cwd, each.value.custom_data)), base64encode(each.value.custom_data))
+  custom_data = (
+                  try(each.value.custom_data, null) == null 
+                    ? null 
+                    : (each.value.custom_data == "palo_alto_connection_string" 
+                        ? base64encode("storage-account=${var.storage_accounts["examples"]["sa1"].name}, access-key=${var.storage_accounts["examples"]["sa1"].primary_access_key}, file-share=${var.storage_accounts["examples"]["sa1"].file_share["share1"].name}, share-directory=${var.storage_accounts["examples"]["sa1"].file_share["share1"].file_share_directories["dir1"].name}") 
+                        : try(filebase64(format("%s/%s", path.cwd, each.value.custom_data)), base64encode(each.value.custom_data))
+                      )
+                )   
+  #custom_data                     = base64encode("storage-account=${var.storage_accounts["examples"]["sa1"].name}, access-key=${var.storage_accounts["examples"]["sa1"].primary_access_key}, file-share=${var.storage_accounts["examples"]["sa1"].file_share["share1"].name}, share-directory=${var.storage_accounts["examples"]["sa1"].file_share["share1"].file_share_directories["dir1"].name}")
   availability_set_id             = try(var.availability_sets[var.client_config.landingzone_key][each.value.availability_set_key].id, var.availability_sets[each.value.availability_sets].id, null)
   proximity_placement_group_id    = try(var.proximity_placement_groups[var.client_config.landingzone_key][each.value.proximity_placement_group_key].id, var.proximity_placement_groups[each.value.proximity_placement_groups].id, null)
   dedicated_host_id = try(coalesce(
