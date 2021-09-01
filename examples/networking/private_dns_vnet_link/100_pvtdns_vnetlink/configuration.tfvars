@@ -1,4 +1,4 @@
-private_dns_vnet_link = {
+private_dns_vnet_links = {
   vnet_pvtdns_link1 = {        
     vnet_key = "vnet_key1"
     #lz_key = "remote landing zone key for vnet"

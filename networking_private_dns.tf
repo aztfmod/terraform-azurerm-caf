@@ -23,9 +23,9 @@ output "private_dns" {
 # Create vnet links on remote DNS zones
 #
 
-module "private_dns_vnet_link" {
+module "private_dns_vnet_links" {
   source   = "./modules/networking/private_dns_vnet_link"
-  for_each = try(local.networking.private_dns_vnet_link, {})
+  for_each = try(local.networking.private_dns_vnet_links, {})
   depends  = [module.private_dns]
 
   base_tags       = {}
@@ -39,6 +39,6 @@ module "private_dns_vnet_link" {
   settings    = each.value
 }
 
-output "private_dns_vnet_link" {
-  value = module.private_dns_vnet_link
+output "private_dns_vnet_links" {
+  value = module.private_dns_vnet_links
 }
