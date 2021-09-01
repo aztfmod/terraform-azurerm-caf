@@ -11,7 +11,6 @@ resource_groups = {
     region = "region1"
   }
 }
-
 logic_app_workflow = {
   applogic1 = {
     name               = "workflow1"
@@ -25,25 +24,17 @@ logic_app_workflow = {
     #parameters 
   }
 }
-
 logic_app_trigger_custom = {
   trigger_custom1 = {
     name         = "webhook"
     logic_app_key = "applogic1"
     body = <<BODY
 {
-    "description": "A variable to configure the auto expiration age in days. Configured in negative number. Default is -30 (30 days old).",
-    "inputs": {
-        "variables": [
-            {
-                "name": "ExpirationAgeInDays",
-                "type": "Integer",
-                "value": -30
-            }
-        ]
-    },
-    "runAfter": {},
-    "type": "InitializeVariable"
+  "recurrence": {
+    "frequency": "Day",
+    "interval": 1
+  },
+  "type": "Recurrence"
 }
 BODY
   }
