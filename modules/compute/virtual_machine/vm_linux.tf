@@ -1,3 +1,12 @@
+locals {
+  dynamic_custom_data = {
+    palo_alto_connection_string = {
+      for item in var.settings.virtual_machine_settings: 
+        item.name => base64encode("storage-account=${var.storage_accounts[var.client_config.landingzone_key][item.palo_alto_connection_string.storage_account].name}, access-key=${var.storage_accounts[var.client_config.landingzone_key][item.palo_alto_connection_string.storage_account].primary_access_key}, file-share=${var.storage_accounts[var.client_config.landingzone_key][item.palo_alto_connection_string.storage_account].file_share[item.palo_alto_connection_string.file_share].name}, share-directory=${var.storage_accounts[var.client_config.landingzone_key][item.palo_alto_connection_string.storage_account].file_share[item.palo_alto_connection_string.file_share].file_share_directories[item.palo_alto_connection_string.file_share_directory].name}") 
+    }
+  }
+}
+
 resource "tls_private_key" "ssh" {
   for_each = local.create_sshkeys ? var.settings.virtual_machine_settings : {}
 
@@ -77,12 +86,11 @@ resource "azurerm_linux_virtual_machine" "vm" {
   custom_data = (
                   try(each.value.custom_data, null) == null 
                     ? null 
-                    : (each.value.custom_data == "palo_alto_connection_string" 
-                        ? base64encode("storage-account=${var.storage_accounts["examples"]["sa1"].name}, access-key=${var.storage_accounts["examples"]["sa1"].primary_access_key}, file-share=${var.storage_accounts["examples"]["sa1"].file_share["share1"].name}, share-directory=${var.storage_accounts["examples"]["sa1"].file_share["share1"].file_share_directories["dir1"].name}") 
-                        : try(filebase64(format("%s/%s", path.cwd, each.value.custom_data)), base64encode(each.value.custom_data))
+                    : (can(local.dynamic_custom_data[each.value.custom_data][each.value.name]) == true
+                        ? local.dynamic_custom_data[each.value.custom_data][each.value.name] 
+                        : null
                       )
                 )   
-  #custom_data                     = base64encode("storage-account=${var.storage_accounts["examples"]["sa1"].name}, access-key=${var.storage_accounts["examples"]["sa1"].primary_access_key}, file-share=${var.storage_accounts["examples"]["sa1"].file_share["share1"].name}, share-directory=${var.storage_accounts["examples"]["sa1"].file_share["share1"].file_share_directories["dir1"].name}")
   availability_set_id             = try(var.availability_sets[var.client_config.landingzone_key][each.value.availability_set_key].id, var.availability_sets[each.value.availability_sets].id, null)
   proximity_placement_group_id    = try(var.proximity_placement_groups[var.client_config.landingzone_key][each.value.proximity_placement_group_key].id, var.proximity_placement_groups[each.value.proximity_placement_groups].id, null)
   dedicated_host_id = try(coalesce(

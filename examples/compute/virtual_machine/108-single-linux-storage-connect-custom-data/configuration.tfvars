@@ -67,6 +67,11 @@ virtual_machines = {
 #echo "Execute your super awesome commands here!"
 #CUSTOM_DATA
         custom_data = "palo_alto_connection_string"
+        palo_alto_connection_string = {
+          storage_account = "sa1"
+          file_share = "share1"
+          file_share_directory = "dir1"
+        }
 
         # Spot VM to save money
         priority        = "Spot"
