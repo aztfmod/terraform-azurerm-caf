@@ -125,5 +125,18 @@ private_endpoints = {
         }
       }
     }
+
+    redis_caches = {
+      sales_rc1 = {
+        private_service_connection = {
+          name = "psc-redis-sales-rc1"
+        }
+
+        private_dns = {
+          zone_group_name = "default"
+          keys            = ["dns1"]
+        }
+      }
+    }
   }
 }
