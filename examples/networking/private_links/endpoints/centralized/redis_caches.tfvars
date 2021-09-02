@@ -1,4 +1,4 @@
-redis_caches = {
+azurerm_redis_caches = {
   sales_rc1 = {
     region             = "region1"
     resource_group_key = "rg1"
