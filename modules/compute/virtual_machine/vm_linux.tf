@@ -82,7 +82,6 @@ resource "azurerm_linux_virtual_machine" "vm" {
   provision_vm_agent              = try(each.value.provision_vm_agent, true)
   zone                            = try(each.value.zone, null)
   disable_password_authentication = try(each.value.disable_password_authentication, true)
-  #custom_data                     = try(each.value.custom_data, null) == null ? null : try(filebase64(format("%s/%s", path.cwd, each.value.custom_data)), base64encode(each.value.custom_data))
   custom_data = (
                   try(each.value.custom_data, null) == null 
                     ? null 
