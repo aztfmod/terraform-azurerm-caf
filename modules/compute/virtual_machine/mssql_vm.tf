@@ -9,7 +9,7 @@ resource "azurerm_mssql_virtual_machine" "mssqlvm" {
   r_services_enabled               = try(each.value.mssql_settings.r_services_enabled, null)
   sql_connectivity_port            = try(each.value.mssql_settings.sql_connectivity_port, null)
   sql_connectivity_type            = try(each.value.mssql_settings.sql_connectivity_type, null)
-  # should the username and password for sql be the same as the one in vm
+  # should the username and password for sql be the same as the one in vm?
   sql_connectivity_update_username = try(each.value.admin_username_key, null) == null ? each.value.admin_username : local.admin_username
   sql_connectivity_update_password = try(each.value.admin_password_key, null) == null ? random_password.admin[local.os_type].result : local.admin_password
   tags                             = merge(local.tags, try(each.value.tags, null))

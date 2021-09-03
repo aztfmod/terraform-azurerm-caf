@@ -27,7 +27,7 @@ keyvaults = {
     resource_group_key       = "rg1"
     sku_name                 = "standard"
     soft_delete_enabled      = true
-    purge_protection_enabled = true
+    purge_protection_enabled = false
     tags = {
       env = "Standalone"
     }
@@ -49,14 +49,6 @@ dynamic_keyvault_secrets = {
     vmadmin-password = {
       secret_name = "vmadmin-password"
       value       = "Very@Str5ngP!44w0rdToChaNge#"
-    }
-    sql-username = {
-      secret_name = "sql-username"
-      value = "sqllogin"
-    }
-    sql-password = {
-      secret_name = "sql-password"
-      value = "Password1234!"
     }
   }
 }
