@@ -42,7 +42,7 @@ module "virtual_machines" {
     local.combined_objects_resource_groups[local.client_config.landingzone_key][each.value.resource_group.key].location,
     local.combined_objects_resource_groups[local.client_config.landingzone_key][each.value.resource_group_key].location
   )
-  base_tags = try(local.global_settings.inherit_tags, false) ? coalese(
+  base_tags = try(local.global_settings.inherit_tags, false) ? coalesce(
     local.combined_objects_resource_groups[each.value.resource_group.lz_key][each.value.resource_group.key].tags,
     local.combined_objects_resource_groups[each.value.resource_group.lz_key][each.value.resource_group_key].tags,
     local.combined_objects_resource_groups[local.client_config.landingzone_key][each.value.resource_group.key].tags,
