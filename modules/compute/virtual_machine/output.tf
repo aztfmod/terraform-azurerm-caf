@@ -43,9 +43,14 @@ output "ssh_keys" {
 }
 
 output "nic_id" {
-  value = flatten([
-    for nic_key in var.settings.virtual_machine_settings[local.os_type].network_interface_keys : format("%s.%s", try(azurerm_network_interface.nic[nic_key].id, try(azurerm_linux_virtual_machine.vm["linux"].name, azurerm_windows_virtual_machine.vm["windows"].name)), azurerm_network_interface.nic[nic_key].id)
-  ])
+  value = coalescelist(
+    flatten(
+     [
+       for nic_key in try(var.settings.virtual_machine_settings[local.os_type].network_interface_keys,[]) : format("%s.%s", try(azurerm_network_interface.nic[nic_key].id, try(azurerm_linux_virtual_machine.vm["linux"].name, azurerm_windows_virtual_machine.vm["windows"].name)), azurerm_network_interface.nic[nic_key].id)
+     ]
+     ),
+     try(var.settings.networking_interface_ids,[])
+  )
 }
 
 output "nics" {
