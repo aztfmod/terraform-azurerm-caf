@@ -12,7 +12,7 @@ module "storage_accounts" {
   recovery_vaults     = local.combined_objects_recovery_vaults
   private_dns         = local.combined_objects_private_dns
 
-  location = coalese(
+  location = coalesce(
     try(local.global_settings.regions[each.value.region],null),
     local.combined_objects_resource_groups[each.value.resource_group.lz_key][each.value.resource_group.key].location,
     local.combined_objects_resource_groups[each.value.resource_group.lz_key][each.value.resource_group_key)].location,
@@ -25,7 +25,7 @@ module "storage_accounts" {
     local.combined_objects_resource_groups[local.client_config.landingzone_key][each.value.resource_group.key].tags,
     local.combined_objects_resource_groups[local.client_config.landingzone_key][each.value.resource_group_key].tags
   ) : {}
-  resource_group_name = coalese(
+  resource_group_name = coalesce(
     local.combined_objects_resource_groups[each.value.resource_group.lz_key][each.value.resource_group.key].name,
     local.combined_objects_resource_groups[each.value.resource_group.lz_key][each.value.resource_group_key)].name,
     local.combined_objects_resource_groups[local.client_config.landingzone_key][each.value.resource_group.key].name,
