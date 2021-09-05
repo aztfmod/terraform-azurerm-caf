@@ -37,22 +37,22 @@ module "virtual_machines" {
 
   location = coalesce(
     try(local.global_settings.regions[each.value.region],null),
-    local.combined_objects_resource_groups[each.value.resource_group.lz_key][each.value.resource_group.key].location,
-    local.combined_objects_resource_groups[each.value.resource_group.lz_key][each.value.resource_group_key].location,
-    local.combined_objects_resource_groups[local.client_config.landingzone_key][each.value.resource_group.key].location,
-    local.combined_objects_resource_groups[local.client_config.landingzone_key][each.value.resource_group_key].location
+    try(local.combined_objects_resource_groups[each.value.resource_group.lz_key][each.value.resource_group.key].location,null),
+    try(local.combined_objects_resource_groups[each.value.resource_group.lz_key][each.value.resource_group_key].location,null),
+    try(local.combined_objects_resource_groups[local.client_config.landingzone_key][each.value.resource_group.key].location,null),
+    try(local.combined_objects_resource_groups[local.client_config.landingzone_key][each.value.resource_group_key].location,null)
   )
   base_tags = try(local.global_settings.inherit_tags, false) ? coalesce(
-    local.combined_objects_resource_groups[each.value.resource_group.lz_key][each.value.resource_group.key].tags,
-    local.combined_objects_resource_groups[each.value.resource_group.lz_key][each.value.resource_group_key].tags,
-    local.combined_objects_resource_groups[local.client_config.landingzone_key][each.value.resource_group.key].tags,
-    local.combined_objects_resource_groups[local.client_config.landingzone_key][each.value.resource_group_key].tags
+    try(local.combined_objects_resource_groups[each.value.resource_group.lz_key][each.value.resource_group.key].tags,null),
+    try(local.combined_objects_resource_groups[each.value.resource_group.lz_key][each.value.resource_group_key].tags,null),
+    try(local.combined_objects_resource_groups[local.client_config.landingzone_key][each.value.resource_group.key].tags,null),
+    try(local.combined_objects_resource_groups[local.client_config.landingzone_key][each.value.resource_group_key].tags,null)
   ) : {}
   resource_group_name = coalesce(
-    local.combined_objects_resource_groups[each.value.resource_group.lz_key][each.value.resource_group.key].name,
-    local.combined_objects_resource_groups[each.value.resource_group.lz_key][each.value.resource_group_key].name,
-    local.combined_objects_resource_groups[local.client_config.landingzone_key][each.value.resource_group.key].name,
-    local.combined_objects_resource_groups[local.client_config.landingzone_key][each.value.resource_group_key].name
+    try(local.combined_objects_resource_groups[each.value.resource_group.lz_key][each.value.resource_group.key].name,null),
+    try(local.combined_objects_resource_groups[each.value.resource_group.lz_key][each.value.resource_group_key].name,null),
+    try(local.combined_objects_resource_groups[local.client_config.landingzone_key][each.value.resource_group.key].name,null),
+    try(local.combined_objects_resource_groups[local.client_config.landingzone_key][each.value.resource_group_key].name,null)
   )
 }
 
