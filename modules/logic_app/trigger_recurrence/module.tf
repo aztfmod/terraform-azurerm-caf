@@ -8,11 +8,11 @@ resource "azurecaf_name" "latr" {
   use_slug      = var.global_settings.use_slug
 }
 resource "azurerm_logic_app_trigger_recurrence" "latr" {
-  name            = azurecaf_name.latr.result
-  logic_app_id    = var.logic_app_id
-  frequency       = var.settings.frequency
-  interval        = var.settings.interval
-  start_time      = try(var.settings.start_time, null)
-  time_zone       = try(var.settings.time_zone, null)
+  name         = azurecaf_name.latr.result
+  logic_app_id = var.logic_app_id
+  frequency    = var.settings.frequency
+  interval     = var.settings.interval
+  start_time   = try(var.settings.start_time, null)
+  time_zone    = try(var.settings.time_zone, null)
   #schedule        = try(var.settings.schedule, null)
 }
