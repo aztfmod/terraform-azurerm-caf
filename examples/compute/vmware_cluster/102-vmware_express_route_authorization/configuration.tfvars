@@ -20,7 +20,7 @@ keyvaults = {
 
     creation_policies = {
       logged_in_user = {
-        secret_permissions      = ["Set", "Get", "List", "Delete", "Purge"]
+        secret_permissions = ["Set", "Get", "List", "Delete", "Purge"]
       }
     }
   }
@@ -40,11 +40,11 @@ dynamic_keyvault_secrets = {
 }
 
 vmware_private_clouds = {
-  vwpc1= {
-    name                = "example-vmware-private-cloud"
+  vwpc1 = {
+    name               = "example-vmware-private-cloud"
     resource_group_key = "rgvwc"
-    region                  = "region1"
-    sku_name            = "av36"
+    region             = "region1"
+    sku_name           = "av36"
     management_cluster = {
       size = 3
     }
@@ -54,12 +54,12 @@ vmware_private_clouds = {
     nsxt_password = {
       #password = "123#sadd$saASD"
       keyvault_key = "kv_rg1"
-      #lzKey= "ejkle" (optional)
-      secret_key = "secret_key1"      
+      #lz_key= "ejkle" (optional)
+      secret_key = "secret_key1"
     }
     vcenter_password = {
       keyvault_key = "kv_rg1"
-      #lzKey= "ejkle" (optional)
+      #lz_key= "ejkle" (optional)
       secret_name = "vcenter-password"
     }
   }
@@ -67,16 +67,16 @@ vmware_private_clouds = {
 
 vmware_clusters = {
   vwc1 = {
-    name               = "example-Cluster"
-    vmware_private_cloud_key   = "vwpc1"
-    cluster_node_count = 3
-    sku_name           = "av36"
+    name                     = "example-Cluster"
+    vmware_private_cloud_key = "vwpc1"
+    cluster_node_count       = 3
+    sku_name                 = "av36"
   }
 }
 
 vmware_express_route_authorizations = {
-  vwera1={
-    name             = "example-authorization"
+  vwera1 = {
+    name                     = "example-authorization"
     vmware_private_cloud_key = "vwpc1"
   }
 }

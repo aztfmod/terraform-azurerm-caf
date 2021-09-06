@@ -35,7 +35,7 @@ resource "azurecaf_name" "os_disk_windows" {
   clean_input   = true
   passthrough   = var.global_settings.passthrough
   use_slug      = var.global_settings.use_slug
- 
+
   lifecycle {
     ignore_changes = [
       name

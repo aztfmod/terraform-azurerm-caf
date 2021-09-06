@@ -37,12 +37,12 @@ virtual_wans = {
             private_ip_allocation_method = "Static"
             public_ip_address = {
               public_ip_address_key = "vwan_pip1"
-              #lz_key = "lzkey"
+              #lz_key = "lz_key"
             }
             subnet = {
               vnet_key   = "vnet_region1"
               subnet_key = "RouteServerSubnet"
-              #lz_key = "lzkey"
+              #lz_key = "lz_key"
             }
             # We can also directly provide the resource ID
             # public_ip_address_id         = "Azure_Resource_ID"

@@ -101,7 +101,6 @@ diagnostics_definition = {
         ["AppServiceHTTPLogs", true, false, 7],
         ["AppServiceConsoleLogs", true, false, 7],
         ["AppServiceAppLogs", true, false, 7],
-        ["AppServiceFileAuditLogs", true, false, 7],
         ["AppServiceAuditLogs", true, false, 7],
         ["AppServiceIPSecAuditLogs", true, false, 7],
         ["AppServicePlatformLogs", true, false, 7],
