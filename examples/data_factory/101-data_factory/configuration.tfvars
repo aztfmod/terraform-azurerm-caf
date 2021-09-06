@@ -12,7 +12,7 @@ resource_groups = {
 }
 data_factory = {
   df1 = {
-    name                = "example"
+    name               = "example"
     resource_group_key = "rg1"
   }
 }
