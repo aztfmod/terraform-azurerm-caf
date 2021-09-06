@@ -254,7 +254,7 @@ resource "azurerm_kubernetes_cluster_node_pool" "nodepools" {
   enable_node_public_ip = try(each.value.enable_node_public_ip, false)
   node_count            = try(each.value.node_count, 1)
   min_count             = try(each.value.min_count, null)
-  max_count             = try(each.value.max_count, null)  
+  max_count             = try(each.value.max_count, null)
   max_pods              = try(each.value.max_pods, 30)
   node_labels           = try(each.value.node_labels, null)
   node_taints           = try(each.value.node_taints, null)

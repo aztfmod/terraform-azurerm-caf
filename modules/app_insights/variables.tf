@@ -79,7 +79,7 @@ variable "base_tags" {
 }
 variable "workspace_id" {
   description = "Log Analytics Workspace based workspace id"
-  default = null
+  default     = null
 }
 variable "diagnostic_profiles" {
   default = null

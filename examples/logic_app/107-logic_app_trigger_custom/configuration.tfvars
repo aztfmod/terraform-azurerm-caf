@@ -28,9 +28,9 @@ logic_app_workflow = {
 
 logic_app_trigger_custom = {
   trigger_custom1 = {
-    name         = "webhook"
+    name          = "webhook"
     logic_app_key = "applogic1"
-    body = <<BODY
+    body          = <<BODY
 {
     "description": "A variable to configure the auto expiration age in days. Configured in negative number. Default is -30 (30 days old).",
     "inputs": {

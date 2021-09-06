@@ -8,9 +8,9 @@ application_gateway_applications_v1 = {
       demo = {
         name  = "demo_pool01"
         fqdns = ["babc-app-ptsg-5sspdemoappap-lo.babc-ase-ase01-pd.appserviceenvironment.net"]
-        
+
         # ip_addresses = ["10.0.0.4", "10.0.0.5"]
-        
+
         # app_services = {
         #   lz_key = ""
         #   key = ""
