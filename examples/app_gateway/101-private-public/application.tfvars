@@ -33,26 +33,26 @@ application_gateway_applications = {
         #rewrite_rule_set_key = "rule_set_1"
       }
       path_based = {
-        rule_type         = "PathBasedRouting"
-        url_path_map_key  = "path_map_1"
+        rule_type        = "PathBasedRouting"
+        url_path_map_key = "path_map_1"
       }
     }
 
     url_path_maps = {
       path_map_1 = {
-        name = "path_map_1"
+        name                         = "path_map_1"
         default_rewrite_rule_set_key = "rule_set_1"
         path_rules = {
           pathRuleIdentity = {
-              name    = "pathRuleIdentity"
-              paths   = ["/identity*"]
-              #rewrite_rule_set_key = "rule_set_1"
+            name  = "pathRuleIdentity"
+            paths = ["/identity*"]
+            #rewrite_rule_set_key = "rule_set_1"
           }
 
           pathRuleAuthorisation = {
-              name    = "pathRuleAuthorization"
-              paths   = ["/authorization*"]
-              #rewrite_rule_set_key = "rule_set_1"
+            name  = "pathRuleAuthorization"
+            paths = ["/authorization*"]
+            #rewrite_rule_set_key = "rule_set_1"
           }
         }
       }
@@ -75,20 +75,20 @@ application_gateway_applications = {
         name = "header-rules"
         rewrite_rules = {
           rule_1 = {
-            name = "server-header-remove"
+            name          = "server-header-remove"
             rule_sequence = 100
             #conditions = {
-              #condition_1 = {
-                #variable = "http_status"
-                #pattern = "200"
-                #ignore_case = true
-                #negate = false
-              #}
+            #condition_1 = {
+            #variable = "http_status"
+            #pattern = "200"
+            #ignore_case = true
+            #negate = false
+            #}
             #}
             response_header_configurations = {
               server_header = {
-                header_name     = "Server"
-                header_value    = ""  # Use blank value to remove header
+                header_name  = "Server"
+                header_value = "" # Use blank value to remove header
               }
             }
             # url = {
@@ -99,20 +99,20 @@ application_gateway_applications = {
           }
 
           rule_2 = {
-            name = "hsts-add-header"
+            name          = "hsts-add-header"
             rule_sequence = 101
             #conditions = {
-              #condition_1 = {
-                #variable = "http_status"
-                #pattern = "200"
-                #ignore_case = true
-                #negate = false
-              #}
+            #condition_1 = {
+            #variable = "http_status"
+            #pattern = "200"
+            #ignore_case = true
+            #negate = false
+            #}
             #}
             response_header_configurations = {
               hsts_header = {
-                header_name     = "Strict-Transport-Security"
-                header_value    = "max-age=31536000"
+                header_name  = "Strict-Transport-Security"
+                header_value = "max-age=31536000"
               }
             }
             # url = {
@@ -123,20 +123,20 @@ application_gateway_applications = {
           }
 
           rule_3 = {
-            name = "add-request-header"
+            name          = "add-request-header"
             rule_sequence = 102
             #conditions = {
-              #condition_1 = {
-                #variable = "http_status"
-                #pattern = "200"
-                #ignore_case = true
-                #negate = false
-              #}
+            #condition_1 = {
+            #variable = "http_status"
+            #pattern = "200"
+            #ignore_case = true
+            #negate = false
+            #}
             #}
             request_header_configurations = {
               foo_header = {
-                header_name     = "foo"
-                header_value    = "123456"
+                header_name  = "foo"
+                header_value = "123456"
               }
             }
             # url = {
