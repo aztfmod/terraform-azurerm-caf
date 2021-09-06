@@ -27,7 +27,8 @@ module "data_factory_pipeline" {
 
   name                = each.value.name
   resource_group_name = local.resource_groups[each.value.resource_group_key].name
-  data_factory_name   = module.data_factory[each.value.data_factory_key].name
+  #data_factory_name   = local.data_factory[each.value.data_factory_key].name
+  data_factory_name   = try(each.value.lz_key, null) == null ? local.combined_objects_data_factory[local.client_config.landingzone_key][each.value.data_factory_key].name : local.combined_objects_data_factory[each.value.lz_key][each.value.data_factory_key].name
   description         = try(each.value.description, null)
   annotations         = try(each.value.annotations, null)
   parameters          = try(each.value.parameters, null)

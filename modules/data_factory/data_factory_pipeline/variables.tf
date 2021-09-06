@@ -29,3 +29,4 @@ variable "variables" {
 variable "activities_json" {
   description = "(Optional) A JSON object that contains the activities that will be associated with the Data Factory Pipeline"
 }
+
