@@ -1,6 +1,6 @@
 module "application_gateway_applications" {
-  source     = "./modules/networking/application_gateway_application"
-  for_each   = local.networking.application_gateway_applications_v1
+  source   = "./modules/networking/application_gateway_application"
+  for_each = local.networking.application_gateway_applications_v1
 
   client_config                 = local.client_config
   global_settings               = local.global_settings

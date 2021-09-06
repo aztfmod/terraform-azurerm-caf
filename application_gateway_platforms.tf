@@ -1,6 +1,6 @@
 module "application_gateway_platforms" {
-  source     = "./modules/networking/application_gateway_platform"
-  for_each   = local.networking.application_gateway_platforms
+  source   = "./modules/networking/application_gateway_platform"
+  for_each = local.networking.application_gateway_platforms
 
   application_gateway_waf_policies = local.combined_objects_application_gateway_waf_policies
   client_config                    = local.client_config

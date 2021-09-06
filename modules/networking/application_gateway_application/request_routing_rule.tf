@@ -14,18 +14,18 @@ resource "null_resource" "set_request_routing_rule" {
     on_failure  = fail
 
     environment = {
-      RESOURCE                  = "REQUESTROUTINGRULE"
-      RG_NAME                   = var.application_gateway.resource_group_name
-      APPLICATION_GATEWAY_NAME  = var.application_gateway.name
-      NAME                      = each.value.name
-      LISTENER                  = try(var.settings.http_listeners[each.value.http_listener_key].name, null)
-      ADDRESS_POOL              = try(var.settings.backend_pools[each.value.backend_pool_key].name, null)
-      HTTP_SETTINGS             = try(var.settings.http_settings[each.value.http_settings_key].name, null)
-      PRIORITY                  = try(each.value.priority, null)
-      RULE_TYPE                 = try(each.value.rule_type, null)
-      REDIRECT_CONFIG           = try(each.value.redirect_config, null) //TODO
-      REWRITE_RULE_SET          = try(each.value.rewrite_rule_set, null) //TODO
-      URL_PATH_MAP              = try(var.settings.url_path_maps[each.value.url_path_map_key].name, null)
+      RESOURCE                 = "REQUESTROUTINGRULE"
+      RG_NAME                  = var.application_gateway.resource_group_name
+      APPLICATION_GATEWAY_NAME = var.application_gateway.name
+      NAME                     = each.value.name
+      LISTENER                 = try(var.settings.http_listeners[each.value.http_listener_key].name, null)
+      ADDRESS_POOL             = try(var.settings.backend_pools[each.value.backend_pool_key].name, null)
+      HTTP_SETTINGS            = try(var.settings.http_settings[each.value.http_settings_key].name, null)
+      PRIORITY                 = try(each.value.priority, null)
+      RULE_TYPE                = try(each.value.rule_type, null)
+      REDIRECT_CONFIG          = try(each.value.redirect_config, null)  //TODO
+      REWRITE_RULE_SET         = try(each.value.rewrite_rule_set, null) //TODO
+      URL_PATH_MAP             = try(var.settings.url_path_maps[each.value.url_path_map_key].name, null)
     }
   }
 }
