@@ -6,11 +6,12 @@ data "azurerm_billing_enrollment_account_scope" "sub" {
 }
 
 resource "azurerm_subscription" "sub" {
-  count = try(var.settings.subscription_id, null) == null && var.subscription_key != "logged_in_subscription" ? 1 : 0
+  count = var.subscription_key != "logged_in_subscription" ? 1 : 0
 
   alias             = var.subscription_key
   subscription_name = var.settings.name
-  billing_scope_id  = data.azurerm_billing_enrollment_account_scope.sub.0.id
+  subscription_id   =  try(var.settings.subscription_id, null) != null ? var.settings.subscription_id : null
+  billing_scope_id  =  try(var.settings.subscription_id, null) == null ? data.azurerm_billing_enrollment_account_scope.sub.0.id : null
   workload          = try(var.settings.workload, null)
 }
 
