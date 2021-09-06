@@ -40,7 +40,7 @@ resource "null_resource" "delete_ssl_cert" {
   for_each = try(var.settings.ssl_certs, {})
 
   triggers = {
-    ssl_cert_name       = each.value.name
+    ssl_cert_name            = each.value.name
     resource_group_name      = var.application_gateway.resource_group_name
     application_gateway_name = var.application_gateway.name
   }

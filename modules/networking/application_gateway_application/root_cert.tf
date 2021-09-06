@@ -39,7 +39,7 @@ resource "null_resource" "delete_root_cert" {
   for_each = try(var.settings.trusted_root_certificates, {})
 
   triggers = {
-    root_cert_name       = each.value.name
+    root_cert_name           = each.value.name
     resource_group_name      = var.application_gateway.resource_group_name
     application_gateway_name = var.application_gateway.name
   }

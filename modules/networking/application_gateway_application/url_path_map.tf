@@ -35,7 +35,7 @@ resource "null_resource" "delete_url_path_map" {
   for_each = try(var.settings.url_path_maps, {})
 
   triggers = {
-    url_path_map_name       = each.value.name
+    url_path_map_name        = each.value.name
     resource_group_name      = var.application_gateway.resource_group_name
     application_gateway_name = var.application_gateway.name
   }

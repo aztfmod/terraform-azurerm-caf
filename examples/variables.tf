@@ -357,6 +357,12 @@ variable "cosmos_db" {
 variable "log_analytics" {
   default = {}
 }
+variable "logic_app_workflow" {
+  default = {}
+}
+variable "logic_app_integration_account" {
+  default = {}
+}
 variable "recovery_vaults" {
   default = {}
 }
@@ -571,5 +577,24 @@ variable "nat_gateways" {
   default = {}
 }
 variable "cognitive_services_account" {
+  default = {}
+}
+
+variable "integration_service_environment" {
+  default = {}
+}
+variable "logic_app_action_http" {
+  default = {}
+}
+variable "logic_app_action_custom" {
+  default = {}
+}
+variable "logic_app_trigger_http_request" {
+  default = {}
+}
+variable "logic_app_trigger_recurrence" {
+  default = {}
+}
+variable "logic_app_trigger_custom" {
   default = {}
 }
