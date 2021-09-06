@@ -194,7 +194,7 @@ module "example" {
     app_services                 = var.app_services
   }
   data_factory = {
-    data_factory = var.data_factory
+    data_factory          = var.data_factory
     data_factory_pipeline = var.data_factory_pipeline
   }
 
