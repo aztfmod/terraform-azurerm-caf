@@ -561,3 +561,6 @@ variable "cognitive_services_account" {
 variable "data_factory" {
   default = {}
 }
+variable "data_factory_pipeline" {
+  default = {}
+}

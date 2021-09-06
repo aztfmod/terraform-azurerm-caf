@@ -195,6 +195,7 @@ module "example" {
   }
   data_factory = {
     data_factory = var.data_factory
+    data_factory_pipeline = var.data_factory_pipeline
   }
 
 }
