@@ -2,8 +2,8 @@ virtual_machines = {
 
   # Configuration to deploy a bastion host linux virtual machine
   bastion_host = {
-    resource_group_key                   = "aks_jumpbox_re1"
-    provision_vm_agent                   = true
+    resource_group_key = "aks_jumpbox_re1"
+    provision_vm_agent = true
 
     os_type = "linux"
 

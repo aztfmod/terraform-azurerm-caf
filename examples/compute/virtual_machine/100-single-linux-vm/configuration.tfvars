@@ -62,8 +62,13 @@ virtual_machines = {
         admin_username                  = "adminuser"
         disable_password_authentication = true
 
+        #custom_data - Users can either reference a local file path or a block of code as seen below.
         #custom_data                     = "scripts/cloud-init/install-rover-tools.config"
-        custom_data = "compute/virtual_machine/100-single-linux-vm/scripts/cloud-init/install-rover-tools.config"
+        #custom_data = "compute/virtual_machine/100-single-linux-vm/scripts/cloud-init/install-rover-tools.config"
+        custom_data = <<CUSTOM_DATA
+#!/bin/bash
+echo "Execute your super awesome commands here!"
+CUSTOM_DATA
 
         # Spot VM to save money
         priority        = "Spot"
@@ -79,7 +84,13 @@ virtual_machines = {
           disk_encryption_set_key = "set1"
         }
         identity = {
-          type = "SystemAssigned"
+          type = "SystemAssigned" #SystemAssigned OR UserAssigned OR SystemAssigned, UserAssigned
+          # remote = {
+          #   remote_kz_key = { # remote lz key
+          #     managed_identity_keys = [""] # remote msi resource key
+          #   }
+          # }
+          # managed_identity_keys = [""] //local msi resource key
         }
         source_image_reference = {
           publisher = "Canonical"
