@@ -10,9 +10,9 @@ resource "azurecaf_name" "laachr" {
 # Last review :  AzureRM version 2.74.0
 # Ref : https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/resources/logic_app_trigger_http_request
 resource "azurerm_logic_app_trigger_http_request" "laachr" {
-  name            = azurecaf_name.laachr.result
-  logic_app_id    = var.logic_app_id
-  schema          = var.settings.schema
-  method          = try(var.settings.method,null)
-  relative_path   = try(var.settings.relative_path,null)
+  name          = azurecaf_name.laachr.result
+  logic_app_id  = var.logic_app_id
+  schema        = var.settings.schema
+  method        = try(var.settings.method, null)
+  relative_path = try(var.settings.relative_path, null)
 }

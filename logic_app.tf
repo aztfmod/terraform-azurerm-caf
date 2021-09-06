@@ -23,10 +23,10 @@ module "logic_app_action_custom" {
 
   for_each = local.logic_app.logic_app_action_custom
 
-  global_settings                    = local.global_settings
-  client_config                      = local.client_config
-  settings                           = each.value
-  logic_app_id                       = try(local.combined_objects_logic_app_workflow[try(each.value.lz_key, local.client_config.landingzone_key)][each.value.logic_app_key].id,null)
+  global_settings = local.global_settings
+  client_config   = local.client_config
+  settings        = each.value
+  logic_app_id    = try(local.combined_objects_logic_app_workflow[try(each.value.lz_key, local.client_config.landingzone_key)][each.value.logic_app_key].id, null)
 }
 
 output "logic_app_action_custom" {
@@ -39,10 +39,10 @@ module "logic_app_action_http" {
 
   for_each = local.logic_app.logic_app_action_http
 
-  global_settings                    = local.global_settings
-  client_config                      = local.client_config
-  settings                           = each.value
-  logic_app_id                       = try(local.combined_objects_logic_app_workflow[try(each.value.lz_key, local.client_config.landingzone_key)][each.value.logic_app_key].id,null)
+  global_settings = local.global_settings
+  client_config   = local.client_config
+  settings        = each.value
+  logic_app_id    = try(local.combined_objects_logic_app_workflow[try(each.value.lz_key, local.client_config.landingzone_key)][each.value.logic_app_key].id, null)
 }
 
 output "logic_app_action_http" {
@@ -55,12 +55,12 @@ module "logic_app_integration_account" {
 
   for_each = local.logic_app.logic_app_integration_account
 
-  global_settings                    = local.global_settings
-  client_config                      = local.client_config
-  settings                           = each.value
-  resource_group_name                = local.resource_groups[each.value.resource_group_key].name
-  location                           = lookup(each.value, "region", null) == null ? local.resource_groups[each.value.resource_group_key].location : local.global_settings.regions[each.value.region]
-  base_tags                          = try(local.global_settings.inherit_tags, false) ? local.resource_groups[each.value.resource_group_key].tags : {}
+  global_settings     = local.global_settings
+  client_config       = local.client_config
+  settings            = each.value
+  resource_group_name = local.resource_groups[each.value.resource_group_key].name
+  location            = lookup(each.value, "region", null) == null ? local.resource_groups[each.value.resource_group_key].location : local.global_settings.regions[each.value.region]
+  base_tags           = try(local.global_settings.inherit_tags, false) ? local.resource_groups[each.value.resource_group_key].tags : {}
 }
 
 output "logic_app_integration_account" {
@@ -73,10 +73,10 @@ module "logic_app_trigger_custom" {
 
   for_each = local.logic_app.logic_app_trigger_custom
 
-  global_settings                    = local.global_settings
-  client_config                      = local.client_config
-  settings                           = each.value
-  logic_app_id                       = try(local.combined_objects_logic_app_workflow[try(each.value.lz_key, local.client_config.landingzone_key)][each.value.logic_app_key].id,null)
+  global_settings = local.global_settings
+  client_config   = local.client_config
+  settings        = each.value
+  logic_app_id    = try(local.combined_objects_logic_app_workflow[try(each.value.lz_key, local.client_config.landingzone_key)][each.value.logic_app_key].id, null)
 }
 
 output "logic_app_trigger_custom" {
@@ -89,10 +89,10 @@ module "logic_app_trigger_http_request" {
 
   for_each = local.logic_app.logic_app_trigger_http_request
 
-  global_settings                    = local.global_settings
-  client_config                      = local.client_config
-  settings                           = each.value
-  logic_app_id                       = try(local.combined_objects_logic_app_workflow[try(each.value.lz_key, local.client_config.landingzone_key)][each.value.logic_app_key].id,null)
+  global_settings = local.global_settings
+  client_config   = local.client_config
+  settings        = each.value
+  logic_app_id    = try(local.combined_objects_logic_app_workflow[try(each.value.lz_key, local.client_config.landingzone_key)][each.value.logic_app_key].id, null)
 }
 
 output "logic_app_trigger_http_request" {
@@ -105,10 +105,10 @@ module "logic_app_trigger_recurrence" {
 
   for_each = local.logic_app.logic_app_trigger_recurrence
 
-  global_settings                    = local.global_settings
-  client_config                      = local.client_config
-  settings                           = each.value
-  logic_app_id                       = try(local.combined_objects_logic_app_workflow[try(each.value.lz_key, local.client_config.landingzone_key)][each.value.logic_app_key].id,null)
+  global_settings = local.global_settings
+  client_config   = local.client_config
+  settings        = each.value
+  logic_app_id    = try(local.combined_objects_logic_app_workflow[try(each.value.lz_key, local.client_config.landingzone_key)][each.value.logic_app_key].id, null)
 }
 
 output "logic_app_trigger_recurrence" {
@@ -126,8 +126,8 @@ module "logic_app_workflow" {
   resource_group_name                = local.resource_groups[each.value.resource_group_key].name
   location                           = lookup(each.value, "region", null) == null ? local.resource_groups[each.value.resource_group_key].location : local.global_settings.regions[each.value.region]
   base_tags                          = try(local.global_settings.inherit_tags, false) ? local.resource_groups[each.value.resource_group_key].tags : {}
-  integration_service_environment_id = try(local.combined_objects_integration_service_environment[try(each.value.lz_key, local.client_config.landingzone_key)][each.value.integration_service_environment_key].id,null)
-  logic_app_integration_account_id   = try(local.combined_objects_logic_app_integration_account[try(each.value.lz_key, local.client_config.landingzone_key)][each.value.logic_app_integration_account_key].id,null)
+  integration_service_environment_id = try(local.combined_objects_integration_service_environment[try(each.value.lz_key, local.client_config.landingzone_key)][each.value.integration_service_environment_key].id, null)
+  logic_app_integration_account_id   = try(local.combined_objects_logic_app_integration_account[try(each.value.lz_key, local.client_config.landingzone_key)][each.value.logic_app_integration_account_key].id, null)
 }
 
 output "logic_app_workflow" {

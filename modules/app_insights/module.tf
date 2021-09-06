@@ -19,5 +19,6 @@ resource "azurerm_application_insights" "appinsights" {
   retention_in_days                     = var.retention_in_days
   sampling_percentage                   = var.sampling_percentage
   disable_ip_masking                    = var.disable_ip_masking
+  workspace_id                          = var.workspace_id
   tags                                  = local.tags
 }

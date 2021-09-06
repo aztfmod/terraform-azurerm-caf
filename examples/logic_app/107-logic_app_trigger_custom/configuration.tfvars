@@ -26,9 +26,9 @@ logic_app_workflow = {
 }
 logic_app_trigger_custom = {
   trigger_custom1 = {
-    name         = "webhook"
+    name          = "webhook"
     logic_app_key = "applogic1"
-    body = <<BODY
+    body          = <<BODY
 {
   "recurrence": {
     "frequency": "Day",

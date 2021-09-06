@@ -34,19 +34,19 @@ application_gateway_applications = {
     }
 
     probes = {
-          probe_1 = {
-              name                = "probe-backend-443"
-              protocol            = "Https"
-              path                = "/status-0123456789abcdef"
-              host                = "cafdemo.appserviceenvironment.net"
-              interval            = 30
-              timeout             = 30
-              unhealthy_threshold = 3
-              match               = {
-                  status_code = ["200-399"]
-              }
-          }
-     }
+      probe_1 = {
+        name                = "probe-backend-443"
+        protocol            = "Https"
+        path                = "/status-0123456789abcdef"
+        host                = "cafdemo.appserviceenvironment.net"
+        interval            = 30
+        timeout             = 30
+        unhealthy_threshold = 3
+        match = {
+          status_code = ["200-399"]
+        }
+      }
+    }
 
   }
 }

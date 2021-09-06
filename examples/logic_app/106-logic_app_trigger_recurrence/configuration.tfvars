@@ -28,9 +28,9 @@ logic_app_workflow = {
 
 logic_app_trigger_recurrence = {
   trigger_recurrence1 = {
-    name         = "run-every-day"
+    name          = "run-every-day"
     logic_app_key = "applogic1"
-    frequency    = "Day"
-    interval     = 1
+    frequency     = "Day"
+    interval      = 1
   }
 }
