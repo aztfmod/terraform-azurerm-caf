@@ -18,7 +18,7 @@ data_factory = {
 }
 data_factory_pipeline = {
   dfp1 = {
-    name                = "example"
+    name               = "example"
     resource_group_key = "rg1"
     data_factory_key   = "df1"
   }
