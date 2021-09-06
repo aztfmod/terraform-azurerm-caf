@@ -113,9 +113,9 @@ resource "azurerm_application_gateway" "agw" {
       http_listener_name         = request_routing_rule.value.name
       backend_http_settings_name = local.backend_http_settings[request_routing_rule.value.app_key].name
       backend_address_pool_name  = local.backend_pools[request_routing_rule.value.app_key].name
-      url_path_map_name          = try(local.request_routing_rules[format("%s-%s", request_routing_rule.value.app_key, request_routing_rule.value.request_routing_rule_key)].rule.url_path_map_name, 
-                                   try(local.url_path_maps[format("%s-%s", request_routing_rule.value.app_key,local.request_routing_rules[format("%s-%s", request_routing_rule.value.app_key, request_routing_rule.value.request_routing_rule_key)].rule.url_path_map_key)].name, null))
-      rewrite_rule_set_name      = try(local.rewrite_rule_sets[format("%s-%s", request_routing_rule.value.app_key, local.request_routing_rules[format("%s-%s", request_routing_rule.value.app_key, request_routing_rule.value.request_routing_rule_key)].rule.rewrite_rule_set_key)].name, null)
+      url_path_map_name = try(local.request_routing_rules[format("%s-%s", request_routing_rule.value.app_key, request_routing_rule.value.request_routing_rule_key)].rule.url_path_map_name,
+      try(local.url_path_maps[format("%s-%s", request_routing_rule.value.app_key, local.request_routing_rules[format("%s-%s", request_routing_rule.value.app_key, request_routing_rule.value.request_routing_rule_key)].rule.url_path_map_key)].name, null))
+      rewrite_rule_set_name = try(local.rewrite_rule_sets[format("%s-%s", request_routing_rule.value.app_key, local.request_routing_rules[format("%s-%s", request_routing_rule.value.app_key, request_routing_rule.value.request_routing_rule_key)].rule.rewrite_rule_set_key)].name, null)
     }
   }
 
@@ -145,20 +145,20 @@ resource "azurerm_application_gateway" "agw" {
 
     content {
       name                                      = probe.value.name
-      host                                      = probe.value.host
+      host                                      = try(probe.value.host, null)
       interval                                  = probe.value.interval
       protocol                                  = probe.value.protocol
       path                                      = probe.value.path
       timeout                                   = probe.value.timeout
       unhealthy_threshold                       = probe.value.unhealthy_threshold
-      port                                      = try(probe.value.port,null)
+      port                                      = try(probe.value.port, null)
       pick_host_name_from_backend_http_settings = try(probe.value.pick_host_name_from_backend_http_settings, false)
       minimum_servers                           = try(probe.value.minimum_servers, 0)
       dynamic "match" {
         for_each = try(probe.value.match, null) == null ? [] : [1]
         content {
-          body        = try(probe.value.match.body,null)
-          status_code = try(probe.value.match.status_code,null)
+          body        = try(probe.value.match.body, null)
+          status_code = try(probe.value.match.status_code, null)
         }
       }
     }
@@ -176,7 +176,7 @@ resource "azurerm_application_gateway" "agw" {
       pick_host_name_from_backend_address = try(backend_http_settings.value.pick_host_name_from_backend_address, false)
       trusted_root_certificate_names      = try(backend_http_settings.value.trusted_root_certificate_names, null)
       host_name                           = try(backend_http_settings.value.host_name, null)
-      probe_name                          = try(local.probes[format("%s-%s",backend_http_settings.key, backend_http_settings.value.probe_key)].name, null)
+      probe_name                          = try(local.probes[format("%s-%s", backend_http_settings.key, backend_http_settings.value.probe_key)].name, null)
     }
   }
 
@@ -185,7 +185,7 @@ resource "azurerm_application_gateway" "agw" {
 
     content {
       name         = var.application_gateway_applications[backend_address_pool.key].name
-      fqdns        = try(length(backend_address_pool.value.fqdns), 0) == 0 ? null : backend_address_pool.value.fqdns 
+      fqdns        = try(length(backend_address_pool.value.fqdns), 0) == 0 ? null : backend_address_pool.value.fqdns
       ip_addresses = try(backend_address_pool.value.ip_addresses, null)
     }
   }
@@ -253,30 +253,30 @@ resource "azurerm_application_gateway" "agw" {
       key_vault_secret_id = ssl_certificate.value.secret_id
     }
   }
-  
+
   dynamic "waf_configuration" {
     for_each = try(var.settings.waf_configuration, null) == null ? [] : [1]
     content {
-      enabled                   = var.settings.waf_configuration.enabled
-      firewall_mode             = var.settings.waf_configuration.firewall_mode
-      rule_set_type             = var.settings.waf_configuration.rule_set_type
-      rule_set_version          = var.settings.waf_configuration.rule_set_version
-      file_upload_limit_mb      = try(var.settings.waf_configuration.file_upload_limit_mb, 100)
-      request_body_check        = try(var.settings.waf_configuration.request_body_check, true)
-      max_request_body_size_kb  = try(var.settings.waf_configuration.max_request_body_size_kb, 128)
+      enabled                  = var.settings.waf_configuration.enabled
+      firewall_mode            = var.settings.waf_configuration.firewall_mode
+      rule_set_type            = var.settings.waf_configuration.rule_set_type
+      rule_set_version         = var.settings.waf_configuration.rule_set_version
+      file_upload_limit_mb     = try(var.settings.waf_configuration.file_upload_limit_mb, 100)
+      request_body_check       = try(var.settings.waf_configuration.request_body_check, true)
+      max_request_body_size_kb = try(var.settings.waf_configuration.max_request_body_size_kb, 128)
       dynamic "disabled_rule_group" {
         for_each = try(var.settings.waf_configuration.disabled_rule_groups, {})
         content {
-          rule_group_name       = disabled_rule_group.value.rule_group_name
-          rules                 = try(disabled_rule_group.value.rules,null)
+          rule_group_name = disabled_rule_group.value.rule_group_name
+          rules           = try(disabled_rule_group.value.rules, null)
         }
       }
       dynamic "exclusion" {
         for_each = try(var.settings.waf_configuration.exclusions, {})
         content {
           match_variable          = exclusion.value.match_variable
-          selector_match_operator = try(exclusion.value.selector_match_operator,null)
-          selector                = try(exclusion.value.selector,null)
+          selector_match_operator = try(exclusion.value.selector_match_operator, null)
+          selector                = try(exclusion.value.selector, null)
         }
       }
     }
@@ -292,7 +292,7 @@ resource "azurerm_application_gateway" "agw" {
     for_each = try(local.rewrite_rule_sets)
 
     content {
-      name  = rewrite_rule_set.value.name
+      name = rewrite_rule_set.value.name
       dynamic "rewrite_rule" {
         for_each = try(rewrite_rule_set.value.rewrite_rules, {})
         content {
@@ -310,23 +310,23 @@ resource "azurerm_application_gateway" "agw" {
           dynamic "request_header_configuration" {
             for_each = try(rewrite_rule.value.request_header_configurations, {})
             content {
-              header_name   = request_header_configuration.value.header_name
-              header_value  = request_header_configuration.value.header_value
+              header_name  = request_header_configuration.value.header_name
+              header_value = request_header_configuration.value.header_value
             }
           }
           dynamic "response_header_configuration" {
             for_each = try(rewrite_rule.value.response_header_configurations, {})
             content {
-              header_name   = response_header_configuration.value.header_name
-              header_value  = response_header_configuration.value.header_value
+              header_name  = response_header_configuration.value.header_name
+              header_value = response_header_configuration.value.header_value
             }
           }
           dynamic "url" {
             for_each = try(rewrite_rule.value.url, null) == null ? [] : [1]
             content {
-              path              = try(url.value.path,null)
-              query_string      = try(url.value.query_string,null)
-              reroute           = try(url.value.reroute,null)
+              path         = try(url.value.path, null)
+              query_string = try(url.value.query_string, null)
+              reroute      = try(url.value.reroute, null)
             }
           }
         }

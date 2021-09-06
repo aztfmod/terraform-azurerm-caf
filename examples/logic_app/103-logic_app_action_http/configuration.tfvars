@@ -28,9 +28,9 @@ logic_app_workflow = {
 
 logic_app_action_http = {
   action_http1 = {
-    name         = "webhook"
+    name          = "webhook"
     logic_app_key = "applogic1"
-    method       = "GET"
-    uri          = "http://example.com/some-webhook"
+    method        = "GET"
+    uri           = "http://example.com/some-webhook"
   }
 }

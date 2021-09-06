@@ -333,7 +333,13 @@ variable "event_hub_namespaces" {
 variable "application_gateways" {
   default = {}
 }
+variable "application_gateway_platforms" {
+  default = {}
+}
 variable "application_gateway_applications" {
+  default = {}
+}
+variable "application_gateway_applications_v1" {
   default = {}
 }
 variable "application_gateway_waf_policies" {

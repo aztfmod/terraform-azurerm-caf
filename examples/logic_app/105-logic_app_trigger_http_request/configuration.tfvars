@@ -28,9 +28,9 @@ logic_app_workflow = {
 
 logic_app_trigger_http_request = {
   trigger_http_request1 = {
-    name         = "webhook"
+    name          = "webhook"
     logic_app_key = "applogic1"
-    schema = <<SCHEMA
+    schema        = <<SCHEMA
 {
     "type": "object",
     "properties": {
