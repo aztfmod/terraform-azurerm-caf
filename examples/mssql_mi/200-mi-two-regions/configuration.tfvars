@@ -162,6 +162,7 @@ mssql_managed_instances_secondary = {
       vnet_key   = "sqlmi_region2"
       subnet_key = "sqlmi2"
     }
+    keyvault_key = "sqlmi_rg1"
 
     storageSizeInGB = 32
     vCores          = 8
@@ -281,30 +282,41 @@ mssql_mi_administrators = {
   }
 }
 
-# keyvaults = {
-#   tde_primary = {
-#     name               = "mi-tde-primary"
-#     resource_group_key = "sqlmi_region1"
-#     sku_name           = "standard"
+keyvaults = {
+  sqlmi_rg1 = {
+    name               = "sqlmirg1"
+    resource_group_key = "sqlmi_region1"
+    sku_name           = "standard"
 
-#     creation_policies = {
-#       logged_in_user = {
-#         key_permissions = ["get", "list", "update", "create", "import", "delete", "recover", "backup", "restore", "purge"]
-#       }
-#     }
-#   }
-#   tde_secondary = {
-#     name               = "mi-tde-secondary"
-#     resource_group_key = "sqlmi_region2"
-#     sku_name           = "standard"
+    creation_policies = {
+      logged_in_user = {
+        secret_permissions = ["Set", "Get", "List", "Delete", "Purge"]
+      }
+    }
+  }
+  # tde_primary = {
+  #   name               = "mi-tde-primary"
+  #   resource_group_key = "sqlmi_region1"
+  #   sku_name           = "standard"
 
-#     creation_policies = {
-#       logged_in_user = {
-#         key_permissions = ["get", "list", "update", "create", "import", "delete", "recover", "backup", "restore", "purge"]
-#       }
-#     }
-#   }
-# }
+  #   creation_policies = {
+  #     logged_in_user = {
+  #       key_permissions = ["get", "list", "update", "create", "import", "delete", "recover", "backup", "restore", "purge"]
+  #     }
+  #   }
+  # }
+  # tde_secondary = {
+  #   name               = "mi-tde-secondary"
+  #   resource_group_key = "sqlmi_region2"
+  #   sku_name           = "standard"
+
+  #   creation_policies = {
+  #     logged_in_user = {
+  #       key_permissions = ["get", "list", "update", "create", "import", "delete", "recover", "backup", "restore", "purge"]
+  #     }
+  #   }
+  # }
+}
 
 # keyvault_access_policies = {
 #   # A maximum of 16 access policies per keyvault

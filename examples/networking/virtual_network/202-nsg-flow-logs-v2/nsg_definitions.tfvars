@@ -455,9 +455,9 @@ network_security_group_definition = {
     flow_logs = {
       version = 2
       enabled = true
-      
+
       network_watcher_key = "network_watcher_1"
-      lz_key = "lz_key" #Put the Landing Zone Key here.
+      lz_key              = "lz_key" #Put the Landing Zone Key here.
 
       storage_account = {
         storage_account_destination = "all_regions"

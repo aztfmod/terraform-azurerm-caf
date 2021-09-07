@@ -26,7 +26,7 @@ aks_clusters = {
     os_type            = "Linux"
 
     identity = {
-      type = "UserAssigned"
+      type                 = "UserAssigned"
       managed_identity_key = "aks_usermsi"
     }
 

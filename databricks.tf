@@ -8,6 +8,8 @@ module "databricks_workspaces" {
   client_config       = local.client_config
   settings            = each.value
   vnets               = local.combined_objects_networking
+  aml                 = local.combined_objects_machine_learning
+  diagnostics         = local.combined_diagnostics
   base_tags           = try(local.global_settings.inherit_tags, false) ? local.resource_groups[each.value.resource_group_key].tags : {}
 }
 
