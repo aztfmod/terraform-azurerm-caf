@@ -8,5 +8,5 @@ module "nsg_flows" {
   diagnostics       = var.diagnostics
   settings          = var.settings.flow_logs
   network_watchers  = var.network_watchers
-  client_config      = var.client_config
+  client_config     = var.client_config
 }
