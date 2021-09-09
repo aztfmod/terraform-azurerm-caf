@@ -9,18 +9,16 @@ resource "azurerm_mssql_virtual_machine" "mssqlvm" {
   r_services_enabled               = try(each.value.mssql_settings.r_services_enabled, null)
   sql_connectivity_port            = try(each.value.mssql_settings.sql_connectivity_port, null)
   sql_connectivity_type            = try(each.value.mssql_settings.sql_connectivity_type, null)
-  # should the username and password for sql be the same as the one in vm?
-  sql_connectivity_update_username = try(each.value.admin_username_key, null) == null ? each.value.admin_username : local.admin_username
-  sql_connectivity_update_password = try(each.value.admin_password_key, null) == null ? random_password.admin[local.os_type].result : local.admin_password
+  sql_connectivity_update_username = try(data.external.sql_username[each.key].result.value, null)
+  sql_connectivity_update_password = try(data.external.sql_password[each.key].result.value, null)
   tags                             = merge(local.tags, try(each.value.tags, null))
 
   dynamic "auto_backup" {
-    for_each = try(each.value.mssql_settings.auto_backup, null) != null ? [1] : []
+    for_each =  try(each.value.mssql_settings.auto_backup, null) != null ? [1] : []
 
     content {
-      encryption_enabled              = try(each.value.mssql_settings.auto_backup.encryption_enabled, null)
-      # should the encryption password be different?
-      encryption_password             = try(each.value.mssql_settings.auto_backup.encryption_enabled, false) ? try(each.value.admin_password_key, null) == null ? random_password.admin[local.os_type].result : local.admin_password : null
+      encryption_enabled              = try(each.value.mssql_settings.auto_backup.encryption_enabled, false)
+      encryption_password             = try(each.value.mssql_settings.auto_backup.encryption_enabled, false) ? try(data.external.encryption_password[each.key].result.value, null) : null
       retention_period_in_days        = each.value.mssql_settings.auto_backup.retention_period_in_days
       system_databases_backup_enabled = try(each.value.mssql_settings.auto_backup.system_databases_backup_enabled, null)
       storage_account_access_key      = data.azurerm_storage_account.mssqlvm_backup_sa[each.key].primary_access_key
@@ -53,22 +51,17 @@ resource "azurerm_mssql_virtual_machine" "mssqlvm" {
     }
   }
 
-  # dynamic "key_vault_credentials" {
-  #   for_each = try(each.value.mssql_settings.key_vault_credentials, null) != null ? [1] : []
+  dynamic "key_vault_credential" {
+    for_each = try(each.value.mssql_settings.sql_authentication.keyvault_credential, null) != null ? [1] : []
 
-  #   content {
-  #     name = each.value.mssql_settings.key_vault_credentials.name
-  #     key_vault_url = 
-  #     service_principal_name = 
-  #     service_principal_secret = 
-  #   }
-  # }
+    content {
+      name = each.value.mssql_settings.sql_authentication.keyvault_credential.name
+      key_vault_url = try(var.keyvaults[try(each.value.mssql_settings.sql_authentication.keyvault_credential.lz_key,var.client_config.landingzone_key)][each.value.mssql_settings.sql_authentication.keyvault_credential.keyvault_key].vault_uri, null)
+      service_principal_name = try(data.external.sp_client_id[each.key].result.value, null)
+      service_principal_secret = try(data.external.sp_client_secret[each.key].result.value, null)
+    }
+  }
   
-  # should the sp secret be stored in the vm kv or a separate one?
-  # if not shared with vm kv, should the kv_url be the same kv as where the sp credential is stored?
-
-
-
   dynamic "storage_configuration" {
     for_each = try(each.value.mssql_settings.storage_configuration, null) != null ? [1] : []
 
@@ -124,3 +117,88 @@ data "azurerm_storage_account" "mssqlvm_backup_sa" {
       try(var.storage_accounts[var.client_config.landingzone_key][each.value.mssql_settings.auto_backup.storage_account.key].resource_group_name, null),
     )
 }
+
+
+# Use data external to retrieve value from different subscription
+
+data "external" "sql_username" {
+  for_each = {
+    for key, value in try(var.settings.virtual_machine_settings, {}) : key => value
+    if try(value.mssql_settings.sql_authentication.sql_credential, null) != null
+  }
+
+  program = [
+    "bash", "-c",
+    format(
+      "az keyvault secret show --name '%s' --vault-name '%s' --query '{value: value }' -o json",
+      each.value.mssql_settings.sql_authentication.sql_credential.sql_username_key,
+      try(var.keyvaults[try(each.value.mssql_settings.sql_authentication.sql_credential.lz_key, var.client_config.landingzone_key)][each.value.mssql_settings.sql_authentication.sql_credential.keyvault_key].name, null)
+    )
+  ]
+}
+ 
+data "external" "sql_password" {
+  for_each = {
+    for key, value in try(var.settings.virtual_machine_settings, {}) : key => value
+    if try(value.mssql_settings.sql_authentication.sql_credential, null) != null
+  }
+
+  program = [
+    "bash", "-c",
+    format(
+      "az keyvault secret show --name '%s' --vault-name '%s' --query '{value: value }' -o json",
+      each.value.mssql_settings.sql_authentication.sql_credential.sql_password_key,
+      try(var.keyvaults[try(each.value.mssql_settings.sql_authentication.sql_credential.lz_key, var.client_config.landingzone_key)][each.value.mssql_settings.sql_authentication.sql_credential.keyvault_key].name, null)
+    )
+  ]
+}
+
+data "external" "encryption_password" {
+  for_each = {
+    for key, value in try(var.settings.virtual_machine_settings, {}) : key => value
+    if try(value.mssql_settings.auto_backup.encryption_password, null) != null
+  }
+
+  program = [
+    "bash", "-c",
+    format(
+      "az keyvault secret show --name '%s' --vault-name '%s' --query '{value: value }' -o json",
+      each.value.mssql_settings.auto_backup.encryption_password.encryption_password_key,
+      try(var.keyvaults[try(each.value.mssql_settings.auto_backup.encryption_password.lz_key, var.client_config.landingzone_key)][each.value.mssql_settings.auto_backup.encryption_password.keyvault_key].name, null)
+    )
+  ]
+}
+
+
+data "external" "sp_client_id" {
+  for_each = {
+    for key, value in try(var.settings.virtual_machine_settings, {}) : key => value
+    if try(value.mssql_settings.sql_authentication.keyvault_credential.service_principal_secrets, null) != null
+  }
+
+  program = [
+    "bash", "-c",
+    format(
+      "az keyvault secret show --name '%s' --vault-name '%s' --query '{value: value }' -o json",
+      each.value.mssql_settings.sql_authentication.keyvault_credential.service_principal_secrets.sp_client_id_key,
+      try(var.keyvaults[try(each.value.mssql_settings.sql_authentication.keyvault_credential.service_principal_secrets.lz_key, var.client_config.landingzone_key)][each.value.mssql_settings.sql_authentication.keyvault_credential.service_principal_secrets.keyvault_key].name, null)
+    )
+  ]
+}
+
+data "external" "sp_client_secret" {
+  for_each = {
+    for key, value in try(var.settings.virtual_machine_settings, {}) : key => value
+    if try(value.mssql_settings.sql_authentication.keyvault_credential.service_principal_secrets, null) != null
+  }
+
+  program = [
+    "bash", "-c",
+    format(
+      "az keyvault secret show --name '%s' --vault-name '%s' --query '{value: value }' -o json",
+      each.value.mssql_settings.sql_authentication.keyvault_credential.service_principal_secrets.sp_client_secret_key,
+      try(var.keyvaults[try(each.value.mssql_settings.sql_authentication.keyvault_credential.service_principal_secrets.lz_key, var.client_config.landingzone_key)][each.value.mssql_settings.sql_authentication.keyvault_credential.service_principal_secrets.keyvault_key].name, null)
+    )
+  ]
+}
+
