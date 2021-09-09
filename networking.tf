@@ -41,7 +41,7 @@ module "networking" {
   base_tags           = try(local.global_settings.inherit_tags, false) ? local.combined_objects_resource_groups[try(each.value.resource_group.lz_key, local.client_config.landingzone_key)][try(each.value.resource_group.key, each.value.resource_group_key)].tags : {}
 
   remote_dns = {
-    azurerm_firewalls = try(var.remote_objects.azurerm_firewalls, null) #assumed from remote lz only
+    azurerm_firewall = try(var.remote_objects.azurerm_firewalls, null) #assumed from remote lz only
   }
 }
 
