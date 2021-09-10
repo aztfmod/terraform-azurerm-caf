@@ -56,7 +56,10 @@ resource "azurerm_mssql_virtual_machine" "mssqlvm" {
 
     content {
       name = each.value.mssql_settings.sql_authentication.keyvault_credential.name
-      key_vault_url = try(var.keyvaults[try(each.value.mssql_settings.sql_authentication.keyvault_credential.lz_key,var.client_config.landingzone_key)][each.value.mssql_settings.sql_authentication.keyvault_credential.keyvault_key].vault_uri, null)
+      key_vault_url = coalesce(
+        try(var.keyvaults[each.value.mssql_settings.sql_authentication.keyvault_credential.lz_key][each.value.mssql_settings.sql_authentication.keyvault_credential.keyvault_key].vault_uri , null),
+        try(var.keyvaults[var.client_config.landingzone_key][each.value.mssql_settings.sql_authentication.keyvault_credential.keyvault_key].vault_uri , null),
+      )
       service_principal_name = try(data.external.sp_client_id[each.key].result.value, null)
       service_principal_secret = try(data.external.sp_client_secret[each.key].result.value, null)
     }
