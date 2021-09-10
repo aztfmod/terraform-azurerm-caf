@@ -7,7 +7,7 @@ module "diagnostic_storage_account" {
   settings            = each.value
   resource_id         = coalesce(
     try(var.remote_objects.diagnostic_storage_accounts[each.key].id, null),
-    try(each.value.resource_id)
+    try(each.value.resource_id, null)
   )
   subresource_names   = toset(try(each.value.private_service_connection.subresource_names, ["blob"]))
   subnet_id           = var.subnet_id

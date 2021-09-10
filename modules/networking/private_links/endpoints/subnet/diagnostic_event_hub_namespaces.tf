@@ -7,7 +7,7 @@ module "diagnostic_event_hub_namespaces" {
   settings            = each.value
   resource_id         = coalesce(
     try(var.remote_objects.diagnostic_event_hub_namespaces[each.key].id, null),
-    try(each.value.resource_id)
+    try(each.value.resource_id, null)
   )
   subresource_names   = ["namespace"]
   subnet_id           = var.subnet_id
