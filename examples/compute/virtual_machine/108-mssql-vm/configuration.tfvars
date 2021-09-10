@@ -267,7 +267,6 @@ virtual_machines = {
             }
           }
 
-          # key_vault_credentials = {} # not supported yet
         }
 
       }
