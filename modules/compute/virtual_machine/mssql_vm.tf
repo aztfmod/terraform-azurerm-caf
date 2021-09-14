@@ -14,7 +14,7 @@ resource "azurerm_mssql_virtual_machine" "mssqlvm" {
   tags                             = merge(local.tags, try(each.value.tags, null))
 
   dynamic "auto_backup" {
-    for_each =  try(each.value.mssql_settings.auto_backup, null) != null ? [1] : []
+    for_each = try(each.value.mssql_settings.auto_backup, null) != null ? [1] : []
 
     content {
       encryption_enabled              = try(each.value.mssql_settings.auto_backup.encryption_enabled, false)
@@ -22,7 +22,7 @@ resource "azurerm_mssql_virtual_machine" "mssqlvm" {
       retention_period_in_days        = each.value.mssql_settings.auto_backup.retention_period_in_days
       system_databases_backup_enabled = try(each.value.mssql_settings.auto_backup.system_databases_backup_enabled, null)
       storage_account_access_key      = data.azurerm_storage_account.mssqlvm_backup_sa[each.key].primary_access_key
-      storage_blob_endpoint           = coalesce(
+      storage_blob_endpoint = coalesce(
         try(var.storage_accounts[each.value.mssql_settings.auto_backup.storage_account.lz_key][each.value.mssql_settings.auto_backup.storage_account.key].primary_blob_endpoint, null),
         try(var.storage_accounts[var.client_config.landingzone_key][each.value.mssql_settings.auto_backup.storage_account.key].primary_blob_endpoint, null),
       )
@@ -57,14 +57,14 @@ resource "azurerm_mssql_virtual_machine" "mssqlvm" {
     content {
       name = each.value.mssql_settings.sql_authentication.keyvault_credential.name
       key_vault_url = coalesce(
-        try(var.keyvaults[each.value.mssql_settings.sql_authentication.keyvault_credential.lz_key][each.value.mssql_settings.sql_authentication.keyvault_credential.keyvault_key].vault_uri , null),
-        try(var.keyvaults[var.client_config.landingzone_key][each.value.mssql_settings.sql_authentication.keyvault_credential.keyvault_key].vault_uri , null),
+        try(var.keyvaults[each.value.mssql_settings.sql_authentication.keyvault_credential.lz_key][each.value.mssql_settings.sql_authentication.keyvault_credential.keyvault_key].vault_uri, null),
+        try(var.keyvaults[var.client_config.landingzone_key][each.value.mssql_settings.sql_authentication.keyvault_credential.keyvault_key].vault_uri, null),
       )
-      service_principal_name = try(data.external.sp_client_id[each.key].result.value, null)
+      service_principal_name   = try(data.external.sp_client_id[each.key].result.value, null)
       service_principal_secret = try(data.external.sp_client_secret[each.key].result.value, null)
     }
   }
-  
+
   dynamic "storage_configuration" {
     for_each = try(each.value.mssql_settings.storage_configuration, null) != null ? [1] : []
 
@@ -111,14 +111,14 @@ data "azurerm_storage_account" "mssqlvm_backup_sa" {
     if try(value.mssql_settings.auto_backup, null) != null
   }
 
-  name                =  coalesce(
-      try(var.storage_accounts[each.value.mssql_settings.auto_backup.storage_account.lz_key][each.value.mssql_settings.auto_backup.storage_account.key].name, null),
-      try(var.storage_accounts[var.client_config.landingzone_key][each.value.mssql_settings.auto_backup.storage_account.key].name, null),
-    )
-  resource_group_name =  coalesce(
-      try(var.storage_accounts[each.value.mssql_settings.auto_backup.storage_account.lz_key][each.value.mssql_settings.auto_backup.storage_account.key].resource_group_name, null),
-      try(var.storage_accounts[var.client_config.landingzone_key][each.value.mssql_settings.auto_backup.storage_account.key].resource_group_name, null),
-    )
+  name = coalesce(
+    try(var.storage_accounts[each.value.mssql_settings.auto_backup.storage_account.lz_key][each.value.mssql_settings.auto_backup.storage_account.key].name, null),
+    try(var.storage_accounts[var.client_config.landingzone_key][each.value.mssql_settings.auto_backup.storage_account.key].name, null),
+  )
+  resource_group_name = coalesce(
+    try(var.storage_accounts[each.value.mssql_settings.auto_backup.storage_account.lz_key][each.value.mssql_settings.auto_backup.storage_account.key].resource_group_name, null),
+    try(var.storage_accounts[var.client_config.landingzone_key][each.value.mssql_settings.auto_backup.storage_account.key].resource_group_name, null),
+  )
 }
 
 
@@ -139,7 +139,7 @@ data "external" "sql_username" {
     )
   ]
 }
- 
+
 data "external" "sql_password" {
   for_each = {
     for key, value in try(var.settings.virtual_machine_settings, {}) : key => value

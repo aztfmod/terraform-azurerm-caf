@@ -10,8 +10,8 @@ resource "azurerm_subscription" "sub" {
 
   alias             = var.subscription_key
   subscription_name = var.settings.name
-  subscription_id   =  try(var.settings.subscription_id, null) != null ? var.settings.subscription_id : null
-  billing_scope_id  =  try(var.settings.subscription_id, null) == null ? data.azurerm_billing_enrollment_account_scope.sub.0.id : null
+  subscription_id   = try(var.settings.subscription_id, null) != null ? var.settings.subscription_id : null
+  billing_scope_id  = try(var.settings.subscription_id, null) == null ? data.azurerm_billing_enrollment_account_scope.sub.0.id : null
   workload          = try(var.settings.workload, null)
 }
 

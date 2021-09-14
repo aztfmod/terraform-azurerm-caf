@@ -84,25 +84,25 @@ dynamic_keyvault_secrets = {
     }
     sql-username = {
       secret_name = "sql-username"
-      value = "sqllogin"
+      value       = "sqllogin"
     }
     sql-password = {
       secret_name = "sql-password"
-      value = "Very@Str5ngP!44w0rdToChaNge#"
+      value       = "Very@Str5ngP!44w0rdToChaNge#"
     }
     encryption-password = {
       secret_name = "encryption-password"
-      value = "Very@Str5ngP!44w0rdToChaNge#"
+      value       = "Very@Str5ngP!44w0rdToChaNge#"
     }
   }
   sp_secrets = {
     sp-client-id = {
       secret_name = "sp-client-id"
-      value = ""
+      value       = ""
     }
     sp-client-secret = {
       secret_name = "sp-client-secret"
-      value = ""
+      value       = ""
     }
   }
 }
@@ -185,27 +185,27 @@ virtual_machines = {
         network_interface_keys = ["nic0"]
 
         os_disk = {
-          name                    = "osdisk"
-          caching                 = "ReadWrite"
-          storage_account_type    = "Standard_LRS"
-          managed_disk_type       = "StandardSSD_LRS"
-          disk_size_gb            = "128"
-          create_option           = "FromImage"
+          name                 = "osdisk"
+          caching              = "ReadWrite"
+          storage_account_type = "Standard_LRS"
+          managed_disk_type    = "StandardSSD_LRS"
+          disk_size_gb         = "128"
+          create_option        = "FromImage"
         }
         source_image_reference = {
           publisher = "MicrosoftSQLServer"
           offer     = "SQL2017-WS2016"
           # offer     = "sql2019-ws2019"
-          sku       = "SQLDEV"
-          version   = "latest"
+          sku     = "SQLDEV"
+          version = "latest"
         }
 
         mssql_settings = { # requires SQL Image in source_image_reference
-          sql_license_type                 = "PAYG"
-          r_services_enabled               = true
-          sql_connectivity_port            = 1433
-          sql_connectivity_type            = "PRIVATE"
-          
+          sql_license_type      = "PAYG"
+          r_services_enabled    = true
+          sql_connectivity_port = 1433
+          sql_connectivity_type = "PRIVATE"
+
           # sql credentials is the same as the one for vm
           sql_authentication = {
             sql_credential = {
@@ -218,15 +218,15 @@ virtual_machines = {
             keyvault_credential = {
               name = "sqlkv_credentials"
               # lz_key       = ""
-              keyvault_key = "sql_cred_kv" # get url from here
+              keyvault_key = "sql_cred_kv"  # get url from here
               service_principal_secrets = { # sp secret to access the kv above
                 # lz_key = ""
-                keyvault_key = "sp_secrets" # get url from here
-                sp_client_id_key = "sp-client-id"
+                keyvault_key         = "sp_secrets" # get url from here
+                sp_client_id_key     = "sp-client-id"
                 sp_client_secret_key = "sp-client-secret"
               }
             }
-            
+
           }
 
           auto_patching = {
@@ -237,9 +237,9 @@ virtual_machines = {
           auto_backup = {
             encryption_enabled = false # uses the vmadmin password
             # ERROR: unable to locate password as the secret has not been created yet
-            encryption_password = { 
+            encryption_password = {
               # lz_key = ""
-              keyvault_key = "kv1"
+              keyvault_key            = "kv1"
               encryption_password_key = "encryption-password"
             }
             retention_period_in_days = 7
@@ -248,22 +248,22 @@ virtual_machines = {
               key = "sa1"
             }
             manual_schedule = {
-              full_backup_frequency = "Weekly" # Daily / Weekly
-              full_backup_start_hour = 0 # 0 - 23
-              full_backup_window_in_hours = 1 # 1 - 23
-              log_backup_frequency_in_minutes = 60 # 5 - 60f
+              full_backup_frequency           = "Weekly" # Daily / Weekly
+              full_backup_start_hour          = 0        # 0 - 23
+              full_backup_window_in_hours     = 1        # 1 - 23
+              log_backup_frequency_in_minutes = 60       # 5 - 60f
             }
 
           }
 
-          
+
           storage_configuration = {
-            disk_type = "NEW" # NEW, EXTEND, ADD
+            disk_type             = "NEW"     # NEW, EXTEND, ADD
             storage_workload_type = "GENERAL" # GENERAL, OLTP, DW
 
             data_settings = {
               default_file_path = "F:\\data"
-              luns = [1]
+              luns              = [1]
             }
           }
 
@@ -275,10 +275,10 @@ virtual_machines = {
       data1 = {
         name                 = "datadisk1"
         storage_account_type = "Premium_LRS"
-        create_option           = "Empty"
-        disk_size_gb            = "10"
-        lun                     = 1
-        zones                   = ["1"]
+        create_option        = "Empty"
+        disk_size_gb         = "10"
+        lun                  = 1
+        zones                = ["1"]
       }
     }
 
