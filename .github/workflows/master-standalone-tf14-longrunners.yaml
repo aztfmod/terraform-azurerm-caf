@@ -31,7 +31,7 @@ jobs:
           cases=$((
             cat ./.github/workflows/standalone-scenarios.json) | jq -c .)
           echo "::set-output name=matrix::${cases}"
-          
+
   examples:
     name: examples
     runs-on: ubuntu-latest

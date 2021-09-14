@@ -13,7 +13,7 @@ resource "azurecaf_name" "pnetlk" {
 resource "azurerm_private_dns_zone_virtual_network_link" "vnet_links" {
   for_each = var.settings.private_dns_zones
 
-  name = azurecaf_name.pnetlk[each.key].result
+  name                = azurecaf_name.pnetlk[each.key].result
   resource_group_name = var.resource_group_name
   private_dns_zone_name = coalesce(
     try(var.private_dns[each.value.lz_key][each.value.key].name, null),

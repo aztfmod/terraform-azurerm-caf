@@ -17,8 +17,8 @@
     "networking/virtual_wan/103-vwan-hub-gw",
     "networking/virtual_wan/104-vwan-hub-gw-spp",
     "networking/virtual_wan/105-vwan-hub-route-table",
-    "networking/virtual_wan/106-vwan-hub-routes", 
-    
+    "networking/virtual_wan/106-vwan-hub-routes",
+
     "mssql_mi/200-mi-two-regions",
 
     "compute/vmware_cluster/102-vmware_express_route_authorization"

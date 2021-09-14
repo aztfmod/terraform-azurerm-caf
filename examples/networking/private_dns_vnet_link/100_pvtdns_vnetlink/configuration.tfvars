@@ -20,7 +20,7 @@ private_dns_vnet_links = {
     private_dns_zones = {
       dns_zone1 = {
         name = "dns1-lnk"
-        key    = "dns1"
+        key  = "dns1"
         #lz_key = "provide the landing zone key of private dns zone"
       }
       # dns_zone2 = {
