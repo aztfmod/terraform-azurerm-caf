@@ -44,7 +44,7 @@
     "consumption_budget/102-consumption-budget-rg-alerts",
     "consumption_budget/103-consumption-budget-subscription-alerts",
     "consumption_budget/104-consumption-budget-subscription-vm",
-    "consumption_budget/105-consumption-budget-subscription-aks"
+    "consumption_budget/105-consumption-budget-subscription-aks",
     "cosmos_db/100-simple-cosmos-db-cassandra",
     "cosmos_db/100-simple-cosmos-db-gremlin",
     "cosmos_db/100-simple-cosmos-db-mongo",
