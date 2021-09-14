@@ -21,3 +21,7 @@ variable "base_tags" {
 variable "tags" {
   default = {}
 }
+
+variable "resource_group_name" {
+  description = "Name of the existing resource group to deploy the resource."
+}
