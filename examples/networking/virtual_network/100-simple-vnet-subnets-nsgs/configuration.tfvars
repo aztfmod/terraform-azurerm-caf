@@ -22,16 +22,16 @@ vnets = {
       #dns_servers   = ["10.2.0.5", "10.2.0.6"]
       # dns_servers_keys = {
       #   ip1 = {
-      #     lz_key          = "",
-      #     key             = "",
-      # .   resource_type   = "azurerm_firewall",
+      #     lz_key          = ""
+      #     key             = ""
+      # .   resource_type   = "azurerm_firewall"
       #     interface_index = 0 #Optional it will take 0.
       #
       #   }
       #   ip2 = {
-      #     lz_key          = "",
-      #     key             = "",
-      #     resource_type   = "azurerm_firewall",
+      #     lz_key          = ""
+      #     key             = ""
+      #     resource_type   = "azurerm_firewall"
       #   }
       # }
     }
