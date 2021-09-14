@@ -16,6 +16,8 @@ resource "azurerm_container_registry" "acr" {
   admin_enabled       = var.admin_enabled
   tags                = local.tags
 
+  public_network_access_enabled = var.public_network_access_enabled
+
   dynamic "network_rule_set" {
     for_each = try(var.network_rule_set, {})
 
