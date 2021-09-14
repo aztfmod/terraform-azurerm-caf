@@ -14,7 +14,12 @@ module "mysql_servers" {
   client_config       = local.client_config
   resource_group_name = local.resource_groups[each.value.resource_group_key].name
   location            = lookup(each.value, "region", null) == null ? local.resource_groups[each.value.resource_group_key].location : local.global_settings.regions[each.value.region]
-  keyvault_id         = try(each.value.administrator_login_password, null) == null ? module.keyvaults[each.value.keyvault_key].id : null
+  keyvault_id         = coalesce(
+    try(each.value.administrator_login_password, null),
+    try(module.keyvaults[each.value.keyvault_key].id, null),
+    try(local.combined_objects_keyvaults[each.value.keyvault.lz_key][each.value.keyvault.key].id, null),
+    try(local.combined_objects_keyvaults[local.client_config.landingzone_key][each.value.keyvault.key].id, null)
+  )
   storage_accounts    = module.storage_accounts
   azuread_groups      = module.azuread_groups
   vnets               = local.combined_objects_networking
