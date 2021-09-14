@@ -10,6 +10,7 @@ module "azuread_groups" {
   global_settings = local.global_settings
   azuread_groups  = each.value
   tenant_id       = local.client_config.tenant_id
+  client_config   = local.client_config
 }
 
 output "azuread_groups" {
