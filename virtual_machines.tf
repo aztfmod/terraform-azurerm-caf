@@ -34,6 +34,7 @@ module "virtual_machines" {
   settings                   = each.value
   vnets                      = local.combined_objects_networking
   dedicated_hosts            = local.combined_objects_dedicated_hosts
+  storage_accounts           = local.combined_objects_storage_accounts
 
   resource_group_name = local.combined_objects_resource_groups[try(each.value.resource_group.lz_key, local.client_config.landingzone_key)][try(each.value.resource_group.key, each.value.resource_group_key)].name
   location            = lookup(each.value, "region", null) == null ? local.combined_objects_resource_groups[try(each.value.resource_group.lz_key, local.client_config.landingzone_key)][try(each.value.resource_group.key, each.value.resource_group_key)].location : local.global_settings.regions[each.value.region]

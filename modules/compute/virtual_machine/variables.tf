@@ -85,3 +85,6 @@ variable "dedicated_hosts" {
   default = {}
 }
 
+variable "storage_accounts" {
+  default = {}
+}
