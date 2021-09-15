@@ -88,7 +88,3 @@ variable "network_security_groups" {
 variable "dedicated_hosts" {
   default = {}
 }
-
-variable "storage_accounts" {
-  default = {}
-}
