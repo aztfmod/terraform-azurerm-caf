@@ -145,7 +145,7 @@ resource "azurerm_application_gateway" "agw" {
 
     content {
       name                                      = probe.value.name
-      host                                      = probe.value.host
+      host                                      = try(probe.value.host, null)
       interval                                  = probe.value.interval
       protocol                                  = probe.value.protocol
       path                                      = probe.value.path

@@ -1,5 +1,7 @@
 {
   "config_files": [
+    "logic_app/101-integration_service_environment",
+    "logic_app/108-logic_app_complex",
     "mssql_mi/200-mi",
     "networking/virtual_wan/109-vwan-vpn-gateway-connection",
     "networking/virtual_wan/101-vwan-hub-firewall-legacy",

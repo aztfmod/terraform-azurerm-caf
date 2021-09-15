@@ -12,7 +12,7 @@ resource_groups = {
 
 log_analytics = {
   law1 = {
-    name = "appinsightexamplelaw"
+    name               = "appinsightexamplelaw"
     resource_group_key = "rg1"
   }
 }

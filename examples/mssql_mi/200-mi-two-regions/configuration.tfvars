@@ -162,7 +162,7 @@ mssql_managed_instances_secondary = {
       vnet_key   = "sqlmi_region2"
       subnet_key = "sqlmi2"
     }
-    keyvault_key        = "sqlmi_rg1"
+    keyvault_key = "sqlmi_rg1"
 
     storageSizeInGB = 32
     vCores          = 8

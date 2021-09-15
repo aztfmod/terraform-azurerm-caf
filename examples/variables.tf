@@ -333,7 +333,13 @@ variable "event_hub_namespaces" {
 variable "application_gateways" {
   default = {}
 }
+variable "application_gateway_platforms" {
+  default = {}
+}
 variable "application_gateway_applications" {
+  default = {}
+}
+variable "application_gateway_applications_v1" {
   default = {}
 }
 variable "application_gateway_waf_policies" {
@@ -349,6 +355,12 @@ variable "cosmos_db" {
   default = {}
 }
 variable "log_analytics" {
+  default = {}
+}
+variable "logic_app_workflow" {
+  default = {}
+}
+variable "logic_app_integration_account" {
   default = {}
 }
 variable "recovery_vaults" {
@@ -565,5 +577,24 @@ variable "nat_gateways" {
   default = {}
 }
 variable "cognitive_services_account" {
+  default = {}
+}
+
+variable "integration_service_environment" {
+  default = {}
+}
+variable "logic_app_action_http" {
+  default = {}
+}
+variable "logic_app_action_custom" {
+  default = {}
+}
+variable "logic_app_trigger_http_request" {
+  default = {}
+}
+variable "logic_app_trigger_recurrence" {
+  default = {}
+}
+variable "logic_app_trigger_custom" {
   default = {}
 }
