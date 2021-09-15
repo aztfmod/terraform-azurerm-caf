@@ -3,6 +3,7 @@ private_endpoints = {
     # lz_key = ""  # Landingzone key when deployed in remote landing zone
     vnet_key    = "vnet_01"
     subnet_keys = ["subnet_01"]
+    # resource_group_key = "" # Key of resource group of the vnet
 
     storage_accounts = {
       level0 = {
@@ -23,6 +24,18 @@ private_endpoints = {
           keys = ["dns1"]
         }
       }
+      # level1custom = {
+      #   resource_id = "" # Using the created resource id if resource are created outside of CAF
+      #
+      #   private_service_connection = {
+      #     name        = ""
+      #   }
+      #   private_dns = {
+      #     zone_group_name = "default"
+      #     # lz_key          = ""   # If the DNS keys are deployed in a remote landingzone
+      #     keys = ["dns1"]
+      #   }
+      # }
     }
 
     # Diagnostics objects are global and inherit from base core landing zones

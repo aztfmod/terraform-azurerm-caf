@@ -37,6 +37,9 @@ virtual_machines = {
     keyvault_key = "example_vm_rg1"
 
     # Define the number of networking cards to attach the virtual machine
+    # Option to use when BYOI (Bring your Own Interface) 
+    # networking_interface_ids = ["/subscriptions/<subid>/resourceGroups/<rg-name>/providers/Microsoft.Network/networkInterfaces/<nicID>"] 
+
     networking_interfaces = {
       nic0 = {
         # Value of the keys from networking.tfvars

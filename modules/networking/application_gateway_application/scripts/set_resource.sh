@@ -3,9 +3,9 @@
 echo "rg: ${RG_NAME} gateway: ${APPLICATION_GATEWAY_NAME} name: ${NAME} resource: ${RESOURCE}"
 
 case "${RESOURCE}" in
-    BACKENDPOOL)       
+    BACKENDPOOL)
         servers=$([ -z "${ADDRESS_POOL}" ] && echo "" || echo "--servers ${ADDRESS_POOL} ")
-        
+
         execute_with_backoff az network application-gateway address-pool create -g ${RG_NAME} \
             --gateway-name ${APPLICATION_GATEWAY_NAME} -n ${NAME} ${servers}
         ;;
@@ -73,7 +73,7 @@ case "${RESOURCE}" in
         wafpolicy=$([ -z "${WAF_POLICY}" ] && echo "" || echo "--waf-policy ${WAF_POLICY} ")
 
         execute_with_backoff az network application-gateway url-path-map create -g ${RG_NAME} --gateway-name ${APPLICATION_GATEWAY_NAME} \
-            -n ${NAME} --paths ${PATHS} ${addresspool}${httpsettings}${redirectconfig}${rewriteruleset}${rulename}${wafpolicy} 
+            -n ${NAME} --paths ${PATHS} ${addresspool}${httpsettings}${redirectconfig}${rewriteruleset}${rulename}${wafpolicy}
         ;;
     PATHRULE)
         addresspool=$([ -z "${ADDRESS_POOL}" ] && echo "" || echo "--address-pool ${ADDRESS_POOL} ")
@@ -84,7 +84,7 @@ case "${RESOURCE}" in
 
         execute_with_backoff az network application-gateway url-path-map rule create -g ${RG_NAME} \
             --gateway-name ${APPLICATION_GATEWAY_NAME} -n ${NAME} --path-map-name ${PATHMAPNAME} \
-            --paths ${PATHS} ${addresspool}${httpsettings}${redirectconfig}${rewriteruleset}${wafpolicy} 
+            --paths ${PATHS} ${addresspool}${httpsettings}${redirectconfig}${rewriteruleset}${wafpolicy}
         ;;
 esac
 
