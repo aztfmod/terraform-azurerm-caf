@@ -115,12 +115,6 @@ storage_accounts = {
       }
     }
 
-    # commented for CI as Azure backup put a lock on the storage account that prevent it to be deleted.
-    # backup = {
-    #   vault_key = "asr1"
-    #   # lz_key = ""
-    # }
-
     tags = {
       environment = "dev"
       team        = "IT"
@@ -128,29 +122,3 @@ storage_accounts = {
   }
 }
 
-recovery_vaults = {
-  asr1 = {
-    name               = "asr-container-protection"
-    resource_group_key = "test"
-
-    region = "region1"
-    backup_policies = {
-
-      fs = {
-        policy1 = {
-          name      = "FSBackupPolicy1"
-          vault_key = "asr1"
-          rg_key    = "primary"
-          timezone  = "UTC"
-          backup = {
-            frequency = "Daily"
-            time      = "23:00"
-          }
-          retention_daily = {
-            count = 10
-          }
-        }
-      }
-    }
-  }
-}
