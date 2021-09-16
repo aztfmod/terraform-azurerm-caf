@@ -115,10 +115,11 @@ storage_accounts = {
       }
     }
 
-    backup = {
-      vault_key = "asr1"
-      # lz_key = ""
-    }
+    # commented for CI as Azure backup put a lock on the storage account that prevent it to be deleted.
+    # backup = {
+    #   vault_key = "asr1"
+    #   # lz_key = ""
+    # }
 
     tags = {
       environment = "dev"
