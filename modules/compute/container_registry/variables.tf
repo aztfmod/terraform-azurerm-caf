@@ -72,3 +72,7 @@ variable "base_tags" {
 variable "private_dns" {
   default = {}
 }
+
+variable "public_network_access_enabled" {
+  default = "true"
+}
