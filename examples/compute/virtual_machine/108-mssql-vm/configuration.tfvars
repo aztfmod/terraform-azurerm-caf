@@ -215,17 +215,18 @@ virtual_machines = {
               sql_password_key = "sql-password"
             }
 
-            keyvault_credential = {
-              name = "sqlkv_credentials"
-              # lz_key       = ""
-              keyvault_key = "sql_cred_kv"  # get url from here
-              service_principal_secrets = { # sp secret to access the kv above
-                # lz_key = ""
-                keyvault_key         = "sp_secrets" # get url from here
-                sp_client_id_key     = "sp-client-id"
-                sp_client_secret_key = "sp-client-secret"
-              }
-            }
+            # To be implemented in 5.5. Do not uncomment
+            # keyvault_credential = {
+            #   name = "sqlkv_credentials"
+            #   # lz_key       = ""
+            #   keyvault_key = "sql_cred_kv"  # get url from here
+            #   service_principal_secrets = { # sp secret to access the kv above
+            #     # lz_key = ""
+            #     keyvault_key         = "sp_secrets" # get url from here
+            #     sp_client_id_key     = "sp-client-id"
+            #     sp_client_secret_key = "sp-client-secret"
+            #   }
+            # }
 
           }
 
