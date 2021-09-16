@@ -2,10 +2,10 @@ module "diagnostic_storage_account" {
   source   = "../private_endpoint"
   for_each = try(var.private_endpoints.diagnostic_storage_accounts, {})
 
-  global_settings     = var.global_settings
-  client_config       = var.client_config
-  settings            = each.value
-  resource_id         = coalesce(
+  global_settings = var.global_settings
+  client_config   = var.client_config
+  settings        = each.value
+  resource_id = coalesce(
     try(var.remote_objects.diagnostic_storage_accounts[each.key].id, null),
     try(each.value.resource_id, null)
   )

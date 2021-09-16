@@ -26,9 +26,9 @@ azuread_groups = {
     description = "Provide read and write access"
     members = {
       user_principal_names = []
-      group_names = []
-      object_ids  = []
-      group_keys  = []
+      group_names          = []
+      object_ids           = []
+      group_keys           = []
 
       service_principal_keys = []
 
