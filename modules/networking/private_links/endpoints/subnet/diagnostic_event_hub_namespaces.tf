@@ -2,10 +2,13 @@ module "diagnostic_event_hub_namespaces" {
   source   = "../private_endpoint"
   for_each = try(var.private_endpoints.diagnostic_event_hub_namespaces, {})
 
-  global_settings     = var.global_settings
-  client_config       = var.client_config
-  settings            = each.value
-  resource_id         = var.remote_objects.diagnostic_event_hub_namespaces[each.key].id
+  global_settings = var.global_settings
+  client_config   = var.client_config
+  settings        = each.value
+  resource_id = coalesce(
+    try(var.remote_objects.diagnostic_event_hub_namespaces[each.key].id, null),
+    try(each.value.resource_id, null)
+  )
   subresource_names   = ["namespace"]
   subnet_id           = var.subnet_id
   private_dns         = var.private_dns

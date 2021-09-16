@@ -333,7 +333,13 @@ variable "event_hub_namespaces" {
 variable "application_gateways" {
   default = {}
 }
+variable "application_gateway_platforms" {
+  default = {}
+}
 variable "application_gateway_applications" {
+  default = {}
+}
+variable "application_gateway_applications_v1" {
   default = {}
 }
 variable "application_gateway_waf_policies" {
@@ -349,6 +355,12 @@ variable "cosmos_db" {
   default = {}
 }
 variable "log_analytics" {
+  default = {}
+}
+variable "logic_app_workflow" {
+  default = {}
+}
+variable "logic_app_integration_account" {
   default = {}
 }
 variable "recovery_vaults" {
@@ -552,6 +564,15 @@ variable "storage_account_queues" {
 variable "storage_account_blobs" {
   default = {}
 }
+variable "vmware_private_clouds" {
+  default = {}
+}
+variable "vmware_clusters" {
+  default = {}
+}
+variable "vmware_express_route_authorizations" {
+  default = {}
+}
 variable "nat_gateways" {
   default = {}
 }
@@ -607,5 +628,26 @@ variable "data_factory_linked_service_postgresql" {
   default = {}
 }
 variable "data_factory_linked_service_sql_server" {
+  default = {}
+}
+variable "integration_service_environment" {
+  default = {}
+}
+variable "logic_app_action_http" {
+  default = {}
+}
+variable "logic_app_action_custom" {
+  default = {}
+}
+variable "logic_app_trigger_http_request" {
+  default = {}
+}
+variable "logic_app_trigger_recurrence" {
+  default = {}
+}
+variable "logic_app_trigger_custom" {
+  default = {}
+}
+variable "private_dns_vnet_links" {
   default = {}
 }
