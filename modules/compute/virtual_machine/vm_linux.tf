@@ -76,8 +76,8 @@ resource "azurerm_linux_virtual_machine" "vm" {
   zone                            = try(each.value.zone, null)
 
   custom_data = try(
-    try(filebase64(format("%s/%s", path.cwd, each.value.custom_data)), base64encode(each.value.custom_data)),
     local.dynamic_custom_data[each.value.custom_data][each.value.name],
+    try(filebase64(format("%s/%s", path.cwd, each.value.custom_data)), base64encode(each.value.custom_data)),
     null
   )
 
