@@ -26,7 +26,7 @@ azure_container_registries = {
     sku                = "Premium"
 
     #public_network_access_enabled = "false" #Only able to control when sku = "premium"
-    
+
     georeplications = {
       region2 = {
         tags = {
