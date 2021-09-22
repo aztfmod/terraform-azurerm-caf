@@ -21,7 +21,7 @@ module "mssql_servers" {
   resource_groups     = try(each.value.private_endpoints, {}) == {} ? null : local.resource_groups
   base_tags           = try(local.global_settings.inherit_tags, false) ? local.resource_groups[each.value.resource_group_key].tags : {}
   private_dns         = local.combined_objects_private_dns
-  keyvault_id         = coalesce(
+  keyvault_id = coalesce(
     try(each.value.administrator_login_password, null),
     try(module.keyvaults[each.value.keyvault_key].id, null),
     try(local.combined_objects_keyvaults[each.value.keyvault.lz_key][each.value.keyvault.key].id, null),

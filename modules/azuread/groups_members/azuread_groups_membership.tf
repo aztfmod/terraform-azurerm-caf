@@ -15,9 +15,9 @@ module "managed_identities_membership" {
   source   = "./membership"
   for_each = try(var.settings.managed_identities, {})
 
-  group_object_id            = var.group_id
-  managed_identities         = var.managed_identities[try(each.value.lz_key, var.client_config.landingzone_key)]
-  members                    = each.value
+  group_object_id    = var.group_id
+  managed_identities = var.managed_identities[try(each.value.lz_key, var.client_config.landingzone_key)]
+  members            = each.value
 }
 
 module "membership_object_id" {

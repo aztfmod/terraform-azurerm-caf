@@ -2,13 +2,13 @@ locals {
   nic_ids = flatten(
     [
       local.network_interface_ids,
-      try(var.settings.networking_interface_ids,[])
+      try(var.settings.networking_interface_ids, [])
     ]
   )
-  
+
   network_interface_ids = flatten(
     [
-    for nic_key in try(var.settings.virtual_machine_settings[var.settings.os_type].network_interface_keys,[]) : [
+      for nic_key in try(var.settings.virtual_machine_settings[var.settings.os_type].network_interface_keys, []) : [
         azurerm_network_interface.nic[nic_key].id
       ]
     ]

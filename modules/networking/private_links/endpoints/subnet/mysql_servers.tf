@@ -2,10 +2,10 @@ module "mysql_servers" {
   source   = "../private_endpoint"
   for_each = try(var.private_endpoints.mysql_servers, {})
 
-  global_settings     = var.global_settings
-  client_config       = var.client_config
-  settings            = each.value
-  resource_id         = coalesce(
+  global_settings = var.global_settings
+  client_config   = var.client_config
+  settings        = each.value
+  resource_id = coalesce(
     try(var.remote_objects.mysql_servers[each.value.lz_key][each.key].id, null),
     try(var.remote_objects.mysql_servers[var.client_config.landingzone_key][each.key].id, null),
     try(each.value.resource_id, null)

@@ -2,13 +2,13 @@ module "redis_caches" {
   source   = "../private_endpoint"
   for_each = try(var.private_endpoints.redis_caches, {})
 
-  global_settings     = var.global_settings
-  client_config       = var.client_config
-  settings            = each.value
-  resource_id         = coalesce(
+  global_settings = var.global_settings
+  client_config   = var.client_config
+  settings        = each.value
+  resource_id = coalesce(
     try(var.remote_objects.redis_caches[each.value.lz_key][each.key].redis_cache.id, null),
-    try(var.remote_objects.redis_caches[var.client_config.landingzone_key][each.key].redis_cache.id,null),
-    try(each.value.resource_id,null)
+    try(var.remote_objects.redis_caches[var.client_config.landingzone_key][each.key].redis_cache.id, null),
+    try(each.value.resource_id, null)
   )
   subresource_names   = ["redisCache"]
   subnet_id           = var.subnet_id

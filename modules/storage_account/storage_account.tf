@@ -233,8 +233,8 @@ module "file_share" {
 }
 
 module "management_policy" {
-  source               = "./management_policy"
-  for_each             = try(var.storage_account.management_policies, {})
-  storage_account_id   = azurerm_storage_account.stg.id
-  settings             = try(var.storage_account.management_policies, {})
+  source             = "./management_policy"
+  for_each           = try(var.storage_account.management_policies, {})
+  storage_account_id = azurerm_storage_account.stg.id
+  settings           = try(var.storage_account.management_policies, {})
 }

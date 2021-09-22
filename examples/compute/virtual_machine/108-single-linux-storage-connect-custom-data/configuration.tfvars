@@ -62,14 +62,15 @@ virtual_machines = {
         disable_password_authentication = true
 
         #custom_data                     = "scripts/cloud-init/install-rover-tools.config"
-#        custom_data = <<CUSTOM_DATA
-##!/bin/bash
-#echo "Execute your super awesome commands here!"
-#CUSTOM_DATA
+        #        custom_data = <<CUSTOM_DATA
+        ## make sure the following are not indented. It got indented due to terraform fmt
+        ##!/bin/bash
+        #echo "Execute your super awesome commands here!"
+        #CUSTOM_DATA
         custom_data = "palo_alto_connection_string"
         palo_alto_connection_string = {
-          storage_account = "sa1"
-          file_share = "share1"
+          storage_account      = "sa1"
+          file_share           = "share1"
           file_share_directory = "dir1"
         }
 
