@@ -12,12 +12,12 @@ module "storage_accounts" {
   recovery_vaults   = local.combined_objects_recovery_vaults
   private_dns       = local.combined_objects_private_dns
 
-  location = coalesce(
-    try(local.global_settings.regions[each.value.region], null),
-    try(local.combined_objects_resource_groups[each.value.resource_group.lz_key][each.value.resource_group.key].location, null),
-    try(local.combined_objects_resource_groups[each.value.resource_group.lz_key][each.value.resource_group_key].location, null),
-    try(local.combined_objects_resource_groups[local.client_config.landingzone_key][each.value.resource_group.key].location, null),
-    try(local.combined_objects_resource_groups[local.client_config.landingzone_key][each.value.resource_group_key].location, null)
+  location = try(
+    local.global_settings.regions[each.value.region],
+    local.combined_objects_resource_groups[each.value.resource_group.lz_key][each.value.resource_group.key].location,
+    local.combined_objects_resource_groups[each.value.resource_group.lz_key][each.value.resource_group_key].location,
+    local.combined_objects_resource_groups[local.client_config.landingzone_key][each.value.resource_group.key].location,
+    local.combined_objects_resource_groups[local.client_config.landingzone_key][each.value.resource_group_key].location
   )
   base_tags = try(local.global_settings.inherit_tags, false) ? coalesce(
     try(local.combined_objects_resource_groups[each.value.resource_group.lz_key][each.value.resource_group.key].tags, null),
@@ -25,11 +25,11 @@ module "storage_accounts" {
     try(local.combined_objects_resource_groups[local.client_config.landingzone_key][each.value.resource_group.key].tags, null),
     try(local.combined_objects_resource_groups[local.client_config.landingzone_key][each.value.resource_group_key].tags, null)
   ) : {}
-  resource_group_name = coalesce(
-    try(local.combined_objects_resource_groups[each.value.resource_group.lz_key][each.value.resource_group.key].name, null),
-    try(local.combined_objects_resource_groups[each.value.resource_group.lz_key][each.value.resource_group_key].name, null),
-    try(local.combined_objects_resource_groups[local.client_config.landingzone_key][each.value.resource_group.key].name, null),
-    try(local.combined_objects_resource_groups[local.client_config.landingzone_key][each.value.resource_group_key].name, null)
+  resource_group_name = try(
+    local.combined_objects_resource_groups[each.value.resource_group.lz_key][each.value.resource_group.key].name,
+    local.combined_objects_resource_groups[each.value.resource_group.lz_key][each.value.resource_group_key].name,
+    local.combined_objects_resource_groups[local.client_config.landingzone_key][each.value.resource_group.key].name,
+    local.combined_objects_resource_groups[local.client_config.landingzone_key][each.value.resource_group_key].name
   )
 }
 
