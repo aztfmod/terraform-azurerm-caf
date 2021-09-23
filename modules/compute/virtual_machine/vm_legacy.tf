@@ -185,7 +185,7 @@ resource "azurerm_virtual_machine" "vm" {
       caching = try(storage_data_disk.value.caching, null)
       create_option = storage_data_disk.value.create_option
       disk_size_gb = try(storage_data_disk.value.disk_size_gb)
-      lun = storage_data_disk.value.name
+      lun = storage_data_disk.value.lun
       write_accelerator_enabled = try(storage_data_disk.value.write_accelerator_enabled, null)
       managed_disk_type = try(storage_data_disk.value.managed_disk_type, null)
       managed_disk_id = try(storage_data_disk.value.managed_disk_id, null)
