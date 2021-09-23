@@ -222,7 +222,10 @@ resource "azurerm_linux_virtual_machine_scale_set" "vmss" {
     }
   }
 
-
+  lifecycle {
+    ignore_changes = try(each.value.ignore_changes, [])
+  }
+  
 }
 
 #
