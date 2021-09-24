@@ -46,29 +46,40 @@ resource "azurerm_kubernetes_cluster" "aks" {
   default_node_pool {
     name                         = var.settings.default_node_pool.name //azurecaf_name.default_node_pool.result
     vm_size                      = var.settings.default_node_pool.vm_size
-    type                         = try(var.settings.default_node_pool.type, "VirtualMachineScaleSets")
-    os_disk_size_gb              = try(var.settings.default_node_pool.os_disk_size_gb, null)
-    os_disk_type                 = try(var.settings.default_node_pool.os_disk_type, null)
     availability_zones           = try(var.settings.default_node_pool.availability_zones, null)
     enable_auto_scaling          = try(var.settings.default_node_pool.enable_auto_scaling, false)
+    enable_host_encryption       = try(var.settings.default_node_pool.enable_host_encryption, false)
     enable_node_public_ip        = try(var.settings.default_node_pool.enable_node_public_ip, false)
-    only_critical_addons_enabled = try(var.settings.default_node_pool.only_critical_addons_enabled, false)
-    node_count                   = try(var.settings.default_node_pool.node_count, 1)
-    min_count                    = try(var.settings.default_node_pool.min_count, null)
-    max_count                    = try(var.settings.default_node_pool.max_count, null)
+    kubelet_config               = try(var.settings.default_node_pool.kubelet_config, null)
+    linux_os_config              = try(var.settings.default_node_pool.linux_os_config, null)
+    fips_enabled                 = try(var.settings.default_node_pool.fips_enabled, null)
+    kubelet_disk_type            = try(var.settings.default_node_pool.kubelet_disk_type, null)
     max_pods                     = try(var.settings.default_node_pool.max_pods, 30)
+    node_public_ip_prefix_id     = try(var.settings.default_node_pool.node_public_ip_prefix_id, null)
     node_labels                  = try(var.settings.default_node_pool.node_labels, null)
-    node_taints                  = try(var.settings.default_node_pool.node_taints, null)
+    only_critical_addons_enabled = try(var.settings.default_node_pool.only_critical_addons_enabled, false)
     orchestrator_version         = try(var.settings.default_node_pool.orchestrator_version, try(var.settings.kubernetes_version, null))
+    os_disk_size_gb              = try(var.settings.default_node_pool.os_disk_size_gb, null)
+    os_disk_type                 = try(var.settings.default_node_pool.os_disk_type, null)
+    os_sku                       = try(var.settings.default_node_pool.os_sku, null)
+    pod_subnet_id                = try(var.settings.default_node_pool.pod_subnet_id, null)
+    type                         = try(var.settings.default_node_pool.type, "VirtualMachineScaleSets")
     tags                         = merge(try(var.settings.default_node_pool.tags, {}), local.tags)
+    ultra_ssd_enabled            = try(var.settings.default_node_pool.ultra_ssd_enabled, false)
+    upgrade_settings             = try(var.settings.default_node_pool.upgrade_settings, false)
     vnet_subnet_id = coalesce(
       try(var.subnets[var.settings.default_node_pool.subnet_key].id, ""),
       try(var.subnets[var.settings.default_node_pool.subnet.key].id, ""),
       try(var.settings.default_node_pool.subnet.resource_id, "")
     )
+    max_count  = try(var.settings.default_node_pool.max_count, null)
+    min_count  = try(var.settings.default_node_pool.min_count, null)
+    node_count = try(var.settings.default_node_pool.node_count, 1)
   }
 
-  dns_prefix = try(var.settings.dns_prefix, random_string.prefix.result)
+  dns_prefix                 = try(var.settings.dns_prefix, random_string.prefix.result)
+  dns_prefix_private_cluster = try(var.settings.dns_prefix_private_cluster, random_string.prefix.result)
+  automatic_channel_upgrade  = try(var.settings.automatic_channel_upgrade, null)
 
   dynamic "addon_profile" {
     for_each = lookup(var.settings, "addon_profile", null) == null ? [] : [1]
@@ -124,10 +135,23 @@ resource "azurerm_kubernetes_cluster" "aks" {
           }
         }
       }
+
+      dynamic "ingress_application_gateway" {
+        for_each = try(var.settings.addon_profile.ingress_application_gateway[*], {})
+        content {
+          enabled      = var.settings.addon_profile.ingress_application_gateway.enabled
+          gateway_id   = try(var.settings.addon_profile.ingress_application_gateway.gateway_id, null)
+          gateway_name = try(var.settings.addon_profile.ingress_application_gateway.gateway_name, null)
+          subnet_cidr  = try(var.settings.addon_profile.ingress_application_gateway.subnet_cidr, null)
+          subnet_id    = try(var.settings.addon_profile.ingress_application_gateway.subnet_id, null)
+        }
+      }
     }
   }
 
   api_server_authorized_ip_ranges = try(var.settings.api_server_authorized_ip_ranges, null)
+
+  disk_encryption_set_id = try(var.settings.disk_encryption_set_id, null)
 
   dynamic "auto_scaler_profile" {
     for_each = try(var.settings.auto_scaler_profile[*], {})
@@ -145,8 +169,6 @@ resource "azurerm_kubernetes_cluster" "aks" {
     }
   }
 
-  disk_encryption_set_id = try(var.settings.disk_encryption_set_id, null)
-
   dynamic "identity" {
     for_each = try(var.settings.identity, null) == null ? [] : [1]
 
@@ -160,38 +182,40 @@ resource "azurerm_kubernetes_cluster" "aks" {
     }
   }
 
-  # Enabled RBAC
-  dynamic "role_based_access_control" {
-    for_each = try(var.settings.role_based_access_control[*], {})
+  kubelet_identity   = try(var.settings.kubelet_identity, null)
+  kubernetes_version = try(var.settings.kubernetes_version, null)
+
+  dynamic "linux_profile" {
+    for_each = var.settings.linux_profile == null ? [] : [1]
 
     content {
-      enabled = try(role_based_access_control.value.enabled, true)
+      admin_username = try(var.settings.linux_profile.admin_username, null)
+      ssh_key        = try(var.settings.linux_profile.ssh_key, null)
+    }
+  }
 
-      dynamic "azure_active_directory" {
-        for_each = try(var.settings.role_based_access_control.azure_active_directory[*], {})
+  local_account_disabled = try(var.settings.local_account_disabled, false)
 
+  dynamic "maintenance_window " {
+    for_each = var.settings.maintenance_window == null ? [] : [1]
+    content {
+      dynamic "allowed" {
+        for_each = var.settings.maintenance_window.allowed == null ? [] : [1]
         content {
-          managed                = azure_active_directory.value.managed
-          tenant_id              = try(azure_active_directory.value.tenant_id, null)
-          admin_group_object_ids = try(azure_active_directory.value.admin_group_object_ids, try(var.admin_group_object_ids, null))
-          client_app_id          = try(azure_active_directory.value.client_app_id, null)
-          server_app_id          = try(azure_active_directory.value.server_app_id, null)
-          server_app_secret      = try(azure_active_directory.value.server_app_secret, null)
+          day   = var.settings.maintenance_window.allowed.day
+          hours = var.settings.maintenance_window.allowed.hours
+        }
+      }
+      dynamic "not_allowed" {
+        for_each = var.settings.maintenance_window.not_allowed == null ? [] : [1]
+        content {
+          end   = var.settings.maintenance_window.not_allowed.end
+          start = var.settings.maintenance_window.not_allowed.start
         }
       }
     }
   }
-  sku_tier           = try(var.settings.sku_tier, null)
-  kubernetes_version = try(var.settings.kubernetes_version, null)
 
-  # dynamic "linux_profile" {
-  #   for_each = var.settings.linux_profile == null ? [] : [1]
-
-  #   content {
-  #     admin_username  = try(var.settings.linux_profile.admin_username,null)
-  #     ssh_key         = try(var.settings.linux_profile.ssh_key,null)
-  #   }
-  # }
 
   dynamic "network_profile" {
     for_each = try(var.settings.network_profile[*], {})
@@ -222,12 +246,56 @@ resource "azurerm_kubernetes_cluster" "aks" {
   private_dns_zone_id                 = var.private_dns_zone_id
   private_cluster_public_fqdn_enabled = try(var.settings.private_cluster_public_fqdn_enabled, false)
 
+  # Enabled RBAC
+  dynamic "role_based_access_control" {
+    for_each = try(var.settings.role_based_access_control[*], {})
+
+    content {
+      enabled = try(role_based_access_control.value.enabled, true)
+
+      dynamic "azure_active_directory" {
+        for_each = try(var.settings.role_based_access_control.azure_active_directory[*], {})
+
+        content {
+          managed                = azure_active_directory.value.managed
+          tenant_id              = try(azure_active_directory.value.tenant_id, null)
+          admin_group_object_ids = try(azure_active_directory.value.admin_group_object_ids, try(var.admin_group_object_ids, null))
+          client_app_id          = try(azure_active_directory.value.client_app_id, null)
+          server_app_id          = try(azure_active_directory.value.server_app_id, null)
+          server_app_secret      = try(azure_active_directory.value.server_app_secret, null)
+        }
+      }
+    }
+  }
+
+  dynamic "service_principal" {
+    for_each = try(var.settings.service_principal[*], {})
+    content {
+      client_id     = var.settings.service_principal.client_id
+      client_secret = var.settings.service_principal.client_secret
+    }
+  }
+
+  sku_tier = try(var.settings.sku_tier, null)
+
+
   lifecycle {
     ignore_changes = [
       windows_profile,
     ]
   }
   tags = merge(local.tags, lookup(var.settings, "tags", {}))
+
+  dynamic "windows_profile" {
+    for_each = try(var.settings.windows_profile[*], {})
+    content {
+      admin_username = var.settings.windows_profile.admin_username
+      admin_password = var.settings.windows_profile.admin_password
+      license        = try(var.settings.windows_profile.license, null)
+
+    }
+
+  }
 }
 
 resource "random_string" "prefix" {
