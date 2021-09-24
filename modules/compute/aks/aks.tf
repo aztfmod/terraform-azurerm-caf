@@ -217,9 +217,10 @@ resource "azurerm_kubernetes_cluster" "aks" {
     }
   }
 
-  node_resource_group     = azurecaf_name.rg_node.result
-  private_cluster_enabled = try(var.settings.private_cluster_enabled, false)
-  private_dns_zone_id     = var.private_dns_zone_id
+  node_resource_group                 = azurecaf_name.rg_node.result
+  private_cluster_enabled             = try(var.settings.private_cluster_enabled, false)
+  private_dns_zone_id                 = var.private_dns_zone_id
+  private_cluster_public_fqdn_enabled = try(var.settings.private_cluster_public_fqdn_enabled, false)
 
   lifecycle {
     ignore_changes = [
