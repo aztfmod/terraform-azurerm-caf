@@ -6,6 +6,7 @@
 name: standalone-scenario-tf100-longrunners
 
 on:
+  workflow_dispatch:
   schedule:
     - cron:  '0 4 * * 0' #2 AM on Sunday
 
@@ -19,20 +20,29 @@ env:
   ROVER_RUNNER: true
 
 jobs:
+  load_scenarios:
+    runs-on: ubuntu-latest
+    outputs:
+      matrix: ${{ steps.load_scenarios.outputs.matrix }}
+    steps:
+      - uses: actions/checkout@v2
+      - id: load_scenarios
+        run: |
+          cases=$((
+            cat ./.github/workflows/standalone-scenarios-longrunners.json) | jq -c .)
+          echo "::set-output name=matrix::${cases}"
+
   examples:
     name: examples
     runs-on: ubuntu-latest
+    needs: load_scenarios
 
     strategy:
       fail-fast: false
-      matrix:
-          config_files: [
-            "mssql_mi/200-mi",
-            "mssql_mi/200-mi-two-regions"
-          ]
+      matrix: ${{fromJSON(needs.load_scenarios.outputs.matrix)}}
 
     container:
-      image: aztfmod/rover:1.0.4-2108.1305
+      image: aztfmod/rover:1.0.4-2108.1802
       options: --user 0
 
     steps:
@@ -57,7 +67,7 @@ jobs:
     needs: examples
 
     container:
-      image: aztfmod/rover:1.0.4-2108.1305
+      image: aztfmod/rover:1.0.4-2108.1802
       options: --user 0
 
     steps:

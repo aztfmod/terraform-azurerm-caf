@@ -19,6 +19,7 @@ module "private_endpoints" {
     keyvaults            = local.combined_objects_keyvaults
     mysql_servers        = local.combined_objects_mysql_servers
     mssql_servers        = local.combined_objects_mssql_servers
+    redis_caches         = local.combined_objects_redis_caches
     networking           = local.combined_objects_networking
     recovery_vaults      = local.combined_objects_recovery_vaults
     storage_accounts     = local.combined_objects_storage_accounts
