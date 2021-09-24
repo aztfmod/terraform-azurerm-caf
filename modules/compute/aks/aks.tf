@@ -62,15 +62,21 @@ resource "azurerm_kubernetes_cluster" "aks" {
     os_disk_size_gb              = try(var.settings.default_node_pool.os_disk_size_gb, null)
     os_disk_type                 = try(var.settings.default_node_pool.os_disk_type, null)
     os_sku                       = try(var.settings.default_node_pool.os_sku, null)
-    pod_subnet_id                = try(var.settings.default_node_pool.pod_subnet_id, null)
-    type                         = try(var.settings.default_node_pool.type, "VirtualMachineScaleSets")
-    tags                         = merge(try(var.settings.default_node_pool.tags, {}), local.tags)
-    ultra_ssd_enabled            = try(var.settings.default_node_pool.ultra_ssd_enabled, false)
-    upgrade_settings             = try(var.settings.default_node_pool.upgrade_settings, false)
+    pod_subnet_id = coalesce(
+      try(var.subnets[var.settings.default_node_pool.pod_subnet_key].id, ""),
+      try(var.subnets[var.settings.default_node_pool.pod_subnet.key].id, ""),
+      try(var.settings.default_node_pool.pod_subnet.resource_id, ""),
+      try(var.settings.default_node_pool.pod_subnet_id, "")
+    )
+    type              = try(var.settings.default_node_pool.type, "VirtualMachineScaleSets")
+    tags              = merge(try(var.settings.default_node_pool.tags, {}), local.tags)
+    ultra_ssd_enabled = try(var.settings.default_node_pool.ultra_ssd_enabled, false)
+    upgrade_settings  = try(var.settings.default_node_pool.upgrade_settings, false)
     vnet_subnet_id = coalesce(
       try(var.subnets[var.settings.default_node_pool.subnet_key].id, ""),
       try(var.subnets[var.settings.default_node_pool.subnet.key].id, ""),
-      try(var.settings.default_node_pool.subnet.resource_id, "")
+      try(var.settings.default_node_pool.subnet.resource_id, ""),
+      try(var.settings.default_node_pool.vnet_subnet_id, "")
     )
     max_count  = try(var.settings.default_node_pool.max_count, null)
     min_count  = try(var.settings.default_node_pool.min_count, null)
@@ -312,26 +318,47 @@ resource "random_string" "prefix" {
 resource "azurerm_kubernetes_cluster_node_pool" "nodepools" {
   for_each = try(var.settings.node_pools, {})
 
-  name                  = each.value.name
-  mode                  = try(each.value.mode, "User")
-  kubernetes_cluster_id = azurerm_kubernetes_cluster.aks.id
-  vm_size               = each.value.vm_size
-  os_disk_size_gb       = try(each.value.os_disk_size_gb, null)
-  os_disk_type          = try(each.value.os_disk_type, null)
-  availability_zones    = try(each.value.availability_zones, null)
-  enable_auto_scaling   = try(each.value.enable_auto_scaling, false)
-  enable_node_public_ip = try(each.value.enable_node_public_ip, false)
-  node_count            = try(each.value.node_count, 1)
-  min_count             = try(each.value.min_count, null)
-  max_count             = try(each.value.max_count, null)
-  max_pods              = try(each.value.max_pods, 30)
-  node_labels           = try(each.value.node_labels, null)
-  node_taints           = try(each.value.node_taints, null)
-  orchestrator_version  = try(each.value.orchestrator_version, try(var.settings.kubernetes_version, null))
-  tags                  = merge(try(var.settings.default_node_pool.tags, {}), try(each.value.tags, {}))
+  name                     = each.value.name
+  kubernetes_cluster_id    = azurerm_kubernetes_cluster.aks.id
+  vm_size                  = each.value.vm_size
+  availability_zones       = try(each.value.availability_zones, null)
+  enable_auto_scaling      = try(each.value.enable_auto_scaling, false)
+  enable_host_encryption   = try(each.value.enable_host_encryption, false)
+  enable_node_public_ip    = try(each.value.enable_node_public_ip, false)
+  eviction_policy          = try(each.value.eviction_policy, null)
+  kubelet_config           = try(each.value.kubelet_config, null)
+  linux_os_config          = try(each.value.linux_os_config, null)
+  fips_enabled             = try(each.value.fips_enabled, false)
+  kubelet_disk_type        = try(each.value.kubelet_disk_type, null)
+  max_pods                 = try(each.value.max_pods, null)
+  mode                     = try(each.value.mode, "User")
+  node_labels              = try(each.value.node_labels, null)
+  node_public_ip_prefix_id = try(each.value.node_public_ip_prefix_id, null)
+  node_taints              = try(each.value.node_taints, null)
+  orchestrator_version     = try(each.value.orchestrator_version, try(var.settings.kubernetes_version, null))
+  os_disk_size_gb          = try(each.value.os_disk_size_gb, null)
+  os_disk_type             = try(each.value.os_disk_type, null)
+  pod_subnet_id = coalesce(
+    try(var.subnets[each.value.pod_subnet_key].id, ""),
+    try(var.subnets[each.value.pod_subnet.key].id, ""),
+    try(each.value.pod_subnet.resource_id, ""),
+    try(each.value.pod_subnet_id, "")
+  )
+  os_sku                       = try(each.value.os_sku, null)
+  os_type                      = try(each.value.os_type, null)
+  priority                     = try(each.value.priority, null)
+  proximity_placement_group_id = try(each.value.proximity_placement_group_id, null)
+  spot_max_price               = try(each.value.spot_max_price, null)
+  tags                         = merge(try(var.settings.default_node_pool.tags, {}), try(each.value.tags, {}))
+  ultra_ssd_enabled            = try(each.value.ultra_ssd_enabled, false)
+  upgrade_settings             = try(each.value.upgrade_settings, null)
   vnet_subnet_id = coalesce(
     try(var.subnets[each.value.subnet_key].id, ""),
     try(var.subnets[each.value.subnet.key].id, ""),
-    try(each.value.subnet.resource_id, "")
+    try(each.value.subnet.resource_id, ""),
+    try(each.value.vnet_subnet_id, "")
   )
+  max_count  = try(each.value.max_count, null)
+  min_count  = try(each.value.min_count, null)
+  node_count = try(each.value.node_count, null)
 }
