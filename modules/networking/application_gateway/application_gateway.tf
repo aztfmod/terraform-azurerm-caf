@@ -322,11 +322,11 @@ resource "azurerm_application_gateway" "agw" {
             }
           }
           dynamic "url" {
-            for_each = try([rewrite_rule.value.url], [])
+            for_each = try(rewrite_rule.value.url, null) == null ? [] : [1]
             content {
-              path         = try(url.value.path, null)
-              query_string = try(url.value.query_string, null)
-              reroute      = try(url.value.reroute, null)
+              path         = try(rewrite_rule.value.url.path, null)
+              query_string = try(rewrite_rule.value.url.query_string, null)
+              reroute      = try(rewrite_rule.value.url.reroute, null)
             }
           }
         }
