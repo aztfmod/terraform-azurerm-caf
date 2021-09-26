@@ -112,6 +112,17 @@ locals {
     mysql_servers                      = try(var.database.mysql_servers, {})
     postgresql_servers                 = try(var.database.postgresql_servers, {})
     synapse_workspaces                 = try(var.database.synapse_workspaces, {})
+    data_explorer = {
+      kusto_clusters                         = try(var.database.data_explorer.kusto_clusters, {})
+      kusto_databases                        = try(var.database.data_explorer.kusto_databases, {})
+      kusto_attached_database_configurations = try(var.database.data_explorer.kusto_attached_database_configurations, {})
+      kusto_cluster_customer_managed_keys    = try(var.database.data_explorer.kusto_cluster_customer_managed_keys, {})
+      kusto_cluster_principal_assignments    = try(var.database.data_explorer.kusto_cluster_principal_assignments, {})
+      kusto_database_principal_assignments   = try(var.database.data_explorer.kusto_database_principal_assignments, {})
+      kusto_eventgrid_data_connections       = try(var.database.data_explorer.kusto_eventgrid_data_connections, {})
+      kusto_eventhub_data_connections        = try(var.database.data_explorer.kusto_eventhub_data_connections, {})
+      kusto_iothub_data_connections          = try(var.database.data_explorer.kusto_iothub_data_connections, {})
+    }
   }
 
   data_factory = {
