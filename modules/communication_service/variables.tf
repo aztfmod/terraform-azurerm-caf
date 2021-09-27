@@ -5,7 +5,9 @@ variable "client_config" {
   description = "Client configuration object (see module README.md)."
 }
 
-variable "settings" {}
+variable "settings" {
+  default = {}
+}
 
 variable "name" {
   type        = string

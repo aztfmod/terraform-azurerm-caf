@@ -1,11 +1,11 @@
 
-global_settings = {
-  default_region = "region1"
-  regions = {
-    region1 = "eastus2"
-    region2 = "centralus"
-  }
-}
+// global_settings = {
+//   default_region = "region1"
+//   regions = {
+//     region1 = "eastus2"
+//     region2 = "centralus"
+//   }
+// }
 
 // landingzone = {
 //   backend_type        = "azurerm"
