@@ -1,5 +1,5 @@
 module "diagnostics" {
-  source = "../../diagnostics"
+  source = "../diagnostics"
   count  = lookup(var.settings, "diagnostic_profiles", null) == null ? 0 : 1
 
   resource_id       = azurerm_communication_service.acs.id
