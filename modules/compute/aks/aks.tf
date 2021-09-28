@@ -84,12 +84,12 @@ resource "azurerm_kubernetes_cluster" "aks" {
     os_disk_size_gb              = try(var.settings.default_node_pool.os_disk_size_gb, null)
     os_disk_type                 = try(var.settings.default_node_pool.os_disk_type, null)
     os_sku                       = try(var.settings.default_node_pool.os_sku, null)
-    pod_subnet_id = coalesce(
-      try(var.subnets[var.settings.default_node_pool.pod_subnet_key].id, ""),
-      try(var.subnets[var.settings.default_node_pool.pod_subnet.key].id, ""),
-      try(var.settings.default_node_pool.pod_subnet.resource_id, ""),
-      try(var.settings.default_node_pool.pod_subnet_id, "")
-    )
+    pod_subnet_id = try(coalesce(
+      try(var.subnets[var.settings.default_node_pool.pod_subnet_key].id, null),
+      try(var.subnets[var.settings.default_node_pool.pod_subnet.key].id, null),
+      try(var.settings.default_node_pool.pod_subnet.resource_id, null),
+      try(var.settings.default_node_pool.pod_subnet_id, null)
+    ), null)
     type              = try(var.settings.default_node_pool.type, "VirtualMachineScaleSets")
     tags              = merge(try(var.settings.default_node_pool.tags, {}), local.tags)
     ultra_ssd_enabled = try(var.settings.default_node_pool.ultra_ssd_enabled, false)
@@ -239,7 +239,7 @@ resource "azurerm_kubernetes_cluster" "aks" {
   kubernetes_version = try(var.settings.kubernetes_version, null)
 
   dynamic "linux_profile" {
-    for_each = var.settings.linux_profile == null ? [] : [1]
+    for_each = try(var.settings.linux_profile, null) == null ? [] : [1]
 
     content {
       admin_username = try(var.settings.linux_profile.admin_username, null)
@@ -250,7 +250,7 @@ resource "azurerm_kubernetes_cluster" "aks" {
   local_account_disabled = try(var.settings.local_account_disabled, false)
 
   dynamic "maintenance_window" {
-    for_each = var.settings.maintenance_window == null ? [] : [1]
+    for_each = try(var.settings.maintenance_window, null) == null ? [] : [1]
     content {
       dynamic "allowed" {
         for_each = var.settings.maintenance_window.allowed == null ? [] : [1]
