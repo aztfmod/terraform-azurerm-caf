@@ -373,8 +373,30 @@ resource "azurerm_kubernetes_cluster_node_pool" "nodepools" {
   enable_host_encryption   = try(each.value.enable_host_encryption, false)
   enable_node_public_ip    = try(each.value.enable_node_public_ip, false)
   eviction_policy          = try(each.value.eviction_policy, null)
-  kubelet_config           = try(each.value.kubelet_config, null)
-  linux_os_config          = try(each.value.linux_os_config, null)
+  dynamic "kubelet_config" {
+      for_each = try(each.value.kubelet_config, null) == null ? [] : [1]
+      content {
+        allowed_unsafe_sysctls    = try(each.value.allowed_unsafe_sysctls, null)
+        container_log_max_line    = try(each.value.container_log_max_line, null)
+        container_log_max_size_mb = try(each.value.container_log_max_size_mb, null)
+        cpu_cfs_quota_enabled     = try(each.value.cpu_cfs_quota_enabled, null)
+        cpu_cfs_quota_period      = try(each.value.cpu_cfs_quota_period, null)
+        cpu_manager_policy        = try(each.value.cpu_manager_policy, null)
+        image_gc_high_threshold   = try(each.value.image_gc_high_threshold, null)
+        image_gc_low_threshold    = try(each.value.image_gc_low_threshold, null)
+        pod_max_pid               = try(each.value.pod_max_pid, null)
+        topology_manager_policy   = try(each.value.topology_manager_policy, null)
+      }
+    }
+  dynamic "linux_os_config" {
+      for_each = try(each.value.linux_os_config, null) == null ? [] : [1]
+      content {
+        swap_file_size_mb             = try(each.value.allowed_unsafe_sysctls, null)
+        sysctl_config                 = try(each.value.sysctl_config, null)
+        transparent_huge_page_defrag  = try(each.value.transparent_huge_page_defrag, null)
+        transparent_huge_page_enabled = try(each.value.transparent_huge_page_enabled, null)
+      }
+    }
   fips_enabled             = try(each.value.fips_enabled, false)
   kubelet_disk_type        = try(each.value.kubelet_disk_type, null)
   max_pods                 = try(each.value.max_pods, null)
@@ -398,7 +420,12 @@ resource "azurerm_kubernetes_cluster_node_pool" "nodepools" {
   spot_max_price               = try(each.value.spot_max_price, null)
   tags                         = merge(try(var.settings.default_node_pool.tags, {}), try(each.value.tags, {}))
   ultra_ssd_enabled            = try(each.value.ultra_ssd_enabled, false)
-  upgrade_settings             = try(each.value.upgrade_settings, null)
+  dynamic "upgrade_settings" {
+    for_each = try(each.value.upgrade_settings, null) == null ? [] : [1]
+    content {
+      max_surge = each.value.max_surge
+    }
+  }
   vnet_subnet_id = coalesce(
     try(var.subnets[each.value.subnet_key].id, ""),
     try(var.subnets[each.value.subnet.key].id, ""),
