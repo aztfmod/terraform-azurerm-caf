@@ -3,17 +3,34 @@ module "storage_accounts" {
   source   = "./modules/storage_account"
   for_each = var.storage_accounts
 
-  global_settings     = local.global_settings
-  client_config       = local.client_config
-  storage_account     = each.value
-  resource_group_name = local.resource_groups[each.value.resource_group_key].name
-  location            = lookup(each.value, "region", null) == null ? local.resource_groups[each.value.resource_group_key].location : local.global_settings.regions[each.value.region]
-  vnets               = local.combined_objects_networking
-  private_endpoints   = try(each.value.private_endpoints, {})
-  resource_groups     = try(each.value.private_endpoints, {}) == {} ? null : local.resource_groups
-  recovery_vaults     = local.combined_objects_recovery_vaults
-  base_tags           = try(local.global_settings.inherit_tags, false) ? local.resource_groups[each.value.resource_group_key].tags : {}
-  private_dns         = local.combined_objects_private_dns
+  global_settings   = local.global_settings
+  client_config     = local.client_config
+  storage_account   = each.value
+  vnets             = local.combined_objects_networking
+  private_endpoints = try(each.value.private_endpoints, {})
+  resource_groups   = try(each.value.private_endpoints, {}) == {} ? null : local.resource_groups
+  recovery_vaults   = local.combined_objects_recovery_vaults
+  private_dns       = local.combined_objects_private_dns
+
+  location = try(
+    local.global_settings.regions[each.value.region],
+    local.combined_objects_resource_groups[each.value.resource_group.lz_key][each.value.resource_group.key].location,
+    local.combined_objects_resource_groups[each.value.resource_group.lz_key][each.value.resource_group_key].location,
+    local.combined_objects_resource_groups[local.client_config.landingzone_key][each.value.resource_group.key].location,
+    local.combined_objects_resource_groups[local.client_config.landingzone_key][each.value.resource_group_key].location
+  )
+  base_tags = try(local.global_settings.inherit_tags, false) ? coalesce(
+    try(local.combined_objects_resource_groups[each.value.resource_group.lz_key][each.value.resource_group.key].tags, null),
+    try(local.combined_objects_resource_groups[each.value.resource_group.lz_key][each.value.resource_group_key].tags, null),
+    try(local.combined_objects_resource_groups[local.client_config.landingzone_key][each.value.resource_group.key].tags, null),
+    try(local.combined_objects_resource_groups[local.client_config.landingzone_key][each.value.resource_group_key].tags, null)
+  ) : {}
+  resource_group_name = try(
+    local.combined_objects_resource_groups[each.value.resource_group.lz_key][each.value.resource_group.key].name,
+    local.combined_objects_resource_groups[each.value.resource_group.lz_key][each.value.resource_group_key].name,
+    local.combined_objects_resource_groups[local.client_config.landingzone_key][each.value.resource_group.key].name,
+    local.combined_objects_resource_groups[local.client_config.landingzone_key][each.value.resource_group_key].name
+  )
 }
 
 output "storage_accounts" {

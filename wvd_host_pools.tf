@@ -12,5 +12,6 @@ module "wvd_host_pools" {
 }
 
 output "wvd_host_pools" {
-  value = module.wvd_host_pools
+  value     = module.wvd_host_pools
+  sensitive = true
 }

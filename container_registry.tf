@@ -19,6 +19,8 @@ module "container_registry" {
   resource_groups     = local.resource_groups
   base_tags           = try(local.global_settings.inherit_tags, false) ? local.resource_groups[each.value.resource_group_key].tags : {}
   private_dns         = local.combined_objects_private_dns
+
+  public_network_access_enabled = try(each.value.public_network_access_enabled, "true")
 }
 
 output "azure_container_registries" {
