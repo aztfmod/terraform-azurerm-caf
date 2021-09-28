@@ -2,10 +2,14 @@ module "storage_account" {
   source   = "../private_endpoint"
   for_each = try(var.private_endpoints.storage_accounts, {})
 
-  global_settings     = var.global_settings
-  client_config       = var.client_config
-  settings            = each.value
-  resource_id         = try(var.remote_objects.storage_accounts[each.value.lz_key][each.key].id, var.remote_objects.storage_accounts[var.client_config.landingzone_key][each.key].id)
+  global_settings = var.global_settings
+  client_config   = var.client_config
+  settings        = each.value
+  resource_id = coalesce(
+    try(var.remote_objects.storage_accounts[each.value.lz_key][each.key].id, null),
+    try(var.remote_objects.storage_accounts[var.client_config.landingzone_key][each.key].id, null),
+    try(each.value.resource_id, null)
+  )
   subresource_names   = toset(try(each.value.private_service_connection.subresource_names, ["blob"]))
   subnet_id           = var.subnet_id
   private_dns         = var.private_dns

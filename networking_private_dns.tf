@@ -18,3 +18,31 @@ module "private_dns" {
 output "private_dns" {
   value = module.private_dns
 }
+
+#
+# Create vnet links on remote DNS zones
+#
+
+module "private_dns_vnet_links" {
+  source     = "./modules/networking/private_dns_vnet_link"
+  for_each   = try(local.networking.private_dns_vnet_links, {})
+  depends_on = [module.private_dns]
+
+  base_tags       = {}
+  global_settings = local.global_settings
+  resource_group_name = coalesce(
+    try(local.combined_objects_resource_groups[try(each.value.resource_group.lz_key, local.client_config.landingzone_key)][each.value.resource_group.key].name, null),
+    try(local.combined_objects_resource_groups[local.client_config.landingzone_key][each.value.resource_group_key].name, null)
+  )
+  client_config = local.client_config
+  virtual_network_id = coalesce(
+    try(local.combined_objects_networking[each.value.lz_key][each.value.vnet_key].id, null),
+    try(local.combined_objects_networking[local.client_config.landingzone_key][each.value.vnet_key].id, null)
+  )
+  private_dns = local.combined_objects_private_dns
+  settings    = each.value
+}
+
+output "private_dns_vnet_links" {
+  value = module.private_dns_vnet_links
+}

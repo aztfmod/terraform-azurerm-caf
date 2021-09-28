@@ -1,23 +1,25 @@
-variable "name" {
-  description = "(Required) The name which should be used for this Logic App Integration Account"
+variable "global_settings" {
+  description = "Global settings object (see module README.md)"
 }
-
-variable "resource_group_name" {
-  description = "(Required) The name of the Resource Group where the Logic App Integration Account should exist"
+variable "client_config" {
+  description = "Client configuration object (see module README.md)."
 }
-
-variable "location" {
-  description = "(Required) The Azure Region where the Logic App Integration Account should exist"
+variable "settings" {
+  description = "Settings object (see module README.md)."
 }
-
-variable "sku_name" {
-  description = "(Required) The sku name of the Logic App Integration Account. Possible Values are Basic, Free and Standard"
+variable "base_tags" {
+  description = "Base tags for the resource to be inherited from the resource group."
+  type        = map(any)
 }
-
 variable "tags" {
-  description = "(Optional) A mapping of tags which should be assigned to the Logic App Integration Account"
+  description = "(Required) map of tags for the deployment"
+  default     = null
 }
-
-variable "global_settings" {}
-
-variable "base_tags" {}
+variable "location" {
+  description = "(Required) Resource Location"
+  type        = string
+  default     = null
+}
+variable "resource_group_name" {
+  description = "(Required) Resource group of the Logic App"
+}

@@ -57,7 +57,7 @@ mssql_managed_instances = {
     sku = {
       name = "GP_Gen5"
     }
-    administratorLogin         = "adminuser"
+    administratorLogin = "adminuser"
     # administratorLoginPassword = "@dm1nu53r@30102020"
 
     //networking
@@ -65,6 +65,7 @@ mssql_managed_instances = {
       vnet_key   = "sqlmi_region1"
       subnet_key = "sqlmi1"
     }
+    keyvault_key = "sqlmi_rg1"
 
     storageSizeInGB = 32
     vCores          = 8
@@ -119,5 +120,19 @@ mssql_mi_administrators = {
 
     # group key or upn supported
     # user_principal_name = ""
+  }
+}
+
+keyvaults = {
+  sqlmi_rg1 = {
+    name               = "sqlmirg1"
+    resource_group_key = "sqlmi_region1"
+    sku_name           = "standard"
+
+    creation_policies = {
+      logged_in_user = {
+        secret_permissions = ["Set", "Get", "List", "Delete", "Purge"]
+      }
+    }
   }
 }

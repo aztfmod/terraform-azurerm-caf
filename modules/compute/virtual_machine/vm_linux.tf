@@ -44,7 +44,7 @@ resource "azurecaf_name" "os_disk_linux" {
   clean_input   = true
   passthrough   = var.global_settings.passthrough
   use_slug      = var.global_settings.use_slug
-  
+
   lifecycle {
     ignore_changes = [
       name
@@ -56,26 +56,31 @@ resource "azurecaf_name" "os_disk_linux" {
 resource "azurerm_linux_virtual_machine" "vm" {
   for_each = local.os_type == "linux" ? var.settings.virtual_machine_settings : {}
 
-  name                  = azurecaf_name.linux[each.key].result
-  location              = var.location
-  resource_group_name   = var.resource_group_name
-  size                  = each.value.size
-  admin_username        = each.value.admin_username
-  admin_password        = each.value.disable_password_authentication == false ? each.value.admin_password : null
-  network_interface_ids = local.nic_ids
-  tags                  = merge(local.tags, try(each.value.tags, null))
-
+  admin_password                  = each.value.disable_password_authentication == false ? each.value.admin_password : null
+  admin_username                  = each.value.admin_username
   allow_extension_operations      = try(each.value.allow_extension_operations, null)
+  availability_set_id             = try(var.availability_sets[var.client_config.landingzone_key][each.value.availability_set_key].id, var.availability_sets[each.value.availability_sets].id, null)
   computer_name                   = azurecaf_name.linux_computer_name[each.key].result
+  disable_password_authentication = try(each.value.disable_password_authentication, true)
   eviction_policy                 = try(each.value.eviction_policy, null)
+  location                        = var.location
   max_bid_price                   = try(each.value.max_bid_price, null)
+  name                            = azurecaf_name.linux[each.key].result
+  network_interface_ids           = local.nic_ids
   priority                        = try(each.value.priority, null)
   provision_vm_agent              = try(each.value.provision_vm_agent, true)
-  zone                            = try(each.value.zone, null)
-  disable_password_authentication = try(each.value.disable_password_authentication, true)
-  custom_data                     = try(each.value.custom_data, null) == null ? null : filebase64(format("%s/%s", path.cwd, each.value.custom_data))
-  availability_set_id             = try(var.availability_sets[var.client_config.landingzone_key][each.value.availability_set_key].id, var.availability_sets[each.value.availability_sets].id, null)
   proximity_placement_group_id    = try(var.proximity_placement_groups[var.client_config.landingzone_key][each.value.proximity_placement_group_key].id, var.proximity_placement_groups[each.value.proximity_placement_groups].id, null)
+  resource_group_name             = var.resource_group_name
+  size                            = each.value.size
+  tags                            = merge(local.tags, try(each.value.tags, null))
+  zone                            = try(each.value.zone, null)
+
+  custom_data = try(
+    local.dynamic_custom_data[each.value.custom_data][each.value.name],
+    try(filebase64(format("%s/%s", path.cwd, each.value.custom_data)), base64encode(each.value.custom_data)),
+    null
+  )
+
   dedicated_host_id = try(coalesce(
     try(each.value.dedicated_host.id, null),
     var.dedicated_hosts[try(each.value.dedicated_host.lz_key, var.client_config.landingzone_key)][each.value.dedicated_host.key].id,
@@ -146,7 +151,7 @@ resource "azurerm_linux_virtual_machine" "vm" {
       os_disk[0].name
     ]
   }
-  
+
 }
 
 #
@@ -156,7 +161,7 @@ resource "azurerm_linux_virtual_machine" "vm" {
 resource "azurerm_key_vault_secret" "ssh_private_key" {
   for_each = local.create_sshkeys ? var.settings.virtual_machine_settings : {}
 
-  name         = format("%s-ssh-private-key", azurecaf_name.linux_computer_name[each.key].result)
+  name         = try(format("%s-ssh-private-key", azurecaf_name.linux_computer_name[each.key].result), format("%s-ssh-private-key", azurecaf_name.legacy_computer_name[each.key].result))
   value        = tls_private_key.ssh[each.key].private_key_pem
   key_vault_id = local.keyvault.id
 
@@ -171,7 +176,7 @@ resource "azurerm_key_vault_secret" "ssh_private_key" {
 resource "azurerm_key_vault_secret" "ssh_public_key_openssh" {
   for_each = local.create_sshkeys ? var.settings.virtual_machine_settings : {}
 
-  name         = format("%s-ssh-public-key-openssh", azurecaf_name.linux_computer_name[each.key].result)
+  name         = try(format("%s-ssh-public-key-openssh", azurecaf_name.linux_computer_name[each.key].result), format("%s-ssh-public-key-openssh", azurecaf_name.legacy_computer_name[each.key].result))
   value        = tls_private_key.ssh[each.key].public_key_openssh
   key_vault_id = local.keyvault.id
 

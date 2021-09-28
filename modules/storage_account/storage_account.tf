@@ -194,6 +194,12 @@ resource "azurerm_storage_account" "stg" {
       choice                      = try(var.storage_account.routing.choice, "MicrosoftRouting")
     }
   }
+
+  lifecycle {
+    ignore_changes = [
+      location, resource_group_name
+    ]
+  }
 }
 
 module "queue" {
@@ -230,4 +236,11 @@ module "file_share" {
   settings             = each.value
   recovery_vault       = local.recovery_vault
   resource_group_name  = var.resource_group_name
+}
+
+module "management_policy" {
+  source             = "./management_policy"
+  for_each           = try(var.storage_account.management_policies, {})
+  storage_account_id = azurerm_storage_account.stg.id
+  settings           = try(var.storage_account.management_policies, {})
 }
