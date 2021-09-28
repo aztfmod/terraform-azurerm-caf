@@ -110,8 +110,8 @@ resource "azurerm_kubernetes_cluster" "aks" {
     node_count = try(var.settings.default_node_pool.node_count, 1)
   }
 
-  dns_prefix                 = try(var.settings.dns_prefix, random_string.prefix.result)
-  dns_prefix_private_cluster = try(var.settings.dns_prefix_private_cluster, random_string.prefix.result)
+  dns_prefix                 = var.settings.dns_prefix
+  dns_prefix_private_cluster = var.settings.dns_prefix_private_cluster
   automatic_channel_upgrade  = try(var.settings.automatic_channel_upgrade, null)
 
   dynamic "addon_profile" {
