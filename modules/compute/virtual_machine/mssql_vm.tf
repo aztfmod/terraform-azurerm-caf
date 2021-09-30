@@ -3,6 +3,10 @@ resource "azurerm_mssql_virtual_machine" "mssqlvm" {
     for key, value in try(var.settings.virtual_machine_settings, {}) : key => value
     if try(value.mssql_settings, null) != null
   }
+  
+  depends_on = [
+    azurerm_virtual_machine_data_disk_attachment.disk
+  ]
 
   virtual_machine_id               = local.os_type == "windows" ? try(azurerm_windows_virtual_machine.vm[each.key].id, null) : try(azurerm_linux_virtual_machine.vm[each.key].id, null)
   sql_license_type                 = try(each.value.mssql_settings.sql_license_type, null)
