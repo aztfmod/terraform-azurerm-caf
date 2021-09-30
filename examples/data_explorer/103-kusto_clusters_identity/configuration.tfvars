@@ -28,9 +28,13 @@ managed_identities = {
 }
 kusto_clusters = {
   kc1 = {
-    name               = "kustocluster"
-    resource_group_key = "rg1"
-    region             = "region1"
+    name = "kustocluster"
+    resource_group = {
+      key = "rg1"
+      #lz_key = ""
+      #name   = ""
+    }
+    region = "region1"
 
     sku = {
       name     = "Dev(No SLA)_Standard_E2a_v4"
