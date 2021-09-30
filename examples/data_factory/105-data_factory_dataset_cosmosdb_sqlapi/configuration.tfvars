@@ -12,8 +12,12 @@ resource_groups = {
 }
 data_factory = {
   df1 = {
-    name               = "example"
-    resource_group_key = "rg1"
+    name = "example"
+    resource_group = {
+      key = "rg1"
+      #lz_key = ""
+      #name = ""
+    }
   }
 }
 
@@ -49,22 +53,47 @@ cosmos_dbs = {
 
 data_factory_linked_service_cosmosdb = {
   dflscdb1 = {
-    name                 = "dflscdb1example"
-    resource_group_key   = "rg1"
-    data_factory_key     = "df1"
-    cosmosdb_account_key = "cosmosdb_account_re1"
-    #account_endpoint    = azurerm_cosmosdb_account.example.endpoint
-    #account_key         = data.azurerm_cosmosdb_account.example.primary_access_key
-    database = "foo"
+    name = "dflscdb1example"
+    resource_group = {
+      key = "rg1"
+      #lz_key = ""
+      #name = ""
+    }
+    data_factory = {
+      key = "df1"
+      #lz_key = ""
+      #name = ""
+    }
+    cosmosdb_account = {
+      key = "cosmosdb_account_re1"
+      #lz_key = ""
+      #endpoint = ""
+      #account_key = ""
+      database = "foo"
+    }
+    #connection_string = ""
+
   }
 }
 data_factory_dataset_cosmosdb_sqlapi = {
   dfdab1 = {
-    name               = "dfdab1example"
-    resource_group_key = "rg1"
-    data_factory_key   = "df1"
-    linked_service_key = "dflscdb1"
-    collection_name    = "bar"
+    name = "dfdab1example"
+    resource_group = {
+      key = "rg1"
+      #lz_key = ""
+      #name = ""
+    }
+    data_factory = {
+      key = "df1"
+      #lz_key = ""
+      #name = ""
+    }
+    linked_service = {
+      key = "dflscdb1"
+      #lz_key = ""
+      #name = ""
+    }
+    collection_name = "bar"
   }
 }
 
