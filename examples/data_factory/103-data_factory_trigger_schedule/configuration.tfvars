@@ -12,23 +12,47 @@ resource_groups = {
 }
 data_factory = {
   df1 = {
-    name               = "example"
-    resource_group_key = "rg1"
+    name = "example"
+    resource_group = {
+      key = "rg1"
+      #lz_key = ""
+      #name = ""
+    }
   }
 }
 data_factory_pipeline = {
   dfp1 = {
-    name               = "example"
-    resource_group_key = "rg1"
-    data_factory_key   = "df1"
+    name = "example"
+    resource_group = {
+      key = "rg1"
+      #lz_key = ""
+      #name = ""
+    }
+    data_factory = {
+      key = "df1"
+      #lz_key = ""
+      #name = ""
+    }
   }
 }
 data_factory_trigger_schedule = {
   dfps1 = {
-    name                      = "example"
-    data_factory_key          = "df1"
-    resource_group_key        = "rg1"
-    data_factory_pipeline_key = "dfp1"
+    name = "example"
+    resource_group = {
+      key = "rg1"
+      #lz_key = ""
+      #name = ""
+    }
+    data_factory = {
+      key = "df1"
+      #lz_key = ""
+      #name = ""
+    }
+    data_factory_pipeline = {
+      key = "dfp1"
+      #lz_key = ""
+      #name = ""
+    }
 
     interval  = 5
     frequency = "Day"

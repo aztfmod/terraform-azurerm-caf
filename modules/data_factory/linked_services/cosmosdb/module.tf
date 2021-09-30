@@ -16,8 +16,8 @@ resource "azurerm_data_factory_linked_service_cosmosdb" "linked_service_cosmosdb
   annotations              = try(var.settings.annotations, null)
   parameters               = try(var.settings.parameters, null)
   additional_properties    = try(var.settings.additional_properties, null)
-  account_endpoint         = try(var.settings.account_endpoint, null)
-  account_key              = try(var.settings.account_key, null)
-  database                 = try(var.settings.database, null)
+  account_endpoint         = try(var.account_endpoint, null)
+  account_key              = try(var.account_key, null)
+  database                 = try(var.settings.cosmosdb_account.database, null)
   connection_string        = try(var.settings.connection_string, null)
 }
