@@ -359,3 +359,8 @@ variable "cognitive_services" {
   description = "Configuration object - Cognitive Service Resource "
   default     = {}
 }
+
+variable "communication" {
+  description = "Configuration object - communication resources"
+  default     = {}
+}

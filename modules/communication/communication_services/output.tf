@@ -4,7 +4,7 @@ output "id" {
 }
 
 output "name" {
-  value = azurecaf_name.acs.result
+  value = azurerm_communication_service.acs.name
 }
 
 output "resource_group_name" {
