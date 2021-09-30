@@ -11,28 +11,7 @@ resource_groups = {
   }
 }
 
-vnets = {
-  vnet1 = {
-    resource_group_key = "rg1"
-    vnet = {
-      name          = "vnet1"
-      address_space = ["10.100.100.0/24"]
-    }
-    specialsubnets = {}
-    subnets = {
-      subnet1 = {
-        name    = "subnet1"
-        cidr    = ["10.100.100.0/29"]
-        nsg_key = "nsg1"
-        delegation = {
-          name               = "kusto_clusters"
-          service_delegation = "Microsoft.Kusto/clusters"
-        }
-        route_table_key = "rt1"
-      }
-    }
-  }
-}
+
 network_security_group_definition = {
   nsg1 = {
     nsg = [
@@ -144,6 +123,28 @@ route_tables = {
     resource_group_key = "rg1"
   }
 }
+vnets = {
+  vnet1 = {
+    resource_group_key = "rg1"
+    vnet = {
+      name          = "vnet1"
+      address_space = ["10.100.100.0/24"]
+    }
+    specialsubnets = {}
+    subnets = {
+      subnet1 = {
+        name    = "subnet1"
+        cidr    = ["10.100.100.0/29"]
+        nsg_key = "nsg1"
+        delegation = {
+          name               = "kusto_clusters"
+          service_delegation = "Microsoft.Kusto/clusters"
+        }
+        route_table_key = "rt1"
+      }
+    }
+  }
+}
 public_ip_addresses = {
   pip1 = {
     name                    = "pip1"
@@ -165,9 +166,13 @@ public_ip_addresses = {
 }
 kusto_clusters = {
   kc1 = {
-    name               = "kustocluster"
-    resource_group_key = "rg1"
-    region             = "region1"
+    name = "kustocluster"
+    resource_group = {
+      key = "rg1"
+      #lz_key = ""
+      #name   = ""
+    }
+    region = "region1"
 
     sku = {
       name     = "Dev(No SLA)_Standard_E2a_v4"
