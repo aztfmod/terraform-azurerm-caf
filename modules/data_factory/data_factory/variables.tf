@@ -16,6 +16,7 @@ variable "base_tags" {
   type        = map(any)
 }
 variable "settings" {}
+variable "combined_resources" {}
 variable "tags" {
   default = null
 }

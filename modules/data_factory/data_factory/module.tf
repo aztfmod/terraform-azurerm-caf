@@ -35,9 +35,9 @@ resource "azurerm_data_factory" "df" {
   }
   dynamic "identity" {
     for_each = try(var.settings.identity, null) != null ? [var.settings.identity] : []
-
     content {
-      type = identity.value.type
+      type         = var.settings.identity.type
+      identity_ids = coalesce(local.managed_identities, var.settings.identity.identity_ids)
     }
   }
 
@@ -58,3 +58,4 @@ resource "azurerm_data_factory" "df" {
   #customer_managed_key_id         = try(var.settings.customer_managed_key_id)
   tags = local.tags
 }
+
