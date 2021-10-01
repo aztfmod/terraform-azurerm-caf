@@ -13,6 +13,6 @@ resource "azurerm_key_vault_access_policy" "policy" {
   }
 
   lifecycle {
-    ignore_changes = [key_vault_id]
+    ignore_changes = [key_vault_id, object_id]
   }
 }

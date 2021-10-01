@@ -19,7 +19,13 @@ resource_groups = {
 # https://docs.microsoft.com/en-us/azure/storage/
 storage_accounts = {
   sa1 = {
-    name               = "sa1dev"
+    name = "sa1dev"
+    # This option is to enable remote RG reference
+    # resource_group = {
+    #   lz_key = ""
+    #   key    = ""
+    # }
+
     resource_group_key = "test"
     # Account types are BlobStorage, BlockBlobStorage, FileStorage, Storage and StorageV2. Defaults to StorageV2
     account_kind = "BlobStorage"

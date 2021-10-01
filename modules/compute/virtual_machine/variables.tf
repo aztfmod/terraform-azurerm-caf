@@ -48,6 +48,10 @@ variable "recovery_vaults" {
   default = {}
 }
 
+variable "storage_accounts" {
+  default = {}
+}
+
 variable "availability_sets" {
   default = {}
 }
@@ -84,4 +88,3 @@ variable "network_security_groups" {
 variable "dedicated_hosts" {
   default = {}
 }
-
