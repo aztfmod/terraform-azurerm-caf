@@ -48,9 +48,9 @@ The current folder contains an example of module with the whole features set of 
 cd /tf/caf/examples
 az login
 terraform init
-terraform plan -var-file <path to your variable files>
-terraform apply
-terraform destroy
+terraform plan -var-file <path to your variable file>
+terraform apply -var-file <path to your variable file>
+terraform destroy -var-file <path to your variable file>
 ```
 
 ## Deploying examples within a landing zone
