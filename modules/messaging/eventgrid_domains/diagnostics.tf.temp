@@ -1,8 +1,0 @@
-module "diagnostics" {
-  source = "../../diagnostics"
-
-  resource_id       = azurerm_eventgrid_domain.evgd.id
-  resource_location = azurerm_eventgrid_domain.evgd.location
-  diagnostics       = var.diagnostics
-  profiles          = try(var.settings.diagnostic_profiles, {})
-}
