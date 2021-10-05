@@ -274,4 +274,12 @@ locals {
     virtual_machines = try(var.enable.virtual_machines, true)
   }
 
+  messaging = {
+    notification_hubs_namespaces = try(var.messaging.notification_hubs_namespaces, {})
+    notification_hubs            = try(var.messaging.notification_hubs, {})
+    notification_hub_authorization_rule = try(var.messaging.notification_hub_authorization_rule, {})
+    eventgrid_topics            = try(var.messaging.eventgrid_topics, {})
+    eventgrid_domains            = try(var.messaging.eventgrid_domains, {})
+  }
+
 }
