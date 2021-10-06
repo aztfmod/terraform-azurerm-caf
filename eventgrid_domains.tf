@@ -20,3 +20,15 @@ module "eventgrid_domains" {
 output "eventgrid_domains" {
   value = module.eventgrid_domains
 }
+
+module "eventgrid_domains_diagnostics" {
+  source   = "./modules/diagnostics"
+  // for_each = var.eventgrid_domains
+  for_each = local.messaging.eventgrid_domains
+
+  resource_id       = module.eventgrid_domains[each.key].id
+  // resource_location = module.eventgrid_domains[each.key].location
+  resource_location = lookup(each.value, "region", null) == null ? local.resource_groups[each.value.resource_group_key].location : local.global_settings.regions[each.value.region]
+  diagnostics       = local.combined_diagnostics
+  profiles          = try(each.value.diagnostic_profiles, {})
+}
