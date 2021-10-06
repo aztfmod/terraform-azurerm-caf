@@ -29,21 +29,21 @@ resource "azurecaf_name" "legacy_computer_name" {
 resource "azurerm_virtual_machine" "vm" {
   for_each = local.os_type == "legacy" ? var.settings.virtual_machine_settings : {}
 
-  name                  = each.value.name
-  location              = var.location
-  resource_group_name   = var.resource_group_name
-  vm_size               = each.value.size
-  network_interface_ids = local.nic_ids
-  zones = try([each.value.zones], null)
-  tags                  = merge(local.tags, try(each.value.tags, null))
-  delete_os_disk_on_termination = try(each.value.delete_os_disk_on_termination, null)
+  name                             = each.value.name
+  location                         = var.location
+  resource_group_name              = var.resource_group_name
+  vm_size                          = each.value.size
+  network_interface_ids            = local.nic_ids
+  zones                            = try([each.value.zones], null)
+  tags                             = merge(local.tags, try(each.value.tags, null))
+  delete_os_disk_on_termination    = try(each.value.delete_os_disk_on_termination, null)
   delete_data_disks_on_termination = try(each.value.delete_data_disks_on_termination, null)
 
   # dynamic
   os_profile {
-    computer_name                = azurecaf_name.legacy_computer_name[each.key].result
-    admin_username               = try(each.value.admin_username_key, null) == null ? each.value.admin_username : local.admin_username
-    admin_password               = try(each.value.admin_password_key, null) == null ? random_password.legacy[local.os_type].result : local.admin_password
+    computer_name  = azurecaf_name.legacy_computer_name[each.key].result
+    admin_username = try(each.value.admin_username_key, null) == null ? each.value.admin_username : local.admin_username
+    admin_password = try(each.value.admin_password_key, null) == null ? random_password.legacy[local.os_type].result : local.admin_password
   }
 
   # os_profile_secrets
@@ -53,13 +53,13 @@ resource "azurerm_virtual_machine" "vm" {
 
     content {
       disable_password_authentication = try(each.value.os_profile_linux_config.disable_password_authentication, true)
-      
+
       dynamic "ssh_keys" {
         for_each = each.value.os_profile_linux_config.disable_password_authentication == false ? [] : [1]
 
         content {
-            key_data = local.create_sshkeys ? tls_private_key.ssh[each.key].public_key_openssh : file(var.settings.public_key_pem_file)
-            path = "/home/${each.value.admin_username}/.ssh/authorized_keys"
+          key_data = local.create_sshkeys ? tls_private_key.ssh[each.key].public_key_openssh : file(var.settings.public_key_pem_file)
+          path     = "/home/${each.value.admin_username}/.ssh/authorized_keys"
         }
       }
     }
@@ -83,63 +83,63 @@ resource "azurerm_virtual_machine" "vm" {
       }
     }
   }
-  
+
   dynamic "os_profile_windows_config" {
     for_each = try(each.value.os_profile_windows_config, null) == null ? [] : [1]
 
     content {
-      provision_vm_agent = try(each.value.os_profile_windows_config.provision_vm_agent, null)
+      provision_vm_agent        = try(each.value.os_profile_windows_config.provision_vm_agent, null)
       enable_automatic_upgrades = try(each.value.os_profile_windows_config.enable_automatic_upgrades, null)
-      timezone = try(each.value.os_profile_windows_config.timezone, null)
-      
+      timezone                  = try(each.value.os_profile_windows_config.timezone, null)
+
       dynamic "winrm" {
-        for_each  = {
-          for key, value in try(each.value.os_profile_windows_config.winrm, {}) : key => value 
+        for_each = {
+          for key, value in try(each.value.os_profile_windows_config.winrm, {}) : key => value
         }
 
         content {
-          protocol = winrm.value.protocol
+          protocol        = winrm.value.protocol
           certificate_url = try(winrm.value.certificate_url, null)
         }
 
       }
 
       dynamic "additional_unattend_config" {
-        for_each =  {
+        for_each = {
           for key, value in try(each.value.os_profile_windows_config.additional_unattend_config, {}) : key => value
         }
 
         content {
-          pass = additional_unattend_config.value.pass
-          component = additional_unattend_config.value.component
+          pass         = additional_unattend_config.value.pass
+          component    = additional_unattend_config.value.component
           setting_name = additional_unattend_config.value.setting_name
-          content = additional_unattend_config.value.content
+          content      = additional_unattend_config.value.content
         }
       }
     }
   }
 
-  availability_set_id             = try(var.availability_sets[var.client_config.landingzone_key][each.value.availability_set_key].id, var.availability_sets[each.value.availability_sets].id, null)
+  availability_set_id = try(var.availability_sets[var.client_config.landingzone_key][each.value.availability_set_key].id, var.availability_sets[each.value.availability_sets].id, null)
 
   dynamic "boot_diagnostics" {
     for_each = try(var.boot_diagnostics_storage_account != null ? [1] : var.global_settings.resource_defaults.virtual_machines.use_azmanaged_storage_for_boot_diagnostics == true ? [1] : [], [])
 
     content {
       storage_uri = var.boot_diagnostics_storage_account == "" ? null : var.boot_diagnostics_storage_account
-      enabled = true
+      enabled     = true
     }
   }
 
   dynamic "additional_capabilities" {
     for_each = try(each.value.additional_capabilities, null) == null ? [] : [1]
 
-      content {
-        ultra_ssd_enabled = each.value.additional_capabilities.ultra_ssd_enabled
-      }
-  
+    content {
+      ultra_ssd_enabled = each.value.additional_capabilities.ultra_ssd_enabled
+    }
+
   }
 
-  proximity_placement_group_id    = try(var.proximity_placement_groups[var.client_config.landingzone_key][each.value.proximity_placement_group_key].id, var.proximity_placement_groups[each.value.proximity_placement_groups].id, null)
+  proximity_placement_group_id = try(var.proximity_placement_groups[var.client_config.landingzone_key][each.value.proximity_placement_group_key].id, var.proximity_placement_groups[each.value.proximity_placement_groups].id, null)
 
   storage_os_disk {
     caching                   = try(each.value.os_disk.caching, null)
@@ -147,22 +147,22 @@ resource "azurerm_virtual_machine" "vm" {
     name                      = try(each.value.os_disk.name, null)
     write_accelerator_enabled = try(each.value.os_disk.write_accelerator_enabled, false)
     create_option             = each.value.os_disk.create_option
-    image_uri = try("${each.value.storage_image_reference.publisher}:${each.value.storage_image_reference.offer}:${each.value.storage_image_reference.sku}:${each.value.storage_image_reference.version}", null)
-    os_type = try(each.value.os_disk.operating_system, null)
-    managed_disk_id = try(each.value.os_disk.managed_disk_id, null)
-    managed_disk_type = try(each.value.os_disk.managed_disk_type, null)
-    vhd_uri = try(each.value.os_disk.vhd_uri, null)
+    image_uri                 = try("${each.value.storage_image_reference.publisher}:${each.value.storage_image_reference.offer}:${each.value.storage_image_reference.sku}:${each.value.storage_image_reference.version}", null)
+    os_type                   = try(each.value.os_disk.operating_system, null)
+    managed_disk_id           = try(each.value.os_disk.managed_disk_id, null)
+    managed_disk_type         = try(each.value.os_disk.managed_disk_type, null)
+    vhd_uri                   = try(each.value.os_disk.vhd_uri, null)
   }
 
   dynamic "storage_image_reference" {
     for_each = try(each.value.storage_image_reference, false) == false ? [] : [1]
 
     content {
-      publisher      = try(each.value.storage_image_reference.publisher, null)
-      offer   = try(each.value.storage_image_reference.offer, null)
-      sku = try(each.value.storage_image_reference.sku, null)
-      version = try(each.value.storage_image_reference.version, null)
-      id = try(each.value.storage_image_reference.custom_image_id, var.custom_image_ids[each.value.lz_key][each.value.custom_image_key].id, null)
+      publisher = try(each.value.storage_image_reference.publisher, null)
+      offer     = try(each.value.storage_image_reference.offer, null)
+      sku       = try(each.value.storage_image_reference.sku, null)
+      version   = try(each.value.storage_image_reference.version, null)
+      id        = try(each.value.storage_image_reference.custom_image_id, var.custom_image_ids[each.value.lz_key][each.value.custom_image_key].id, null)
     }
   }
 
@@ -181,15 +181,15 @@ resource "azurerm_virtual_machine" "vm" {
       for key, value in try(var.settings.storage_data_disk, {}) : key => value
     }
     content {
-      name = storage_data_disk.value.name
-      caching = try(storage_data_disk.value.caching, null)
-      create_option = storage_data_disk.value.create_option
-      disk_size_gb = try(storage_data_disk.value.disk_size_gb)
-      lun = storage_data_disk.value.lun
+      name                      = storage_data_disk.value.name
+      caching                   = try(storage_data_disk.value.caching, null)
+      create_option             = storage_data_disk.value.create_option
+      disk_size_gb              = try(storage_data_disk.value.disk_size_gb)
+      lun                       = storage_data_disk.value.lun
       write_accelerator_enabled = try(storage_data_disk.value.write_accelerator_enabled, null)
-      managed_disk_type = try(storage_data_disk.value.managed_disk_type, null)
-      managed_disk_id = try(storage_data_disk.value.managed_disk_id, null)
-      vhd_uri = try(storage_data_disk.value.vhd_uri, null)
+      managed_disk_type         = try(storage_data_disk.value.managed_disk_type, null)
+      managed_disk_id           = try(storage_data_disk.value.managed_disk_id, null)
+      vhd_uri                   = try(storage_data_disk.value.vhd_uri, null)
     }
   }
 
@@ -207,7 +207,7 @@ resource "azurerm_virtual_machine" "vm" {
 
   lifecycle {
     ignore_changes = [
-      storage_os_disk[0].name
+      resource_group_name, location, os_disk[0].name
     ]
   }
 
