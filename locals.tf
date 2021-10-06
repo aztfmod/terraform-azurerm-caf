@@ -277,9 +277,7 @@ locals {
   messaging = {
     notification_hub_namespaces = try(var.messaging.notification_hub_namespaces, {})
     notification_hubs            = try(var.messaging.notification_hubs, {})
-    notification_hub_authorization_rules = try(var.messaging.notification_hub_authorization_rules, {})
-    eventgrid_topics            = try(var.messaging.eventgrid_topics, {})
-    eventgrid_domains            = try(var.messaging.eventgrid_domains, {})
+    notification_hub_authorization_rules = try(var.messaging.notification_hub_authorization_rules, {})    
   }
 
 }
