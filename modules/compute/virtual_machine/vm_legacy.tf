@@ -207,7 +207,7 @@ resource "azurerm_virtual_machine" "vm" {
 
   lifecycle {
     ignore_changes = [
-      resource_group_name, location, os_disk[0].name
+      resource_group_name, location
     ]
   }
 
