@@ -3,7 +3,7 @@ resource "azurerm_mssql_virtual_machine" "mssqlvm" {
     for key, value in try(var.settings.virtual_machine_settings, {}) : key => value
     if try(value.mssql_settings, null) != null
   }
-  
+
   depends_on = [
     azurerm_virtual_machine_data_disk_attachment.disk
   ]
