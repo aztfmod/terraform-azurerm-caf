@@ -1,3 +1,7 @@
+#######################################################################################################################################
+# Commented due to azurerm_communication_service type of resource is currently not available in "azurecaf_name" and needs to be updated
+#######################################################################################################################################
+
 // resource "azurecaf_name" "acs" {
 //   name          = var.settings.name
 //   resource_type = "azurerm_communication_service"
@@ -12,7 +16,7 @@ resource "azurerm_communication_service" "acs" {
   // name                = azurecaf_name.acs.result
   name                = var.settings.name
   resource_group_name = var.resource_group_name
-  data_location       = try(var.settings.data_location, null)
+  data_location       = try(var.settings.data_location, "United States")
   tags                = local.tags
 }
 
