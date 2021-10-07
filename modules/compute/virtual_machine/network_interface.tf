@@ -40,7 +40,9 @@ resource "azurecaf_name" "nic" {
 
 resource "azurerm_network_interface" "nic" {
   for_each = var.settings.networking_interfaces
-
+  lifecycle {
+    ignore_changes = [resource_group_name, location]
+  }
   name                = azurecaf_name.nic[each.key].result
   location            = var.location
   resource_group_name = var.resource_group_name

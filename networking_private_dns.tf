@@ -24,13 +24,13 @@ output "private_dns" {
 #
 
 module "private_dns_vnet_links" {
-  source   = "./modules/networking/private_dns_vnet_link"
-  for_each = try(local.networking.private_dns_vnet_links, {})
-  depends_on  = [module.private_dns]
+  source     = "./modules/networking/private_dns_vnet_link"
+  for_each   = try(local.networking.private_dns_vnet_links, {})
+  depends_on = [module.private_dns]
 
   base_tags       = {}
   global_settings = local.global_settings
-  client_config = local.client_config
+  client_config   = local.client_config
   virtual_network_id = coalesce(
     try(local.combined_objects_networking[each.value.lz_key][each.value.vnet_key].id, null),
     try(local.combined_objects_networking[local.client_config.landingzone_key][each.value.vnet_key].id, null)
