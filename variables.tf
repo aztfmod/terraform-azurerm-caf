@@ -220,6 +220,11 @@ variable "networking" {
   default     = {}
 }
 
+variable "virtual_hub_lz_key" {
+  description = "Key name of the landinzone when the virtual hub is deployed. Required when peering in multi-subscription and/or different Azure AD tenants."
+  default = null
+}
+
 ## Security variables
 variable "security" {
   description = "Configuration object - security resources"

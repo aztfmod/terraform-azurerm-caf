@@ -3,7 +3,7 @@ terraform {
   required_providers {
     azurerm = {
       source  = "hashicorp/azurerm"
-      version = "~> 2.78.0"
+      version = "~> 2.79.0"
     }
     azuread = {
       source  = "hashicorp/azuread"
@@ -30,6 +30,15 @@ provider "azurerm" {
     }
   }
 }
+
+provider "azurerm" {
+  alias = "vhub"
+  skip_provider_registration = true
+  features {}
+  subscription_id = can(var.tfstates[var.virtual_hub_lz_key].subscription_id) ? var.tfstates[var.virtual_hub_lz_key].subscription_id : local.client_config.subscription_id
+  tenant_id       = can(var.tfstates[var.virtual_hub_lz_key].tenant_id) ? var.tfstates[var.virtual_hub_lz_key].tenant_id : local.client_config.tenant_id
+}
+
 
 data "azurerm_subscription" "primary" {}
 data "azurerm_client_config" "current" {}
