@@ -33,11 +33,6 @@ resource "azurerm_private_endpoint" "pep" {
     }
   }
 
-  lifecycle {
-    ignore_changes = [
-      resource_group_name, location
-    ]
-  }
 }
 
 locals {
