@@ -7,6 +7,9 @@ resource "random_string" "prefix" {
 }
 
 locals {
+  api_management_services = {
+    api_management = try(var.api_management_services.api_management, {})
+  }
   azuread = {
     azuread_api_permissions             = try(var.azuread.azuread_api_permissions, {})
     azuread_applications                = try(var.azuread.azuread_applications, {})

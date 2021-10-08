@@ -34,6 +34,11 @@ module "example" {
     azuread_service_principals          = var.azuread_service_principals
     azuread_users                       = var.azuread_users
   }
+  
+  api_management_services = {
+    api_management = var.api_management
+  }
+
   # # Defaulted, you can declare an override if you dont target Azure public
   # cloud = {
   #   acrLoginServerEndpoint                      = var.acrLoginServerEndpoint

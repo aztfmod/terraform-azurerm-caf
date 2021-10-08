@@ -601,3 +601,6 @@ variable "logic_app_trigger_custom" {
 variable "private_dns_vnet_links" {
   default = {}
 }
+variable "api_management" {
+  default = {}
+}
