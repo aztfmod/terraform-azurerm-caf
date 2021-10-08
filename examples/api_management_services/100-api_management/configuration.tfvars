@@ -24,6 +24,37 @@ api_management = {
     publisher_name      = "My Company"
     publisher_email     = "company@terraform.io"
     sku_name = "Developer_1"
+    
+    additional_locations = {
+      location_1 = {
+        location = "eastus"
+        virtual_network_configuration = {
+          subnet_id = "some_id"
+        }
+      }
+      location_2 = {
+        location = "eastus2"
+        virtual_network_configuration = {
+          subnet_id = "some_id_2"
+        }
+      }
+    }
+    certificate = {
+      certificate_1 = {
+        encoded_certificate = "Asdfasdf"
+        store_name = "store_name_1"
+      }
+    }
+
+    client_certificate_enabled = false
+    gateway_disabled = false
+    #min_api_version = "1.1" # Not sure what a real version is
+    zones = []
+
+    identity = {
+      type = SystemAssigned
+      identity_ids = []
+    }
   }
 
 }
