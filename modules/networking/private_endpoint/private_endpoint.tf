@@ -32,6 +32,7 @@ resource "azurerm_private_endpoint" "pep" {
       private_dns_zone_ids = local.private_dns_zone_ids
     }
   }
+
 }
 
 locals {
