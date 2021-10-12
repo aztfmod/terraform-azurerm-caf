@@ -2,48 +2,6 @@
 
 When ugrading to a newer version of the CAF module, some configuration structures must be updated before applying the modifications.
 
-## 5.4.3 to 5.4.4
-
-### virtual_hub_connections
-There is a requirement for the virtual hub connection to work cross susbcriptions and cross tenant to have the azurerm provider to be connected to the virtual hub. In this release we are adding an alias to the azurerm provider to support the peering cross-subscriptions.
-
-Limitations - Only one virtual hub can be targeted per deployed. If you need to peer to different virtual hubs, split the peering into different deployemnts.
-
-```hcl
-# Before
-
-virtual_hub_connections = {
-  vnet_to_dev = {
-    name = "vnet-it-dna-artemis-dev-TO-dev"
-    virtual_hub = {
-      lz_key = "connectivity_virtual_hub_dev"
-      key    = "dev"
-    }
-    vnet = {
-      vnet_key = "vnet"
-    }
-  }
-}
-
-# To move to 5.4.4
-virtual_hub_lz_key = "connectivity_virtual_hub_dev"
-
-virtual_hub_connections = {
-  vnet_to_dev = {
-    name = "vnet-dev-TO-vhub_dev"
-    virtual_hub = {
-      lz_key = "connectivity_virtual_hub_dev"
-      key    = "dev"
-    }
-    vnet = {
-      vnet_key = "vnet"
-    }
-  }
-}
-
-
-```
-
 ## 5.4.0
 
 Upgrade to 5.4.0 includes support azurerm 2.64.0 provider and implements the following changes:
