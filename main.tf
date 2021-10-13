@@ -4,6 +4,9 @@ terraform {
     azurerm = {
       source  = "hashicorp/azurerm"
       version = "~> 2.79.1"
+      configuration_aliases = [
+        azurerm.vhub
+      ]
     }
     azuread = {
       source  = "hashicorp/azuread"
@@ -31,14 +34,6 @@ provider "azurerm" {
       delete_nested_items_during_deletion = false
     }
   }
-}
-
-provider "azurerm" {
-  alias = "vhub"
-  skip_provider_registration = true
-  features {}
-  subscription_id = can(var.tfstates[var.virtual_hub_lz_key].subscription_id) ? var.tfstates[var.virtual_hub_lz_key].subscription_id : local.client_config.subscription_id
-  tenant_id       = can(var.tfstates[var.virtual_hub_lz_key].tenant_id) ? var.tfstates[var.virtual_hub_lz_key].tenant_id : local.client_config.tenant_id
 }
 
 
