@@ -194,6 +194,12 @@ resource "azurerm_storage_account" "stg" {
       choice                      = try(var.storage_account.routing.choice, "MicrosoftRouting")
     }
   }
+
+  lifecycle {
+    ignore_changes = [
+      location, resource_group_name
+    ]
+  }
 }
 
 module "queue" {

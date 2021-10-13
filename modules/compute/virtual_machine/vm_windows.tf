@@ -185,7 +185,7 @@ resource "azurerm_windows_virtual_machine" "vm" {
 
   lifecycle {
     ignore_changes = [
-      os_disk[0].name
+      resource_group_name, location, os_disk[0].name
     ]
   }
 
@@ -231,24 +231,24 @@ locals {
 # With for_each it is not possible to change the provider's subscription at runtime so using the following pattern.
 #
 data "external" "windows_admin_username" {
-  count = try(var.settings.virtual_machine_settings["windows"].admin_username_key, null) == null ? 0 : 1
+  count = try(var.settings.virtual_machine_settings["windows"].admin_username_key, var.settings.virtual_machine_settings["legacy"].admin_password_key, null) == null ? 0 : 1
   program = [
     "bash", "-c",
     format(
       "az keyvault secret show --name '%s' --vault-name '%s' --query '{value: value }' -o json",
-      var.settings.virtual_machine_settings["windows"].admin_username_key,
+      try(var.settings.virtual_machine_settings["windows"].admin_username_key, var.settings.virtual_machine_settings["legacy"].admin_username_key, null),
       local.keyvault.name
     )
   ]
 }
 
 data "external" "windows_admin_password" {
-  count = try(var.settings.virtual_machine_settings["windows"].admin_password_key, null) == null ? 0 : 1
+  count = try(var.settings.virtual_machine_settings["windows"].admin_password_key, var.settings.virtual_machine_settings["legacy"].admin_password_key, null) == null ? 0 : 1
   program = [
     "bash", "-c",
     format(
       "az keyvault secret show -n '%s' --vault-name '%s' --query '{value: value }' -o json",
-      var.settings.virtual_machine_settings["windows"].admin_password_key,
+      try(var.settings.virtual_machine_settings["windows"].admin_password_key, var.settings.virtual_machine_settings["legacy"].admin_password_key),
       local.keyvault.name
     )
   ]
