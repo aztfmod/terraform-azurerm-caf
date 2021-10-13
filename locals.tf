@@ -205,6 +205,7 @@ locals {
     dns_zones                                               = try(var.networking.dns_zones, {})
     domain_name_registrations                               = try(var.networking.domain_name_registrations, {})
     express_route_circuit_authorizations                    = try(var.networking.express_route_circuit_authorizations, {})
+    express_route_circuit_peerings                          = try(var.networking.express_route_circuit_peerings, {})
     express_route_circuits                                  = try(var.networking.express_route_circuits, {})
     front_door_waf_policies                                 = try(var.networking.front_door_waf_policies, {})
     front_doors                                             = try(var.networking.front_doors, {})
