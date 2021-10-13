@@ -3,6 +3,11 @@ output "id" {
   value       = azurerm_storage_share.fs.id
 }
 
+output "name" {
+  description = "The URL of the File Share"
+  value       = azurerm_storage_share.fs.name
+}
+
 output "url" {
   description = "The URL of the File Share"
   value       = azurerm_storage_share.fs.url
