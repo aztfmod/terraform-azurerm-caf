@@ -4,11 +4,11 @@
 resource "azurerm_backup_policy_vm" "vm" {
   for_each = try(var.settings.backup_policies.vms, {})
 
-  name                = each.value.name
-  resource_group_name = var.resource_group_name
-  recovery_vault_name = azurerm_recovery_services_vault.asr.name
-
-  timezone = try(each.value.timezone, null)
+  name                           = each.value.name
+  resource_group_name            = var.resource_group_name
+  recovery_vault_name            = azurerm_recovery_services_vault.asr.name
+  instant_restore_retention_days = try(each.value.instant_restore_retention_days, null)
+  timezone                       = try(each.value.timezone, null)
 
   dynamic "backup" {
     for_each = lookup(each.value, "backup", null) == null ? [] : [1]
