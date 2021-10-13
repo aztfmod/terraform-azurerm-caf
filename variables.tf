@@ -120,6 +120,16 @@ variable "subscriptions" {
   default     = {}
 }
 
+variable "connectivity_subscription_id" {
+  description = "Connectivity subscription id"
+  default = null
+}
+
+variable "connectivity_tenant_id" {
+  description = "Connectivity tenant id"
+  default = null
+}
+
 variable "subscription_billing_role_assignments" {
   description = "Configuration object - subscription billing roleassignments."
   default     = {}
@@ -218,11 +228,6 @@ variable "database" {
 variable "networking" {
   description = "Configuration object - networking resources"
   default     = {}
-}
-
-variable "virtual_hub_lz_key" {
-  description = "Key name of the landinzone when the virtual hub is deployed. Required when peering in multi-subscription and/or different Azure AD tenants."
-  default = null
 }
 
 ## Security variables

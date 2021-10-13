@@ -1,6 +1,10 @@
 module "example" {
   source = "../"
 
+  providers = {
+    azurerm.vhub = azurerm.vhub
+  }
+
   current_landingzone_key               = var.landingzone.key
   custom_role_definitions               = var.custom_role_definitions
   event_hub_auth_rules                  = var.event_hub_auth_rules
