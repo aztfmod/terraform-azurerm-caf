@@ -4,7 +4,8 @@ When upgrading to a newer version of the CAF module, some configuration structur
 
 ## 5.4.4
 
-Due to a regression in the Terraform provider >2.78, this update is not capable of cross-tenant, cross-subscriptions peering between vhub and vwans. This is available in 5.4.3 and will be fixed in 5.4.x.
+Due to a regression in the Terraform provider >2.78, this update is not capable of cross-tenant, cross-subscriptions peering between vhub and vwans. This is available in 5.4.3 and will be fixed in 5.5.0.
+
 ## 5.4.0
 
 Upgrade to 5.4.0 includes support azurerm 2.64.0 provider and implements the following changes:
