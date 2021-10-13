@@ -25,20 +25,20 @@ api_management = {
     publisher_email     = "company@terraform.io"
     sku_name = "Premium_2"
     
-    additional_location = {
-      location_1 = {
-        location = "eastus"
-        #virtual_network_configuration = {
-        #  subnet_id = "some_id"
-        #}
-      }
-      location_2 = {
-        location = "eastus2"
-        #virtual_network_configuration = {
-        #  subnet_id = "some_id_2"
-        #}
-      }
-    }
+    #additional_location = {
+    #  location_1 = {
+    #    location = "eastus"
+    #    #virtual_network_configuration = {
+    #    #  subnet_id = "some_id"
+    #    #}
+    #  }
+    #  location_2 = {
+    #    location = "eastus2"
+    #    #virtual_network_configuration = {
+    #    #  subnet_id = "some_id_2"
+    #    #}
+    #  }
+    #}
     #certificate = {
     #  certificate_1 = {
     #    encoded_certificate = "Asdfasdf"
