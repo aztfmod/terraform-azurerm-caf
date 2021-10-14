@@ -207,6 +207,7 @@ locals {
     express_route_circuit_authorizations                    = try(var.networking.express_route_circuit_authorizations, {})
     express_route_circuit_peerings                          = try(var.networking.express_route_circuit_peerings, {})
     express_route_circuits                                  = try(var.networking.express_route_circuits, {})
+    express_route_connections                               = try(var.networking.express_route_connections, {})
     front_door_waf_policies                                 = try(var.networking.front_door_waf_policies, {})
     front_doors                                             = try(var.networking.front_doors, {})
     ip_groups                                               = try(var.networking.ip_groups, {})
