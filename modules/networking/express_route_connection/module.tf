@@ -30,12 +30,12 @@ resource "azurerm_express_route_connection" "erc" {
 
 locals {
   associated_route_table = {
-    id = coalesce(
+    id = try(coalesce(
       try(var.virtual_hub_route_tables[var.settings.route_table.lz_key][var.settings.route_table.key].id, ""),
       try(var.virtual_hub_route_tables[var.client_config.landingzone_key][var.settings.route_table.key].id, ""),
       try(var.settings.route_table.id, ""),
       contains(tolist(["defaultRouteTable", "None"]), try(var.settings.route_table.key, "")) ? format("%s/hubRouteTables/%s", var.virtual_hub_id, var.settings.route_table.key) : ""
-    )
+    ), null)
   }
 
   propagated_route_tables = {
