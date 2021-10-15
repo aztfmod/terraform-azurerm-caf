@@ -16,11 +16,13 @@ resource "azurerm_container_registry" "acr" {
   admin_enabled       = var.admin_enabled
   tags                = local.tags
 
+  public_network_access_enabled = var.public_network_access_enabled
+
   dynamic "network_rule_set" {
     for_each = try(var.network_rule_set, {})
 
     content {
-      default_action = try(var.network_rule_set.default_action, "Allow")
+      default_action = try(network_rule_set.value.default_action, "Allow")
 
       dynamic "ip_rule" {
         for_each = try(network_rule_set.value.ip_rules, {})

@@ -55,7 +55,7 @@ output "management_cluster" {
 #     for key, value in azurerm_vmware_private_cloud.vwpc.circuit : key => {
 #       express_route_id = azurerm_vmware_private_cloud.vwpc.circuit[key].express_route_id
 #       express_route_private_peering_id  = azurerm_vmware_private_cloud.vwpc.circuit[key].express_route_private_peering_id
-#       primary_subnet_cidr   = azurerm_vmware_private_cloud.vwpc.circuit[key].primary_subnet_cidr 
+#       primary_subnet_cidr   = azurerm_vmware_private_cloud.vwpc.circuit[key].primary_subnet_cidr
 #       secondary_subnet_cidr  = azurerm_vmware_private_cloud.vwpc.circuit[key].secondary_subnet_cidr
 #     }
 #   }

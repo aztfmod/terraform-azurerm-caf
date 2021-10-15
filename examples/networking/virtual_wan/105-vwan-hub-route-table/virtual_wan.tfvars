@@ -66,7 +66,7 @@ virtual_hub_route_tables = {
       #   # Will be covered in the landingzone starter production configuration in future releases.
       #   #
       #   next_hop = {
-      #     lz_key = "" # 
+      #     lz_key = "" #
       #     resource_type = "virtual_hub_connection"  # Only supported value.
       #     resource_key  = "egress-fw"
       #   }
@@ -127,7 +127,7 @@ virtual_hub_connections = {
 
             # Either next_hop or next_hop_ip_address can be used
             next_hop = {
-              # lz_key = "" # 
+              # lz_key = "" #
               key             = "egress-fw"
               interface_index = 0 # Required.
             }
