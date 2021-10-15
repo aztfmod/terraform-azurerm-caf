@@ -19,9 +19,9 @@ logic_app_workflow = {
     resource_group_key = "rgwflow1"
     #integration_service_environment_key
     #logic_app_integration_account_key
-    #workflow_parameters 
-    #workflow_schema 
+    #workflow_parameters
+    #workflow_schema
     workflow_version = "1.0.0.0"
-    #parameters 
+    #parameters
   }
 }

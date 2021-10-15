@@ -38,6 +38,12 @@ resource "azurerm_user_assigned_identity" "msi" {
     ),
     {}
   )
+
+  lifecycle {
+    ignore_changes = [
+      location, resource_group_name
+    ]
+  }
 }
 
 resource "time_sleep" "propagate_to_azuread" {

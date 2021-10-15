@@ -598,3 +598,6 @@ variable "logic_app_trigger_recurrence" {
 variable "logic_app_trigger_custom" {
   default = {}
 }
+variable "private_dns_vnet_links" {
+  default = {}
+}
