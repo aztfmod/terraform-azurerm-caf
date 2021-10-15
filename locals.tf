@@ -91,6 +91,7 @@ locals {
     app_config                         = try(var.database.app_config, {})
     azurerm_redis_caches               = try(var.database.azurerm_redis_caches, {})
     cosmos_dbs                         = try(var.database.cosmos_dbs, {})
+    cosmosdb_sql_databases             = try(var.database.cosmosdb_sql_databases, {})
     database_migration_services        = try(var.database.database_migration_services, {})
     database_migration_projects        = try(var.database.database_migration_projects, {})
     databricks_workspaces              = try(var.database.databricks_workspaces, {})
