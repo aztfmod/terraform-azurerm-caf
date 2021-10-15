@@ -1,4 +1,5 @@
 module "servicebus_namespaces" {
+  depends_on = [module.networking]
   source = "./modules/servicebus/namespace"
   for_each = local.servicebus.servicebus_namespaces
 
@@ -8,6 +9,11 @@ module "servicebus_namespaces" {
 
   remote_objects    = {
     resource_groups = local.combined_objects_resource_groups
+    vnets           = local.combined_objects_networking
   }
 
+}
+
+output "servicebus_namespaces" {
+  value = module.servicebus_namespaces
 }
