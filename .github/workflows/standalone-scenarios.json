@@ -56,7 +56,6 @@
     "data_factory/109-data_factory_dataset_mysql",
     "data_factory/110-data_factory_dataset_postgresql",
     "data_factory/111-data_factory_dataset_sql_server_table",
-    "databricks/100-simple-databricks",
     "databricks/100-standard-databricks-no-vnet",
     "databricks/101-standard-databricks-vnet",
     "databricks/102-premium-aml",
