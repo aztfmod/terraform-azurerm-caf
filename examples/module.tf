@@ -199,6 +199,30 @@ module "example" {
     app_service_plans            = var.app_service_plans
     app_services                 = var.app_services
   }
+  data_factory = {
+    data_factory                  = var.data_factory
+    data_factory_pipeline         = var.data_factory_pipeline
+    data_factory_trigger_schedule = var.data_factory_trigger_schedule
+    datasets = {
+      azure_blob                          = var.data_factory_dataset_azure_blob
+      cosmosdb_sqlapi                     = var.data_factory_dataset_cosmosdb_sqlapi
+      delimited_text                      = var.data_factory_dataset_delimited_text
+      http                                = var.data_factory_dataset_http
+      json                                = var.data_factory_dataset_json
+      mysql                               = var.data_factory_dataset_mysql
+      postgresql                          = var.data_factory_dataset_postgresql
+      sql_server_table                    = var.data_factory_dataset_sql_server_table
+      data_factory_dataset_delimited_text = var.data_factory_dataset_delimited_text
+    }
+    linked_services = {
+      azure_blob_storage = var.data_factory_linked_service_azure_blob_storage
+      cosmosdb           = var.data_factory_linked_service_cosmosdb
+      web                = var.data_factory_linked_service_web
+      mysql              = var.data_factory_linked_service_mysql
+      postgresql         = var.data_factory_linked_service_postgresql
+      sql_server         = var.data_factory_linked_service_sql_server
+    }
+  }
   logic_app = {
     integration_service_environment = var.integration_service_environment
     logic_app_action_custom         = var.logic_app_action_custom
