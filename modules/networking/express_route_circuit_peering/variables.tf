@@ -4,3 +4,4 @@ variable "resource_group_name" {
   type        = string
 }
 variable "express_route_circuit_name" {}
+variable "route_filter_id" {}
