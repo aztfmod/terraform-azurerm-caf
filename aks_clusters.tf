@@ -19,11 +19,9 @@ module "aks_clusters" {
     local.combined_objects_private_dns[local.client_config.landingzone_key][each.value.private_dns_zone.key].id,
   null)
   managed_identities  = local.combined_objects_managed_identities
-  application_gateway = lookup(each.value.addon_profile.ingress_application_gateway, "lz_key", null) == null ? local.combined_objects_application_gateways[local.client_config.landingzone_key][each.value.addon_profile.ingress_application_gateway.gateway_key] : local.combined_objects_application_gateways[each.value.lz_key][each.value.addon_profile.ingress_application_gateway.gateway_key]
+  application_gateway = try(each.value.addon_profile.ingress_application_gateway, null) != null ? try(each.value.addon_profile.ingress_application_gateway.lz_key, null) == null ? local.combined_objects_application_gateways[local.client_config.landingzone_key][each.value.addon_profile.ingress_application_gateway.key] : local.combined_objects_application_gateways[each.value.lz_key][each.value.addon_profile.ingress_application_gateway.key] : null
 
   admin_group_object_ids = try(each.value.admin_groups.azuread_group_keys, null) == null ? null : try(each.value.admin_groups.ids, [
     for group_key in try(each.value.admin_groups.azuread_groups.keys, {}) : local.combined_objects_azuread_groups[local.client_config.landingzone_key][group_key].id
   ])
-
-
 }
