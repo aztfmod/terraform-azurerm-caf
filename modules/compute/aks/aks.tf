@@ -44,12 +44,12 @@ resource "azurerm_kubernetes_cluster" "aks" {
   resource_group_name = var.resource_group.name
 
   default_node_pool {
-    name                         = var.settings.default_node_pool.name //azurecaf_name.default_node_pool.result
-    vm_size                      = var.settings.default_node_pool.vm_size
-    availability_zones           = try(var.settings.default_node_pool.availability_zones, null)
-    enable_auto_scaling          = try(var.settings.default_node_pool.enable_auto_scaling, false)
-    enable_host_encryption       = try(var.settings.default_node_pool.enable_host_encryption, false)
-    enable_node_public_ip        = try(var.settings.default_node_pool.enable_node_public_ip, false)
+    name                   = var.settings.default_node_pool.name //azurecaf_name.default_node_pool.result
+    vm_size                = var.settings.default_node_pool.vm_size
+    availability_zones     = try(var.settings.default_node_pool.availability_zones, null)
+    enable_auto_scaling    = try(var.settings.default_node_pool.enable_auto_scaling, false)
+    enable_host_encryption = try(var.settings.default_node_pool.enable_host_encryption, false)
+    enable_node_public_ip  = try(var.settings.default_node_pool.enable_node_public_ip, false)
     dynamic "kubelet_config" {
       for_each = try(var.settings.default_node_pool.kubelet_config, null) == null ? [] : [1]
       content {
@@ -220,25 +220,25 @@ resource "azurerm_kubernetes_cluster" "aks" {
     }
   }
 
-  dynamic "kubelet_identity"{
+  dynamic "kubelet_identity" {
     for_each = try(var.settings.kubelet_identity, null) == null ? [] : [1]
     content {
       client_id = coalesce(
-        try(kubelet_identity.value.client_id,null),
+        try(kubelet_identity.value.client_id, null),
         try(var.managed_identities[var.settings.kubelet_identity.lz_key][var.settings.kubelet_identity.managed_identity_key].client_id, null),
         try(var.managed_identities[var.client_config.landingzone_key][var.settings.kubelet_identity.managed_identity_key].client_id, null)
       )
       object_id = coalesce(
-        try(kubelet_identity.value.object_id,null),
+        try(kubelet_identity.value.object_id, null),
         try(var.managed_identities[var.settings.kubelet_identity.lz_key][var.settings.kubelet_identity.managed_identity_key].principal_id, null),
         try(var.managed_identities[var.client_config.landingzone_key][var.settings.kubelet_identity.managed_identity_key].principal_id, null)
       )
       user_assigned_identity_id = coalesce(
-        try(kubelet_identity.value.user_assigned_identity_id,null),
+        try(kubelet_identity.value.user_assigned_identity_id, null),
         try(var.managed_identities[var.settings.kubelet_identity.lz_key][var.settings.kubelet_identity.managed_identity_key].id, null),
         try(var.managed_identities[var.client_config.landingzone_key][var.settings.kubelet_identity.managed_identity_key].id, null)
       )
-    } 
+    }
   }
 
   kubernetes_version = try(var.settings.kubernetes_version, null)
@@ -370,38 +370,71 @@ resource "random_string" "prefix" {
 resource "azurerm_kubernetes_cluster_node_pool" "nodepools" {
   for_each = try(var.settings.node_pools, {})
 
-  name                     = each.value.name
-  kubernetes_cluster_id    = azurerm_kubernetes_cluster.aks.id
-  vm_size                  = each.value.vm_size
-  availability_zones       = try(each.value.availability_zones, null)
-  enable_auto_scaling      = try(each.value.enable_auto_scaling, false)
-  enable_host_encryption   = try(each.value.enable_host_encryption, false)
-  enable_node_public_ip    = try(each.value.enable_node_public_ip, false)
-  eviction_policy          = try(each.value.eviction_policy, null)
+  name                   = each.value.name
+  kubernetes_cluster_id  = azurerm_kubernetes_cluster.aks.id
+  vm_size                = each.value.vm_size
+  availability_zones     = try(each.value.availability_zones, null)
+  enable_auto_scaling    = try(each.value.enable_auto_scaling, false)
+  enable_host_encryption = try(each.value.enable_host_encryption, false)
+  enable_node_public_ip  = try(each.value.enable_node_public_ip, false)
+  eviction_policy        = try(each.value.eviction_policy, null)
   dynamic "kubelet_config" {
-      for_each = try(each.value.kubelet_config, null) == null ? [] : [1]
-      content {
-        allowed_unsafe_sysctls    = try(kubelet_config.value.allowed_unsafe_sysctls, null)
-        container_log_max_line    = try(kubelet_config.value.container_log_max_line, null)
-        container_log_max_size_mb = try(kubelet_config.value.container_log_max_size_mb, null)
-        cpu_cfs_quota_enabled     = try(kubelet_config.value.cpu_cfs_quota_enabled, null)
-        cpu_cfs_quota_period      = try(kubelet_config.value.cpu_cfs_quota_period, null)
-        cpu_manager_policy        = try(kubelet_config.value.cpu_manager_policy, null)
-        image_gc_high_threshold   = try(kubelet_config.value.image_gc_high_threshold, null)
-        image_gc_low_threshold    = try(kubelet_config.value.image_gc_low_threshold, null)
-        pod_max_pid               = try(kubelet_config.value.pod_max_pid, null)
-        topology_manager_policy   = try(kubelet_config.value.topology_manager_policy, null)
-      }
+    for_each = try(each.value.kubelet_config, null) == null ? [] : [1]
+    content {
+      allowed_unsafe_sysctls    = try(kubelet_config.value.allowed_unsafe_sysctls, null)
+      container_log_max_line    = try(kubelet_config.value.container_log_max_line, null)
+      container_log_max_size_mb = try(kubelet_config.value.container_log_max_size_mb, null)
+      cpu_cfs_quota_enabled     = try(kubelet_config.value.cpu_cfs_quota_enabled, null)
+      cpu_cfs_quota_period      = try(kubelet_config.value.cpu_cfs_quota_period, null)
+      cpu_manager_policy        = try(kubelet_config.value.cpu_manager_policy, null)
+      image_gc_high_threshold   = try(kubelet_config.value.image_gc_high_threshold, null)
+      image_gc_low_threshold    = try(kubelet_config.value.image_gc_low_threshold, null)
+      pod_max_pid               = try(kubelet_config.value.pod_max_pid, null)
+      topology_manager_policy   = try(kubelet_config.value.topology_manager_policy, null)
     }
+  }
   dynamic "linux_os_config" {
-      for_each = try(each.value.linux_os_config, null) == null ? [] : [1]
-      content {
-        swap_file_size_mb             = try(linux_os_config.value.allowed_unsafe_sysctls, null)
-        sysctl_config                 = try(linux_os_config.value.sysctl_config, null)
-        transparent_huge_page_defrag  = try(linux_os_config.value.transparent_huge_page_defrag, null)
-        transparent_huge_page_enabled = try(linux_os_config.value.transparent_huge_page_enabled, null)
+    for_each = try(each.value.linux_os_config, null) == null ? [] : [1]
+    content {
+      swap_file_size_mb = try(linux_os_config.value.allowed_unsafe_sysctls, null)
+      dynamic "sysctl_config" {
+        for_each = try(linux_os_config.value.sysctl_config, null) == null ? [] : [1]
+        content {
+          fs_aio_max_nr                      = try(sysctl_config.value.fs_aio_max_nr, null)
+          fs_file_max                        = try(sysctl_config.value.fs_file_max, null)
+          fs_inotify_max_user_watches        = try(sysctl_config.value.fs_inotify_max_user_watches, null)
+          fs_nr_open                         = try(sysctl_config.value.fs_nr_open, null)
+          kernel_threads_max                 = try(sysctl_config.value.kernel_threads_max, null)
+          net_core_netdev_max_backlog        = try(sysctl_config.value.net_core_netdev_max_backlog, null)
+          net_core_optmem_max                = try(sysctl_config.value.net_core_optmem_max, null)
+          net_core_rmem_default              = try(sysctl_config.value.net_core_rmem_default, null)
+          net_core_rmem_max                  = try(sysctl_config.value.net_core_rmem_max, null)
+          net_core_somaxconn                 = try(sysctl_config.value.net_core_somaxconn, null)
+          net_core_wmem_default              = try(sysctl_config.value.net_core_wmem_default, null)
+          net_core_wmem_max                  = try(sysctl_config.value.net_core_wmem_max, null)
+          net_ipv4_ip_local_port_range_max   = try(sysctl_config.value.net_ipv4_ip_local_port_range_max, null)
+          net_ipv4_ip_local_port_range_min   = try(sysctl_config.value.net_ipv4_ip_local_port_range_min, null)
+          net_ipv4_neigh_default_gc_thresh1  = try(sysctl_config.value.net_ipv4_neigh_default_gc_thresh1, null)
+          net_ipv4_neigh_default_gc_thresh2  = try(sysctl_config.value.net_ipv4_neigh_default_gc_thresh2, null)
+          net_ipv4_neigh_default_gc_thresh3  = try(sysctl_config.value.net_ipv4_neigh_default_gc_thresh3, null)
+          net_ipv4_tcp_fin_timeout           = try(sysctl_config.value.net_ipv4_tcp_fin_timeout, null)
+          net_ipv4_tcp_keepalive_intvl       = try(sysctl_config.value.net_ipv4_tcp_keepalive_intvl, null)
+          net_ipv4_tcp_keepalive_probes      = try(sysctl_config.value.net_ipv4_tcp_keepalive_probes, null)
+          net_ipv4_tcp_keepalive_time        = try(sysctl_config.value.net_ipv4_tcp_keepalive_time, null)
+          net_ipv4_tcp_max_syn_backlog       = try(sysctl_config.value.net_ipv4_tcp_max_syn_backlog, null)
+          net_ipv4_tcp_max_tw_buckets        = try(sysctl_config.value.net_ipv4_tcp_max_tw_buckets, null)
+          net_ipv4_tcp_tw_reuse              = try(sysctl_config.value.net_ipv4_tcp_tw_reuse, null)
+          net_netfilter_nf_conntrack_buckets = try(sysctl_config.value.net_netfilter_nf_conntrack_buckets, null)
+          net_netfilter_nf_conntrack_max     = try(sysctl_config.value.net_netfilter_nf_conntrack_max, null)
+          vm_max_map_count                   = try(sysctl_config.value.vm_max_map_count, null)
+          vm_swappiness                      = try(sysctl_config.value.vm_swappiness, null)
+          vm_vfs_cache_pressure              = try(sysctl_config.value.vm_vfs_cache_pressure, null)
+        }
       }
+      transparent_huge_page_defrag  = try(linux_os_config.value.transparent_huge_page_defrag, null)
+      transparent_huge_page_enabled = try(linux_os_config.value.transparent_huge_page_enabled, null)
     }
+  }
   fips_enabled             = try(each.value.fips_enabled, false)
   kubelet_disk_type        = try(each.value.kubelet_disk_type, null)
   max_pods                 = try(each.value.max_pods, null)
