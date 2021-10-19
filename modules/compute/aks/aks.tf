@@ -435,6 +435,7 @@ resource "azurerm_kubernetes_cluster_node_pool" "nodepools" {
     content {
       swap_file_size_mb = try(linux_os_config.value.allowed_unsafe_sysctls, null)
       dynamic "sysctl_config" {
+        for_each = try(linux_os_config.value.sysctl_config, null) == null ? [] : [1]
         content {
           fs_aio_max_nr                      = try(sysctl_config.value.fs_aio_max_nr, null)
           fs_file_max                        = try(sysctl_config.value.fs_file_max, null)
