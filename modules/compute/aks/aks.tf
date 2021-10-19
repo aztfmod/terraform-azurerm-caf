@@ -143,8 +143,8 @@ resource "azurerm_kubernetes_cluster" "aks" {
     node_count = try(var.settings.default_node_pool.node_count, 1)
   }
 
-  dns_prefix                 = var.settings.dns_prefix
-  dns_prefix_private_cluster = var.settings.dns_prefix_private_cluster
+  dns_prefix                 = try(var.settings.dns_prefix, try(var.settings.dns_prefix_private_cluster, random_string.prefix.result))
+  dns_prefix_private_cluster = try(var.settings.dns_prefix_private_cluster, null)
   automatic_channel_upgrade  = try(var.settings.automatic_channel_upgrade, null)
 
   dynamic "addon_profile" {
@@ -205,10 +205,9 @@ resource "azurerm_kubernetes_cluster" "aks" {
       dynamic "ingress_application_gateway" {
         for_each = try(var.settings.addon_profile.ingress_application_gateway[*], {})
         content {
-          enabled    = var.settings.addon_profile.ingress_application_gateway.enabled
-          gateway_id = try(var.settings.addon_profile.ingress_application_gateway.gateway_id, var.application_gateway.id)
-
-          gateway_name = try(var.settings.addon_profile.ingress_application_gateway.gateway_name, var.application_gateway.name)
+          enabled      = var.settings.addon_profile.ingress_application_gateway.enabled
+          gateway_name = try(var.settings.addon_profile.ingress_application_gateway.gateway_name, try(var.application_gateway.name, null))
+          gateway_id   = try(var.settings.addon_profile.ingress_application_gateway.gateway_id, try(var.application_gateway.id, null))
           subnet_cidr  = try(var.settings.addon_profile.ingress_application_gateway.subnet_cidr, null)
           subnet_id    = try(var.settings.addon_profile.ingress_application_gateway.subnet_id, null)
         }
@@ -218,10 +217,10 @@ resource "azurerm_kubernetes_cluster" "aks" {
 
   api_server_authorized_ip_ranges = try(var.settings.api_server_authorized_ip_ranges, null)
 
-  disk_encryption_set_id = coalesce(
+  disk_encryption_set_id = try(coalesce(
     try(var.settings.disk_encryption_set_id, ""),
     try(var.settings.disk_encryption_set.id, "")
-  )
+  ), null)
 
 
   dynamic "auto_scaler_profile" {
