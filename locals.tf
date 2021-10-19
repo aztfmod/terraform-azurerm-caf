@@ -141,6 +141,11 @@ locals {
     }
     linked_services = {
       azure_blob_storage = try(var.data_factory.linked_services.azure_blob_storage, {})
+      cosmosdb           = try(var.data_factory.linked_services.cosmosdb, {})
+      web                = try(var.data_factory.linked_services.web, {})
+      mysql              = try(var.data_factory.linked_services.mysql, {})
+      postgresql         = try(var.data_factory.linked_services.postgresql, {})
+      sql_server         = try(var.data_factory.linked_services.sql_server, {})
     }
   }
 
@@ -226,6 +231,7 @@ locals {
     network_security_group_definition                       = try(var.networking.network_security_group_definition, {})
     network_watchers                                        = try(var.networking.network_watchers, {})
     private_dns                                             = try(var.networking.private_dns, {})
+    private_dns_vnet_links                                  = try(var.networking.private_dns_vnet_links, {})
     public_ip_addresses                                     = try(var.networking.public_ip_addresses, {})
     route_tables                                            = try(var.networking.route_tables, {})
     vhub_peerings                                           = try(var.networking.vhub_peerings, {})

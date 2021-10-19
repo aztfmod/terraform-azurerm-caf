@@ -1,21 +1,23 @@
 ##### azurerm_data_factory
 module "data_factory_dataset_azure_blob" {
-  source = "./modules/data_factory/datasets/azure_blob"
-
+  source   = "./modules/data_factory/datasets/azure_blob"
   for_each = local.data_factory.datasets.azure_blob
 
-  name                  = each.value.name
-  resource_group_name   = local.resource_groups[each.value.resource_group_key].name
-  data_factory_name     = module.data_factory[each.value.data_factory_key].name
-  linked_service_name   = local.data_factory.linked_services[each.value.linked_service_key]
-  folder                = try(each.value.folder, null)
-  description           = try(each.value.description, null)
-  annotations           = try(each.value.annotations, null)
-  parameters            = try(each.value.parameters, null)
-  additional_properties = try(each.value.additional_properties, null)
-  schema_column         = try(each.value.schema_column, null)
-  path                  = each.value.path
-  filename              = each.value.filename
+  global_settings = local.global_settings
+  client_config   = local.client_config
+  settings        = each.value
+  resource_group_name = coalesce(
+    try(local.combined_objects_resource_groups[try(each.value.resource_group.lz_key, local.client_config.landingzone_key)][each.value.resource_group.key].name, null),
+    try(each.value.resource_group.name, null)
+  )
+  data_factory_name = coalesce(
+    try(local.combined_objects_data_factory[try(each.value.data_factory.lz_key, local.client_config.landingzone_key)][each.value.data_factory.key].name, null),
+    try(each.value.data_factory.name, null)
+  )
+  linked_service_name = coalesce(
+    try(local.combined_objects_data_factory_linked_service_azure_blob_storage[try(each.value.linked_service.lz_key, local.client_config.landingzone_key)][each.value.linked_service.key].name, null),
+    try(each.value.linked_service.name, null)
+  )
 }
 
 output "data_factory_dataset_azure_blob" {
@@ -28,17 +30,21 @@ module "data_factory_dataset_cosmosdb_sqlapi" {
 
   for_each = local.data_factory.datasets.cosmosdb_sqlapi
 
-  name                  = each.value.name
-  resource_group_name   = local.resource_groups[each.value.resource_group_key].name
-  data_factory_name     = module.data_factory[each.value.data_factory_key].name
-  linked_service_name   = local.data_factory.linked_services[each.value.linked_service_key].name
-  folder                = try(each.value.folder, null)
-  description           = try(each.value.description, null)
-  annotations           = try(each.value.annotations, null)
-  parameters            = try(each.value.parameters, null)
-  additional_properties = try(each.value.additional_properties, null)
-  schema_column         = try(each.value.schema_column, null)
-  collection_name       = try(each.value.collection_name, null)
+  global_settings = local.global_settings
+  client_config   = local.client_config
+  settings        = each.value
+  resource_group_name = coalesce(
+    try(local.combined_objects_resource_groups[try(each.value.resource_group.lz_key, local.client_config.landingzone_key)][each.value.resource_group.key].name, null),
+    try(each.value.resource_group.name, null)
+  )
+  data_factory_name = coalesce(
+    try(local.combined_objects_data_factory[try(each.value.data_factory.lz_key, local.client_config.landingzone_key)][each.value.data_factory.key].name, null),
+    try(each.value.data_factory.name, null)
+  )
+  linked_service_name = coalesce(
+    try(local.combined_objects_data_factory_linked_service_cosmosdb[try(each.value.linked_service.lz_key, local.client_config.landingzone_key)][each.value.linked_service.key].name, null),
+    try(each.value.linked_service.name, null)
+  )
 }
 
 output "data_factory_dataset_cosmosdb_sqlapi" {
@@ -51,25 +57,21 @@ module "data_factory_dataset_delimited_text" {
 
   for_each = local.data_factory.datasets.delimited_text
 
-  name                        = each.value.name
-  resource_group_name         = local.resource_groups[each.value.resource_group_key].name
-  data_factory_name           = module.data_factory[each.value.data_factory_key].name
-  linked_service_name         = local.data_factory.linked_services[each.value.linked_service_key]
-  folder                      = try(each.value.folder, null)
-  description                 = try(each.value.description, null)
-  annotations                 = try(each.value.annotations, null)
-  parameters                  = try(each.value.parameters, null)
-  additional_properties       = try(each.value.additional_properties, null)
-  schema_column               = try(each.value.schema_column, null)
-  http_server_location        = try(each.value.http_server_location, null)
-  azure_blob_storage_location = try(each.value.azure_blob_storage_location, null)
-  column_delimiter            = each.value.column_delimiter
-  row_delimiter               = each.value.row_delimiter
-  encoding                    = each.value.encoding
-  quote_character             = each.value.quote_character
-  escape_character            = each.value.escape_character
-  first_row_as_header         = each.value.first_row_as_header
-  null_value                  = each.value.null_value
+  global_settings = local.global_settings
+  client_config   = local.client_config
+  settings        = each.value
+  resource_group_name = coalesce(
+    try(local.combined_objects_resource_groups[try(each.value.resource_group.lz_key, local.client_config.landingzone_key)][each.value.resource_group.key].name, null),
+    try(each.value.resource_group.name, null)
+  )
+  data_factory_name = coalesce(
+    try(local.combined_objects_data_factory[try(each.value.data_factory.lz_key, local.client_config.landingzone_key)][each.value.data_factory.key].name, null),
+    try(each.value.data_factory.name, null)
+  )
+  linked_service_name = coalesce(
+    try(local.combined_objects_data_factory_linked_service_web[try(each.value.linked_service.lz_key, local.client_config.landingzone_key)][each.value.linked_service.key].name, null),
+    try(each.value.linked_service.name, null)
+  )
 }
 
 output "data_factory_dataset_delimited_text" {
@@ -78,23 +80,24 @@ output "data_factory_dataset_delimited_text" {
 
 ##### azurerm_data_factory_dataset_http
 module "data_factory_dataset_http" {
-  source = "./modules/data_factory/datasets/http"
-
+  source   = "./modules/data_factory/datasets/http"
   for_each = local.data_factory.datasets.http
 
-  name                  = each.value.name
-  resource_group_name   = local.resource_groups[each.value.resource_group_key].name
-  data_factory_name     = module.data_factory[each.value.data_factory_key].name
-  linked_service_name   = local.data_factory.linked_services[each.value.linked_service_key].name
-  folder                = try(each.value.folder, null)
-  description           = try(each.value.description, null)
-  annotations           = try(each.value.annotations, null)
-  parameters            = try(each.value.parameters, null)
-  additional_properties = try(each.value.additional_properties, null)
-  schema_column         = try(each.value.schema_column, null)
-  relative_url          = each.value.relative_url
-  request_body          = each.value.request_body
-  request_method        = each.value.request_method
+  global_settings = local.global_settings
+  client_config   = local.client_config
+  settings        = each.value
+  resource_group_name = coalesce(
+    try(local.combined_objects_resource_groups[try(each.value.resource_group.lz_key, local.client_config.landingzone_key)][each.value.resource_group.key].name, null),
+    try(each.value.resource_group.name, null)
+  )
+  data_factory_name = coalesce(
+    try(local.combined_objects_data_factory[try(each.value.data_factory.lz_key, local.client_config.landingzone_key)][each.value.data_factory.key].name, null),
+    try(each.value.data_factory.name, null)
+  )
+  linked_service_name = coalesce(
+    try(local.combined_objects_data_factory_linked_service_web[try(each.value.linked_service.lz_key, local.client_config.landingzone_key)][each.value.linked_service.key].name, null),
+    try(each.value.linked_service.name, null)
+  )
 }
 
 output "data_factory_dataset_http" {
@@ -103,23 +106,24 @@ output "data_factory_dataset_http" {
 
 ##### azurerm_data_factory_dataset_json
 module "data_factory_dataset_json" {
-  source = "./modules/data_factory/datasets/json"
-
+  source   = "./modules/data_factory/datasets/json"
   for_each = local.data_factory.datasets.json
 
-  name                        = each.value.name
-  resource_group_name         = local.resource_groups[each.value.resource_group_key].name
-  data_factory_name           = module.data_factory[each.value.data_factory_key].name
-  linked_service_name         = local.data_factory.linked_services[each.value.linked_service_key].name
-  folder                      = try(each.value.folder, null)
-  description                 = try(each.value.description, null)
-  annotations                 = try(each.value.annotations, null)
-  parameters                  = try(each.value.parameters, null)
-  additional_properties       = try(each.value.additional_properties, null)
-  schema_column               = try(each.value.schema_column, null)
-  http_server_location        = try(each.value.http_server_location, null)
-  azure_blob_storage_location = try(each.value.azure_blob_storage_location, null)
-  encoding                    = each.value.encoding
+  global_settings = local.global_settings
+  client_config   = local.client_config
+  settings        = each.value
+  resource_group_name = coalesce(
+    try(local.combined_objects_resource_groups[try(each.value.resource_group.lz_key, local.client_config.landingzone_key)][each.value.resource_group.key].name, null),
+    try(each.value.resource_group.name, null)
+  )
+  data_factory_name = coalesce(
+    try(local.combined_objects_data_factory[try(each.value.data_factory.lz_key, local.client_config.landingzone_key)][each.value.data_factory.key].name, null),
+    try(each.value.data_factory.name, null)
+  )
+  linked_service_name = coalesce(
+    try(local.combined_objects_data_factory_linked_service_web[try(each.value.linked_service.lz_key, local.client_config.landingzone_key)][each.value.linked_service.key].name, null),
+    try(each.value.linked_service.name, null)
+  )
 }
 
 output "data_factory_dataset_json" {
@@ -128,21 +132,24 @@ output "data_factory_dataset_json" {
 
 ##### azurerm_data_factory_dataset_mysql
 module "data_factory_dataset_mysql" {
-  source = "./modules/data_factory/datasets/mysql"
-
+  source   = "./modules/data_factory/datasets/mysql"
   for_each = local.data_factory.datasets.mysql
 
-  name                  = each.value.name
-  resource_group_name   = local.resource_groups[each.value.resource_group_key].name
-  data_factory_name     = module.data_factory[each.value.data_factory_key].name
-  linked_service_name   = local.data_factory.linked_services[each.value.linked_service_key].name
-  folder                = try(each.value.folder, null)
-  description           = try(each.value.description, null)
-  annotations           = try(each.value.annotations, null)
-  parameters            = try(each.value.parameters, null)
-  additional_properties = try(each.value.additional_properties, null)
-  schema_column         = try(each.value.schema_column, null)
-  table_name            = try(each.value.table_name, null)
+  global_settings = local.global_settings
+  client_config   = local.client_config
+  settings        = each.value
+  resource_group_name = coalesce(
+    try(local.combined_objects_resource_groups[try(each.value.resource_group.lz_key, local.client_config.landingzone_key)][each.value.resource_group.key].name, null),
+    try(each.value.resource_group.name, null)
+  )
+  data_factory_name = coalesce(
+    try(local.combined_objects_data_factory[try(each.value.data_factory.lz_key, local.client_config.landingzone_key)][each.value.data_factory.key].name, null),
+    try(each.value.data_factory.name, null)
+  )
+  linked_service_name = coalesce(
+    try(local.combined_objects_data_factory_linked_service_mysql[try(each.value.linked_service.lz_key, local.client_config.landingzone_key)][each.value.linked_service.key].name, null),
+    try(each.value.linked_service.name, null)
+  )
 }
 
 output "data_factory_dataset_mysql" {
@@ -151,21 +158,24 @@ output "data_factory_dataset_mysql" {
 
 ##### azurerm_data_factory_dataset_postgresql
 module "data_factory_dataset_postgresql" {
-  source = "./modules/data_factory/datasets/postgresql"
-
+  source   = "./modules/data_factory/datasets/postgresql"
   for_each = local.data_factory.datasets.postgresql
 
-  name                  = each.value.name
-  resource_group_name   = local.resource_groups[each.value.resource_group_key].name
-  data_factory_name     = module.data_factory[each.value.data_factory_key].name
-  linked_service_name   = local.data_factory.linked_services[each.value.linked_service_key].name
-  folder                = try(each.value.folder, null)
-  description           = try(each.value.description, null)
-  annotations           = try(each.value.annotations, null)
-  parameters            = try(each.value.parameters, null)
-  additional_properties = try(each.value.additional_properties, null)
-  schema_column         = try(each.value.schema_column, null)
-  table_name            = try(each.value.table_name, null)
+  global_settings = local.global_settings
+  client_config   = local.client_config
+  settings        = each.value
+  resource_group_name = coalesce(
+    try(local.combined_objects_resource_groups[try(each.value.resource_group.lz_key, local.client_config.landingzone_key)][each.value.resource_group.key].name, null),
+    try(each.value.resource_group.name, null)
+  )
+  data_factory_name = coalesce(
+    try(local.combined_objects_data_factory[try(each.value.data_factory.lz_key, local.client_config.landingzone_key)][each.value.data_factory.key].name, null),
+    try(each.value.data_factory.name, null)
+  )
+  linked_service_name = coalesce(
+    try(local.combined_objects_data_factory_linked_service_postgresql[try(each.value.linked_service.lz_key, local.client_config.landingzone_key)][each.value.linked_service.key].name, null),
+    try(each.value.linked_service.name, null)
+  )
 }
 
 output "data_factory_dataset_postgresql" {
@@ -178,17 +188,21 @@ module "data_factory_dataset_sql_server_table" {
 
   for_each = local.data_factory.datasets.sql_server_table
 
-  name                  = each.value.name
-  resource_group_name   = local.resource_groups[each.value.resource_group_key].name
-  data_factory_name     = module.data_factory[each.value.data_factory_key].name
-  linked_service_name   = local.data_factory.linked_services[each.value.linked_service_key].name
-  folder                = try(each.value.folder, null)
-  description           = try(each.value.description, null)
-  annotations           = try(each.value.annotations, null)
-  parameters            = try(each.value.parameters, null)
-  additional_properties = try(each.value.additional_properties, null)
-  schema_column         = try(each.value.schema_column, null)
-  table_name            = try(each.value.table_name, null)
+  global_settings = local.global_settings
+  client_config   = local.client_config
+  settings        = each.value
+  resource_group_name = coalesce(
+    try(local.combined_objects_resource_groups[try(each.value.resource_group.lz_key, local.client_config.landingzone_key)][each.value.resource_group.key].name, null),
+    try(each.value.resource_group.name, null)
+  )
+  data_factory_name = coalesce(
+    try(local.combined_objects_data_factory[try(each.value.data_factory.lz_key, local.client_config.landingzone_key)][each.value.data_factory.key].name, null),
+    try(each.value.data_factory.name, null)
+  )
+  linked_service_name = coalesce(
+    try(local.combined_objects_data_factory_linked_service_sql_server[try(each.value.linked_service.lz_key, local.client_config.landingzone_key)][each.value.linked_service.key].name, null),
+    try(each.value.linked_service.name, null)
+  )
 }
 
 output "data_factory_dataset_sql_server_table" {
