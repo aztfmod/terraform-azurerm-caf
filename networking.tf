@@ -41,7 +41,7 @@ module "networking" {
   base_tags           = try(local.global_settings.inherit_tags, false) ? local.combined_objects_resource_groups[try(each.value.resource_group.lz_key, local.client_config.landingzone_key)][try(each.value.resource_group.key, each.value.resource_group_key)].tags : {}
 
   remote_dns = {
-    azurerm_firewall = try(var.remote_objects.azurerm_firewall, null) #assumed from remote lz only
+    azurerm_firewall = try(var.remote_objects.azurerm_firewalls, null) #assumed from remote lz only
   }
 }
 
@@ -124,6 +124,14 @@ resource "azurerm_virtual_network_peering" "peering" {
   allow_forwarded_traffic      = try(each.value.allow_forwarded_traffic, false)
   allow_gateway_transit        = try(each.value.allow_gateway_transit, false)
   use_remote_gateways          = try(each.value.use_remote_gateways, false)
+
+  lifecycle {
+    ignore_changes = [
+      remote_virtual_network_id,
+      resource_group_name,
+      virtual_network_name
+    ]
+  }
 }
 
 #

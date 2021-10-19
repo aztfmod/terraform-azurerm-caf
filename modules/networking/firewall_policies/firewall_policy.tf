@@ -38,4 +38,36 @@ resource "azurerm_firewall_policy" "fwpol" {
       fqdns        = try(var.settings.threat_intelligence_allowlist.fqdns, null)
     }
   }
+
+  dynamic "intrusion_detection" {
+    for_each = try(var.settings.intrusion_detection, null) == null ? [] : [1]
+
+    content {
+      mode = try(var.settings.intrusion_detection.mode, "Off")
+
+      dynamic "signature_overrides" {
+        for_each = try(var.settings.intrusion_detection.signature_overrides, {})
+
+        content {
+          id    = try(signature_overrides.value.id, null)
+          state = try(signature_overrides.value.state, null)
+        }
+      }
+      dynamic "traffic_bypass" {
+        for_each = try(var.settings.intrusion_detection.traffic_bypass, {})
+
+        content {
+          name                  = traffic_bypass.value.name
+          protocol              = traffic_bypass.value.protocol
+          description           = try(traffic_bypass.value.description, null)
+          destination_addresses = try(traffic_bypass.value.destination_addresses, null)
+          destination_ip_groups = try(traffic_bypass.value.destination_ip_groups, null)
+          destination_ports     = try(traffic_bypass.value.destination_ports, null)
+          source_addresses      = try(traffic_bypass.value.source_addresses, null)
+          source_ip_groups      = try(traffic_bypass.value.source_ip_groups, null)
+
+        }
+      }
+    }
+  }
 }

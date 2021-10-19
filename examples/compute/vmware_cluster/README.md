@@ -74,7 +74,7 @@ vmware_private_clouds = {
       #password = "123#sadd$saASD"
       keyvault_key = "kv_rg1"
       #lzKey= "ejkle" (optional)
-      secret_key = "secret_key1"      
+      secret_key = "secret_key1"
     }
     vcenter_password = {
       keyvault_key = "kv_rg1"
@@ -142,7 +142,7 @@ vmware_express_route_authorizations = {
 |vcenter_password |The password of the vCenter admin. Changing this forces a new Vmware Private Cloud to be created.  [see below](#vcenter_password-input-values)| `block` |  | false |
 |tags |A mapping of tags which should be assigned to the Vmware Private Cloud. | `object` |  | false |
 
-### nsxt_password input block 
+### nsxt_password input block
 | Name | Description | Type | Default | Required |
 |------|-------------|------|---------|:--------:|
 |password | Password in plain string | `string` |  | false|
@@ -152,7 +152,7 @@ vmware_express_route_authorizations = {
 |secret_key | The Secret Key of your Key Vault that holds your secret_name, this also requires the `keyvault_key` to be defined. | `string` |  | false|
 
 
-### vcenter_password input block 
+### vcenter_password input block
 | Name | Description | Type | Default | Required |
 |------|-------------|------|---------|:--------:|
 |password | Password in plain string | `string` |  | false |
@@ -161,13 +161,13 @@ vmware_express_route_authorizations = {
 |secret_name | Secret name of your key Vault in plain string, this also requires the `keyvault_key` to be defined. | `string` |  |false|
 |secret_key | The Secret Key of your Key Vault that holds your secret_name, this also requires the `keyvault_key` to be defined. | `string` |  | false|
 
-### management_cluster input block 
+### management_cluster input block
 | Name | Description | Type | Default | Required |
 |------|-------------|------|---------|:--------:|
 |size |The size of the management cluster. This field can not updated with `internet_connection_enabled` together. | `number` |  | false |
 
 
-### sku_name input values 
+### sku_name input values
 | Name | Description |
 |------|-------------|
 |av20||
