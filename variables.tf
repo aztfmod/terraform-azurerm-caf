@@ -359,3 +359,9 @@ variable "cognitive_services" {
   description = "Configuration object - Cognitive Service Resource "
   default     = {}
 }
+
+## Service Bus variables
+variable "service_bus" {
+  description = "Configuration object - Service Bus resources"
+  default     = {}
+}
