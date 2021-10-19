@@ -5,8 +5,8 @@ module "kusto_clusters" {
   global_settings = local.global_settings
   client_config   = local.client_config
   settings        = each.value
-  location        = lookup(each.value, "region", null) == null ? local.resource_groups[each.value.resource_group_key].location : local.global_settings.regions[each.value.region]
-  base_tags       = try(local.global_settings.inherit_tags, false) ? local.resource_groups[each.value.resource_group_key].tags : {}
+  location        = lookup(each.value, "region", null) == null ? local.resource_groups[each.value.resource_group.key].location : local.global_settings.regions[each.value.region]
+  base_tags       = try(local.global_settings.inherit_tags, false) ? local.resource_groups[each.value.resource_group.key].tags : {}
 
   resource_group_name = coalesce(
     try(local.combined_objects_resource_groups[try(each.value.resource_group.lz_key, local.client_config.landingzone_key)][each.value.resource_group.key].name, null),
@@ -30,7 +30,7 @@ module "kusto_databases" {
   global_settings = local.global_settings
   client_config   = local.client_config
   settings        = each.value
-  location        = lookup(each.value, "region", null) == null ? local.resource_groups[each.value.resource_group_key].location : local.global_settings.regions[each.value.region]
+  location        = lookup(each.value, "region", null) == null ? local.resource_groups[each.value.resource_group.key].location : local.global_settings.regions[each.value.region]
 
   resource_group_name = coalesce(
     try(local.combined_objects_resource_groups[try(each.value.resource_group.lz_key, local.client_config.landingzone_key)][each.value.resource_group.key].name, null),
@@ -54,7 +54,7 @@ module "kusto_attached_database_configurations" {
   global_settings = local.global_settings
   client_config   = local.client_config
   settings        = each.value
-  location        = lookup(each.value, "region", null) == null ? local.resource_groups[each.value.resource_group_key].location : local.global_settings.regions[each.value.region]
+  location        = lookup(each.value, "region", null) == null ? local.resource_groups[each.value.resource_group.key].location : local.global_settings.regions[each.value.region]
 
 
   resource_group_name = coalesce(
@@ -85,7 +85,7 @@ module "kusto_database_principal_assignments" {
   global_settings = local.global_settings
   client_config   = local.client_config
   settings        = each.value
-  location        = lookup(each.value, "region", null) == null ? local.resource_groups[each.value.resource_group_key].location : local.global_settings.regions[each.value.region]
+  location        = lookup(each.value, "region", null) == null ? local.resource_groups[each.value.resource_group.key].location : local.global_settings.regions[each.value.region]
   resource_group_name = coalesce(
     try(local.combined_objects_resource_groups[try(each.value.resource_group.lz_key, local.client_config.landingzone_key)][each.value.resource_group.key].name, null),
     try(each.value.resource_group.name, null)
