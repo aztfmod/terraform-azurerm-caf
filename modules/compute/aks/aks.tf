@@ -145,9 +145,10 @@ resource "azurerm_kubernetes_cluster" "aks" {
       dynamic "ingress_application_gateway" {
         for_each = try(var.settings.addon_profile.ingress_application_gateway[*], {})
         content {
-          enabled      = var.settings.addon_profile.ingress_application_gateway.enabled
-          gateway_id   = try(var.settings.addon_profile.ingress_application_gateway.gateway_id, null)
-          gateway_name = try(var.settings.addon_profile.ingress_application_gateway.gateway_name, null)
+          enabled    = var.settings.addon_profile.ingress_application_gateway.enabled
+          gateway_id = try(var.settings.addon_profile.ingress_application_gateway.gateway_id, var.application_gateway.id)
+
+          gateway_name = try(var.settings.addon_profile.ingress_application_gateway.gateway_name, var.application_gateway.name)
           subnet_cidr  = try(var.settings.addon_profile.ingress_application_gateway.subnet_cidr, null)
           subnet_id    = try(var.settings.addon_profile.ingress_application_gateway.subnet_id, null)
         }
@@ -157,7 +158,11 @@ resource "azurerm_kubernetes_cluster" "aks" {
 
   api_server_authorized_ip_ranges = try(var.settings.api_server_authorized_ip_ranges, null)
 
-  disk_encryption_set_id = try(var.settings.disk_encryption_set_id, null)
+  disk_encryption_set_id = coalesce(
+    try(var.settings.disk_encryption_set_id, ""),
+    try(var.settings.disk_encryption_set.id, "")
+  )
+
 
   dynamic "auto_scaler_profile" {
     for_each = try(var.settings.auto_scaler_profile[*], {})
