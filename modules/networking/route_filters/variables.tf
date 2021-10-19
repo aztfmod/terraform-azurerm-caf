@@ -13,5 +13,5 @@ variable "rule_name" {
 
 variable "rule_communities" {
   description = "(Required) The collection for bgp community values to filter on. e.g. ['12076:5010','12076:5020']."
-  type        = string
+  type        = list
 }
