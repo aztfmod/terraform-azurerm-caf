@@ -31,7 +31,7 @@ aks_clusters = {
       # ids = []
       # azuread_group_keys = ["aks_admins"]
     }
-
+    private_cluster_public_fqdn_enabled = true
     load_balancer_profile = {
       # Only one option can be set
       managed_outbound_ip_count = 1

@@ -10,6 +10,7 @@ module "azuread_groups" {
   global_settings = local.global_settings
   azuread_groups  = each.value
   tenant_id       = local.client_config.tenant_id
+  client_config   = local.client_config
 }
 
 output "azuread_groups" {
@@ -38,4 +39,5 @@ module "azuread_groups_membership" {
   settings                   = each.value
   group_id                   = local.combined_objects_azuread_groups[try(each.value.lz_key, local.client_config.landingzone_key)][each.key].id
   azuread_service_principals = local.combined_objects_azuread_service_principals
+  managed_identities         = local.combined_objects_managed_identities
 }

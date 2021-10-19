@@ -24,6 +24,9 @@ azure_container_registries = {
     name               = "acr-test"
     resource_group_key = "acr_region1"
     sku                = "Premium"
+
+    #public_network_access_enabled = "false" #Only able to control when sku = "premium"
+
     georeplications = {
       region2 = {
         tags = {

@@ -1,6 +1,10 @@
 # Upgrade notes
 
-When ugrading to a newer version of the CAF module, some configuration structures must be updated before applying the modifications.
+When upgrading to a newer version of the CAF module, some configuration structures must be updated before applying the modifications.
+
+## 5.4.4
+
+Due to a regression in the Terraform provider >2.78, this update is not capable of cross-tenant, cross-subscriptions peering between vhub and vwans. This is available in 5.4.3 and will be fixed in 5.5.0.
 
 ## 5.4.0
 
