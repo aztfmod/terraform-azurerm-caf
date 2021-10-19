@@ -217,18 +217,17 @@ resource "azurerm_kubernetes_cluster" "aks" {
 
   api_server_authorized_ip_ranges = try(var.settings.api_server_authorized_ip_ranges, null)
 
-  disk_encryption_set_id = try(coalesce(
-    try(var.settings.disk_encryption_set_id, ""),
-    try(var.settings.disk_encryption_set.id, "")
-  ), null)
-
-
   dynamic "auto_scaler_profile" {
     for_each = try(var.settings.auto_scaler_profile[*], {})
 
     content {
       balance_similar_node_groups      = try(auto_scaler_profile.value.balance_similar_node_groups, null)
+      expander                         = try(auto_scaler_profile.value.expander, null)
       max_graceful_termination_sec     = try(auto_scaler_profile.value.max_graceful_termination_sec, null)
+      max_node_provisioning_time       = try(auto_scaler_profile.value.max_node_provisioning_time, null)
+      max_unready_nodes                = try(auto_scaler_profile.value.max_unready_nodes, null)
+      max_unready_percentage           = try(auto_scaler_profile.value.max_unready_percentage, null)
+      new_pod_scale_up_delay           = try(auto_scaler_profile.value.new_pod_scale_up_delay, null)
       scale_down_delay_after_add       = try(auto_scaler_profile.value.scale_down_delay_after_add, null)
       scale_down_delay_after_delete    = try(auto_scaler_profile.value.scale_down_delay_after_delete, null)
       scale_down_delay_after_failure   = try(auto_scaler_profile.value.scale_down_delay_after_failure, null)
@@ -236,8 +235,16 @@ resource "azurerm_kubernetes_cluster" "aks" {
       scale_down_unneeded              = try(auto_scaler_profile.value.scale_down_unneeded, null)
       scale_down_unready               = try(auto_scaler_profile.value.scale_down_unready, null)
       scale_down_utilization_threshold = try(auto_scaler_profile.value.scale_down_utilization_threshold, null)
+      empty_bulk_delete_max            = try(auto_scaler_profile.value.empty_bulk_delete_max, null)
+      skip_nodes_with_local_storage    = try(auto_scaler_profile.value.skip_nodes_with_local_storage, null)
+      skip_nodes_with_system_pods      = try(auto_scaler_profile.value.skip_nodes_with_system_pods, null)
     }
   }
+
+  disk_encryption_set_id = try(coalesce(
+    try(var.settings.disk_encryption_set_id, ""),
+    try(var.settings.disk_encryption_set.id, "")
+  ), null)
 
   dynamic "identity" {
     for_each = try(var.settings.identity, null) == null ? [] : [1]
@@ -336,9 +343,9 @@ resource "azurerm_kubernetes_cluster" "aks" {
   }
 
   node_resource_group                 = azurecaf_name.rg_node.result
-  private_cluster_enabled             = try(var.settings.private_cluster_enabled, false)
-  private_dns_zone_id                 = var.private_dns_zone_id
-  private_cluster_public_fqdn_enabled = try(var.settings.private_cluster_public_fqdn_enabled, false)
+  private_cluster_enabled             = try(var.settings.private_cluster_enabled, null)
+  private_dns_zone_id                 = try(var.private_dns_zone_id, null)
+  private_cluster_public_fqdn_enabled = try(var.settings.private_cluster_public_fqdn_enabled, null)
 
   # Enabled RBAC
   dynamic "role_based_access_control" {
