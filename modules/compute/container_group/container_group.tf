@@ -18,6 +18,15 @@ resource "azurerm_container_group" "acg" {
   ip_address_type     = try(var.settings.ip_address_type, "Public")
   restart_policy      = try(var.settings.restart_policy, "Always")
 
+  dynamic "image_registry_credential" {
+    for_each = lookup(var.settings, "image_registry_credential", null) == null ? [] : [1]
+    content {
+      server   =  each.value.image_registry_credential.server
+      username =  each.value.image_registry_credential.username
+      password =  each.value.image_registry_credential.password
+    }
+  }
+
   # Create containers based on for_each
   dynamic "container" {
     for_each = local.combined_containers
