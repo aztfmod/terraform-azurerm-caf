@@ -68,8 +68,41 @@ resource "azurerm_kubernetes_cluster" "aks" {
     dynamic "linux_os_config" {
       for_each = try(var.settings.default_node_pool.linux_os_config, null) == null ? [] : [1]
       content {
-        swap_file_size_mb             = try(linux_os_config.value.allowed_unsafe_sysctls, null)
-        sysctl_config                 = try(linux_os_config.value.sysctl_config, null)
+        swap_file_size_mb = try(linux_os_config.value.allowed_unsafe_sysctls, null)
+        dynamic "sysctl_config" {
+          for_each = try(linux_os_config.value.sysctl_config, null) == null ? [] : [1]
+          content {
+            fs_aio_max_nr                      = try(sysctl_config.value.fs_aio_max_nr, null)
+            fs_file_max                        = try(sysctl_config.value.fs_file_max, null)
+            fs_inotify_max_user_watches        = try(sysctl_config.value.fs_inotify_max_user_watches, null)
+            fs_nr_open                         = try(sysctl_config.value.fs_nr_open, null)
+            kernel_threads_max                 = try(sysctl_config.value.kernel_threads_max, null)
+            net_core_netdev_max_backlog        = try(sysctl_config.value.net_core_netdev_max_backlog, null)
+            net_core_optmem_max                = try(sysctl_config.value.net_core_optmem_max, null)
+            net_core_rmem_default              = try(sysctl_config.value.net_core_rmem_default, null)
+            net_core_rmem_max                  = try(sysctl_config.value.net_core_rmem_max, null)
+            net_core_somaxconn                 = try(sysctl_config.value.net_core_somaxconn, null)
+            net_core_wmem_default              = try(sysctl_config.value.net_core_wmem_default, null)
+            net_core_wmem_max                  = try(sysctl_config.value.net_core_wmem_max, null)
+            net_ipv4_ip_local_port_range_max   = try(sysctl_config.value.net_ipv4_ip_local_port_range_max, null)
+            net_ipv4_ip_local_port_range_min   = try(sysctl_config.value.net_ipv4_ip_local_port_range_min, null)
+            net_ipv4_neigh_default_gc_thresh1  = try(sysctl_config.value.net_ipv4_neigh_default_gc_thresh1, null)
+            net_ipv4_neigh_default_gc_thresh2  = try(sysctl_config.value.net_ipv4_neigh_default_gc_thresh2, null)
+            net_ipv4_neigh_default_gc_thresh3  = try(sysctl_config.value.net_ipv4_neigh_default_gc_thresh3, null)
+            net_ipv4_tcp_fin_timeout           = try(sysctl_config.value.net_ipv4_tcp_fin_timeout, null)
+            net_ipv4_tcp_keepalive_intvl       = try(sysctl_config.value.net_ipv4_tcp_keepalive_intvl, null)
+            net_ipv4_tcp_keepalive_probes      = try(sysctl_config.value.net_ipv4_tcp_keepalive_probes, null)
+            net_ipv4_tcp_keepalive_time        = try(sysctl_config.value.net_ipv4_tcp_keepalive_time, null)
+            net_ipv4_tcp_max_syn_backlog       = try(sysctl_config.value.net_ipv4_tcp_max_syn_backlog, null)
+            net_ipv4_tcp_max_tw_buckets        = try(sysctl_config.value.net_ipv4_tcp_max_tw_buckets, null)
+            net_ipv4_tcp_tw_reuse              = try(sysctl_config.value.net_ipv4_tcp_tw_reuse, null)
+            net_netfilter_nf_conntrack_buckets = try(sysctl_config.value.net_netfilter_nf_conntrack_buckets, null)
+            net_netfilter_nf_conntrack_max     = try(sysctl_config.value.net_netfilter_nf_conntrack_max, null)
+            vm_max_map_count                   = try(sysctl_config.value.vm_max_map_count, null)
+            vm_swappiness                      = try(sysctl_config.value.vm_swappiness, null)
+            vm_vfs_cache_pressure              = try(sysctl_config.value.vm_vfs_cache_pressure, null)
+          }
+        }
         transparent_huge_page_defrag  = try(linux_os_config.value.transparent_huge_page_defrag, null)
         transparent_huge_page_enabled = try(linux_os_config.value.transparent_huge_page_enabled, null)
       }
@@ -248,6 +281,7 @@ resource "azurerm_kubernetes_cluster" "aks" {
     content {
       admin_username = try(var.settings.linux_profile.admin_username, null)
       dynamic "ssh_key" {
+        for_each = try(var.settings.linux_profile.ssh_key, null) == null ? [] : [1]
         content {
           key_data = try(var.settings.linux_profile.ssh_key.key_data, null)
         }
@@ -401,7 +435,6 @@ resource "azurerm_kubernetes_cluster_node_pool" "nodepools" {
     content {
       swap_file_size_mb = try(linux_os_config.value.allowed_unsafe_sysctls, null)
       dynamic "sysctl_config" {
-        for_each = try(linux_os_config.value.sysctl_config, null) == null ? [] : [1]
         content {
           fs_aio_max_nr                      = try(sysctl_config.value.fs_aio_max_nr, null)
           fs_file_max                        = try(sysctl_config.value.fs_file_max, null)
