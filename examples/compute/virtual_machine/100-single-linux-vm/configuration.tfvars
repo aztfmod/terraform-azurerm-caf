@@ -37,6 +37,9 @@ virtual_machines = {
     keyvault_key = "example_vm_rg1"
 
     # Define the number of networking cards to attach the virtual machine
+    # Option to use when BYOI (Bring your Own Interface)
+    # networking_interface_ids = ["/subscriptions/<subid>/resourceGroups/<rg-name>/providers/Microsoft.Network/networkInterfaces/<nicID>"]
+
     networking_interfaces = {
       nic0 = {
         # Value of the keys from networking.tfvars
@@ -63,8 +66,7 @@ virtual_machines = {
         disable_password_authentication = true
 
         #custom_data - Users can either reference a local file path or a block of code as seen below.
-        #custom_data                     = "scripts/cloud-init/install-rover-tools.config"
-        #custom_data = "compute/virtual_machine/100-single-linux-vm/scripts/cloud-init/install-rover-tools.config"
+        # custom_data                     = "scripts/cloud-init/install-rover-tools.config"
         custom_data = <<CUSTOM_DATA
 #!/bin/bash
 echo "Execute your super awesome commands here!"

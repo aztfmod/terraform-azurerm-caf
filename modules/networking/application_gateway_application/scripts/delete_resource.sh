@@ -2,7 +2,7 @@
 echo "rg: ${RG_NAME} gateway: ${APPLICATION_GATEWAY_NAME} name: ${NAME}"
 
 case "${RESOURCE}" in
-    BACKENDPOOL)       
+    BACKENDPOOL)
         execute_with_backoff az network application-gateway address-pool delete -g ${RG_NAME} --gateway-name ${APPLICATION_GATEWAY_NAME} -n ${NAME}
         ;;
     HTTPSETTINGS)
