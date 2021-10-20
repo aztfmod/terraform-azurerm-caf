@@ -1,4 +1,4 @@
-# Azure Storage Accounts
+# Azure Storage Account Containers
 
 This module is part of Cloud Adoption Framework landing zones for Azure on Terraform.
 
