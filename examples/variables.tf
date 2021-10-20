@@ -582,7 +582,57 @@ variable "nat_gateways" {
 variable "cognitive_services_account" {
   default = {}
 }
-
+variable "data_factory" {
+  default = {}
+}
+variable "data_factory_pipeline" {
+  default = {}
+}
+variable "data_factory_trigger_schedule" {
+  default = {}
+}
+variable "data_factory_dataset_azure_blob" {
+  default = {}
+}
+variable "data_factory_dataset_cosmosdb_sqlapi" {
+  default = {}
+}
+variable "data_factory_dataset_delimited_text" {
+  default = {}
+}
+variable "data_factory_dataset_http" {
+  default = {}
+}
+variable "data_factory_dataset_json" {
+  default = {}
+}
+variable "data_factory_dataset_mysql" {
+  default = {}
+}
+variable "data_factory_dataset_postgresql" {
+  default = {}
+}
+variable "data_factory_dataset_sql_server_table" {
+  default = {}
+}
+variable "data_factory_linked_service_azure_blob_storage" {
+  default = {}
+}
+variable "data_factory_linked_service_cosmosdb" {
+  default = {}
+}
+variable "data_factory_linked_service_web" {
+  default = {}
+}
+variable "data_factory_linked_service_mysql" {
+  default = {}
+}
+variable "data_factory_linked_service_postgresql" {
+  default = {}
+}
+variable "data_factory_linked_service_sql_server" {
+  default = {}
+}
 variable "integration_service_environment" {
   default = {}
 }
