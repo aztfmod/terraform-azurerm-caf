@@ -14,7 +14,7 @@ module "caf" {
 |metadata| A mapping of MetaData for this Container. All metadata keys should be lowercase.||False|
 
 ## Blocks
-| BLock | Argument | Description | Required |
+| Block | Argument | Description | Required |
 |-------|----------|-------------|----------|
 |storage_account| key | Key for  storage_account||| Required if  |
 |storage_account| lz_key |Landing Zone Key in wich the storage_account is located|||True|
