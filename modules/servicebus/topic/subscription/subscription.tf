@@ -23,8 +23,6 @@ resource "azurerm_servicebus_subscription" "subscription" {
   enable_batched_operations                 = try(var.settings.enable_batched_operations, null)
   requires_session                          = try(var.settings.requires_session, null)
   status                                    = try(var.settings.status, null)
-
-  # forward_to = "" # name of queue or topic, remote object ref
-  # forward_dead_lettered_messages_to = "" # name of queue or topic'
-
+  forward_to                                = try(var.settings.forward_to.queue_name,var.settings.forward_to.topic_name, null)
+  forward_dead_lettered_messages_to         = try(var.settings.forward_to.queue_name,var.settings.forward_to.topic_name, null)
 }

@@ -25,6 +25,8 @@ resource "azurerm_servicebus_queue" "queue" {
   requires_session                        = try(var.settings.requires_session, null)
   resource_group_name                     = local.resource_group_name
   status                                  = try(var.settings.status, null)
+  forward_to                              = try(var.settings.forward_to.queue_name,var.settings.forward_to.topic_name, null)
+  forward_dead_lettered_messages_to       = try(var.settings.forward_to.queue_name,var.settings.forward_to.topic_name, null)
   
   # forward_to = try(var.settings.forward_to.queue, null) != null ? coalesce(
   #   try(var.remote_objects.servicebus_queues[var.settings.forward_to.queue.lz_key][var.settings.forward_to.queue.key].name, null),

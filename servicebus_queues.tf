@@ -10,10 +10,9 @@ module "servicebus_queues" {
   remote_objects    = {
     resource_groups       = local.combined_objects_resource_groups
     servicebus_namespaces = local.combined_objects_servicebus_namespaces
-    # servicebus_queues     = local.combined_objects_servicebus_queues
     # servicebus_topics     = local.combined_objects_servicebus_topics
+    # servicebus_queues     = local.combined_objects_servicebus_queues # cycle error:unable to self reference
   }
-# reference networking_virtual_hub_connection to create local value before passing in
 }
 
 output "servicebus_queues" {
