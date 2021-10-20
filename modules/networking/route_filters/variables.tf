@@ -15,3 +15,7 @@ variable "rule_communities" {
   description = "(Required) The collection for bgp community values to filter on. e.g. ['12076:5010','12076:5020']."
   type        = list
 }
+variable "tags" {
+  description = "(Required) Map of tags to be applied to the resource"
+  type        = map(any)
+}
