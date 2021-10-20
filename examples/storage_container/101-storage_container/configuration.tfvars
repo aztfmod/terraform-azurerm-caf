@@ -24,7 +24,7 @@ storage_accounts = {
 
 
 
-storage_container = {
+storage_containers = {
   sc1 = {
     name = "sc1"
     storage_account = {
