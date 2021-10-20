@@ -564,6 +564,9 @@ variable "storage_account_queues" {
 variable "storage_account_blobs" {
   default = {}
 }
+variable "storage_container" {
+  default = {}
+}
 variable "vmware_private_clouds" {
   default = {}
 }
