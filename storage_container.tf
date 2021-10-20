@@ -1,4 +1,4 @@
-module "storage_container" {
+module "storage_containers" {
   source   = "./modules/storage_container/"
   for_each = local.storage.storage_container
 
@@ -16,6 +16,6 @@ module "storage_container" {
     storage_account = local.combined_objects_storage_accounts
   }
 }
-output "storage_container" {
-  value = module.storage_container
+output "storage_containers" {
+  value = module.storage_containers
 }
