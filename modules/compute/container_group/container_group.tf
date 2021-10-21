@@ -21,9 +21,9 @@ resource "azurerm_container_group" "acg" {
   dynamic "image_registry_credential" {
     for_each = lookup(var.settings, "image_registry_credential", null) == null ? [] : [1]
     content {
-      server   =  each.value.image_registry_credential.server
-      username =  each.value.image_registry_credential.username
-      password =  each.value.image_registry_credential.password
+      server   =  image_registry_credential.value.server
+      username =  image_registry_credential.value.username
+      password =  image_registry_credential.value.password
     }
   }
 
