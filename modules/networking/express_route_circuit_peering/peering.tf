@@ -17,9 +17,9 @@ resource "azurerm_express_route_circuit_peering" "circuitpeering" {
     for_each = lookup(var.settings, "microsoft_peering_config", null) == null ? [] : [1]
  
     content {
-      advertised_public_prefixes = [each.value.microsoft_peering_config.advertised_public_prefixes]
-      routing_registry_name      = try(each.value.microsoft_peering_config.routing_registry_name,null)
-      customer_asn               = try(each.value.microsoft_peering_config.customer_asn,null)
+      advertised_public_prefixes = [var.settings.microsoft_peering_config.advertised_public_prefixes]
+      routing_registry_name      = try(var.settings.microsoft_peering_config.routing_registry_name,null)
+      customer_asn               = try(var.settings.microsoft_peering_config.customer_asn,null)
     }
   }
 }
