@@ -105,6 +105,7 @@ resource "azurerm_firewall_policy_rule_collection_group" "polgroup" {
             ]), null)
           )
           destination_addresses = try(rule.value.destination_addresses, null)
+          destination_fqdns     = try(rule.value.destination_fqdns, null)
           destination_ip_groups = try(rule.value.destination_ip_groups, try(flatten([
             for key, value in var.ip_groups : value.id
             if contains(rule.value.destination_ip_groups_keys, key)
