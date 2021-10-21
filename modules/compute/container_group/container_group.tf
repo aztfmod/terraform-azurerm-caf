@@ -18,7 +18,7 @@ resource "azurerm_container_group" "acg" {
   ip_address_type     = try(var.settings.ip_address_type, "Public")
   restart_policy      = try(var.settings.restart_policy, "Always")
 
-  xcdynamic "image_registry_credential" {
+  dynamic "image_registry_credential" {
     for_each = lookup(var.settings, "image_registry_credential", null) == null ? [] : [1]
     content {
       server   =  each.value.image_registry_credential.server

@@ -1,5 +1,5 @@
 output "id" {
-  value = azurerm_route_table.rtfilter.id
+  value = azurerm_route_filter.rtfilter
 
 }
 
