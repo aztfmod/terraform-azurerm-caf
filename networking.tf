@@ -194,22 +194,12 @@ module "routes" {
 }
 
 
-resource "azurecaf_name" "route_filters" {
-  for_each = local.networking.route_filters
-
-  name          = try(each.value.name, null)
-  prefixes      = local.global_settings.prefixes
-  random_length = local.global_settings.random_length
-  clean_input   = true
-  passthrough   = local.global_settings.passthrough
-  use_slug      = local.global_settings.use_slug
-}
 
 module "route_filters" {
   source   = "./modules/networking/route_filters"
   for_each = local.networking.route_filters
 
-  name                          = azurecaf_name.route_filters[each.key].result
+  name                          = each.value.name
   resource_group_name           = local.combined_objects_resource_groups[try(each.value.resource_group.lz_key, local.client_config.landingzone_key)][try(each.value.resource_group.key, each.value.resource_group_key)].name
   location                      = lookup(each.value, "region", null) == null ? local.combined_objects_resource_groups[try(each.value.resource_group.lz_key, local.client_config.landingzone_key)][try(each.value.resource_group.key, each.value.resource_group_key)].location : local.global_settings.regions[each.value.region]
   rule_name                     = each.value.rule.rule_name
