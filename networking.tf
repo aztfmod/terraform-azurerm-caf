@@ -198,7 +198,6 @@ resource "azurecaf_name" "route_filters" {
   for_each = local.networking.route_filters
 
   name          = try(each.value.name, null)
-  resource_type = "azurerm_route_filter"
   prefixes      = local.global_settings.prefixes
   random_length = local.global_settings.random_length
   clean_input   = true
