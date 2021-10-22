@@ -61,7 +61,7 @@ output "express_route_circuit_authorizations" {
 }
 
 output "express_route_circuit_peerings" {
-  value       = module.express_route_circuit_peering
+  value       = module.express_route_circuit_peerings
   sensitive   = true
   description = "Express Route Circuit Peering Keys output"
 }
