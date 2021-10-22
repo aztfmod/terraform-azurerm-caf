@@ -8,10 +8,10 @@ resource "azurerm_route_filter" "rtfilter" {
  
   for_each =  lookup(var.settings, "rule", null) == null ? [] : [1]
    content {
-     name        = var.settings.rule_name
+     name        = var.settings.rule.rule_name
      access      = "Allow"       # The access type of the rule. The only possible value is Allow
      rule_type   = "Community"   # The rule type of the rule. The only possible value is Community.
-     communities = var.settings.rule_communities
+     communities = var.settings.rule.rule_communities
    }
   }
 }
