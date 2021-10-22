@@ -118,7 +118,7 @@ resource "azurerm_container_group" "acg" {
           secret               = try(each.share.secret, null)
 
           dynamic "git_repo" {
-            for_each = try(each.value.git_repo, null) == null ? [] : [1]
+            for_each = try(volume.value.git_repo, null) == null ? [] : [1]
 
             content {
               url       = git_repo.value.url
