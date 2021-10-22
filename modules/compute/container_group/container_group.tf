@@ -108,17 +108,17 @@ resource "azurerm_container_group" "acg" {
         for_each = try(container.value.volume, null) == null ? [] : [1]
 
         content {
-          name                 = volume.value.name
-          mount_path           = volume.value.mount_path
-          read_only            = try(volume.value.read_only, false)
-          empty_dir            = try(volume.value.empty_dir, false)
-          storage_account_name = try(volume.value.storage_account_name, null)
-          storage_account_key  = try(volume.value.storage_account_key, null)
-          share_name           = try(volume.value.share_name, null)
-          secret               = try(volume.share.secret, null)
+          name                 = each.value.name
+          mount_path           = each.value.mount_path
+          read_only            = try(each.value.read_only, false)
+          empty_dir            = try(each.value.empty_dir, false)
+          storage_account_name = try(each.value.storage_account_name, null)
+          storage_account_key  = try(each.value.storage_account_key, null)
+          share_name           = try(each.value.share_name, null)
+          secret               = try(each.share.secret, null)
 
           dynamic "git_repo" {
-            for_each = try(volume.value.git_repo, null) == null ? [] : [1]
+            for_each = try(each.value.git_repo, null) == null ? [] : [1]
 
             content {
               url       = git_repo.value.url
