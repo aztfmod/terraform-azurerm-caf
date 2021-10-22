@@ -39,7 +39,7 @@ module "express_route_circuit_authorizations" {
 
 module "express_route_circuit_peerings" {
   source   = "./modules/networking/express_route_circuit_peerings"
-  for_each = local.networking.express_route_circuit_peering
+  for_each = local.networking.express_route_circuit_peerings
 
   settings                   = each.value
   resource_group_name        = try(local.resource_groups[each.value.resource_group_key].name, null) == null ? module.express_route_circuits[each.value.express_route_key].resource_group_name : local.resource_groups[each.value.resource_group_key].name
