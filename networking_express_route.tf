@@ -37,8 +37,8 @@ module "express_route_circuit_authorizations" {
 #
 #
 
-module "express_route_circuit_peering" {
-  source   = "./modules/networking/express_route_circuit_peering"
+module "express_route_circuit_peerings" {
+  source   = "./modules/networking/express_route_circuit_peerings"
   for_each = local.networking.express_route_circuit_peering
 
   settings                   = each.value
@@ -60,7 +60,7 @@ output "express_route_circuit_authorizations" {
   description = "Express Route Circuit Authorizations Keys output"
 }
 
-output "express_route_circuit_peering" {
+output "express_route_circuit_peerings" {
   value       = module.express_route_circuit_peering
   sensitive   = true
   description = "Express Route Circuit Peering Keys output"
