@@ -1,4 +1,4 @@
-#data_factory_linked_service_mysql
+# data_factory_linked_service_mysql
 
 This module is part of Cloud Adoption Framework landing zones for Azure on Terraform.
 
@@ -44,7 +44,7 @@ module "caf" {
   version = "5.1.0"
 }
 
-#data_factory_dataset_mysql
+# data_factory_dataset_mysql
 
 This module is part of Cloud Adoption Framework landing zones for Azure on Terraform.
 

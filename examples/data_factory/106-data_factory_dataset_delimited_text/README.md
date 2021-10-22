@@ -1,4 +1,4 @@
-#data_factory_linked_service_web
+# data_factory_linked_service_web
 
 This module is part of Cloud Adoption Framework landing zones for Azure on Terraform.
 
@@ -47,7 +47,7 @@ module "caf" {
   version = "5.1.0"
 }
 
-#data_factory_dataset_delimited_text
+# data_factory_dataset_delimited_text
 
 This module is part of Cloud Adoption Framework landing zones for Azure on Terraform.
 

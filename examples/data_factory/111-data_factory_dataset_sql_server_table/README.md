@@ -1,4 +1,4 @@
-#data_factory_linked_service_sql_server
+# data_factory_linked_service_sql_server
 
 This module is part of Cloud Adoption Framework landing zones for Azure on Terraform.
 
@@ -49,7 +49,7 @@ module "caf" {
 |id|The ID of the Data Factory SQL Server Linked Service.|||
 
 
-#data_factory_dataset_sql_server_table
+# data_factory_dataset_sql_server_table
 
 This module is part of Cloud Adoption Framework landing zones for Azure on Terraform.
 
