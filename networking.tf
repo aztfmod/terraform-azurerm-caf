@@ -12,6 +12,10 @@ output "network_watchers" {
   value = module.network_watchers
 }
 
+output "route_filters" {
+  value = module.route_filters
+}
+
 
 #
 #
