@@ -1,4 +1,4 @@
-#data_factory_linked_service_azure_blob_storage
+# data_factory_linked_service_azure_blob_storage
 
 This module is part of Cloud Adoption Framework landing zones for Azure on Terraform.
 
@@ -50,7 +50,7 @@ module "caf" {
   version = "5.1.0"
 }
 
-#data_factory_linked_service_cosmosdb
+# data_factory_linked_service_cosmosdb
 
 This module is part of Cloud Adoption Framework landing zones for Azure on Terraform.
 

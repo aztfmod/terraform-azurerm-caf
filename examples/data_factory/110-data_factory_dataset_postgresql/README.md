@@ -1,4 +1,4 @@
-#data_factory_linked_service_postgresql
+# data_factory_linked_service_postgresql
 
 This module is part of Cloud Adoption Framework landing zones for Azure on Terraform.
 
@@ -40,7 +40,7 @@ module "caf" {
 |------|-------------|
 |id|The ID of the Data Factory PostgreSQL Linked Service.|||
 
-#data_factory_dataset_postgresql
+# data_factory_dataset_postgresql
 
 This module is part of Cloud Adoption Framework landing zones for Azure on Terraform.
 
