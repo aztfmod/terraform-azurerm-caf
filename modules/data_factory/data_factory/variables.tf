@@ -16,7 +16,7 @@ variable "base_tags" {
   type        = map(any)
 }
 variable "settings" {}
-variable "combined_resources" {}
+variable "remote_objects" {}
 variable "tags" {
   default = null
 }
