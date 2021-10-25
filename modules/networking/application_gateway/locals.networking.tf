@@ -30,7 +30,7 @@ locals {
     }
     public = {
       subnet_id     = try(local.public_vnet.subnets[var.settings.front_end_ip_configurations.public.subnet_key].id, null)
-      ip_address_id = try(var.public_ip_addresses[var.client_config.landingzone_key][var.settings.front_end_ip_configurations.public.public_ip_key].id, var.public_ip_addresses[var.settings.front_end_ip_configurations.public.lz_key][var.settings.front_end_ip_configurations.public.public_ip_key].id)
+      ip_address_id = try(var.public_ip_addresses[var.client_config.landingzone_key][var.settings.front_end_ip_configurations.public.public_ip_key].id, var.public_ip_addresses[var.settings.front_end_ip_configurations.public.lz_key][var.settings.front_end_ip_configurations.public.public_ip_key].id, null)    
     }
   }
 
