@@ -19,4 +19,18 @@ variable "settings" {}
 variable "remote_objects" {}
 variable "tags" {
   default = null
+  description = "(Optional) A mapping of tags to assign to the resource"
+}
+
+variable "private_endpoints" {
+  default = {}
+}
+variable "vnets" {
+  default = {}
+}
+variable "resource_groups" {
+  default = {}
+}
+variable "private_dns" {
+  default = {}
 }
