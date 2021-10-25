@@ -14,7 +14,7 @@ module "data_factory" {
     try(local.combined_objects_resource_groups[try(each.value.resource_group.lz_key, local.client_config.landingzone_key)][each.value.resource_group.key].name, null),
     try(each.value.resource_group.name, null)
   )
-  combined_resources = {
+  remote_objects = {
     managed_identities = local.combined_objects_managed_identities
   }
 }
