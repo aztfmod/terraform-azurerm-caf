@@ -16,21 +16,9 @@ variable "base_tags" {
   type        = map(any)
 }
 variable "settings" {}
-variable "combined_resources" {}
+variable "remote_objects" {}
 variable "tags" {
   default = null
   description = "(Optional) A mapping of tags to assign to the resource"
 }
 
-variable "private_endpoints" {
-  default = {}
-}
-variable "vnets" {
-  default = {}
-}
-variable "resource_groups" {
-  default = {}
-}
-variable "private_dns" {
-  default = {}
-}
