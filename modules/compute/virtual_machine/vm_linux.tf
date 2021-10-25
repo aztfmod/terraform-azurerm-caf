@@ -76,8 +76,8 @@ resource "azurerm_linux_virtual_machine" "vm" {
   zone                            = try(each.value.zone, null)
 
   custom_data = try(
-    try(filebase64(format("%s/%s", path.cwd, each.value.custom_data)), base64encode(each.value.custom_data)),
     local.dynamic_custom_data[each.value.custom_data][each.value.name],
+    try(filebase64(format("%s/%s", path.cwd, each.value.custom_data)), base64encode(each.value.custom_data)),
     null
   )
 
@@ -148,7 +148,7 @@ resource "azurerm_linux_virtual_machine" "vm" {
 
   lifecycle {
     ignore_changes = [
-      os_disk[0].name
+      resource_group_name, location, os_disk[0].name
     ]
   }
 
@@ -161,7 +161,7 @@ resource "azurerm_linux_virtual_machine" "vm" {
 resource "azurerm_key_vault_secret" "ssh_private_key" {
   for_each = local.create_sshkeys ? var.settings.virtual_machine_settings : {}
 
-  name         = format("%s-ssh-private-key", azurecaf_name.linux_computer_name[each.key].result)
+  name         = try(format("%s-ssh-private-key", azurecaf_name.linux_computer_name[each.key].result), format("%s-ssh-private-key", azurecaf_name.legacy_computer_name[each.key].result))
   value        = tls_private_key.ssh[each.key].private_key_pem
   key_vault_id = local.keyvault.id
 
@@ -176,7 +176,7 @@ resource "azurerm_key_vault_secret" "ssh_private_key" {
 resource "azurerm_key_vault_secret" "ssh_public_key_openssh" {
   for_each = local.create_sshkeys ? var.settings.virtual_machine_settings : {}
 
-  name         = format("%s-ssh-public-key-openssh", azurecaf_name.linux_computer_name[each.key].result)
+  name         = try(format("%s-ssh-public-key-openssh", azurecaf_name.linux_computer_name[each.key].result), format("%s-ssh-public-key-openssh", azurecaf_name.legacy_computer_name[each.key].result))
   value        = tls_private_key.ssh[each.key].public_key_openssh
   key_vault_id = local.keyvault.id
 
