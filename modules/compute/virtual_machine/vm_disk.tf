@@ -34,7 +34,7 @@ resource "azurerm_managed_disk" "disk" {
 
   lifecycle {
     ignore_changes = [
-      name
+      name, resource_group_name, location
     ]
   }
 
