@@ -42,7 +42,7 @@ module "express_route_circuit_peerings" {
   for_each = local.networking.express_route_circuit_peerings
 
   settings = each.value
-  
+
   resource_group_name = coalesce(
     try(local.combined_objects_express_route_circuits[each.value.express_route.lz_key][each.value.express_route.key].resource_group_name, null),
     try(local.combined_objects_express_route_circuits[local.client_config.landingzone_key][each.value.express_route_key].resource_group_name, null)
