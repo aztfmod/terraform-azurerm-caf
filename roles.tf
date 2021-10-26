@@ -73,6 +73,7 @@ locals {
     azuread_service_principals  = local.combined_objects_azuread_service_principals
     azuread_users               = local.combined_objects_azuread_users
     azurerm_firewalls           = local.combined_objects_azurerm_firewalls
+    databricks_workspaces       = local.combined_objects_databricks_workspaces
     dns_zones                   = local.combined_objects_dns_zones
     event_hub_namespaces        = local.combined_objects_event_hub_namespaces
     keyvaults                   = local.combined_objects_keyvaults
