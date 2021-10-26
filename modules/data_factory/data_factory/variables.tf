@@ -1,31 +1,24 @@
-variable "name" {
-  description = "(Required) Specifies the name of the Data Factory"
+variable "global_settings" {
+  description = "Global settings object (see module README.md)"
 }
-
-variable "resource_group_name" {
-  description = "(Required) The name of the resource group in which to create the Data Factory"
+variable "client_config" {
+  description = "Client configuration object (see module README.md)."
 }
-
 variable "location" {
-  description = "(Required) Specifies the supported Azure location where the resource exists"
+  description = "(Required) Specifies the supported Azure location where to create the resource. Changing this forces a new resource to be created."
+  type        = string
 }
-
-variable "github_configuration" {
-  description = "(Optional) A github_configuration block"
+variable "resource_group_name" {
+  description = "Name of the existing resource group to deploy the virtual machine"
 }
-
-variable "identity" {
-  description = "(Optional) An identity block"
+variable "base_tags" {
+  description = "Base tags for the resource to be inherited from the resource group."
+  type        = map(any)
 }
-
-variable "vsts_configuration" {
-  description = "(Optional) A vsts_configuration block"
-}
-
+variable "settings" {}
+variable "remote_objects" {}
 variable "tags" {
+  default = null
   description = "(Optional) A mapping of tags to assign to the resource"
 }
 
-variable "base_tags" {}
-
-variable "global_settings" {}

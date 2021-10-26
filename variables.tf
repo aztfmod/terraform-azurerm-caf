@@ -122,12 +122,12 @@ variable "subscriptions" {
 
 variable "connectivity_subscription_id" {
   description = "Connectivity subscription id"
-  default = null
+  default     = null
 }
 
 variable "connectivity_tenant_id" {
   description = "Connectivity tenant id"
-  default = null
+  default     = null
 }
 
 variable "subscription_billing_role_assignments" {
