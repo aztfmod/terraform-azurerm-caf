@@ -33,6 +33,7 @@ locals {
   fileuri_sa_full_path = "${local.fileuri_sa}${local.fileuri_sa_path}"
 
   timestamp = {"timestamp" : try(var.extension.timestamp, "12345678")}
-  fileuris = (try(var.extension.fileuris, "" == "")) ? [local.fileuri_sa_full_path] : var.extension.fileuris
+  fileuri_sa_defined   = try(var.extension.fileuris, "")
+  fileuris = fileuri_sa_defined == "" ? [local.fileuri_sa_full_path] : var.extension.fileuris
   settings = merge(local.timestamp,local.fileuris)
 }
