@@ -16,13 +16,13 @@ module "data_factory" {
   )
   remote_objects = {
     managed_identities = local.combined_objects_managed_identities
-    private_dns                     = local.combined_objects_private_dns
-    vnets                           = local.combined_objects_networking
-    private_endpoints               = try(each.value.private_endpoints, {})
-    resource_groups                 = try(each.value.private_endpoints, {}) == {} ? null : local.resource_groups    
+    private_dns        = local.combined_objects_private_dns
+    vnets              = local.combined_objects_networking
+    private_endpoints  = try(each.value.private_endpoints, {})
+    resource_groups    = try(each.value.private_endpoints, {}) == {} ? null : local.resource_groups
   }
 
-  
+
 }
 
 output "data_factory" {
@@ -76,4 +76,33 @@ module "data_factory_trigger_schedule" {
 }
 output "data_factory_trigger_schedule" {
   value = module.data_factory_trigger_schedule
+}
+
+module "data_factory_integration_runtime_azure_ssis" {
+  source   = "./modules/data_factory/data_factory_integration_runtime_azure_ssis"
+  for_each = local.data_factory.data_factory_integration_runtime_azure_ssis
+
+  global_settings = local.global_settings
+  client_config   = local.client_config
+  settings        = each.value
+
+  data_factory_name = coalesce(
+    try(local.combined_objects_data_factory[try(each.value.data_factory.lz_key, local.client_config.landingzone_key)][each.value.data_factory.key].name, null),
+    try(each.value.data_factory.name, null)
+  )
+
+  resource_group_name = coalesce(
+    try(local.combined_objects_resource_groups[try(each.value.resource_group.lz_key, local.client_config.landingzone_key)][each.value.resource_group.key].name, null),
+    try(each.value.resource_group.name, null)
+  )
+
+  location = lookup(each.value, "region", null) == null ? local.resource_groups[each.value.resource_group_key].location : local.global_settings.regions[each.value.region]
+
+  remote_objects = {
+    data_factory   = local.combined_objects_data_factory
+    resource_group = local.combined_objects_resource_groups
+  }
+}
+output "data_factory_integration_runtime_azure_ssis" {
+  value = module.data_factory_integration_runtime_azure_ssis
 }
