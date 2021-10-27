@@ -19,6 +19,3 @@ variable "wvd_host_pools" {
 variable "managed_identities" {
   default = {}
 }
-variable "storage_accounts" {
-  default = {}
-}
