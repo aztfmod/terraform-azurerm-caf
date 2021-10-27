@@ -115,9 +115,10 @@ locals {
   }
 
   data_factory = {
-    data_factory                  = try(var.data_factory.data_factory, {})
-    data_factory_pipeline         = try(var.data_factory.data_factory_pipeline, {})
-    data_factory_trigger_schedule = try(var.data_factory.data_factory_trigger_schedule, {})
+    data_factory                                = try(var.data_factory.data_factory, {})
+    data_factory_pipeline                       = try(var.data_factory.data_factory_pipeline, {})
+    data_factory_trigger_schedule               = try(var.data_factory.data_factory_trigger_schedule, {})
+    data_factory_integration_runtime_azure_ssis = try(var.data_factory.data_factory_integration_runtime_azure_ssis, {})
     datasets = {
       azure_blob       = try(var.data_factory.datasets.azure_blob, {})
       cosmosdb_sqlapi  = try(var.data_factory.datasets.cosmosdb_sqlapi, {})
