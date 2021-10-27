@@ -1,18 +1,28 @@
 ##### azurerm_data_factory
 module "data_factory" {
-  source = "./modules/data_factory/data_factory"
-
+  source   = "./modules/data_factory/data_factory"
   for_each = local.data_factory.data_factory
 
-  name                 = each.value.name
-  resource_group_name  = local.resource_groups[each.value.resource_group_key].name
-  location             = lookup(each.value, "region", null) == null ? local.resource_groups[each.value.resource_group_key].location : local.global_settings.regions[each.value.region]
-  github_configuration = try(each.value.github_configuration, null)
-  identity             = try(each.value.identity, null)
-  vsts_configuration   = try(each.value.vsts_configuration, null)
-  global_settings      = local.global_settings
-  base_tags            = try(local.global_settings.inherit_tags, false) ? local.resource_groups[each.value.resource_group_key].tags : {}
-  tags                 = try(each.value.tags, null)
+  global_settings = local.global_settings
+  client_config   = local.client_config
+  settings        = each.value
+
+  base_tags = try(local.global_settings.inherit_tags, false) ? local.resource_groups[each.value.resource_group.key].tags : {}
+  location  = lookup(each.value, "region", null) == null ? local.resource_groups[each.value.resource_group.key].location : local.global_settings.regions[each.value.region]
+
+  resource_group_name = coalesce(
+    try(local.combined_objects_resource_groups[try(each.value.resource_group.lz_key, local.client_config.landingzone_key)][each.value.resource_group.key].name, null),
+    try(each.value.resource_group.name, null)
+  )
+  remote_objects = {
+    managed_identities = local.combined_objects_managed_identities
+    private_dns                     = local.combined_objects_private_dns
+    vnets                           = local.combined_objects_networking
+    private_endpoints               = try(each.value.private_endpoints, {})
+    resource_groups                 = try(each.value.private_endpoints, {}) == {} ? null : local.resource_groups    
+  }
+
+  
 }
 
 output "data_factory" {
@@ -21,18 +31,21 @@ output "data_factory" {
 
 ##### azurerm_data_factory_pipeline
 module "data_factory_pipeline" {
-  source = "./modules/data_factory/data_factory_pipeline"
-
+  source   = "./modules/data_factory/data_factory_pipeline"
   for_each = local.data_factory.data_factory_pipeline
 
-  name                = each.value.name
-  resource_group_name = local.resource_groups[each.value.resource_group_key].name
-  data_factory_name   = module.data_factory[each.value.data_factory_key].name
-  description         = try(each.value.description, null)
-  annotations         = try(each.value.annotations, null)
-  parameters          = try(each.value.parameters, null)
-  variables           = try(each.value.variables, null)
-  activities_json     = try(each.value.activities_json, null)
+  global_settings = local.global_settings
+  client_config   = local.client_config
+  settings        = each.value
+
+  resource_group_name = coalesce(
+    try(local.combined_objects_resource_groups[try(each.value.resource_group.lz_key, local.client_config.landingzone_key)][each.value.resource_group.key].name, null),
+    try(each.value.resource_group.name, null)
+  )
+  data_factory_name = coalesce(
+    try(local.combined_objects_data_factory[try(each.value.data_factory.lz_key, local.client_config.landingzone_key)][each.value.data_factory.key].name, null),
+    try(each.value.data_factory.name, null)
+  )
 }
 
 output "data_factory_pipeline" {
@@ -41,22 +54,26 @@ output "data_factory_pipeline" {
 
 ##### azurerm_data_factory_trigger_schedule
 module "data_factory_trigger_schedule" {
-  source = "./modules/data_factory/data_factory_trigger_schedule"
-
+  source   = "./modules/data_factory/data_factory_trigger_schedule"
   for_each = local.data_factory.data_factory_trigger_schedule
 
-  name                = each.value.name
-  resource_group_name = local.resource_groups[each.value.resource_group_key].name
-  data_factory_name   = module.data_factory[each.value.data_factory_key].name
-  pipeline_name       = module.data_factory_pipeline[each.value.data_factory_pipeline_key].name
-  start_time          = try(each.value.start_time, null)
-  end_time            = try(each.value.end_time, null)
-  interval            = try(each.value.interval, null)
-  frequency           = try(each.value.frequency, null)
-  pipeline_parameters = try(each.value.pipeline_parameters, null)
-  annotations         = try(each.value.annotations, null)
-}
+  global_settings = local.global_settings
+  client_config   = local.client_config
+  settings        = each.value
 
+  resource_group_name = coalesce(
+    try(local.combined_objects_resource_groups[try(each.value.resource_group.lz_key, local.client_config.landingzone_key)][each.value.resource_group.key].name, null),
+    try(each.value.resource_group.name, null)
+  )
+  data_factory_name = coalesce(
+    try(local.combined_objects_data_factory[try(each.value.data_factory.lz_key, local.client_config.landingzone_key)][each.value.data_factory.key].name, null),
+    try(each.value.data_factory.name, null)
+  )
+  pipeline_name = coalesce(
+    try(local.combined_objects_data_factory_pipeline[try(each.value.data_factory_pipeline.lz_key, local.client_config.landingzone_key)][each.value.data_factory_pipeline.key].name, null),
+    try(each.value.data_factory_pipeline.name, null)
+  )
+}
 output "data_factory_trigger_schedule" {
   value = module.data_factory_trigger_schedule
 }

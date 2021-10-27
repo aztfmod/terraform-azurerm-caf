@@ -125,7 +125,7 @@ resource "azurerm_virtual_network_peering" "peering" {
   allow_gateway_transit        = try(each.value.allow_gateway_transit, false)
   use_remote_gateways          = try(each.value.use_remote_gateways, false)
 
-    lifecycle {
+  lifecycle {
     ignore_changes = [
       remote_virtual_network_id,
       resource_group_name,
