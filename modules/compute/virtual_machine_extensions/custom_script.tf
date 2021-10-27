@@ -30,7 +30,7 @@ locals {
   fileuri_sa_key       = try(var.extension.fileuri_sa_key, "")
   fileuri_sa_path      = try(var.extension.fileuri_sa_path, "")
   fileuri_sa           = local.fileuri_sa_key != "" ? try(var.storage_accounts[var.client_config.landingzone_key][var.extension.fileuri_sa_key].primary_blob_endpoint, try(var.storage_accounts[var.extension.lz_key][var.extension.fileuri_sa_key].primary_blob_endpoint)) : null
-  fileuri_sa_full_path = "${local.filuri_sa}${local.fileuri_sa_path}"
+  fileuri_sa_full_path = "${local.fileuri_sa}${local.fileuri_sa_path}"
 
   timestamp = {"timestamp" : try(var.extension.timestamp, "12345678")}
   fileuris = (try(var.extension.fileuris, "" == "")) ? [local.fileuri_sa_full_path] : var.extension.fileuris
