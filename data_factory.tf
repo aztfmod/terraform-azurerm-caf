@@ -100,7 +100,7 @@ module "data_factory_integration_runtime_azure_ssis" {
 
   remote_objects = {
     resource_groups          = local.combined_objects_resource_groups
-    keyvaults                = local.combined_objects_resource_groups
+    keyvaults                = local.combined_objects_keyvaults
     dynamic_keyvault_secrets = local.security.dynamic_keyvault_secrets
   }
 }
