@@ -61,4 +61,7 @@ case "${RESOURCE}" in
     PATHRULE)
         execute_with_backoff az network application-gateway url-path-map rule delete -g ${RG_NAME} --gateway-name ${APPLICATION_GATEWAY_NAME} --path-map-name ${PATHMAPNAME} -n ${NAME}
         ;;
+    PROBE)
+        execute_with_backoff az network application-gateway probe delete -g ${RG_NAME} --gateway-name ${APPLICATION_GATEWAY_NAME} -n ${NAME}
+        ;;
 esac

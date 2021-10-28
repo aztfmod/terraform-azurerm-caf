@@ -121,4 +121,19 @@ case "${RESOURCE}" in
             --gateway-name ${APPLICATION_GATEWAY_NAME} -n ${NAME} --path-map-name ${PATHMAPNAME} \
             --paths ${PATHS} ${addresspool}${httpsettings}${redirectconfig}${rewriteruleset}${wafpolicy}
         ;;
+    PROBE)
+        host=$([ -z "${HOST}" ] && echo "" || echo "--host ${HOST} ")
+        hostnamefromhttpsettings=$([ -z "${HOST_NAME_FROM_HTTP_SETTINGS}" ] && echo "" || echo "--host-name-from-http-settings ${HOST_NAME_FROM_HTTP_SETTINGS} ")
+        interval=$([ -z "${INTERVAL}" ] && echo "" || echo "--interval ${INTERVAL} ")
+        matchbody=$([ -z "${MATCH_BODY}" ] && echo "" || echo "--match-body ${MATCH_BODY} ")
+        matchstatuscodes=$([ -z "${MATCH_STATUS_CODES}" ] && echo "" || echo "--match-status-codes ${MATCH_STATUS_CODES} ")
+        minservers=$([ -z "${MIN_SERVERS}" ] && echo "" || echo "--min-servers ${MIN_SERVERS} ")
+        port=$([ -z "${PORT}" ] && echo "" || echo "--port ${PORT} ")
+        threshold=$([ -z "${THRESHOLD}" ] && echo "" || echo "--threshold ${THRESHOLD} ")
+        timeout=$([ -z "${TIMEOUT}" ] && echo "" || echo "--timeout ${TIMEOUT} ")
+
+        execute_with_backoff az network application-gateway probe create -g ${RG_NAME} \
+            --gateway-name ${APPLICATION_GATEWAY_NAME} -n ${NAME} --protocol ${PROTOCOL} \
+            --path ${PATH} ${host}${hostnamefromhttpsettings}${interval}${matchbody}${matchstatuscodes}${minservers}${port}${threshold}${timeout}
+        ;;
 esac
