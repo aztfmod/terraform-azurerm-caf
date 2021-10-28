@@ -558,6 +558,15 @@ variable "vpn_sites" {
 variable "vpn_gateway_connections" {
   default = {}
 }
+variable "servicebus_namespaces" {
+  default = {}
+}
+variable "servicebus_topics" {
+  default = {}
+}
+variable "servicebus_queues" {
+  default = {}
+}
 variable "storage_account_queues" {
   default = {}
 }
