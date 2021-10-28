@@ -130,6 +130,11 @@ locals {
     }
     linked_services = {
       azure_blob_storage = try(var.data_factory.linked_services.azure_blob_storage, {})
+      cosmosdb           = try(var.data_factory.linked_services.cosmosdb, {})
+      web                = try(var.data_factory.linked_services.web, {})
+      mysql              = try(var.data_factory.linked_services.mysql, {})
+      postgresql         = try(var.data_factory.linked_services.postgresql, {})
+      sql_server         = try(var.data_factory.linked_services.sql_server, {})
     }
   }
 
@@ -265,6 +270,7 @@ locals {
     netapp_accounts        = try(var.storage.netapp_accounts, {})
     storage_account_blobs  = try(var.storage.storage_account_blobs, {})
     storage_account_queues = try(var.storage.storage_account_queues, {})
+    storage_containers     = try(var.storage.storage_containers, {})
   }
 
   webapp = {
