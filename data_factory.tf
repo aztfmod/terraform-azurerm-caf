@@ -99,8 +99,9 @@ module "data_factory_integration_runtime_azure_ssis" {
   location = lookup(each.value, "region", null) == null ? local.resource_groups[each.value.resource_group_key].location : local.global_settings.regions[each.value.region]
 
   remote_objects = {
-    data_factory   = local.combined_objects_data_factory
-    resource_group = local.combined_objects_resource_groups
+    resource_groups          = local.combined_objects_resource_groups
+    keyvaults                = local.combined_objects_resource_groups
+    dynamic_keyvault_secrets = local.security.dynamic_keyvault_secrets
   }
 }
 output "data_factory_integration_runtime_azure_ssis" {
