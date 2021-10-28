@@ -7,7 +7,6 @@ resource "azurerm_virtual_machine_extension" "custom_script" {
   type_handler_version       = "1.10"
   auto_upgrade_minor_version = true
 
-  #settings                   = jsonencode(local.settings)
   settings = jsonencode(
     {
       "fileUris" : local.fileuris,
@@ -38,9 +37,6 @@ locals {
   fileuri_sa_path      = try(var.extension.fileuri_sa_path, "")
   fileuri_sa           = local.fileuri_sa_key != "" ? try(var.storage_accounts[var.client_config.landingzone_key][var.extension.fileuri_sa_key].primary_blob_endpoint, try(var.storage_accounts[var.extension.lz_key][var.extension.fileuri_sa_key].primary_blob_endpoint)) : ""
   fileuri_sa_full_path = "${local.fileuri_sa}${local.fileuri_sa_path}"
-
-  #timestamp = {"timestamp" : try(var.extension.timestamp, "12345678")}
   fileuri_sa_defined   = try(var.extension.fileuris, "")
   fileuris = local.fileuri_sa_defined == "" ? [local.fileuri_sa_full_path] : var.extension.fileuris
-  #settings = merge(local.timestamp,local.fileuris)
 }
