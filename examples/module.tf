@@ -178,6 +178,11 @@ module "example" {
     keyvault_certificates         = var.keyvault_certificates
     lighthouse_definitions        = var.lighthouse_definitions
   }
+  servicebus = {
+    servicebus_namespaces          = var.servicebus_namespaces
+    servicebus_topics              = var.servicebus_topics
+    servicebus_queues              = var.servicebus_queues
+  }
   shared_services = {
     consumption_budgets      = var.consumption_budgets
     image_definitions        = var.image_definitions

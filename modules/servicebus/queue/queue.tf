@@ -25,24 +25,10 @@ resource "azurerm_servicebus_queue" "queue" {
   requires_session                        = try(var.settings.requires_session, null)
   resource_group_name                     = local.resource_group_name
   status                                  = try(var.settings.status, null)
+  #TODO: to be enhanced for forward_to and forward_dead_lettered_messages_to to use key reference for name value
   forward_to                              = try(var.settings.forward_to.queue_name,var.settings.forward_to.topic_name, null)
   forward_dead_lettered_messages_to       = try(var.settings.forward_to.queue_name,var.settings.forward_to.topic_name, null)
   
-  # forward_to = try(var.settings.forward_to.queue, null) != null ? coalesce(
-  #   try(var.remote_objects.servicebus_queues[var.settings.forward_to.queue.lz_key][var.settings.forward_to.queue.key].name, null),
-  #   try(var.remote_objects.servicebus_queues[var.client_config.landingzone_key][var.settings.forward_to.queue.key].name, null)
-  #   ) : try(var.settings.forward_to.topics, null) != null ? coalesce(
-  #     try(var.remote_objects.servicebus_topics[var.settings.forward_to.topic.lz_key][var.settings.forward_to.topic.key].name, null),
-  #     try(var.remote_objects.servicebus_topics[var.client_config.landingzone_key][var.settings.forward_to.topic.key].name, null)
-  #     ) : null
-
-  # forward_dead_lettered_messages_to = try(var.settings.forward_dead_lettered_messages_to.queue, null) != null ? coalesce(
-  #   try(var.remote_objects.servicebus_queues[var.settings.forward_to.queue.lz_key][var.settings.forward_to.queue.key].name, null),
-  #   try(var.remote_objects.servicebus_queues[var.client_config.landingzone_key][var.settings.forward_to.queue.key].name, null)
-  #   ) : try(var.settings.forward_to.topics, null) != null ? coalesce(
-  #     try(var.remote_objects.servicebus_topics[var.settings.forward_to.topic.lz_key][var.settings.forward_to.topic.key].name, null),
-  #     try(var.remote_objects.servicebus_topics[var.client_config.landingzone_key][var.settings.forward_to.topic.key].name, null)
-  #     ) : null: null
 }
 
 module "queue_auth_rules" {
