@@ -29,7 +29,12 @@ mysql_servers = {
     administrator_login = "mysqlsalesadmin"
     #   Below password argument is used to set the DB password. If not passed, there will be a random password generated and stored in azure keyvault.
     #   administrator_login_password  = "ComplxP@ssw0rd!"
-    keyvault_key                  = "mysql-re1"
+    keyvault_key = "mysql-re1"
+    # If your keyvault is on remote lz use this:
+    # keyvault = {
+    #   lz_key = "" #lz which the keyvault is located
+    #   key    = "" #keyvault resource key
+    # }
     system_msi                    = true
     public_network_access_enabled = true
     auto_grow_enabled             = true

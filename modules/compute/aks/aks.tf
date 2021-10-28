@@ -35,10 +35,19 @@ resource "azurecaf_name" "rg_node" {
   use_slug      = var.global_settings.use_slug
 }
 
+
+# Needed as introduced in >2.79.1 - https://github.com/hashicorp/terraform-provider-azurerm/issues/13585  
+ resource "null_resource" "aks_registration_preview" {
+  provisioner "local-exec" {
+    command = "az feature register --namespace Microsoft.ContainerService -n AutoUpgradePreview"
+  }
+}
 ### AKS cluster resource
 
 resource "azurerm_kubernetes_cluster" "aks" {
-
+  depends_on = [
+    null_resource.aks_registration_preview
+  ]
   name                = azurecaf_name.aks.result
   location            = var.resource_group.location
   resource_group_name = var.resource_group.name
@@ -54,6 +63,8 @@ resource "azurerm_kubernetes_cluster" "aks" {
     enable_node_public_ip        = try(var.settings.default_node_pool.enable_node_public_ip, false)
     only_critical_addons_enabled = try(var.settings.default_node_pool.only_critical_addons_enabled, false)
     node_count                   = try(var.settings.default_node_pool.node_count, 1)
+    min_count                    = try(var.settings.default_node_pool.min_count, null)
+    max_count                    = try(var.settings.default_node_pool.max_count, null)
     max_pods                     = try(var.settings.default_node_pool.max_pods, 30)
     node_labels                  = try(var.settings.default_node_pool.node_labels, null)
     node_taints                  = try(var.settings.default_node_pool.node_taints, null)
@@ -215,9 +226,10 @@ resource "azurerm_kubernetes_cluster" "aks" {
     }
   }
 
-  node_resource_group     = azurecaf_name.rg_node.result
-  private_cluster_enabled = try(var.settings.private_cluster_enabled, false)
-  private_dns_zone_id     = var.private_dns_zone_id
+  node_resource_group                 = azurecaf_name.rg_node.result
+  private_cluster_enabled             = try(var.settings.private_cluster_enabled, false)
+  private_dns_zone_id                 = var.private_dns_zone_id
+  private_cluster_public_fqdn_enabled = try(var.settings.private_cluster_public_fqdn_enabled, false)
 
   lifecycle {
     ignore_changes = [
@@ -251,6 +263,8 @@ resource "azurerm_kubernetes_cluster_node_pool" "nodepools" {
   enable_auto_scaling   = try(each.value.enable_auto_scaling, false)
   enable_node_public_ip = try(each.value.enable_node_public_ip, false)
   node_count            = try(each.value.node_count, 1)
+  min_count             = try(each.value.min_count, null)
+  max_count             = try(each.value.max_count, null)
   max_pods              = try(each.value.max_pods, 30)
   node_labels           = try(each.value.node_labels, null)
   node_taints           = try(each.value.node_taints, null)

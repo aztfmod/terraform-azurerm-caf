@@ -35,6 +35,7 @@ recovery_vaults = {
           vault_key = "asr1"
           rg_key    = "primary"
           timezone  = "UTC"
+          instant_restore_retention_days = 5
           backup = {
             frequency = "Daily"
             time      = "23:00"

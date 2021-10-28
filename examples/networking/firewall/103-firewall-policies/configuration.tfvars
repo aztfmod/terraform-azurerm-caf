@@ -70,6 +70,31 @@ azurerm_firewall_policies = {
     name               = "firewall_policy"
     resource_group_key = "test"
     region             = "region1"
+    sku                = "Premium"
+
+    #   threat_intelligence_mode = "Alert"
+
+    #   threat_intelligence_allowlist = {
+    #     ip_addresses = []
+    #     fqdns        = []
+    #   }
+
+    #   intrusion_detection = {
+    #     mode                = "Alert"
+    #     signature_overrides = {
+    #       id    = ""
+    #       state = ""
+    #     }
+    #     traffic_bypass      = {
+    #       name                  = ""
+    #       protocol              = ""
+    #       description           = ""
+    #       destination_addresses = ""
+    #       destination_ip_groups = ""
+    #       destination_ports     = ""
+    #       source_addresses      = ""
+    #       source_ip_groups      = ""
+    #     }
   }
 }
 

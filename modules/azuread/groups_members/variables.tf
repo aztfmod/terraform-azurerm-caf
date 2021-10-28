@@ -10,3 +10,9 @@ variable "azuread_apps" {
 variable "azuread_service_principals" {
   default = {}
 }
+variable "managed_identities" {
+  default = {}
+}
+variable "mssql_servers" {
+  default = {}
+}
