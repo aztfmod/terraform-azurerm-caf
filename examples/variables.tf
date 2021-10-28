@@ -237,6 +237,9 @@ variable "azuread_applications" {
 variable "azuread_credentials" {
   default = {}
 }
+variable "azuread_groups_membership" {
+  default = {}
+}
 variable "azuread_service_principals" {
   default = {}
 }
@@ -333,7 +336,13 @@ variable "event_hub_namespaces" {
 variable "application_gateways" {
   default = {}
 }
+variable "application_gateway_platforms" {
+  default = {}
+}
 variable "application_gateway_applications" {
+  default = {}
+}
+variable "application_gateway_applications_v1" {
   default = {}
 }
 variable "application_gateway_waf_policies" {
@@ -349,6 +358,12 @@ variable "cosmos_db" {
   default = {}
 }
 variable "log_analytics" {
+  default = {}
+}
+variable "logic_app_workflow" {
+  default = {}
+}
+variable "logic_app_integration_account" {
   default = {}
 }
 variable "recovery_vaults" {
@@ -552,6 +567,18 @@ variable "storage_account_queues" {
 variable "storage_account_blobs" {
   default = {}
 }
+variable "storage_containers" {
+  default = {}
+}
+variable "vmware_private_clouds" {
+  default = {}
+}
+variable "vmware_clusters" {
+  default = {}
+}
+variable "vmware_express_route_authorizations" {
+  default = {}
+}
 variable "nat_gateways" {
   default = {}
 }
@@ -562,5 +589,77 @@ variable "database_migration_services" {
   default = {}
 }
 variable "database_migration_projects" {
+  default = {}
+}
+variable "data_factory" {
+  default = {}
+}
+variable "data_factory_pipeline" {
+  default = {}
+}
+variable "data_factory_trigger_schedule" {
+  default = {}
+}
+variable "data_factory_dataset_azure_blob" {
+  default = {}
+}
+variable "data_factory_dataset_cosmosdb_sqlapi" {
+  default = {}
+}
+variable "data_factory_dataset_delimited_text" {
+  default = {}
+}
+variable "data_factory_dataset_http" {
+  default = {}
+}
+variable "data_factory_dataset_json" {
+  default = {}
+}
+variable "data_factory_dataset_mysql" {
+  default = {}
+}
+variable "data_factory_dataset_postgresql" {
+  default = {}
+}
+variable "data_factory_dataset_sql_server_table" {
+  default = {}
+}
+variable "data_factory_linked_service_azure_blob_storage" {
+  default = {}
+}
+variable "data_factory_linked_service_cosmosdb" {
+  default = {}
+}
+variable "data_factory_linked_service_web" {
+  default = {}
+}
+variable "data_factory_linked_service_mysql" {
+  default = {}
+}
+variable "data_factory_linked_service_postgresql" {
+  default = {}
+}
+variable "data_factory_linked_service_sql_server" {
+  default = {}
+}
+variable "integration_service_environment" {
+  default = {}
+}
+variable "logic_app_action_http" {
+  default = {}
+}
+variable "logic_app_action_custom" {
+  default = {}
+}
+variable "logic_app_trigger_http_request" {
+  default = {}
+}
+variable "logic_app_trigger_recurrence" {
+  default = {}
+}
+variable "logic_app_trigger_custom" {
+  default = {}
+}
+variable "private_dns_vnet_links" {
   default = {}
 }

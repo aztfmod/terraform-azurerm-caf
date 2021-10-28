@@ -9,7 +9,7 @@ locals {
   nic_asg = {
     for nic in flatten(
       [
-        for nic_key, nic_value in var.settings.networking_interfaces : [
+        for nic_key, nic_value in try(var.settings.networking_interfaces, []) : [
           for asg_key, asg_value in try(nic_value.networking_interface_asg_associations, {}) : {
             nic_key = nic_key
             asg_key = asg_key

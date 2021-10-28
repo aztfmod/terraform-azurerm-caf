@@ -68,20 +68,23 @@ locals {
   }, var.cloud)
 
   compute = {
-    aks_clusters               = try(var.compute.aks_clusters, {})
-    availability_sets          = try(var.compute.availability_sets, {})
-    azure_container_registries = try(var.compute.azure_container_registries, {})
-    bastion_hosts              = try(var.compute.bastion_hosts, {})
-    container_groups           = try(var.compute.container_groups, {})
-    dedicated_hosts            = try(var.compute.dedicated_hosts, {})
-    dedicated_host_groups      = try(var.compute.dedicated_host_groups, {})
-    proximity_placement_groups = try(var.compute.proximity_placement_groups, {})
-    wvd_applications           = try(var.compute.wvd_applications, {})
-    wvd_application_groups     = try(var.compute.wvd_application_groups, {})
-    wvd_host_pools             = try(var.compute.wvd_host_pools, {})
-    wvd_workspaces             = try(var.compute.wvd_workspaces, {})
-    virtual_machines           = try(var.compute.virtual_machines, {})
-    virtual_machine_scale_sets = try(var.compute.virtual_machine_scale_sets, {})
+    aks_clusters                        = try(var.compute.aks_clusters, {})
+    availability_sets                   = try(var.compute.availability_sets, {})
+    azure_container_registries          = try(var.compute.azure_container_registries, {})
+    bastion_hosts                       = try(var.compute.bastion_hosts, {})
+    container_groups                    = try(var.compute.container_groups, {})
+    dedicated_hosts                     = try(var.compute.dedicated_hosts, {})
+    dedicated_host_groups               = try(var.compute.dedicated_host_groups, {})
+    proximity_placement_groups          = try(var.compute.proximity_placement_groups, {})
+    vmware_clusters                     = try(var.compute.vmware_clusters, {})
+    vmware_private_clouds               = try(var.compute.vmware_private_clouds, {})
+    vmware_express_route_authorizations = try(var.compute.vmware_express_route_authorizations, {})
+    wvd_applications                    = try(var.compute.wvd_applications, {})
+    wvd_application_groups              = try(var.compute.wvd_application_groups, {})
+    wvd_host_pools                      = try(var.compute.wvd_host_pools, {})
+    wvd_workspaces                      = try(var.compute.wvd_workspaces, {})
+    virtual_machines                    = try(var.compute.virtual_machines, {})
+    virtual_machine_scale_sets          = try(var.compute.virtual_machine_scale_sets, {})
   }
 
   database = {
@@ -129,6 +132,11 @@ locals {
     }
     linked_services = {
       azure_blob_storage = try(var.data_factory.linked_services.azure_blob_storage, {})
+      cosmosdb           = try(var.data_factory.linked_services.cosmosdb, {})
+      web                = try(var.data_factory.linked_services.web, {})
+      mysql              = try(var.data_factory.linked_services.mysql, {})
+      postgresql         = try(var.data_factory.linked_services.postgresql, {})
+      sql_server         = try(var.data_factory.linked_services.sql_server, {})
     }
   }
 
@@ -187,6 +195,8 @@ locals {
 
   networking = {
     application_gateway_applications                        = try(var.networking.application_gateway_applications, {})
+    application_gateway_applications_v1                     = try(var.networking.application_gateway_applications_v1, {})
+    application_gateway_platforms                           = try(var.networking.application_gateway_platforms, {})
     application_gateway_waf_policies                        = try(var.networking.application_gateway_waf_policies, {})
     application_gateways                                    = try(var.networking.application_gateways, {})
     application_security_groups                             = try(var.networking.application_security_groups, {})
@@ -212,6 +222,7 @@ locals {
     network_security_group_definition                       = try(var.networking.network_security_group_definition, {})
     network_watchers                                        = try(var.networking.network_watchers, {})
     private_dns                                             = try(var.networking.private_dns, {})
+    private_dns_vnet_links                                  = try(var.networking.private_dns_vnet_links, {})
     public_ip_addresses                                     = try(var.networking.public_ip_addresses, {})
     route_tables                                            = try(var.networking.route_tables, {})
     vhub_peerings                                           = try(var.networking.vhub_peerings, {})
@@ -256,6 +267,7 @@ locals {
     netapp_accounts        = try(var.storage.netapp_accounts, {})
     storage_account_blobs  = try(var.storage.storage_account_blobs, {})
     storage_account_queues = try(var.storage.storage_account_queues, {})
+    storage_containers     = try(var.storage.storage_containers, {})
   }
 
   webapp = {

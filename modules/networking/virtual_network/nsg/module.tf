@@ -27,6 +27,7 @@ resource "azurerm_network_security_group" "nsg_obj" {
     for_each = try(var.network_security_group_definition[each.value.nsg_key].nsg, [])
     content {
       name                         = lookup(security_rule.value, "name", null)
+      description                  = lookup(security_rule.value, "description", null)
       priority                     = lookup(security_rule.value, "priority", null)
       direction                    = lookup(security_rule.value, "direction", null)
       access                       = lookup(security_rule.value, "access", null)

@@ -22,6 +22,7 @@ resource "azurerm_virtual_network_gateway_connection" "vngw_connection" {
 
   # The following arguments are applicable only if the type is IPsec (VPN)
   connection_protocol                = try(var.settings.connection_method, null)
+  dpd_timeout_seconds                = try(var.settings.dpd_timeout_seconds, null)
   shared_key                         = try(var.settings.shared_key, null)
   enable_bgp                         = try(var.settings.enable_bgp, null)
   local_network_gateway_id           = try(var.local_network_gateway_id, null)

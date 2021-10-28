@@ -1,17 +1,14 @@
 {
   "config_files": [
+    "logic_app/101-integration_service_environment",
+    "logic_app/108-logic_app_complex",
     "mssql_mi/200-mi",
-    "mssql_mi/200-mi-two-regions",
-    "networking/virtual_network_gateway/100-expressroute-gateway",
-    "networking/virtual_network_gateway/101-vpn-site-to-site",
-    "networking/virtual_network_gateway/102-vpn-site-to-site-active-active",
-    "networking/virtual_network_gateway/103-vpn-site-to-site-connection",
-    "networking/virtual_wan/100-vwan-multi-hubs",
+    "networking/virtual_wan/109-vwan-vpn-gateway-connection",
     "networking/virtual_wan/101-vwan-hub-firewall-legacy",
     "networking/virtual_wan/102-vwan-hub-firewall-new",
+    "networking/virtual_wan/105-vwan-hub-route-table",
     "networking/virtual_wan/103-vwan-hub-gw",
     "networking/virtual_wan/104-vwan-hub-gw-spp",
-    "networking/virtual_wan/105-vwan-hub-route-table",
-    "networking/virtual_wan/106-vwan-hub-routes"
+    "compute/vmware_cluster/101-vmware_cluster"
   ]
 }
