@@ -76,7 +76,7 @@ resource "random_password" "sql_admin" {
 resource "azurerm_key_vault_secret" "sql_admin_password" {
   count = try(var.settings.administrator_login_password, null) == null ? 1 : 0
 
-  name         = format("%s-password", azurecaf_name.mssql.result)
+  name         = can(var.settings.keyvault_secret_name) ? var.settings.keyvault_secret_name : format("%s-password", azurecaf_name.mssql.result)
   value        = random_password.sql_admin.0.result
   key_vault_id = var.keyvault_id
 
