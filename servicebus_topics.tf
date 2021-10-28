@@ -10,6 +10,8 @@ module "servicebus_topics" {
   remote_objects    = {
     resource_groups       = local.combined_objects_resource_groups
     servicebus_namespaces = local.combined_objects_servicebus_namespaces
+    # servicebus_topics     = local.combined_objects_servicebus_topics
+    # servicebus_queues     = local.combined_objects_servicebus_queues # cycle error:unable to self reference
   }
 
 }
