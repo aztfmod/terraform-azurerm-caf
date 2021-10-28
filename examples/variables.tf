@@ -237,6 +237,9 @@ variable "azuread_applications" {
 variable "azuread_credentials" {
   default = {}
 }
+variable "azuread_groups_membership" {
+  default = {}
+}
 variable "azuread_service_principals" {
   default = {}
 }
