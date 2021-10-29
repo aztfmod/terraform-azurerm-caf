@@ -128,6 +128,7 @@
     "networking/virtual_network/101-vnet-peering-nsg",
     "networking/virtual_network/200-nsg-flow-logs",
     "networking/virtual_network/201-nsg-flow-logs-v1",
+    "networking/virtual_subnets/100-simple-subnet-nsg",
     "networking/virtual_wan/100-vwan-multi-hubs",
     "networking/virtual_wan/106-vwan-hub-routes",
     "networking/virtual_wan/108-vwan-vpn-site",
