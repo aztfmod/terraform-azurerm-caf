@@ -45,6 +45,35 @@ module "networking" {
   }
 }
 
+module "virtual_subnets" {
+  depends_on = [module.networking]
+  source     = "./modules/networking/virtual_subnets"
+  for_each   = local.networking.virtual_subnets
+  
+  global_settings = local.global_settings
+  client_config   = local.client_config
+  settings        = each.value
+  network_security_groups           = module.network_security_groups
+  network_security_group_definition = local.networking.network_security_group_definition
+  route_tables                      = module.route_tables
+
+  resource_group_name   = coalesce(
+    try(each.value.resource_group.name, null),
+    try(local.combined_objects_resource_groups[each.value.resource_group.lz_key][each.value.resource_group.key].name, null),
+    try(local.combined_objects_resource_groups[local.client_config.landingzone_key][each.value.resource_group.key].name, null),
+    try(local.combined_objects_networking[each.value.vnet.lz_key][each.value.vnet.key].resource_group_name, null),
+    try(local.combined_objects_networking[local.client_config.landingzone_key][each.value.vnet.key].resource_group_name, null),
+    try(split("/", each.value.vnet.id)[4],null)
+  )
+  virtual_network_name  = coalesce(
+    try(each.value.vnet.name, null),
+    try(local.combined_objects_networking[each.value.vnet.lz_key][each.value.vnet.key].name, null),
+    try(local.combined_objects_networking[local.client_config.landingzone_key][each.value.vnet.key].name, null),
+    try(split("/", each.value.vnet.id)[8],null)
+  )
+}
+
+
 #
 #
 # Public IP Addresses
