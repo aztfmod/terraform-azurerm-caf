@@ -47,14 +47,26 @@ virtual_subnets = {
     }
 }
 
+managed_identities = {
+  testvm = {
+    # Used by the release agent to access the level0 keyvault and storage account with the tfstates in read / write
+    # Assign read access to level0
+    name = "msi-test"
+    resource_group = {
+      # lz_key = "examples"
+      key = "rg1"
+    }
+  }
+}
+
 role_mapping = {
   built_in_role_mapping = {
     virtual_subnets = {
       # subcription level access
       subnet1 = {
         "Contributor" = {
-          azuread_apps = {
-            keys = ["test_client"]
+          managed_identities = {
+            keys = ["test"]
           }
         }
       }
