@@ -183,6 +183,7 @@ resource "azurerm_kubernetes_cluster" "aks" {
           managed                = azure_active_directory.value.managed
           tenant_id              = try(azure_active_directory.value.tenant_id, null)
           admin_group_object_ids = try(azure_active_directory.value.admin_group_object_ids, try(var.admin_group_object_ids, null))
+          azure_rbac_enabled     = try(azure_active_directory.value.azure_rbac_enabled, null)
           client_app_id          = try(azure_active_directory.value.client_app_id, null)
           server_app_id          = try(azure_active_directory.value.server_app_id, null)
           server_app_secret      = try(azure_active_directory.value.server_app_secret, null)
