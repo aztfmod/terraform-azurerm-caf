@@ -151,6 +151,7 @@ resource "azurerm_kubernetes_cluster" "aks" {
       scale_down_unneeded              = try(auto_scaler_profile.value.scale_down_unneeded, null)
       scale_down_unready               = try(auto_scaler_profile.value.scale_down_unready, null)
       scale_down_utilization_threshold = try(auto_scaler_profile.value.scale_down_utilization_threshold, null)
+      skip_nodes_with_local_storage    = try(auto_scaler_profile.value.skip_nodes_with_local_storage, null)
     }
   }
 
