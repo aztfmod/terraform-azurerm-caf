@@ -48,7 +48,7 @@ virtual_subnets = {
 }
 
 managed_identities = {
-  testvm = {
+  test = {
     # Used by the release agent to access the level0 keyvault and storage account with the tfstates in read / write
     # Assign read access to level0
     name = "msi-test"
