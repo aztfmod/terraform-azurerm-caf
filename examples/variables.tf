@@ -177,6 +177,9 @@ variable "azurerm_routes" {
 variable "vnets" {
   default = {}
 }
+variable "virtual_subnets" {
+  default = {}
+}
 variable "azurerm_redis_caches" {
   default = {}
 }
