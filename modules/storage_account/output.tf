@@ -63,14 +63,20 @@ output "backup_container_id" {
   value       = try(azurerm_backup_container_storage_account.container["enabled"].id, null)
 }
 
+
 output "primary_web_host" {
   description = "The hostname with port if applicable for web storage in the primary location."
   value       = azurerm_storage_account.stg.primary_web_host
 }
 
-#output "primary_connection_string" {
-#  value = try(azurerm_storage_account.stg.primary_connection_string, null)
-#}
+output "primary_connection_string" {
+  value = try(azurerm_storage_account.stg.primary_connection_string, null)
+}
+
+
+output "primary_blob_connection_string" {
+  value = try(azurerm_storage_account.stg.primary_blob_connection_string, null)
+}
 
 #output "primary_queue_endpoint" {
 #  value = try(azurerm_storage_account.stg.primary_queue_endpoint, null)
