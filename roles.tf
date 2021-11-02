@@ -95,6 +95,7 @@ locals {
     recovery_vaults             = local.combined_objects_recovery_vaults
     resource_groups             = local.combined_objects_resource_groups
     storage_accounts            = local.combined_objects_storage_accounts
+    storage_containers          = local.combined_objects_storage_containers
     subscriptions               = local.combined_objects_subscriptions
     synapse_workspaces          = local.combined_objects_synapse_workspaces
   }
