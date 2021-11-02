@@ -40,4 +40,5 @@ module "azuread_groups_membership" {
   group_id                   = local.combined_objects_azuread_groups[try(each.value.lz_key, local.client_config.landingzone_key)][each.key].id
   azuread_service_principals = local.combined_objects_azuread_service_principals
   managed_identities         = local.combined_objects_managed_identities
+  mssql_servers              = local.combined_objects_mssql_servers
 }

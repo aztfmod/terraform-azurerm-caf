@@ -244,6 +244,7 @@ locals {
     virtual_wans                                            = try(var.networking.virtual_wans, {})
     vnet_peerings                                           = try(var.networking.vnet_peerings, {})
     vnets                                                   = try(var.networking.vnets, {})
+    virtual_subnets                                         = try(var.networking.virtual_subnets, {})
     vpn_gateway_connections                                 = try(var.networking.vpn_gateway_connections, {})
     vpn_sites                                               = try(var.networking.vpn_sites, {})
   }
@@ -276,6 +277,7 @@ locals {
     netapp_accounts        = try(var.storage.netapp_accounts, {})
     storage_account_blobs  = try(var.storage.storage_account_blobs, {})
     storage_account_queues = try(var.storage.storage_account_queues, {})
+    storage_containers     = try(var.storage.storage_containers, {})
   }
 
   webapp = {

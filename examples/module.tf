@@ -28,6 +28,7 @@ module "example" {
     azuread_apps                        = var.azuread_apps
     azuread_credentials                 = var.azuread_credentials
     azuread_groups                      = var.azuread_groups
+    azuread_groups_membership           = var.azuread_groups_membership
     azuread_credential_policies         = var.azuread_credential_policies
     azuread_roles                       = var.azuread_roles
     azuread_service_principal_passwords = var.azuread_service_principal_passwords
@@ -176,6 +177,7 @@ module "example" {
     virtual_wans                                            = var.virtual_wans
     vnet_peerings                                           = var.vnet_peerings
     vnets                                                   = var.vnets
+    virtual_subnets                                         = var.virtual_subnets
     vpn_gateway_connections                                 = var.vpn_gateway_connections
     vpn_sites                                               = var.vpn_sites
   }
@@ -203,6 +205,8 @@ module "example" {
     netapp_accounts        = var.netapp_accounts
     storage_account_blobs  = var.storage_account_blobs
     storage_account_queues = var.storage_account_queues
+    storage_containers     = var.storage_containers
+
   }
   webapp = {
     azurerm_application_insights = var.azurerm_application_insights

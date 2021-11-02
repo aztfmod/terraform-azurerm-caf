@@ -177,6 +177,9 @@ variable "azurerm_routes" {
 variable "vnets" {
   default = {}
 }
+variable "virtual_subnets" {
+  default = {}
+}
 variable "azurerm_redis_caches" {
   default = {}
 }
@@ -235,6 +238,9 @@ variable "azuread_applications" {
   default = {}
 }
 variable "azuread_credentials" {
+  default = {}
+}
+variable "azuread_groups_membership" {
   default = {}
 }
 variable "azuread_service_principals" {
@@ -562,6 +568,9 @@ variable "storage_account_queues" {
   default = {}
 }
 variable "storage_account_blobs" {
+  default = {}
+}
+variable "storage_containers" {
   default = {}
 }
 variable "vmware_private_clouds" {
