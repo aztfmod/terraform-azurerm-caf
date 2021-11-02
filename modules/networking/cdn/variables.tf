@@ -5,6 +5,8 @@ variable "resource_group_name" {
 
 variable "settings" {}
 
+variable "endpoints" {}
+
 variable "global_settings" {
   description = "Global settings object (see module README.md)"
 }

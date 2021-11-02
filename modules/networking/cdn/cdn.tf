@@ -30,15 +30,15 @@ resource "azurerm_cdn_endpoint" "endpoint" {
   }
 
   delivery_rule {
-    name  = "HttpsRedirect"
-    order = 1
+    name  = each.value.delivery_rule_name
+    order = each.value.delivery_order
     request_scheme_condition {
-      match_values = ["HTTP"]
-      operator     = "Equal"
+      match_values = [each.value.delivery_match_value]
+      operator     = each.value.delivery_operator
     }
     url_redirect_action {
-      redirect_type = "Found"
-      protocol      = "Https"
+      redirect_type = each.value.delivery_redirect_type
+      protocol      = each.value.delivery_protocol
     }
   }
 }
