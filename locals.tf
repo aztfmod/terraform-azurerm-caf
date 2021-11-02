@@ -201,6 +201,7 @@ locals {
     azurerm_firewalls                                       = try(var.networking.azurerm_firewalls, {})
     azurerm_routes                                          = try(var.networking.azurerm_routes, {})
     cdn_profiles                                            = try(var.networking.cdn_profiles, {})
+    cdn_endpoints                                           = try(var.networking.cdn_endpoints, {})
     ddos_services                                           = try(var.networking.ddos_services, {})
     dns_zone_records                                        = try(var.networking.dns_zone_records, {})
     dns_zones                                               = try(var.networking.dns_zones, {})
