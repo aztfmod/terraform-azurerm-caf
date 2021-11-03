@@ -17,6 +17,7 @@ module "container_groups" {
     keyvaults          = local.combined_objects_keyvaults
     managed_identities = local.combined_objects_managed_identities
     vnets              = local.combined_objects_networking
+    resource_groups    = local.combined_objects_resource_groups
   }
 }
 
