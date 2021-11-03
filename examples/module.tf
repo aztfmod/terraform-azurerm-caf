@@ -144,6 +144,8 @@ module "example" {
     express_route_circuits                                  = var.express_route_circuits
     front_door_waf_policies                                 = var.front_door_waf_policies
     front_doors                                             = var.front_doors
+    frontdoor_rules_engine                                  = var.frontdoor_rules_engine
+    frontdoor_custom_https_configuration                    = var.frontdoor_custom_https_configuration
     ip_groups                                               = var.ip_groups
     load_balancers                                          = var.load_balancers
     local_network_gateways                                  = var.local_network_gateways
