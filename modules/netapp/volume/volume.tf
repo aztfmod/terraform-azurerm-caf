@@ -35,4 +35,8 @@ resource "azurerm_netapp_volume" "volume" {
     }
   }
   tags = var.tags
+  lifecycle {
+    ignore_changes = [resource_group_name, location]
+  }
+
 }
