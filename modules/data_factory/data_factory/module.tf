@@ -1,5 +1,5 @@
 resource "azurecaf_name" "df" {
-  name          = var.name
+  name          = var.settings.name
   resource_type = "azurerm_data_factory"
   prefixes      = var.global_settings.prefixes
   random_length = var.global_settings.random_length
@@ -9,12 +9,12 @@ resource "azurecaf_name" "df" {
 }
 
 resource "azurerm_data_factory" "df" {
-  name                = azurecaf_name.df.result
-  resource_group_name = var.resource_group_name
-  location            = var.location
+  name                            = azurecaf_name.df.result
+  resource_group_name             = var.resource_group_name
+  location                        = var.location
 
   dynamic "github_configuration" {
-    for_each = try(var.github_configuration, null) != null ? [var.github_configuration] : []
+    for_each = try(var.settings.github_configuration, null) != null ? [var.settings.github_configuration] : []
 
     content {
       account_name    = github_configuration.value.account_name
@@ -24,17 +24,25 @@ resource "azurerm_data_factory" "df" {
       root_folder     = github_configuration.value.root_folder
     }
   }
-
-  dynamic "identity" {
-    for_each = try(var.identity, null) != null ? [var.identity] : []
+  dynamic "global_parameter" {
+    for_each = try(var.settings.global_parameter, null) != null ? [var.settings.vsts_configuration] : []
 
     content {
-      type = identity.value.type
+      name  = global_parameter.value.name
+      type  = global_parameter.value.type
+      value = global_parameter.value.value
+    }
+  }
+  dynamic "identity" {
+    for_each = try(var.settings.identity, null) != null ? [var.settings.identity] : []
+    content {
+      type         = var.settings.identity.type
+      identity_ids = coalesce(local.managed_identities, var.settings.identity.identity_ids)
     }
   }
 
   dynamic "vsts_configuration" {
-    for_each = try(var.vsts_configuration, null) != null ? [var.vsts_configuration] : []
+    for_each = try(var.settings.vsts_configuration, null) != null ? [var.settings.vsts_configuration] : []
 
     content {
       account_name    = vsts_configuration.value.account_name
@@ -45,6 +53,9 @@ resource "azurerm_data_factory" "df" {
       tenant_id       = vsts_configuration.value.tenant_id
     }
   }
-
-  tags = merge(var.tags, var.base_tags)
+  managed_virtual_network_enabled = try(var.settings.managed_virtual_network_enabled, null)
+  public_network_enabled          = try(var.settings.public_network_enabled, null)
+  #customer_managed_key_id         = try(var.settings.customer_managed_key_id)
+  tags = local.tags
 }
+
