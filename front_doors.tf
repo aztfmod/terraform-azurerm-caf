@@ -63,20 +63,16 @@ module "frontdoor_rules_engine" {
   global_settings = local.global_settings
   client_config   = local.client_config
   settings        = each.value
-
   frontdoor_name = coalesce(
     try(local.combined_objects_front_door[try(each.value.frontdoor.lz_key, local.client_config.landingzone_key)][each.value.frontdoor.key].name, null),
     try(each.value.frontdoor.name, null)
   )
-
   resource_group_name = coalesce(
     try(local.combined_objects_resource_groups[try(each.value.resource_group.lz_key, local.client_config.landingzone_key)][each.value.resource_group.key].name, null),
     try(each.value.resource_group.name, null)
   )
-
-
   remote_objects = {
-    #frontdoor = local.combined_objects_front_door
+    frontdoor      = local.combined_objects_front_door
     resource_group = local.combined_objects_resource_groups
   }
 }
@@ -94,6 +90,9 @@ module "frontdoor_custom_https_configuration" {
 
 
   remote_objects = {
+    frontdoor      = local.combined_objects_front_door
+    keyvault       = local.combined_objects_keyvaults
+    resource_group = local.combined_objects_resource_groups
   }
 }
 output "frontdoor_custom_https_configuration" {

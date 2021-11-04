@@ -9,7 +9,6 @@ keyvaults = {
         secret_permissions      = ["Set", "Get", "List", "Delete", "Purge"]
       }
     }
-
   }
 }
 
@@ -47,6 +46,5 @@ keyvault_certificate_issuers = {
         phone_number  = "00000001"
       }
     } #add more admins by repeating the block.
-
   }
 }
