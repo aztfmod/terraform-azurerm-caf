@@ -213,6 +213,8 @@ locals {
     express_route_circuits                                  = try(var.networking.express_route_circuits, {})
     front_door_waf_policies                                 = try(var.networking.front_door_waf_policies, {})
     front_doors                                             = try(var.networking.front_doors, {})
+    frontdoor_rules_engine                                  = try(var.networking.frontdoor_rules_engine, {})
+    frontdoor_custom_https_configuration                    = try(var.networking.frontdoor_custom_https_configuration, {})
     ip_groups                                               = try(var.networking.ip_groups, {})
     load_balancers                                          = try(var.networking.load_balancers, {})
     local_network_gateways                                  = try(var.networking.local_network_gateways, {})
