@@ -17,7 +17,7 @@ resource "azurerm_database_migration_service" "dms" {
   tags                = local.tags
   subnet_id = coalesce(
     try(var.settings.subnet.id, null),
-    try(var.vnets[var.client_config.landingzone_key][var.settings.subnet.vnet_key].subnets[var.settings.subnet.subnet_key].id, null),
-    try(var.vnets[var.settings.subnet.lz_key][var.settings.subnet.vnet_key].subnets[var.settings.subnet.subnet_key].id, null)
+    try(var.remote_objects.vnets[var.client_config.landingzone_key][var.settings.subnet.vnet_key].subnets[var.settings.subnet.subnet_key].id, null),
+    try(var.remote_objects.vnets[var.settings.subnet.lz_key][var.settings.subnet.vnet_key].subnets[var.settings.subnet.subnet_key].id, null)
   )
 }

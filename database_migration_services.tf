@@ -9,8 +9,11 @@ module "database_migration_services" {
   resource_group_name = local.resource_groups[each.value.resource_group_key].name
   settings            = each.value
   global_settings     = local.global_settings
-  vnets               = local.combined_objects_networking
   base_tags           = try(local.global_settings.inherit_tags, false) ? local.combined_objects_resource_groups[try(each.value.resource_group.lz_key, local.client_config.landingzone_key)][try(each.value.resource_group.key, each.value.resource_group_key)].tags : {}
+
+  remote_objects = {
+    vnets = local.combined_objects_networking
+  }
 }
 
 output "database_migration_services" {
@@ -29,8 +32,10 @@ module "database_migration_projects" {
   database_migration_services = local.combined_objects_database_migration_services
   settings                    = each.value
   global_settings             = local.global_settings
-  vnets                       = local.combined_objects_networking
   base_tags                   = try(local.global_settings.inherit_tags, false) ? local.combined_objects_resource_groups[try(each.value.resource_group.lz_key, local.client_config.landingzone_key)][try(each.value.resource_group.key, each.value.resource_group_key)].tags : {}
+  remote_objects = {
+    vnets = local.combined_objects_networking
+  }
 }
 
 output "database_migration_projects" {
