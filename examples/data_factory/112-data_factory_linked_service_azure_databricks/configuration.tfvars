@@ -32,9 +32,6 @@ databricks_workspaces = {
     name               = "dtbwsp1"
     resource_group_key = "rg1"
     sku                = "standard"
-    identity = {
-      type = "SystemAssigned"
-    }
   }
 }
 
@@ -51,10 +48,7 @@ data_factory_linked_service_azure_databricks = {
       #lz_key  = ""
       #name    = ""
     }
-
-
     description = "ADB Linked Service via MSI"
-
     databricks_workspace = {
       key = "dtbwsp1"
       #lz_key    = ""
