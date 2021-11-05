@@ -223,6 +223,7 @@ module "example" {
       mysql              = var.data_factory_linked_service_mysql
       postgresql         = var.data_factory_linked_service_postgresql
       sql_server         = var.data_factory_linked_service_sql_server
+      azure_databricks   = var.data_factory_linked_service_azure_databricks
     }
   }
   logic_app = {
