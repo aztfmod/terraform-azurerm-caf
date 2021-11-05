@@ -11,7 +11,7 @@ output "server_id" {
 }
 
 output "server_name" {
-  value = "${var.server_name}"
+  value = var.server_name
 }
 
 output "server_fqdn" {
