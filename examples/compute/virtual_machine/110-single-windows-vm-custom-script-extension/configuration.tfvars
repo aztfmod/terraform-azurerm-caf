@@ -18,6 +18,63 @@ resource_groups = {
   }
 }
 
+# managed identity to attach to vm to download from the storage account
+managed_identities = {
+  user_mi = {
+    name               = "user_mi"
+    resource_group_key = "vm_region1"
+  }
+}
+
+storage_accounts = {
+  sa1 = {
+    name               = "sa1"
+    resource_group_key = "vm_region1"
+    # Account types are BlobStorage, BlockBlobStorage, FileStorage, Storage and StorageV2. Defaults to StorageV2
+    #account_kind = "BlobStorage"
+    # Account Tier options are Standard and Premium. For BlockBlobStorage and FileStorage accounts only Premium is valid.
+    account_tier = "Standard"
+    #  Valid options are LRS, GRS, RAGRS, ZRS, GZRS and RAGZRS
+    account_replication_type = "LRS" # https://docs.microsoft.com/en-us/azure/storage/common/storage-redundancy
+    containers = {
+      files = {
+        name = "files"
+      }
+    }
+  }
+} 
+
+# upload helloworld script
+storage_account_blobs = {
+  script = {
+    name                   = "helloworld.ps1"
+    storage_account_key    = "sa1"
+    storage_container_name = "files"
+    source                 = "../../examples/helloworld.ps1"
+    parallelism            = 1
+  }
+}
+
+# give managed identity Storage Blob Data reader and executing user Storage Blob Data Contributor permissions on storage account
+role_mapping = {
+  built_in_role_mapping = {
+    storage_accounts = {
+      sa1 = {
+        "Storage Blob Data Reader" = {
+          managed_identities = {
+            keys = ["user_mi"]
+          }
+        }
+        "Storage Blob Data Contributor" = {
+          logged_in = {
+            keys = ["user"]
+          }
+        }  
+      }
+    }
+  } 
+}
+
 # Virtual machines
 virtual_machines = {
 
@@ -48,12 +105,12 @@ virtual_machines = {
 
     virtual_machine_settings = {
       windows = {
-        name = "example_vm3"
+        name = "example_cse"
         size = "Standard_F2"
         zone = "1"
 
-        admin_username_key = "vmadmin-username"
-        admin_password_key = "vmadmin-password"
+        # admin_username_key = "vmadmin-username"
+        # admin_password_key = "vmadmin-password"
 
         # Spot VM to save money
         priority        = "Spot"
@@ -80,41 +137,23 @@ virtual_machines = {
 
       }
     }
+    identity = { #assign managed identity to the vm
+      type                  = "UserAssigned"
+      managed_identity_keys = ["user_mi"]
+      }
 
     virtual_machine_extensions = {
      custom_script = {
         #fileuris            = ["https://somelocation/container/script.ps1"]
         # can define fileuris directly or use fileuri_sa_ reference keys and lz_key:
-        fileuri_sa_key       = "mystorageaccount"
-        fileuri_sa_path      = "container/script.ps1"
-        commandtoexecute     = "PowerShell -file script.ps1"
+        fileuri_sa_key       = "sa1"
+        fileuri_sa_path      = "files/helloworld.ps1" 
+        commandtoexecute     = "PowerShell -file helloworld.ps1"
         # managed_identity_id = optional to define managed identity principal_id directly
         identity_type        = "UserAssigned" #optional to use managed_identity for download from location specified in fileuri, UserAssigned or SystemAssigned. 
-        managed_identity_key = "mymanagedidentity"
-        lz_key               = "shared_storage"
+        managed_identity_key = "user_mi"
+        lz_key               = "shared_storage" 
       }
-    }
-  }
-}
-
-# Store output attributes into keyvault secret
-dynamic_keyvault_secrets = {
-  example_vm_rg1 = { # Key of the keyvault
-    vmadmin-username = {
-      secret_name = "vmadmin-username"
-      value       = "vmadmin"
-    }
-    vmadmin-password = {
-      secret_name = "vmadmin-password"
-      value       = "Very@Str5ngP!44w0rdToChaNge#"
-    }
-    domain-join-username = {
-      secret_name = "domain-join-username"
-      value       = "domainjoinuser@contoso.com"
-    }
-    domain-join-password = {
-      secret_name = "domain-join-password"
-      value       = "MyDoma1nVery@Str5ngP!44w0rdToChaNge#"
     }
   }
 }
