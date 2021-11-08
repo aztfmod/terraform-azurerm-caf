@@ -134,6 +134,6 @@ case "${RESOURCE}" in
 
         execute_with_backoff az network application-gateway probe create -g ${RG_NAME} \
             --gateway-name ${APPLICATION_GATEWAY_NAME} -n ${NAME} --protocol ${PROTOCOL} \
-            --path ${PATH} ${host}${hostnamefromhttpsettings}${interval}${matchbody}${matchstatuscodes}${minservers}${port}${threshold}${timeout}
+            --path ${PROBEPATH} ${host}${hostnamefromhttpsettings}${interval}${matchbody}${matchstatuscodes}${minservers}${port}${threshold}${timeout}
         ;;
 esac

@@ -17,7 +17,7 @@ resource "null_resource" "set_probe" {
       APPLICATION_GATEWAY_NAME      = var.application_gateway.name
       NAME                          = each.value.name
       PROTOCOL                      = each.value.protocol
-      PATH                          = each.value.path
+      PROBEPATH                     = each.value.path
       HOST                          = try(each.value.host, null)
       HOST_NAME_FROM_HTTP_SETTINGS  = try(each.value.host_name_from_http_settings, null)
       INTERVAL                      = try(each.value.interval, null)
