@@ -45,6 +45,7 @@
     "cosmos_db/100-simple-cosmos-db-mongo",
     "cosmos_db/100-simple-cosmos-db-sql",
     "cosmos_db/100-simple-cosmos-db-table",
+    "database_migration_services/100-dms",
     "data_factory/101-data_factory",
     "data_factory/102-data_factory_pipeline",
     "data_factory/103-data_factory_trigger_schedule",

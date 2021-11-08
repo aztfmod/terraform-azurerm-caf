@@ -106,6 +106,8 @@ module "example" {
     azurerm_redis_caches               = var.azurerm_redis_caches
     cosmos_dbs                         = var.cosmos_dbs
     databricks_workspaces              = var.databricks_workspaces
+    database_migration_services        = var.database_migration_services
+    database_migration_projects        = var.database_migration_projects
     machine_learning_workspaces        = var.machine_learning_workspaces
     mariadb_servers                    = var.mariadb_servers
     mssql_databases                    = var.mssql_databases

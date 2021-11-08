@@ -588,6 +588,12 @@ variable "nat_gateways" {
 variable "cognitive_services_account" {
   default = {}
 }
+variable "database_migration_services" {
+  default = {}
+}
+variable "database_migration_projects" {
+  default = {}
+}
 variable "data_factory" {
   default = {}
 }
