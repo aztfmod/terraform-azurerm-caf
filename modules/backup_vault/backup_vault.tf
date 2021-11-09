@@ -1,4 +1,4 @@
-naming convention
+# naming convention
 resource "azurecaf_name" "backup_vault_name" {
   name          = var.settings.name
   resource_type = "azurerm_data_protection_backup_vault"
