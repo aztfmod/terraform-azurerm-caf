@@ -167,7 +167,7 @@ resource "azurerm_key_vault_secret" "ssh_private_key" {
 
   lifecycle {
     ignore_changes = [
-      value
+      value, key_vault_id
     ]
   }
 }
@@ -182,7 +182,7 @@ resource "azurerm_key_vault_secret" "ssh_public_key_openssh" {
 
   lifecycle {
     ignore_changes = [
-      value
+      value, key_vault_id
     ]
   }
 }
