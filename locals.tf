@@ -215,7 +215,7 @@ locals {
     nat_gateways                                            = try(var.networking.nat_gateways, {})
     network_security_group_definition                       = try(var.networking.network_security_group_definition, {})
     network_watchers                                        = try(var.networking.network_watchers, {})
-    network_profiles                                        = try(var.network_profiles, {})
+    network_profiles                                        = try(var.networking.network_profiles, {})
     private_dns                                             = try(var.networking.private_dns, {})
     private_dns_vnet_links                                  = try(var.networking.private_dns_vnet_links, {})
     public_ip_addresses                                     = try(var.networking.public_ip_addresses, {})
