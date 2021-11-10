@@ -9,7 +9,7 @@ resource "azurerm_network_profile" "netprof" {
 
     ip_configuration {
       name      = var.settings.container_network_interface.ip_configuration.name
-      subnet_id = var.settings.container_network_interface.ip_configuration.subnet_id
+      subnet_id = var.subnet_id
     }
   }
 }

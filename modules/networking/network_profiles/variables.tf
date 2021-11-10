@@ -15,4 +15,7 @@ variable "base_tags" {
   type        = map(any)
 }
 
+variable "subnet_id" {
+  description = "Reference to the subnet associated with the IP Configuration."
+} 
 variable "settings" {}
