@@ -32,6 +32,7 @@ module "example" {
     azuread_apps                        = var.azuread_apps
     azuread_credentials                 = var.azuread_credentials
     azuread_groups                      = var.azuread_groups
+    azuread_groups_membership           = var.azuread_groups_membership
     azuread_credential_policies         = var.azuread_credential_policies
     azuread_roles                       = var.azuread_roles
     azuread_service_principal_passwords = var.azuread_service_principal_passwords
@@ -109,6 +110,8 @@ module "example" {
     azurerm_redis_caches               = var.azurerm_redis_caches
     cosmos_dbs                         = var.cosmos_dbs
     databricks_workspaces              = var.databricks_workspaces
+    database_migration_services        = var.database_migration_services
+    database_migration_projects        = var.database_migration_projects
     machine_learning_workspaces        = var.machine_learning_workspaces
     mariadb_servers                    = var.mariadb_servers
     mssql_databases                    = var.mssql_databases
@@ -148,6 +151,8 @@ module "example" {
     express_route_circuits                                  = var.express_route_circuits
     front_door_waf_policies                                 = var.front_door_waf_policies
     front_doors                                             = var.front_doors
+    frontdoor_rules_engine                                  = var.frontdoor_rules_engine
+    frontdoor_custom_https_configuration                    = var.frontdoor_custom_https_configuration
     ip_groups                                               = var.ip_groups
     load_balancers                                          = var.load_balancers
     local_network_gateways                                  = var.local_network_gateways
@@ -169,6 +174,7 @@ module "example" {
     virtual_wans                                            = var.virtual_wans
     vnet_peerings                                           = var.vnet_peerings
     vnets                                                   = var.vnets
+    virtual_subnets                                         = var.virtual_subnets
     vpn_gateway_connections                                 = var.vpn_gateway_connections
     vpn_sites                                               = var.vpn_sites
   }

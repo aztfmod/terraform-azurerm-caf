@@ -26,3 +26,4 @@ variable "private_dns" {
   default = {}
 }
 variable "keyvault_id" {}
+variable "remote_objects" {}

@@ -99,6 +99,7 @@ locals {
     storage_containers          = local.combined_objects_storage_containers
     subscriptions               = local.combined_objects_subscriptions
     synapse_workspaces          = local.combined_objects_synapse_workspaces
+    virtual_subnets             = local.combined_objects_virtual_subnets
   }
 
 
