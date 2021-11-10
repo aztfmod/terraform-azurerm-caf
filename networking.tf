@@ -16,6 +16,9 @@ output "route_filters" {
   value = module.route_filters
 }
 
+output "network_profiles" {
+  value = module.network_profiles
+}
 
 #
 #
@@ -205,8 +208,18 @@ module "route_filters" {
 
   resource_group_name           = local.combined_objects_resource_groups[try(each.value.resource_group.lz_key, local.client_config.landingzone_key)][try(each.value.resource_group.key, each.value.resource_group_key)].name
   location                      = lookup(each.value, "region", null) == null ? local.combined_objects_resource_groups[try(each.value.resource_group.lz_key, local.client_config.landingzone_key)][try(each.value.resource_group.key, each.value.resource_group_key)].location : local.global_settings.regions[each.value.region]
-  #rule_name                     = each.value.rule.rule_name
-  #rule_communities              = each.value.rule.rule_communities
+  settings                      = each.value
+  base_tags                     = try(local.global_settings.inherit_tags, false) ? local.combined_objects_resource_groups[try(each.value.resource_group.lz_key, local.client_config.landingzone_key)][try(each.value.resource_group.key, each.value.resource_group_key)].tags : {}
+  tags                          = try(each.value.tags, null)
+}
+
+
+module "network_profiles" {
+  source   = "./modules/networking/network_profiles"
+  for_each = local.networking.network_profiles
+
+  resource_group_name           = local.combined_objects_resource_groups[try(each.value.resource_group.lz_key, local.client_config.landingzone_key)][try(each.value.resource_group.key, each.value.resource_group_key)].name
+  location                      = lookup(each.value, "region", null) == null ? local.combined_objects_resource_groups[try(each.value.resource_group.lz_key, local.client_config.landingzone_key)][try(each.value.resource_group.key, each.value.resource_group_key)].location : local.global_settings.regions[each.value.region]
   settings                      = each.value
   base_tags                     = try(local.global_settings.inherit_tags, false) ? local.combined_objects_resource_groups[try(each.value.resource_group.lz_key, local.client_config.landingzone_key)][try(each.value.resource_group.key, each.value.resource_group_key)].tags : {}
   tags                          = try(each.value.tags, null)
