@@ -12,6 +12,7 @@ module "container_groups" {
   location            = lookup(each.value, "region", null) == null ? local.combined_objects_resource_groups[try(each.value.lz_key, local.client_config.landingzone_key)][each.value.resource_group_key].location : local.global_settings.regions[each.value.region]
   resource_group_name = local.combined_objects_resource_groups[try(each.value.lz_key, local.client_config.landingzone_key)][each.value.resource_group_key].name
   settings            = each.value
+  network_profile_id  = try(module.network_profiles[each.value.network_profile_key].id,null)
 
   combined_resources = {
     keyvaults          = local.combined_objects_keyvaults
