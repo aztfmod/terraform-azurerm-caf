@@ -26,7 +26,7 @@ output "primary_blob_endpoint" {
 output "primary_access_key" {
   description = "The endpoint URL for blob storage in the primary location."
   value       = azurerm_storage_account.stg.primary_access_key
-  sensitive   = true
+  sensitive   = false
 }
 
 output "containers" {
