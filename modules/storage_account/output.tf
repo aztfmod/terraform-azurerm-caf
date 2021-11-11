@@ -69,9 +69,9 @@ output "primary_connection_string" {
 }
 
 
-output "primary_blob_connection_string" {
-  value = try(azurerm_storage_account.stg.primary_blob_connection_string, null)
-}
+# output "primary_blob_connection_string" {
+#   value = try(azurerm_storage_account.stg.primary_blob_connection_string, null)
+# }
 
 #output "primary_queue_endpoint" {
 #  value = try(azurerm_storage_account.stg.primary_queue_endpoint, null)
