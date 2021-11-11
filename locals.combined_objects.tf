@@ -33,6 +33,7 @@ locals {
   combined_objects_data_factory_linked_service_sql_server         = merge(tomap({ (local.client_config.landingzone_key) = module.data_factory_linked_service_sql_server }), try(var.remote_objects.data_factory_linked_service_sql_server, {}))
   combined_objects_data_factory_linked_service_web                = merge(tomap({ (local.client_config.landingzone_key) = module.data_factory_linked_service_web }), try(var.remote_objects.data_factory_linked_service_web, {}))
   combined_objects_data_factory_pipeline                          = merge(tomap({ (local.client_config.landingzone_key) = module.data_factory_pipeline }), try(var.remote_objects.data_factory_pipeline, {}))
+  combined_objects_data_factory_integration_runtime_self_hosted   = merge(tomap({ (local.client_config.landingzone_key) = module.data_factory_integration_runtime_self_hosted }), try(var.remote_objects.data_factory_integration_runtime_self_hosted, {}))
   combined_objects_dedicated_host_groups                          = merge(tomap({ (local.client_config.landingzone_key) = module.dedicated_host_groups }), try(var.remote_objects.dedicated_host_groups, {}))
   combined_objects_dedicated_hosts                                = merge(tomap({ (local.client_config.landingzone_key) = module.dedicated_hosts }), try(var.remote_objects.dedicated_hosts, {}))
   combined_objects_diagnostic_storage_accounts                    = merge(tomap({ (local.client_config.landingzone_key) = module.diagnostic_storage_accounts }), try(var.remote_objects.diagnostic_storage_accounts, {}))
