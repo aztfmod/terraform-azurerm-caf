@@ -137,6 +137,7 @@ locals {
       mysql              = try(var.data_factory.linked_services.mysql, {})
       postgresql         = try(var.data_factory.linked_services.postgresql, {})
       sql_server         = try(var.data_factory.linked_services.sql_server, {})
+      azure_databricks   = try(var.data_factory.linked_services.azure_databricks, {})
     }
   }
 
