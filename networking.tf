@@ -216,7 +216,7 @@ module "route_filters" {
 
 module "network_profiles" {
   depends_on = [
-    module.azurerm_subnet
+    module.vnets
   ]
   source   = "./modules/networking/network_profiles"
   for_each = local.networking.network_profiles
