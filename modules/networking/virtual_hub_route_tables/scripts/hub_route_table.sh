@@ -2,17 +2,6 @@
 
 set -e
 
-function hub_route_table {
-
-    echo "Set hub_route_table:"
-    echo " - properties:"
-    echo "${PROPERTIES}" | jq -r
-    echo " - url: ${URL}"
-
-    execute_with_backoff az rest --method PUT --url ${URL} --header Content-Type=application/json --body "${PROPERTIES}"
-
-}
-
 #
 # Execute a command and re-execute it with a backoff retry logic. This is mainly to handle throttling situations in CI
 #
@@ -46,6 +35,17 @@ function execute_with_backoff {
   fi
 
   return $exitCode
+}
+
+function hub_route_table {
+
+    echo "Set hub_route_table:"
+    echo " - properties:"
+    echo "${PROPERTIES}" | jq -r
+    echo " - url: ${URL}"
+
+    execute_with_backoff az rest --method PUT --url ${URL} --header Content-Type=application/json --body "${PROPERTIES}"
+
 }
 
 

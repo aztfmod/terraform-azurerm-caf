@@ -23,10 +23,10 @@ resource "azurerm_virtual_network" "vnet" {
   )
 
   dynamic "ddos_protection_plan" {
-    for_each = var.ddos_id != "" ? [1] : []
+    for_each = var.ddos_id != "" || can(var.global_settings.custom_variables["ddos_protection_plan_id"]) ? [1] : []
 
     content {
-      id     = var.ddos_id
+      id     = var.ddos_id != "" ? var.ddos_id : var.global_settings.custom_variables["ddos_protection_plan_id"]
       enable = true
     }
   }
@@ -73,7 +73,7 @@ module "nsg" {
   network_security_groups           = var.network_security_groups
   network_security_group_definition = var.network_security_group_definition
   resource_group                    = var.resource_group_name
-  subnets                           = var.settings.subnets
+  subnets                           = try(var.settings.subnets, {})
   network_watchers                  = var.network_watchers
   tags                              = local.tags
   virtual_network_name              = azurerm_virtual_network.vnet.name
