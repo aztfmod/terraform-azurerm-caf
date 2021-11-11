@@ -11,3 +11,6 @@ variable "managed_identities" {
 variable "members" {
   default = {}
 }
+variable "mssql_servers" {
+  default = {}
+}

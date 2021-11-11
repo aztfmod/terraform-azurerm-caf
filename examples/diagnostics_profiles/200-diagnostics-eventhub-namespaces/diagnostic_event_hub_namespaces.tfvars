@@ -12,6 +12,8 @@ diagnostic_event_hub_namespaces = {
         definition_key   = "event_hub_namespace"
         destination_type = "event_hub"
         destination_key  = "central_logs"
+        # eventhub_name = "namespace_to_be_created" #Optional
+        # eventhub_authorization_rule_id = "/subscriptions/<sub_id>/resourceGroups/<rg_name>/providers/Microsoft.EventHub/namespaces/<eh_name>/authorizationRules/RootManageSharedAccessKey
       }
     }
   }

@@ -17,6 +17,8 @@ resource "azurerm_express_route_circuit" "circuit" {
   service_provider_name = try(var.settings.service_provider_name, "Equinix")
   peering_location      = try(var.settings.peering_location, "Silicon Valley")
   bandwidth_in_mbps     = try(var.settings.bandwidth_in_mbps, 50)
+  express_route_port_id = try(var.settings.express_route_port_id, null)
+  bandwidth_in_gbps     = try(var.settings.bandwidth_in_gbps, null)
 
   sku {
     tier   = try(var.settings.tier, "Standard")
