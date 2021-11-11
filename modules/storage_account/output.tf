@@ -23,11 +23,11 @@ output "primary_blob_endpoint" {
   value       = azurerm_storage_account.stg.primary_blob_endpoint
 }
 
-# output "primary_access_key" {
-#   description = "The endpoint URL for blob storage in the primary location."
-#   value       = azurerm_storage_account.stg.primary_access_key
-#   sensitive   = true
-# }
+output "primary_access_key" {
+  description = "The endpoint URL for blob storage in the primary location."
+  value       = azurerm_storage_account.stg.primary_access_key
+  sensitive   = false
+}
 
 output "containers" {
   description = "The containers output objects as created by the container submodule."
@@ -64,16 +64,16 @@ output "backup_container_id" {
   value       = try(azurerm_backup_container_storage_account.container["enabled"].id, null)
 }
 
-# output "primary_connection_string" {
-#   value = try(azurerm_storage_account.stg.primary_connection_string, null)
-#   sensitive   = true
-# }
+output "primary_connection_string" {
+  value = try(azurerm_storage_account.stg.primary_connection_string, null)
+  sensitive   = false
+}
 
 
-# output "primary_blob_connection_string" {
-#   value = try(azurerm_storage_account.stg.primary_blob_connection_string, null)
-#   sensitive   = true
-# }
+output "primary_blob_connection_string" {
+  value = try(azurerm_storage_account.stg.primary_blob_connection_string, null)
+  sensitive   = false
+}
 
 #output "primary_queue_endpoint" {
 #  value = try(azurerm_storage_account.stg.primary_queue_endpoint, null)
