@@ -23,12 +23,12 @@ locals {
   managed_local_identity = try(var.managed_identities[var.client_config.landingzone_key][var.extension.managed_identity_key].principal_id, "")
   managed_remote_identity = try(var.managed_identities[var.extension.lz_key][var.extension.managed_identity_key].principal_id, "")
   provided_identity = try(var.extension.managed_identity_id, "")
-  managed_identity = coalesce(local.managed_local_identity, local.managed_remote_identity, local.provided_identity)
+  managed_identity = try(coalesce(local.managed_local_identity, local.managed_remote_identity, local.provided_identity),"")
   
   system_assigned_id = local.identity_type == "SystemAssigned" ? {"managedIdentity" : {}} : null
   user_assigned_id = local.identity_type == "UserAssigned" ? {"managedIdentity" : {"objectid" : "${local.managed_identity}"}} : null
   
-  command = {"commandtoexecute" : "${var.extension.commandtoexecute}"}
+  command = {"commandtoexecute" : "${try(var.extension.commandtoexecute,"")}"}
 
   protected_settings = merge(local.command,local.system_assigned_id,local.user_assigned_id)
 
