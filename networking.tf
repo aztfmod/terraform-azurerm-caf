@@ -225,7 +225,7 @@ module "network_profiles" {
   location                      = lookup(each.value, "region", null) == null ? local.combined_objects_resource_groups[try(each.value.resource_group.lz_key, local.client_config.landingzone_key)][try(each.value.resource_group.key, each.value.resource_group_key)].location : local.global_settings.regions[each.value.region]
   settings                      = each.value
   #subnet_id                     = module.networking[each.value.vnet_key].subnets[each.value.container_network_interface.ip_configuration.subnet_key].id
-  subnet_id                     = local.combined_objects_networking[local.client_config.landingzone_key][each.value.vnet_key].subnets[each.value.subnet_key].id
+  subnet_id                     = local.combined_objects_networking[local.client_config.landingzone_key][each.value.vnet_key].subnets[each.value.container_network_interface.ip_configuration.subnet_key].id
   base_tags                     = try(local.global_settings.inherit_tags, false) ? local.combined_objects_resource_groups[try(each.value.resource_group.lz_key, local.client_config.landingzone_key)][try(each.value.resource_group.key, each.value.resource_group_key)].tags : {}
   tags                          = try(each.value.tags, null)
 }
