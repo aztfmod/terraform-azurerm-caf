@@ -645,6 +645,9 @@ variable "data_factory_linked_service_postgresql" {
 variable "data_factory_linked_service_sql_server" {
   default = {}
 }
+variable "data_factory_linked_service_azure_databricks" {
+  default = {}
+}
 variable "integration_service_environment" {
   default = {}
 }

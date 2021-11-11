@@ -18,7 +18,7 @@ variable "base_tags" {
 variable "settings" {}
 variable "remote_objects" {}
 variable "tags" {
-  default = null
+  default     = null
   description = "(Optional) A mapping of tags to assign to the resource"
 }
 
