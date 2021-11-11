@@ -66,6 +66,7 @@ output "backup_container_id" {
 
 output "primary_connection_string" {
   value = try(azurerm_storage_account.stg.primary_connection_string, null)
+  sensitive   = true
 }
 
 
