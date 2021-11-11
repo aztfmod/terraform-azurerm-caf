@@ -212,9 +212,11 @@ module "example" {
     app_services                 = var.app_services
   }
   data_factory = {
-    data_factory                  = var.data_factory
-    data_factory_pipeline         = var.data_factory_pipeline
-    data_factory_trigger_schedule = var.data_factory_trigger_schedule
+    data_factory                                 = var.data_factory
+    data_factory_pipeline                        = var.data_factory_pipeline
+    data_factory_trigger_schedule                = var.data_factory_trigger_schedule
+    data_factory_integration_runtime_azure_ssis  = var.data_factory_integration_runtime_azure_ssis
+    data_factory_integration_runtime_self_hosted = var.data_factory_integration_runtime_self_hosted
     datasets = {
       azure_blob                          = var.data_factory_dataset_azure_blob
       cosmosdb_sqlapi                     = var.data_factory_dataset_cosmosdb_sqlapi
