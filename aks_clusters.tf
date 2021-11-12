@@ -17,6 +17,7 @@ module "aks_clusters" {
   resource_group      = local.resource_groups[each.value.resource_group_key]
   private_dns_zone_id = try(local.combined_objects_private_dns[each.value.private_dns_zone.lz_key][each.value.private_dns_zone.key].id,
     local.combined_objects_private_dns[local.client_config.landingzone_key][each.value.private_dns_zone.key].id,
+    each.value.private_dns_zone.id,
   null)
   managed_identities  = local.combined_objects_managed_identities
   application_gateway = try(each.value.addon_profile.ingress_application_gateway, null) != null ? try(each.value.addon_profile.ingress_application_gateway.lz_key, null) == null ? local.combined_objects_application_gateways[local.client_config.landingzone_key][each.value.addon_profile.ingress_application_gateway.key] : local.combined_objects_application_gateways[each.value.lz_key][each.value.addon_profile.ingress_application_gateway.key] : null
