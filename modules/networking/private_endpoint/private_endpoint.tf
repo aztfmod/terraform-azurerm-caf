@@ -29,7 +29,10 @@ resource "azurerm_private_endpoint" "pep" {
 
     content {
       name                 = var.settings.private_dns.zone_group_name
-      private_dns_zone_ids = local.private_dns_zone_ids
+      private_dns_zone_ids = concat(
+        local.private_dns_zone_ids,
+        try(var.settings.private_dns.ids, [])
+      )
     }
   }
 

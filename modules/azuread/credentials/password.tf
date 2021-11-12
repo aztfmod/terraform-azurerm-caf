@@ -5,12 +5,11 @@ resource "azuread_application_password" "key" {
   value       = random_password.key.0.result
   end_date    = local.expiration_date.key
 
-  application_object_id = coalesce(
-    try(var.resources.application.id, null)
-  )
+  application_object_id = try(var.resources.application.id, null)
 
   lifecycle {
     create_before_destroy = true
+    ignore_changes        = [application_object_id]
   }
 }
 
@@ -20,12 +19,11 @@ resource "azuread_application_password" "key0" {
   value       = random_password.key0.0.result
   end_date    = local.expiration_date.key0
 
-  application_object_id = coalesce(
-    try(var.resources.application.id, null)
-  )
+  application_object_id = try(var.resources.application.id, null)
 
   lifecycle {
     create_before_destroy = true
+    ignore_changes        = [application_object_id]
   }
 }
 
@@ -35,12 +33,11 @@ resource "azuread_application_password" "key1" {
   value       = random_password.key1.0.result
   end_date    = local.expiration_date.key1
 
-  application_object_id = coalesce(
-    try(var.resources.application.id, null)
-  )
+  application_object_id = try(var.resources.application.id, null)
 
   lifecycle {
     create_before_destroy = true
+    ignore_changes        = [application_object_id]
   }
 }
 

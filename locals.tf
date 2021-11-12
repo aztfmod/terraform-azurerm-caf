@@ -91,6 +91,8 @@ locals {
     app_config                         = try(var.database.app_config, {})
     azurerm_redis_caches               = try(var.database.azurerm_redis_caches, {})
     cosmos_dbs                         = try(var.database.cosmos_dbs, {})
+    database_migration_services        = try(var.database.database_migration_services, {})
+    database_migration_projects        = try(var.database.database_migration_projects, {})
     databricks_workspaces              = try(var.database.databricks_workspaces, {})
     machine_learning_workspaces        = try(var.database.machine_learning_workspaces, {})
     mariadb_databases                  = try(var.database.mariadb_databases, {})
@@ -126,9 +128,11 @@ locals {
   }
 
   data_factory = {
-    data_factory                  = try(var.data_factory.data_factory, {})
-    data_factory_pipeline         = try(var.data_factory.data_factory_pipeline, {})
-    data_factory_trigger_schedule = try(var.data_factory.data_factory_trigger_schedule, {})
+    data_factory                                 = try(var.data_factory.data_factory, {})
+    data_factory_pipeline                        = try(var.data_factory.data_factory_pipeline, {})
+    data_factory_trigger_schedule                = try(var.data_factory.data_factory_trigger_schedule, {})
+    data_factory_integration_runtime_azure_ssis  = try(var.data_factory.data_factory_integration_runtime_azure_ssis, {})
+    data_factory_integration_runtime_self_hosted = try(var.data_factory.data_factory_integration_runtime_self_hosted, {})
     datasets = {
       azure_blob       = try(var.data_factory.datasets.azure_blob, {})
       cosmosdb_sqlapi  = try(var.data_factory.datasets.cosmosdb_sqlapi, {})
@@ -146,6 +150,7 @@ locals {
       mysql              = try(var.data_factory.linked_services.mysql, {})
       postgresql         = try(var.data_factory.linked_services.postgresql, {})
       sql_server         = try(var.data_factory.linked_services.sql_server, {})
+      azure_databricks   = try(var.data_factory.linked_services.azure_databricks, {})
     }
   }
 
@@ -221,9 +226,13 @@ locals {
     dns_zones                                               = try(var.networking.dns_zones, {})
     domain_name_registrations                               = try(var.networking.domain_name_registrations, {})
     express_route_circuit_authorizations                    = try(var.networking.express_route_circuit_authorizations, {})
+    express_route_circuit_peerings                          = try(var.networking.express_route_circuit_peerings, {})
     express_route_circuits                                  = try(var.networking.express_route_circuits, {})
+    express_route_connections                               = try(var.networking.express_route_connections, {})
     front_door_waf_policies                                 = try(var.networking.front_door_waf_policies, {})
     front_doors                                             = try(var.networking.front_doors, {})
+    frontdoor_rules_engine                                  = try(var.networking.frontdoor_rules_engine, {})
+    frontdoor_custom_https_configuration                    = try(var.networking.frontdoor_custom_https_configuration, {})
     ip_groups                                               = try(var.networking.ip_groups, {})
     load_balancers                                          = try(var.networking.load_balancers, {})
     local_network_gateways                                  = try(var.networking.local_network_gateways, {})
