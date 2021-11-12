@@ -15,15 +15,16 @@ locals {
 # }
 
 resource "random_string" "bckp_name" {
-  count   = try(var.global_settings.prefix, null) == null ? 1 : 0
+  count   = try(var.global_settings.prefix, backup_vault) == null ? 1 : 0
   length  = 4
   special = false
   upper   = false
-  number  = true
+  lower   = true
+  number  = false
 }
 
 resource "azurerm_data_protection_backup_vault" "backup_vault" {
-  name                = random_string.bckp_name  #azurecaf_name.backup_vault_name.result
+  name                = random_string.bckp_name 
   location            = var.location
   resource_group_name = var.resource_group_name
   datastore_type      = try(var.datastore_type, "VaultStore")
