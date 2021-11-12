@@ -2,7 +2,7 @@ variable "location" {
   description = "(Required) Specifies the supported Azure location where to create the resource. Changing this forces a new resource to be created."
   type        = string
 }
-variable "settings" {}
+# variable "settings" {}
 variable "global_settings" {
   description = "Global settings object (see module README.md)"
 }
