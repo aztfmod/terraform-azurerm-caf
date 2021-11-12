@@ -15,7 +15,7 @@ locals {
 # }
 
 resource "random_string" "bckp_name" {
-  count   = try(var.global_settings.prefix, backup_vault) == null ? 1 : 0
+#   count   = try(var.global_settings.prefix, null) == null ? 1 : 0
   length  = 4
   special = false
   upper   = false
