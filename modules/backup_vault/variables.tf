@@ -23,11 +23,9 @@ variable "resource_groups" {}
 variable "identity" {
   default = null
 }
-# variable "redundancy" {
-#   default     = null
-#   description = "Specifies the backup storage redundancy. Possible values are GeoRedundant and LocallyRedundant"
-# }
-# variable "datastore_type" {
-#   default = null
-#   description = "Specifies the backup storage datastore type. Possible values are ArchiveStore, SnapshotStore and VaultStore"
-# }
+variable "redundancy" {
+  description = "Specifies the backup storage redundancy. Possible values are GeoRedundant and LocallyRedundant"
+}
+variable "datastore_type" {
+  description = "Specifies the backup storage datastore type. Possible values are ArchiveStore, SnapshotStore and VaultStore"
+}
