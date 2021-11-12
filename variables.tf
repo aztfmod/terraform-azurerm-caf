@@ -276,6 +276,10 @@ variable "diagnostic_storage_accounts" {
   description = "Configuration object - Storage account for diagnostics resources"
   default     = {}
 }
+variable "backup_vaults" {
+  description = "Configuration object - Backup vault resources"
+  default     = {}
+}
 
 # Shared services
 variable "shared_services" {
