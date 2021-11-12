@@ -60,6 +60,10 @@ resource "azurerm_data_factory_linked_service_azure_databricks" "dflsad" {
       log_destination             = try(new_cluster_config.value.log_destination, null)
       spark_config                = try(new_cluster_config.value.spark_config, null)
       spark_environment_variables = try(new_cluster_config.value.spark_environment_variables, null)
+
+      min_number_of_workers = try(new_cluster_config.value.min_number_of_workers, null)
+      max_number_of_workers = try(new_cluster_config.value.max_number_of_workers, null)
+
     }
   }
 
