@@ -1,3 +1,8 @@
+locals {
+  # Need to update the storage tags if the environment tag is updated with the rover command line
+  tags = lookup(var.storage_account, "tags", null) == null ? null : lookup(var.storage_account.tags, "environment", null) == null ? var.storage_account.tags : merge(lookup(var.storage_account, "tags", {}), { "environment" : var.global_settings.environment })
+}
+
 # naming convention
 # resource "azurecaf_name" "backup_vault_name" {
 #   name          = var.settings.name
@@ -8,6 +13,7 @@
 #   passthrough   = var.global_settings.passthrough
 #   use_slug      = var.global_settings.use_slug
 # }
+
 resource "random_string" "bckp_name" {
   count   = try(var.global_settings.prefix, null) == null ? 1 : 0
   length  = 4
