@@ -13,5 +13,4 @@ module "backup_vaults" {
 }
 output "backup_vaults" {
   value = module.backup_vaults
-
 }
