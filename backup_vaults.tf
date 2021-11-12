@@ -4,7 +4,7 @@ module "backup_vaults" {
 
   global_settings     = local.global_settings
   client_config       = local.client_config
-  settings            = each.value
+  backup_vault        = each.value
   diagnostics         = local.combined_diagnostics
   identity            = try(each.value.identity, null)
   resource_groups     = local.resource_groups
