@@ -14,15 +14,6 @@ resource "azurecaf_name" "bckp" {
   use_slug      = var.global_settings.use_slug
 }
 
-# resource "random_string" "bckp_name" {
-#   count   = try(var.global_settings.prefix, null) == null ? 1 : 0
-#   length  = 4
-#   special = false
-#   upper   = false
-#   lower   = true
-#   number  = false
-# }
-
 resource "azurerm_data_protection_backup_vault" "backup_vault" {
   name                = azurecaf_name.bckp.result 
   location            = var.location
