@@ -26,7 +26,6 @@ variable "identity" {
 variable "redundancy" {
   type        = string
   description = "Specifies the backup storage redundancy. Possible values are GeoRedundant and LocallyRedundant"
-  
 }
 variable "datastore_type" {
   type        = string
