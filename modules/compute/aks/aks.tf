@@ -502,7 +502,7 @@ resource "azurerm_kubernetes_cluster_node_pool" "nodepools" {
     try(var.subnets[each.value.pod_subnet_key].id, ""),
     try(var.subnets[each.value.pod_subnet.key].id, ""),
     try(each.value.pod_subnet.resource_id, ""),
-    try(each.value.pod_subnet_id, ""), null)
+    try(each.value.pod_subnet_id, "")), null
   )
   os_sku                       = try(each.value.os_sku, null)
   os_type                      = try(each.value.os_type, null)
