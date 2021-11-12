@@ -50,7 +50,7 @@ storage_account_blobs = {
     name                   = "helloworld.ps1"
     storage_account_key    = "sa1"
     storage_container_name = "files"
-    source                 = "../../examples/helloworld.ps1"
+    source                 = "./compute/virtual_machine/110-single-windows-vm-custom-script-extension/helloworld.ps1"
     parallelism            = 1
   }
 }
@@ -95,22 +95,34 @@ virtual_machines = {
     networking_interfaces = {
       nic0 = {
         # Value of the keys from networking.tfvars
-        net_key                 = "vnet_region1"
+        vnet_key                = "vnet_region1"
         subnet_key              = "example"
         name                    = "0"
         enable_ip_forwarding    = false
         internal_dns_name_label = "nic0"
       }
     }
-
+    virtual_machine_extensions = {
+     custom_script = {
+        #fileuris            = ["https://somelocation/container/script.ps1"]
+        # can define fileuris directly or use fileuri_sa_ reference keys and lz_key:
+        fileuri_sa_key       = "sa1"
+        fileuri_sa_path      = "files/helloworld.ps1" 
+        commandtoexecute     = "PowerShell -file helloworld.ps1"
+        # managed_identity_id = optional to define managed identity principal_id directly
+        identity_type        = "UserAssigned" #optional to use managed_identity for download from location specified in fileuri, UserAssigned or SystemAssigned. 
+        managed_identity_key = "user_mi"
+        #lz_key               = "other_lz" optional for managed identity defined in other lz 
+      }
+    }
     virtual_machine_settings = {
       windows = {
         name = "example_cse"
         size = "Standard_F2"
         zone = "1"
 
-        # admin_username_key = "vmadmin-username"
-        # admin_password_key = "vmadmin-password"
+        admin_username_key = "vmadmin-username"
+        admin_password_key = "vmadmin-password"
 
         # Spot VM to save money
         priority        = "Spot"
@@ -134,25 +146,10 @@ virtual_machines = {
           sku       = "2019-Datacenter"
           version   = "latest"
         }
-
-      }
-    }
-    identity = { #assign managed identity to the vm
-      type                  = "UserAssigned"
-      managed_identity_keys = ["user_mi"]
-      }
-
-    virtual_machine_extensions = {
-     custom_script = {
-        #fileuris            = ["https://somelocation/container/script.ps1"]
-        # can define fileuris directly or use fileuri_sa_ reference keys and lz_key:
-        fileuri_sa_key       = "sa1"
-        fileuri_sa_path      = "files/helloworld.ps1" 
-        commandtoexecute     = "PowerShell -file helloworld.ps1"
-        # managed_identity_id = optional to define managed identity principal_id directly
-        identity_type        = "UserAssigned" #optional to use managed_identity for download from location specified in fileuri, UserAssigned or SystemAssigned. 
-        managed_identity_key = "user_mi"
-        lz_key               = "shared_storage" 
+        identity = { #assign managed identity to the vm
+        type                  = "UserAssigned"
+        managed_identity_keys = ["user_mi"]
+        }
       }
     }
   }
@@ -188,5 +185,18 @@ vnets = {
       }
     }
 
+  }
+}
+# Store output attributes into keyvault secret
+dynamic_keyvault_secrets = {
+  example_vm_rg1 = { # Key of the keyvault
+    vmadmin-username = {
+      secret_name = "vmadmin-username"
+      value       = "vmadmin"
+    }
+    vmadmin-password = {
+      secret_name = "vmadmin-password"
+      value       = "Very@Str5ngP!44w0rdToChaNge#"
+    }
   }
 }
