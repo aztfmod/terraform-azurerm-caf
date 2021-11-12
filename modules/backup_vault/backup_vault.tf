@@ -6,7 +6,7 @@ locals {
 # naming convention
 resource "azurecaf_name" "bckp" {
   name          = var.backup_vault.name
-  resource_type = "azurerm_storage_account"
+  resource_type = "azurerm_recovery_services_vault"
   prefixes      = var.global_settings.prefixes
   random_length = var.global_settings.random_length
   clean_input   = true
