@@ -18,8 +18,8 @@ resource "azurerm_data_protection_backup_vault" "backup_vault" {
   name                = azurecaf_name.bckp.result 
   location            = var.location
   resource_group_name = var.resource_group_name
-  datastore_type      = try(var.datastore_type, "VaultStore")
-  redundancy          = try(var.redundancy, "LocallyRedundant")
+  datastore_type      = try(var.backup_vault.datastore_type, "VaultStore")
+  redundancy          = try(var.backup_vault.redundancy, "LocallyRedundant")
   tags                = merge(var.base_tags, local.tags)
 
   identity {
