@@ -20,9 +20,9 @@ resource "azurerm_data_protection_backup_vault" "backup_vault" {
   name                = random_string.bckp_name  #azurecaf_name.backup_vault_name.result
   location            = var.location
   resource_group_name = var.resource_group_name
-  tags                = local.tags
   datastore_type      = try(var.settings.datastore_type, "VaultStore")
   redundancy          = try(var.settings.redundancy, "LocallyRedundant")
+  tags                = merge(var.base_tags, local.tags)
 
   identity {
     type = "SystemAssigned"
