@@ -1,6 +1,6 @@
 module "backup_vaults" {
   source   = "./modules/backup_vault"
-  for_each = local.shared_services.backup_vaults
+  for_each = var.backup_vaults
 
   global_settings     = local.global_settings
   client_config       = local.client_config
