@@ -24,10 +24,14 @@ data_factory = {
 
 data_factory_integration_runtime_azure_ssis = {
   dfiras1 = {
-    name               = "dfiras1"
-    data_factory_key   = "df1"
-    resource_group_key = "rg1"
-    region             = "region1"
+    name = "dfiras1"
+    data_factory = {
+      key = "df1"
+    }
+    resource_group = {
+      key = "rg1"
+    }
+    region = "region1"
 
     node_size = "Standard_D8_v3"
   }
