@@ -28,6 +28,7 @@ module "example" {
     azuread_apps                        = var.azuread_apps
     azuread_credentials                 = var.azuread_credentials
     azuread_groups                      = var.azuread_groups
+    azuread_groups_membership           = var.azuread_groups_membership
     azuread_credential_policies         = var.azuread_credential_policies
     azuread_roles                       = var.azuread_roles
     azuread_service_principal_passwords = var.azuread_service_principal_passwords
@@ -105,6 +106,8 @@ module "example" {
     azurerm_redis_caches               = var.azurerm_redis_caches
     cosmos_dbs                         = var.cosmos_dbs
     databricks_workspaces              = var.databricks_workspaces
+    database_migration_services        = var.database_migration_services
+    database_migration_projects        = var.database_migration_projects
     machine_learning_workspaces        = var.machine_learning_workspaces
     mariadb_servers                    = var.mariadb_servers
     mssql_databases                    = var.mssql_databases
@@ -144,6 +147,8 @@ module "example" {
     express_route_circuits                                  = var.express_route_circuits
     front_door_waf_policies                                 = var.front_door_waf_policies
     front_doors                                             = var.front_doors
+    frontdoor_rules_engine                                  = var.frontdoor_rules_engine
+    frontdoor_custom_https_configuration                    = var.frontdoor_custom_https_configuration
     ip_groups                                               = var.ip_groups
     load_balancers                                          = var.load_balancers
     local_network_gateways                                  = var.local_network_gateways
@@ -165,6 +170,7 @@ module "example" {
     virtual_wans                                            = var.virtual_wans
     vnet_peerings                                           = var.vnet_peerings
     vnets                                                   = var.vnets
+    virtual_subnets                                         = var.virtual_subnets
     vpn_gateway_connections                                 = var.vpn_gateway_connections
     vpn_sites                                               = var.vpn_sites
   }
@@ -192,12 +198,38 @@ module "example" {
     netapp_accounts        = var.netapp_accounts
     storage_account_blobs  = var.storage_account_blobs
     storage_account_queues = var.storage_account_queues
+    storage_containers     = var.storage_containers
+
   }
   webapp = {
     azurerm_application_insights = var.azurerm_application_insights
     app_service_environments     = var.app_service_environments
     app_service_plans            = var.app_service_plans
     app_services                 = var.app_services
+  }
+  data_factory = {
+    data_factory                  = var.data_factory
+    data_factory_pipeline         = var.data_factory_pipeline
+    data_factory_trigger_schedule = var.data_factory_trigger_schedule
+    datasets = {
+      azure_blob                          = var.data_factory_dataset_azure_blob
+      cosmosdb_sqlapi                     = var.data_factory_dataset_cosmosdb_sqlapi
+      delimited_text                      = var.data_factory_dataset_delimited_text
+      http                                = var.data_factory_dataset_http
+      json                                = var.data_factory_dataset_json
+      mysql                               = var.data_factory_dataset_mysql
+      postgresql                          = var.data_factory_dataset_postgresql
+      sql_server_table                    = var.data_factory_dataset_sql_server_table
+      data_factory_dataset_delimited_text = var.data_factory_dataset_delimited_text
+    }
+    linked_services = {
+      azure_blob_storage = var.data_factory_linked_service_azure_blob_storage
+      cosmosdb           = var.data_factory_linked_service_cosmosdb
+      web                = var.data_factory_linked_service_web
+      mysql              = var.data_factory_linked_service_mysql
+      postgresql         = var.data_factory_linked_service_postgresql
+      sql_server         = var.data_factory_linked_service_sql_server
+    }
   }
   logic_app = {
     integration_service_environment = var.integration_service_environment

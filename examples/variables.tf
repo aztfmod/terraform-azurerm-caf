@@ -177,6 +177,9 @@ variable "azurerm_routes" {
 variable "vnets" {
   default = {}
 }
+variable "virtual_subnets" {
+  default = {}
+}
 variable "azurerm_redis_caches" {
   default = {}
 }
@@ -235,6 +238,9 @@ variable "azuread_applications" {
   default = {}
 }
 variable "azuread_credentials" {
+  default = {}
+}
+variable "azuread_groups_membership" {
   default = {}
 }
 variable "azuread_service_principals" {
@@ -564,6 +570,9 @@ variable "storage_account_queues" {
 variable "storage_account_blobs" {
   default = {}
 }
+variable "storage_containers" {
+  default = {}
+}
 variable "vmware_private_clouds" {
   default = {}
 }
@@ -579,7 +588,63 @@ variable "nat_gateways" {
 variable "cognitive_services_account" {
   default = {}
 }
-
+variable "database_migration_services" {
+  default = {}
+}
+variable "database_migration_projects" {
+  default = {}
+}
+variable "data_factory" {
+  default = {}
+}
+variable "data_factory_pipeline" {
+  default = {}
+}
+variable "data_factory_trigger_schedule" {
+  default = {}
+}
+variable "data_factory_dataset_azure_blob" {
+  default = {}
+}
+variable "data_factory_dataset_cosmosdb_sqlapi" {
+  default = {}
+}
+variable "data_factory_dataset_delimited_text" {
+  default = {}
+}
+variable "data_factory_dataset_http" {
+  default = {}
+}
+variable "data_factory_dataset_json" {
+  default = {}
+}
+variable "data_factory_dataset_mysql" {
+  default = {}
+}
+variable "data_factory_dataset_postgresql" {
+  default = {}
+}
+variable "data_factory_dataset_sql_server_table" {
+  default = {}
+}
+variable "data_factory_linked_service_azure_blob_storage" {
+  default = {}
+}
+variable "data_factory_linked_service_cosmosdb" {
+  default = {}
+}
+variable "data_factory_linked_service_web" {
+  default = {}
+}
+variable "data_factory_linked_service_mysql" {
+  default = {}
+}
+variable "data_factory_linked_service_postgresql" {
+  default = {}
+}
+variable "data_factory_linked_service_sql_server" {
+  default = {}
+}
 variable "integration_service_environment" {
   default = {}
 }
@@ -599,5 +664,11 @@ variable "logic_app_trigger_custom" {
   default = {}
 }
 variable "private_dns_vnet_links" {
+  default = {}
+}
+variable "frontdoor_rules_engine" {
+  default = {}
+}
+variable "frontdoor_custom_https_configuration" {
   default = {}
 }

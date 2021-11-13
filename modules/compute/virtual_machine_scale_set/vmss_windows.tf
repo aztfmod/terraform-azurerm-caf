@@ -252,6 +252,12 @@ resource "azurerm_windows_virtual_machine_scale_set" "vmss" {
     }
   }
 
+lifecycle {
+    ignore_changes = [
+      resource_group_name, location
+    ]
+  }
+
 }
 
 
