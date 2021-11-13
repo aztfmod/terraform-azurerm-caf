@@ -35,13 +35,14 @@ jobs:
   examples:
     name: examples
     runs-on: ubuntu-latest
+    needs: load_scenarios
 
     strategy:
       fail-fast: false
       matrix: ${{fromJSON(needs.load_scenarios.outputs.matrix)}}
 
     container:
-      image: aztfmod/rover:0.14.11-2109.2410
+      image: aztfmod/rover:0.14.11-2111.0103
       options: --user 0
 
     steps:
@@ -66,7 +67,7 @@ jobs:
     needs: examples
 
     container:
-      image: aztfmod/rover:0.14.11-2109.2410
+      image: aztfmod/rover:0.14.11-2111.0103
       options: --user 0
 
     steps:
