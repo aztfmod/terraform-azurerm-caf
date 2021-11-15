@@ -123,7 +123,7 @@ resource "azurerm_windows_virtual_machine" "vm" {
     for_each = try(each.value.additional_unattend_content, false) == false ? [] : [1]
 
     content {
-      content = each.value.additional_unattend_content.content
+      content = each.value.additional_unattend_content.content != null ? null : filebase64(format("%s/%s", path.cwd,each.value.additional_unattend_content.contentfile))
       setting = each.value.additional_unattend_content.setting
     }
   }
