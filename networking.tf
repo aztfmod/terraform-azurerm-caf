@@ -1,7 +1,10 @@
 output "vnets" {
   depends_on = [azurerm_virtual_network_peering.peering]
   value      = module.networking
+}
 
+output "virtual_subnets" {
+  value = module.virtual_subnets
 }
 
 output "public_ip_addresses" {
@@ -51,6 +54,53 @@ module "networking" {
     azurerm_firewall = try(var.remote_objects.azurerm_firewalls, null) #assumed from remote lz only
   }
 }
+
+module "virtual_subnets" {
+  depends_on = [module.networking]
+  source = "./modules/networking/virtual_network/subnet"
+  for_each = local.networking.virtual_subnets
+
+  global_settings = local.global_settings
+  settings        = each.value
+
+  name                                           = each.value.name
+  address_prefixes                               = try(each.value.cidr, [])
+  service_endpoints                              = try(each.value.service_endpoints, [])
+  enforce_private_link_endpoint_network_policies = try(each.value.enforce_private_link_endpoint_network_policies, false)
+  enforce_private_link_service_network_policies  = try(each.value.enforce_private_link_service_network_policies, false)
+
+  resource_group_name   = coalesce(
+    try(local.combined_objects_networking[each.value.vnet.lz_key][each.value.vnet.key].resource_group_name, null),
+    try(local.combined_objects_networking[local.client_config.landingzone_key][each.value.vnet.key].resource_group_name, null),
+    try(split("/", each.value.vnet.id)[4],null)
+  )
+  virtual_network_name  = coalesce(
+    try(local.combined_objects_networking[each.value.vnet.lz_key][each.value.vnet.key].name, null),
+    try(local.combined_objects_networking[local.client_config.landingzone_key][each.value.vnet.key].name, null),
+    try(split("/", each.value.vnet.id)[8],null)
+  )
+}
+
+resource "azurerm_subnet_route_table_association" "rt" {
+  for_each = {
+    for key, subnet in local.networking.virtual_subnets : key => subnet
+    if try(subnet.route_table_key, null) != null
+  }
+
+  subnet_id      = lookup(module.virtual_subnets, each.key, null).id
+  route_table_id = module.route_tables[each.value.route_table_key].id
+}
+
+resource "azurerm_subnet_network_security_group_association" "nsg_vnet_association_version" {
+  for_each = {
+    for key, value in local.networking.virtual_subnets : key => value
+    if try(local.networking.network_security_group_definition[value.nsg_key].version, 0) > 0 && try(value.nsg_key, null) != null
+  }
+
+  subnet_id                 = module.virtual_subnets[each.key].id
+  network_security_group_id = module.network_security_groups[each.value.nsg_key].id
+}
+
 
 #
 #
@@ -132,7 +182,7 @@ resource "azurerm_virtual_network_peering" "peering" {
   allow_gateway_transit        = try(each.value.allow_gateway_transit, false)
   use_remote_gateways          = try(each.value.use_remote_gateways, false)
 
-    lifecycle {
+  lifecycle {
     ignore_changes = [
       remote_virtual_network_id,
       resource_group_name,
