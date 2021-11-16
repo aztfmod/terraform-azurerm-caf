@@ -74,13 +74,18 @@ resource "azurerm_lb_rule" "lb_rule" {
   frontend_port                  = each.value.frontend_port
   backend_port                   = each.value.backend_port
   frontend_ip_configuration_name = each.value.frontend_ip_configuration_name
-  backend_address_pool_id        = try(azurerm_lb_backend_address_pool.backend_address_pool.0.id, null)
-  probe_id                       = try(azurerm_lb_probe.lb_probe[each.value.probe_id_key].id, null)
-  enable_floating_ip             = try(each.value.enable_floating_ip, null)
-  idle_timeout_in_minutes        = try(each.value.idle_timeout_in_minutes, null)
-  load_distribution              = try(each.value.load_distribution, null)
-  disable_outbound_snat          = try(each.value.disable_outbound_snat, null)
-  enable_tcp_reset               = try(each.value.enable_tcp_reset, null)
+  backend_address_pool_ids = try(flatten([
+    for backend_address_pool in try(azurerm_lb_backend_address_pool.backend_address_pool, []) : [
+      backend_address_pool.id
+    ]
+  ]), null)
+  #try(azurerm_lb_backend_address_pool.backend_address_pool.0.id, null)
+  probe_id                = try(azurerm_lb_probe.lb_probe[each.value.probe_id_key].id, null)
+  enable_floating_ip      = try(each.value.enable_floating_ip, null)
+  idle_timeout_in_minutes = try(each.value.idle_timeout_in_minutes, null)
+  load_distribution       = try(each.value.load_distribution, null)
+  disable_outbound_snat   = try(each.value.disable_outbound_snat, null)
+  enable_tcp_reset        = try(each.value.enable_tcp_reset, null)
 
   depends_on = [
     azurerm_lb_backend_address_pool.backend_address_pool,

@@ -23,14 +23,22 @@ module "private_endpoints" {
     diagnostic_storage_accounts     = local.combined_diagnostics.storage_accounts
     diagnostic_event_hub_namespaces = local.combined_diagnostics.event_hub_namespaces
 
-    event_hub_namespaces = local.combined_objects_event_hub_namespaces
-    keyvaults            = local.combined_objects_keyvaults
-    mysql_servers        = local.combined_objects_mysql_servers
-    mssql_servers        = local.combined_objects_mssql_servers
-    redis_caches         = local.combined_objects_redis_caches
-    networking           = local.combined_objects_networking
-    recovery_vaults      = local.combined_objects_recovery_vaults
-    storage_accounts     = local.combined_objects_storage_accounts
+    aks_clusters               = local.combined_objects_aks_clusters
+    application_gateways       = local.combined_objects_application_gateways
+    azure_container_registries = local.combined_objects_azure_container_registries
+    cosmos_dbs                 = local.combined_objects_cosmos_dbs
+    data_factory               = local.combined_objects_data_factory
+    event_hub_namespaces       = local.combined_objects_event_hub_namespaces
+    keyvaults                  = local.combined_objects_keyvaults
+    machine_learning           = local.combined_objects_machine_learning
+    mssql_servers              = local.combined_objects_mssql_servers
+    mysql_servers              = local.combined_objects_mysql_servers
+    networking                 = local.combined_objects_networking
+    postgresql_servers         = local.combined_objects_postgresql_servers
+    recovery_vaults            = local.combined_objects_recovery_vaults
+    redis_caches               = local.combined_objects_redis_caches
+    storage_accounts           = local.combined_objects_storage_accounts
+    synapse_workspaces         = local.combined_objects_synapse_workspaces
   }
 
 }

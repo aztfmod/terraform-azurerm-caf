@@ -2,6 +2,41 @@
 
 echo "rg: ${RG_NAME} gateway: ${APPLICATION_GATEWAY_NAME} name: ${NAME} resource: ${RESOURCE}"
 
+#
+# Execute a command and re-execute it with a backoff retry logic. This is mainly to handle throttling situations in CI
+#
+function execute_with_backoff {
+  local max_attempts=${ATTEMPTS-5}
+  local timeout=${TIMEOUT-20}
+  local attempt=0
+  local exitCode=0
+
+  while [[ $attempt < $max_attempts ]]
+  do
+    set +e
+    "$@"
+    exitCode=$?
+    set -e
+
+    if [[ $exitCode == 0 ]]
+    then
+      break
+    fi
+
+    echo "Failure! Return code ${exitCode} - Retrying in $timeout.." 1>&2
+    sleep $timeout
+    attempt=$(( attempt + 1 ))
+    timeout=$(( timeout * 2 ))
+  done
+
+  if [[ $exitCode != 0 ]]
+  then
+    echo "Hit the max retry count ($@)" 1>&2
+  fi
+
+  return $exitCode
+}
+
 case "${RESOURCE}" in
     BACKENDPOOL)
         servers=$([ -z "${ADDRESS_POOL}" ] && echo "" || echo "--servers ${ADDRESS_POOL} ")
@@ -87,38 +122,3 @@ case "${RESOURCE}" in
             --paths ${PATHS} ${addresspool}${httpsettings}${redirectconfig}${rewriteruleset}${wafpolicy}
         ;;
 esac
-
-#
-# Execute a command and re-execute it with a backoff retry logic. This is mainly to handle throttling situations in CI
-#
-function execute_with_backoff {
-  local max_attempts=${ATTEMPTS-5}
-  local timeout=${TIMEOUT-20}
-  local attempt=0
-  local exitCode=0
-
-  while [[ $attempt < $max_attempts ]]
-  do
-    set +e
-    "$@"
-    exitCode=$?
-    set -e
-
-    if [[ $exitCode == 0 ]]
-    then
-      break
-    fi
-
-    echo "Failure! Return code ${exitCode} - Retrying in $timeout.." 1>&2
-    sleep $timeout
-    attempt=$(( attempt + 1 ))
-    timeout=$(( timeout * 2 ))
-  done
-
-  if [[ $exitCode != 0 ]]
-  then
-    echo "Hit the max retry count ($@)" 1>&2
-  fi
-
-  return $exitCode
-}
