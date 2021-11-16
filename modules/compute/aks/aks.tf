@@ -49,7 +49,7 @@ resource "azurerm_kubernetes_cluster" "aks" {
     null_resource.aks_registration_preview
   ]
   name                = azurecaf_name.aks.result
-  location            = var.resource_group.location
+  location            = can(var.settings.region) ? var.global_settings.regions[var.settings.region] : var.resource_group.location
   resource_group_name = var.resource_group.name
 
   default_node_pool {

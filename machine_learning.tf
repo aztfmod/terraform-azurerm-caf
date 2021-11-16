@@ -3,8 +3,7 @@ module "machine_learning_workspaces" {
   for_each = local.database.machine_learning_workspaces
 
   client_config           = local.client_config
-  location                = lookup(each.value, "region", null) == null ? local.resource_groups[each.value.resource_group_key].location : local.global_settings.regions[each.value.region]
-  resource_group_name     = local.resource_groups[each.value.resource_group_key].name
+  resource_groups         = local.combined_objects_resource_groups
   global_settings         = local.global_settings
   settings                = each.value
   vnets                   = local.combined_objects_networking

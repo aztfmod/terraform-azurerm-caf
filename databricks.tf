@@ -2,8 +2,8 @@ module "databricks_workspaces" {
   source   = "./modules/analytics/databricks_workspace"
   for_each = local.database.databricks_workspaces
 
-  location            = lookup(each.value, "region", null) == null ? local.resource_groups[each.value.resource_group_key].location : local.global_settings.regions[each.value.region]
-  resource_group_name = local.resource_groups[each.value.resource_group_key].name
+  # location            = lookup(each.value, "region", null) == null ? local.resource_groups[each.value.resource_group_key].location : local.global_settings.regions[each.value.region]
+  # resource_group_name = local.resource_groups[each.value.resource_group_key].name
   global_settings     = local.global_settings
   client_config       = local.client_config
   settings            = each.value
@@ -11,6 +11,11 @@ module "databricks_workspaces" {
   aml                 = local.combined_objects_machine_learning
   diagnostics         = local.combined_diagnostics
   base_tags           = try(local.global_settings.inherit_tags, false) ? local.resource_groups[each.value.resource_group_key].tags : {}
+
+  resource_group = try(
+    local.resource_groups[each.value.resource_group_key],
+    local.combined_objects_resource_groups[each.value.resource_group.lz_key][each.value.resource_group.key]
+  )
 }
 
 output "databricks_workspaces" {
