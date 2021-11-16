@@ -122,12 +122,13 @@ resource "azurerm_windows_virtual_machine" "vm" {
   dynamic "additional_unattend_content" {
     for_each = try(each.value.additional_unattend_content, false) == false ? [] : [1]
  
-      content {
-       
-      content = try(value.content, false) != false ? false : try(filebase64(format("%s/%s", path.cwd,value.contentfile)), null)
-      setting = value.setting
-      
-    }
+    content {
+
+        for_each = [for el in each.value.additional_unattend_content: el]
+
+        content = try(el.content, false) != false ? false : try(filebase64(format("%s/%s", path.cwd,el.contentfile)), null)
+        setting = el.setting
+    }  
   }
 
   dynamic "boot_diagnostics" {
