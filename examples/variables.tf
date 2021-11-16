@@ -669,6 +669,9 @@ variable "logic_app_trigger_custom" {
 variable "private_dns_vnet_links" {
   default = {}
 }
+variable "machine_learning_compute_instance" {
+  default = {}
+}
 variable "data_factory_integration_runtime_self_hosted" {
   default = {}
 }
