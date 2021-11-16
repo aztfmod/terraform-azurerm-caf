@@ -185,7 +185,7 @@ resource "azurerm_windows_virtual_machine" "vm" {
 
   lifecycle {
     ignore_changes = [
-      resource_group_name, location, os_disk[0].name
+      resource_group_name, location, os_disk[0].name, availability_set_id
     ]
   }
 
@@ -211,7 +211,7 @@ resource "azurerm_key_vault_secret" "admin_password" {
 
   lifecycle {
     ignore_changes = [
-      value
+      value, key_vault_id
     ]
   }
 }

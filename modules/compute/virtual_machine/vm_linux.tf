@@ -148,7 +148,7 @@ resource "azurerm_linux_virtual_machine" "vm" {
 
   lifecycle {
     ignore_changes = [
-      resource_group_name, location, os_disk[0].name
+      resource_group_name, location, os_disk[0].name, availability_set_id
     ]
   }
 
@@ -167,7 +167,7 @@ resource "azurerm_key_vault_secret" "ssh_private_key" {
 
   lifecycle {
     ignore_changes = [
-      value
+      value, key_vault_id
     ]
   }
 }
@@ -182,7 +182,7 @@ resource "azurerm_key_vault_secret" "ssh_public_key_openssh" {
 
   lifecycle {
     ignore_changes = [
-      value
+      value, key_vault_id
     ]
   }
 }
