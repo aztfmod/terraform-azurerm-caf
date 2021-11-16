@@ -120,15 +120,13 @@ resource "azurerm_windows_virtual_machine" "vm" {
   }
 
   dynamic "additional_unattend_content" {
-    for_each = try(each.value.additional_unattend_content, false) == false ? [] : [1]
- 
+    for_each = { for key, value in try(each.value.additional_unattend_content, null) : key => value}
+
     content {
 
-        temp = each.value.additional_unattend_content
-        for el in temp {
-          content = try(el.content, false) != false ? false : try(filebase64(format("%s/%s", path.cwd,el.contentfile)), null)
-          setting = el.setting 
-        }
+        content = try(value.content, try(filebase64(format("%s/%s", path.cwd,value.contentfile))))
+        setting = value.setting 
+        
     }  
   }
 
