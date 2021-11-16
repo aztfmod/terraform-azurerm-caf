@@ -177,6 +177,9 @@ variable "azurerm_routes" {
 variable "vnets" {
   default = {}
 }
+variable "virtual_subnets" {
+  default = {}
+}
 variable "azurerm_redis_caches" {
   default = {}
 }
@@ -235,6 +238,9 @@ variable "azuread_applications" {
   default = {}
 }
 variable "azuread_credentials" {
+  default = {}
+}
+variable "azuread_groups_membership" {
   default = {}
 }
 variable "azuread_service_principals" {
@@ -582,6 +588,12 @@ variable "nat_gateways" {
 variable "cognitive_services_account" {
   default = {}
 }
+variable "database_migration_services" {
+  default = {}
+}
+variable "database_migration_projects" {
+  default = {}
+}
 variable "data_factory" {
   default = {}
 }
@@ -652,5 +664,11 @@ variable "logic_app_trigger_custom" {
   default = {}
 }
 variable "private_dns_vnet_links" {
+  default = {}
+}
+variable "frontdoor_rules_engine" {
+  default = {}
+}
+variable "frontdoor_custom_https_configuration" {
   default = {}
 }

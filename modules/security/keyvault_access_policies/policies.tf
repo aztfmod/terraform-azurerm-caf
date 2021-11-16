@@ -183,7 +183,6 @@ module "mssql_managed_instances_secondary" {
 }
 
 
-
 module "storage_accounts" {
   source = "./access_policy"
   for_each = {

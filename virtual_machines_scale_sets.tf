@@ -25,15 +25,26 @@ module "virtual_machine_scale_sets" {
   global_settings                  = local.global_settings
   keyvaults                        = local.combined_objects_keyvaults
   load_balancers                   = local.combined_objects_load_balancers
-  location                         = lookup(each.value, "region", null) == null ? module.resource_groups[each.value.resource_group_key].location : local.global_settings.regions[each.value.region]
   managed_identities               = local.combined_objects_managed_identities
   network_security_groups          = try(module.network_security_groups, {})
   proximity_placement_groups       = local.combined_objects_proximity_placement_groups
   public_ip_addresses              = local.combined_objects_public_ip_addresses
   recovery_vaults                  = local.combined_objects_recovery_vaults
-  resource_group_name              = module.resource_groups[each.value.resource_group_key].name
   settings                         = each.value
   vnets                            = local.combined_objects_networking
+  resource_group_name = coalesce(
+    try(local.combined_objects_resource_groups[each.value.resource_group.lz_key][each.value.resource_group.key].name, null),
+    try(local.combined_objects_resource_groups[each.value.resource_group.lz_key][each.value.resource_group_key].name, null),
+    try(local.combined_objects_resource_groups[local.client_config.landingzone_key][each.value.resource_group.key].name, null),
+    try(local.combined_objects_resource_groups[local.client_config.landingzone_key][each.value.resource_group_key].name, null)
+  )
+  location = coalesce(
+    try(local.global_settings.regions[each.value.region], null),
+    try(local.combined_objects_resource_groups[each.value.resource_group.lz_key][each.value.resource_group.key].location, null),
+    try(local.combined_objects_resource_groups[each.value.resource_group.lz_key][each.value.resource_group_key].location, null),
+    try(local.combined_objects_resource_groups[local.client_config.landingzone_key][each.value.resource_group.key].location, null),
+    try(local.combined_objects_resource_groups[local.client_config.landingzone_key][each.value.resource_group_key].location, null)
+  )
 }
 
 
