@@ -7,16 +7,10 @@ You can instantiate this directly using the following parameters:
 ```hcl
 module "caf" {
   source  = "aztfmod/caf/azurerm"
-  version = "5.1.0"
+  version = "5.4.0"
   # insert the 7 required variables here
 }
 ```
-module "caf" {
-  source  = "aztfmod/caf/azurerm"
-  version = "5.1.0"
-}
-
-
 
 ## Inputs
 | Name | Description | Type | Required |
