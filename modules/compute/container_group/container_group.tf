@@ -106,7 +106,7 @@ resource "azurerm_container_group" "acg" {
       } //liveness_probe
 
       dynamic "volume" {
-        for_each = try(container.value.volume, null) == null ? [] : [1]
+        for_each = try(container.value.volume, {}) #== null ? [] : [1]
 
         content {
           name                 = volume.value.name
