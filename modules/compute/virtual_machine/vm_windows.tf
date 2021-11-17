@@ -124,10 +124,9 @@ resource "azurerm_windows_virtual_machine" "vm" {
     
       content {
 
-        content = try(each.value.additional_unattend_content[value].content, filebase64(format("%s/%s", path.cwd,each.value.additional_unattend_content[value].contentfile)))
-        setting = each.value.additional_unattend_content[value].setting 
-        
-    }  
+        content = try(additional_unattend_content.value.content, filebase64(format("%s/%s", path.cwd,additional_unattend_content.value.contentfile)))
+        setting = additional_unattend_content
+      }  
   }
 
   dynamic "boot_diagnostics" {
