@@ -15,7 +15,7 @@ resource "azurerm_monitor_diagnostic_setting" "diagnostics" {
 
   eventhub_authorization_rule_id = each.value.destination_type == "event_hub" ? format("%s/authorizationRules/RootManageSharedAccessKey", var.diagnostics.event_hub_namespaces[var.diagnostics.diagnostics_destinations.event_hub_namespaces[each.value.destination_key].event_hub_namespace_key].id) : null
 
-  log_analytics_workspace_id     = each.value.destination_type == "log_analytics" ? var.diagnostics.log_analytics[var.diagnostics.diagnostics_destinations.log_analytics[each.value.destination_key].log_analytics_key].id : null
+  log_analytics_workspace_id     = each.value.destination_type == "log_analytics" ? try(var.diagnostics.diagnostics_destinations.log_analytics[each.value.destination_key].log_analytics_resource_id, var.diagnostics.log_analytics[var.diagnostics.diagnostics_destinations.log_analytics[each.value.destination_key].log_analytics_key].id) : null
   log_analytics_destination_type = each.value.destination_type == "log_analytics" ? lookup(var.diagnostics.diagnostics_definition[each.value.definition_key], "log_analytics_destination_type", null) : null
 
   storage_account_id = each.value.destination_type == "storage" ? var.diagnostics.storage_accounts[var.diagnostics.diagnostics_destinations.storage[each.value.destination_key][var.resource_location].storage_account_key].id : null
