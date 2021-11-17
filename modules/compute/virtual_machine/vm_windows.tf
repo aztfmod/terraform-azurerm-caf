@@ -120,7 +120,7 @@ resource "azurerm_windows_virtual_machine" "vm" {
   }
 
   dynamic "additional_unattend_content" {
-    for_each = try(each.value.additional_unattend_content, null)
+    for_each = each.value.additional_unattend_content
     
       content {
 
