@@ -124,7 +124,7 @@ resource "azurerm_windows_virtual_machine" "vm" {
     
       content {
 
-        content = try(try(additional_unattend_content.value.content, null), filebase64(format("%s/%s", path.cwd,additional_unattend_content.value.contentfile)))
+        content = try(additional_unattend_content.value.content, null) != null ? null : filebase64(format("%s/%s", path.cwd,additional_unattend_content.value.contentfile))
         setting = additional_unattend_content.value.setting
       }  
   }
