@@ -32,8 +32,12 @@ resource "azurerm_machine_learning_compute_instance" "mlci" {
 
     content {
       type         = identity.value.type
-      identity_ids = identity.value.identity_ids
+      identity_ids = coalesce(
+                    var.settings.identity.identity_ids,
+                    local.managed_identities
+      )
     }
+    
   }
 
   #It's on the AzureRM provider documentation but it does raises an error.
