@@ -11,7 +11,7 @@ resource "azurecaf_name" "bckp" {
   random_length = var.global_settings.random_length
   clean_input   = true
   passthrough   = var.global_settings.passthrough
-  use_slug      = "bckv" #false #var.global_settings.use_slug
+  use_slug      = false #var.global_settings.use_slug
 }
 
 resource "azurerm_data_protection_backup_vault" "backup_vault" {
