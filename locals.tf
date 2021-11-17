@@ -88,7 +88,7 @@ locals {
   }
 
   communication = {
-    communication_services            = try(var.communication.communication_services, {})
+    communication_services = try(var.communication.communication_services, {})
   }
 
   database = {

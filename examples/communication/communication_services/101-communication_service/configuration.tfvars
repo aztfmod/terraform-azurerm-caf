@@ -1,32 +1,25 @@
-
 global_settings = {
   default_region = "region1"
   regions = {
-    region1 = "eastus2"
-    region2 = "centralus"
+    region1 = "westus"
   }
 }
-
-landingzone = {
-  backend_type        = "azurerm"
-  global_settings_key = "caf_foundations_sharedservices"
-  level               = "level2"
-  key                 = "caf_level2_acs"
-  tfstates = {
-    caf_foundations_sharedservices = {
-      level   = "lower"
-      tfstate = "caf_foundations_sharedservices.tfstate"
-    }    
-  }
-}
-
 
 resource_groups = {
-  rg_region1 = {
-    name = "example-communication-services-re1"
+  rg1 = {
+    name = "rg1"
   }
 }
 
-
-
-
+communication_services = {
+  cs1 = {
+    name               = "test-acs1-re1"
+    resource_group_key = "rg1"
+    data_location      = "United States"
+  }
+  cs2 = {
+    name               = "test-acs2-re2"
+    resource_group_key = "rg1"
+    data_location      = "United States"
+  }
+}

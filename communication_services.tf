@@ -19,8 +19,7 @@ module "communication_services_diagnostics" {
   for_each = local.communication.communication_services
 
   resource_id       = module.communication_services[each.key].id
-  // resource_location = module.communication_services[each.key].location
-  resource_location = lookup(each.value, "region", null) == null ? local.resource_groups[each.value.resource_group_key].location : local.global_settings.regions[each.value.region]
+  resource_location = local.resource_groups[each.value.resource_group_key].location
   diagnostics       = local.combined_diagnostics
   profiles          = try(each.value.diagnostic_profiles, {})
 }
