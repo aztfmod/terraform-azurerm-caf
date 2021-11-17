@@ -124,7 +124,7 @@ resource "azurerm_windows_virtual_machine" "vm" {
     
       content {
 
-        content = try(additional_unattend_content.value.content, false) != false ? [1] : file(format("%s/%s", path.cwd, additional_unattend_content.value.contentfile))
+        content = try(additional_unattend_content.value.content, false) != false ? additional_unattend_content.value.content : file(format("%s/%s", path.cwd, additional_unattend_content.value.contentfile))
         setting = additional_unattend_content.value.setting
       }  
   }
