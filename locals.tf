@@ -87,6 +87,10 @@ locals {
     virtual_machine_scale_sets          = try(var.compute.virtual_machine_scale_sets, {})
   }
 
+  communication = {
+    communication_services            = try(var.communication.communication_services, {})
+  }
+
   database = {
     app_config                         = try(var.database.app_config, {})
     azurerm_redis_caches               = try(var.database.azurerm_redis_caches, {})
