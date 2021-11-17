@@ -33,6 +33,7 @@ module "machine_learning_compute_instance" {
 
 
   remote_objects = {
+    managed_identities = local.combined_objects_managed_identities
     machine_learning_workspace_id = coalesce(
       try(local.combined_objects_machine_learning[each.value.machine_learning_workspace.lz_key][each.value.machine_learning_workspace.key].id, null),
       try(local.combined_objects_machine_learning[local.client_config.landingzone_key][each.value.machine_learning_workspace.key].id, null),
