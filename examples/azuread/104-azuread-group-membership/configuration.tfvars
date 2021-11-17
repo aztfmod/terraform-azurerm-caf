@@ -43,10 +43,10 @@ azuread_groups = {
 
 azuread_groups_membership = {
   ad_group1 = { # ad group key
-    # lz_key = "" # lz_key for ad group
     managed_identities = {
       launchpad = {
-        # lz_key = ""
+        # group_lz_key = "" # group lz_key
+        # lz_key = ""       # managed_identity lz_key
         keys = ["msi1"]
       }
     }
