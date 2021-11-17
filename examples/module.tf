@@ -78,7 +78,9 @@ module "example" {
   cognitive_services = {
     cognitive_services_account = var.cognitive_services_account
   }
-
+  communication = {
+    communication_services = var.communication_services
+  }
   compute = {
     aks_clusters                        = var.aks_clusters
     availability_sets                   = var.availability_sets
