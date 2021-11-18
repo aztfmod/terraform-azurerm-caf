@@ -58,7 +58,7 @@ storage_accounts = {
         }
         #add multiple subnets by extending this block. You can reference remote subnets by using remote_subnet_id
         #subnet2 = {
-          #remote_subnet_id = "/subscriptions/*******/resourceGroups/*******/providers/Microsoft.Network/virtualNetworks/vnet-euno-uat-sapfc-001/subnets/snet-remote-subnet"
+          #remote_subnet_id = "/subscriptions/*******/resourceGroups/*******/providers/Microsoft.Network/virtualNetworks/vnet-some-remote-vnet/subnets/snet-remote-subnet"
       }
 
     }
