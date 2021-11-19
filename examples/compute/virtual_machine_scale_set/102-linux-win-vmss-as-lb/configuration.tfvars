@@ -379,12 +379,20 @@ monitor_autoscale_settings = {
       }
     }
 
-    recurrence = {
-      timezone = "Pacific Standard Time"
-      days     = ["Saturday", "Sunday"]
-      hours    = [12]
-      minutes  = [0]
-    }
+    # Note: use either recurrence or fixed_date
+    # recurrence = {
+    #   timezone = "Pacific Standard Time"
+    #   days     = ["Saturday", "Sunday"]
+    #   hours    = [12]
+    #   minutes  = [0]
+    # }
+
+    # Note: use either fixed_date or recurrence
+    # fixed_date = {
+    #   timezone = "Pacific Standard Time"
+    #   start    = "2020-07-01T00:00:00Z"
+    #   end      = "2020-07-31T23:59:59Z"
+    # }
 
     notification = {
       email = {

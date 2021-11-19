@@ -51,6 +51,13 @@ resource "azurerm_monitor_autoscale_setting" "this" {
       hours    = var.settings.recurrence.hours
       minutes  = var.settings.recurrence.minutes
     }
+
+    fixed_date {
+      timezone = var.settings.fixed_date.timezone
+      start    = var.settings.fixed_date.start
+      end      = var.settings.fixed_date.end
+    }
+
   }
 
   notification {
