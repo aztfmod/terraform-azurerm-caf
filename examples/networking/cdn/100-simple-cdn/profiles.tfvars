@@ -1,4 +1,4 @@
-cdn_profiles = {
+cdn_profile = {
   example_profile = {
     name               = "exampleprofile"
     resource_group_key = "cdn_profile_example_key"
@@ -7,7 +7,7 @@ cdn_profiles = {
   }
 }
 
-cdn_endpoints = {
+cdn_endpoint = {
   example_endpoint = {
     name                = "exampleendpoint"
     profile_name        = "exampleprofile"
