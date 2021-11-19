@@ -1,22 +1,52 @@
-output "cdn_profile" {
-  value = module.cdn_profile
+module "cdn_endpoint" {
+  source   = "./modules/networking/cdn_endpoint"
+  for_each = local.networking.cdn_endpoint
+
+  global_settings = local.global_settings
+  client_config   = local.client_config
+  settings        = each.value
+
+  resource_group_name = coalesce(
+    try(local.combined_objects_resource_groups[each.value.resource_group.lz_key][each.value.resource_group.key].name, null),
+    try(local.combined_objects_resource_groups[local.client_config.landingzone_key][each.value.resource_group.key].name, null),
+    try(each.value.resource_group.name, null)
+  )
+
+  location = lookup(each.value, "region", null) == null ? local.resource_groups[each.value.resource_group_key].location : local.global_settings.regions[each.value.region]
+
+  remote_objects = {
+    profile_name = coalesce(
+      try(local.combined_objects_cdn_profile[each.value.profile.lz_key][each.value.profile.key].name, null),
+      try(local.combined_objects_cdn_profile[local.client_config.landingzone_key][each.value.profile.key].name, null),
+      try(each.value.profile.name, null)
+    )
+  }
+}
+
+output "cdn_endpoint" {
+  value = module.cdn_endpoint
 }
 
 module "cdn_profile" {
-  source          = "./modules/networking/cdn"
-  depends_on      = [module.storage_accounts]
-  for_each        = local.networking.cdn_profiles
-  diagnostics     = local.combined_diagnostics
+  source   = "./modules/networking/cdn_profile"
+  for_each = local.networking.cdn_profile
+
   global_settings = local.global_settings
-  base_tags       = try(local.global_settings.inherit_tags, false) ? local.resource_groups[each.value.resource_group_key].tags : {}
+  client_config   = local.client_config
   settings        = each.value
-  endpoints       = local.networking.cdn_endpoints
-  resource_group_name = coalesce(
-    try(local.combined_objects_resource_groups[try(each.value.resource_group.lz_key, local.client_config.landingzone_key)][each.value.resource_group.key].name, null),
-    try(local.combined_objects_resource_groups[local.client_config.landingzone_key][each.value.resource_group_key].name, null),
-    try(each.value.resource_group.name, null)
-  )
-  storage_accounts = local.combined_objects_storage_accounts
-  client_config    = local.client_config
-  location         = try(each.value.location, "Global")
+
+    resource_group_name = coalesce(
+        try(local.combined_objects_resource_groups[each.value.resource_group.lz_key][each.value.resource_group.key].name, null),
+        try(local.combined_objects_resource_groups[local.client_config.landingzone_key][each.value.resource_group.key].name, null),
+        try(each.value.resource_group.name, null)
+    )
+
+    location = lookup(each.value, "region", null) == null ? local.resource_groups[each.value.resource_group_key].location : local.global_settings.regions[each.value.region]
+
+  remote_objects = {
+        diagnostics    = local.combined_diagnostics
+  }
+}
+output "cdn_profile" {
+  value = module.cdn_profile
 }

@@ -687,3 +687,9 @@ variable "frontdoor_rules_engine" {
 variable "frontdoor_custom_https_configuration" {
   default = {}
 }
+variable "cdn_endpoint" {
+  default = {}
+}
+variable "cdn_profile" {
+  default = {}
+}
