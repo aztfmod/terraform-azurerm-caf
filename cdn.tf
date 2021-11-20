@@ -12,7 +12,7 @@ module "cdn_endpoint" {
     try(each.value.resource_group.name, null)
   )
 
-  location = lookup(each.value, "region", null) == null ? local.resource_groups[each.value.resource_group_key].location : local.global_settings.regions[each.value.region]
+  location = lookup(each.value, "region", null) == null ? local.resource_groups[each.value.resource_group.key].location : local.global_settings.regions[each.value.region]
 
   remote_objects = {
     profile_name = coalesce(
@@ -35,16 +35,16 @@ module "cdn_profile" {
   client_config   = local.client_config
   settings        = each.value
 
-    resource_group_name = coalesce(
-        try(local.combined_objects_resource_groups[each.value.resource_group.lz_key][each.value.resource_group.key].name, null),
-        try(local.combined_objects_resource_groups[local.client_config.landingzone_key][each.value.resource_group.key].name, null),
-        try(each.value.resource_group.name, null)
-    )
+  resource_group_name = coalesce(
+    try(local.combined_objects_resource_groups[each.value.resource_group.lz_key][each.value.resource_group.key].name, null),
+    try(local.combined_objects_resource_groups[local.client_config.landingzone_key][each.value.resource_group.key].name, null),
+    try(each.value.resource_group.name, null)
+  )
 
-    location = lookup(each.value, "region", null) == null ? local.resource_groups[each.value.resource_group_key].location : local.global_settings.regions[each.value.region]
+  location = lookup(each.value, "region", null) == null ? local.resource_groups[each.value.resource_group.key].location : local.global_settings.regions[each.value.region]
 
   remote_objects = {
-        diagnostics    = local.combined_diagnostics
+    diagnostics = local.combined_diagnostics
   }
 }
 output "cdn_profile" {

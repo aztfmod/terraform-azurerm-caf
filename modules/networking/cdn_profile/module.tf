@@ -10,10 +10,10 @@ resource "azurecaf_name" "cdn" {
 
 resource "azurerm_cdn_profile" "cdn" {
   name = azurecaf_name.cdn.result
-  
-  resource_group_name = var.resource_group_name  
-  location = var.location  
-  sku = var.settings.sku  
-  tags = local.tags
-  
+
+  resource_group_name = var.resource_group_name
+  location            = var.location
+  sku                 = var.settings.sku
+  tags                = local.tags
+
 }
