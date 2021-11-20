@@ -34,7 +34,7 @@ resource "azurerm_data_factory_linked_service_azure_databricks" "dflsad" {
 
   adb_domain = try(coalesce(
     try(var.settings.databricks_workspace.adb_domain, null),
-    try(var.remote_objects.databricks_workspace.workspace_url, null)
+    try(format("https://%s", var.remote_objects.databricks_workspace.workspace_url), null)
   ), null)
 
   existing_cluster_id = try(var.settings.existing_cluster_id, null)
