@@ -12,3 +12,4 @@ variable "managed_identities" {}
 variable "client_config" {
   description = "Client configuration object (see module README.md)."
 }
+variable "backup_vaults" {}
