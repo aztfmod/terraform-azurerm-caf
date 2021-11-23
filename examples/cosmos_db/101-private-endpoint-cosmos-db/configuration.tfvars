@@ -70,7 +70,7 @@ cosmos_dbs = {
         private_dns = {
           zone_group_name = "cosmosdb-private-dns-zone"
           # lz_key          = ""
-          keys            = ["cosmos_dns"]
+          keys = ["cosmos_dns"]
         }
       }
     }
@@ -106,7 +106,7 @@ private_dns = {
 
     vnet_links = {
       vnlk1 = {
-        name     = "cosmos-vnet-link"
+        name = "cosmos-vnet-link"
         # lz_key   = ""
         vnet_key = "vnet_region1"
       }

@@ -37,7 +37,7 @@ resource "azurecaf_name" "rg_node" {
 
 
 # Needed as introduced in >2.79.1 - https://github.com/hashicorp/terraform-provider-azurerm/issues/13585  
- resource "null_resource" "aks_registration_preview" {
+resource "null_resource" "aks_registration_preview" {
   provisioner "local-exec" {
     command = "az feature register --namespace Microsoft.ContainerService -n AutoUpgradePreview"
   }
