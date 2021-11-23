@@ -15,10 +15,10 @@ resource_groups = {
   }
 }
 
-# managed identity to attach to vm to download from the storage account
+# Managed identity to attach to vm to download from the storage account
 managed_identities = {
-  example_mi = {
-    name               = "example_mi"
+  example_vmss_mi = {
+    name               = "example_vmss_mi"
     resource_group_key = "example_vmss_rg1"
   }
 }
@@ -59,7 +59,7 @@ role_mapping = {
       sa1 = {
         "Storage Blob Data Reader" = {
           managed_identities = {
-            keys = ["user_mi"]
+            keys = ["example_vmss_mi"]
           }
         }
         "Storage Blob Data Contributor" = {
@@ -237,7 +237,7 @@ virtual_machine_scale_sets = {
         identity = {
           # type = "SystemAssigned"
           type                  = "UserAssigned"
-          managed_identity_keys = ["example_mi"]
+          managed_identity_keys = ["example_vmss_mi"]
 
           remote = {
             lz_key_name = {
