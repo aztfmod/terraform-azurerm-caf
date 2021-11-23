@@ -21,8 +21,16 @@ resource "azurerm_data_protection_backup_vault" "backup_vault" {
   datastore_type      = try(var.backup_vault.datastore_type, "VaultStore")
   redundancy          = try(var.backup_vault.redundancy, "LocallyRedundant")
   tags                = merge(var.base_tags, local.tags)
+  
+  dynamic "identity" {
+    for_each = lookup(var.backup_vault, "enable_identity", false) == false ? [] : [1]
 
-  identity {
-    type = "SystemAssigned"
+    content {
+      type = "SystemAssigned"
+    }
   }
+#   identity {
+#     type = "SystemAssigned"
+#   }
+  
 }
