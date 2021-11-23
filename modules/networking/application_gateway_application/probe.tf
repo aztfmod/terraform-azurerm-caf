@@ -15,6 +15,7 @@ resource "null_resource" "set_probe" {
       RESOURCE                      = "PROBE"
       RG_NAME                       = var.application_gateway.resource_group_name
       APPLICATION_GATEWAY_NAME      = var.application_gateway.name
+      APPLICATION_GATEWAY_ID        = var.application_gateway.id
       NAME                          = each.value.name
       PROTOCOL                      = each.value.protocol
       PROBEPATH                     = each.value.path
@@ -38,6 +39,7 @@ resource "null_resource" "delete_probe" {
     probe_name               = each.value.name
     resource_group_name      = var.application_gateway.resource_group_name
     application_gateway_name = var.application_gateway.name
+    application_gateway_id   = var.application_gateway.id
   }
 
   provisioner "local-exec" {
@@ -51,6 +53,7 @@ resource "null_resource" "delete_probe" {
       NAME                     = self.triggers.probe_name
       RG_NAME                  = self.triggers.resource_group_name
       APPLICATION_GATEWAY_NAME = self.triggers.application_gateway_name
+      APPLICATION_GATEWAY_ID   = self.triggers.application_gateway_id
     }
   }
 }

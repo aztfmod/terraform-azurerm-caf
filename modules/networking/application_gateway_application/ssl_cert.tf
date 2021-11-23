@@ -26,6 +26,7 @@ resource "null_resource" "set_ssl_cert" {
       RESOURCE                 = "SSLCERT"
       RG_NAME                  = var.application_gateway.resource_group_name
       APPLICATION_GATEWAY_NAME = var.application_gateway.name
+      APPLICATION_GATEWAY_ID   = var.application_gateway.id
       NAME                     = each.value.name
       CERT_FILE                = try(each.value.cert_file, null)
       CERT_PASSWORD            = try(each.value.cert_password, null)
@@ -43,6 +44,7 @@ resource "null_resource" "delete_ssl_cert" {
     ssl_cert_name            = each.value.name
     resource_group_name      = var.application_gateway.resource_group_name
     application_gateway_name = var.application_gateway.name
+    application_gateway_id   = var.application_gateway.id
   }
 
   provisioner "local-exec" {
@@ -56,6 +58,7 @@ resource "null_resource" "delete_ssl_cert" {
       NAME                     = self.triggers.ssl_cert_name
       RG_NAME                  = self.triggers.resource_group_name
       APPLICATION_GATEWAY_NAME = self.triggers.application_gateway_name
+      APPLICATION_GATEWAY_ID   = self.triggers.application_gateway_id
     }
   }
 }
