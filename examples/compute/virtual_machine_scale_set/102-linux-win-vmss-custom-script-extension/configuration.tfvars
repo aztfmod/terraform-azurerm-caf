@@ -10,7 +10,7 @@ tags = {
 }
 
 resource_groups = {
-  rg1 = {
+  example_vm_rg1 = {
     name = "vmss-lb-cse-rg"
   }
 }
@@ -19,14 +19,14 @@ resource_groups = {
 managed_identities = {
   example_mi = {
     name               = "example_mi"
-    resource_group_key = "rg1"
+    resource_group_key = "example_vm_rg1"
   }
 }
 
 storage_accounts = {
   sa1 = {
     name               = "sa1"
-    resource_group_key = "rg1"
+    resource_group_key = "example_vm_rg1"
     # Account types are BlobStorage, BlockBlobStorage, FileStorage, Storage and StorageV2. Defaults to StorageV2
     #account_kind = "BlobStorage"
     # Account Tier options are Standard and Premium. For BlockBlobStorage and FileStorage accounts only Premium is valid.
@@ -74,7 +74,7 @@ role_mapping = {
 
 vnets = {
   vnet1 = {
-    resource_group_key = "rg1"
+    resource_group_key = "example_vm_rg1"
     vnet = {
       name          = "vmss"
       address_space = ["10.100.0.0/16"]
@@ -92,7 +92,7 @@ vnets = {
 keyvaults = {
   example_vm_rg1 = {
     name               = "vmsecretskv"
-    resource_group_key = "rg1"
+    resource_group_key = "example_vm_rg1"
     sku_name           = "standard"
     tags = {
       env = "Standalone"
@@ -123,7 +123,7 @@ diagnostic_storage_accounts = {
   # Stores boot diagnostic for region1
   bootdiag1 = {
     name                     = "lebootdiag1"
-    resource_group_key       = "rg1"
+    resource_group_key       = "example_vm_rg1"
     account_kind             = "StorageV2"
     account_tier             = "Standard"
     account_replication_type = "LRS"
@@ -134,7 +134,7 @@ diagnostic_storage_accounts = {
 # Application security groups
 application_security_groups = {
   app_sg1 = {
-    resource_group_key = "rg1"
+    resource_group_key = "example_vm_rg1"
     name               = "app_sg1"
   }
 }
@@ -143,7 +143,7 @@ application_security_groups = {
 public_ip_addresses = {
   lb_pip1 = {
     name               = "lb_pip1"
-    resource_group_key = "rg1"
+    resource_group_key = "example_vm_rg1"
     sku                = "Basic"
     # Note: For UltraPerformance ExpressRoute Virtual Network gateway, the associated Public IP needs to be sku "Basic" not "Standard"
     allocation_method = "Dynamic"
@@ -153,7 +153,7 @@ public_ip_addresses = {
   }
   lb_pip2 = {
     name               = "lb_pip2"
-    resource_group_key = "rg1"
+    resource_group_key = "example_vm_rg1"
     sku                = "Basic"
     # Note: For UltraPerformance ExpressRoute Virtual Network gateway, the associated Public IP needs to be sku "Basic" not "Standard"
     allocation_method = "Dynamic"
@@ -168,7 +168,7 @@ load_balancers = {
   lb1 = {
     name                      = "lb-vmss"
     sku                       = "basic"
-    resource_group_key        = "rg1"
+    resource_group_key        = "example_vm_rg1"
     backend_address_pool_name = "vmss1"
     frontend_ip_configurations = {
       config1 = {
@@ -180,7 +180,7 @@ load_balancers = {
   lb2 = {
     name                      = "lb-vmss2"
     sku                       = "basic"
-    resource_group_key        = "rg1"
+    resource_group_key        = "example_vm_rg1"
     backend_address_pool_name = "vmss1"
     frontend_ip_configurations = {
       config1 = {
@@ -193,7 +193,7 @@ load_balancers = {
 
 virtual_machine_scale_sets = {
   vmss1 = {
-    resource_group_key                   = "rg1"
+    resource_group_key                   = "example_vm_rg1"
     boot_diagnostics_storage_account_key = "bootdiag1"
     os_type                              = "linux"
     keyvault_key                         = "kv1"
@@ -318,7 +318,7 @@ virtual_machine_scale_sets = {
   }
 
   vmss2 = {
-    resource_group_key                   = "rg1"
+    resource_group_key                   = "example_vm_rg1"
     provision_vm_agent                   = true
     boot_diagnostics_storage_account_key = "bootdiag1"
     os_type                              = "windows"
