@@ -17,6 +17,7 @@ resource "null_resource" "set_request_routing_rule" {
       RESOURCE                 = "REQUESTROUTINGRULE"
       RG_NAME                  = var.application_gateway.resource_group_name
       APPLICATION_GATEWAY_NAME = var.application_gateway.name
+      APPLICATION_GATEWAY_ID   = var.application_gateway.id
       NAME                     = each.value.name
       LISTENER                 = try(var.settings.http_listeners[each.value.http_listener_key].name, null)
       ADDRESS_POOL             = try(var.settings.backend_pools[each.value.backend_pool_key].name, null)
@@ -39,6 +40,7 @@ resource "null_resource" "delete_request_routing_rule" {
     request_routing_rule_name = each.value.name
     resource_group_name       = var.application_gateway.resource_group_name
     application_gateway_name  = var.application_gateway.name
+    application_gateway_id    = var.application_gateway.id
   }
 
   provisioner "local-exec" {
@@ -52,6 +54,7 @@ resource "null_resource" "delete_request_routing_rule" {
       NAME                     = self.triggers.request_routing_rule_name
       RG_NAME                  = self.triggers.resource_group_name
       APPLICATION_GATEWAY_NAME = self.triggers.application_gateway_name
+      APPLICATION_GATEWAY_ID   = self.triggers.application_gateway_id
     }
   }
 }
