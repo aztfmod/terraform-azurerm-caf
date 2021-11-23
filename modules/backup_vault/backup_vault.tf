@@ -29,8 +29,4 @@ resource "azurerm_data_protection_backup_vault" "backup_vault" {
       type = "SystemAssigned"
     }
   }
-#   identity {
-#     type = "SystemAssigned"
-#   }
-  
 }
