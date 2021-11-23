@@ -17,7 +17,7 @@ resource "azurerm_machine_learning_compute_instance" "mlci" {
   authorization_type            = try(var.settings.authorization_type, null)
 
   dynamic "assign_to_user" {
-    for_each = try(var.settings.assign_to_user, null) != null ? [var.settings.assign_to_user] : []
+    for_each = try(var.settings.assign_to_user, {}) != null ? [var.settings.assign_to_user] : []
 
     content {
       object_id = assign_to_user.value.object_id
