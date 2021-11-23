@@ -15,8 +15,8 @@ azuread_groups = {
     name        = "sqldbmsi-admins"
     description = "Administrators of the ep SQL server."
     members = {
-      user_principal_names = [] 
-      object_ids = []
+      user_principal_names   = []
+      object_ids             = []
       group_keys             = []
       service_principal_keys = []
     }
@@ -31,7 +31,7 @@ azuread_groups = {
 }
 
 azuread_groups_membership = { # the dependency of kv access policy with mssql_server id is cyclic by nature, mssql_server > kv_access_policy > tde enablement
-  sqldbmsi_admins = { # group key
+  sqldbmsi_admins = {         # group key
     # lz_key = "launchpad" # group lz_key
     mssql_servers = {
       # lz_key = ""
@@ -62,7 +62,7 @@ resource_groups = {
 
 managed_identities = {
   sqldbmsi = {
-    name = "sqldbmsi"
+    name               = "sqldbmsi"
     resource_group_key = "rg1"
   }
 }
@@ -72,13 +72,13 @@ vnets = {
   vnet1 = {
     resource_group_key = "rg1"
     vnet = {
-      name = "testvnet1"
+      name          = "testvnet1"
       address_space = ["10.0.0.0/16"]
     }
     subnets = {
       web = {
-        name = "web-subnet"
-        cidr = ["10.0.1.0/24"]
+        name              = "web-subnet"
+        cidr              = ["10.0.1.0/24"]
         service_endpoints = ["Microsoft.Sql"]
       }
     }
@@ -97,8 +97,8 @@ mssql_servers = {
     public_network_access_enabled = true
     minimum_tls_version           = "1.2"
 
-    identity = { 
-      type = "SystemAssigned" 
+    identity = {
+      type = "SystemAssigned"
     }
 
     azuread_administrator = {
@@ -107,22 +107,22 @@ mssql_servers = {
 
     firewall_rules = {
       rule1 = {
-        name = "testrule1"
+        name             = "testrule1"
         start_ip_address = "124.82.37.221"
-        end_ip_address = "124.82.37.221"
+        end_ip_address   = "124.82.37.221"
       }
     }
 
     network_rules = {
       rule1 = {
-        name = "testrule1"
-        vnet_key = "vnet1"
+        name       = "testrule1"
+        vnet_key   = "vnet1"
         subnet_key = "web"
       }
     }
 
     transparent_data_encryption = { # the dependency of kv access policy with mssql_server id is cyclic by nature, mssql_server > kv_access_policy > tde enablement
-      enable = false # NOTE: Enable this AFTER deployment of the mssql server and kv access policy assignment.
+      enable = false                # NOTE: Enable this AFTER deployment of the mssql server and kv access policy assignment.
       encryption_key = {
         # lz_key = ""
         keyvault_key_key = "key1" # encryption key reference of the keyvault key
@@ -139,11 +139,11 @@ keyvaults = {
     resource_group_key = "rg1"
     sku_name           = "standard"
     creation_policies = {
-      sqldbmsi_admins = { # the dependency of kv access policy with mssql_server id is cyclic by nature, mssql_server > kv_access_policy > tde enablement
+      sqldbmsi_admins = {                      # the dependency of kv access policy with mssql_server id is cyclic by nature, mssql_server > kv_access_policy > tde enablement
         azuread_group_key  = "sqldbmsi_admins" # add users/msi/sp on ad group member to gain permission
         secret_permissions = ["Set", "Get", "List", "Delete", "Purge"]
-        key_permissions = ["Create", "Decrypt", "Delete", "Encrypt", "Get", "List", "Purge", "UnwrapKey", "WrapKey"]
-        
+        key_permissions    = ["Create", "Decrypt", "Delete", "Encrypt", "Get", "List", "Purge", "UnwrapKey", "WrapKey"]
+
       }
     }
   }
@@ -154,7 +154,7 @@ keyvault_keys = {
     # lz_key = ""
     keyvault_key = "kv1"
 
-    name = "tdekey"
+    name     = "tdekey"
     key_type = "RSA"
     key_size = 2048
     key_opts = ["unwrapKey", "wrapKey"]
