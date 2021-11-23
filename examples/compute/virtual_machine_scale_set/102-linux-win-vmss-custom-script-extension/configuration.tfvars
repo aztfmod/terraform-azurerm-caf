@@ -90,7 +90,7 @@ vnets = {
 }
 
 keyvaults = {
-  example_vm_rg1 = {
+  example_vmss_kv1 = {
     name               = "vmsecretskv"
     resource_group_key = "example_vmss_rg1"
     sku_name           = "standard"
@@ -107,7 +107,7 @@ keyvaults = {
 
 # Store output attributes into keyvault secret
 dynamic_keyvault_secrets = {
-  example_vm_rg1 = { # Key of the keyvault
+  example_vmss_kv1 = { # Key of the keyvault
     vmadmin-username = {
       secret_name = "vmadmin-username"
       value       = "vmadmin"
@@ -196,7 +196,7 @@ virtual_machine_scale_sets = {
     resource_group_key                   = "example_vmss_rg1"
     boot_diagnostics_storage_account_key = "bootdiag1"
     os_type                              = "linux"
-    keyvault_key                         = "kv1"
+    keyvault_key                         = "example_vmss_kv1"
 
     vmss_settings = {
       linux = {
@@ -322,7 +322,7 @@ virtual_machine_scale_sets = {
     provision_vm_agent                   = true
     boot_diagnostics_storage_account_key = "bootdiag1"
     os_type                              = "windows"
-    keyvault_key                         = "kv1"
+    keyvault_key                         = "example_vmss_kv1"
 
     vmss_settings = {
       windows = {
