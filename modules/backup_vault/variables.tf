@@ -24,9 +24,7 @@ variable "base_tags" {
 variable "client_config" {
   description = "Client configuration object (see module README.md)."
 }
-variable "identity" {
-  default = null
-}
+variable "identity" {}
 # variable "redundancy" {
 #   type        = string
 #   description = "Specifies the backup storage redundancy. Possible values are GeoRedundant and LocallyRedundant"
