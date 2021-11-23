@@ -51,5 +51,5 @@ resource "azurerm_role_assignment" "msi" {
   scope                = var.scope
   role_definition_name = var.role_definition_name == null ? null : var.role_definition_name
   role_definition_id   = var.role_definition_id == null ? null : var.role_definition_id
-  principal_id         = "bb8e80dd-bf76-4bcb-81c2-74c5b325172a" #var.backup_vaults[each.key].identity.principal_id
+  principal_id         = var.backup_vaults[each.key].identity.principal_id
 }
