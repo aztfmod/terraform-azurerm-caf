@@ -20,6 +20,15 @@ module "managed_identities_membership" {
   members            = each.value
 }
 
+module "mssql_servers_membership" {
+  source   = "./membership"
+  for_each = try(var.settings.mssql_servers, {})
+
+  group_object_id = var.group_id
+  mssql_servers   = var.mssql_servers[try(each.value.lz_key, var.client_config.landingzone_key)]
+  members         = each.value
+}
+
 module "membership_object_id" {
   source = "./member"
   for_each = {

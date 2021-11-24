@@ -27,6 +27,9 @@ module "mssql_servers" {
     try(local.combined_objects_keyvaults[each.value.keyvault.lz_key][each.value.keyvault.key].id, null),
     try(local.combined_objects_keyvaults[local.client_config.landingzone_key][each.value.keyvault.key].id, null)
   )
+  remote_objects = {
+    keyvault_keys = local.combined_objects_keyvault_keys
+  }
 }
 
 data "azurerm_storage_account" "mssql_auditing" {
