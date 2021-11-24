@@ -7,8 +7,8 @@ module "application_gateway_applications" {
   settings                      = each.value
   application_gateway           = local.combined_objects_application_gateway_platforms[try(each.value.lz_key, local.client_config.landingzone_key)][each.value.application_gateway_key]
   app_services                  = local.combined_objects_app_services
-  keyvault_certificate_requests = module.keyvault_certificate_requests
-  keyvault_certificates         = module.keyvault_certificates
+  keyvault_certificate_requests = local.combined_objects_keyvault_certificate_requests
+  keyvault_certificates         = local.combined_objects_keyvault_certificates
   keyvaults                     = local.combined_objects_keyvaults
 }
 

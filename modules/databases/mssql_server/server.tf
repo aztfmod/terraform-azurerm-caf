@@ -1,5 +1,4 @@
 resource "azurerm_mssql_server" "mssql" {
-
   name                          = azurecaf_name.mssql.result
   resource_group_name           = var.resource_group_name
   location                      = var.location
@@ -88,3 +87,12 @@ resource "azurerm_key_vault_secret" "sql_admin_password" {
 }
 
 
+resource "azurerm_mssql_server_transparent_data_encryption" "tde" {
+  count = try(var.settings.transparent_data_encryption.enable, false) ? 1 : 0
+
+  server_id = azurerm_mssql_server.mssql.id
+  key_vault_key_id = try(var.settings.transparent_data_encryption.encryption_key, null) == null ? null : coalesce(
+    try(var.remote_objects.keyvault_keys[var.settings.transparent_data_encryption.encryption_key.lz_key][var.settings.transparent_data_encryption.encryption_key.keyvault_key_key].id, null),
+    try(var.remote_objects.keyvault_keys[var.client_config.landingzone_key][var.settings.transparent_data_encryption.encryption_key.keyvault_key_key].id, null)
+  )
+}
