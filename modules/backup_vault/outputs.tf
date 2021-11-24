@@ -32,3 +32,7 @@ output "identity" {
   description = " An identity block, which contains the Identity information for this Backup Vault. Exports principal_id (The Principal ID for the Service Principal associated with the Identity of this Backup Vault), tenand_id (The Tenant ID for the Service Principal associated with the Identity of this Backup Vault)"
   value       = try(azurerm_data_protection_backup_vault.backup_vault.identity, null)
 }
+output "rbac_id" {
+  description = " The Principal ID for the Service Principal associated with the Identity of this Backup Vault. (Extracted from the identity block)"
+  value       = try(azurerm_data_protection_backup_vault.backup_vault.identity.0.principal_id, null)
+}
