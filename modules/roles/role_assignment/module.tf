@@ -12,6 +12,5 @@ module "assignment" {
   azuread_groups       = var.azuread_groups
   managed_identities   = var.managed_identities
   client_config        = var.client_config
-#   backup_vaults        = var.backup_vaults
 }
 
