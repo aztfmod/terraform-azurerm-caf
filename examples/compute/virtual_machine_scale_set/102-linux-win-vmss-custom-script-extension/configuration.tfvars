@@ -41,15 +41,22 @@ storage_accounts = {
   }
 }
 
-# Upload helloworld script
+# Upload helloworld scripts
 storage_account_blobs = {
-  script = {
+  script1 = {
+    name                   = "helloworld.sh"
+    storage_account_key    = "sa1"
+    storage_container_name = "files"
+    source                 = "./compute/virtual_machine_scale_set/102-linux-win-vmss-custom-script-extension/scripts/helloworld.sh"
+    parallelism            = 1
+  }
+  script2 = {
     name                   = "helloworld.ps1"
     storage_account_key    = "sa1"
     storage_container_name = "files"
-    source                 = "./compute/virtual_machine_scale_set/102-linux-win-vmss-custom-script-extension/helloworld.ps1"
+    source                 = "./compute/virtual_machine_scale_set/102-linux-win-vmss-custom-script-extension/scripts/helloworld.ps1"
     parallelism            = 1
-  }
+  },
 }
 
 # Give managed identity Storage Blob Data reader and executing user Storage Blob Data Contributor permissions on storage account
@@ -304,12 +311,12 @@ virtual_machine_scale_sets = {
 
     virtual_machine_scale_set_extensions = {
       custom_script = {
-        # can define fileuris directly or use fileuri_sa_reference keys and lz_key:
+        # can define fileuris directly or use fileuri_sa reference keys and lz_key:
         # fileuris             = ["https://somelocation/container/script.ps1"]
         fileuri_sa_key       = "sa1"
-        fileuri_sa_path      = "helloworld.sh"
-        commandtoexecute     = "bash ./helloworld.sh"
-        identity_type        = "UserAssigned" #optional to use managed_identity for download from location specified in fileuri, UserAssigned or SystemAssigned.
+        fileuri_sa_path      = "files/helloworld.sh"
+        commandtoexecute     = "bash ./files/helloworld.sh"
+        identity_type        = "UserAssigned" # optional to use managed_identity for download from location specified in fileuri, UserAssigned or SystemAssigned.
         managed_identity_key = "example_vmss_mi"
         # managed_identity_id  = "id" optional to define managed identity principal_id directly
         # lz_key               = "other_lz" optional for managed identity defined in other lz
@@ -417,12 +424,12 @@ virtual_machine_scale_sets = {
 
     virtual_machine_scale_set_extensions = {
       custom_script = {
-        # can define fileuris directly or use fileuri_sa_reference keys and lz_key:
+        # can define fileuris directly or use fileuri_sa reference keys and lz_key:
         # fileuris             = ["https://somelocation/container/script.ps1"]
         fileuri_sa_key       = "sa1"
         fileuri_sa_path      = "files/helloworld.ps1"
         commandtoexecute     = "PowerShell -file helloworld.ps1"
-        identity_type        = "UserAssigned" #optional to use managed_identity for download from location specified in fileuri, UserAssigned or SystemAssigned.
+        identity_type        = "UserAssigned" # optional to use managed_identity for download from location specified in fileuri, UserAssigned or SystemAssigned.
         managed_identity_key = "example_vmss_mi"
         # managed_identity_id  = "id" optional to define managed identity principal_id directly
         # lz_key               = "other_lz" optional for managed identity defined in other lz
