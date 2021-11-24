@@ -183,16 +183,70 @@ load_balancers = {
         public_ip_address_key = "lb_pip1"
       }
     }
+    probes = {
+      probe1 = {
+        resource_group_key  = "example_vmss_rg1"
+        load_balancer_key   = "lb1"
+        probe_name          = "probe1"
+        port                = "22"
+        interval_in_seconds = "20"
+        number_of_probes    = "3"
+      }
+    }
+    lb_rules = {
+      rule1 = {
+        resource_group_key             = "example_vmss_rg1"
+        load_balancer_key              = "lb1"
+        lb_rule_name                   = "rule1"
+        protocol                       = "tcp"
+        probe_id_key                   = "probe1"
+        frontend_port                  = "22"
+        backend_port                   = "22"
+        enable_floating_ip             = "false"
+        idle_timeout_in_minutes        = "4"
+        load_distribution              = "SourceIPProtocol"
+        disable_outbound_snat          = "false"
+        enable_tcp_rest                = "false"
+        frontend_ip_configuration_name = "config1" # name must match the configuration that's defined in the load_balancers block.
+      }
+    }
   }
   lb2 = {
     name                      = "lb-vmss2"
     sku                       = "basic"
     resource_group_key        = "example_vmss_rg1"
-    backend_address_pool_name = "vmss1"
+    backend_address_pool_name = "vmss2"
     frontend_ip_configurations = {
       config1 = {
         name                  = "config1"
         public_ip_address_key = "lb_pip2"
+      }
+    }
+    probes = {
+      probe1 = {
+        resource_group_key  = "example_vmss_rg1"
+        load_balancer_key   = "lb2"
+        probe_name          = "probe1"
+        port                = "3389"
+        interval_in_seconds = "20"
+        number_of_probes    = "3"
+      }
+    }
+    lb_rules = {
+      rule1 = {
+        resource_group_key             = "example_vmss_rg1"
+        load_balancer_key              = "lb2"
+        lb_rule_name                   = "rule1"
+        protocol                       = "tcp"
+        probe_id_key                   = "probe1"
+        frontend_port                  = "3389"
+        backend_port                   = "3389"
+        enable_floating_ip             = "false"
+        idle_timeout_in_minutes        = "4"
+        load_distribution              = "SourceIPProtocol"
+        disable_outbound_snat          = "false"
+        enable_tcp_rest                = "false"
+        frontend_ip_configuration_name = "config1" # name must match the configuration that's defined in the load_balancers block.
       }
     }
   }
