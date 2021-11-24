@@ -1,8 +1,8 @@
 data_factory = {
   preparation = {
-    name = "olympus-prod-preparation-df"
+    name = "example-prod-preparation-df"
     resource_group = {
-      #lz_key = "it_dna_olympus_prod_resources"
+      #lz_key = "it_dna_example_prod_resources"
       key = "preparation"
     }
     identity = {
@@ -14,24 +14,24 @@ data_factory = {
 
 data_factory_integration_runtime_self_hosted = {
   adf_self_ir = {
-    name = "olympus-prod-prep-run"
+    name = "example-prod-prep-run"
     data_factory = {
       key = "preparation"
     }
     resource_group = {
-      #lz_key = "it_dna_olympus_prod_resources"
+      #lz_key = "it_dna_example_prod_resources"
       key = "preparation"
     }
   }
 }
 data_factory_linked_service_azure_databricks = {
   preparation = {
-    name = "olympus-prod-preparation-ls"
+    name = "example-prod-preparation-ls"
     data_factory = {
       key = "preparation"
     }
     resource_group = {
-      #lz_key = "it_dna_olympus_prod_resources"
+      #lz_key = "it_dna_example_prod_resources"
       key = "preparation"
     }
     databricks_workspace = {
@@ -50,12 +50,12 @@ data_factory_linked_service_azure_databricks = {
     }
   }
   modeling = {
-    name = "olympus-prod-modeling"
+    name = "example-prod-modeling"
     data_factory = {
       key = "preparation"
     }
     resource_group = {
-      #lz_key = "it_dna_olympus_prod_resources"
+      #lz_key = "it_dna_example_prod_resources"
       key = "preparation"
     }
     databricks_workspace = {
