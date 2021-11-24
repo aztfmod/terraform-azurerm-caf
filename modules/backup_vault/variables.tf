@@ -25,11 +25,3 @@ variable "client_config" {
   description = "Client configuration object (see module README.md)."
 }
 variable "identity" {}
-# variable "redundancy" {
-#   type        = string
-#   description = "Specifies the backup storage redundancy. Possible values are GeoRedundant and LocallyRedundant"
-# }
-# variable "datastore_type" {
-#   type        = string
-#   description = "Specifies the backup storage datastore type. Possible values are ArchiveStore, SnapshotStore and VaultStore"
-# }
