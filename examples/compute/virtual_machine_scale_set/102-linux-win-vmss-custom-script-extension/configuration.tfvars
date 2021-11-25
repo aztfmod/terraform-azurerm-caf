@@ -295,14 +295,18 @@ virtual_machine_scale_sets = {
           # lz_key = ""
         }
 
-        identity = {
-          # type = "SystemAssigned"
-          type                  = "UserAssigned"
-          managed_identity_keys = ["example_vmss_mi"]
+        # Uncomment in case the managed_identity_keys are generated locally
+        # identity = {
+        #   type                  = "UserAssigned"
+        #   managed_identity_keys = ["example_vmss_id"]
+        # }
 
+        # Uncomment in case the managed_identity_keys are generated in a different landingzone
+        identity = {
+          type = "UserAssigned"
           remote = {
-            lz_key_name = {
-              managed_identity_keys = []
+            examples = {
+              managed_identity_keys = ["example_vmss_mi"]
             }
           }
         }
@@ -371,6 +375,7 @@ virtual_machine_scale_sets = {
         fileuri_sa_path      = "files/helloworld.sh"
         commandtoexecute     = "bash ./files/helloworld.sh"
         identity_type        = "UserAssigned" # optional to use managed_identity for download from location specified in fileuri, UserAssigned or SystemAssigned.
+        lz_key               = "examples"
         managed_identity_key = "example_vmss_mi"
         # managed_identity_id  = "id" optional to define managed identity principal_id directly
         # lz_key               = "other_lz" optional for managed identity defined in other lz
@@ -417,9 +422,20 @@ virtual_machine_scale_sets = {
           disk_size_gb         = 128
         }
 
+        # Uncomment in case the managed_identity_keys are generated locally
+        # identity = {
+        #   type                  = "UserAssigned"
+        #   managed_identity_keys = ["example_vmss_id"]
+        # }
+
+        # Uncomment in case the managed_identity_keys are generated in a different landingzone
         identity = {
-          type                  = "SystemAssigned"
-          managed_identity_keys = []
+          type = "UserAssigned"
+          remote = {
+            examples = {
+              managed_identity_keys = ["example_vmss_mi"]
+            }
+          }
         }
 
         source_image_reference = {
@@ -484,6 +500,7 @@ virtual_machine_scale_sets = {
         fileuri_sa_path      = "files/helloworld.ps1"
         commandtoexecute     = "PowerShell -file helloworld.ps1"
         identity_type        = "UserAssigned" # optional to use managed_identity for download from location specified in fileuri, UserAssigned or SystemAssigned.
+        lz_key               = "examples"
         managed_identity_key = "example_vmss_mi"
         # managed_identity_id  = "id" optional to define managed identity principal_id directly
         # lz_key               = "other_lz" optional for managed identity defined in other lz
