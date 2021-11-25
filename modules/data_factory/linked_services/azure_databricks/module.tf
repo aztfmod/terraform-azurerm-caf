@@ -1,6 +1,6 @@
 resource "azurecaf_name" "dflsad" {
   name          = var.settings.name
-  resource_type = "azurerm_data_factory" #"azurerm_data_factory_linked_service_azure_databricks"
+  resource_type = "azurerm_data_factory_linked_service_azure_databricks"
   prefixes      = var.global_settings.prefixes
   random_length = var.global_settings.random_length
   clean_input   = true
@@ -12,11 +12,8 @@ resource "azurerm_data_factory_linked_service_azure_databricks" "dflsad" {
 
   name                = azurecaf_name.dflsad.result
   resource_group_name = var.resource_group_name
-  data_factory_name = coalesce(
-    try(var.settings.data_factory.name, null),
-    try(var.remote_objects.data_factory.name, null)
-  )
-  access_token = try(var.settings.access_token, null)
+  data_factory_name   = var.remote_objects.data_factory.name
+  access_token        = try(var.settings.access_token, null)
 
   dynamic "key_vault_password" {
     for_each = try(var.settings.key_vault_password, null) != null ? [var.settings.key_vault_password] : []
@@ -71,7 +68,7 @@ resource "azurerm_data_factory_linked_service_azure_databricks" "dflsad" {
   additional_properties    = try(var.settings.additional_properties, null)
   annotations              = try(var.settings.annotations, null)
   description              = try(var.settings.description, null)
-  integration_runtime_name = try(var.settings.integration_runtime_name, null)
+  integration_runtime_name = try(var.settings.integration_runtime_name, var.integration_runtime_name)
   parameters               = try(var.settings.parameters, null)
 
 }
