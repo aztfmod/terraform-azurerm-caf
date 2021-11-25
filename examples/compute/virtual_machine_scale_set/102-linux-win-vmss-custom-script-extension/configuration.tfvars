@@ -56,7 +56,7 @@ storage_account_blobs = {
     storage_container_name = "files"
     source                 = "./compute/virtual_machine_scale_set/102-linux-win-vmss-custom-script-extension/scripts/helloworld.ps1"
     parallelism            = 1
-  },
+  }
 }
 
 # Give managed identity Storage Blob Data reader and executing user Storage Blob Data Contributor permissions on storage account
@@ -173,7 +173,7 @@ public_ip_addresses = {
 # Public Load Balancer will be created. For Internal/Private Load Balancer config, please refer 102-internal-load-balancer example.
 load_balancers = {
   lb1 = {
-    name                      = "lb-vmss"
+    name                      = "lb-vmss1"
     sku                       = "basic"
     resource_group_key        = "example_vmss_rg1"
     backend_address_pool_name = "vmss1"
