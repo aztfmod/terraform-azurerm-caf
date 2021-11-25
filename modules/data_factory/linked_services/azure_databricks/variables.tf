@@ -19,3 +19,7 @@ variable "base_tags" {
 variable "resource_group_name" {
   description = " The name of the resource group in which to create the Data Factory Linked Service. Changing this forces a new resource."
 }
+variable "integration_runtime_name" {
+  description = "(Optional) The integration runtime reference to associate with the Data Factory Linked Service Databricks."
+  default     = "null"
+}
