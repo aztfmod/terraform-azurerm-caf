@@ -43,8 +43,10 @@ resource "azurerm_application_gateway" "agw" {
   }
 
   gateway_ip_configuration {
-    name      = azurecaf_name.agw.result
-    subnet_id = local.ip_configuration["gateway"].subnet_id
+    name = azurecaf_name.agw.result
+    subnet_id = coalesce(
+      local.ip_configuration["gateway"].subnet_id
+    )
   }
 
   dynamic "ssl_policy" {

@@ -47,6 +47,5 @@ application_gateway_applications = {
         }
       }
     }
-
   }
 }
