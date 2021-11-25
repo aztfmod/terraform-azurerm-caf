@@ -16,3 +16,9 @@ variable "keyvaults" {
 variable "wvd_host_pools" {
   default = {}
 }
+variable "managed_identities" {
+  default = {}
+}
+variable "storage_accounts" {
+  default = {}
+}
