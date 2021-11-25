@@ -167,3 +167,48 @@ module "data_factory_linked_service_azure_databricks" {
 output "data_factory_linked_service_azure_databricks" {
   value = module.data_factory_linked_service_azure_databricks
 }
+
+
+module "data_factory_linked_service_key_vault" {
+  source   = "./modules/data_factory/linked_services/key_vault"
+  for_each = local.data_factory.linked_services.key_vault
+
+  global_settings       = local.global_settings
+  client_config         = local.client_config
+  settings              = each.value
+  description           = try(each.value.description, null)
+  annotations           = try(each.value.annotations, null)
+  parameters            = try(each.value.parameters, null)
+  name                  = each.value.name
+  additional_properties = try(each.value.additional_properties, null)
+
+  key_vault_id = coalesce(
+    try(local.combined_objects_keyvaults[local.client_config.landingzone_key][each.value.keyvault.key].id, null),
+    try(local.combined_objects_keyvaults[each.value.keyvault.lz_key][each.value.keyvault.key].id, null),
+    try(each.value.keyvault.id, null)
+  ) 
+  
+  resource_group_name = coalesce(
+    try(local.combined_objects_resource_groups[each.value.resource_group.lz_key][each.value.resource_group.key].name, null),
+    try(local.combined_objects_resource_groups[local.client_config.landingzone_key][each.value.resource_group.key].name, null),
+    try(each.value.resource_group.name, null)
+  )
+
+  data_factory_name = coalesce(
+    try(local.combined_objects_data_factory[try(each.value.data_factory.lz_key, local.client_config.landingzone_key)][each.value.data_factory.key].name, null),
+    try(each.value.data_factory.name, null)
+  )
+
+  integration_runtime_name = coalesce(
+    try(local.combined_objects_data_factory_integration_runtime_self_hosted[each.value.integration_runtime.data_factory_integration_runtime_self_hosted.lz_key][each.value.integration_runtime.data_factory_integration_runtime_self_hosted.key].name, null),
+    try(local.combined_objects_data_factory_integration_runtime_self_hosted[local.client_config.landingzone_key][each.value.integration_runtime.data_factory_integration_runtime_self_hosted.key].name, null),
+    try(each.value.integration_runtime.data_factory_integration_runtime_self_hosted.name, null),
+    try(local.combined_objects_data_factory_integration_runtime_azure_ssis[each.value.integration_runtime.combined_objects_data_factory_integration_runtime_azure_ssis.lz_key][each.value.integration_runtime.combined_objects_data_factory_integration_runtime_azure_ssis.key].name, null),
+    try(local.combined_objects_data_factory_integration_runtime_azure_ssis[local.client_config.landingzone_key][each.value.integration_runtime.combined_objects_data_factory_integration_runtime_azure_ssis.key].name, null),
+    try(each.value.integration_runtime.combined_objects_data_factory_integration_runtime_azure_ssis.name, null)
+  )
+
+}
+output "data_factory_linked_service_key_vault" {
+  value = module.data_factory_linked_service_key_vault
+}

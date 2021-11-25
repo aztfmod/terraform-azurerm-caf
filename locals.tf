@@ -135,12 +135,13 @@ locals {
     }
     linked_services = {
       azure_blob_storage = try(var.data_factory.linked_services.azure_blob_storage, {})
+      azure_databricks   = try(var.data_factory.linked_services.azure_databricks, {})
       cosmosdb           = try(var.data_factory.linked_services.cosmosdb, {})
-      web                = try(var.data_factory.linked_services.web, {})
+      key_vault          = try(var.data_factory.linked_services.key_vault, {})
       mysql              = try(var.data_factory.linked_services.mysql, {})
       postgresql         = try(var.data_factory.linked_services.postgresql, {})
       sql_server         = try(var.data_factory.linked_services.sql_server, {})
-      azure_databricks   = try(var.data_factory.linked_services.azure_databricks, {})
+      web                = try(var.data_factory.linked_services.web, {})
     }
   }
 
