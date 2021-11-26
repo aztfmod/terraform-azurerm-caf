@@ -1,6 +1,10 @@
 module "example" {
   source = "../"
 
+  providers = {
+    azurerm.vhub = azurerm.vhub
+  }
+
   current_landingzone_key               = var.landingzone.key
   custom_role_definitions               = var.custom_role_definitions
   event_hub_auth_rules                  = var.event_hub_auth_rules
@@ -75,7 +79,9 @@ module "example" {
   cognitive_services = {
     cognitive_services_account = var.cognitive_services_account
   }
-
+  communication = {
+    communication_services = var.communication_services
+  }
   compute = {
     aks_clusters                        = var.aks_clusters
     availability_sets                   = var.availability_sets
@@ -84,6 +90,7 @@ module "example" {
     container_groups                    = var.container_groups
     dedicated_host_groups               = var.dedicated_host_groups
     dedicated_hosts                     = var.dedicated_hosts
+    machine_learning_compute_instance   = var.machine_learning_compute_instance
     proximity_placement_groups          = var.proximity_placement_groups
     virtual_machine_scale_sets          = var.virtual_machine_scale_sets
     virtual_machines                    = var.virtual_machines
@@ -208,9 +215,11 @@ module "example" {
     app_services                 = var.app_services
   }
   data_factory = {
-    data_factory                  = var.data_factory
-    data_factory_pipeline         = var.data_factory_pipeline
-    data_factory_trigger_schedule = var.data_factory_trigger_schedule
+    data_factory                                 = var.data_factory
+    data_factory_pipeline                        = var.data_factory_pipeline
+    data_factory_trigger_schedule                = var.data_factory_trigger_schedule
+    data_factory_integration_runtime_azure_ssis  = var.data_factory_integration_runtime_azure_ssis
+    data_factory_integration_runtime_self_hosted = var.data_factory_integration_runtime_self_hosted
     datasets = {
       azure_blob                          = var.data_factory_dataset_azure_blob
       cosmosdb_sqlapi                     = var.data_factory_dataset_cosmosdb_sqlapi
@@ -229,6 +238,7 @@ module "example" {
       mysql              = var.data_factory_linked_service_mysql
       postgresql         = var.data_factory_linked_service_postgresql
       sql_server         = var.data_factory_linked_service_sql_server
+      azure_databricks   = var.data_factory_linked_service_azure_databricks
     }
   }
   logic_app = {

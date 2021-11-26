@@ -645,6 +645,9 @@ variable "data_factory_linked_service_postgresql" {
 variable "data_factory_linked_service_sql_server" {
   default = {}
 }
+variable "data_factory_linked_service_azure_databricks" {
+  default = {}
+}
 variable "integration_service_environment" {
   default = {}
 }
@@ -664,6 +667,18 @@ variable "logic_app_trigger_custom" {
   default = {}
 }
 variable "private_dns_vnet_links" {
+  default = {}
+}
+variable "communication_services" {
+  default = {}
+}
+variable "machine_learning_compute_instance" {
+  default = {}
+}
+variable "data_factory_integration_runtime_self_hosted" {
+  default = {}
+}
+variable "data_factory_integration_runtime_azure_ssis" {
   default = {}
 }
 variable "frontdoor_rules_engine" {

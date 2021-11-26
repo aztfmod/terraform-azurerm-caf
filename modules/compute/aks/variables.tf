@@ -21,3 +21,6 @@ variable "private_dns_zone_id" {
 variable "managed_identities" {
   default = {}
 }
+variable "application_gateway" {
+  default = {}
+}
