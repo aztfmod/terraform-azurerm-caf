@@ -49,7 +49,7 @@ resource "azurerm_synapse_workspace" "ws" {
     for_each = try(var.settings.customer_managed_key_versionless_id, null) == null ? [] : [1]
 
     content {
-      key_versionless_id  = try(var.settings.customer_managed_key_versionless_id, null)
+      key_versionless_id = try(var.settings.customer_managed_key_versionless_id, null)
     }
   }
 
