@@ -687,3 +687,6 @@ variable "frontdoor_rules_engine" {
 variable "frontdoor_custom_https_configuration" {
   default = {}
 }
+variable "function_apps" {
+  default = {}
+}
