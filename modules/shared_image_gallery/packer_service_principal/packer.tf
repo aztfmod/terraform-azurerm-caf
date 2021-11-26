@@ -40,21 +40,12 @@ resource "local_file" "packer_template" {
   directory_permission = "0755"
 }
 
-resource "null_resource" "packer_configuration_generator" {
-  provisioner "local-exec" {
-    command = "cat > ${var.settings.packer_config_filepath} <<EOL\n${data.local_file.packer_template.content}\nEOL"
-  }
-  depends_on = [
-    data.template_file.packer_template
-  ]
-}
-
 resource "null_resource" "create_image" {
   provisioner "local-exec" {
-    command = "packer build ${var.settings.packer_config_filepath}"
+    command = "packer build ${var.settings.packer_template_filepath}"
   }
   depends_on = [
-    null_resource.packer_configuration_generator
+    local_file.packer_template
   ]
 }
 
