@@ -15,7 +15,7 @@ resource "azurerm_monitor_autoscale_setting" "this" {
   target_resource_id  = var.target_resource_id
 
   dynamic "profile" {
-    for_each = var.settings
+    for_each = var.settings.profiles
     content {
       name = profile.value.name
 
@@ -26,7 +26,7 @@ resource "azurerm_monitor_autoscale_setting" "this" {
       }
 
       dynamic "rule" {
-        for_each = var.settings.rules
+        for_each = profile.value.rules
         content {
           metric_trigger {
             metric_name        = rule.value.metric_trigger.metric_name
@@ -48,7 +48,7 @@ resource "azurerm_monitor_autoscale_setting" "this" {
       }
 
       dynamic "recurrence" {
-        for_each = try(var.settings.recurrence, {})
+        for_each = try(var.settings.profiles.recurrence, {})
         content {
           timezone = recurrence.value.timezone
           days     = recurrence.value.days
@@ -58,7 +58,7 @@ resource "azurerm_monitor_autoscale_setting" "this" {
       }
 
       dynamic "fixed_date" {
-        for_each = try(var.settings.fixed_date, {})
+        for_each = try(var.settings.profiles.fixed_date, {})
         content {
           timezone = try(fixed_date.value.timezone, "")
           start    = fixed_date.value.start
@@ -67,17 +67,16 @@ resource "azurerm_monitor_autoscale_setting" "this" {
       }
 
     }
+  }
 
-    dynamic "notification" {
-      for_each = try(var.settings.notification, {})
-      content {
-        email {
-          send_to_subscription_administrator    = notification.value.email.send_to_subscription_administrator
-          send_to_subscription_co_administrator = notification.value.email.send_to_subscription_co_administrator
-          custom_emails                         = notification.value.email.custom_emails
-        }
+  dynamic "notification" {
+    for_each = try(var.settings.profiles.notification, {})
+    content {
+      email {
+        send_to_subscription_administrator    = notification.value.email.send_to_subscription_administrator
+        send_to_subscription_co_administrator = notification.value.email.send_to_subscription_co_administrator
+        custom_emails                         = notification.value.email.custom_emails
       }
     }
-
   }
 }
