@@ -32,7 +32,7 @@ module "function_apps" {
   tags            = try(each.value.tags, null)
 
   remote_objects = {
-    subnets = local.combined_objects_networking[try(each.value.settings.lz_key, local.client_config.landingzone_key)][each.value.settings.vnet_key].subnets
+    subnets = try(local.combined_objects_networking[try(each.value.settings.lz_key, local.client_config.landingzone_key)][each.value.settings.vnet_key].subnets, null)
   }
 }
 
