@@ -17,6 +17,7 @@ resource "null_resource" "set_http_settings" {
       RESOURCE                    = "HTTPSETTINGS"
       RG_NAME                     = var.application_gateway.resource_group_name
       APPLICATION_GATEWAY_NAME    = var.application_gateway.name
+      APPLICATION_GATEWAY_ID      = var.application_gateway.id
       NAME                        = each.value.name
       PORT                        = var.application_gateway.frontend_ports[each.value.front_end_port_key].port
       PROTOCOL                    = try(var.application_gateway.frontend_ports[each.value.front_end_port_key].protocol, null)
@@ -44,6 +45,7 @@ resource "null_resource" "delete_http_settings" {
     http_settings_name       = each.value.name
     resource_group_name      = var.application_gateway.resource_group_name
     application_gateway_name = var.application_gateway.name
+    application_gateway_id   = var.application_gateway.id
   }
 
   provisioner "local-exec" {
@@ -57,6 +59,7 @@ resource "null_resource" "delete_http_settings" {
       NAME                     = self.triggers.http_settings_name
       RG_NAME                  = self.triggers.resource_group_name
       APPLICATION_GATEWAY_NAME = self.triggers.application_gateway_name
+      APPLICATION_GATEWAY_ID   = self.triggers.application_gateway_id
     }
   }
 }
