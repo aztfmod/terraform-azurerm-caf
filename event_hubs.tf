@@ -6,8 +6,7 @@ module "event_hub_namespaces" {
   global_settings     = local.global_settings
   settings            = each.value
   storage_accounts    = local.combined_objects_storage_accounts
-  resource_group_name = local.resource_groups[each.value.resource_group_key].name
-  location            = lookup(each.value, "region", null) == null ? local.resource_groups[each.value.resource_group_key].location : local.global_settings.regions[each.value.region]
+  resource_groups     = local.combined_objects_resource_groups
   client_config       = local.client_config
   base_tags           = try(local.global_settings.inherit_tags, false) ? local.combined_objects_resource_groups[try(each.value.resource_group.lz_key, local.client_config.landingzone_key)][each.value.resource_group_key].tags : {}
 }
@@ -20,11 +19,11 @@ module "event_hub_namespace_auth_rules" {
   source   = "./modules/event_hubs/namespaces/auth_rules"
   for_each = try(var.event_hub_namespace_auth_rules, {})
 
-  resource_group_name = local.resource_groups[each.value.resource_group_key].name
   client_config       = local.client_config
   global_settings     = local.global_settings
-  settings            = each.value
   namespace_name      = module.event_hub_namespaces[each.value.event_hub_namespace_key].name
+  resource_groups     = local.combined_objects_resource_groups
+  settings            = each.value
 
   depends_on = [
     module.event_hub_namespaces
@@ -91,7 +90,7 @@ module "event_hubs" {
   depends_on = [module.event_hub_namespaces]
   for_each   = try(var.event_hubs, {})
 
-  resource_group_name = local.resource_groups[each.value.resource_group_key].name
+  resource_groups     = local.combined_objects_resource_groups
   client_config       = local.client_config
   global_settings     = local.global_settings
   settings            = each.value
@@ -104,7 +103,7 @@ module "event_hub_auth_rules" {
   source   = "./modules/event_hubs/hubs/auth_rules"
   for_each = try(var.event_hub_auth_rules, {})
 
-  resource_group_name = local.resource_groups[each.value.resource_group_key].name
+  resource_groups     = local.combined_objects_resource_groups
   client_config       = local.client_config
   global_settings     = local.global_settings
   settings            = each.value
@@ -121,12 +120,12 @@ module "event_hub_consumer_groups" {
   source   = "./modules/event_hubs/consumer_groups"
   for_each = try(var.event_hub_consumer_groups, {})
 
-  resource_group_name = local.resource_groups[each.value.resource_group_key].name
-  client_config       = local.client_config
-  global_settings     = local.global_settings
-  settings            = each.value
-  namespace_name      = module.event_hub_namespaces[each.value.event_hub_namespace_key].name
-  eventhub_name       = module.event_hubs[each.value.event_hub_name_key].name
+  resource_groups = local.combined_objects_resource_groups
+  client_config   = local.client_config
+  global_settings = local.global_settings
+  settings        = each.value
+  namespace_name  = module.event_hub_namespaces[each.value.event_hub_namespace_key].name
+  eventhub_name   = module.event_hubs[each.value.event_hub_name_key].name
 
   depends_on = [
     module.event_hub_namespaces,

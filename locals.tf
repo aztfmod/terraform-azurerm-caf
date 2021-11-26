@@ -75,6 +75,7 @@ locals {
     container_groups                    = try(var.compute.container_groups, {})
     dedicated_hosts                     = try(var.compute.dedicated_hosts, {})
     dedicated_host_groups               = try(var.compute.dedicated_host_groups, {})
+    machine_learning_compute_instance   = try(var.compute.machine_learning_compute_instance, {})
     proximity_placement_groups          = try(var.compute.proximity_placement_groups, {})
     vmware_clusters                     = try(var.compute.vmware_clusters, {})
     vmware_private_clouds               = try(var.compute.vmware_private_clouds, {})
@@ -85,6 +86,10 @@ locals {
     wvd_workspaces                      = try(var.compute.wvd_workspaces, {})
     virtual_machines                    = try(var.compute.virtual_machines, {})
     virtual_machine_scale_sets          = try(var.compute.virtual_machine_scale_sets, {})
+  }
+
+  communication = {
+    communication_services = try(var.communication.communication_services, {})
   }
 
   database = {
@@ -117,9 +122,11 @@ locals {
   }
 
   data_factory = {
-    data_factory                  = try(var.data_factory.data_factory, {})
-    data_factory_pipeline         = try(var.data_factory.data_factory_pipeline, {})
-    data_factory_trigger_schedule = try(var.data_factory.data_factory_trigger_schedule, {})
+    data_factory                                 = try(var.data_factory.data_factory, {})
+    data_factory_pipeline                        = try(var.data_factory.data_factory_pipeline, {})
+    data_factory_trigger_schedule                = try(var.data_factory.data_factory_trigger_schedule, {})
+    data_factory_integration_runtime_azure_ssis  = try(var.data_factory.data_factory_integration_runtime_azure_ssis, {})
+    data_factory_integration_runtime_self_hosted = try(var.data_factory.data_factory_integration_runtime_self_hosted, {})
     datasets = {
       azure_blob       = try(var.data_factory.datasets.azure_blob, {})
       cosmosdb_sqlapi  = try(var.data_factory.datasets.cosmosdb_sqlapi, {})
@@ -132,11 +139,13 @@ locals {
     }
     linked_services = {
       azure_blob_storage = try(var.data_factory.linked_services.azure_blob_storage, {})
+      azure_databricks   = try(var.data_factory.linked_services.azure_databricks, {})
       cosmosdb           = try(var.data_factory.linked_services.cosmosdb, {})
-      web                = try(var.data_factory.linked_services.web, {})
+      key_vault          = try(var.data_factory.linked_services.key_vault, {})
       mysql              = try(var.data_factory.linked_services.mysql, {})
       postgresql         = try(var.data_factory.linked_services.postgresql, {})
       sql_server         = try(var.data_factory.linked_services.sql_server, {})
+      web                = try(var.data_factory.linked_services.web, {})
     }
   }
 
@@ -212,7 +221,9 @@ locals {
     dns_zones                                               = try(var.networking.dns_zones, {})
     domain_name_registrations                               = try(var.networking.domain_name_registrations, {})
     express_route_circuit_authorizations                    = try(var.networking.express_route_circuit_authorizations, {})
+    express_route_circuit_peerings                          = try(var.networking.express_route_circuit_peerings, {})
     express_route_circuits                                  = try(var.networking.express_route_circuits, {})
+    express_route_connections                               = try(var.networking.express_route_connections, {})
     front_door_waf_policies                                 = try(var.networking.front_door_waf_policies, {})
     front_doors                                             = try(var.networking.front_doors, {})
     frontdoor_rules_engine                                  = try(var.networking.frontdoor_rules_engine, {})

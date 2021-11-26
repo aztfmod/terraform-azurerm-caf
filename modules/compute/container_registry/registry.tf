@@ -10,8 +10,8 @@ resource "azurecaf_name" "acr" {
 
 resource "azurerm_container_registry" "acr" {
   name                = azurecaf_name.acr.result
-  resource_group_name = var.resource_group_name
-  location            = var.location
+  resource_group_name = local.resource_group.name
+  location            = local.location
   sku                 = var.sku
   admin_enabled       = var.admin_enabled
   tags                = local.tags
