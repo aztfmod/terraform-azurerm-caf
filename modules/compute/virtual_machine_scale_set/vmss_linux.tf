@@ -105,7 +105,7 @@ resource "azurerm_linux_virtual_machine_scale_set" "vmss" {
         name    = azurecaf_name.linux_nic[network_interface.key].result
         primary = try(network_interface.value.primary, false)
         subnet_id = coalesce(
-          try(network_interface.value.subnet_key_id, null),
+          try(network_interface.value.subnet_id, null),
           try(var.vnets[var.client_config.landingzone_key][network_interface.value.vnet_key].subnets[network_interface.value.subnet_key].id, null),
           try(var.vnets[network_interface.value.lz_key][network_interface.value.vnet_key].subnets[network_interface.value.subnet_key].id, null)
         )
