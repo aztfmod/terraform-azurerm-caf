@@ -21,7 +21,7 @@ resource "azurerm_function_app" "function_app" {
   # client_affinity_enabled    = lookup(var.settings, "client_affinity_enabled", null) deprecated in azurerm >2.81.0
   enabled                    = lookup(var.settings, "enabled", null)
   https_only                 = lookup(var.settings, "https_only", null)
-  os_type                    = lookup(var.settings, "os_type", "linux")
+  os_type                    = lookup(var.settings, "os_type", null)
   storage_account_name       = var.storage_account_name
   storage_account_access_key = var.storage_account_access_key
   tags                       = local.tags
