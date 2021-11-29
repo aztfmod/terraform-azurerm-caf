@@ -14,14 +14,13 @@ module "backup_vaults" {
 }
 
 module "backup_vault_policies" {
-  source   = "./modules/backup_vault"
+  source   = "./modules/backup_vault/backup_vault_policy"
   for_each = var.backup_vault_policies
 
   global_settings = local.global_settings
   client_config   = local.client_config
 
-  backup_vault_key      = each.key
-  backup_vault_policies = each.value
+  backup_vault_policy   = each.value
   retention_duration    = try(each.value.retention_duration, {})
 }
 
