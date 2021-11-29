@@ -15,3 +15,9 @@ module "backup_vaults" {
 output "backup_vaults" {
   value = module.backup_vaults
 }
+
+# module "backup_vault_policies"
+#   source  = "./modules/backup_vault/backup_vault_policy"
+#   for_each = var.backup_vault_policies
+  
+#   backup_vault_key = each.key
