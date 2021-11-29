@@ -17,7 +17,6 @@ module "backup_vault_policies" {
   source   = "./modules/backup_vault/backup_vault_policy"
   for_each = var.backup_vault_policies
 
-  backup_vaults         = local.combined_objects_backup_vaults
   backup_vault_policy   = each.value
   retention_duration    = try(each.value.retention_duration, {})
 }
