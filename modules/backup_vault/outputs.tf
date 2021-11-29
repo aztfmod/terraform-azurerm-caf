@@ -34,5 +34,5 @@ output "identity" {
 }
 output "rbac_id" {
   description = " The Principal ID for the Service Principal associated with the Identity of this Backup Vault. (Extracted from the identity block)"
-  value       = try(azurerm_data_protection_backup_vault.settings.identity.0.principal_id, null)
+  value       = try(azurerm_data_protection_backup_vault.backup_vault.identity.0.principal_id, null)
 }
