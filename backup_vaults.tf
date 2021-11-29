@@ -14,7 +14,7 @@ module "backup_vaults" {
 }
 
 module "backup_vault_policies" {
-  source   = "./modules/backup_vault/backup_vault_policy"
+  source   = "./modules/backup_vault"
   for_each = var.backup_vault_policies
 
   global_settings = local.global_settings
