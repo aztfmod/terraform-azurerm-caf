@@ -23,7 +23,7 @@ resource "azurerm_data_protection_backup_vault" "backup_vault" {
   tags                = merge(var.base_tags, local.tags)
   
   dynamic "identity" {
-    for_each = lookup(var.settings, "enable_identity", false) == false ? [] : [1]
+    for_each = lookup(var.backup_vault, "enable_identity", false) == false ? [] : [1]
 
     content {
       type = "SystemAssigned"
