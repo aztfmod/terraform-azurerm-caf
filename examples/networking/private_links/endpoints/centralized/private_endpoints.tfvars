@@ -151,5 +151,18 @@ private_endpoints = {
         }
       }
     }
+
+    azure_container_registries = {
+      acr1 = {
+        private_service_connection = {
+          name = "psc-acr-sales-acr1"
+        }
+
+        private_dns = {
+          zone_group_name = "default"
+          keys            = ["dns1"]
+        }
+      }
+    }
   }
 }

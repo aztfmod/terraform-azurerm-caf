@@ -23,14 +23,15 @@ module "private_endpoints" {
     diagnostic_storage_accounts     = local.combined_diagnostics.storage_accounts
     diagnostic_event_hub_namespaces = local.combined_diagnostics.event_hub_namespaces
 
-    event_hub_namespaces = local.combined_objects_event_hub_namespaces
-    keyvaults            = local.combined_objects_keyvaults
-    mysql_servers        = local.combined_objects_mysql_servers
-    mssql_servers        = local.combined_objects_mssql_servers
-    redis_caches         = local.combined_objects_redis_caches
-    networking           = local.combined_objects_networking
-    recovery_vaults      = local.combined_objects_recovery_vaults
-    storage_accounts     = local.combined_objects_storage_accounts
+    event_hub_namespaces       = local.combined_objects_event_hub_namespaces
+    keyvaults                  = local.combined_objects_keyvaults
+    mysql_servers              = local.combined_objects_mysql_servers
+    mssql_servers              = local.combined_objects_mssql_servers
+    redis_caches               = local.combined_objects_redis_caches
+    networking                 = local.combined_objects_networking
+    recovery_vaults            = local.combined_objects_recovery_vaults
+    storage_accounts           = local.combined_objects_storage_accounts
+    azure_container_registries = local.combined_objects_azure_container_registries
   }
 
 }
