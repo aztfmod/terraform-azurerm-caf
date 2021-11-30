@@ -14,22 +14,22 @@ resource "null_resource" "set_probe" {
     on_failure  = fail
 
     environment = {
-      RESOURCE                      = "PROBE"
-      RG_NAME                       = var.application_gateway.resource_group_name
-      APPLICATION_GATEWAY_NAME      = var.application_gateway.name
-      APPLICATION_GATEWAY_ID        = var.application_gateway.id
-      NAME                          = each.value.name
-      PROTOCOL                      = each.value.protocol
-      PROBEPATH                     = each.value.path
-      HOST                          = try(each.value.host, null)
-      HOST_NAME_FROM_HTTP_SETTINGS  = try(each.value.host_name_from_http_settings, null)
-      INTERVAL                      = try(each.value.interval, null)
-      MATCH_BODY                    = try(each.value.match_body, null)
-      MATCH_STATUS_CODES            = try(each.value.match_status_codes, null)
-      MIN_SERVERS                   = try(each.value.min_servers, null)
-      PORT                          = try(each.value.port, null)
-      THRESHOLD                     = try(each.value.threshold, null)
-      TIMEOUT                       = try(each.value.timeout, null)
+      RESOURCE                     = "PROBE"
+      RG_NAME                      = var.application_gateway.resource_group_name
+      APPLICATION_GATEWAY_NAME     = var.application_gateway.name
+      APPLICATION_GATEWAY_ID       = var.application_gateway.id
+      NAME                         = each.value.name
+      PROTOCOL                     = each.value.protocol
+      PROBEPATH                    = each.value.path
+      HOST                         = try(each.value.host, null)
+      HOST_NAME_FROM_HTTP_SETTINGS = try(each.value.host_name_from_http_settings, null)
+      INTERVAL                     = try(each.value.interval, null)
+      MATCH_BODY                   = try(each.value.match_body, null)
+      MATCH_STATUS_CODES           = try(each.value.match_status_codes, null)
+      MIN_SERVERS                  = try(each.value.min_servers, null)
+      PORT                         = try(each.value.port, null)
+      THRESHOLD                    = try(each.value.threshold, null)
+      TIMEOUT                      = try(each.value.timeout, null)
     }
   }
 }
