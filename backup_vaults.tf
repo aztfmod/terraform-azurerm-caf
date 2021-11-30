@@ -13,14 +13,6 @@ module "backup_vaults" {
   base_tags           = try(local.global_settings.inherit_tags, false) ? local.resource_groups[each.value.resource_group_key].tags : {}
 }
 
-module "backup_vault_policies" {
-  source   = "./modules/backup_vault/backup_vault_policy"
-  for_each = var.backup_vault_policies
-
-  backup_vault_policy   = each.value
-  retention_duration    = try(each.value.retention_duration, {})
-}
-
 output "backup_vaults" {
   value = module.backup_vaults
 }
