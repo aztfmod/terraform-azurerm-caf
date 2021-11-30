@@ -667,7 +667,7 @@ variable "private_dns_vnet_links" {
   default = {}
 }
 variable "machine_learning_compute_instance" {
-    default = {}
+  default = {}
 }
 variable "frontdoor_rules_engine" {
   default = {}
