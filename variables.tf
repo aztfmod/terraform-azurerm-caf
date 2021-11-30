@@ -374,3 +374,8 @@ variable "communication" {
   description = "Configuration object - communication resources"
   default     = {}
 }
+
+variable "identity" {
+  description = "Configuration object - identity resources"
+  default     = {}
+}
