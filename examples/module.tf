@@ -254,5 +254,8 @@ module "example" {
     logic_app_trigger_recurrence   = var.logic_app_trigger_recurrence
     logic_app_workflow             = var.logic_app_workflow
   }
-
+  identity = {
+    active_directory_domain_service             = var.active_directory_domain_service
+    active_directory_domain_service_replica_set = var.active_directory_domain_service_replica_set
+  }
 }
