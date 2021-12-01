@@ -6,6 +6,7 @@ module "application_gateway_platforms" {
   client_config                    = local.client_config
   diagnostics                      = local.combined_diagnostics
   global_settings                  = local.global_settings
+  keyvaults                        = local.combined_objects_keyvaults
   managed_identities               = local.combined_objects_managed_identities
   private_dns                      = lookup(each.value, "private_dns_records", null) == null ? {} : local.combined_objects_private_dns
   public_ip_addresses              = local.combined_objects_public_ip_addresses

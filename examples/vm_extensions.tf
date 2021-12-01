@@ -75,7 +75,7 @@ module "vm_extension_session_host_dscextension" {
 }
 
 module "vm_extension_custom_scriptextension" {
-  source     = "../modules/compute/virtual_machine_extensions"
+  source = "../modules/compute/virtual_machine_extensions"
 
   depends_on = [module.example, module.vm_extension_microsoft_azure_domainjoin]
 
