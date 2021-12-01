@@ -297,4 +297,9 @@ locals {
     virtual_machines = try(var.enable.virtual_machines, true)
   }
 
+  identity = {
+    active_directory_domain_service             = try(var.identity.active_directory_domain_service, {})
+    active_directory_domain_service_replica_set = try(var.identity.active_directory_domain_service_replica_set, {})
+  }
+
 }

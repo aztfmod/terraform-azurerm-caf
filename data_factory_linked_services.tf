@@ -201,8 +201,8 @@ module "data_factory_linked_service_key_vault" {
     try(local.combined_objects_keyvaults[local.client_config.landingzone_key][each.value.keyvault.key].id, null),
     try(local.combined_objects_keyvaults[each.value.keyvault.lz_key][each.value.keyvault.key].id, null),
     try(each.value.keyvault.id, null)
-  ) 
-  
+  )
+
   resource_group_name = coalesce(
     try(local.combined_objects_resource_groups[each.value.resource_group.lz_key][each.value.resource_group.key].name, null),
     try(local.combined_objects_resource_groups[local.client_config.landingzone_key][each.value.resource_group.key].name, null),

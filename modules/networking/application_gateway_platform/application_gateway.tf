@@ -120,11 +120,24 @@ resource "azurerm_application_gateway" "agw" {
     request_timeout       = var.settings.default.request_timeout
   }
 
+  dynamic "ssl_certificate" {
+    for_each = can(var.settings.default.ssl_cert_key) ? [1] : []
+
+    content {
+      name                = var.settings.ssl_certs[var.settings.default.ssl_cert_key].name
+      key_vault_secret_id = data.azurerm_key_vault_certificate.manual_certs[var.settings.default.ssl_cert_key].secret_id
+    }
+  }
+
   http_listener {
     name                           = var.settings.default.listener_name
     frontend_ip_configuration_name = var.settings.front_end_ip_configurations[var.settings.default.frontend_ip_configuration_key].name
     frontend_port_name             = var.settings.front_end_ports[var.settings.default.frontend_port_key].name
     protocol                       = var.settings.front_end_ports[var.settings.default.frontend_port_key].protocol
+    host_names                     = try(var.settings.default.host_name, null) == null ? try(var.settings.default.host_names, null) : null
+    require_sni                    = try(var.settings.default.require_sni, false)
+    ssl_certificate_name           = lower(var.settings.front_end_ports[var.settings.default.frontend_port_key].protocol) == "https" ? var.settings.ssl_certs[var.settings.default.ssl_cert_key].name : null
+    firewall_policy_id             = try(var.application_gateway_waf_policies[try(var.settings.waf_policy.lz_key, var.client_config.landingzone_key)][var.settings.waf_policy.key].id, null)
   }
 
   request_routing_rule {
@@ -149,4 +162,13 @@ resource "azurerm_application_gateway" "agw" {
       redirect_configuration
     ]
   }
+}
+
+data "azurerm_key_vault_certificate" "manual_certs" {
+  for_each = {
+    for key, value in try(var.settings.ssl_certs, {}) : key => value
+    if try(value.keyvault.certificate_name, null) != null
+  }
+  name         = each.value.keyvault.certificate_name
+  key_vault_id = var.keyvaults[try(each.value.keyvault.lz_key, var.client_config.landingzone_key)][each.value.keyvault.key].id
 }

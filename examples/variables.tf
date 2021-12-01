@@ -690,3 +690,9 @@ variable "frontdoor_custom_https_configuration" {
 variable "function_apps" {
   default = {}
 }
+variable "active_directory_domain_service" {
+  default = {}
+}
+variable "active_directory_domain_service_replica_set" {
+  default = {}
+}
