@@ -34,7 +34,7 @@ output "soft_delete_enabled" {
   value       = try(var.settings.soft_delete_enabled, true)
 }
 
-output rbac_id {
-   description = "Principal Id of the Vault"
-   value       = try(azurerm_recovery_services_vault.asr.identity.0.principal_id,null)
+output "rbac_id" {
+  description = "Principal Id of the Vault"
+  value       = try(azurerm_recovery_services_vault.asr.identity.0.principal_id, null)
 }
