@@ -21,15 +21,15 @@ resource "azurecaf_name" "host" {
 resource "azurerm_bastion_host" "host" {
   for_each = try(local.compute.bastion_hosts, {})
 
-  name                = azurecaf_name.host[each.key].result
-  tags                = try(local.global_settings.inherit_tags, false) ? merge(local.resource_groups[each.value.resource_group_key].tags, try(each.value.tags, null)) : try(each.value.tags, null)
+  name = azurecaf_name.host[each.key].result
+  tags = try(local.global_settings.inherit_tags, false) ? merge(local.resource_groups[each.value.resource_group_key].tags, try(each.value.tags, null)) : try(each.value.tags, null)
 
   location = lookup(each.value, "region", null) != null ? local.global_settings.regions[each.value.region] : coalesce(
     try(local.resource_groups[each.value.resource_group_key].location, null), #Kept for backwards compatibility
     try(local.combined_objects_resource_groups[each.value.resource_group.lz_key][each.value.resource_group.key].location, null),
     try(local.combined_objects_resource_groups[local.client_config.landingzone_key][each.value.resource_group.key].location, null)
   )
-  
+
   resource_group_name = coalesce(
     try(local.resource_groups[each.value.resource_group_key].name, null), #Kept for backwards compatibility
     try(local.combined_objects_resource_groups[each.value.resource_group.lz_key][each.value.resource_group.key].name, null),
@@ -37,8 +37,8 @@ resource "azurerm_bastion_host" "host" {
   )
 
   ip_configuration {
-    name                 = each.value.name
-    subnet_id            = local.combined_objects_networking[try(each.value.vnet.lz_key, local.client_config.landingzone_key)][try(each.value.vnet.vnet_key, each.value.vnet_key)].subnets[try(each.value.vnet.subnet_key, each.value.subnet_key)].id
+    name      = each.value.name
+    subnet_id = local.combined_objects_networking[try(each.value.vnet.lz_key, local.client_config.landingzone_key)][try(each.value.vnet.vnet_key, each.value.vnet_key)].subnets[try(each.value.vnet.subnet_key, each.value.subnet_key)].id
     public_ip_address_id = coalesce(
       try(local.combined_objects_public_ip_addresses[each.value.public_ip.lz_key][each.value.public_ip.key].id, null),
       try(local.combined_objects_public_ip_addresses[each.value.public_ip.lz_key][each.value.public_ip.public_ip_key].id, null),
