@@ -52,6 +52,11 @@ resource "azurerm_bastion_host" "host" {
   timeouts {
     create = "60m"
   }
+  lifecycle {
+    ignore_changes = [
+      ip_configuration[0].public_ip_address_id
+    ]
+  }
 }
 
 module "bastion_host_diagnostics" {
