@@ -211,9 +211,9 @@ resource "azurerm_kubernetes_cluster" "aks" {
       dns_service_ip     = try(network_profile.value.dns_service_ip, null)
       docker_bridge_cidr = try(network_profile.value.docker_bridge_cidr, null)
       outbound_type      = try(network_profile.value.outbound_type, null)
-      pod_cidr           = try(network_profile.value.network_profile.pod_cidr, null)
-      service_cidr       = try(network_profile.value.network_profile.service_cidr, null)
-      load_balancer_sku  = try(network_profile.value.network_profile.load_balancer_sku, null)
+      pod_cidr           = try(network_profile.value.pod_cidr, null)
+      service_cidr       = try(network_profile.value.service_cidr, null)
+      load_balancer_sku  = try(network_profile.value.load_balancer_sku, null)
 
       dynamic "load_balancer_profile" {
         for_each = try(network_profile.value.load_balancer_profile[*], {})
