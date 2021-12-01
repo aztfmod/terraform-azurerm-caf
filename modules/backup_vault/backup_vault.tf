@@ -1,6 +1,6 @@
 locals {
   # Need to update the storage tags if the environment tag is updated with the rover command line
-  tags = try(var.settings.tags, null) == null ? null : try(var.settings.tags.environment, null) == null ? var.settings.tags : merge(lookup(var.settings, "tags", {}), { "environment" : var.global_settings.environment })
+  tags = try(var.backup_vault.tags, null) == null ? null : try(var.backup_vault.tags.environment, null) == null ? var.backup_vault.tags : merge(lookup(var.backup_vault, "tags", {}), { "environment" : var.global_settings.environment })
 }
 
 # naming convention
