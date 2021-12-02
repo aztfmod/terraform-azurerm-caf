@@ -19,6 +19,7 @@ resource "azurecaf_name" "account" {
   resource_type = "azurerm_resource_group"
   #TODO: need to be changed to appropriate resource (no caf reference for now)
   prefixes      = local.global_settings.prefixes
+  suffixes      = local.global_settings.suffixes
   random_length = local.global_settings.random_length
   clean_input   = true
   passthrough   = local.global_settings.passthrough
