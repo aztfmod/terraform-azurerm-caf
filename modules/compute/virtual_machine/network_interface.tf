@@ -32,6 +32,7 @@ resource "azurecaf_name" "nic" {
   name          = each.value.name
   resource_type = "azurerm_network_interface"
   prefixes      = var.global_settings.prefixes
+  suffixes      = var.global_settings.suffixes
   random_length = var.global_settings.random_length
   clean_input   = true
   passthrough   = var.global_settings.passthrough

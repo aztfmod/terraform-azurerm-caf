@@ -5,6 +5,7 @@ resource "azurecaf_name" "p2s_gateway" {
   name          = try(var.virtual_hub_config.p2s_config.name, null)
   resource_type = "azurerm_point_to_site_vpn_gateway"
   prefixes      = var.global_settings.prefixes
+  suffixes      = var.global_settings.suffixes
   random_length = var.global_settings.random_length
   clean_input   = true
   passthrough   = var.global_settings.passthrough
