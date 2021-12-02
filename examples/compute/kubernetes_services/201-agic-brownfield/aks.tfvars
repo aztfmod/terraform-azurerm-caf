@@ -52,7 +52,7 @@ aks_clusters = {
       }
       ingress_application_gateway = {
         enabled = true
-        key     = "agw1_az1"
+        key     = "agw"
       }
     }
     # admin_groups = {
@@ -68,14 +68,15 @@ aks_clusters = {
     }
 
     default_node_pool = {
-      name                  = "sharedsvc"
-      vm_size               = "Standard_F4s_v2"
-      subnet_key            = "aks_nodepool_system"
-      enabled_auto_scaling  = false
-      enable_node_public_ip = false
-      max_pods              = 30
-      node_count            = 1
-      os_disk_size_gb       = 512
+      name                         = "sharedsvc"
+      vm_size                      = "Standard_F4s_v2"
+      subnet_key                   = "aks_nodepool_system"
+      enabled_auto_scaling         = false
+      enable_node_public_ip        = false
+      max_pods                     = 30
+      node_count                   = 1
+      os_disk_size_gb              = 512
+      only_critical_addons_enabled = false          # when using ingress_application_gateway and ingress_application_gateway=true you need an additional node_pool as agic is a non-critical addon
       tags = {
         "project" = "system services"
       }

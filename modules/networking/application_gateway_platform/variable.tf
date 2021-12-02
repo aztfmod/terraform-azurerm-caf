@@ -56,3 +56,6 @@ variable "managed_identities" {
 variable "application_gateway_waf_policies" {
   default = {}
 }
+variable "keyvaults" {
+  default = {}
+}
