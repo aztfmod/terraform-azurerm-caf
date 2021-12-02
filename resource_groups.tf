@@ -12,7 +12,6 @@ module "resource_groups" {
   tags                = var.tags
 }
 
-
 module "resource_group_reused" {
   depends_on = [module.resource_groups]
   source     = "./modules/resource_group_reused"
