@@ -36,7 +36,7 @@ resource "azurecaf_name" "rg_node" {
 }
 
 
-# Needed as introduced in >2.79.1 - https://github.com/hashicorp/terraform-provider-azurerm/issues/13585  
+# Needed as introduced in >2.79.1 - https://github.com/hashicorp/terraform-provider-azurerm/issues/13585
 resource "null_resource" "aks_registration_preview" {
   provisioner "local-exec" {
     command = "az feature register --namespace Microsoft.ContainerService -n AutoUpgradePreview"
@@ -77,7 +77,9 @@ resource "azurerm_kubernetes_cluster" "aks" {
     )
   }
 
-  dns_prefix = try(var.settings.dns_prefix, random_string.prefix.result)
+  dns_prefix                 = try(var.settings.dns_prefix, try(var.settings.dns_prefix_private_cluster, random_string.prefix.result))
+  dns_prefix_private_cluster = try(var.settings.dns_prefix_private_cluster, null)
+  automatic_channel_upgrade  = try(var.settings.automatic_channel_upgrade, null)
 
   dynamic "addon_profile" {
     for_each = lookup(var.settings, "addon_profile", null) == null ? [] : [1]
@@ -133,10 +135,27 @@ resource "azurerm_kubernetes_cluster" "aks" {
           }
         }
       }
+
+      dynamic "ingress_application_gateway" {
+        for_each = try(var.settings.addon_profile.ingress_application_gateway[*], {})
+        content {
+          enabled      = var.settings.addon_profile.ingress_application_gateway.enabled
+          gateway_name = try(var.settings.addon_profile.ingress_application_gateway.gateway_name, try(var.application_gateway.name, null))
+          gateway_id   = try(var.settings.addon_profile.ingress_application_gateway.gateway_id, try(var.application_gateway.id, null))
+          subnet_cidr  = try(var.settings.addon_profile.ingress_application_gateway.subnet_cidr, null)
+          subnet_id    = try(var.settings.addon_profile.ingress_application_gateway.subnet_id, null)
+        }
+      }
     }
   }
 
   api_server_authorized_ip_ranges = try(var.settings.api_server_authorized_ip_ranges, null)
+
+  disk_encryption_set_id = try(coalesce(
+    try(var.settings.disk_encryption_set_id, ""),
+    try(var.settings.disk_encryption_set.id, "")
+  ), null)
+
 
   dynamic "auto_scaler_profile" {
     for_each = try(var.settings.auto_scaler_profile[*], {})
@@ -153,8 +172,6 @@ resource "azurerm_kubernetes_cluster" "aks" {
       scale_down_utilization_threshold = try(auto_scaler_profile.value.scale_down_utilization_threshold, null)
     }
   }
-
-  disk_encryption_set_id = try(var.settings.disk_encryption_set_id, null)
 
   dynamic "identity" {
     for_each = try(var.settings.identity, null) == null ? [] : [1]
