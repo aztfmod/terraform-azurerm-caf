@@ -13,7 +13,7 @@ module "aks_clusters" {
   diagnostic_profiles = try(each.value.diagnostic_profiles, {})
   base_tags           = try(local.global_settings.inherit_tags, false) ? local.resource_groups[each.value.resource_group_key].tags : {}
   settings            = each.value
-  subnets             = lookup(each.value, "lz_key", null) == null ? local.combined_objects_networking[local.client_config.landingzone_key][each.value.vnet_key].subnets : local.combined_objects_networking[each.value.lz_key][each.value.vnet_key].subnets
+  subnets             = try(lookup(each.value, "lz_key", null) == null ? local.combined_objects_networking[local.client_config.landingzone_key][each.value.vnet_key].subnets : local.combined_objects_networking[each.value.lz_key][each.value.vnet_key].subnets, {})
   resource_group      = local.resource_groups[each.value.resource_group_key]
   private_dns_zone_id = try(local.combined_objects_private_dns[each.value.private_dns_zone.lz_key][each.value.private_dns_zone.key].id,
     local.combined_objects_private_dns[local.client_config.landingzone_key][each.value.private_dns_zone.key].id,
