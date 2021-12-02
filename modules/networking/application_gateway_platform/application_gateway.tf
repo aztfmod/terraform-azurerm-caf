@@ -30,13 +30,13 @@ resource "azurerm_application_gateway" "agw" {
   }
 
   dynamic "ssl_policy" {
-    for_each = try(var.settings.ssl_policy, null) == null ? [] : [1]
+    for_each = can(var.settings.ssl_policy) ? [var.settings.ssl_policy] : []
     content {
-      disabled_protocols   = try(var.settings.ssl_policy.disabled_protocols, null)
-      policy_type          = try(var.settings.ssl_policy.policy_type, null)
-      policy_name          = try(var.settings.ssl_policy.policy_name, null)
-      cipher_suites        = try(var.settings.ssl_policy.cipher_suites, null)
-      min_protocol_version = try(var.settings.ssl_policy.min_protocol_version, null)
+      disabled_protocols   = try(ssl_policy.value.disabled_protocols, null)
+      policy_type          = try(ssl_policy.value.policy_type, null)
+      policy_name          = try(ssl_policy.value.policy_name, null)
+      cipher_suites        = try(ssl_policy.value.cipher_suites, null)
+      min_protocol_version = try(ssl_policy.value.min_protocol_version, null)
     }
   }
 
@@ -120,11 +120,24 @@ resource "azurerm_application_gateway" "agw" {
     request_timeout       = var.settings.default.request_timeout
   }
 
+  dynamic "ssl_certificate" {
+    for_each = can(var.settings.default.ssl_cert_key) ? [1] : []
+
+    content {
+      name                = var.settings.ssl_certs[var.settings.default.ssl_cert_key].name
+      key_vault_secret_id = data.azurerm_key_vault_certificate.manual_certs[var.settings.default.ssl_cert_key].secret_id
+    }
+  }
+
   http_listener {
     name                           = var.settings.default.listener_name
     frontend_ip_configuration_name = var.settings.front_end_ip_configurations[var.settings.default.frontend_ip_configuration_key].name
     frontend_port_name             = var.settings.front_end_ports[var.settings.default.frontend_port_key].name
     protocol                       = var.settings.front_end_ports[var.settings.default.frontend_port_key].protocol
+    host_names                     = try(var.settings.default.host_name, null) == null ? try(var.settings.default.host_names, null) : null
+    require_sni                    = try(var.settings.default.require_sni, false)
+    ssl_certificate_name           = lower(var.settings.front_end_ports[var.settings.default.frontend_port_key].protocol) == "https" ? var.settings.ssl_certs[var.settings.default.ssl_cert_key].name : null
+    firewall_policy_id             = try(var.application_gateway_waf_policies[try(var.settings.waf_policy.lz_key, var.client_config.landingzone_key)][var.settings.waf_policy.key].id, null)
   }
 
   request_routing_rule {
@@ -139,14 +152,25 @@ resource "azurerm_application_gateway" "agw" {
     ignore_changes = [
       backend_address_pool,
       backend_http_settings,
+      frontend_port,
       http_listener,
-      request_routing_rule,
-      url_path_map,
-      trusted_root_certificate,
-      ssl_certificate,
       probe,
+      redirect_configuration,
+      request_routing_rule,
       rewrite_rule_set,
-      redirect_configuration
+      ssl_certificate,
+      tags["managed-by-k8s-ingress"],
+      trusted_root_certificate,
+      url_path_map   
     ]
   }
+}
+
+data "azurerm_key_vault_certificate" "manual_certs" {
+  for_each = {
+    for key, value in try(var.settings.ssl_certs, {}) : key => value
+    if try(value.keyvault.certificate_name, null) != null
+  }
+  name         = each.value.keyvault.certificate_name
+  key_vault_id = var.keyvaults[try(each.value.keyvault.lz_key, var.client_config.landingzone_key)][each.value.keyvault.key].id
 }

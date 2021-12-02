@@ -70,6 +70,7 @@ resource "azurerm_kubernetes_cluster" "aks" {
     node_taints                  = try(var.settings.default_node_pool.node_taints, null)
     orchestrator_version         = try(var.settings.default_node_pool.orchestrator_version, try(var.settings.kubernetes_version, null))
     tags                         = merge(try(var.settings.default_node_pool.tags, {}), local.tags)
+
     vnet_subnet_id = coalesce(
       try(var.subnets[var.settings.default_node_pool.subnet_key].id, ""),
       try(var.subnets[var.settings.default_node_pool.subnet.key].id, ""),
@@ -137,13 +138,13 @@ resource "azurerm_kubernetes_cluster" "aks" {
       }
 
       dynamic "ingress_application_gateway" {
-        for_each = try(var.settings.addon_profile.ingress_application_gateway[*], {})
+        for_each = can(var.settings.addon_profile.ingress_application_gateway) ? [var.settings.addon_profile.ingress_application_gateway] : []
         content {
-          enabled      = var.settings.addon_profile.ingress_application_gateway.enabled
-          gateway_name = try(var.settings.addon_profile.ingress_application_gateway.gateway_name, try(var.application_gateway.name, null))
-          gateway_id   = try(var.settings.addon_profile.ingress_application_gateway.gateway_id, try(var.application_gateway.id, null))
-          subnet_cidr  = try(var.settings.addon_profile.ingress_application_gateway.subnet_cidr, null)
-          subnet_id    = try(var.settings.addon_profile.ingress_application_gateway.subnet_id, null)
+          enabled      = ingress_application_gateway.value.enabled
+          gateway_name = try(ingress_application_gateway.value.gateway_name, null)
+          gateway_id   = try(ingress_application_gateway.value.gateway_id, try(var.application_gateway.id, null))
+          subnet_cidr  = try(ingress_application_gateway.value.subnet_cidr, null)
+          subnet_id    = try(ingress_application_gateway.value.subnet_id, null)
         }
       }
     }
