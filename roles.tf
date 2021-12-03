@@ -53,8 +53,8 @@ locals {
       (var.current_landingzone_key) = {
         for key, value in try(module.aks_clusters, {}) :
         key => {
-          rbac_id = module.aks_clusters[key].addon_profile[0].ingress_application_gateway[0].ingress_application_gateway_identity[0].object_id
-        }
+          rbac_id = value.addon_profile[0].ingress_application_gateway[0].ingress_application_gateway_identity[0].object_id
+        } if can(value.addon_profile[0].ingress_application_gateway[0].ingress_application_gateway_identity[0].object_id)
       }
     }
   )

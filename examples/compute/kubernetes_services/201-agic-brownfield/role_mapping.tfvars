@@ -27,5 +27,14 @@ role_mapping = {
         }
       }
     }
+    aks_clusters = {
+      "cluster_re1" = {
+        "Azure Kubernetes Service RBAC Cluster Admin" = {
+          logged_in = {
+            keys = ["user"]
+          }
+        }
+      }
+    }
   }
 }
