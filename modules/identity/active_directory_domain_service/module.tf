@@ -1,5 +1,5 @@
 
-resource "azurecaf_name" "adds" {
+resource "azurecaf_name" "aadds" {
   name          = var.settings.name
   resource_type = "azurerm_data_factory" #"azurerm_active_directory_domain_service"
   prefixes      = var.global_settings.prefixes
@@ -8,8 +8,8 @@ resource "azurecaf_name" "adds" {
   passthrough   = var.global_settings.passthrough
   use_slug      = var.global_settings.use_slug
 }
-resource "azurerm_active_directory_domain_service" "adds" {
-  name                  = azurecaf_name.adds.result
+resource "azurerm_active_directory_domain_service" "aadds" {
+  name                  = azurecaf_name.aadds.result
   resource_group_name   = var.resource_group_name
   location              = var.remote_objects.location
   domain_name           = var.settings.domain_name
@@ -18,7 +18,7 @@ resource "azurerm_active_directory_domain_service" "adds" {
   tags                  = local.tags
 
   dynamic "secure_ldap" {
-    for_each = try(var.settings.secure_ldap, null) != null ? [var.settings.secure_ldap] : []
+    for_each = can(var.settings.secure_ldap) ? [var.settings.secure_ldap] : []
     content {
       enabled                  = try(secure_ldap.value.enabled, null)
       external_access_enabled  = try(secure_ldap.value.external_access_enabled, null)
@@ -28,7 +28,7 @@ resource "azurerm_active_directory_domain_service" "adds" {
   }
 
   dynamic "notifications" {
-    for_each = try(var.settings.notifications, null) != null ? [var.settings.notifications] : []
+    for_each = can(var.settings.notifications) ? [var.settings.notifications] : []
     content {
       additional_recipients = try(notifications.value.additional_recipients, null)
       notify_dc_admins      = try(notifications.value.notify_dc_admins, null)
@@ -37,7 +37,7 @@ resource "azurerm_active_directory_domain_service" "adds" {
   }
 
   dynamic "initial_replica_set" {
-    for_each = try(var.settings.initial_replica_set, null) != null ? [var.settings.initial_replica_set] : []
+    for_each = can(var.settings.initial_replica_set) ? [var.settings.initial_replica_set] : []
     content {
       subnet_id = coalesce(
         try(var.remote_objects.vnets[initial_replica_set.value.subnet.lz_key][initial_replica_set.value.subnet.vnet_key].subnets[initial_replica_set.value.subnet.key].id, null),
@@ -48,7 +48,7 @@ resource "azurerm_active_directory_domain_service" "adds" {
   }
 
   dynamic "security" {
-    for_each = try(var.settings.security, null) != null ? [var.settings.security] : []
+    for_each = can(var.settings.security) ? [var.settings.security] : []
     content {
       ntlm_v1_enabled         = try(security.value.ntlm_v1_enabled, null)
       sync_kerberos_passwords = try(security.value.sync_kerberos_passwords, null)
@@ -57,4 +57,18 @@ resource "azurerm_active_directory_domain_service" "adds" {
       tls_v1_enabled          = try(security.value.tls_v1_enabled, null)
     }
   }
+
+  lifecycle {
+    ignore_changes = [
+      initial_replica_set[0].subnet_id
+    ]
+  }
+
+  timeouts {
+    create = "2h"
+    update = "3h"
+    delete = "3h"
+    read   = "5m"
+  }
+
 }

@@ -1,32 +1,76 @@
 vnets = {
-  vnet1 = {
-    resource_group_key = "rg1"
+  vnet_aadds_re1 = {
+    resource_group_key = "rg"
+    region = "region1"
     vnet = {
-      name          = "app-vnet"
-      address_space = ["10.1.0.0/16"]
+      name          = "vnet-aadds-re1"
+      address_space = ["10.1.0.0/28"]
+      dns_servers = [
+        "10.1.0.4", 
+        "10.1.0.5",
+        "10.1.1.4", 
+        "10.1.1.5"
+      ]
     }
-    specialsubnets = {}
     subnets = {
-      jump_host = {
-        name    = "jump_host"
-        cidr    = ["10.1.1.0/24"]
-        nsg_key = "jump_host"
-      }
-      web = {
-        name    = "web-layer"
-        cidr    = ["10.1.2.0/24"]
-        nsg_key = "web"
-      }
-      app = {
-        name    = "app-layer"
-        cidr    = ["10.1.3.0/24"]
-        nsg_key = "app"
-      }
-      data = {
-        name    = "data-layer"
-        cidr    = ["10.1.4.0/24"]
-        nsg_key = "data"
+      aadds = {
+        name    = "snet-aadds-re1"
+        cidr    = ["10.1.0.0/28"]
+        nsg_key = "aadds_re1"
       }
     }
+  }
+  vnet_aadds_re2 = {
+    resource_group_key = "rg"
+    region = "region2"
+    vnet = {
+      name          = "vnet-aadds-re2"
+      address_space = ["10.1.1.0/28"]
+      dns_servers = [
+        "10.1.1.4", 
+        "10.1.1.5",
+        "10.1.0.4", 
+        "10.1.0.5"
+      ]
+    }
+    subnets = {
+      aadds = {
+        name    = "snet-aadds-re2"
+        cidr    = ["10.1.1.0/28"]
+        nsg_key = "aadds_re2"
+      }
+    }
+  }
+}
+
+
+vnet_peerings = {
+
+  vnet_aadds_re1-TO-vnet_aadds_re2 = {
+    name = "vnet_aadds_re1-TO-vnet_aadds_re2"
+    from = {
+      vnet_key = "vnet_aadds_re1"
+    }
+    to = {
+      vnet_key = "vnet_aadds_re2"
+    }
+    allow_virtual_network_access = true
+    allow_forwarded_traffic      = false
+    allow_gateway_transit        = false
+    use_remote_gateways          = false
+  }
+
+  vnet_aadds_re2-TO-vnet_aadds_re1 = {
+    name = "vnet_aadds_re2-TO-vnet_aadds_re1"
+    from = {
+      vnet_key = "vnet_aadds_re2"
+    }
+    to = {
+      vnet_key = "vnet_aadds_re1"
+    }
+    allow_virtual_network_access = true
+    allow_forwarded_traffic      = false
+    allow_gateway_transit        = false
+    use_remote_gateways          = false
   }
 }
