@@ -8,6 +8,24 @@ resource "azurecaf_name" "agw" {
   use_slug      = var.global_settings.use_slug
 }
 
+data "azurerm_key_vault_certificate" "trustedcas" {
+  for_each = {
+    for key, value in try(var.settings.trusted_root_certificate, {}) : key => value
+    if try(value.keyvault_key, null) != null
+  }
+  name         = each.value.name
+  key_vault_id = var.keyvaults[try(each.value.lz_key, var.client_config.landingzone_key)][each.value.keyvault_key].id
+}
+
+data "azurerm_key_vault_certificate" "manual_certs" {
+  for_each = {
+    for key, value in try(var.settings.ssl_certs, {}) : key => value
+    if try(value.keyvault.certificate_name, null) != null
+  }
+  name         = each.value.keyvault.certificate_name
+  key_vault_id = var.keyvaults[try(each.value.keyvault.lz_key, var.client_config.landingzone_key)][each.value.keyvault.key].id
+}
+
 resource "azurerm_application_gateway" "agw" {
   name                = azurecaf_name.agw.result
   resource_group_name = var.resource_group_name
@@ -41,11 +59,11 @@ resource "azurerm_application_gateway" "agw" {
   }
 
   dynamic "autoscale_configuration" {
-    for_each = try(var.settings.capacity.autoscale, null) == null ? [] : [1]
+    for_each = can(var.settings.capacity.autoscale) ? [var.settings.capacity.autoscale] : []
 
     content {
-      min_capacity = var.settings.capacity.autoscale.minimum_scale_unit
-      max_capacity = var.settings.capacity.autoscale.maximum_scale_unit
+      min_capacity = autoscale_configuration.value.minimum_scale_unit
+      max_capacity = autoscale_configuration.value.maximum_scale_unit
     }
   }
 
@@ -120,6 +138,16 @@ resource "azurerm_application_gateway" "agw" {
     request_timeout       = var.settings.default.request_timeout
   }
 
+  dynamic "trusted_root_certificate" {
+    for_each = {
+      for key, value in try(var.settings.trusted_root_certificate, {}) : key => value
+    }
+    content {
+      name = trusted_root_certificate.value.name
+      data = try(trusted_root_certificate.value.data, data.azurerm_key_vault_certificate.trustedcas[trusted_root_certificate.key].certificate_data_base64)
+    }
+  }
+  
   dynamic "ssl_certificate" {
     for_each = can(var.settings.default.ssl_cert_key) ? [1] : []
 
@@ -164,13 +192,4 @@ resource "azurerm_application_gateway" "agw" {
       url_path_map   
     ]
   }
-}
-
-data "azurerm_key_vault_certificate" "manual_certs" {
-  for_each = {
-    for key, value in try(var.settings.ssl_certs, {}) : key => value
-    if try(value.keyvault.certificate_name, null) != null
-  }
-  name         = each.value.keyvault.certificate_name
-  key_vault_id = var.keyvaults[try(each.value.keyvault.lz_key, var.client_config.landingzone_key)][each.value.keyvault.key].id
 }
