@@ -76,7 +76,7 @@ aks_clusters = {
       max_pods                     = 30
       node_count                   = 1
       os_disk_size_gb              = 512
-      only_critical_addons_enabled = false          # when using ingress_application_gateway and ingress_application_gateway=true you need an additional node_pool as agic is a non-critical addon
+      only_critical_addons_enabled = false # when using ingress_application_gateway and ingress_application_gateway=true you need an additional node_pool as agic is a non-critical addon
       tags = {
         "project" = "system services"
       }
