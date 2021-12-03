@@ -666,9 +666,15 @@ variable "logic_app_trigger_custom" {
 variable "private_dns_vnet_links" {
   default = {}
 }
+variable "machine_learning_compute_instance" {
+  default = {}
+}
 variable "frontdoor_rules_engine" {
   default = {}
 }
 variable "frontdoor_custom_https_configuration" {
+  default = {}
+}
+variable "function_apps" {
   default = {}
 }

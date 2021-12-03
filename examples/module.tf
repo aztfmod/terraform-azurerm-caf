@@ -84,6 +84,7 @@ module "example" {
     container_groups                    = var.container_groups
     dedicated_host_groups               = var.dedicated_host_groups
     dedicated_hosts                     = var.dedicated_hosts
+    machine_learning_compute_instance   = var.machine_learning_compute_instance
     proximity_placement_groups          = var.proximity_placement_groups
     virtual_machine_scale_sets          = var.virtual_machine_scale_sets
     virtual_machines                    = var.virtual_machines
@@ -206,6 +207,7 @@ module "example" {
     app_service_environments     = var.app_service_environments
     app_service_plans            = var.app_service_plans
     app_services                 = var.app_services
+    function_apps                = var.function_apps
   }
   data_factory = {
     data_factory                  = var.data_factory
