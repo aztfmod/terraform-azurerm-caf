@@ -39,14 +39,14 @@ module "backup_vault_policy" {
   settings = each.value
 }
   
-module "backup_vault_instance" {
-  source   = "./backup_vault_instance"
-  for_each = try(var.backup_vault.backup_vault_instances, {})
+# module "backup_vault_instance" {
+#   source   = "./backup_vault_instance"
+#   for_each = try(var.backup_vault.backup_vault_instances, {})
 
-  vault_id           = azurerm_data_protection_backup_vault.backup_vault.id
-  location           = lookup(each.value, "region", null) == null ? local.resource_groups[each.value.resource_group_key].location : local.global_settings.regions[each.value.region]
-  storage_account_id = module.storage_accounts[each.value.storage_account_key].id
-  backup_policy_id   = azurerm_data_protection_backup_vault.backup_vault_policy.id
-  settings           = each.value
-}
+#   vault_id           = azurerm_data_protection_backup_vault.backup_vault.id
+#   location           = lookup(each.value, "region", null) == null ? local.resource_groups[each.value.resource_group_key].location : local.global_settings.regions[each.value.region]
+#   storage_account_id = module.storage_accounts[each.value.storage_account_key].id
+#   backup_policy_id   = azurerm_data_protection_backup_vault.backup_vault_policy.id
+#   settings           = each.value
+# }
   
