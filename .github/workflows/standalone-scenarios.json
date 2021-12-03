@@ -76,6 +76,7 @@
     "eventhub/104-namespace-and-evh-with-storage",
     "keyvault/101-keyvault-policies",
     "keyvault/102-keyvault-cert-issuer",
+    "identity/active_directory_domain_service/100-active_directory_domain_service-replica",
     "logic_app/100-logic_app_workflow",
     "logic_app/102-logic_app_integration_account",
     "logic_app/103-logic_app_action_http",
