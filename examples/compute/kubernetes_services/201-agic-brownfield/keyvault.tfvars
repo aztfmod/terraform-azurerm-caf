@@ -7,12 +7,12 @@ keyvaults = {
       key = "aks_re1"
     }
 
-    sku_name                    = "premium"
-    soft_delete_enabled         = true
-    purge_protection_enabled    = false       # set to true in production
-    
+    sku_name                 = "premium"
+    soft_delete_enabled      = true
+    purge_protection_enabled = false # set to true in production
+
     creation_policies = {
-      logged_in_user = {                      # Set the object_id of the pripeline the following permissions
+      logged_in_user = { # Set the object_id of the pripeline the following permissions
         certificate_permissions = ["Get", "List", "Update", "Create", "Import", "Delete", "Purge", "Recover"]
       }
     }

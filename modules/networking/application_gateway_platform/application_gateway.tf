@@ -147,7 +147,7 @@ resource "azurerm_application_gateway" "agw" {
       data = try(trusted_root_certificate.value.data, data.azurerm_key_vault_certificate.trustedcas[trusted_root_certificate.key].certificate_data_base64)
     }
   }
-  
+
   dynamic "ssl_certificate" {
     for_each = can(var.settings.default.ssl_cert_key) ? [1] : []
 
@@ -189,7 +189,7 @@ resource "azurerm_application_gateway" "agw" {
       ssl_certificate,
       tags["managed-by-k8s-ingress"],
       trusted_root_certificate,
-      url_path_map   
+      url_path_map
     ]
   }
 }

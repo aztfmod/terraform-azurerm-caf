@@ -5,7 +5,7 @@ application_gateway_platforms = {
   agw = {
     name = "app_gateway_example"
     # lz_key     = ""                   # Set the lz_key if the vnet and subnet are remote
-    vnet_key   = "spoke_aks_re1"        # Check in the networking.tfvars for more details
+    vnet_key   = "spoke_aks_re1" # Check in the networking.tfvars for more details
     subnet_key = "application_gateway"
     sku_name   = "WAF_v2"
     sku_tier   = "WAF_v2"
@@ -40,12 +40,12 @@ application_gateway_platforms = {
 
     front_end_ip_configurations = {
       public = {
-        name          = "public"
+        name = "public"
         # lz_key        = ""
         public_ip_key = "agw"
       }
       private = {
-        name                          = "private"
+        name = "private"
         # lz_key                        = ""
         vnet_key                      = "spoke_aks_re1"
         subnet_key                    = "application_gateway"
@@ -61,7 +61,7 @@ application_gateway_platforms = {
         keyvault = {
           # lz_key           = ""
           key              = "certificates"
-          certificate_name = "default-domain-name-com"  # As is line 7 on the certificates.tfvars
+          certificate_name = "default-domain-name-com" # As is line 7 on the certificates.tfvars
         }
       }
     }
@@ -85,7 +85,7 @@ application_gateway_platforms = {
       cookie_based_affinity         = "Disabled"
       request_timeout               = "60"
       rule_type                     = "Basic"
-      ssl_cert_key                  = "default"           # ssl_certs key as defined above in line 59 
+      ssl_cert_key                  = "default" # ssl_certs key as defined above in line 59
     }
 
   }
