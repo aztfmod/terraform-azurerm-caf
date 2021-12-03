@@ -29,6 +29,7 @@
     "compute/kubernetes_services/103-multi-clusters",
     "compute/kubernetes_services/104-private-cluster",
     "compute/kubernetes_services/105-cluster-usermsi",
+    "compute/kubernetes_services/201-agic-brownfield",
     "compute/proximity_placement_group",
     "compute/virtual_machine/101-single-windows-vm",
     "compute/virtual_machine/102-single-vm-data-disks",
