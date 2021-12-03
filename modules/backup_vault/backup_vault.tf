@@ -39,3 +39,12 @@ module "backup_vault_policy" {
   settings = each.value
 }
   
+module "backup_vault_instance"{
+  source   = "./backup_vault_intance"
+  for_each = try(var.backup_vault.backup_vault_instances, {})
+  
+  vault_id = azurerm_data_protection_backup_vault.backup_vault.id
+  location = lookup(each.value, "region", null) == null ? local.resource_groups[each.value.resource_group_key].location : local.global_settings.regions[each.value.region]
+  settings = each.value
+}
+  
