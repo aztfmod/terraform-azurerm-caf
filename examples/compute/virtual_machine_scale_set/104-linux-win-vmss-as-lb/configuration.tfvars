@@ -347,6 +347,7 @@ virtual_machine_scale_sets = {
 monitor_autoscale_settings = {
   mas1 = {
     name               = "mas1"
+    enabled            = true
     resource_group_key = "rg1"
     vmss_key           = "vmss2"
     profiles = {

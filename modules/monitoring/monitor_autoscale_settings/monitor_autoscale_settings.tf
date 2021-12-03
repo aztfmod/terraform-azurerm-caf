@@ -13,6 +13,7 @@ resource "azurerm_monitor_autoscale_setting" "this" {
   resource_group_name = var.resource_group_name
   location            = var.location
   target_resource_id  = var.target_resource_id
+  enabled             = var.settings.enabled
 
   dynamic "profile" {
     for_each = var.settings.profiles
