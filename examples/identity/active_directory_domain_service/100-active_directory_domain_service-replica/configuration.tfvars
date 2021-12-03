@@ -2,19 +2,22 @@ global_settings = {
   default_region = "region1"
   regions = {
     region1 = "eastasia"
+    region2 = "westeurope"
   }
 }
 
 resource_groups = {
   rg1 = {
-    name   = "rg1"
+    name   = "aadds"
     region = "region1"
   }
 }
 
+### You must be Global Admin to deploy this example
+
 active_directory_domain_service = {
-  adds1 = {
-    name   = "example-aadds"
+  adds = {
+    name   = "aadds-widgetslogin-net"
     region = "region1"
     resource_group = {
       key = "rg1"
@@ -26,8 +29,8 @@ active_directory_domain_service = {
     initial_replica_set = {
       region = "region1"
       subnet = {
-        vnet_key = "vnet1"
-        key      = "app"
+        vnet_key = "vnet_aadds_re1"
+        key      = "aadds"
       }
     }
 
@@ -45,6 +48,20 @@ active_directory_domain_service = {
 
     tags = {
       Environment = "prod"
+    }
+  }
+}
+
+# You need Enteprise - Premium SKU for replicat_sets
+active_directory_domain_service_replica_set = {
+  aadds_region2 = {
+    region = "region2"
+    active_directory_domain_service = {
+      key = "adds"
+    }
+    subnet = {
+      vnet_key = "vnet_aadds_re2"
+      key      = "aadds"
     }
   }
 }
