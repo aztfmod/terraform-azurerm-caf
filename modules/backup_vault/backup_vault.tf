@@ -40,7 +40,7 @@ module "backup_vault_policy" {
 }
   
 module "backup_vault_instance" {
-  source   = "./backup_vault_intance"
+  source   = "./backup_vault_instance"
   for_each = try(var.backup_vault.backup_vault_instances, {})
 
   vault_id           = azurerm_data_protection_backup_vault.backup_vault.id
