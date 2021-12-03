@@ -70,12 +70,24 @@ resource "azurerm_monitor_autoscale_setting" "this" {
   }
 
   dynamic "notification" {
-    for_each = try(var.settings.profiles.notification, {})
+    for_each = try(var.settings.notification)
     content {
-      email {
-        send_to_subscription_administrator    = notification.value.email.send_to_subscription_administrator
-        send_to_subscription_co_administrator = notification.value.email.send_to_subscription_co_administrator
-        custom_emails                         = notification.value.email.custom_emails
+
+      dynamic "email" {
+        for_each = try(var.settings.notification.email, {}) != {} ? [1] : []
+        content {
+          send_to_subscription_administrator    = try(var.settings.notification.email.send_to_subscription_administrator, null)
+          send_to_subscription_co_administrator = try(var.settings.notification.email.send_to_subscription_co_administrator, null)
+          custom_emails                         = try(var.settings.notification.email.custom_emails, null)
+        }
+      }
+
+      dynamic "webhook" {
+        for_each = try(var.settings.profiles.notification.webhook, {})
+        content {
+          service_uri = var.settings.profiles.notification.webhook.service.uri
+          properties  = try(var.settings.profiles.notification.webhook.properties, null)
+        }
       }
     }
   }
