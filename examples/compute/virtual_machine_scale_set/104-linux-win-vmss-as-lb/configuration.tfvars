@@ -372,6 +372,9 @@ monitor_autoscale_settings = {
               time_aggregation = "Average"
               operator         = "GreaterThan"
               threshold        = 90
+              # You can optionally fill the following fields
+              # metric_namespace          =
+              # divide_by_instance_count  =
             }
             scale_action = {
               direction = "Increase"
