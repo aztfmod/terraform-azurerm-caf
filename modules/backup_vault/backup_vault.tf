@@ -52,8 +52,8 @@ module "backup_vault_instance" {
     try(local.combined_objects_resource_groups[local.client_config.landingzone_key][each.value.resource_group.key].location, null),
     try(local.combined_objects_resource_groups[local.client_config.landingzone_key][each.value.resource_group_key].location, null)
   )
-#   storage_account_id = module.storage_accounts[each.value.storage_account_key].id
-#   backup_policy_id   = azurerm_data_protection_backup_vault.backup_vault_policy.id
+  storage_account_id = "/subscriptions/3f4dae7c-7085-45cc-a974-39c13903344c/resourceGroups/qs-rg-launchpad-level0-gdj/providers/Microsoft.Storage/storageAccounts/qsstlevel0skk"
+  backup_policy_id   = "/subscriptions/3f4dae7c-7085-45cc-a974-39c13903344c/resourceGroups/qs-rg-launchpad-level0-gdj/providers/Microsoft.DataProtection/backupVaults/qs-bckp-level0-gvp/backupPolicies/back-policy"
   settings           = each.value
 }
   
