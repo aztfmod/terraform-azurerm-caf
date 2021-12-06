@@ -15,7 +15,7 @@ parameter_files=$(find ${current_folder} | grep .tfvars | sed 's/.*/-var-file &/
 
 cd ${2}
 
-terraform init -upgrade
+terraform init -upgrade | grep -P '^- (?=Downloading|Using|Finding|Installing)|^[^-]'
 
 terraform apply \
   ${parameter_files} \
