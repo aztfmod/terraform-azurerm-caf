@@ -42,16 +42,14 @@ module "backup_vault_policy" {
 module "backup_vault_instance" {
   source   = "./backup_vault_instance"
   for_each = try(var.backup_vault.backup_vault_instances, {})
+  
+  global_settings     = local.global_settings
+  client_config       = local.client_config
+  resource_groups     = local.resource_groups
 
   vault_id           = azurerm_data_protection_backup_vault.backup_vault.id
-#   location           = lookup(each.value, "region", null) == null ? local.combined_objects_resource_groups[try(each.value.lz_key, local.client_config.landingzone_key)][each.value.resource_group_key].location : local.global_settings.regions[each.value.region]
-    location = coalesce(
-    try(local.global_settings.regions[each.value.region], null),
-    try(local.combined_objects_resource_groups[each.value.resource_group.lz_key][each.value.resource_group.key].location, null),
-    try(local.combined_objects_resource_groups[each.value.resource_group.lz_key][each.value.resource_group_key].location, null),
-    try(local.combined_objects_resource_groups[local.client_config.landingzone_key][each.value.resource_group.key].location, null),
-    try(local.combined_objects_resource_groups[local.client_config.landingzone_key][each.value.resource_group_key].location, null)
-  )
+  location           = lookup(each.value, "region", null) == null ? local.resource_groups[each.value.resource_group_key].location : local.global_settings.regions[each.value.region]
+  
   storage_account_id = "/subscriptions/3f4dae7c-7085-45cc-a974-39c13903344c/resourceGroups/qs-rg-launchpad-level0-gdj/providers/Microsoft.Storage/storageAccounts/qsstlevel0skk"
   backup_policy_id   = "/subscriptions/3f4dae7c-7085-45cc-a974-39c13903344c/resourceGroups/qs-rg-launchpad-level0-gdj/providers/Microsoft.DataProtection/backupVaults/qs-bckp-level0-gvp/backupPolicies/back-policy"
   settings           = each.value
