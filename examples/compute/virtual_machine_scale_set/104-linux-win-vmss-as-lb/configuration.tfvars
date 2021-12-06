@@ -421,6 +421,14 @@ monitor_autoscale_settings = {
         send_to_subscription_co_administrator = true
         custom_emails                         = ["admin@contoso.com"]
       }
+      # You can optionally enable webhook configuration
+      # webhook {
+      #   service_uri = https://webhook.example.com?token=abcd1234"
+      #   properties = {
+      #     optional_key1 = "optional_value1"
+      #     optional_key2 = "optional_value2"
+      #   }
+      # }
     }
   }
 }
