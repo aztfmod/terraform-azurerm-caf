@@ -9,8 +9,8 @@ resource "azurerm_virtual_machine_extension" "custom_script" {
 
   settings = jsonencode(
     {
-      "fileUris" : local.fileuris,
-      "timestamp" : try(var.extension.timestamp, "12345678")
+      fileUris  = local.fileuris,
+      timestamp = try(var.extension.timestamp, "12345678")
     }
   )
 
@@ -33,18 +33,22 @@ locals {
       objectid = local.managed_identity
     }
   }
+  map_command = {
+    commandtoexecute = try(var.extension.commandtoexecute, "")
+  }
 
-  system_assigned_id = local.identity_type == "SystemAssigned" ? tomap(jsonencode(local.map_system_assigned)) : null
-  user_assigned_id   = local.identity_type == "UserAssigned" ? tomap(jsonencode(local.map_user_assigned)) : null
+  system_assigned_id = local.identity_type == "SystemAssigned" ? local.map_system_assigned : null
+  user_assigned_id   = local.identity_type == "UserAssigned" ? local.map_user_assigned : null
 
-  command = { "commandtoexecute" : "${try(var.extension.commandtoexecute, "")}" }
-
-  protected_settings = merge(local.command, local.system_assigned_id, local.user_assigned_id)
+  protected_settings = merge(local.map_command,local.system_assigned_id, local.user_assigned_id)
 
   # fileuris
   fileuri_sa_key       = try(var.extension.fileuri_sa_key, "")
   fileuri_sa_path      = try(var.extension.fileuri_sa_path, "")
-  fileuri_sa           = local.fileuri_sa_key != "" ? try(var.storage_accounts[var.extension.fileuri_sa_key].primary_blob_endpoint, try(var.storage_accounts[var.extension.lz_key][var.extension.fileuri_sa_key].primary_blob_endpoint)) : ""
+  fileuri_sa           = local.fileuri_sa_key != "" ? try(
+    try(var.storage_accounts[var.client_config.landingzone_key][var.extension.fileuri_sa_key].primary_blob_endpoint, null),
+    try(var.storage_accounts[var.extension.lz_key][var.extension.fileuri_sa_key].primary_blob_endpoint, null)
+  ) : ""
   fileuri_sa_full_path = "${local.fileuri_sa}${local.fileuri_sa_path}"
   fileuri_sa_defined   = try(var.extension.fileuris, "")
   fileuris             = local.fileuri_sa_defined == "" ? [local.fileuri_sa_full_path] : var.extension.fileuris
