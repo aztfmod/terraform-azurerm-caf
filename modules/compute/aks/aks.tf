@@ -72,7 +72,6 @@ resource "azurerm_kubernetes_cluster" "aks" {
     os_disk_type                 = try(var.settings.default_node_pool.os_disk_type, null)
     os_sku                       = try(var.settings.default_node_pool.os_sku, null)
     tags                         = merge(try(var.settings.default_node_pool.tags, {}), local.tags)
-    tags                         = merge(try(var.settings.default_node_pool.tags, {}), local.tags)
     type                         = try(var.settings.default_node_pool.type, "VirtualMachineScaleSets")
     ultra_ssd_enabled            = try(var.settings.default_node_pool.ultra_ssd_enabled, false)
     vm_size                      = var.settings.default_node_pool.vm_size
@@ -83,7 +82,7 @@ resource "azurerm_kubernetes_cluster" "aks" {
       try(var.settings.default_node_pool.pod_subnet.resource_id, null),
       try(var.settings.default_node_pool.pod_subnet_id, null)
     ), null)
-    
+
     vnet_subnet_id = coalesce(
       try(var.subnets[var.settings.default_node_pool.subnet_key].id, ""),
       try(var.subnets[var.settings.default_node_pool.subnet.key].id, ""),
@@ -261,14 +260,11 @@ resource "azurerm_kubernetes_cluster" "aks" {
     }
   }
 
-<<<<<<< HEAD
   disk_encryption_set_id = try(coalesce(
     try(var.settings.disk_encryption_set_id, ""),
     try(var.settings.disk_encryption_set.id, "")
   ), null)
 
-=======
->>>>>>> origin/master
   dynamic "identity" {
     for_each = try(var.settings.identity, null) == null ? [] : [1]
 
