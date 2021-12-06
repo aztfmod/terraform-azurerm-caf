@@ -373,8 +373,8 @@ monitor_autoscale_settings = {
               operator         = "GreaterThan"
               threshold        = 90
               # You can optionally fill the following fields
-              # metric_namespace          =
-              # divide_by_instance_count  =
+              # metric_namespace         = "microsoft.compute/virtualmachinescalesets"
+              # divide_by_instance_count = true
               dimensions = {
                 dimension1 = {
                   name     = "App1"
