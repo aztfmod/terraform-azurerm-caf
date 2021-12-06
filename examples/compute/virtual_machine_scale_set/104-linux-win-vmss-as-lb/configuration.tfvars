@@ -375,6 +375,19 @@ monitor_autoscale_settings = {
               # You can optionally fill the following fields
               # metric_namespace          =
               # divide_by_instance_count  =
+              dimensions = {
+                dimension1 = {
+                  name     = "App1"
+                  operator = "Equals"
+                  values   = ["App1"]
+                }
+                # You can create multiple dimensions as defined by the resource docs
+                # dimension2 = {
+                #   name     = "App2"
+                #   operator = "Equals"
+                #   values   = ["App2"]
+                # }
+              }
             }
             scale_action = {
               direction = "Increase"
