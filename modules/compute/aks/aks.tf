@@ -260,11 +260,6 @@ resource "azurerm_kubernetes_cluster" "aks" {
     }
   }
 
-  disk_encryption_set_id = try(coalesce(
-    try(var.settings.disk_encryption_set_id, ""),
-    try(var.settings.disk_encryption_set.id, "")
-  ), null)
-
   dynamic "identity" {
     for_each = try(var.settings.identity, null) == null ? [] : [1]
 
