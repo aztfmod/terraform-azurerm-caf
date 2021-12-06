@@ -25,8 +25,17 @@ locals {
   provided_identity       = try(var.extension.managed_identity_id, "")
   managed_identity        = try(coalesce(local.managed_local_identity, local.managed_remote_identity, local.provided_identity), "")
 
-  system_assigned_id = local.identity_type == "SystemAssigned" ? { "managedIdentity" : {} } : null
-  user_assigned_id   = local.identity_type == "UserAssigned" ? { "managedIdentity" : { "objectid" : "${local.managed_identity}" } } : null
+  map_system_assigned = {
+    managedIdentity = {}
+  }
+  map_user_assigned = {
+    managedIdentity = {
+      objectid = local.managed_identity
+    }
+  }
+
+  system_assigned_id = local.identity_type == "SystemAssigned" ? tomap(jsonencode(local.map_system_assigned)) : null
+  user_assigned_id   = local.identity_type == "UserAssigned" ? tomap(jsonencode(local.map_user_assigned)) : null
 
   command = { "commandtoexecute" : "${try(var.extension.commandtoexecute, "")}" }
 
