@@ -112,14 +112,35 @@ servicebus_topics = {
           requires_session = false
           status = "Active" # ReceiveDisabled, Disabled, Active (default)
 
-          # forward_to = {
-          #   queue_name = "" # full name of the queue
-          #   topic_name = "" # full name of the topic
-          # }
-          # forward_dead_lettered_messages_to = {
-          #   queue_name = "" # full name of the queue
-          #   topic_name = "" # full name of the queue
-          # }
+        # forward_to = {
+        #   # queue_name = "" # full name of the queue
+        #   # topic_name = "" # full name of the topic
+        #   queue = { # key reference only works remote landingzone
+        #     # name = ""
+        #     # lz_key = ""
+        #     # key = ""
+        #   }
+        #   # topic = {
+        #   #   # name = ""
+        #   #   lz_key = ""
+        #   #   key = ""
+        #   # }
+        # }
+
+        # forward_dead_lettered_messages_to = {
+        #   # queue_name = "" # full name of the queue
+        #   # topic_name = "" # full name of the topic
+        #   queue = { # key reference only works remote landingzone
+        #     # name = ""
+        #     # lz_key = ""
+        #     # key = ""
+        #   }
+        #   # topic = {
+        #   #   # name = ""
+        #   #   lz_key = ""
+        #   #   key = ""
+        #   # }
+        # }
 
           subscription_rules = {
 
@@ -185,17 +206,28 @@ servicebus_queues = {
     #   queue = { # key reference only works remote landingzone
     #     # name = ""
     #     # lz_key = ""
-    #     # queue_key = ""
+    #     # key = ""
     #   }
     #   # topic = {
     #   #   # name = ""
     #   #   lz_key = ""
-    #   #   topic_key = ""
+    #   #   key = ""
     #   # }
     # }
+
     # forward_dead_lettered_messages_to = {
-    #   queue_name = "" # full name of the queue
-    #   topic_name = "" # full name of the queue
+    #   # queue_name = "" # full name of the queue
+    #   # topic_name = "" # full name of the topic
+    #   queue = { # key reference only works remote landingzone
+    #     # name = ""
+    #     # lz_key = ""
+    #     # key = ""
+    #   }
+    #   # topic = {
+    #   #   # name = ""
+    #   #   lz_key = ""
+    #   #   key = ""
+    #   # }
     # }
 
     queue_auth_rules = {
