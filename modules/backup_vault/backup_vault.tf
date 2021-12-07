@@ -51,7 +51,6 @@ module "backup_vault_instance" {
   settings           = each.value
   global_settings    = local.global_settings
   backup_policy_id   = azurerm_data_protection_backup_policy_blob_storage.backup_vault_policy.id 
-  settings           = each.value
 }
 
 
