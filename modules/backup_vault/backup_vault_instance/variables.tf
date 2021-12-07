@@ -1,7 +1,7 @@
 variable "settings" {}
 variable "vault_id" {}
 
-variable "location" {}
+# variable "location" {}
 variable "storage_account_id" {}
 variable "backup_policy_id" {}
 # variable "global_settings" {
@@ -10,4 +10,4 @@ variable "backup_policy_id" {}
 # variable "client_config" {
 #   description = "Client configuration object (see module README.md)."
 # }
-variable "resource_group_name" {}
+# variable "resource_group_name" {}
