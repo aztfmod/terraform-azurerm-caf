@@ -20,7 +20,7 @@ resource "null_resource" "set_url_path_rule" {
       APPLICATION_GATEWAY_ID   = var.application_gateway.id
       NAME                     = each.value.name
       PATHS                    = each.value.paths
-      PATHMAPNAME              = try(var.settings.url_path_maps[each.value.url_path_map_key].name, null)
+      PATHMAPNAME              = var.settings.url_path_maps[each.value.url_path_map_key].name
       ADDRESS_POOL             = try(var.settings.backend_pools[each.value.backend_pool_key].name, null)
       HTTP_SETTINGS            = try(var.settings.http_settings[each.value.http_settings_key].name, null)
       REDIRECT_CONFIG          = try(each.value.redirect_config, null)
@@ -39,7 +39,7 @@ resource "null_resource" "delete_url_path_rule" {
     url_path_rule_name       = each.value.name
     resource_group_name      = var.application_gateway.resource_group_name
     application_gateway_name = var.application_gateway.name
-    path_map_name            = each.value.path_map_name
+    path_map_name            = var.settings.url_path_maps[each.value.url_path_map_key].name
     application_gateway_id   = var.application_gateway.id
   }
 
