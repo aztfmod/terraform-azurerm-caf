@@ -15,7 +15,7 @@ module "data_factory_linked_service_azure_blob_storage" {
     try(local.combined_objects_data_factory[try(each.value.data_factory.lz_key, local.client_config.landingzone_key)][each.value.data_factory.key].name, null),
     try(each.value.data_factory.name, null)
   )
-  storage_account = local.combined_objects_storage_accounts[try(each.value.storage_account.lz_key, local.client_config.landingzone_key)][each.value.storage_account.key]
+  storage_account = try(local.combined_objects_storage_accounts[try(each.value.storage_account.lz_key, local.client_config.landingzone_key)][each.value.storage_account.key], null)
 
   integration_runtime_name = try(
     coalesce(
