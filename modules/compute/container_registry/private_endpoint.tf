@@ -6,10 +6,10 @@ module "private_endpoint" {
   base_tags           = local.tags
   client_config       = var.client_config
   global_settings     = var.global_settings
-  location            = var.resource_groups[each.value.resource_group_key].location
+  location            = var.resource_groups[var.client_config.landingzone_key][each.value.resource_group_key].location
   name                = each.value.name
   private_dns         = var.private_dns
-  resource_group_name = var.resource_groups[each.value.resource_group_key].name
+  resource_group_name = var.resource_groups[var.client_config.landingzone_key][each.value.resource_group_key].name
   resource_id         = azurerm_container_registry.acr.id
   settings            = each.value
 

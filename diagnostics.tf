@@ -52,10 +52,15 @@ module "diagnostic_event_hub_namespaces" {
 
   global_settings = local.global_settings
   settings        = each.value
-  resource_groups = local.combined_objects_resource_groups
   client_config   = local.client_config
   base_tags       = try(local.global_settings.inherit_tags, false) ? local.resource_groups[each.value.resource_group_key].tags : {}
-  # storage_accounts    = local.combined_objects_storage_accounts
+  
+  resource_group = coalesce(
+    try(local.combined_objects_resource_groups[local.client_config.landingzone_key][each.value.resource_group_key], null),
+    try(local.combined_objects_resource_groups[each.value.lz_key][each.value.resource_group_key], null),
+    try(local.combined_objects_resource_groups[local.client_config.landingzone_key][each.value.resource_group.key], null),
+    try(local.combined_objects_resource_groups[each.value.resource_group.lz_key][each.value.resource_group.key], null)
+  )
 }
 
 module "diagnostic_event_hub_namespaces_diagnostics" {
