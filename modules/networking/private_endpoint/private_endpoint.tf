@@ -11,7 +11,7 @@ resource "azurecaf_name" "pep" {
 
 resource "azurerm_private_endpoint" "pep" {
   name                = azurecaf_name.pep.result
-  location            = local.location
+  location            = try(local.location, var.location)
   resource_group_name = try(local.resource_group.name, var.resource_group_name)
   subnet_id           = var.subnet_id
   tags                = local.tags
