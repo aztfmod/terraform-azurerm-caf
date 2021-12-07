@@ -4,6 +4,9 @@ variable "vault_id" {}
 # variable "location" {}
 variable "storage_account_id" {}
 variable "backup_policy_id" {}
+variable "storage_accounts" {
+  default = {}
+}
 # variable "global_settings" {
 #   description = "Global settings object (see module README.md)"
 # }
