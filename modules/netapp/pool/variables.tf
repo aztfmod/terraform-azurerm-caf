@@ -9,3 +9,4 @@ variable "vnets" {}
 variable "base_tags" {
   default = {}
 }
+variable "global_settings" {}
