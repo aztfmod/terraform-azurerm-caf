@@ -10,9 +10,13 @@ module "servicebus_queues" {
   remote_objects    = {
     resource_groups       = local.combined_objects_resource_groups
     servicebus_namespaces = local.combined_objects_servicebus_namespaces
+    servicebus_queues     = var.remote_objects.servicebus_queues
+    # local_servicebus_queue_name = try(module.servicebus_queues[each.value.forward_to.queue.key].name, null)
+    # servicebus_queues     = var.remote.servicebus_queues
   }
 }
 
 output "servicebus_queues" {
   value = module.servicebus_queues
 }
+
