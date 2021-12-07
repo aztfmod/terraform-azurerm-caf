@@ -180,8 +180,18 @@ servicebus_queues = {
     # enable_express = false
 
     # forward_to = {
-    #   queue_name = "" # full name of the queue
-    #   topic_name = "" # full name of the topic
+    #   # queue_name = "" # full name of the queue
+    #   # topic_name = "" # full name of the topic
+    #   queue = { # key reference only works remote landingzone
+    #     # name = ""
+    #     # lz_key = ""
+    #     # queue_key = ""
+    #   }
+    #   # topic = {
+    #   #   # name = ""
+    #   #   lz_key = ""
+    #   #   topic_key = ""
+    #   # }
     # }
     # forward_dead_lettered_messages_to = {
     #   queue_name = "" # full name of the queue
