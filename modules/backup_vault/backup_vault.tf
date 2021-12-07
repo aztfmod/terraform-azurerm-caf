@@ -47,18 +47,12 @@ module "backup_vault_instance" {
   vault_id           = azurerm_data_protection_backup_vault.backup_vault.id
   location           = var.location
   storage_account_id = try(each.value.storage_account_key, null) == null ? null : try(local.combined_objects_storage_accounts[local.client_config.landingzone_key][each.value.storage_account_key].id, local.combined_objects_storage_accounts[each.value.lz_key][each.value.storage_account_key].id)
-  tags                       = try(each.value.tags, null)
-  kind                       = try(each.value.kind, null)
-  settings                   = each.value
-  global_settings            = local.global_settings
-}
-
-output "app_service_plans" {
-  value = module.app_service_plans
-
-}
-
+  
+  settings           = each.value
+  global_settings    = local.global_settings
   backup_policy_id   = azurerm_data_protection_backup_policy_blob_storage.backup_vault_policy.id 
   settings           = each.value
 }
+
+
   
