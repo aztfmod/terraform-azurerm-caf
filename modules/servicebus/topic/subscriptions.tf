@@ -10,6 +10,8 @@ module "servicebus_subscriptions" {
     servicebus_topic_name     = azurerm_servicebus_topic.topic.name
     servicebus_namespace_name = local.servicebus_namespace_name
     resource_group_name       = local.resource_group_name
+    servicebus_queues         = var.remote_objects.servicebus_queues
+    servicebus_topics         = var.remote_objects.servicebus_topics
   }
 
 }
