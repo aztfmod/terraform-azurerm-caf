@@ -43,4 +43,9 @@ resource "null_resource" "cancel_order_global_sign" {
       SOAP_CANCEL_ORDER_TPL = self.triggers.SOAP_CANCEL_ORDER
     }
   }
+  lifecycle {
+    ignore_changes = [
+      triggers
+    ]
+  }
 }
