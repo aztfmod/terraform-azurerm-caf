@@ -16,3 +16,6 @@ variable "keyvault_id" {
 variable "keyvaults" {
   default = {}
 }
+variable "virtual_machine_scale_set_os_type" {
+  default = {}
+}
