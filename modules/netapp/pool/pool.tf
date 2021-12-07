@@ -36,5 +36,5 @@ module "volumes" {
   subnet_id           = try(var.vnets[var.client_config.landingzone_key][each.value.vnet_key].subnets[each.value.subnet_key].id, var.vnets[each.value.lz_key][each.value.vnet_key].subnets[each.value.subnet_key].id)
   export_policy_rule  = try(each.value.export_policy_rule, {})
   tags                = merge(var.base_tags, try(each.value.tags, {}))
-
+  global_settings     = var.global_settings
 }
