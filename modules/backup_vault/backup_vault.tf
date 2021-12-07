@@ -45,11 +45,13 @@ module "backup_vault_instance" {
   
 
   vault_id           = azurerm_data_protection_backup_vault.backup_vault.id
+  
   location           = var.resource_groups[each.value.resource_group_key].location
+  backup_policy_id   = azurerm_data_protection_backup_policy_blob_storage.backup_vault.backup_vault_policy.id
   storage_account_id = try(var.storage_accounts[try(each.value.storage_account.lz_key, var.client_config.landingzone_key)][each.value.storage_account.key].id, null)
   
   settings           = each.value
-  backup_policy_id   = azurerm_data_protection_backup_policy_blob_storage.backup_vault_policy.id 
+   
 }
 
 
