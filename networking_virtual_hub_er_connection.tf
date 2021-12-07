@@ -1,4 +1,7 @@
-
+#
+# Original implementation - Only support AzurePrivatePeering
+# Prefer the express_route_connections (networking_express_route_connections.tf)
+#
 module "virtual_hub_er_gateway_connections" {
   source   = "./modules/networking/virtual_hub_er_gateway_connection"
   for_each = try(local.networking.virtual_hub_er_gateway_connections, {})
