@@ -1,7 +1,7 @@
 network_security_group_definition = {
   aadds_re1 = {
     version            = 1
-    resource_group_key = "rg"
+    resource_group_key = "rg1"
     region             = "region1"
     name               = "nsg-aadds-re1"
     nsg = [

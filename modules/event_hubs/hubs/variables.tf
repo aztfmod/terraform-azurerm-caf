@@ -1,7 +1,7 @@
 variable "global_settings" {}
 variable "settings" {}
-variable "resource_groups" {
-  description = "Name of the resource group objects."
+variable "resource_group" {
+  description = "Resource group objects."
 }
 variable "base_tags" {}
 variable "client_config" {}

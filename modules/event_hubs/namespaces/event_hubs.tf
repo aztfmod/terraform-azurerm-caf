@@ -2,7 +2,7 @@ module "event_hubs" {
   source   = "../hubs"
   for_each = try(var.settings.event_hubs, {})
 
-  resource_groups    = var.resource_groups
+  resource_group     = var.resource_group
   client_config      = var.client_config
   global_settings    = var.global_settings
   settings           = each.value
