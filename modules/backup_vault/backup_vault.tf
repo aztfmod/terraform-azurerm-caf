@@ -38,10 +38,3 @@ module "backup_vault_policies" {
   vault_id = azurerm_data_protection_backup_vault.backup_vault.id
   settings = each.value
 }
-
-output "backup_vault_policies" {
-  value = module.backup_vault_policies
-}
-
-
-  
