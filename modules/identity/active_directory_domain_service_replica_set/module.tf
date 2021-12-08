@@ -1,5 +1,5 @@
 resource "azurerm_active_directory_domain_service_replica_set" "aaddsrs" {
-  location          = var.location
+  location = var.location
 
   domain_service_id = coalesce(
     try(var.settings.domain_service_id, null),

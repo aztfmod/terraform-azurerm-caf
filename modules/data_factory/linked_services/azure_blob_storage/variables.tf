@@ -18,7 +18,7 @@ variable "connection_string" {
 }
 variable "integration_runtime_name" {
   description = "(Optional) The integration runtime reference to associate with the Data Factory Linked Service."
-  default = null
+  default     = null
 }
 variable "storage_account" {
   description = "Storage account to attach"

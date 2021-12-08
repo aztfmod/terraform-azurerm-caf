@@ -96,17 +96,17 @@ application_gateway_applications_v1 = {
 
     probes = {
       test = {
-        name                                      = "test-http"
-        protocol                                  = "Http" # Http or Https
-        host                                      = "test.com"
-        host_name_from_http_settings              = false
+        name                         = "test-http"
+        protocol                     = "Http" # Http or Https
+        host                         = "test.com"
+        host_name_from_http_settings = false
         # port                                    = "" # Leave not set if pick port from backend http settings
-        path                                      = "/api/health"
-        interval                                  = "60"
-        timeout                                   = "60"
-        threshold                                 = "3"
-        min_servers                               = "0"
-        match_status_codes                        = "200-499"
+        path               = "/api/health"
+        interval           = "60"
+        timeout            = "60"
+        threshold          = "3"
+        min_servers        = "0"
+        match_status_codes = "200-499"
       }
     }
   }

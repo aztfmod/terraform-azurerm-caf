@@ -1,14 +1,14 @@
 vnets = {
   vnet_aadds_re1 = {
     resource_group_key = "rg"
-    region = "region1"
+    region             = "region1"
     vnet = {
       name          = "vnet-aadds-re1"
       address_space = ["10.1.0.0/28"]
       dns_servers = [
-        "10.1.0.4", 
+        "10.1.0.4",
         "10.1.0.5",
-        "10.1.1.4", 
+        "10.1.1.4",
         "10.1.1.5"
       ]
     }
@@ -22,14 +22,14 @@ vnets = {
   }
   vnet_aadds_re2 = {
     resource_group_key = "rg"
-    region = "region2"
+    region             = "region2"
     vnet = {
       name          = "vnet-aadds-re2"
       address_space = ["10.1.1.0/28"]
       dns_servers = [
-        "10.1.1.4", 
+        "10.1.1.4",
         "10.1.1.5",
-        "10.1.0.4", 
+        "10.1.0.4",
         "10.1.0.5"
       ]
     }

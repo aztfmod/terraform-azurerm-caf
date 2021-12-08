@@ -28,7 +28,7 @@ resource "azurerm_private_endpoint" "pep" {
     for_each = can(var.settings.private_dns) ? [var.settings.private_dns] : []
 
     content {
-      name                 = private_dns_zone_group.zone_group_name
+      name = private_dns_zone_group.zone_group_name
       private_dns_zone_ids = concat(
         flatten([
           for key in try(private_dns_zone_group.keys, []) : [

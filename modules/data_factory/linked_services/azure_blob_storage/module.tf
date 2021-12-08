@@ -26,8 +26,8 @@ resource "azurerm_data_factory_linked_service_azure_blob_storage" "linked_servic
   sas_uri          = try(var.settings.sas_uri, null)
   connection_string = try(
     try(var.storage_account.primary_blob_connection_string, null),
-    var.settings.connection_string, 
-    var.connection_string, 
+    var.settings.connection_string,
+    var.connection_string,
     null
   )
 

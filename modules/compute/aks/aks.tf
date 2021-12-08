@@ -75,7 +75,7 @@ resource "azurerm_kubernetes_cluster" "aks" {
     type                         = try(var.settings.default_node_pool.type, "VirtualMachineScaleSets")
     ultra_ssd_enabled            = try(var.settings.default_node_pool.ultra_ssd_enabled, false)
     vm_size                      = var.settings.default_node_pool.vm_size
-    
+
     pod_subnet_id = try(coalesce(
       try(var.subnets[var.settings.default_node_pool.pod_subnet_key].id, null),
       try(var.subnets[var.settings.default_node_pool.pod_subnet.key].id, null),
