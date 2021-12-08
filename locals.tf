@@ -259,8 +259,8 @@ locals {
 
   servicebus = {
     servicebus_namespaces = try(var.servicebus.servicebus_namespaces, {})
-    servicebus_queues = try(var.servicebus.servicebus_queues, {})
-    servicebus_topics = try(var.servicebus.servicebus_topics, {})
+    servicebus_queues     = try(var.servicebus.servicebus_queues, {})
+    servicebus_topics     = try(var.servicebus.servicebus_topics, {})
   }
   security = {
     disk_encryption_sets          = try(var.security.disk_encryption_sets, {})

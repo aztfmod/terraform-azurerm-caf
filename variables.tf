@@ -275,7 +275,7 @@ variable "dynamic_keyvault_secrets" {
 # Service Bus
 variable "servicebus" {
   description = "Configuration object - service bus namespaces, topics and queues"
-  default = {}
+  default     = {}
 }
 
 ## Storage variables

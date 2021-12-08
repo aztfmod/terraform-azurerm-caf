@@ -22,7 +22,7 @@ resource "azurerm_servicebus_subscription_rule" "correlation_filter" {
 
     content {
       content_type        = try(var.settings.correlation_filter.content_type, null)
-      correlation_id      = try(var.settings.correlation_filter.correlation_id, null )
+      correlation_id      = try(var.settings.correlation_filter.correlation_id, null)
       label               = try(var.settings.correlation_filter.label, null)
       message_id          = try(var.settings.correlation_filter.message_id, null)
       reply_to            = try(var.settings.correlation_filter.reply_to, null)
