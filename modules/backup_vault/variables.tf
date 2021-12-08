@@ -11,7 +11,6 @@ variable "settings" {}
 variable "global_settings" {
   description = "Global settings object (see module README.md)"
 }
-# variable "backup_vault" {}
 variable "resource_group_name" {
   description = "(Required) The name of the resource group where to create the resource."
   type        = string
@@ -29,4 +28,3 @@ variable "storage_account_id" {
   description = "The ID of the Storage Account to be used by the Backup Vault instance."
   type        = string
 }
-# variable "vault_id" {}
