@@ -25,12 +25,12 @@ output "backup_vault_policies"{
 
 output "datastore_type" {
   description = "Output of the datastore type on the resource."
-  value       = try(var.backup_vault.datastore_type, null)
+  value       = try(var.settings.datastore_type, null)
 }
 
 output "redundancy" {
   description = "Output of the datastore type on the resource."
-  value       = try(var.backup_vault.redundancy, null)
+  value       = try(var.settings.redundancy, null)
 }
 
 output "identity" {
