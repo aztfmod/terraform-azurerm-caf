@@ -8,7 +8,6 @@ resource "azurerm_virtual_machine_scale_set_extension" "custom_script" {
   auto_upgrade_minor_version   = try(var.extension.auto_upgrade_minor_version, true)
   automatic_upgrade_enabled    = try(var.extension.automatic_upgrade_enabled, null)
 
-  # settings                     = jsonencode(local.settings)
   settings = jsonencode(
     {
       "fileUris" : local.fileuris,
