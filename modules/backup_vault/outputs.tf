@@ -20,7 +20,7 @@ output "resource_group_name" {
 
 output "backup_vault_policies"{
   description = "The backup vault policies output objects as created by the backup vault policies submodule."
-  value       = module.backup_vault_policy
+  value       = module.backup_vault_policies
 }
 
 output "datastore_type" {
