@@ -7,7 +7,7 @@ global_settings = {
 }
 
 resource_groups = {
-  rg1 = {
+  rg = {
     name   = "aadds"
     region = "region1"
   }
@@ -20,7 +20,7 @@ active_directory_domain_service = {
     name   = "aadds-widgetslogin-net"
     region = "region1"
     resource_group = {
-      key = "rg1"
+      key = "rg"
     }
     domain_name           = "widgetslogin.net"
     sku                   = "Enterprise"
