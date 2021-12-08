@@ -255,6 +255,11 @@ locals {
 
   object_id = coalesce(var.logged_user_objectId, var.logged_aad_app_objectId, try(data.azurerm_client_config.current.object_id, null), try(data.azuread_service_principal.logged_in_app.0.object_id, null))
 
+  servicebus = {
+    servicebus_namespaces = try(var.servicebus.servicebus_namespaces, {})
+    servicebus_queues = try(var.servicebus.servicebus_queues, {})
+    servicebus_topics = try(var.servicebus.servicebus_topics, {})
+  }
   security = {
     disk_encryption_sets          = try(var.security.disk_encryption_sets, {})
     dynamic_keyvault_secrets      = try(var.security.dynamic_keyvault_secrets, {})
