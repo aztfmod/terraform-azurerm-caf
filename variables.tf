@@ -272,6 +272,11 @@ variable "role_mapping" {
 variable "dynamic_keyvault_secrets" {
   default = {}
 }
+# Service Bus
+variable "servicebus" {
+  description = "Configuration object - service bus namespaces, topics and queues"
+  default = {}
+}
 
 ## Storage variables
 variable "storage_accounts" {
