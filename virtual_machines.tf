@@ -20,6 +20,7 @@ module "virtual_machines" {
   diagnostics                 = local.combined_diagnostics
   disk_encryption_sets        = local.combined_objects_disk_encryption_sets
   global_settings             = local.global_settings
+  image_definitions           = local.combined_objects_image_definitions
   keyvaults                   = local.combined_objects_keyvaults
   managed_identities          = local.combined_objects_managed_identities
   network_security_groups     = local.combined_objects_network_security_groups
