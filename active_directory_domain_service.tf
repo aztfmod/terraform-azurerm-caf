@@ -32,9 +32,9 @@ module "active_directory_domain_service_replica_set" {
 
   depends_on = [azurerm_virtual_network_peering.peering]
 
-  settings        = each.value
-  client_config   = local.client_config
-  location        = local.global_settings.regions[each.value.region]
+  settings      = each.value
+  client_config = local.client_config
+  location      = local.global_settings.regions[each.value.region]
 
   remote_objects = {
     vnets                           = try(local.combined_objects_networking, null)

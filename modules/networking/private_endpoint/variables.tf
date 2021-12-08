@@ -7,7 +7,7 @@ variable "name" {
 
 variable "resource_group_name" {
   description = "The name of the resource group. Changing this forces a new resource to be created."
-  default = null
+  default     = null
 }
 variable "resource_groups" {
   description = "The combined_objects of the resource groups. Changing this forces a new resource to be created."

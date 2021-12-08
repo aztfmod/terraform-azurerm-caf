@@ -10,8 +10,8 @@ locals {
   module_tag = {
     "module" = basename(abspath(path.module))
   }
-  tags = merge(var.base_tags, local.module_tag, try(var.tags, null))
-  location       = can(var.settings.region) ? var.global_settings.regions[var.settings.region] : local.resource_group.location
+  tags     = merge(var.base_tags, local.module_tag, try(var.tags, null))
+  location = can(var.settings.region) ? var.global_settings.regions[var.settings.region] : local.resource_group.location
   resource_group = coalesce(
     try(var.resource_groups[var.client_config.landingzone_key][var.settings.resource_group_key], null),
     try(var.resource_groups[var.settings.lz_key][var.settings.resource_group_key], null),

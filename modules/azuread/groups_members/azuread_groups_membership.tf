@@ -5,7 +5,7 @@
 module "azuread_service_principals_membership" {
   source   = "./membership"
   for_each = try(var.settings.azuread_service_principals, {})
- 
+
   azuread_service_principals = var.azuread_service_principals[try(each.value.lz_key, var.client_config.landingzone_key)]
   members                    = each.value
 
@@ -32,8 +32,8 @@ module "mssql_servers_membership" {
   source   = "./membership"
   for_each = try(var.settings.mssql_servers, {})
 
-  mssql_servers      = var.mssql_servers[try(each.value.lz_key, var.client_config.landingzone_key)]
-  members            = each.value
+  mssql_servers = var.mssql_servers[try(each.value.lz_key, var.client_config.landingzone_key)]
+  members       = each.value
 
   group_object_id = coalesce(
     try(var.azuread_groups[each.value.group_lz_key][var.group_key].id, null),
