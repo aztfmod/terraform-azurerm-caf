@@ -30,11 +30,3 @@ resource "azurerm_data_protection_backup_vault" "backup_vault" {
     }
   }
 }
-
-# module "backup_vault_policies" {
-#   source   = "./backup_vault_policy"
-#   for_each = try(var.settings.backup_vault_policies, {})
-
-#   vault_id = azurerm_data_protection_backup_vault.backup_vault.id
-#   settings = each.value
-# }
