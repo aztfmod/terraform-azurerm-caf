@@ -1,6 +1,10 @@
 module "example" {
   source = "../"
 
+  providers = {
+    azurerm.vhub = azurerm.vhub
+  }
+
   current_landingzone_key               = var.landingzone.key
   custom_role_definitions               = var.custom_role_definitions
   event_hub_auth_rules                  = var.event_hub_auth_rules
@@ -75,7 +79,9 @@ module "example" {
   cognitive_services = {
     cognitive_services_account = var.cognitive_services_account
   }
-
+  communication = {
+    communication_services = var.communication_services
+  }
   compute = {
     aks_clusters                        = var.aks_clusters
     availability_sets                   = var.availability_sets
@@ -210,9 +216,11 @@ module "example" {
     function_apps                = var.function_apps
   }
   data_factory = {
-    data_factory                  = var.data_factory
-    data_factory_pipeline         = var.data_factory_pipeline
-    data_factory_trigger_schedule = var.data_factory_trigger_schedule
+    data_factory                                 = var.data_factory
+    data_factory_pipeline                        = var.data_factory_pipeline
+    data_factory_trigger_schedule                = var.data_factory_trigger_schedule
+    data_factory_integration_runtime_azure_ssis  = var.data_factory_integration_runtime_azure_ssis
+    data_factory_integration_runtime_self_hosted = var.data_factory_integration_runtime_self_hosted
     datasets = {
       azure_blob                          = var.data_factory_dataset_azure_blob
       cosmosdb_sqlapi                     = var.data_factory_dataset_cosmosdb_sqlapi
@@ -231,6 +239,7 @@ module "example" {
       mysql              = var.data_factory_linked_service_mysql
       postgresql         = var.data_factory_linked_service_postgresql
       sql_server         = var.data_factory_linked_service_sql_server
+      azure_databricks   = var.data_factory_linked_service_azure_databricks
     }
   }
   logic_app = {
@@ -245,5 +254,8 @@ module "example" {
     logic_app_trigger_recurrence   = var.logic_app_trigger_recurrence
     logic_app_workflow             = var.logic_app_workflow
   }
-
+  identity = {
+    active_directory_domain_service             = var.active_directory_domain_service
+    active_directory_domain_service_replica_set = var.active_directory_domain_service_replica_set
+  }
 }

@@ -27,4 +27,11 @@ resource "azurerm_express_route_gateway" "er_gateway" {
     create = "60m"
     delete = "120m"
   }
+
+  # Add a lifecycle until bug fixed https://github.com/hashicorp/terraform-provider-azurerm/issues/13368
+  lifecycle {
+    ignore_changes = [
+      tags
+    ]
+  }
 }
