@@ -25,3 +25,7 @@ variable "client_config" {
   description = "Client configuration object (see module README.md)."
 }
 variable "identity" {}
+variable "storage_account_id" {
+  description = "The ID of the Storage Account to be used by the Backup Vault instance."
+  type        = string
+}
