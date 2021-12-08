@@ -10,7 +10,7 @@ virtual_machines = {
     # if boot_diagnostics_storage_account_key is not defined, but global_settings.resource_defaults.virtual_machines.use_azmanaged_storage_for_boot_diagnostics is true, boot diagnostics will be put on azure managed storage
     boot_diagnostics_storage_account_key = "bootdiag_region1"
 
-    os_type = "windows"
+    os_type = "linux"
 
     # the auto-generated ssh key in keyvault secret. Secret name being {VM name}-ssh-public and {VM name}-ssh-private
     keyvault_key = "packer_client"
@@ -29,11 +29,11 @@ virtual_machines = {
     }
 
     virtual_machine_settings = {
-      windows = {
-        name           = "example_vm2"
-        size           = "Standard_F2"
-        admin_username = "adminuser"
-
+      linux = {
+        name                            = "example_vm2"
+        size                            = "Standard_F2"
+        admin_username                  = "adminuser"
+        disable_password_authentication = true
         # Spot VM to save money
         #priority        = "Spot"
         #eviction_policy = "Deallocate"
@@ -47,9 +47,9 @@ virtual_machines = {
           storage_account_type = "Standard_LRS"
         }
 
-       custom_image_key = "image1"
-       custom_image_version = "1.0.0"
-       #custom_image_lz_key # reference to image source landingzone 
+        custom_image_key     = "image1"
+        custom_image_version = "1.0.0"
+        #custom_image_lz_key # reference to image source landingzone 
       }
     }
 
@@ -79,8 +79,8 @@ vnets = {
     specialsubnets = {}
     subnets = {
       example = {
-        name = "examples"
-        cidr = ["10.100.100.0/29"]
+        name    = "examples"
+        cidr    = ["10.100.100.0/29"]
         nsg_key = "example"
       }
     }
