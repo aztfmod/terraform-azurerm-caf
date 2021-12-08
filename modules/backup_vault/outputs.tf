@@ -18,10 +18,10 @@ output "resource_group_name" {
   value       = var.resource_group_name
 }
 
-output "backup_vault_policies"{
-  description = "The backup vault policies output objects as created by the backup vault policies submodule."
-  value       = module.backup_vault_policies
-}
+# output "backup_vault_policies"{
+#   description = "The backup vault policies output objects as created by the backup vault policies submodule."
+#   value       = module.backup_vault_policies
+# }
 
 output "datastore_type" {
   description = "Output of the datastore type on the resource."
