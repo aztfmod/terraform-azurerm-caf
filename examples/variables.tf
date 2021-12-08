@@ -324,6 +324,9 @@ variable "machine_learning_workspaces" {
 variable "monitor_action_groups" {
   default = {}
 }
+variable "monitor_autoscale_settings" {
+  default = {}
+}
 variable "monitoring" {
   default = {}
 }
