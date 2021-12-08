@@ -17,13 +17,19 @@ resource "azurerm_data_factory_linked_service_azure_blob_storage" "linked_servic
   annotations              = try(var.settings.annotations, null)
   parameters               = try(var.settings.parameters, null)
   additional_properties    = try(var.settings.additional_properties, null)
-  connection_string        = try(var.connection_string, var.settings.connection_string, null)
-  sas_uri                  = try(var.settings.sas_uri, null)
-  service_endpoint         = can(var.settings.use_managed_identity) ? try(var.settings.service_endpoint, var.storage_account.primary_blob_endpoint) : null
   use_managed_identity     = try(var.settings.use_managed_identity, null)
   service_principal_id     = try(var.settings.service_principal_id, null)
   service_principal_key    = try(var.settings.service_principal_key, null)
   tenant_id                = try(var.settings.tenant_id, null)
+
+  service_endpoint = can(var.settings.use_managed_identity) ? try(var.settings.service_endpoint, var.storage_account.primary_blob_endpoint) : null
+  sas_uri          = try(var.settings.sas_uri, null)
+  connection_string = try(
+    try(var.storage_account.primary_blob_connection_string, null),
+    var.settings.connection_string, 
+    var.connection_string, 
+    null
+  )
 
   dynamic "key_vault_sas_token" {
     for_each = try(var.settings.key_vault_sas_token, null) != null ? [var.settings.key_vault_sas_token] : []

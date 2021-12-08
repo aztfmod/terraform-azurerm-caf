@@ -22,4 +22,5 @@ variable "integration_runtime_name" {
 }
 variable "storage_account" {
   description = "Storage account to attach"
+  default     = null
 }

@@ -1,6 +1,6 @@
 vnets = {
   vnet_aadds_re1 = {
-    resource_group_key = "rg1"
+    resource_group_key = "rg"
     region = "region1"
     vnet = {
       name          = "vnet-aadds-re1"
