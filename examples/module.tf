@@ -193,15 +193,21 @@ module "example" {
     keyvault_certificates         = var.keyvault_certificates
     lighthouse_definitions        = var.lighthouse_definitions
   }
+  servicebus = {
+    servicebus_namespaces          = var.servicebus_namespaces
+    servicebus_topics              = var.servicebus_topics
+    servicebus_queues              = var.servicebus_queues
+  }
   shared_services = {
-    consumption_budgets      = var.consumption_budgets
-    image_definitions        = var.image_definitions
-    monitor_action_groups    = var.monitor_action_groups
-    monitoring               = var.monitoring
-    packer_managed_identity  = var.packer_managed_identity
-    packer_service_principal = var.packer_service_principal
-    recovery_vaults          = var.recovery_vaults
-    shared_image_galleries   = var.shared_image_galleries
+    consumption_budgets        = var.consumption_budgets
+    image_definitions          = var.image_definitions
+    monitor_action_groups      = var.monitor_action_groups
+    monitor_autoscale_settings = var.monitor_autoscale_settings
+    monitoring                 = var.monitoring
+    packer_managed_identity    = var.packer_managed_identity
+    packer_service_principal   = var.packer_service_principal
+    recovery_vaults            = var.recovery_vaults
+    shared_image_galleries     = var.shared_image_galleries
   }
   storage = {
     netapp_accounts        = var.netapp_accounts
@@ -215,6 +221,7 @@ module "example" {
     app_service_environments     = var.app_service_environments
     app_service_plans            = var.app_service_plans
     app_services                 = var.app_services
+    function_apps                = var.function_apps
   }
   data_factory = {
     data_factory                                 = var.data_factory
@@ -255,5 +262,8 @@ module "example" {
     logic_app_trigger_recurrence   = var.logic_app_trigger_recurrence
     logic_app_workflow             = var.logic_app_workflow
   }
-
+  identity = {
+    active_directory_domain_service             = var.active_directory_domain_service
+    active_directory_domain_service_replica_set = var.active_directory_domain_service_replica_set
+  }
 }

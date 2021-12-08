@@ -21,7 +21,10 @@ resource "azurerm_machine_learning_compute_instance" "mlci" {
 
     content {
       object_id = assign_to_user.value.object_id
-      tenant_id = assign_to_user.value.tenant_id
+      tenant_id = coalesce(
+        try(assign_to_user.value.tenant_id, null),
+        var.client_config.tenant_id
+      )
     }
   }
 
@@ -31,13 +34,13 @@ resource "azurerm_machine_learning_compute_instance" "mlci" {
     for_each = try(var.settings.identity, null) != null ? [var.settings.identity] : []
 
     content {
-      type         = identity.value.type
+      type = identity.value.type
       identity_ids = coalesce(
-                    var.settings.identity.identity_ids,
-                    local.managed_identities
+        var.settings.identity.identity_ids,
+        local.managed_identities
       )
     }
-    
+
   }
 
   #It's on the AzureRM provider documentation but it does raises an error.

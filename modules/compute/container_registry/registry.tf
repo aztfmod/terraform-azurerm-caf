@@ -10,8 +10,8 @@ resource "azurecaf_name" "acr" {
 
 resource "azurerm_container_registry" "acr" {
   name                = azurecaf_name.acr.result
-  resource_group_name = var.resource_group_name
-  location            = var.location
+  resource_group_name = local.resource_group.name
+  location            = local.location
   sku                 = var.sku
   admin_enabled       = var.admin_enabled
   tags                = local.tags
@@ -36,8 +36,13 @@ resource "azurerm_container_registry" "acr" {
         for_each = try(network_rule_set.value.virtual_networks, {})
 
         content {
-          action    = "Allow"
-          subnet_id = try(var.vnets[try(virtual_network.value.lz_key, var.client_config.landingzone_key)][virtual_network.value.vnet_key].subnets[virtual_network.value.subnet_key].id, {})
+          action = "Allow"
+          #subnet_id = try(var.vnets[try(virtual_network.value.lz_key, var.client_config.landingzone_key)][virtual_network.value.vnet_key].subnets[virtual_network.value.subnet_key].id, {})
+          subnet_id = coalesce(
+            try(virtual_network.value.subnet_id, null),
+            try(var.vnets[var.client_config.landingzone_key][virtual_network.value.vnet_key].subnets[virtual_network.value.subnet_key].id, null),
+            try(var.vnets[virtual_network.value.lz_key][virtual_network.value.vnet_key].subnets[virtual_network.value.subnet_key].id, null)
+          )
         }
       }
     }

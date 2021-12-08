@@ -7,14 +7,9 @@ module "data_factory" {
   client_config   = local.client_config
   settings        = each.value
 
-  base_tags = try(local.global_settings.inherit_tags, false) ? local.resource_groups[each.value.resource_group.key].tags : {}
-  location  = lookup(each.value, "region", null) == null ? local.resource_groups[each.value.resource_group.key].location : local.global_settings.regions[each.value.region]
+  base_tags       = try(local.global_settings.inherit_tags, false) ? local.resource_groups[each.value.resource_group.key].tags : {}
+  resource_groups = local.combined_objects_resource_groups
 
-  resource_group_name = coalesce(
-    try(local.combined_objects_resource_groups[each.value.resource_group.lz_key][each.value.resource_group.key].name, null),
-    try(local.combined_objects_resource_groups[local.client_config.landingzone_key][each.value.resource_group.key].name, null),
-    try(each.value.resource_group.name, null)
-  )
   remote_objects = {
     managed_identities = local.combined_objects_managed_identities
     private_dns        = local.combined_objects_private_dns

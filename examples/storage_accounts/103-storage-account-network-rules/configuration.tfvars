@@ -56,7 +56,9 @@ storage_accounts = {
           vnet_key   = "vnet1"
           subnet_key = "subnet1"
         }
-        #add multiple subnets by extending this block
+        #add multiple subnets by extending this block. You can reference remote subnets by using remote_subnet_id
+        #subnet2 = {
+        #remote_subnet_id = "/subscriptions/*******/resourceGroups/*******/providers/Microsoft.Network/virtualNetworks/vnet-some-remote-vnet/subnets/snet-remote-subnet"
       }
 
     }
