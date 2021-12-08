@@ -27,9 +27,9 @@ virtual_machines = {
       env = "dev"
     }
     resource_group_key = "vm_sg"
-    
-    os_type                              = "legacy"
-    keyvault_key                         = "example_vm_rg1"
+
+    os_type      = "legacy"
+    keyvault_key = "example_vm_rg1"
 
     networking_interfaces = {
       nic0 = {
@@ -45,22 +45,22 @@ virtual_machines = {
 
     virtual_machine_settings = {
       legacy = {
-        name                            = "vm_1"
-        resource_group_key              = "vm_sg"
-        size                            = "Standard_E48s_v3"
-        admin_username                  = "cloud-user"
+        name               = "vm_1"
+        resource_group_key = "vm_sg"
+        size               = "Standard_E48s_v3"
+        admin_username     = "cloud-user"
         #zones = ""
-        delete_os_disk_on_termination = true
+        delete_os_disk_on_termination    = true
         delete_data_disks_on_termination = true
 
         # Value of the nic keys to attach the VM. The first one in the list is the default nic
         network_interface_keys = ["nic0"]
 
         os_disk = {
-          name                 = "vm_1-os"
-          caching              = "ReadWrite"
-          disk_size_gb         = "64"
-          create_option        = "FromImage"
+          name                  = "vm_1-os"
+          caching               = "ReadWrite"
+          disk_size_gb          = "64"
+          create_option         = "FromImage"
           operating_system_type = "Linux"
         }
 
@@ -84,39 +84,39 @@ virtual_machines = {
 
         storage_data_disk = {
           lun0 = {
-            name                 = "vm_1-lun0"
-            create_option        = "FromImage"
-            disk_size_gb         = "65"
-            lun                  = 0
-            caching            = "ReadWrite"
+            name          = "vm_1-lun0"
+            create_option = "FromImage"
+            disk_size_gb  = "65"
+            lun           = 0
+            caching       = "ReadWrite"
           }
           lun1 = {
-            name                 = "vm_1-lun1"
-            create_option        = "FromImage"
-            disk_size_gb         = "65"
-            lun                  = 1
-            caching            = "ReadWrite"
+            name              = "vm_1-lun1"
+            create_option     = "FromImage"
+            disk_size_gb      = "65"
+            lun               = 1
+            caching           = "ReadWrite"
             managed_disk_type = "Premium_LRS"
           }
           lun2 = {
-            name                 = "vm_1-lun2"
-            create_option        = "FromImage"
-            disk_size_gb         = "65"
-            lun                  = 2
-            caching            = "ReadWrite"
+            name          = "vm_1-lun2"
+            create_option = "FromImage"
+            disk_size_gb  = "65"
+            lun           = 2
+            caching       = "ReadWrite"
           }
-        }    
+        }
       }
-    } 
+    }
   },
   vm_2 = {
     tags = {
       env = "dev"
     }
     resource_group_key = "vm_sg"
-    
-    os_type                              = "legacy"
-    keyvault_key                         = "example_vm_rg1"
+
+    os_type      = "legacy"
+    keyvault_key = "example_vm_rg1"
 
     networking_interfaces = {
       nic1 = {
@@ -132,30 +132,30 @@ virtual_machines = {
 
     virtual_machine_settings = {
       legacy = {
-        name                            = "vm_2"
-        resource_group_key              = "vm_sg"
-        size                            = "Standard_E48s_v3"
-        admin_username_key = "vmadmin-username"
-        admin_password_key = "vmadmin-password"
-        delete_os_disk_on_termination = true
+        name                             = "vm_2"
+        resource_group_key               = "vm_sg"
+        size                             = "Standard_E48s_v3"
+        admin_username_key               = "vmadmin-username"
+        admin_password_key               = "vmadmin-password"
+        delete_os_disk_on_termination    = true
         delete_data_disks_on_termination = true
-        license_type = "Windows_Server"
+        license_type                     = "Windows_Server"
 
         # Value of the nic keys to attach the VM. The first one in the list is the default nic
         network_interface_keys = ["nic1"]
 
         os_disk = {
-          name                 = "vm_2-os"
-          caching              = "ReadWrite"
-          disk_size_gb         = "127"
-          create_option        = "FromImage"
+          name                  = "vm_2-os"
+          caching               = "ReadWrite"
+          disk_size_gb          = "127"
+          create_option         = "FromImage"
           operating_system_type = "Windows"
         }
 
         os_profile_windows_config = {
-          provision_vm_agent = true
+          provision_vm_agent        = true
           enable_automatic_upgrades = true
-          timezone = "Central Standard Time"
+          timezone                  = "Central Standard Time"
           #winrm = {
           #  winrm_1 = {
           #  protocol = "HTTPS"
@@ -189,37 +189,37 @@ virtual_machines = {
 
         storage_data_disk = {
           lun0 = {
-            name                 = "vm_2-lun0"
-            create_option        = "Empty"
-            disk_size_gb         = "65"
-            lun                  = 0
-            caching            = "ReadWrite"
+            name          = "vm_2-lun0"
+            create_option = "Empty"
+            disk_size_gb  = "65"
+            lun           = 0
+            caching       = "ReadWrite"
           }
           lun1 = {
-            name                 = "vm_2-lun1"
-            create_option        = "Empty"
-            disk_size_gb         = "65"
-            lun                  = 1
-            caching            = "ReadWrite"
+            name              = "vm_2-lun1"
+            create_option     = "Empty"
+            disk_size_gb      = "65"
+            lun               = 1
+            caching           = "ReadWrite"
             managed_disk_type = "Premium_LRS"
           }
           lun2 = {
-            name                 = "vm_2-lun2"
-            create_option        = "Empty"
-            disk_size_gb         = "65"
-            lun                  = 2
-            caching            = "ReadWrite"
+            name          = "vm_2-lun2"
+            create_option = "Empty"
+            disk_size_gb  = "65"
+            lun           = 2
+            caching       = "ReadWrite"
           }
           lun3 = {
-            name                 = "vm_2-lun3"
-            create_option        = "Empty"
-            disk_size_gb         = "65"
-            lun                  = 2
-            caching            = "ReadWrite"
+            name          = "vm_2-lun3"
+            create_option = "Empty"
+            disk_size_gb  = "65"
+            lun           = 2
+            caching       = "ReadWrite"
           }
-        }    
+        }
       }
-    } 
+    }
   }
 }
 

@@ -21,7 +21,7 @@ service_bus_namespaces = {
     region             = "region1"
     capacity           = 1              # Optional: capacity attribute can only be used with Premium sku. Possible values 1,2,4,8 or 16
     zone_redundant     = true           # Optional: zone_redundant attribute can only be used with Premium sku. Defaults to false
-    tags {
+    tags = {
       "environment" = "Dev"
     }
   }

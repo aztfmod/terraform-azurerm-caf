@@ -24,14 +24,13 @@ variable "client_config" {
   description = "Client configuration object (see module README.md)."
 }
 
-variable "location" {
-  description = "Specifies the supported Azure location where to create the resource. Changing this forces a new resource to be created."
-  type        = string
-}
+# variable "location" {
+#   description = "Specifies the supported Azure location where to create the resource. Changing this forces a new resource to be created."
+#   type        = string
+# }
 
-variable "resource_group_name" {
-  description = "The name of the resource group where to create the resource."
-  type        = string
+variable "resource_group" {
+  description = "The resource group object where to create the resource."
 }
 
 variable "vnets" {

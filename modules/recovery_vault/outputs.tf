@@ -34,7 +34,7 @@ output "soft_delete_enabled" {
   value       = try(var.settings.soft_delete_enabled, true)
 }
 
-# output rbac_id {
-#   depends_on  = [azurerm_resource_group_template_deployment.asr]
-#   value       = jsondecode(azurerm_resource_group_template_deployment.asr.output_content).principalId.value
-# }
+output "rbac_id" {
+  description = "Principal Id of the Vault"
+  value       = try(azurerm_recovery_services_vault.asr.identity.0.principal_id, null)
+}
