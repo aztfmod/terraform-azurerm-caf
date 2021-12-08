@@ -5,13 +5,14 @@ resource "azurerm_virtual_machine_scale_set_extension" "custom_script" {
   type                         = local.type
   publisher                    = local.publisher
   type_handler_version         = local.type_handler_version
-  auto_upgrade_minor_version   = true
+  auto_upgrade_minor_version   = try(var.extension.auto_upgrade_minor_version, true)
+  automatic_upgrade_enabled    = try(var.extension.automatic_upgrade_enabled, null)
 
   # settings                     = jsonencode(local.settings)
   settings = jsonencode(
     {
       "fileUris" : local.fileuris,
-      "timestamp" : try(var.extension.timestamp, "12345678")
+      "timestamp" : try(toint(var.extension.timestamp), 12345678)
     }
   )
 
@@ -26,15 +27,26 @@ locals {
   provided_identity       = try(var.extension.managed_identity_id, "")
   managed_identity        = try(coalesce(local.managed_local_identity, local.managed_remote_identity, local.provided_identity), "")
 
-  system_assigned_id = local.identity_type == "SystemAssigned" ? { "managedIdentity" : {} } : null
-  user_assigned_id   = local.identity_type == "UserAssigned" ? { "managedIdentity" : { "objectid" : "${local.managed_identity}" } } : null
+  map_system_assigned = {
+    managedIdentity = {}
+  }
+  map_user_assigned = {
+    managedIdentity = {
+      objectid = local.managed_identity
+    }
+  }
+  map_command = {
+    commandToExecute = try(var.extension.commandtoexecute, "")
+  }
+
+  system_assigned_id = local.identity_type == "SystemAssigned" ? local.map_system_assigned : null
+  user_assigned_id   = local.identity_type == "UserAssigned" ? local.map_user_assigned : null
 
   publisher            = var.virtual_machine_scale_set_os_type == "linux" ? "Microsoft.Azure.Extensions" : "Microsoft.Compute"
   type_handler_version = var.virtual_machine_scale_set_os_type == "linux" ? "2.1" : "1.10"
   type                 = var.virtual_machine_scale_set_os_type == "linux" ? "CustomScript" : "CustomScriptExtension"
 
-  command            = { "commandtoexecute" : "${try(var.extension.commandtoexecute, "")}" }
-  protected_settings = merge(local.command, local.system_assigned_id, local.user_assigned_id)
+  protected_settings = merge(local.map_command, local.system_assigned_id, local.user_assigned_id)
 
   # Fileuris
   fileuris             = local.fileuri_sa_defined == "" ? [local.fileuri_sa_full_path] : var.extension.fileuris

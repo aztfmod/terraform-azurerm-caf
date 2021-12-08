@@ -34,7 +34,7 @@ locals {
     }
   }
   map_command = {
-    commandtoexecute = try(var.extension.commandtoexecute, "")
+    commandToExecute = try(var.extension.commandtoexecute, "")
   }
 
   system_assigned_id = local.identity_type == "SystemAssigned" ? local.map_system_assigned : null
