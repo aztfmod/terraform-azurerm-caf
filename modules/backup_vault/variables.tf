@@ -29,4 +29,4 @@ variable "storage_account_id" {
   description = "The ID of the Storage Account to be used by the Backup Vault instance."
   type        = string
 }
-variable "vault_id" {}
+# variable "vault_id" {}
