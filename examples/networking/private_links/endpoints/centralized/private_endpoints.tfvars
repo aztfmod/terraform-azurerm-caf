@@ -22,6 +22,7 @@ private_endpoints = {
           zone_group_name = "default"
           # lz_key          = ""   # If the DNS keys are deployed in a remote landingzone
           keys = ["dns1"]
+          # ids = []    # List of DNS resource ids
         }
       }
       # level1custom = {
