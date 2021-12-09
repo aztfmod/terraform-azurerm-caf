@@ -1,5 +1,6 @@
 resource "azurerm_data_protection_backup_instance_blob_storage" "backup_vault_instance" {
   for_each = try(var.settings.backup_vault_instances, {})
+  depends_on = [azurerm_role_assignment.for]
   
   name               = each.value.name
   vault_id           = azurerm_data_protection_backup_vault.backup_vault.id
