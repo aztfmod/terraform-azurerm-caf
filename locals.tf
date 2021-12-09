@@ -279,8 +279,8 @@ locals {
     monitor_autoscale_settings = try(var.shared_services.monitor_autoscale_settings, {})
     monitor_action_groups      = try(var.shared_services.monitor_action_groups, {})
     monitoring                 = try(var.shared_services.monitoring, {})
-    packer_managed_identity    = try(var.shared_services.packer_managed_identity, {})
     packer_service_principal   = try(var.shared_services.packer_service_principal, {})
+    packer_build               = try(var.shared_services.packer_build, {})
     recovery_vaults            = try(var.shared_services.recovery_vaults, {})
     shared_image_galleries     = try(var.shared_services.shared_image_galleries, {})
   }

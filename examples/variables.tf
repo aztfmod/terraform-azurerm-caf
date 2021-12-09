@@ -416,7 +416,7 @@ variable "packer_service_principal" {
   default = {}
 }
 
-variable "packer_managed_identity" {
+variable "packer_build" {
   default = {}
 }
 

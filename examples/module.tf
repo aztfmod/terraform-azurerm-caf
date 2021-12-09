@@ -204,7 +204,7 @@ module "example" {
     monitor_action_groups      = var.monitor_action_groups
     monitor_autoscale_settings = var.monitor_autoscale_settings
     monitoring                 = var.monitoring
-    packer_managed_identity    = var.packer_managed_identity
+    packer_build               = var.packer_build
     packer_service_principal   = var.packer_service_principal
     recovery_vaults            = var.recovery_vaults
     shared_image_galleries     = var.shared_image_galleries
