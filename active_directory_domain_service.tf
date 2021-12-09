@@ -3,7 +3,7 @@ module "active_directory_domain_service" {
   for_each = local.identity.active_directory_domain_service
 
   # to destroy azuread_group at last
-  depends_on = [module.azuread_groups]
+  depends_on = [module.azuread_groups, module.azuread_service_principals]
 
   global_settings = local.global_settings
   client_config   = local.client_config
