@@ -28,8 +28,7 @@ app_service_plans = {
     name               = "azure-functions-test-service-plan"
     resource_group_key = "rg1"
     region             = "region1"
-    kind               = "Linux"
-    reserved           = true
+    kind               = "functionapp"
 
     sku = {
       tier = "Dynamic"
@@ -46,7 +45,6 @@ function_apps = {
     app_service_plan_key = "asp1"
     storage_account_key  = "sa1"
     settings = {
-      os_type = "linux"
       version = "~3"
     }
   }
