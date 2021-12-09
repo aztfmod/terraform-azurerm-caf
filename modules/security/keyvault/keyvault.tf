@@ -55,4 +55,10 @@ resource "azurerm_key_vault" "keyvault" {
       phone = try(contact.value.phone, null)
     }
   }
+
+  lifecycle {
+    ignore_changes = [
+      resource_group_name, location
+    ]
+  }
 }
