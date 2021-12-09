@@ -10,7 +10,7 @@ resource "azurerm_data_protection_backup_instance_blob_storage" "backup_vault_in
   backup_policy_id   = azurerm_data_protection_backup_policy_blob_storage.backup_vault_policy[each.value.backup_vault_policy_key].id #module.backup_vault_policy[each.value].id 
 }
 resource "time_sleep" "delay_create" {
-  depends_on = [azurerm_recovery_services_vault.asr]
+  depends_on = [azurerm_data_protection_backup_instance_blob_storage.backup_vault_instance]
 
   create_duration = "60s"
 }
