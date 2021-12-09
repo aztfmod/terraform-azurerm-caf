@@ -38,38 +38,6 @@ keyvaults = {
       }
     }
   }
-  sql_cred_kv = {
-    name                     = "sqlsecretkv"
-    resource_group_key       = "rg1"
-    sku_name                 = "standard"
-    soft_delete_enabled      = true
-    purge_protection_enabled = false
-    tags = {
-      env = "Standalone"
-    }
-    creation_policies = {
-      logged_in_user = {
-        secret_permissions = ["Set", "Get", "List", "Delete", "Purge", "Recover"]
-        key_permissions    = ["Get", "List", "Update", "Create", "Import", "Delete", "Recover", "Backup", "Restore", "Decrypt", "Encrypt", "UnwrapKey", "WrapKey", "Verify", "Sign", "Purge"]
-      }
-    }
-  }
-  sp_secrets = {
-    name                     = "spsecretkv"
-    resource_group_key       = "rg1"
-    sku_name                 = "standard"
-    soft_delete_enabled      = true
-    purge_protection_enabled = false
-    tags = {
-      env = "Standalone"
-    }
-    creation_policies = {
-      logged_in_user = {
-        secret_permissions = ["Set", "Get", "List", "Delete", "Purge", "Recover"]
-        key_permissions    = ["Get", "List", "Update", "Create", "Import", "Delete", "Recover", "Backup", "Restore", "Decrypt", "Encrypt", "UnwrapKey", "WrapKey", "Verify", "Sign", "Purge"]
-      }
-    }
-  }
 }
 
 dynamic_keyvault_secrets = {
@@ -98,11 +66,11 @@ dynamic_keyvault_secrets = {
   sp_secrets = {
     sp-client-id = {
       secret_name = "sp-client-id"
-      value       = ""
+      value       = "" # to be added in portal after creation
     }
     sp-client-secret = {
       secret_name = "sp-client-secret"
-      value       = ""
+      value       = "" # to be added in portal after creation
     }
   }
 }
@@ -211,23 +179,23 @@ virtual_machines = {
             sql_credential = {
               # lz_key           = ""
               keyvault_key     = "kv1"
+              # keyvault_secret_name = "" # use this if need to specify secret name for password
               sql_username_key = "sql-username"
-              sql_password_key = "sql-password"
+              # sql_password_key = "sql-password" # if not specified, password will be auto-generated
+
             }
 
-            # To be implemented in 5.5. Do not uncomment
             # keyvault_credential = {
             #   name = "sqlkv_credentials"
             #   # lz_key       = ""
-            #   keyvault_key = "sql_cred_kv"  # get url from here
+            #   keyvault_key = "sql_cred_kv" # get url from here
             #   service_principal_secrets = { # sp secret to access the kv above
             #     # lz_key = ""
-            #     keyvault_key         = "sp_secrets" # get url from here
-            #     sp_client_id_key     = "sp-client-id"
+            #     keyvault_key = "sp_secrets" # get url from here
+            #     sp_client_id_key = "sp-client-id"
             #     sp_client_secret_key = "sp-client-secret"
             #   }
             # }
-
           }
 
           auto_patching = {
@@ -241,7 +209,7 @@ virtual_machines = {
             encryption_password = {
               # lz_key = ""
               keyvault_key            = "kv1"
-              encryption_password_key = "encryption-password"
+              # encryption_password_key = "encryption-password"
             }
             retention_period_in_days = 7
             storage_account = {
