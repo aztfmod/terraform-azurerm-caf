@@ -10,8 +10,8 @@ module "servicebus_queues" {
   remote_objects = {
     resource_groups       = local.combined_objects_resource_groups
     servicebus_namespaces = local.combined_objects_servicebus_namespaces
-    servicebus_queues     = var.remote_objects.servicebus_queues
-    servicebus_topics     = var.remote_objects.servicebus_topics
+    servicebus_queues     = try(var.remote_objects.servicebus_queues, null)
+    servicebus_topics     = try(var.remote_objects.servicebus_topics, null)
   }
 }
 
