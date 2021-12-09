@@ -99,12 +99,12 @@ resource "azurerm_function_app" "function_app" {
     }
   }
 
-  dynamic "identity" {
+    dynamic "identity" {
     for_each = try(var.identity, null) == null ? [] : [1]
 
     content {
-      type         = "UserAssigned"
-      identity_ids = local.managed_identities
+      type         = var.identity.type
+      identity_ids = lower(var.identity.type) == "userassigned" ? local.managed_identities : null
     }
   }
 
