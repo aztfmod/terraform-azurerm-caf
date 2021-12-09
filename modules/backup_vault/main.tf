@@ -16,7 +16,7 @@ terraform {
 }
 
 resource "time_sleep" "delay_create" {
-  depends_on = [azurerm_data_protection_backup_instance_blob_storage.backup_vault.instance]
+  depends_on = [azurerm_data_protection_backup_instance_blob_storage.backup_vault_instance]
 
   create_duration = "30s"
 }
