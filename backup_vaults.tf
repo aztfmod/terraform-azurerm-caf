@@ -11,7 +11,7 @@ module "backup_vaults" {
   location            = lookup(each.value, "region", null) == null ? local.resource_groups[each.value.resource_group_key].location : local.global_settings.regions[each.value.region]
   base_tags           = try(local.global_settings.inherit_tags, false) ? local.resource_groups[each.value.resource_group_key].tags : {}
   storage_accounts    = module.storage_accounts
-  depends_on          = [module.role_assignment]
+  depends_on          = [module.roles]
 }
 
 output "backup_vaults" {
