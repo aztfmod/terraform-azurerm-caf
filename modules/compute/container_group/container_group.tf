@@ -13,7 +13,7 @@ data "azurerm_key_vault_secret" "image_registry_credential_password" {
     for irc_key, irc in try(var.settings.image_registry_credentials,{}) : irc_key => irc if try(irc.keyvault_key, null) != null
   }
   key_vault_id = try(var.combined_resources.keyvaults[try(each.value.lz_key, var.client_config.landingzone_key)][each.value.keyvault_key].id, null)
-  name         = try(try(var.dynamic_keyvault_secrets[each.value.keyvault_key][each.value.password_secret_key].secret_name, each.value.password_secret_name), null)
+  name         = try(var.dynamic_keyvault_secrets[each.value.keyvault_key][each.value.password_secret_key].secret_name, each.value.password_secret_name, null)
 }
 
 data "azurerm_key_vault_secret" "image_registry_credential_username" {
@@ -21,7 +21,7 @@ data "azurerm_key_vault_secret" "image_registry_credential_username" {
     for irc_key, irc in try(var.settings.image_registry_credentials, {}) : irc_key => irc if try(irc.keyvault_key, null) != null
   }
   key_vault_id = try(var.combined_resources.keyvaults[try(each.value.lz_key, var.client_config.landingzone_key)][each.value.keyvault_key].id, null)
-  name         = try(try(var.dynamic_keyvault_secrets[each.value.keyvault_key][each.value.username_secret_key].secret_name, each.value.username_secret_name), null)
+  name         = try(var.dynamic_keyvault_secrets[each.value.keyvault_key][each.value.username_secret_key].secret_name, each.value.username_secret_name, null)
 }
 
 resource "azurerm_container_group" "acg" {
@@ -161,8 +161,8 @@ resource "azurerm_container_group" "acg" {
     for_each = try(var.settings.image_registry_credentials, {})
     content {
       server = image_registry_credential.value.server
-      username = try(image_registry_credential.value.username,data.azurerm_key_vault_secret.image_registry_credential_username[image_registry_credential.key].value)
-      password = try(image_registry_credential.value.password,data.azurerm_key_vault_secret.image_registry_credential_password[image_registry_credential.key].value)
+      username = try(data.azurerm_key_vault_secret.image_registry_credential_username[image_registry_credential.key].value, image_registry_credential.value.username)
+      password = try(data.azurerm_key_vault_secret.image_registry_credential_password[image_registry_credential.key].value, image_registry_credential.value.password)
     }
   }
 
