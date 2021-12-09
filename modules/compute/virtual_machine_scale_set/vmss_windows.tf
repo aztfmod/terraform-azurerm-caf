@@ -258,7 +258,7 @@ resource "azurerm_windows_virtual_machine_scale_set" "vmss" {
       certificate_url = try(each.value.winrm.enable_self_signed, false) ? azurerm_key_vault_certificate.self_signed_winrm[each.key].secret_id : each.value.winrm.certificate_url
     }
   }
-  
+
   dynamic "automatic_instance_repair" {
     for_each = try(each.value.automatic_instance_repair, false) == false ? [] : [1]
     content {
@@ -267,7 +267,7 @@ resource "azurerm_windows_virtual_machine_scale_set" "vmss" {
     }
   }
 
-  health_probe_id = var.load_balancers[try(each.value.lz_key, var.client_config.landingzone_key)][each.value.health_probe.loadbalancer_key].probes[each.value.health_probe.probe_key].id
+  health_probe_id = try(var.load_balancers[try(each.value.lz_key, var.client_config.landingzone_key)][each.value.health_probe.loadbalancer_key].probes[each.value.health_probe.probe_key].id, null)
 
   lifecycle {
     ignore_changes = [
