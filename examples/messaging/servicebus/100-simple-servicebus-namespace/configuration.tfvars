@@ -19,9 +19,9 @@ service_bus_namespaces = {
     resource_group_key = "sb_examples"
     sku                = "Standard"
     region             = "region1"
-    capacity           = 1              # Optional: capacity attribute can only be used with Premium sku. Possible values 1,2,4,8 or 16
-    zone_redundant     = true           # Optional: zone_redundant attribute can only be used with Premium sku. Defaults to false
-    tags {
+    capacity           = 1    # Optional: capacity attribute can only be used with Premium sku. Possible values 1,2,4,8 or 16
+    zone_redundant     = true # Optional: zone_redundant attribute can only be used with Premium sku. Defaults to false
+    tags = {
       "environment" = "Dev"
     }
   }

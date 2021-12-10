@@ -41,7 +41,7 @@ function_apps = {
     settings = {
       vnet_key   = "spoke"
       subnet_key = "app"
-
+      #subnet_id = "/subscriptions/97958dac-xxxx-xxxx-xxxx-9f436fa73bd4/resourceGroups/jana-rg-spoke/providers/Microsoft.Network/virtualNetworks/jana-vnet-spoke/subnets/jana-snet-app"
       enabled = true
     }
   }
@@ -79,6 +79,11 @@ vnets = {
       app = {
         name = "app"
         cidr = ["10.1.0.0/28"]
+        delegation = {
+          name               = "functions"
+          service_delegation = "Microsoft.Web/serverFarms"
+          actions            = ["Microsoft.Network/virtualNetworks/subnets/action"]
+        }
       }
     }
 

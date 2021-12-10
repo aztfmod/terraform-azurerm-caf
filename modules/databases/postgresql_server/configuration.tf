@@ -4,7 +4,7 @@
 resource "time_sleep" "wait_propagation" {
   depends_on = [azurerm_postgresql_server.postgresql]
 
-  create_duration = "300s"
+  create_duration = "120s"
 }
 
 resource "azurerm_postgresql_configuration" "postgresql_configuration" {

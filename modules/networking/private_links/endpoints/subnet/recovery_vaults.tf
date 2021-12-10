@@ -14,7 +14,7 @@ module "recovery_vault" {
   resource_id         = can(each.value.resource_id) ? each.value.resource_id : var.remote_objects.recovery_vaults[var.client_config.landingzone_key][each.key].id
   settings            = each.value
   subnet_id           = var.subnet_id
-  subresource_names   = ["AzureSiteRecovery"]
+  subresource_names   = toset(try(each.value.private_service_connection.subresource_names, ["AzureSiteRecovery"]))
 }
 module "recovery_vault_remote" {
   source = "../private_endpoint"
@@ -32,5 +32,5 @@ module "recovery_vault_remote" {
   resource_id         = var.remote_objects.recovery_vaults[var.client_config.landingzone_key][each.key].id
   settings            = each.value
   subnet_id           = var.subnet_id
-  subresource_names   = ["AzureSiteRecovery"]
+  subresource_names   = toset(try(each.value.private_service_connection.subresource_names, ["AzureSiteRecovery"]))
 }
