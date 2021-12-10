@@ -11,3 +11,4 @@ variable "export_policy_rule" {
 variable "tags" {
   default = {}
 }
+variable "global_settings" {}

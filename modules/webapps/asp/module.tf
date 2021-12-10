@@ -14,7 +14,7 @@ resource "azurerm_app_service_plan" "asp" {
   name                         = azurecaf_name.plan.result
   location                     = var.location
   resource_group_name          = var.resource_group_name
-  kind                         = var.kind
+  kind                         = try(var.kind, null)
   maximum_elastic_worker_count = lookup(var.settings, "maximum_elastic_worker_count", null)
 
   # For kind=Linux must be set to true and for kind=Windows must be set to false

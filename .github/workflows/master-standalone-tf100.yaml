@@ -7,8 +7,6 @@ name: standalone-scenario-tf100
 
 on:
   workflow_dispatch:
-  schedule:
-    - cron:  '0 0 * * *' #Midnight everyday
 
 env:
   TF_CLI_ARGS: '-no-color'
@@ -17,6 +15,8 @@ env:
   ARM_CLIENT_ID: ${{ secrets.ARM_CLIENT_ID }}
   ARM_SUBSCRIPTION_ID: ${{ secrets.ARM_SUBSCRIPTION_ID }}
   ARM_TENANT_ID: ${{ secrets.ARM_TENANT_ID }}
+  TF_REGISTRY_DISCOVERY_RETRY: 5
+  TF_REGISTRY_CLIENT_TIMEOUT: 15
   ROVER_RUNNER: true
 
 jobs:
@@ -42,7 +42,7 @@ jobs:
       matrix: ${{fromJSON(needs.load_scenarios.outputs.matrix)}}
 
     container:
-      image: aztfmod/rover-preview:1.0.10-2111.100347
+      image: aztfmod/rover:1.0.11-2112.0809
       options: --user 0
 
     steps:
@@ -67,7 +67,7 @@ jobs:
     needs: examples
 
     container:
-      image: aztfmod/rover-preview:1.0.10-2111.100347
+      image: aztfmod/rover:1.0.11-2112.0809
       options: --user 0
 
     steps:

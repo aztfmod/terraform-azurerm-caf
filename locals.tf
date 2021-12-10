@@ -139,12 +139,13 @@ locals {
     }
     linked_services = {
       azure_blob_storage = try(var.data_factory.linked_services.azure_blob_storage, {})
+      azure_databricks   = try(var.data_factory.linked_services.azure_databricks, {})
       cosmosdb           = try(var.data_factory.linked_services.cosmosdb, {})
-      web                = try(var.data_factory.linked_services.web, {})
+      key_vault          = try(var.data_factory.linked_services.key_vault, {})
       mysql              = try(var.data_factory.linked_services.mysql, {})
       postgresql         = try(var.data_factory.linked_services.postgresql, {})
       sql_server         = try(var.data_factory.linked_services.sql_server, {})
-      azure_databricks   = try(var.data_factory.linked_services.azure_databricks, {})
+      web                = try(var.data_factory.linked_services.web, {})
     }
   }
 
@@ -215,6 +216,8 @@ locals {
     azurerm_firewall_policy_rule_collection_groups          = try(var.networking.azurerm_firewall_policy_rule_collection_groups, {})
     azurerm_firewalls                                       = try(var.networking.azurerm_firewalls, {})
     azurerm_routes                                          = try(var.networking.azurerm_routes, {})
+    cdn_profile                                             = try(var.networking.cdn_profile, {})
+    cdn_endpoint                                            = try(var.networking.cdn_endpoint, {})
     ddos_services                                           = try(var.networking.ddos_services, {})
     dns_zone_records                                        = try(var.networking.dns_zone_records, {})
     dns_zones                                               = try(var.networking.dns_zones, {})
@@ -254,6 +257,11 @@ locals {
 
   object_id = coalesce(var.logged_user_objectId, var.logged_aad_app_objectId, try(data.azurerm_client_config.current.object_id, null), try(data.azuread_service_principal.logged_in_app.0.object_id, null))
 
+  servicebus = {
+    servicebus_namespaces = try(var.servicebus.servicebus_namespaces, {})
+    servicebus_queues     = try(var.servicebus.servicebus_queues, {})
+    servicebus_topics     = try(var.servicebus.servicebus_topics, {})
+  }
   security = {
     disk_encryption_sets          = try(var.security.disk_encryption_sets, {})
     dynamic_keyvault_secrets      = try(var.security.dynamic_keyvault_secrets, {})
@@ -265,15 +273,16 @@ locals {
   }
 
   shared_services = {
-    automations              = try(var.shared_services.automations, {})
-    consumption_budgets      = try(var.shared_services.consumption_budgets, {})
-    image_definitions        = try(var.shared_services.image_definitions, {})
-    monitor_action_groups    = try(var.shared_services.monitor_action_groups, {})
-    monitoring               = try(var.shared_services.monitoring, {})
-    packer_managed_identity  = try(var.shared_services.packer_managed_identity, {})
-    packer_service_principal = try(var.shared_services.packer_service_principal, {})
-    recovery_vaults          = try(var.shared_services.recovery_vaults, {})
-    shared_image_galleries   = try(var.shared_services.shared_image_galleries, {})
+    automations                = try(var.shared_services.automations, {})
+    consumption_budgets        = try(var.shared_services.consumption_budgets, {})
+    image_definitions          = try(var.shared_services.image_definitions, {})
+    monitor_autoscale_settings = try(var.shared_services.monitor_autoscale_settings, {})
+    monitor_action_groups      = try(var.shared_services.monitor_action_groups, {})
+    monitoring                 = try(var.shared_services.monitoring, {})
+    packer_managed_identity    = try(var.shared_services.packer_managed_identity, {})
+    packer_service_principal   = try(var.shared_services.packer_service_principal, {})
+    recovery_vaults            = try(var.shared_services.recovery_vaults, {})
+    shared_image_galleries     = try(var.shared_services.shared_image_galleries, {})
   }
 
   storage = {
@@ -294,6 +303,11 @@ locals {
   enable = {
     bastion_hosts    = try(var.enable.bastion_hosts, true)
     virtual_machines = try(var.enable.virtual_machines, true)
+  }
+
+  identity = {
+    active_directory_domain_service             = try(var.identity.active_directory_domain_service, {})
+    active_directory_domain_service_replica_set = try(var.identity.active_directory_domain_service_replica_set, {})
   }
 
 }

@@ -16,8 +16,13 @@ module "mssql_managed_instances" {
   settings            = each.value
   resource_group_name = local.combined_objects_resource_groups[try(each.value.lz_key, local.client_config.landingzone_key)][each.value.resource_group_key].name
   location            = try(local.global_settings.regions[each.value.region], local.combined_objects_resource_groups[try(each.value.lz_key, local.client_config.landingzone_key)][each.value.resource_group_key].location)
-  subnet_id           = local.combined_objects_networking[try(each.value.networking.lz_key, local.client_config.landingzone_key)][each.value.networking.vnet_key].subnets[each.value.networking.subnet_key].id
-  base_tags           = try(local.global_settings.inherit_tags, false) ? local.resource_groups[each.value.resource_group_key].tags : {}
+  subnet_id = try(
+    each.value.subnet_id,
+    local.combined_objects_networking[each.value.settings.lz_key][each.value.settings.vnet_key].subnets[each.value.settings.subnet_key].id,
+    local.combined_objects_networking[local.client_config.landingzone_key][each.value.settings.vnet_key].subnets[each.value.settings.subnet_key].id,
+    null
+  )
+  base_tags = try(local.global_settings.inherit_tags, false) ? local.resource_groups[each.value.resource_group_key].tags : {}
   keyvault_id = coalesce(
     try(each.value.administrator_login_password, null),
     try(module.keyvaults[each.value.keyvault_key].id, null),
@@ -35,10 +40,15 @@ module "mssql_managed_instances_secondary" {
   settings            = each.value
   resource_group_name = local.combined_objects_resource_groups[try(each.value.lz_key, local.client_config.landingzone_key)][each.value.resource_group_key].name
   location            = try(local.global_settings.regions[each.value.region], local.combined_objects_resource_groups[try(each.value.lz_key, local.client_config.landingzone_key)][each.value.resource_group_key].location)
-  subnet_id           = local.combined_objects_networking[try(each.value.networking.lz_key, local.client_config.landingzone_key)][each.value.networking.vnet_key].subnets[each.value.networking.subnet_key].id
-  primary_server_id   = module.mssql_managed_instances[each.value.primary_server.mi_server_key].id
-  base_tags           = try(local.global_settings.inherit_tags, false) ? local.resource_groups[each.value.resource_group_key].tags : {}
-  keyvault_id         = try(each.value.administratorLoginPassword, null) == null ? module.keyvaults[each.value.keyvault_key].id : null
+  subnet_id = try(
+    each.value.subnet_id,
+    local.combined_objects_networking[each.value.settings.lz_key][each.value.settings.vnet_key].subnets[each.value.settings.subnet_key].id,
+    local.combined_objects_networking[local.client_config.landingzone_key][each.value.settings.vnet_key].subnets[each.value.settings.subnet_key].id,
+    null
+  )
+  primary_server_id = module.mssql_managed_instances[each.value.primary_server.mi_server_key].id
+  base_tags         = try(local.global_settings.inherit_tags, false) ? local.resource_groups[each.value.resource_group_key].tags : {}
+  keyvault_id       = try(each.value.administratorLoginPassword, null) == null ? module.keyvaults[each.value.keyvault_key].id : null
 }
 
 module "mssql_mi_failover_groups" {
