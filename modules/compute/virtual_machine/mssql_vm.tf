@@ -32,7 +32,6 @@ resource "azurerm_mssql_virtual_machine" "mssqlvm" {
       encryption_enabled              = try(each.value.mssql_settings.auto_backup.encryption_password, null) != null ? true : false
       encryption_password             = try(each.value.mssql_settings.auto_backup.encryption_password, null) != null ? try(coalesce(
         try(random_password.encryption_password[each.key].result, null),
-        # try(data.external.generated_encryption_password[each.key].result.value, null)
         try(data.external.backup_encryption_password[each.key].result.value, null)
       ), null) : null
       retention_period_in_days        = each.value.mssql_settings.auto_backup.retention_period_in_days
@@ -172,21 +171,6 @@ data "external" "sql_password" {
   ]
 }
 
-# data "external" "generated_encryption_password" {
-#   for_each = {
-#     for key, value in try(var.settings.virtual_machine_settings, {}) : key => value
-#     if try(value.mssql_settings.auto_backup.encryption_password, null) != null && try(value.mssql_settings.auto_backup.encryption_password.encryption_password_key, null) == null
-#   }
-
-#   program = [
-#     "bash", "-c",
-#     format(
-#       "az keyvault secret show --name '%s' --vault-name '%s' --query '{value: value }' -o json",
-#       azurerm_key_vault_secret.backup_encryption_password[each.key].name,
-#       try(var.keyvaults[try(each.value.mssql_settings.auto_backup.encryption_password.lz_key, var.client_config.landingzone_key)][each.value.mssql_settings.auto_backup.encryption_password.keyvault_key].name, null)
-#     )
-#   ]
-# }
 
 data "external" "backup_encryption_password" {
   for_each = {
@@ -274,7 +258,9 @@ resource "azurerm_key_vault_secret" "sql_admin_password" {
 }
 
 resource "random_password" "encryption_password" {
-  for_each = try(var.settings.virtual_machine_settings, {})
+  for_each = try(var.settings.virtual_machine_settings, {}) 
+  # Encryption password must be generated on first apply thus condition is removed to ensure creation first.
+
   # for_each = {
   #   for key, value in try(var.settings.virtual_machine_settings, {}) : key => value
   #   if try(value.mssql_settings.auto_backup.encryption_password, null) != null && try(value.mssql_settings.auto_backup.encryption_password.encryption_password_key, null) == null
