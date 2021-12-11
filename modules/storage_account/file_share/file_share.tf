@@ -5,7 +5,22 @@ resource "azurerm_storage_share" "fs" {
   name                 = var.settings.name
   storage_account_name = var.storage_account_name
   quota                = try(var.settings.quota, null)
+  enabled_protocol     = try(var.settings.enabled_protocol, null)
   metadata             = try(var.settings.metadata, null)
+    dynamic "acl" {
+    for_each = try(var.settings.acl, {})
+    content {
+      id = acl.value.id
+      
+      dynamic "access_policy" {
+        content {
+          permissions = access_policy.value.permissions
+          start = try(access_policy.value.start, null)
+          expiry = try(access_policy.value.expiry, null)
+        }
+      }
+    }
+  }
 }
 
 # Issue open in 2.61 : https://github.com/terraform-providers/terraform-provider-azurerm/issues/11184
