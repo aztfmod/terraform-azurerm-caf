@@ -35,8 +35,7 @@ module "storage_accounts" {
 
 output "storage_accounts" {
   value = module.storage_accounts
-
-}
+ }
 
 resource "azurerm_storage_account_customer_managed_key" "cmk" {
   depends_on = [module.keyvault_access_policies]
