@@ -15,8 +15,8 @@ terraform {
   required_version = ">= 0.13"
 }
 
-resource "time_sleep" "delay_create" {
-  depends_on = [azurerm_data_protection_backup_policy_blob_storage.backup_vault_policy]
+# resource "time_sleep" "delay_create" {
+#   depends_on = [azurerm_data_protection_backup_policy_blob_storage.backup_vault_policy]
 
-  create_duration = "180s"
-}
+#   create_duration = "180s"
+# }
