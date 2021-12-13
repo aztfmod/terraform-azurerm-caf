@@ -37,5 +37,5 @@ output "rbac_id" {
   value       = try(azurerm_data_protection_backup_vault.backup_vault.identity.0.principal_id, null)
 }
 output "backup_vault_policies"{
-  value = azurerm_data_protection_backup_policy_blob_storage.backup_vault_policy[*].id
+  value = azurerm_data_protection_backup_policy_blob_storage.backup_vault_policy
 }
