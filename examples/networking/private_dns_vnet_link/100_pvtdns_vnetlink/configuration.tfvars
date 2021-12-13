@@ -14,12 +14,12 @@ resource_groups = {
 
 private_dns_vnet_links = {
   vnet_pvtdns_link1 = {
-    vnet_key           = "vnet_test"
+    vnet_key = "vnet_test"
     #lz_key = "remote landing zone key for vnet"
     private_dns_zones = {
       dns_zone1 = {
         name = "dns1-lnk"
-        key    = "dns1"
+        key  = "dns1"
         #lz_key = "provide the landing zone key of private dns zone"
       }
       # dns_zone2 = {

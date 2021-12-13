@@ -36,8 +36,8 @@ resource "azurecaf_name" "rg_node" {
 }
 
 
-# Needed as introduced in >2.79.1 - https://github.com/hashicorp/terraform-provider-azurerm/issues/13585  
- resource "null_resource" "aks_registration_preview" {
+# Needed as introduced in >2.79.1 - https://github.com/hashicorp/terraform-provider-azurerm/issues/13585
+resource "null_resource" "aks_registration_preview" {
   provisioner "local-exec" {
     command = "az feature register --namespace Microsoft.ContainerService -n AutoUpgradePreview"
   }
@@ -70,6 +70,7 @@ resource "azurerm_kubernetes_cluster" "aks" {
     node_taints                  = try(var.settings.default_node_pool.node_taints, null)
     orchestrator_version         = try(var.settings.default_node_pool.orchestrator_version, try(var.settings.kubernetes_version, null))
     tags                         = merge(try(var.settings.default_node_pool.tags, {}), local.tags)
+
     vnet_subnet_id = coalesce(
       try(var.subnets[var.settings.default_node_pool.subnet_key].id, ""),
       try(var.subnets[var.settings.default_node_pool.subnet.key].id, ""),
@@ -77,7 +78,9 @@ resource "azurerm_kubernetes_cluster" "aks" {
     )
   }
 
-  dns_prefix = try(var.settings.dns_prefix, random_string.prefix.result)
+  dns_prefix                 = try(var.settings.dns_prefix, try(var.settings.dns_prefix_private_cluster, random_string.prefix.result))
+  dns_prefix_private_cluster = try(var.settings.dns_prefix_private_cluster, null)
+  automatic_channel_upgrade  = try(var.settings.automatic_channel_upgrade, null)
 
   dynamic "addon_profile" {
     for_each = lookup(var.settings, "addon_profile", null) == null ? [] : [1]
@@ -133,10 +136,27 @@ resource "azurerm_kubernetes_cluster" "aks" {
           }
         }
       }
+
+      dynamic "ingress_application_gateway" {
+        for_each = can(var.settings.addon_profile.ingress_application_gateway) ? [var.settings.addon_profile.ingress_application_gateway] : []
+        content {
+          enabled      = ingress_application_gateway.value.enabled
+          gateway_name = try(ingress_application_gateway.value.gateway_name, null)
+          gateway_id   = try(ingress_application_gateway.value.gateway_id, try(var.application_gateway.id, null))
+          subnet_cidr  = try(ingress_application_gateway.value.subnet_cidr, null)
+          subnet_id    = try(ingress_application_gateway.value.subnet_id, null)
+        }
+      }
     }
   }
 
   api_server_authorized_ip_ranges = try(var.settings.api_server_authorized_ip_ranges, null)
+
+  disk_encryption_set_id = try(coalesce(
+    try(var.settings.disk_encryption_set_id, ""),
+    try(var.settings.disk_encryption_set.id, "")
+  ), null)
+
 
   dynamic "auto_scaler_profile" {
     for_each = try(var.settings.auto_scaler_profile[*], {})
@@ -153,8 +173,6 @@ resource "azurerm_kubernetes_cluster" "aks" {
       scale_down_utilization_threshold = try(auto_scaler_profile.value.scale_down_utilization_threshold, null)
     }
   }
-
-  disk_encryption_set_id = try(var.settings.disk_encryption_set_id, null)
 
   dynamic "identity" {
     for_each = try(var.settings.identity, null) == null ? [] : [1]
@@ -211,9 +229,9 @@ resource "azurerm_kubernetes_cluster" "aks" {
       dns_service_ip     = try(network_profile.value.dns_service_ip, null)
       docker_bridge_cidr = try(network_profile.value.docker_bridge_cidr, null)
       outbound_type      = try(network_profile.value.outbound_type, null)
-      pod_cidr           = try(network_profile.value.network_profile.pod_cidr, null)
-      service_cidr       = try(network_profile.value.network_profile.service_cidr, null)
-      load_balancer_sku  = try(network_profile.value.network_profile.load_balancer_sku, null)
+      pod_cidr           = try(network_profile.value.pod_cidr, null)
+      service_cidr       = try(network_profile.value.service_cidr, null)
+      load_balancer_sku  = try(network_profile.value.load_balancer_sku, null)
 
       dynamic "load_balancer_profile" {
         for_each = try(network_profile.value.load_balancer_profile[*], {})
@@ -233,7 +251,7 @@ resource "azurerm_kubernetes_cluster" "aks" {
 
   lifecycle {
     ignore_changes = [
-      windows_profile,
+      windows_profile, private_dns_zone_id
     ]
   }
   tags = merge(local.tags, lookup(var.settings, "tags", {}))

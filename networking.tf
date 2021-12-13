@@ -57,8 +57,8 @@ module "networking" {
 
 module "virtual_subnets" {
   depends_on = [module.networking]
-  source = "./modules/networking/virtual_network/subnet"
-  for_each = local.networking.virtual_subnets
+  source     = "./modules/networking/virtual_network/subnet"
+  for_each   = local.networking.virtual_subnets
 
   global_settings = local.global_settings
   settings        = each.value
@@ -69,15 +69,15 @@ module "virtual_subnets" {
   enforce_private_link_endpoint_network_policies = try(each.value.enforce_private_link_endpoint_network_policies, false)
   enforce_private_link_service_network_policies  = try(each.value.enforce_private_link_service_network_policies, false)
 
-  resource_group_name   = coalesce(
+  resource_group_name = coalesce(
     try(local.combined_objects_networking[each.value.vnet.lz_key][each.value.vnet.key].resource_group_name, null),
     try(local.combined_objects_networking[local.client_config.landingzone_key][each.value.vnet.key].resource_group_name, null),
-    try(split("/", each.value.vnet.id)[4],null)
+    try(split("/", each.value.vnet.id)[4], null)
   )
-  virtual_network_name  = coalesce(
+  virtual_network_name = coalesce(
     try(local.combined_objects_networking[each.value.vnet.lz_key][each.value.vnet.key].name, null),
     try(local.combined_objects_networking[local.client_config.landingzone_key][each.value.vnet.key].name, null),
-    try(split("/", each.value.vnet.id)[8],null)
+    try(split("/", each.value.vnet.id)[8], null)
   )
 }
 
