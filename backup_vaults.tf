@@ -21,7 +21,7 @@ module "backup_vault_instances" {
  source = "./modules/backup_vault/backup_vault_instance"
  for_each = var.backup_vault_instances
   
- settings           = each.value
+ backup_vault_instances           = each.value
 #  vault_id           = azurerm_data_protection_backup_vault.backup_vault.id
  vault_id           = module.backup_vaults[each.key].id
  location           = lookup(each.value, "region", null) == null ? local.resource_groups[each.value.resource_group_key].location : local.global_settings.regions[each.value.region]
