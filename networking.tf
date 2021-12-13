@@ -29,7 +29,7 @@ module "networking" {
 
   application_security_groups       = local.combined_objects_application_security_groups
   client_config                     = local.client_config
-  ddos_id                           = try(azurerm_network_ddos_protection_plan.ddos_protection_plan[each.value.ddos_services_key].id, "")
+  ddos_id                           = try(local.combined_objects_ddos_services[try(each.value.ddos_services_lz_key, local.client_config.landingzone_key)][try(each.value.ddos_services_key, each.value.ddos_services_key)].id, "")
   diagnostics                       = local.combined_diagnostics
   global_settings                   = local.global_settings
   network_security_groups           = module.network_security_groups
@@ -50,8 +50,8 @@ module "networking" {
 
 module "virtual_subnets" {
   depends_on = [module.networking]
-  source = "./modules/networking/virtual_network/subnet"
-  for_each = local.networking.virtual_subnets
+  source     = "./modules/networking/virtual_network/subnet"
+  for_each   = local.networking.virtual_subnets
 
   global_settings = local.global_settings
   settings        = each.value
@@ -62,15 +62,15 @@ module "virtual_subnets" {
   enforce_private_link_endpoint_network_policies = try(each.value.enforce_private_link_endpoint_network_policies, false)
   enforce_private_link_service_network_policies  = try(each.value.enforce_private_link_service_network_policies, false)
 
-  resource_group_name   = coalesce(
+  resource_group_name = coalesce(
     try(local.combined_objects_networking[each.value.vnet.lz_key][each.value.vnet.key].resource_group_name, null),
     try(local.combined_objects_networking[local.client_config.landingzone_key][each.value.vnet.key].resource_group_name, null),
-    try(split("/", each.value.vnet.id)[4],null)
+    try(split("/", each.value.vnet.id)[4], null)
   )
-  virtual_network_name  = coalesce(
+  virtual_network_name = coalesce(
     try(local.combined_objects_networking[each.value.vnet.lz_key][each.value.vnet.key].name, null),
     try(local.combined_objects_networking[local.client_config.landingzone_key][each.value.vnet.key].name, null),
-    try(split("/", each.value.vnet.id)[8],null)
+    try(split("/", each.value.vnet.id)[8], null)
   )
 }
 
@@ -274,6 +274,10 @@ resource "azurerm_network_ddos_protection_plan" "ddos_protection_plan" {
   location            = lookup(each.value, "region", null) == null ? local.combined_objects_resource_groups[try(each.value.lz_key, local.client_config.landingzone_key)][each.value.resource_group_key].location : local.global_settings.regions[each.value.region]
   resource_group_name = local.combined_objects_resource_groups[try(each.value.lz_key, local.client_config.landingzone_key)][each.value.resource_group_key].name
   tags                = try(local.global_settings.inherit_tags, false) ? merge(local.combined_objects_resource_groups[try(each.value.lz_key, local.client_config.landingzone_key)][each.value.resource_group_key].tags, each.value.tags) : try(each.value.tags, null)
+}
+
+output "ddos_services" {
+  value = azurerm_network_ddos_protection_plan.ddos_protection_plan
 }
 
 #

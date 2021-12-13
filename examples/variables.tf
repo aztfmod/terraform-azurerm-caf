@@ -324,6 +324,9 @@ variable "machine_learning_workspaces" {
 variable "monitor_action_groups" {
   default = {}
 }
+variable "monitor_autoscale_settings" {
+  default = {}
+}
 variable "monitoring" {
   default = {}
 }
@@ -564,6 +567,15 @@ variable "vpn_sites" {
 variable "vpn_gateway_connections" {
   default = {}
 }
+variable "servicebus_namespaces" {
+  default = {}
+}
+variable "servicebus_topics" {
+  default = {}
+}
+variable "servicebus_queues" {
+  default = {}
+}
 variable "storage_account_queues" {
   default = {}
 }
@@ -645,6 +657,9 @@ variable "data_factory_linked_service_postgresql" {
 variable "data_factory_linked_service_sql_server" {
   default = {}
 }
+variable "data_factory_linked_service_azure_databricks" {
+  default = {}
+}
 variable "integration_service_environment" {
   default = {}
 }
@@ -666,9 +681,36 @@ variable "logic_app_trigger_custom" {
 variable "private_dns_vnet_links" {
   default = {}
 }
+variable "communication_services" {
+  default = {}
+}
+variable "machine_learning_compute_instance" {
+  default = {}
+}
+variable "data_factory_integration_runtime_self_hosted" {
+  default = {}
+}
+variable "data_factory_integration_runtime_azure_ssis" {
+  default = {}
+}
 variable "frontdoor_rules_engine" {
   default = {}
 }
 variable "frontdoor_custom_https_configuration" {
+  default = {}
+}
+variable "cdn_endpoint" {
+  default = {}
+}
+variable "cdn_profile" {
+  default = {}
+}
+variable "function_apps" {
+  default = {}
+}
+variable "active_directory_domain_service" {
+  default = {}
+}
+variable "active_directory_domain_service_replica_set" {
   default = {}
 }

@@ -1,24 +1,27 @@
-
-# resource "azurecaf_name" "plan" {
-#   name          = var.name
-#   resource_type = "azurerm_function_app"
-#   prefixes      = var.global_settings.prefixes
-#   suffixes      = var.global_settings.suffixes
-#   random_length = var.global_settings.random_length
-#   clean_input   = true
-#   passthrough   = var.global_settings.passthrough
-#   use_slug      = var.global_settings.use_slug
-# }
+resource "azurecaf_name" "plan" {
+  name          = var.name
+  resource_type = "azurerm_function_app"
+  prefixes      = var.global_settings.prefixes
+  suffixes      = var.global_settings.suffixes
+  random_length = var.global_settings.random_length
+  clean_input   = true
+  passthrough   = var.global_settings.passthrough
+  use_slug      = var.global_settings.use_slug
+}
 
 resource "azurerm_function_app" "function_app" {
-  name                       = var.name
-  location                   = var.location
-  resource_group_name        = var.resource_group_name
-  app_service_plan_id        = var.app_service_plan_id
+  #To avoid redeploy with existing customer
+  lifecycle {
+    ignore_changes = [name]
+  }
+  name                = azurecaf_name.plan.result
+  location            = var.location
+  resource_group_name = var.resource_group_name
+  app_service_plan_id = var.app_service_plan_id
   # client_affinity_enabled    = lookup(var.settings, "client_affinity_enabled", null) deprecated in azurerm >2.81.0
-  enabled                    = lookup(var.settings, "enabled", null)
-  https_only                 = lookup(var.settings, "https_only", null)
-  os_type                    = lookup(var.settings, "os_type", "linux")
+  enabled                    = try(var.settings.enabled, null)
+  https_only                 = try(var.settings.https_only, null)
+  os_type                    = try(var.settings.os_type, null)
   storage_account_name       = var.storage_account_name
   storage_account_access_key = var.storage_account_access_key
   tags                       = local.tags
@@ -113,43 +116,60 @@ resource "azurerm_function_app" "function_app" {
     for_each = lookup(var.settings, "site_config", {}) != {} ? [1] : []
 
     content {
-      # numberOfWorkers           = lookup(each.value.site_config, "numberOfWorkers", 1)  # defined in ARM template below
-      always_on = lookup(var.settings.site_config, "always_on", false)
-      #app_command_line          = lookup(var.settings.site_config, "app_command_line", null)
-      #default_documents         = lookup(var.settings.site_config, "default_documents", null)
-      #dotnet_framework_version  = lookup(var.settings.site_config, "dotnet_framework_version", null)
-      ftps_state    = lookup(var.settings.site_config, "ftps_state", "FtpsOnly")
-      http2_enabled = lookup(var.settings.site_config, "http2_enabled", false)
-      #java_version              = lookup(var.settings.site_config, "java_version", null)
-      #java_container            = lookup(var.settings.site_config, "java_container", null)
-      #java_container_version    = lookup(var.settings.site_config, "java_container_version", null)
-      #local_mysql_enabled       = lookup(var.settings.site_config, "local_mysql_enabled", null)
-      linux_fx_version = lookup(var.settings.site_config, "linux_fx_version", null)
-      #windows_fx_version        = lookup(var.settings.site_config, "windows_fx_version", null)
-      #managed_pipeline_mode     = lookup(var.settings.site_config, "managed_pipeline_mode", null)
-      min_tls_version = lookup(var.settings.site_config, "min_tls_version", "1.2")
-      #php_version               = lookup(var.settings.site_config, "php_version", null)
-      #python_version            = lookup(var.settings.site_config, "python_version", null)
-      #remote_debugging_enabled  = lookup(var.settings.site_config, "remote_debugging_enabled", null)
-      #remote_debugging_version  = lookup(var.settings.site_config, "remote_debugging_version", null)
-      use_32_bit_worker_process = lookup(var.settings.site_config, "use_32_bit_worker_process", false)
-      websockets_enabled        = lookup(var.settings.site_config, "websockets_enabled", false)
-      scm_type                  = lookup(var.settings.site_config, "scm_type", null)
+      always_on                        = lookup(var.settings.site_config, "always_on", false)
+      app_scale_limit                  = lookup(var.settings.site_config, "app_scale_limit", null)
+      elastic_instance_minimum         = lookup(var.settings.site_config, "elastic_instance_minimum", null)
+      health_check_path                = lookup(var.settings.site_config, "health_check_path", null)
+      min_tls_version                  = lookup(var.settings.site_config, "min_tls_version", null)
+      pre_warmed_instance_count        = lookup(var.settings.site_config, "pre_warmed_instance_count", null)
+      runtime_scale_monitoring_enabled = lookup(var.settings.site_config, "runtime_scale_monitoring_enabled", null)
+      dotnet_framework_version         = lookup(var.settings.site_config, "dotnet_framework_version", null)
+      ftps_state                       = lookup(var.settings.site_config, "ftps_state", null)
+      http2_enabled                    = lookup(var.settings.site_config, "http2_enabled", null)
+      java_version                     = lookup(var.settings.site_config, "java_version", null)
+      linux_fx_version                 = lookup(var.settings.site_config, "linux_fx_version", null)
+      use_32_bit_worker_process        = lookup(var.settings.site_config, "use_32_bit_worker_process", null)
+      websockets_enabled               = lookup(var.settings.site_config, "websockets_enabled", null)
+      scm_type                         = lookup(var.settings.site_config, "scm_type", null)
+      scm_use_main_ip_restriction      = lookup(var.settings.site_config, "scm_use_main_ip_restriction", null)
+      vnet_route_all_enabled           = lookup(var.settings.site_config, "vnet_route_all_enabled", null)
 
       dynamic "cors" {
-        for_each = lookup(var.settings.site_config, "cors", {}) != {} ? [1] : []
+        for_each = try(var.settings.site_config.cors, {})
 
         content {
-          allowed_origins     = lookup(var.settings.site_config.cors, "allowed_origins", null)
-          support_credentials = lookup(var.settings.site_config.cors, "support_credentials", null)
+          allowed_origins     = lookup(cors, "allowed_origins", null)
+          support_credentials = lookup(cors, "support_credentials", null)
         }
       }
       dynamic "ip_restriction" {
-        for_each = lookup(var.settings.site_config, "ip_restriction", {}) != {} ? [1] : []
+        for_each = try(var.settings.site_config.ip_restriction, {})
 
         content {
-          ip_address                = lookup(var.settings.site_config.ip_restriction, "ip_address", null)
-          virtual_network_subnet_id = lookup(var.settings.site_config.ip_restriction, "virtual_network_subnet_id", null)
+          ip_address                = lookup(ip_restriction, "ip_address", null)
+          virtual_network_subnet_id = lookup(ip_restriction, "virtual_network_subnet_id", null)
+        }
+      }
+      dynamic "scm_ip_restriction" {
+        for_each = try(var.settings.site_config.scm_ip_restriction, {})
+
+        content {
+          ip_address                = lookup(scm_ip_restriction, "ip_address", null)
+          service_tag               = lookup(scm_ip_restriction, "service_tag", null)
+          virtual_network_subnet_id = lookup(scm_ip_restriction, "virtual_network_subnet_id", null)
+          name                      = lookup(scm_ip_restriction, "name", null)
+          priority                  = lookup(scm_ip_restriction, "priority", null)
+          action                    = lookup(scm_ip_restriction, "action", null)
+          dynamic "headers" {
+            for_each = try(scm_ip_restriction.headers, {})
+
+            content {
+              x_azure_fdid      = lookup(headers, "x_azure_fdid", null)
+              x_fd_health_probe = lookup(headers, "x_fd_health_probe", null)
+              x_forwarded_for   = lookup(headers, "x_forwarded_for", null)
+              x_forwarded_host  = lookup(headers, "x_forwarded_host", null)
+            }
+          }
         }
       }
     }
@@ -169,9 +189,11 @@ resource "azurerm_function_app" "function_app" {
 }
 
 resource "azurerm_app_service_virtual_network_swift_connection" "vnet_config" {
-  depends_on = [azurerm_function_app.function_app]
-  count      = try(var.subnet_id, null) == null ? 0 : 1
-
+  depends_on     = [azurerm_function_app.function_app]
+  count          = lookup(var.settings, "subnet_key", null) == null && lookup(var.settings, "subnet_id", null) == null ? 0 : 1
   app_service_id = azurerm_function_app.function_app.id
-  subnet_id      = var.subnet_id
+  subnet_id = coalesce(
+    try(var.remote_objects.subnets[var.settings.subnet_key].id, null),
+    try(var.settings.subnet_id, null)
+  )
 }

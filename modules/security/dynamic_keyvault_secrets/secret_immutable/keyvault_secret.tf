@@ -6,7 +6,7 @@ resource "azurerm_key_vault_secret" "secret" {
 
   lifecycle {
     ignore_changes = [
-      value
+      value, key_vault_id
     ]
   }
 }

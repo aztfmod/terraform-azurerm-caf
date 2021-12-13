@@ -6,11 +6,17 @@ variable "name" {
 }
 
 variable "resource_group_name" {
-  description = "(Required) The name of the resource group. Changing this forces a new resource to be created."
+  description = "The name of the resource group. Changing this forces a new resource to be created."
+  default     = null
+}
+variable "resource_groups" {
+  description = "The combined_objects of the resource groups. Changing this forces a new resource to be created."
+  default     = {}
 }
 
 variable "location" {
-  description = "(Required) Specifies the supported Azure location where the resource exists. Changing this forces a new resource to be created."
+  description = "Specifies the supported Azure location where the resource exists. Changing this forces a new resource to be created."
+  default     = null
 }
 
 variable "subnet_id" {}

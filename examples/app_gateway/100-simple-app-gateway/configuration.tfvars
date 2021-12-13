@@ -34,11 +34,15 @@ application_gateways = {
       public = {
         name          = "public"
         public_ip_key = "example_agw_pip1_rg1"
+        #subnet_id = "/subscriptions/97958dac-xxxx-xxxx-xxxx-9f436fa73bd4/resourceGroups/vupf-rg-example-agw/providers/Microsoft.Network/virtualNetworks/vupf-vnet-app_gateway_vnet/subnets/vupf-snet-app_gateway_subnet"
+        #public_ip_id = "/subscriptions/97958dac-xxxx-xxxx-xxxx-9f436fa73bd4/resourceGroups/vupf-rg-example-agw/providers/Microsoft.Network/publicIPAddresses/vupf-pip-example_agw_pip1"
       }
       private = {
-        name                          = "private"
-        vnet_key                      = "vnet_region1"
-        subnet_key                    = "app-gateway-subnet"
+        name       = "private"
+        vnet_key   = "vnet_region1"
+        subnet_key = "app-gateway-subnet"
+        #subnet_id                     = "/subscriptions/97958dac-xxxx-xxxx-xxxx-9f436fa73bd4/resourceGroups/vupf-rg-example-agw/providers/Microsoft.Network/virtualNetworks/vupf-vnet-app_gateway_vnet/subnets/vupf-snet-app_gateway_subnet"
+        #subnet_cidr                   = "10.100.100.0/25"
         subnet_cidr_index             = 0 # It is possible to have more than one cidr block per subnet
         private_ip_offset             = 4 # e.g. cidrhost(10.10.0.0/25,4) = 10.10.0.4 => AGW private IP address
         private_ip_address_allocation = "Static"
