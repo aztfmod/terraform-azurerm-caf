@@ -3,8 +3,7 @@ resource "azurerm_key_vault_certificate" "cert" {
 
   name         = var.settings.name
   key_vault_id = var.keyvault.id
-  # Disabled inherited tags as it may have exceed limit of 15 tags on cert that gives badparameter error
-  tags = try(var.settings.cert_tags, null)
+  tags         = merge(var.settings.tags, var.keyvault.base_tags)
 
   certificate_policy {
     issuer_parameters {

@@ -39,16 +39,15 @@ azure_container_registries = {
       }
     }
 
-    private_endpoints = {
+    private_links = {
       hub_rg1-jumphost = {
         name               = "acr-test-private-link"
         resource_group_key = "vnet_region1"
         vnet_key           = "hub_rg1"
         subnet_key         = "jumphost"
         private_service_connection = {
-          name                 = "acr-private-link"
+          name                 = "acr-test-private-link-psc"
           is_manual_connection = false
-          subresource_names    = ["registry"]
         }
       }
     }
@@ -76,10 +75,9 @@ vnets = {
     specialsubnets = {}
     subnets = {
       jumphost = {
-        name                                           = "jumphost"
-        cidr                                           = ["100.64.103.0/27"]
-        service_endpoint                               = ["Microsoft.ContainerRegistry"]
-        enforce_private_link_endpoint_network_policies = "true"
+        name             = "jumphost"
+        cidr             = ["100.64.103.0/27"]
+        service_endpoint = ["Microsoft.ContainerRegistry"]
       }
     }
   }

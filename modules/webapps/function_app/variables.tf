@@ -62,6 +62,6 @@ variable "dynamic_app_settings" {
   default = {}
 }
 
-variable "remote_objects" {
+variable "subnet_id" {
   default = null
 }

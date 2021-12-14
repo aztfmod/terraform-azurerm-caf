@@ -1,11 +1,6 @@
 variable "settings" {}
-variable "group_id" {
-  default = null
-}
+variable "group_id" {}
 variable "client_config" {}
-variable "group_key" {
-  default = null
-}
 variable "azuread_groups" {
   default = {}
 }

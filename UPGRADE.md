@@ -1,6 +1,7 @@
 # Upgrade notes
 
 When upgrading to a newer version of the CAF module, some configuration structures must be updated before applying the modifications.
+
 ## 5.4.5
 
 Upgrade to 5.4.5 includes support azurerm 2.81.0 provider and implements the following changes:
