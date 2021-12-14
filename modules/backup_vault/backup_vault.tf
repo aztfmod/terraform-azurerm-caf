@@ -30,16 +30,3 @@ resource "azurerm_data_protection_backup_vault" "backup_vault" {
     }
   }
 }
-
-module "backup_vault_policies" {
-  source   = "./backup_vault_policy"
-  for_each = var.settings.backup_vault_policies
-  
-  settings = each.value
-  vault_id = lookup(each.value, "backup_vault_key") == null ? null : module.backup_vaults[each.value.backup_vault_key].id
-  retention_duration = try(each.value.retention_duration, "P30D")
-}
-  
-output "backup_vault_policies" {
-  value = module.backup_vault_policies
-}
