@@ -19,7 +19,7 @@ output "backup_vaults" {
   
 module "backup_vault_instances" {
   source   = "./modules/backup_vault/backup_vault_instance"
-  for_each = var.backup_vault_instance
+  for_each = var.backup_vault_instances
 
   backup_vault_instances = each.value
   #  vault_id           = azurerm_data_protection_backup_vault.backup_vault.id
