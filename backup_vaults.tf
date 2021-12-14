@@ -4,7 +4,7 @@ module "backup_vaults" {
 
   global_settings     = local.global_settings
   client_config       = local.client_config
-  settings            = each.value
+  backup_vault        = each.value
   diagnostics         = local.combined_diagnostics
   identity            = try(each.value.identity, {})
   resource_group_name = local.resource_groups[each.value.resource_group_key].name
@@ -17,18 +17,18 @@ output "backup_vaults" {
   value = module.backup_vaults
 }
 
-module "backup_vault_policies" {
-  source   = "./modules/backup_vault/backup_vault_policy"
-  for_each = var.backup_vaults.backup_vault_policies
+# module "backup_vault_policies" {
+#   source   = "./modules/backup_vault/backup_vault_policy"
+#   for_each = var.backup_vault_policies
   
-  settings = each.value
-  vault_id = lookup(each.value, "backup_vault_key") == null ? null : module.backup_vaults[each.value.backup_vault_key].id
-  retention_duration = try(each.value.retention_duration, "P30D")
-}
+#   settings = each.value
+#   vault_id = lookup(each.value, "backup_vault_key") == null ? null : module.backup_vaults[each.value.backup_vault_key].id
+#   retention_duration = try(each.value.retention_duration, "P30D")
+# }
   
-output "backup_vault_policies" {
-  value = module.backup_vault_policies
-}
+# output "backup_vault_policies" {
+#   value = module.backup_vault_policies
+# }
   
 # module "backup_vault_instances" {
 #   source   = "./modules/backup_vault/backup_vault_instance"
