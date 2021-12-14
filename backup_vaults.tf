@@ -22,7 +22,7 @@ module "backup_vault_policies" {
   for_each = var.backup_vault_policies
   
   settings = each.value
-  vault_id = module.backup_vaults[each.value.backup_vault_key].id
+  vault_id = module.backup_vaults[each.value].id
   retention_duration = try(each.value.retention_duration, "P30D")
 }
   
