@@ -23,7 +23,7 @@ module "backup_vault_instances" {
 
   settings = each.value
   #  vault_id           = azurerm_data_protection_backup_vault.backup_vault.id
-  vault_id           = module.backup_vaults[each.key].id
+  vault_id           = module.backup_vaults[each.value].id
   location           = lookup(each.value, "region", null) == null ? local.resource_groups[each.value.resource_group_key].location : local.global_settings.regions[each.value.region]
 #   storage_account_id = lookup(each.value, "storage_account_key") == null ? null : var.storage_accounts[each.value.storage_account_key].id
   storage_account_id = lookup(each.value, "storage_account_key") == null ? null : module.storage_accounts[each.value.storage_account_key].id
