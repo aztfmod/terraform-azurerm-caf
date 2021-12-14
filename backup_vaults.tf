@@ -16,22 +16,31 @@ module "backup_vaults" {
 output "backup_vaults" {
   value = module.backup_vaults
 }
+
+module "backup_vault_policies" {
+  source   = "./modules/backup_vault/backup_vault_policy"
+  for_each = var.backup_vault_policies
   
-module "backup_vault_instances" {
-  source   = "./modules/backup_vault/backup_vault_instance"
-  for_each = var.backup_vault_instances
-
   settings = each.value
-  #  vault_id           = azurerm_data_protection_backup_vault.backup_vault.id
-  vault_id           = module.backup_vaults[each.value].id
-  location           = lookup(each.value, "region", null) == null ? local.resource_groups[each.value.resource_group_key].location : local.global_settings.regions[each.value.region]
-#   storage_account_id = lookup(each.value, "storage_account_key") == null ? null : var.storage_accounts[each.value.storage_account_key].id
-  storage_account_id = lookup(each.value, "storage_account_key") == null ? null : module.storage_accounts[each.value.storage_account_key].id
-  #  backup_policy_id   = azurerm_data_protection_backup_policy_blob_storage.backup_vault_policy[each.value.backup_vault_policy_key].id
-  backup_policy_id = module.backup_vaults.backup_vault_policy[each.value].id
-
+  vault_id = module.backup_vaults[each.value].id
+  retention_duration = try(each.value.retention_duration, "P30D")
 }
+  
+# module "backup_vault_instances" {
+#   source   = "./modules/backup_vault/backup_vault_instance"
+#   for_each = var.backup_vault_instances
 
-output "backup_vault_instances" {
-  value = module.backup_vault_instances
-}
+#   settings = each.value
+#   #  vault_id           = azurerm_data_protection_backup_vault.backup_vault.id
+#   vault_id           = module.backup_vaults[each.value].id
+#   location           = lookup(each.value, "region", null) == null ? local.resource_groups[each.value.resource_group_key].location : local.global_settings.regions[each.value.region]
+# #   storage_account_id = lookup(each.value, "storage_account_key") == null ? null : var.storage_accounts[each.value.storage_account_key].id
+#   storage_account_id = lookup(each.value, "storage_account_key") == null ? null : module.storage_accounts[each.value.storage_account_key].id
+#   #  backup_policy_id   = azurerm_data_protection_backup_policy_blob_storage.backup_vault_policy[each.value.backup_vault_policy_key].id
+#   backup_policy_id = module.backup_vaults.backup_vault_policy[each.value].id
+
+# }
+
+# output "backup_vault_instances" {
+#   value = module.backup_vault_instances
+# }
