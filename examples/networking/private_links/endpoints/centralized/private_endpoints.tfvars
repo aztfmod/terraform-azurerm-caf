@@ -22,6 +22,7 @@ private_endpoints = {
           zone_group_name = "default"
           # lz_key          = ""   # If the DNS keys are deployed in a remote landingzone
           keys = ["dns1"]
+          # ids = []    # List of DNS resource ids
         }
       }
       # level1custom = {
@@ -143,6 +144,19 @@ private_endpoints = {
       sales_rc1 = {
         private_service_connection = {
           name = "psc-redis-sales-rc1"
+        }
+
+        private_dns = {
+          zone_group_name = "default"
+          keys            = ["dns1"]
+        }
+      }
+    }
+
+    azure_container_registries = {
+      acr1 = {
+        private_service_connection = {
+          name = "psc-acr-sales-acr1"
         }
 
         private_dns = {

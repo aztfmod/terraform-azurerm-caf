@@ -1,7 +1,7 @@
 terraform {
   required_providers {
   }
-  required_version = ">= 0.13"
+  required_version = ">= 0.15"
 }
 
 
@@ -12,6 +12,16 @@ provider "azurerm" {
     }
   }
 }
+
+provider "azurerm" {
+  alias                      = "vhub"
+  skip_provider_registration = true
+  features {}
+  subscription_id = data.azurerm_client_config.default.subscription_id
+  tenant_id       = data.azurerm_client_config.default.tenant_id
+}
+
+data "azurerm_client_config" "default" {}
 
 locals {
   landingzone_tag = {

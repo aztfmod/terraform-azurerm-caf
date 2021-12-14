@@ -1,7 +1,7 @@
 global_settings = {
   default_region = "region1"
   regions = {
-    region1 = "eastus"
+    region1 = "southeastasia"
   }
 }
 
@@ -42,7 +42,7 @@ storage_accounts = {
       }
     }
   }
-} 
+}
 
 # upload helloworld script
 storage_account_blobs = {
@@ -69,10 +69,10 @@ role_mapping = {
           logged_in = {
             keys = ["user"]
           }
-        }  
+        }
       }
     }
-  } 
+  }
 }
 
 # Virtual machines
@@ -103,12 +103,12 @@ virtual_machines = {
       }
     }
     virtual_machine_extensions = {
-     custom_script = {
+      custom_script = {
         #fileuris            = ["https://somelocation/container/script.ps1"]
         # can define fileuris directly or use fileuri_sa_ reference keys and lz_key:
-        fileuri_sa_key       = "sa1"
-        fileuri_sa_path      = "files/helloworld.ps1" 
-        commandtoexecute     = "PowerShell -file helloworld.ps1"
+        fileuri_sa_key   = "sa1"
+        fileuri_sa_path  = "files/helloworld.ps1"
+        commandtoexecute = "PowerShell -file helloworld.ps1"
         # managed_identity_id = optional to define managed identity principal_id directly
         identity_type        = "UserAssigned" #optional to use managed_identity for download from location specified in fileuri, UserAssigned or SystemAssigned. 
         managed_identity_key = "user_mi"
@@ -147,8 +147,8 @@ virtual_machines = {
           version   = "latest"
         }
         identity = { #assign managed identity to the vm
-        type                  = "UserAssigned"
-        managed_identity_keys = ["user_mi"]
+          type                  = "UserAssigned"
+          managed_identity_keys = ["user_mi"]
         }
       }
     }
