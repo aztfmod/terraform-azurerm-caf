@@ -26,6 +26,10 @@ module "backup_vault_policies" {
   retention_duration = try(each.value.retention_duration, "P30D")
 }
   
+output "backup_vault_policies" {
+  value = module.backup_vault_policies
+}
+  
 # module "backup_vault_instances" {
 #   source   = "./modules/backup_vault/backup_vault_instance"
 #   for_each = var.backup_vault_instances
