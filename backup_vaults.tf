@@ -1,5 +1,13 @@
+resource "time_sleep" "delay" {
+  depends_on = [azurerm_role_assignment.for]
+  for_each = var.backup_vaults
+
+  create_duration = "60s"
+}
+
 module "backup_vaults" {
   source   = "./modules/backup_vault"
+  depends_on = [time_sleep.delay]
   for_each = var.backup_vaults
 
   global_settings     = local.global_settings
