@@ -28,7 +28,7 @@ module "backup_vault_instances" {
 #   storage_account_id = lookup(each.value, "storage_account_key") == null ? null : var.storage_accounts[each.value.storage_account_key].id
   storage_account_id = lookup(each.value, "storage_account_key") == null ? null : module.storage_accounts[each.value.storage_account_key].id
   #  backup_policy_id   = azurerm_data_protection_backup_policy_blob_storage.backup_vault_policy[each.value.backup_vault_policy_key].id
-  backup_policy_id = module.backup_vaults.backup_vault_policy[each.key].id
+  backup_policy_id = module.backup_vaults.backup_vault_policy[each.value].id
 
 }
 
