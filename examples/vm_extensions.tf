@@ -75,7 +75,7 @@ module "vm_extension_session_host_dscextension" {
 }
 
 module "vm_extension_custom_scriptextension" {
-  source = "../modules/compute/virtual_machine_extensions"
+  source     = "../modules/compute/virtual_machine_extensions"
 
   depends_on = [module.example, module.vm_extension_microsoft_azure_domainjoin]
 
@@ -88,14 +88,6 @@ module "vm_extension_custom_scriptextension" {
   virtual_machine_id = module.example.virtual_machines[each.key].id
   extension          = each.value.virtual_machine_extensions.custom_script
   extension_name     = "custom_script"
-  managed_identities = tomap(
-    {
-      (var.landingzone.key) = module.example.managed_identities
-    }
-  )
-  storage_accounts = tomap(
-    {
-      (var.landingzone.key) = module.example.storage_accounts
-    }
-  )
+  managed_identities = module.example.managed_identities
+  storage_accounts   = module.example.storage_accounts
 }

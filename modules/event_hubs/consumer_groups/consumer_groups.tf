@@ -15,6 +15,6 @@ resource "azurerm_eventhub_consumer_group" "evhcg" {
   name                = azurecaf_name.evhcg_name.result
   namespace_name      = var.namespace_name
   eventhub_name       = var.eventhub_name
-  resource_group_name = var.resource_group.name
+  resource_group_name = var.resource_group_name
   user_metadata       = try(var.settings.user_metadata, null)
 }

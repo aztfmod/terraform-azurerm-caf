@@ -17,7 +17,6 @@ resource "null_resource" "set_url_path_map" {
       RESOURCE                 = "PATHMAP"
       RG_NAME                  = var.application_gateway.resource_group_name
       APPLICATION_GATEWAY_NAME = var.application_gateway.name
-      APPLICATION_GATEWAY_ID   = var.application_gateway.id
       NAME                     = each.value.name
       PATHS                    = each.value.paths
       ADDRESS_POOL             = try(var.settings.backend_pools[each.value.backend_pool_key].name, null)
@@ -31,7 +30,7 @@ resource "null_resource" "set_url_path_map" {
 }
 
 resource "null_resource" "delete_url_path_map" {
-  depends_on = [null_resource.delete_http_settings, null_resource.delete_backend_pool, null_resource.delete_http_listener, null_resource.delete_ssl_cert, null_resource.delete_root_cert]
+  depends_on = [null_resource.delete_http_settings, null_resource.delete_backend_pool, null_resource.delete_http_listener, null_resource.delete_ssl_cert]
 
   for_each = try(var.settings.url_path_maps, {})
 
@@ -39,7 +38,6 @@ resource "null_resource" "delete_url_path_map" {
     url_path_map_name        = each.value.name
     resource_group_name      = var.application_gateway.resource_group_name
     application_gateway_name = var.application_gateway.name
-    application_gateway_id   = var.application_gateway.id
   }
 
   provisioner "local-exec" {
@@ -53,7 +51,6 @@ resource "null_resource" "delete_url_path_map" {
       NAME                     = self.triggers.url_path_map_name
       RG_NAME                  = self.triggers.resource_group_name
       APPLICATION_GATEWAY_NAME = self.triggers.application_gateway_name
-      APPLICATION_GATEWAY_ID   = self.triggers.application_gateway_id
     }
   }
 }

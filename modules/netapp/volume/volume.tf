@@ -1,16 +1,17 @@
-resource "azurecaf_name" "volume" {
-  name          = var.settings.name
-  prefixes      = var.global_settings.prefixes
-  resource_type = "azurerm_netapp_volume"
-  random_length = var.global_settings.random_length
-  clean_input   = true
-  passthrough   = var.global_settings.passthrough
-  use_slug      = var.global_settings.use_slug
-}
+#TODO: Naming convention resources to be implemented
+#resource "azurecaf_name" "volume" {
+#  name          = var.settings.name
+#  prefixes      = var.global_settings.prefixes
+#  resource_type = "azurerm_netapp_volume"
+#  random_length = var.global_settings.random_length
+#  clean_input   = true
+#  passthrough   = var.global_settings.passthrough
+#  use_slug      = var.global_settings.use_slug
+#}
 
 resource "azurerm_netapp_volume" "volume" {
   # A volume name must be unique within each capacity pool. It must be at least three characters long. You can use any alphanumeric characters.
-  name                = azurecaf_name.volume.result
+  name                = var.settings.name
   resource_group_name = var.resource_group_name
   location            = var.location
   account_name        = var.account_name
@@ -35,7 +36,7 @@ resource "azurerm_netapp_volume" "volume" {
   }
   tags = var.tags
   lifecycle {
-    ignore_changes = [resource_group_name, location, name]
+    ignore_changes = [resource_group_name, location]
   }
 
 }

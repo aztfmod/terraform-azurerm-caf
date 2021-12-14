@@ -120,16 +120,6 @@ variable "subscriptions" {
   default     = {}
 }
 
-variable "connectivity_subscription_id" {
-  description = "Connectivity subscription id"
-  default     = null
-}
-
-variable "connectivity_tenant_id" {
-  description = "Connectivity tenant id"
-  default     = null
-}
-
 variable "subscription_billing_role_assignments" {
   description = "Configuration object - subscription billing roleassignments."
   default     = {}
@@ -272,11 +262,6 @@ variable "role_mapping" {
 variable "dynamic_keyvault_secrets" {
   default = {}
 }
-# Service Bus
-variable "servicebus" {
-  description = "Configuration object - service bus namespaces, topics and queues"
-  default     = {}
-}
 
 ## Storage variables
 variable "storage_accounts" {
@@ -372,15 +357,5 @@ variable "random_strings" {
 
 variable "cognitive_services" {
   description = "Configuration object - Cognitive Service Resource "
-  default     = {}
-}
-
-variable "communication" {
-  description = "Configuration object - communication resources"
-  default     = {}
-}
-
-variable "identity" {
-  description = "Configuration object - identity resources"
   default     = {}
 }

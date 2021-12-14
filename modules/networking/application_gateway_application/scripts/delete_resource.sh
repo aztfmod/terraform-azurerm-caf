@@ -9,43 +9,9 @@ function execute_with_backoff {
   local timeout=${TIMEOUT-20}
   local attempt=0
   local exitCode=0
-  local API_VERSION="2021-05-01"
-  local FILE=$HOME/$APPLICATION_GATEWAY_NAME.tmp
 
   while [[ $attempt < $max_attempts ]]
   do
-    STATUS=$(az rest --method GET --url $APPLICATION_GATEWAY_ID?api-version=$API_VERSION --query "{status:properties.provisioningState}" -o tsv)
-    echo "starting"
-    while [[ "$STATUS" != "Succeeded" ]]
-    do
-        echo "waiting status to be succeeded"
-        sleep 10
-        STATUS=$(az rest --method GET --url $APPLICATION_GATEWAY_ID?api-version=$API_VERSION --query "{status:properties.provisioningState}" -o tsv)
-        if [[ "$STATUS" == "Succeeded" ]]
-        then
-          break
-        fi
-    done
-
-    if [[ ! -f "$FILE" ]]
-    then
-      echo "creating semaphore"
-      touch "$FILE"
-    else
-      echo "waiting semaphore to be removed"
-      while [[ -f "$FILE" ]]
-      do
-          sleep 10
-          if [[ ! -f "$FILE" ]]
-          then
-               echo "creating semaphore"
-              touch "$FILE"
-              break
-          fi
-      done
-    fi
-    echo "running command"
-
     set +e
     "$@"
     exitCode=$?
@@ -61,10 +27,6 @@ function execute_with_backoff {
     attempt=$(( attempt + 1 ))
     timeout=$(( timeout * 2 ))
   done
-  
-  sleep 10
-  rm -rf "$FILE"
-  echo "done"
 
   if [[ $exitCode != 0 ]]
   then
@@ -98,8 +60,5 @@ case "${RESOURCE}" in
         ;;
     PATHRULE)
         execute_with_backoff az network application-gateway url-path-map rule delete -g ${RG_NAME} --gateway-name ${APPLICATION_GATEWAY_NAME} --path-map-name ${PATHMAPNAME} -n ${NAME}
-        ;;
-    PROBE)
-        execute_with_backoff az network application-gateway probe delete -g ${RG_NAME} --gateway-name ${APPLICATION_GATEWAY_NAME} -n ${NAME}
         ;;
 esac

@@ -32,10 +32,11 @@ azuread_groups = {
 
 azuread_groups_membership = { # the dependency of kv access policy with mssql_server id is cyclic by nature, mssql_server > kv_access_policy > tde enablement
   sqldbmsi_admins = {         # group key
+    # lz_key = "launchpad" # group lz_key
     mssql_servers = {
-      server1 = { # name of the map
-        # group_lz_key = "" # group lz_key
-        # lz_key = ""       # mssql_server lz_key
+      # lz_key = ""
+      server1 = {
+        # lz_key = ""
         keys = ["mssqlserver1"] # to assign this group with kv access policy
       }
     }
