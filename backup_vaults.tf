@@ -19,7 +19,7 @@ output "backup_vaults" {
 
 module "backup_vault_policies" {
   source   = "./modules/backup_vault/backup_vault_policy"
-  for_each = var.backup_vault.backup_vault_policies
+  for_each = var.backup_vaults.backup_vault_policies
   
   settings = each.value
   vault_id = lookup(each.value, "backup_vault_key") == null ? null : module.backup_vaults[each.value.backup_vault_key].id
