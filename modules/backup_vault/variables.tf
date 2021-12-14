@@ -7,7 +7,7 @@ variable "location" {
 #     error_message = "Allowed values are southcentralus, centralus."
 #   }
 }
-variable "settings" {}
+variable "backup_vault" {}
 variable "global_settings" {
   description = "Global settings object (see module README.md)"
 }
