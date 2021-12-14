@@ -7,7 +7,7 @@ variable "location" {
 #     error_message = "Allowed values are southcentralus, centralus."
 #   }
 }
-variable "backup_vault_instances" {}
+variable "settings" {}
 variable "vault_id" {}
 variable "storage_account_id" {}
 variable "backup_policy_id" {}
