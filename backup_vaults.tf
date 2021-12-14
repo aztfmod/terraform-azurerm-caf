@@ -1,5 +1,6 @@
 module "backup_vaults" {
   source   = "./modules/backup_vault"
+  depends_on = [azurerm_role_assignment.for]
   for_each = var.backup_vaults
 
   global_settings     = local.global_settings
@@ -17,18 +18,18 @@ output "backup_vaults" {
   value = module.backup_vaults
 }
 
-module "backup_vault_policies" {
-  source   = "./modules/backup_vault/backup_vault_policy"
-  for_each = var.backup_vault_policies
+# module "backup_vault_policies" {
+#   source   = "./modules/backup_vault/backup_vault_policy"
+#   for_each = var.backup_vault_policies
   
-  settings = each.value
-  vault_id = lookup(each.value, "backup_vault_key") == null ? null : module.backup_vaults[each.value.backup_vault_key].id
-  retention_duration = try(each.value.retention_duration, "P30D")
-}
+#   settings = each.value
+#   vault_id = lookup(each.value, "backup_vault_key") == null ? null : module.backup_vaults[each.value.backup_vault_key].id
+#   retention_duration = try(each.value.retention_duration, "P30D")
+# }
   
-output "backup_vault_policies" {
-  value = module.backup_vault_policies
-}
+# output "backup_vault_policies" {
+#   value = module.backup_vault_policies
+# }
   
 # module "backup_vault_instances" {
 #   source   = "./modules/backup_vault/backup_vault_instance"
