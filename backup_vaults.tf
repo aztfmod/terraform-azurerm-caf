@@ -1,6 +1,6 @@
 resource "time_sleep" "delay_p" {
   depends_on = [azurerm_role_assignment.for]
-  for_each = var.backup_vaults
+  for_each = local.shared_services.backup_vaults
 
   create_duration = "60s"
 }
@@ -8,7 +8,7 @@ resource "time_sleep" "delay_p" {
 module "backup_vaults" {
   source   = "./modules/backup_vault"
   depends_on = [time_sleep.delay_p]
-  for_each = var.backup_vaults
+  for_each = local.shared_services.backup_vaults
 
   global_settings     = local.global_settings
   client_config       = local.client_config
