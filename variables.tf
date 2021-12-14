@@ -284,6 +284,11 @@ variable "backup_vault_instances" {
   description = "Configuration object - Backup vault instance"
   default     = {}
 }
+variable "backup_vault_policies" {
+  description = "Configuration object - Backup vault instance"
+  default     = {}
+}
+
 
 # Shared services
 variable "shared_services" {
