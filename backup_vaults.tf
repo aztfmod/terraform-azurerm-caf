@@ -1,11 +1,12 @@
-resource "time_sleep" "delay_p" {
-  depends_on = [azurerm_role_assignment.for]
+# resource "time_sleep" "delay_p" {
+#   depends_on = [azurerm_role_assignment.for]
+#   for_each = var.backup_vaults
+#   create_duration = "30s"
+# } 
 
-  create_duration = "30s"
-} 
 module "backup_vaults" {
   source   = "./modules/backup_vault"
-  depends_on = [time_sleep.delay_p]
+  depends_on = [azurerm_role_assignment.for]
   for_each = var.backup_vaults
 
   global_settings     = local.global_settings
