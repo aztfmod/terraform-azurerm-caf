@@ -18,3 +18,6 @@ variable "keyvault_certificates" {
 variable "keyvault_certificate_requests" {
   default = {}
 }
+variable "application_gateway_waf_policies" {
+  default = {}
+}
