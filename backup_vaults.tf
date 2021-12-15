@@ -24,7 +24,6 @@ module "backup_vault_policies" {
   
   settings = each.value
   vault_id = module.backup_vaults[each.key].id
-  retention_duration = try(each.value.retention_duration, "P30D")
 }
   
 output "backup_vault_policies" {
