@@ -20,7 +20,6 @@ output "backup_vaults" {
 
 module "backup_vault_policies" {
   source   = "./modules/backup_vault/backup_vault_policy"
-  depends_on = [azurerm_role_assignment.for]
   for_each = var.backup_vaults
   
   settings = each.value
@@ -32,21 +31,22 @@ output "backup_vault_policies" {
   value = module.backup_vault_policies
 }
   
-# module "backup_vault_instances" {
-#   source   = "./modules/backup_vault/backup_vault_instance"
-#   for_each = var.backup_vault_instances
+module "backup_vault_instances" {
+  source   = "./modules/backup_vault/backup_vault_instance"
+  for_each = var.backup_vaults
+  depends_on = [azurerm_role_assignment.for]
 
-#   settings = each.value
-#   #  vault_id           = azurerm_data_protection_backup_vault.backup_vault.id
-#   vault_id           = module.backup_vaults[each.value].id
-#   location           = lookup(each.value, "region", null) == null ? local.resource_groups[each.value.resource_group_key].location : local.global_settings.regions[each.value.region]
-# #   storage_account_id = lookup(each.value, "storage_account_key") == null ? null : var.storage_accounts[each.value.storage_account_key].id
-#   storage_account_id = lookup(each.value, "storage_account_key") == null ? null : module.storage_accounts[each.value.storage_account_key].id
-#   #  backup_policy_id   = azurerm_data_protection_backup_policy_blob_storage.backup_vault_policy[each.value.backup_vault_policy_key].id
-#   backup_policy_id = module.backup_vaults.backup_vault_policy[each.value].id
+  settings = each.value
+  #  vault_id           = azurerm_data_protection_backup_vault.backup_vault.id
+  vault_id           = module.backup_vaults[each.key].id
+  location           = lookup(each.value, "region", null) == null ? local.resource_groups[each.value.resource_group_key].location : local.global_settings.regions[each.value.region]
+#   storage_account_id = lookup(each.value, "storage_account_key") == null ? null : var.storage_accounts[each.value.storage_account_key].id
+  storage_account_id = module.storage_accounts[each.key].id
+  #  backup_policy_id   = azurerm_data_protection_backup_policy_blob_storage.backup_vault_policy[each.value.backup_vault_policy_key].id
+  backup_policy_id = module.backup_vault_policies[each.key].id
 
-# }
+}
 
-# output "backup_vault_instances" {
-#   value = module.backup_vault_instances
-# }
+output "backup_vault_instances" {
+  value = module.backup_vault_instances
+}
