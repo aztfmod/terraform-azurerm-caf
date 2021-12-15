@@ -2,7 +2,6 @@
 module "storage_accounts" {
   source   = "./modules/storage_account"
   for_each = var.storage_accounts
-  depends_on = [module.keyvaults]
 
   global_settings   = local.global_settings
   client_config     = local.client_config
