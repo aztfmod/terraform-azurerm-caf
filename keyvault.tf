@@ -1,7 +1,6 @@
 
 module "keyvaults" {
   source   = "./modules/security/keyvault"
-  depends_on = [azurerm_role_assignment.for]
   for_each = var.keyvaults
 
   global_settings    = local.global_settings
