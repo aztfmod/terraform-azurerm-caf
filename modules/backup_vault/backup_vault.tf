@@ -5,7 +5,6 @@ locals {
 
 # naming convention
 resource "azurecaf_name" "bckp" {
-  depends_on = [time_sleep.delay_p]
   
   name          = var.backup_vault.name
   resource_type = "azurerm_recovery_services_vault"
