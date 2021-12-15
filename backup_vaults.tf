@@ -1,6 +1,6 @@
 resource "time_sleep" "delay_p" {
   depends_on = [azurerm_role_assignment.for]
-  create_duration = "180s"
+  create_duration = "30s"
 }
 
 module "backup_vaults" {
