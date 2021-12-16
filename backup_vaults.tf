@@ -19,6 +19,7 @@ output "backup_vaults" {
 
 module "backup_vault_policies" {
   source   = "./modules/backup_vault/backup_vault_policy"
+  depends_on = [azurerm_role_assignment.for]
   for_each = var.backup_vaults
   
   settings = each.value
