@@ -32,7 +32,7 @@ output "backup_vault_policies" {
 module "backup_vault_instances" {
   source   = "./modules/backup_vault/backup_vault_instance"
   depends_on = [azurerm_role_assignment.for]
-  for_each = var.backup_vaults
+  for_each = var.backup_vault_instances
 
   settings = each.value
   vault_id           = module.backup_vaults[each.key].id
