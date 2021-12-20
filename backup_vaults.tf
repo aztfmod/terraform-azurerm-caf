@@ -32,9 +32,9 @@ output "backup_vault_policies" {
 module "backup_vault_instances" {
   source   = "./modules/backup_vault/backup_vault_instance"
   depends_on = [azurerm_role_assignment.for, module.backup_vault_policies]
-  for_each = var.backup_vault_instances
+  for_each = var.backup_vaults
 
-  settings = each.value
+  settings           = each.value
   vault_id           = module.backup_vaults[each.key].id
   location           = lookup(each.value, "region", null) == null ? local.resource_groups[each.value.resource_group_key].location : local.global_settings.regions[each.value.region]
   storage_account_id = try(module.storage_accounts[each.value.storage_account_key].id, null)
