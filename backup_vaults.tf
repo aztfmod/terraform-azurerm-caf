@@ -33,8 +33,7 @@ module "backup_vault_instances" {
   source   = "./modules/backup_vault/backup_vault_instance"
   depends_on = [azurerm_role_assignment.for, module.backup_vault_policies]
   for_each = var.backup_vaults
-
-#   global_settings     = local.global_settings  
+ 
   settings           = each.value
   vault_id           = module.backup_vaults[each.key].id
   location = lookup(each.value, "region", null) == null ? coalesce(
