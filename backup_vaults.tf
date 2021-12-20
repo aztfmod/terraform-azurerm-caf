@@ -38,8 +38,8 @@ module "backup_vault_instances" {
   vault_id           = module.backup_vaults[each.key].id
   location           = lookup(each.value, "region", null) == null ? local.resource_groups[each.value.resource_group_key].location : local.global_settings.regions[each.value.region]
   storage_account_id = try(module.storage_accounts[each.value.storage_account_key].id, null)
-  #  backup_policy_id   = azurerm_data_protection_backup_policy_blob_storage.backup_vault_policy[each.value.backup_vault_policy_key].id
-  backup_policy_id = try(module.backup_vault_policies[each.value.backup_vault_policy_key].id, null)
+  backup_policy_id = module.backup_vault_policies[each.key].id
+#   backup_policy_id = try(module.backup_vault_policies[each.value.backup_vault_policy_key].id, null)
 
 }
 
