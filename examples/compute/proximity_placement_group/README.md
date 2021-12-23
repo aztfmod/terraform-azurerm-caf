@@ -3,16 +3,14 @@ module "caf" {
   version = "5.1.0"
 }
 
-# automation_account
+# proximity_placement_group
 
 ## Inputs
 | Name | Description | Type | Required |
 |------|-------------|------|:--------:|
-|name| Specifies the name of the Automation Account. Changing this forces a new resource to be created.||True|
+|name| Specifies the name of the availability set. Changing this forces a new resource to be created.||True|
 |resource_group|The `resource_group` block as defined below.|Block|True|
 | region |The region_key where the resource will be deployed|String|True|
-|sku|) A `sku` block as described below.| Block |False|
-|sku_name| The SKU name of the account - only `Basic` is supported at this time.||False|
 |tags| A mapping of tags to assign to the resource.||False|
 
 ## Blocks
@@ -21,12 +19,8 @@ module "caf" {
 |resource_group| key | Key for  resource_group||| Required if  |
 |resource_group| lz_key |Landing Zone Key in wich the resource_group is located|||True|
 |resource_group| name | The name of the resource_group |||True|
-|sku|name| The SKU name of the account - only `Basic` is supported at this time.|||True|
 
 ## Outputs
 | Name | Description |
 |------|-------------|
-|id|The Automation Account ID.|||
-|dsc_server_endpoint|The DSC Server Endpoint associated with this Automation Account.|||
-|dsc_primary_access_key|The Primary Access Key for the DSC Endpoint associated with this Automation Account.|||
-|dsc_secondary_access_key|The Secondary Access Key for the DSC Endpoint associated with this Automation Account.|||
+|id|The ID of the Proximity Placement Group.|||

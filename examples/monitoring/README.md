@@ -95,3 +95,42 @@ No requirements.
 
 }
 ```
+module "caf" {
+  source  = "aztfmod/caf/azurerm"
+  version = "5.1.0"
+}
+
+# monitor_action_group
+
+## Inputs
+| Name | Description | Type | Required |
+|------|-------------|------|:--------:|
+|name| The name of the Action Group. Changing this forces a new resource to be created.||True|
+|resource_group|The `resource_group` block as defined below.|Block|True|
+|short_name| The short name of the action group. This will be used in SMS messages.||True|
+|enabled| Whether this action group is enabled. If an action group is not enabled, then none of its receivers will receive communications. Defaults to `true`.||False|
+|arm_role_receiver| One or more `arm_role_receiver` blocks as defined below.||False|
+|automation_runbook_receiver| One or more `automation_runbook_receiver` blocks as defined below.||False|
+|azure_app_push_receiver| One or more `azure_app_push_receiver` blocks as defined below.||False|
+|azure_function_receiver| One or more `azure_function_receiver` blocks as defined below.||False|
+|email_receiver| One or more `email_receiver` blocks as defined below.||False|
+|itsm_receiver| One or more `itsm_receiver` blocks as defined below.||False|
+|logic_app_receiver| One or more `logic_app_receiver` blocks as defined below.||False|
+|sms_receiver| One or more `sms_receiver` blocks as defined below.||False|
+|voice_receiver| One or more `voice_receiver` blocks as defined below.||False|
+|webhook_receiver| One or more `webhook_receiver` blocks as defined below.||False|
+|tags| A mapping of tags to assign to the resource.||False|
+
+## Blocks
+| Block | Argument | Description | Required |
+|-------|----------|-------------|----------|
+|resource_group| key | Key for  resource_group||| Required if  |
+|resource_group| lz_key |Landing Zone Key in wich the resource_group is located|||True|
+|resource_group| name | The name of the resource_group |||True|
+
+## Outputs
+| Name | Description |
+|------|-------------|
+|id|The ID of the Action Group.|||
+
+
