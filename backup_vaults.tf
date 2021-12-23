@@ -42,8 +42,8 @@ module "backup_vault_instances" {
   ) : local.global_settings.regions[each.value.region]
   storage_account_id = try(module.storage_accounts[each.value.storage_account_key].id, null)
 #   backup_policy_id   = lookup(each.value.backup_vault_instances, "backup_vault_policy_key") == null ? null : module.backup_vault_policies[each.value.backup_vault_policy_key].id
-  backup_policy_id = try(each.value.backup_vault_policy.id, null)
-#   backup_policy_id   = module.backup_vault_policies[each.key].id
+#   backup_policy_id = try(each.value.backup_vault_policy.id, null)
+  backup_policy_id   = module.backup_vault_policies[each.key].id
 }
 
 output "backup_vault_instances" {
