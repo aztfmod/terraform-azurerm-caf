@@ -19,7 +19,7 @@ output "backup_vaults" {
 
 module "backup_vault_policies" {
   source   = "./modules/backup_vault/backup_vault_policy"
-  for_each = var.backup_policies
+  for_each = var.backup_vault_policies
   
   settings = each.value
   vault_id = module.backup_vaults[each.key].id
