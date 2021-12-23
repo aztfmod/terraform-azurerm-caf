@@ -43,7 +43,6 @@ module "backup_vault_instances" {
 #   storage_account_id = module.storage_accounts[each.key].id
   storage_account_id = lookup(each.value, "storage_account_key") == null ? null : module.storage_accounts[each.value.storage_account_key].id
   backup_policy_id   = module.backup_vault_policies[each.key].id
-  storage  
 }
 
 output "backup_vault_instances" {
