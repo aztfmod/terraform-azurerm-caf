@@ -40,8 +40,8 @@ module "backup_vault_instances" {
     try(local.combined_objects_resource_groups[try(each.value.resource_group.lz_key, local.client_config.landingzone_key)][each.value.resource_group.key].location, null),
     try(local.combined_objects_resource_groups[local.client_config.landingzone_key][each.value.resource_group_key].location, null)
   ) : local.global_settings.regions[each.value.region]
-  storage_account_id = try(module.storage_accounts[each.key].id, null)
-  backup_policy_id   = try(module.backup_vault_policies[each.key].id, null)
+  storage_account_id = module.storage_accounts[each.key].id
+  backup_policy_id   = module.backup_vault_policies[each.key].id
 }
 
 output "backup_vault_instances" {
