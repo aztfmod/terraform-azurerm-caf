@@ -21,8 +21,8 @@ module "backup_vault_policies" {
   source   = "./modules/backup_vault/backup_vault_policy"
   for_each = try(var.backup_vaults, {})
   
-  backup_vault_policy = each.value
-  vault_id            = module.backup_vaults[each.key].id
+  settings = each.value
+  vault_id = module.backup_vaults[each.key].id
 }
   
 output "backup_vault_policies" {
