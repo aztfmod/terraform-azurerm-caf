@@ -19,6 +19,7 @@ output "backup_vaults" {
 
 module "backup_vault_policies" {
   source   = "./modules/backup_vault/backup_vault_policy"
+  depends_on = [module.backup_vaults]
   for_each = try(var.backup_vaults, {})
   
   settings = each.value
