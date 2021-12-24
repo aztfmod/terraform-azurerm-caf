@@ -17,18 +17,18 @@ output "backup_vaults" {
   value = module.backup_vaults
 }
 
-module "backup_vault_policies" {
-  source   = "./modules/backup_vault/backup_vault_policy"
-  depends_on = [module.backup_vaults]
-  for_each = try(var.backup_vaults, {})
+# module "backup_vault_policies" {
+#   source   = "./modules/backup_vault/backup_vault_policy"
+#   depends_on = [module.backup_vaults]
+#   for_each = try(var.backup_vaults, {})
   
-  settings = each.value
-  vault_id = module.backup_vaults[each.key].id  
-}
+#   settings = each.value
+#   vault_id = module.backup_vaults[each.key].id  
+# }
   
-output "backup_vault_policies" {
-  value = module.backup_vault_policies
-}
+# output "backup_vault_policies" {
+#   value = module.backup_vault_policies
+# }
   
 # module "backup_vault_instances" {
 #   source     = "./modules/backup_vault/backup_vault_instance"
