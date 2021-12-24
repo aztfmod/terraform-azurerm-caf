@@ -4,7 +4,6 @@ output "id" {
 }
 
 output "name" {
-  depends_on  = [azurerm_data_protection_backup_vault.backup_vault]
   description = "The name of the Backup Vault"
   value       = azurerm_data_protection_backup_vault.backup_vault.name
 }
@@ -20,12 +19,12 @@ output "resource_group_name" {
 
 output "datastore_type" {
   description = "Output of the datastore type on the resource."
-  value       = try(var.backup_vault.datastore_type, null)
+  value       = try(var.settings.datastore_type, null)
 }
 
 output "redundancy" {
   description = "Output of the datastore type on the resource."
-  value       = try(var.backup_vault.redundancy, null)
+  value       = try(var.settings.redundancy, null)
 }
 
 output "identity" {
