@@ -280,6 +280,10 @@ variable "backup_vaults" {
   description = "Configuration object - Backup vault resources"
   default     = {}
 }
+variable "backup_vault_policies" {
+  description = "Configuration object - Backup vault resources"
+  default     = {}
+}
 
 # Shared services
 variable "shared_services" {
