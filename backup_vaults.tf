@@ -23,7 +23,7 @@ module "backup_vault_policies" {
   
   settings = each.value
 #   vault_id = module.backup_vaults[each.key].id
-  vault_id = each.value.id  
+  vault_id = each.key.id  
 }
   
 output "backup_vault_policies" {
