@@ -22,7 +22,8 @@ module "backup_vault_policies" {
   for_each = try(var.backup_vaults, {})
   
   settings = each.value
-  vault_id = module.backup_vaults[each.key].id
+#   vault_id = module.backup_vaults[each.key].id
+  vault_id = each.value.id  
 }
   
 output "backup_vault_policies" {
