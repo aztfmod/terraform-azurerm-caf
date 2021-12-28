@@ -24,5 +24,3 @@ variable "client_config" {
 }
 variable "identity" {}
 variable "settings" {}
-variable "storage_account_id" {}
-variable "backup_policy_id" {}
