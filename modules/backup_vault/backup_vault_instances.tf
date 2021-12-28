@@ -1,4 +1,4 @@
-module "backup_vault_instances" {
+module "backup_vault_instance" {
   source     = "./backup_vault_instance"
   for_each   = try(var.settings.backup_vault_instances, {})
 
