@@ -11,6 +11,8 @@ module "backup_vaults" {
   resource_group_name = local.resource_groups[each.value.resource_group_key].name
   location            = lookup(each.value, "region", null) == null ? local.resource_groups[each.value.resource_group_key].location : local.global_settings.regions[each.value.region]
   base_tags           = try(local.global_settings.inherit_tags, false) ? local.resource_groups[each.value.resource_group_key].tags : {}
+  storage_account_id = lookup(each.value, "storage_account_key") == null ? null : module.storage_accounts[each.value.storage_account_key].id
+  backup_policy_id = lookup(each.value, "backup_vault_policy_key") == null ? null : module.backup_vault_policies[each.value.backup_vault_policy_key].id
 }
 
 output "backup_vaults" {
