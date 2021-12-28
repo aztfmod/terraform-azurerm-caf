@@ -9,7 +9,7 @@ variable "location" {
 }
 variable "settings" {}
 variable "vault_id" {}
-variable "storage_account_id_test" {
+variable "storage_account_id" {
   description = "Identifier of the storage account ID to be used."
   type        = string
 }
