@@ -9,5 +9,9 @@ variable "location" {
 }
 variable "settings" {}
 variable "vault_id" {}
-variable "storage_account_id" {}
-variable "backup_policy_id" {}
+variable "storage_account_id" {
+  description = "The ID of the Storage Account to be used by the backup vault instance."
+}
+variable "backup_policy_id" {
+  description = "The ID of the backup vault policy to be used by the backup vault instance"
+}
