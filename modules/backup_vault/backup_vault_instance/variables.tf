@@ -10,8 +10,10 @@ variable "location" {
 variable "settings" {}
 variable "vault_id" {}
 variable "storage_account_id" {
-  description = "The ID of the Storage Account to be used by the backup vault instance."
+  description = "Identifier of the storage account ID to be used."
+  type        = string
 }
 variable "backup_policy_id" {
-  description = "The ID of the backup vault policy to be used by the backup vault instance"
+  description = "The ID of the backup vault policy to be used."
+  type        = string
 }
