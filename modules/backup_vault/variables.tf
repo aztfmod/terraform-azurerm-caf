@@ -24,3 +24,4 @@ variable "client_config" {
 }
 variable "identity" {}
 variable "settings" {}
+variable "storage_accounts" {}
