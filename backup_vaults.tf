@@ -34,7 +34,7 @@ output "backup_vault_policies" {
 module "backup_vault_instances" {
   source     = "./modules/backup_vault/backup_vault_instance"
   depends_on = [azurerm_role_assignment.for, module.backup_vault_policies]
-  for_each   = try(var.backup_vault_instances, {})
+  for_each   = try(var.backup_vaults, {})
 
   settings = each.value
 #   vault_id = module.backup_vaults[each.key].id
