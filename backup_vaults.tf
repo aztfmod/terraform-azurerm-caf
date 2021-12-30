@@ -26,6 +26,9 @@ module "backup_vault_policies" {
   settings = each.value
   vault_id = module.backup_vaults[each.key].id
 }
+locals {
+  backup_vault_plocies = module.backup_vault_policies
+}
 
 output "backup_vault_policies" {
   value = module.backup_vault_policies
@@ -44,7 +47,7 @@ module "backup_vault_instances" {
     try(local.combined_objects_resource_groups[local.client_config.landingzone_key][each.value.resource_group_key].location, null)
   ) : local.global_settings.regions[each.value.region]
   storage_accounts = local.combined_objects_storage_accounts
-  backup_policy = module.backup_vault_policies[*].id
+  backup_policy = local.backup_vault_policies
   #storage_account_id = module.storage_accounts[each.value.storage_account_key].id
   #backup_policy_id   = module.backup_vault_policies[each.value.backup_vault_policy_key].id
   #   storage_account_id = module.storage_accounts[each.key].id
