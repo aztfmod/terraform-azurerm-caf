@@ -21,7 +21,5 @@ variable "storage_accounts" {
   description = "Identifier of the storage account ID to be used."
   type        = string
 }
-variable "backup_policy" {
-  description = "The ID of the backup vault policy to be used."
-  type        = string
+variable "backup_policy" {}
 }
