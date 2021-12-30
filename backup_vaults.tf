@@ -27,7 +27,7 @@ module "backup_vault_policies" {
   vault_id = module.backup_vaults[each.key].id
 }
 locals {
-  backup_vault_plocies = module.backup_vault_policies
+  backup_vault_policies = module.backup_vault_policies
 }
 
 output "backup_vault_policies" {
