@@ -39,6 +39,11 @@ module "private_endpoints" {
     redis_caches               = local.combined_objects_redis_caches
     storage_accounts           = local.combined_objects_storage_accounts
     synapse_workspaces         = local.combined_objects_synapse_workspaces
+    signalr_services           = local.combined_objects_signalr_services
   }
 
+}
+
+output "private_endpoints" {
+  value       = module.private_endpoints
 }

@@ -201,6 +201,9 @@ locals {
   cognitive_services = {
     cognitive_services_account = try(var.cognitive_services.cognitive_services_account, {})
   }
+  messaging = { #TODO: combine servicebus under messaging
+    signalr_services = try(var.messaging.signalr_services, {})
+  }
 
   networking = {
     application_gateway_applications                        = try(var.networking.application_gateway_applications, {})
