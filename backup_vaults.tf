@@ -46,10 +46,8 @@ module "backup_vault_instances" {
     try(local.combined_objects_resource_groups[try(each.value.resource_group.lz_key, local.client_config.landingzone_key)][each.value.resource_group.key].location, null),
     try(local.combined_objects_resource_groups[local.client_config.landingzone_key][each.value.resource_group_key].location, null)
   ) : local.global_settings.regions[each.value.region]
-#   storage_accounts = module.storage_accounts #Romans item
+  storage_accounts = module.storage_accounts #Romans item
   backup_policy    = local.backup_vault_policies[each.key] #Romans item
-  storage_accounts = local.combined_objects_storage_accounts
-  storage_account_id = local.combined_objects_storage_accounts[each.value.storage_account_key].id
 }
 
 output "backup_vault_instances" {
