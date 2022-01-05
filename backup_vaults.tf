@@ -41,14 +41,12 @@ module "backup_vault_instances" {
 
   settings = each.value
   vault_id = module.backup_vaults[each.key].id
-  #   vault_id = module.backup_vaults[each.value.backup_vault_key].id
   location = lookup(each.value, "region", null) == null ? coalesce(
     try(local.combined_objects_resource_groups[try(each.value.resource_group.lz_key, local.client_config.landingzone_key)][each.value.resource_group.key].location, null),
     try(local.combined_objects_resource_groups[local.client_config.landingzone_key][each.value.resource_group_key].location, null)
   ) : local.global_settings.regions[each.value.region]
-#   storage_accounts = module.storage_accounts #Romans item
+  storage_accounts = module.storage_accounts #Romans item
   backup_policy    = local.backup_vault_policies[each.key] #Romans item
-  storage_accounts = local.combined_objects_storage_accounts
 }
 
 output "backup_vault_instances" {
