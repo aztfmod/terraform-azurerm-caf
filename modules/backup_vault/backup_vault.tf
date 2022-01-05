@@ -1,7 +1,3 @@
-# locals {
-#   # Need to update the storage tags if the environment tag is updated with the rover command line
-#   tags = try(var.settings.tags, null) == null ? null : try(var.settings.tags.environment, null) == null ? var.settings.tags : merge(lookup(var.settings, "tags", {}), { "environment" : var.global_settings.environment })
-# }
 
 # naming convention
 resource "azurecaf_name" "bckp" {
@@ -21,7 +17,6 @@ resource "azurerm_data_protection_backup_vault" "backup_vault" {
   resource_group_name = var.resource_group_name
   datastore_type      = try(var.settings.datastore_type, "VaultStore")
   redundancy          = try(var.settings.redundancy, "LocallyRedundant")
-#   tags                = try(merge(var.base_tags, local.tags), {})
   tags                = local.tags
   
   dynamic "identity" {
