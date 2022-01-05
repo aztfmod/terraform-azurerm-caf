@@ -29,3 +29,6 @@ output "backend_address_pool_id" {
   value = azurerm_lb_backend_address_pool.backend_address_pool.0.id
 }
 
+output "probes" {
+  value = azurerm_lb_probe.lb_probe
+}
