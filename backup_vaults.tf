@@ -46,22 +46,22 @@ module "backup_vault_instances" {
     try(local.combined_objects_resource_groups[try(each.value.resource_group.lz_key, local.client_config.landingzone_key)][each.value.resource_group.key].location, null),
     try(local.combined_objects_resource_groups[local.client_config.landingzone_key][each.value.resource_group_key].location, null)
   ) : local.global_settings.regions[each.value.region]
-#   storage_accounts = module.storage_accounts #Romans item
-#   backup_policy = local.backup_vault_policies[each.key] #Romans item
+  storage_accounts = module.storage_accounts #Romans item
+  backup_policy = local.backup_vault_policies[each.key] #Romans item
 #   storage_accounts = module.storage_accounts[each.value.storage_account_key].id
 #   backup_policy   = module.backup_vault_policies[each.value.backup_vault_policy_key].id
 #     storage_accounts = module.storage_accounts[each.key].id
 #     backup_policy   = module.backup_vault_policies[each.key].id
-    storage_accounts = coalesce(
-      try(local.combined_objects_storage_accounts[each.value.storage_account.lz_key][each.value.storage_account.key].id, null),
-      try(local.combined_objects_storage_accounts[local.client_config.landingzone_key][each.value.storage_account.key].id, null),
-      try(each.value.storage_account.id, null)
-    )
-    backup_policy = coalesce(
-      try(local.combined_objects_storage_accounts[each.value.backup_policy.lz_key][each.value.backup_policy.key].id, null),
-      try(local.combined_objects_storage_accounts[local.client_config.landingzone_key][each.value.backup_policy.key].id, null),
-      try(each.value.backup_policy.id, null)
-    )
+#     storage_accounts = coalesce(
+#       try(local.combined_objects_storage_accounts[each.value.storage_account.lz_key][each.value.storage_account.key].id, null),
+#       try(local.combined_objects_storage_accounts[local.client_config.landingzone_key][each.value.storage_account.key].id, null),
+#       try(each.value.storage_account.id, null)
+#     )
+#     backup_policy = coalesce(
+#       try(local.combined_objects_storage_accounts[each.value.backup_policy.lz_key][each.value.backup_policy.key].id, null),
+#       try(local.combined_objects_storage_accounts[local.client_config.landingzone_key][each.value.backup_policy.key].id, null),
+#       try(each.value.backup_policy.id, null)
+#     )
 }
 
 output "backup_vault_instances" {
