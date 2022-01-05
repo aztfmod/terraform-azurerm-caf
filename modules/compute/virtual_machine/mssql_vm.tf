@@ -226,7 +226,7 @@ data "external" "sp_client_secret" {
 resource "random_password" "sql_admin_password" {
   for_each = {
     for key, value in try(var.settings.virtual_machine_settings, {}) : key => value
-    if try(value.mssql_settings.sql_authentication.sql_credential.sql_password_key, null) == null
+    if try(value.mssql_settings.sql_authentication.sql_credential.sql_password_key, null) == null && try(value.mssql_settings, null) != null
   }
 
   length           = 100
@@ -240,7 +240,7 @@ resource "random_password" "sql_admin_password" {
 resource "azurerm_key_vault_secret" "sql_admin_password" {
   for_each = {
     for key, value in try(var.settings.virtual_machine_settings, {}) : key => value
-    if try(value.mssql_settings.sql_authentication.sql_credential.sql_password_key, null) == null
+    if try(value.mssql_settings.sql_authentication.sql_credential.sql_password_key, null) == null && try(value.mssql_settings, null) != null 
   }
 
   name         = can(each.value.mssql_settings.sql_authentication.sql_credential.keyvault_secret_name) ? each.value.mssql_settings.sql_authentication.sql_credential.keyvault_secret_name : format("%s-mssql-login-pw", azurerm_windows_virtual_machine.vm[each.key].name)
@@ -277,7 +277,7 @@ resource "random_password" "encryption_password" {
 resource "azurerm_key_vault_secret" "backup_encryption_password" {
   for_each = {
     for key, value in try(var.settings.virtual_machine_settings, {}) : key => value
-    if try(value.mssql_settings.auto_backup.encryption_password, null) != null && try(value.mssql_settings.auto_backup.encryption_password.encryption_password_key, null) == null
+    if try(value.mssql_settings.auto_backup.encryption_password, null) != null && try(value.mssql_settings.auto_backup.encryption_password.encryption_password_key, null) == null && try(value.mssql_settings, null) != null
   }
 
   name         = can(each.value.mssql_settings.auto_backup.encryption_password.encryption_password_secret_name) ? each.value.mssql_settings.auto_backup.encryption_password.encryption_password_secret_name : format("%s-mssql-bkup-encryption-pw", azurerm_windows_virtual_machine.vm[each.key].name)
