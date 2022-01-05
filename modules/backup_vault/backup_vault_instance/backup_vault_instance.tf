@@ -6,4 +6,5 @@ resource "azurerm_data_protection_backup_instance_blob_storage" "backup_vault_in
   location           = var.location
   storage_account_id = var.storage_accounts[each.value.storage_account_key].id #Romans item
   backup_policy_id   = var.backup_policy.id[each.value.backup_vault_policy_key].id #Romans item
+  storage_account_id = var.storage_account_id
 }
