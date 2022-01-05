@@ -62,6 +62,7 @@ resource "azurerm_linux_virtual_machine_scale_set" "vmss" {
   for_each = local.os_type == "linux" ? var.settings.vmss_settings : {}
 
   admin_username      = each.value.admin_username
+  admin_password      = each.value.disable_password_authentication == false ? each.value.admin_password : null
   instances           = each.value.instances
   location            = var.location
   name                = azurecaf_name.linux[each.key].result
