@@ -714,3 +714,9 @@ variable "active_directory_domain_service" {
 variable "active_directory_domain_service_replica_set" {
   default = {}
 }
+variable "api_management" {
+  default = {}
+}
+variable "api_management_api" {
+  default = {}
+}

@@ -309,5 +309,8 @@ locals {
     active_directory_domain_service             = try(var.identity.active_directory_domain_service, {})
     active_directory_domain_service_replica_set = try(var.identity.active_directory_domain_service_replica_set, {})
   }
-
+  apim = {
+    api_management = try(var.apim.api_management,null)
+    api_management_api = try(var.apim.api_management_api,null)
+  }
 }
