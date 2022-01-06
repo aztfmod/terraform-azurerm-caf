@@ -1,6 +1,6 @@
 resource "azurecaf_name" "apim" {
   name          = var.settings.name
-  resource_type = "azurerm_api_management"
+  resource_type = "azurerm_data_factory" #"azurerm_api_management"
   prefixes      = var.global_settings.prefixes
   random_length = var.global_settings.random_length
   clean_input   = true
@@ -63,10 +63,39 @@ resource "azurerm_api_management" "apim" {
     for_each = try(var.settings.hostname_configuration, null) != null ? [var.settings.hostname_configuration] : []
 
     content {
+      dynamic "management" {
+        for_each = try(var.settings.management, null) != null ? [var.settings.management] : []
 
-      management       = try(hostname_configuration.value.management, null)
-      portal           = try(hostname_configuration.value.portal, null)
-      developer_portal = try(hostname_configuration.value.developer_portal, null)
+        content {
+          host_name = try(management.value.host_name,null)
+          key_vault_id = try(management.value.key_vault_id,null)
+          certificate = try(management.value.certificate,null)
+          certificate_password = try(management.value.certificate_password,null)
+          negotiate_client_certificate = try(management.value.negotiate_client_certificate,null)
+        }
+      }
+      dynamic "portal" {
+        for_each = try(var.settings.portal, null) != null ? [var.settings.portal] : []
+
+        content {
+          host_name = try(portal.value.host_name,null)
+          key_vault_id = try(portal.value.key_vault_id,null)
+          certificate = try(portal.value.certificate,null)
+          certificate_password = try(portal.value.certificate_password,null)
+          negotiate_client_certificate = try(portal.value.negotiate_client_certificate,null)
+        }
+      }
+      dynamic "developer_portal" {
+        for_each = try(var.settings.developer_portal, null) != null ? [var.settings.developer_portal] : []
+
+        content {
+          host_name = try(developer_portal.value.host_name,null)
+          key_vault_id = try(developer_portal.value.key_vault_id,null)
+          certificate = try(developer_portal.value.certificate,null)
+          certificate_password = try(developer_portal.value.certificate_password,null)
+          negotiate_client_certificate = try(developer_portal.value.negotiate_client_certificate,null)
+        }
+      }
       dynamic "proxy" {
         for_each = try(var.settings.proxy, null) != null ? [var.settings.proxy] : []
 
@@ -75,21 +104,22 @@ resource "azurerm_api_management" "apim" {
           default_ssl_binding = try(proxy.value.default_ssl_binding, null)
           host_name           = try(proxy.value.host_name, null)
           key_vault_id        = try(proxy.value.key_vault_id, null)
-          dynamic "certificate" {
-            for_each = try(var.settings.certificate, null) != null ? [var.settings.certificate] : []
-
-            content {
-
-              encoded_certificate  = try(certificate.value.encoded_certificate, null)
-              store_name           = try(certificate.value.store_name, null)
-              certificate_password = try(certificate.value.certificate_password, null)
-            }
-          }
+          certificate         = try(proxy.value.certificate, null)
           certificate_password         = try(proxy.value.certificate_password, null)
           negotiate_client_certificate = try(proxy.value.negotiate_client_certificate, null)
         }
       }
-      scm = try(hostname_configuration.value.scm, null)
+      dynamic "scm" {
+        for_each = try(var.settings.scm, null) != null ? [var.settings.scm] : []
+
+        content {
+          host_name = try(scm.value.host_name,null)
+          key_vault_id = try(scm.value.key_vault_id,null)
+          certificate = try(scm.value.certificate,null)
+          certificate_password = try(scm.value.certificate_password,null)
+          negotiate_client_certificate = try(scm.value.negotiate_client_certificate,null)
+        }
+      }
     }
   }
   notification_sender_email = try(var.settings.notification_sender_email, null)
@@ -123,8 +153,8 @@ resource "azurerm_api_management" "apim" {
       enable_frontend_tls11                               = try(security.value.enable_frontend_tls11, null)
       tls_ecdhe_ecdsa_with_aes128_cbc_sha_ciphers_enabled = try(security.value.tls_ecdhe_ecdsa_with_aes128_cbc_sha_ciphers_enabled, null)
       tls_ecdhe_ecdsa_with_aes256_cbc_sha_ciphers_enabled = try(security.value.tls_ecdhe_ecdsa_with_aes256_cbc_sha_ciphers_enabled, null)
-      tls_ecdheRsa_with_aes128_cbc_sha_ciphers_enabled    = try(security.value.tls_ecdheRsa_with_aes128_cbc_sha_ciphers_enabled, null)
-      tls_ecdheRsa_with_aes256_cbc_sha_ciphers_enabled    = try(security.value.tls_ecdheRsa_with_aes256_cbc_sha_ciphers_enabled, null)
+      tls_ecdhe_rsa_with_aes128_cbc_sha_ciphers_enabled    = try(security.value.tls_ecdhe_rsa_with_aes128_cbc_sha_ciphers_enabled, null)
+      tls_ecdhe_rsa_with_aes256_cbc_sha_ciphers_enabled    = try(security.value.tls_ecdhe_rsa_with_aes256_cbc_sha_ciphers_enabled, null)
       tls_rsa_with_aes128_cbc_sha256_ciphers_enabled      = try(security.value.tls_rsa_with_aes128_cbc_sha256_ciphers_enabled, null)
       tls_rsa_with_aes128_cbc_sha_ciphers_enabled         = try(security.value.tls_rsa_with_aes128_cbc_sha_ciphers_enabled, null)
       tls_rsa_with_aes128_gcm_sha256_ciphers_enabled      = try(security.value.tls_rsa_with_aes128_gcm_sha256_ciphers_enabled, null)
@@ -132,12 +162,12 @@ resource "azurerm_api_management" "apim" {
       tls_rsa_with_aes256_cbc_sha_ciphers_enabled         = try(security.value.tls_rsa_with_aes256_cbc_sha_ciphers_enabled, null)
       enable_triple_des_ciphers                           = try(security.value.enable_triple_des_ciphers, null)
       triple_des_ciphers_enabled                          = try(security.value.triple_des_ciphers_enabled, null)
-      disable_backend_ssl30                               = try(security.value.disable_backend_ssl30, null)
-      disable_backend_tls10                               = try(security.value.disable_backend_tls10, null)
-      disable_backend_tls11                               = try(security.value.disable_backend_tls11, null)
-      disable_frontend_ssl30                              = try(security.value.disable_frontend_ssl30, null)
-      disable_frontend_tls10                              = try(security.value.disable_frontend_tls10, null)
-      disable_frontend_tls11                              = try(security.value.disable_frontend_tls11, null)
+      # disable_backend_ssl30                               = try(security.value.disable_backend_ssl30, null)
+      # disable_backend_tls10                               = try(security.value.disable_backend_tls10, null)
+      # disable_backend_tls11                               = try(security.value.disable_backend_tls11, null)
+      # disable_frontend_ssl30                              = try(security.value.disable_frontend_ssl30, null)
+      # disable_frontend_tls10                              = try(security.value.disable_frontend_tls10, null)
+      # disable_frontend_tls11                              = try(security.value.disable_frontend_tls11, null)
     }
   }
   dynamic "sign_in" {

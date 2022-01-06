@@ -7,6 +7,9 @@ variable "client_config" {
 variable "settings" {
   description = "(Required) Used to handle passthrough paramenters."
 }
+variable "location" {
+  description = "(Required) Region in which the resource will be deployed"
+}
 variable "remote_objects" {
   description = "(Required) Specifies the supported Azure location where to create the resource. Changing this forces a new resource to be created."
   default     = {}
