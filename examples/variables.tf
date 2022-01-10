@@ -720,3 +720,27 @@ variable "api_management" {
 variable "api_management_api" {
   default = {}
 }
+variable "lb" {
+  default = {}
+}
+variable "lb_backend_address_pool" {
+  default = {}
+}
+variable "lb_backend_address_pool_address" {
+  default = {}
+}
+variable "lb_nat_pool" {
+  default = {}
+}
+variable "lb_nat_rule" {
+  default = {}
+}
+variable "lb_outbound_rule" {
+  default = {}
+}
+variable "lb_probe" {
+  default = {}
+}
+variable "lb_rule" {
+  default = {}
+}
