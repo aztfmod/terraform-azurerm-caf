@@ -1,5 +1,13 @@
 {
   "config_files": [
+    "apim/100-basic",
+    "apim/101-api",
+    "apim/102-diagnostics",
+    "apim/103-api_operations",
+    "apim/104-backend",
+    "apim/105-api_policy",
+    "apim/106-api_operation_tag",
+    "apim/107-api_operation_policy",
     "app_gateway/100-simple-app-gateway",
     "app_gateway/101-private-public",
     "app_gateway/102-waf-policy",
