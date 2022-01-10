@@ -32,7 +32,9 @@ api_management_api = {
     resource_group      = {
       key = "rg1"
     }
-    api_management_key = "apim1"
+    api_management = {
+      key = "apim1"
+    }
     revision            = "1"
     display_name        = "Example API"
     path                = "example"
@@ -55,7 +57,7 @@ api_management_api_policy = {
     resource_group      = {
       key = "rg1"
     }
-    operation_id        = "user-delete"
+
   xml_content = <<XML
 <policies>
   <inbound>

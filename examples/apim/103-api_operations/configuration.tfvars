@@ -33,7 +33,9 @@ api_management_api = {
     resource_group      = {
       key = "rg1"
     }
-    api_management_key = "apim1"
+    api_management = {
+      key = "apim1"
+    }
     revision            = "1"
     display_name        = "Example API"
     path                = "example"
