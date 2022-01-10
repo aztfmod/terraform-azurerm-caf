@@ -315,5 +315,9 @@ locals {
     api_management_api_diagnostic = try(var.apim.api_management_api_diagnostic,null)
     api_management_logger = try(var.apim.api_management_logger,null)
     api_management_api_operation = try(var.apim.api_management_api_operation,null)
+    api_management_backend = try(var.apim.api_management_backend,null)
+    api_management_api_policy = try(var.apim.api_management_api_policy,null)
+    api_management_api_operation_tag = try(var.apim.api_management_api_operation_tag,null)
+    api_management_api_operation_policy = try(var.apim.api_management_api_operation_policy,null)
   }
 }

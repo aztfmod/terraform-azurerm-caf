@@ -27,3 +27,16 @@ api_management = {
   }
 }
 
+api_management_backend = {
+  apimb1 = {
+    name                = "example-backend"
+    resource_group      = {
+      key = "rg1"
+    }
+    api_management = {
+      key = "apim1"
+    }
+    protocol            = "http"
+    url                 = "https://backend"
+  }
+}
