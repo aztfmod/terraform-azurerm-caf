@@ -59,6 +59,18 @@ resource "azurerm_api_management" "apim" {
       identity_ids = try(identity.value.identity_ids, null)
     }
   }
+    dynamic "identity" {
+    for_each = try(var.settings.identity, null) != null ? [var.settings.identity] : []
+
+    content {
+      type = try(identity.value.type, null)
+      user_assigned_identity_id = lower(var.settings.identity.type) == "userassigned" ? coalesce(
+        try(identity.user_assigned_identity_id, null),
+        try(var.remote_objects.managed_identities[identity.lz_key][identity.managed_identity_key].id, null),
+        try(var.remote_objects.managed_identities[var.client_config.landingzone_key][identity.managed_identity_key].id, null)
+      ) : null
+    }
+  }
   dynamic "hostname_configuration" {
     for_each = try(var.settings.hostname_configuration, null) != null ? [var.settings.hostname_configuration] : []
 

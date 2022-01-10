@@ -720,3 +720,12 @@ variable "api_management" {
 variable "api_management_api" {
   default = {}
 }
+variable "api_management_api_diagnostic" {
+  default = {}
+}
+variable "api_management_logger" {
+  default = {}
+}
+variable "api_management_api_operation" {
+  default = {}
+}
