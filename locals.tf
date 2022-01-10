@@ -312,5 +312,8 @@ locals {
   apim = {
     api_management = try(var.apim.api_management,null)
     api_management_api = try(var.apim.api_management_api,null)
+    api_management_api_diagnostic = try(var.apim.api_management_api_diagnostic,null)
+    api_management_logger = try(var.apim.api_management_logger,null)
+    api_management_api_operation = try(var.apim.api_management_api_operation,null)
   }
 }

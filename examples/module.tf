@@ -269,5 +269,8 @@ module "example" {
   apim = {
     api_management = var.api_management
     api_management_api = var.api_management_api
+    api_management_api_diagnostic = var.api_management_api_diagnostic
+    api_management_logger = var.api_management_logger
+    api_management_api_operation = var.api_management_api_operation
   }
 }
