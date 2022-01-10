@@ -153,3 +153,130 @@ module "api_management_api_operation" {
 output "api_management_api_operation" {
   value = module.api_management_api_operation
 }
+
+module "api_management_backend" {
+  source   = "./modules/apim/api_management_backend"
+  for_each = local.apim.api_management_backend
+
+  global_settings = local.global_settings
+  client_config   = local.client_config
+  settings        = each.value
+
+  api_management_name = coalesce(
+      try(local.combined_objects_api_management[each.value.api_management.lz_key][each.value.api_management.key].name, null),
+      try(local.combined_objects_api_management[local.client_config.landingzone_key][each.value.api_management.key].name, null),
+      try(each.value.api_management.name, null)
+  )
+
+  resource_group_name = coalesce(
+      try(local.combined_objects_resource_groups[each.value.resource_group.lz_key][each.value.resource_group.key].name, null),
+      try(local.combined_objects_resource_groups[local.client_config.landingzone_key][each.value.resource_group.key].name, null),
+      try(each.value.resource_group.name, null)
+  )
+
+
+  remote_objects = {
+        api_management = local.combined_objects_api_management
+        resource_group = local.combined_objects_resource_groups
+  }
+}
+output "api_management_backend" {
+  value = module.api_management_backend
+}
+
+module "api_management_api_policy" {
+  source   = "./modules/apim/api_management_api_policy"
+  for_each = local.apim.api_management_api_policy
+
+  global_settings = local.global_settings
+  client_config   = local.client_config
+  settings        = each.value
+
+    api_name = coalesce(
+        try(local.combined_objects_api_management_api[each.value.api.lz_key][each.value.apit.key].name, null),
+        try(local.combined_objects_api_management_api[local.client_config.landingzone_key][each.value.api.key].name, null),
+        try(each.value.api.name, null)
+    )
+    api_management_name = coalesce(
+        try(local.combined_objects_api_management[each.value.api_management.lz_key][each.value.api_management.key].name, null),
+        try(local.combined_objects_api_management[local.client_config.landingzone_key][each.value.api_management.key].name, null),
+        try(each.value.api_management.name, null)
+    )
+
+    resource_group_name = coalesce(
+        try(local.combined_objects_resource_groups[each.value.resource_group.lz_key][each.value.resource_group.key].name, null),
+        try(local.combined_objects_resource_groups[local.client_config.landingzone_key][each.value.resource_group.key].name, null),
+        try(each.value.resource_group.name, null)
+    )
+
+
+  remote_objects = {
+        api_management = local.combined_objects_api_management
+        resource_group = local.combined_objects_resource_groups
+  }
+}
+output "api_management_api_policy" {
+  value = module.api_management_api_policy
+}
+
+module "api_management_api_operation_tag" {
+  source   = "./modules/apim/api_management_api_operation_tag"
+  for_each = local.apim.api_management_api_operation_tag
+
+  api_operation_id = coalesce(
+        try(local.combined_objects_api_management_api_operation[each.value.api_operation.lz_key][each.value.api_operation.key].id, null),
+        try(local.combined_objects_api_management_api_operation[local.client_config.landingzone_key][each.value.api_operation.key].id, null),
+        try(each.value.api_operation.id, null)
+    )
+
+
+  global_settings = local.global_settings
+  client_config   = local.client_config
+  settings        = each.value
+
+
+  remote_objects = {
+  }
+}
+output "api_management_api_operation_tag" {
+  value = module.api_management_api_operation_tag
+}
+module "api_management_api_operation_policy" {
+  source   = "./modules/apim/api_management_api_operation_policy"
+  for_each = local.apim.api_management_api_operation_policy
+
+  global_settings = local.global_settings
+  client_config   = local.client_config
+  settings        = each.value
+
+    api_name = coalesce(
+        try(local.combined_objects_api_management_api[each.value.api.lz_key][each.value.api.key].name, null),
+        try(local.combined_objects_api_management_api[local.client_config.landingzone_key][each.value.api.key].name, null),
+        try(each.value.api.name, null)
+    )
+
+    api_management_name = coalesce(
+        try(local.combined_objects_api_management[each.value.api_management.lz_key][each.value.api_management.key].name, null),
+        try(local.combined_objects_api_management[local.client_config.landingzone_key][each.value.api_management.key].name, null),
+        try(each.value.api_management.name, null)
+    )
+
+    resource_group_name = coalesce(
+        try(local.combined_objects_resource_groups[each.value.resource_group.lz_key][each.value.resource_group.key].name, null),
+        try(local.combined_objects_resource_groups[local.client_config.landingzone_key][each.value.resource_group.key].name, null),
+        try(each.value.resource_group.name, null)
+    )
+
+  api_operation_id = coalesce(
+        try(local.combined_objects_api_management_api_operation[each.value.api_operation.lz_key][each.value.api_operation.key].id, null),
+        try(local.combined_objects_api_management_api_operation[local.client_config.landingzone_key][each.value.api_operation.key].id, null),
+        try(each.value.api_operation.id, null)
+    )
+  remote_objects = {
+        api_management = local.combined_objects_api_management
+        resource_group = local.combined_objects_resource_groups
+  }
+}
+output "api_management_api_operation_policy" {
+  value = module.api_management_api_operation_policy
+}

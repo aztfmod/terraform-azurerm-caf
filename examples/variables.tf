@@ -729,3 +729,15 @@ variable "api_management_logger" {
 variable "api_management_api_operation" {
   default = {}
 }
+variable "api_management_backend" {
+  default = {}
+}
+variable "api_management_api_policy" {
+  default = {}
+}
+variable "api_management_api_operation_policy" {
+  default = {}
+}
+variable "api_management_api_operation_tag" {
+  default = {}
+}
