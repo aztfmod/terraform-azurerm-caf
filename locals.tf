@@ -231,6 +231,14 @@ locals {
     frontdoor_rules_engine                                  = try(var.networking.frontdoor_rules_engine, {})
     frontdoor_custom_https_configuration                    = try(var.networking.frontdoor_custom_https_configuration, {})
     ip_groups                                               = try(var.networking.ip_groups, {})
+    lb                                                      = try(var.networking.lb, {})
+    lb_backend_address_pool                                 = try(var.networking.lb_backend_address_pool, {})
+    lb_backend_address_pool_address                         = try(var.networking.lb_backend_address_pool_address, {})
+    lb_nat_pool                                             = try(var.networking.lb_nat_pool, {})
+    lb_nat_rule                                             = try(var.networking.lb_nat_rule, {})
+    lb_outbound_rule                                        = try(var.networking.lb_outbound_rule, {})
+    lb_probe                                                = try(var.networking.lb_probe, {})
+    lb_rule                                                 = try(var.networking.lb_rule, {})
     load_balancers                                          = try(var.networking.load_balancers, {})
     local_network_gateways                                  = try(var.networking.local_network_gateways, {})
     nat_gateways                                            = try(var.networking.nat_gateways, {})
@@ -309,5 +317,4 @@ locals {
     active_directory_domain_service             = try(var.identity.active_directory_domain_service, {})
     active_directory_domain_service_replica_set = try(var.identity.active_directory_domain_service_replica_set, {})
   }
-
 }

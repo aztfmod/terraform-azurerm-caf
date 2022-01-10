@@ -159,6 +159,14 @@ module "example" {
     frontdoor_rules_engine                                  = var.frontdoor_rules_engine
     frontdoor_custom_https_configuration                    = var.frontdoor_custom_https_configuration
     ip_groups                                               = var.ip_groups
+    lb                                                      = var.lb
+    lb_backend_address_pool                                 = var.lb_backend_address_pool
+    lb_backend_address_pool_address                         = var.lb_backend_address_pool_address
+    lb_nat_pool                                             = var.lb_nat_pool
+    lb_nat_rule                                             = var.lb_nat_rule
+    lb_outbound_rule                                        = var.lb_outbound_rule
+    lb_probe                                                = var.lb_probe
+    lb_rule                                                 = var.lb_rule
     load_balancers                                          = var.load_balancers
     local_network_gateways                                  = var.local_network_gateways
     nat_gateways                                            = var.nat_gateways
