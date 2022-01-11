@@ -13,7 +13,7 @@ resource_groups = {
   }
 }
 
-service_bus_namespaces = {
+servicebus_namespaces = {
   sb_ns1 = {
     name               = "sb_ns1"
     resource_group_key = "sb_examples"
