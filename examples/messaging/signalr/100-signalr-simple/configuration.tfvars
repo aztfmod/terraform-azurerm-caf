@@ -82,6 +82,7 @@ private_endpoints = {
 
     signalr_services = {
       service1 = { # signalr service key
+        name = "signalr-pe1"
         # lz_key = ""
         private_service_connection = {
           name = "psc-signalr"
@@ -95,12 +96,16 @@ private_endpoints = {
     }
   }
   vnet2 = { 
+    
+    
+
     # lz_key = ""
     vnet_key = "vnet2"
     subnet_keys = ["subnet1"]
 
     signalr_services = {
       service1 = { # signalr service key
+        name = "signalr-pe2"
         # lz_key = ""
         private_service_connection = {
           name = "psc-signalr2"
@@ -129,11 +134,6 @@ signalr_services = {
       capacity = 1
     }
 
-    # Shows in documentation but error shows not supported during plan/apply
-    # connectivity_logs_enabled = "True"
-    # messaging_logs_enabled    = "True"
-    # service_mode              = "Default"
-
     cors = {
       allowed_origins = ["http://example.com"]
     }
@@ -160,12 +160,12 @@ signalr_services = {
         event_pattern    = ["*"]
         hub_pattern      = ["hub1"]
       }
-      endpoint2 = {
-        url_template     = "http://foo2.com"
-        category_pattern = ["connections"]
-        event_pattern    = ["*"]
-        hub_pattern      = ["hub1"]
-      }
+      # endpoint2 = {
+      #   url_template     = "http://foo2.com"
+      #   category_pattern = ["connections"]
+      #   event_pattern    = ["*"]
+      #   hub_pattern      = ["hub1"]
+      # }
     }
 
 
