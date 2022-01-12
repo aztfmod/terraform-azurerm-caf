@@ -16,6 +16,3 @@ variable "base_tags" {
   type        = map(any)
   default     = {}
 }
-variable "virtual_network_id" {
-  description = " The ID of the Virtual Network within which the Backend Address Pool should exist."
-}
