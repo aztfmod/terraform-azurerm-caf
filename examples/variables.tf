@@ -741,3 +741,15 @@ variable "api_management_api_operation_policy" {
 variable "api_management_api_operation_tag" {
   default = {}
 }
+variable "api_management_user" {
+  default = {}
+}
+variable "api_management_custom_domain" {
+  default = {}
+}
+variable "api_management_diagnostic" {
+  default = {}
+}
+variable "api_management_certificate" {
+  default = {}
+} 
