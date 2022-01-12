@@ -15,7 +15,9 @@ module "lb" {
   location = lookup(each.value, "region", null) == null ? local.resource_groups[each.value.resource_group_key].location : local.global_settings.regions[each.value.region]
 
   remote_objects = {
-    resource_group = local.combined_objects_resource_groups
+    resource_group      = local.combined_objects_resource_groups
+    virtual_network     = local.combined_objects_networking
+    public_ip_addresses = local.combined_objects_public_ip_addresses
   }
 }
 output "lb" {
@@ -32,6 +34,7 @@ module "lb_backend_address_pool" {
 
 
   remote_objects = {
+    lb = local.combined_objects_lb
   }
 }
 output "lb_backend_address_pool" {
@@ -46,15 +49,9 @@ module "lb_backend_address_pool_address" {
   client_config   = local.client_config
   settings        = each.value
 
-  virtual_network_id = coalesce(
-    try(local.combined_objects_networking[each.value.virtual_network.lz_key][each.value.virtual_network.key].id, null),
-    try(local.combined_objects_networking[local.client_config.landingzone_key][each.value.virtual_network.key].id, null),
-    try(each.value.virtual_network.id, null)
-  )
-
-
   remote_objects = {
-    virtual_network = local.combined_objects_networking
+    virtual_network         = local.combined_objects_networking
+    lb_backend_address_pool = local.combined_objects_lb_backend_address_pool
   }
 }
 output "lb_backend_address_pool_address" {
@@ -78,6 +75,7 @@ module "lb_nat_pool" {
 
   remote_objects = {
     resource_group = local.combined_objects_resource_groups
+    lb             = local.combined_objects_lb
   }
 }
 output "lb_nat_pool" {
@@ -100,6 +98,7 @@ module "lb_nat_rule" {
 
   remote_objects = {
     resource_group = local.combined_objects_resource_groups
+    lb             = local.combined_objects_lb
   }
 }
 output "lb_nat_rule" {
@@ -122,7 +121,9 @@ module "lb_outbound_rule" {
 
 
   remote_objects = {
-    resource_group = local.combined_objects_resource_groups
+    resource_group          = local.combined_objects_resource_groups
+    lb                      = local.combined_objects_lb
+    lb_backend_address_pool = local.combined_objects_lb_backend_address_pool
   }
 }
 output "lb_outbound_rule" {
@@ -146,6 +147,7 @@ module "lb_probe" {
 
   remote_objects = {
     resource_group = local.combined_objects_resource_groups
+    lb             = local.combined_objects_lb
   }
 }
 output "lb_probe" {
@@ -168,6 +170,7 @@ module "lb_rule" {
 
   remote_objects = {
     resource_group = local.combined_objects_resource_groups
+    lb             = local.combined_objects_lb
   }
 }
 output "lb_rule" {
