@@ -155,7 +155,7 @@
     "redis_cache/101-redis-diagnostics",
     "redis_cache/102-redis-private",
     "role_mapping/100-simple-role-mapping",
-    "messaging/servicebus/100-simple-servicebus",
+    "messaging/servicebus/100-servicebus-services",
     "messaging/signalr/100-signalr-simple",
     "storage_accounts/101-storage-account-with-protection",
     "storage_accounts/102-storage-account-advanced-options",

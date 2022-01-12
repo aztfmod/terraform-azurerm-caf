@@ -67,8 +67,9 @@ servicebus_namespaces = {
 
     network_rule_sets = { # created in terraform but not reflected in azure?
       ruleset1 = {
-        default_action = "Allow"
+        default_action = "Deny"
         ip_rules = ["1.1.1.1"]
+        
         network_rules = {
           subnet1 = {
             # lz_key = ""
@@ -198,18 +199,19 @@ servicebus_queues = {
     #   key = ""
     # }
 
+    max_delivery_count = 10
+    max_size_in_megabytes = 1024
+    default_message_ttl = "P0Y0M14DT0H0M0S" # ISO 8601 format
+    
     # lock_duration = "PT30S"
-    # max_size_in_megabytes = 1024
     # requires_duplicate_detection = false
     # requires_session = false
-    # default_message_ttl = "P14D"
     # dead_lettering_on_message_expiration = false
     # duplicate_detection_history_time_window = "PT10M"
-    # max_delivery_count = 1
     # status = "Active" # Active, Creating, Deleting, Disabled, ReceiveDisabled, Renaming, SendDisabled, Unknown
     # enable_batched_operations = true
     # auto_delete_on_idle = "PT5M"
-    # enable_partitioning = false
+    # enable_partitioning = false # must be true on premium
     # enable_express = false
 
     # forward_to = {
