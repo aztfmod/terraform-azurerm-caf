@@ -10,7 +10,8 @@ module "virtual_machine_scale_sets" {
     module.proximity_placement_groups,
     module.load_balancers,
     module.application_gateways,
-    module.application_security_groups
+    module.application_security_groups,
+    module.packer_service_principal
   ]
   for_each = local.compute.virtual_machine_scale_sets
 
