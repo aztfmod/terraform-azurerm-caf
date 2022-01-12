@@ -18,3 +18,7 @@ output "version_set_id" {
   value       = azurerm_api_management_api.apim.version_set_id
   description = "The ID of the Version Set which this API is associated with."
 }
+output "name" {
+  value       = azurerm_api_management_api.apim.name
+  description = "The name of the API Management API."
+}
