@@ -1,7 +1,7 @@
 module "servicebus_topics" {
   depends_on = [module.servicebus_namespaces]
   source     = "./modules/servicebus/topic"
-  for_each   = local.servicebus.servicebus_topics
+  for_each   = local.messaging.servicebus_topics
 
   global_settings = local.global_settings
   client_config   = local.client_config
