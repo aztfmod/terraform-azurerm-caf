@@ -385,5 +385,5 @@ variable "identity" {
   default     = {}
 }
 variable "apim" {
-  default     = {}
+  default = {}
 }
