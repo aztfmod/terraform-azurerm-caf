@@ -46,3 +46,7 @@ output "tenant_access" {
   value       = azurerm_api_management.apim.tenant_access
   description = "The `tenant_access` block as documented below."
 }
+output "name" {
+  value       = azurerm_api_management.apim.name
+  description = "The name of the API Management Service."
+}
