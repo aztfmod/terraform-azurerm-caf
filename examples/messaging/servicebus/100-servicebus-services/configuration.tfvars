@@ -65,11 +65,11 @@ servicebus_namespaces = {
       }
     }
 
-    network_rule_sets = { # created in terraform but not reflected in azure?
+    network_rule_sets = { 
       ruleset1 = {
         default_action = "Deny"
         ip_rules = ["1.1.1.1"]
-        
+
         network_rules = {
           subnet1 = {
             # lz_key = ""
