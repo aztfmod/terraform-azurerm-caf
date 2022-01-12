@@ -9,7 +9,8 @@ module "virtual_machines" {
     module.keyvault_access_policies_azuread_apps,
     module.proximity_placement_groups,
     module.network_security_groups,
-    module.storage_account_blobs
+    module.storage_account_blobs,
+    module.packer_service_principal
   ]
   for_each = local.compute.virtual_machines
 
