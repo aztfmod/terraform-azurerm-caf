@@ -1,4 +1,4 @@
-# Azure Redis Cache
+# Azure Cognitive Services
 
 This module is part of Cloud Adoption Framework landing zones for Azure on Terraform.
 
@@ -26,3 +26,4 @@ resource_to_be_created = {
 }
 ```
 
+You can review complete set of examples on the [GitHub repository](https://github.com/aztfmod/terraform-azurerm-caf/tree/master/examples/cognitive_services).
