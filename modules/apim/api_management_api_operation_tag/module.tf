@@ -2,7 +2,7 @@
 
 resource "azurecaf_name" "apim" {
   name          = var.settings.name
-  resource_type = "azurerm_data_factory" #"azurerm_api_management_api_operation_tag"
+  resource_type = "azurerm_api_management_api_operation_tag"
   prefixes      = var.global_settings.prefixes
   random_length = var.global_settings.random_length
   clean_input   = true
