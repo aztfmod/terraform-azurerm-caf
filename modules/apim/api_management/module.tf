@@ -1,6 +1,6 @@
 resource "azurecaf_name" "apim" {
   name          = var.settings.name
-  resource_type = "azurerm_data_factory" #"azurerm_api_management"
+  resource_type = "azurerm_api_management"
   prefixes      = var.global_settings.prefixes
   random_length = var.global_settings.random_length
   clean_input   = true
@@ -50,27 +50,19 @@ resource "azurerm_api_management" "apim" {
   gateway_disabled           = try(var.settings.gateway_disabled, null)
   min_api_version            = try(var.settings.min_api_version, null)
   zones                      = try(var.settings.zones, null)
+
   dynamic "identity" {
     for_each = try(var.settings.identity, null) != null ? [var.settings.identity] : []
 
     content {
-
-      type         = try(identity.value.type, null)
-      identity_ids = try(identity.value.identity_ids, null)
+      type = identity.value.type
+      identity_ids = coalesce(
+        try(var.settings.identity.identity_ids,null),
+        local.managed_identities
+      )
     }
   }
-    dynamic "identity" {
-    for_each = try(var.settings.identity, null) != null ? [var.settings.identity] : []
 
-    content {
-      type = try(identity.value.type, null)
-      user_assigned_identity_id = lower(var.settings.identity.type) == "userassigned" ? coalesce(
-        try(identity.user_assigned_identity_id, null),
-        try(var.remote_objects.managed_identities[identity.lz_key][identity.managed_identity_key].id, null),
-        try(var.remote_objects.managed_identities[var.client_config.landingzone_key][identity.managed_identity_key].id, null)
-      ) : null
-    }
-  }
   dynamic "hostname_configuration" {
     for_each = try(var.settings.hostname_configuration, null) != null ? [var.settings.hostname_configuration] : []
 

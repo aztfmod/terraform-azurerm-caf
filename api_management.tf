@@ -113,6 +113,7 @@ module "api_management_logger" {
   remote_objects = {
     resource_group = local.combined_objects_resource_groups
     api_management = local.combined_objects_api_management
+    application_insights = local.combined_objects_application_insights
   }
 }
 output "api_management_logger" {
@@ -305,6 +306,9 @@ module "api_management_certificate" {
   remote_objects = {
     api_management = local.combined_objects_api_management
     resource_group = local.combined_objects_resource_groups
+    keyvault_certificates = local.combined_objects_keyvault_certificates
+    keyvault_certificate_requests = local.combined_objects_keyvault_certificate_requests
+    managed_identities  = local.combined_objects_managed_identities
   }
 }
 output "api_management_certificate" {
@@ -328,6 +332,8 @@ module "api_management_custom_domain" {
 
   remote_objects = {
     api_management = local.combined_objects_api_management
+    keyvault_certificates = local.combined_objects_keyvault_certificates
+    keyvault_certificate_requests = local.combined_objects_keyvault_certificate_requests
   }
 }
 output "api_management_custom_domain" {
@@ -360,8 +366,7 @@ module "api_management_diagnostic" {
     try(each.value.api_management_logger.id, null)
   )
 
-
-  remote_objects = {
+    remote_objects = {
     api_management        = local.combined_objects_api_management
     resource_group        = local.combined_objects_resource_groups
     api_management_logger = local.combined_objects_api_management_logger
@@ -395,7 +400,6 @@ module "api_management_user" {
   remote_objects = {
     api_management = local.combined_objects_api_management
     resource_group = local.combined_objects_resource_groups
-    azuread_users  = local.combined_objects_azuread_users
   }
 }
 output "api_management_user" {

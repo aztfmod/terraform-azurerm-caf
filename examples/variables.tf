@@ -752,4 +752,4 @@ variable "api_management_diagnostic" {
 }
 variable "api_management_certificate" {
   default = {}
-} 
+}

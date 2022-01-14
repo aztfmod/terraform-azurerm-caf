@@ -11,7 +11,12 @@ resource_groups = {
     region = "region1"
   }
 }
-
+managed_identities = {
+  mi1 = {
+    name               = "secrets-msi"
+    resource_group_key = "rg1"
+  }
+}
 
 api_management = {
   apim1 = {
@@ -24,76 +29,60 @@ api_management = {
     publisher_email = "company@terraform.io"
 
     sku_name = "Developer_1"
-  }
-}
 
-api_management_api = {
-  apimapi1 = {
-    name = "example-api"
-    resource_group = {
-      key = "rg1"
-    }
-    api_management = {
-      key = "apim1"
-    }
-    revision     = "1"
-    display_name = "Example API"
-    path         = "example"
-    protocols    = ["https"]
-
-    import = {
-      content_format = "swagger-link-json"
-      content_value  = "http://conferenceapi.azurewebsites.net/?format=json"
-    }
+    identity = {
+      type = "UserAssigned"
+      managed_identity_keys = ["mi1"]
+    }  
   }
 }
 
 
-api_management_api_operation = {
-  apimapio1 = {
-    operation_id = "user-delete"
-    api = {
-      key = "apimapi1"
-    }
-    api_management = {
-      key = "apim1"
-    }
-    resource_group = {
-      key = "rg1"
-    }
-    display_name = "Delete User Operation"
-    method       = "DELETE"
-    url_template = "/users/{id}/delete"
-    description  = "This can only be done by the logged in user."
+keyvaults = {
+  kv1 = {
+    name               = "certs"
+    resource_group_key = "rg1"
+    sku_name           = "standard"
 
-    response = {
-      status_code = 200
+    enabled_for_deployment = true
+
+    creation_policies = {
+      logged_in_user = {
+        certificate_permissions = ["Get", "List", "Update", "Create", "Import", "Delete", "Purge", "Recover"]
+        secret_permissions      = ["Set", "Get", "List", "Delete", "Purge", "Recover"]
+      }
     }
   }
 }
 
-
-api_management_api_operation_policy = {
-  apimapiopo1 = {
-    api = {
-      key = ""
+keyvault_access_policies = {
+  kv1 = {
+    apgw_keyvault_secrets = {
+      managed_identity_key    = "mi1"
+      certificate_permissions = ["Get", "List"]
+      secret_permissions      = ["Get", "List"]
     }
+  }
+}
+
+api_management_custom_domain = {
+  apimcd1 = {
     api_management = {
       key = "apim1"
     }
-    resource_group = {
-      key = "rg1"
-    }
-    api_operation = {
-      key = "apimapio1"
+    proxy = {
+      host_name    = "api.example.com"
+      key_vault_certificate = {
+        certificate_request_key = "example"
+      }
     }
 
-    xml_content = <<XML
-<policies>
-  <inbound>
-    <find-and-replace from="xyz" to="abc" />
-  </inbound>
-</policies>
-XML
+    developer_portal = {
+      host_name    = "portal.example.com"
+      key_vault_certificate = {
+        certificate_request_key = "example"
+        #id = ""
+      }
+    }
   }
 }

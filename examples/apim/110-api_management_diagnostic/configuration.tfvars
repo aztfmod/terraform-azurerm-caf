@@ -20,80 +20,92 @@ api_management = {
     resource_group = {
       key = "rg1"
     }
+    api_management = {
+      key = "apim1"
+    }
     publisher_name  = "My Company"
     publisher_email = "company@terraform.io"
 
     sku_name = "Developer_1"
   }
 }
-
-api_management_api = {
-  apimapi1 = {
-    name = "example-api"
-    resource_group = {
-      key = "rg1"
-    }
+azurerm_application_insights = {
+  webappi1 = {
+    name               = "tf-test-appinsights-web"
+    resource_group_key = "rg1"
+    application_type   = "web"
+  }
+}
+api_management_logger =  {
+  apiml1 = {
+    name                = "example-logger"
     api_management = {
       key = "apim1"
     }
-    revision     = "1"
-    display_name = "Example API"
-    path         = "example"
-    protocols    = ["https"]
-
-    import = {
-      content_format = "swagger-link-json"
-      content_value  = "http://conferenceapi.azurewebsites.net/?format=json"
+    resource_group = {
+      key = "rg1"
+    }
+    resource = {
+      key = "webappi1"
+    }
+    application_insights = {
+      key = "webappi1"
     }
   }
 }
-
-
-api_management_api_operation = {
-  apimapio1 = {
-    operation_id = "user-delete"
-    api = {
-      key = "apimapi1"
-    }
+api_management_diagnostic = {
+  apimd1 = {
+    identifier               = "applicationinsights"
     api_management = {
       key = "apim1"
     }
     resource_group = {
       key = "rg1"
     }
-    display_name = "Delete User Operation"
-    method       = "DELETE"
-    url_template = "/users/{id}/delete"
-    description  = "This can only be done by the logged in user."
-
-    response = {
-      status_code = 200
-    }
-  }
-}
-
-
-api_management_api_operation_policy = {
-  apimapiopo1 = {
-    api = {
-      key = ""
-    }
-    api_management = {
-      key = "apim1"
-    }
-    resource_group = {
-      key = "rg1"
-    }
-    api_operation = {
-      key = "apimapio1"
+    api_management_logger = {
+      key = "apiml1"
     }
 
-    xml_content = <<XML
-<policies>
-  <inbound>
-    <find-and-replace from="xyz" to="abc" />
-  </inbound>
-</policies>
-XML
+    sampling_percentage       = 5.0
+    always_log_errors         = true
+    log_client_ip             = true
+    verbosity                 = "verbose"
+    http_correlation_protocol = "W3C"
+
+    frontend_request = {
+      body_bytes = 32
+      headers_to_log = [
+        "content-type",
+        "accept",
+        "origin",
+      ]
+    }
+
+    frontend_response = {
+      body_bytes = 32
+      headers_to_log = [
+        "content-type",
+        "content-length",
+        "origin",
+      ]
+    }
+
+    backend_request = {
+      body_bytes = 32
+      headers_to_log = [
+        "content-type",
+        "accept",
+        "origin",
+      ]
+    }
+
+    backend_response = {
+      body_bytes = 32
+      headers_to_log = [
+        "content-type",
+        "content-length",
+        "origin",
+      ]
+    }
   }
 }

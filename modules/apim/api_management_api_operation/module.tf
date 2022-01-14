@@ -1,5 +1,3 @@
-
-
 resource "azurerm_api_management_api_operation" "apim" {
   operation_id = var.settings.operation_id
   api_name = var.api_name

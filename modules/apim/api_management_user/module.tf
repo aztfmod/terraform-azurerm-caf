@@ -4,11 +4,7 @@ resource "azurerm_api_management_user" "apim" {
   email               = var.settings.email
   first_name          = var.settings.first_name
   last_name           = var.settings.last_name
-  user_id = coalesce(
-    try(var.remote_objects.azuread_users[var.settings.user.lz_key][var.settings.user.key].id, null),
-    try(var.remote_objects.azuread_users[var.client_config.landingzone_key][var.settings.user.key].id, null),
-    try(var.settings.user_id, null)
-  )
+  user_id             = var.settings.user_id
   confirmation = try(var.settings.confirmation, null)
   note         = try(var.settings.note, null)
   password     = try(var.settings.password, null)
