@@ -16,10 +16,10 @@ resource "azurerm_api_management_logger" "apim" {
 
   application_insights {
     instrumentation_key = try(
-                              var.remote_objects.application_insights[var.settings.application_insights.lz_key][var.settings.application_insights.key].instrumentation_key, 
-                              var.remote_objects.application_insights[var.client_config.landingzone_key][var.settings.application_insights.key].instrumentation_key, 
-                              var.settings.application_insights.instrumentation_key,
-                              null)
+      var.remote_objects.application_insights[var.settings.application_insights.lz_key][var.settings.application_insights.key].instrumentation_key,
+      var.remote_objects.application_insights[var.client_config.landingzone_key][var.settings.application_insights.key].instrumentation_key,
+      var.settings.application_insights.instrumentation_key,
+    null)
   }
   buffered = try(var.settings.buffered, null)
 

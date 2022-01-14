@@ -31,9 +31,9 @@ api_management = {
     sku_name = "Developer_1"
 
     identity = {
-      type = "UserAssigned"
+      type                  = "UserAssigned"
       managed_identity_keys = ["mi1"]
-    }  
+    }
   }
 }
 
@@ -71,14 +71,14 @@ api_management_custom_domain = {
       key = "apim1"
     }
     proxy = {
-      host_name    = "api.example.com"
+      host_name = "api.example.com"
       key_vault_certificate = {
         certificate_request_key = "example"
       }
     }
 
     developer_portal = {
-      host_name    = "portal.example.com"
+      host_name = "portal.example.com"
       key_vault_certificate = {
         certificate_request_key = "example"
         #id = ""
