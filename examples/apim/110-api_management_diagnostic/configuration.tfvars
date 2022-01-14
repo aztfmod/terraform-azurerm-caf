@@ -36,9 +36,9 @@ azurerm_application_insights = {
     application_type   = "web"
   }
 }
-api_management_logger =  {
+api_management_logger = {
   apiml1 = {
-    name                = "example-logger"
+    name = "example-logger"
     api_management = {
       key = "apim1"
     }
@@ -55,7 +55,7 @@ api_management_logger =  {
 }
 api_management_diagnostic = {
   apimd1 = {
-    identifier               = "applicationinsights"
+    identifier = "applicationinsights"
     api_management = {
       key = "apim1"
     }

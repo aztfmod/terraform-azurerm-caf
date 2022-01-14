@@ -15,13 +15,13 @@ resource_groups = {
 
 api_management = {
   apim1 = {
-    name                = "example-apim"
-    region              = "region1"
-    resource_group      = {
+    name   = "example-apim"
+    region = "region1"
+    resource_group = {
       key = "rg1"
     }
-    publisher_name      = "My Company"
-    publisher_email     = "company@terraform.io"
+    publisher_name  = "My Company"
+    publisher_email = "company@terraform.io"
 
     sku_name = "Developer_1"
   }
@@ -29,14 +29,14 @@ api_management = {
 
 api_management_backend = {
   apimb1 = {
-    name                = "example-backend"
-    resource_group      = {
+    name = "example-backend"
+    resource_group = {
       key = "rg1"
     }
     api_management = {
       key = "apim1"
     }
-    protocol            = "http"
-    url                 = "https://backend"
+    protocol = "http"
+    url      = "https://backend"
   }
 }

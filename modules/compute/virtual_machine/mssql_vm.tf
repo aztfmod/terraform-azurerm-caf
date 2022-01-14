@@ -17,11 +17,11 @@ resource "azurerm_mssql_virtual_machine" "mssqlvm" {
   sql_connectivity_port            = try(each.value.mssql_settings.sql_connectivity_port, null)
   sql_connectivity_type            = try(each.value.mssql_settings.sql_connectivity_type, null)
   tags                             = merge(local.tags, try(each.value.tags, null))
-  sql_connectivity_update_username = try(each.value.mssql_settings.sql_authentication.sql_credential.sql_username, data.external.sql_username[each.key].result.value, null) 
-  
+  sql_connectivity_update_username = try(each.value.mssql_settings.sql_authentication.sql_credential.sql_username, data.external.sql_username[each.key].result.value, null)
+
   sql_connectivity_update_password = try(coalesce(
     try(data.external.sql_password[each.key].result.value, null),
-    try(random_password.sql_admin_password[each.key].result,null),
+    try(random_password.sql_admin_password[each.key].result, null),
   ), null)
 
 
@@ -29,8 +29,8 @@ resource "azurerm_mssql_virtual_machine" "mssqlvm" {
     for_each = try(each.value.mssql_settings.auto_backup, null) != null ? [1] : []
 
     content {
-      encryption_enabled              = try(each.value.mssql_settings.auto_backup.encryption_password, null) != null ? true : false
-      encryption_password             = try(each.value.mssql_settings.auto_backup.encryption_password, null) != null ? try(coalesce(
+      encryption_enabled = try(each.value.mssql_settings.auto_backup.encryption_password, null) != null ? true : false
+      encryption_password = try(each.value.mssql_settings.auto_backup.encryption_password, null) != null ? try(coalesce(
         try(random_password.encryption_password[each.key].result, null),
         try(data.external.backup_encryption_password[each.key].result.value, null)
       ), null) : null
@@ -243,11 +243,11 @@ resource "azurerm_key_vault_secret" "sql_admin_password" {
     if try(value.mssql_settings.sql_authentication.sql_credential.sql_password_key, null) == null && try(value.mssql_settings, null) != null
   }
 
-  name         = can(each.value.mssql_settings.sql_authentication.sql_credential.keyvault_secret_name) ? each.value.mssql_settings.sql_authentication.sql_credential.keyvault_secret_name : format("%s-mssql-login-pw", azurerm_windows_virtual_machine.vm[each.key].name)
-  value        = random_password.sql_admin_password[each.key].result
+  name  = can(each.value.mssql_settings.sql_authentication.sql_credential.keyvault_secret_name) ? each.value.mssql_settings.sql_authentication.sql_credential.keyvault_secret_name : format("%s-mssql-login-pw", azurerm_windows_virtual_machine.vm[each.key].name)
+  value = random_password.sql_admin_password[each.key].result
   key_vault_id = coalesce(
-    try(var.keyvaults[each.value.mssql_settings.sql_authentication.sql_credential.lz_key][each.value.mssql_settings.sql_authentication.sql_credential.keyvault_key].id,null),
-    try(var.keyvaults[var.client_config.landingzone_key][each.value.mssql_settings.sql_authentication.sql_credential.keyvault_key].id,null)
+    try(var.keyvaults[each.value.mssql_settings.sql_authentication.sql_credential.lz_key][each.value.mssql_settings.sql_authentication.sql_credential.keyvault_key].id, null),
+    try(var.keyvaults[var.client_config.landingzone_key][each.value.mssql_settings.sql_authentication.sql_credential.keyvault_key].id, null)
   )
 
   lifecycle {
@@ -258,7 +258,7 @@ resource "azurerm_key_vault_secret" "sql_admin_password" {
 }
 
 resource "random_password" "encryption_password" {
-  for_each = try(var.settings.virtual_machine_settings, {}) 
+  for_each = try(var.settings.virtual_machine_settings, {})
   # Encryption password must be generated on first apply thus condition is removed to ensure creation first.
 
   # for_each = {
@@ -280,11 +280,11 @@ resource "azurerm_key_vault_secret" "backup_encryption_password" {
     if try(value.mssql_settings.auto_backup.encryption_password, null) != null && try(value.mssql_settings.auto_backup.encryption_password.encryption_password_key, null) == null && try(value.mssql_settings, null) != null
   }
 
-  name         = can(each.value.mssql_settings.auto_backup.encryption_password.encryption_password_secret_name) ? each.value.mssql_settings.auto_backup.encryption_password.encryption_password_secret_name : format("%s-mssql-bkup-encryption-pw", azurerm_windows_virtual_machine.vm[each.key].name)
-  value        = random_password.encryption_password[each.key].result
+  name  = can(each.value.mssql_settings.auto_backup.encryption_password.encryption_password_secret_name) ? each.value.mssql_settings.auto_backup.encryption_password.encryption_password_secret_name : format("%s-mssql-bkup-encryption-pw", azurerm_windows_virtual_machine.vm[each.key].name)
+  value = random_password.encryption_password[each.key].result
   key_vault_id = coalesce(
-    try(var.keyvaults[each.value.mssql_settings.auto_backup.encryption_password.lz_key][each.value.mssql_settings.auto_backup.encryption_password.keyvault_key].id,null),
-    try(var.keyvaults[var.client_config.landingzone_key][each.value.mssql_settings.auto_backup.encryption_password.keyvault_key].id,null)
+    try(var.keyvaults[each.value.mssql_settings.auto_backup.encryption_password.lz_key][each.value.mssql_settings.auto_backup.encryption_password.keyvault_key].id, null),
+    try(var.keyvaults[var.client_config.landingzone_key][each.value.mssql_settings.auto_backup.encryption_password.keyvault_key].id, null)
   )
 
   lifecycle {

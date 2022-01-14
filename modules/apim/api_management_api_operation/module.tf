@@ -1,12 +1,12 @@
 resource "azurerm_api_management_api_operation" "apim" {
-  operation_id = var.settings.operation_id
-  api_name = var.api_name
+  operation_id        = var.settings.operation_id
+  api_name            = var.api_name
   api_management_name = var.api_management_name
   resource_group_name = var.resource_group_name
-  display_name = var.settings.display_name
-  method = var.settings.method
-  url_template = var.settings.url_template
-  description = try(var.settings.description, null)
+  display_name        = var.settings.display_name
+  method              = var.settings.method
+  url_template        = var.settings.url_template
+  description         = try(var.settings.description, null)
   dynamic "request" {
     for_each = try(var.settings.request, null) != null ? [var.settings.request] : []
     content {
@@ -58,7 +58,7 @@ resource "azurerm_api_management_api_operation" "apim" {
           #     external_value = try(example.value.external_value, null)
           #   }
           # }
-          sample = try(representation.value.sample, null)
+          sample    = try(representation.value.sample, null)
           schema_id = try(representation.value.schema_id, null)
           type_name = try(representation.value.type_name, null)
         }
@@ -106,7 +106,7 @@ resource "azurerm_api_management_api_operation" "apim" {
           #     external_value = try(example.value.external_value, null)
           #   }
           # }
-          sample = try(representation.value.sample, null)
+          sample    = try(representation.value.sample, null)
           schema_id = try(representation.value.schema_id, null)
           type_name = try(representation.value.type_name, null)
         }

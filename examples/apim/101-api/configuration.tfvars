@@ -15,13 +15,13 @@ resource_groups = {
 
 api_management = {
   apim1 = {
-    name                = "example-apim"
-    region              = "region1"
-    resource_group      = {
+    name   = "example-apim"
+    region = "region1"
+    resource_group = {
       key = "rg1"
     }
-    publisher_name      = "My Company"
-    publisher_email     = "company@terraform.io"
+    publisher_name  = "My Company"
+    publisher_email = "company@terraform.io"
 
     sku_name = "Developer_1"
   }

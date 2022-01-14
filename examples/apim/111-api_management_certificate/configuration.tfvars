@@ -29,7 +29,7 @@ api_management = {
     publisher_email = "company@terraform.io"
 
     identity = {
-      type = "UserAssigned"
+      type                  = "UserAssigned"
       managed_identity_keys = ["mi1"]
     }
 
@@ -67,7 +67,7 @@ keyvault_access_policies = {
 
 api_management_certificate = {
   apimc1 = {
-    name                = "example-cert"
+    name = "example-cert"
     api_management = {
       key = "apim1"
     }

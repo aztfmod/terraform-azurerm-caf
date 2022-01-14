@@ -40,9 +40,9 @@ keyvault_certificates = {
 
     # Possible values include 2048 and 4096.
     # Changing this forces a new resource to be created.
-      key_size   = 2048
-      key_type   = "RSA"
-      reuse_key  = true
+    key_size  = 2048
+    key_type  = "RSA"
+    reuse_key = true
 
     # The Type of action to be performed when the lifetime trigger is triggered.
     # Possible values include AutoRenew and EmailContacts.

@@ -27,7 +27,7 @@ keyvaults = {
         }
         #add multiple subnets by extending this block. You can reference remote subnets by using subnet_id
         #subnet2 = {
-          #subnet_id = "/subscriptions/*******/resourceGroups/*******/providers/Microsoft.Network/virtualNetworks/vnet-some-remote-vnet/subnets/snet-remote-subnet"
+        #subnet_id = "/subscriptions/*******/resourceGroups/*******/providers/Microsoft.Network/virtualNetworks/vnet-some-remote-vnet/subnets/snet-remote-subnet"
         # }
       }
     }
