@@ -70,59 +70,61 @@ api_management_logger = {
 }
 
 api_management_api_diagnostic = {
-  identifier               = "applicationinsights"
-  resource_group = {
-    key = "rg1"
-  }
-  api_management = {
-    key = "apim1"
-  }
-  api = {
-    key = "apima1"
-  }
-  api_management_logger = {
-    key = "apiml1"
-  }
+  apimd1 = {
+    identifier               = "applicationinsights"
+    resource_group = {
+      key = "rg1"
+    }
+    api_management = {
+      key = "apim1"
+    }
+    api = {
+      key = "apima1"
+    }
+    api_management_logger = {
+      key = "apiml1"
+    }
 
-  sampling_percentage       = 5.0
-  always_log_errors         = true
-  log_client_ip             = true
-  verbosity                 = "verbose"
-  http_correlation_protocol = "W3C"
+    sampling_percentage       = 5.0
+    always_log_errors         = true
+    log_client_ip             = true
+    verbosity                 = "verbose"
+    http_correlation_protocol = "W3C"
 
-  frontend_request = {
-    body_bytes = 32
-    headers_to_log = [
-      "content-type",
-      "accept",
-      "origin",
-    ]
-  }
+    frontend_request = {
+      body_bytes = 32
+      headers_to_log = [
+        "content-type",
+        "accept",
+        "origin",
+      ]
+    }
 
-  frontend_response = {
-    body_bytes = 32
-    headers_to_log = [
-      "content-type",
-      "content-length",
-      "origin",
-    ]
-  }
+    frontend_response = {
+      body_bytes = 32
+      headers_to_log = [
+        "content-type",
+        "content-length",
+        "origin",
+      ]
+    }
 
-  backend_request = {
-    body_bytes = 32
-    headers_to_log = [
-      "content-type",
-      "accept",
-      "origin",
-    ]
-  }
+    backend_request = {
+      body_bytes = 32
+      headers_to_log = [
+        "content-type",
+        "accept",
+        "origin",
+      ]
+    }
 
-  backend_response = {
-    body_bytes = 32
-    headers_to_log = [
-      "content-type",
-      "content-length",
-      "origin",
-    ]
+    backend_response = {
+      body_bytes = 32
+      headers_to_log = [
+        "content-type",
+        "content-length",
+        "origin",
+      ]
+    }
   }
 }
