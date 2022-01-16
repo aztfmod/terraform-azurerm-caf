@@ -1,7 +1,7 @@
 resource "azurerm_api_management_api_diagnostic" "apim" {
   api_management_logger_id = var.api_management_logger_id
   api_management_name      = var.api_management_name
-  api_name                 = var.settings.api_name
+  api_name                 = var.api_name
   identifier               = var.settings.identifier
   resource_group_name      = var.resource_group_name
   always_log_errors        = try(var.settings.always_log_errors, null)

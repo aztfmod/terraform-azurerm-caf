@@ -32,9 +32,9 @@ module "api_management_api" {
   settings        = each.value
 
   api_management_name = coalesce(
-    try(local.combined_objects_api_management[each.value.api_management.lz_key][each.value.api_management.key].name, null),
-    try(local.combined_objects_api_management[local.client_config.landingzone_key][each.value.api_management.key].name, null),
-    try(each.value.api_management.name, null)
+    try(local.combined_objects_api_management_api[each.value.api.lz_key][each.value.api.key].name, null),
+    try(local.combined_objects_api_management_api[local.client_config.landingzone_key][each.value.api.key].name, null),
+    try(each.value.api.name, null)
   )
 
   resource_group_name = coalesce(
@@ -72,7 +72,11 @@ module "api_management_api_diagnostic" {
     try(local.combined_objects_api_management[local.client_config.landingzone_key][each.value.api_management.key].name, null),
     try(each.value.api_management.name, null)
   )
-
+  api_name = coalesce(
+    try(local.combined_objects_api_management_api[each.value.api.lz_key][each.value.api.key].name, null),
+    try(local.combined_objects_api_management_api[local.client_config.landingzone_key][each.value.api.key].name, null),
+    try(each.value.api.name, null)
+  )
   resource_group_name = coalesce(
     try(local.combined_objects_resource_groups[each.value.resource_group.lz_key][each.value.resource_group.key].name, null),
     try(local.combined_objects_resource_groups[local.client_config.landingzone_key][each.value.resource_group.key].name, null),
@@ -81,9 +85,9 @@ module "api_management_api_diagnostic" {
 
 
   remote_objects = {
-    api_management_logger = local.combined_objects_api_management_logger
-    api_management        = local.combined_objects_api_management
-    resource_group        = local.combined_objects_resource_groups
+    #api_management_logger = local.combined_objects_api_management_logger
+    #api_management        = local.combined_objects_api_management
+    #resource_group        = local.combined_objects_resource_groups
   }
 }
 output "api_management_api_diagnostic" {
