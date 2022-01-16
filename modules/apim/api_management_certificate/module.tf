@@ -1,5 +1,3 @@
-
-
 resource "azurecaf_name" "apim" {
   name          = var.settings.name
   resource_type = "azurerm_api_management_certificate"
