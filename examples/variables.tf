@@ -738,3 +738,6 @@ variable "lb_probe" {
 variable "lb_rule" {
   default = {}
 }
+variable "network_interface_backend_address_pool_association" {
+  default = {}
+}
