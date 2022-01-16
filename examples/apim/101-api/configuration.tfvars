@@ -11,8 +11,6 @@ resource_groups = {
     region = "region1"
   }
 }
-
-
 api_management = {
   apim1 = {
     name   = "example-apim"
@@ -26,4 +24,23 @@ api_management = {
     sku_name = "Developer_1"
   }
 }
+api_management_api = {
+  apima1 = {
+    name                = "example-api"
+    resource_group = {
+      key = "rg1"
+    }
+    api_management = {
+      key = "apim1"
+    }
+    revision            = "1"
+    display_name        = "Example API"
+    path                = "example"
+    protocols           = ["https"]
 
+    import = {
+      content_format = "swagger-link-json"
+      content_value  = "http://conferenceapi.azurewebsites.net/?format=json"
+    }
+  }
+}
