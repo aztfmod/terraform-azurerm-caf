@@ -15,7 +15,7 @@ azurerm_application_insights = {
   ai1 = {
     name               = "test-appinsights-apim"
     resource_group_key = "rg1"
-    application_type   = "apim"
+    application_type   = "web"
   }
 }
 api_management = {

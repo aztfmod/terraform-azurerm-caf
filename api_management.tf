@@ -32,8 +32,8 @@ module "api_management_api" {
   settings        = each.value
 
   api_management_name = coalesce(
-    try(local.combined_objects_api_management[each.value.api.lz_key][each.value.api.key].name, null),
-    try(local.combined_objects_api_management[local.client_config.landingzone_key][each.value.api.key].name, null),
+    try(local.combined_objects_api_management[each.value.api_management.lz_key][each.value.api_management.key].name, null),
+    try(local.combined_objects_api_management[local.client_config.landingzone_key][each.value.api_management.key].name, null),
     try(each.value.api.name, null)
   )
 
