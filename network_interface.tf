@@ -22,7 +22,7 @@ module "network_interface_backend_address_pool_association" {
     try(each.value.network_interface.id, null)
   )
 
-  remote_objects = { 
+  remote_objects = {
 
   }
 }

@@ -21,7 +21,7 @@ resource "azurerm_lb" "lb" {
       availability_zone = try(frontend_ip_configuration.value.availability_zone, null)
       subnet_id = try(
         var.remote_objects.virtual_network[frontend_ip_configuration.value.subnet.lz_key][frontend_ip_configuration.value.subnet.vnet_key].subnets[frontend_ip_configuration.value.subnet.key].id,
-        var.remote_objects.virtual_network[var.client_config.landingzone_key][frontend_ip_configuration.value.subnet.vnet_key].subnets[frontend_ip_configuration.value.subnet.key].id, 
+        var.remote_objects.virtual_network[var.client_config.landingzone_key][frontend_ip_configuration.value.subnet.vnet_key].subnets[frontend_ip_configuration.value.subnet.key].id,
         frontend_ip_configuration.value.subnet.id,
         null
       )

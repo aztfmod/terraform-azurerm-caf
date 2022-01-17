@@ -2,6 +2,10 @@ locals {
   # CAF landing zones can retrieve remote objects from a different landing zone and the
   # combined_objects will merge it with the local objects
   combined_objects_aks_clusters                                   = merge(tomap({ (local.client_config.landingzone_key) = module.aks_clusters }), try(var.remote_objects.aks_clusters, {}))
+  combined_objects_api_management                                 = merge(tomap({ (local.client_config.landingzone_key) = module.api_management }), try(var.remote_objects.api_management, {}))
+  combined_objects_api_management_api                             = merge(tomap({ (local.client_config.landingzone_key) = module.api_management_api }), try(var.remote_objects.api_management_api, {}))
+  combined_objects_api_management_api_operation                   = merge(tomap({ (local.client_config.landingzone_key) = module.api_management_api_operation }), try(var.remote_objects.api_management_api_operation, {}))
+  combined_objects_api_management_logger                          = merge(tomap({ (local.client_config.landingzone_key) = module.api_management_logger }), try(var.remote_objects.api_management_logger, {}))
   combined_objects_app_config                                     = merge(tomap({ (local.client_config.landingzone_key) = module.app_config }), try(var.remote_objects.app_config, {}))
   combined_objects_app_service_environments                       = merge(tomap({ (local.client_config.landingzone_key) = module.app_service_environments }), try(var.remote_objects.app_service_environments, {}))
   combined_objects_app_service_plans                              = merge(tomap({ (local.client_config.landingzone_key) = module.app_service_plans }), try(var.remote_objects.app_service_plans, {}))
@@ -9,6 +13,7 @@ locals {
   combined_objects_application_gateway_platforms                  = merge(tomap({ (local.client_config.landingzone_key) = module.application_gateway_platforms }), try(var.remote_objects.application_gateway_platforms, {}))
   combined_objects_application_gateway_waf_policies               = merge(tomap({ (local.client_config.landingzone_key) = module.application_gateway_waf_policies }), try(var.remote_objects.application_gateway_waf_policies, {}))
   combined_objects_application_gateways                           = merge(tomap({ (local.client_config.landingzone_key) = module.application_gateways }), try(var.remote_objects.application_gateways, {}))
+  combined_objects_application_insights                           = merge(tomap({ (local.client_config.landingzone_key) = module.azurerm_application_insights }), try(var.remote_objects.azurerm_application_insights, {}))
   combined_objects_application_security_groups                    = merge(tomap({ (local.client_config.landingzone_key) = module.application_security_groups }), try(var.remote_objects.application_security_groups, {}))
   combined_objects_availability_sets                              = merge(tomap({ (local.client_config.landingzone_key) = module.availability_sets }), try(var.remote_objects.availability_sets, {}))
   combined_objects_azure_container_registries                     = merge(tomap({ (local.client_config.landingzone_key) = module.container_registry }), try(var.remote_objects.container_registry, {}))

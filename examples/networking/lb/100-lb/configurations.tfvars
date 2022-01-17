@@ -163,6 +163,6 @@ lb_rule = {
     frontend_port                  = 3389
     backend_port                   = 3389
     frontend_ip_configuration_name = "PublicIPAddress"
-    disable_outbound_snat = true
+    disable_outbound_snat          = true
   }
 }

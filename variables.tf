@@ -384,3 +384,6 @@ variable "identity" {
   description = "Configuration object - identity resources"
   default     = {}
 }
+variable "apim" {
+  default = {}
+}
