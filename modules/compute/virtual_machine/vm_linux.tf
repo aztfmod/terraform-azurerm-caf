@@ -63,6 +63,7 @@ resource "azurerm_linux_virtual_machine" "vm" {
   computer_name                   = azurecaf_name.linux_computer_name[each.key].result
   disable_password_authentication = try(each.value.disable_password_authentication, true)
   eviction_policy                 = try(each.value.eviction_policy, null)
+  license_type                    = try(each.value.license_type, null)
   location                        = var.location
   max_bid_price                   = try(each.value.max_bid_price, null)
   name                            = azurecaf_name.linux[each.key].result
