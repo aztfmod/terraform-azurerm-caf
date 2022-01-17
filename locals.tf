@@ -318,4 +318,19 @@ locals {
     active_directory_domain_service             = try(var.identity.active_directory_domain_service, {})
     active_directory_domain_service_replica_set = try(var.identity.active_directory_domain_service_replica_set, {})
   }
+  apim = {
+    api_management                      = try(var.apim.api_management, null)
+    api_management_api                  = try(var.apim.api_management_api, null)
+    api_management_api_diagnostic       = try(var.apim.api_management_api_diagnostic, null)
+    api_management_logger               = try(var.apim.api_management_logger, null)
+    api_management_api_operation        = try(var.apim.api_management_api_operation, null)
+    api_management_backend              = try(var.apim.api_management_backend, null)
+    api_management_api_policy           = try(var.apim.api_management_api_policy, null)
+    api_management_api_operation_tag    = try(var.apim.api_management_api_operation_tag, null)
+    api_management_api_operation_policy = try(var.apim.api_management_api_operation_policy, null)
+    api_management_user                 = try(var.apim.api_management_user, null)
+    api_management_custom_domain        = try(var.apim.api_management_custom_domain, null)
+    api_management_diagnostic           = try(var.apim.api_management_diagnostic, null)
+    api_management_certificate          = try(var.apim.api_management_certificate, null)
+  }
 }

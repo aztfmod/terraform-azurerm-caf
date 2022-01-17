@@ -114,11 +114,11 @@ lb = {
       name = "config1"
       subnet = {
         vnet_key = "vnet_test"
-        key = "subnet1"
+        key      = "subnet1"
       }
       private_ip_address_allocation = "Dynamic"
     }
-    sku =  "basic" #SKU must match with the SKU of the PIP
+    sku = "basic" #SKU must match with the SKU of the PIP
   }
 }
 lb_backend_address_pool = {
