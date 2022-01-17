@@ -47,23 +47,23 @@ api_management_api = {
   }
 }
 api_management_api_policy = {
+  apimp1 = {
+    api = {
+      key = "apimapi1"
+    }
+    api_management = {
+      key = "apim1"
+    }
+    resource_group = {
+      key = "rg1"
+    }
 
-  api = {
-    key = "apimapi1"
-  }
-  api_management = {
-    key = "apim1"
-  }
-  resource_group = {
-    key = "rg1"
-  }
-
-  xml_content = <<XML
+    xml_content = <<XML
 <policies>
   <inbound>
     <find-and-replace from="xyz" to="abc" />
   </inbound>
 </policies>
 XML
-
+  }
 }
