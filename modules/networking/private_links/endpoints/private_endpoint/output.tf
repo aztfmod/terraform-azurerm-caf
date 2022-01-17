@@ -1,5 +1,5 @@
-output pep {
-  value     = azurerm_private_endpoint.pep
+output "pep" {
+  value = azurerm_private_endpoint.pep
 
 }
 

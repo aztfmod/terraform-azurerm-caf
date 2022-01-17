@@ -37,7 +37,7 @@ resource "azurerm_signalr_service" "signalr_service" {
     for_each = try(var.settings.features, {})
 
     content {
-      flag = features.value.flag
+      flag  = features.value.flag
       value = features.value.value
     }
   }

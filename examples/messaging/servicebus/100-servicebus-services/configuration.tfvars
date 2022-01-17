@@ -51,30 +51,30 @@ servicebus_namespaces = {
       # lz_key = ""
       key = "rg1"
     }
-    name = "sbexample"
-    sku = "premium" # basic | standard | premium
-    capacity = 1 # capacity only for premium: 1,2,4,8,16 otherwise 0
+    name     = "sbexample"
+    sku      = "premium" # basic | standard | premium
+    capacity = 1         # capacity only for premium: 1,2,4,8,16 otherwise 0
     # zone_redundant = false # only true for premium
     # tags = {} # optional
     namespace_auth_rules = {
       rule1 = {
-        name = "rule1"
+        name   = "rule1"
         listen = true
-        send = true
+        send   = true
         manage = false
       }
     }
 
-    network_rule_sets = { 
+    network_rule_sets = {
       ruleset1 = {
         default_action = "Deny"
-        ip_rules = ["1.1.1.1"]
+        ip_rules       = ["1.1.1.1"]
 
         network_rules = {
           subnet1 = {
             # lz_key = ""
-            vnet_key = "vnet1"
-            subnet_key = "subnet1"
+            vnet_key                             = "vnet1"
+            subnet_key                           = "subnet1"
             ignore_missing_vnet_service_endpoint = false
           }
         }
@@ -95,92 +95,92 @@ servicebus_topics = {
       key = "namespace1"
     }
     name = "topic1"
-    
+
     # auto_delete_on_idle = "P0Y0M0DT0H5M0S"
     # default_message_ttl = "P0Y0M0DT0H5M0S"
     # duplicate_detection_history_time_window = "P0Y0M0DT0H5M0S"
-    enable_batched_operations = false
-    enable_express = false
-    enable_partitioning = false
-    max_size_in_megabytes = 1024
+    enable_batched_operations    = false
+    enable_express               = false
+    enable_partitioning          = false
+    max_size_in_megabytes        = 1024
     requires_duplicate_detection = false
-    support_ordering = false
+    support_ordering             = false
 
     topic_auth_rules = {
       rule1 = {
-        name = "authrule1"  
+        name   = "authrule1"
         listen = true
-        send = false
+        send   = false
         manage = false # requires both listen and send
       }
     }
 
     subscriptions = {
       sub1 = {
-        name = "subtest1"
-          max_delivery_count = 1
+        name               = "subtest1"
+        max_delivery_count = 1
 
-          auto_delete_on_idle = "P14DT5M"
-          default_message_ttl = "P14D"
-          lock_duration = "PT30S"
-          dead_lettering_on_message_expiration = false
-          dead_lettering_on_filter_evaluation_error = true
-          enable_batched_operations = false
-          requires_session = false
-          status = "Active" # ReceiveDisabled, Disabled, Active (default)
+        auto_delete_on_idle                       = "P14DT5M"
+        default_message_ttl                       = "P14D"
+        lock_duration                             = "PT30S"
+        dead_lettering_on_message_expiration      = false
+        dead_lettering_on_filter_evaluation_error = true
+        enable_batched_operations                 = false
+        requires_session                          = false
+        status                                    = "Active" # ReceiveDisabled, Disabled, Active (default)
 
-          # forward_to = {
-          #   queue = { # lz_key, key reference only work for queues created in a different landingzone
-          #     # name = "" # full queue name 
-          #     # lz_key = ""
-          #     # key = ""
-          #   }
-          #   # topic = {
-          #   #   # name = "" # full topic name or use reference key below
-          #   #   lz_key = ""
-          #   #   key = ""
-          #   # }
-          # }
+        # forward_to = {
+        #   queue = { # lz_key, key reference only work for queues created in a different landingzone
+        #     # name = "" # full queue name
+        #     # lz_key = ""
+        #     # key = ""
+        #   }
+        #   # topic = {
+        #   #   # name = "" # full topic name or use reference key below
+        #   #   lz_key = ""
+        #   #   key = ""
+        #   # }
+        # }
 
-          # forward_dead_lettered_messages_to = {
-          #   queue = { # lz_key, key reference only work for queues created in a different landingzone
-          #     # name = "" # full queue name 
-          #     # lz_key = ""
-          #     # key = ""
-          #   }
-          #   # topic = {
-          #   #   # name = "" # full topic name or use reference key below
-          #   #   lz_key = ""
-          #   #   key = ""
-          #   # }
-          # }
+        # forward_dead_lettered_messages_to = {
+        #   queue = { # lz_key, key reference only work for queues created in a different landingzone
+        #     # name = "" # full queue name
+        #     # lz_key = ""
+        #     # key = ""
+        #   }
+        #   # topic = {
+        #   #   # name = "" # full topic name or use reference key below
+        #   #   lz_key = ""
+        #   #   key = ""
+        #   # }
+        # }
 
-          subscription_rules = {
+        subscription_rules = {
 
-            correlation_filter_rules = {
-              rule1 = {
-                name = "testrule1"
-                # action = "" # in sql syntax against BrokeredMessage
-                correlation_filter = { 
-                  correlation_id = "high"
-                  label = "red"
-                  properties = {
-                    custom1 = "value"
-                  }
+          correlation_filter_rules = {
+            rule1 = {
+              name = "testrule1"
+              # action = "" # in sql syntax against BrokeredMessage
+              correlation_filter = {
+                correlation_id = "high"
+                label          = "red"
+                properties = {
+                  custom1 = "value"
                 }
               }
             }
-
-            sql_filter_rules = {
-              rule1 = {
-                name = "testrule2"
-                # action = ""
-                filter_type = "SqlFilter"
-                sql_filter = "x=1"
-              }
-            }
-
           }
+
+          sql_filter_rules = {
+            rule1 = {
+              name = "testrule2"
+              # action = ""
+              filter_type = "SqlFilter"
+              sql_filter  = "x=1"
+            }
+          }
+
+        }
 
       }
     }
@@ -199,10 +199,10 @@ servicebus_queues = {
     #   key = ""
     # }
 
-    max_delivery_count = 10
+    max_delivery_count    = 10
     max_size_in_megabytes = 1024
-    default_message_ttl = "P0Y0M14DT0H0M0S" # ISO 8601 format
-    
+    default_message_ttl   = "P0Y0M14DT0H0M0S" # ISO 8601 format
+
     # lock_duration = "PT30S"
     # requires_duplicate_detection = false
     # requires_session = false
@@ -216,7 +216,7 @@ servicebus_queues = {
 
     # forward_to = {
     #   queue = { # lz_key, key reference only work for queues created in a different landingzone
-    #     # name = "" # full queue name 
+    #     # name = "" # full queue name
     #     # lz_key = ""
     #     # key = ""
     #   }
@@ -229,7 +229,7 @@ servicebus_queues = {
 
     # forward_dead_lettered_messages_to = {
     #   queue = { # lz_key, key reference only work for queues created in a different landingzone
-    #     # name = "" # full queue name 
+    #     # name = "" # full queue name
     #     # lz_key = ""
     #     # key = ""
     #   }
@@ -242,9 +242,9 @@ servicebus_queues = {
 
     queue_auth_rules = {
       rule1 = {
-        name = "qauthrule1"
+        name   = "qauthrule1"
         listen = true
-        send = false
+        send   = false
         manage = false
 
       }
