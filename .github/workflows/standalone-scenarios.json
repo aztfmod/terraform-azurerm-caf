@@ -122,6 +122,7 @@
     "networking/ip_group/100-simple-ip_group",
     "networking/ip_group/101-firewall-ip_group",
     "networking/lb/100-lb",
+    "networking/lb/101-vm_lb",
     "networking/load_balancers/100-simple-load-balancer-basic-sku",
     "networking/load_balancers/101-load-balancer-with-rules",
     "networking/load_balancers/102-internal-load-balancer",
