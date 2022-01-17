@@ -76,7 +76,7 @@ api_management_api_operation = {
 api_management_api_operation_policy = {
   apimapiopo1 = {
     api = {
-      key = ""
+      key = "apimapi1"
     }
     api_management = {
       key = "apim1"
