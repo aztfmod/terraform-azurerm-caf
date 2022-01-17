@@ -133,6 +133,12 @@ module "example" {
     postgresql_servers                 = var.postgresql_servers
     synapse_workspaces                 = var.synapse_workspaces
   }
+  messaging = {
+    signalr_services      = var.signalr_services
+    servicebus_namespaces = var.servicebus_namespaces
+    servicebus_topics     = var.servicebus_topics
+    servicebus_queues     = var.servicebus_queues
+  }
   networking = {
     application_gateway_applications                        = var.application_gateway_applications
     application_gateway_applications_v1                     = var.application_gateway_applications_v1
@@ -201,11 +207,6 @@ module "example" {
     keyvault_keys                 = var.keyvault_keys
     keyvault_certificates         = var.keyvault_certificates
     lighthouse_definitions        = var.lighthouse_definitions
-  }
-  servicebus = {
-    servicebus_namespaces = var.servicebus_namespaces
-    servicebus_topics     = var.servicebus_topics
-    servicebus_queues     = var.servicebus_queues
   }
   shared_services = {
     consumption_budgets        = var.consumption_budgets
