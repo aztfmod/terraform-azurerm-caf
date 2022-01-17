@@ -75,18 +75,18 @@ application_security_groups = {
 # Load Balancer
 public_ip_addresses = {
   lb_pip1 = {
-    name               = "lb_pip1"
-    resource_group_key = "rg1"
-    sku                = "Standard"
-    allocation_method = "Static"
+    name                    = "lb_pip1"
+    resource_group_key      = "rg1"
+    sku                     = "Standard"
+    allocation_method       = "Static"
     ip_version              = "IPv4"
     idle_timeout_in_minutes = "4"
   }
   lb_pip2 = {
-    name               = "lb_pip12"
-    resource_group_key = "rg1"
-    sku                = "Standard"
-    allocation_method = "Static"
+    name                    = "lb_pip12"
+    resource_group_key      = "rg1"
+    sku                     = "Standard"
+    allocation_method       = "Static"
     ip_version              = "IPv4"
     idle_timeout_in_minutes = "4"
   }
@@ -209,7 +209,7 @@ virtual_machine_scale_sets = {
 
         # To replace unhealthy nodes, add this block and the `health_probe`
         automatic_instance_repair = {
-          enabled = true
+          enabled      = true
           grace_period = "PT30M" # Use ISO8601 expressions.
         }
 
@@ -300,7 +300,7 @@ virtual_machine_scale_sets = {
 
         # To replace unhealthy nodes, add this block and the `health_probe`
         automatic_instance_repair = {
-          enabled = true
+          enabled      = true
           grace_period = "PT30M" # Use ISO8601 expressions.
         }
 
