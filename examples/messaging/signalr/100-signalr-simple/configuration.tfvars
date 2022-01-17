@@ -22,8 +22,8 @@ vnets = {
     specialsubnets = {}
     subnets = {
       subnet1 = {
-        name = "signalr-pr-subnet"
-        cidr = ["10.100.100.0/29"]
+        name                                           = "signalr-pr-subnet"
+        cidr                                           = ["10.100.100.0/29"]
         enforce_private_link_endpoint_network_policies = "true"
       }
     }
@@ -38,8 +38,8 @@ vnets = {
     specialsubnets = {}
     subnets = {
       subnet1 = {
-        name = "signalr-pr-subnet"
-        cidr = ["10.100.100.8/29"]
+        name                                           = "signalr-pr-subnet"
+        cidr                                           = ["10.100.100.8/29"]
         enforce_private_link_endpoint_network_policies = "true"
       }
     }
@@ -75,9 +75,9 @@ private_dns = {
 }
 
 private_endpoints = {
-  vnet1 = { 
+  vnet1 = {
     # lz_key = ""
-    vnet_key = "vnet1"
+    vnet_key    = "vnet1"
     subnet_keys = ["subnet1"]
 
     signalr_services = {
@@ -95,12 +95,12 @@ private_endpoints = {
       }
     }
   }
-  vnet2 = { 
-    
-    
+  vnet2 = {
+
+
 
     # lz_key = ""
-    vnet_key = "vnet2"
+    vnet_key    = "vnet2"
     subnet_keys = ["subnet1"]
 
     signalr_services = {
@@ -130,7 +130,7 @@ signalr_services = {
     }
 
     sku = {
-      name = "Standard_S1"
+      name     = "Standard_S1"
       capacity = 1
     }
 
@@ -140,15 +140,15 @@ signalr_services = {
 
     features = {
       feature1 = {
-        flag = "ServiceMode"
+        flag  = "ServiceMode"
         value = "Serverless" # Default Serverless Classic
       }
       feature2 = {
-        flag = "EnableMessagingLogs"
+        flag  = "EnableMessagingLogs"
         value = "True" # True / False
       }
       feature3 = {
-        flag = "EnableConnectivityLogs"
+        flag  = "EnableConnectivityLogs"
         value = "True" # True / False
       }
     }
@@ -182,11 +182,11 @@ signalr_services = {
 
       # NOTE: private endpoints id can only be added AFTER Private endpoint has been created and add the ID below.
       # NOTE: private endpoint key reference not possible due to cyclic dependency
-      
-      # private_endpoints = { 
+
+      # private_endpoints = {
       #   pe1 = {
       #     id = "/subscriptions/xxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx/resourceGroups/xxxx-resourcegroup/providers/Microsoft.Network/privateEndpoints/xxxx-pe"
-      #     allowed_request_types = ["ServerConnection"]  
+      #     allowed_request_types = ["ServerConnection"]
       #   }
       #   pe2 = {
       #     id = "/subscriptions/xxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx/resourceGroups/xxxx-resourcegroup/providers/Microsoft.Network/privateEndpoints/xxxx-pe"
