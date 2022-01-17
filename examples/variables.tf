@@ -714,6 +714,9 @@ variable "active_directory_domain_service" {
 variable "active_directory_domain_service_replica_set" {
   default = {}
 }
+variable "signalr_services" {
+  default = {}
+}
 variable "api_management" {
   default = {}
 }
