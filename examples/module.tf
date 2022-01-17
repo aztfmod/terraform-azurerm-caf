@@ -134,7 +134,7 @@ module "example" {
     synapse_workspaces                 = var.synapse_workspaces
   }
   messaging = {
-    signalr_services = var.signalr_services
+    signalr_services      = var.signalr_services
     servicebus_namespaces = var.servicebus_namespaces
     servicebus_topics     = var.servicebus_topics
     servicebus_queues     = var.servicebus_queues
@@ -165,9 +165,18 @@ module "example" {
     frontdoor_rules_engine                                  = var.frontdoor_rules_engine
     frontdoor_custom_https_configuration                    = var.frontdoor_custom_https_configuration
     ip_groups                                               = var.ip_groups
+    lb                                                      = var.lb
+    lb_backend_address_pool                                 = var.lb_backend_address_pool
+    lb_backend_address_pool_address                         = var.lb_backend_address_pool_address
+    lb_nat_pool                                             = var.lb_nat_pool
+    lb_nat_rule                                             = var.lb_nat_rule
+    lb_outbound_rule                                        = var.lb_outbound_rule
+    lb_probe                                                = var.lb_probe
+    lb_rule                                                 = var.lb_rule
     load_balancers                                          = var.load_balancers
     local_network_gateways                                  = var.local_network_gateways
     nat_gateways                                            = var.nat_gateways
+    network_interface_backend_address_pool_association      = var.network_interface_backend_address_pool_association
     network_security_group_definition                       = var.network_security_group_definition
     network_watchers                                        = var.network_watchers
     private_dns                                             = var.private_dns
@@ -266,5 +275,20 @@ module "example" {
   identity = {
     active_directory_domain_service             = var.active_directory_domain_service
     active_directory_domain_service_replica_set = var.active_directory_domain_service_replica_set
+  }
+  apim = {
+    api_management                      = var.api_management
+    api_management_api                  = var.api_management_api
+    api_management_api_diagnostic       = var.api_management_api_diagnostic
+    api_management_logger               = var.api_management_logger
+    api_management_api_operation        = var.api_management_api_operation
+    api_management_backend              = var.api_management_backend
+    api_management_api_policy           = var.api_management_api_policy
+    api_management_api_operation_tag    = var.api_management_api_operation_tag
+    api_management_api_operation_policy = var.api_management_api_operation_policy
+    api_management_user                 = var.api_management_user
+    api_management_custom_domain        = var.api_management_custom_domain
+    api_management_diagnostic           = var.api_management_diagnostic
+    api_management_certificate          = var.api_management_certificate
   }
 }

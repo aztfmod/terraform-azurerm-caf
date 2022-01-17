@@ -226,7 +226,7 @@ variable "database" {
 
 variable "messaging" {
   description = "Configuration object - messaging resources"
-  default = {}
+  default     = {}
 }
 
 ## Networking variables
@@ -383,4 +383,7 @@ variable "communication" {
 variable "identity" {
   description = "Configuration object - identity resources"
   default     = {}
+}
+variable "apim" {
+  default = {}
 }

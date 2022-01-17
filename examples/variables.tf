@@ -717,3 +717,69 @@ variable "active_directory_domain_service_replica_set" {
 variable "signalr_services" {
   default = {}
 }
+variable "api_management" {
+  default = {}
+}
+variable "api_management_api" {
+  default = {}
+}
+variable "api_management_api_diagnostic" {
+  default = {}
+}
+variable "api_management_logger" {
+  default = {}
+}
+variable "api_management_api_operation" {
+  default = {}
+}
+variable "api_management_backend" {
+  default = {}
+}
+variable "api_management_api_policy" {
+  default = {}
+}
+variable "api_management_api_operation_policy" {
+  default = {}
+}
+variable "api_management_api_operation_tag" {
+  default = {}
+}
+variable "api_management_user" {
+  default = {}
+}
+variable "api_management_custom_domain" {
+  default = {}
+}
+variable "api_management_diagnostic" {
+  default = {}
+}
+variable "api_management_certificate" {
+  default = {}
+}
+variable "lb" {
+  default = {}
+}
+variable "lb_backend_address_pool" {
+  default = {}
+}
+variable "lb_backend_address_pool_address" {
+  default = {}
+}
+variable "lb_nat_pool" {
+  default = {}
+}
+variable "lb_nat_rule" {
+  default = {}
+}
+variable "lb_outbound_rule" {
+  default = {}
+}
+variable "lb_probe" {
+  default = {}
+}
+variable "lb_rule" {
+  default = {}
+}
+variable "network_interface_backend_address_pool_association" {
+  default = {}
+}
