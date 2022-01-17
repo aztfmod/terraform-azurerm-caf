@@ -272,11 +272,6 @@ module "api_management_api_operation_policy" {
     try(each.value.resource_group.name, null)
   )
 
-  api_operation_id = coalesce(
-    try(local.combined_objects_api_management_api_operation[each.value.api_operation.lz_key][each.value.api_operation.key].id, null),
-    try(local.combined_objects_api_management_api_operation[local.client_config.landingzone_key][each.value.api_operation.key].id, null),
-    try(each.value.api_operation.id, null)
-  )
   remote_objects = {
     api_management = local.combined_objects_api_management
     resource_group = local.combined_objects_resource_groups
