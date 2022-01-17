@@ -87,9 +87,7 @@ api_management_api_operation_policy = {
     resource_group = {
       key = "rg1"
     }
-    api_operation = {
-      key = "apimapio1"
-    }
+    api_operation_id = "sample"
 
     xml_content = <<XML
 <policies>
