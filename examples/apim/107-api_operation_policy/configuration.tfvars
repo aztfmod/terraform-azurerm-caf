@@ -47,11 +47,9 @@ api_management_api = {
     }
   }
 }
-
-
 api_management_api_operation = {
   apimapio1 = {
-    operation_id = "user-delete"
+    operation_id        = "sample"
     api = {
       key = "apimapi1"
     }
@@ -61,13 +59,18 @@ api_management_api_operation = {
     resource_group = {
       key = "rg1"
     }
-    display_name = "Delete User Operation"
-    method       = "DELETE"
-    url_template = "/users/{id}/delete"
-    description  = "This can only be done by the logged in user."
 
-    response = {
-      status_code = 200
+    display_name        = "Get WishLists"
+    method              = "GET"
+    url_template        = "/wishlists"
+    description         = "Get WishList"
+    request = {
+      query_parameter = {
+        name     = "test"
+        required = false
+        type     = "string"
+        values   = ["true", "false"]
+      }
     }
   }
 }
