@@ -49,7 +49,7 @@ api_management_api = {
 }
 api_management_api_operation = {
   apimapio1 = {
-    operation_id        = "sample"
+    operation_id = "sample"
     api = {
       key = "apimapi1"
     }
@@ -60,10 +60,10 @@ api_management_api_operation = {
       key = "rg1"
     }
 
-    display_name        = "Get WishLists"
-    method              = "GET"
-    url_template        = "/wishlists"
-    description         = "Get WishList"
+    display_name = "Get WishLists"
+    method       = "GET"
+    url_template = "/wishlists"
+    description  = "Get WishList"
     request = {
       query_parameter = {
         name     = "test"
