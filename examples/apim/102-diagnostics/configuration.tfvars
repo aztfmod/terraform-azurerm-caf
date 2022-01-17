@@ -33,17 +33,17 @@ api_management = {
 }
 api_management_api = {
   apima1 = {
-    name                = "example-api"
+    name = "example-api"
     resource_group = {
       key = "rg1"
     }
     api_management = {
       key = "apim1"
     }
-    revision            = "1"
-    display_name        = "Example API"
-    path                = "example"
-    protocols           = ["https"]
+    revision     = "1"
+    display_name = "Example API"
+    path         = "example"
+    protocols    = ["https"]
 
     import = {
       content_format = "swagger-link-json"
@@ -55,7 +55,7 @@ api_management_api = {
 
 api_management_logger = {
   apiml1 = {
-    name                = "example-apimlogger"
+    name = "example-apimlogger"
     resource_group = {
       key = "rg1"
     }
@@ -71,7 +71,7 @@ api_management_logger = {
 
 api_management_api_diagnostic = {
   apimd1 = {
-    identifier               = "applicationinsights"
+    identifier = "applicationinsights"
     resource_group = {
       key = "rg1"
     }
