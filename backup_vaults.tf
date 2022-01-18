@@ -56,7 +56,7 @@ module "backup_vault_instances" {
   ) : local.global_settings.regions[each.value.region]  
     }
   storage_account_id = module.storage_accounts[each.value.storage_account_key].id
-  backup_policy_id = module.backup_vault_policies[each.value.backup_vault_policy_key].id
+  backup_policy_id = module.backup_vault_policies[each.value.backup_vault_policy_key].id  
 }
   
 # module "backup_vault_instances" {
