@@ -8,9 +8,9 @@ resource "azurecaf_name" "apim" {
   use_slug      = var.global_settings.use_slug
 }
 
-resource "azurerm_api_management_gateway" "apim" {
+resource "azurerm_api_management_group" "apim" {
   name = azurecaf_name.apim.result
-  
+
   api_management_name = coalesce(
     try(var.remote_objects.api_management[var.settings.api_management.lz_key][var.settings.api_management.key].name, null),
     try(var.remote_objects.api_management[var.client_config.landingzone_key][var.settings.api_management.key].name, null),
@@ -23,15 +23,18 @@ resource "azurerm_api_management_gateway" "apim" {
     try(var.settings.resource_group.name, null)
   )
 
+  display_name        = var.settings.display_name
   description         = try(var.settings.description, null)
-  
-  dynamic "location_data" {
-    for_each = try(var.settings.location_data, null) != null ? [var.settings.location_data] : []
+  external_id         = var.settings.external_id
+  type                = var.settings.type
+
+  dynamic "timeouts" {
+    for_each = try(var.settings.timeouts, null) != null ? [var.settings.timeouts] : []
     content {
-      name = try(location_data.value.name, null)
-      region = try(location_data.value.region, null)
-      city = try(location_data.value.city, null)
-      district = try(location_data.value.district, null)
+      create = try(timeouts.value.create, null)
+      read = try(timeouts.value.read, null)
+      update = try(timeouts.value.update, null)
+      delete = try(timeouts.value.delete, null)
     }
   }
 }
