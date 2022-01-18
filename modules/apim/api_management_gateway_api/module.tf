@@ -32,3 +32,4 @@ resource "azurerm_api_management_gateway_api" "apim" {
       delete = try(timeouts.value.delete, null)
     }
   }
+}

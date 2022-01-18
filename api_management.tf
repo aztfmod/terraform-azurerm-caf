@@ -436,6 +436,23 @@ module "api_management_gateway_api" {
     api_management_gateway = local.combined_objects_api_management_gateway
   }
 }
-output "api_management_gateway" {
+output "api_management_gateway_api" {
   value = module.api_management_gateway_api
+}
+
+module "api_management_group" {
+  source   = "./modules/apim/api_management_group"
+  for_each = local.apim.api_management_group
+
+  global_settings = local.global_settings
+  client_config   = local.client_config
+  settings        = each.value
+
+  remote_objects = {
+    api_management = local.combined_objects_api_management
+    resource_group = local.combined_objects_resource_groups
+  }
+}
+output "api_management_group" {
+  value = module.api_management_group
 }
