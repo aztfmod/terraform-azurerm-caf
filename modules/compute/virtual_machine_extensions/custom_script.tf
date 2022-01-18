@@ -49,10 +49,6 @@ locals {
   # fileuris
   fileuri_sa_key  = try(var.extension.fileuri_sa_key, "")
   fileuri_sa_path = try(var.extension.fileuri_sa_path, "")
-  # fileuri_sa = local.fileuri_sa_key != "" ? try(
-  #   try(var.storage_accounts[var.client_config.landingzone_key][var.extension.fileuri_sa_key].primary_blob_endpoint, null),
-  #   try(var.storage_accounts[var.extension.lz_key][var.extension.fileuri_sa_key].primary_blob_endpoint, null)
-  # ) : ""
   fileuri_sa = local.fileuri_sa_key != "" ? try(var.storage_accounts[var.client_config.landingzone_key][var.extension.fileuri_sa_key].primary_blob_endpoint, 
     var.storage_accounts[var.extension.lz_key][var.extension.fileuri_sa_key].primary_blob_endpoint) : ""
   fileuri_sa_full_path = "${local.fileuri_sa}${local.fileuri_sa_path}"
