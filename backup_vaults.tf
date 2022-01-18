@@ -46,8 +46,6 @@ module "backup_vault_instances" {
   source     = "./modules/backup_vault/backup_vault_instance"
   for_each   = try(var.backup_vault_instances, {}) 
   
-  client_config       = local.client_config
-  global_settings     = local.global_settings
   settings = each.value
   vault_id = module.backup_vaults[each.value.backup_vault_key].id
   location = lookup(each.value, "region", null) == null ? coalesce(
