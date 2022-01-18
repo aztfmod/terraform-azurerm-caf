@@ -404,3 +404,38 @@ module "api_management_user" {
 output "api_management_user" {
   value = module.api_management_user
 }
+
+module "api_management_gateway" {
+  source   = "./modules/apim/api_management_gateway"
+  for_each = local.apim.api_management_gateway
+
+  global_settings = local.global_settings
+  client_config   = local.client_config
+  settings        = each.value
+
+  remote_objects = {
+    api_management = local.combined_objects_api_management
+    resource_group = local.combined_objects_resource_groups 
+  }
+}
+output "api_management_gateway" {
+  value = module.api_management_gateway
+}
+
+module "api_management_gateway_api" {
+  source   = "./modules/apim/api_management_gateway_api"
+  for_each = local.apim.api_management_gateway_api
+
+  global_settings = local.global_settings
+  client_config   = local.client_config
+  settings        = each.value
+
+  remote_objects = {
+    api_management = local.combined_objects_api_management
+    resource_group = local.combined_objects_resource_groups
+    api_management_gateway = local.combined_objects_api_management_gateway
+  }
+}
+output "api_management_gateway" {
+  value = module.api_management_gateway_api
+}

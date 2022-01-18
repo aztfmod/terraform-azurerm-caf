@@ -756,6 +756,9 @@ variable "api_management_diagnostic" {
 variable "api_management_certificate" {
   default = {}
 }
+variable "api_management_gateway" {
+  default = {}
+}
 variable "lb" {
   default = {}
 }
