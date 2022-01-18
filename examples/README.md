@@ -70,14 +70,15 @@ rover login --tenant <tenant_name>.onmicrosoft.com -s <subscription_id>
 ```bash
 rover -lz /tf/caf/landingzones/caf_launchpad \
 -launchpad \
--var-folder /tf/caf/landingzones/caf_launchpad/scenario/100 \
+-var-folder /tf/caf/landingzones/caf_launchpad/scenario/100 \ -env singtel
 -a apply
 ```
 
 ### 3. Test your example
 
 ```bash
-rover -lz /tf/caf/landingzones/caf_example \
--var-folder /tf/caf/examples/<path of the example> \
--a plan|apply
+rover -lz /tf/caf/examples \
+-var-folder /tf/caf/examples/apim/112-api_management_gateway \
+-env "demo" \
+-a plan
 ```

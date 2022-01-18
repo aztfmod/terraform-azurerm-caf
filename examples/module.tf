@@ -290,5 +290,6 @@ module "example" {
     api_management_custom_domain        = var.api_management_custom_domain
     api_management_diagnostic           = var.api_management_diagnostic
     api_management_certificate          = var.api_management_certificate
+    api_management_gateway              = var.api_management_gateway
   }
 }

@@ -333,5 +333,6 @@ locals {
     api_management_custom_domain        = try(var.apim.api_management_custom_domain, {})
     api_management_diagnostic           = try(var.apim.api_management_diagnostic, {})
     api_management_certificate          = try(var.apim.api_management_certificate, {})
+    api_management_gateway              = try(var.apim.api_management_gateway, {})
   }
 }
