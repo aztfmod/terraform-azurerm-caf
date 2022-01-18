@@ -75,6 +75,8 @@ resource "azurerm_windows_virtual_machine_scale_set" "vmss" {
   scale_in_policy              = try(each.value.scale_in_policy, null)
   zone_balance                 = try(each.value.zone_balance, null)
   zones                        = try(each.value.zones, null)
+  timezone                     = try(each.value.timezone, null)
+  license_type                 = try(each.value.license_type, null)
 
   dynamic "network_interface" {
     for_each = try(var.settings.network_interfaces, {})
@@ -87,9 +89,14 @@ resource "azurerm_windows_virtual_machine_scale_set" "vmss" {
       network_security_group_id     = try(network_interface.value.network_security_group_id, null)
 
       ip_configuration {
-        name                                         = azurecaf_name.windows_nic[network_interface.key].result
-        primary                                      = try(network_interface.value.primary, false)
-        subnet_id                                    = try(var.vnets[var.client_config.landingzone_key][network_interface.value.vnet_key].subnets[network_interface.value.subnet_key].id, var.vnets[network_interface.value.lz_key][network_interface.value.vnet_key].subnets[network_interface.value.subnet_key].id)
+        name    = azurecaf_name.windows_nic[network_interface.key].result
+        primary = try(network_interface.value.primary, false)
+        #subnet_id                                    = try(var.vnets[var.client_config.landingzone_key][network_interface.value.vnet_key].subnets[network_interface.value.subnet_key].id, var.vnets[network_interface.value.lz_key][network_interface.value.vnet_key].subnets[network_interface.value.subnet_key].id)
+        subnet_id = coalesce(
+          try(network_interface.value.subnet_id, null),
+          try(var.vnets[var.client_config.landingzone_key][network_interface.value.vnet_key].subnets[network_interface.value.subnet_key].id, null),
+          try(var.vnets[network_interface.value.lz_key][network_interface.value.vnet_key].subnets[network_interface.value.subnet_key].id, null)
+        )
         load_balancer_backend_address_pool_ids       = try(local.load_balancer_backend_address_pool_ids, null)
         application_gateway_backend_address_pool_ids = try(local.application_gateway_backend_address_pool_ids, null)
         application_security_group_ids               = try(local.application_security_group_ids, null)
@@ -252,7 +259,17 @@ resource "azurerm_windows_virtual_machine_scale_set" "vmss" {
     }
   }
 
-lifecycle {
+  dynamic "automatic_instance_repair" {
+    for_each = try(each.value.automatic_instance_repair, false) == false ? [] : [1]
+    content {
+      enabled      = each.value.automatic_instance_repair.enabled
+      grace_period = each.value.automatic_instance_repair.grace_period
+    }
+  }
+
+  health_probe_id = try(var.load_balancers[try(each.value.lz_key, var.client_config.landingzone_key)][each.value.health_probe.loadbalancer_key].probes[each.value.health_probe.probe_key].id, null)
+
+  lifecycle {
     ignore_changes = [
       resource_group_name, location
     ]

@@ -10,8 +10,8 @@ resource "azurecaf_name" "evh" {
 
 resource "azurerm_eventhub_namespace" "evh" {
   name                     = azurecaf_name.evh.result
-  location                 = var.location
-  resource_group_name      = var.resource_group_name
+  location                 = local.location
+  resource_group_name      = var.resource_group.name
   sku                      = var.settings.sku
   capacity                 = try(var.settings.capacity, null)
   tags                     = local.tags

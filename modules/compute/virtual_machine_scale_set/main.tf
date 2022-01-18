@@ -4,7 +4,7 @@ terraform {
       source = "aztfmod/azurecaf"
     }
   }
-  required_version = ">= 0.13"
+
 }
 
 
@@ -38,7 +38,7 @@ locals {
   application_security_group_ids = flatten([
     for nic, nic_value in var.settings.network_interfaces : [
       for asg, asg_value in try(nic_value.application_security_groups, {}) : [
-        try(var.application_security_groups[try(var.client_config.landingzone_key, asg_value.lz_key)][asg_value.asg_key].id, null)
+        try(var.application_security_groups[var.client_config.landingzone_key][asg_value.asg_key].id, var.application_security_groups[asg_value.lz_key][asg_value.asg_key].id)
       ]
     ]
   ])

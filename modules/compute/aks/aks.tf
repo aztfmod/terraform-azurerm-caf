@@ -36,8 +36,8 @@ resource "azurecaf_name" "rg_node" {
 }
 
 
-# Needed as introduced in >2.79.1 - https://github.com/hashicorp/terraform-provider-azurerm/issues/13585  
- resource "null_resource" "aks_registration_preview" {
+# Needed as introduced in >2.79.1 - https://github.com/hashicorp/terraform-provider-azurerm/issues/13585
+resource "null_resource" "aks_registration_preview" {
   provisioner "local-exec" {
     command = "az feature register --namespace Microsoft.ContainerService -n AutoUpgradePreview"
   }
@@ -49,16 +49,54 @@ resource "azurerm_kubernetes_cluster" "aks" {
     null_resource.aks_registration_preview
   ]
   name                = azurecaf_name.aks.result
-  location            = var.resource_group.location
+  location            = can(var.settings.region) ? var.global_settings.regions[var.settings.region] : var.resource_group.location
   resource_group_name = var.resource_group.name
 
   default_node_pool {
-    name                   = var.settings.default_node_pool.name //azurecaf_name.default_node_pool.result
-    vm_size                = var.settings.default_node_pool.vm_size
-    availability_zones     = try(var.settings.default_node_pool.availability_zones, null)
-    enable_auto_scaling    = try(var.settings.default_node_pool.enable_auto_scaling, false)
-    enable_host_encryption = try(var.settings.default_node_pool.enable_host_encryption, false)
-    enable_node_public_ip  = try(var.settings.default_node_pool.enable_node_public_ip, false)
+    availability_zones           = try(var.settings.default_node_pool.availability_zones, null)
+    enable_auto_scaling          = try(var.settings.default_node_pool.enable_auto_scaling, false)
+    enable_host_encryption       = try(var.settings.default_node_pool.enable_host_encryption, false)
+    enable_node_public_ip        = try(var.settings.default_node_pool.enable_node_public_ip, false)
+    fips_enabled                 = try(var.settings.default_node_pool.fips_enabled, null)
+    kubelet_disk_type            = try(var.settings.default_node_pool.kubelet_disk_type, null)
+    max_count                    = try(var.settings.default_node_pool.max_count, null)
+    max_pods                     = try(var.settings.default_node_pool.max_pods, 30)
+    min_count                    = try(var.settings.default_node_pool.min_count, null)
+    name                         = var.settings.default_node_pool.name //azurecaf_name.default_node_pool.result
+    node_count                   = try(var.settings.default_node_pool.node_count, 1)
+    node_labels                  = try(var.settings.default_node_pool.node_labels, null)
+    node_public_ip_prefix_id     = try(var.settings.default_node_pool.node_public_ip_prefix_id, null)
+    only_critical_addons_enabled = try(var.settings.default_node_pool.only_critical_addons_enabled, false)
+    orchestrator_version         = try(var.settings.default_node_pool.orchestrator_version, try(var.settings.kubernetes_version, null))
+    os_disk_size_gb              = try(var.settings.default_node_pool.os_disk_size_gb, null)
+    os_disk_type                 = try(var.settings.default_node_pool.os_disk_type, null)
+    os_sku                       = try(var.settings.default_node_pool.os_sku, null)
+    tags                         = merge(try(var.settings.default_node_pool.tags, {}), local.tags)
+    type                         = try(var.settings.default_node_pool.type, "VirtualMachineScaleSets")
+    ultra_ssd_enabled            = try(var.settings.default_node_pool.ultra_ssd_enabled, false)
+    vm_size                      = var.settings.default_node_pool.vm_size
+
+    pod_subnet_id = try(coalesce(
+      try(var.subnets[var.settings.default_node_pool.pod_subnet_key].id, null),
+      try(var.subnets[var.settings.default_node_pool.pod_subnet.key].id, null),
+      try(var.settings.default_node_pool.pod_subnet.resource_id, null),
+      try(var.settings.default_node_pool.pod_subnet_id, null)
+    ), null)
+
+    vnet_subnet_id = coalesce(
+      try(var.subnets[var.settings.default_node_pool.subnet_key].id, ""),
+      try(var.subnets[var.settings.default_node_pool.subnet.key].id, ""),
+      try(var.settings.default_node_pool.subnet.resource_id, ""),
+      try(var.settings.default_node_pool.vnet_subnet_id, "")
+    )
+
+    dynamic "upgrade_settings" {
+      for_each = try(var.settings.default_node_pool.upgrade_settings, null) == null ? [] : [1]
+      content {
+        max_surge = upgrade_settings.value.max_surge
+      }
+    }
+
     dynamic "kubelet_config" {
       for_each = try(var.settings.default_node_pool.kubelet_config, null) == null ? [] : [1]
       content {
@@ -116,40 +154,6 @@ resource "azurerm_kubernetes_cluster" "aks" {
         transparent_huge_page_enabled = try(linux_os_config.value.transparent_huge_page_enabled, null)
       }
     }
-    fips_enabled                 = try(var.settings.default_node_pool.fips_enabled, null)
-    kubelet_disk_type            = try(var.settings.default_node_pool.kubelet_disk_type, null)
-    max_pods                     = try(var.settings.default_node_pool.max_pods, 30)
-    node_public_ip_prefix_id     = try(var.settings.default_node_pool.node_public_ip_prefix_id, null)
-    node_labels                  = try(var.settings.default_node_pool.node_labels, null)
-    only_critical_addons_enabled = try(var.settings.default_node_pool.only_critical_addons_enabled, false)
-    orchestrator_version         = try(var.settings.default_node_pool.orchestrator_version, try(var.settings.kubernetes_version, null))
-    os_disk_size_gb              = try(var.settings.default_node_pool.os_disk_size_gb, null)
-    os_disk_type                 = try(var.settings.default_node_pool.os_disk_type, null)
-    os_sku                       = try(var.settings.default_node_pool.os_sku, null)
-    pod_subnet_id = try(coalesce(
-      try(var.subnets[var.settings.default_node_pool.pod_subnet_key].id, null),
-      try(var.subnets[var.settings.default_node_pool.pod_subnet.key].id, null),
-      try(var.settings.default_node_pool.pod_subnet.resource_id, null),
-      try(var.settings.default_node_pool.pod_subnet_id, null)
-    ), null)
-    type              = try(var.settings.default_node_pool.type, "VirtualMachineScaleSets")
-    tags              = merge(try(var.settings.default_node_pool.tags, {}), local.tags)
-    ultra_ssd_enabled = try(var.settings.default_node_pool.ultra_ssd_enabled, false)
-    dynamic "upgrade_settings" {
-      for_each = try(var.settings.default_node_pool.upgrade_settings, null) == null ? [] : [1]
-      content {
-        max_surge = upgrade_settings.value.max_surge
-      }
-    }
-    vnet_subnet_id = coalesce(
-      try(var.subnets[var.settings.default_node_pool.subnet_key].id, ""),
-      try(var.subnets[var.settings.default_node_pool.subnet.key].id, ""),
-      try(var.settings.default_node_pool.subnet.resource_id, ""),
-      try(var.settings.default_node_pool.vnet_subnet_id, "")
-    )
-    max_count  = try(var.settings.default_node_pool.max_count, null)
-    min_count  = try(var.settings.default_node_pool.min_count, null)
-    node_count = try(var.settings.default_node_pool.node_count, 1)
   }
 
   dns_prefix                 = try(var.settings.dns_prefix, try(var.settings.dns_prefix_private_cluster, random_string.prefix.result))
@@ -212,19 +216,25 @@ resource "azurerm_kubernetes_cluster" "aks" {
       }
 
       dynamic "ingress_application_gateway" {
-        for_each = try(var.settings.addon_profile.ingress_application_gateway[*], {})
+        for_each = can(var.settings.addon_profile.ingress_application_gateway) ? [var.settings.addon_profile.ingress_application_gateway] : []
         content {
-          enabled      = var.settings.addon_profile.ingress_application_gateway.enabled
-          gateway_name = try(var.settings.addon_profile.ingress_application_gateway.gateway_name, try(var.application_gateway.name, null))
-          gateway_id   = try(var.settings.addon_profile.ingress_application_gateway.gateway_id, try(var.application_gateway.id, null))
-          subnet_cidr  = try(var.settings.addon_profile.ingress_application_gateway.subnet_cidr, null)
-          subnet_id    = try(var.settings.addon_profile.ingress_application_gateway.subnet_id, null)
+          enabled      = ingress_application_gateway.value.enabled
+          gateway_name = try(ingress_application_gateway.value.gateway_name, null)
+          gateway_id   = try(ingress_application_gateway.value.gateway_id, try(var.application_gateway.id, null))
+          subnet_cidr  = try(ingress_application_gateway.value.subnet_cidr, null)
+          subnet_id    = try(ingress_application_gateway.value.subnet_id, null)
         }
       }
     }
   }
 
   api_server_authorized_ip_ranges = try(var.settings.api_server_authorized_ip_ranges, null)
+
+  disk_encryption_set_id = try(coalesce(
+    try(var.settings.disk_encryption_set_id, ""),
+    try(var.settings.disk_encryption_set.id, "")
+  ), null)
+
 
   dynamic "auto_scaler_profile" {
     for_each = try(var.settings.auto_scaler_profile[*], {})
@@ -249,11 +259,6 @@ resource "azurerm_kubernetes_cluster" "aks" {
       skip_nodes_with_system_pods      = try(auto_scaler_profile.value.skip_nodes_with_system_pods, null)
     }
   }
-
-  disk_encryption_set_id = try(coalesce(
-    try(var.settings.disk_encryption_set_id, ""),
-    try(var.settings.disk_encryption_set.id, "")
-  ), null)
 
   dynamic "identity" {
     for_each = try(var.settings.identity, null) == null ? [] : [1]
@@ -392,7 +397,7 @@ resource "azurerm_kubernetes_cluster" "aks" {
 
   lifecycle {
     ignore_changes = [
-      windows_profile,
+      windows_profile, private_dns_zone_id
     ]
   }
   tags = merge(local.tags, lookup(var.settings, "tags", {}))

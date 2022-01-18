@@ -59,6 +59,14 @@ application_gateway_applications_v1 = {
         name = "demo"
         keyvault = {
           certificate_key = "demoapp1.cafsandpit.com"
+
+          # lz_key                  = "" #remote keyvault
+
+          # certificate_request_key = "" #for cert request
+
+          # manual cert
+          # key                     = "" #keyvault key
+          # certificate_name        = "" #manual cert name
         }
       }
     }
@@ -70,6 +78,35 @@ application_gateway_applications_v1 = {
         rule_name         = "test_path_rule"
         backend_pool_key  = "demo"
         http_settings_key = "demo"
+      }
+    }
+
+    url_path_rules = {
+      rule1 = {
+        name             = "rule1-demo"
+        url_path_map_key = "demo"
+        paths            = "/test/rule1/*"
+      }
+      rule2 = {
+        name             = "rule2-demo"
+        url_path_map_key = "demo"
+        paths            = "/test/rule2/*"
+      }
+    }
+
+    probes = {
+      test = {
+        name                         = "test-http"
+        protocol                     = "Http" # Http or Https
+        host                         = "test.com"
+        host_name_from_http_settings = false
+        # port                                    = "" # Leave not set if pick port from backend http settings
+        path               = "/api/health"
+        interval           = "60"
+        timeout            = "60"
+        threshold          = "3"
+        min_servers        = "0"
+        match_status_codes = "200-499"
       }
     }
   }

@@ -23,6 +23,7 @@ application_gateway_applications = {
           // To use manual uploaded cert
           # certificate_name = "testkhairi"
           # keyvault_key     = "certificates"
+          #  keyvault_id     = "/subscriptions/97958dac-xxxx-xxxx-xxxx-9f436fa73bd4/resourceGroups/jmtv-rg-example-app-gateway-re1/providers/Microsoft.KeyVault/vaults/jmtv-kv-certs"
         }
       }
       public_ssl = {
@@ -35,7 +36,7 @@ application_gateway_applications = {
           certificate_key = "demoapp1.cafdemo.com"
           // To use manual uploaded cert
           # certificate_name = "testkhairi"
-          # keyvault_key     = "certificates"
+          # keyvault_id     = "/subscriptions/97958dac-xxxx-xxxx-xxxx-9f436fa73bd4/resourceGroups/jmtv-rg-example-app-gateway-re1/providers/Microsoft.KeyVault/vaults/jmtv-kv-certs"
         }
       }
     }

@@ -25,26 +25,26 @@ vnets = {
 
 virtual_subnets = {
   subnet1 = {
-      name = "test"
-      cidr = ["172.33.1.0/24"]
-      nsg_key = "empty_nsg"
-      # service_endpoints = ["Microsoft.ServiceBus"]
-      vnet = {
-        # id = "/subscriptions/xxxx-xxxx-xxxx-xxx/resourceGroups/example-rg/providers/Microsoft.Network/virtualNetworks/example-vnet"
-        # lz_key = ""
-        key = "vnet1"
-      }
+    name    = "test"
+    cidr    = ["172.33.1.0/24"]
+    nsg_key = "empty_nsg"
+    # service_endpoints = ["Microsoft.ServiceBus"]
+    vnet = {
+      # id = "/subscriptions/xxxx-xxxx-xxxx-xxx/resourceGroups/example-rg/providers/Microsoft.Network/virtualNetworks/example-vnet"
+      # lz_key = ""
+      key = "vnet1"
     }
+  }
   subnet2 = {
-      name = "AzureFirewallSubnet"
-      special_subnet = true #special_subnet means NO nsg will be created for this subnet
-      cidr = ["172.33.2.0/24"]
-      vnet = {
-        # id = "/subscriptions/xxxx-xxxx-xxxx-xxx/resourceGroups/example-rg/providers/Microsoft.Network/virtualNetworks/example-vnet"
-        # lz_key = ""
-        key = "vnet1"
-      }
+    name           = "AzureFirewallSubnet"
+    special_subnet = true #special_subnet means NO nsg will be created for this subnet
+    cidr           = ["172.33.2.0/24"]
+    vnet = {
+      # id = "/subscriptions/xxxx-xxxx-xxxx-xxx/resourceGroups/example-rg/providers/Microsoft.Network/virtualNetworks/example-vnet"
+      # lz_key = ""
+      key = "vnet1"
     }
+  }
 }
 
 managed_identities = {

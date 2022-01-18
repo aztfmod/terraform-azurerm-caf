@@ -38,73 +38,6 @@ keyvaults = {
       }
     }
   }
-  sql_cred_kv = {
-    name                     = "sqlsecretkv"
-    resource_group_key       = "rg1"
-    sku_name                 = "standard"
-    soft_delete_enabled      = true
-    purge_protection_enabled = false
-    tags = {
-      env = "Standalone"
-    }
-    creation_policies = {
-      logged_in_user = {
-        secret_permissions = ["Set", "Get", "List", "Delete", "Purge", "Recover"]
-        key_permissions    = ["Get", "List", "Update", "Create", "Import", "Delete", "Recover", "Backup", "Restore", "Decrypt", "Encrypt", "UnwrapKey", "WrapKey", "Verify", "Sign", "Purge"]
-      }
-    }
-  }
-  sp_secrets = {
-    name                     = "spsecretkv"
-    resource_group_key       = "rg1"
-    sku_name                 = "standard"
-    soft_delete_enabled      = true
-    purge_protection_enabled = false
-    tags = {
-      env = "Standalone"
-    }
-    creation_policies = {
-      logged_in_user = {
-        secret_permissions = ["Set", "Get", "List", "Delete", "Purge", "Recover"]
-        key_permissions    = ["Get", "List", "Update", "Create", "Import", "Delete", "Recover", "Backup", "Restore", "Decrypt", "Encrypt", "UnwrapKey", "WrapKey", "Verify", "Sign", "Purge"]
-      }
-    }
-  }
-}
-
-dynamic_keyvault_secrets = {
-  kv1 = { # Key of the keyvault
-    vmadmin-username = {
-      secret_name = "vmadmin-username"
-      value       = "vmadmin"
-    }
-    vmadmin-password = {
-      secret_name = "vmadmin-password"
-      value       = "Very@Str5ngP!44w0rdToChaNge#"
-    }
-    sql-username = {
-      secret_name = "sql-username"
-      value       = "sqllogin"
-    }
-    sql-password = {
-      secret_name = "sql-password"
-      value       = "Very@Str5ngP!44w0rdToChaNge#"
-    }
-    encryption-password = {
-      secret_name = "encryption-password"
-      value       = "Very@Str5ngP!44w0rdToChaNge#"
-    }
-  }
-  sp_secrets = {
-    sp-client-id = {
-      secret_name = "sp-client-id"
-      value       = ""
-    }
-    sp-client-secret = {
-      secret_name = "sp-client-secret"
-      value       = ""
-    }
-  }
 }
 
 vnets = {
@@ -174,8 +107,10 @@ virtual_machines = {
         size = "Standard_D4as_v4"
         zone = "1"
 
-        admin_username_key = "vmadmin-username"
-        admin_password_key = "vmadmin-password"
+        admin_username = "azadminuser"
+
+        # admin_username_key = "vmadmin-username"
+        # admin_password_key = "vmadmin-password"
 
         # Spot VM to save money
         priority        = "Spot"
@@ -195,9 +130,8 @@ virtual_machines = {
         source_image_reference = {
           publisher = "MicrosoftSQLServer"
           offer     = "SQL2017-WS2016"
-          # offer     = "sql2019-ws2019"
-          sku     = "SQLDEV"
-          version = "latest"
+          sku       = "SQLDEV"
+          version   = "latest"
         }
 
         mssql_settings = { # requires SQL Image in source_image_reference
@@ -206,28 +140,27 @@ virtual_machines = {
           sql_connectivity_port = 1433
           sql_connectivity_type = "PRIVATE"
 
-          # sql credentials is the same as the one for vm
           sql_authentication = {
             sql_credential = {
               # lz_key           = ""
-              keyvault_key     = "kv1"
-              sql_username_key = "sql-username"
-              sql_password_key = "sql-password"
+              keyvault_key = "kv1"
+              sql_username = "sqllogin"
+              # sql_password_secret_name = "" # custom kv secret name for sql user password
+              # sql_username_key = "sql-username" # existing kv secret name for reference
+              # sql_password_key = "sql-password" # existing kv secret name for password reference, if not specified, password will be auto-generated
             }
 
-            # To be implemented in 5.5. Do not uncomment
             # keyvault_credential = {
             #   name = "sqlkv_credentials"
             #   # lz_key       = ""
-            #   keyvault_key = "sql_cred_kv"  # get url from here
+            #   keyvault_key = "sql_cred_kv" # get url from here
             #   service_principal_secrets = { # sp secret to access the kv above
             #     # lz_key = ""
-            #     keyvault_key         = "sp_secrets" # get url from here
-            #     sp_client_id_key     = "sp-client-id"
+            #     keyvault_key = "sp_secrets" # get url from here
+            #     sp_client_id_key = "sp-client-id"
             #     sp_client_secret_key = "sp-client-secret"
             #   }
             # }
-
           }
 
           auto_patching = {
@@ -236,13 +169,14 @@ virtual_machines = {
             maintenance_window_starting_hour       = 2
           }
           auto_backup = {
-            encryption_enabled = false # uses the vmadmin password
-            # ERROR: unable to locate password as the secret has not been created yet
-            encryption_password = {
-              # lz_key = ""
-              keyvault_key            = "kv1"
-              encryption_password_key = "encryption-password"
-            }
+            # DEPLOYMENT NOTE: To apply this using auto-generated password, the module should be deployed with the encryption_password block commented first. Then re-apply with the block uncommented
+
+            # encryption_password = { # comment this block if encryption is not needed
+            #   # lz_key = ""
+            #   keyvault_key = "kv1"
+            #   # encryption_password_secret_name = "" # custom kv secret name for auto-generated password
+            #   # encryption_password_key = "" existing kv secret name for password reference, if not specified, password will be auto-generated
+            # }
             retention_period_in_days = 7
             storage_account = {
               # lz_key = ""

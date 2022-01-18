@@ -17,8 +17,8 @@ resource "azurecaf_name" "keyvault" {
 resource "azurerm_key_vault" "keyvault" {
 
   name                            = azurecaf_name.keyvault.result
-  location                        = lookup(var.settings, "region", null) == null ? var.resource_groups[try(var.settings.resource_group.key, var.settings.resource_group_key)].location : var.global_settings.regions[var.settings.region]
-  resource_group_name             = var.resource_groups[try(var.settings.resource_group.key, var.settings.resource_group_key)].name
+  location                        = lookup(var.settings, "region", null) == null ? local.resource_group.location : var.global_settings.regions[var.settings.region]
+  resource_group_name             = local.resource_group.name
   tenant_id                       = var.client_config.tenant_id
   sku_name                        = try(var.settings.sku_name, "standard")
   tags                            = try(merge(var.base_tags, local.tags), {})
@@ -41,7 +41,7 @@ resource "azurerm_key_vault" "keyvault" {
       default_action = try(var.settings.network.default_action, "Deny")
       ip_rules       = try(var.settings.network.ip_rules, null)
       virtual_network_subnet_ids = try(var.settings.network.subnets, null) == null ? null : [
-        for key, value in var.settings.network.subnets : try(var.vnets[var.client_config.landingzone_key][value.vnet_key].subnets[value.subnet_key].id, var.vnets[value.lz_key][value.vnet_key].subnets[value.subnet_key].id)
+        for key, value in var.settings.network.subnets : try(var.vnets[var.client_config.landingzone_key][value.vnet_key].subnets[value.subnet_key].id, try(var.vnets[value.lz_key][value.vnet_key].subnets[value.subnet_key].id, value.subnet_id))
       ]
     }
   }
@@ -54,5 +54,11 @@ resource "azurerm_key_vault" "keyvault" {
       name  = try(contact.value.name, null)
       phone = try(contact.value.phone, null)
     }
+  }
+
+  lifecycle {
+    ignore_changes = [
+      resource_group_name, location
+    ]
   }
 }
