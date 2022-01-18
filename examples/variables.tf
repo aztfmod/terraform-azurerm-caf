@@ -324,6 +324,9 @@ variable "machine_learning_workspaces" {
 variable "monitor_action_groups" {
   default = {}
 }
+variable "monitor_autoscale_settings" {
+  default = {}
+}
 variable "monitoring" {
   default = {}
 }
@@ -564,6 +567,15 @@ variable "vpn_sites" {
 variable "vpn_gateway_connections" {
   default = {}
 }
+variable "servicebus_namespaces" {
+  default = {}
+}
+variable "servicebus_topics" {
+  default = {}
+}
+variable "servicebus_queues" {
+  default = {}
+}
 variable "storage_account_queues" {
   default = {}
 }
@@ -696,6 +708,12 @@ variable "kusto_iothub_data_connections" {
 variable "private_dns_vnet_links" {
   default = {}
 }
+variable "communication_services" {
+  default = {}
+}
+variable "machine_learning_compute_instance" {
+  default = {}
+}
 variable "data_factory_integration_runtime_self_hosted" {
   default = {}
 }
@@ -706,5 +724,89 @@ variable "frontdoor_rules_engine" {
   default = {}
 }
 variable "frontdoor_custom_https_configuration" {
+  default = {}
+}
+variable "cdn_endpoint" {
+  default = {}
+}
+variable "cdn_profile" {
+  default = {}
+}
+variable "function_apps" {
+  default = {}
+}
+variable "active_directory_domain_service" {
+  default = {}
+}
+variable "active_directory_domain_service_replica_set" {
+  default = {}
+}
+variable "signalr_services" {
+  default = {}
+}
+variable "api_management" {
+  default = {}
+}
+variable "api_management_api" {
+  default = {}
+}
+variable "api_management_api_diagnostic" {
+  default = {}
+}
+variable "api_management_logger" {
+  default = {}
+}
+variable "api_management_api_operation" {
+  default = {}
+}
+variable "api_management_backend" {
+  default = {}
+}
+variable "api_management_api_policy" {
+  default = {}
+}
+variable "api_management_api_operation_policy" {
+  default = {}
+}
+variable "api_management_api_operation_tag" {
+  default = {}
+}
+variable "api_management_user" {
+  default = {}
+}
+variable "api_management_custom_domain" {
+  default = {}
+}
+variable "api_management_diagnostic" {
+  default = {}
+}
+variable "api_management_certificate" {
+  default = {}
+}
+variable "lb" {
+  default = {}
+}
+variable "lb_backend_address_pool" {
+  default = {}
+}
+variable "lb_backend_address_pool_address" {
+  default = {}
+}
+variable "lb_nat_pool" {
+  default = {}
+}
+variable "lb_nat_rule" {
+  default = {}
+}
+variable "lb_outbound_rule" {
+  default = {}
+}
+variable "lb_probe" {
+  default = {}
+}
+variable "lb_rule" {
+  default = {}
+}
+variable "network_interface_backend_address_pool_association" {
   default = {}
 }

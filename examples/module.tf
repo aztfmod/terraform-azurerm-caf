@@ -79,7 +79,9 @@ module "example" {
   cognitive_services = {
     cognitive_services_account = var.cognitive_services_account
   }
-
+  communication = {
+    communication_services = var.communication_services
+  }
   compute = {
     aks_clusters                        = var.aks_clusters
     availability_sets                   = var.availability_sets
@@ -88,6 +90,7 @@ module "example" {
     container_groups                    = var.container_groups
     dedicated_host_groups               = var.dedicated_host_groups
     dedicated_hosts                     = var.dedicated_hosts
+    machine_learning_compute_instance   = var.machine_learning_compute_instance
     proximity_placement_groups          = var.proximity_placement_groups
     virtual_machine_scale_sets          = var.virtual_machine_scale_sets
     virtual_machines                    = var.virtual_machines
@@ -141,6 +144,12 @@ module "example" {
       kusto_iothub_data_connections          = var.kusto_iothub_data_connections
     }
   }
+  messaging = {
+    signalr_services      = var.signalr_services
+    servicebus_namespaces = var.servicebus_namespaces
+    servicebus_topics     = var.servicebus_topics
+    servicebus_queues     = var.servicebus_queues
+  }
   networking = {
     application_gateway_applications                        = var.application_gateway_applications
     application_gateway_applications_v1                     = var.application_gateway_applications_v1
@@ -155,6 +164,8 @@ module "example" {
     azurerm_firewall_policy_rule_collection_groups          = var.azurerm_firewall_policy_rule_collection_groups
     azurerm_firewalls                                       = var.azurerm_firewalls
     azurerm_routes                                          = var.azurerm_routes
+    cdn_profile                                             = var.cdn_profile
+    cdn_endpoint                                            = var.cdn_endpoint
     dns_zone_records                                        = var.dns_zone_records
     dns_zones                                               = var.dns_zones
     domain_name_registrations                               = var.domain_name_registrations
@@ -165,9 +176,18 @@ module "example" {
     frontdoor_rules_engine                                  = var.frontdoor_rules_engine
     frontdoor_custom_https_configuration                    = var.frontdoor_custom_https_configuration
     ip_groups                                               = var.ip_groups
+    lb                                                      = var.lb
+    lb_backend_address_pool                                 = var.lb_backend_address_pool
+    lb_backend_address_pool_address                         = var.lb_backend_address_pool_address
+    lb_nat_pool                                             = var.lb_nat_pool
+    lb_nat_rule                                             = var.lb_nat_rule
+    lb_outbound_rule                                        = var.lb_outbound_rule
+    lb_probe                                                = var.lb_probe
+    lb_rule                                                 = var.lb_rule
     load_balancers                                          = var.load_balancers
     local_network_gateways                                  = var.local_network_gateways
     nat_gateways                                            = var.nat_gateways
+    network_interface_backend_address_pool_association      = var.network_interface_backend_address_pool_association
     network_security_group_definition                       = var.network_security_group_definition
     network_watchers                                        = var.network_watchers
     private_dns                                             = var.private_dns
@@ -200,14 +220,15 @@ module "example" {
     lighthouse_definitions        = var.lighthouse_definitions
   }
   shared_services = {
-    consumption_budgets      = var.consumption_budgets
-    image_definitions        = var.image_definitions
-    monitor_action_groups    = var.monitor_action_groups
-    monitoring               = var.monitoring
-    packer_managed_identity  = var.packer_managed_identity
-    packer_service_principal = var.packer_service_principal
-    recovery_vaults          = var.recovery_vaults
-    shared_image_galleries   = var.shared_image_galleries
+    consumption_budgets        = var.consumption_budgets
+    image_definitions          = var.image_definitions
+    monitor_action_groups      = var.monitor_action_groups
+    monitor_autoscale_settings = var.monitor_autoscale_settings
+    monitoring                 = var.monitoring
+    packer_managed_identity    = var.packer_managed_identity
+    packer_service_principal   = var.packer_service_principal
+    recovery_vaults            = var.recovery_vaults
+    shared_image_galleries     = var.shared_image_galleries
   }
   storage = {
     netapp_accounts        = var.netapp_accounts
@@ -221,6 +242,7 @@ module "example" {
     app_service_environments     = var.app_service_environments
     app_service_plans            = var.app_service_plans
     app_services                 = var.app_services
+    function_apps                = var.function_apps
   }
   data_factory = {
     data_factory                                 = var.data_factory
@@ -261,5 +283,23 @@ module "example" {
     logic_app_trigger_recurrence   = var.logic_app_trigger_recurrence
     logic_app_workflow             = var.logic_app_workflow
   }
-
+  identity = {
+    active_directory_domain_service             = var.active_directory_domain_service
+    active_directory_domain_service_replica_set = var.active_directory_domain_service_replica_set
+  }
+  apim = {
+    api_management                      = var.api_management
+    api_management_api                  = var.api_management_api
+    api_management_api_diagnostic       = var.api_management_api_diagnostic
+    api_management_logger               = var.api_management_logger
+    api_management_api_operation        = var.api_management_api_operation
+    api_management_backend              = var.api_management_backend
+    api_management_api_policy           = var.api_management_api_policy
+    api_management_api_operation_tag    = var.api_management_api_operation_tag
+    api_management_api_operation_policy = var.api_management_api_operation_policy
+    api_management_user                 = var.api_management_user
+    api_management_custom_domain        = var.api_management_custom_domain
+    api_management_diagnostic           = var.api_management_diagnostic
+    api_management_certificate          = var.api_management_certificate
+  }
 }

@@ -13,8 +13,8 @@ resource "azurecaf_name" "wp" {
 
 resource "azurerm_databricks_workspace" "ws" {
   name                        = azurecaf_name.wp.result
-  resource_group_name         = var.resource_group_name
-  location                    = var.location
+  resource_group_name         = var.resource_group.name
+  location                    = local.location
   sku                         = try(var.settings.sku, "standard")
   managed_resource_group_name = try(var.settings.managed_resource_group_name, null)
   tags                        = try(local.tags, null)

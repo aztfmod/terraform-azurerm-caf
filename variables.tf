@@ -224,6 +224,11 @@ variable "database" {
   default     = {}
 }
 
+variable "messaging" {
+  description = "Configuration object - messaging resources"
+  default     = {}
+}
+
 ## Networking variables
 variable "networking" {
   description = "Configuration object - networking resources"
@@ -368,4 +373,17 @@ variable "random_strings" {
 variable "cognitive_services" {
   description = "Configuration object - Cognitive Service Resource "
   default     = {}
+}
+
+variable "communication" {
+  description = "Configuration object - communication resources"
+  default     = {}
+}
+
+variable "identity" {
+  description = "Configuration object - identity resources"
+  default     = {}
+}
+variable "apim" {
+  default = {}
 }
