@@ -47,7 +47,7 @@ module "backup_vault_instances" {
   for_each   = try(var.backup_vault_instances, {}) 
   
   settings = each.value
-  vault_id = module.backup_vaults[each.key].id
+  vault_id = module.backup_vaults[each.value.backup_vault_key].id
   location = lookup(each.value, "region", null) == null ? coalesce(
     try(local.combined_objects_resource_groups[try(each.value.resource_group.lz_key, local.client_config.landingzone_key)][each.value.resource_group.key].location, null),
     try(local.combined_objects_resource_groups[local.client_config.landingzone_key][each.value.resource_group_key].location, null)
