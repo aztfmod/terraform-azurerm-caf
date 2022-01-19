@@ -9,14 +9,14 @@ variable "location" {
 }
 variable "settings" {}
 variable "vault_id" {}
-# variable "storage_account_id" {
-#   description = "Identifier of the storage account ID to be used."
-#   type        = string
-# }
-# variable "backup_policy_id" {
-#   description = "The ID of the backup vault policy to be used."
-#   type        = string
-# }
-variable "storage_accounts" {}
-variable "backup_policy" {}
+variable "storage_account_id" {
+  description = "Identifier of the storage account ID to be used."
+  type        = string
+}
+variable "backup_policy_id" {
+  description = "The ID of the backup vault policy to be used."
+  type        = string
+}
+# variable "storage_accounts" {}
+# variable "backup_policy" {}
 
