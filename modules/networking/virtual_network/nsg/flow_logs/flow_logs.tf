@@ -14,7 +14,8 @@ resource "azurerm_network_watcher_flow_log" "flow" {
 
   version                   = try(var.settings.version, 2)
   network_security_group_id = var.resource_id
-  storage_account_id        = try(var.diagnostics.storage_accounts[var.diagnostics.diagnostics_destinations.storage[var.settings.storage_account.storage_account_destination][var.resource_location].storage_account_key].id)
+  storage_account_id        = try(var.diagnostics.diagnostics_destinations.storage[var.settings.storage_account.storage_account_destination][var.resource_location].storage_account_resource_id,
+                              var.diagnostics.storage_accounts[var.diagnostics.diagnostics_destinations.storage[var.settings.storage_account.storage_account_destination][var.resource_location].storage_account_key].id)
   enabled                   = try(var.settings.enabled, false)
 
   retention_policy {
