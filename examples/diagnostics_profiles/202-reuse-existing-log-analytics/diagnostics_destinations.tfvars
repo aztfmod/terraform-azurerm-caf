@@ -14,4 +14,13 @@ diagnostics_destinations = {
       log_analytics_resource_id = "/subscriptions/0-0-0-0-0/resourcegroups/eqej-rg-operations/providers/microsoft.operationalinsights/workspaces/eqej-log-logs"
     }
   }
+
+  # use existing storage account
+  storage = {
+    central_storage = {
+      southeastasia = { # region
+        storage_account_resource_id = "/subscriptions/0-0-0-0-0/resourcegroups/eqej-rg-operations/providers/Microsoft.Storage/storageAccounts/imfd-log-storage"
+      }
+    }
+  }
 }
