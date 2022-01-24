@@ -1,11 +1,11 @@
 module "container_groups" {
-  source   = "./modules/compute/container_group"
-  for_each = local.compute.container_groups
+  source     = "./modules/compute/container_group"
+  for_each   = local.compute.container_groups
   depends_on = [module.dynamic_keyvault_secrets]
 
-  base_tags                = try(local.global_settings.inherit_tags, false) ? local.combined_objects_resource_groups[try(each.value.lz_key, local.client_config.landingzone_key)][each.value.resource_group_key].tags : {}
-  client_config            = local.client_config
-  combined_diagnostics     = local.combined_diagnostics
+  base_tags            = try(local.global_settings.inherit_tags, false) ? local.combined_objects_resource_groups[try(each.value.lz_key, local.client_config.landingzone_key)][each.value.resource_group_key].tags : {}
+  client_config        = local.client_config
+  combined_diagnostics = local.combined_diagnostics
   # combined_managed_identities  = local.combined_objects_managed_identities
   # combined_vnets               = local.combined_objects_networking
   diagnostic_profiles      = try(each.value.diagnostic_profiles, {})
