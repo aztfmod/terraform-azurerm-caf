@@ -12,7 +12,7 @@ resource "azurerm_storage_share" "fs" {
 resource "azurerm_backup_protected_file_share" "fs_backup" {
   for_each = try(var.settings.backups, null) != null ? toset(["enabled"]) : toset([])
 
-  resource_group_name       = var.resource_group_name
+  resource_group_name       = var.recovery_vault.resource_group_name
   recovery_vault_name       = var.recovery_vault.name
   source_storage_account_id = var.storage_account_id
   source_file_share_name    = azurerm_storage_share.fs.name
