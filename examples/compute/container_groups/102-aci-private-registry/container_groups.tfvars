@@ -60,19 +60,19 @@ container_groups = {
       ]
     } // identity
 
-    image_registry_credentials = { # Max 1 image registry credential per container
-      ghcr = { # To be able to pull container from private repo
-        keyvault_key = "secrets" # keyvault key used in dynamic secrets
+    image_registry_credentials = {            # Max 1 image registry credential per container
+      ghcr = {                                # To be able to pull container from private repo
+        keyvault_key        = "secrets"       # keyvault key used in dynamic secrets
         username_secret_key = "ghcr_username" # dynamic secret for github username
         password_secret_key = "ghcr_password" # dynamic secret for github PAT-token
-        server = "ghcr.io"
+        server              = "ghcr.io"
       }
-#      docker_hub = {
-#        username = "my_username"
-#        password = "HUB_PAT"
-#        server = "index.docker.io"
-#      }
+      #      docker_hub = {
+      #        username = "my_username"
+      #        password = "HUB_PAT"
+      #        server = "index.docker.io"
+      #      }
     } //image_registry_credentials
-  } //github_private_image
+  }   //github_private_image
 }
 

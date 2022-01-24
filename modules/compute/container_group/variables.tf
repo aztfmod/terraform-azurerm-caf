@@ -12,5 +12,5 @@ variable "resource_group_name" {}
 variable "settings" {}
 variable "dynamic_keyvault_secrets" {
   description = "Provide credenrials for private image registries"
-  default = {}
+  default     = {}
 }

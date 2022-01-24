@@ -110,9 +110,9 @@ virtual_machines = {
         fileuri_sa_path  = "files/helloworld.ps1"
         commandtoexecute = "PowerShell -file helloworld.ps1"
         # managed_identity_id = optional to define managed identity principal_id directly
-        identity_type        = "UserAssigned" #optional to use managed_identity for download from location specified in fileuri, UserAssigned or SystemAssigned. 
+        identity_type        = "UserAssigned" #optional to use managed_identity for download from location specified in fileuri, UserAssigned or SystemAssigned.
         managed_identity_key = "user_mi"
-        #lz_key               = "other_lz" optional for managed identity defined in other lz 
+        #lz_key               = "other_lz" optional for managed identity defined in other lz
       }
     }
     virtual_machine_settings = {
