@@ -103,6 +103,25 @@ resource "null_resource" "clean_old_versions" {
   ]
 }
 
+resource "null_resource" "remove_all_versions" {
+  triggers = {
+    resource_group_name = var.resource_group_name
+    gallery_name = var.gallery_name
+    image_name = var.image_name
+  }
+  provisioner "local-exec" {
+    interpreter = ["/bin/bash"]
+    when    = destroy
+    command = format("%s/remove_all_versions.sh", path.module)
+    environment = {
+      RESOURCE_GROUP_NAME = self.triggers.resource_group_name 
+      GALLERY_NAME = self.triggers.gallery_name
+      IMAGE_NAME = self.triggers.image_name
+    }
+  }
+}
+
+
 data "azurerm_platform_image" "source" {
   count     = try(var.settings.image_publisher, "") == "" ? 0 : 1
   publisher = var.settings.image_publisher
