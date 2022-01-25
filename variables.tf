@@ -387,3 +387,13 @@ variable "identity" {
 variable "apim" {
   default = {}
 }
+
+
+variable "iot" {
+  description = "Configuration object - IoT"
+  default = {
+    # digital_twins_instances                 = {}
+    # digital_twins_endpoint_eventhubs                 = {}
+    
+  }
+}

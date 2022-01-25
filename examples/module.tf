@@ -291,4 +291,9 @@ module "example" {
     api_management_diagnostic           = var.api_management_diagnostic
     api_management_certificate          = var.api_management_certificate
   }
+
+  iot = {
+    digital_twins_instances = var.digital_twins_instances
+    digital_twins_endpoint_eventhubs = var.digital_twins_endpoint_eventhubs    
+  }
 }
