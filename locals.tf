@@ -334,4 +334,8 @@ locals {
     api_management_diagnostic           = try(var.apim.api_management_diagnostic, {})
     api_management_certificate          = try(var.apim.api_management_certificate, {})
   }
+  iot = {
+    digital_twins_instances     = try(var.iot.digital_twins_instances, {})
+    digital_twins_endpoint_eventhubs = try(var.iot.digital_twins_endpoint_eventhubs, {})
+  }
 }

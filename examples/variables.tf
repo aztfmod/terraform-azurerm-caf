@@ -783,3 +783,15 @@ variable "lb_rule" {
 variable "network_interface_backend_address_pool_association" {
   default = {}
 }
+variable "digital_twins_instances" {
+  description = "Digital Twins Instances"
+  default = {    
+  }
+}
+
+variable "digital_twins_endpoint_eventhubs" {
+  description = "Digital Twins Endpoints Eventhubs"
+  default = {    
+  }
+}
+
