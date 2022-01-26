@@ -795,3 +795,15 @@ variable "digital_twins_endpoint_eventhubs" {
   }
 }
 
+variable "digital_twins_endpoint_eventgrids" {
+  description = "Digital Twins Endpoints Eventgrid"
+  default = {    
+  }
+}
+
+variable "digital_twins_endpoint_servicebuses" {
+  description = "Digital Twins Endpoints Service Bus"
+  default = {    
+  }
+}
+

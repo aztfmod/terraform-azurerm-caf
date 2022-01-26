@@ -294,6 +294,9 @@ module "example" {
 
   iot = {
     digital_twins_instances = var.digital_twins_instances
-    digital_twins_endpoint_eventhubs = var.digital_twins_endpoint_eventhubs    
+    digital_twins_endpoint_eventhubs = var.digital_twins_endpoint_eventhubs
+    digital_twins_endpoint_eventgrids = var.digital_twins_endpoint_eventgrids
+    digital_twins_endpoint_servicebuses = var.digital_twins_endpoint_servicebuses
+    
   }
 }
