@@ -86,6 +86,7 @@ module "vm_extension_custom_scriptextension" {
 
   client_config      = module.example.client_config
   virtual_machine_id = module.example.virtual_machines[each.key].id
+  virtual_machine_os_type = module.example.virtual_machines[each.key].os_type
   extension          = each.value.virtual_machine_extensions.custom_script
   extension_name     = "custom_script"
   managed_identities = tomap(
