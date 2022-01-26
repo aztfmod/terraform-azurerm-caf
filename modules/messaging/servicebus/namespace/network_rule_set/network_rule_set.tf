@@ -1,8 +1,8 @@
 resource "azurerm_servicebus_namespace_network_rule_set" "rule_set" {
-  namespace_name      = var.remote_objects.servicebus_namespace_name
-  resource_group_name = var.remote_objects.resource_group_name
-  default_action      = var.settings.default_action
-  ip_rules            = var.settings.ip_rules
+  namespace_id = var.remote_objects.servicebus_namespace_id
+  # resource_group_name = var.remote_objects.resource_group_name
+  default_action = var.settings.default_action
+  ip_rules       = var.settings.ip_rules
 
   dynamic "network_rules" {
     for_each = try(var.settings.network_rules, {})
