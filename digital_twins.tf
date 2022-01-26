@@ -1,5 +1,5 @@
 # Digital Twins Instaces
-module "digital_twins_instances" {
+module "digital_twins_instance" {
   source = "./modules/iot/digital_twins/digital_twins_instance"
 
   for_each = local.iot.digital_twins_instances
@@ -29,7 +29,7 @@ module "digital_twins_endpoint_eventhub" {
   eventhub_primary_connection_string  = module.event_hub_auth_rules[each.value.event_hub_auth_rules_key].primary_connection_string
   eventhub_secondary_connection_string  = module.event_hub_auth_rules[each.value.event_hub_auth_rules_key].primary_connection_string
   depends_on = [
-    module.digital_twins_instances
+    module.digital_twins_instance
   ]
 }
 
