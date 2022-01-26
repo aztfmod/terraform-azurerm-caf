@@ -273,8 +273,8 @@ module "api_management_api_operation_policy" {
   )
 
   remote_objects = {
-    api_management = local.combined_objects_api_management
-    resource_group = local.combined_objects_resource_groups
+    api_management               = local.combined_objects_api_management
+    resource_group               = local.combined_objects_resource_groups
     api_management_api_operation = local.combined_objects_api_management_api_operation
   }
 }

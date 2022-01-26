@@ -7,7 +7,7 @@ When upgrading to a newer version of the CAF module, some configuration structur
 Version 5.5.2 includes support for azurerm 2.93.1 which requires your attention if you are deploying the following components:
 
 - signal_r: 
-  - The ```features``` block is deprecated, favor of use ```connectivity_logs_enabled```, ```messaging_logs_enabled```, ```live_trace_enabled``` and ```service_mode``` instead. Module has been updated to reflect that.
+  - The ```features``` block is deprecated, favor of use ```connectivity_logs_enabled```, ```messaging_logs_enabled```, ```live_trace_enabled``` and ```service_mode``` instead. Module has been updated to reflect that. You must update the settings in your configuration file accordingly.
 
 - data factory: 
   - The `data_factory_name` reference method is deprecated in favour of `data_factory_id` and will be removed in version 3.0 of the AzureRM provider.
@@ -23,6 +23,12 @@ Version 5.5.2 includes support for azurerm 2.93.1 which requires your attention 
 - apim:
   - The ```proxy``` block is deprecated in favour of `gateway` and will be removed in version 3.0 of the AzureRM provider.
   - Azurerm 2.93.1 does not seem to have ```gateway``` implemented yet, even with ```ARM_THREEPOINTZERO_BETA_RESOURCES=true```
+
+- azure virtual desktop:
+  - azurerm 2.93.1 has a bug on https://github.com/hashicorp/terraform-provider-azurerm/pull/14953 for output "token" {
+  value     = tostring(azurerm_virtual_desktop_host_pool.wvdpool.registration_info[0].token)
+  sensitive = true} as observed in https://github.com/aztfmod/terraform-azurerm-caf/runs/4946734570?check_suite_focus=true
+
 
 ## 5.5.0
 
