@@ -9,8 +9,8 @@ resource "azurecaf_name" "adteh" {
   use_slug      = var.global_settings.use_slug
 }
 # Per options https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/resources/digital_twins_endpoint_eventhub
-resource "azurerm_digital_twins_endpoint_eventhub" "adtehv" {
-  name                                 = var.name
+resource "azurerm_digital_twins_endpoint_eventhub" "adteh" {
+  name                = azurecaf_name.adteh.result
   digital_twins_id                     = var.digital_twins_id
   eventhub_primary_connection_string   = var.eventhub_primary_connection_string
   eventhub_secondary_connection_string = var.eventhub_secondary_connection_string
