@@ -32,7 +32,7 @@ postgresql_flexible_servers = {
     # administrator_username  = "postgresqladmin"
     # administrator_password  = "ComplxP@ssw0rd!"
     keyvault = {
-      key = "postgresql_region1"              # (Required) when auto-generated administrator credentials needed.
+      key = "postgresql_region1" # (Required) when auto-generated administrator credentials needed.
       # lz_key      = ""                      # Set the lz_key if the keyvault is remote.
     }
 
@@ -90,7 +90,7 @@ postgresql_flexible_servers = {
 ## Keyvault configuration
 keyvaults = {
   postgresql_region1 = {
-    name                = "postgresql-region1"
+    name                = "akv"
     resource_group_key  = "security_region1"
     sku_name            = "standard"
     soft_delete_enabled = true
