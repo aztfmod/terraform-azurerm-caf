@@ -4,6 +4,6 @@ resource "azurerm_data_protection_backup_policy_blob_storage" "backup_vault_poli
 #   name               = each.value.policy_name
   name               = var.settings.policy_name
   vault_id           = var.vault_id
-  retention_duration = try(each.value.retention_duration, "P30D")
+#   retention_duration = try(each.value.retention_duration, "P30D")
   retention_duration = try(var.settings.retention_duration, "P30D")
 }
