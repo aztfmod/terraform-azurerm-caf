@@ -11,16 +11,8 @@ module "backup_vaults" {
   identity            = try(each.value.identity, {})
   resource_groups     = local.resource_groups
   resource_group_name = local.resource_groups[each.value.resource_group_key].name
-#   resource_group_name = coalesce(
-#     try(local.combined_objects_resource_groups[each.value.resource_group.lz_key][each.value.resource_group.key].name, null),
-#     try(local.combined_objects_resource_groups[each.value.resource_group.lz_key][each.value.resource_group_key].name, null),
-#     try(local.combined_objects_resource_groups[local.client_config.landingzone_key][each.value.resource_group.key].name, null),
-#     try(local.combined_objects_resource_groups[local.client_config.landingzone_key][each.value.resource_group_key].name, null)
-#   )
-#   resource_group_name = local.combined_objects_resource_groups[try(each.value.resource_group.lz_key, local.client_config.landingzone_key)][try(each.value.resource_group.key, each.value.resource_group_key)].name
   location            = lookup(each.value, "region", null) == null ? local.resource_groups[each.value.resource_group_key].location : local.global_settings.regions[each.value.region]
   base_tags           = try(local.global_settings.inherit_tags, false) ? local.resource_groups[each.value.resource_group_key].tags : {}
-#   base_tags           = try(local.global_settings.inherit_tags, false) ? local.combined_objects_resource_groups[try(each.value.resource_group.lz_key, local.client_config.landingzone_key)][try(each.value.resource_group.key, each.value.resource_group_key)].tags : {}
 }
 
 output "backup_vaults" {
@@ -29,15 +21,10 @@ output "backup_vaults" {
 
 module "backup_vault_policies" {
   source = "./modules/backup_vault/backup_vault_policy"
-#   for_each = try(var.backup_vaults, {})
   for_each = try(var.backup_vault_policies, {})
 
   settings = each.value
-#   vault_id = module.backup_vaults[each.key].id
   vault_id = lookup(each.value, "backup_vault_key") == null ? null : module.backup_vaults[each.value.backup_vault_key].id 
-}
-locals {
-  backup_vault_policies = module.backup_vault_policies
 }
 
 output "backup_vault_policies" {
