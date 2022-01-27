@@ -12,11 +12,13 @@ resource "azurerm_container_group" "acg" {
   name                = azurecaf_name.acg.result
   location            = var.location
   resource_group_name = var.resource_group_name
-  os_type             = var.settings.os_type
+  os_type             = try(var.settings.os_type, "Linux")
   dns_name_label      = try(var.settings.dns_name_label, null)
   tags                = merge(local.tags, try(var.settings.tags, null))
   ip_address_type     = try(var.settings.ip_address_type, "Public")
   restart_policy      = try(var.settings.restart_policy, "Always")
+  
+  network_profile_id = var.combined_resources.network_profiles[var.client_config.landingzone_key][var.settings.network_profile.key].id
 
   # Create containers based on for_each
   dynamic "container" {
@@ -45,7 +47,7 @@ resource "azurerm_container_group" "acg" {
 
         content {
           port     = ports.value.port
-          protocol = ports.value.protocol
+          protocol = try(upper(ports.value.protocol), "TCP")
         }
       }
 
