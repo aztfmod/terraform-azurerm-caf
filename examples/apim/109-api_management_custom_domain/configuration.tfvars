@@ -55,7 +55,7 @@ keyvaults = {
 
 keyvault_access_policies = {
   kv1 = {
-    apgw_keyvault_secrets = {
+    mi1 = {
       managed_identity_key    = "mi1"
       certificate_permissions = ["Get", "List"]
       secret_permissions      = ["Get", "List"]
