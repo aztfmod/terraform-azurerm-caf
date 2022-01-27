@@ -91,19 +91,16 @@ monitor_activity_log_alert = {
     }
     scopes              = {
       scope1 = {
-        resource_type = "storage_accounts"
-        key  = "sa1"
+        resource_type = "resource_groups"
+        key  = "rg1"
       }
-      scope2 = {
-        resource_type = "storage_accounts"
-        key  = "sa2"
-      }      
     }
     description         = "This alert will monitor a specific storage account updates."
 
     criteria = {
       resource    = {
         key = "sa1"
+        resource_type = "storage_accounts"
       }
       operation_name = "Microsoft.Storage/storageAccounts/write"
       category       = "Recommendation"
