@@ -27,7 +27,12 @@ resource "azurerm_monitor_activity_log_alert" "mala" {
       resource_provider = try(criteria.value.resource_provider, null)
       resource_type = try(criteria.value.resource_type, null)
       resource_group = try(criteria.value.resource_group, null)
-      resource_id = try(criteria.value.resource_id, null)
+      resource_id  = try(
+                        var.remote_objects[criteria.value.resource.resource_type][criteria.value.resource.lz_key][criteria.value.resource.lz_key][criteria.value.resource.key].id,
+                        var.remote_objects[criteria.value.resource.resource_type][var.client_config.landingzone_key][criteria.value.resource.key].id, 
+                        criteria.value.resource.id,
+                        null
+                      )
       caller = try(criteria.value.caller, null)
       level = try(criteria.value.level, null)
       status = try(criteria.value.status, null)
