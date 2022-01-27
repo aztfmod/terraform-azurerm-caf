@@ -11,7 +11,14 @@ resource "azurecaf_name" "mma" {
 resource "azurerm_monitor_metric_alert" "mma" {
   name = azurecaf_name.mma.result
   resource_group_name = var.resource_group_name
-  scopes = var.settings.scopes
+  scopes = try(flatten([
+          for key, value in var.settings.scopes: coalesce (
+                                                            try(var.remote_objects[value.resource_type][value.lz_key][value.lz_key][value.key].id, null),
+                                                            try(var.remote_objects[value.resource_type][var.client_config.landingzone_key][value.key].id, null),
+                                                            try(value.id,null),
+                                                            []
+                                                          )
+  ]),[])
   dynamic "criteria" {
     for_each = try(var.settings.criteria, null) != null ? [var.settings.criteria] : []
     content {
@@ -64,7 +71,11 @@ resource "azurerm_monitor_metric_alert" "mma" {
   dynamic "action" {
     for_each = try(var.settings.action, null) != null ? [var.settings.action] : []
     content {
-      action_group_id = try(action.value.action_group_id, null)
+      action_group_id = coalesce(
+                              try(var.remote_objects["monitor_action_groups"][action.value.action_group.lz_key][action.value.action_group.key].id,null),
+                              try(var.remote_objects["monitor_action_groups"][var.client_config.landingzone_key][action.value.action_group.key].id,null),
+                              try(action.value.action_group.id,null),
+                            )
       webhook_properties = try(action.value.webhook_properties, null)
     }
   }

@@ -15,6 +15,7 @@ resource "azurerm_monitor_activity_log_alert" "mala" {
             for key, value in var.settings.scopes: coalesce (
                                                               try(var.remote_objects[value.resource_type][value.lz_key][value.lz_key][value.key].id, null),
                                                               try(var.remote_objects[value.resource_type][var.client_config.landingzone_key][value.key].id, null),
+                                                              try(value.id,null),
                                                               []
                                                             )
   ]),[])
@@ -50,6 +51,7 @@ resource "azurerm_monitor_activity_log_alert" "mala" {
       action_group_id = coalesce(
                               try(var.remote_objects["monitor_action_groups"][action.value.action_group.lz_key][action.value.action_group.key].id,null),
                               try(var.remote_objects["monitor_action_groups"][var.client_config.landingzone_key][action.value.action_group.key].id,null),
+                              try(action.value.action_group.id,null),
                             )
       webhook_properties = try(action.value.webhook_properties, null)
     }
