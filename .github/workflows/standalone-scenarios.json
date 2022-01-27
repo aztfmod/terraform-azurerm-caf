@@ -108,6 +108,7 @@
     "messaging/signalr/100-signalr-simple",
     "monitoring/100-service-health-alerts",
     "monitoring/101-monitor-action-groups",
+    "monitoring/102-monitor_activity_log_alert",
     "mssql_server/101-sqlserver-simple",
     "mssql_server/102-sqlserver-extend",
     "mssql_server/104-sqlserver-elastic_pools",
