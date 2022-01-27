@@ -13,7 +13,7 @@ module "digital_twins_instances" {
   client_config       = local.client_config
 }
 
-output "digital_twins_instance" {
+output "digital_twins_instances" {
   value = module.digital_twins_instances
 
 }
@@ -60,8 +60,8 @@ module "digital_twins_endpoint_servicebus" {
 
   name                                   = each.value.name
   digital_twins_id                       = try(each.value.lz_key, null) == null ? local.combined_objects_digital_twins_instances[local.client_config.landingzone_key][each.value.digital_twins_instance_key].id : local.combined_objects_digital_twins_instances[each.value.lz_key][each.value.digital_twins_instance_key].id
-  servicebus_primary_connection_string   = module.servicebus_topic_authorization_rules[each.value.servicebus_topic_authorization_rules_key].primary_connection_string
-  servicebus_secondary_connection_string = module.servicebus_topic_authorization_rule[each.value.servicebus_topic_authorization_rules_key].secondary_connection_string
+  servicebus_primary_connection_string   = module.servicebus_topics[each.value.servicebus_topic_key].topic_auth_rules[each.value.topic_auth_rules_key].primary_connection_string
+  servicebus_secondary_connection_string = module.servicebus_topics[each.value.servicebus_topic_key].topic_auth_rules[each.value.topic_auth_rules_key].secondary_connection_string
   global_settings     = local.global_settings
   client_config       = local.client_config
 
