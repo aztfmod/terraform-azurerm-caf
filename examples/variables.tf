@@ -357,6 +357,9 @@ variable "application_gateway_waf_policies" {
 variable "mysql_servers" {
   default = {}
 }
+variable "postgresql_flexible_servers" {
+  default = {}
+}
 variable "postgresql_servers" {
   default = {}
 }
