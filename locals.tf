@@ -265,8 +265,6 @@ locals {
     packer_service_principal = try(var.shared_services.packer_service_principal, {})
     recovery_vaults          = try(var.shared_services.recovery_vaults, {})
     shared_image_galleries   = try(var.shared_services.shared_image_galleries, {})
-    backup_vaults            = try(var.shared_services.backup_vaults, {})
-    backup_vault_instances   = try(var.shared_services.backup_vault_instances, {}) 
   }
 
   storage = {
