@@ -17,6 +17,16 @@ resource "azurerm_container_group" "acg" {
   tags                = merge(local.tags, try(var.settings.tags, null))
   ip_address_type     = try(var.settings.ip_address_type, "Public")
   restart_policy      = try(var.settings.restart_policy, "Always")
+  network_profile_id  = try(var.network_profile_id, null)
+
+  dynamic "image_registry_credential" {
+    for_each = lookup(var.settings, "image_registry_credential", null) == null ? [] : [1]
+    content {
+      server   =  var.settings.image_registry_credential.server
+      username =  var.settings.image_registry_credential.username
+      password =  var.settings.image_registry_credential.password
+    }
+  }
 
   # Create containers based on for_each
   dynamic "container" {
@@ -99,17 +109,17 @@ resource "azurerm_container_group" "acg" {
         for_each = try(container.value.volume, null) == null ? [] : [1]
 
         content {
-          name                 = volume.value.name
-          mount_path           = volume.value.mount_path
-          read_only            = try(volume.value.read_only, false)
-          empty_dir            = try(volume.value.empty_dir, false)
-          storage_account_name = try(volume.value.storage_account_name, null)
-          storage_account_key  = try(volume.value.storage_account_key, null)
-          share_name           = try(volume.value.share_name, null)
-          secret               = try(volume.share.secret, null)
+          name                 = container.value.volume.name
+          mount_path           = container.value.volume.mount_path
+          read_only            = try(container.value.volume.read_only, false)
+          empty_dir            = try(container.value.volume.empty_dir, false)
+          storage_account_name = try(container.value.volume.storage_account_name, null)
+          storage_account_key  = try(container.value.volume.storage_account_key, null)
+          share_name           = try(container.value.volume.share_name, null)
+          secret               = try(container.value.volume.share.secret, null)
 
           dynamic "git_repo" {
-            for_each = try(volume.value.git_repo, null) == null ? [] : [1]
+            for_each = try(container.value.volume.git_repo, null) == null ? [] : [1]
 
             content {
               url       = git_repo.value.url

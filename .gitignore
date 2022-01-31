@@ -13,3 +13,5 @@ public
 **/.terraform.lock.hcl
 **/*.backup
 landingzones
+**/*.devcontainer
+**/*.vscode

@@ -34,6 +34,21 @@ module "express_route_circuit_authorizations" {
   )
 }
 
+#
+#
+# Express Route Circuit Peering
+#
+#
+
+module "express_route_circuit_peerings" {
+  source   = "./modules/networking/express_route_circuit_peerings"
+  for_each = local.networking.express_route_circuit_peerings
+
+  settings                   = each.value
+  resource_group_name        = try(local.resource_groups[each.value.resource_group_key].name, null) == null ? module.express_route_circuits[each.value.express_route_key].resource_group_name : local.resource_groups[each.value.resource_group_key].name
+  express_route_circuit_name = module.express_route_circuits[each.value.express_route_key].name
+  route_filter_id            = module.route_filters[each.value.route_filter_key].id
+}
 
 # Outputs
 output "express_route_circuits" {
@@ -46,4 +61,10 @@ output "express_route_circuit_authorizations" {
   value       = module.express_route_circuit_authorizations
   sensitive   = true
   description = "Express Route Circuit Authorizations Keys output"
+}
+
+output "express_route_circuit_peerings" {
+  value       = module.express_route_circuit_peerings
+  sensitive   = true
+  description = "Express Route Circuit Peering Keys output"
 }

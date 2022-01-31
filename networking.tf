@@ -15,6 +15,13 @@ output "network_watchers" {
   value = module.network_watchers
 }
 
+output "route_filters" {
+  value = module.route_filters
+}
+
+output "network_profiles" {
+  value = module.network_profiles
+}
 
 #
 #
@@ -243,6 +250,31 @@ module "routes" {
 
 }
 
+
+
+module "route_filters" {
+  source   = "./modules/networking/route_filters"
+  for_each = local.networking.route_filters
+
+  resource_group_name           = local.combined_objects_resource_groups[try(each.value.resource_group.lz_key, local.client_config.landingzone_key)][try(each.value.resource_group.key, each.value.resource_group_key)].name
+  location                      = lookup(each.value, "region", null) == null ? local.combined_objects_resource_groups[try(each.value.resource_group.lz_key, local.client_config.landingzone_key)][try(each.value.resource_group.key, each.value.resource_group_key)].location : local.global_settings.regions[each.value.region]
+  settings                      = each.value
+  base_tags                     = try(local.global_settings.inherit_tags, false) ? local.combined_objects_resource_groups[try(each.value.resource_group.lz_key, local.client_config.landingzone_key)][try(each.value.resource_group.key, each.value.resource_group_key)].tags : {}
+  tags                          = try(each.value.tags, null)
+}
+
+
+module "network_profiles" {
+  source   = "./modules/networking/network_profiles"
+  for_each = local.networking.network_profiles
+
+  resource_group_name           = local.combined_objects_resource_groups[try(each.value.resource_group.lz_key, local.client_config.landingzone_key)][try(each.value.resource_group.key, each.value.resource_group_key)].name
+  location                      = lookup(each.value, "region", null) == null ? local.combined_objects_resource_groups[try(each.value.resource_group.lz_key, local.client_config.landingzone_key)][try(each.value.resource_group.key, each.value.resource_group_key)].location : local.global_settings.regions[each.value.region]
+  settings                      = each.value
+  subnet_id                     = local.combined_objects_networking[local.client_config.landingzone_key][each.value.vnet_key].subnets[each.value.container_network_interface.ip_configuration.subnet_key].id
+  base_tags                     = try(local.global_settings.inherit_tags, false) ? local.combined_objects_resource_groups[try(each.value.resource_group.lz_key, local.client_config.landingzone_key)][try(each.value.resource_group.key, each.value.resource_group_key)].tags : {}
+  tags                          = try(each.value.tags, null)
+}
 #
 #
 # Azure DDoS
