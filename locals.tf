@@ -7,7 +7,7 @@ resource "random_string" "prefix" {
 }
 
 resource "random_string" "suffix" {
-  count   = try(var.global_settings.prefix, null) == null ? 1 : 0
+  count   = try(var.global_settings.suffix, null) == null ? 1 : 0
   length  = 4
   special = false
   upper   = false
