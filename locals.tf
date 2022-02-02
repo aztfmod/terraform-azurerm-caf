@@ -102,6 +102,7 @@ locals {
     machine_learning_workspaces        = try(var.database.machine_learning_workspaces, {})
     mariadb_databases                  = try(var.database.mariadb_databases, {})
     mariadb_servers                    = try(var.database.mariadb_servers, {})
+    mysql_flexible_server              = try(var.database.mysql_flexible_server, {})
     mssql_databases                    = try(var.database.mssql_databases, {})
     mssql_elastic_pools                = try(var.database.mssql_elastic_pools, {})
     mssql_failover_groups              = try(var.database.mssql_failover_groups, {})
