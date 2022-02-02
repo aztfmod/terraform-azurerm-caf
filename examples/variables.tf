@@ -714,3 +714,7 @@ variable "active_directory_domain_service" {
 variable "active_directory_domain_service_replica_set" {
   default = {}
 }
+variable "mysql_flexible_servers" {
+  default = {}
+}
+

@@ -61,6 +61,7 @@ locals {
   combined_objects_machine_learning                               = merge(tomap({ (local.client_config.landingzone_key) = module.machine_learning_workspaces }), try(var.remote_objects.machine_learning_workspaces, {}))
   combined_objects_managed_identities                             = merge(tomap({ (local.client_config.landingzone_key) = module.managed_identities }), try(var.remote_objects.managed_identities, {}))
   combined_objects_monitor_action_groups                          = merge(tomap({ (local.client_config.landingzone_key) = module.monitor_action_groups }), try(var.remote_objects.monitor_action_groups, {}))
+  combined_objects_mysql_flexible_server                          = merge(tomap({ (local.client_config.landingzone_key) = module.mysql_flexible_server }), try(var.remote_objects.mysql_flexible_server, {}))
   combined_objects_mssql_databases                                = merge(tomap({ (local.client_config.landingzone_key) = module.mssql_databases }), try(var.remote_objects.mssql_databases, {}))
   combined_objects_mssql_elastic_pools                            = merge(tomap({ (local.client_config.landingzone_key) = module.mssql_elastic_pools }), try(var.remote_objects.mssql_elastic_pools, {}))
   combined_objects_mssql_managed_databases                        = merge(tomap({ (local.client_config.landingzone_key) = module.mssql_managed_databases }), try(var.remote_objects.mssql_managed_databases, {}))
