@@ -60,6 +60,8 @@ locals {
   combined_objects_keyvault_certificate_requests                  = merge(tomap({ (local.client_config.landingzone_key) = module.keyvault_certificate_requests }), try(var.remote_objects.keyvault_certificate_requests, {}))
   combined_objects_keyvault_keys                                  = merge(tomap({ (local.client_config.landingzone_key) = module.keyvault_keys }), try(var.remote_objects.keyvault_keys, {}))
   combined_objects_keyvaults                                      = merge(tomap({ (local.client_config.landingzone_key) = module.keyvaults }), try(var.remote_objects.keyvaults, {}))
+  combined_objects_kusto_clusters                                 = merge(tomap({ (local.client_config.landingzone_key) = module.kusto_clusters }), try(var.remote_objects.kusto_clusters, {}))
+  combined_objects_kusto_databases                                = merge(tomap({ (local.client_config.landingzone_key) = module.kusto_databases }), try(var.remote_objects.kusto_databases, {}))
   combined_objects_lb                                             = merge(tomap({ (local.client_config.landingzone_key) = module.lb }), try(var.remote_objects.lb, {}))
   combined_objects_lb_backend_address_pool                        = merge(tomap({ (local.client_config.landingzone_key) = module.lb_backend_address_pool }), try(var.remote_objects.lb_backend_address_pool, {}))
   combined_objects_load_balancers                                 = merge(tomap({ (local.client_config.landingzone_key) = module.load_balancers }), try(var.remote_objects.load_balancers, {}))

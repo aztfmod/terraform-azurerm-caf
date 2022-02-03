@@ -681,6 +681,33 @@ variable "logic_app_trigger_recurrence" {
 variable "logic_app_trigger_custom" {
   default = {}
 }
+variable "kusto_clusters" {
+  default = {}
+}
+variable "kusto_databases" {
+  default = {}
+}
+variable "kusto_attached_database_configurations" {
+  default = {}
+}
+variable "kusto_cluster_customer_managed_keys" {
+  default = {}
+}
+variable "kusto_cluster_principal_assignments" {
+  default = {}
+}
+variable "kusto_database_principal_assignments" {
+  default = {}
+}
+variable "kusto_eventgrid_data_connections" {
+  default = {}
+}
+variable "kusto_eventhub_data_connections" {
+  default = {}
+}
+variable "kusto_iothub_data_connections" {
+  default = {}
+}
 variable "private_dns_vnet_links" {
   default = {}
 }
@@ -810,3 +837,9 @@ variable "digital_twins_endpoint_servicebuses" {
   }
 }
 
+variable "monitor_metric_alert" {
+  default = {}
+}
+variable "monitor_activity_log_alert" {
+  default = {}
+}

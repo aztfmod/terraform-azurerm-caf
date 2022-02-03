@@ -21,7 +21,7 @@ resource "azurerm_machine_learning_workspace" "ws" {
   storage_account_id      = var.storage_account_id
   container_registry_id   = var.container_registry_id
   tags                    = try(local.tags, null)
-  sku_name                = try(var.settings.sku_name, "Basic")
+  sku_name                = try(var.settings.sku_name, null)
   description             = try(var.settings.description, null)
   friendly_name           = try(var.settings.friendly_name, null)
   high_business_impact    = try(var.settings.high_business_impact, null)
