@@ -786,3 +786,9 @@ variable "lb_rule" {
 variable "network_interface_backend_address_pool_association" {
   default = {}
 }
+variable "monitor_metric_alert" {
+  default = {}
+}
+variable "monitor_activity_log_alert" {
+  default = {}
+}

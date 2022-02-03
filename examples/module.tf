@@ -215,6 +215,8 @@ module "example" {
     monitor_action_groups      = var.monitor_action_groups
     monitor_autoscale_settings = var.monitor_autoscale_settings
     monitoring                 = var.monitoring
+    monitor_metric_alert       = var.monitor_metric_alert
+    monitor_activity_log_alert = var.monitor_activity_log_alert
     packer_managed_identity    = var.packer_managed_identity
     packer_service_principal   = var.packer_service_principal
     recovery_vaults            = var.recovery_vaults
