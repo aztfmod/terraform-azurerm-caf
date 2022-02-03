@@ -133,6 +133,17 @@ module "example" {
     postgresql_flexible_servers        = var.postgresql_flexible_servers    
     postgresql_servers                 = var.postgresql_servers
     synapse_workspaces                 = var.synapse_workspaces
+    data_explorer = {
+      kusto_clusters                         = var.kusto_clusters
+      kusto_databases                        = var.kusto_databases
+      kusto_attached_database_configurations = var.kusto_attached_database_configurations
+      kusto_cluster_customer_managed_keys    = var.kusto_cluster_customer_managed_keys
+      kusto_cluster_principal_assignments    = var.kusto_cluster_principal_assignments
+      kusto_database_principal_assignments   = var.kusto_database_principal_assignments
+      kusto_eventgrid_data_connections       = var.kusto_eventgrid_data_connections
+      kusto_eventhub_data_connections        = var.kusto_eventhub_data_connections
+      kusto_iothub_data_connections          = var.kusto_iothub_data_connections
+    }
   }
   messaging = {
     signalr_services      = var.signalr_services
