@@ -130,16 +130,20 @@ module "example" {
     mssql_mi_tdes                      = var.mssql_mi_tdes
     mssql_servers                      = var.mssql_servers
     mysql_servers                      = var.mysql_servers
-    postgresql_flexible_servers        = var.postgresql_flexible_servers    
+    postgresql_flexible_servers        = var.postgresql_flexible_servers
     postgresql_servers                 = var.postgresql_servers
     synapse_workspaces                 = var.synapse_workspaces
   }
   messaging = {
-    signalr_services      = var.signalr_services
-    servicebus_namespaces = var.servicebus_namespaces
-    servicebus_topics     = var.servicebus_topics
-    servicebus_queues     = var.servicebus_queues
+    signalr_services        = var.signalr_services
+    servicebus_namespaces   = var.servicebus_namespaces
+    servicebus_topics       = var.servicebus_topics
+    servicebus_queues       = var.servicebus_queues
+    eventgrid_domains       = var.eventgrid_domains
+    eventgrid_domain_topics = var.eventgrid_domain_topics
+    eventgrid_topics        = var.eventgrid_topics
   }
+
   networking = {
     application_gateway_applications                        = var.application_gateway_applications
     application_gateway_applications_v1                     = var.application_gateway_applications_v1

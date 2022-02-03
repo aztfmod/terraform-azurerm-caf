@@ -786,3 +786,12 @@ variable "lb_rule" {
 variable "network_interface_backend_address_pool_association" {
   default = {}
 }
+variable "eventgrid_domains" {
+  default = {}
+}
+variable "eventgrid_domain_topics" {
+  default = {}
+}
+variable "eventgrid_topics" {
+  default = {}
+}

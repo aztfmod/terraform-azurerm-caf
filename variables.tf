@@ -387,3 +387,14 @@ variable "identity" {
 variable "apim" {
   default = {}
 }
+
+
+variable "eventgrid_domains" {
+  description = "Configuration object - Event Grid domains"
+  default     = {}
+}
+
+variable "eventgrid_domain_topics" {
+  description = "Configuration object - Event Grid domain topics"
+  default     = {}
+}
