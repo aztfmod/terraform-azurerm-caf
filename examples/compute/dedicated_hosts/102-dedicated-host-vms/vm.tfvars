@@ -30,7 +30,7 @@ virtual_machines = {
     virtual_machine_settings = {
       windows = {
         name           = "example_vm1"
-        size           = "Standard_D2S_v3"
+        size           = "Standard_D2s_v3"
         admin_username = "adminuser"
 
         dedicated_host = {
@@ -89,7 +89,7 @@ virtual_machines = {
     virtual_machine_settings = {
       linux = {
         name                            = "example_vm2"
-        size                            = "Standard_D2S_v3"
+        size                            = "Standard_D2s_v3"
         admin_username                  = "adminuser"
         disable_password_authentication = true
 
