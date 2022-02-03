@@ -12,6 +12,14 @@ on:
         description: 'Select the base version to use as baseline (refer to tags)'
         required: true
         type: string
+    scenario:
+        description: 'Select the scenario you want to run:'
+        required: false
+        type: choice
+        default: 'standalone-scenarios.json'
+        options:
+        - standalone-scenarios.json
+        - standalone-scenarios-longrunners.json
 
 env:
   TF_CLI_ARGS: '-no-color'
@@ -34,7 +42,7 @@ jobs:
       - id: load_scenarios
         run: |
           cases=$((
-            cat ./.github/workflows/standalone-scenarios.json) | jq -c .)
+            cat ./.github/workflows/${{ github.event.inputs.scenario }}) | jq -c .)
           echo "::set-output name=matrix::${cases}"
 
   testcases:

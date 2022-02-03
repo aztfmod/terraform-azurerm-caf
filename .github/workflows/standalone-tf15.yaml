@@ -3,7 +3,7 @@
 # Licensed under the MIT License.
 #
 
-name: standalone-tf100
+name: standalone-tf15
 
 on:
   workflow_dispatch:
@@ -38,7 +38,7 @@ jobs:
       - id: load_scenarios
         run: |
           cases=$((
-            cat ./.github/workflows/standalone-scenarios.json) | jq -c .)
+            cat ./.github/workflows/${{ github.event.inputs.scenario }}) | jq -c .)
           echo "::set-output name=matrix::${cases}"
 
   testcases:
@@ -57,7 +57,6 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v2
-        with:
 
       - name: Create environment variables
         run: |
