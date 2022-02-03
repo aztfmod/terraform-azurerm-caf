@@ -22,3 +22,6 @@ variable "managed_identities" {
 variable "storage_accounts" {
   default = {}
 }
+variable "virtual_machine_os_type" {
+  default = {}
+}
