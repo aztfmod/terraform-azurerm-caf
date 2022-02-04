@@ -80,7 +80,7 @@ postgresql_flexible_servers = {
 # Store the postgresql_flexible_server administrator credentials into keyvault if the attribute keyvault{} block is defined.
 keyvaults = {
   postgresql_region1 = {
-    name                = "postgresql-region1"
+    name                = "akv"
     resource_group_key  = "security_region1"
     sku_name            = "standard"
     soft_delete_enabled = true
