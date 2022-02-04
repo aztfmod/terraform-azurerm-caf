@@ -759,6 +759,12 @@ variable "api_management_certificate" {
 variable "api_management_gateway" {
   default = {}
 }
+variable "api_management_gateway_api" {
+  default = {}
+}
+variable "api_management_group" {
+  default = {}
+}
 variable "lb" {
   default = {}
 }

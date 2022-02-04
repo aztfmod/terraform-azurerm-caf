@@ -25,8 +25,8 @@ resource "azurerm_api_management_group" "apim" {
 
   display_name        = var.settings.display_name
   description         = try(var.settings.description, null)
-  external_id         = var.settings.external_id
-  type                = var.settings.type
+  #external_id         = var.settings.external_id
+  #type                = var.settings.type
 
   dynamic "timeouts" {
     for_each = try(var.settings.timeouts, null) != null ? [var.settings.timeouts] : []

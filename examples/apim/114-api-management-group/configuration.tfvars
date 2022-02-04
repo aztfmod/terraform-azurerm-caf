@@ -34,9 +34,10 @@ api_management_group = {
     resource_group = {
       key = "rg1"
     }
-    api_management_name = {
+    api_management = {
       key = "apim1"
     }
     display_name        = "Example Group"
     description         = "This is an example API management group."
+  }
 }

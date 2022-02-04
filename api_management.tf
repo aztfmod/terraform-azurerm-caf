@@ -431,6 +431,7 @@ module "api_management_gateway_api" {
   settings        = each.value
 
   remote_objects = {
+    api_management_api = local.combined_objects_api_management_api
     api_management = local.combined_objects_api_management
     resource_group = local.combined_objects_resource_groups
     api_management_gateway = local.combined_objects_api_management_gateway
