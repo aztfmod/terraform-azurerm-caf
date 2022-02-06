@@ -132,6 +132,7 @@ module "example" {
     mysql_servers                      = var.mysql_servers
     postgresql_servers                 = var.postgresql_servers
     synapse_workspaces                 = var.synapse_workspaces
+    mysql_flexible_server              = var.mysql_flexible_server
   }
   networking = {
     application_gateway_applications                        = var.application_gateway_applications

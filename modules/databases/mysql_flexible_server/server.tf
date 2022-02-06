@@ -11,14 +11,14 @@ resource "azurerm_mysql_flexible_server" "mysql" {
 
   delegated_subnet_id = var.remote_objects.subnet_id
   private_dns_zone_id = var.remote_objects.private_dns_zone_id
-
+  
   create_mode                       = try(var.settings.create_mode, "Default")
   point_in_time_restore_time_in_utc = try(var.settings.create_mode, "PointInTimeRestore") == "PointInTimeRestore" ? try(var.settings.point_in_time_restore_time_in_utc, null) : null
   source_server_id                  = try(var.settings.create_mode, "PointInTimeRestore") == "PointInTimeRestore" ? try(var.settings.source_server_id, null) : null
 
   administrator_login    = try(var.settings.create_mode, "Default") == "Default" ? try(var.settings.administrator_username, "psqladmin") : null
-  administrator_password = try(var.settings.create_mode, "Default") == "Default" ? try(var.settings.administrator_password) : null
-
+  administrator_password = try(var.settings.create_mode, "Default") == "Default" ? try(var.settings.administrator_password, azurerm_key_vault_secret.mysql_administrator_password.0.value) : null 
+  geo_redundant_backup_enabled = try(var.settings.geo_redundant_backup_enabled, false)
   backup_retention_days = try(var.settings.backup_retention_days, null)
 
   dynamic "maintenance_window" {
@@ -64,7 +64,7 @@ resource "azurerm_mysql_flexible_server" "mysql" {
 resource "azurerm_key_vault_secret" "mysql_administrator_username" {
   count = lookup(var.settings, "keyvault", null) == null ? 0 : 1
 
-  name         = format("%s-username", azurerm_mysql_flexible_server.mysql.name)
+  name         = format("%s-mysql-administrator-username", var.settings.name )
   value        = try(var.settings.administrator_username, "psqladmin")
   key_vault_id = var.remote_objects.keyvault_id
 
@@ -79,18 +79,18 @@ resource "azurerm_key_vault_secret" "mysql_administrator_username" {
 resource "random_password" "mysql_administrator_password" {
   count = lookup(var.settings, "administrator_password", null) == null ? 1 : 0
 
-  length           = try(var.settings.administrator_password_length, 128)
+  length           = try(var.settings.administrator_password_length, 32)
   upper            = true
   number           = true
   special          = true
-  override_special = "$#%"
+  override_special = "!@"
 }
 
 # Store the mysql_flexible_administrator_password into keyvault if the attribute keyvault{} is defined.
 resource "azurerm_key_vault_secret" "mysql_administrator_password" {
   count = lookup(var.settings, "keyvault", null) == null ? 0 : 1
 
-  name         = format("%s-password", azurerm_mysql_flexible_server.mysql.name)
+  name         = format("%s-mysql-administrator-password",  var.settings.name )
   value        = try(var.settings.administrator_password, random_password.mysql_administrator_password.0.result)
   key_vault_id = var.remote_objects.keyvault_id
 
@@ -105,7 +105,7 @@ resource "azurerm_key_vault_secret" "mysql_administrator_password" {
 resource "azurerm_key_vault_secret" "mysql_fqdn" {
   count = lookup(var.settings, "keyvault", null) == null ? 0 : 1
 
-  name         = format("%s-fqdn", azurerm_mysql_flexible_server.mysql.name)
+  name         = format("%s-mysql-fqdn", var.settings.name )
   value        = azurerm_mysql_flexible_server.mysql.fqdn
   key_vault_id = var.remote_objects.keyvault_id
 }

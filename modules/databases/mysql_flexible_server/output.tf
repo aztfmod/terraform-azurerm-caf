@@ -43,7 +43,7 @@ output "mysql_flexible_server_configuration_id" {
 }
 
 output "mysql_flexible_server_database_id" {
-#  description = "ID of the MYSQL flexible server database"
+  description = "ID of the MYSQL flexible server database"
   value = {
     for k, v in azurerm_mysql_flexible_database.mysql : k => v.id
   }
