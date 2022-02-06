@@ -1,3 +1,4 @@
+
 output "mysql_flexible_server" {
   value = module.mysql_flexible_server
 }
