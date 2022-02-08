@@ -17,8 +17,16 @@ resource "azurerm_container_group" "acg" {
   tags                = merge(local.tags, try(var.settings.tags, null))
   ip_address_type     = try(var.settings.ip_address_type, "Public")
   restart_policy      = try(var.settings.restart_policy, "Always")
-  
-  network_profile_id = var.combined_resources.network_profiles[var.client_config.landingzone_key][var.settings.network_profile.key].id
+  network_profile_id  = try(var.combined_resources.network_profiles[var.client_config.landingzone_key][var.settings.network_profile.key].id, null)
+
+  dynamic "exposed_port" {
+    for_each = try(var.settings.exposed_port, [])
+
+    content {
+      port     = exposed_port.value.port
+      protocol = upper(exposed_port.value.protocol)
+    }
+  }
 
   # Create containers based on for_each
   dynamic "container" {
@@ -46,7 +54,7 @@ resource "azurerm_container_group" "acg" {
         for_each = try(container.value.ports, {})
 
         content {
-          port     = ports.value.port
+          port     = can(container.value.iterator) ? tonumber(ports.value.port) + container.value.iterator : ports.value.port
           protocol = try(upper(ports.value.protocol), "TCP")
         }
       }
