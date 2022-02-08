@@ -9,6 +9,9 @@
     "networking/virtual_wan/105-vwan-hub-route-table",
     "networking/virtual_wan/103-vwan-hub-gw",
     "networking/virtual_wan/104-vwan-hub-gw-spp",
-    "compute/vmware_cluster/101-vmware_cluster"
+    "compute/vmware_cluster/101-vmware_cluster",
+    "apim/112-api_management_gateway",
+    "apim/113-api_management_gateway_api",
+    "apim/114-api-management-group"
   ]
 }
