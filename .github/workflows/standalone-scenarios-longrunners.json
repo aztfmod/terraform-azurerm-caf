@@ -11,6 +11,9 @@
     "apim/108-api_management_user",
     "apim/110-api_management_diagnostic",
     "apim/111-api_management_certificate",
+    "apim/112-api_management_gateway",
+    "apim/113-api_management_gateway_api",
+    "apim/114-api-management-group"
     "app_gateway/301-agw-v1",
     "compute/vmware_cluster/101-vmware_cluster",
     "logic_app/101-integration_service_environment",
