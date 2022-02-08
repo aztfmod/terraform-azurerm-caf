@@ -34,7 +34,6 @@ resource "azurerm_storage_account" "stg" {
   large_file_share_enabled = try(var.storage_account.large_file_share_enabled, null)
   tags                     = merge(var.base_tags, local.tags)
 
-
   dynamic "custom_domain" {
     for_each = lookup(var.storage_account, "custom_domain", false) == false ? [] : [1]
 
