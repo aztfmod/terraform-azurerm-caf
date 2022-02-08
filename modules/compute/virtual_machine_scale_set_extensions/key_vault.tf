@@ -14,7 +14,7 @@ resource "azurerm_virtual_machine_scale_set_extension" "keyvault" {
     ]
   }
 
-  settings = {
+  settings = jsonencode({
     "secretsManagementSettings" : {
       "pollingIntervalInS" : try(var.extension.secretsManagementSettings.pollingIntervalInS, "")
       "certificateStoreName" : try(var.extension.secretsManagementSettings.certificateStoreName, "")
@@ -27,5 +27,5 @@ resource "azurerm_virtual_machine_scale_set_extension" "keyvault" {
       "msiEndpoint" : try(var.extension.authenticationSettings.msiEndpoint, "")
       "msiClientId" : try(var.extension.authenticationSettings.msiClientId, "")
     }
-  }
+  })
 }
