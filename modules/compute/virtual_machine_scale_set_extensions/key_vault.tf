@@ -16,11 +16,11 @@ resource "azurerm_virtual_machine_scale_set_extension" "keyvault" {
 
   settings = jsonencode({
     "secretsManagementSettings" : {
-      "pollingIntervalInS" : try(var.extension.secretsManagementSettings.pollingIntervalInS, "")
+      "pollingIntervalInS" : try(var.extension.secretsManagementSettings.pollingIntervalInS, "3600")
       "certificateStoreName" : try(var.extension.secretsManagementSettings.certificateStoreName, "")
-      "linkOnRenewal" : try(var.extension.secretsManagementSettings.linkOnRenewal, "")
+      "linkOnRenewal" : try(var.extension.secretsManagementSettings.linkOnRenewal, "false")
       "certificateStoreLocation" : try(var.extension.secretsManagementSettings.certificateStoreLocation, "")
-      "requireInitialSync" : try(var.extension.secretsManagementSettings.requireInitialSync, "")
+      "requireInitialSync" : try(var.extension.secretsManagementSettings.requireInitialSync, "true")
       "observedCertificates" : try(var.extension.secretsManagementSettings.observedCertificates, "")
     }
     "authenticationSettings" : {
