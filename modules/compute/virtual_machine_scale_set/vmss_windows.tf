@@ -180,7 +180,7 @@ resource "azurerm_windows_virtual_machine_scale_set" "vmss" {
       force_update_tag           = try(extension.value.force_update_tag, null)
       protected_settings         = try(extension.value.protected_settings, null)
       provision_after_extensions = try(extension.value.provision_after_extensions, null)
-      settings                   = try(extension.value.settings, null)
+      settings                   = try(jsonencode(extension.value.settings), null)
     }
   }
 
