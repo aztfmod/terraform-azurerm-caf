@@ -120,6 +120,17 @@ locals {
     postgresql_flexible_servers        = try(var.database.postgresql_flexible_servers, {})
     postgresql_servers                 = try(var.database.postgresql_servers, {})
     synapse_workspaces                 = try(var.database.synapse_workspaces, {})
+    data_explorer = {
+      kusto_clusters                         = try(var.database.data_explorer.kusto_clusters, {})
+      kusto_databases                        = try(var.database.data_explorer.kusto_databases, {})
+      kusto_attached_database_configurations = try(var.database.data_explorer.kusto_attached_database_configurations, {})
+      kusto_cluster_customer_managed_keys    = try(var.database.data_explorer.kusto_cluster_customer_managed_keys, {})
+      kusto_cluster_principal_assignments    = try(var.database.data_explorer.kusto_cluster_principal_assignments, {})
+      kusto_database_principal_assignments   = try(var.database.data_explorer.kusto_database_principal_assignments, {})
+      kusto_eventgrid_data_connections       = try(var.database.data_explorer.kusto_eventgrid_data_connections, {})
+      kusto_eventhub_data_connections        = try(var.database.data_explorer.kusto_eventhub_data_connections, {})
+      kusto_iothub_data_connections          = try(var.database.data_explorer.kusto_iothub_data_connections, {})
+    }
   }
 
   data_factory = {
@@ -290,6 +301,8 @@ locals {
     monitor_autoscale_settings = try(var.shared_services.monitor_autoscale_settings, {})
     monitor_action_groups      = try(var.shared_services.monitor_action_groups, {})
     monitoring                 = try(var.shared_services.monitoring, {})
+    monitor_metric_alert       = try(var.shared_services.monitor_metric_alert, {})
+    monitor_activity_log_alert = try(var.shared_services.monitor_activity_log_alert, {})
     packer_managed_identity    = try(var.shared_services.packer_managed_identity, {})
     packer_service_principal   = try(var.shared_services.packer_service_principal, {})
     recovery_vaults            = try(var.shared_services.recovery_vaults, {})
@@ -334,5 +347,8 @@ locals {
     api_management_custom_domain        = try(var.apim.api_management_custom_domain, {})
     api_management_diagnostic           = try(var.apim.api_management_diagnostic, {})
     api_management_certificate          = try(var.apim.api_management_certificate, {})
+    api_management_gateway              = try(var.apim.api_management_gateway, {})
+    api_management_gateway_api          = try(var.apim.api_management_gateway_api, {})
+    api_management_group                = try(var.apim.api_management_group, {})
   }
 }
