@@ -65,3 +65,7 @@ variable "dynamic_app_settings" {
 variable "remote_objects" {
   default = null
 }
+
+variable "key_vault_reference_identity_id" {
+  default = null
+}
