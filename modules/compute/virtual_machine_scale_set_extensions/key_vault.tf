@@ -18,9 +18,9 @@ resource "azurerm_virtual_machine_scale_set_extension" "keyvault" {
     "secretsManagementSettings" : {
       "pollingIntervalInS" : try(var.extension.secretsManagementSettings.pollingIntervalInS, "3600")
       "certificateStoreName" : try(var.extension.secretsManagementSettings.certificateStoreName, "")
-      "linkOnRenewal" : try(var.extension.secretsManagementSettings.linkOnRenewal, "false")
+      "linkOnRenewal" : try(var.extension.secretsManagementSettings.linkOnRenewal, false)
       "certificateStoreLocation" : try(var.extension.secretsManagementSettings.certificateStoreLocation, "")
-      "requireInitialSync" : try(var.extension.secretsManagementSettings.requireInitialSync, "true")
+      "requireInitialSync" : try(var.extension.secretsManagementSettings.requireInitialSync, true)
       "observedCertificates" : try(var.extension.secretsManagementSettings.observedCertificates, "")
     }
     "authenticationSettings" : {
