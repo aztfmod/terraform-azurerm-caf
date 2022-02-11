@@ -14,14 +14,15 @@ module "function_apps" {
     try(local.combined_objects_resource_groups[local.client_config.landingzone_key][each.value.resource_group_key].name, null),
     try(each.value.resource_group.name, null)
   )
-  location                   = lookup(each.value, "region", null) == null ? local.resource_groups[each.value.resource_group_key].location : local.global_settings.regions[each.value.region]
-  app_service_plan_id        = try(each.value.lz_key, null) == null ? local.combined_objects_app_service_plans[local.client_config.landingzone_key][each.value.app_service_plan_key].id : local.combined_objects_app_service_plans[each.value.lz_key][each.value.app_service_plan_key].id
-  settings                   = each.value.settings
-  application_insight        = try(each.value.application_insight_key, null) == null ? null : module.azurerm_application_insights[each.value.application_insight_key]
-  identity                   = try(each.value.identity, null)
-  connection_strings         = try(each.value.connection_strings, {})
-  storage_account_name       = try(data.azurerm_storage_account.function_apps[each.key].name, null)
-  storage_account_access_key = try(data.azurerm_storage_account.function_apps[each.key].primary_access_key, null)
+  location                        = lookup(each.value, "region", null) == null ? local.resource_groups[each.value.resource_group_key].location : local.global_settings.regions[each.value.region]
+  app_service_plan_id             = try(each.value.lz_key, null) == null ? local.combined_objects_app_service_plans[local.client_config.landingzone_key][each.value.app_service_plan_key].id : local.combined_objects_app_service_plans[each.value.lz_key][each.value.app_service_plan_key].id
+  settings                        = each.value.settings
+  application_insight             = try(each.value.application_insight_key, null) == null ? null : module.azurerm_application_insights[each.value.application_insight_key]
+  identity                        = try(each.value.identity, null)
+  key_vault_reference_identity_id = try(local.combined_objects_managed_identities[local.client_config.landingzone_key][each.value.key_vault_reference_key].id, null)
+  connection_strings              = try(each.value.connection_strings, {})
+  storage_account_name            = try(data.azurerm_storage_account.function_apps[each.key].name, null)
+  storage_account_access_key      = try(data.azurerm_storage_account.function_apps[each.key].primary_access_key, null)
   # subnet_id = try(
   #                 each.value.subnet_id,
   #                 local.combined_objects_networking[try(each.value.settings.lz_key, local.client_config.landingzone_key)][each.value.settings.vnet_key].subnets[each.value.settings.subnet_key].id,
