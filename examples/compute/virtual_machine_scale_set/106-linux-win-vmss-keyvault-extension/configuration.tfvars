@@ -409,9 +409,9 @@ virtual_machine_scale_sets = {
         secretsManagementSettings = {
           certificateStoreName     = "webselfsigned"
           certificateStoreLocation = "LocalMachine"
-          requireInitialSync       = "true"
+          requireInitialSync       = true
           observedCertificates     = ["https://<keyvault-id>.vault.azure.net/secrets/certificates/webselfsigned"] # keep the /secrets in the path, it returns the full certificate
-          # linkOnRenewal            = "false" # optional
+          # linkOnRenewal            = false # optional
           # pollingIntervalInS       = "3600" # optional
         }
         authenticationSettings = {
