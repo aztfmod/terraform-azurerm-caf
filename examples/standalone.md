@@ -52,7 +52,7 @@ You can then feed the module with a ```example.auto.tfvars```:
 global_settings = {
   default_region = "region1"
   regions = {
-    region1 = "southeastasia"
+    region1 = "eastus2"
   }
   resource_defaults = {
     virtual_machines = {
