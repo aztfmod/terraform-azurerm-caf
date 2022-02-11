@@ -406,6 +406,10 @@ virtual_machine_scale_sets = {
 
     virtual_machine_scale_set_extensions = {
       microsoft_azure_keyvault = {
+        identity_type        = "UserAssigned"
+        managed_identity_key = "example_mi"
+        # lz_key               = ""
+        # managed_identity_id  = "" # optional : add manual id
         secretsManagementSettings = {
           certificateStoreName     = "webselfsigned"
           certificateStoreLocation = "LocalMachine"
@@ -417,9 +421,6 @@ virtual_machine_scale_sets = {
         authenticationSettings = {
           # msiEndpoint          = "http://169.254.169.254/metadata/identity" # optional: the default MSI Endpoint
           # msiClientId          = ""                                         # optional: managed identity client id
-          identity_type        = "UserAssigned"
-          managed_identity_key = "example_mi"
-          # lz_key               = ""
         }
       }
     }
