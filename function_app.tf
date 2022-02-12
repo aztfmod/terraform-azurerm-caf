@@ -19,7 +19,7 @@ module "function_apps" {
   settings                        = each.value.settings
   application_insight             = try(each.value.application_insight_key, null) == null ? null : module.azurerm_application_insights[each.value.application_insight_key]
   identity                        = try(each.value.identity, null)
-  key_vault_reference_identity_id = try(local.combined_objects_managed_identities[local.client_config.landingzone_key][each.value.key_vault_reference_key].id, null)
+  key_vault_reference_identity_id = try(local.combined_objects_managed_identities[local.client_config.landingzone_key][each.value.key_vault_reference_identity_key].id, null)
   connection_strings              = try(each.value.connection_strings, {})
   storage_account_name            = try(data.azurerm_storage_account.function_apps[each.key].name, null)
   storage_account_access_key      = try(data.azurerm_storage_account.function_apps[each.key].primary_access_key, null)
