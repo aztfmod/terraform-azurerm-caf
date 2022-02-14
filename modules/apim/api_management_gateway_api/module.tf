@@ -18,7 +18,7 @@ resource "azurerm_api_management_gateway_api" "apim" {
     for_each = try(var.settings.timeouts, null) != null ? [var.settings.timeouts] : []
     content {
       create = try(timeouts.value.create, null)
-      read = try(timeouts.value.read, null)
+      read   = try(timeouts.value.read, null)
       update = try(timeouts.value.update, null)
       delete = try(timeouts.value.delete, null)
     }

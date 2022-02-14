@@ -49,19 +49,19 @@ api_management_api = {
 }
 
 api_management_gateway = {
-  apimgw1= {
-    name              = "example-gateway"
-    api_management    = {
+  apimgw1 = {
+    name = "example-gateway"
+    api_management = {
       key = "apim1"
       #lz_key = ""
       #name = ""
     }
-    description       = "Example API Management gateway"
+    description = "Example API Management gateway"
     resource_group = {
       key = "rg1"
       #lz_key = ""
       #name = ""
-    } 
+    }
 
     location_data = {
       name     = "example name"
@@ -75,7 +75,7 @@ api_management_gateway = {
 api_management_gateway_api = {
   apimgwapi1 = {
     api_management_gateway = {
-      key = "apimgw1" 
+      key = "apimgw1"
       #lz_key = ""
       #id = ""
     }

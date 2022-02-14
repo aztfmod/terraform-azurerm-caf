@@ -22,7 +22,7 @@ resource "azurerm_cosmosdb_account" "cosmos_account" {
   enable_multiple_write_locations   = try(var.settings.enable_multiple_write_locations, false)
   enable_automatic_failover         = try(var.settings.enable_automatic_failover, null)
   is_virtual_network_filter_enabled = try(var.settings.is_virtual_network_filter_enabled, null)
-  create_mode = try(var.settings.create_mode, null)
+  create_mode                       = try(var.settings.create_mode, null)
 
   dynamic "consistency_policy" {
     for_each = lookup(var.settings, "consistency_policy", {}) == {} ? [] : [1]
@@ -66,7 +66,7 @@ resource "azurerm_cosmosdb_account" "cosmos_account" {
         }
       }
     }
-  }  
+  }
 }
 
 
