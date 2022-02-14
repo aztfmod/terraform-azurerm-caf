@@ -7,7 +7,7 @@ module "monitor_action_groups" {
 
   remote_objects = {
     event_hub_namespaces = local.combined_objects_event_hub_namespaces
-  }  
+  }
 }
 
 output "monitor_action_groups" {
