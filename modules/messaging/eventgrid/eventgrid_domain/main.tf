@@ -4,6 +4,7 @@ terraform {
       source = "aztfmod/azurecaf"
     }
   }
+  required_version = ">= 0.13"
 }
 
 locals {
