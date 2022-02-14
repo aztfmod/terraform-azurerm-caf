@@ -22,12 +22,15 @@ Version 5.5.2 includes support for azurerm 2.93.1 which requires your attention 
 
 - apim:
   - The ```proxy``` block is deprecated in favour of `gateway` and will be removed in version 3.0 of the AzureRM provider.
-  - Azurerm 2.93.1 does not seem to have ```gateway``` implemented yet, even with ```ARM_THREEPOINTZERO_BETA_RESOURCES=true```
+  - Azurerm 2.96 does not seem to have ```gateway``` implemented yet, even with ```ARM_THREEPOINTZERO_BETA_RESOURCES=true```
 
 - azure virtual desktop:
-  - azurerm 2.93.1 has a bug on https://github.com/hashicorp/terraform-provider-azurerm/pull/14953 for output "token" {
+  - azurerm 2.96 has a bug - seems to be corrected in https://github.com/hashicorp/terraform-provider-azurerm/pull/14953 for output "token" {
   value     = tostring(azurerm_virtual_desktop_host_pool.wvdpool.registration_info[0].token)
   sensitive = true} as observed in https://github.com/aztfmod/terraform-azurerm-caf/runs/4946734570?check_suite_focus=true
+
+- azurerm_network_watcher_flow_log:
+  - the ```name``` attribute has been added and is mandatory for each network watcher flow log. Changing this forces a new resource to be created so this is expected to be a breaking change for existing azurerm_network_watcher_flow_log.
 
 
 ## 5.5.0
