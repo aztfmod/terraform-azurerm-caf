@@ -826,4 +826,5 @@ variable "eventgrid_domain_topics" {
   default = {}
 }
 variable "eventgrid_topics" {
+  default = {}
 }
