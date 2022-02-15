@@ -23,6 +23,26 @@ locals {
   type_handler_version = var.virtual_machine_scale_set_os_type == "linux" ? "2.1" : "1.10"
   type                 = var.virtual_machine_scale_set_os_type == "linux" ? "CustomScript" : "CustomScriptExtension"
 
+  map_system_assigned = {
+    managedIdentity = {}
+  }
+
+  map_user_assigned = {
+    managedIdentity = {
+      objectid = local.managed_identity
+    }
+  }
+
+  map_command = {
+    commandToExecute = try(var.extension.commandtoexecute, "")
+  }
+
+  identity_type      = try(var.extension.identity_type, "") # userassigned, systemassigned or null
+  system_assigned_id = local.identity_type == "SystemAssigned" ? local.map_system_assigned : null
+  user_assigned_id   = local.identity_type == "UserAssigned" ? local.map_user_assigned : null
+
+  protected_settings = merge(local.map_command, local.system_assigned_id, local.user_assigned_id)
+
   # Fileuris
   fileuris             = local.fileuri_sa_defined == "" ? [local.fileuri_sa_full_path] : var.extension.fileuris
   fileuri_sa_key       = try(var.extension.fileuri_sa_key, "")
