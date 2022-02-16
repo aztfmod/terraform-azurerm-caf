@@ -16,10 +16,12 @@ resource "azurerm_private_dns_zone_virtual_network_link" "vnet_links" {
   name = azurecaf_name.pnetlk[each.key].result
   resource_group_name = coalesce(
     try(var.private_dns[each.value.lz_key][each.value.key].resource_group_name, null),
+    try(var.private_dns[each.value.lz_key].dns_zones[each.value.key].resource_group_name, null),
     try(var.private_dns[var.client_config.landingzone_key][each.value.key].resource_group_name, null)
   )
   private_dns_zone_name = coalesce(
     try(var.private_dns[each.value.lz_key][each.value.key].name, null),
+    try(var.private_dns[each.value.lz_key].dns_zones[each.value.key].name, null),
     try(var.private_dns[var.client_config.landingzone_key][each.value.key].name, null)
   )
   virtual_network_id   = var.virtual_network_id
