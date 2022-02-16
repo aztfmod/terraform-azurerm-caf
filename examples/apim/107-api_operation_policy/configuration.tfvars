@@ -89,7 +89,7 @@ api_management_api_operation_policy = {
     api_operation = {
       id = "sample"
     }
-    
+
 
     xml_content = <<XML
 <policies>
