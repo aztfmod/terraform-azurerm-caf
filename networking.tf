@@ -15,14 +15,6 @@ output "network_watchers" {
   value = module.network_watchers
 }
 
-output "route_filters" {
-  value = module.route_filters
-}
-
-output "network_profiles" {
-  value = module.network_profiles
-}
-
 #
 #
 # Virtual network
