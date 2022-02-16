@@ -15,6 +15,13 @@ resource_groups = {
   }
 }
 
+managed_identities = {
+  example_mi = {
+    name               = "example_mi"
+    resource_group_key = "rg1"
+  }
+}
+
 storage_accounts = {
   sa1 = {
     name               = "sa1"
@@ -40,7 +47,7 @@ role_mapping = {
       sa1 = {
         "Storage Blob Data Reader" = {
           managed_identities = {
-            keys = ["user_mi"]
+            keys = ["example_mi"]
           }
         }
         "Storage Blob Data Contributor" = {
