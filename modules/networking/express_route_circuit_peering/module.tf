@@ -32,7 +32,7 @@ resource "azurerm_express_route_circuit_peering" "peering" {
       secondary_peer_address_prefix = var.settings.ipv6.secondary_peer_address_prefix
 
       # To be added when route filter is added to the core aztfmod module
-      # route_filter_id = 
+      # route_filter_id =
 
       microsoft_peering {
         advertised_public_prefixes = var.settings.ipv6.microsoft_peering.advertised_public_prefixes
