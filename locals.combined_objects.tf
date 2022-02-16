@@ -88,6 +88,7 @@ locals {
   combined_objects_private_endpoints                              = merge(tomap({ (local.client_config.landingzone_key) = module.private_endpoints }), try(var.remote_objects.private_endpoints, {}))
   combined_objects_proximity_placement_groups                     = merge(tomap({ (local.client_config.landingzone_key) = module.proximity_placement_groups }), try(var.remote_objects.proximity_placement_groups, {}))
   combined_objects_public_ip_addresses                            = merge(tomap({ (local.client_config.landingzone_key) = module.public_ip_addresses }), try(var.remote_objects.public_ip_addresses, {}))
+  combined_objects_public_ip_prefixes                             = merge(tomap({ (local.client_config.landingzone_key) = module.public_ip_prefixes }), try(var.remote_objects.public_ip_prefixes, {}))
   combined_objects_recovery_vaults                                = merge(tomap({ (local.client_config.landingzone_key) = module.recovery_vaults }), try(var.remote_objects.recovery_vaults, {}))
   combined_objects_redis_caches                                   = merge(tomap({ (local.client_config.landingzone_key) = module.redis_caches }), try(var.remote_objects.redis_caches, {}))
   combined_objects_resource_groups                                = merge(tomap({ (local.client_config.landingzone_key) = local.resource_groups }), try(var.remote_objects.resource_groups, {}))
