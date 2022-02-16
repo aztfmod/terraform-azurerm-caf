@@ -130,8 +130,20 @@ module "example" {
     mssql_mi_tdes                      = var.mssql_mi_tdes
     mssql_servers                      = var.mssql_servers
     mysql_servers                      = var.mysql_servers
+    postgresql_flexible_servers        = var.postgresql_flexible_servers
     postgresql_servers                 = var.postgresql_servers
     synapse_workspaces                 = var.synapse_workspaces
+    data_explorer = {
+      kusto_clusters                         = var.kusto_clusters
+      kusto_databases                        = var.kusto_databases
+      kusto_attached_database_configurations = var.kusto_attached_database_configurations
+      kusto_cluster_customer_managed_keys    = var.kusto_cluster_customer_managed_keys
+      kusto_cluster_principal_assignments    = var.kusto_cluster_principal_assignments
+      kusto_database_principal_assignments   = var.kusto_database_principal_assignments
+      kusto_eventgrid_data_connections       = var.kusto_eventgrid_data_connections
+      kusto_eventhub_data_connections        = var.kusto_eventhub_data_connections
+      kusto_iothub_data_connections          = var.kusto_iothub_data_connections
+    }
   }
   messaging = {
     signalr_services      = var.signalr_services
@@ -214,6 +226,8 @@ module "example" {
     monitor_action_groups      = var.monitor_action_groups
     monitor_autoscale_settings = var.monitor_autoscale_settings
     monitoring                 = var.monitoring
+    monitor_metric_alert       = var.monitor_metric_alert
+    monitor_activity_log_alert = var.monitor_activity_log_alert
     packer_managed_identity    = var.packer_managed_identity
     packer_service_principal   = var.packer_service_principal
     recovery_vaults            = var.recovery_vaults
@@ -290,5 +304,8 @@ module "example" {
     api_management_custom_domain        = var.api_management_custom_domain
     api_management_diagnostic           = var.api_management_diagnostic
     api_management_certificate          = var.api_management_certificate
+    api_management_gateway              = var.api_management_gateway
+    api_management_gateway_api          = var.api_management_gateway_api
+    api_management_group                = var.api_management_group
   }
 }
