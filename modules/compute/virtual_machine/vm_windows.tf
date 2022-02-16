@@ -185,7 +185,7 @@ resource "azurerm_windows_virtual_machine" "vm" {
 
   lifecycle {
     ignore_changes = [
-      resource_group_name, location, os_disk[0].name, availability_set_id, 
+      resource_group_name, location, os_disk[0].name, availability_set_id,
       admin_username, # Only used for initial deployment as it can be changed later by GPO
       admin_password  # Only used for initial deployment as it can be changed later by GPO
     ]

@@ -79,7 +79,7 @@ virtual_machines = {
         identity = {
           type = "SystemAssigned"
         }
-        
+
         source_image_reference = {
           publisher = "MicrosoftWindowsServer"
           offer     = "WindowsServer"
