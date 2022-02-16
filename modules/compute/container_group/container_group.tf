@@ -8,6 +8,22 @@ resource "azurecaf_name" "acg" {
   use_slug      = var.global_settings.use_slug
 }
 
+data "azurerm_key_vault_secret" "image_registry_credential_password" {
+  for_each = {
+    for irc_key, irc in try(var.settings.image_registry_credentials, {}) : irc_key => irc if try(irc.keyvault_key, null) != null
+  }
+  key_vault_id = try(var.combined_resources.keyvaults[try(each.value.lz_key, var.client_config.landingzone_key)][each.value.keyvault_key].id, null)
+  name         = try(var.dynamic_keyvault_secrets[each.value.keyvault_key][each.value.password_secret_key].secret_name, each.value.password_secret_name, null)
+}
+
+data "azurerm_key_vault_secret" "image_registry_credential_username" {
+  for_each = {
+    for irc_key, irc in try(var.settings.image_registry_credentials, {}) : irc_key => irc if try(irc.keyvault_key, null) != null
+  }
+  key_vault_id = try(var.combined_resources.keyvaults[try(each.value.lz_key, var.client_config.landingzone_key)][each.value.keyvault_key].id, null)
+  name         = try(var.dynamic_keyvault_secrets[each.value.keyvault_key][each.value.username_secret_key].secret_name, each.value.username_secret_name, null)
+}
+
 resource "azurerm_container_group" "acg" {
   name                = azurecaf_name.acg.result
   location            = var.location
@@ -148,6 +164,15 @@ resource "azurerm_container_group" "acg" {
       nameservers    = var.settings.dns_config.nameservers
       search_domains = var.settings.dns_config.search_domains
       options        = var.settings.dns_config.options
+    }
+  }
+
+  dynamic "image_registry_credential" {
+    for_each = try(var.settings.image_registry_credentials, {})
+    content {
+      server   = image_registry_credential.value.server
+      username = try(data.azurerm_key_vault_secret.image_registry_credential_username[image_registry_credential.key].value, image_registry_credential.value.username)
+      password = try(data.azurerm_key_vault_secret.image_registry_credential_password[image_registry_credential.key].value, image_registry_credential.value.password)
     }
   }
 
