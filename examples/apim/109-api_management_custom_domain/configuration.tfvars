@@ -43,9 +43,7 @@ keyvaults = {
     name               = "certs"
     resource_group_key = "rg1"
     sku_name           = "standard"
-
-    enabled_for_deployment = true
-
+    
     creation_policies = {
       logged_in_user = {
         certificate_permissions = ["Get", "List", "Update", "Create", "Import", "Delete", "Purge", "Recover"]
@@ -57,7 +55,7 @@ keyvaults = {
 
 keyvault_access_policies = {
   kv1 = {
-    apgw_keyvault_secrets = {
+    mi1 = {
       managed_identity_key    = "mi1"
       certificate_permissions = ["Get", "List"]
       secret_permissions      = ["Get", "List"]
