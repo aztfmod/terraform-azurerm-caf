@@ -25,3 +25,6 @@ variable "storage_accounts" {
 variable "virtual_machine_os_type" {
   default = {}
 }
+variable "microsoft_monitoring_agent_extension_name" {
+  default = {}
+}

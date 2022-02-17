@@ -374,19 +374,14 @@ virtual_machine_scale_sets = {
     }
 
     virtual_machine_scale_set_extensions = {
-      custom_script = {
-        # You can define fileuris directly or use fileuri_sa reference keys and lz_key:
-        # fileuris                  = ["https://somelocation/container/script.ps1"]
-        fileuri_sa_key            = "sa1"
-        fileuri_sa_path           = "files/helloworld.sh"
-        commandtoexecute          = "bash helloworld.sh"
-        identity_type             = "UserAssigned" # optional to use managed_identity for download from location specified in fileuri, UserAssigned or SystemAssigned.
-        lz_key                    = "examples"
-        managed_identity_key      = "example_vmss_mi"
-        automatic_upgrade_enabled = false
-        # managed_identity_id       = "id" # optional to define managed identity principal_id directly
-        # lz_key                    = "other_lz" # optional for managed identity defined in other lz
+      microsoft_monitoring_agent = {
+        workspace = {
+          key     = "law1"
+          lz_key  = "example"
+        }
       }
+      #dependency_agent = {
+      #}      
     }
   }
 
@@ -500,24 +495,14 @@ virtual_machine_scale_sets = {
     }
 
     virtual_machine_scale_set_extensions = {
-      custom_script = {
-        # You can define fileuris directly or use fileuri_sa reference keys and lz_key:
-        # fileuris                  = ["https://somelocation/container/script.ps1"]
-        fileuri_sa_key            = "sa1"
-        fileuri_sa_path           = "files/helloworld.ps1"
-        commandtoexecute          = "PowerShell -file helloworld.ps1"
-        identity_type             = "UserAssigned" # optional to use managed_identity for download from location specified in fileuri, UserAssigned or SystemAssigned.
-        lz_key                    = "examples"
-        managed_identity_key      = "example_vmss_mi"
-        automatic_upgrade_enabled = false
-        # managed_identity_id       = "id" # optional to define managed identity principal_id directly
-        # lz_key                    = "other_lz" # optional for managed identity defined in other lz
-      }
-      microsoft_monitoring_agent = {
-        log_analytics_workspace={
-          key = "law1"
+            microsoft_monitoring_agent = {
+        workspace = {
+          key     = "law1"
+          lz_key  = "example"
         }
       }
+      dependency_agent = {
+      }    
     }
   }
 }

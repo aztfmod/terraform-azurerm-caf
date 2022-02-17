@@ -19,9 +19,9 @@ variable "keyvaults" {
 variable "virtual_machine_scale_set_os_type" {
   default = {}
 }
-variable "log_analytics_workspace" {
+variable "log_analytics_workspaces" {
   default = {}
 }
-variable "vmss_extension_microsoft_monitoring_agent_extension_name" {
+variable "microsoft_monitoring_agent_extension_name" {
   default = {}
 }
