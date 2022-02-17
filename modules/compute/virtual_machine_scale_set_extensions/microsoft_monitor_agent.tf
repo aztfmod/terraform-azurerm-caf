@@ -8,11 +8,21 @@ resource "azurerm_virtual_machine_scale_set_extension" "vmss_ext_mma" {
   type_handler_version         = "1.0"
   
   protected_settings = jsonencode({
-    "workspaceKey" = "${var.log_analytics_workspace.primary_shared_key}"
+    #"workspaceKey" = var.log_analytics_workspaces[var.client_config.landingzone_key][var.extension.workspace.key].primary_shared_key
+    "workspaceKey" = try(
+                        var.log_analytics_workspaces[var.extension.workspace.lz_key][var.extension.workspace.key].primary_shared_key,
+                        var.log_analytics_workspaces[var.client_config.landingzone_key][var.extension.workspace.key].primary_shared_key,
+                        var.extension.workspace.primary_shared_key
+                      )
   })
 
   settings = jsonencode({
-    "workspaceId"               = "${var.log_analytics_workspace.workspace_id}",
+    #"workspaceId" = var.log_analytics_workspaces[var.client_config.landingzone_key][var.extension.workspace.key].id
+    "workspaceId" = try(
+                        var.log_analytics_workspaces[var.extension.workspace.lz_key][var.extension.workspace.key].id,
+                        var.log_analytics_workspaces[var.client_config.landingzone_key][var.extension.workspace.key].id,
+                        var.extension.workspace.id
+                      )
     "stopOnMultipleConnections" = true
   })
 }

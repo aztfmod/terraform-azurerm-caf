@@ -45,12 +45,16 @@ module "vmss_extension_microsoft_monitoring_agent" {
   extension                         = each.value.virtual_machine_scale_set_extensions.microsoft_monitoring_agent
   client_config                     = module.example.client_config
   virtual_machine_scale_set_id      = module.example.virtual_machine_scale_sets[each.key].id
-  log_analytics_workspace           = module.example.vmss_extension_custom_scriptextension[each.value.log_analytics_workspace.key]
+  log_analytics_workspaces = tomap(
+    {
+      (var.landingzone.key) = module.example.log_analytics
+    }
+  )
 }
 
 module "vmss_extension_dependency_agent" {
   source     = "../modules/compute/virtual_machine_scale_set_extensions"
-  depends_on = [module.example]
+  depends_on = [module.example, module.vmss_extension_microsoft_monitoring_agent]
 
   for_each = {
     for key, value in try(var.virtual_machine_scale_sets, {}) : key => value
@@ -60,5 +64,5 @@ module "vmss_extension_dependency_agent" {
   extension                                   = each.value.virtual_machine_scale_set_extensions.dependency_agent
   client_config                               = module.example.client_config
   virtual_machine_scale_set_id                = module.example.virtual_machine_scale_sets[each.key].id
-  vmss_extension_microsoft_monitoring_agent_extension_name = "microsoft_monitoring_agent"
+  microsoft_monitoring_agent_extension_name   = "microsoft_monitoring_agent"
 }
