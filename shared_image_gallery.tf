@@ -26,7 +26,10 @@ module "image_definitions" {
   gallery_name        = module.shared_image_galleries[each.value.gallery_key].name
   settings            = each.value
   base_tags           = try(local.global_settings.inherit_tags, false) ? local.resource_groups[each.value.resource_group_key].tags : {}
+}
 
+output "image_definitions" {
+  value = module.image_definitions
 }
 
 module "packer_service_principal" {
