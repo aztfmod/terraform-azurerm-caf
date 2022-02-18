@@ -25,3 +25,6 @@ variable "log_analytics_workspaces" {
 variable "microsoft_monitoring_agent_extension_name" {
   default = {}
 }
+variable "settings" {
+  default = {}
+}

@@ -4,7 +4,7 @@ resource "azurerm_virtual_machine_scale_set_extension" "vmss_ext_da" {
   auto_upgrade_minor_version   = true
   name                         = "DependencyAgentWindows"
   publisher                    = "Microsoft.Azure.Monitoring.DependencyAgent"
-  type                         = "DependencyAgentWindows"
+  type                         = var.virtual_machine_scale_set_os_type == "linux" ? "DependencyAgentLinux" : "DependencyAgentWindows" 
   type_handler_version         = "9.10"
   provision_after_extensions = [var.microsoft_monitoring_agent_extension_name]
 
