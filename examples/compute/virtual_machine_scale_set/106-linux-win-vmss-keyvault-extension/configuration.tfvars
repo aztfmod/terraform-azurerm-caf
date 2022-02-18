@@ -78,8 +78,8 @@ vnets = {
 }
 
 keyvaults = {
-  example_vm_rg1 = {
-    name               = "vmsecretskv"
+  example_kv_rg1 = {
+    name               = "example_kv_rg1"
     resource_group_key = "rg1"
     sku_name           = "standard"
     tags = {
@@ -414,21 +414,25 @@ virtual_machine_scale_sets = {
     virtual_machine_scale_set_extensions = {
       microsoft_azure_keyvault = {
         identity_type        = "UserAssigned"
-        managed_identity_key = "example_mi"
-        # lz_key               = ""
+        managed_identity_key = "job_mi"
         # managed_identity_id  = "" # optional : add manual id
+        # lz_key               = ""
         secretsManagementSettings = {
+          # key_vault_id             = ""               # optional: manually enter the id of the keyvault
+          # lz_key                   = "shared_storage" # optional: add lz_key if keyvault exists in a different landingzone
+          key_vault_key            = "example_kv_rg1" # key of the keyvault (created in the current or other landingzone)
           certificateStoreName     = "webselfsigned"
-          certificateStoreLocation = "LocalMachine"
+          certificateStoreLocation = "LocalMachine" # LocalMachine or CurrentUser (case sensitive)
           requireInitialSync       = true
-          observedCertificates     = ["https://<keyvault-id>.vault.azure.net/secrets/certificates/webselfsigned"] # keep the /secrets in the path, it returns the full certificate
-          # linkOnRenewal            = false # optional
-          # pollingIntervalInS       = "3600" # optional
+          # observedCertificates     = ["https://<kv-name>.vault.azure.net/secrets/certificates/webselfsigned"] # one or more urls ["url1", "url2"] or empty (if manual, put /secrets in the path, it returns the full certificate)
+          # linkOnRenewal            = false
+          # pollingIntervalInS       = "3600"
         }
-        authenticationSettings = {
-          # msiEndpoint          = "http://169.254.169.254/metadata/identity" # optional: the default MSI Endpoint
-          # msiClientId          = ""                                         # optional: managed identity client id
-        }
+        # Optional manual auth settings
+        # authenticationSettings = {
+        #   msiEndpoint = "http://169.254.169.254/metadata/identity"
+        #   msiClientId = "<client-id>"
+        # }
       }
     }
   }
