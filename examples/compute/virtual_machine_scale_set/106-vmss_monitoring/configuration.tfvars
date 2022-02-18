@@ -18,6 +18,10 @@ log_analytics = {
   law1 = {
     name               = "appinsightexamplelaw"
     resource_group_key = "example_vmss_rg1"
+    plan = {
+      publisher = "Microsoft"
+      product   = "OMSGallery/VMInsights"
+    }      
   }
 }
 
@@ -495,14 +499,14 @@ virtual_machine_scale_sets = {
     }
 
     virtual_machine_scale_set_extensions = {
-            microsoft_monitoring_agent = {
+      microsoft_monitoring_agent = {
         workspace = {
           key     = "law1"
           lz_key  = "example"
         }
       }
-      dependency_agent = {
-      }    
+      #dependency_agent = {
+      #}    
     }
   }
 }
