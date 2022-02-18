@@ -2,8 +2,8 @@ variable "global_settings" {
   default = {
     default_region = "region1"
     regions = {
-      region1 = "southeastasia"
-      region2 = "eastasia"
+      region1 = "eastus2"
+      region2 = "centralus"
     }
   }
 }
