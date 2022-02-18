@@ -162,6 +162,7 @@
     "recovery_vault/102-asr-protection",
     "recovery_vault/103-asr-with-private-endpoint",
     "role_mapping/100-simple-role-mapping",
+    "shared_image_gallery/101-packer_service_principal",
     "storage_accounts/101-storage-account-with-protection",
     "storage_accounts/102-storage-account-advanced-options",
     "storage_accounts/103-storage-account-network-rules",
