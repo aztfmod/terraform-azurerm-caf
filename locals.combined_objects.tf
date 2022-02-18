@@ -47,6 +47,7 @@ locals {
   combined_objects_dedicated_hosts                                = merge(tomap({ (local.client_config.landingzone_key) = module.dedicated_hosts }), try(var.remote_objects.dedicated_hosts, {}))
   combined_objects_diagnostic_storage_accounts                    = merge(tomap({ (local.client_config.landingzone_key) = module.diagnostic_storage_accounts }), try(var.remote_objects.diagnostic_storage_accounts, {}))
   combined_objects_disk_encryption_sets                           = merge(tomap({ (local.client_config.landingzone_key) = module.disk_encryption_sets }), try(var.remote_objects.disk_encryption_sets, {}))
+  combined_objects_domain_name_registrations                      = merge(tomap({ (local.client_config.landingzone_key) = module.domain_name_registrations }), try(var.remote_objects.domain_name_registrations, {}))
   combined_objects_dns_zones                                      = merge(tomap({ (local.client_config.landingzone_key) = module.dns_zones }), try(var.remote_objects.dns_zones, {}))
   combined_objects_ddos_services                                  = merge(tomap({ (local.client_config.landingzone_key) = azurerm_network_ddos_protection_plan.ddos_protection_plan }), try(var.remote_objects.ddos_services, {}), try(var.remote_objects.ddos_services, {}))
   combined_objects_event_hub_namespaces                           = merge(tomap({ (local.client_config.landingzone_key) = module.event_hub_namespaces }), try(var.remote_objects.event_hub_namespaces, {}))
