@@ -49,7 +49,7 @@ virtual_machines = {
 
         custom_image_key     = "image1"
         custom_image_version = "1.0.0"
-        #custom_image_lz_key # reference to image source landingzone 
+        #custom_image_lz_key # reference to image source landingzone
       }
     }
 
