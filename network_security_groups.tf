@@ -13,6 +13,7 @@ module "network_security_groups" {
   resource_group_name = local.resource_groups[each.value.resource_group_key].name
   settings            = each.value
   client_config       = local.client_config
+  network_watchers    = local.combined_objects_network_watchers
 
   // Module to support the NSG creation outside of the a subnet
   // version = 1 of NSG can be attached to a nic or a subnet
