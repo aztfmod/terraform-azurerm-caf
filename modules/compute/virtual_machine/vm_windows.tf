@@ -226,8 +226,8 @@ resource "azurerm_key_vault_secret" "admin_password" {
 #
 
 locals {
-  admin_username = data.external.windows_admin_username.0.result.value
-  admin_password = data.external.windows_admin_password.0.result.value
+  admin_username = can(var.settings.virtual_machine_settings["windows"].admin_username_key) ? data.external.windows_admin_username.0.result.value : null
+  admin_password = can(var.settings.virtual_machine_settings["windows"].admin_password_key) ? data.external.windows_admin_password.0.result.value : null
 }
 
 #
@@ -241,7 +241,7 @@ data "external" "windows_admin_username" {
     "bash", "-c",
     format(
       "az keyvault secret show --name '%s' --vault-name '%s' --query '{value: value }' -o json",
-      try(var.settings.virtual_machine_settings["windows"].admin_username_key, var.settings.virtual_machine_settings["legacy"].admin_username_key),
+      var.settings.virtual_machine_settings["windows"].admin_username_key, var.settings.virtual_machine_settings["legacy"].admin_username_key,
       local.keyvault.name
     )
   ]
@@ -253,7 +253,7 @@ data "external" "windows_admin_password" {
     "bash", "-c",
     format(
       "az keyvault secret show -n '%s' --vault-name '%s' --query '{value: value }' -o json",
-      try(var.settings.virtual_machine_settings["windows"].admin_password_key, var.settings.virtual_machine_settings["legacy"].admin_password_key),
+      var.settings.virtual_machine_settings["windows"].admin_password_key, var.settings.virtual_machine_settings["legacy"].admin_password_key,
       local.keyvault.name
     )
   ]
