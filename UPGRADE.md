@@ -2,9 +2,9 @@
 
 When upgrading to a newer version of the CAF module, some configuration structures must be updated before applying the modifications.
 
-## 5.5.2
+## 5.5.x
 
-Version 5.5.2 includes support for azurerm 2.93.1 which requires your attention if you are deploying the following components:
+Version 5.5.x includes support for azurerm 2.97 which requires your attention if you are deploying the following components:
 
 - signal_r: 
   - The ```features``` block is deprecated, favor of use ```connectivity_logs_enabled```, ```messaging_logs_enabled```, ```live_trace_enabled``` and ```service_mode``` instead. Module has been updated to reflect that. You must update the settings in your configuration file accordingly.
@@ -25,9 +25,7 @@ Version 5.5.2 includes support for azurerm 2.93.1 which requires your attention 
   - Azurerm 2.96 does not seem to have ```gateway``` implemented yet, even with ```ARM_THREEPOINTZERO_BETA_RESOURCES=true```
 
 - azure virtual desktop:
-  - azurerm 2.96 has a bug - seems to be corrected in https://github.com/hashicorp/terraform-provider-azurerm/pull/14953 for output "token" {
-  value     = tostring(azurerm_virtual_desktop_host_pool.wvdpool.registration_info[0].token)
-  sensitive = true} as observed in https://github.com/aztfmod/terraform-azurerm-caf/runs/4946734570?check_suite_focus=true
+  - azurerm 2.97 addedd support for new token method - azurerm_virtual_desktop_host_pool_registration_info - updated and should be transparent.
 
 - azurerm_network_watcher_flow_log:
   - the ```name``` attribute has been added and is mandatory for each network watcher flow log. Changing this forces a new resource to be created so this is expected to be a breaking change for existing azurerm_network_watcher_flow_log.
