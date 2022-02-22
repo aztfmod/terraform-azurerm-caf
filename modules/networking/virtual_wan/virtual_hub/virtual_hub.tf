@@ -2,11 +2,11 @@
 resource "azurecaf_name" "vwan_hub" {
   name          = var.virtual_hub_config.hub_name
   resource_type = "azurerm_virtual_hub"
-  prefixes      = var.global_settings.prefixes
-  random_length = var.global_settings.random_length
+  prefixes      = try(var.virtual_hub_config.global_settings.prefixes, var.global_settings.prefixes)
+  random_length = try(var.virtual_hub_config.global_settings.random_length, var.global_settings.random_length)
   clean_input   = true
-  passthrough   = var.global_settings.passthrough
-  use_slug      = var.global_settings.use_slug
+  passthrough   = try(var.virtual_hub_config.global_settings.passthrough, var.global_settings.passthrough)
+  use_slug      = try(var.virtual_hub_config.global_settings.use_slug, var.global_settings.use_slug)
 }
 
 ## creates a virtual hub in the region
