@@ -15,6 +15,7 @@ resource "azurerm_virtual_hub" "vwan_hub" {
   resource_group_name = var.resource_group_name
   location            = var.location
   virtual_wan_id      = var.vwan_id
+  sku                 = try(var.virtual_hub_config.hub_sku, "Basic")
   address_prefix      = var.virtual_hub_config.hub_address_prefix
   tags                = local.tags
 
