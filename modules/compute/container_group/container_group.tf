@@ -33,6 +33,7 @@ resource "azurerm_container_group" "acg" {
   tags                = merge(local.tags, try(var.settings.tags, null))
   ip_address_type     = try(var.settings.ip_address_type, "Public")
   restart_policy      = try(var.settings.restart_policy, "Always")
+  network_profile_id  = try(var.network_profile_id, null)
 
   # Create containers based on for_each
   dynamic "container" {

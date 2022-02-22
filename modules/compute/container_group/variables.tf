@@ -9,6 +9,7 @@ variable "combined_resources" {
 variable "global_settings" {}
 variable "location" {}
 variable "resource_group_name" {}
+variable "network_profile_id" {}
 variable "settings" {}
 variable "dynamic_keyvault_secrets" {
   description = "Provide credenrials for private image registries"

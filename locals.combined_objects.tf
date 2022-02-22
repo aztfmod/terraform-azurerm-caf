@@ -78,6 +78,7 @@ locals {
   combined_objects_nat_gateways                                   = merge(tomap({ (local.client_config.landingzone_key) = module.nat_gateways }), try(var.remote_objects.nat_gateways, {}))
   combined_objects_network_security_groups                        = merge(tomap({ (local.client_config.landingzone_key) = module.network_security_groups }), try(var.remote_objects.network_security_groups, {}))
   combined_objects_network_watchers                               = merge(tomap({ (local.client_config.landingzone_key) = module.network_watchers }), try(var.remote_objects.network_watchers, {}))
+  combined_objects_network_profiles                               = merge(tomap({ (local.client_config.landingzone_key) = module.network_profiles }), try(var.remote_objects.network_profiles, {}))
   combined_objects_networking                                     = merge(tomap({ (local.client_config.landingzone_key) = module.networking }), try(var.remote_objects.vnets, {}))
   combined_objects_postgresql_servers                             = merge(tomap({ (local.client_config.landingzone_key) = module.postgresql_servers }), try(var.remote_objects.postgresql_servers, {}))
   combined_objects_private_dns                                    = merge(tomap({ (local.client_config.landingzone_key) = module.private_dns }), try(var.remote_objects.private_dns, {}))

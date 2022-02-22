@@ -7,18 +7,18 @@ module "container_groups" {
   client_config        = local.client_config
   combined_diagnostics = local.combined_diagnostics
   # combined_managed_identities  = local.combined_objects_managed_identities
-  # combined_vnets               = local.combined_objects_networking
+
   diagnostic_profiles      = try(each.value.diagnostic_profiles, {})
   global_settings          = local.global_settings
   location                 = lookup(each.value, "region", null) == null ? local.combined_objects_resource_groups[try(each.value.lz_key, local.client_config.landingzone_key)][each.value.resource_group_key].location : local.global_settings.regions[each.value.region]
   resource_group_name      = local.combined_objects_resource_groups[try(each.value.lz_key, local.client_config.landingzone_key)][each.value.resource_group_key].name
   settings                 = each.value
   dynamic_keyvault_secrets = try(local.security.dynamic_keyvault_secrets, {})
+  network_profile_id       = local.combined_objects_network_profiles[try(each.value.lz_key, local.client_config.landingzone_key)][each.value.network_profile_key].id
 
   combined_resources = {
     keyvaults          = local.combined_objects_keyvaults
     managed_identities = local.combined_objects_managed_identities
-    vnets              = local.combined_objects_networking
   }
 }
 
