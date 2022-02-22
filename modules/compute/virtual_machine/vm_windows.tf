@@ -241,7 +241,7 @@ data "external" "windows_admin_username" {
     "bash", "-c",
     format(
       "az keyvault secret show --name '%s' --vault-name '%s' --query '{value: value }' -o json",
-      var.settings.virtual_machine_settings["windows"].admin_username_key, var.settings.virtual_machine_settings["legacy"].admin_username_key,
+      try(var.settings.virtual_machine_settings["windows"].admin_username_key, var.settings.virtual_machine_settings["legacy"].admin_username_key),
       local.keyvault.name
     )
   ]
@@ -253,7 +253,7 @@ data "external" "windows_admin_password" {
     "bash", "-c",
     format(
       "az keyvault secret show -n '%s' --vault-name '%s' --query '{value: value }' -o json",
-      var.settings.virtual_machine_settings["windows"].admin_password_key, var.settings.virtual_machine_settings["legacy"].admin_password_key,
+      try(var.settings.virtual_machine_settings["windows"].admin_password_key, var.settings.virtual_machine_settings["legacy"].admin_password_key),
       local.keyvault.name
     )
   ]
