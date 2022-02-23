@@ -268,7 +268,7 @@ resource "azurerm_network_ddos_protection_plan" "ddos_protection_plan" {
   name                = azurecaf_name.ddos_protection_plan[each.key].result
   location            = lookup(each.value, "region", null) == null ? local.combined_objects_resource_groups[try(each.value.lz_key, local.client_config.landingzone_key)][each.value.resource_group_key].location : local.global_settings.regions[each.value.region]
   resource_group_name = local.combined_objects_resource_groups[try(each.value.lz_key, local.client_config.landingzone_key)][each.value.resource_group_key].name
-  tags                = try(local.global_settings.inherit_tags, false) ? merge(local.combined_objects_resource_groups[try(each.value.lz_key, local.client_config.landingzone_key)][each.value.resource_group_key].tags, each.value.tags) : try(each.value.tags, null)
+  tags                = try(local.global_settings.inherit_tags, false) ? merge(try(local.combined_objects_resource_groups[try(each.value.lz_key, local.client_config.landingzone_key)][each.value.resource_group_key].tags, {}), try(each.value.tags, {})) : try(each.value.tags, {})
 }
 
 output "ddos_services" {

@@ -1,7 +1,7 @@
 global_settings = {
   default_region = "region1"
   regions = {
-    region1 = "eastasia"
+    region1 = "centralus"
     region2 = "westeurope"
   }
 }

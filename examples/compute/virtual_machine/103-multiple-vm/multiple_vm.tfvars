@@ -1,14 +1,14 @@
-location = "southeastasia"
+location = "eastus2"
 
 resource_groups = {
   vm_sg = {
     name      = "test-vm-sg"
-    location  = "southeastasia"
+    location  = "eastus2"
     useprefix = true
   }
   vnet_sg = {
     name      = "test-networking-sg"
-    location  = "southeastasia"
+    location  = "eastus2"
     useprefix = true
   }
 }
@@ -123,7 +123,7 @@ virtual_machines = {
 networking = {
   hub_sg = {
     resource_group_key = "vnet_sg"
-    location           = "southeastasia"
+    location           = "eastus2"
     vnet = {
       name          = "hub"
       address_space = ["10.10.100.0/24"]
