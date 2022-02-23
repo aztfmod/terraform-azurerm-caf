@@ -3,7 +3,7 @@ variable "global_settings" {
     default_region = "region1"
     regions = {
       region1 = "eastus2"
-      region2 = "eastasia"
+      region2 = "centralus"
     }
   }
 }
@@ -419,7 +419,7 @@ variable "packer_service_principal" {
   default = {}
 }
 
-variable "packer_managed_identity" {
+variable "packer_build" {
   default = {}
 }
 

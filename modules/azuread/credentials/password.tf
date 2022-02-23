@@ -52,8 +52,11 @@ locals {
 resource "time_sleep" "wait_new_password_propagation" {
   depends_on = [azuread_application_password.key, azuread_application_password.key0, azuread_application_password.key1]
 
-  # 15 mins
-  create_duration = "900s"
+  # 2 mins timer on creation
+  create_duration = "2m"
+
+  # 15 mins to allow new password to be propagated in directory partitions when password changes
+  destroy_duration = "15m"
 
   triggers = {
     key  = try(time_rotating.key.0.rotation_rfc3339, null)

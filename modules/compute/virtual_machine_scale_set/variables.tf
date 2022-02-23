@@ -67,7 +67,7 @@ variable "network_security_groups" {
   description = "Require a version 1 NSG definition to be attached to a nic."
 }
 
-variable "custom_image_ids" {
+variable "image_definitions" {
   default = {}
 }
 variable "disk_encryption_sets" {}

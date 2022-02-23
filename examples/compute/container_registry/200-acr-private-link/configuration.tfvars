@@ -3,7 +3,7 @@ global_settings = {
   environment    = "test"
   regions = {
     region1 = "eastus2"
-    region2 = "eastasia"
+    region2 = "centralus"
     region3 = "westeurope"
   }
 }
@@ -27,7 +27,7 @@ azure_container_registries = {
     georeplications = {
       region2 = {
         tags = {
-          region = "eastasia"
+          region = "centralus"
           type   = "acr_replica"
         }
       }

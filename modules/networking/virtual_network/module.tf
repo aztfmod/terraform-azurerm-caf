@@ -23,10 +23,10 @@ resource "azurerm_virtual_network" "vnet" {
   )
 
   dynamic "ddos_protection_plan" {
-    for_each = var.ddos_id != "" || can(var.global_settings.custom_variables["ddos_protection_plan_id"]) ? [1] : []
+    for_each = var.ddos_id != "" || can(var.global_settings["ddos_protection_plan_id"]) ? [1] : []
 
     content {
-      id     = var.ddos_id != "" ? var.ddos_id : var.global_settings.custom_variables["ddos_protection_plan_id"]
+      id     = var.ddos_id != "" ? var.ddos_id : var.global_settings["ddos_protection_plan_id"]
       enable = true
     }
   }
