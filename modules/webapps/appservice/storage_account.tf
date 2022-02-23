@@ -32,8 +32,8 @@ data "azurerm_storage_account_blob_container_sas" "logs" {
   container_name    = local.backup_storage_account.containers[var.settings.logs.container_key].name
   https_only        = true
 
-  start  = time_rotating.sas[0].id
-  expiry = timeadd(time_rotating.sas[0].id, format("%sh", var.settings.logs.sas_policy.expire_in_days * 24))
+  start  = time_rotating.logs_sas[0].id
+  expiry = timeadd(time_rotating.logs_sas[0].id, format("%sh", var.settings.logs.sas_policy.expire_in_days * 24))
 
   permissions {
     read   = true
@@ -53,8 +53,8 @@ data "azurerm_storage_account_blob_container_sas" "http_logs" {
   container_name    = local.backup_storage_account.containers[var.settings.http_logs.container_key].name
   https_only        = true
 
-  start  = time_rotating.sas[0].id
-  expiry = timeadd(time_rotating.sas[0].id, format("%sh", var.settings.http_logs.sas_policy.expire_in_days * 24))
+  start  = time_rotating.http_logs_sas[0].id
+  expiry = timeadd(time_rotating.http_logs_sas[0].id, format("%sh", var.settings.http_logs.sas_policy.expire_in_days * 24))
 
   permissions {
     read   = true
