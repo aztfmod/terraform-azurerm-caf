@@ -19,6 +19,11 @@ resource "azurerm_virtual_machine_scale_set_extension" "custom_script" {
 }
 
 locals {
+  managed_local_identity_principal_id  = try(var.managed_identities[var.client_config.landingzone_key][var.extension.managed_identity_key].principal_id, "")
+  managed_remote_identity_principal_id = try(var.managed_identities[var.extension.lz_key][var.extension.managed_identity_key].principal_id, "")
+  provided_identity_principal_id       = try(var.extension.managed_identity_id, "")
+  managed_identity_principal_id        = try(coalesce(local.managed_local_identity_principal_id, local.managed_remote_identity_principal_id, local.provided_identity_principal_id), "")
+
   publisher            = var.virtual_machine_scale_set_os_type == "linux" ? "Microsoft.Azure.Extensions" : "Microsoft.Compute"
   type_handler_version = var.virtual_machine_scale_set_os_type == "linux" ? "2.1" : "1.10"
   type                 = var.virtual_machine_scale_set_os_type == "linux" ? "CustomScript" : "CustomScriptExtension"
@@ -29,7 +34,7 @@ locals {
 
   map_user_assigned = {
     managedIdentity = {
-      objectid = local.managed_identity
+      objectid = local.managed_identity_principal_id
     }
   }
 
