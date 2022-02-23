@@ -65,7 +65,7 @@ recovery_vaults = {
         source_recovery_fabric_key = "fabric1"
         target_recovery_fabric_key = "fabric2"
         source_network = {
-          #lz_key   = "" 
+          #lz_key   = ""
           vnet_key = "vnet_region1"
           #id=Use the vnet id to use a network created outside of CAF
         }

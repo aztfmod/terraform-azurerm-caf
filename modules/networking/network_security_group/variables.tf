@@ -33,3 +33,8 @@ variable "network_watchers" {
 variable "client_config" {
   description = "client_config object (see module README.md)"
 }
+
+variable "application_security_groups" {
+  description = "Application Security Groups to attach the NSG"
+  default     = {}
+}
