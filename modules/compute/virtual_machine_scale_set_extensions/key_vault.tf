@@ -25,7 +25,7 @@ resource "azurerm_virtual_machine_scale_set_extension" "keyvault" {
     }
     "authenticationSettings" : {
       "msiEndpoint" : try(var.extension.authenticationSettings.msiEndpoint, "http://169.254.169.254/metadata/identity")
-      "msiClientId" : try(var.extension.authenticationSettings.msiClientId, local.managed_identity)
+      "msiClientId" : try(var.extension.authenticationSettings.msiClientId, local.managed_identity_client_id)
     }
   })
 }
@@ -37,4 +37,11 @@ data "azurerm_key_vault_certificate" "observedCertificates" {
     var.extension.secretsManagementSettings.certificateStoreName.key_vault_id,
     try(var.keyvaults[var.extension.secretsManagementSettings.lz_key][var.extension.secretsManagementSettings.keyvault_key].id, var.keyvaults[var.client_config.landingzone_key][var.extension.certificate_store_location.keyvault_key].id)
   )
+}
+
+locals {
+  managed_local_identity_client_id  = try(var.managed_identities[var.client_config.landingzone_key][var.extension.managed_identity_key].client_id, "")
+  managed_remote_identity_client_id = try(var.managed_identities[var.extension.lz_key][var.extension.managed_identity_key].client_id, "")
+  provided_identity_client_id       = try(var.extension.managed_identity_id, "")
+  managed_identity_client_id        = try(coalesce(local.managed_local_identity_client_id, local.managed_remote_identity_client_id, local.provided_identity_client_id), "")
 }
