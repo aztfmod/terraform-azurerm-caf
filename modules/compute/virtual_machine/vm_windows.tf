@@ -109,7 +109,10 @@ resource "azurerm_windows_virtual_machine" "vm" {
     }
   }
 
-  source_image_id = try(each.value.custom_image_id, var.custom_image_ids[each.value.lz_key][each.value.custom_image_key].id, null)
+  source_image_id = try(each.value.source_image_reference, null) == null ? format("%s%s",
+    try(each.value.custom_image_id, var.image_definitions[var.client_config.landingzone_key][each.value.custom_image_key].id,
+    var.image_definitions[each.value.custom_image_lz_key][each.value.custom_image_key].id),
+  try("/versions/${each.value.custom_image_version}", "")) : null
 
   dynamic "additional_capabilities" {
     for_each = try(each.value.additional_capabilities, false) == false ? [] : [1]
@@ -185,7 +188,9 @@ resource "azurerm_windows_virtual_machine" "vm" {
 
   lifecycle {
     ignore_changes = [
-      resource_group_name, location, os_disk[0].name, availability_set_id
+      resource_group_name, location, os_disk[0].name, availability_set_id,
+      admin_username, # Only used for initial deployment as it can be changed later by GPO
+      admin_password  # Only used for initial deployment as it can be changed later by GPO
     ]
   }
 
@@ -221,8 +226,8 @@ resource "azurerm_key_vault_secret" "admin_password" {
 #
 
 locals {
-  admin_username = try(data.external.windows_admin_username.0.result.value, null)
-  admin_password = try(data.external.windows_admin_password.0.result.value, null)
+  admin_username = can(var.settings.virtual_machine_settings["windows"].admin_username_key) ? data.external.windows_admin_username.0.result.value : null
+  admin_password = can(var.settings.virtual_machine_settings["windows"].admin_password_key) ? data.external.windows_admin_password.0.result.value : null
 }
 
 #
@@ -236,7 +241,7 @@ data "external" "windows_admin_username" {
     "bash", "-c",
     format(
       "az keyvault secret show --name '%s' --vault-name '%s' --query '{value: value }' -o json",
-      try(var.settings.virtual_machine_settings["windows"].admin_username_key, var.settings.virtual_machine_settings["legacy"].admin_username_key, null),
+      try(var.settings.virtual_machine_settings["windows"].admin_username_key, var.settings.virtual_machine_settings["legacy"].admin_username_key),
       local.keyvault.name
     )
   ]

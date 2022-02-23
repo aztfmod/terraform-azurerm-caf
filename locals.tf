@@ -261,6 +261,7 @@ locals {
     local_network_gateways                                  = try(var.networking.local_network_gateways, {})
     nat_gateways                                            = try(var.networking.nat_gateways, {})
     network_interface_backend_address_pool_association      = try(var.networking.network_interface_backend_address_pool_association, {})
+    network_profiles                                        = try(var.networking.network_profiles, {})
     network_security_group_definition                       = try(var.networking.network_security_group_definition, {})
     network_watchers                                        = try(var.networking.network_watchers, {})
     private_dns                                             = try(var.networking.private_dns, {})
@@ -303,8 +304,8 @@ locals {
     monitoring                 = try(var.shared_services.monitoring, {})
     monitor_metric_alert       = try(var.shared_services.monitor_metric_alert, {})
     monitor_activity_log_alert = try(var.shared_services.monitor_activity_log_alert, {})
-    packer_managed_identity    = try(var.shared_services.packer_managed_identity, {})
     packer_service_principal   = try(var.shared_services.packer_service_principal, {})
+    packer_build               = try(var.shared_services.packer_build, {})
     recovery_vaults            = try(var.shared_services.recovery_vaults, {})
     shared_image_galleries     = try(var.shared_services.shared_image_galleries, {})
   }

@@ -14,7 +14,7 @@ data "azurerm_billing_mca_account_scope" "sub" {
 }
 
 resource "azurerm_subscription" "sub" {
-  count = var.subscription_key != "logged_in_subscription" ? 1 : 0
+  count = var.subscription_key != "logged_in_subscription" && lookup(var.settings, "create_alias", true) ? 1 : 0
 
   alias             = try(var.settings.alias, null) == null ? var.subscription_key : var.settings.alias
   subscription_name = var.settings.name

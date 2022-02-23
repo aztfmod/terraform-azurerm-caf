@@ -10,7 +10,9 @@ module "virtual_machine_scale_sets" {
     module.proximity_placement_groups,
     module.load_balancers,
     module.application_gateways,
-    module.application_security_groups
+    module.application_security_groups,
+    module.packer_service_principal,
+    module.packer_build
   ]
   for_each = local.compute.virtual_machine_scale_sets
 
@@ -23,6 +25,7 @@ module "virtual_machine_scale_sets" {
   diagnostics                      = local.combined_diagnostics
   disk_encryption_sets             = local.combined_objects_disk_encryption_sets
   global_settings                  = local.global_settings
+  image_definitions                = local.combined_objects_image_definitions
   keyvaults                        = local.combined_objects_keyvaults
   load_balancers                   = local.combined_objects_load_balancers
   managed_identities               = local.combined_objects_managed_identities

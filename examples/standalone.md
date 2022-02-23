@@ -1,6 +1,6 @@
 # Cloud Adoption Framework for Azure - Standalone module consumption
 
-You can use this module directly from the Terraform registry using a mininalistic ```main.tf``` as follow:
+You can use this module directly from the Terraform registry using a minimalistic ```main.tf``` as follow:
 
 ```hcl
 module "caf" {

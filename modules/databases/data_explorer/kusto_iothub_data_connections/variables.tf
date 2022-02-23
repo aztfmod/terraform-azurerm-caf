@@ -9,13 +9,10 @@ variable "location" {
   type        = string
 }
 variable "resource_group_name" {
-  description = "Name of the existing resource group to deploy the virtual machine"
+  description = "(Required) Specifies the Resource Group where the Kusto Database should exist. Changing this forces a new resource to be created."
 }
 variable "settings" {
   description = "Settings configuration object (see module README.md)."
-}
-variable "resource_group_name" {
-  description = "(Required) Specifies the Resource Group where the Kusto Database should exist. Changing this forces a new resource to be created."
 }
 variable "cluster_name" {
   description = "(Required) Specifies the name of the Kusto Cluster this data connection will be added to. Changing this forces a new resource to be created."
