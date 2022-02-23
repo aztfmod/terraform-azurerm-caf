@@ -1,7 +1,18 @@
+
+resource "azurecaf_name" "mysql_flexible_server" {
+  name          = var.settings.name
+  resource_type = "azurerm_mysql_flexible_server"
+  prefixes      = var.global_settings.prefixes
+  random_length = var.global_settings.random_length
+  clean_input   = true
+  passthrough   = var.global_settings.passthrough
+  use_slug      = var.global_settings.use_slug
+}
+
 resource "azurerm_mysql_flexible_server" "mysql" {
  
   
-  name                = var.settings.name
+  name                = azurecaf_name.mysql_flexible_server.result
   resource_group_name = var.resource_group.name
   location            = var.resource_group.location
   version             = try(var.settings.version, null)
@@ -64,7 +75,7 @@ resource "azurerm_mysql_flexible_server" "mysql" {
 resource "azurerm_key_vault_secret" "mysql_administrator_username" {
   count = lookup(var.settings, "keyvault", null) == null ? 0 : 1
 
-  name         = format("%s-mysql-administrator-username", var.settings.name )
+  name         = format("%s-mysql-administrator-username", azurecaf_name.mysql_flexible_server.result )
   value        = try(var.settings.administrator_username, "psqladmin")
   key_vault_id = var.remote_objects.keyvault_id
 
@@ -90,7 +101,7 @@ resource "random_password" "mysql_administrator_password" {
 resource "azurerm_key_vault_secret" "mysql_administrator_password" {
   count = lookup(var.settings, "keyvault", null) == null ? 0 : 1
 
-  name         = format("%s-mysql-administrator-password",  var.settings.name )
+  name         = format("%s-mysql-administrator-password",  azurecaf_name.mysql_flexible_server.result )
   value        = try(var.settings.administrator_password, random_password.mysql_administrator_password.0.result)
   key_vault_id = var.remote_objects.keyvault_id
 
@@ -105,7 +116,7 @@ resource "azurerm_key_vault_secret" "mysql_administrator_password" {
 resource "azurerm_key_vault_secret" "mysql_fqdn" {
   count = lookup(var.settings, "keyvault", null) == null ? 0 : 1
 
-  name         = format("%s-mysql-fqdn", var.settings.name )
+  name         = format("%s-mysql-fqdn", azurecaf_name.mysql_flexible_server.result )
   value        = azurerm_mysql_flexible_server.mysql.fqdn
   key_vault_id = var.remote_objects.keyvault_id
 }
