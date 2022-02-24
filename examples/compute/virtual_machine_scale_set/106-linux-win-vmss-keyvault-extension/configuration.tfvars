@@ -95,7 +95,7 @@ keyvaults = {
 
 # Store output attributes into keyvault secret
 dynamic_keyvault_secrets = {
-  example_vm_rg1 = { # Key of the keyvault
+  example_kv_rg1 = { # Key of the keyvault
     vmadmin-username = {
       secret_name = "vmadmin-username"
       value       = "vmadmin"
