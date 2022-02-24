@@ -21,7 +21,7 @@ resource "azurerm_virtual_machine_scale_set_extension" "keyvault" {
       "linkOnRenewal" : try(var.extension.secretsManagementSettings.linkOnRenewal, false)
       "certificateStoreLocation" : try(var.extension.secretsManagementSettings.certificateStoreLocation, "")
       "requireInitialSync" : try(var.extension.secretsManagementSettings.requireInitialSync, true)
-      "observedCertificates" : try(var.extension.secretsManagementSettings.observedCertificates, data.azurerm_key_vault_certificate.observedCertificates["enabled"].value)
+      "observedCertificates" : try(var.extension.secretsManagementSettings.observedCertificates, data.azurerm_key_vault_certificate.observedCertificates["enabled"].id)
     }
     "authenticationSettings" : {
       "msiEndpoint" : try(var.extension.authenticationSettings.msiEndpoint, "http://169.254.169.254/metadata/identity")
