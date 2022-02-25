@@ -6,10 +6,10 @@ When upgrading to a newer version of the CAF module, some configuration structur
 
 Version 5.5.x includes support for azurerm 2.97 which requires your attention if you are deploying the following components:
 
-- signal_r: 
+- signal_r:
   - The ```features``` block is deprecated, favor of use ```connectivity_logs_enabled```, ```messaging_logs_enabled```, ```live_trace_enabled``` and ```service_mode``` instead. Module has been updated to reflect that. You must update the settings in your configuration file accordingly.
 
-- data factory: 
+- data factory:
   - The `data_factory_name` reference method is deprecated in favour of `data_factory_id` and will be removed in version 3.0 of the AzureRM provider.
   - If you are referencing literals for data factory name inside ```data_factory.datasets``` (azure_blob, cosmosdb_sqlapi, delimited_text, http, json, mysql, postgresql, sql_server_table) or ```data_factory.linked_services``` (azure_blob_storage, cosmosdb, web, mysql, postgresql, key_vault) you will need to update to use the ```id``` attribute instead of ```name```.
   - **If you are referencing objects with ```key``` and ```lz_key``` inside your model, you dont need to update anything.**
@@ -29,6 +29,9 @@ Version 5.5.x includes support for azurerm 2.97 which requires your attention if
 
 - azurerm_network_watcher_flow_log:
   - the ```name``` attribute has been added and is mandatory for each network watcher flow log. Changing this forces a new resource to be created so this is expected to be a breaking change for existing azurerm_network_watcher_flow_log.
+
+- virtual_machine_scale_sets
+  - in azurerm 2.97 - problem at creation as per https://github.com/hashicorp/terraform-provider-azurerm/issues/15516
 
 
 ## 5.5.0
