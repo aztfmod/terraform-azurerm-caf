@@ -16,10 +16,10 @@ resource "azurerm_virtual_machine_scale_set_extension" "HealthExtension" {
 
   settings = jsonencode({
     "protocol" : try(var.extension.settings.protocol, "http")
-    "port" : try(var.extension.settings.port, "80")
+    "port" : try(var.extension.settings.port, 80)
     "requestPath" : try(var.extension.settings.requestPath, "/")
-    "intervalInSeconds" : try(var.extension.settings.intervalInSeconds, "5.0")
-    "numberOfProbes" : try(var.extension.settings.numberOfProbes, "1.0")
+    "intervalInSeconds" : try(var.extension.settings.intervalInSeconds, 5.0)
+    "numberOfProbes" : try(var.extension.settings.numberOfProbes, 1.0)
     }
   )
 }
