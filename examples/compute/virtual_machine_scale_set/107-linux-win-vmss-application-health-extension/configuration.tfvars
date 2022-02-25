@@ -414,12 +414,11 @@ virtual_machine_scale_sets = {
     virtual_machine_scale_set_extensions = {
       microsoft_azure_health_extension = {
         settings = {
-          protocol    = "http"
-          port        = "80"
-          requestPath = "/"
-          # Optional
-          # intervalInSeconds = "5.0"
-          # numberOfProbes    = "1.0"
+          protocol          = "http"
+          port              = 80
+          requestPath       = "/"
+          intervalInSeconds = 5.0 # Optional
+          numberOfProbes    = 1.0 # Optional
         }
       }
     }
