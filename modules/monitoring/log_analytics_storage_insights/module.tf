@@ -1,7 +1,7 @@
 
 resource "azurecaf_name" "lasi" {
   name          = var.settings.name
-  resource_type = "azurerm_data_factory" #"azurerm_log_analytics_storage_insights"
+  resource_type = "azurerm_log_analytics_storage_insights"
   prefixes      = var.global_settings.prefixes
   random_length = var.global_settings.random_length
   clean_input   = true
