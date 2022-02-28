@@ -2,8 +2,8 @@ variable "global_settings" {
   default = {
     default_region = "region1"
     regions = {
-      region1 = "southeastasia"
-      region2 = "eastasia"
+      region1 = "eastus2"
+      region2 = "centralus"
     }
   }
 }
@@ -419,7 +419,7 @@ variable "packer_service_principal" {
   default = {}
 }
 
-variable "packer_managed_identity" {
+variable "packer_build" {
   default = {}
 }
 
@@ -784,6 +784,15 @@ variable "api_management_diagnostic" {
   default = {}
 }
 variable "api_management_certificate" {
+  default = {}
+}
+variable "api_management_gateway" {
+  default = {}
+}
+variable "api_management_gateway_api" {
+  default = {}
+}
+variable "api_management_group" {
   default = {}
 }
 variable "lb" {

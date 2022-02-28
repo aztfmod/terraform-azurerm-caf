@@ -232,7 +232,7 @@ module "example" {
     monitoring                 = var.monitoring
     monitor_metric_alert       = var.monitor_metric_alert
     monitor_activity_log_alert = var.monitor_activity_log_alert
-    packer_managed_identity    = var.packer_managed_identity
+    packer_build               = var.packer_build
     packer_service_principal   = var.packer_service_principal
     recovery_vaults            = var.recovery_vaults
     shared_image_galleries     = var.shared_image_galleries
@@ -308,5 +308,8 @@ module "example" {
     api_management_custom_domain        = var.api_management_custom_domain
     api_management_diagnostic           = var.api_management_diagnostic
     api_management_certificate          = var.api_management_certificate
+    api_management_gateway              = var.api_management_gateway
+    api_management_gateway_api          = var.api_management_gateway_api
+    api_management_group                = var.api_management_group
   }
 }

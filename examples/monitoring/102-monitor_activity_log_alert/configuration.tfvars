@@ -1,7 +1,7 @@
 global_settings = {
   default_region = "region1"
   regions = {
-    region1 = "southeastasia"
+    region1 = "eastus2"
   }
   random_length = 5
 }
@@ -69,37 +69,37 @@ monitor_action_groups = {
 
 storage_accounts = {
   sa1 = {
-    name = "sa1dev"
-    resource_group_key = "rg1"
-    account_kind = "BlobStorage"
-    account_tier = "Standard"
+    name                     = "sa1dev"
+    resource_group_key       = "rg1"
+    account_kind             = "BlobStorage"
+    account_tier             = "Standard"
     account_replication_type = "GRS"
   }
   sa2 = {
-    name = "sa2dev"
-    resource_group_key = "rg1"
-    account_kind = "BlobStorage"
-    account_tier = "Standard"
+    name                     = "sa2dev"
+    resource_group_key       = "rg1"
+    account_kind             = "BlobStorage"
+    account_tier             = "Standard"
     account_replication_type = "GRS"
-  }  
+  }
 }
 monitor_activity_log_alert = {
   mala1 = {
-    name                = "example-activitylogalert"
+    name = "example-activitylogalert"
     resource_group = {
       key = "rg1"
     }
-    scopes              = {
+    scopes = {
       scope1 = {
         resource_type = "resource_groups"
-        key  = "rg1"
+        key           = "rg1"
       }
     }
-    description         = "This alert will monitor a specific storage account updates."
+    description = "This alert will monitor a specific storage account updates."
 
     criteria = {
-      resource    = {
-        key = "sa1"
+      resource = {
+        key           = "sa1"
         resource_type = "storage_accounts"
       }
       operation_name = "Microsoft.Storage/storageAccounts/write"
@@ -108,7 +108,7 @@ monitor_activity_log_alert = {
 
     action = {
       action_group = {
-        key  = "mag1"
+        key = "mag1"
       }
       webhook_properties = {
         from = "terraform"

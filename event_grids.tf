@@ -10,7 +10,7 @@ module "eventgrid_domains" {
   global_settings                           = local.global_settings
   client_config                             = local.client_config
   identity                                  = try(each.value.identity, null)
-  input_schema                              = try(each.value.input_schema, null)
+  input_schema                              = try(each.value.input_schema, "EventGridSchema")
   input_mapping_fields                      = try(each.value.input_mapping_fields, null)
   public_network_access_enabled             = try(each.value.public_network_access_enabled, true)
   local_auth_enabled                        = try(each.value.local_auth_enabled, true)
@@ -119,7 +119,7 @@ module "eventgrid_topics" {
   global_settings               = local.global_settings
   client_config                 = local.client_config
   identity                      = try(each.value.identity, null)
-  input_schema                  = try(each.value.input_schema, null)
+  input_schema                  = try(each.value.input_schema, "EventGridSchema")
   input_mapping_fields          = try(each.value.input_mapping_fields, null)
   input_mapping_default_values  = try(each.value.input_mapping_default_values, null)
   public_network_access_enabled = try(each.value.public_network_access_enabled, true)

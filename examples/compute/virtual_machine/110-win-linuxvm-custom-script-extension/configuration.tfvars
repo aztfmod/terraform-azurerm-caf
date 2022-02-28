@@ -1,7 +1,7 @@
 global_settings = {
   default_region = "region1"
   regions = {
-    region1 = "southeastasia"
+    region1 = "eastus2"
   }
 }
 
@@ -110,7 +110,7 @@ virtual_machines = {
         public_ip_address_key   = "example_vm_pip1_rg1"
       }
     }
-   
+
     virtual_machine_extensions = {
       custom_script = {
         #fileuris            = ["https://somelocation/container/script.ps1"]
@@ -128,7 +128,7 @@ virtual_machines = {
       windows = {
         name = "win_cse"
         size = "Standard_F2"
-        
+
         admin_username = "adminuser"
         # Spot VM to save money
         #priority        = "Spot"
@@ -153,7 +153,7 @@ virtual_machines = {
           version   = "latest"
         }
         identity = {
-          type = "UserAssigned"
+          type                  = "UserAssigned"
           managed_identity_keys = ["user_mi"]
         }
       }
@@ -193,7 +193,7 @@ virtual_machines = {
 
       }
     }
-    
+
     virtual_machine_settings = {
       linux = {
         name                            = "linux_cse"
@@ -209,12 +209,12 @@ virtual_machines = {
         network_interface_keys = ["nic0"]
 
         os_disk = {
-          name                    = "linux_vm1-os"
-          caching                 = "ReadWrite"
-          storage_account_type    = "Standard_LRS"
+          name                 = "linux_vm1-os"
+          caching              = "ReadWrite"
+          storage_account_type = "Standard_LRS"
         }
         identity = {
-          type = "UserAssigned"
+          type                  = "UserAssigned"
           managed_identity_keys = ["user_mi"]
         }
         source_image_reference = {
@@ -227,18 +227,18 @@ virtual_machines = {
     }
     virtual_machine_extensions = {
       custom_script = {
-          # You can define fileuris directly or use fileuri_sa reference keys and lz_key:
-          # fileuris                  = ["https://somelocation/container/script.ps1"]
-          fileuri_sa_key            = "sa1"
-          fileuri_sa_path           = "files/helloworld.sh"
-          commandtoexecute          = "bash helloworld.sh"
-          identity_type             = "UserAssigned" # optional to use managed_identity for download from location specified in fileuri, UserAssigned or SystemAssigned.
-          managed_identity_key      = "user_mi"
-          automatic_upgrade_enabled = false
-          # managed_identity_id       = "id" # optional to define managed identity principal_id directly
-          # lz_key                    = "other_lz" # optional for managed identity defined in other lz
+        # You can define fileuris directly or use fileuri_sa reference keys and lz_key:
+        # fileuris                  = ["https://somelocation/container/script.ps1"]
+        fileuri_sa_key            = "sa1"
+        fileuri_sa_path           = "files/helloworld.sh"
+        commandtoexecute          = "bash helloworld.sh"
+        identity_type             = "UserAssigned" # optional to use managed_identity for download from location specified in fileuri, UserAssigned or SystemAssigned.
+        managed_identity_key      = "user_mi"
+        automatic_upgrade_enabled = false
+        # managed_identity_id       = "id" # optional to define managed identity principal_id directly
+        # lz_key                    = "other_lz" # optional for managed identity defined in other lz
       }
-    } 
+    }
   }
 }
 
