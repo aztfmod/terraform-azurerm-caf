@@ -826,7 +826,7 @@ variable "monitor_metric_alert" {
   default = {}
 }
 variable "monitor_activity_log_alert" {
-    default = {}
+  default = {}
 }
 variable "eventgrid_domains" {
   default = {}

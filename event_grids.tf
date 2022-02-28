@@ -18,11 +18,11 @@ module "eventgrid_domains" {
   auto_delete_topic_with_last_subscription  = try(each.value.auto_delete_topic_with_last_subscription, true)
   inbound_ip_rule                           = try(each.value.inbound_ip_rule, [])
   #eventgrid_domain_topics                   = try(each.eventgrid_domain_topics, null)
-  vnets                                     = local.combined_objects_networking
-  subnet_id                                 = try(each.value.vnet_key, null) == null ? null : try(local.combined_objects_networking[local.client_config.landingzone_key][each.value.vnet_key].subnets[each.value.subnet_key].id, local.combined_objects_networking[each.value.lz_key][each.value.vnet_key].subnets[each.value.subnet_key].id)
-  private_endpoints                         = try(each.value.private_endpoints, {})
-  resource_groups                           = try(each.value.private_endpoints, {}) == {} ? null : local.resource_groups
-  private_dns                               = local.combined_objects_private_dns
+  vnets             = local.combined_objects_networking
+  subnet_id         = try(each.value.vnet_key, null) == null ? null : try(local.combined_objects_networking[local.client_config.landingzone_key][each.value.vnet_key].subnets[each.value.subnet_key].id, local.combined_objects_networking[each.value.lz_key][each.value.vnet_key].subnets[each.value.subnet_key].id)
+  private_endpoints = try(each.value.private_endpoints, {})
+  resource_groups   = try(each.value.private_endpoints, {}) == {} ? null : local.resource_groups
+  private_dns       = local.combined_objects_private_dns
 
 }
 
