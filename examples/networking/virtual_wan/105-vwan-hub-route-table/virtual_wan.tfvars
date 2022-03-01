@@ -1,7 +1,7 @@
 global_settings = {
   default_region = "region1"
   regions = {
-    region1 = "eastus2"
+    region1 = "southeastasia"
   }
 }
 
@@ -78,7 +78,7 @@ virtual_hub_route_tables = {
   routetable2 = {
     name = "example-vhubroutetable2"
 
-  //  virtual_hub = {
+    virtual_hub = {
       key = "hub_re1"
     }
 
