@@ -18,9 +18,11 @@ log_analytics = {
   law1 = {
     name               = "appinsightexamplelaw"
     resource_group_key = "example_vmss_rg1"
-    plan = {
-      publisher = "Microsoft"
-      product   = "OMSGallery/VMInsights"
+    solutions_maps = {
+      VMInsights = {
+        publisher = "Microsoft"
+        product   = "OMSGallery/VMInsights"
+      }
     }      
   }
 }
@@ -51,23 +53,7 @@ storage_accounts = {
   }
 }
 
-# Upload helloworld scripts
-storage_account_blobs = {
-  script1 = {
-    name                   = "helloworld.sh"
-    storage_account_key    = "sa1"
-    storage_container_name = "files"
-    source                 = "./compute/virtual_machine_scale_set/102-linux-win-vmss-custom-script-extension/scripts/helloworld.sh"
-    parallelism            = 1
-  }
-  script2 = {
-    name                   = "helloworld.ps1"
-    storage_account_key    = "sa1"
-    storage_container_name = "files"
-    source                 = "./compute/virtual_machine_scale_set/102-linux-win-vmss-custom-script-extension/scripts/helloworld.ps1"
-    parallelism            = 1
-  }
-}
+
 
 # Give managed identity Storage Blob Data reader and executing user Storage Blob Data Contributor permissions on storage account
 role_mapping = {
@@ -268,7 +254,6 @@ virtual_machine_scale_sets = {
     boot_diagnostics_storage_account_key = "bootdiag1"
     os_type                              = "linux"
     keyvault_key                         = "example_vmss_kv1"
-
     vmss_settings = {
       linux = {
         name                            = "linux_vmss1"
@@ -282,7 +267,7 @@ virtual_machine_scale_sets = {
         eviction_policy                 = "Deallocate"
         ultra_ssd_enabled               = false # required if planning to use UltraSSD_LRS
 
-        upgrade_mode = "Manual" # Automatic / Rolling / Manual
+        upgrade_mode = "Automatic" # Automatic / Rolling / Manual
 
         # rolling_upgrade_policy = {
         #   # Only for upgrade mode = "Automatic / Rolling "
@@ -379,13 +364,16 @@ virtual_machine_scale_sets = {
 
     virtual_machine_scale_set_extensions = {
       microsoft_monitoring_agent = {
+        stopOnMultipleConnections = true
         workspace = {
           key     = "law1"
           lz_key  = "example"
         }
       }
-      #dependency_agent = {
-      #}      
+      dependency_agent = {
+        auto_upgrade_minor_version  = true
+        type_handler_version        = "9.5"        
+      }      
     }
   }
 
@@ -395,7 +383,6 @@ virtual_machine_scale_sets = {
     boot_diagnostics_storage_account_key = "bootdiag1"
     os_type                              = "windows"
     keyvault_key                         = "example_vmss_kv1"
-
     vmss_settings = {
       windows = {
         name                            = "win"
@@ -407,7 +394,7 @@ virtual_machine_scale_sets = {
         priority                        = "Spot"
         eviction_policy                 = "Deallocate"
 
-        upgrade_mode = "Manual" # Automatic / Rolling / Manual
+        upgrade_mode = "Automatic" # Automatic / Rolling / Manual
 
         # rolling_upgrade_policy = {
         #   # Only for upgrade mode = "Automatic / Rolling "
@@ -500,13 +487,16 @@ virtual_machine_scale_sets = {
 
     virtual_machine_scale_set_extensions = {
       microsoft_monitoring_agent = {
-        workspace = {
-          key     = "law1"
-          lz_key  = "example"
-        }
+       stopOnMultipleConnections = true
+       workspace = {
+         key     = "law1"
+         lz_key  = "example"
+       }
       }
-      #dependency_agent = {
-      #}    
+      dependency_agent = {
+        auto_upgrade_minor_version  = true
+        type_handler_version        = "9.5"
+      }    
     }
   }
 }
