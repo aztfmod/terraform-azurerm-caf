@@ -214,10 +214,14 @@ locals {
     cognitive_services_account = try(var.cognitive_services.cognitive_services_account, {})
   }
   messaging = {
-    signalr_services      = try(var.messaging.signalr_services, {})
-    servicebus_namespaces = try(var.messaging.servicebus_namespaces, {})
-    servicebus_queues     = try(var.messaging.servicebus_queues, {})
-    servicebus_topics     = try(var.messaging.servicebus_topics, {})
+    signalr_services              = try(var.messaging.signalr_services, {})
+    servicebus_namespaces         = try(var.messaging.servicebus_namespaces, {})
+    servicebus_queues             = try(var.messaging.servicebus_queues, {})
+    servicebus_topics             = try(var.messaging.servicebus_topics, {})
+    eventgrid_domain              = try(var.messaging.eventgrid_domain, {})
+    eventgrid_topic               = try(var.messaging.eventgrid_topic, {})
+    eventgrid_event_subscription  = try(var.messaging.eventgrid_event_subscription, {})
+    eventgrid_domain_topic        = try(var.messaging.eventgrid_domain_topic, {})
   }
 
   networking = {
