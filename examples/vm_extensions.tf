@@ -100,3 +100,20 @@ module "vm_extension_custom_scriptextension" {
     }
   )
 }
+
+module "vm_extension_generic" {
+  source = "../modules/compute/virtual_machine_extensions"
+
+  depends_on = [module.example]
+
+  for_each = {
+    for key, value in try(var.virtual_machines, {}) : key => value
+    if try(value.virtual_machine_extensions.generic_extensions, null) != null
+  }
+
+  client_config           = module.example.client_config
+  virtual_machine_id      = module.example.virtual_machines[each.key].id
+  virtual_machine_os_type = module.example.virtual_machines[each.key].os_type
+  extension               = each.value.virtual_machine_extensions.generic_extensions
+  extension_name          = "generic_extension"
+}
