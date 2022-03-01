@@ -1,7 +1,7 @@
 global_settings = {
   default_region = "region1"
   regions = {
-    region1 = "southeastasia"
+    region1 = "eastus2"
   }
 }
 
@@ -28,19 +28,19 @@ api_management = {
 }
 
 api_management_gateway = {
-  apimgw1= {
-    name              = "example-gateway"
-    api_management    = {
+  apimgw1 = {
+    name = "example-gateway"
+    api_management = {
       key = "apim1"
       #lz_key = ""
       #name = ""
     }
-    description       = "Example API Management gateway"
+    description = "Example API Management gateway"
     resource_group = {
       key = "rg1"
       #lz_key = ""
       #name = ""
-    } 
+    }
 
     location_data = {
       name     = "example name"

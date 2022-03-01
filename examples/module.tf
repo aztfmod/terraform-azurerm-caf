@@ -130,7 +130,7 @@ module "example" {
     mssql_mi_tdes                      = var.mssql_mi_tdes
     mssql_servers                      = var.mssql_servers
     mysql_servers                      = var.mysql_servers
-    postgresql_flexible_servers        = var.postgresql_flexible_servers    
+    postgresql_flexible_servers        = var.postgresql_flexible_servers
     postgresql_servers                 = var.postgresql_servers
     synapse_workspaces                 = var.synapse_workspaces
     data_explorer = {
@@ -228,7 +228,7 @@ module "example" {
     monitoring                 = var.monitoring
     monitor_metric_alert       = var.monitor_metric_alert
     monitor_activity_log_alert = var.monitor_activity_log_alert
-    packer_managed_identity    = var.packer_managed_identity
+    packer_build               = var.packer_build
     packer_service_principal   = var.packer_service_principal
     recovery_vaults            = var.recovery_vaults
     shared_image_galleries     = var.shared_image_galleries

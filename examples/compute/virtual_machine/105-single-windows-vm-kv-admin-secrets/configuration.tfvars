@@ -1,7 +1,7 @@
 global_settings = {
   default_region = "region1"
   regions = {
-    region1 = "southeastasia"
+    region1 = "eastus2"
   }
 }
 
@@ -29,7 +29,6 @@ virtual_machines = {
   # Configuration to deploy a bastion host linux virtual machine
   example_vm1 = {
     resource_group_key = "vm_region1"
-    provision_vm_agent = true
     # when boot_diagnostics_storage_account_key is empty string "", boot diagnostics will be put on azure managed storage
     # when boot_diagnostics_storage_account_key is a non-empty string, it needs to point to the key of a user managed storage defined in diagnostic_storage_accounts
     # if boot_diagnostics_storage_account_key is not defined, but global_settings.resource_defaults.virtual_machines.use_azmanaged_storage_for_boot_diagnostics is true, boot diagnostics will be put on azure managed storage
@@ -73,21 +72,22 @@ virtual_machines = {
           name                    = "example_vm1-os"
           caching                 = "ReadWrite"
           storage_account_type    = "Standard_LRS"
-          managed_disk_type       = "StandardSSD_LRS"
           disk_size_gb            = "128"
-          create_option           = "FromImage"
           disk_encryption_set_key = "set1"
         }
 
         identity = {
           type = "SystemAssigned"
         }
+
         source_image_reference = {
           publisher = "MicrosoftWindowsServer"
           offer     = "WindowsServer"
           sku       = "2019-Datacenter"
           version   = "latest"
         }
+
+        provision_vm_agent = true
 
       }
     }

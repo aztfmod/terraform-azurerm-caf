@@ -70,7 +70,7 @@ rover login --tenant <tenant_name>.onmicrosoft.com -s <subscription_id>
 ```bash
 rover -lz /tf/caf/landingzones/caf_launchpad \
 -launchpad \
--var-folder /tf/caf/landingzones/caf_launchpad/scenario/100 \ 
+-var-folder /tf/caf/landingzones/caf_launchpad/scenario/100 \
 -a apply
 ```
 
