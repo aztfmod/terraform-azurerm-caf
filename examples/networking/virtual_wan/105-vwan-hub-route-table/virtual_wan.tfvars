@@ -78,7 +78,7 @@ virtual_hub_route_tables = {
   routetable2 = {
     name = "example-vhubroutetable2"
 
-    virtual_hub = {
+  //  virtual_hub = {
       key = "hub_re1"
     }
 
