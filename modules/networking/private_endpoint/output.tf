@@ -12,3 +12,8 @@ output "private_dns_zone_configs" {
   value = azurerm_private_endpoint.pep.private_dns_zone_configs
 
 }
+
+output "private_service_connection" {
+  value = azurerm_private_endpoint.pep.private_service_connection
+
+}
