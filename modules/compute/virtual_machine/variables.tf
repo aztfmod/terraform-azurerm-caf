@@ -13,6 +13,9 @@ variable "resource_group_name" {
   description = "Name of the existing resource group to deploy the virtual machine"
 }
 
+variable "resource_groups" {
+}
+
 variable "keyvaults" {
   description = "Keyvault to store the SSH public and private keys when not provided by the var.public_key_pem_file or retrieve admin username and password"
   default     = ""

@@ -60,6 +60,7 @@ module "virtual_machines" {
     try(local.combined_objects_resource_groups[local.client_config.landingzone_key][each.value.resource_group.key].name, null),
     try(local.combined_objects_resource_groups[local.client_config.landingzone_key][each.value.resource_group_key].name, null)
   )
+  resource_groups     = local.combined_objects_resource_groups
 }
 
 

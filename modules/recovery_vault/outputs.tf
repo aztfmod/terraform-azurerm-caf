@@ -24,6 +24,16 @@ output "replication_policies" {
   value       = azurerm_site_recovery_replication_policy.policy
 }
 
+output "recovery_fabrics" {
+  description = "Ouput the set of replication policies in the vault"
+  value       = azurerm_site_recovery_fabric.recovery_fabric
+}
+
+output "protection_containers" {
+  description = "Ouput the set of replication policies in the vault"
+  value       = azurerm_site_recovery_protection_container.protection_container
+}
+
 output "resource_group_name" {
   description = "Output the resource group name"
   value       = var.resource_group_name
