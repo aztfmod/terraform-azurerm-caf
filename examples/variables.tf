@@ -18,7 +18,7 @@ variable "landingzone" {
 }
 
 variable "var_folder_path" {
-  default = {}
+  default = ""
 }
 
 variable "provider_azurerm_features_keyvault" {
