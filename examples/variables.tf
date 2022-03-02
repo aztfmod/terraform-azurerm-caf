@@ -828,3 +828,6 @@ variable "monitor_metric_alert" {
 variable "monitor_activity_log_alert" {
   default = {}
 }
+variable "log_analytics_storage_insights" {
+  default = {}
+}
