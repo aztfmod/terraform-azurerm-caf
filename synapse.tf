@@ -18,7 +18,7 @@ module "synapse_integration_runtime_azure" {
   global_settings = local.global_settings
   client_config   = local.client_config
   settings        = each.value
-  location        = lookup(each.value, "region", null) == null ? local.resource_groups[each.value.resource_group_key].location : local.global_settings.regions[each.value.region]
+  location        = lookup(each.value, "region", null) == null ? local.resource_groups[each.value.resource_group.key].location : local.global_settings.regions[each.value.region]
   remote_objects = {
     synapse_workspace = local.combined_objects_synapse_workspaces
   }
@@ -75,7 +75,7 @@ module "synapse_private_link_hub" {
   global_settings = local.global_settings
   client_config   = local.client_config
   settings        = each.value
-  location        = lookup(each.value, "region", null) == null ? local.resource_groups[each.value.resource_group_key].location : local.global_settings.regions[each.value.region]
+  location        = lookup(each.value, "region", null) == null ? local.resource_groups[each.value.resource_group.key].location : local.global_settings.regions[each.value.region]
   remote_objects = {
     resource_group = local.combined_objects_resource_groups
   }
@@ -211,10 +211,12 @@ module "synapse_workspace" {
   global_settings = local.global_settings
   client_config   = local.client_config
   settings        = each.value
-  location        = lookup(each.value, "region", null) == null ? local.resource_groups[each.value.resource_group_key].location : local.global_settings.regions[each.value.region]
+  location        = lookup(each.value, "region", null) == null ? local.resource_groups[each.value.resource_group.key].location : local.global_settings.regions[each.value.region]
   remote_objects = {
     resource_group                    = local.combined_objects_resource_groups
     storage_data_lake_gen2_filesystem = local.combined_objects_storage_data_lake_gen2_filesystem
+    vnets                             = local.combined_objects_networking
+    #purview                             = local.combined_objects_purview
   }
 }
 output "synapse_workspace" {

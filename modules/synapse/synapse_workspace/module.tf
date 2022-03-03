@@ -16,13 +16,14 @@ resource "azurerm_synapse_workspace" "syws" {
   sql_administrator_login              = var.settings.sql_administrator_login
   sql_administrator_login_password     = var.settings.sql_administrator_login_password
   linking_allowed_for_aad_tenant_ids   = try(var.settings.linking_allowed_for_aad_tenant_ids, null)
-  compute_subnet_id                    = try(var.settings.compute_subnet_id, null)
+  compute_subnet_id                    = can(var.settings.compute_subnet.id) ? var.settings.compute_subnet.id : can(var.remote_objects.vnets[try(var.settings.compute_subnet.id, var.client_config.landingzone_key)][var.settings.compute_subnet.vnet_key][var.settings.compute_subnet.subnet_key].id) ? var.remote_objects.vnets[try(var.settings.compute_subnet.id, var.client_config.landingzone_key)][var.settings.compute_subnet.vnet_key][var.settings.compute_subnet.subnet_key].id : null
   data_exfiltration_protection_enabled = try(var.settings.data_exfiltration_protection_enabled, null)
   managed_virtual_network_enabled      = try(var.settings.managed_virtual_network_enabled, null)
   public_network_access_enabled        = try(var.settings.public_network_access_enabled, null)
-  purview_id                           = try(var.settings.purview_id, null)
-  sql_identity_control_enabled         = try(var.settings.sql_identity_control_enabled, null)
-  managed_resource_group_name          = try(var.settings.managed_resource_group_name, null)
+  #purview_id                           = can(var.settings.purview.id) ? var.settings.purview.name : can(var.remote_objects.purview[try(var.settings.purview.lz_key, var.client_config.landingzone_key)][var.settings.purview.key].id) ? var.remote_objects.purview[try(var.settings.purview.lz_key, var.client_config.landingzone_key)][var.settings.purview.key].id : null
+  purview_id                   = try(var.settings.purview_id, null)
+  sql_identity_control_enabled = try(var.settings.sql_identity_control_enabled, null)
+  managed_resource_group_name  = can(var.settings.managed_resource_group.name) ? var.settings.managed_resource_group.name : can(var.remote_objects.resource_group[try(var.settings.managed_resource_group.lz_key, var.client_config.landingzone_key)][var.settings.managed_resource_group.key].name) ? var.remote_objects.resource_group[try(var.settings.managed_resource_group.lz_key, var.client_config.landingzone_key)][var.settings.managed_resource_group.key].name : null
   dynamic "aad_admin" {
     for_each = try(var.settings.aad_admin, null) != null ? [var.settings.aad_admin] : []
     content {
