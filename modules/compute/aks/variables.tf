@@ -5,8 +5,9 @@ variable "global_settings" {
 variable "client_config" {}
 variable "diagnostics" {}
 variable "settings" {}
+variable "location" {}
 variable "subnets" {}
-variable "resource_group" {}
+variable "resource_group_name" {}
 variable "admin_group_object_ids" {}
 variable "base_tags" {
   description = "Base tags for the resource to be inherited from the resource group."
