@@ -14,26 +14,24 @@ resource "azurerm_network_security_group" "nsg" {
   location            = var.location
   tags                = local.tags
 
-  dynamic "security_rule" {
-    for_each = try(var.settings.nsg, [])
-    content {
-      name                         = try(security_rule.value.name, null)
-      priority                     = try(security_rule.value.priority, null)
-      direction                    = try(security_rule.value.direction, null)
-      access                       = try(security_rule.value.access, null)
-      protocol                     = try(security_rule.value.protocol, null)
-      source_port_range            = try(security_rule.value.source_port_range, null)
-      source_port_ranges           = try(security_rule.value.source_port_ranges, null)
-      destination_port_range       = try(security_rule.value.destination_port_range, null)
-      destination_port_ranges      = try(security_rule.value.destination_port_ranges, null)
-      source_address_prefix        = try(security_rule.value.source_address_prefix, null)
-      source_address_prefixes      = try(security_rule.value.source_address_prefixes, null)
-      destination_address_prefix   = try(security_rule.value.destination_address_prefix, null)
-      destination_address_prefixes = try(security_rule.value.destination_address_prefixes, null)
-      # source_application_security_group_ids      = try(security_rule.value.source_application_security_group_ids, null)
-      # destination_application_security_group_ids = try(security_rule.value.destination_application_security_group_ids, null)
+  security_rule = can(var.settings.nsg) == false ? [] : [
+    for value in var.settings.nsg : {
+      name                         = value.name
+      description                  = lookup(value, "description", "")
+      priority                     = value.priority
+      direction                    = value.direction
+      access                       = value.access
+      protocol                     = value.protocol
+      source_port_range            = lookup(value, "source_port_range", "")
+      source_port_ranges           = lookup(value, "source_port_ranges", [])
+      destination_port_range       = lookup(value, "destination_port_range", "")
+      destination_port_ranges      = lookup(value, "destination_port_ranges", [])
+      source_address_prefix        = lookup(value, "source_address_prefix", "")
+      source_address_prefixes      = lookup(value, "source_address_prefixes", [])
+      destination_address_prefix   = lookup(value, "destination_address_prefix", "")
+      destination_address_prefixes = lookup(value, "destination_address_prefixes", [])
 
-
+      # Example config file:
       # source_application_security_groups = {
       #   keys = ["app_server"]
       # }
@@ -46,14 +44,14 @@ resource "azurerm_network_security_group" "nsg" {
         coalescelist(
           flatten(
             [
-              for key in try(security_rule.value.source_application_security_groups.keys, []) : [
-                var.application_security_groups[try(security_rule.value.lz_key, var.client_config.landingzone_key)][key].id
+              for key in try(value.source_application_security_groups.keys, []) : [
+                var.application_security_groups[try(value.lz_key, var.client_config.landingzone_key)][key].id
               ]
             ]
           ),
           flatten(
             [
-              for asg_id in try(security_rule.value.source_application_security_groups.ids, []) : [
+              for asg_id in try(value.source_application_security_groups.ids, []) : [
                 asg_id
               ]
             ]
@@ -62,27 +60,18 @@ resource "azurerm_network_security_group" "nsg" {
         []
       )
 
-
-      # destination_application_security_groups = {
-      #   keys = ["app_server"]
-      # }
-      # or
-      # destination_application_security_groups = {
-      #   ids = ["resource_id"]
-      # }
-
       destination_application_security_group_ids = try(
         coalescelist(
           flatten(
             [
-              for key in try(security_rule.value.destination_application_security_groups.keys, []) : [
-                var.application_security_groups[try(security_rule.value.lz_key, var.client_config.landingzone_key)][key].id
+              for key in try(value.destination_application_security_groups.keys, []) : [
+                var.application_security_groups[try(value.lz_key, var.client_config.landingzone_key)][key].id
               ]
             ]
           ),
           flatten(
             [
-              for asg_id in try(security_rule.value.destination_application_security_groups.ids, []) : [
+              for asg_id in try(value.destination_application_security_groups.ids, []) : [
                 asg_id
               ]
             ]
@@ -91,7 +80,8 @@ resource "azurerm_network_security_group" "nsg" {
         []
       )
     }
-  }
+
+  ]
 }
 
 output "id" {
