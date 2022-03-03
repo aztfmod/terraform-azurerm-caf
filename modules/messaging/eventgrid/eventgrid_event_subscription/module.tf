@@ -57,39 +57,141 @@ resource "azurerm_eventgrid_event_subscription" "eges" {
     }
   }
   included_event_types = try(var.settings.included_event_types, null)
-  dynamic "subject_filter" {
-    for_each = try(var.settings.subject_filter, null) != null ? [var.settings.subject_filter] : []
-    content {
-      subject_begins_with = try(subject_filter.value.subject_begins_with, null)
-      subject_ends_with = try(subject_filter.value.subject_ends_with, null)
-      case_sensitive = try(subject_filter.value.case_sensitive, null)
-    }
-  }
+
   dynamic "advanced_filter" {
     for_each = try(var.settings.advanced_filter, null) != null ? [var.settings.advanced_filter] : []
     content {
-      #bool_equals = try(advanced_filter.value.bool_equals, null)
-      #number_greater_than = try(advanced_filter.value.number_greater_than, null)
-      #number_greater_than_or_equals = try(advanced_filter.value.number_greater_than_or_equals, null)
-      #number_less_than = try(advanced_filter.value.number_less_than, null)
-      #number_less_than_or_equals = try(advanced_filter.value.number_less_than_or_equals, null)
-      #number_in = try(advanced_filter.value.number_in, null)
-      #number_not_in = try(advanced_filter.value.number_not_in, null)
-      #number_in_range = try(advanced_filter.value.number_in_range, null)
-      #number_not_in_range = try(advanced_filter.value.number_not_in_range, null)
-      #string_begins_with = try(advanced_filter.value.string_begins_with, null)
-      #string_not_begins_with = try(advanced_filter.value.string_not_begins_with, null)
-      #string_ends_with = try(advanced_filter.value.string_ends_with, null)
-      #string_not_ends_with = try(advanced_filter.value.string_not_ends_with, null)
-      #string_contains = try(advanced_filter.value.string_contains, null)
-      #string_not_contains = try(advanced_filter.value.string_not_contains, null)
-      #string_in = try(advanced_filter.value.string_in, null)
-      #string_not_in = try(advanced_filter.value.string_not_in, null)
-      #is_not_null = try(advanced_filter.value.is_not_null, null)
-      #is_null_or_undefined = try(advanced_filter.value.is_null_or_undefined, null)
-      #key = try(advanced_filter.value.key, null)
-      #value = try(advanced_filter.value.value, null)
-      #values = try(advanced_filter.value.values, null)
+      dynamic "bool_equals" {
+        for_each = try(var.settings.bool_equals, null) != null ? [var.settings.bool_equals] : []
+        content {
+          key = try(bool_equals.value.subject_begins_with, null)
+          value = try(bool_equals.value.subject_ends_with, null)
+        }
+      }
+      dynamic "number_greater_than" {
+        for_each = try(var.settings.number_greater_than, null) != null ? [var.settings.number_greater_than] : []
+        content {
+          key = try(number_greater_than.value.subject_begins_with, null)
+          value = try(number_greater_than.value.subject_ends_with, null)
+        }
+      }
+      dynamic "number_greater_than_or_equals" {
+        for_each = try(var.settings.number_greater_than_or_equals, null) != null ? [var.settings.number_greater_than_or_equals] : []
+        content {
+          key = try(number_greater_than_or_equals.value.subject_begins_with, null)
+          value = try(number_greater_than_or_equals.value.subject_ends_with, null)
+        }
+      }          
+      dynamic "number_less_than" {
+        for_each = try(var.settings.number_less_than, null) != null ? [var.settings.number_less_than] : []
+        content {
+          key = try(number_less_than.value.subject_begins_with, null)
+          value = try(number_less_than.value.subject_ends_with, null)
+        }
+      }
+      dynamic "number_less_than_or_equals" {
+        for_each = try(var.settings.number_less_than_or_equals, null) != null ? [var.settings.number_less_than_or_equals] : []
+        content {
+          key = try(number_less_than.value.number_less_than_or_equals, null)
+          value = try(number_less_than.value.number_less_than_or_equals, null)
+        }
+      }
+      dynamic "number_in" {
+        for_each = try(var.settings.number_in, null) != null ? [var.settings.number_in] : []
+        content {
+          key = try(number_less_than.value.number_in, null)
+          values = try(number_less_than.value.number_in, null)
+        }
+      }
+      dynamic "number_not_in" {
+        for_each = try(var.settings.number_not_in, null) != null ? [var.settings.number_not_in] : []
+        content {
+          key = try(number_less_than.value.number_not_in, null)
+          values = try(number_less_than.value.number_not_in, null)
+        }
+      }
+      dynamic "number_in_range" {
+        for_each = try(var.settings.number_in_range, null) != null ? [var.settings.number_in_range] : []
+        content {
+          key = try(number_less_than.value.number_in_range, null)
+          values = try(number_less_than.value.number_in_range, null)
+        }
+      }
+      dynamic "number_not_in_range" {
+        for_each = try(var.settings.number_not_in_range, null) != null ? [var.settings.number_not_in_range] : []
+        content {
+          key = try(number_less_than.value.number_not_in_range, null)
+          values = try(number_less_than.value.number_not_in_range, null)
+        }
+      }
+      dynamic "string_begins_with" {
+        for_each = try(var.settings.string_begins_with, null) != null ? [var.settings.string_begins_with] : []
+        content {
+          key = try(number_less_than.value.string_begins_with, null)
+          values = try(number_less_than.value.string_begins_with, null)
+        }
+      }
+      dynamic "string_not_begins_with" {
+        for_each = try(var.settings.string_not_begins_with, null) != null ? [var.settings.string_not_begins_with] : []
+        content {
+          key = try(number_less_than.value.string_not_begins_with, null)
+          values = try(number_less_than.value.string_not_begins_with, null)
+        }
+      }
+      dynamic "string_ends_with" {
+        for_each = try(var.settings.string_ends_with, null) != null ? [var.settings.string_ends_with] : []
+        content {
+          key = try(number_less_than.value.string_ends_with, null)
+          values = try(number_less_than.value.string_ends_with, null)
+        }
+      }
+      dynamic "string_not_ends_with" {
+        for_each = try(var.settings.string_not_ends_with, null) != null ? [var.settings.string_not_ends_with] : []
+        content {
+          key = try(number_less_than.value.string_not_ends_with, null)
+          values = try(number_less_than.value.string_not_ends_with, null)
+        }
+      }
+      dynamic "string_contains" {
+        for_each = try(var.settings.string_contains, null) != null ? [var.settings.string_contains] : []
+        content {
+          key = try(number_less_than.value.string_contains, null)
+          values = try(number_less_than.value.string_contains, null)
+        }
+      }
+      dynamic "string_not_contains" {
+        for_each = try(var.settings.string_not_contains, null) != null ? [var.settings.string_not_contains] : []
+        content {
+          key = try(number_less_than.value.string_not_contains, null)
+          values = try(number_less_than.value.string_not_contains, null)
+        }
+      }
+      dynamic "string_in" {
+        for_each = try(var.settings.string_in, null) != null ? [var.settings.string_in] : []
+        content {
+          key = try(number_less_than.value.string_in, null)
+          values = try(number_less_than.value.string_in, null)
+        }
+      }     
+      dynamic "string_not_in" {
+        for_each = try(var.settings.string_not_in, null) != null ? [var.settings.string_not_in] : []
+        content {
+          key = try(number_less_than.value.string_not_in, null)
+          values = try(number_less_than.value.string_not_in, null)
+        }
+      }           
+      dynamic "is_not_null" {
+        for_each = try(var.settings.is_not_null, null) != null ? [var.settings.is_not_null] : []
+        content {
+          key = try(number_less_than.value.is_not_null, null)
+        }
+      }
+      dynamic "is_null_or_undefined" {
+        for_each = try(var.settings.is_null_or_undefined, null) != null ? [var.settings.is_null_or_undefined] : []
+        content {
+          key = try(number_less_than.value.is_null_or_undefined, null)
+        }
+      }
     }
   }
   dynamic "delivery_identity" {

@@ -40,9 +40,9 @@ resource "azurerm_eventgrid_domain" "egd" {
     }
   }
   public_network_access_enabled             = try(var.settings.public_network_access_enabled, null)
-  #local_auth_enabled                        = try(var.settings.local_auth_enabled, null)  Should be implemented in Newest Version
-  #auto_create_topic_with_first_subscription = try(var.settings.auto_create_topic_with_first_subscription, null)
-  #auto_delete_topic_with_last_subscription  = try(var.settings.auto_delete_topic_with_last_subscription, null)
+  local_auth_enabled                        = try(var.settings.local_auth_enabled, null)  
+  auto_create_topic_with_first_subscription = try(var.settings.auto_create_topic_with_first_subscription, null)
+  auto_delete_topic_with_last_subscription  = try(var.settings.auto_delete_topic_with_last_subscription, null)
   dynamic "inbound_ip_rule" {
     for_each = try(var.settings.inbound_ip_rule, null) != null ? [var.settings.inbound_ip_rule] : []
     content {
