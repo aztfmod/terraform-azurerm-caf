@@ -2,9 +2,9 @@
 
 When upgrading to a newer version of the CAF module, some configuration structures must be updated before applying the modifications.
 
-## 5.5.x
+## 5.6.0
 
-Version 5.5.x includes support for azurerm 2.97 which requires your attention if you are deploying the following components:
+Version 5.6.0 includes support for azurerm 2.98 which requires your attention if you are deploying the following components:
 
 - signal_r:
   - The ```features``` block is deprecated, favor of use ```connectivity_logs_enabled```, ```messaging_logs_enabled```, ```live_trace_enabled``` and ```service_mode``` instead. Module has been updated to reflect that. You must update the settings in your configuration file accordingly.
@@ -30,8 +30,8 @@ Version 5.5.x includes support for azurerm 2.97 which requires your attention if
 - azurerm_network_watcher_flow_log:
   - the ```name``` attribute has been added and is mandatory for each network watcher flow log. Changing this forces a new resource to be created so this is expected to be a breaking change for existing azurerm_network_watcher_flow_log.
 
-- virtual_machine_scale_sets
-  - in azurerm 2.97 - problem at creation as per https://github.com/hashicorp/terraform-provider-azurerm/issues/15516
+- network security groups:
+  - refactoring for reliability will cause previously created NSG to be delegated and recreated. This will create a very temporary disconnection.
 
 
 ## 5.5.0
