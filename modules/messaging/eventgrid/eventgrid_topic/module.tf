@@ -41,7 +41,7 @@ resource "azurerm_eventgrid_topic" "egt" {
     }
   }  
     public_network_access_enabled = try(var.settings.public_network_access_enabled,null)
-    #local_auth_enabled = try(var.settings.local_auth_enabled,null)
+    local_auth_enabled = try(var.settings.local_auth_enabled,null)
     
   dynamic "inbound_ip_rule" {
     for_each = try(var.settings.inbound_ip_rule, null) != null ? [var.settings.inbound_ip_rule] : []
