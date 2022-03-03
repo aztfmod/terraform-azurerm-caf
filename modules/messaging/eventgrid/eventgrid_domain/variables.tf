@@ -16,9 +16,6 @@ variable "base_tags" {
   type        = map(any)
   default = {}
 }
-variable "resource_group_name" {
-   description = " The name of the resource group in which the EventGrid Domain exists. Changing this forces a new resource to be created."
-}
 variable "location" {
   description = "Specifies the supported Azure location where to create the resource. Changing this forces a new resource to be created."
   default     = null
@@ -28,4 +25,10 @@ variable "managed_identities" {
 }
 variable "private_endpoints" {
   default = {}
+}
+variable "diagnostic_profiles" {
+  default = null
+}
+variable "diagnostics" {
+  default = null
 }

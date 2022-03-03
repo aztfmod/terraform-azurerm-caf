@@ -9,7 +9,7 @@ resource "azurecaf_name" "egt" {
 }
 resource "azurerm_eventgrid_topic" "egt" {
   name = azurecaf_name.egt.result
-  resource_group_name = var.resource_group_name
+  resource_group_name = can(var.settings.resource_group.name) ? var.settings.resource_group.name : var.remote_objects.resource_group[try(var.settings.resource_group.lz_key, var.client_config.landingzone_key)][var.settings.resource_group.key].name
   location = var.location
   
   dynamic "identity" {
