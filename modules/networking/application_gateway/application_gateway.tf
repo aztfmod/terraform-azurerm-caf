@@ -186,6 +186,13 @@ resource "azurerm_application_gateway" "agw" {
       trusted_root_certificate_names      = try(backend_http_settings.value.trusted_root_certificate_names, null)
       host_name                           = try(backend_http_settings.value.host_name, null)
       probe_name                          = try(local.probes[format("%s-%s", backend_http_settings.key, backend_http_settings.value.probe_key)].name, null)
+      dynamic "connection_draining" {
+        for_each = try(backend_http_settings.value.connection_draining, null) == null ? [] : [1]
+        content {
+          enabled           = try(backend_http_settings.value.connection_draining.enabled, false)
+          drain_timeout_sec = try(backend_http_settings.value.connection_draining.drain_timeout_sec, 120)
+        }
+      }
     }
   }
 
