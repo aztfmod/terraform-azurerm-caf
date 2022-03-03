@@ -199,6 +199,8 @@ module "example" {
     private_dns_vnet_links                                  = var.private_dns_vnet_links
     private_endpoints                                       = var.private_endpoints
     public_ip_addresses                                     = var.public_ip_addresses
+    relay_namespace                                         = var.relay_namespace
+    relay_hybrid_connection                                 = var.relay_hybrid_connection
     route_tables                                            = var.route_tables
     vhub_peerings                                           = var.vhub_peerings
     virtual_hub_connections                                 = var.virtual_hub_connections

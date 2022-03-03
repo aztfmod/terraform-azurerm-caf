@@ -843,3 +843,9 @@ variable "eventgrid_event_subscription" {
 variable "eventgrid_domain_topic" {
   default = {}
 }
+variable "relay_hybrid_connection" {
+  default = {}
+}
+variable "relay_namespace" {
+  default = {}
+}

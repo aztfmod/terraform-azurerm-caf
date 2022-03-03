@@ -10,7 +10,7 @@ resource "azurecaf_name" "egd" {
 }
 resource "azurerm_eventgrid_domain" "egd" {
   name                = azurecaf_name.egd.result
-  resource_group_name = var.resource_group_name
+  resource_group_name = can(var.settings.resource_group.name) ? var.settings.resource_group.name : var.remote_objects.resource_group[try(var.settings.resource_group.lz_key, var.client_config.landingzone_key)][var.settings.resource_group.key].name
   location            = var.location
   dynamic "identity" {
     for_each = try(var.settings.identity, null) != null ? [var.settings.identity] : []

@@ -10,38 +10,30 @@ resource "azurecaf_name" "eges" {
 }
 resource "azurerm_eventgrid_event_subscription" "eges" {
   name = azurecaf_name.eges.result
-  scope = var.settings.scope
+  scope = can(var.settings.scope.id) ? var.settings.scope.id : var.remote_objects.all[var.settings.scope.resource_type][try(var.settings.scope.lz_key, var.client_config.landingzone_key)][var.settings.scope.key].id
   expiration_time_utc = try(var.settings.expiration_time_utc, null)
   event_delivery_schema = try(var.settings.event_delivery_schema, null)
   dynamic "azure_function_endpoint" {
     for_each = try(var.settings.azure_function_endpoint, null) != null ? [var.settings.azure_function_endpoint] : []
     content {
-      function_id = try(azure_function_endpoint.value.function_id, null)
+      function_id =  can(azure_function_endpoint.value.function.id) ? azure_function_endpoint.value.function.id : can(var.remote_objects.functions[try(azure_function_endpoint.value.function.lz_key,var.client_config.landingzone_key)][azure_function_endpoint.value.function.key].id) ? var.remote_objects.functions[try(azure_function_endpoint.value.function.lz_key,var.client_config.landingzone_key)][azure_function_endpoint.value.function.key].id : null                                              
       max_events_per_batch = try(azure_function_endpoint.value.max_events_per_batch, null)
       preferred_batch_size_in_kilobytes = try(azure_function_endpoint.value.preferred_batch_size_in_kilobytes, null)
     }
   }
-  dynamic "eventhub_endpoint" {
-    for_each = try(var.settings.eventhub_endpoint, null) != null ? [var.settings.eventhub_endpoint] : []
-    content {
-      eventhub_id = try(eventhub_endpoint.value.eventhub_id, null)
-    }
-  }
-  eventhub_endpoint_id = try(var.settings.eventhub_endpoint_id, null)
-  dynamic "hybrid_connection_endpoint" {
-    for_each = try(var.settings.hybrid_connection_endpoint, null) != null ? [var.settings.hybrid_connection_endpoint] : []
-    content {
-      hybrid_connection_id = try(hybrid_connection_endpoint.value.hybrid_connection_id, null)
-    }
-  }
-  hybrid_connection_endpoint_id = try(var.settings.hybrid_connection_endpoint_id, null)
-  service_bus_queue_endpoint_id = try(var.settings.service_bus_queue_endpoint_id, null)
-  service_bus_topic_endpoint_id = try(var.settings.service_bus_topic_endpoint_id, null)
+
+  #eventhub_endpoint - (Optional / Deprecated in favour of eventhub_endpoint_id)
+  eventhub_endpoint_id =  can(var.settings.eventhub.id) ? var.settings.eventhub.id : can(var.remote_objects.eventhubs[try(var.settings.eventhub.lz_key,var.client_config.landingzone_key)][var.settings.eventhub.key].id) ? var.remote_objects.eventhubs[try(var.settings.eventhub.lz_key,var.client_config.landingzone_key)][var.settings.eventhub.key].id : null                                              
+  #hybrid_connection_endpoint - (Optional / Deprecated in favour of hybrid_connection_endpoint_id)                         
+  hybrid_connection_endpoint_id =  can(var.settings.hybrid_connection.id) ? var.settings.hybrid_connection.id : can(var.remote_objects.hybrid_connections[try(var.settings.hybrid_connection.lz_key,var.client_config.landingzone_key)][var.settings.hybrid_connection.key].id) ? var.remote_objects.hybrid_connections[try(var.settings.hybrid_connection.lz_key,var.client_config.landingzone_key)][var.settings.hybrid_connection.key].id : null                        
+  service_bus_queue_endpoint_id =  can(var.settings.servicebus_queues.id) ? var.settings.servicebus_queues.id : can(var.remote_objects.servicebus_queues[try(var.settings.servicebus_queues.lz_key,var.client_config.landingzone_key)][var.settings.servicebus_queues.key].id) ? var.remote_objects.servicebus_queues[try(var.settings.servicebus_queues.lz_key,var.client_config.landingzone_key)][var.settings.servicebus_queues.key].id : null
+  service_bus_topic_endpoint_id =  can(var.settings.servicebus_topic.id) ? var.settings.servicebus_topic.id : can(var.remote_objects.servicebus_topic[try(var.settings.servicebus_topic.lz_key,var.client_config.landingzone_key)][var.settings.servicebus_topic.key].id) ? var.remote_objects.servicebus_topic[try(var.settings.servicebus_topic.lz_key,var.client_config.landingzone_key)][var.settings.servicebus_topic.key].id : null
+
   dynamic "storage_queue_endpoint" {
     for_each = try(var.settings.storage_queue_endpoint, null) != null ? [var.settings.storage_queue_endpoint] : []
     content {
-      storage_account_id = try(storage_queue_endpoint.value.storage_account_id, null)
-      queue_name = try(storage_queue_endpoint.value.queue_name, null)
+      storage_account_id = can(storage_queue_endpoint.value.eue_endpoint.storage_account.id) ? storage_queue_endpoint.value.eue_endpoint.storage_account.id : var.remote_objects.storage_accounts[try(storage_queue_endpoint.value.storage_account.lz_key,var.client_config.landingzone_key)][storage_queue_endpoint.value.storage_account.key].id
+      queue_name = can(storage_queue_endpoint.value.queue.name) ? storage_queue_endpoint.value.queue.name : var.remote_objects.storage_account_queues[try(storage_queue_endpoint.value.queue.lz_key,var.client_config.landingzone_key)][storage_queue_endpoint.value.queue.key].name
       queue_message_time_to_live_in_seconds = try(storage_queue_endpoint.value.queue_message_time_to_live_in_seconds, null)
     }
   }
@@ -73,6 +65,7 @@ resource "azurerm_eventgrid_event_subscription" "eges" {
         content {
           key = try(number_greater_than.value.subject_begins_with, null)
           value = try(number_greater_than.value.subject_ends_with, null)
+
         }
       }
       dynamic "number_greater_than_or_equals" {

@@ -51,12 +51,14 @@ locals {
   combined_objects_dns_zones                                      = merge(tomap({ (local.client_config.landingzone_key) = module.dns_zones }), try(var.remote_objects.dns_zones, {}))
   combined_objects_ddos_services                                  = merge(tomap({ (local.client_config.landingzone_key) = azurerm_network_ddos_protection_plan.ddos_protection_plan }), try(var.remote_objects.ddos_services, {}), try(var.remote_objects.ddos_services, {}))
   combined_objects_eventgrid_domains                              = merge(tomap({ (local.client_config.landingzone_key) = module.eventgrid_domain }), try(var.remote_objects.eventgrid_domain, {}))
+  combined_objects_event_hubs                                     = merge(tomap({ (local.client_config.landingzone_key) = module.event_hubs }), try(var.remote_objects.event_hubs, {}))
   combined_objects_event_hub_namespaces                           = merge(tomap({ (local.client_config.landingzone_key) = module.event_hub_namespaces }), try(var.remote_objects.event_hub_namespaces, {}))
   combined_objects_express_route_circuit_authorizations           = merge(tomap({ (local.client_config.landingzone_key) = module.express_route_circuit_authorizations }), try(var.remote_objects.express_route_circuit_authorizations, {}))
   combined_objects_express_route_circuit_peerings                 = merge(tomap({ (local.client_config.landingzone_key) = module.express_route_circuit_peerings }), try(var.remote_objects.express_route_circuit_peerings, {}))
   combined_objects_express_route_circuits                         = merge(tomap({ (local.client_config.landingzone_key) = module.express_route_circuits }), try(var.remote_objects.express_route_circuits, {}))
   combined_objects_front_door                                     = merge(tomap({ (local.client_config.landingzone_key) = module.front_doors }), try(var.remote_objects.front_doors, {}))
   combined_objects_front_door_waf_policies                        = merge(tomap({ (local.client_config.landingzone_key) = module.front_door_waf_policies }), try(var.remote_objects.front_door_waf_policies, {}))
+  combined_objects_function_apps                                  = merge(tomap({ (local.client_config.landingzone_key) = module.function_apps }), try(var.remote_objects.function_apps, {}))
   combined_objects_image_definitions                              = merge(tomap({ (local.client_config.landingzone_key) = module.image_definitions }), try(var.remote_objects.image_definitions, {}))
   combined_objects_integration_service_environment                = merge(tomap({ (local.client_config.landingzone_key) = module.integration_service_environment }), try(var.remote_objects.integration_service_environment, {}))
   combined_objects_keyvault_certificates                          = merge(tomap({ (local.client_config.landingzone_key) = module.keyvault_certificates }), try(var.remote_objects.keyvault_certificates, {}))
@@ -94,6 +96,8 @@ locals {
   combined_objects_public_ip_addresses                            = merge(tomap({ (local.client_config.landingzone_key) = module.public_ip_addresses }), try(var.remote_objects.public_ip_addresses, {}))
   combined_objects_recovery_vaults                                = merge(tomap({ (local.client_config.landingzone_key) = module.recovery_vaults }), try(var.remote_objects.recovery_vaults, {}))
   combined_objects_redis_caches                                   = merge(tomap({ (local.client_config.landingzone_key) = module.redis_caches }), try(var.remote_objects.redis_caches, {}))
+  combined_objects_relay_namespace                                = merge(tomap({ (local.client_config.landingzone_key) = module.relay_namespace }), try(var.remote_objects.relay_namespace, {}))
+  combined_objects_relay_hybrid_connection                        = merge(tomap({ (local.client_config.landingzone_key) = module.relay_hybrid_connection }), try(var.remote_objects.relay_hybrid_connection, {}))
   combined_objects_resource_groups                                = merge(tomap({ (local.client_config.landingzone_key) = local.resource_groups }), try(var.remote_objects.resource_groups, {}))
   combined_objects_servicebus_namespaces                          = merge(tomap({ (local.client_config.landingzone_key) = module.servicebus_namespaces }), try(var.remote_objects.servicebus_namespaces, {}))
   combined_objects_servicebus_topics                              = merge(tomap({ (local.client_config.landingzone_key) = module.servicebus_topics }), try(var.remote_objects.servicebus_topics, {}))
@@ -101,6 +105,7 @@ locals {
   combined_objects_signalr_services                               = merge(tomap({ (local.client_config.landingzone_key) = module.signalr_services }), try(var.remote_objects.signalr_services, {}))
   combined_objects_storage_accounts                               = merge(tomap({ (local.client_config.landingzone_key) = module.storage_accounts }), try(var.remote_objects.storage_accounts, {}))
   combined_objects_storage_containers                             = merge(tomap({ (local.client_config.landingzone_key) = module.storage_containers }), try(var.remote_objects.storage_containers, {}))
+  combined_objects_storage_account_queues                         = merge(tomap({ (local.client_config.landingzone_key) = module.storage_account_queues }), try(var.remote_objects.storage_account_queues, {}))
   combined_objects_synapse_workspaces                             = merge(tomap({ (local.client_config.landingzone_key) = module.synapse_workspaces }), try(var.remote_objects.synapse_workspaces, {}))
   combined_objects_virtual_hub_connections                        = merge(tomap({ (local.client_config.landingzone_key) = azurerm_virtual_hub_connection.vhub_connection }), try(var.remote_objects.vhub_peerings, {}), try(var.remote_objects.virtual_hub_connections, {}))
   combined_objects_virtual_hub_route_tables                       = merge(tomap({ (local.client_config.landingzone_key) = azurerm_virtual_hub_route_table.route_table }), try(var.remote_objects.virtual_hub_route_tables, {}))
@@ -132,3 +137,4 @@ locals {
   )
 
 }
+ 

@@ -271,6 +271,8 @@ locals {
     private_dns                                             = try(var.networking.private_dns, {})
     private_dns_vnet_links                                  = try(var.networking.private_dns_vnet_links, {})
     public_ip_addresses                                     = try(var.networking.public_ip_addresses, {})
+    relay_hybrid_connection                                 = try(var.networking.relay_hybrid_connection, {})
+    relay_namespace                                         = try(var.networking.relay_namespace, {})
     route_tables                                            = try(var.networking.route_tables, {})
     vhub_peerings                                           = try(var.networking.vhub_peerings, {})
     virtual_hub_connections                                 = try(var.networking.virtual_hub_connections, {})

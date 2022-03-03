@@ -6,12 +6,6 @@ module "eventgrid_domain" {
   client_config   = local.client_config
   settings        = each.value
 
-  resource_group_name = coalesce(
-      try(local.combined_objects_resource_groups[each.value.resource_group.lz_key][each.value.resource_group.key].name, null),
-      try(local.combined_objects_resource_groups[local.client_config.landingzone_key][each.value.resource_group.key].name, null),
-      try(each.value.resource_group.name, null)
-  )
-
   location = lookup(each.value, "region", null) == null ? local.resource_groups[each.value.resource_group_key].location : local.global_settings.regions[each.value.region]
 
   remote_objects = {
@@ -31,12 +25,6 @@ module "eventgrid_topic" {
   global_settings = local.global_settings
   client_config   = local.client_config
   settings        = each.value
-
-  resource_group_name = coalesce(
-      try(local.combined_objects_resource_groups[each.value.resource_group.lz_key][each.value.resource_group.key].name, null),
-      try(local.combined_objects_resource_groups[local.client_config.landingzone_key][each.value.resource_group.key].name, null),
-      try(each.value.resource_group.name, null)
-  )
 
   location = lookup(each.value, "region", null) == null ? local.resource_groups[each.value.resource_group_key].location : local.global_settings.regions[each.value.region]
 
@@ -58,6 +46,14 @@ module "eventgrid_event_subscription" {
 
 
   remote_objects = {
+    all = local.remote_objects,
+    functions = local.combined_objects_function_apps,
+    eventhubs = local.combined_objects_event_hubs,
+    servicebus_topic = local.combined_objects_servicebus_topics,
+    servicebus_queues = local.combined_objects_servicebus_queues,
+    storage_accounts = local.combined_objects_storage_accounts,    
+    hybrid_connections = local.combined_objects_relay_hybrid_connection,
+    storage_account_queues = local.combined_objects_storage_account_queues
   }
 }
 output "eventgrid_event_subscription" {
@@ -71,13 +67,6 @@ module "eventgrid_domain_topic" {
   global_settings = local.global_settings
   client_config   = local.client_config
   settings        = each.value
-
-  resource_group_name = coalesce(
-      try(local.combined_objects_resource_groups[each.value.resource_group.lz_key][each.value.resource_group.key].name, null),
-      try(local.combined_objects_resource_groups[local.client_config.landingzone_key][each.value.resource_group.key].name, null),
-      try(each.value.resource_group.name, null)
-  )
-
 
   remote_objects = {
         resource_group = local.combined_objects_resource_groups
