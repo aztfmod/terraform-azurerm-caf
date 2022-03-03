@@ -12,10 +12,10 @@ resource_groups = {
 
 purview_account = {
   pva1 = {
-    name            = "pva1"
-    region          = "region1"
-    resource_group  = {
-      key  = "rg1"
+    name   = "pva1"
+    region = "region1"
+    resource_group = {
+      key = "rg1"
     }
   }
 }
