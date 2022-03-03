@@ -1,6 +1,6 @@
 resource "azurecaf_name" "pva" {
   name          = var.settings.name
-  resource_type = "azurerm_data_factory"#"azurerm_purview_account"
+  resource_type = "azurerm_data_factory" #"azurerm_purview_account"
   prefixes      = var.global_settings.prefixes
   random_length = var.global_settings.random_length
   clean_input   = true
@@ -9,10 +9,10 @@ resource "azurecaf_name" "pva" {
 }
 
 resource "azurerm_purview_account" "pva" {
-  location = var.location
-  name = azurecaf_name.pva.result
-  resource_group_name = var.resource_group_name
-  public_network_enabled = try(var.settings.public_network_enabled, null)
+  location                    = var.location
+  name                        = azurecaf_name.pva.result
+  resource_group_name         = var.resource_group_name
+  public_network_enabled      = try(var.settings.public_network_enabled, null)
   managed_resource_group_name = try(var.settings.managed_resource_group_name, null)
-  tags = local.tags
+  tags                        = local.tags
 }
