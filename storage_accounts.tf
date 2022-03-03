@@ -49,3 +49,18 @@ resource "azurerm_storage_account_customer_managed_key" "cmk" {
   key_vault_id       = module.keyvaults[each.value.customer_managed_key.keyvault_key].id
   key_name           = module.keyvault_keys[each.value.customer_managed_key.keyvault_key_key].name
 }
+
+
+module "storage_data_lake_gen2_filesystem" {
+  source          = "./modules/storage_account/storage_data_lake_gen2_filesystem"
+  for_each        = local.storage.storage_data_lake_gen2_filesystem
+  global_settings = local.global_settings
+  client_config   = local.client_config
+  settings        = each.value
+  remote_objects = {
+    storage_account = local.combined_objects_storage_accounts
+  }
+}
+output "storage_data_lake_gen2_filesystem" {
+  value = module.storage_data_lake_gen2_filesystem
+}
