@@ -11,7 +11,7 @@ global_settings = {
   default_region = "region1"
   regions = {
     region1 = "eastus2"
-  }
+ }
 }
 
 # Seperate Resource Group where Azure Firewall will be deployed into 
@@ -48,7 +48,7 @@ virtual_hubs = {
     }
 
     hub_name           = "hub1"
-    region             = "region2"
+    region             = "region1"
     hub_address_prefix = "192.168.14.0/24"
     deploy_p2s         = false
     p2s_config         = {}
@@ -62,14 +62,14 @@ azurerm_firewall_policies = {
   policy1 = {
     name                = "firewall_policy"
     # region            = {
-    #   key  = "region2"
+    #   key  = "region1"
     # }
     # resource_group = {
     #   key = "firewall_policy"
     # }
     resource_group_key  = "firewall_policy"
     sku                 = "Standard"
-    region              = "region2"
+    region              = "region1"
     # Premium Policy Features
   #   dns = {
   #     proxy_enabled = "true"
@@ -180,7 +180,7 @@ azurerm_firewalls = {
     sku_name             = "AZFW_Hub"
     sku_tier             = "Standard" # Standard, Premium
     firewall_policy_key  = "policy1" # Ensure Policy is of same SKU as Firewall
-    region               = "region2"
+    region               = "region1"
     # resource_group_key  = "firewall1"
     resource_group = {
       # lz_key = "firewallpolicy" # In case key to call out from Remote TState
