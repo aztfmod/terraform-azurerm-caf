@@ -15,7 +15,8 @@ resource "azurerm_virtual_machine_scale_set_extension" "custom_script" {
     }
   )
 
-  protected_settings = jsonencode(local.protected_settings)
+  provision_after_extensions = try(var.extension.provision_after_extensions, null)
+  protected_settings         = jsonencode(local.protected_settings)
 }
 
 locals {
