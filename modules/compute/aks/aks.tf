@@ -49,8 +49,8 @@ resource "azurerm_kubernetes_cluster" "aks" {
     null_resource.aks_registration_preview
   ]
   name                = azurecaf_name.aks.result
-  location            = can(var.settings.region) ? var.global_settings.regions[var.settings.region] : var.resource_group.location
-  resource_group_name = var.resource_group.name
+  location            = var.location
+  resource_group_name = var.resource_group_name
 
   default_node_pool {
     availability_zones           = try(var.settings.default_node_pool.availability_zones, null)
@@ -223,6 +223,15 @@ resource "azurerm_kubernetes_cluster" "aks" {
           gateway_id   = try(ingress_application_gateway.value.gateway_id, try(var.application_gateway.id, null))
           subnet_cidr  = try(ingress_application_gateway.value.subnet_cidr, null)
           subnet_id    = try(ingress_application_gateway.value.subnet_id, null)
+        }
+      }
+
+      dynamic "azure_keyvault_secrets_provider" {
+        for_each = try(var.settings.addon_profile.azure_keyvault_secrets_provider, {})
+        content {
+          enabled                  = azure_keyvault_secrets_provider.value.enabled
+          secret_rotation_enabled  = try(azure_keyvault_secrets_provider.value.secret_rotation_enabled, null)
+          secret_rotation_interval = try(zure_keyvault_secrets_provider.value.secret_rotation_interval, null)
         }
       }
     }

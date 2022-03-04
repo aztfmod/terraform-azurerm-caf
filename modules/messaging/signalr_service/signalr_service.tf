@@ -16,9 +16,10 @@ resource "azurerm_signalr_service" "signalr_service" {
   tags                = merge(local.base_tags, try(var.settings.tags, {}))
 
   # Shows in documentation but error shows not supported during plan/apply
-  # connectivity_logs_enabled = try(var.settings.connectivity_logs_enabled, null)
-  # messaging_logs_enabled    = try(var.settings.messaging_logs_enabled, null)
-  # service_mode              = try(var.settings.service_mode, null)
+  connectivity_logs_enabled = try(var.settings.connectivity_logs_enabled, null)
+  messaging_logs_enabled    = try(var.settings.messaging_logs_enabled, null)
+  service_mode              = try(var.settings.service_mode, null)
+  live_trace_enabled        = try(var.settings.live_trace_enabled, null)
 
   sku {
     name     = var.settings.sku.name
@@ -33,14 +34,14 @@ resource "azurerm_signalr_service" "signalr_service" {
     }
   }
 
-  dynamic "features" {
-    for_each = try(var.settings.features, {})
+  # dynamic "features" {
+  #   for_each = try(var.settings.features, {})
 
-    content {
-      flag  = features.value.flag
-      value = features.value.value
-    }
-  }
+  #   content {
+  #     flag  = features.value.flag
+  #     value = features.value.value
+  #   }
+  # }
 
   dynamic "upstream_endpoint" {
     for_each = try(var.settings.upstream_endpoints, {})

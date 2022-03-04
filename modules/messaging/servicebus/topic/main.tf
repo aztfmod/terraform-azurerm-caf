@@ -14,8 +14,12 @@ locals {
     try(var.remote_objects.servicebus_namespaces[var.settings.servicebus_namespace.lz_key][var.settings.servicebus_namespace.key].resource_group_name, null),
     try(var.remote_objects.servicebus_namespaces[var.client_config.landingzone_key][var.settings.servicebus_namespace.key].resource_group_name, null),
   )
-  servicebus_namespace_name = coalesce(
-    try(var.remote_objects.servicebus_namespaces[var.settings.servicebus_namespace.lz_key][var.settings.servicebus_namespace.key].name, null),
-    try(var.remote_objects.servicebus_namespaces[var.client_config.landingzone_key][var.settings.servicebus_namespace.key].name, null),
+  # servicebus_namespace_name = coalesce(
+  #   try(var.remote_objects.servicebus_namespaces[var.settings.servicebus_namespace.lz_key][var.settings.servicebus_namespace.key].name, null),
+  #   try(var.remote_objects.servicebus_namespaces[var.client_config.landingzone_key][var.settings.servicebus_namespace.key].name, null),
+  # )
+  servicebus_namespace_id = coalesce(
+    try(var.remote_objects.servicebus_namespaces[var.settings.servicebus_namespace.lz_key][var.settings.servicebus_namespace.key].id, null),
+    try(var.remote_objects.servicebus_namespaces[var.client_config.landingzone_key][var.settings.servicebus_namespace.key].id, null),
   )
 }
