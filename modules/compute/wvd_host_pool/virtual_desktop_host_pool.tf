@@ -9,7 +9,7 @@ resource "azurecaf_name" "wvdpool" {
 }
 
 
-# Last review :  AzureRM version 2.63.0
+# Last review :  AzureRM version 2.97.0
 # Ref : https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/resources/virtual_desktop_host_pool
 
 resource "azurerm_virtual_desktop_host_pool" "wvdpool" {
@@ -27,14 +27,12 @@ resource "azurerm_virtual_desktop_host_pool" "wvdpool" {
   custom_rdp_properties            = try(var.settings.custom_rdp_properties, null)
   start_vm_on_connect              = try(var.settings.start_vm_on_connect, null)
   tags                             = local.tags
-
-  dynamic "registration_info" {
-    for_each = try(var.settings.registration_info, null) == null ? [] : [1]
-
-    content {
-      expiration_date = try(var.settings.registration_info.expiration_date, timeadd(timestamp(), var.settings.registration_info.token_validity))
-    }
-  }
-
 }
 
+# Last review :  AzureRM version 2.97.0
+# Ref : https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/resources/virtual_desktop_host_pool_registration_info
+
+resource "azurerm_virtual_desktop_host_pool_registration_info" "wvdpool" {
+  hostpool_id     = azurerm_virtual_desktop_host_pool.wvdpool.id
+  expiration_date = try(var.settings.registration_info.expiration_date, timeadd(timestamp(), var.settings.registration_info.token_validity))
+}

@@ -17,12 +17,9 @@ resource "azurerm_virtual_hub_connection" "vhub_connection" {
 
   provider = azurerm.vhub
 
-  name           = each.value.name
-  virtual_hub_id = local.azurerm_virtual_hub_connection[each.key].virtual_hub_id
-  remote_virtual_network_id = coalesce(
-    try(local.combined_objects_networking[try(each.value.vnet.lz_key, local.client_config.landingzone_key)][each.value.vnet.vnet_key].id, ""),
-    try(each.value.vnet.resource_id, "")
-  )
+  name                      = each.value.name
+  virtual_hub_id            = local.azurerm_virtual_hub_connection[each.key].virtual_hub_id
+  remote_virtual_network_id = can(each.value.vnet.resource_id) ? each.value.vnet.resource_id : local.combined_objects_networking[try(each.value.vnet.lz_key, local.client_config.landingzone_key)][each.value.vnet.vnet_key].id
   internet_security_enabled = try(each.value.internet_security_enabled, null)
 
   dynamic "routing" {
@@ -82,10 +79,10 @@ resource "azurerm_virtual_hub_connection" "vhub_connection" {
 locals {
   azurerm_virtual_hub_connection = {
     for key, value in local.networking.virtual_hub_connections : key => {
-      virtual_hub_id = coalesce(
-        try(local.combined_objects_virtual_wans[try(value.vhub.lz_key, local.client_config.landingzone_key)][value.vhub.virtual_wan_key].virtual_hubs[value.vhub.virtual_hub_key].id, null),
-        try(local.combined_objects_virtual_wans[try(value.virtual_hub.lz_key, local.client_config.landingzone_key)][value.virtual_wan.key].virtual_hubs[value.virtual_hub.key].id, null),
-        try(local.combined_objects_virtual_hubs[try(value.virtual_hub.lz_key, local.client_config.landingzone_key)][value.virtual_hub.key].id, null)
+      virtual_hub_id = try(
+        local.combined_objects_virtual_hubs[try(value.virtual_hub.lz_key, local.client_config.landingzone_key)][value.virtual_hub.key].id,
+        local.combined_objects_virtual_wans[try(value.vhub.lz_key, local.client_config.landingzone_key)][value.vhub.virtual_wan_key].virtual_hubs[value.vhub.virtual_hub_key].id,
+        local.combined_objects_virtual_wans[try(value.virtual_hub.lz_key, local.client_config.landingzone_key)][value.virtual_wan.key].virtual_hubs[value.virtual_hub.key].id
       )
     }
   }

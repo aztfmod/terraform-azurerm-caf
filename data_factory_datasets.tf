@@ -10,9 +10,13 @@ module "data_factory_dataset_azure_blob" {
     try(local.combined_objects_resource_groups[try(each.value.resource_group.lz_key, local.client_config.landingzone_key)][each.value.resource_group.key].name, null),
     try(each.value.resource_group.name, null)
   )
-  data_factory_name = coalesce(
-    try(local.combined_objects_data_factory[try(each.value.data_factory.lz_key, local.client_config.landingzone_key)][each.value.data_factory.key].name, null),
-    try(each.value.data_factory.name, null)
+  # data_factory_name = coalesce(
+  #   try(local.combined_objects_data_factory[try(each.value.data_factory.lz_key, local.client_config.landingzone_key)][each.value.data_factory.key].name, null),
+  #   try(each.value.data_factory.name, null)
+  # )
+  data_factory_id = coalesce(
+    try(local.combined_objects_data_factory[try(each.value.data_factory.lz_key, local.client_config.landingzone_key)][each.value.data_factory.key].id, null),
+    try(each.value.data_factory.id, null)
   )
   linked_service_name = coalesce(
     try(local.combined_objects_data_factory_linked_service_azure_blob_storage[try(each.value.linked_service.lz_key, local.client_config.landingzone_key)][each.value.linked_service.key].name, null),
@@ -37,9 +41,13 @@ module "data_factory_dataset_cosmosdb_sqlapi" {
     try(local.combined_objects_resource_groups[try(each.value.resource_group.lz_key, local.client_config.landingzone_key)][each.value.resource_group.key].name, null),
     try(each.value.resource_group.name, null)
   )
-  data_factory_name = coalesce(
-    try(local.combined_objects_data_factory[try(each.value.data_factory.lz_key, local.client_config.landingzone_key)][each.value.data_factory.key].name, null),
-    try(each.value.data_factory.name, null)
+  # data_factory_name = coalesce(
+  #   try(local.combined_objects_data_factory[try(each.value.data_factory.lz_key, local.client_config.landingzone_key)][each.value.data_factory.key].name, null),
+  #   try(each.value.data_factory.name, null)
+  # )
+  data_factory_id = coalesce(
+    try(local.combined_objects_data_factory[try(each.value.data_factory.lz_key, local.client_config.landingzone_key)][each.value.data_factory.key].id, null),
+    try(each.value.data_factory.id, null)
   )
   linked_service_name = coalesce(
     try(local.combined_objects_data_factory_linked_service_cosmosdb[try(each.value.linked_service.lz_key, local.client_config.landingzone_key)][each.value.linked_service.key].name, null),
@@ -64,9 +72,13 @@ module "data_factory_dataset_delimited_text" {
     try(local.combined_objects_resource_groups[try(each.value.resource_group.lz_key, local.client_config.landingzone_key)][each.value.resource_group.key].name, null),
     try(each.value.resource_group.name, null)
   )
-  data_factory_name = coalesce(
-    try(local.combined_objects_data_factory[try(each.value.data_factory.lz_key, local.client_config.landingzone_key)][each.value.data_factory.key].name, null),
-    try(each.value.data_factory.name, null)
+  # data_factory_name = coalesce(
+  #   try(local.combined_objects_data_factory[try(each.value.data_factory.lz_key, local.client_config.landingzone_key)][each.value.data_factory.key].name, null),
+  #   try(each.value.data_factory.name, null)
+  # )
+  data_factory_id = coalesce(
+    try(local.combined_objects_data_factory[try(each.value.data_factory.lz_key, local.client_config.landingzone_key)][each.value.data_factory.key].id, null),
+    try(each.value.data_factory.id, null)
   )
   linked_service_name = coalesce(
     try(local.combined_objects_data_factory_linked_service_web[try(each.value.linked_service.lz_key, local.client_config.landingzone_key)][each.value.linked_service.key].name, null),
@@ -90,9 +102,13 @@ module "data_factory_dataset_http" {
     try(local.combined_objects_resource_groups[try(each.value.resource_group.lz_key, local.client_config.landingzone_key)][each.value.resource_group.key].name, null),
     try(each.value.resource_group.name, null)
   )
-  data_factory_name = coalesce(
-    try(local.combined_objects_data_factory[try(each.value.data_factory.lz_key, local.client_config.landingzone_key)][each.value.data_factory.key].name, null),
-    try(each.value.data_factory.name, null)
+  # data_factory_name = coalesce(
+  #   try(local.combined_objects_data_factory[try(each.value.data_factory.lz_key, local.client_config.landingzone_key)][each.value.data_factory.key].name, null),
+  #   try(each.value.data_factory.name, null)
+  # )
+  data_factory_id = coalesce(
+    try(local.combined_objects_data_factory[try(each.value.data_factory.lz_key, local.client_config.landingzone_key)][each.value.data_factory.key].id, null),
+    try(each.value.data_factory.id, null)
   )
   linked_service_name = coalesce(
     try(local.combined_objects_data_factory_linked_service_web[try(each.value.linked_service.lz_key, local.client_config.landingzone_key)][each.value.linked_service.key].name, null),
@@ -116,9 +132,13 @@ module "data_factory_dataset_json" {
     try(local.combined_objects_resource_groups[try(each.value.resource_group.lz_key, local.client_config.landingzone_key)][each.value.resource_group.key].name, null),
     try(each.value.resource_group.name, null)
   )
-  data_factory_name = coalesce(
-    try(local.combined_objects_data_factory[try(each.value.data_factory.lz_key, local.client_config.landingzone_key)][each.value.data_factory.key].name, null),
-    try(each.value.data_factory.name, null)
+  # data_factory_name = coalesce(
+  #   try(local.combined_objects_data_factory[try(each.value.data_factory.lz_key, local.client_config.landingzone_key)][each.value.data_factory.key].name, null),
+  #   try(each.value.data_factory.name, null)
+  # )
+  data_factory_id = coalesce(
+    try(local.combined_objects_data_factory[try(each.value.data_factory.lz_key, local.client_config.landingzone_key)][each.value.data_factory.key].id, null),
+    try(each.value.data_factory.id, null)
   )
   linked_service_name = coalesce(
     try(local.combined_objects_data_factory_linked_service_web[try(each.value.linked_service.lz_key, local.client_config.landingzone_key)][each.value.linked_service.key].name, null),
@@ -142,9 +162,13 @@ module "data_factory_dataset_mysql" {
     try(local.combined_objects_resource_groups[try(each.value.resource_group.lz_key, local.client_config.landingzone_key)][each.value.resource_group.key].name, null),
     try(each.value.resource_group.name, null)
   )
-  data_factory_name = coalesce(
-    try(local.combined_objects_data_factory[try(each.value.data_factory.lz_key, local.client_config.landingzone_key)][each.value.data_factory.key].name, null),
-    try(each.value.data_factory.name, null)
+  # data_factory_name = coalesce(
+  #   try(local.combined_objects_data_factory[try(each.value.data_factory.lz_key, local.client_config.landingzone_key)][each.value.data_factory.key].name, null),
+  #   try(each.value.data_factory.name, null)
+  # )
+  data_factory_id = coalesce(
+    try(local.combined_objects_data_factory[try(each.value.data_factory.lz_key, local.client_config.landingzone_key)][each.value.data_factory.key].id, null),
+    try(each.value.data_factory.id, null)
   )
   linked_service_name = coalesce(
     try(local.combined_objects_data_factory_linked_service_mysql[try(each.value.linked_service.lz_key, local.client_config.landingzone_key)][each.value.linked_service.key].name, null),
@@ -168,9 +192,13 @@ module "data_factory_dataset_postgresql" {
     try(local.combined_objects_resource_groups[try(each.value.resource_group.lz_key, local.client_config.landingzone_key)][each.value.resource_group.key].name, null),
     try(each.value.resource_group.name, null)
   )
-  data_factory_name = coalesce(
-    try(local.combined_objects_data_factory[try(each.value.data_factory.lz_key, local.client_config.landingzone_key)][each.value.data_factory.key].name, null),
-    try(each.value.data_factory.name, null)
+  # data_factory_name = coalesce(
+  #   try(local.combined_objects_data_factory[try(each.value.data_factory.lz_key, local.client_config.landingzone_key)][each.value.data_factory.key].name, null),
+  #   try(each.value.data_factory.name, null)
+  # )
+  data_factory_id = coalesce(
+    try(local.combined_objects_data_factory[try(each.value.data_factory.lz_key, local.client_config.landingzone_key)][each.value.data_factory.key].id, null),
+    try(each.value.data_factory.id, null)
   )
   linked_service_name = coalesce(
     try(local.combined_objects_data_factory_linked_service_postgresql[try(each.value.linked_service.lz_key, local.client_config.landingzone_key)][each.value.linked_service.key].name, null),
@@ -195,9 +223,13 @@ module "data_factory_dataset_sql_server_table" {
     try(local.combined_objects_resource_groups[try(each.value.resource_group.lz_key, local.client_config.landingzone_key)][each.value.resource_group.key].name, null),
     try(each.value.resource_group.name, null)
   )
-  data_factory_name = coalesce(
-    try(local.combined_objects_data_factory[try(each.value.data_factory.lz_key, local.client_config.landingzone_key)][each.value.data_factory.key].name, null),
-    try(each.value.data_factory.name, null)
+  # data_factory_name = coalesce(
+  #   try(local.combined_objects_data_factory[try(each.value.data_factory.lz_key, local.client_config.landingzone_key)][each.value.data_factory.key].name, null),
+  #   try(each.value.data_factory.name, null)
+  # )
+  data_factory_id = coalesce(
+    try(local.combined_objects_data_factory[try(each.value.data_factory.lz_key, local.client_config.landingzone_key)][each.value.data_factory.key].id, null),
+    try(each.value.data_factory.id, null)
   )
   linked_service_name = coalesce(
     try(local.combined_objects_data_factory_linked_service_sql_server[try(each.value.linked_service.lz_key, local.client_config.landingzone_key)][each.value.linked_service.key].name, null),
