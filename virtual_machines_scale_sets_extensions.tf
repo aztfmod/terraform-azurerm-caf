@@ -61,3 +61,18 @@ module "vmss_extension_dependency_agent" {
   extension_name                    = "dependency_agent"
   virtual_machine_scale_set_os_type = module.virtual_machine_scale_sets[each.key].os_type
 }
+
+module "vmss_extension_application_health_extension" {
+  source = "./modules/compute/virtual_machine_scale_set_extensions"
+
+  for_each = {
+    for key, value in try(var.virtual_machine_scale_sets, {}) : key => value
+    if try(value.virtual_machine_scale_set_extensions.microsoft_azure_health_extension, null) != null
+  }
+
+  client_config                     = module.client_config
+  virtual_machine_scale_set_id      = module.virtual_machine_scale_sets[each.key].id
+  virtual_machine_scale_set_os_type = module.virtual_machine_scale_sets[each.key].os_type
+  extension                         = each.value.virtual_machine_scale_set_extensions.microsoft_azure_health_extension
+  extension_name                    = "microsoft_azure_health_extension"
+}
