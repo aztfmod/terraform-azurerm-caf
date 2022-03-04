@@ -14,7 +14,7 @@ variable "global_settings" {
   default     = {}
 }
 
-variable "resource_group" {
+variable "resource_group_name" {
   description = "(Required) The name of the Resource Group where the resource should exist. Changing this forces a new resource to be created."
 }
 
@@ -26,4 +26,9 @@ variable "remote_objects" {
 variable "settings" {
   description = "(Required) Used to handle passthrough parameters."
   default     = {}
+}
+
+variable "location" {
+  description = "(Required) Specifies the supported Azure location where to create the resource. Changing this forces a new resource to be created."
+  type        = string
 }
