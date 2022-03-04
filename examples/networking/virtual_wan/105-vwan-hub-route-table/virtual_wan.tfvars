@@ -64,7 +64,7 @@ virtual_hub_route_tables = {
       #   # When using next_hop, the azurerm_firewalls or virtual_hub_connection must be deployed in a different landingzone. This cannot be tested in the standalone module.
       #   # Will be covered in the landingzone starter production configuration in future releases.
          next_hop = {
-           lz_key = "secazfw1" # Remote Landing Zone Key from where Azure Firewall Key needs to be retrieved
+          #  lz_key = "secazfw1" # Remote Landing Zone Key from where Azure Firewall Key needs to be retrieved
            resource_type = "azurerm_firewalls"  # Only supported value in case of "Secured Virtual HUB" where you need to route Internet Egress from Secured vHUB Firewall.
       #    resource_type = "virtual_hub_connection"  # Only supported value in case mapping route at VNET Connection Level
            key  = "firewall1" # Azure Firewall Key sitting in the Secured Virtual Hub
