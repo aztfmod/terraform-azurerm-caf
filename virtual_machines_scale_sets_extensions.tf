@@ -32,7 +32,7 @@ module "vmss_extension_microsoft_azure_domainjoin" {
 
 
 module "vmss_extension_microsoft_monitoring_agent" {
-  source     = "./modules/compute/virtual_machine_scale_set_extensions"
+  source = "./modules/compute/virtual_machine_scale_set_extensions"
   for_each = {
     for key, value in try(local.compute.virtual_machine_scale_sets, {}) : key => value
     if try(value.virtual_machine_scale_set_extensions.microsoft_monitoring_agent, null) != null
@@ -47,12 +47,12 @@ module "vmss_extension_microsoft_monitoring_agent" {
 }
 
 module "vmss_extension_dependency_agent" {
-  source     = "./modules/compute/virtual_machine_scale_set_extensions"
+  source = "./modules/compute/virtual_machine_scale_set_extensions"
   for_each = {
     for key, value in try(local.compute.virtual_machine_scale_sets, {}) : key => value
     if try(value.virtual_machine_scale_set_extensions.dependency_agent, null) != null
   }
-  
+
   client_config                     = local.client_config
   virtual_machine_scale_set_id      = module.virtual_machine_scale_sets[each.key].id
   extension                         = each.value.virtual_machine_scale_set_extensions.dependency_agent
