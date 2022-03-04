@@ -2,16 +2,12 @@ module "kusto_clusters" {
   source   = "./modules/databases/data_explorer/kusto_clusters"
   for_each = local.database.data_explorer.kusto_clusters
 
-  global_settings = local.global_settings
-  client_config   = local.client_config
-  settings        = each.value
-  location        = lookup(each.value, "region", null) == null ? local.resource_groups[each.value.resource_group.key].location : local.global_settings.regions[each.value.region]
-  base_tags       = try(local.global_settings.inherit_tags, false) ? local.resource_groups[each.value.resource_group.key].tags : {}
-
-  resource_group_name = coalesce(
-    try(local.combined_objects_resource_groups[try(each.value.resource_group.lz_key, local.client_config.landingzone_key)][each.value.resource_group.key].name, null),
-    try(each.value.resource_group.name, null)
-  )
+  global_settings     = local.global_settings
+  client_config       = local.client_config
+  settings            = each.value
+  location            = can(local.global_settings.regions[each.value.region]) ? local.global_settings.regions[each.value.region] : local.combined_objects_resource_groups[try(local.client_config.landingzone_key, each.value.resource_group.lz_key)][try(each.value.resource_group.key, each.value.resource_group_key)].location
+  resource_group_name = can(each.value.resource_group.name) || can(each.value.resource_group_name) ? try(each.value.resource_group.name, each.value.resource_group_name) : local.combined_objects_resource_groups[try(local.client_config.landingzone_key, each.value.resource_group.lz_key)][try(each.value.resource_group_key, each.value.resource_group.key)].name
+  base_tags           = try(local.global_settings.inherit_tags, false) ? local.combined_objects_resource_groups[try(local.client_config.landingzone_key, each.value.resource_group.lz_key)][try(each.value.resource_group.key, each.value.resource_group_key)].tags : {}
 
   combined_resources = {
     vnets              = local.combined_objects_networking
@@ -27,15 +23,12 @@ module "kusto_databases" {
   source   = "./modules/databases/data_explorer/kusto_databases"
   for_each = local.database.data_explorer.kusto_databases
 
-  global_settings = local.global_settings
-  client_config   = local.client_config
-  settings        = each.value
-  location        = lookup(each.value, "region", null) == null ? local.resource_groups[each.value.resource_group.key].location : local.global_settings.regions[each.value.region]
+  global_settings     = local.global_settings
+  client_config       = local.client_config
+  settings            = each.value
+  location            = can(local.global_settings.regions[each.value.region]) ? local.global_settings.regions[each.value.region] : local.combined_objects_resource_groups[try(local.client_config.landingzone_key, each.value.resource_group.lz_key)][try(each.value.resource_group.key, each.value.resource_group_key)].location
+  resource_group_name = can(each.value.resource_group.name) || can(each.value.resource_group_name) ? try(each.value.resource_group.name, each.value.resource_group_name) : local.combined_objects_resource_groups[try(local.client_config.landingzone_key, each.value.resource_group.lz_key)][try(each.value.resource_group_key, each.value.resource_group.key)].name
 
-  resource_group_name = coalesce(
-    try(local.combined_objects_resource_groups[try(each.value.resource_group.lz_key, local.client_config.landingzone_key)][each.value.resource_group.key].name, null),
-    try(each.value.resource_group.name, null)
-  )
   cluster_name = coalesce(
     try(local.combined_objects_kusto_clusters[try(each.value.kusto_cluster.lz_key, local.client_config.landingzone_key)][each.value.kusto_cluster.key].name, null),
     try(each.value.kusto_cluster.name, null)
