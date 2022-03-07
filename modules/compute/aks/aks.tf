@@ -49,8 +49,8 @@ resource "azurerm_kubernetes_cluster" "aks" {
     null_resource.aks_registration_preview
   ]
   name                = azurecaf_name.aks.result
-  location            = can(var.settings.region) ? var.global_settings.regions[var.settings.region] : var.resource_group.location
-  resource_group_name = var.resource_group.name
+  location            = var.location
+  resource_group_name = var.resource_group_name
 
   default_node_pool {
     availability_zones           = try(var.settings.default_node_pool.availability_zones, null)
@@ -76,19 +76,8 @@ resource "azurerm_kubernetes_cluster" "aks" {
     ultra_ssd_enabled            = try(var.settings.default_node_pool.ultra_ssd_enabled, false)
     vm_size                      = var.settings.default_node_pool.vm_size
 
-    pod_subnet_id = try(coalesce(
-      try(var.subnets[var.settings.default_node_pool.pod_subnet_key].id, null),
-      try(var.subnets[var.settings.default_node_pool.pod_subnet.key].id, null),
-      try(var.settings.default_node_pool.pod_subnet.resource_id, null),
-      try(var.settings.default_node_pool.pod_subnet_id, null)
-    ), null)
-
-    vnet_subnet_id = coalesce(
-      try(var.subnets[var.settings.default_node_pool.subnet_key].id, ""),
-      try(var.subnets[var.settings.default_node_pool.subnet.key].id, ""),
-      try(var.settings.default_node_pool.subnet.resource_id, ""),
-      try(var.settings.default_node_pool.vnet_subnet_id, "")
-    )
+    pod_subnet_id  = can(var.settings.default_node_pool.pod_subnet_key) == false || can(var.settings.default_node_pool.pod_subnet.key) == false || can(var.settings.default_node_pool.pod_subnet_id) || can(var.settings.default_node_pool.pod_subnet.resource_id) ? try(var.settings.default_node_pool.pod_subnet_id, var.settings.default_node_pool.pod_subnet.resource_id, null) : var.subnets[try(var.settings.default_node_pool.pod_subnet_key, var.settings.default_node_pool.pod_subnet.key)].id
+    vnet_subnet_id = can(var.settings.default_node_pool.vnet_subnet_id) || can(var.settings.default_node_pool.subnet.resource_id) ? try(var.settings.default_node_pool.vnet_subnet_id, var.settings.default_node_pool.subnet.resource_id) : var.subnets[try(var.settings.default_node_pool.subnet_key, var.settings.default_node_pool.subnet.key)].id
 
     dynamic "upgrade_settings" {
       for_each = try(var.settings.default_node_pool.upgrade_settings, null) == null ? [] : [1]
@@ -264,33 +253,17 @@ resource "azurerm_kubernetes_cluster" "aks" {
     for_each = try(var.settings.identity, null) == null ? [] : [1]
 
     content {
-      type = var.settings.identity.type
-      user_assigned_identity_id = lower(var.settings.identity.type) == "userassigned" ? coalesce(
-        try(var.settings.identity.user_assigned_identity_id, null),
-        try(var.managed_identities[var.settings.identity.lz_key][var.settings.identity.managed_identity_key].id, null),
-        try(var.managed_identities[var.client_config.landingzone_key][var.settings.identity.managed_identity_key].id, null)
-      ) : null
+      type                      = var.settings.identity.type
+      user_assigned_identity_id = lower(var.settings.identity.type) == "userassigned" ? can(var.settings.identity.user_assigned_identity_id) ? var.settings.identity.user_assigned_identity_id : var.managed_identities[try(var.settings.identity.lz_key, var.client_config.landingzone_key)][var.settings.identity.managed_identity_key].id : null
     }
   }
 
   dynamic "kubelet_identity" {
     for_each = try(var.settings.kubelet_identity, null) == null ? [] : [1]
     content {
-      client_id = coalesce(
-        try(kubelet_identity.value.client_id, null),
-        try(var.managed_identities[var.settings.kubelet_identity.lz_key][var.settings.kubelet_identity.managed_identity_key].client_id, null),
-        try(var.managed_identities[var.client_config.landingzone_key][var.settings.kubelet_identity.managed_identity_key].client_id, null)
-      )
-      object_id = coalesce(
-        try(kubelet_identity.value.object_id, null),
-        try(var.managed_identities[var.settings.kubelet_identity.lz_key][var.settings.kubelet_identity.managed_identity_key].principal_id, null),
-        try(var.managed_identities[var.client_config.landingzone_key][var.settings.kubelet_identity.managed_identity_key].principal_id, null)
-      )
-      user_assigned_identity_id = coalesce(
-        try(kubelet_identity.value.user_assigned_identity_id, null),
-        try(var.managed_identities[var.settings.kubelet_identity.lz_key][var.settings.kubelet_identity.managed_identity_key].id, null),
-        try(var.managed_identities[var.client_config.landingzone_key][var.settings.kubelet_identity.managed_identity_key].id, null)
-      )
+      client_id                 = can(kubelet_identity.value.client_id) ? kubelet_identity.value.client_id : var.managed_identities[try(var.settings.kubelet_identity.lz_key, var.client_config.landingzone_key)][var.settings.kubelet_identity.managed_identity_key].client_id
+      object_id                 = can(kubelet_identity.value.object_id) ? kubelet_identity.value.object_id : var.managed_identities[try(var.settings.kubelet_identity.lz_key, var.client_config.landingzone_key)][var.settings.kubelet_identity.managed_identity_key].principal_id
+      user_assigned_identity_id = can(kubelet_identity.value.user_assigned_identity_id) ? kubelet_identity.value.user_assigned_identity_id : var.managed_identities[try(var.settings.kubelet_identity.lz_key, var.client_config.landingzone_key)][var.settings.kubelet_identity.managed_identity_key].id
     }
   }
 
@@ -503,12 +476,8 @@ resource "azurerm_kubernetes_cluster_node_pool" "nodepools" {
   orchestrator_version     = try(each.value.orchestrator_version, try(var.settings.kubernetes_version, null))
   os_disk_size_gb          = try(each.value.os_disk_size_gb, null)
   os_disk_type             = try(each.value.os_disk_type, null)
-  pod_subnet_id = try(coalesce(
-    try(var.subnets[each.value.pod_subnet_key].id, ""),
-    try(var.subnets[each.value.pod_subnet.key].id, ""),
-    try(each.value.pod_subnet.resource_id, ""),
-    try(each.value.pod_subnet_id, "")), null
-  )
+  pod_subnet_id            = can(each.value.pod_subnet_key) == false || can(each.value.pod_subnet.key) == false || can(each.value.pod_subnet_id) || can(each.value.pod_subnet.resource_id) ? try(each.value.pod_subnet_id, each.value.pod_subnet.resource_id, null) : var.subnets[try(each.value.pod_subnet.key, each.value.pod_subnet_key)].id
+
   os_sku                       = try(each.value.os_sku, null)
   os_type                      = try(each.value.os_type, null)
   priority                     = try(each.value.priority, null)
@@ -522,12 +491,9 @@ resource "azurerm_kubernetes_cluster_node_pool" "nodepools" {
       max_surge = upgrade_settings.value.max_surge
     }
   }
-  vnet_subnet_id = coalesce(
-    try(var.subnets[each.value.subnet_key].id, ""),
-    try(var.subnets[each.value.subnet.key].id, ""),
-    try(each.value.subnet.resource_id, ""),
-    try(each.value.vnet_subnet_id, "")
-  )
+
+  vnet_subnet_id = can(each.value.subnet.resource_id) || can(each.value.vnet_subnet_id) ? try(each.value.subnet.resource_id, each.value.vnet_subnet_id) : var.subnets[try(each.value.subnet.key, each.value.subnet_key)].id
+
   max_count  = try(each.value.max_count, null)
   min_count  = try(each.value.min_count, null)
   node_count = try(each.value.node_count, null)
