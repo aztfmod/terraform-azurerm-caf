@@ -309,4 +309,7 @@ module "example" {
     api_management_gateway_api          = var.api_management_gateway_api
     api_management_group                = var.api_management_group
   }
+  purview = {
+    purview_account = var.purview_account
+  }  
 }

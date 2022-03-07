@@ -91,7 +91,9 @@ locals {
   communication = {
     communication_services = try(var.communication.communication_services, {})
   }
-
+  purview = {
+    purview_account = try(var.purview.purview_account,{})
+  }
   database = {
     app_config                         = try(var.database.app_config, {})
     azurerm_redis_caches               = try(var.database.azurerm_redis_caches, {})
