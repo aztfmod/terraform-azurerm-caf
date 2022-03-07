@@ -76,17 +76,26 @@ resource "azurerm_firewall" "fw" {
   }
 
   dynamic "virtual_hub" {
-    for_each = try(var.settings.virtual_hub, {})
+    for_each = {
+      for key, value in try(var.settings.virtual_hub, {}) : key => value
+      if can(value.virtual_wan_key) == false
+    }
+
     content {
-      virtual_hub_id = coalesce(
-        try(virtual_hub.value.virtual_hub_id, null),
-        try(var.virtual_wans[virtual_hub.value.lz_key][virtual_hub.value.virtual_wan_key].virtual_hubs[virtual_hub.value.virtual_hub_key].id, null),
-        try(var.virtual_wans[var.client_config.landingzone_key][virtual_hub.value.virtual_wan_key].virtual_hubs[virtual_hub.value.virtual_hub_key].id, null),
-        try(var.virtual_hubs[virtual_hub.value.lz_key][virtual_hub.value.virtual_hub_key].id, null),
-        try(var.virtual_hubs[var.client_config.landingzone_key][virtual_hub.value.virtual_hub_key].id, null),
-        try(var.virtual_hubs[virtual_hub.value.lz_key][virtual_hub.value.key].id, null),
-        try(var.virtual_hubs[var.client_config.landingzone_key][virtual_hub.value.key].id, null)
-      )
+      virtual_hub_id = can(virtual_hub.value.virtual_hub_id) || can(virtual_hub.value.virtual_hub.id) ? try(virtual_hub.value.virtual_hub_id, virtual_hub.value.virtual_hub.id) : var.virtual_hubs[try(virtual_hub.value.lz_key, virtual_hub.value.virtual_hub.lz_key, var.client_config.landingzone_key)][try(virtual_hub.value.virtual_hub.key, virtual_hub.value.virtual_hub_key, virtual_hub.value.key)].id
+
+      public_ip_count = try(virtual_hub.value.public_ip_count, 1)
+    }
+  }
+
+  dynamic "virtual_hub" {
+    for_each = {
+      for key, value in try(var.settings.virtual_hub, {}) : key => value
+      if can(value.virtual_wan_key)
+    }
+
+    content {
+      virtual_hub_id = var.virtual_wans[try(virtual_hub.value.lz_key, var.client_config.landingzone_key)][virtual_hub.value.virtual_wan_key].virtual_hubs[virtual_hub.value.virtual_hub_key].id
 
       public_ip_count = try(virtual_hub.value.public_ip_count, 1)
     }
