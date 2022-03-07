@@ -180,6 +180,7 @@
     "storage_accounts/107-storage-account-management-policy",
     "storage_container/101-storage_container",
     "synapse_analytics/100-synapse",
+    "synapse/100-synapse_workspace",
     "synapse_analytics/101-synapse-sparkpool",
     "webapps/appservice/101-appservice-simple",
     "webapps/appservice/102-appservice-slots",

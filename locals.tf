@@ -312,10 +312,11 @@ locals {
   }
 
   storage = {
-    netapp_accounts        = try(var.storage.netapp_accounts, {})
-    storage_account_blobs  = try(var.storage.storage_account_blobs, {})
-    storage_account_queues = try(var.storage.storage_account_queues, {})
-    storage_containers     = try(var.storage.storage_containers, {})
+    netapp_accounts                   = try(var.storage.netapp_accounts, {})
+    storage_account_blobs             = try(var.storage.storage_account_blobs, {})
+    storage_account_queues            = try(var.storage.storage_account_queues, {})
+    storage_containers                = try(var.storage.storage_containers, {})
+    storage_data_lake_gen2_filesystem = try(var.storage.storage_data_lake_gen2_filesystem, {})
   }
 
   webapp = {
@@ -352,5 +353,29 @@ locals {
     api_management_gateway              = try(var.apim.api_management_gateway, {})
     api_management_gateway_api          = try(var.apim.api_management_gateway_api, {})
     api_management_group                = try(var.apim.api_management_group, {})
+  }
+  synapse = {
+    synapse_firewall_rule                              = try(var.synapse.synapse_firewall_rule, {})
+    synapse_integration_runtime_azure                  = try(var.synapse.synapse_integration_runtime_azure, {})
+    synapse_integration_runtime_self_hosted            = try(var.synapse.synapse_integration_runtime_self_hosted, {})
+    synapse_linked_service                             = try(var.synapse.synapse_linked_service, {})
+    synapse_managed_private_endpoint                   = try(var.synapse.synapse_managed_private_endpoint, {})
+    synapse_private_link_hub                           = try(var.synapse.synapse_private_link_hub, {})
+    synapse_role_assignment                            = try(var.synapse.synapse_role_assignment, {})
+    synapse_spark_pool                                 = try(var.synapse.synapse_spark_pool, {})
+    synapse_sql_pool                                   = try(var.synapse.synapse_sql_pool, {})
+    synapse_sql_pool_extended_auditing_policy          = try(var.synapse.synapse_sql_pool_extended_auditing_policy, {})
+    synapse_sql_pool_security_alert_policy             = try(var.synapse.synapse_sql_pool_security_alert_policy, {})
+    synapse_sql_pool_vulnerability_assessment          = try(var.synapse.synapse_sql_pool_vulnerability_assessment, {})
+    synapse_sql_pool_vulnerability_assessment_baseline = try(var.synapse.synapse_sql_pool_vulnerability_assessment_baseline, {})
+    synapse_sql_pool_workload_classifier               = try(var.synapse.synapse_sql_pool_workload_classifier, {})
+    synapse_sql_pool_workload_group                    = try(var.synapse.synapse_sql_pool_workload_group, {})
+    synapse_workspace                                  = try(var.synapse.synapse_workspace, {})
+    synapse_workspace_aad_admin                        = try(var.synapse.synapse_workspace_aad_admin, {})
+    synapse_workspace_extended_auditing_policy         = try(var.synapse.synapse_workspace_extended_auditing_policy, {})
+    synapse_workspace_keys                             = try(var.synapse.synapse_workspace_keys, {})
+    synapse_workspace_security_alert_policy            = try(var.synapse.synapse_workspace_security_alert_policy, {})
+    synapse_workspace_sql_aad_admin                    = try(var.synapse.synapse_workspace_sql_aad_admin, {})
+    synapse_workspace_vulnerability_assessment         = try(var.synapse.synapse_workspace_vulnerability_assessment, {})
   }
 }

@@ -235,10 +235,11 @@ module "example" {
     shared_image_galleries         = var.shared_image_galleries
   }
   storage = {
-    netapp_accounts        = var.netapp_accounts
-    storage_account_blobs  = var.storage_account_blobs
-    storage_account_queues = var.storage_account_queues
-    storage_containers     = var.storage_containers
+    netapp_accounts                   = var.netapp_accounts
+    storage_account_blobs             = var.storage_account_blobs
+    storage_account_queues            = var.storage_account_queues
+    storage_containers                = var.storage_containers
+    storage_data_lake_gen2_filesystem = var.storage_data_lake_gen2_filesystem
 
   }
   webapp = {
@@ -308,5 +309,29 @@ module "example" {
     api_management_gateway              = var.api_management_gateway
     api_management_gateway_api          = var.api_management_gateway_api
     api_management_group                = var.api_management_group
+  }
+  synapse = {
+    synapse_firewall_rule                              = var.synapse_firewall_rule
+    synapse_integration_runtime_azure                  = var.synapse_integration_runtime_azure
+    synapse_integration_runtime_self_hosted            = var.synapse_integration_runtime_self_hosted
+    synapse_linked_service                             = var.synapse_linked_service
+    synapse_managed_private_endpoint                   = var.synapse_managed_private_endpoint
+    synapse_private_link_hub                           = var.synapse_private_link_hub
+    synapse_role_assignment                            = var.synapse_role_assignment
+    synapse_spark_pool                                 = var.synapse_spark_pool
+    synapse_sql_pool                                   = var.synapse_sql_pool
+    synapse_sql_pool_extended_auditing_policy          = var.synapse_sql_pool_extended_auditing_policy
+    synapse_sql_pool_security_alert_policy             = var.synapse_sql_pool_security_alert_policy
+    synapse_sql_pool_vulnerability_assessment          = var.synapse_sql_pool_vulnerability_assessment
+    synapse_sql_pool_vulnerability_assessment_baseline = var.synapse_sql_pool_vulnerability_assessment_baseline
+    synapse_sql_pool_workload_classifier               = var.synapse_sql_pool_workload_classifier
+    synapse_sql_pool_workload_group                    = var.synapse_sql_pool_workload_group
+    synapse_workspace                                  = var.synapse_workspace
+    synapse_workspace_aad_admin                        = var.synapse_workspace_aad_admin
+    synapse_workspace_extended_auditing_policy         = var.synapse_workspace_extended_auditing_policy
+    synapse_workspace_keys                             = var.synapse_workspace_keys
+    synapse_workspace_security_alert_policy            = var.synapse_workspace_security_alert_policy
+    synapse_workspace_sql_aad_admin                    = var.synapse_workspace_sql_aad_admin
+    synapse_workspace_vulnerability_assessment         = var.synapse_workspace_vulnerability_assessment
   }
 }
