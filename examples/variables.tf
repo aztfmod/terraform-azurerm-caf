@@ -831,6 +831,6 @@ variable "monitor_activity_log_alert" {
 variable "log_analytics_storage_insights" {
   default = {}
 }
-variable "purview_account" {
+variable "purview_accounts" {
   default = {}
 }

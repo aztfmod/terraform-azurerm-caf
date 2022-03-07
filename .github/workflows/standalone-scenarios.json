@@ -160,7 +160,7 @@
     "postgresql_server/101-vnet-rule-postgresql",
     "postgresql_server/102-private-endpoint-postgresql",
     "postgresql_server/103-private-endpoint-with-fw-rule",
-    "purview/100-purview_account",
+    "purview/100-purview_accounts",
     "recovery_vault/101-simple-asrv",
     "recovery_vault/102-asr-protection",
     "recovery_vault/103-asr-with-private-endpoint",

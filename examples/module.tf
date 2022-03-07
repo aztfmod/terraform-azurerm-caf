@@ -310,6 +310,6 @@ module "example" {
     api_management_group                = var.api_management_group
   }
   purview = {
-    purview_account = var.purview_account
-  }  
+    purview_accounts = var.purview_accounts
+  }
 }

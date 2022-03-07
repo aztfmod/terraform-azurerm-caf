@@ -3,7 +3,7 @@ module "caf" {
   version = "5.1.0"
 }
 
-# purview_account
+# purview_accounts
 
 ## Inputs
 | Name | Description | Type | Required |

@@ -10,7 +10,7 @@ resource_groups = {
   }
 }
 
-purview_account = {
+purview_accounts = {
   pva1 = {
     name   = "pva1"
     region = "region1"

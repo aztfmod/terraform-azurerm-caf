@@ -92,7 +92,7 @@ locals {
     communication_services = try(var.communication.communication_services, {})
   }
   purview = {
-    purview_account = try(var.purview.purview_account,{})
+    purview_accounts = try(var.purview.purview_accounts, {})
   }
   database = {
     app_config                         = try(var.database.app_config, {})
