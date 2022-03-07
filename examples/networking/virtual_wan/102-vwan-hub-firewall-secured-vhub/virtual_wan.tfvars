@@ -4,17 +4,17 @@
 # 3. Firewall Policy Deployment (It can be idependent of vHUB/vWAN deployment also)
 # 4. Deploy Azure Firewall into the virtual hub (Thus, coverting virtual HUB into Secured Virtual HUB)
 # 5. Route Table Deployment (If using Internet Egress Control via Secured vHUB Firewall,
-# Then it should deployed in sequence after Secured vHUB deployment) 
+# Then it should deployed in sequence after Secured vHUB deployment)
 
 
 global_settings = {
   default_region = "region1"
   regions = {
     region1 = "eastus2"
- }
+  }
 }
 
-# Seperate Resource Group where Azure Firewall will be deployed into 
+# Seperate Resource Group where Azure Firewall will be deployed into
 resource_groups = {
   contoso_global_wan = {
     name   = "contoso-connectivity-global-wan"
@@ -39,7 +39,7 @@ virtual_hubs = {
   hub1 = {
     virtual_wan = {
       # lz_key = "connectivity_virtual_wan"
-      key    = "contoso_global_wan"
+      key = "contoso_global_wan"
     }
 
     resource_group = {
@@ -60,23 +60,23 @@ virtual_hubs = {
 
 azurerm_firewall_policies = {
   policy1 = {
-    name                = "firewall_policy"
+    name = "firewall_policy"
     # region            = {
     #   key  = "region1"
     # }
     # resource_group = {
     #   key = "firewall_policy"
     # }
-    resource_group_key  = "firewall_policy"
-    sku                 = "Standard"
-    region              = "region1"
+    resource_group_key = "firewall_policy"
+    sku                = "Standard"
+    region             = "region1"
     # Premium Policy Features
-  #   dns = {
-  #     proxy_enabled = "true"
-  #   }
-  #   threat_intelligence_mode = "Alert"
-  #   threat_intelligence_allowlist = {
-  #     fqdns = ["microsoft.com", "demo.com"]
+    #   dns = {
+    #     proxy_enabled = "true"
+    #   }
+    #   threat_intelligence_mode = "Alert"
+    #   threat_intelligence_allowlist = {
+    #     fqdns = ["microsoft.com", "demo.com"]
   }
 }
 
@@ -106,7 +106,7 @@ azurerm_firewall_policy_rule_collection_groups = {
               }
             }
             source_addresses  = ["192.168.12.0/23"]
-            destination_fqdns = ["*.linkedin.com","*.facebook.com"]
+            destination_fqdns = ["*.linkedin.com", "*.facebook.com"]
           }
         }
       }
@@ -176,11 +176,11 @@ azurerm_firewall_policy_rule_collection_groups = {
 # Azure Firewall Deployement into vHUB to covert into secured vHUB
 azurerm_firewalls = {
   firewall1 = {
-    name                 = "test-firewall"
-    sku_name             = "AZFW_Hub"
-    sku_tier             = "Standard" # Standard, Premium
-    firewall_policy_key  = "policy1" # Ensure Policy is of same SKU as Firewall
-    region               = "region1"
+    name                = "test-firewall"
+    sku_name            = "AZFW_Hub"
+    sku_tier            = "Standard" # Standard, Premium
+    firewall_policy_key = "policy1"  # Ensure Policy is of same SKU as Firewall
+    region              = "region1"
     # resource_group_key  = "firewall1"
     resource_group = {
       # lz_key = "firewallpolicy" # In case key to call out from Remote TState
@@ -212,16 +212,16 @@ virtual_hub_route_tables = {
         destinations_type = "CIDR"
         destinations      = ["0.0.0.0/0"]
 
-      # #   # Either next_hop or next_hop_id can be used
-      # #   # When using next_hop, the virtual_hub_connection must be deployed in a different landingzone. This cannot be tested in the standalone module.
-      # #   # Will be covered in the landingzone starter production configuration in future releases.
+        # #   # Either next_hop or next_hop_id can be used
+        # #   # When using next_hop, the virtual_hub_connection must be deployed in a different landingzone. This cannot be tested in the standalone module.
+        # #   # Will be covered in the landingzone starter production configuration in future releases.
         next_hop = {
           # lz_key        = "secazfw1" #
-          resource_type = "azurerm_firewalls"  # Only supported value in case secured hub.
+          resource_type = "azurerm_firewalls" # Only supported value in case secured hub.
           key           = "firewall1"
         }
-      # # #   #to cather for external object
-      #   next_hop_id       = "Azure_Resource_ID"
+        # # #   #to cather for external object
+        #   next_hop_id       = "Azure_Resource_ID"
       }
     }
   }
