@@ -11,22 +11,18 @@ module "azurerm_firewalls" {
   diagnostic_profiles = try(each.value.diagnostic_profiles, null)
   diagnostics         = local.combined_diagnostics
   global_settings     = local.global_settings
-  location            = lookup(each.value, "region", null) == null ? local.resource_groups[each.value.resource_group_key].location : local.global_settings.regions[each.value.region]
+  location            = can(local.global_settings.regions[each.value.region]) ? local.global_settings.regions[each.value.region] : local.combined_objects_resource_groups[try(local.client_config.landingzone_key, each.value.resource_group.lz_key)][try(each.value.resource_group.key, each.value.resource_group_key)].location
   name                = each.value.name
   public_ip_addresses = try(module.public_ip_addresses, null)
   public_ip_id        = try(module.public_ip_addresses[each.value.public_ip_key].id, null)
   public_ip_keys      = try(each.value.public_ip_keys, null)
+  resource_group_name = can(each.value.resource_group.name) ? each.value.resource_group.name : local.combined_objects_resource_groups[try(local.client_config.landingzone_key, each.value.resource_group.lz_key)][try(each.value.resource_group_key, each.value.resource_group.key)].name
   settings            = each.value
   subnet_id           = try(module.networking[each.value.vnet_key].subnets["AzureFirewallSubnet"].id, null)
   tags                = try(each.value.tags, null)
   virtual_hubs        = local.combined_objects_virtual_hubs
   virtual_networks    = local.combined_objects_networking
   virtual_wans        = local.combined_objects_virtual_wans
-  
-  resource_group_name = coalesce(
-    try(local.combined_objects_resource_groups[try(each.value.resource_group.lz_key, local.client_config.landingzone_key)][each.value.resource_group.key].name, null),
-    try(local.resource_groups[each.value.resource_group_key].name, null)
-  )
 
   firewall_policy_id = try(coalesce(
     try(local.combined_objects_azurerm_firewall_policies[each.value.firewall_policy.lz_key][each.value.firewall_policy.key].id, null),

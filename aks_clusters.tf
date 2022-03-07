@@ -34,10 +34,7 @@ module "aks_clusters" {
     each.value.private_dns_zone.id,
     null
   )
-
-  resource_group = try(
-    local.resource_groups[each.value.resource_group_key],
-    local.combined_objects_resource_groups[each.value.resource_group.lz_key][each.value.resource_group.key]
-  )
+  location            = can(local.global_settings.regions[each.value.region]) ? local.global_settings.regions[each.value.region] : local.combined_objects_resource_groups[try(local.client_config.landingzone_key, each.value.resource_group.lz_key)][try(each.value.resource_group.key, each.value.resource_group_key)].location
+  resource_group_name = can(each.value.resource_group.name) || can(each.value.resource_group_name) ? try(each.value.resource_group.name, each.value.resource_group_name) : local.combined_objects_resource_groups[try(local.client_config.landingzone_key, each.value.resource_group.lz_key)][try(each.value.resource_group_key, each.value.resource_group.key)].name
 
 }

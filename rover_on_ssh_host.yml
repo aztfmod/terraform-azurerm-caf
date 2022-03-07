@@ -11,7 +11,7 @@
 version: '3.7'
 services:
   rover:
-    image: aztfmod/rover-preview:1.1.6-2202.210742
+    image: aztfmod/rover:1.1.6-2202.2503
 
     user: vscode
 
