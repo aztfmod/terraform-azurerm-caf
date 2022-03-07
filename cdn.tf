@@ -10,11 +10,7 @@ module "cdn_endpoint" {
   resource_group_name = can(each.value.resource_group.name) || can(each.value.resource_group_name) ? try(each.value.resource_group.name, each.value.resource_group_name) : local.combined_objects_resource_groups[try(local.client_config.landingzone_key, each.value.resource_group.lz_key)][try(each.value.resource_group_key, each.value.resource_group.key)].name
 
   remote_objects = {
-    profile_name = coalesce(
-      try(local.combined_objects_cdn_profile[each.value.profile.lz_key][each.value.profile.key].name, null),
-      try(local.combined_objects_cdn_profile[local.client_config.landingzone_key][each.value.profile.key].name, null),
-      try(each.value.profile.name, null)
-    )
+    profile_name = can(each.value.profile.name) ? each.value.profile.name : local.combined_objects_cdn_profile[try(local.client_config.landingzone_key, each.value.profile.lz_key)][each.value.profile.key].name
   }
 }
 
