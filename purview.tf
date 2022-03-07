@@ -1,6 +1,6 @@
-module "purview_account" {
-  source   = "./modules/purview/purview_account"
-  for_each = local.purview.purview_account
+module "purview_accounts" {
+  source   = "./modules/purview/purview_accounts"
+  for_each = local.purview.purview_accounts
 
   global_settings     = local.global_settings
   client_config       = local.client_config
@@ -15,6 +15,6 @@ module "purview_account" {
     resource_group = local.combined_objects_resource_groups
   }
 }
-output "purview_account" {
-  value = module.purview_account
+output "purview_accounts" {
+  value = module.purview_accounts
 }
