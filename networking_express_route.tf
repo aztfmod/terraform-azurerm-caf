@@ -8,7 +8,7 @@ module "express_route_circuits" {
   source   = "./modules/networking/express_route_circuit"
   for_each = local.networking.express_route_circuits
 
-  settings = each.value
+  settings            = each.value
   resource_group_name = can(each.value.resource_group.name) ? each.value.resource_group.name : local.combined_objects_resource_groups[try(local.client_config.landingzone_key, each.value.resource_group.lz_key)][try(each.value.resource_group_key, each.value.resource_group.key)].name
   resource_groups     = local.resource_groups
   location            = lookup(each.value, "region", null) == null ? local.resource_groups[each.value.resource_group_key].location : local.global_settings.regions[each.value.region]
