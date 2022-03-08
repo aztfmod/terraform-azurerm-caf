@@ -136,7 +136,7 @@ network_interface_backend_address_pool_association = {
       key = "lbap1"
       #id = ""
     }
-    ip_configuration_name = "0"
+    # ip_configuration_name = "0"
     network_interface = {
       vm_key  = "vm1"
       nic_key = "nic0"
