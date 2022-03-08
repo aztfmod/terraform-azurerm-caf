@@ -21,11 +21,5 @@ module "vpn_sites" {
   resource_group_name = can(each.value.resource_group.name) || can(each.value.resource_group_name) ? try(each.value.resource_group.name, each.value.resource_group_name) : local.combined_objects_resource_groups[try(each.value.resource_group.lz_key, local.client_config.landingzone_key)][try(each.value.resource_group_key, each.value.resource_group.key)].name
   base_tags           = try(local.global_settings.inherit_tags, false) ? local.combined_objects_resource_groups[try(each.value.resource_group.lz_key, local.client_config.landingzone_key)][try(each.value.resource_group.key, each.value.resource_group_key)].tags : {}
 
-  virtual_wan_id = coalesce(
-    try(local.combined_objects_virtual_wans[try(each.value.virtual_wan.lz_key, local.client_config.landingzone_key)][each.value.virtual_wan.key].virtual_wan.id, null),
-    try(local.combined_objects_virtual_wans[try(each.value.lz_key, local.client_config.landingzone_key)][each.value.virtual_wan_key].virtual_wan.id, null),
-    try(each.value.virtual_wan.resource_id, null),
-    try(each.value.virtual_wan.id, null),
-    try(each.value.virtual_wan_id, null)
-  )
+  virtual_wan_id = can(each.value.virtual_wan_id) || can(each.value.virtual_wan.id) ? try(each.value.virtual_wan_id, each.value.virtual_wan.id) : local.combined_objects_virtual_wans[try(each.value.virtual_wan.lz_key, each.value.lz_key, local.client_config.landingzone_key)][try(each.value.virtual_wan.key, each.value.virtual_wan_key)].virtual_wan.id
 }
