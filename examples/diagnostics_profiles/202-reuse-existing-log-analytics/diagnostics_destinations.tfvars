@@ -12,6 +12,7 @@ diagnostics_destinations = {
       #log_analytics_key              = "central_logs_region1"
       #log_analytics_destination_type = "Dedicated"
       log_analytics_resource_id = "/subscriptions/0-0-0-0-0/resourcegroups/eqej-rg-operations/providers/microsoft.operationalinsights/workspaces/eqej-log-logs"
+      workspace_id              = "0-0-0-0-0"
     }
   }
 
