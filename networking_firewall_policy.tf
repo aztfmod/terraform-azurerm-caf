@@ -31,7 +31,7 @@ module "azurerm_firewall_policies_child" {
 
 
 resource "time_sleep" "after_azurerm_firewall_policies" {
-  count = can(local.networking.azurerm_firewall_policy_rule_collection_groups) ? 1 : 0
+  count = local.networking.azurerm_firewall_policy_rule_collection_groups != {} ? 1 : 0
   depends_on = [
     module.azurerm_firewall_policies,
     module.azurerm_firewall_policies_child

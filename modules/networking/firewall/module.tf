@@ -41,7 +41,7 @@ resource "azurerm_firewall" "fw" {
 
     content {
       name                 = ip_configuration.key
-      public_ip_address_id = var.public_ip_addresses[ip_configuration.value].id
+      public_ip_address_id = var.public_ip_addresses[var.client_config.landingzone_key][ip_configuration.value].id
       subnet_id            = try(var.subnet_id, null)
     }
   }
@@ -51,7 +51,7 @@ resource "azurerm_firewall" "fw" {
 
     content {
       name                 = ip_configuration.key
-      public_ip_address_id = var.public_ip_addresses[ip_configuration.value].id
+      public_ip_address_id = var.public_ip_addresses[var.client_config.landingzone_key][ip_configuration.value].id
       subnet_id            = ip_configuration.key == 0 ? var.subnet_id : null
     }
   }
