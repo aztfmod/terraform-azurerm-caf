@@ -54,13 +54,7 @@ module "diagnostic_event_hub_namespaces" {
   settings        = each.value
   client_config   = local.client_config
   base_tags       = try(local.global_settings.inherit_tags, false) ? local.resource_groups[each.value.resource_group_key].tags : {}
-
-  resource_group = coalesce(
-    try(local.combined_objects_resource_groups[local.client_config.landingzone_key][each.value.resource_group_key], null),
-    try(local.combined_objects_resource_groups[each.value.lz_key][each.value.resource_group_key], null),
-    try(local.combined_objects_resource_groups[local.client_config.landingzone_key][each.value.resource_group.key], null),
-    try(local.combined_objects_resource_groups[each.value.resource_group.lz_key][each.value.resource_group.key], null)
-  )
+  resource_group  = local.combined_objects_resource_groups[try(each.value.lz_key, local.client_config.landingzone_key)][try(each.value.resource_group_key, each.value.resource_group.key)]
 }
 
 module "diagnostic_event_hub_namespaces_diagnostics" {

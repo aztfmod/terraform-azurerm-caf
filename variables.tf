@@ -391,3 +391,6 @@ variable "identity" {
 variable "apim" {
   default = {}
 }
+variable "purview" {
+  default = {}
+}
