@@ -62,6 +62,9 @@ resource "azurerm_virtual_hub_connection" "vhub_connection" {
         content {
           name             = static_vnet_route.value.name
           address_prefixes = static_vnet_route.value.address_prefixes
+
+          # next_hop_ip_address = can(static_vnet_route.value.next_hop_ip_address)
+
           next_hop_ip_address = coalesce(
             try(static_vnet_route.value.next_hop_ip_address, null),
             try(local.combined_objects_azurerm_firewalls[static_vnet_route.value.next_hop.lz_key][static_vnet_route.value.next_hop.key].ip_configuration[static_vnet_route.value.next_hop.interface_index].private_ip_address, null),

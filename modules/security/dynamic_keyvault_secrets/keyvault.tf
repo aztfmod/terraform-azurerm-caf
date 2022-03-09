@@ -6,7 +6,7 @@ module "secret" {
   }
 
   name        = each.value.secret_name
-  value       = can(each.value.value) ? each.value.value : lookup(var.objects[each.value.output_key], try(each.value.resource_key, null), each.value.attribute_key)
+  value       = can(each.value.value) ? each.value.value : var.objects[each.value.output_key][try(each.value.resource_key, each.value.attribute_key)][try(each.value.attribute_key, "")]
   keyvault_id = var.keyvault.id
 }
 
@@ -30,6 +30,6 @@ module "secret_immutable" {
   }
 
   name        = each.value.secret_name
-  value       = can(each.value.value) ? each.value.value : lookup(var.objects[each.value.output_key], try(each.value.resource_key, null), each.value.attribute_key)
+  value       = can(each.value.value) ? each.value.value : var.objects[each.value.output_key][try(each.value.resource_key, each.value.attribute_key)][try(each.value.attribute_key, "")]
   keyvault_id = var.keyvault.id
 }
