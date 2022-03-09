@@ -14,7 +14,7 @@ Version 5.6.0 includes support for azurerm 2.98 which requires your attention if
   - If you are referencing literals for data factory name inside ```data_factory.datasets``` (azure_blob, cosmosdb_sqlapi, delimited_text, http, json, mysql, postgresql, sql_server_table) or ```data_factory.linked_services``` (azure_blob_storage, cosmosdb, web, mysql, postgresql, key_vault) you will need to update to use the ```id``` attribute instead of ```name```.
   - **If you are referencing objects with ```key``` and ```lz_key``` inside your model, you dont need to update anything.**
 
-- servive bus:
+- service bus:
   - The `namespace_name` field is deprecated in favour of `namespace_id` and will be removed in version 3.0 of the AzureRM provider.
   - The `topic_name` field is deprecated in favour of `topic_id` and will be removed in version 3.0 of the AzureRM provider.
   - The `subscription_name` field is deprecated in favour of `subscription_id` and will be removed in version 3.0 of the AzureRM provider.
@@ -22,7 +22,7 @@ Version 5.6.0 includes support for azurerm 2.98 which requires your attention if
 
 - apim:
   - The ```proxy``` block is deprecated in favour of `gateway` and will be removed in version 3.0 of the AzureRM provider.
-  - Azurerm 2.96 does not seem to have ```gateway``` implemented yet, even with ```ARM_THREEPOINTZERO_BETA_RESOURCES=true```
+  - Azurerm 2.98 does not have ```gateway``` implemented yet, even with ```ARM_THREEPOINTZERO_BETA_RESOURCES=true```
 
 - azure virtual desktop:
   - azurerm 2.97 addedd support for new token method - azurerm_virtual_desktop_host_pool_registration_info - updated and should be transparent.
