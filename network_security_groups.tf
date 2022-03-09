@@ -7,13 +7,15 @@ module "network_security_groups" {
   }
 
   application_security_groups = local.combined_objects_application_security_groups
-  base_tags                   = try(local.global_settings.inherit_tags, false) ? local.resource_groups[each.value.resource_group_key].tags : {}
   client_config               = local.client_config
   diagnostics                 = local.combined_diagnostics
   global_settings             = local.global_settings
-  location                    = lookup(each.value, "region", null) == null ? local.resource_groups[each.value.resource_group_key].location : local.global_settings.regions[each.value.region]
-  resource_group_name         = local.resource_groups[each.value.resource_group_key].name
+  location                    = can(local.global_settings.regions[each.value.region]) ? local.global_settings.regions[each.value.region] : local.combined_objects_resource_groups[try(each.value.resource_group.lz_key, local.client_config.landingzone_key)][try(each.value.resource_group.key, each.value.resource_group_key)].location
+  resource_group_name         = can(each.value.resource_group.name) || can(each.value.resource_group_name) ? try(each.value.resource_group.name, each.value.resource_group_name) : local.combined_objects_resource_groups[try(each.value.resource_group.lz_key, local.client_config.landingzone_key)][try(each.value.resource_group_key, each.value.resource_group.key)].name
+  base_tags                   = try(local.global_settings.inherit_tags, false) ? local.combined_objects_resource_groups[try(each.value.resource_group.lz_key, local.client_config.landingzone_key)][try(each.value.resource_group.key, each.value.resource_group_key)].tags : {}
+  network_watchers            = local.combined_objects_network_watchers
   settings                    = each.value
+
 
   // Module to support the NSG creation outside of the a subnet
   // version = 1 of NSG can be attached to a nic or a subnet

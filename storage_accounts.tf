@@ -12,25 +12,10 @@ module "storage_accounts" {
   recovery_vaults   = local.combined_objects_recovery_vaults
   private_dns       = local.combined_objects_private_dns
 
-  location = try(
-    local.global_settings.regions[each.value.region],
-    local.combined_objects_resource_groups[each.value.resource_group.lz_key][each.value.resource_group.key].location,
-    local.combined_objects_resource_groups[each.value.resource_group.lz_key][each.value.resource_group_key].location,
-    local.combined_objects_resource_groups[local.client_config.landingzone_key][each.value.resource_group.key].location,
-    local.combined_objects_resource_groups[local.client_config.landingzone_key][each.value.resource_group_key].location
-  )
-  base_tags = try(local.global_settings.inherit_tags, false) ? coalesce(
-    try(local.combined_objects_resource_groups[each.value.resource_group.lz_key][each.value.resource_group.key].tags, null),
-    try(local.combined_objects_resource_groups[each.value.resource_group.lz_key][each.value.resource_group_key].tags, null),
-    try(local.combined_objects_resource_groups[local.client_config.landingzone_key][each.value.resource_group.key].tags, null),
-    try(local.combined_objects_resource_groups[local.client_config.landingzone_key][each.value.resource_group_key].tags, null)
-  ) : {}
-  resource_group_name = try(
-    local.combined_objects_resource_groups[each.value.resource_group.lz_key][each.value.resource_group.key].name,
-    local.combined_objects_resource_groups[each.value.resource_group.lz_key][each.value.resource_group_key].name,
-    local.combined_objects_resource_groups[local.client_config.landingzone_key][each.value.resource_group.key].name,
-    local.combined_objects_resource_groups[local.client_config.landingzone_key][each.value.resource_group_key].name
-  )
+  location            = can(local.global_settings.regions[each.value.region]) ? local.global_settings.regions[each.value.region] : local.combined_objects_resource_groups[try(each.value.resource_group.lz_key, local.client_config.landingzone_key)][try(each.value.resource_group.key, each.value.resource_group_key)].location
+  resource_group_name = can(each.value.resource_group.name) || can(each.value.resource_group_name) ? try(each.value.resource_group.name, each.value.resource_group_name) : local.combined_objects_resource_groups[try(each.value.resource_group.lz_key, local.client_config.landingzone_key)][try(each.value.resource_group_key, each.value.resource_group.key)].name
+  base_tags           = try(local.global_settings.inherit_tags, false) ? local.combined_objects_resource_groups[try(each.value.resource_group.lz_key, local.client_config.landingzone_key)][try(each.value.resource_group.key, each.value.resource_group_key)].tags : {}
+
 }
 
 output "storage_accounts" {

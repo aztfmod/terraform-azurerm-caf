@@ -24,17 +24,11 @@ module "network_profiles" {
   source   = "./modules/networking/network_profile"
   for_each = local.networking.network_profiles
 
-
-  base_tags       = try(local.global_settings.inherit_tags, false) ? local.combined_objects_resource_groups[try(each.value.lz_key, local.client_config.landingzone_key)][each.value.resource_group_key].tags : {}
+  base_tags       = try(local.global_settings.inherit_tags, false) ? local.combined_objects_resource_groups[try(each.value.resource_group.lz_key, local.client_config.landingzone_key)][try(each.value.resource_group.key, each.value.resource_group_key)].tags : {}
   client_config   = local.client_config
   global_settings = local.global_settings
   settings        = each.value
-
-  resource_group = coalesce(
-    try(local.combined_objects_resource_groups[each.value.resource_group.lz_key][each.value.resource_group.key], null),
-    try(local.combined_objects_resource_groups[local.client_config.landingzone_key][each.value.resource_group.key], null),
-    try(local.combined_objects_resource_groups[local.client_config.landingzone_key][each.value.resource_group_key], null)
-  )
+  resource_group  = local.combined_objects_resource_groups[try(each.value.resource_group.lz_key, local.client_config.landingzone_key)][try(each.value.resource_group_key, each.value.resource_group.key)]
 
   remote_objects = {
     networking      = local.combined_objects_networking
