@@ -26,3 +26,7 @@ output "identity" {
   value       = azurerm_purview_account.pva.identity
   description = "A `identity` block as defined below."
 }
+output "rbac_id" {
+  value       = azurerm_purview_account.pva.identity[0].principal_id
+  description = "The ID of the Purview Account for role assignments."
+}
