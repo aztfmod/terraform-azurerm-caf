@@ -34,16 +34,8 @@ module "data_factory_pipeline" {
   client_config   = local.client_config
   settings        = each.value
 
-  resource_group_name = coalesce(
-    try(local.combined_objects_resource_groups[each.value.resource_group.lz_key][each.value.resource_group.key].name, null),
-    try(local.combined_objects_resource_groups[local.client_config.landingzone_key][each.value.resource_group.key].name, null),
-    try(each.value.resource_group.name, null)
-  )
-  data_factory_name = coalesce(
-    try(local.combined_objects_data_factory[each.value.data_factory.lz_key][each.value.data_factory.key].name, null),
-    try(local.combined_objects_data_factory[local.client_config.landingzone_key][each.value.data_factory.key].name, null),
-    try(each.value.data_factory.name, null)
-  )
+  resource_group_name = can(each.value.resource_group.name) || can(each.value.resource_group_name) ? try(each.value.resource_group.name, each.value.resource_group_name) : local.combined_objects_resource_groups[try(each.value.resource_group.lz_key, local.client_config.landingzone_key)][try(each.value.resource_group_key, each.value.resource_group.key)].name
+  data_factory_name   = can(each.value.data_factory.name) ? each.value.data_factory.name : local.combined_objects_data_factory[try(each.value.data_factory.lz_key, local.client_config.landingzone_key)][each.value.data_factory.key].name
 }
 
 output "data_factory_pipeline" {
@@ -59,19 +51,11 @@ module "data_factory_trigger_schedule" {
   client_config   = local.client_config
   settings        = each.value
 
-  resource_group_name = coalesce(
-    try(local.combined_objects_resource_groups[try(each.value.resource_group.lz_key, local.client_config.landingzone_key)][each.value.resource_group.key].name, null),
-    try(each.value.resource_group.name, null)
-  )
-  data_factory_name = coalesce(
-    try(local.combined_objects_data_factory[try(each.value.data_factory.lz_key, local.client_config.landingzone_key)][each.value.data_factory.key].name, null),
-    try(each.value.data_factory.name, null)
-  )
-  pipeline_name = coalesce(
-    try(local.combined_objects_data_factory_pipeline[try(each.value.data_factory_pipeline.lz_key, local.client_config.landingzone_key)][each.value.data_factory_pipeline.key].name, null),
-    try(each.value.data_factory_pipeline.name, null)
-  )
+  resource_group_name = can(each.value.resource_group.name) || can(each.value.resource_group_name) ? try(each.value.resource_group.name, each.value.resource_group_name) : local.combined_objects_resource_groups[try(each.value.resource_group.lz_key, local.client_config.landingzone_key)][try(each.value.resource_group_key, each.value.resource_group.key)].name
+  data_factory_name   = can(each.value.data_factory.name) ? each.value.data_factory.name : local.combined_objects_data_factory[try(each.value.data_factory.lz_key, local.client_config.landingzone_key)][each.value.data_factory.key].name
+  pipeline_name       = can(each.value.data_factory_pipeline.name) ? each.value.data_factory_pipeline.name : local.combined_objects_data_factory_pipeline[try(each.value.data_factory_pipeline.lz_key, local.client_config.landingzone_key)][each.value.data_factory_pipeline.key].name
 }
+
 output "data_factory_trigger_schedule" {
   value = module.data_factory_trigger_schedule
 }
@@ -84,15 +68,9 @@ module "data_factory_integration_runtime_self_hosted" {
   client_config   = local.client_config
   settings        = each.value
 
-  data_factory_name = coalesce(
-    try(local.combined_objects_data_factory[try(each.value.data_factory.lz_key, local.client_config.landingzone_key)][each.value.data_factory.key].name, null),
-    try(each.value.data_factory.name, null)
-  )
+  data_factory_name   = can(each.value.data_factory.name) ? each.value.data_factory.name : local.combined_objects_data_factory[try(each.value.data_factory.lz_key, local.client_config.landingzone_key)][each.value.data_factory.key].name
+  resource_group_name = can(each.value.resource_group.name) || can(each.value.resource_group_name) ? try(each.value.resource_group.name, each.value.resource_group_name) : local.combined_objects_resource_groups[try(each.value.resource_group.lz_key, local.client_config.landingzone_key)][try(each.value.resource_group_key, each.value.resource_group.key)].name
 
-  resource_group_name = coalesce(
-    try(local.combined_objects_resource_groups[try(each.value.resource_group.lz_key, local.client_config.landingzone_key)][each.value.resource_group.key].name, null),
-    try(each.value.resource_group.name, null)
-  )
   remote_objects = {
     data_factory   = local.combined_objects_data_factory
     resource_group = local.combined_objects_resource_groups
@@ -110,23 +88,10 @@ module "data_factory_integration_runtime_azure_ssis" {
   client_config   = local.client_config
   settings        = each.value
 
-  data_factory_name = coalesce(
-    try(local.combined_objects_data_factory[each.value.data_factory.lz_key][each.value.data_factory.key].name, null),
-    try(local.combined_objects_data_factory[local.client_config.landingzone_key][each.value.data_factory.key].name, null),
-    try(each.value.data_factory.name, null)
-  )
+  data_factory_name   = can(each.value.data_factory.name) ? each.value.data_factory.name : local.combined_objects_data_factory[try(each.value.data_factory.lz_key, local.client_config.landingzone_key)][each.value.data_factory.key].name
+  resource_group_name = can(each.value.resource_group.name) || can(each.value.resource_group_name) ? try(each.value.resource_group.name, each.value.resource_group_name) : local.combined_objects_resource_groups[try(each.value.resource_group.lz_key, local.client_config.landingzone_key)][try(each.value.resource_group_key, each.value.resource_group.key)].name
+  location            = can(local.global_settings.regions[each.value.region]) ? local.global_settings.regions[each.value.region] : local.combined_objects_resource_groups[try(each.value.resource_group.lz_key, local.client_config.landingzone_key)][try(each.value.resource_group.key, each.value.resource_group_key)].location
 
-  resource_group_name = coalesce(
-    try(local.combined_objects_resource_groups[local.client_config.landingzone_key][each.value.resource_group.key].name, null),
-    try(local.combined_objects_resource_groups[each.value.resource_group.lz_key][each.value.resource_group.key].name, null),
-    try(each.value.resource_group.name, null)
-  )
-
-  location = lookup(each.value, "region", null) == null ? coalesce(
-    try(local.combined_objects_resource_groups[local.client_config.landingzone_key][each.value.resource_group.key].name, null),
-    try(local.combined_objects_resource_groups[each.value.resource_group.lz_key][each.value.resource_group.key].name, null),
-    try(each.value.resource_group.name, null)
-  ) : local.global_settings.regions[each.value.region]
 
   remote_objects = {
     resource_groups          = local.combined_objects_resource_groups

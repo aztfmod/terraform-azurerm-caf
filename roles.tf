@@ -73,6 +73,7 @@ locals {
   services_roles = {
     aks_clusters                               = local.combined_objects_aks_clusters
     aks_ingress_application_gateway_identities = local.aks_ingress_application_gateway_identities
+    api_management                             = local.combined_objects_api_management
     app_config                                 = local.combined_objects_app_config
     app_service_environments                   = local.combined_objects_app_service_environments
     app_service_plans                          = local.combined_objects_app_service_plans
@@ -87,11 +88,14 @@ locals {
     azuread_service_principals                 = local.combined_objects_azuread_service_principals
     azuread_users                              = local.combined_objects_azuread_users
     azurerm_firewalls                          = local.combined_objects_azurerm_firewalls
+    data_factory                               = local.combined_objects_data_factory
     databricks_workspaces                      = local.combined_objects_databricks_workspaces
     dns_zones                                  = local.combined_objects_dns_zones
     event_hub_namespaces                       = local.combined_objects_event_hub_namespaces
     keyvaults                                  = local.combined_objects_keyvaults
+    kusto_clusters                             = local.combined_objects_kusto_clusters
     logged_in                                  = local.logged_in
+    machine_learning_compute_instance          = module.machine_learning_compute_instance
     machine_learning_workspaces                = local.combined_objects_machine_learning
     managed_identities                         = local.combined_objects_managed_identities
     management_group                           = local.management_groups
@@ -107,6 +111,7 @@ locals {
     private_dns                                = local.combined_objects_private_dns
     proximity_placement_groups                 = local.combined_objects_proximity_placement_groups
     public_ip_addresses                        = local.combined_objects_public_ip_addresses
+    purview_accounts                           = local.combined_objects_purview_accounts
     recovery_vaults                            = local.combined_objects_recovery_vaults
     resource_groups                            = local.combined_objects_resource_groups
     storage_accounts                           = local.combined_objects_storage_accounts

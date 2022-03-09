@@ -10,11 +10,7 @@ module "databricks_workspaces" {
   settings        = each.value
   vnets           = local.combined_objects_networking
 
-  resource_group = coalesce(
-    try(local.resource_groups[each.value.resource_group_key], null), #Kept for backwards compatibility
-    try(local.combined_objects_resource_groups[each.value.resource_group.lz_key][each.value.resource_group.key], null),
-    try(local.combined_objects_resource_groups[local.client_config.landingzone_key][each.value.resource_group.key], null)
-  )
+  resource_group = can(local.resource_groups[each.value.resource_group_key]) ? local.resource_groups[each.value.resource_group_key] : local.combined_objects_resource_groups[try(each.value.resource_group.lz_key, local.client_config.landingzone_key)][try(each.value.resource_group.key, each.value.resource_group.key)]
 }
 
 output "databricks_workspaces" {
