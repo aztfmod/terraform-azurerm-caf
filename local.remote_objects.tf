@@ -93,6 +93,8 @@ locals {
     storage_accounts                               = try(local.combined_objects_storage_accounts, null)
     storage_containers                             = try(local.combined_objects_storage_containers, null)
     synapse_workspaces                             = try(local.combined_objects_synapse_workspaces, null)
+    synapse_workspace                              = try(local.combined_objects_synapse_workspace, null)
+    synapse_sql_pool                               = try(local.combined_objects_synapse_sql_pool, null)
     virtual_hub_connections                        = try(local.combined_objects_virtual_hub_connections, null)
     virtual_hub_route_tables                       = try(local.combined_objects_virtual_hub_route_tables, null)
     virtual_hubs                                   = try(local.combined_objects_virtual_hubs, null)

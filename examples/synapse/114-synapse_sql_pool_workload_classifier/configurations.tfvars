@@ -1,4 +1,3 @@
-
 global_settings = {
   default_region = "region1"
   regions = {
@@ -29,22 +28,7 @@ storage_data_lake_gen2_filesystem = {
     }
   }
 }
-vnets = {
-  vnet_region1 = {
-    resource_group_key = "rg1"
-    vnet = {
-      name          = "virtual_machines"
-      address_space = ["10.100.100.0/24"]
-    }
-    specialsubnets = {}
-    subnets = {
-      example = {
-        name = "examples"
-        cidr = ["10.100.100.0/29"]
-      }
-    }
-  }
-}
+
 synapse_workspace = {
   syws1 = {
     name = "example"
@@ -55,14 +39,49 @@ synapse_workspace = {
     storage_data_lake_gen2_filesystem = {
       key = "sdlg21"
     }
-    compute_subnet = {
-      vnet_key   = "vnet_region1"
-      subnet_key = "example"
-    }
     sql_administrator_login          = "sqladminuser"
     sql_administrator_login_password = "H@Sh1CoR3!"
     tags = {
       Env = "production"
     }
+  }
+}
+synapse_sql_pool = {
+  sysp1 = {
+    name = "examplesqlpool"
+    synapse_workspace = {
+      key = "syws1"
+    }
+    sku_name    = "DW100c"
+    create_mode = "Default"
+  }
+}
+synapse_sql_pool_workload_group = {
+  sspwg1 = {
+    name = "example"
+    sql_pool = {
+      id = "sysp1"
+    }
+    importance                         = "normal"
+    max_resource_percent               = 100
+    min_resource_percent               = 0
+    max_resource_percent_per_request   = 3
+    min_resource_percent_per_request   = 3
+    query_execution_timeout_in_seconds = 0
+  }
+}
+
+synapse_sql_pool_workload_classifier = {
+  sspwc1 = {
+    name = "example"
+    workload_group = {
+      key = "sspwg1"
+    }
+    context     = "example_context"
+    end_time    = "14:00"
+    importance  = "high"
+    label       = "example_label"
+    member_name = "dbo"
+    start_time  = "12:00"
   }
 }

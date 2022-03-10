@@ -1,7 +1,7 @@
 
 resource "azurecaf_name" "syplh" {
   name          = var.settings.name
-  resource_type = "azurerm_data_factory" #"azurerm_synapse_private_link_hub"
+  resource_type = "azurerm_synapse_private_link_hub"
   prefixes      = var.global_settings.prefixes
   random_length = var.global_settings.random_length
   clean_input   = true

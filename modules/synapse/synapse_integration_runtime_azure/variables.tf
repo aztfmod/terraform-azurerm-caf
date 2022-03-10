@@ -16,6 +16,3 @@ variable "base_tags" {
   type        = map(any)
   default     = {}
 }
-variable "location" {
-  description = " The Azure Region where the Synapse Azure Integration Runtime should exist. Changing this forces a new Synapse Azure Integration Runtime to be created."
-}

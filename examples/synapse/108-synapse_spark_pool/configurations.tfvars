@@ -29,22 +29,7 @@ storage_data_lake_gen2_filesystem = {
     }
   }
 }
-vnets = {
-  vnet_region1 = {
-    resource_group_key = "rg1"
-    vnet = {
-      name          = "virtual_machines"
-      address_space = ["10.100.100.0/24"]
-    }
-    specialsubnets = {}
-    subnets = {
-      example = {
-        name = "examples"
-        cidr = ["10.100.100.0/29"]
-      }
-    }
-  }
-}
+
 synapse_workspace = {
   syws1 = {
     name = "example"
@@ -55,14 +40,46 @@ synapse_workspace = {
     storage_data_lake_gen2_filesystem = {
       key = "sdlg21"
     }
-    compute_subnet = {
-      vnet_key   = "vnet_region1"
-      subnet_key = "example"
-    }
     sql_administrator_login          = "sqladminuser"
     sql_administrator_login_password = "H@Sh1CoR3!"
     tags = {
       Env = "production"
+    }
+  }
+}
+
+synapse_spark_pool = {
+  sysp1 = {
+    name = "example"
+    synapse_workspace = {
+      key = "syws1"
+    }
+    node_size_family = "MemoryOptimized"
+    node_size        = "Small"
+    cache_size       = 100
+
+    auto_scale = {
+      max_node_count = 50
+      min_node_count = 3
+    }
+
+    auto_pause = {
+      delay_in_minutes = 15
+    }
+
+    library_requirement = {
+      content  = <<EOF
+  appnope==0.1.0
+  beautifulsoup4==4.6.3
+  EOF
+      filename = "requirements.txt"
+    }
+
+    spark_config = {
+      content  = <<EOF
+  spark.shuffle.spill                true
+  EOF
+      filename = "config.txt"
     }
   }
 }

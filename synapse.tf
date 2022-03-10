@@ -5,22 +5,21 @@ module "synapse_firewall_rule" {
   client_config   = local.client_config
   settings        = each.value
   remote_objects = {
-    synapse_workspace = local.combined_objects_synapse_workspaces
+    synapse_workspace = local.combined_objects_synapse_workspace
   }
 }
 output "synapse_firewall_rule" {
   value = module.synapse_firewall_rule
 }
-
 module "synapse_integration_runtime_azure" {
   source          = "./modules/synapse/synapse_integration_runtime_azure"
   for_each        = local.synapse.synapse_integration_runtime_azure
   global_settings = local.global_settings
   client_config   = local.client_config
   settings        = each.value
-  location        = lookup(each.value, "region", null) == null ? local.resource_groups[each.value.resource_group.key].location : local.global_settings.regions[each.value.region]
+
   remote_objects = {
-    synapse_workspace = local.combined_objects_synapse_workspaces
+    synapse_workspace = local.combined_objects_synapse_workspace
   }
 }
 output "synapse_integration_runtime_azure" {
@@ -34,7 +33,7 @@ module "synapse_integration_runtime_self_hosted" {
   client_config   = local.client_config
   settings        = each.value
   remote_objects = {
-    synapse_workspace = local.combined_objects_synapse_workspaces
+    synapse_workspace = local.combined_objects_synapse_workspace
   }
 }
 output "synapse_integration_runtime_self_hosted" {
@@ -48,7 +47,7 @@ module "synapse_linked_service" {
   client_config   = local.client_config
   settings        = each.value
   remote_objects = {
-    synapse_workspace = local.combined_objects_synapse_workspaces
+    synapse_workspace = local.combined_objects_synapse_workspace
   }
 }
 output "synapse_linked_service" {
@@ -62,7 +61,8 @@ module "synapse_managed_private_endpoint" {
   client_config   = local.client_config
   settings        = each.value
   remote_objects = {
-    synapse_workspace = local.combined_objects_synapse_workspaces
+    synapse_workspace = local.combined_objects_synapse_workspace
+    all               = local.remote_objects
   }
 }
 output "synapse_managed_private_endpoint" {
@@ -91,8 +91,9 @@ module "synapse_role_assignment" {
   client_config   = local.client_config
   settings        = each.value
   remote_objects = {
-    synapse_workspace  = local.combined_objects_synapse_workspaces
+    synapse_workspace  = local.combined_objects_synapse_workspace
     synapse_spark_pool = local.combined_objects_synapse_spark_pool
+    all                = local.remote_objects
   }
 }
 output "synapse_role_assignment" {
@@ -106,7 +107,7 @@ module "synapse_spark_pool" {
   client_config   = local.client_config
   settings        = each.value
   remote_objects = {
-    synapse_workspace = local.combined_objects_synapse_workspaces
+    synapse_workspace = local.combined_objects_synapse_workspace
   }
 }
 output "synapse_spark_pool" {
@@ -120,7 +121,7 @@ module "synapse_sql_pool" {
   client_config   = local.client_config
   settings        = each.value
   remote_objects = {
-    synapse_workspace = local.combined_objects_synapse_workspaces
+    synapse_workspace = local.combined_objects_synapse_workspace
   }
 }
 output "synapse_sql_pool" {
@@ -134,6 +135,8 @@ module "synapse_sql_pool_extended_auditing_policy" {
   client_config   = local.client_config
   settings        = each.value
   remote_objects = {
+    synapse_sql_pool = local.combined_objects_synapse_sql_pool
+    storage_accounts = local.combined_objects_storage_accounts
   }
 }
 output "synapse_sql_pool_extended_auditing_policy" {
@@ -153,6 +156,7 @@ output "synapse_sql_pool_security_alert_policy" {
   value = module.synapse_sql_pool_security_alert_policy
 }
 
+
 module "synapse_sql_pool_vulnerability_assessment" {
   source          = "./modules/synapse/synapse_sql_pool_vulnerability_assessment"
   for_each        = local.synapse.synapse_sql_pool_vulnerability_assessment
@@ -160,6 +164,7 @@ module "synapse_sql_pool_vulnerability_assessment" {
   client_config   = local.client_config
   settings        = each.value
   remote_objects = {
+    value = module.synapse_sql_pool
   }
 }
 output "synapse_sql_pool_vulnerability_assessment" {
@@ -173,6 +178,7 @@ module "synapse_sql_pool_vulnerability_assessment_baseline" {
   client_config   = local.client_config
   settings        = each.value
   remote_objects = {
+    synapse_sql_pool_vulnerability_assessment = local.combined_objects_synapse_sql_pool_vulnerability_assessment
   }
 }
 output "synapse_sql_pool_vulnerability_assessment_baseline" {
@@ -186,10 +192,12 @@ module "synapse_sql_pool_workload_classifier" {
   client_config   = local.client_config
   settings        = each.value
   remote_objects = {
+    synapse_sql_pool_vulnerability_assessment = local.combined_objects_synapse_sql_pool_vulnerability_assessment
   }
 }
 output "synapse_sql_pool_workload_classifier" {
   value = module.synapse_sql_pool_workload_classifier
+
 }
 
 module "synapse_sql_pool_workload_group" {
@@ -199,6 +207,7 @@ module "synapse_sql_pool_workload_group" {
   client_config   = local.client_config
   settings        = each.value
   remote_objects = {
+    value = module.synapse_sql_pool
   }
 }
 output "synapse_sql_pool_workload_group" {
@@ -230,7 +239,7 @@ module "synapse_workspace_aad_admin" {
   client_config   = local.client_config
   settings        = each.value
   remote_objects = {
-    synapse_workspace = local.combined_objects_synapse_workspaces
+    synapse_workspace = local.combined_objects_synapse_workspace
   }
 }
 output "synapse_workspace_aad_admin" {
@@ -244,7 +253,8 @@ module "synapse_workspace_extended_auditing_policy" {
   client_config   = local.client_config
   settings        = each.value
   remote_objects = {
-    synapse_workspace = local.combined_objects_synapse_workspaces
+    synapse_workspace = local.combined_objects_synapse_workspace
+    storage_accounts  = local.combined_objects_storage_accounts
   }
 }
 output "synapse_workspace_extended_auditing_policy" {
@@ -258,7 +268,7 @@ module "synapse_workspace_keys" {
   client_config   = local.client_config
   settings        = each.value
   remote_objects = {
-    synapse_workspace = local.combined_objects_synapse_workspaces
+    synapse_workspace = local.combined_objects_synapse_workspace
   }
 }
 output "synapse_workspace_keys" {
@@ -272,7 +282,8 @@ module "synapse_workspace_security_alert_policy" {
   client_config   = local.client_config
   settings        = each.value
   remote_objects = {
-    synapse_workspace = local.combined_objects_synapse_workspaces
+    synapse_workspace = local.combined_objects_synapse_workspace
+    storage_accounts  = local.combined_objects_storage_accounts
   }
 }
 output "synapse_workspace_security_alert_policy" {
@@ -286,7 +297,7 @@ module "synapse_workspace_sql_aad_admin" {
   client_config   = local.client_config
   settings        = each.value
   remote_objects = {
-    synapse_workspace = local.combined_objects_synapse_workspaces
+    synapse_workspace = local.combined_objects_synapse_workspace
   }
 }
 output "synapse_workspace_sql_aad_admin" {

@@ -1,6 +1,6 @@
 resource "azurecaf_name" "syls" {
   name          = var.settings.name
-  resource_type = "azurerm_data_factory" #"azurerm_synapse_linked_service"
+  resource_type = "azurerm_synapse_linked_service"
   prefixes      = var.global_settings.prefixes
   random_length = var.global_settings.random_length
   clean_input   = true

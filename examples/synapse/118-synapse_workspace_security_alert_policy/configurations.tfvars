@@ -1,4 +1,3 @@
-
 global_settings = {
   default_region = "region1"
   regions = {
@@ -29,22 +28,7 @@ storage_data_lake_gen2_filesystem = {
     }
   }
 }
-vnets = {
-  vnet_region1 = {
-    resource_group_key = "rg1"
-    vnet = {
-      name          = "virtual_machines"
-      address_space = ["10.100.100.0/24"]
-    }
-    specialsubnets = {}
-    subnets = {
-      example = {
-        name = "examples"
-        cidr = ["10.100.100.0/29"]
-      }
-    }
-  }
-}
+
 synapse_workspace = {
   syws1 = {
     name = "example"
@@ -55,14 +39,30 @@ synapse_workspace = {
     storage_data_lake_gen2_filesystem = {
       key = "sdlg21"
     }
-    compute_subnet = {
-      vnet_key   = "vnet_region1"
-      subnet_key = "example"
-    }
     sql_administrator_login          = "sqladminuser"
     sql_administrator_login_password = "H@Sh1CoR3!"
     tags = {
       Env = "production"
     }
+  }
+}
+
+synapse_workspace_security_alert_policy = {
+  sywsap1 = {
+    synapse_workspace = {
+      key = "syws1"
+    }
+    policy_state = "Enabled"
+    storage = {
+      key = "sa1"
+      #endpoint                               = azurerm_storage_account.audit_logs.primary_blob_endpoint
+      #access_key                             = azurerm_storage_account.audit_logs.primary_access_key
+      storage_account_access_key_is_secondary = false
+    }
+    disabled_alerts = [
+      "Sql_Injection",
+      "Data_Exfiltration"
+    ]
+    retention_days = 20
   }
 }
