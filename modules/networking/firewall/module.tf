@@ -95,7 +95,7 @@ resource "azurerm_firewall" "fw" {
     }
 
     content {
-      virtual_hub_id = var.virtual_wans[try(virtual_hub.value.lz_key, var.client_config.landingzone_key)][virtual_hub.value.virtual_wan_key].virtual_hubs[virtual_hub.value.virtual_hub_key].id
+      virtual_hub_id = can(var.virtual_hubs[try(virtual_hub.value.lz_key, virtual_hub.value.virtual_hub.lz_key, var.client_config.landingzone_key)][try(virtual_hub.value.virtual_hub.key, virtual_hub.value.virtual_hub_key, virtual_hub.value.key)].id) ? var.virtual_hubs[try(virtual_hub.value.lz_key, virtual_hub.value.virtual_hub.lz_key, var.client_config.landingzone_key)][try(virtual_hub.value.virtual_hub.key, virtual_hub.value.virtual_hub_key, virtual_hub.value.key)].id : var.virtual_wans[try(virtual_hub.value.lz_key, var.client_config.landingzone_key)][virtual_hub.value.virtual_wan_key].virtual_hubs[virtual_hub.value.virtual_hub_key].id
 
       public_ip_count = try(virtual_hub.value.public_ip_count, 1)
     }
