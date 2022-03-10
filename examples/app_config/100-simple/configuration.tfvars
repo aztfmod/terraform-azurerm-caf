@@ -6,12 +6,13 @@ global_settings = {
 }
 
 resource_groups = {
-  rgwflow1 = {
+  rg1 = {
     name   = "rg1"
     region = "region1"
   }
 }
-azurerm_app_configuration = {
+
+app_config = {
   appconf1 = {
     name                = "appConf1"
     resource_group_key = "rg1"
