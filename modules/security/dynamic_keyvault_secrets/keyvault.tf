@@ -14,7 +14,7 @@ module "secret_value" {
   source = "./secret"
   for_each = {
     for key, value in var.settings : key => value
-    if try(value.value, null) != null && try(value.value, null) != ""
+    if try(value.value, null) != null && try(value.value, null) != "" && try(value.value, null) != "dynamic"
   }
 
   name        = each.value.secret_name
@@ -32,4 +32,17 @@ module "secret_immutable" {
   name        = each.value.secret_name
   value       = can(each.value.value) ? each.value.value : var.objects[each.value.output_key][try(each.value.resource_key, each.value.attribute_key)][try(each.value.attribute_key, "")]
   keyvault_id = var.keyvault.id
+}
+
+module "secret_dynamic" {
+  source = "./secret_dynamic"
+  for_each = {
+    for key, value in var.settings : key => value
+    if try(value.value, null) == "dynamic"
+  }
+
+  name        = each.value.secret_name
+  value       = each.value.value
+  keyvault_id = var.keyvault.id
+  config      = each.value.config
 }
