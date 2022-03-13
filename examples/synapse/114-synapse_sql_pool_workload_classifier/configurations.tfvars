@@ -60,7 +60,7 @@ synapse_sql_pool_workload_group = {
   sspwg1 = {
     name = "example"
     sql_pool = {
-      id = "sysp1"
+      key = "sysp1"
     }
     importance                         = "normal"
     max_resource_percent               = 100

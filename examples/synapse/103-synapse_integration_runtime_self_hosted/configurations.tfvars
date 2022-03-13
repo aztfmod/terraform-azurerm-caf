@@ -60,8 +60,10 @@ synapse_firewall_rule = {
 }
 
 synapse_integration_runtime_self_hosted = {
-  name = "example"
-  synapse_workspace = {
-    key = "syws1"
+  sirsh1 = {
+    name = "example"
+    synapse_workspace = {
+      key = "syws1"
+    }
   }
 }

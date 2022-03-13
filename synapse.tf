@@ -135,7 +135,7 @@ module "synapse_sql_pool_extended_auditing_policy" {
   client_config   = local.client_config
   settings        = each.value
   remote_objects = {
-    synapse_sql_pool = local.combined_objects_synapse_sql_pool
+    sql_pool         = local.combined_objects_synapse_sql_pool
     storage_accounts = local.combined_objects_storage_accounts
   }
 }
@@ -150,6 +150,8 @@ module "synapse_sql_pool_security_alert_policy" {
   client_config   = local.client_config
   settings        = each.value
   remote_objects = {
+    sql_pool         = local.combined_objects_synapse_sql_pool
+    storage_accounts = local.combined_objects_storage_accounts
   }
 }
 output "synapse_sql_pool_security_alert_policy" {
@@ -164,7 +166,8 @@ module "synapse_sql_pool_vulnerability_assessment" {
   client_config   = local.client_config
   settings        = each.value
   remote_objects = {
-    value = module.synapse_sql_pool
+    sql_pool_security_alert_policy = local.combined_objects_synapse_sql_pool_security_alert_policy
+    storage_accounts               = local.combined_objects_storage_accounts
   }
 }
 output "synapse_sql_pool_vulnerability_assessment" {
@@ -192,7 +195,7 @@ module "synapse_sql_pool_workload_classifier" {
   client_config   = local.client_config
   settings        = each.value
   remote_objects = {
-    synapse_sql_pool_vulnerability_assessment = local.combined_objects_synapse_sql_pool_vulnerability_assessment
+    synapse_sql_pool_workload_group = local.combined_objects_synapse_sql_pool_workload_group
   }
 }
 output "synapse_sql_pool_workload_classifier" {
@@ -207,7 +210,7 @@ module "synapse_sql_pool_workload_group" {
   client_config   = local.client_config
   settings        = each.value
   remote_objects = {
-    value = module.synapse_sql_pool
+    sql_pool = local.combined_objects_synapse_sql_pool
   }
 }
 output "synapse_sql_pool_workload_group" {
@@ -311,6 +314,8 @@ module "synapse_workspace_vulnerability_assessment" {
   client_config   = local.client_config
   settings        = each.value
   remote_objects = {
+    workspace_security_alert_policy = local.combined_objects_synapse_workspace_security_alert_policy
+    storage_accounts                = local.combined_objects_storage_accounts
   }
 }
 output "synapse_workspace_vulnerability_assessment" {
