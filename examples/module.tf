@@ -310,6 +310,7 @@ module "example" {
     api_management_gateway_api          = var.api_management_gateway_api
     api_management_group                = var.api_management_group
   }
+<<<<<<< HEAD
   synapse = {
     synapse_firewall_rule                              = var.synapse_firewall_rule
     synapse_integration_runtime_azure                  = var.synapse_integration_runtime_azure
@@ -333,5 +334,9 @@ module "example" {
     synapse_workspace_security_alert_policy            = var.synapse_workspace_security_alert_policy
     synapse_workspace_sql_aad_admin                    = var.synapse_workspace_sql_aad_admin
     synapse_workspace_vulnerability_assessment         = var.synapse_workspace_vulnerability_assessment
+=======
+  purview = {
+    purview_accounts = var.purview_accounts
+>>>>>>> main
   }
 }

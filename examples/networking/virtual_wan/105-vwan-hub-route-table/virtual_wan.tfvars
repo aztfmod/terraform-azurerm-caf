@@ -44,7 +44,7 @@ virtual_hubs = {
   }
 }
 
-
+# "example-vhubroutetable1" is the Static Route Gets assigned to directing Internet traffic to Secured VHUB Azure Firewall ResourceID
 virtual_hub_route_tables = {
   routetable1 = {
     name = "example-vhubroutetable1"
@@ -53,26 +53,25 @@ virtual_hub_route_tables = {
       key = "hub_re1"
     }
 
-    labels = ["label1"]
+    labels = ["label1", "default"]
     routes = {
-      # egress_internet = {
-      #   name              = "egress-internet"
-      #   destinations_type = "CIDR"
-      #   destinations      = ["0.0.0.0/0"]
+      egress_internet = {
+        name              = "egress-internet"
+        destinations_type = "CIDR"
+        destinations      = ["0.0.0.0/0"]
 
-      #   # Either next_hop or next_hop_id can be used
-      #   #
-      #   # When using next_hop, the virtual_hub_connection must be deployed in a different landingzone. This cannot be tested in the standalone module.
-      #   # Will be covered in the landingzone starter production configuration in future releases.
-      #   #
-      #   next_hop = {
-      #     lz_key = "" #
-      #     resource_type = "virtual_hub_connection"  # Only supported value.
-      #     resource_key  = "egress-fw"
-      #   }
-      #   #to cather for external object
-      #   #next_hop_id       = "Azure_Resource_ID"
-      # }
+        #   # Either next_hop or next_hop_id can be used
+        #   # When using next_hop, the azurerm_firewalls or virtual_hub_connection must be deployed in a different landingzone. This cannot be tested in the standalone module.
+        #   # Will be covered in the landingzone starter production configuration in future releases.
+        next_hop = {
+          #  lz_key = "secazfw1" # Remote Landing Zone Key from where Azure Firewall Key needs to be retrieved
+          resource_type = "azurerm_firewalls" # Only supported value in case of "Secured Virtual HUB" where you need to route Internet Egress from Secured vHUB Firewall.
+          #    resource_type = "virtual_hub_connection"  # Only supported value in case mapping route at VNET Connection Level
+          key = "egress-fw" # Azure Firewall Key sitting in the Secured Virtual Hub
+        }
+        #to cather for external object
+        #next_hop_id       = "Azure_Resource_ID"
+      }
     }
   }
   routetable2 = {
@@ -186,6 +185,8 @@ virtual_hub_connections = {
 
 }
 
+# Following Code is only use if you want to deploy Azure Firewall in SPOKE VNET (For Non Secure Virtual Hub)
+# This Deployment is also called NVA in SPOKE VNET
 azurerm_firewalls = {
   egress-fw = {
     name               = "egress-firewall"

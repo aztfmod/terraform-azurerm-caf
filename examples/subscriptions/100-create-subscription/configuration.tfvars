@@ -6,9 +6,9 @@ subscriptions = {
     workload                = "Production"
     management_group_id     = "Online"
     tags = {
-      businessUnit           = "HR"
-      environment            = "Production"
-      costcenter             = "123456"
+      businessUnit = "HR"
+      environment  = "Production"
+      costcenter   = "123456"
     }
   }
 }

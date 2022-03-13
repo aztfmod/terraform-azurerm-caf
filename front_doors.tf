@@ -2,14 +2,15 @@ module "front_doors" {
   source   = "./modules/networking/front_door"
   for_each = local.networking.front_doors
 
-  base_tags                     = try(local.global_settings.inherit_tags, false) ? local.resource_groups[each.value.resource_group_key].tags : {}
+  resource_group_name = can(each.value.resource_group.name) || can(each.value.resource_group_name) ? try(each.value.resource_group.name, each.value.resource_group_name) : local.combined_objects_resource_groups[try(each.value.resource_group.lz_key, local.client_config.landingzone_key)][try(each.value.resource_group_key, each.value.resource_group.key)].name
+  base_tags           = try(local.global_settings.inherit_tags, false) ? local.combined_objects_resource_groups[try(each.value.resource_group.lz_key, local.client_config.landingzone_key)][try(each.value.resource_group.key, each.value.resource_group_key)].tags : {}
+
   client_config                 = local.client_config
   diagnostics                   = local.combined_diagnostics
   front_door_waf_policies       = local.combined_objects_front_door_waf_policies
   global_settings               = local.global_settings
   keyvault_id                   = try(each.value.keyvault_key, null) == null ? null : try(local.combined_objects_keyvaults[local.client_config.landingzone_key][each.value.keyvault_key].id, local.combined_objects_keyvaults[each.value.lz_key][each.value.keyvault_key].id)
   keyvault_certificate_requests = local.combined_objects_keyvault_certificate_requests
-  resource_group_name           = local.resource_groups[each.value.resource_group_key].name
   settings                      = each.value
 }
 
@@ -60,17 +61,12 @@ module "frontdoor_rules_engine" {
   source   = "./modules/networking/frontdoor_rules_engine"
   for_each = local.networking.frontdoor_rules_engine
 
-  global_settings = local.global_settings
-  client_config   = local.client_config
-  settings        = each.value
-  frontdoor_name = coalesce(
-    try(local.combined_objects_front_door[try(each.value.frontdoor.lz_key, local.client_config.landingzone_key)][each.value.frontdoor.key].name, null),
-    try(each.value.frontdoor.name, null)
-  )
-  resource_group_name = coalesce(
-    try(local.combined_objects_resource_groups[try(each.value.resource_group.lz_key, local.client_config.landingzone_key)][each.value.resource_group.key].name, null),
-    try(each.value.resource_group.name, null)
-  )
+  global_settings     = local.global_settings
+  client_config       = local.client_config
+  settings            = each.value
+  frontdoor_name      = can(each.value.frontdoor.name) ? each.value.frontdoor.name : local.combined_objects_front_door[try(each.value.frontdoor.lz_key, local.client_config.landingzone_key)][each.value.frontdoor.key].name
+  resource_group_name = can(each.value.resource_group.name) || can(each.value.resource_group_name) ? try(each.value.resource_group.name, each.value.resource_group_name) : local.combined_objects_resource_groups[try(each.value.resource_group.lz_key, local.client_config.landingzone_key)][try(each.value.resource_group_key, each.value.resource_group.key)].name
+
   remote_objects = {
     frontdoor      = local.combined_objects_front_door
     resource_group = local.combined_objects_resource_groups
@@ -87,7 +83,6 @@ module "frontdoor_custom_https_configuration" {
   global_settings = local.global_settings
   client_config   = local.client_config
   settings        = each.value
-
 
   remote_objects = {
     frontdoor      = local.combined_objects_front_door

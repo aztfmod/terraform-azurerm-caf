@@ -831,6 +831,7 @@ variable "monitor_activity_log_alert" {
 variable "log_analytics_storage_insights" {
   default = {}
 }
+<<<<<<< HEAD
 
 variable "synapse_firewall_rule" {
   default = {}
@@ -905,5 +906,8 @@ variable "synapse_workspace_vulnerability_assessment" {
   default = {}
 }
 variable "storage_data_lake_gen2_filesystem" {
+=======
+variable "purview_accounts" {
+>>>>>>> main
   default = {}
 }

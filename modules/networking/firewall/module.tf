@@ -41,7 +41,7 @@ resource "azurerm_firewall" "fw" {
 
     content {
       name                 = ip_configuration.key
-      public_ip_address_id = var.public_ip_addresses[ip_configuration.value].id
+      public_ip_address_id = var.public_ip_addresses[var.client_config.landingzone_key][ip_configuration.value].id
       subnet_id            = try(var.subnet_id, null)
     }
   }
@@ -51,7 +51,7 @@ resource "azurerm_firewall" "fw" {
 
     content {
       name                 = ip_configuration.key
-      public_ip_address_id = var.public_ip_addresses[ip_configuration.value].id
+      public_ip_address_id = var.public_ip_addresses[var.client_config.landingzone_key][ip_configuration.value].id
       subnet_id            = ip_configuration.key == 0 ? var.subnet_id : null
     }
   }
@@ -61,7 +61,7 @@ resource "azurerm_firewall" "fw" {
 
     content {
       name                 = ip_configuration.value.name
-      public_ip_address_id = try(ip_configuration.value.public_ip_id, null) != null ? ip_configuration.value.public_ip_id : var.public_ip_addresses[ip_configuration.value.public_ip_key].id
+      public_ip_address_id = can(ip_configuration.value.public_ip_id) ? ip_configuration.value.public_ip_id : var.public_ip_addresses[try(ip_configuration.value.lz_key, var.client_config.landingzone_key)][ip_configuration.value.public_ip_key].id
       subnet_id            = try(ip_configuration.value.subnet_id, null) != null ? ip_configuration.value.subnet_id : (lookup(ip_configuration.value, "lz_key", null) == null ? var.virtual_networks[var.client_config.landingzone_key][ip_configuration.value.vnet_key].subnets[ip_configuration.value.subnet_key].id : var.virtual_networks[ip_configuration.value.lz_key][ip_configuration.value.vnet_key].subnets[ip_configuration.value.subnet_key].id)
     }
   }
@@ -76,15 +76,26 @@ resource "azurerm_firewall" "fw" {
   }
 
   dynamic "virtual_hub" {
-    for_each = try(var.settings.virtual_hub, {})
+    for_each = {
+      for key, value in try(var.settings.virtual_hub, {}) : key => value
+      if can(value.virtual_wan_key) == false
+    }
+
     content {
-      virtual_hub_id = coalesce(
-        try(virtual_hub.value.virtual_hub_id, null),
-        try(var.virtual_wans[virtual_hub.value.lz_key][virtual_hub.value.virtual_wan_key].virtual_hubs[virtual_hub.value.virtual_hub_key].id, null),
-        try(var.virtual_wans[var.client_config.landingzone_key][virtual_hub.value.virtual_wan_key].virtual_hubs[virtual_hub.value.virtual_hub_key].id, null),
-        try(var.virtual_hubs[virtual_hub.value.lz_key][virtual_hub.value.virtual_hub_key].id, null),
-        try(var.virtual_hubs[var.client_config.landingzone_key][virtual_hub.value.virtual_hub_key].id, null)
-      )
+      virtual_hub_id = can(virtual_hub.value.virtual_hub_id) || can(virtual_hub.value.virtual_hub.id) ? try(virtual_hub.value.virtual_hub_id, virtual_hub.value.virtual_hub.id) : var.virtual_hubs[try(virtual_hub.value.lz_key, virtual_hub.value.virtual_hub.lz_key, var.client_config.landingzone_key)][try(virtual_hub.value.virtual_hub.key, virtual_hub.value.virtual_hub_key, virtual_hub.value.key)].id
+
+      public_ip_count = try(virtual_hub.value.public_ip_count, 1)
+    }
+  }
+
+  dynamic "virtual_hub" {
+    for_each = {
+      for key, value in try(var.settings.virtual_hub, {}) : key => value
+      if can(value.virtual_wan_key)
+    }
+
+    content {
+      virtual_hub_id = can(var.virtual_hubs[try(virtual_hub.value.lz_key, virtual_hub.value.virtual_hub.lz_key, var.client_config.landingzone_key)][try(virtual_hub.value.virtual_hub.key, virtual_hub.value.virtual_hub_key, virtual_hub.value.key)].id) ? var.virtual_hubs[try(virtual_hub.value.lz_key, virtual_hub.value.virtual_hub.lz_key, var.client_config.landingzone_key)][try(virtual_hub.value.virtual_hub.key, virtual_hub.value.virtual_hub_key, virtual_hub.value.key)].id : var.virtual_wans[try(virtual_hub.value.lz_key, var.client_config.landingzone_key)][virtual_hub.value.virtual_wan_key].virtual_hubs[virtual_hub.value.virtual_hub_key].id
 
       public_ip_count = try(virtual_hub.value.public_ip_count, 1)
     }

@@ -4,6 +4,7 @@ module "data_factory_linked_service_azure_blob_storage" {
 
   for_each = local.data_factory.linked_services.azure_blob_storage
 
+<<<<<<< HEAD
   global_settings = local.global_settings
   client_config   = local.client_config
   settings        = each.value
@@ -20,6 +21,15 @@ module "data_factory_linked_service_azure_blob_storage" {
     try(each.value.data_factory.id, null)
   )
   storage_account = try(local.combined_objects_storage_accounts[try(each.value.storage_account.lz_key, local.client_config.landingzone_key)][each.value.storage_account.key], null)
+=======
+  global_settings     = local.global_settings
+  client_config       = local.client_config
+  settings            = each.value
+  resource_group_name = can(each.value.resource_group.name) || can(each.value.resource_group_name) ? try(each.value.resource_group.name, each.value.resource_group_name) : local.combined_objects_resource_groups[try(each.value.resource_group.lz_key, local.client_config.landingzone_key)][try(each.value.resource_group_key, each.value.resource_group.key)].name
+
+  data_factory_name = can(each.value.data_factory.name) ? each.value.data_factory.name : local.combined_objects_data_factory[try(each.value.data_factory.lz_key, local.client_config.landingzone_key)][each.value.data_factory.key].name
+  storage_account   = can(each.value.storage_account.key) ? local.combined_objects_storage_accounts[try(each.value.storage_account.lz_key, local.client_config.landingzone_key)][each.value.storage_account.key] : null
+>>>>>>> main
 
   integration_runtime_name = try(
     coalesce(
@@ -42,6 +52,7 @@ module "data_factory_linked_service_cosmosdb" {
 
   for_each = local.data_factory.linked_services.cosmosdb
 
+<<<<<<< HEAD
   global_settings = local.global_settings
   client_config   = local.client_config
   settings        = each.value
@@ -65,6 +76,15 @@ module "data_factory_linked_service_cosmosdb" {
     try(local.combined_objects_cosmos_dbs[try(each.value.cosmosdb_account.lz_key, local.client_config.landingzone_key)][each.value.cosmosdb_account.key].primary_key, null),
     try(each.value.cosmosdb_account.account_key, null)
   )
+=======
+  global_settings     = local.global_settings
+  client_config       = local.client_config
+  settings            = each.value
+  resource_group_name = can(each.value.resource_group.name) || can(each.value.resource_group_name) ? try(each.value.resource_group.name, each.value.resource_group_name) : local.combined_objects_resource_groups[try(each.value.resource_group.lz_key, local.client_config.landingzone_key)][try(each.value.resource_group_key, each.value.resource_group.key)].name
+  data_factory_name   = can(each.value.data_factory.name) ? each.value.data_factory.name : local.combined_objects_data_factory[try(each.value.data_factory.lz_key, local.client_config.landingzone_key)][each.value.data_factory.key].name
+  account_endpoint    = can(each.value.cosmosdb_account.endpoint) ? each.value.cosmosdb_account.endpoint : local.combined_objects_cosmos_dbs[try(each.value.cosmosdb_account.lz_key, local.client_config.landingzone_key)][each.value.cosmosdb_account.key].endpoint
+  account_key         = can(each.value.cosmosdb_account.account_key) ? each.value.cosmosdb_account.account_key : local.combined_objects_cosmos_dbs[try(each.value.cosmosdb_account.lz_key, local.client_config.landingzone_key)][each.value.cosmosdb_account.key].primary_key
+>>>>>>> main
 }
 
 output "data_factory_linked_service_cosmosdb" {
@@ -76,6 +96,7 @@ module "data_factory_linked_service_web" {
 
   for_each = local.data_factory.linked_services.web
 
+<<<<<<< HEAD
   global_settings = local.global_settings
   client_config   = local.client_config
   settings        = each.value
@@ -91,6 +112,14 @@ module "data_factory_linked_service_web" {
     try(local.combined_objects_data_factory[try(each.value.data_factory.lz_key, local.client_config.landingzone_key)][each.value.data_factory.key].id, null),
     try(each.value.data_factory.id, null)
   )
+=======
+  global_settings     = local.global_settings
+  client_config       = local.client_config
+  settings            = each.value
+  resource_group_name = can(each.value.resource_group.name) || can(each.value.resource_group_name) ? try(each.value.resource_group.name, each.value.resource_group_name) : local.combined_objects_resource_groups[try(each.value.resource_group.lz_key, local.client_config.landingzone_key)][try(each.value.resource_group_key, each.value.resource_group.key)].name
+  data_factory_name   = can(each.value.data_factory.name) ? each.value.data_factory.name : local.combined_objects_data_factory[try(each.value.data_factory.lz_key, local.client_config.landingzone_key)][each.value.data_factory.key].name
+
+>>>>>>> main
   #connection_string = try(each.value.lz_key, null) == null ? local.combined_objects_cosmos_dbs[local.client_config.landingzone_key][each.value.cosmos_db_key].name : local.combined_objects_cosmos_dbs[each.value.lz_key][each.value.cosmos_db_key].connection_string
 }
 
@@ -102,6 +131,7 @@ module "data_factory_linked_service_mysql" {
   source   = "./modules/data_factory/linked_services/mysql"
   for_each = local.data_factory.linked_services.mysql
 
+<<<<<<< HEAD
   global_settings = local.global_settings
   client_config   = local.client_config
   settings        = each.value
@@ -117,6 +147,14 @@ module "data_factory_linked_service_mysql" {
     try(local.combined_objects_data_factory[try(each.value.data_factory.lz_key, local.client_config.landingzone_key)][each.value.data_factory.key].id, null),
     try(each.value.data_factory.id, null)
   )
+=======
+  global_settings     = local.global_settings
+  client_config       = local.client_config
+  settings            = each.value
+  resource_group_name = can(each.value.resource_group.name) || can(each.value.resource_group_name) ? try(each.value.resource_group.name, each.value.resource_group_name) : local.combined_objects_resource_groups[try(each.value.resource_group.lz_key, local.client_config.landingzone_key)][try(each.value.resource_group_key, each.value.resource_group.key)].name
+  data_factory_name   = can(each.value.data_factory.name) ? each.value.data_factory.name : local.combined_objects_data_factory[try(each.value.data_factory.lz_key, local.client_config.landingzone_key)][each.value.data_factory.key].name
+
+>>>>>>> main
   #connection_string = try(each.value.lz_key, null) == null ? local.combined_objects_cosmos_dbs[local.client_config.landingzone_key][each.value.cosmos_db_key].name : local.combined_objects_cosmos_dbs[each.value.lz_key][each.value.cosmos_db_key].connection_string
 }
 ##### data_factory_linked_service_postgresql
@@ -124,6 +162,7 @@ module "data_factory_linked_service_postgresql" {
   source   = "./modules/data_factory/linked_services/postgresql"
   for_each = local.data_factory.linked_services.postgresql
 
+<<<<<<< HEAD
   global_settings = local.global_settings
   client_config   = local.client_config
   settings        = each.value
@@ -139,6 +178,14 @@ module "data_factory_linked_service_postgresql" {
     try(local.combined_objects_data_factory[try(each.value.data_factory.lz_key, local.client_config.landingzone_key)][each.value.data_factory.key].id, null),
     try(each.value.data_factory.id, null)
   )
+=======
+  global_settings     = local.global_settings
+  client_config       = local.client_config
+  settings            = each.value
+  resource_group_name = can(each.value.resource_group.name) || can(each.value.resource_group_name) ? try(each.value.resource_group.name, each.value.resource_group_name) : local.combined_objects_resource_groups[try(each.value.resource_group.lz_key, local.client_config.landingzone_key)][try(each.value.resource_group_key, each.value.resource_group.key)].name
+  data_factory_name   = can(each.value.data_factory.name) ? each.value.data_factory.name : local.combined_objects_data_factory[try(each.value.data_factory.lz_key, local.client_config.landingzone_key)][each.value.data_factory.key].name
+
+>>>>>>> main
   #connection_string = try(each.value.lz_key, null) == null ? local.combined_objects_cosmos_dbs[local.client_config.landingzone_key][each.value.cosmos_db_key].name : local.combined_objects_cosmos_dbs[each.value.lz_key][each.value.cosmos_db_key].connection_string
 }
 output "data_factory_linked_service_postgresql" {
@@ -149,6 +196,7 @@ module "data_factory_linked_service_sql_server" {
   source   = "./modules/data_factory/linked_services/sql_server"
   for_each = local.data_factory.linked_services.sql_server
 
+<<<<<<< HEAD
   global_settings = local.global_settings
   client_config   = local.client_config
   settings        = each.value
@@ -164,6 +212,14 @@ module "data_factory_linked_service_sql_server" {
     try(local.combined_objects_data_factory[try(each.value.data_factory.lz_key, local.client_config.landingzone_key)][each.value.data_factory.key].id, null),
     try(each.value.data_factory.id, null)
   )
+=======
+  global_settings     = local.global_settings
+  client_config       = local.client_config
+  settings            = each.value
+  resource_group_name = can(each.value.resource_group.name) || can(each.value.resource_group_name) ? try(each.value.resource_group.name, each.value.resource_group_name) : local.combined_objects_resource_groups[try(each.value.resource_group.lz_key, local.client_config.landingzone_key)][try(each.value.resource_group_key, each.value.resource_group.key)].name
+  data_factory_name   = can(each.value.data_factory.name) ? each.value.data_factory.name : local.combined_objects_data_factory[try(each.value.data_factory.lz_key, local.client_config.landingzone_key)][each.value.data_factory.key].name
+
+>>>>>>> main
   #connection_string = try(each.value.lz_key, null) == null ? local.combined_objects_cosmos_dbs[local.client_config.landingzone_key][each.value.cosmos_db_key].name : local.combined_objects_cosmos_dbs[each.value.lz_key][each.value.cosmos_db_key].connection_string
 }
 output "data_factory_linked_service_sql_server" {
@@ -178,11 +234,8 @@ module "data_factory_linked_service_azure_databricks" {
   client_config   = local.client_config
   settings        = each.value
 
-  resource_group_name = coalesce(
-    try(local.combined_objects_resource_groups[each.value.resource_group.lz_key][each.value.resource_group.key].name, null),
-    try(local.combined_objects_resource_groups[local.client_config.landingzone_key][each.value.resource_group.key].name, null),
-    try(each.value.resource_group.name, null)
-  )
+  resource_group_name = can(each.value.resource_group.name) || can(each.value.resource_group_name) ? try(each.value.resource_group.name, each.value.resource_group_name) : local.combined_objects_resource_groups[try(each.value.resource_group.lz_key, local.client_config.landingzone_key)][try(each.value.resource_group_key, each.value.resource_group.key)].name
+
 
   integration_runtime_name = coalesce(
     try(local.combined_objects_data_factory_integration_runtime_self_hosted[each.value.integration_runtime.data_factory_integration_runtime_self_hosted.lz_key][each.value.integration_runtime.data_factory_integration_runtime_self_hosted.key].name, null),
@@ -223,12 +276,11 @@ module "data_factory_linked_service_key_vault" {
   name                  = each.value.name
   additional_properties = try(each.value.additional_properties, null)
 
-  key_vault_id = coalesce(
-    try(local.combined_objects_keyvaults[local.client_config.landingzone_key][each.value.keyvault.key].id, null),
-    try(local.combined_objects_keyvaults[each.value.keyvault.lz_key][each.value.keyvault.key].id, null),
-    try(each.value.keyvault.id, null)
-  )
+  key_vault_id        = can(each.value.keyvault.id) ? each.value.keyvault.id : local.combined_objects_keyvaults[try(each.value.keyvault.lz_key, local.client_config.landingzone_key)][each.value.keyvault.key].id
+  resource_group_name = can(each.value.resource_group.name) || can(each.value.resource_group_name) ? try(each.value.resource_group.name, each.value.resource_group_name) : local.combined_objects_resource_groups[try(each.value.resource_group.lz_key, local.client_config.landingzone_key)][try(each.value.resource_group_key, each.value.resource_group.key)].name
+  data_factory_name   = can(each.value.data_factory.name) ? each.value.data_factory.name : local.combined_objects_data_factory[try(each.value.data_factory.lz_key, local.client_config.landingzone_key)][each.value.data_factory.key].name
 
+<<<<<<< HEAD
   resource_group_name = coalesce(
     try(local.combined_objects_resource_groups[each.value.resource_group.lz_key][each.value.resource_group.key].name, null),
     try(local.combined_objects_resource_groups[local.client_config.landingzone_key][each.value.resource_group.key].name, null),
@@ -243,6 +295,8 @@ module "data_factory_linked_service_key_vault" {
     try(local.combined_objects_data_factory[try(each.value.data_factory.lz_key, local.client_config.landingzone_key)][each.value.data_factory.key].id, null),
     try(each.value.data_factory.id, null)
   )
+=======
+>>>>>>> main
 
   integration_runtime_name = coalesce(
     try(local.combined_objects_data_factory_integration_runtime_self_hosted[each.value.integration_runtime.data_factory_integration_runtime_self_hosted.lz_key][each.value.integration_runtime.data_factory_integration_runtime_self_hosted.key].name, null),
