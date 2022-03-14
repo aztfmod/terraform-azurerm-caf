@@ -24,6 +24,13 @@ resource "azurerm_app_service" "app_service" {
   enabled                 = lookup(var.settings, "enabled", null)
   https_only              = lookup(var.settings, "https_only", null)
 
+  key_vault_reference_identity_id = try(
+    var.combined_objects.managed_identities[var.settings.identity.lz_key][var.settings.key_vault_reference_identity.key].id,
+    var.combined_objects.managed_identities[var.client_config.landingzone_key][var.settings.key_vault_reference_identity.key].id,
+    var.settings.key_vault_reference_identity.id,
+    null
+  )
+
   dynamic "identity" {
     for_each = try(var.identity, null) == null ? [] : [1]
 
