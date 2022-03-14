@@ -37,12 +37,17 @@ resource "azurerm_app_service" "app_service" {
     for_each = lookup(var.settings, "site_config", {}) != {} ? [1] : []
 
     content {
-      # numberOfWorkers           = lookup(each.value.site_config, "numberOfWorkers", 1)  # defined in ARM template below
+      acr_use_managed_identity_credentials = lookup(var.settings.site_config, "acr_use_managed_identity_credentials", null)
+      acr_user_managed_identity_client_id = try(coalesce(
+        try(var.settings.site_config.acr_user_managed_identity_client_id, null),
+        try(var.combined_objects.managed_identities[try(var.settings.identity.lz_key, var.client_config.landingzone_key)][var.settings.site_config.acr_user_managed_identity_key].client_id, null)
+      ), null)
       always_on                 = lookup(var.settings.site_config, "always_on", false)
       app_command_line          = lookup(var.settings.site_config, "app_command_line", null)
       default_documents         = lookup(var.settings.site_config, "default_documents", null)
       dotnet_framework_version  = lookup(var.settings.site_config, "dotnet_framework_version", null)
       ftps_state                = lookup(var.settings.site_config, "ftps_state", "FtpsOnly")
+      number_of_workers         = lookup(var.settings.site_config, "number_of_workers", null)
       http2_enabled             = lookup(var.settings.site_config, "http2_enabled", false)
       java_version              = lookup(var.settings.site_config, "java_version", null)
       java_container            = lookup(var.settings.site_config, "java_container", null)
@@ -253,22 +258,4 @@ resource "azurerm_app_service" "app_service" {
       site_config[0].scm_type
     ]
   }
-}
-
-resource "azurerm_template_deployment" "site_config" {
-  depends_on = [azurerm_app_service.app_service]
-
-  count = lookup(var.settings, "numberOfWorkers", {}) != {} ? 1 : 0
-
-  name                = azurecaf_name.app_service.result
-  resource_group_name = var.resource_group_name
-
-  template_body = file(local.arm_filename)
-
-  parameters = {
-    "numberOfWorkers" = tonumber(var.settings.numberOfWorkers)
-    "name"            = azurecaf_name.app_service.result
-  }
-
-  deployment_mode = "Incremental"
 }
