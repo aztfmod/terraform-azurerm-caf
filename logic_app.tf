@@ -134,3 +134,20 @@ module "logic_app_workflow" {
 output "logic_app_workflow" {
   value = module.logic_app_workflow
 }
+
+module "logic_app_standard" {
+  source = "./modules/logic_app/standard"
+
+  for_each = local.logic_app.logic_app_standard
+
+  global_settings  = local.global_settings
+  client_config    = local.client_config
+  settings         = each.value
+  resource_groups  = local.combined_objects_resource_groups
+  storage_accounts = local.combined_objects_storage_accounts
+  app_service_plans = local.combined_objects_app_service_plans
+}
+
+output "logic_app_standard" {
+  value = module.logic_app_standard
+}
