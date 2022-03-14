@@ -11,15 +11,9 @@ module "mssql_databases" {
   cloud               = local.cloud
   managed_identities  = local.combined_objects_managed_identities
   settings            = each.value
-<<<<<<< HEAD
-  server_id           = local.combined_objects_mssql_servers[try(local.client_config.landingzone_key, each.value.lz_key)][each.value.mssql_server_key].id
-  server_name         = try(local.combined_objects_mssql_servers[local.client_config.landingzone_key][each.value.mssql_server_key].name, local.combined_objects_mssql_servers[each.value.lz_key][each.value.mssql_server_key].name)
-  elastic_pool_id     = try(each.value.elastic_pool_key, null) == null ? null : try(local.combined_objects_mssql_elastic_pools[local.client_config.landingzone_key][each.value.elastic_pool_key].id, local.combined_objects_mssql_elastic_pools[each.value.lz_key][each.value.elastic_pool_key].id)
-=======
   server_id           = local.combined_objects_mssql_servers[try(each.value.lz_key, local.client_config.landingzone_key)][each.value.mssql_server_key].id
   server_name         = local.combined_objects_mssql_servers[try(each.value.lz_key, local.client_config.landingzone_key)][each.value.mssql_server_key].name
   elastic_pool_id     = can(each.value.elastic_pool_key) ? local.combined_objects_mssql_elastic_pools[try(each.value.lz_key, local.client_config.landingzone_key)][each.value.elastic_pool_key].id : null
->>>>>>> main
   storage_accounts    = module.storage_accounts
   diagnostic_profiles = try(each.value.diagnostic_profiles, null)
   diagnostics         = local.combined_diagnostics
