@@ -394,3 +394,6 @@ variable "apim" {
 variable "synapse" {
   default = {}
 }
+variable "purview" {
+  default = {}
+}

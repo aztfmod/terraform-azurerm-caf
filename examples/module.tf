@@ -334,4 +334,7 @@ module "example" {
     synapse_workspace_sql_aad_admin                    = var.synapse_workspace_sql_aad_admin
     synapse_workspace_vulnerability_assessment         = var.synapse_workspace_vulnerability_assessment
   }
+  purview = {
+    purview_accounts = var.purview_accounts
+  }
 }

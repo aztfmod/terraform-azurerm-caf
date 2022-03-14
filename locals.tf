@@ -378,4 +378,7 @@ locals {
     synapse_workspace_sql_aad_admin                    = try(var.synapse.synapse_workspace_sql_aad_admin, {})
     synapse_workspace_vulnerability_assessment         = try(var.synapse.synapse_workspace_vulnerability_assessment, {})
   }
+  purview = {
+    purview_accounts = try(var.purview.purview_accounts, {})
+  }
 }

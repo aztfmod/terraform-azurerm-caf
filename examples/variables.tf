@@ -907,3 +907,6 @@ variable "synapse_workspace_vulnerability_assessment" {
 variable "storage_data_lake_gen2_filesystem" {
   default = {}
 }
+variable "purview_accounts" {
+  default = {}
+}
