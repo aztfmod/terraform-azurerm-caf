@@ -40,12 +40,10 @@ resource "azurerm_app_service" "app_service" {
 
     content {
       acr_use_managed_identity_credentials = lookup(var.settings.site_config, "acr_use_managed_identity_credentials", null)
-      acr_user_managed_identity_client_id = try(
-        var.combined_objects.managed_identities[var.settings.identity.lz_key][var.settings.site_config.acr_user_managed_identity.key].client_id,
-        var.combined_objects.managed_identities[var.client_config.landingzone_key][var.settings.site_config.acr_user_managed_identity.key].client_id,
-        var.settings.site_config.acr_user_managed_identity_client.id,
-        null
-      )
+      acr_user_managed_identity_client_id = try(coalesce(
+        try(var.settings.site_config.acr_user_managed_identity_client_id, null),
+        try(var.combined_objects.managed_identities[try(var.settings.identity.lz_key, var.client_config.landingzone_key)][var.settings.site_config.acr_user_managed_identity_key].client_id, null)
+      ), null)
       always_on                 = lookup(var.settings.site_config, "always_on", false)
       app_command_line          = lookup(var.settings.site_config, "app_command_line", null)
       default_documents         = lookup(var.settings.site_config, "default_documents", null)
