@@ -219,6 +219,7 @@ module "example" {
     keyvault_keys                 = var.keyvault_keys
     keyvault_certificates         = var.keyvault_certificates
     lighthouse_definitions        = var.lighthouse_definitions
+    sentinel                      = var.sentinel
   }
   shared_services = {
     consumption_budgets            = var.consumption_budgets
