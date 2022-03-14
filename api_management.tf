@@ -7,8 +7,12 @@ module "api_management" {
   settings        = each.value
 
   location = lookup(each.value, "region", null) == null ? local.resource_groups[each.value.resource_group_key].location : local.global_settings.regions[each.value.region]
+  resource_group_name = coalesce(
+    try(local.combined_objects_resource_groups[each.value.resource_group.lz_key][each.value.resource_group.key].name, null),
+    try(local.combined_objects_resource_groups[local.client_config.landingzone_key][each.value.resource_group.key].name, null),
+    try(each.value.resource_group.name, null)
+  )
 
-  resource_group_name = can(each.value.resource_group.name) || can(each.value.resource_group_name) ? try(each.value.resource_group.name, each.value.resource_group_name) : local.combined_objects_resource_groups[try(each.value.resource_group.lz_key, local.client_config.landingzone_key)][try(each.value.resource_group_key, each.value.resource_group.key)].name
 
   remote_objects = {
     resource_group     = local.combined_objects_resource_groups
@@ -27,8 +31,18 @@ module "api_management_api" {
   client_config   = local.client_config
   settings        = each.value
 
-  api_management_name = can(each.value.api_management.name) ? each.value.api_management.name : local.combined_objects_api_management[try(each.value.api_management.lz_key, local.client_config.landingzone_key)][each.value.api_management.key].name
-  resource_group_name = can(each.value.resource_group.name) || can(each.value.resource_group_name) ? try(each.value.resource_group.name, each.value.resource_group_name) : local.combined_objects_resource_groups[try(each.value.resource_group.lz_key, local.client_config.landingzone_key)][try(each.value.resource_group_key, each.value.resource_group.key)].name
+  api_management_name = coalesce(
+    try(local.combined_objects_api_management[each.value.api_management.lz_key][each.value.api_management.key].name, null),
+    try(local.combined_objects_api_management[local.client_config.landingzone_key][each.value.api_management.key].name, null),
+    try(each.value.api.name, null)
+  )
+
+  resource_group_name = coalesce(
+    try(local.combined_objects_resource_groups[each.value.resource_group.lz_key][each.value.resource_group.key].name, null),
+    try(local.combined_objects_resource_groups[local.client_config.landingzone_key][each.value.resource_group.key].name, null),
+    try(each.value.resource_group.name, null)
+  )
+
 
   remote_objects = {
     api_management = local.combined_objects_api_management
@@ -47,8 +61,18 @@ module "api_management_logger" {
   client_config   = local.client_config
   settings        = each.value
 
-  resource_group_name = can(each.value.resource_group.name) || can(each.value.resource_group_name) ? try(each.value.resource_group.name, each.value.resource_group_name) : local.combined_objects_resource_groups[try(each.value.resource_group.lz_key, local.client_config.landingzone_key)][try(each.value.resource_group_key, each.value.resource_group.key)].name
-  api_management_name = can(each.value.api_management.name) ? each.value.api_management.name : local.combined_objects_api_management[try(each.value.api_management.lz_key, local.client_config.landingzone_key)][each.value.api_management.key].name
+  resource_group_name = coalesce(
+    try(local.combined_objects_resource_groups[each.value.resource_group.lz_key][each.value.resource_group.key].name, null),
+    try(local.combined_objects_resource_groups[local.client_config.landingzone_key][each.value.resource_group.key].name, null),
+    try(each.value.resource_group.name, null)
+  )
+
+  api_management_name = coalesce(
+    try(local.combined_objects_api_management[each.value.api_management.lz_key][each.value.api_management.key].name, null),
+    try(local.combined_objects_api_management[local.client_config.landingzone_key][each.value.api_management.key].name, null),
+    try(each.value.api_management.name, null)
+  )
+
 
   remote_objects = {
     resource_group       = local.combined_objects_resource_groups
@@ -67,10 +91,28 @@ module "api_management_api_diagnostic" {
   client_config   = local.client_config
   settings        = each.value
 
-  api_management_logger_id = can(each.value.api_management_logger.id) ? each.value.api_management_logger.id : local.combined_objects_api_management_logger[try(each.value.api_management_logger.lz_key, local.client_config.landingzone_key)][each.value.api_management_logger.key].id
-  api_management_name      = can(each.value.api_management.name) ? each.value.api_management.name : local.combined_objects_api_management[try(each.value.api_management.lz_key, local.client_config.landingzone_key)][each.value.api_management.key].name
-  resource_group_name      = can(each.value.resource_group.name) ? each.value.resource_group.name : local.combined_objects_resource_groups[try(each.value.resource_group.lz_key, local.client_config.landingzone_key)][try(each.value.resource_group_key, each.value.resource_group.key)].name
-  api_name                 = can(each.value.api.name) ? each.value.api.name : local.combined_objects_api_management_api[try(each.value.api.lz_key, local.client_config.landingzone_key)][each.value.api.key].name
+  api_management_logger_id = coalesce(
+    try(local.combined_objects_api_management_logger[each.value.api_management_logger.lz_key][each.value.api_management_logger.key].id, null),
+    try(local.combined_objects_api_management_logger[local.client_config.landingzone_key][each.value.api_management_logger.key].id, null),
+    try(each.value.api_management_logger.id, null)
+  )
+
+  api_management_name = coalesce(
+    try(local.combined_objects_api_management[each.value.api_management.lz_key][each.value.api_management.key].name, null),
+    try(local.combined_objects_api_management[local.client_config.landingzone_key][each.value.api_management.key].name, null),
+    try(each.value.api_management.name, null)
+  )
+  api_name = coalesce(
+    try(local.combined_objects_api_management_api[each.value.api.lz_key][each.value.api.key].name, null),
+    try(local.combined_objects_api_management_api[local.client_config.landingzone_key][each.value.api.key].name, null),
+    try(each.value.api.name, null)
+  )
+  resource_group_name = coalesce(
+    try(local.combined_objects_resource_groups[each.value.resource_group.lz_key][each.value.resource_group.key].name, null),
+    try(local.combined_objects_resource_groups[local.client_config.landingzone_key][each.value.resource_group.key].name, null),
+    try(each.value.resource_group.name, null)
+  )
+
 
   remote_objects = {
     #api_management_logger = local.combined_objects_api_management_logger
@@ -89,9 +131,24 @@ module "api_management_api_operation" {
   client_config   = local.client_config
   settings        = each.value
 
-  api_name            = can(each.value.api.name) ? each.value.api.name : local.combined_objects_api_management_api[try(each.value.api.lz_key, local.client_config.landingzone_key)][each.value.api.key].name
-  api_management_name = can(each.value.api_management.name) ? each.value.api_management.name : local.combined_objects_api_management[try(each.value.api_management.lz_key, local.client_config.landingzone_key)][each.value.api_management.key].name
-  resource_group_name = can(each.value.resource_group.name) || can(each.value.resource_group_name) ? try(each.value.resource_group.name, each.value.resource_group_name) : local.combined_objects_resource_groups[try(each.value.resource_group.lz_key, local.client_config.landingzone_key)][try(each.value.resource_group_key, each.value.resource_group.key)].name
+  api_name = coalesce(
+    try(local.combined_objects_api_management_api[each.value.api.lz_key][each.value.apit.key].name, null),
+    try(local.combined_objects_api_management_api[local.client_config.landingzone_key][each.value.api.key].name, null),
+    try(each.value.api.name, null)
+  )
+
+  api_management_name = coalesce(
+    try(local.combined_objects_api_management[each.value.api_management.lz_key][each.value.api_management.key].name, null),
+    try(local.combined_objects_api_management[local.client_config.landingzone_key][each.value.api_management.key].name, null),
+    try(each.value.api_management.name, null)
+  )
+
+  resource_group_name = coalesce(
+    try(local.combined_objects_resource_groups[each.value.resource_group.lz_key][each.value.resource_group.key].name, null),
+    try(local.combined_objects_resource_groups[local.client_config.landingzone_key][each.value.resource_group.key].name, null),
+    try(each.value.resource_group.name, null)
+  )
+
 
   remote_objects = {
     api_management = local.combined_objects_api_management
@@ -110,8 +167,18 @@ module "api_management_backend" {
   client_config   = local.client_config
   settings        = each.value
 
-  api_management_name = can(each.value.api_management.name) ? each.value.api_management.name : local.combined_objects_api_management[try(each.value.api_management.lz_key, local.client_config.landingzone_key)][each.value.api_management.key].name
-  resource_group_name = can(each.value.resource_group.name) || can(each.value.resource_group_name) ? try(each.value.resource_group.name, each.value.resource_group_name) : local.combined_objects_resource_groups[try(each.value.resource_group.lz_key, local.client_config.landingzone_key)][try(each.value.resource_group_key, each.value.resource_group.key)].name
+  api_management_name = coalesce(
+    try(local.combined_objects_api_management[each.value.api_management.lz_key][each.value.api_management.key].name, null),
+    try(local.combined_objects_api_management[local.client_config.landingzone_key][each.value.api_management.key].name, null),
+    try(each.value.api_management.name, null)
+  )
+
+  resource_group_name = coalesce(
+    try(local.combined_objects_resource_groups[each.value.resource_group.lz_key][each.value.resource_group.key].name, null),
+    try(local.combined_objects_resource_groups[local.client_config.landingzone_key][each.value.resource_group.key].name, null),
+    try(each.value.resource_group.name, null)
+  )
+
 
   remote_objects = {
     api_management = local.combined_objects_api_management
@@ -130,9 +197,23 @@ module "api_management_api_policy" {
   client_config   = local.client_config
   settings        = each.value
 
-  api_name            = can(each.value.api.name) ? each.value.api.name : local.combined_objects_api_management_api[try(each.value.api.lz_key, local.client_config.landingzone_key)][each.value.api.key].name
-  api_management_name = can(each.value.api_management.name) ? each.value.api_management.name : local.combined_objects_api_management[try(each.value.api_management.lz_key, local.client_config.landingzone_key)][each.value.api_management.key].name
-  resource_group_name = can(each.value.resource_group.name) || can(each.value.resource_group_name) ? try(each.value.resource_group.name, each.value.resource_group_name) : local.combined_objects_resource_groups[try(each.value.resource_group.lz_key, local.client_config.landingzone_key)][try(each.value.resource_group_key, each.value.resource_group.key)].name
+  api_name = coalesce(
+    try(local.combined_objects_api_management_api[each.value.api.lz_key][each.value.apit.key].name, null),
+    try(local.combined_objects_api_management_api[local.client_config.landingzone_key][each.value.api.key].name, null),
+    try(each.value.api.name, null)
+  )
+  api_management_name = coalesce(
+    try(local.combined_objects_api_management[each.value.api_management.lz_key][each.value.api_management.key].name, null),
+    try(local.combined_objects_api_management[local.client_config.landingzone_key][each.value.api_management.key].name, null),
+    try(each.value.api_management.name, null)
+  )
+
+  resource_group_name = coalesce(
+    try(local.combined_objects_resource_groups[each.value.resource_group.lz_key][each.value.resource_group.key].name, null),
+    try(local.combined_objects_resource_groups[local.client_config.landingzone_key][each.value.resource_group.key].name, null),
+    try(each.value.resource_group.name, null)
+  )
+
 
   remote_objects = {
     api_management = local.combined_objects_api_management
@@ -147,7 +228,12 @@ module "api_management_api_operation_tag" {
   source   = "./modules/apim/api_management_api_operation_tag"
   for_each = local.apim.api_management_api_operation_tag
 
-  api_operation_id = can(each.value.api_operation.id) ? each.value.api_operation.id : local.combined_objects_api_management_api_operation[try(each.value.api_operation.lz_key, local.client_config.landingzone_key)][each.value.api_operation.key].id
+  api_operation_id = coalesce(
+    try(local.combined_objects_api_management_api_operation[each.value.api_operation.lz_key][each.value.api_operation.key].id, null),
+    try(local.combined_objects_api_management_api_operation[local.client_config.landingzone_key][each.value.api_operation.key].id, null),
+    try(each.value.api_operation.id, null)
+  )
+
 
   global_settings = local.global_settings
   client_config   = local.client_config
@@ -168,9 +254,23 @@ module "api_management_api_operation_policy" {
   client_config   = local.client_config
   settings        = each.value
 
-  api_name            = can(each.value.api.name) ? each.value.api.name : local.combined_objects_api_management_api[try(each.value.api.lz_key, local.client_config.landingzone_key)][each.value.api.key].name
-  api_management_name = can(each.value.api_management.name) ? each.value.api_management.name : local.combined_objects_api_management[try(each.value.api_management.lz_key, local.client_config.landingzone_key)][each.value.api_management.key].name
-  resource_group_name = can(each.value.resource_group.name) || can(each.value.resource_group_name) ? try(each.value.resource_group.name, each.value.resource_group_name) : local.combined_objects_resource_groups[try(each.value.resource_group.lz_key, local.client_config.landingzone_key)][try(each.value.resource_group_key, each.value.resource_group.key)].name
+  api_name = coalesce(
+    try(local.combined_objects_api_management_api[each.value.api.lz_key][each.value.api.key].name, null),
+    try(local.combined_objects_api_management_api[local.client_config.landingzone_key][each.value.api.key].name, null),
+    try(each.value.api.name, null)
+  )
+
+  api_management_name = coalesce(
+    try(local.combined_objects_api_management[each.value.api_management.lz_key][each.value.api_management.key].name, null),
+    try(local.combined_objects_api_management[local.client_config.landingzone_key][each.value.api_management.key].name, null),
+    try(each.value.api_management.name, null)
+  )
+
+  resource_group_name = coalesce(
+    try(local.combined_objects_resource_groups[each.value.resource_group.lz_key][each.value.resource_group.key].name, null),
+    try(local.combined_objects_resource_groups[local.client_config.landingzone_key][each.value.resource_group.key].name, null),
+    try(each.value.resource_group.name, null)
+  )
 
   remote_objects = {
     api_management               = local.combined_objects_api_management
@@ -190,8 +290,18 @@ module "api_management_certificate" {
   client_config   = local.client_config
   settings        = each.value
 
-  api_management_name = can(each.value.api_management.name) ? each.value.api_management.name : local.combined_objects_api_management[try(each.value.api_management.lz_key, local.client_config.landingzone_key)][each.value.api_management.key].name
-  resource_group_name = can(each.value.resource_group.name) || can(each.value.resource_group_name) ? try(each.value.resource_group.name, each.value.resource_group_name) : local.combined_objects_resource_groups[try(each.value.resource_group.lz_key, local.client_config.landingzone_key)][try(each.value.resource_group_key, each.value.resource_group.key)].name
+  api_management_name = coalesce(
+    try(local.combined_objects_api_management[each.value.api_management.lz_key][each.value.api_management.key].name, null),
+    try(local.combined_objects_api_management[local.client_config.landingzone_key][each.value.api_management.key].name, null),
+    try(each.value.api_management.name, null)
+  )
+
+  resource_group_name = coalesce(
+    try(local.combined_objects_resource_groups[each.value.resource_group.lz_key][each.value.resource_group.key].name, null),
+    try(local.combined_objects_resource_groups[local.client_config.landingzone_key][each.value.resource_group.key].name, null),
+    try(each.value.resource_group.name, null)
+  )
+
 
   remote_objects = {
     api_management                = local.combined_objects_api_management
@@ -213,7 +323,12 @@ module "api_management_custom_domain" {
   client_config   = local.client_config
   settings        = each.value
 
-  api_management_id = can(each.value.api_management.id) ? each.value.api_management.id : local.combined_objects_api_management[try(each.value.api_management.lz_key, local.client_config.landingzone_key)][each.value.api_management.key].id
+  api_management_id = coalesce(
+    try(local.combined_objects_api_management[each.value.api_management.lz_key][each.value.api_management.key].id, null),
+    try(local.combined_objects_api_management[local.client_config.landingzone_key][each.value.api_management.key].id, null),
+    try(each.value.api_management.id, null)
+  )
+
 
   remote_objects = {
     api_management                = local.combined_objects_api_management
@@ -233,9 +348,23 @@ module "api_management_diagnostic" {
   client_config   = local.client_config
   settings        = each.value
 
-  api_management_name      = can(each.value.api_management.name) ? each.value.api_management.name : local.combined_objects_api_management[try(each.value.api_management.lz_key, local.client_config.landingzone_key)][each.value.api_management.key].name
-  resource_group_name      = can(each.value.resource_group.name) ? each.value.resource_group.name : local.combined_objects_resource_groups[try(each.value.resource_group.lz_key, local.client_config.landingzone_key)][try(each.value.resource_group_key, each.value.resource_group.key)].name
-  api_management_logger_id = can(each.value.api_management_logger.id) ? each.value.api_management_logger.id : local.combined_objects_api_management_logger[try(each.value.api_management_logger.lz_key, local.client_config.landingzone_key)][each.value.api_management_logger.key].id
+  api_management_name = coalesce(
+    try(local.combined_objects_api_management[each.value.api_management.lz_key][each.value.api_management.key].name, null),
+    try(local.combined_objects_api_management[local.client_config.landingzone_key][each.value.api_management.key].name, null),
+    try(each.value.api_management.name, null)
+  )
+
+  resource_group_name = coalesce(
+    try(local.combined_objects_resource_groups[each.value.resource_group.lz_key][each.value.resource_group.key].name, null),
+    try(local.combined_objects_resource_groups[local.client_config.landingzone_key][each.value.resource_group.key].name, null),
+    try(each.value.resource_group.name, null)
+  )
+
+  api_management_logger_id = coalesce(
+    try(local.combined_objects_api_management_logger[each.value.api_management_logger.lz_key][each.value.api_management_logger.key].id, null),
+    try(local.combined_objects_api_management_logger[local.client_config.landingzone_key][each.value.api_management_logger.key].id, null),
+    try(each.value.api_management_logger.id, null)
+  )
 
   remote_objects = {
     api_management        = local.combined_objects_api_management
@@ -243,7 +372,6 @@ module "api_management_diagnostic" {
     api_management_logger = local.combined_objects_api_management_logger
   }
 }
-
 output "api_management_diagnostic" {
   value = module.api_management_diagnostic
 }
@@ -256,8 +384,18 @@ module "api_management_user" {
   client_config   = local.client_config
   settings        = each.value
 
-  api_management_name = can(each.value.api_management.name) ? each.value.api_management.name : local.combined_objects_api_management[try(each.value.api_management.lz_key, local.client_config.landingzone_key)][each.value.api_management.key].name
-  resource_group_name = can(each.value.resource_group.name) || can(each.value.resource_group_name) ? try(each.value.resource_group.name, each.value.resource_group_name) : local.combined_objects_resource_groups[try(each.value.resource_group.lz_key, local.client_config.landingzone_key)][try(each.value.resource_group_key, each.value.resource_group.key)].name
+  api_management_name = coalesce(
+    try(local.combined_objects_api_management[each.value.api_management.lz_key][each.value.api_management.key].name, null),
+    try(local.combined_objects_api_management[local.client_config.landingzone_key][each.value.api_management.key].name, null),
+    try(each.value.api_management.name, null)
+  )
+
+  resource_group_name = coalesce(
+    try(local.combined_objects_resource_groups[each.value.resource_group.lz_key][each.value.resource_group.key].name, null),
+    try(local.combined_objects_resource_groups[local.client_config.landingzone_key][each.value.resource_group.key].name, null),
+    try(each.value.resource_group.name, null)
+  )
+
 
   remote_objects = {
     api_management = local.combined_objects_api_management

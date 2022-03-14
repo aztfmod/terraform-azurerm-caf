@@ -391,6 +391,6 @@ variable "identity" {
 variable "apim" {
   default = {}
 }
-variable "purview" {
+variable "synapse" {
   default = {}
 }

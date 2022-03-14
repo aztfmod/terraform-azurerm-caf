@@ -6,8 +6,13 @@ module "lb" {
   client_config   = local.client_config
   settings        = each.value
 
-  location            = can(local.global_settings.regions[each.value.region]) ? local.global_settings.regions[each.value.region] : local.combined_objects_resource_groups[try(each.value.resource_group.lz_key, local.client_config.landingzone_key)][try(each.value.resource_group.key, each.value.resource_group_key)].location
-  resource_group_name = can(each.value.resource_group.name) || can(each.value.resource_group_name) ? try(each.value.resource_group.name, each.value.resource_group_name) : local.combined_objects_resource_groups[try(each.value.resource_group.lz_key, local.client_config.landingzone_key)][try(each.value.resource_group_key, each.value.resource_group.key)].name
+  resource_group_name = coalesce(
+    try(local.combined_objects_resource_groups[each.value.resource_group.lz_key][each.value.resource_group.key].name, null),
+    try(local.combined_objects_resource_groups[local.client_config.landingzone_key][each.value.resource_group.key].name, null),
+    try(each.value.resource_group.name, null)
+  )
+
+  location = lookup(each.value, "region", null) == null ? local.resource_groups[each.value.resource_group_key].location : local.global_settings.regions[each.value.region]
 
   remote_objects = {
     resource_group      = local.combined_objects_resource_groups
@@ -61,7 +66,12 @@ module "lb_nat_pool" {
   client_config   = local.client_config
   settings        = each.value
 
-  resource_group_name = can(each.value.resource_group.name) || can(each.value.resource_group_name) ? try(each.value.resource_group.name, each.value.resource_group_name) : local.combined_objects_resource_groups[try(each.value.resource_group.lz_key, local.client_config.landingzone_key)][try(each.value.resource_group_key, each.value.resource_group.key)].name
+  resource_group_name = coalesce(
+    try(local.combined_objects_resource_groups[each.value.resource_group.lz_key][each.value.resource_group.key].name, null),
+    try(local.combined_objects_resource_groups[local.client_config.landingzone_key][each.value.resource_group.key].name, null),
+    try(each.value.resource_group.name, null)
+  )
+
 
   remote_objects = {
     resource_group = local.combined_objects_resource_groups
@@ -79,7 +89,12 @@ module "lb_nat_rule" {
   client_config   = local.client_config
   settings        = each.value
 
-  resource_group_name = can(each.value.resource_group.name) || can(each.value.resource_group_name) ? try(each.value.resource_group.name, each.value.resource_group_name) : local.combined_objects_resource_groups[try(each.value.resource_group.lz_key, local.client_config.landingzone_key)][try(each.value.resource_group_key, each.value.resource_group.key)].name
+  resource_group_name = coalesce(
+    try(local.combined_objects_resource_groups[each.value.resource_group.lz_key][each.value.resource_group.key].name, null),
+    try(local.combined_objects_resource_groups[local.client_config.landingzone_key][each.value.resource_group.key].name, null),
+    try(each.value.resource_group.name, null)
+  )
+
 
   remote_objects = {
     resource_group = local.combined_objects_resource_groups
@@ -98,7 +113,12 @@ module "lb_outbound_rule" {
   client_config   = local.client_config
   settings        = each.value
 
-  resource_group_name = can(each.value.resource_group.name) || can(each.value.resource_group_name) ? try(each.value.resource_group.name, each.value.resource_group_name) : local.combined_objects_resource_groups[try(each.value.resource_group.lz_key, local.client_config.landingzone_key)][try(each.value.resource_group_key, each.value.resource_group.key)].name
+  resource_group_name = coalesce(
+    try(local.combined_objects_resource_groups[each.value.resource_group.lz_key][each.value.resource_group.key].name, null),
+    try(local.combined_objects_resource_groups[local.client_config.landingzone_key][each.value.resource_group.key].name, null),
+    try(each.value.resource_group.name, null)
+  )
+
 
   remote_objects = {
     resource_group          = local.combined_objects_resource_groups
@@ -118,7 +138,12 @@ module "lb_probe" {
   client_config   = local.client_config
   settings        = each.value
 
-  resource_group_name = can(each.value.resource_group.name) || can(each.value.resource_group_name) ? try(each.value.resource_group.name, each.value.resource_group_name) : local.combined_objects_resource_groups[try(each.value.resource_group.lz_key, local.client_config.landingzone_key)][try(each.value.resource_group_key, each.value.resource_group.key)].name
+  resource_group_name = coalesce(
+    try(local.combined_objects_resource_groups[each.value.resource_group.lz_key][each.value.resource_group.key].name, null),
+    try(local.combined_objects_resource_groups[local.client_config.landingzone_key][each.value.resource_group.key].name, null),
+    try(each.value.resource_group.name, null)
+  )
+
 
   remote_objects = {
     resource_group = local.combined_objects_resource_groups
@@ -136,7 +161,12 @@ module "lb_rule" {
   client_config   = local.client_config
   settings        = each.value
 
-  resource_group_name = can(each.value.resource_group.name) || can(each.value.resource_group_name) ? try(each.value.resource_group.name, each.value.resource_group_name) : local.combined_objects_resource_groups[try(each.value.resource_group.lz_key, local.client_config.landingzone_key)][try(each.value.resource_group_key, each.value.resource_group.key)].name
+  resource_group_name = coalesce(
+    try(local.combined_objects_resource_groups[each.value.resource_group.lz_key][each.value.resource_group.key].name, null),
+    try(local.combined_objects_resource_groups[local.client_config.landingzone_key][each.value.resource_group.key].name, null),
+    try(each.value.resource_group.name, null)
+  )
+
 
   remote_objects = {
     resource_group = local.combined_objects_resource_groups

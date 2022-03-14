@@ -11,7 +11,7 @@ resource "azurecaf_name" "disk" {
 
   lifecycle {
     ignore_changes = [
-      name #for ASR disk restores
+      name
     ]
   }
 
@@ -34,8 +34,7 @@ resource "azurerm_managed_disk" "disk" {
 
   lifecycle {
     ignore_changes = [
-      name, #for ASR disk restores
-      resource_group_name, location
+      name, resource_group_name, location
     ]
   }
 
