@@ -21,14 +21,3 @@ locals {
     try(var.storage_accounts[var.settings.storage_account.lz_key][var.settings.storage_account.key], null)
   )
 }
-
-
-logic_apps = {
-  logic_app_standard = {
-    name = "demo-pre-uks"
-    resource_group_key = ?
-    storage_account_key = ?
-    app_service_plan_key = ?
-    region = region1
-  }
-}
