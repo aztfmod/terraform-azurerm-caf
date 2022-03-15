@@ -19,7 +19,6 @@ module "azurerm_application_insights" {
   diagnostic_profiles                   = try(each.value.diagnostic_profiles, null)
   diagnostics                           = local.combined_diagnostics
   settings                              = each.value
-
 }
 
 output "application_insights" {
