@@ -4,8 +4,8 @@ app_service_plans = {
     name               = "logicapp1asp"
 
     sku = {
-      tier = "Standard"
-      size = "S1"
+      tier = "WorkflowStandard"
+      size = "WS1"
     }
   }
 }
