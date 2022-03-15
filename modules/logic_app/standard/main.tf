@@ -20,4 +20,11 @@ locals {
     try(var.storage_accounts[var.settings.lz_key][var.settings.storage_account_key], null),
     try(var.storage_accounts[var.settings.storage_account.lz_key][var.settings.storage_account.key], null)
   )
+
+  app_service_plan = coalesce(
+    try(var.app_service_plans[var.client_config.landingzone_key][var.settings.app_service_plan_key], null),
+    try(var.app_service_plans[var.client_config.landingzone_key][var.settings.app_service_plan.key], null),
+    try(var.app_service_plans[var.settings.lz_key][var.settings.app_service_plan_key], null),
+    try(var.app_service_plans[var.settings.app_service_plan.lz_key][var.settings.app_service_plan.key], null)
+  )
 }
