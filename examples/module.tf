@@ -110,6 +110,7 @@ module "example" {
     diagnostics_destinations        = var.diagnostics_destinations
   }
   database = {
+    app_config                         = var.app_config
     azurerm_redis_caches               = var.azurerm_redis_caches
     cosmos_dbs                         = var.cosmos_dbs
     databricks_workspaces              = var.databricks_workspaces

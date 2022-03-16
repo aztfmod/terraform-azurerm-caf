@@ -3,7 +3,7 @@ locals {
     for setting in
     flatten(
       [
-        for setting_name, resources in var.settings.dynamic_settings : [
+        for setting_name, resources in try(var.settings.dynamic_settings,[]) : [
           for resource_type_key, resource in resources : [
             for object_id_key, object_attributes in resource : {
               key   = setting_name
