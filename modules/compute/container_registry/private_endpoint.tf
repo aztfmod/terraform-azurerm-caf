@@ -9,7 +9,7 @@ module "private_endpoint" {
   location            = var.resource_groups[try(each.value.resource_group.lz_key, var.client_config.landingzone_key)][try(each.value.resource_group.key, each.value.resource_group_key)].location
   name                = each.value.name
   private_dns         = var.private_dns
-  resource_group_name = svar.resource_groups[try(each.value.resource_group.lz_key, var.client_config.landingzone_key)][try(each.value.resource_group.key, each.value.resource_group_key)].name
+  resource_group_name = var.resource_groups[try(each.value.resource_group.lz_key, var.client_config.landingzone_key)][try(each.value.resource_group.key, each.value.resource_group_key)].name
   resource_id         = azurerm_container_registry.acr.id
   settings            = each.value
 
