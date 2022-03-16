@@ -23,7 +23,7 @@ module "postgresql_servers" {
   vnets             = local.combined_objects_networking
   subnet_id         = try(each.value.vnet_key, null) == null ? null : try(local.combined_objects_networking[local.client_config.landingzone_key][each.value.vnet_key].subnets[each.value.subnet_key].id, local.combined_objects_networking[each.value.lz_key][each.value.vnet_key].subnets[each.value.subnet_key].id)
   private_endpoints = try(each.value.private_endpoints, {})
-  resource_groups   = try(each.value.private_endpoints, {}) == {} ? null : local.resource_groups
+  resource_groups   = try(each.value.private_endpoints, {}) == {} ? null : local.combined_objects_resource_groups
   private_dns       = local.combined_objects_private_dns
   diagnostics       = local.combined_diagnostics
 }

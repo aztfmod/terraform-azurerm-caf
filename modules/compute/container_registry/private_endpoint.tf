@@ -3,15 +3,17 @@ module "private_endpoint" {
   source   = "../../networking/private_endpoint"
   for_each = var.private_endpoints
 
-  base_tags           = local.tags
-  client_config       = var.client_config
-  global_settings     = var.global_settings
-  location            = var.resource_groups[var.client_config.landingzone_key][each.value.resource_group_key].location
-  name                = each.value.name
-  private_dns         = var.private_dns
-  resource_group_name = var.resource_groups[var.client_config.landingzone_key][each.value.resource_group_key].name
-  resource_id         = azurerm_container_registry.acr.id
-  settings            = each.value
+  base_tags       = local.tags
+  client_config   = var.client_config
+  global_settings = var.global_settings
+  location        = var.resource_groups[var.client_config.landingzone_key][each.value.resource_group_key].location
+  name            = each.value.name
+  private_dns     = var.private_dns
+  #resource_group_name = var.resource_groups[var.client_config.landingzone_key][each.value.resource_group_key].name
+  resource_group_name = can(each.value.resource_group.name) || can(each.value.resource_group_name) ? try(each.value.resource_group.name, each.value.resource_group_name) : var.resource_groups[try(each.value.resource_group.lz_key, var.client_config.landingzone_key)][try(each.value.resource_group_key, each.value.resource_group.key)].name
+
+  resource_id = azurerm_container_registry.acr.id
+  settings    = each.value
 
   subnet_id = coalesce(
     try(each.value.subnet_id, null),

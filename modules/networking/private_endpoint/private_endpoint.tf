@@ -10,11 +10,13 @@ resource "azurecaf_name" "pep" {
 }
 
 resource "azurerm_private_endpoint" "pep" {
-  name                = azurecaf_name.pep.result
-  location            = try(local.location, var.location)
-  resource_group_name = try(local.resource_group.name, var.resource_group_name)
-  subnet_id           = var.subnet_id
-  tags                = local.tags
+  name     = azurecaf_name.pep.result
+  location = try(local.location, var.location)
+  #resource_group_name = try(local.resource_group.name, var.resource_group_name)
+  resource_group_name = can(each.value.resource_group.name) || can(each.value.resource_group_name) ? try(each.value.resource_group.name, each.value.resource_group_name) : var.resource_groups[try(each.value.resource_group.lz_key, var.client_config.landingzone_key)][try(each.value.resource_group_key, each.value.resource_group.key)].name
+
+  subnet_id = var.subnet_id
+  tags      = local.tags
 
   private_service_connection {
     name                           = var.settings.private_service_connection.name

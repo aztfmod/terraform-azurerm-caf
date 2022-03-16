@@ -12,8 +12,9 @@ resource "azurecaf_name" "pep" {
 resource "azurerm_private_endpoint" "pep" {
   for_each = toset(var.subresource_names)
 
-  name                = format("%s-%s", azurecaf_name.pep.result, each.key)
-  location            = var.location
+  name     = format("%s-%s", azurecaf_name.pep.result, each.key)
+  location = var.location
+  #Need to use same RG is it ok?
   resource_group_name = var.resource_group_name
   subnet_id           = var.subnet_id
   tags                = local.tags
