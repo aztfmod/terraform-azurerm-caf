@@ -76,8 +76,21 @@ resource "azurerm_key_vault_secret" "sql_admin" {
   key_vault_id = var.keyvault_id
 }
 
+resource "azurerm_key_vault_secret" "postgresql_admin_login_name" {
+  count = try(var.settings.administrator_login_password, null) == null ? 1 : 0
 
+  name         = format("%s-login-name", azurecaf_name.postgresql.result)
+  value        = format("%s@%s", var.settings.administrator_login, azurerm_postgresql_server.postgresql.fqdn)
+  key_vault_id = var.keyvault_id
+}
 
+resource "azurerm_key_vault_secret" "postgresql_fqdn" {
+  count = try(var.settings.administrator_login_password, null) == null ? 1 : 0
+
+  name         = format("%s-fqdn", azurecaf_name.postgresql.result)
+  value        = azurerm_postgresql_server.postgresql.fqdn
+  key_vault_id = var.keyvault_id
+}
 
 
 
