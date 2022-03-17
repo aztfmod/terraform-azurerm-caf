@@ -1,7 +1,7 @@
 # See http://pre-commit.com for more information
 # See http://pre-commit.com/hooks.html for more hooks
 repos:
-  - repo: git://github.com/antonbabenko/pre-commit-terraform
+  - repo: https://github.com/antonbabenko/pre-commit-terraform
     rev: v1.64.0
     hooks:
     - id: terraform_fmt
@@ -10,7 +10,7 @@ repos:
     # - id: terraform_validate
     # - id: terraform_tfsec
     # - id: checkov
-  - repo: git://github.com/pre-commit/pre-commit-hooks
+  - repo: https://github.com/pre-commit/pre-commit-hooks
     rev: v4.1.0
     hooks:
       - id: check-merge-conflict
@@ -18,11 +18,11 @@ repos:
       - id: check-yaml
       - id: check-added-large-files
       - id: detect-private-key
-  # - repo: git://github.com/markdownlint/markdownlint
+  # - repo: https://github.com/markdownlint/markdownlint
   #   rev: v0.9.0
   #   hooks:
   #     - id: markdownlint
-  # - repo: git://github.com/ansible-community/ansible-lint
+  # - repo: https://github.com/ansible-community/ansible-lint
   #   rev: v5.0.11
   #   hooks:
   #     - id: ansible-lint

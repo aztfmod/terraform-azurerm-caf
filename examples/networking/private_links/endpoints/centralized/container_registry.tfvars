@@ -7,7 +7,7 @@ azure_container_registries = {
     georeplications = {
       region2 = {
         tags = {
-          region = "centralus"
+          region = "australiacentral"
           type   = "acr_replica"
         }
       }
