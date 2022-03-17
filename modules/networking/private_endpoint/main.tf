@@ -13,5 +13,5 @@ locals {
   }
   tags = merge(var.base_tags, local.module_tag, try(var.settings.tags, null))
 
-  location = can(var.settings.region) ? var.global_settings.regions[var.settings.region] : try(var.location, local.resource_group.location)
+  location = can(var.settings.region) ? var.global_settings.regions[var.settings.region] : try(var.location, var.resource_groups.location)
 }

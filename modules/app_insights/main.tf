@@ -4,7 +4,6 @@ terraform {
       source = "aztfmod/azurecaf"
     }
   }
-
 }
 
 locals {

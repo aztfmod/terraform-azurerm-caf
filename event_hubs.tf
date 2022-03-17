@@ -71,13 +71,12 @@ locals {
       [
         for eh_ns_key, eh_ns in var.event_hub_namespaces : [
           for pe_key, pe in try(eh_ns.private_endpoints, {}) : {
-            eh_ns_key = eh_ns_key
-            pe_key    = pe_key
-            id        = module.event_hub_namespaces[eh_ns_key].id
-            settings  = pe
-            location  = local.resource_groups[pe.resource_group_key].location
-            #resource_group_name = local.resource_groups[pe.resource_group_key].name
-            resource_group_name = can(each.value.resource_group.name) || can(each.value.resource_group_name) ? try(each.value.resource_group.name, each.value.resource_group_name) : local.combined_objects_resource_groups[try(each.value.resource_group.lz_key, local.client_config.landingzone_key)][try(each.value.resource_group_key, each.value.resource_group.key)].name
+            eh_ns_key           = eh_ns_key
+            pe_key              = pe_key
+            id                  = module.event_hub_namespaces[eh_ns_key].id
+            settings            = pe
+            location            = local.resource_groups[pe.resource_group_key].location
+            resource_group_name = local.resource_groups[pe.resource_group_key].name
             subnet_id           = try(pe.vnet_key, null) == null ? null : try(local.combined_objects_networking[local.client_config.landingzone_key][pe.vnet_key].subnets[pe.subnet_key].id, local.combined_objects_networking[pe.lz_key][pe.vnet_key].subnets[pe.subnet_key].id)
             base_tags           = try(local.global_settings.inherit_tags, false) ? local.resource_groups[pe.resource_group_key].tags : {}
           }

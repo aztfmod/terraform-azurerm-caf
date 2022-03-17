@@ -21,7 +21,7 @@ module "postgresql_servers" {
   storage_accounts  = module.storage_accounts
   azuread_groups    = module.azuread_groups
   vnets             = local.combined_objects_networking
-  subnet_id         = can(each.value.networking.subnet_id) ? each.value.networking.subnet_id : local.combined_objects_networking[try(each.value.networking.lz_key, local.client_config.landingzone_key)][each.value.networking.vnet_key].subnets[each.value.networking.subnet_key].id
+  subnet_id         = can(each.value.networking.subnet_key) == false || can(each.value.networking.vnet_key) == false ? try(each.value.networking.subnet_id, null) : local.combined_objects_networking[try(each.value.networking.lz_key, local.client_config.landingzone_key)][each.value.networking.vnet_key].subnets[each.value.networking.subnet_key].id
   private_endpoints = try(each.value.private_endpoints, {})
   resource_groups   = try(each.value.private_endpoints, {}) == {} ? null : local.combined_objects_resource_groups
   private_dns       = local.combined_objects_private_dns

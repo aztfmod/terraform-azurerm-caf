@@ -5,13 +5,8 @@ module "azuread_apps" {
     for key, access_policy in var.access_policies : key => access_policy
     if try(access_policy.azuread_app_key, null) != null
   }
-  keyvault_id = can(var.keyvault_id) || can(var.keyvault.id) ? try(var.keyvault_id, var.keyvault.id) : var.keyvaults[try(each.value.keyvault_lz_key, each.value.keyvault.lz_key, var.client_config.landingzone_key)][try(var.keyvault_key, var.keyvault.key)].id
-  # keyvault_id = coalesce(
-  #   var.keyvault_id,
-  #   try(var.keyvaults[each.value.keyvault_lz_key][var.keyvault_key].id, null),
-  #   try(var.keyvaults[var.client_config.landingzone_key][var.keyvault_key].id, null),
-  #   try(var.keyvaults[each.value.lz_key][var.keyvault_key].id, null) // For backward compatibility
-  # )
+  keyvault_id = can(var.keyvault_id) || can(each.value.keyvault.id) ? try(var.keyvault_id, each.value.keyvault.id) : var.keyvaults[try(each.value.keyvault_lz_key, each.value.keyvault.lz_key, var.client_config.landingzone_key)][try(var.keyvault_key, each.value.keyvault.key)].id
+
 
   access_policy = each.value
   tenant_id     = var.client_config.tenant_id
@@ -28,13 +23,7 @@ module "azuread_service_principals" {
     for key, access_policy in var.access_policies : key => access_policy
     if try(access_policy.azuread_service_principal_key, null) != null
   }
-  keyvault_id = can(var.keyvault_id) || can(var.keyvault.id) ? try(var.keyvault_id, var.keyvault.id) : var.keyvaults[try(each.value.keyvault_lz_key, each.value.keyvault.lz_key, var.client_config.landingzone_key)][try(var.keyvault_key, var.keyvault.key)].id
-  # keyvault_id = coalesce(
-  #   var.keyvault_id,
-  #   try(var.keyvaults[each.value.keyvault_lz_key][var.keyvault_key].id, null),
-  #   try(var.keyvaults[var.client_config.landingzone_key][var.keyvault_key].id, null),
-  #   try(var.keyvaults[each.value.lz_key][var.keyvault_key].id, null) // For backward compatibility
-  # )
+  keyvault_id = can(var.keyvault_id) || can(each.value.keyvault.id) ? try(var.keyvault_id, each.value.keyvault.id) : var.keyvaults[try(each.value.keyvault_lz_key, each.value.keyvault.lz_key, var.client_config.landingzone_key)][try(var.keyvault_key, each.value.keyvault.key)].id
 
   access_policy = each.value
   tenant_id     = var.resources.azuread_service_principals[try(each.value.lz_key, var.client_config.landingzone_key)][each.value.azuread_service_principal_key].tenant_id
@@ -51,13 +40,7 @@ module "azuread_group" {
     for key, access_policy in var.access_policies : key => access_policy
     if try(access_policy.azuread_group_key, null) != null
   }
-  keyvault_id = can(var.keyvault_id) || can(var.keyvault.id) ? try(var.keyvault_id, var.keyvault.id) : var.keyvaults[try(each.value.keyvault_lz_key, each.value.keyvault.lz_key, var.client_config.landingzone_key)][try(var.keyvault_key, var.keyvault.key)].id
-  # keyvault_id = coalesce(
-  #   var.keyvault_id,
-  #   try(var.keyvaults[each.value.keyvault_lz_key][var.keyvault_key].id, null),
-  #   try(var.keyvaults[var.client_config.landingzone_key][var.keyvault_key].id, null),
-  #   try(var.keyvaults[each.value.lz_key][var.keyvault_key].id, null) // For backward compatibility
-  # )
+  keyvault_id = can(var.keyvault_id) || can(each.value.keyvault.id) ? try(var.keyvault_id, each.value.keyvault.id) : var.keyvaults[try(each.value.keyvault_lz_key, each.value.keyvault.lz_key, var.client_config.landingzone_key)][try(var.keyvault_key, each.value.keyvault.key)].id
 
   access_policy = each.value
   tenant_id     = var.client_config.tenant_id
@@ -70,13 +53,7 @@ module "logged_in_user" {
     for key, access_policy in var.access_policies : key => access_policy
     if key == "logged_in_user" && var.client_config.logged_user_objectId != null
   }
-  keyvault_id = can(var.keyvault_id) || can(var.keyvault.id) ? try(var.keyvault_id, var.keyvault.id) : var.keyvaults[try(each.value.keyvault_lz_key, each.value.keyvault.lz_key, var.client_config.landingzone_key)][try(var.keyvault_key, var.keyvault.key)].id
-  # keyvault_id = coalesce(
-  #   var.keyvault_id,
-  #   try(var.keyvaults[each.value.keyvault_lz_key][var.keyvault_key].id, null),
-  #   try(var.keyvaults[var.client_config.landingzone_key][var.keyvault_key].id, null),
-  #   try(var.keyvaults[each.value.lz_key][var.keyvault_key].id, null) // For backward compatibility
-  # )
+  keyvault_id = can(var.keyvault_id) || can(each.value.keyvault.id) ? try(var.keyvault_id, each.value.keyvault.id) : var.keyvaults[try(each.value.keyvault_lz_key, each.value.keyvault.lz_key, var.client_config.landingzone_key)][try(var.keyvault_key, each.value.keyvault.key)].id
 
   access_policy = each.value
   tenant_id     = var.client_config.tenant_id
@@ -89,13 +66,7 @@ module "logged_in_aad_app" {
     for key, access_policy in var.access_policies : key => access_policy
     if key == "logged_in_aad_app" && var.client_config.logged_aad_app_objectId != null
   }
-  keyvault_id = can(var.keyvault_id) || can(var.keyvault.id) ? try(var.keyvault_id, var.keyvault.id) : var.keyvaults[try(each.value.keyvault_lz_key, each.value.keyvault.lz_key, var.client_config.landingzone_key)][try(var.keyvault_key, var.keyvault.key)].id
-  # keyvault_id = coalesce(
-  #   var.keyvault_id,
-  #   try(var.keyvaults[each.value.keyvault_lz_key][var.keyvault_key].id, null),
-  #   try(var.keyvaults[var.client_config.landingzone_key][var.keyvault_key].id, null),
-  #   try(var.keyvaults[each.value.lz_key][var.keyvault_key].id, null) // For backward compatibility
-  # )
+  keyvault_id = can(var.keyvault_id) || can(each.value.keyvault.id) ? try(var.keyvault_id, each.value.keyvault.id) : var.keyvaults[try(each.value.keyvault_lz_key, each.value.keyvault.lz_key, var.client_config.landingzone_key)][try(var.keyvault_key, each.value.keyvault.key)].id
 
   access_policy = each.value
   tenant_id     = var.client_config.tenant_id
@@ -108,13 +79,7 @@ module "object_id" {
     for key, access_policy in var.access_policies : key => access_policy
     if try(access_policy.object_id, null) != null && var.client_config.logged_aad_app_objectId != null
   }
-  keyvault_id = can(var.keyvault_id) || can(var.keyvault.id) ? try(var.keyvault_id, var.keyvault.id) : var.keyvaults[try(each.value.keyvault_lz_key, each.value.keyvault.lz_key, var.client_config.landingzone_key)][try(var.keyvault_key, var.keyvault.key)].id
-  # keyvault_id = coalesce(
-  #   var.keyvault_id,
-  #   try(var.keyvaults[each.value.keyvault_lz_key][var.keyvault_key].id, null),
-  #   try(var.keyvaults[var.client_config.landingzone_key][var.keyvault_key].id, null),
-  #   try(var.keyvaults[each.value.lz_key][var.keyvault_key].id, null) // For backward compatibility
-  # )
+  keyvault_id = can(var.keyvault_id) || can(each.value.keyvault.id) ? try(var.keyvault_id, each.value.keyvault.id) : var.keyvaults[try(each.value.keyvault_lz_key, each.value.keyvault.lz_key, var.client_config.landingzone_key)][try(var.keyvault_key, each.value.keyvault.key)].id
 
   access_policy = each.value
   tenant_id     = try(each.value.tenant_id, var.client_config.tenant_id)
@@ -127,13 +92,7 @@ module "managed_identity" {
     for key, access_policy in var.access_policies : key => access_policy
     if try(access_policy.managed_identity_key, null) != null
   }
-  keyvault_id = can(var.keyvault_id) || can(var.keyvault.id) ? try(var.keyvault_id, var.keyvault.id) : var.keyvaults[try(each.value.keyvault_lz_key, each.value.keyvault.lz_key, var.client_config.landingzone_key)][try(var.keyvault_key, var.keyvault.key)].id
-  # keyvault_id = coalesce(
-  #   var.keyvault_id,
-  #   try(var.keyvaults[each.value.keyvault_lz_key][var.keyvault_key].id, null),
-  #   try(var.keyvaults[var.client_config.landingzone_key][var.keyvault_key].id, null),
-  #   try(var.keyvaults[each.value.lz_key][var.keyvault_key].id, null) // For backward compatibility
-  # )
+  keyvault_id = can(var.keyvault_id) || can(each.value.keyvault.id) ? try(var.keyvault_id, each.value.keyvault.id) : var.keyvaults[try(each.value.keyvault_lz_key, each.value.keyvault.lz_key, var.client_config.landingzone_key)][try(var.keyvault_key, each.value.keyvault.key)].id
 
   access_policy = each.value
   tenant_id     = var.client_config.tenant_id
@@ -150,13 +109,7 @@ module "mssql_managed_instance" {
     for key, access_policy in var.access_policies : key => access_policy
     if try(access_policy.mssql_managed_instance_key, null) != null
   }
-  keyvault_id = can(var.keyvault_id) || can(var.keyvault.id) ? try(var.keyvault_id, var.keyvault.id) : var.keyvaults[try(each.value.keyvault_lz_key, each.value.keyvault.lz_key, var.client_config.landingzone_key)][try(var.keyvault_key, var.keyvault.key)].id
-  # keyvault_id = coalesce(
-  #   var.keyvault_id,
-  #   try(var.keyvaults[each.value.keyvault_lz_key][var.keyvault_key].id, null),
-  #   try(var.keyvaults[var.client_config.landingzone_key][var.keyvault_key].id, null),
-  #   try(var.keyvaults[each.value.lz_key][var.keyvault_key].id, null) // For backward compatibility
-  # )
+  keyvault_id = can(var.keyvault_id) || can(each.value.keyvault.id) ? try(var.keyvault_id, each.value.keyvault.id) : var.keyvaults[try(each.value.keyvault_lz_key, each.value.keyvault.lz_key, var.client_config.landingzone_key)][try(var.keyvault_key, each.value.keyvault.key)].id
 
   access_policy = each.value
   tenant_id     = var.client_config.tenant_id
@@ -169,13 +122,7 @@ module "mssql_managed_instances_secondary" {
     for key, access_policy in var.access_policies : key => access_policy
     if try(access_policy.mssql_managed_instance_secondary_key, null) != null
   }
-  keyvault_id = can(var.keyvault_id) || can(var.keyvault.id) ? try(var.keyvault_id, var.keyvault.id) : var.keyvaults[try(each.value.keyvault_lz_key, each.value.keyvault.lz_key, var.client_config.landingzone_key)][try(var.keyvault_key, var.keyvault.key)].id
-  # keyvault_id = coalesce(
-  #   var.keyvault_id,
-  #   try(var.keyvaults[each.value.keyvault_lz_key][var.keyvault_key].id, null),
-  #   try(var.keyvaults[var.client_config.landingzone_key][var.keyvault_key].id, null),
-  #   try(var.keyvaults[each.value.lz_key][var.keyvault_key].id, null) // For backward compatibility
-  # )
+  keyvault_id = can(var.keyvault_id) || can(each.value.keyvault.id) ? try(var.keyvault_id, each.value.keyvault.id) : var.keyvaults[try(each.value.keyvault_lz_key, each.value.keyvault.lz_key, var.client_config.landingzone_key)][try(var.keyvault_key, each.value.keyvault.key)].id
 
   access_policy = each.value
   tenant_id     = var.client_config.tenant_id
@@ -190,13 +137,7 @@ module "storage_accounts" {
     if try(access_policy.storage_account_key, null) != null
   }
 
-  keyvault_id = can(var.keyvault_id) || can(var.keyvault.id) ? try(var.keyvault_id, var.keyvault.id) : var.keyvaults[try(each.value.keyvault_lz_key, each.value.keyvault.lz_key, var.client_config.landingzone_key)][try(var.keyvault_key, var.keyvault.key)].id
-  # keyvault_id = coalesce(
-  #   var.keyvault_id,
-  #   try(var.keyvaults[each.value.keyvault_lz_key][var.keyvault_key].id, null),
-  #   try(var.keyvaults[var.client_config.landingzone_key][var.keyvault_key].id, null),
-  #   try(var.keyvaults[each.value.lz_key][var.keyvault_key].id, null) // For backward compatibility
-  # )
+  keyvault_id = can(var.keyvault_id) || can(each.value.keyvault.id) ? try(var.keyvault_id, each.value.keyvault.id) : var.keyvaults[try(each.value.keyvault_lz_key, each.value.keyvault.lz_key, var.client_config.landingzone_key)][try(var.keyvault_key, each.value.keyvault.key)].id
 
   access_policy = each.value
   tenant_id     = var.resources.storage_accounts[try(each.value.lz_key, var.client_config.landingzone_key)][each.value.storage_account_key].identity.0.tenant_id
@@ -210,13 +151,7 @@ module "diagnostic_storage_accounts" {
     if try(access_policy.diagnostic_storage_account_key, null) != null
   }
 
-  keyvault_id = can(var.keyvault_id) || can(var.keyvault.id) ? try(var.keyvault_id, var.keyvault.id) : var.keyvaults[try(each.value.keyvault_lz_key, each.value.keyvault.lz_key, var.client_config.landingzone_key)][try(var.keyvault_key, var.keyvault.key)].id
-  # keyvault_id = coalesce(
-  #   var.keyvault_id,
-  #   try(var.keyvaults[each.value.keyvault_lz_key][var.keyvault_key].id, null),
-  #   try(var.keyvaults[var.client_config.landingzone_key][var.keyvault_key].id, null),
-  #   try(var.keyvaults[each.value.lz_key][var.keyvault_key].id, null) // For backward compatibility
-  # )
+  keyvault_id = can(var.keyvault_id) || can(each.value.keyvault.id) ? try(var.keyvault_id, each.value.keyvault.id) : var.keyvaults[try(each.value.keyvault_lz_key, each.value.keyvault.lz_key, var.client_config.landingzone_key)][try(var.keyvault_key, each.value.keyvault.key)].id
 
   access_policy = each.value
   tenant_id     = var.resources.diagnostic_storage_accounts[try(each.value.lz_key, var.client_config.landingzone_key)][each.value.diagnostic_storage_account_key].identity.0.tenant_id

@@ -4,15 +4,12 @@ global_settings = {
     region1 = "eastus2"
   }
 }
-
 resource_groups = {
   rg1 = {
     name   = "example-agw"
     region = "region1"
   }
 }
-
-
 api_management = {
   apim1 = {
     name   = "example-apim"
