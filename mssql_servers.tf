@@ -21,12 +21,8 @@ module "mssql_servers" {
   private_endpoints   = try(each.value.private_endpoints, {})
   resource_groups     = try(each.value.private_endpoints, {}) == {} ? null : local.resource_groups
   private_dns         = local.combined_objects_private_dns
-  keyvault_id = coalesce(
-    try(each.value.administrator_login_password, null),
-    try(module.keyvaults[each.value.keyvault_key].id, null),
-    try(local.combined_objects_keyvaults[each.value.keyvault.lz_key][each.value.keyvault.key].id, null),
-    try(local.combined_objects_keyvaults[local.client_config.landingzone_key][each.value.keyvault.key].id, null)
-  )
+  keyvault_id         = can(each.value.administrator_login_password) ? each.value.administrator_login_password : local.combined_objects_keyvaults[try(each.value.keyvault.lz_key, local.client_config.landingzone_key)][try(each.value.keyvault.key, each.value.keyvault_key)].id
+
   remote_objects = {
     keyvault_keys = local.combined_objects_keyvault_keys
   }

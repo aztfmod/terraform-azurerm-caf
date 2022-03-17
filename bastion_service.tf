@@ -30,7 +30,7 @@ resource "azurerm_bastion_host" "host" {
 
   ip_configuration {
     name                 = each.value.name
-    subnet_id            = local.combined_objects_networking[try(each.value.vnet.lz_key, local.client_config.landingzone_key)][try(each.value.vnet.vnet_key, each.value.vnet_key)].subnets[try(each.value.vnet.subnet_key, each.value.subnet_key)].id
+    subnet_id            = can(each.value.networking.subnet_id) ? each.value.networking.subnet_id : local.combined_objects_networking[try(each.value.networking.lz_key, local.client_config.landingzone_key)][each.value.networking.vnet_key].subnets[each.value.networking.subnet_key].id
     public_ip_address_id = can(each.value.public_ip.id) ? each.value.public_ip.id : local.combined_objects_public_ip_addresses[try(each.value.public_ip.lz_key, local.client_config.landingzone_key)][try(each.value.public_ip.key, each.value.public_ip_key, each.value.public_ip.public_ip_key)].id
   }
 
