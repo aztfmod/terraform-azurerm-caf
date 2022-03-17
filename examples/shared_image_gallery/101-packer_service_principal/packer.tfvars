@@ -10,7 +10,7 @@ packer_service_principal = {
     image_publisher          = "Canonical"
     image_offer              = "UbuntuServer"
     image_sku                = "16.04-LTS"
-    location                 = "eastus2"
+    location                 = "australiaeast"
     vm_size                  = "Standard_A2_v2"
     ansible_playbook_path    = "./shared_image_gallery/101-packer_service_principal/packer_files/ansible-ping.yml"
     shared_image_gallery_destination = {
@@ -18,7 +18,7 @@ packer_service_principal = {
       image_key           = "image1"
       image_version       = "1.0.0"
       resource_group_key  = "sig"
-      replication_regions = "eastus2"
+      replication_regions = "australiaeast"
     }
   }
 }

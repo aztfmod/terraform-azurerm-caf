@@ -1,7 +1,7 @@
 global_settings = {
   default_region = "region1"
   regions = {
-    region1 = "eastus2"
+    region1 = "australiaeast"
   }
 }
 
@@ -9,12 +9,12 @@ global_settings = {
 resource_groups = {
   vm_sg = {
     name      = "test-vm-sg"
-    location  = "eastus2"
+    location  = "australiaeast"
     useprefix = true
   }
   vnet_sg = {
     name      = "test-networking-sg"
-    location  = "eastus2"
+    location  = "australiaeast"
     useprefix = true
   }
 }
@@ -104,7 +104,7 @@ virtual_machines = {
 vnets = {
   hub_sg = {
     resource_group_key = "vnet_sg"
-    location           = "eastus2"
+    location           = "australiaeast"
     vnet = {
       name          = "hub"
       address_space = ["10.10.100.0/24"]
