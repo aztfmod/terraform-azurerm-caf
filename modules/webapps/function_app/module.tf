@@ -113,6 +113,13 @@ resource "azurerm_function_app" "function_app" {
     }
   }
 
+  key_vault_reference_identity_id = try(
+    var.combined_objects.managed_identities[var.settings.identity.lz_key][var.settings.key_vault_reference_identity.key].id,
+    var.combined_objects.managed_identities[var.client_config.landingzone_key][var.settings.key_vault_reference_identity.key].id,
+    var.settings.key_vault_reference_identity.id,
+    null
+  )
+
   dynamic "site_config" {
     for_each = lookup(var.settings, "site_config", {}) != {} ? [1] : []
 
