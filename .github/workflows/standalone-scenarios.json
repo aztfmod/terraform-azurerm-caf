@@ -86,6 +86,7 @@
     "eventhub/104-namespace-and-evh-with-storage",
     "keyvault/101-keyvault-policies",
     "keyvault/102-keyvault-cert-issuer",
+    "keyvault/104-keyvault-dynamic-secret",
     "logic_app/100-logic_app_workflow",
     "logic_app/102-logic_app_integration_account",
     "logic_app/103-logic_app_action_http",
