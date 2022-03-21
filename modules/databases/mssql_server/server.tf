@@ -43,11 +43,7 @@ resource "azurerm_mssql_virtual_network_rule" "network_rules" {
 
   name      = each.value.name
   server_id = azurerm_mssql_server.mssql.id
-  subnet_id = coalesce(
-    try(each.value.subnet_id, null),
-    try(var.vnets[each.value.lz_key][each.value.vnet_key].subnets[each.value.subnet_key].id, null),
-    try(var.vnets[var.client_config.landingzone_key][each.value.vnet_key].subnets[each.value.subnet_key].id, null)
-  )
+  subnet_id = can(each.value.subnet_id) ? each.value.subnet_id : var.vnets[try(each.value.lz_key, var.client_config.landingzone_key)][each.value.vnet_key].subnets[each.value.subnet_key].id
 }
 
 resource "azurecaf_name" "mssql" {
@@ -91,8 +87,5 @@ resource "azurerm_mssql_server_transparent_data_encryption" "tde" {
   count = try(var.settings.transparent_data_encryption.enable, false) ? 1 : 0
 
   server_id = azurerm_mssql_server.mssql.id
-  key_vault_key_id = try(var.settings.transparent_data_encryption.encryption_key, null) == null ? null : coalesce(
-    try(var.remote_objects.keyvault_keys[var.settings.transparent_data_encryption.encryption_key.lz_key][var.settings.transparent_data_encryption.encryption_key.keyvault_key_key].id, null),
-    try(var.remote_objects.keyvault_keys[var.client_config.landingzone_key][var.settings.transparent_data_encryption.encryption_key.keyvault_key_key].id, null)
-  )
+  key_vault_key_id = can(var.settings.transparent_data_encryption.encryption_key) ? var.remote_objects.keyvault_keys[try(var.settings.transparent_data_encryption.encryption_key.lz_key, var.client_config.landingzone_key)][var.settings.transparent_data_encryption.encryption_key.keyvault_key_key].id : null
 }
