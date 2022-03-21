@@ -11,7 +11,8 @@ module "virtual_machines" {
     module.network_security_groups,
     module.storage_account_blobs,
     module.packer_service_principal,
-    module.packer_build
+    module.packer_build,
+    module.proximity_placement_groups
   ]
   for_each = local.compute.virtual_machines
 
