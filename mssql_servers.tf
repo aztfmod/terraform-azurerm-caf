@@ -19,7 +19,7 @@ module "mssql_servers" {
   azuread_groups      = local.combined_objects_azuread_groups
   vnets               = local.combined_objects_networking
   private_endpoints   = try(each.value.private_endpoints, {})
-  resource_groups     = try(each.value.private_endpoints, {}) == {} ? null : local.resource_groups
+  resource_groups     = local.combined_objects_resource_groups
   private_dns         = local.combined_objects_private_dns
   keyvault_id = coalesce(
     try(each.value.administrator_login_password, null),
