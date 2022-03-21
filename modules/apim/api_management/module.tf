@@ -215,7 +215,7 @@ resource "azurerm_api_management" "apim" {
     content {
 
       subnet_id = coalesce(
-        try(each.value.subnet_id, null),
+        try(virtual_network_configuration.value.subnet_id, null),
         try(var.vnets[virtual_network_configuration.value.lz_key][virtual_network_configuration.value.vnet_key].subnets[virtual_network_configuration.value.subnet_key].id, null),
         try(var.vnets[var.client_config.landingzone_key][virtual_network_configuration.value.vnet_key].subnets[virtual_network_configuration.value.subnet_key].id, null)
       )
