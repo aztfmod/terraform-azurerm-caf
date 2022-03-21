@@ -12,7 +12,8 @@ module "virtual_machine_scale_sets" {
     module.application_gateways,
     module.application_security_groups,
     module.packer_service_principal,
-    module.packer_build
+    module.packer_build, 
+    module.proximity_placement_groups
   ]
   for_each = local.compute.virtual_machine_scale_sets
 
