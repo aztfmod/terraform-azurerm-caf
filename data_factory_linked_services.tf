@@ -126,12 +126,12 @@ module "data_factory_linked_service_azure_databricks" {
     try(local.combined_objects_data_factory_integration_runtime_azure_ssis[each.value.integration_runtime.combined_objects_data_factory_integration_runtime_azure_ssis.lz_key][each.value.integration_runtime.combined_objects_data_factory_integration_runtime_azure_ssis.key].name, null),
     try(local.combined_objects_data_factory_integration_runtime_azure_ssis[local.client_config.landingzone_key][each.value.integration_runtime.combined_objects_data_factory_integration_runtime_azure_ssis.key].name, null),
     try(each.value.integration_runtime.combined_objects_data_factory_integration_runtime_azure_ssis.name, null)
-  ), null
+    ), null
   )
 
   remote_objects = {
-    databricks_workspace = local.combined_objects_databricks_workspaces[try(each.value.databricks_workspace.lz_key,local.client_config.landingzone_key)][each.value.databricks_workspace.key]
-    data_factory = local.combined_objects_data_factory[try(each.value.data_factory.lz_key, local.client_config.landingzone_key)][each.value.data_factory.key]
+    databricks_workspace = local.combined_objects_databricks_workspaces[try(each.value.databricks_workspace.lz_key, local.client_config.landingzone_key)][each.value.databricks_workspace.key]
+    data_factory         = local.combined_objects_data_factory[try(each.value.data_factory.lz_key, local.client_config.landingzone_key)][each.value.data_factory.key]
   }
 }
 output "data_factory_linked_service_azure_databricks" {
@@ -164,7 +164,7 @@ module "data_factory_linked_service_key_vault" {
     try(local.combined_objects_data_factory_integration_runtime_azure_ssis[each.value.integration_runtime.combined_objects_data_factory_integration_runtime_azure_ssis.lz_key][each.value.integration_runtime.combined_objects_data_factory_integration_runtime_azure_ssis.key].name, null),
     try(local.combined_objects_data_factory_integration_runtime_azure_ssis[local.client_config.landingzone_key][each.value.integration_runtime.combined_objects_data_factory_integration_runtime_azure_ssis.key].name, null),
     try(each.value.integration_runtime.combined_objects_data_factory_integration_runtime_azure_ssis.name, null)
-  ), null
+    ), null
   )
 
 }
