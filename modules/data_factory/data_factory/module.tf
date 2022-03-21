@@ -10,7 +10,7 @@ resource "azurecaf_name" "df" {
 
 resource "azurerm_data_factory" "df" {
   name                = azurecaf_name.df.result
-  resource_group_name = local.resource_group.name
+  resource_group_name = local.resource_group_name
   location            = local.location
 
   dynamic "github_configuration" {
