@@ -8,16 +8,8 @@ module "cosmosdb_sql_databases" {
 
   global_settings       = local.global_settings
   settings              = each.value
-  resource_group_name   = coalesce(
-    try(local.combined_objects_cosmos_dbs[each.value.lz_key][each.value.cosmosdb_account_key].resource_group_name, null),
-    try(local.combined_objects_cosmos_dbs[local.client_config.landingzone_key][each.value.cosmosdb_account_key].resource_group_name, null)
-  )
-  location              = coalesce(
-    try(local.combined_objects_cosmos_dbs[each.value.lz_key][each.value.cosmosdb_account_key].location, null),
-    try(local.combined_objects_cosmos_dbs[local.client_config.landingzone_key][each.value.cosmosdb_account_key].location, null)
-  )
-  cosmosdb_account_name = coalesce(
-    try(local.combined_objects_cosmos_dbs[each.value.lz_key][each.value.cosmosdb_account_key].name, null),
-    try(local.combined_objects_cosmos_dbs[local.client_config.landingzone_key][each.value.cosmosdb_account_key].name, null)
-  )
+  
+  resource_group_name   = can(each.value.cosmosdb_account.rg_name) ? each.value.cosmosdb_account.rg_name : local.combined_objects_cosmos_dbs[try(each.value.lz_key, local.client_config.landingzone_key)][try(each.value.cosmosdb_account.key, each.value.cosmosdb_account_key)].resource_group_name
+  location              = can(each.value.cosmosdb_account.location) ? each.value.cosmosdb_account.location : local.combined_objects_cosmos_dbs[try(each.value.lz_key, local.client_config.landingzone_key)][try(each.value.cosmosdb_account.key, each.value.cosmosdb_account_key)].location
+  cosmosdb_account_name = can(each.value.cosmosdb_account.name) ? each.value.cosmosdb_account.name : local.combined_objects_cosmos_dbs[try(each.value.lz_key, local.client_config.landingzone_key)][try(each.value.cosmosdb_account.key, each.value.cosmosdb_account_key)].name
 }
