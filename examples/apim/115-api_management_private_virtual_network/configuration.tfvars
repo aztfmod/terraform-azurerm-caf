@@ -43,7 +43,7 @@ api_management = {
     virtual_network_type = "Internal"
     virtual_network_configuration = {
       vnet_key   = "example_vnet"
-      subnet_key = "example_subnet"
+      subnet_key = "example_subnet_key"
     }
   }
 }
