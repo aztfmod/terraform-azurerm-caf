@@ -13,3 +13,15 @@ output "primary_key" {
 output "endpoint" {
   value = azurerm_cosmosdb_account.cosmos_account.endpoint
 }
+
+output "name" {
+  value = azurecaf_name.cdb.result
+}
+
+output "resource_group_name" {
+  value = var.resource_group_name
+}
+
+output "location" {
+  value = var.location
+}
