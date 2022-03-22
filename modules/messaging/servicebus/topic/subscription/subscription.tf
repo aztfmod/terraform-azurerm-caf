@@ -9,11 +9,11 @@ resource "azurecaf_name" "servicebus_subscription" {
 }
 
 resource "azurerm_servicebus_subscription" "subscription" {
-  name                = azurecaf_name.servicebus_subscription.result
-  namespace_name      = var.remote_objects.servicebus_namespace_name
-  topic_name          = var.remote_objects.servicebus_topic_name
-  resource_group_name = var.remote_objects.resource_group_name
-  max_delivery_count  = var.settings.max_delivery_count
+  name = azurecaf_name.servicebus_subscription.result
+  # namespace_id        = var.remote_objects.servicebus_namespace_id
+  topic_id = var.remote_objects.servicebus_topic_id
+  # resource_group_name = var.remote_objects.resource_group_name
+  max_delivery_count = var.settings.max_delivery_count
 
   auto_delete_on_idle                       = try(var.settings.auto_delete_on_idle, null)
   default_message_ttl                       = try(var.settings.default_message_ttl, null)

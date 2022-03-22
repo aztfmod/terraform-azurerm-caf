@@ -75,6 +75,7 @@ resource "azurerm_windows_virtual_machine_scale_set" "vmss" {
   scale_in_policy              = try(each.value.scale_in_policy, null)
   zone_balance                 = try(each.value.zone_balance, null)
   zones                        = try(each.value.zones, null)
+  upgrade_mode                 = try(each.value.upgrade_mode, null)
   timezone                     = try(each.value.timezone, null)
   license_type                 = try(each.value.license_type, null)
 

@@ -214,6 +214,15 @@ resource "azurerm_kubernetes_cluster" "aks" {
           subnet_id    = try(ingress_application_gateway.value.subnet_id, null)
         }
       }
+
+      dynamic "azure_keyvault_secrets_provider" {
+        for_each = try(var.settings.addon_profile.azure_keyvault_secrets_provider, {})
+        content {
+          enabled                  = azure_keyvault_secrets_provider.value.enabled
+          secret_rotation_enabled  = try(azure_keyvault_secrets_provider.value.secret_rotation_enabled, null)
+          secret_rotation_interval = try(zure_keyvault_secrets_provider.value.secret_rotation_interval, null)
+        }
+      }
     }
   }
 
