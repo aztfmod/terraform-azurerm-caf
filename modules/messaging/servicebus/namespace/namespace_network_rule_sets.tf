@@ -7,9 +7,9 @@ module "network_rule_sets" {
   settings        = each.value
 
   remote_objects = {
-    servicebus_namespace_name = azurerm_servicebus_namespace.namespace.name
-    resource_group_name       = local.resource_group_name
-    vnets                     = var.remote_objects.vnets
+    servicebus_namespace_id = azurerm_servicebus_namespace.namespace.id
+    resource_group_name     = local.resource_group_name
+    vnets                   = var.remote_objects.vnets
   }
 
 }

@@ -7,7 +7,7 @@ output "name" {
 }
 
 output "token" {
-  value     = tostring(azurerm_virtual_desktop_host_pool.wvdpool.registration_info[0].token)
+  value     = azurerm_virtual_desktop_host_pool_registration_info.wvdpool.token
   sensitive = true
 }
 
