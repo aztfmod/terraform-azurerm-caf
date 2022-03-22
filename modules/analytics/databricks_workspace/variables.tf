@@ -29,8 +29,12 @@ variable "client_config" {
 #   type        = string
 # }
 
-variable "resource_group" {
+variable "resource_group_name" {
   description = "The resource group object where to create the resource."
+}
+
+variable "location" {
+  description = "The location where to create the resource."
 }
 
 variable "vnets" {

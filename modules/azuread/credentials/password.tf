@@ -9,7 +9,7 @@ resource "azuread_application_password" "key" {
 
   lifecycle {
     create_before_destroy = true
-    ignore_changes        = [application_object_id]
+    # ignore_changes        = [application_object_id]
   }
 }
 
@@ -23,7 +23,7 @@ resource "azuread_application_password" "key0" {
 
   lifecycle {
     create_before_destroy = true
-    ignore_changes        = [application_object_id]
+    # ignore_changes        = [application_object_id]
   }
 }
 
@@ -37,7 +37,7 @@ resource "azuread_application_password" "key1" {
 
   lifecycle {
     create_before_destroy = true
-    ignore_changes        = [application_object_id]
+    # ignore_changes        = [application_object_id]
   }
 }
 
