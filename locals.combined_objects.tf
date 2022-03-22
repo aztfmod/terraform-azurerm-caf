@@ -32,7 +32,6 @@ locals {
   combined_objects_consumption_budgets_resource_groups            = merge(tomap({ (local.client_config.landingzone_key) = module.consumption_budgets_resource_groups }), try(var.remote_objects.consumption_budgets_resource_groups, {}))
   combined_objects_consumption_budgets_subscriptions              = merge(tomap({ (local.client_config.landingzone_key) = module.consumption_budgets_subscriptions }), try(var.remote_objects.consumption_budgets_subscriptions, {}))
   combined_objects_container_registry                             = merge(tomap({ (local.client_config.landingzone_key) = module.container_registry }), try(var.remote_objects.container_registry, {}))
-  combined_objects_cosmos_dbs                                     = merge(tomap({ (local.client_config.landingzone_key) = module.cosmos_dbs }), try(var.remote_objects.cosmos_dbs, {}))
   combined_objects_databricks_workspaces                          = merge(tomap({ (local.client_config.landingzone_key) = module.databricks_workspaces }), try(var.remote_objects.databricks_workspaces, {}))
   combined_objects_data_factory                                   = merge(tomap({ (local.client_config.landingzone_key) = module.data_factory }), try(var.remote_objects.data_factory, {}))
   combined_objects_data_factory_integration_runtime_azure_ssis    = merge(tomap({ (local.client_config.landingzone_key) = module.data_factory_integration_runtime_azure_ssis }), try(var.remote_objects.combined_objects_data_factory_integration_runtime_azure_ssis, {}))
