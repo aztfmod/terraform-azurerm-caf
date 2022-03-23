@@ -11,3 +11,7 @@ variable "remote_objects" {
   description = "(Required) Specifies the supported Azure location where to create the resource. Changing this forces a new resource to be created."
   default     = {}
 }
+variable "resource_groups" {
+  description = "Combined resource groups object."
+  default     = {}
+}

@@ -15,7 +15,8 @@ resource "azurerm_virtual_hub" "vwan_hub" {
   resource_group_name = var.resource_group_name
   location            = var.location
   virtual_wan_id      = var.vwan_id
-  address_prefix      = var.virtual_hub_config.hub_address_prefix
+  sku                 = try(var.virtual_hub_config.sku, null)
+  address_prefix      = try(var.virtual_hub_config.hub_address_prefix, null)
   tags                = local.tags
 
   dynamic "route" {
