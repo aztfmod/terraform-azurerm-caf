@@ -12,7 +12,7 @@ packer_build = {
     image_publisher    = "MicrosoftWindowsServer"
     image_offer        = "WindowsServer"
     image_sku          = "2019-Datacenter-smalldisk"
-    location           = "eastus2"
+    location           = "australiaeast"
     vm_size            = "Standard_D2s_v3"
     #build_script                            = "./shared_image_gallery/102-packer_build_linux/packer_files/ansible-ping.yml"
     #managed_identity_key                             = "example_mi"   #managed identity configured on build VM for permissions to Azure resources during build
@@ -32,7 +32,7 @@ packer_build = {
       gallery_key         = "gallery1"
       image_key           = "image1"
       resource_group_key  = "sig"
-      replication_regions = "eastus2"
+      replication_regions = "australiaeast"
     }
   }
 }
