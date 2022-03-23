@@ -18,7 +18,7 @@ diagnostics_destinations = {
   # use existing storage account
   storage = {
     central_storage = {
-      eastus2 = { # region
+      australiaeast = { # region
         storage_account_resource_id = "/subscriptions/0-0-0-0-0/resourcegroups/eqej-rg-operations/providers/Microsoft.Storage/storageAccounts/imfd-log-storage"
       }
     }

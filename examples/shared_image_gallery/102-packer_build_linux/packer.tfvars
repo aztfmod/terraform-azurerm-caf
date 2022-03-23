@@ -12,7 +12,7 @@ packer_build = {
     image_publisher                                  = "Canonical"
     image_offer                                      = "UbuntuServer"
     image_sku                                        = "18.04-LTS"
-    location                                         = "eastus2"
+    location                                         = "australiaeast"
     vm_size                                          = "Standard_A2_v2"
     build_script                                     = "ansible-ping.yml"
     managed_identity_key                             = "example_mi"   #managed identity configured on build VM for permissions to Azure resources during build
@@ -32,7 +32,7 @@ packer_build = {
       gallery_key         = "gallery1"
       image_key           = "image1"
       resource_group_key  = "sig"
-      replication_regions = ["eastus2", "centralus"]
+      replication_regions = ["australiaeast", "australiacentral"]
     }
   }
 }
