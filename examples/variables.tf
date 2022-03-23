@@ -834,3 +834,10 @@ variable "log_analytics_storage_insights" {
 variable "purview_accounts" {
   default = {}
 }
+variable "app_config" {
+  default = {}
+}
+
+variable "cosmosdb_sql_databases" {
+  default = {}
+}

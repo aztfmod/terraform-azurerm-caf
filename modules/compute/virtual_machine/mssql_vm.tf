@@ -142,7 +142,7 @@ data "azurerm_storage_account" "mssqlvm_backup_sa" {
 data "external" "sql_username" {
   for_each = {
     for key, value in try(var.settings.virtual_machine_settings, {}) : key => value
-    if try(value.mssql_settings.sql_authentication.sql_credential, null) != null && try(value.mssql_settings.sql_authentication.sql_credential.sql_username_key, null) != null
+    if try(value.mssql_settings.sql_authentication.sql_credential.sql_username_key, null) != null
   }
 
   program = [
