@@ -78,7 +78,7 @@ resource "azurerm_linux_virtual_machine_scale_set" "vmss" {
   overprovision                   = try(each.value.overprovision, null)
   priority                        = try(each.value.priority, null)
   provision_vm_agent              = try(each.value.provision_vm_agent, true)
-  proximity_placement_group_id    = try(var.proximity_placement_groups[var.client_config.landingzone_key][each.value.proximity_placement_group_key].id, var.proximity_placement_groups[each.value.proximity_placement_groups].id, null)
+  proximity_placement_group_id    = can(each.value.proximity_placement_group_key) || can(each.value.proximity_placement_group.key) ? var.proximity_placement_groups[try(var.client_config.landingzone_key, var.client_config.landingzone_key)][try(each.value.proximity_placement_group_key, each.value.proximity_placement_group.key)].id : try(each.value.proximity_placement_group_id, each.value.proximity_placement_group.id, null)
   scale_in_policy                 = try(each.value.scale_in_policy, null)
   single_placement_group          = try(each.value.single_placement_group, null)
   upgrade_mode                    = try(each.value.upgrade_mode, null)
@@ -107,11 +107,7 @@ resource "azurerm_linux_virtual_machine_scale_set" "vmss" {
       ip_configuration {
         name    = azurecaf_name.linux_nic[network_interface.key].result
         primary = try(network_interface.value.primary, false)
-        subnet_id = coalesce(
-          try(network_interface.value.subnet_id, null),
-          try(var.vnets[var.client_config.landingzone_key][network_interface.value.vnet_key].subnets[network_interface.value.subnet_key].id, null),
-          try(var.vnets[network_interface.value.lz_key][network_interface.value.vnet_key].subnets[network_interface.value.subnet_key].id, null)
-        )
+        subnet_id = can(network_interface.value.subnet_id) ? network_interface.value.subnet_id : var.vnets[try(network_interface.value.lz_key, var.client_config.landingzone_key)][network_interface.value.vnet_key].subnets[network_interface.value.subnet_key].id
         load_balancer_backend_address_pool_ids       = try(local.load_balancer_backend_address_pool_ids, null)
         application_gateway_backend_address_pool_ids = try(local.application_gateway_backend_address_pool_ids, null)
         application_security_group_ids               = try(local.application_security_group_ids, null)
