@@ -9,15 +9,9 @@ resource "azurecaf_name" "dfiras" {
 }
 
 data "azurerm_key_vault_secret" "administrator_password" {
-  for_each = try(var.settings.catalog_info.keyvault.keyvault_key, null) != null && (try(var.settings.catalog_info.keyvault.secret_name, null) != null || try(var.settings.catalog_info.keyvault.secret_key, null) != null) ? toset(["enabled"]) : toset([])
-  key_vault_id = coalesce(
-    try(var.remote_objects.keyvaults[var.settings.catalog_info.keyvault.lz_key][var.settings.catalog_info.keyvault.key].id, null),
-    try(var.remote_objects.keyvaults[var.client_config.landingzone_key][var.settings.catalog_info.keyvault.key].id, null)
-  )
-  name = coalesce(
-    try(var.remote_objects.dynamic_keyvault_secrets[var.settings.catalog_info.keyvault.key][var.settings.catalog_info.keyvault.secret_key].secret_name, null),
-    try(var.settings.catalog_info.keyvault.secret_name, null)
-  )
+  for_each     = try(var.settings.catalog_info.keyvault.keyvault_key, null) != null && (try(var.settings.catalog_info.keyvault.secret_name, null) != null || try(var.settings.catalog_info.keyvault.secret_key, null) != null) ? toset(["enabled"]) : toset([])
+  key_vault_id = var.remote_objects.keyvaults[try(var.client_config.landingzone_key, var.settings.catalog_info.keyvault.lz_key)][var.settings.catalog_info.keyvault.key].id
+  name         = can(var.settings.catalog_info.keyvault.secret_name) ? var.settings.catalog_info.keyvault.secret_name : var.remote_objects.dynamic_keyvault_secrets[var.settings.catalog_info.keyvault.key][var.settings.catalog_info.keyvault.secret_key].secret_name
 }
 
 resource "azurerm_data_factory_integration_runtime_azure_ssis" "dfiras" {
@@ -36,17 +30,9 @@ resource "azurerm_data_factory_integration_runtime_azure_ssis" "dfiras" {
     for_each = try(var.settings.catalog_info, null) != null ? [var.settings.catalog_info] : []
 
     content {
-      server_endpoint = coalesce(
-        try(catalog_info.value.server_endpoint, null),
-        try(var.remote_objects.mssql_servers[catalog_info.value.mssql_server.lz_key][catalog_info.value.mssql_server.key].fully_qualified_domain_name, null),
-        try(var.remote_objects.mssql_servers[var.client_config.landingzone_key][catalog_info.value.mssql_server.key].fully_qualified_domain_name, null)
-      )
-
-      administrator_login = catalog_info.value.administrator_login
-      administrator_password = coalesce(
-        try(catalog_info.keyvault.administrator_password, null),
-        try(azurerm_key_vault_secret.administrator_password, null)
-      )
+      server_endpoint        = can(catalog_info.value.server_endpoint) ? catalog_info.value.server_endpoint : var.remote_objects.mssql_servers[try(catalog_info.value.mssql_server.lz_key, var.client_config.landingzone_key)][catalog_info.value.mssql_server.key].fully_qualified_domain_name
+      administrator_login    = catalog_info.value.administrator_login
+      administrator_password = can(catalog_info.keyvault.administrator_password) ? catalog_info.keyvault.administrator_password : azurerm_key_vault_secret.administrator_password
       pricing_tier           = catalog_info.value.pricing_tier
       dual_standby_pair_name = catalog_info.value.dual_standby_pair_name
     }
