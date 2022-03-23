@@ -20,7 +20,7 @@ locals {
   combined_objects_azure_container_registries                     = merge(tomap({ (local.client_config.landingzone_key) = module.container_registry }), try(var.remote_objects.container_registry, {}))
   combined_objects_azuread_applications                           = merge(tomap({ (local.client_config.landingzone_key) = module.azuread_applications_v1 }), try(var.remote_objects.azuread_applications, {}))
   combined_objects_azuread_apps                                   = merge(tomap({ (local.client_config.landingzone_key) = module.azuread_applications }), try(var.remote_objects.azuread_apps, {}))
-  combined_objects_azuread_groups                                 = merge(tomap({ (local.client_config.landingzone_key) = module.azuread_groups }), try(var.remote_objects.azuread_groups, {}))
+  combined_objects_azuread_groups                                 = merge(tomap({ (local.client_config.landingzone_key) = module.azuread_graph_group }), try(var.remote_objects.azuread_groups, {}))
   combined_objects_azuread_service_principals                     = merge(tomap({ (local.client_config.landingzone_key) = module.azuread_service_principals }), try(var.remote_objects.azuread_service_principals, {}))
   combined_objects_azuread_users                                  = merge(tomap({ (local.client_config.landingzone_key) = module.azuread_users }), try(var.remote_objects.azuread_users, {}))
   combined_objects_azurerm_firewall_policies                      = merge(tomap({ (local.client_config.landingzone_key) = module.azurerm_firewall_policies }), try(var.remote_objects.azurerm_firewall_policies, {}))

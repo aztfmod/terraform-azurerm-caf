@@ -19,9 +19,9 @@ output "display_name" {
   value = azuread_service_principal.app.object_id
 }
 
-output "oauth2_permissions" {
-  value = azuread_service_principal.app.oauth2_permissions
-}
+# output "oauth2_permissions" {
+#   value = azuread_service_principal.app.oauth2_permissions
+# }
 output "rbac_id" {
   value       = azuread_service_principal.app.object_id
   description = "This attribute is used to set the role assignment"

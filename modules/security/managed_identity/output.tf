@@ -5,6 +5,9 @@ output "id" {
 output "principal_id" {
   value = azurerm_user_assigned_identity.msi.principal_id
 }
+output "object_id" {
+  value = azurerm_user_assigned_identity.msi.principal_id
+}
 
 output "client_id" {
   value = azurerm_user_assigned_identity.msi.client_id

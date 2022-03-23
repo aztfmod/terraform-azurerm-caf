@@ -22,8 +22,10 @@ managed_identities = {
 
 azuread_groups = {
   ad_group1 = {
-    name        = "example-group1"
-    description = "Provide read and write access"
+    display_name     = "test"
+    security_enabled = true
+    name             = "example-group1"
+    description      = "Provide read and write access"
     members = {
       user_principal_names = []
       group_names          = []
@@ -42,13 +44,13 @@ azuread_groups = {
 
 
 azuread_groups_membership = {
-  ad_group1 = { # ad group key
-    managed_identities = {
-      launchpad = {
-        # group_lz_key = "" # group lz_key
-        # lz_key = ""       # managed_identity lz_key
-        keys = ["msi1"]
-      }
+  memb1 = {
+    group_object = {
+      key = "ad_group1"
+    }
+    member_object = {
+      obj_type = "managed_identities"
+      key      = "msi1"
     }
   }
 }

@@ -834,3 +834,9 @@ variable "log_analytics_storage_insights" {
 variable "purview_accounts" {
   default = {}
 }
+variable "azuread_graph_group" {
+  default = {}
+}
+variable "azuread_graph_group_member" {
+  default = {}
+}
