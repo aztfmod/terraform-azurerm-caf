@@ -119,26 +119,19 @@ module "data_factory_linked_service_azure_databricks" {
 
   resource_group_name = can(each.value.resource_group.name) || can(each.value.resource_group_name) ? try(each.value.resource_group.name, each.value.resource_group_name) : local.combined_objects_resource_groups[try(each.value.resource_group.lz_key, local.client_config.landingzone_key)][try(each.value.resource_group_key, each.value.resource_group.key)].name
 
-
-  integration_runtime_name = coalesce(
+  integration_runtime_name = try(coalesce(
     try(local.combined_objects_data_factory_integration_runtime_self_hosted[each.value.integration_runtime.data_factory_integration_runtime_self_hosted.lz_key][each.value.integration_runtime.data_factory_integration_runtime_self_hosted.key].name, null),
     try(local.combined_objects_data_factory_integration_runtime_self_hosted[local.client_config.landingzone_key][each.value.integration_runtime.data_factory_integration_runtime_self_hosted.key].name, null),
     try(each.value.integration_runtime.data_factory_integration_runtime_self_hosted.name, null),
     try(local.combined_objects_data_factory_integration_runtime_azure_ssis[each.value.integration_runtime.combined_objects_data_factory_integration_runtime_azure_ssis.lz_key][each.value.integration_runtime.combined_objects_data_factory_integration_runtime_azure_ssis.key].name, null),
     try(local.combined_objects_data_factory_integration_runtime_azure_ssis[local.client_config.landingzone_key][each.value.integration_runtime.combined_objects_data_factory_integration_runtime_azure_ssis.key].name, null),
     try(each.value.integration_runtime.combined_objects_data_factory_integration_runtime_azure_ssis.name, null)
+    ), null
   )
 
   remote_objects = {
-    databricks_workspace = try(coalesce(
-      try(local.combined_objects_databricks_workspaces[each.value.databricks_workspace.lz_key][each.value.databricks_workspace.key], null),
-      try(local.combined_objects_databricks_workspaces[local.client_config.landingzone_key][each.value.databricks_workspace.key], null)
-    ), null)
-
-    data_factory = try(coalesce(
-      try(local.combined_objects_data_factory[each.value.data_factory.lz_key][each.value.data_factory.key], null),
-      try(local.combined_objects_data_factory[local.client_config.landingzone_key][each.value.data_factory.key], null)
-    ), null)
+    databricks_workspace = local.combined_objects_databricks_workspaces[try(each.value.databricks_workspace.lz_key, local.client_config.landingzone_key)][each.value.databricks_workspace.key]
+    data_factory         = local.combined_objects_data_factory[try(each.value.data_factory.lz_key, local.client_config.landingzone_key)][each.value.data_factory.key]
   }
 }
 output "data_factory_linked_service_azure_databricks" {
@@ -164,13 +157,14 @@ module "data_factory_linked_service_key_vault" {
   data_factory_name   = can(each.value.data_factory.name) ? each.value.data_factory.name : local.combined_objects_data_factory[try(each.value.data_factory.lz_key, local.client_config.landingzone_key)][each.value.data_factory.key].name
 
 
-  integration_runtime_name = coalesce(
+  integration_runtime_name = try(coalesce(
     try(local.combined_objects_data_factory_integration_runtime_self_hosted[each.value.integration_runtime.data_factory_integration_runtime_self_hosted.lz_key][each.value.integration_runtime.data_factory_integration_runtime_self_hosted.key].name, null),
     try(local.combined_objects_data_factory_integration_runtime_self_hosted[local.client_config.landingzone_key][each.value.integration_runtime.data_factory_integration_runtime_self_hosted.key].name, null),
     try(each.value.integration_runtime.data_factory_integration_runtime_self_hosted.name, null),
     try(local.combined_objects_data_factory_integration_runtime_azure_ssis[each.value.integration_runtime.combined_objects_data_factory_integration_runtime_azure_ssis.lz_key][each.value.integration_runtime.combined_objects_data_factory_integration_runtime_azure_ssis.key].name, null),
     try(local.combined_objects_data_factory_integration_runtime_azure_ssis[local.client_config.landingzone_key][each.value.integration_runtime.combined_objects_data_factory_integration_runtime_azure_ssis.key].name, null),
     try(each.value.integration_runtime.combined_objects_data_factory_integration_runtime_azure_ssis.name, null)
+    ), null
   )
 
 }
