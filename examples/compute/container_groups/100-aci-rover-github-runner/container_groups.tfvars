@@ -14,26 +14,25 @@ container_groups = {
     containers = {
       roverxpreview = {
         name   = "aztfmod-rover-preview"
-        image  = "aztfmod/rover-agent:1.1.7-2203.230303-preview-github"
+        image  = "aztfmod/rover-agent:1.1.7-2203.230716-preview-github"
         cpu    = "4"
         memory = "2"
 
-        # ports = {
-        #   22 = {
-        #     port     = 22
-        #     protocol = "TCP"
-        #   }
-        # }
+        ports = {
+          22 = {
+            port     = 22
+            protocol = "TCP"
+          }
+        }
 
         # for demo purposes
         environment_variables = {
           URL         = "https://github.com/your_org/your_repo"
-          AGENT_TOKEN = "replace_with_your_token_from_gha"
           name        = "myrover"
           ARM_USE_MSI = true
         }
         secure_environment_variables = {
-          TOKEN = "token from tfvars"
+          AGENT_TOKEN = "replace_with_your_token_from_gha"
         }
         environment_variables_from_resources = {
           AGENT_KEYVAULT_NAME = {
