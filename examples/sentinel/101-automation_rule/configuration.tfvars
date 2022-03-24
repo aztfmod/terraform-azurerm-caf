@@ -25,7 +25,7 @@ logic_app_workflow = {
   }
 }
 
-log_analytics = {
+diagnostic_log_analytics = {
   law1 = {
     name               = "sentinal-automation-rule"
     resource_group_key = "rg1"
@@ -41,7 +41,7 @@ log_analytics = {
 sentinel_automation_rules = {
   ar1 = {
     name                    = "e0fa0ba9-cdec-4af2-b218-f2fbfd6b38d7"
-    log_analytics_workspace = {
+    diagnostic_log_analytics_workspace = {
       #lz_key = ""
       key = "law1"
     }
