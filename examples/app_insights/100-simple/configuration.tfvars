@@ -1,7 +1,7 @@
 
 global_settings = {
   regions = {
-    region1 = "eastus2"
+    region1 = "australiaeast"
   }
 }
 
