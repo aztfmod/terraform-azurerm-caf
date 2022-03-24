@@ -8,7 +8,7 @@ module "servicebus_subscriptions" {
 
   remote_objects = {
     servicebus_topic_id     = azurerm_servicebus_topic.topic.id
-    servicebus_namespace_id = local.servicebus_namespace_id
+    servicebus_namespace_id = local.servicebus_namespace.id
     resource_group_name     = local.resource_group_name
     servicebus_queues       = try(var.remote_objects.servicebus_queues, null)
     servicebus_topics       = try(var.remote_objects.servicebus_topics, null)
