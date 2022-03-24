@@ -2,7 +2,7 @@ global_settings = {
   default_region = "region1"
   environment    = "examples"
   regions = {
-    region1 = "eastus2"
+    region1 = "australiaeast"
   }
 }
 

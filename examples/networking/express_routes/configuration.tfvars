@@ -1,7 +1,7 @@
 global_settings = {
   default_region = "region1"
   regions = {
-    region1 = "eastus2"
+    region1 = "australiaeast"
   }
 }
 resource_groups = {
@@ -23,12 +23,12 @@ express_route_circuits = {
 
 express_route_circuit_authorizations = {
   key1 = {
-    name               = "er_centralus_np"
+    name               = "er_australiacentral_np"
     resource_group_key = "vm_region1 "
     express_route_key  = "er1"
   }
   key2 = {
-    name               = "er_centralus_prod"
+    name               = "er_australiacentral_prod"
     resource_group_key = "vm_region1 "
     express_route_key  = "er1"
   }

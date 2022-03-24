@@ -3,7 +3,7 @@ global_settings = {
   environment    = "test"
   regions = {
     region1 = "East US"
-    region2 = "eastus2"
+    region2 = "australiaeast"
   }
 }
 
