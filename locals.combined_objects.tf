@@ -96,6 +96,7 @@ locals {
   combined_objects_recovery_vaults                                = merge(tomap({ (local.client_config.landingzone_key) = module.recovery_vaults }), try(var.remote_objects.recovery_vaults, {}))
   combined_objects_redis_caches                                   = merge(tomap({ (local.client_config.landingzone_key) = module.redis_caches }), try(var.remote_objects.redis_caches, {}))
   combined_objects_resource_groups                                = merge(tomap({ (local.client_config.landingzone_key) = local.resource_groups }), try(var.remote_objects.resource_groups, {}))
+  combined_objects_sentinel_watchlists                            = merge(tomap({ (local.client_config.landingzone_key) = module.sentinel_watchlists }), try(var.remote_objects.sentinel_watchlists, {}))
   combined_objects_servicebus_namespaces                          = merge(tomap({ (local.client_config.landingzone_key) = module.servicebus_namespaces }), try(var.remote_objects.servicebus_namespaces, {}))
   combined_objects_servicebus_topics                              = merge(tomap({ (local.client_config.landingzone_key) = module.servicebus_topics }), try(var.remote_objects.servicebus_topics, {}))
   combined_objects_servicebus_queues                              = merge(tomap({ (local.client_config.landingzone_key) = module.servicebus_queues }), try(var.remote_objects.servicebus_queues, {}))
