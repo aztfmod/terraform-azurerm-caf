@@ -7,10 +7,10 @@ resource "azurerm_servicebus_namespace_network_rule_set" "rule_set" {
   ip_rules                      = try(var.settings.ip_rules, null)
 
   dynamic "network_rules" {
-    for_each = try(var.settings.network_rules, {})
+    for_each = try(var.settings.subnets, {})
     content {
-      subnet_id                            = can(var.remote_objects.vnets[network_rules.value.lz_key][network_rules.value.vnet_key].subnets[network_rules.value.subnet_key].id) ? var.remote_objects.vnets[network_rules.value.lz_key][network_rules.value.vnet_key].subnets[network_rules.value.subnet_key].id : var.remote_objects.vnets[var.client_config.landingzone_key][network_rules.value.vnet_key].subnets[network_rules.value.subnet_key].id
-      ignore_missing_vnet_service_endpoint = network_rules.value.ignore_missing_vnet_service_endpoint
+      subnet_id = can(network_rules.value.id) ? network_rules.value.id : var.remote_objects.vnets[try(network_rules.value.lz_key, var.client_config.landingzone_key)][network_rules.value.vnet_key].subnets[network_rules.value.subnet_key].id
+      ignore_missing_vnet_service_endpoint = try(network_rules.value.ignore_missing_vnet_service_endpoint, null)
     }
   }
 }
