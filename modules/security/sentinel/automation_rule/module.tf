@@ -19,7 +19,7 @@ resource "azurerm_sentinel_automation_rule" "automation_rule" {
       severity               = try(action_incident.value.severity, null)
     }
   }
-  
+
   dynamic "action_playbook" {
     for_each = try(var.settings.action_playbook, {})
 
