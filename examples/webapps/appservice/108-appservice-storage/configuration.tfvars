@@ -17,6 +17,8 @@ app_service_plans = {
   asp_storage = {
     resource_group_key = "webapp_storage"
     name               = "asp-storage"
+    kind               = "Linux"
+    reserved           = true
 
     sku = {
       tier = "Standard"
