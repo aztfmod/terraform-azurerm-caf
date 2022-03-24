@@ -390,3 +390,6 @@ variable "apim" {
 variable "purview" {
   default = {}
 }
+variable "sentinel_watchlists" {
+  default     = {}
+}
