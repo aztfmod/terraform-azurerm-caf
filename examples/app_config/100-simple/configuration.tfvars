@@ -14,8 +14,8 @@ resource_groups = {
 
 app_config = {
   appconf1 = {
-    name                = "appConf1"
+    name               = "appConf1"
     resource_group_key = "rg1"
-    location = "region1"
+    location           = "region1"
   }
 }

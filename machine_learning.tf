@@ -11,7 +11,8 @@ module "machine_learning_workspaces" {
   keyvault_id             = lookup(each.value, "keyvault_key") == null ? null : module.keyvaults[each.value.keyvault_key].id
   application_insights_id = lookup(each.value, "application_insights_key") == null ? null : module.azurerm_application_insights[each.value.application_insights_key].id
   container_registry_id   = try(each.value.container_registry_key, null) == null ? null : try(local.combined_objects_container_registry[each.value.lz_key][each.value.container_registry_key].id, local.combined_objects_container_registry[local.client_config.landingzone_key][each.value.container_registry_key].id)
-  base_tags               = try(local.global_settings.inherit_tags, false) ? local.resource_groups[each.value.resource_group_key].tags : {}
+  base_tags               = try(local.global_settings.inherit_tags, false) ? local.combined_objects_resource_groups[try(each.value.resource_group.lz_key, local.client_config.landingzone_key)][try(each.value.resource_group.key, each.value.resource_group_key)].tags : {}
+
 }
 
 output "machine_learning_workspaces" {
@@ -25,9 +26,7 @@ module "machine_learning_compute_instance" {
   global_settings = local.global_settings
   client_config   = local.client_config
   settings        = each.value
-
-  location = local.global_settings.regions[each.value.region]
-  #location = lookup(each.value, "region", null) == null ? local.resource_groups[each.value.resource_group.key].location : local.global_settings.regions[each.value.region]
+  location        = can(local.global_settings.regions[each.value.region]) ? local.global_settings.regions[each.value.region] : local.combined_objects_resource_groups[try(each.value.resource_group.lz_key, local.client_config.landingzone_key)][try(each.value.resource_group.key, each.value.resource_group_key)].location
 
   remote_objects = {
     managed_identities            = local.combined_objects_managed_identities

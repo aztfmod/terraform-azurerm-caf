@@ -2,7 +2,7 @@ global_settings = {
   default_region = "region1"
   regions = {
     region1 = "northeurope"
-    region2 = "centralus"
+    region2 = "australiacentral"
   }
 }
 
