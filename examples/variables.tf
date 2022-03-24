@@ -837,7 +837,9 @@ variable "purview_accounts" {
 variable "app_config" {
   default = {}
 }
-
 variable "cosmosdb_sql_databases" {
+  default = {}
+}
+variable "sentinel" {
   default = {}
 }
