@@ -26,7 +26,7 @@ log_analytics = {
 
 sentinel_ar_fusions = {
   arf1 = {
-    name                    = "example-fusion-alert-rule"
+    name = "example-fusion-alert-rule"
     log_analytics_workspace = {
       #lz_key = ""
       key = "law1"
