@@ -26,13 +26,13 @@ log_analytics = {
 
 sentinel_ar_ms_security_incidents = {
   arm1 = {
-    name                    = "example-ms-security-incident-alert-rule"
+    name = "example-ms-security-incident-alert-rule"
     log_analytics_workspace = {
       #lz_key = ""
       key = "law1"
     }
-    product_filter = "Microsoft Cloud App Security"
-    display_name   = "example rule"
+    product_filter  = "Microsoft Cloud App Security"
+    display_name    = "example rule"
     severity_filter = ["Low"]
   }
 }

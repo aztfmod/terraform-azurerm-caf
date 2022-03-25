@@ -391,5 +391,5 @@ variable "purview" {
   default = {}
 }
 variable "sentinel_watchlists" {
-  default     = {}
+  default = {}
 }

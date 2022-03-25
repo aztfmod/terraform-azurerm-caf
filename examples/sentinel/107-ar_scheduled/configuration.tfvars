@@ -26,14 +26,14 @@ log_analytics = {
 
 sentinel_ar_scheduled = {
   ars1 = {
-    name                    = "example-scheduled-alert-rule"
+    name = "example-scheduled-alert-rule"
     log_analytics_workspace = {
       #lz_key = ""
       key = "law1"
     }
-    display_name             = "example-scheduled-alert-rule"
-    severity                 = "Low"
-    query                    = <<QUERY
+    display_name = "example-scheduled-alert-rule"
+    severity     = "Low"
+    query        = <<QUERY
       AzureActivity |
       where OperationName == "Create or Update Virtual Machine" or OperationName =="Create Deployment" |
       where ActivityStatus == "Succeeded" |
