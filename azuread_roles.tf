@@ -6,7 +6,7 @@ module "azuread_roles_security_groups" {
   object_id     = module.azuread_groups[each.key].id
   azuread_roles = each.value.roles
 }
-  
+
 module "azuread_roles_applications" {
   source   = "./modules/azuread/roles"
   for_each = try(local.azuread.azuread_roles.azuread_apps, {})
