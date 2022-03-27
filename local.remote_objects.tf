@@ -83,6 +83,7 @@ locals {
     private_endpoints                              = try(local.combined_objects_private_endpoints, null)
     proximity_placement_groups                     = try(local.combined_objects_proximity_placement_groups, null)
     public_ip_addresses                            = try(local.combined_objects_public_ip_addresses, null)
+    public_ip_prefixes                             = try(local.combined_objects_public_ip_prefixes, null)
     recovery_vaults                                = try(local.combined_objects_recovery_vaults, null)
     redis_caches                                   = try(local.combined_objects_redis_caches, null)
     resource_groups                                = try(local.combined_objects_resource_groups, null)
