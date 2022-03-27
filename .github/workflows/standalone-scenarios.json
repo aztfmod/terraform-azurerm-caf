@@ -82,6 +82,7 @@
     "datalake/101-datalake-storage",
     "diagnostics_profiles/200-diagnostics-eventhub-namespaces",
     "diagnostics_profiles/201-multi-eventhub-diagnostics",
+    "diagnostics_profiles/202-reuse-existing-log-analytics-and-eventhub",
     "eventhub/100-simple-eventhub-namespace",
     "eventhub/101-evh-namespace-with-private-endpoint",
     "eventhub/102-namespace-and-evh-with-auth-rules",

@@ -11,13 +11,14 @@ resource "azurerm_monitor_diagnostic_setting" "diagnostics" {
   eventhub_name = each.value.destination_type == "event_hub" ? try(
     var.diagnostics.event_hub_namespaces[var.diagnostics.diagnostics_destinations.event_hub_namespaces[each.value.destination_key].event_hub_namespace_key].event_hubs[each.value.event_hub_key].name,
     var.diagnostics.event_hub_namespaces[var.diagnostics.diagnostics_destinations.event_hub_namespaces[each.value.destination_key].event_hub_namespace_key].name,
+    var.diagnostics.diagnostics_destinations.event_hub_namespaces[each.value.destination_key].eventhub_name,
     each.value.eventhub_name,
     null
   ) : null
 
   eventhub_authorization_rule_id = each.value.destination_type == "event_hub" ? coalesce(
     try(each.value.eventhub_authorization_rule_id, null),
-    try(format("%s/authorizationRules/RootManageSharedAccessKey", var.diagnostics.event_hub_namespaces[var.diagnostics.diagnostics_destinations.event_hub_namespaces[each.value.destination_key].event_hub_namespace_key].id), null)
+    try(format("%s/authorizationRules/RootManageSharedAccessKey", try(var.diagnostics.diagnostics_destinations.event_hub_namespaces[each.value.destination_key].eventhub_authorization_rule_id, var.diagnostics.event_hub_namespaces[var.diagnostics.diagnostics_destinations.event_hub_namespaces[each.value.destination_key].event_hub_namespace_key].id)), null)
   ) : null
 
   log_analytics_workspace_id     = each.value.destination_type == "log_analytics" ? try(var.diagnostics.diagnostics_destinations.log_analytics[each.value.destination_key].log_analytics_resource_id, var.diagnostics.log_analytics[var.diagnostics.diagnostics_destinations.log_analytics[each.value.destination_key].log_analytics_key].id) : null
