@@ -40,13 +40,13 @@ diagnostic_log_analytics = {
 
 sentinel_automation_rules = {
   ar1 = {
-    name                    = "e0fa0ba9-cdec-4af2-b218-f2fbfd6b38d7"
+    name = "e0fa0ba9-cdec-4af2-b218-f2fbfd6b38d7"
     diagnostic_log_analytics_workspace = {
       #lz_key = ""
       key = "law1"
     }
-    display_name            = "ar1"
-    order                   = "1"
+    display_name = "ar1"
+    order        = "1"
     #expiration              = ""
 
     action_incident = {
@@ -69,7 +69,7 @@ sentinel_automation_rules = {
       c1 = {
         operator = "Equals"
         property = "IncidentTitle"
-        values   = ["test1","test2"]
+        values   = ["test1", "test2"]
       }
     }
 

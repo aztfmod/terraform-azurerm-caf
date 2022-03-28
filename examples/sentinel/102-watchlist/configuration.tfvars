@@ -26,13 +26,13 @@ log_analytics = {
 
 sentinel_watchlists = {
   wl1 = {
-    name                    = "example-watchlist"
+    name = "example-watchlist"
     log_analytics_workspace = {
       #lz_key = ""
       key = "law1"
     }
-    display_name            = "wl1"
-    description             = "test_description"
-    labels                  = ["test1","test2"]
+    display_name = "wl1"
+    description  = "test_description"
+    labels       = ["test1", "test2"]
   }
 }
