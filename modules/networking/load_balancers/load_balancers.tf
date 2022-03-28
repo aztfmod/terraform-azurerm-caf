@@ -49,7 +49,6 @@ resource "azurerm_lb_backend_address_pool_address" "backend_address_pool_address
 resource "azurerm_lb_probe" "lb_probe" {
   for_each = try(var.settings.probes, {})
 
-  resource_group_name = var.resource_group_name
   loadbalancer_id     = azurerm_lb.lb.id
   name                = each.value.probe_name
   port                = each.value.port
@@ -67,7 +66,6 @@ resource "azurerm_lb_probe" "lb_probe" {
 resource "azurerm_lb_rule" "lb_rule" {
   for_each = try(var.settings.lb_rules, {})
 
-  resource_group_name            = var.resource_group_name
   loadbalancer_id                = azurerm_lb.lb.id
   name                           = each.value.lb_rule_name
   protocol                       = each.value.protocol
@@ -96,7 +94,6 @@ resource "azurerm_lb_rule" "lb_rule" {
 resource "azurerm_lb_outbound_rule" "outbound_rule" {
   for_each = try(var.settings.outbound_rules, {})
 
-  resource_group_name      = var.resource_group_name
   loadbalancer_id          = azurerm_lb.lb.id
   name                     = each.value.name
   protocol                 = each.value.protocol
