@@ -19,6 +19,3 @@ variable "base_tags" {
 variable "data_factory_id" {
   description = " Changing this forces a new Data Factory Self-hosted Integration Runtime to be created."
 }
-variable "resource_group_name" {
-  description = " The name of the Resource Group where the Data Factory should exist. Changing this forces a new Data Factory Self-hosted Integration Runtime to be created."
-}

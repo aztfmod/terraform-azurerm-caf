@@ -9,7 +9,6 @@ resource "azurecaf_name" "linked" {
 }
 resource "azurerm_data_factory_linked_service_data_lake_storage_gen2" "linked_service_data_lake_storage_gen2" {
   name                     = azurecaf_name.linked.name
-  resource_group_name      = var.resource_group_name
   data_factory_id          = var.data_factory_id
   description              = try(var.description, null)
   integration_runtime_name = try(var.integration_runtime_name, null)

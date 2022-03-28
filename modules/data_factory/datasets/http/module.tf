@@ -9,7 +9,6 @@ resource "azurecaf_name" "dataset" {
 }
 resource "azurerm_data_factory_dataset_http" "dataset" {
   name                  = azurecaf_name.dataset.name
-  resource_group_name   = var.resource_group_name
   data_factory_id       = var.data_factory_id
   linked_service_name   = var.linked_service_name
   folder                = try(var.settings.folder, null)
