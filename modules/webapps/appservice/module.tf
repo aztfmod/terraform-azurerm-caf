@@ -161,9 +161,9 @@ resource "azurerm_app_service" "app_service" {
     content {
       name         = storage_account.value.name
       type         = storage_account.value.type
-      account_name = can(storage_account.value.account_key) ? var.storage_accounts[try(storage_account.value.lz_key,var.client_config.landingzone_key)][storage_account.value.account_key].name : try(storage_account.value.account_name, null)
+      account_name = can(storage_account.value.account_key) ? var.storage_accounts[try(storage_account.value.lz_key, var.client_config.landingzone_key)][storage_account.value.account_key].name : try(storage_account.value.account_name, null)
       share_name   = storage_account.value.share_name
-      access_key   = can(storage_account.value.account_key) ? var.storage_accounts[try(storage_account.value.lz_key,var.client_config.landingzone_key)][storage_account.value.account_key].primary_access_key : try(storage_account.value.access_key, null)
+      access_key   = can(storage_account.value.account_key) ? var.storage_accounts[try(storage_account.value.lz_key, var.client_config.landingzone_key)][storage_account.value.account_key].primary_access_key : try(storage_account.value.access_key, null)
       mount_path   = lookup(storage_account.value, "mount_path", null)
     }
   }

@@ -26,7 +26,7 @@ log_analytics = {
 
 sentinel_ar_ml_behavior_analytics = {
   arm1 = {
-    name                    = "example-ml-alert-rule"
+    name = "example-ml-alert-rule"
     log_analytics_workspace = {
       #lz_key = ""
       key = "law1"
