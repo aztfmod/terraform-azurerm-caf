@@ -18,6 +18,6 @@ resource "azurerm_dedicated_host_group" "dhg" {
   location                    = var.location
   platform_fault_domain_count = var.settings.platform_fault_domain_count
   automatic_placement_enabled = try(var.settings.automatic_placement_enabled, false)
-  zones                       = try(var.settings.zones, null)
+  zone                        = try(var.settings.zone, null)
   tags                        = local.tags
 }
