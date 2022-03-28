@@ -9,7 +9,6 @@ resource "azurecaf_name" "dataset" {
 }
 resource "azurerm_data_factory_linked_service_mysql" "linked_service_mysql" {
   name                     = azurecaf_name.dataset.name
-  resource_group_name      = var.resource_group_name
   data_factory_id          = var.data_factory_id
   description              = try(var.settings.description, null)
   integration_runtime_name = try(var.settings.integration_runtime_name, null)
