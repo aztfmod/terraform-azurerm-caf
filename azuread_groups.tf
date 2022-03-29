@@ -4,13 +4,40 @@
 #
 
 module "azuread_groups" {
-  source   = "./modules/azuread/groups"
-  for_each = local.azuread.azuread_groups
+  source = "./modules/azuread/groups"
+  ###############################################################################
+  ### iterate over new groups only in this block
+  ###############################################################################
+  for_each = {
+    for key, value in try(local.azuread.azuread_groups, {}) : key => value
+    if try(value.reuse, false) == false
+  }
 
   global_settings = local.global_settings
   azuread_groups  = each.value
   tenant_id       = local.client_config.tenant_id
   client_config   = local.client_config
+}
+
+###############################################################################
+### If the group is set for "reuse" then use a data lookup
+###############################################################################
+module "azuread_groups_reused" {
+  depends_on = [module.azuread_groups]
+  source     = "./modules/azuread/groups_reused"
+  for_each = {
+    for key, value in try(local.azuread.azuread_groups, {}) : key => value
+    if try(value.reuse, false) == true
+  }
+
+  settings = each.value
+}
+
+###############################################################################
+### merge new groups with existing groups
+###############################################################################
+locals {
+  azuread_groups = merge(module.azuread_groups, module.azuread_groups_reused)
 }
 
 output "azuread_groups" {
@@ -25,7 +52,7 @@ module "azuread_groups_members" {
   client_config              = local.client_config
   settings                   = each.value
   azuread_groups             = module.azuread_groups
-  group_id                   = module.azuread_groups[each.key].id
+  group_id                   = local.azuread_groups[each.key].id
   azuread_apps               = module.azuread_applications
   azuread_service_principals = local.combined_objects_azuread_service_principals[try(each.value.lz_key, local.client_config.landingzone_key)]
 }
