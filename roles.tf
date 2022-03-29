@@ -119,9 +119,15 @@ locals {
     subscriptions                              = local.combined_objects_subscriptions
     synapse_workspaces                         = local.combined_objects_synapse_workspaces
     virtual_subnets                            = local.combined_objects_virtual_subnets
+    log_analytics                              = local.current_objects_log_analytics
   }
 
-
+  current_objects_log_analytics = tomap(
+    {
+      (var.current_landingzone_key) = merge(local.combined_objects_log_analytics, local.combined_diagnostics.log_analytics)
+    }
+  )
+    
   logged_in = tomap(
     {
       (var.current_landingzone_key) = {
