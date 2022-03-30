@@ -12,19 +12,3 @@ module "runbooks_ansible_playbooks" {
   virtual_machines    = local.combined_objects_virtual_machines
   client_config       = local.client_config
 }
-
-
-module "runbooks_remoters" {
-  depends_on = [module.virtual_machines, module.keyvaults, module.public_ip_addresses]
-  source     = "./modules/compute/runbooks/remoters"
-  for_each = {
-    for key, value in try(var.compute.runbooks, {}) : key => value
-    if try(value.type, "") == "remoters"
-  }
-
-  settings            = each.value
-  keyvaults           = local.combined_objects_keyvaults
-  public_ip_addresses = local.combined_objects_public_ip_addresses
-  virtual_machines    = local.combined_objects_virtual_machines
-  client_config       = local.client_config
-}
