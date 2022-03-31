@@ -1,5 +1,13 @@
 {
   "config_files": [
+    "azuread_graph/100-azuread_administrative_units",
+    "azuread_graph/101-azuread_administrative_unit_member",
+    "azuread_graph/102-azuread_conditional_access_policies",
+    "azuread_graph/103-azuread_named_location",
+    "azuread_graph/104-azuread_role_assignments",
+    "azuread_graph/105-azuread_role_assignments_internal",
+    "azuread_graph/106-azuread_role_assignments_internal_user",
+    "azuread_graph/107-azuread_applications",
     "app_gateway/100-simple-app-gateway",
     "app_gateway/101-private-public",
     "app_gateway/102-waf-policy",
