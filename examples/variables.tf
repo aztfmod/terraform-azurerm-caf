@@ -837,3 +837,10 @@ variable "purview_accounts" {
 variable "app_config" {
   default = {}
 }
+
+variable "traffic_manager_profile" {
+  default = {}
+}
+variable "traffic_manager_nested_endpoint" {
+  default = {}
+}
