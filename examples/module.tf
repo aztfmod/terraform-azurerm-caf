@@ -210,6 +210,8 @@ module "example" {
     virtual_subnets                                         = var.virtual_subnets
     vpn_gateway_connections                                 = var.vpn_gateway_connections
     vpn_sites                                               = var.vpn_sites
+    traffic_manager_profile                                 = var.traffic_manager_profile
+    traffic_manager_nested_endpoint                         = var.traffic_manager_nested_endpoint
   }
 
   security = {

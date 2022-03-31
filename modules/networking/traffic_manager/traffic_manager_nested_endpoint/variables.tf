@@ -1,0 +1,3 @@
+variable "settings" {
+  default = {}
+}
