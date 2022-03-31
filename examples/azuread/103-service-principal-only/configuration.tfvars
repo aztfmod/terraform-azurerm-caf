@@ -40,6 +40,7 @@ keyvault_access_policies_azuread_apps = {
 
 azuread_applications = {
   test_client = {
+    display_name     = "test_client"
     useprefix        = true
     application_name = "test-client"
   }
@@ -48,7 +49,7 @@ azuread_applications = {
 
 azuread_service_principals = {
   sp1 = {
-    azuread_application = {
+    application = {
       key = "test_client"
     }
     app_role_assignment_required = true
@@ -57,7 +58,7 @@ azuread_service_principals = {
 
 azuread_service_principal_passwords = {
   sp1 = {
-    azuread_service_principal = {
+    service_principal = {
       key = "sp1"
     }
     password_policy = {

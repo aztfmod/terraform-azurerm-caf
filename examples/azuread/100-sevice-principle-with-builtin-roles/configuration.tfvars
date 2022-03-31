@@ -37,8 +37,9 @@ keyvault_access_policies_azuread_apps = {
   }
 }
 
-azuread_apps = {
+azuread_applications = {
   test_client = {
+    display_name     = "test_client"
     useprefix        = true
     application_name = "test-client"
     password_policy = {

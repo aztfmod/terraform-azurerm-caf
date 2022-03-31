@@ -234,22 +234,10 @@ variable "storage_accounts" {
 variable "azuread_credential_policies" {
   default = {}
 }
-variable "azuread_applications" {
-  default = {}
-}
 variable "azuread_credentials" {
   default = {}
 }
 variable "azuread_groups_membership" {
-  default = {}
-}
-variable "azuread_service_principals" {
-  default = {}
-}
-variable "azuread_service_principal_passwords" {
-  default = {}
-}
-variable "azuread_groups" {
   default = {}
 }
 variable "azuread_roles" {
@@ -470,10 +458,6 @@ variable "domain_name_registrations" {
 }
 
 variable "azuread_apps" {
-  default = {}
-  type    = map(any)
-}
-variable "azuread_users" {
   default = {}
   type    = map(any)
 }
@@ -834,9 +818,68 @@ variable "log_analytics_storage_insights" {
 variable "purview_accounts" {
   default = {}
 }
-variable "azuread_graph_group" {
+variable "azuread_groups" {
   default = {}
 }
-variable "azuread_graph_group_member" {
+variable "azuread_group_members" {
   default = {}
 }
+variable "azuread_applications" {
+  default = {}
+}
+
+variable "azuread_administrative_units" {
+  default = {}
+}
+variable "azuread_administrative_unit_members" {
+  default = {}
+}
+variable "azuread_application_certificates" {
+  default = {}
+}
+variable "azuread_application_federated_identity_credentials" {
+  default = {}
+}
+variable "azuread_application_passwords" {
+  default = {}
+}
+variable "azuread_application_pre_authorizeds" {
+  default = {}
+}
+variable "azuread_app_role_assignments" {
+  default = {}
+}
+variable "azuread_conditional_access_policies" {
+  default = {}
+}
+variable "azuread_custom_directory_roles" {
+  default = {}
+}
+variable "azuread_directory_roles" {
+  default = {}
+}
+variable "azuread_directory_role_members" {
+  default = {}
+}
+variable "azuread_invitations" {
+  default = {}
+}
+variable "azuread_named_locations" {
+  default = {}
+}
+variable "azuread_service_principals" {
+  default = {}
+}
+variable "azuread_service_principal_certificates" {
+  default = {}
+}
+variable "azuread_service_principal_delegated_permission_grants" {
+  default = {}
+}
+variable "azuread_service_principal_passwords" {
+  default = {}
+}
+variable "azuread_users" {
+  default = {}
+}
+                                   

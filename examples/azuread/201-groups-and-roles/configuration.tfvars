@@ -28,8 +28,9 @@ keyvaults = {
   }
 }
 
-azuread_apps = {
+azuread_applications = {
   app1 = {
+    display_name                 = "app1"
     useprefix                    = true
     application_name             = "app1"
     app_role_assignment_required = true
@@ -40,6 +41,7 @@ azuread_apps = {
     }
   }
   app2 = {
+    display_name                 = "app2"
     useprefix                    = true
     application_name             = "app2"
     app_role_assignment_required = true
@@ -53,29 +55,28 @@ azuread_apps = {
 
 azuread_groups = {
   group1 = {
-    name        = "group1"
-    description = "Apps with permissions"
-    members = {
-      user_principal_names = []
-      group_names          = []
-      object_ids           = []
-      group_keys           = []
-      service_principal_keys = [
-        "app1"
-      ]
-
-    }
-    owners = {
-      user_principal_names = []
-      service_principal_keys = [
-        "app2"
-      ]
-    }
+    display_name           = "group1"
+    name                   = "group1"
+    description            = "Apps with permissions"
+    members                = []
+    owners                 = []
     prevent_duplicate_name = false
+    security_enabled       = true
   }
 
 }
-
+azuread_groups_membership = {
+  memb1 = {
+    group_object = {
+      key = "group1"
+      #id = "UUID"
+    }
+    member_object = {
+      obj_type = "azuread_applications"
+      key      = "app1"
+    }
+  }
+}
 role_mapping = {
   built_in_role_mapping = {
     subscriptions = {

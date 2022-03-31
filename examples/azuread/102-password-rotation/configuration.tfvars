@@ -39,8 +39,10 @@ keyvault_access_policies_azuread_apps = {
 
 azuread_users = {
   user1 = {
-    user_name    = "demo-user"
-    keyvault_key = "test_client"
+    display_name        = "user1"
+    user_principal_name = "sergio.miyama@dione.solutions"
+    user_name           = "demo-user"
+    keyvault_key        = "test_client"
     password_policy = {
       # Length of the password
       length  = 250

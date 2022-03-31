@@ -22,31 +22,20 @@ managed_identities = {
 
 azuread_groups = {
   ad_group1 = {
-    display_name     = "test"
-    security_enabled = true
-    name             = "example-group1"
-    description      = "Provide read and write access"
-    members = {
-      user_principal_names = []
-      group_names          = []
-      object_ids           = []
-      group_keys           = []
-
-      service_principal_keys = []
-
-    }
-    owners = {
-      user_principal_names = []
-    }
+    display_name           = "test"
+    security_enabled       = true
+    name                   = "example-group1"
+    description            = "Provide read and write access"
+    members                = []
+    owners                 = []
     prevent_duplicate_name = false
   }
 }
-
-
 azuread_groups_membership = {
   memb1 = {
     group_object = {
       key = "ad_group1"
+      #id = "UUID"
     }
     member_object = {
       obj_type = "managed_identities"

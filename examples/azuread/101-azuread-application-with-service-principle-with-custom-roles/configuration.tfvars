@@ -87,8 +87,9 @@ custom_role_definitions = {
 }
 
 
-azuread_apps = {
+azuread_applications = {
   test_client = {
+    display_name                 = "test_client"
     useprefix                    = true
     application_name             = "test_client"
     app_role_assignment_required = true

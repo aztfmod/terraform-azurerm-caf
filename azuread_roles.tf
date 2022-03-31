@@ -3,7 +3,7 @@ module "azuread_roles_applications" {
   source   = "./modules/azuread/roles"
   for_each = try(local.azuread.azuread_roles.azuread_apps, {})
 
-  object_id     = module.azuread_applications[each.key].azuread_service_principal.object_id
+  object_id     = module.azuread_graph_application[each.key].object_id
   azuread_roles = each.value.roles
 }
 
@@ -11,7 +11,7 @@ module "azuread_roles_service_principals" {
   source   = "./modules/azuread/roles"
   for_each = try(local.azuread.azuread_roles.azuread_service_principals, {})
 
-  object_id     = module.azuread_service_principals[each.key].object_id
+  object_id     = module.azuread_graph_service_principal[each.key].object_id
   azuread_roles = each.value.roles
 }
 

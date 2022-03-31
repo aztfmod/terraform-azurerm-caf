@@ -37,7 +37,27 @@ module "example" {
     azuread_roles                       = var.azuread_roles
     azuread_service_principal_passwords = var.azuread_service_principal_passwords
     azuread_service_principals          = var.azuread_service_principals
-    azuread_users                       = var.azuread_users
+    #azuread_users                       = var.azuread_users
+
+
+    azuread_administrative_units                          = var.azuread_administrative_units
+    azuread_administrative_unit_members                   = var.azuread_administrative_unit_members
+    azuread_application_certificates                      = var.azuread_application_certificates
+    azuread_application_federated_identity_credentials    = var.azuread_application_federated_identity_credentials
+    azuread_application_passwords                         = var.azuread_application_passwords
+    azuread_application_pre_authorizeds                   = var.azuread_application_pre_authorizeds
+    azuread_app_role_assignments                          = var.azuread_app_role_assignments
+    azuread_conditional_access_policies                   = var.azuread_conditional_access_policies
+    azuread_custom_directory_rolesa                       = var.azuread_custom_directory_roles
+    azuread_directory_roles                               = var.azuread_directory_roles
+    azuread_directory_role_members                        = var.azuread_directory_role_members
+    azuread_invitations                                   = var.azuread_invitations
+    azuread_named_locations                               = var.azuread_named_locations
+    azuread_service_principals                            = var.azuread_service_principals
+    azuread_service_principal_certificates                = var.azuread_service_principal_certificates
+    azuread_service_principal_delegated_permission_grants = var.azuread_service_principal_delegated_permission_grants
+    azuread_service_principal_passwords                   = var.azuread_service_principal_passwords
+    azuread_users                                         = var.azuread_users
   }
   # # Defaulted, you can declare an override if you dont target Azure public
   # cloud = {

@@ -17,7 +17,7 @@ resource "azuread_group" "gro" {
   hide_from_outlook_clients = try(var.settings.hide_from_outlook_clients, null)
   mail_enabled              = try(var.settings.mail_enabled, null)
   mail_nickname             = try(var.settings.mail_nickname, null)
-  members                   = try(tolist(var.settings.members), [])
+  members                   = try(var.settings.members, null)
   owners = coalescelist(
     try(tolist(var.settings.owners), []),
     [

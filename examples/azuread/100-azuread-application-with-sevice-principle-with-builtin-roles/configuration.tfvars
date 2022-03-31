@@ -37,8 +37,9 @@ keyvault_access_policies_azuread_apps = {
   }
 }
 
-azuread_apps = {
+azuread_applications = {
   test_client = {
+    display_name     = "test"
     useprefix        = true
     application_name = "test-client"
     password_policy = {
@@ -51,10 +52,8 @@ azuread_apps = {
       # Define the number of days the password is valid. It must be more than the rotation frequency
       expire_in_days = 10
       rotation = {
-        #
         # Set how often the password must be rotated. When passed the renewal time, running the terraform plan / apply will change to a new password
         # Only set one of the value
-        #
 
         # mins   = 10     # only recommended for CI and demo
         days = 7

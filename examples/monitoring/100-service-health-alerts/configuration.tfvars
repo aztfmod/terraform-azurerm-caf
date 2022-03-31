@@ -32,7 +32,7 @@ monitoring = {
       }
     } #add more email alerts by repeating the block.
 
-    #more alert settings can be dynamically added/removed by commenting in/out the following blocks
+    #more alert settings can be dynamically added/reby commenting in/out the following blocks
     #sms_alert_settings = {
     #  sms_alert1 = {
     #   name = "sms_alert_servicehealth"

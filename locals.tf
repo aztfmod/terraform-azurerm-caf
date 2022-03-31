@@ -18,7 +18,26 @@ locals {
     azuread_roles                       = try(var.azuread.azuread_roles, {})
     azuread_service_principal_passwords = try(var.azuread.azuread_service_principal_passwords, {})
     azuread_service_principals          = try(var.azuread.azuread_service_principals, {})
-    azuread_users                       = try(var.azuread.azuread_users, {})
+
+    azuread_administrative_units                          = try(var.azuread.azuread_administrative_units, {})
+    azuread_administrative_unit_members                   = try(var.azuread.azuread_administrative_unit_members, {})
+    azuread_groups_memberships                            = try(var.azuread.azuread_groups_memberships, {})
+    azuread_application_certificates                      = try(var.azuread.azureaazuread_application_certificated_administrative_units, {})
+    azuread_application_federated_identity_credentials    = try(var.azuread.azuread_application_federated_identity_credentials, {})
+    azuread_application_passwords                         = try(var.azuread.azuread_application_passwords, {})
+    azuread_application_pre_authorizeds                   = try(var.azuread.azuread_application_pre_authorizeds, {})
+    azuread_app_role_assignments                          = try(var.azuread.azuread_app_role_assignments, {})
+    azuread_conditional_access_policies                   = try(var.azuread.azuread_conditional_access_policies, {})
+    azuread_custom_directory_roles                        = try(var.azuread.azuread_custom_directory_roles, {})
+    azuread_directory_roles                               = try(var.azuread.azuread_directory_roles, {})
+    azuread_directory_role_members                        = try(var.azuread.azuread_directory_role_members, {})
+    azuread_invitations                                   = try(var.azuread.azuread_invitations, {})
+    azuread_named_locations                               = try(var.azuread.azuread_named_locations, {})
+    azuread_service_principals                            = try(var.azuread.azuread_service_principals, {})
+    azuread_service_principal_certificates                = try(var.azuread.azuread_service_principal_certificates, {})
+    azuread_service_principal_delegated_permission_grants = try(var.azuread.azuread_service_principal_delegated_permission_grants, {})
+    azuread_service_principal_passwords                   = try(var.azuread.azuread_service_principal_passwords, {})
+    azuread_users                                         = try(var.azuread.azuread_users, {})
   }
 
   client_config = var.client_config == {} ? {
