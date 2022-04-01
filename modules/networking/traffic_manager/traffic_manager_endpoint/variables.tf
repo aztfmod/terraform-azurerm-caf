@@ -2,10 +2,10 @@ variable "settings" {
   default = {}
 }
 
-variable "profile_id" {
+variable "profile_name" {
   default = {}
 }
 
-variable "target_resource_id" {
+variable "resource_group_name" {
   default = {}
 }

@@ -28,27 +28,3 @@ resource "azurerm_traffic_manager_external_endpoint" "external_endpoint" {
   geo_mappings = try(each.value.geo_mappings , null )
 }
 
-resource "azurerm_traffic_manager_endpoint" "endpoint" {
-  depends_on = [azurerm_traffic_manager_profile.traffic_manager_profile]
-  for_each     = try(var.settings.endpoint, {})
-
-  name                = each.value.name
-  resource_group_name = var.resource_group_name
-  profile_name        = azurerm_traffic_manager_profile.traffic_manager_profile.name
-  target              = try(each.value.target, null)
-  type                = try(each.value.type, "externalEndpoints")
-  weight              = try(each.value.weight, null)
-}
-
-resource "azurerm_traffic_manager_nested_endpoint" "test" {
-  depends_on = [azurerm_traffic_manager_profile.traffic_manager_profile]
-  for_each     = try(var.settings.nested_endpoint, {})  
- 
-  name                = each.value.name
-  target_resource_id  = azurerm_traffic_manager_profile.traffic_manager_profile[each.value.target_resource_id].id
-  priority            = 1
-  profile_id          = azurerm_traffic_manager_profile.traffic_manager_profile[each.value.profile_id].id
-  minimum_child_endpoints = 5
-  weight              = 1
-}
-*/

@@ -212,6 +212,7 @@ module "example" {
     vpn_sites                                               = var.vpn_sites
     traffic_manager_profile                                 = var.traffic_manager_profile
     traffic_manager_nested_endpoint                         = var.traffic_manager_nested_endpoint
+    traffic_manager_endpoint                                = var.traffic_manager_endpoint
   }
 
   security = {
