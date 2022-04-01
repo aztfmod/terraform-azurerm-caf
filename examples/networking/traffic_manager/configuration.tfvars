@@ -12,7 +12,7 @@ resource_groups = {
 }
 
 traffic_manager_profile = {
-  example_1 = {
+  parent = {
     name =  "trafficmanagervk"
     resource_group_key = "traffic_manager"
     profile_status = "Disabled"
@@ -31,32 +31,12 @@ traffic_manager_profile = {
        tolerated_number_of_failures = 5
     }
 
-   /*
-    external_endpoint = {
-      external_endpoint_1 = { 
-       name = "example-endpoint"
-       weight     =  50
-       target     = "www.examples.com"
-       enabled    = "true"
-      } 
-    }
-    
-    
-    endpoint = {
-      endpoint_1 = { 
-       name = "example-endpoint"
-       weight     =  50
-       target     = "terraform.io"
-       
-      }
-      
-    }
-    */
+   
     tags = {
        name = "something"
     }
   }
-  example_2 = {
+  child = {
     name =  "trafficmanagervks"
     resource_group_key = "traffic_manager"
     profile_status = "Disabled"
@@ -78,11 +58,50 @@ traffic_manager_profile = {
     }
   }
 }
+
+traffic_manager_endpoint = {
+  example_1 = {
+      name                = "test"
+      resource_group_key  = "traffic_manager"
+      target              = "terraform.io"
+      type                = "externalEndpoints"
+      endpoint_status     = "Enabled"
+      weight              = 100
+      traffic_manager_profile = {
+        key = "parent"
+      }
+      custom_header  = {
+        name = "test"
+        value = "host:contoso.com,customheader:contoso"
+      }
+  }
+  example_2 = {
+      name                = "test2"
+      resource_group_key  = "traffic_manager"
+      target              = "terraforms.io"
+      type                = "externalEndpoints"
+      endpoint_status     = "Disabled"
+      weight              = 100
+      traffic_manager_profile = {
+        key = "parent"
+      }
+  }
+}
+/*
 traffic_manager_nested_endpoint = {
    traffic_manager_nested_endpoint_1 = {
      name = "example"
-     target_resource_id  = "/subscriptions/158d9f92-ec1e-433e-8388-6f7157282c13/resourceGroups/ugly-rg-trafficmanagervk-iyv/providers/Microsoft.Network/trafficManagerProfiles/trafficmanagervk"
-     profile_id         =  "/subscriptions/158d9f92-ec1e-433e-8388-6f7157282c13/resourceGroups/ugly-rg-trafficmanagervk-iyv/providers/Microsoft.Network/trafficManagerProfiles/trafficmanagervks"
+      traffic_manager_profile = {
+       #lz_key = ""
+       key = "parent"
+       
+     }
+      traffic_manager_profile = {
+       #lz_key = ""
+       key = "child"
+       
+     }
    }
 
 }
+*/

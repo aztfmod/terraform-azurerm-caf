@@ -119,7 +119,8 @@ locals {
   combined_objects_wvd_host_pools                                 = merge(tomap({ (local.client_config.landingzone_key) = module.wvd_host_pools }), try(var.remote_objects.wvd_host_pools, {}))
   combined_objects_wvd_workspaces                                 = merge(tomap({ (local.client_config.landingzone_key) = module.wvd_workspaces }), try(var.remote_objects.wvd_workspaces, {}))
   combined_objects_traffic_manager_profile                        = merge(tomap({ (local.client_config.landingzone_key) = module.traffic_manager_profile }), try(var.remote_objects.traffic_manager_profile, {}))
-  combined_objects_traffic_manager_nested_endpoint                        = merge(tomap({ (local.client_config.landingzone_key) = module.traffic_manager_nested_endpoint }), try(var.remote_objects.traffic_manager_nested_endpoint, {}))
+  combined_objects_traffic_manager_nested_endpoint                = merge(tomap({ (local.client_config.landingzone_key) = module.traffic_manager_nested_endpoint }), try(var.remote_objects.traffic_manager_nested_endpoint, {}))
+  combined_objects_traffic_manager_endpoint                       = merge(tomap({ (local.client_config.landingzone_key) = module.traffic_manager_endpoint }), try(var.remote_objects.traffic_manager_endpoint, {}))
 
   combined_objects_subscriptions = merge(
     tomap(
