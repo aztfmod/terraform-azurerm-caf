@@ -847,3 +847,6 @@ variable "traffic_manager_nested_endpoint" {
 variable "traffic_manager_endpoint" {
   default = {}
 }
+variable "traffic_manager_external_endpoint" {
+  default = {}
+}

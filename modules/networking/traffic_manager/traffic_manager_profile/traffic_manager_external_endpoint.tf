@@ -28,3 +28,4 @@ resource "azurerm_traffic_manager_external_endpoint" "external_endpoint" {
   geo_mappings = try(each.value.geo_mappings , null )
 }
 
+*/
