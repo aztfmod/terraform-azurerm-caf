@@ -133,6 +133,7 @@
     "networking/firewall/101-simple-firewall",
     "networking/firewall/102-premium-firewall",
     "networking/firewall/103-firewall-policies",
+    "networking/firewall/104-firewall-force-tunnelling",
     "networking/front_door/100-simple-front_door",
     "networking/front_door/101-front_door_waf",
     "networking/front_door/102-front_door_advanced",
