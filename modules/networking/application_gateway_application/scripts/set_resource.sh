@@ -92,7 +92,7 @@ case "${RESOURCE}" in
         enableprobe=$([ -z "${ENABLE_PROBE}" ] && echo "" || echo "--enable-probe ${ENABLE_PROBE} ")
         hostname=$([ -z "${HOST_NAME}" ] && echo "" || echo "--host-name ${HOST_NAME} ")
         hostnamefrombackendpool=$([ -z "${HOST_NAME_FROM_BACKEND_POOL}" ] && echo "" || echo "--host-name-from-backend-pool ${HOST_NAME_FROM_BACKEND_POOL} ")
-        path=$([ -z "${PATH}" ] && echo "" || echo "--path ${PATH} ")
+        path=$([ -z "${OVERRIDE_PATH}" ] && echo "" || echo "--path ${OVERRIDE_PATH} ")
         probe=$([ -z "${PROBE}" ] && echo "" || echo "--probe ${PROBE} ")
         rootcerts=$([ -z "${ROOT_CERTS}" ] && echo "" || echo "--root-certs ${ROOT_CERTS} ")
 
