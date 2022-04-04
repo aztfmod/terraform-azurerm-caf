@@ -11,6 +11,10 @@ output "public_ip_addresses" {
   value = module.public_ip_addresses
 }
 
+output "public_ip_prefixes" {
+  value = module.public_ip_prefixes
+}
+
 output "network_watchers" {
   value = module.network_watchers
 }
@@ -130,7 +134,7 @@ module "public_ip_addresses" {
   generate_domain_name_label = try(each.value.generate_domain_name_label, false)
   tags                       = try(each.value.tags, null)
   ip_tags                    = try(each.value.ip_tags, null)
-  public_ip_prefix_id        = try(each.value.public_ip_prefix_id, null)
+  public_ip_prefix_id        = can(each.value.public_ip_prefix.key) ? local.combined_objects_public_ip_prefixes[try(each.value.public_ip_prefix.lz_key, local.client_config.landingzone_key)][each.value.public_ip_prefix.key].id : try(each.value.public_ip_prefix_id, null)
   zones = coalesce(
     try(each.value.availability_zone, ""),
     try(tostring(each.value.zones[0]), ""),
@@ -141,6 +145,42 @@ module "public_ip_addresses" {
   base_tags           = try(local.global_settings.inherit_tags, false) ? local.combined_objects_resource_groups[try(each.value.resource_group.lz_key, local.client_config.landingzone_key)][try(each.value.resource_group.key, each.value.resource_group_key)].tags : {}
 }
 
+#
+#
+# Public IP Prefixes
+#
+#
+
+# naming convention for public IP prefixes
+resource "azurecaf_name" "public_ip_prefixes" {
+  for_each = local.networking.public_ip_prefixes
+
+  name          = try(each.value.name, null)
+  resource_type = "azurerm_public_ip_prefix"
+  prefixes      = local.global_settings.prefixes
+  random_length = local.global_settings.random_length
+  clean_input   = true
+  passthrough   = local.global_settings.passthrough
+  use_slug      = local.global_settings.use_slug
+}
+
+module "public_ip_prefixes" {
+  source   = "./modules/networking/public_ip_prefixes"
+  for_each = local.networking.public_ip_prefixes
+
+  name                = azurecaf_name.public_ip_prefixes[each.key].result
+  resource_group_name = can(each.value.resource_group.name) || can(each.value.resource_group_name) ? try(each.value.resource_group.name, each.value.resource_group_name) : local.combined_objects_resource_groups[try(each.value.resource_group.lz_key, local.client_config.landingzone_key)][try(each.value.resource_group_key, each.value.resource_group.key)].name
+  location            = can(local.global_settings.regions[each.value.region]) ? local.global_settings.regions[each.value.region] : local.combined_objects_resource_groups[try(each.value.resource_group.lz_key, local.client_config.landingzone_key)][try(each.value.resource_group.key, each.value.resource_group_key)].location
+  sku                 = try(each.value.sku, "Standard")
+  ip_version          = try(each.value.ip_version, "IPv4")
+  tags                = try(each.value.tags, null)
+  zones               = try(each.value.zones, "Zone-Redundant")
+  prefix_length       = try(each.value.prefix_length, 28)
+  create_pips         = try(each.value.create_pips, false)
+  diagnostic_profiles = try(each.value.diagnostic_profiles, {})
+  diagnostics         = local.combined_diagnostics
+  base_tags           = try(local.global_settings.inherit_tags, false) ? local.combined_objects_resource_groups[try(each.value.resource_group.lz_key, local.client_config.landingzone_key)][try(each.value.resource_group.key, each.value.resource_group_key)].tags : {}
+}
 
 #
 #
