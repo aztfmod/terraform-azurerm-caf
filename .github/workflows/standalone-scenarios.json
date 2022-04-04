@@ -147,6 +147,7 @@
     "networking/load_balancers/103-load-balancer-nic-association",
     "networking/load_balancers/104-load-balancer-diagnostics",
     "networking/nat_gateways/100-nat-gateways-with-public-ip",
+    "networking/pip_prefix/100-simple-pip-prefix",
     "networking/private_dns_vnet_link/100_pvtdns_vnetlink",
     "networking/private_dns/100-private-dns-vnet-links",
     "networking/private_links/endpoints/centralized",
