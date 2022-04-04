@@ -16,7 +16,7 @@ resource "azuread_application" "app" {
   identifier_uris            = try(var.settings.identifier_uris, null)
   logout_url                 = try(var.settings.logout_url, null)
   oauth2_allow_implicit_flow = try(var.settings.oauth2_allow_implicit_flow, false)
-  prevent_duplicate_names    = try(var.settings.identifier_uris, false)
+  prevent_duplicate_names    = try(var.settings.prevent_duplicate_names, false)
   public_client              = try(var.settings.public_client, false)
   reply_urls                 = try(var.settings.reply_urls, null)
 
