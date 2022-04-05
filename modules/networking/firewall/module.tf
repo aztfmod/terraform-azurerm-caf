@@ -70,7 +70,7 @@ resource "azurerm_firewall" "fw" {
     for_each = try(var.settings.management_ip_configuration, {})
     content {
       name                 = management_ip_configuration.value.name
-      public_ip_address_id = try(management_ip_configuration.value.public_ip_address_id, null) != null ? management_ip_configuration.value.public_ip_address_id : var.public_ip_addresses[management_ip_configuration.value.public_ip_key].id
+      public_ip_address_id = can(management_ip_configuration.value.public_ip_id) ? management_ip_configuration.value.public_ip_id : var.public_ip_addresses[try(management_ip_configuration.value.lz_key, var.client_config.landingzone_key)][management_ip_configuration.value.public_ip_key].id
       subnet_id            = try(management_ip_configuration.value.subnet_id, null) != null ? management_ip_configuration.value.subnet_id : (lookup(management_ip_configuration.value, "lz_key", null) == null ? var.virtual_networks[var.client_config.landingzone_key][management_ip_configuration.value.vnet_key].subnets[management_ip_configuration.value.subnet_key].id : var.virtual_networks[management_ip_configuration.value.lz_key][management_ip_configuration.value.vnet_key].subnets[management_ip_configuration.value.subnet_key].id)
     }
   }

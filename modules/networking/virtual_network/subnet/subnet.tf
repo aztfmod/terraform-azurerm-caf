@@ -5,7 +5,7 @@ resource "azurecaf_name" "subnet" {
   prefixes      = var.global_settings.prefixes
   random_length = var.global_settings.random_length
   clean_input   = true
-  passthrough   = (var.name == "AzureBastionSubnet") || (var.name == "AzureFirewallSubnet") || (var.name == "GatewaySubnet") || (var.name == "RouteServerSubnet") ? true : var.global_settings.passthrough
+  passthrough   = (var.name == "AzureBastionSubnet") || (var.name == "AzureFirewallSubnet") || (var.name == "AzureFirewallManagementSubnet") || (var.name == "GatewaySubnet") || (var.name == "RouteServerSubnet") ? true : var.global_settings.passthrough
   use_slug      = var.global_settings.use_slug
 }
 
