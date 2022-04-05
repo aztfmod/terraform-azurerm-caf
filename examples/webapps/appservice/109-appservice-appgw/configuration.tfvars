@@ -150,6 +150,15 @@ app_services = {
 
     settings = {
       enabled = true
+      ip_restriction = [
+        {
+          name       = "appgw-access"
+          virtual_network_subnet = {
+            vnet_key   = "webapp_appgw"
+            subnet_key = "appgw"
+          }
+        }
+      ]
     }
   }
 }
