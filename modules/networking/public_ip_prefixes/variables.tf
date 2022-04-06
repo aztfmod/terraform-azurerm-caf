@@ -56,7 +56,7 @@ variable "create_pips" {
 
 variable "pip_settings" {
   description = "(Optional) PIP settings when create_ips = true."
-  default     = {}  
+  default     = {}
 }
 
 variable "zones" {

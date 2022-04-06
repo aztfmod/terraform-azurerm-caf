@@ -82,8 +82,8 @@ azurerm_firewalls = {
         name          = "pip2"
         public_ip_key = "pip2"
         # public_ip_address_id = "/subscriptions/xxxx/resourceGroups/xxxx/providers/Microsoft.Network/publicIPAddresses/xxxx"
-        vnet_key      = "vnet1"
-        subnet_key    = "AzureFirewallManagementSubnet"
+        vnet_key   = "vnet1"
+        subnet_key = "AzureFirewallManagementSubnet"
       }
     }
     diagnostic_profiles = {
