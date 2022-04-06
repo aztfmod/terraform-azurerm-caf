@@ -23,8 +23,8 @@ vnets = {
     specialsubnets = {}
     subnets = {
       appgw = {
-        name = "appgw"
-        cidr = ["10.1.0.0/28"]
+        name              = "appgw"
+        cidr              = ["10.1.0.0/28"]
         service_endpoints = ["Microsoft.Web"]
       }
       webapp = {
@@ -152,7 +152,7 @@ app_services = {
       enabled = true
       ip_restriction = [
         {
-          name       = "appgw-access"
+          name = "appgw-access"
           virtual_network_subnet = {
             vnet_key   = "webapp_appgw"
             subnet_key = "appgw"
