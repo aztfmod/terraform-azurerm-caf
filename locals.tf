@@ -174,6 +174,7 @@ locals {
     mssql_databases             = local.combined_objects_mssql_databases
     mssql_servers               = local.combined_objects_mssql_servers
     storage_accounts            = local.combined_objects_storage_accounts
+    networking                  = local.combined_objects_networking
   }
 
   dynamic_app_config_combined_objects = {
