@@ -62,16 +62,9 @@ module "virtual_subnets" {
   enforce_private_link_endpoint_network_policies = try(each.value.enforce_private_link_endpoint_network_policies, false)
   enforce_private_link_service_network_policies  = try(each.value.enforce_private_link_service_network_policies, false)
 
-  resource_group_name = coalesce(
-    try(local.combined_objects_networking[each.value.vnet.lz_key][each.value.vnet.key].resource_group_name, null),
-    try(local.combined_objects_networking[local.client_config.landingzone_key][each.value.vnet.key].resource_group_name, null),
-    try(split("/", each.value.vnet.id)[4], null)
-  )
-  virtual_network_name = coalesce(
-    try(local.combined_objects_networking[each.value.vnet.lz_key][each.value.vnet.key].name, null),
-    try(local.combined_objects_networking[local.client_config.landingzone_key][each.value.vnet.key].name, null),
-    try(split("/", each.value.vnet.id)[8], null)
-  )
+  resource_group_name  = can(each.value.vnet.key) ? local.combined_objects_networking[try(each.value.vnet.lz_key, local.client_config.landingzone_key)][each.value.vnet.key].resource_group_name : try(split("/", each.value.vnet.id)[4], null)
+  virtual_network_name = can(each.value.vnet.key) ? local.combined_objects_networking[try(each.value.vnet.lz_key, local.client_config.landingzone_key)][each.value.vnet.key].name : try(split("/", each.value.vnet.id)[8], null)
+
 }
 
 resource "azurerm_subnet_route_table_association" "rt" {
