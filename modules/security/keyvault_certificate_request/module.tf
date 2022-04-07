@@ -32,7 +32,7 @@ resource "azurerm_key_vault_certificate" "csr" {
         extended_key_usage = try(x509_certificate_properties.value.extended_key_usage, null)
         key_usage          = x509_certificate_properties.value.key_usage
         # subject            = x509_certificate_properties.value.subject
-        subject            = try(x509_certificate_properties.value.subject, "CN=${try("${x509_certificate_properties.value.domain_name_registration.subdomain}.", "")}${var.domain_name_registrations[x509_certificate_properties.value.domain_name_registration.key].dns_domain_registration_name}")
+        subject            = try(x509_certificate_properties.value.subject, "CN=${try("${x509_certificate_properties.value.domain_name_registration.subdomain}.", "")}${var.domain_name_registrations[try(x509_certificate_properties.value.domain_name_registration.lz_key, var.client_config.landingzone_key)][x509_certificate_properties.value.domain_name_registration.key].dns_domain_registration_name}")
         validity_in_months = x509_certificate_properties.value.validity_in_months
 
         dynamic "subject_alternative_names" {

@@ -13,3 +13,7 @@ module "subnet" {
   remote_objects           = var.remote_objects
   base_tags                = var.base_tags
 }
+
+output "subnet" {
+  value = module.subnet
+}

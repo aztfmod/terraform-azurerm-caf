@@ -1,6 +1,6 @@
 # Cloud Adoption Framework for Azure - Standalone module consumption
 
-You can use this module directly from the Terraform registry using a mininalistic ```main.tf``` as follow:
+You can use this module directly from the Terraform registry using a minimalistic ```main.tf``` as follow:
 
 ```hcl
 module "caf" {
@@ -52,7 +52,7 @@ You can then feed the module with a ```example.auto.tfvars```:
 global_settings = {
   default_region = "region1"
   regions = {
-    region1 = "southeastasia"
+    region1 = "eastus2"
   }
   resource_defaults = {
     virtual_machines = {

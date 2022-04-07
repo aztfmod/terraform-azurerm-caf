@@ -13,8 +13,12 @@ data "azurerm_key_vault_certificate" "trustedcas" {
     for key, value in try(var.settings.trusted_root_certificate, {}) : key => value
     if try(value.keyvault_key, null) != null
   }
-  name         = each.value.name
-  key_vault_id = var.keyvaults[try(each.value.lz_key, var.client_config.landingzone_key)][each.value.keyvault_key].id
+  name = each.value.name
+  key_vault_id = try(
+    var.keyvaults[var.client_config.landingzone_key][each.value.keyvault_key].id,
+    var.keyvaults[each.value.lz_key][each.value.keyvault_key].id,
+    each.value.keyvault_id
+  )
 }
 
 data "azurerm_key_vault_certificate" "manual_certs" {
@@ -22,8 +26,12 @@ data "azurerm_key_vault_certificate" "manual_certs" {
     for key, value in local.listeners : key => value
     if try(value.keyvault_certificate.certificate_name, null) != null
   }
-  name         = each.value.keyvault_certificate.certificate_name
-  key_vault_id = var.keyvaults[try(each.value.keyvault_certificate.lz_key, var.client_config.landingzone_key)][each.value.keyvault_certificate.keyvault_key].id
+  name = each.value.keyvault_certificate.certificate_name
+  key_vault_id = try(
+    var.keyvaults[each.value.keyvault_certificate.lz_key][each.value.keyvault_certificate.keyvault_key].id,
+    var.keyvaults[var.client_config.landingzone_key][each.value.keyvault_certificate.keyvault_key].id,
+    each.value.keyvault_certificate.keyvault_id
+  )
 }
 
 resource "azurerm_application_gateway" "agw" {
@@ -170,6 +178,7 @@ resource "azurerm_application_gateway" "agw" {
     content {
       name                                = var.application_gateway_applications[backend_http_settings.key].name
       cookie_based_affinity               = try(backend_http_settings.value.cookie_based_affinity, "Disabled")
+      affinity_cookie_name                = try(backend_http_settings.value.affinity_cookie_name, null)
       port                                = backend_http_settings.value.port
       protocol                            = backend_http_settings.value.protocol
       request_timeout                     = try(backend_http_settings.value.request_timeout, 30)
@@ -177,6 +186,13 @@ resource "azurerm_application_gateway" "agw" {
       trusted_root_certificate_names      = try(backend_http_settings.value.trusted_root_certificate_names, null)
       host_name                           = try(backend_http_settings.value.host_name, null)
       probe_name                          = try(local.probes[format("%s-%s", backend_http_settings.key, backend_http_settings.value.probe_key)].name, null)
+      dynamic "connection_draining" {
+        for_each = try(backend_http_settings.value.connection_draining, null) == null ? [] : [1]
+        content {
+          enabled           = try(backend_http_settings.value.connection_draining.enabled, false)
+          drain_timeout_sec = try(backend_http_settings.value.connection_draining.drain_timeout_sec, 120)
+        }
+      }
     }
   }
 

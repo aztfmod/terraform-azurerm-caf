@@ -10,7 +10,7 @@ resource "azurecaf_name" "df" {
 
 resource "azurerm_data_factory" "df" {
   name                = azurecaf_name.df.result
-  resource_group_name = local.resource_group.name
+  resource_group_name = local.resource_group_name
   location            = local.location
 
   dynamic "github_configuration" {
@@ -25,7 +25,7 @@ resource "azurerm_data_factory" "df" {
     }
   }
   dynamic "global_parameter" {
-    for_each = try(var.settings.global_parameter, null) != null ? [var.settings.vsts_configuration] : []
+    for_each = try(var.settings.global_parameter, null) != null ? [var.settings.global_parameter] : []
 
     content {
       name  = global_parameter.value.name

@@ -110,8 +110,10 @@ module "example" {
     diagnostics_destinations        = var.diagnostics_destinations
   }
   database = {
+    app_config                         = var.app_config
     azurerm_redis_caches               = var.azurerm_redis_caches
     cosmos_dbs                         = var.cosmos_dbs
+    cosmosdb_sql_databases             = var.cosmosdb_sql_databases
     databricks_workspaces              = var.databricks_workspaces
     database_migration_services        = var.database_migration_services
     database_migration_projects        = var.database_migration_projects
@@ -130,8 +132,26 @@ module "example" {
     mssql_mi_tdes                      = var.mssql_mi_tdes
     mssql_servers                      = var.mssql_servers
     mysql_servers                      = var.mysql_servers
+    postgresql_flexible_servers        = var.postgresql_flexible_servers
     postgresql_servers                 = var.postgresql_servers
     synapse_workspaces                 = var.synapse_workspaces
+    data_explorer = {
+      kusto_clusters                         = var.kusto_clusters
+      kusto_databases                        = var.kusto_databases
+      kusto_attached_database_configurations = var.kusto_attached_database_configurations
+      kusto_cluster_customer_managed_keys    = var.kusto_cluster_customer_managed_keys
+      kusto_cluster_principal_assignments    = var.kusto_cluster_principal_assignments
+      kusto_database_principal_assignments   = var.kusto_database_principal_assignments
+      kusto_eventgrid_data_connections       = var.kusto_eventgrid_data_connections
+      kusto_eventhub_data_connections        = var.kusto_eventhub_data_connections
+      kusto_iothub_data_connections          = var.kusto_iothub_data_connections
+    }
+  }
+  messaging = {
+    signalr_services      = var.signalr_services
+    servicebus_namespaces = var.servicebus_namespaces
+    servicebus_topics     = var.servicebus_topics
+    servicebus_queues     = var.servicebus_queues
   }
   networking = {
     application_gateway_applications                        = var.application_gateway_applications
@@ -159,15 +179,25 @@ module "example" {
     frontdoor_rules_engine                                  = var.frontdoor_rules_engine
     frontdoor_custom_https_configuration                    = var.frontdoor_custom_https_configuration
     ip_groups                                               = var.ip_groups
+    lb                                                      = var.lb
+    lb_backend_address_pool                                 = var.lb_backend_address_pool
+    lb_backend_address_pool_address                         = var.lb_backend_address_pool_address
+    lb_nat_pool                                             = var.lb_nat_pool
+    lb_nat_rule                                             = var.lb_nat_rule
+    lb_outbound_rule                                        = var.lb_outbound_rule
+    lb_probe                                                = var.lb_probe
+    lb_rule                                                 = var.lb_rule
     load_balancers                                          = var.load_balancers
     local_network_gateways                                  = var.local_network_gateways
     nat_gateways                                            = var.nat_gateways
+    network_interface_backend_address_pool_association      = var.network_interface_backend_address_pool_association
     network_security_group_definition                       = var.network_security_group_definition
     network_watchers                                        = var.network_watchers
     private_dns                                             = var.private_dns
     private_dns_vnet_links                                  = var.private_dns_vnet_links
     private_endpoints                                       = var.private_endpoints
     public_ip_addresses                                     = var.public_ip_addresses
+    public_ip_prefixes                                      = var.public_ip_prefixes
     route_tables                                            = var.route_tables
     vhub_peerings                                           = var.vhub_peerings
     virtual_hub_connections                                 = var.virtual_hub_connections
@@ -185,29 +215,45 @@ module "example" {
   }
 
   security = {
-    disk_encryption_sets          = var.disk_encryption_sets
-    dynamic_keyvault_secrets      = var.dynamic_keyvault_secrets
-    keyvault_certificate_issuers  = var.keyvault_certificate_issuers
-    keyvault_certificate_requests = var.keyvault_certificate_requests
-    keyvault_keys                 = var.keyvault_keys
-    keyvault_certificates         = var.keyvault_certificates
-    lighthouse_definitions        = var.lighthouse_definitions
+    disk_encryption_sets                = var.disk_encryption_sets
+    dynamic_keyvault_secrets            = var.dynamic_keyvault_secrets
+    keyvault_certificate_issuers        = var.keyvault_certificate_issuers
+    keyvault_certificate_requests       = var.keyvault_certificate_requests
+    keyvault_keys                       = var.keyvault_keys
+    keyvault_certificates               = var.keyvault_certificates
+    lighthouse_definitions              = var.lighthouse_definitions
+    sentinel                            = var.sentinel
+    sentinel_automation_rules           = var.sentinel_automation_rules
+    sentinel_watchlists                 = var.sentinel_watchlists
+    sentinel_watchlist_items            = var.sentinel_watchlist_items
+    sentinel_ar_fusions                 = var.sentinel_ar_fusions
+    sentinel_ar_ml_behavior_analytics   = var.sentinel_ar_ml_behavior_analytics
+    sentinel_ar_ms_security_incidents   = var.sentinel_ar_ms_security_incidents
+    sentinel_ar_scheduled               = var.sentinel_ar_scheduled
+    sentinel_dc_aad                     = var.sentinel_dc_aad
+    sentinel_dc_app_security            = var.sentinel_dc_app_security
+    sentinel_dc_aws                     = var.sentinel_dc_aws
+    sentinel_dc_azure_threat_protection = var.sentinel_dc_azure_threat_protection
+    sentinel_dc_ms_threat_protection    = var.sentinel_dc_ms_threat_protection
+    sentinel_dc_office_365              = var.sentinel_dc_office_365
+    sentinel_dc_security_center         = var.sentinel_dc_security_center
+    sentinel_dc_threat_intelligence     = var.sentinel_dc_threat_intelligence
+
   }
-  servicebus = {
-    servicebus_namespaces = var.servicebus_namespaces
-    servicebus_topics     = var.servicebus_topics
-    servicebus_queues     = var.servicebus_queues
-  }
+
   shared_services = {
-    consumption_budgets        = var.consumption_budgets
-    image_definitions          = var.image_definitions
-    monitor_action_groups      = var.monitor_action_groups
-    monitor_autoscale_settings = var.monitor_autoscale_settings
-    monitoring                 = var.monitoring
-    packer_managed_identity    = var.packer_managed_identity
-    packer_service_principal   = var.packer_service_principal
-    recovery_vaults            = var.recovery_vaults
-    shared_image_galleries     = var.shared_image_galleries
+    consumption_budgets            = var.consumption_budgets
+    image_definitions              = var.image_definitions
+    log_analytics_storage_insights = var.log_analytics_storage_insights
+    monitor_action_groups          = var.monitor_action_groups
+    monitor_autoscale_settings     = var.monitor_autoscale_settings
+    monitoring                     = var.monitoring
+    monitor_metric_alert           = var.monitor_metric_alert
+    monitor_activity_log_alert     = var.monitor_activity_log_alert
+    packer_build                   = var.packer_build
+    packer_service_principal       = var.packer_service_principal
+    recovery_vaults                = var.recovery_vaults
+    shared_image_galleries         = var.shared_image_galleries
   }
   storage = {
     netapp_accounts        = var.netapp_accounts
@@ -265,5 +311,26 @@ module "example" {
   identity = {
     active_directory_domain_service             = var.active_directory_domain_service
     active_directory_domain_service_replica_set = var.active_directory_domain_service_replica_set
+  }
+  apim = {
+    api_management                      = var.api_management
+    api_management_api                  = var.api_management_api
+    api_management_api_diagnostic       = var.api_management_api_diagnostic
+    api_management_logger               = var.api_management_logger
+    api_management_api_operation        = var.api_management_api_operation
+    api_management_backend              = var.api_management_backend
+    api_management_api_policy           = var.api_management_api_policy
+    api_management_api_operation_tag    = var.api_management_api_operation_tag
+    api_management_api_operation_policy = var.api_management_api_operation_policy
+    api_management_user                 = var.api_management_user
+    api_management_custom_domain        = var.api_management_custom_domain
+    api_management_diagnostic           = var.api_management_diagnostic
+    api_management_certificate          = var.api_management_certificate
+    api_management_gateway              = var.api_management_gateway
+    api_management_gateway_api          = var.api_management_gateway_api
+    api_management_group                = var.api_management_group
+  }
+  purview = {
+    purview_accounts = var.purview_accounts
   }
 }

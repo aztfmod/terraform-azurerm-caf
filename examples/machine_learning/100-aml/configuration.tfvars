@@ -1,7 +1,7 @@
 global_settings = {
   default_region = "region1"
   regions = {
-    region1 = "southeastasia"
+    region1 = "australiaeast"
   }
 }
 
@@ -24,7 +24,8 @@ machine_learning_workspaces = {
     keyvault_key             = "aml_secrets"
     storage_account_key      = "amlstorage_re1"
     application_insights_key = "ml_app_insight"
-    sku_name                 = "Enterprise" # disabling this will set up Basic
+    #sku_name                 = "Enterprise" # disabling this will set up Basic
+    #Commenting sku_name as deprecated - per https://docs.microsoft.com/en-us/azure/machine-learning/concept-workspace#what-happened-to-enterprise-edition
   }
 }
 
