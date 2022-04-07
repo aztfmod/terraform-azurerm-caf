@@ -5,5 +5,6 @@ variable "base_tags" {
 }
 variable "settings" {}
 variable "keyvault_id" {}
-variable "key_vault_key_ids" {}
-variable "resource_groups" {}
+variable "key_vault_key_id" {}
+variable "resource_group_name" {}
+variable "location" {}

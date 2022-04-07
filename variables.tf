@@ -334,9 +334,9 @@ variable "keyvault_certificate_issuers" {
 #   default = {}
 # }
 
-# variable "app_config" {
-#   default = {}
-# }
+variable "app_config" {
+  default = {}
+}
 
 # variable "local_network_gateways" {
 #   default = {}
@@ -385,5 +385,11 @@ variable "identity" {
   default     = {}
 }
 variable "apim" {
+  default = {}
+}
+variable "purview" {
+  default = {}
+}
+variable "sentinel_watchlists" {
   default = {}
 }

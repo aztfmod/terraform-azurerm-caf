@@ -50,7 +50,7 @@ resource "azurerm_windows_virtual_machine" "vm" {
   admin_password               = try(each.value.admin_password_key, null) == null ? random_password.admin[local.os_type].result : local.admin_password
   admin_username               = try(each.value.admin_username_key, null) == null ? each.value.admin_username : local.admin_username
   allow_extension_operations   = try(each.value.allow_extension_operations, null)
-  availability_set_id          = try(var.availability_sets[var.client_config.landingzone_key][each.value.availability_set_key].id, var.availability_sets[each.value.availability_sets].id, null)
+  availability_set_id          = can(each.value.availability_set_key) || can(each.value.availability_set.key) ? var.availability_sets[try(var.client_config.landingzone_key, each.value.availability_set.lz_key)][try(each.value.availability_set_key, each.value.availability_set.key)].id : try(each.value.availability_set.id, each.value.availability_set_id, null)
   computer_name                = azurecaf_name.windows_computer_name[each.key].result
   enable_automatic_updates     = try(each.value.enable_automatic_updates, null)
   eviction_policy              = try(each.value.eviction_policy, null)
@@ -61,7 +61,7 @@ resource "azurerm_windows_virtual_machine" "vm" {
   network_interface_ids        = local.nic_ids
   priority                     = try(each.value.priority, null)
   provision_vm_agent           = try(each.value.provision_vm_agent, true)
-  proximity_placement_group_id = try(var.proximity_placement_groups[var.client_config.landingzone_key][each.value.proximity_placement_group_key].id, var.proximity_placement_groups[each.value.proximity_placement_groups].id, null)
+  proximity_placement_group_id = can(each.value.proximity_placement_group_key) || can(each.value.proximity_placement_group.key) ? var.proximity_placement_groups[try(var.client_config.landingzone_key, var.client_config.landingzone_key)][try(each.value.proximity_placement_group_key, each.value.proximity_placement_group.key)].id : try(each.value.proximity_placement_group_id, each.value.proximity_placement_group.id, null)
   resource_group_name          = var.resource_group_name
   size                         = each.value.size
   tags                         = merge(local.tags, try(each.value.tags, null))
@@ -74,12 +74,7 @@ resource "azurerm_windows_virtual_machine" "vm" {
     null
   )
 
-  dedicated_host_id = try(coalesce(
-    try(each.value.dedicated_host.id, null),
-    var.dedicated_hosts[try(each.value.dedicated_host.lz_key, var.client_config.landingzone_key)][each.value.dedicated_host.key].id,
-    ),
-    null
-  )
+  dedicated_host_id = can(each.value.dedicated_host.key) ? var.dedicated_hosts[try(each.value.dedicated_host.lz_key, var.client_config.landingzone_key)][each.value.dedicated_host.key].id : try(each.value.dedicated_host.id, null)
 
   os_disk {
     caching                   = each.value.os_disk.caching
@@ -188,7 +183,9 @@ resource "azurerm_windows_virtual_machine" "vm" {
 
   lifecycle {
     ignore_changes = [
-      resource_group_name, location, os_disk[0].name, availability_set_id
+      os_disk[0].name, #for ASR disk restores
+      admin_username,  # Only used for initial deployment as it can be changed later by GPO
+      admin_password   # Only used for initial deployment as it can be changed later by GPO
     ]
   }
 
@@ -224,8 +221,8 @@ resource "azurerm_key_vault_secret" "admin_password" {
 #
 
 locals {
-  admin_username = try(data.external.windows_admin_username.0.result.value, null)
-  admin_password = try(data.external.windows_admin_password.0.result.value, null)
+  admin_username = can(var.settings.virtual_machine_settings["windows"].admin_username_key) ? data.external.windows_admin_username.0.result.value : null
+  admin_password = can(var.settings.virtual_machine_settings["windows"].admin_password_key) ? data.external.windows_admin_password.0.result.value : null
 }
 
 #
@@ -239,7 +236,7 @@ data "external" "windows_admin_username" {
     "bash", "-c",
     format(
       "az keyvault secret show --name '%s' --vault-name '%s' --query '{value: value }' -o json",
-      try(var.settings.virtual_machine_settings["windows"].admin_username_key, var.settings.virtual_machine_settings["legacy"].admin_username_key, null),
+      try(var.settings.virtual_machine_settings["windows"].admin_username_key, var.settings.virtual_machine_settings["legacy"].admin_username_key),
       local.keyvault.name
     )
   ]

@@ -8,11 +8,11 @@ variable "location" {
   description = "(Required) Specifies the supported Azure location where to create the resource. Changing this forces a new resource to be created."
   type        = string
 }
-variable "settings" {
-  description = "Settings configuration object (see module README.md)."
-}
 variable "resource_group_name" {
   description = "(Required) Specifies the Resource Group where the Kusto Database should exist. Changing this forces a new resource to be created."
+}
+variable "settings" {
+  description = "Settings configuration object (see module README.md)."
 }
 variable "cluster_name" {
   description = "(Required) Specifies the name of the Kusto Cluster this data connection will be added to. Changing this forces a new resource to be created."

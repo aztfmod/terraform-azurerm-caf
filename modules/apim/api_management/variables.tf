@@ -1,6 +1,9 @@
 variable "global_settings" {
   description = "Global settings object (see module README.md)"
 }
+variable "vnets" {
+  description = "Virtual networks configuration object"
+}
 variable "client_config" {
   description = "Client configuration object (see module README.md)."
 }
