@@ -136,7 +136,7 @@ output "logic_app_workflow" {
 
 module "logic_app_standard" {
   source     = "./modules/logic_app/standard"
-  depends_on = [module.networking]
+  depends_on = [module.networking, module.storage_accounts]
   for_each   = local.logic_app.logic_app_standard
 
   name                 = each.value.name
