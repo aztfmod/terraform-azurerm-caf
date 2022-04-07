@@ -31,3 +31,6 @@ variable "recovery_vaults" {
 variable "private_dns" {
   default = {}
 }
+variable "azuread_groups" {
+  default = {}
+} 

@@ -7,4 +7,13 @@ resource "azurerm_storage_data_lake_gen2_filesystem" "gen2" {
   properties = {
     for key, value in try(var.settings.properties) : key => base64encode(value)
   }
+  dynamic "ace" {
+    for_each = try(var.settings.ace, {})
+    content {
+      scope       = ace.value.scope
+      permissions = ace.value.perm
+      type        = ace.value.type
+      id          = try(var.azuread_groups[var.client_config.landingzone_key][ace.value.ad_group_key].id, ace.value.id)
+    }
+  }
 }

@@ -224,6 +224,8 @@ module "data_lake_filesystem" {
 
   storage_account_id = azurerm_storage_account.stg.id
   settings           = each.value
+  azuread_groups     = var.azuread_groups
+  client_config      = var.client_config
 }
 
 module "file_share" {
