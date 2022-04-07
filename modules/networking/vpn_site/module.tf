@@ -28,7 +28,7 @@ resource "azurerm_vpn_site" "vpn_site" {
       speed_in_mbps = try(link.value.speed_in_mbps, null)
 
       dynamic "bgp" {
-        for_each = try([link.value.bgp], []) # TODO - Check this works
+        for_each = try([link.value.bgp], [])
         content {
           asn             = bgp.value.asn
           peering_address = bgp.value.peering_address

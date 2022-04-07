@@ -54,6 +54,22 @@ resource "azurerm_key_vault_secret" "mariadb_admin" {
   key_vault_id = var.keyvault_id
 }
 
+resource "azurerm_key_vault_secret" "mariadb_admin_login_name" {
+  count = try(var.settings.administrator_login_password, null) == null ? 1 : 0
+
+  name         = format("%s-login-name", azurecaf_name.mariadb.result)
+  value        = format("%s@%s", var.settings.administrator_login, azurerm_mariadb_server.mariadb.fqdn)
+  key_vault_id = var.keyvault_id
+}
+
+resource "azurerm_key_vault_secret" "mariadb_fqdn" {
+  count = try(var.settings.administrator_login_password, null) == null ? 1 : 0
+
+  name         = format("%s-fqdn", azurecaf_name.mariadb.result)
+  value        = azurerm_mariadb_server.mariadb.fqdn
+  key_vault_id = var.keyvault_id
+}
+
 resource "azurecaf_name" "mariadb" {
   name          = var.settings.name
   resource_type = "azurerm_mariadb_server"

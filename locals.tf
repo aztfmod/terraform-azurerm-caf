@@ -91,11 +91,14 @@ locals {
   communication = {
     communication_services = try(var.communication.communication_services, {})
   }
-
+  purview = {
+    purview_accounts = try(var.purview.purview_accounts, {})
+  }
   database = {
     app_config                         = try(var.database.app_config, {})
     azurerm_redis_caches               = try(var.database.azurerm_redis_caches, {})
     cosmos_dbs                         = try(var.database.cosmos_dbs, {})
+    cosmosdb_sql_databases             = try(var.database.cosmosdb_sql_databases, {})
     database_migration_services        = try(var.database.database_migration_services, {})
     database_migration_projects        = try(var.database.database_migration_projects, {})
     databricks_workspaces              = try(var.database.databricks_workspaces, {})
@@ -117,9 +120,22 @@ locals {
     mssql_servers                      = try(var.database.mssql_servers, {})
     mysql_databases                    = try(var.database.mysql_databases, {})
     mysql_servers                      = try(var.database.mysql_servers, {})
+    postgresql_flexible_servers        = try(var.database.postgresql_flexible_servers, {})
     postgresql_servers                 = try(var.database.postgresql_servers, {})
     synapse_workspaces                 = try(var.database.synapse_workspaces, {})
     mysql_flexible_server              = try(var.database.mysql_flexible_server, {})
+    
+    data_explorer = {
+      kusto_clusters                         = try(var.database.data_explorer.kusto_clusters, {})
+      kusto_databases                        = try(var.database.data_explorer.kusto_databases, {})
+      kusto_attached_database_configurations = try(var.database.data_explorer.kusto_attached_database_configurations, {})
+      kusto_cluster_customer_managed_keys    = try(var.database.data_explorer.kusto_cluster_customer_managed_keys, {})
+      kusto_cluster_principal_assignments    = try(var.database.data_explorer.kusto_cluster_principal_assignments, {})
+      kusto_database_principal_assignments   = try(var.database.data_explorer.kusto_database_principal_assignments, {})
+      kusto_eventgrid_data_connections       = try(var.database.data_explorer.kusto_eventgrid_data_connections, {})
+      kusto_eventhub_data_connections        = try(var.database.data_explorer.kusto_eventhub_data_connections, {})
+      kusto_iothub_data_connections          = try(var.database.data_explorer.kusto_iothub_data_connections, {})
+    }
   }
 
   data_factory = {
@@ -160,6 +176,7 @@ locals {
     mssql_databases             = local.combined_objects_mssql_databases
     mssql_servers               = local.combined_objects_mssql_servers
     storage_accounts            = local.combined_objects_storage_accounts
+    networking                  = local.combined_objects_networking
   }
 
   dynamic_app_config_combined_objects = {
@@ -202,6 +219,12 @@ locals {
   cognitive_services = {
     cognitive_services_account = try(var.cognitive_services.cognitive_services_account, {})
   }
+  messaging = {
+    signalr_services      = try(var.messaging.signalr_services, {})
+    servicebus_namespaces = try(var.messaging.servicebus_namespaces, {})
+    servicebus_queues     = try(var.messaging.servicebus_queues, {})
+    servicebus_topics     = try(var.messaging.servicebus_topics, {})
+  }
 
   networking = {
     application_gateway_applications                        = try(var.networking.application_gateway_applications, {})
@@ -232,14 +255,25 @@ locals {
     frontdoor_rules_engine                                  = try(var.networking.frontdoor_rules_engine, {})
     frontdoor_custom_https_configuration                    = try(var.networking.frontdoor_custom_https_configuration, {})
     ip_groups                                               = try(var.networking.ip_groups, {})
+    lb                                                      = try(var.networking.lb, {})
+    lb_backend_address_pool                                 = try(var.networking.lb_backend_address_pool, {})
+    lb_backend_address_pool_address                         = try(var.networking.lb_backend_address_pool_address, {})
+    lb_nat_pool                                             = try(var.networking.lb_nat_pool, {})
+    lb_nat_rule                                             = try(var.networking.lb_nat_rule, {})
+    lb_outbound_rule                                        = try(var.networking.lb_outbound_rule, {})
+    lb_probe                                                = try(var.networking.lb_probe, {})
+    lb_rule                                                 = try(var.networking.lb_rule, {})
     load_balancers                                          = try(var.networking.load_balancers, {})
     local_network_gateways                                  = try(var.networking.local_network_gateways, {})
     nat_gateways                                            = try(var.networking.nat_gateways, {})
+    network_interface_backend_address_pool_association      = try(var.networking.network_interface_backend_address_pool_association, {})
+    network_profiles                                        = try(var.networking.network_profiles, {})
     network_security_group_definition                       = try(var.networking.network_security_group_definition, {})
     network_watchers                                        = try(var.networking.network_watchers, {})
     private_dns                                             = try(var.networking.private_dns, {})
     private_dns_vnet_links                                  = try(var.networking.private_dns_vnet_links, {})
     public_ip_addresses                                     = try(var.networking.public_ip_addresses, {})
+    public_ip_prefixes                                      = try(var.networking.public_ip_prefixes, {})
     route_tables                                            = try(var.networking.route_tables, {})
     vhub_peerings                                           = try(var.networking.vhub_peerings, {})
     virtual_hub_connections                                 = try(var.networking.virtual_hub_connections, {})
@@ -258,32 +292,45 @@ locals {
 
   object_id = coalesce(var.logged_user_objectId, var.logged_aad_app_objectId, try(data.azurerm_client_config.current.object_id, null), try(data.azuread_service_principal.logged_in_app.0.object_id, null))
 
-  servicebus = {
-    servicebus_namespaces = try(var.servicebus.servicebus_namespaces, {})
-    servicebus_queues     = try(var.servicebus.servicebus_queues, {})
-    servicebus_topics     = try(var.servicebus.servicebus_topics, {})
-  }
   security = {
-    disk_encryption_sets          = try(var.security.disk_encryption_sets, {})
-    dynamic_keyvault_secrets      = try(var.security.dynamic_keyvault_secrets, {})
-    keyvault_certificate_issuers  = try(var.security.keyvault_certificate_issuers, {})
-    keyvault_certificate_requests = try(var.security.keyvault_certificate_requests, {})
-    keyvault_certificates         = try(var.security.keyvault_certificates, {})
-    keyvault_keys                 = try(var.security.keyvault_keys, {})
-    lighthouse_definitions        = try(var.security.lighthouse_definitions, {})
+    disk_encryption_sets                = try(var.security.disk_encryption_sets, {})
+    dynamic_keyvault_secrets            = try(var.security.dynamic_keyvault_secrets, {})
+    keyvault_certificate_issuers        = try(var.security.keyvault_certificate_issuers, {})
+    keyvault_certificate_requests       = try(var.security.keyvault_certificate_requests, {})
+    keyvault_certificates               = try(var.security.keyvault_certificates, {})
+    keyvault_keys                       = try(var.security.keyvault_keys, {})
+    lighthouse_definitions              = try(var.security.lighthouse_definitions, {})
+    sentinel_automation_rules           = try(var.security.sentinel_automation_rules, {})
+    sentinel_watchlists                 = try(var.security.sentinel_watchlists, {})
+    sentinel_watchlist_items            = try(var.security.sentinel_watchlist_items, {})
+    sentinel_ar_fusions                 = try(var.security.sentinel_ar_fusions, {})
+    sentinel_ar_ml_behavior_analytics   = try(var.security.sentinel_ar_ml_behavior_analytics, {})
+    sentinel_ar_ms_security_incidents   = try(var.security.sentinel_ar_ms_security_incidents, {})
+    sentinel_ar_scheduled               = try(var.security.sentinel_ar_scheduled, {})
+    sentinel_dc_aad                     = try(var.security.sentinel_dc_aad, {})
+    sentinel_dc_app_security            = try(var.security.sentinel_dc_app_security, {})
+    sentinel_dc_aws                     = try(var.security.sentinel_dc_aws, {})
+    sentinel_dc_azure_threat_protection = try(var.security.sentinel_dc_azure_threat_protection, {})
+    sentinel_dc_ms_threat_protection    = try(var.security.sentinel_dc_ms_threat_protection, {})
+    sentinel_dc_office_365              = try(var.security.sentinel_dc_office_365, {})
+    sentinel_dc_security_center         = try(var.security.sentinel_dc_security_center, {})
+    sentinel_dc_threat_intelligence     = try(var.security.sentinel_dc_threat_intelligence, {})
   }
 
   shared_services = {
-    automations                = try(var.shared_services.automations, {})
-    consumption_budgets        = try(var.shared_services.consumption_budgets, {})
-    image_definitions          = try(var.shared_services.image_definitions, {})
-    monitor_autoscale_settings = try(var.shared_services.monitor_autoscale_settings, {})
-    monitor_action_groups      = try(var.shared_services.monitor_action_groups, {})
-    monitoring                 = try(var.shared_services.monitoring, {})
-    packer_managed_identity    = try(var.shared_services.packer_managed_identity, {})
-    packer_service_principal   = try(var.shared_services.packer_service_principal, {})
-    recovery_vaults            = try(var.shared_services.recovery_vaults, {})
-    shared_image_galleries     = try(var.shared_services.shared_image_galleries, {})
+    automations                    = try(var.shared_services.automations, {})
+    consumption_budgets            = try(var.shared_services.consumption_budgets, {})
+    image_definitions              = try(var.shared_services.image_definitions, {})
+    log_analytics_storage_insights = try(var.shared_services.log_analytics_storage_insights, {})
+    monitor_autoscale_settings     = try(var.shared_services.monitor_autoscale_settings, {})
+    monitor_action_groups          = try(var.shared_services.monitor_action_groups, {})
+    monitoring                     = try(var.shared_services.monitoring, {})
+    monitor_metric_alert           = try(var.shared_services.monitor_metric_alert, {})
+    monitor_activity_log_alert     = try(var.shared_services.monitor_activity_log_alert, {})
+    packer_service_principal       = try(var.shared_services.packer_service_principal, {})
+    packer_build                   = try(var.shared_services.packer_build, {})
+    recovery_vaults                = try(var.shared_services.recovery_vaults, {})
+    shared_image_galleries         = try(var.shared_services.shared_image_galleries, {})
   }
 
   storage = {
@@ -310,5 +357,22 @@ locals {
     active_directory_domain_service             = try(var.identity.active_directory_domain_service, {})
     active_directory_domain_service_replica_set = try(var.identity.active_directory_domain_service_replica_set, {})
   }
-
+  apim = {
+    api_management                      = try(var.apim.api_management, {})
+    api_management_api                  = try(var.apim.api_management_api, {})
+    api_management_api_diagnostic       = try(var.apim.api_management_api_diagnostic, {})
+    api_management_logger               = try(var.apim.api_management_logger, {})
+    api_management_api_operation        = try(var.apim.api_management_api_operation, {})
+    api_management_backend              = try(var.apim.api_management_backend, {})
+    api_management_api_policy           = try(var.apim.api_management_api_policy, {})
+    api_management_api_operation_tag    = try(var.apim.api_management_api_operation_tag, {})
+    api_management_api_operation_policy = try(var.apim.api_management_api_operation_policy, {})
+    api_management_user                 = try(var.apim.api_management_user, {})
+    api_management_custom_domain        = try(var.apim.api_management_custom_domain, {})
+    api_management_diagnostic           = try(var.apim.api_management_diagnostic, {})
+    api_management_certificate          = try(var.apim.api_management_certificate, {})
+    api_management_gateway              = try(var.apim.api_management_gateway, {})
+    api_management_gateway_api          = try(var.apim.api_management_gateway_api, {})
+    api_management_group                = try(var.apim.api_management_group, {})
+  }
 }

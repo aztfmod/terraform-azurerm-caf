@@ -68,12 +68,12 @@ resource "azurerm_network_interface" "nic" {
 
     content {
       name                          = ip_configuration.value.name
-      subnet_id                     = try(each.value.subnet_id, null) != null ? each.value.subnet_id : try(var.vnets[var.client_config.landingzone_key][each.value.vnet_key].subnets[each.value.subnet_key].id, var.vnets[each.value.lz_key][each.value.vnet_key].subnets[each.value.subnet_key].id)
+      subnet_id                     = try(ip_configuration.value.subnet_id, null) != null ? ip_configuration.value.subnet_id : try(var.vnets[var.client_config.landingzone_key][ip_configuration.value.vnet_key].subnets[ip_configuration.value.subnet_key].id, var.vnets[ip_configuration.value.lz_key][ip_configuration.value.vnet_key].subnets[ip_configuration.value.subnet_key].id)
       private_ip_address_allocation = try(ip_configuration.value.private_ip_address_allocation, "Dynamic")
       private_ip_address_version    = lookup(ip_configuration.value, "private_ip_address_version", null)
       private_ip_address            = lookup(ip_configuration.value, "private_ip_address", null)
       primary                       = lookup(ip_configuration.value, "primary", null)
-      public_ip_address_id          = try(each.value.public_address_id, lookup(each.value, "public_ip_address_key", null) == null ? null : try(var.public_ip_addresses[var.client_config.landingzone_key][each.value.public_ip_address_key].id, var.public_ip_addresses[each.value.lz_key][each.value.public_ip_address_key].id))
+      public_ip_address_id          = try(ip_configuration.value.public_address_id, lookup(ip_configuration.value, "public_ip_address_key", null) == null ? null : try(var.public_ip_addresses[var.client_config.landingzone_key][ip_configuration.value.public_ip_address_key].id, var.public_ip_addresses[ip_configuration.value.lz_key][ip_configuration.value.public_ip_address_key].id))
     }
   }
 }

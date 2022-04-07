@@ -2,8 +2,8 @@ variable "global_settings" {
   default = {
     default_region = "region1"
     regions = {
-      region1 = "southeastasia"
-      region2 = "eastasia"
+      region1 = "eastus2"
+      region2 = "centralus"
     }
   }
 }
@@ -357,6 +357,9 @@ variable "application_gateway_waf_policies" {
 variable "mysql_servers" {
   default = {}
 }
+variable "postgresql_flexible_servers" {
+  default = {}
+}
 variable "postgresql_servers" {
   default = {}
 }
@@ -416,7 +419,7 @@ variable "packer_service_principal" {
   default = {}
 }
 
-variable "packer_managed_identity" {
+variable "packer_build" {
   default = {}
 }
 
@@ -678,6 +681,33 @@ variable "logic_app_trigger_recurrence" {
 variable "logic_app_trigger_custom" {
   default = {}
 }
+variable "kusto_clusters" {
+  default = {}
+}
+variable "kusto_databases" {
+  default = {}
+}
+variable "kusto_attached_database_configurations" {
+  default = {}
+}
+variable "kusto_cluster_customer_managed_keys" {
+  default = {}
+}
+variable "kusto_cluster_principal_assignments" {
+  default = {}
+}
+variable "kusto_database_principal_assignments" {
+  default = {}
+}
+variable "kusto_eventgrid_data_connections" {
+  default = {}
+}
+variable "kusto_eventhub_data_connections" {
+  default = {}
+}
+variable "kusto_iothub_data_connections" {
+  default = {}
+}
 variable "private_dns_vnet_links" {
   default = {}
 }
@@ -718,3 +748,150 @@ variable "mysql_flexible_server" {
   default = {}
 }
 
+variable "signalr_services" {
+  default = {}
+}
+variable "api_management" {
+  default = {}
+}
+variable "api_management_api" {
+  default = {}
+}
+variable "api_management_api_diagnostic" {
+  default = {}
+}
+variable "api_management_logger" {
+  default = {}
+}
+variable "api_management_api_operation" {
+  default = {}
+}
+variable "api_management_backend" {
+  default = {}
+}
+variable "api_management_api_policy" {
+  default = {}
+}
+variable "api_management_api_operation_policy" {
+  default = {}
+}
+variable "api_management_api_operation_tag" {
+  default = {}
+}
+variable "api_management_user" {
+  default = {}
+}
+variable "api_management_custom_domain" {
+  default = {}
+}
+variable "api_management_diagnostic" {
+  default = {}
+}
+variable "api_management_certificate" {
+  default = {}
+}
+variable "api_management_gateway" {
+  default = {}
+}
+variable "api_management_gateway_api" {
+  default = {}
+}
+variable "api_management_group" {
+  default = {}
+}
+variable "lb" {
+  default = {}
+}
+variable "lb_backend_address_pool" {
+  default = {}
+}
+variable "lb_backend_address_pool_address" {
+  default = {}
+}
+variable "lb_nat_pool" {
+  default = {}
+}
+variable "lb_nat_rule" {
+  default = {}
+}
+variable "lb_outbound_rule" {
+  default = {}
+}
+variable "lb_probe" {
+  default = {}
+}
+variable "lb_rule" {
+  default = {}
+}
+variable "network_interface_backend_address_pool_association" {
+  default = {}
+}
+variable "monitor_metric_alert" {
+  default = {}
+}
+variable "monitor_activity_log_alert" {
+  default = {}
+}
+variable "log_analytics_storage_insights" {
+  default = {}
+}
+variable "purview_accounts" {
+  default = {}
+}
+variable "app_config" {
+  default = {}
+}
+variable "cosmosdb_sql_databases" {
+  default = {}
+}
+variable "sentinel" {
+  default = {}
+}
+variable "sentinel_automation_rules" {
+  default = {}
+}
+variable "sentinel_watchlists" {
+  default = {}
+}
+variable "sentinel_watchlist_items" {
+  default = {}
+}
+variable "sentinel_ar_fusions" {
+  default = {}
+}
+variable "sentinel_ar_ml_behavior_analytics" {
+  default = {}
+}
+variable "sentinel_ar_ms_security_incidents" {
+  default = {}
+}
+variable "sentinel_ar_scheduled" {
+  default = {}
+}
+variable "sentinel_dc_aad" {
+  default = {}
+}
+variable "sentinel_dc_app_security" {
+  default = {}
+}
+variable "sentinel_dc_aws" {
+  default = {}
+}
+variable "sentinel_dc_azure_threat_protection" {
+  default = {}
+}
+variable "sentinel_dc_ms_threat_protection" {
+  default = {}
+}
+variable "sentinel_dc_office_365" {
+  default = {}
+}
+variable "sentinel_dc_security_center" {
+  default = {}
+}
+variable "sentinel_dc_threat_intelligence" {
+  default = {}
+}
+variable "public_ip_prefixes" {
+  default = {}
+}
