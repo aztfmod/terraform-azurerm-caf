@@ -10,11 +10,6 @@ resource "azurecaf_name" "mssqldb" {
 }
 
 resource "azurerm_mssql_database" "mssqldb" {
-  lifecycle {
-    ignore_changes = [
-      server_id
-    ]
-  }
   name                        = azurecaf_name.mssqldb.result
   server_id                   = var.server_id
   auto_pause_delay_in_minutes = try(var.settings.auto_pause_delay_in_minutes, null)

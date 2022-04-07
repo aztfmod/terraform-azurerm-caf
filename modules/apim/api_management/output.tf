@@ -50,3 +50,7 @@ output "name" {
   value       = azurerm_api_management.apim.name
   description = "The name of the API Management Service."
 }
+output "rbac_id" {
+  value       = try(azurerm_api_management.apim.identity[0].principal_id, null)
+  description = "The rbac_id of the API Management Service for role assignments."
+}

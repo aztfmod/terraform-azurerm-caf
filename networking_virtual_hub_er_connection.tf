@@ -19,15 +19,8 @@ module "virtual_hub_er_gateway_connections" {
     try(each.value.virtual_hub_id, null)
   )
 
-  location = lookup(each.value, "region", null) == null ? coalesce(
-    try(local.resource_groups[each.value.resource_group_key].location, null),
-    try(local.combined_objects_resource_groups[try(each.value.resource_group.lz_key, local.client_config.landingzone_key)][each.value.resource_group.key].location, null)
-  ) : local.global_settings.regions[each.value.region]
-
-  resource_group_name = coalesce(
-    try(local.resource_groups[each.value.resource_group_key].name, null),
-    try(local.combined_objects_resource_groups[try(each.value.resource_group.lz_key, local.client_config.landingzone_key)][each.value.resource_group.key].name, null)
-  )
+  location            = can(local.global_settings.regions[each.value.region]) ? local.global_settings.regions[each.value.region] : local.combined_objects_resource_groups[try(each.value.resource_group.lz_key, local.client_config.landingzone_key)][try(each.value.resource_group.key, each.value.resource_group_key)].location
+  resource_group_name = can(each.value.resource_group.name) || can(each.value.resource_group_name) ? try(each.value.resource_group.name, each.value.resource_group_name) : local.combined_objects_resource_groups[try(each.value.resource_group.lz_key, local.client_config.landingzone_key)][try(each.value.resource_group_key, each.value.resource_group.key)].name
 
   virtual_network_gateway_id = coalesce(
     try(local.combined_objects_virtual_hubs[try(each.value.virtual_hub.lz_key, local.client_config.landingzone_key)][each.value.virtual_hub.key].er_gateway.id, null),

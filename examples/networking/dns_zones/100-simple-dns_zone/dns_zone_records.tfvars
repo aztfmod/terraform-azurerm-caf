@@ -25,6 +25,15 @@ dns_zone_records = {
             "10.10.1.1", "172.10.2.2"
           ]
         }
+        example_alias = {
+          name = "example-alias"
+          ttl  = 1
+          resource_id = {
+            public_ip_address = {
+              key = "example_pip1_re1"
+            }
+          }
+        }
       } //a
     }   //records
   }     //record1

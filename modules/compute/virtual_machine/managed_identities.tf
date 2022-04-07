@@ -10,9 +10,9 @@ locals {
   ])
 
   managed_remote_identities = flatten([
-    for keyvault_key, value in try(var.settings.virtual_machine_settings[local.os_type].identity.remote, []) : [
+    for lz_key, value in try(var.settings.virtual_machine_settings[local.os_type].identity.remote, []) : [
       for managed_identity_key in value.managed_identity_keys : [
-        var.managed_identities[keyvault_key][managed_identity_key].id
+        var.managed_identities[lz_key][managed_identity_key].id
       ]
     ]
   ])
