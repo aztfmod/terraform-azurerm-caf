@@ -69,11 +69,25 @@ resource "azurerm_app_service" "app_service" {
         }
       }
       dynamic "ip_restriction" {
-        for_each = lookup(var.settings.site_config, "ip_restriction", {}) != {} ? [1] : []
+        for_each = try(var.settings.site_config.ip_restriction, {})
 
         content {
-          ip_address                = lookup(var.settings.site_config.ip_restriction, "ip_address", null)
-          virtual_network_subnet_id = lookup(var.settings.site_config.ip_restriction, "virtual_network_subnet_id", null)
+          ip_address                = lookup(ip_restriction.value, "ip_address", null)
+          service_tag               = lookup(ip_restriction.value, "service_tag", null)
+          virtual_network_subnet_id = can(ip_restriction.value.virtual_network_subnet_id) || can(ip_restriction.value.virtual_network_subnet.id) ? try(ip_restriction.value.virtual_network_subnet_id, ip_restriction.value.virtual_network_subnet.id) : var.combined_objects.networking[try(ip_restriction.value.virtual_network_subnet.lz_key, var.client_config.landingzone_key)][ip_restriction.value.virtual_network_subnet.vnet_key].subnets[ip_restriction.value.virtual_network_subnet.subnet_key].id
+          name                      = lookup(ip_restriction.value, "name", null)
+          priority                  = lookup(ip_restriction.value, "priority", null)
+          action                    = lookup(ip_restriction.value, "action", null)
+          dynamic "headers" {
+            for_each = try(ip_restriction.headers, {})
+
+            content {
+              x_azure_fdid      = lookup(headers.value, "x_azure_fdid", null)
+              x_fd_health_probe = lookup(headers.value, "x_fd_health_probe", null)
+              x_forwarded_for   = lookup(headers.value, "x_forwarded_for", null)
+              x_forwarded_host  = lookup(headers.value, "x_forwarded_host", null)
+            }
+          }
         }
       }
     }
@@ -157,14 +171,14 @@ resource "azurerm_app_service" "app_service" {
   }
 
   dynamic "storage_account" {
-    for_each = lookup(var.settings, "storage_account", {})
+    for_each = lookup(var.settings, "storage_account", [])
     content {
-      name         = each.value.name
-      type         = each.value.type
-      account_name = each.value.account_name
-      share_name   = each.value.share_name
-      access_key   = each.value.access_key
-      mount_path   = lookup(each.value, "mount_path", null)
+      name         = storage_account.value.name
+      type         = storage_account.value.type
+      account_name = can(storage_account.value.account_key) ? var.storage_accounts[try(storage_account.value.lz_key, var.client_config.landingzone_key)][storage_account.value.account_key].name : try(storage_account.value.account_name, null)
+      share_name   = storage_account.value.share_name
+      access_key   = can(storage_account.value.account_key) ? var.storage_accounts[try(storage_account.value.lz_key, var.client_config.landingzone_key)][storage_account.value.account_key].primary_access_key : try(storage_account.value.access_key, null)
+      mount_path   = lookup(storage_account.value, "mount_path", null)
     }
   }
 

@@ -1,4 +1,4 @@
-# Deploys Service Health Alerts
+# Deploys Azure Monitor Capabilities
 
 This module is part of Cloud Adoption Framework landing zones for Azure on Terraform.
 
@@ -7,10 +7,28 @@ You can instantiate this directly using the following parameters:
 ```hcl
 module "caf" {
   source  = "aztfmod/caf/azurerm"
-  version = "5.1.0"
-  # insert the 7 required variables here
+  version = "~>5.5.0"
+
+  # Add object as described below
 }
 ```
+
+CAF Terraform module is iterative by default, you can instantiate as many objects as needed, using the following structure:
+
+```hcl
+resource_to_be_created = {
+  object1 = {
+    #configuration details as below
+  }
+  object2 = {
+    #configuration details as below
+  }
+}
+```
+
+You can review complete set of examples on the [GitHub repository](https://github.com/aztfmod/terraform-azurerm-caf/tree/master/examples/monitoring).
+
+## Azure Service Healths Alerts
 
 This module tracks the following types of health events (subscription wide) and send alerts:
 
@@ -25,17 +43,6 @@ This module tracks the following types of health events (subscription wide) and 
 Ref : https://docs.microsoft.com/en-us/azure/service-health/service-health-overview
 
 An Action Group will be created and your choice of Notifications type can be chosen dynamically (refer input syntax).
-
-## Requirements
-
-No requirements.
-
-## Providers
-
-| Name | Version |
-|------|---------|
-| azurecaf | n/a |
-| azurerm | n/a |
 
 ##  Input Syntax
 ```hcl

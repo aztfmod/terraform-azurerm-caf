@@ -224,6 +224,11 @@ variable "database" {
   default     = {}
 }
 
+variable "messaging" {
+  description = "Configuration object - messaging resources"
+  default     = {}
+}
+
 ## Networking variables
 variable "networking" {
   description = "Configuration object - networking resources"
@@ -271,11 +276,6 @@ variable "role_mapping" {
 
 variable "dynamic_keyvault_secrets" {
   default = {}
-}
-# Service Bus
-variable "servicebus" {
-  description = "Configuration object - service bus namespaces, topics and queues"
-  default     = {}
 }
 
 ## Storage variables
@@ -334,9 +334,9 @@ variable "keyvault_certificate_issuers" {
 #   default = {}
 # }
 
-# variable "app_config" {
-#   default = {}
-# }
+variable "app_config" {
+  default = {}
+}
 
 # variable "local_network_gateways" {
 #   default = {}
@@ -383,4 +383,13 @@ variable "communication" {
 variable "identity" {
   description = "Configuration object - identity resources"
   default     = {}
+}
+variable "apim" {
+  default = {}
+}
+variable "purview" {
+  default = {}
+}
+variable "sentinel_watchlists" {
+  default = {}
 }

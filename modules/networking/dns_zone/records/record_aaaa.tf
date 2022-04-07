@@ -21,7 +21,7 @@ resource "azurerm_dns_aaaa_record" "aaaa_dns_zone_record" {
   name                = each.value.name
   zone_name           = var.zone_name
   resource_group_name = var.resource_group_name
-  ttl                 = 300 # Looks like cannot set another value than 300 when using target_resource_id
+  ttl                 = try(each.value.ttl, 300)
   tags                = merge(var.base_tags, try(each.value.tags, {}))
   target_resource_id  = azurerm_dns_aaaa_record.aaaa[each.value.resource_id.dns_zone_record.key].id
 }

@@ -16,6 +16,8 @@ vnets = {
         definition_key   = "networking_all"
         destination_type = "log_analytics"
         destination_key  = "central_logs"
+        # destination_type = "storage" # if using storage account
+        # destination_key  = "central_storage"
       }
     }
   }
