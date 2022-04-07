@@ -22,6 +22,7 @@ resource "azurerm_function_app" "function_app" {
   enabled                    = try(var.settings.enabled, null)
   https_only                 = try(var.settings.https_only, null)
   os_type                    = try(var.settings.os_type, null)
+  version                    = try(var.settings.version, null)
   storage_account_name       = var.storage_account_name
   storage_account_access_key = var.storage_account_access_key
   tags                       = local.tags
@@ -107,10 +108,12 @@ resource "azurerm_function_app" "function_app" {
     for_each = try(var.identity, null) == null ? [] : [1]
 
     content {
-      type         = "UserAssigned"
-      identity_ids = local.managed_identities
+      type         = var.identity.type
+      identity_ids = lower(var.identity.type) == "userassigned" ? local.managed_identities : null
     }
   }
+
+  key_vault_reference_identity_id = can(var.settings.key_vault_reference_identity.key) ? var.combined_objects.managed_identities[try(var.settings.identity.lz_key, var.client_config.landingzone_key)][var.settings.key_vault_reference_identity.key].id : try(var.settings.key_vault_reference_identity.id, null)
 
   dynamic "site_config" {
     for_each = lookup(var.settings, "site_config", {}) != {} ? [1] : []

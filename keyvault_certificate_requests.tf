@@ -10,7 +10,8 @@ module "keyvault_certificate_requests" {
   keyvault_id               = try(local.combined_objects_keyvaults[each.value.lz_key][each.value.keyvault_key].id, local.combined_objects_keyvaults[local.client_config.landingzone_key][each.value.keyvault_key].id)
   certificate_issuers       = try(var.security.keyvault_certificate_issuers, {})
   settings                  = each.value
-  domain_name_registrations = module.domain_name_registrations
+  domain_name_registrations = local.combined_objects_domain_name_registrations
+  client_config             = local.client_config
 }
 
 output "keyvault_certificate_requests" {

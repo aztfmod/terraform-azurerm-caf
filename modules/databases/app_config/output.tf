@@ -9,6 +9,11 @@ output "endpoint" {
 }
 
 output "identity" {
-  value       = azurerm_app_configuration.config.identity
+  value       = try(azurerm_app_configuration.config.identity, null)
   description = "The managed service identity object."
+}
+
+output "rbac_id" {
+  value       = try(azurerm_app_configuration.config.identity[0].principal_id, null)
+  description = "The rbac_id of the App Config for role assignments."
 }

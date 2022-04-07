@@ -61,7 +61,7 @@ function execute_with_backoff {
     attempt=$(( attempt + 1 ))
     timeout=$(( timeout * 2 ))
   done
-  
+
   sleep 10
   rm -rf "$FILE"
   echo "done"
