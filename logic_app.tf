@@ -177,6 +177,7 @@ output "logic_app_standard" {
 }
 
 data "azurerm_storage_account" "logic_app" {
+  depends_on = [module.storage_accounts]
   for_each = {
     for key, value in local.logic_app.logic_app_standard : key => value
     if try(value.storage_account_key, null) != null
