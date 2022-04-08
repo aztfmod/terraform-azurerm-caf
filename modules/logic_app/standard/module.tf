@@ -14,7 +14,7 @@ resource "azurerm_logic_app_standard" "logic_app" {
   lifecycle {
     ignore_changes = [name]
   }
-  name                       = try(var.settings.name, null)#azurecaf_name.plan.result
+  name                       = try(var.settings.name, "logicappRanDomString")#azurecaf_name.plan.result
   location                   = var.location
   resource_group_name        = var.resource_group_name
   app_service_plan_id        = var.app_service_plan_id
