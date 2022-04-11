@@ -287,6 +287,7 @@ locals {
     traffic_manager_nested_endpoint                         = try(var.networking.traffic_manager_nested_endpoint, {})
     traffic_manager_endpoint                                = try(var.networking.traffic_manager_endpoint, {})
     traffic_manager_external_endpoint                       = try(var.networking.traffic_manager_external_endpoint, {})
+    traffic_manager_azure_endpoint                          =  try(var.networking.traffic_manager_azure_endpoint, {})
   }
 
   object_id = coalesce(var.logged_user_objectId, var.logged_aad_app_objectId, try(data.azurerm_client_config.current.object_id, null), try(data.azuread_service_principal.logged_in_app.0.object_id, null))

@@ -1,15 +1,17 @@
-resource "azurerm_traffic_manager_nested_endpoint" "nested_endpoint" {
+resource "azurerm_traffic_manager_azure_endpoint" "azure_endpoint" {
 
   name                    = var.settings.name
-  target_resource_id      = var.target_resource_id
   priority                = try(var.settings.priority, null )
   profile_id              = var.profile_id
-  minimum_child_endpoints = try(var.settings.minimum_child_endpoints, "1" )
   weight                  = try(var.settings.weight, "1" )
   enabled                 = try(var.settings.enabled, "true" )
   geo_mappings            = try(var.settings.geo_mappings , null )
-  minimum_required_child_endpoints_ipv4 = try(var.settings.minimum_required_child_endpoints_ipv4 , null )
-  minimum_required_child_endpoints_ipv6 = try(var.settings.minimum_required_child_endpoints_ipv6 , null )
+  #target_resource_id      = var.remote_objects.public_ip_addresses 
+  target_resource_id  = coalesce(
+        try(var.remote_objects.public_ip_addresses, null),
+        try(var.remote_objects.app_services, null)
+
+      )
 
     dynamic "custom_header" {
     for_each = try(var.settings.custom_header, null) == null ? [] : [var.settings.custom_header]

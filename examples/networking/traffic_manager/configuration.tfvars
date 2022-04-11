@@ -101,7 +101,7 @@ traffic_manager_external_endpoint = {
       }
   }
 }
-
+/*
 traffic_manager_nested_endpoint = {
   example_1 = {
      name                = "example-endpoint"
@@ -117,7 +117,68 @@ traffic_manager_nested_endpoint = {
      target_traffic_manager_profile = {
         key = "parent"
   }
-     
+}
+}
+*/
+
+traffic_manager_azure_endpoint = {
+   example_1 = {
+      name = "test123"
+      weight = 100
+      public_ip_address =  {
+        key = "example_vm_pip1_rg1"
+      }
+      traffic_manager_profile = {
+        key = "parent"
+  }
+   }
+   
+    example_2 = {
+      name = "test1234"
+      weight = 101
+      app_services_key =  {
+        key = "asp1"
+      }
+      traffic_manager_profile = {
+        key = "parent"
+  }
+   }
+   
 }
 
+
+public_ip_addresses = {
+  example_vm_pip1_rg1 = {
+    name                    = "example_vm_pip1"
+    resource_group_key      = "traffic_manager"
+    sku                     = "Standard"
+    allocation_method       = "Static"
+    ip_version              = "IPv4"
+    idle_timeout_in_minutes = "4"
+    domain_name_label       = "slavko"
+  }
+}
+
+app_service_plans = {
+  asp1 = {
+    resource_group_key = "traffic_manager"
+    name               = "asp-simple-vk"
+
+    sku = {
+      tier = "Standard"
+      size = "S1"
+    }
+  }
+}
+
+app_services = {
+  webapp1 = {
+    resource_group_key   = "traffic_manager"
+    name                 = "webapp-simple-vk"
+    app_service_plan_key = "asp1"
+
+    settings = {
+      enabled = true
+    }
+  }
 }

@@ -122,7 +122,8 @@ locals {
   combined_objects_traffic_manager_nested_endpoint                = merge(tomap({ (local.client_config.landingzone_key) = module.traffic_manager_nested_endpoint }), try(var.remote_objects.traffic_manager_nested_endpoint, {}))
   combined_objects_traffic_manager_endpoint                       = merge(tomap({ (local.client_config.landingzone_key) = module.traffic_manager_endpoint }), try(var.remote_objects.traffic_manager_endpoint, {}))
   combined_objects_traffic_manager_external_endpoint              = merge(tomap({ (local.client_config.landingzone_key) = module.traffic_manager_external_endpoint }), try(var.remote_objects.traffic_manager_external_endpoint, {}))
-  
+  combined_objects_traffic_manager_azure_endpoint                 = merge(tomap({ (local.client_config.landingzone_key) = module.traffic_manager_azure_endpoint }), try(var.remote_objects.traffic_manager_azure_endpoint, {}))
+
   combined_objects_subscriptions = merge(
     tomap(
       {

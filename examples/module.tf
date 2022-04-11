@@ -214,6 +214,7 @@ module "example" {
     traffic_manager_nested_endpoint                         = var.traffic_manager_nested_endpoint
     traffic_manager_endpoint                                = var.traffic_manager_endpoint
     traffic_manager_external_endpoint                       = var.traffic_manager_external_endpoint
+    traffic_manager_azure_endpoint                          = var.traffic_manager_azure_endpoint
   }
 
   security = {
