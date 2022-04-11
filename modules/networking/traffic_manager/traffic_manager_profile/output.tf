@@ -1,5 +1,5 @@
 output "id" {
-  description = " The ID of the Traffic Manager Profile"
+  description = "The ID of the Traffic Manager Profile"
   value       = azurerm_traffic_manager_profile.traffic_manager_profile.id
 }
 

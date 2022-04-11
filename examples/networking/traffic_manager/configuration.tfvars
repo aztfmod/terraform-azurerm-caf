@@ -86,38 +86,38 @@ traffic_manager_endpoint = {
         key = "parent"
       }
   }
-  example_3 = {
-      name                = "test3"
-      resource_group_key  = "traffic_manager"
-      target_resource_id  = "/subscriptions/158d9f92-ec1e-433e-8388-6f7157282c13/resourceGroups/ugly-rg-trafficmanagervk-gva/providers/Microsoft.Network/publicIPAddresses/ugly-pip-example_vm_pip1-smn"
-      type                = "azureEndpoints"
-      
-      
-      traffic_manager_profile = {
-        key = "parent"
-      }
-  }
+
 }
 
-public_ip_addresses = {
-  example_vm_pip1_rg1 = {
-    name                    = "example_vm_pip1"
-    resource_group_key      = "traffic_manager"
-    sku                     = "Standard"
-    allocation_method       = "Static"
-    ip_version              = "IPv4"
-    idle_timeout_in_minutes = "4"
 
-  }
-}
 
 traffic_manager_external_endpoint = {
   example_1 = {
-        name       = "example-endpoint"
+        name       = "example-endpoints"
         weight     = 100
         target     = "www.example.com"
         traffic_manager_profile = {
         key = "child"
       }
   }
+}
+
+traffic_manager_nested_endpoint = {
+  example_1 = {
+     name                = "example-endpoint"
+     priority            = 100
+     minimum_child_endpoints = 5
+     custom_header  = {
+        name = "test"
+        value = "host:contoso.com,customheader:contoso"
+      }
+     traffic_manager_profile = {
+        key = "child"
+  }
+     target_traffic_manager_profile = {
+        key = "parent"
+  }
+     
+}
+
 }
