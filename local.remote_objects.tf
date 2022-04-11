@@ -95,6 +95,7 @@ locals {
     synapse_workspaces                             = try(local.combined_objects_synapse_workspaces, null)
     traffic_manager_profile                        = try(local.combined_objects_traffic_manager_profile, null)
     traffic_manager_nested_endpoint                = try(local.combined_objects_traffic_manager_nested_endpoint, null)
+    traffic_manager_azure_endpoint                 = try(local.combined_objects_traffic_manager_azure_endpoint, null)
     traffic_manager_endpoint                       = try(local.combined_objects_traffic_manager_endpoint, null)
     traffic_manager_external_endpoint              = try(local.combined_objects_traffic_manager_external_endpoint, null)
     virtual_hub_connections                        = try(local.combined_objects_virtual_hub_connections, null)
