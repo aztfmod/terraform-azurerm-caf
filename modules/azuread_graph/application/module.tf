@@ -5,7 +5,7 @@ data "azuread_application_template" "template" {
 }
 
 resource "azuread_application" "app" {
-  display_name = var.settings.display_name
+  display_name = try(var.settings.display_name, var.settings.application_name, null)
   dynamic "api" {
     for_each = try(var.settings.api, null) != null ? [var.settings.api] : []
     content {
@@ -107,7 +107,7 @@ resource "azuread_application" "app" {
       }
     }
   }
-  sign_in_audience = try(var.settings.sign_in_audience, null)
+  sign_in_audience = can(var.settings.available_to_other_tenants) ? "AzureADMultipleOrgs" : try(var.settings.sign_in_audience, null)
   dynamic "single_page_application" {
     for_each = try(var.settings.single_page_application, null) != null ? [var.settings.single_page_application] : []
     content {

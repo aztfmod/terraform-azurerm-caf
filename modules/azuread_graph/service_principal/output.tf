@@ -114,3 +114,7 @@ output "type" {
   value = azuread_service_principal.serp.type
   description = "Identifies whether the service principal represents an application or a managed identity"
 }
+output "rbac_id" {
+  value = azuread_service_principal.serp.object_id
+  description = "The object ID of the service principal for role_mapping"
+}

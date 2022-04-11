@@ -109,7 +109,8 @@ module "azuread_graph_application_federated_identity_credential" {
   client_config   = local.client_config
   settings        = each.value
   remote_objects = {
-    #aad = local.aad
+    azuread_applications = local.combined_objects_azuread_applications
+    managed_identities   = local.combined_objects_managed_identities
   }
 }
 output "azuread_graph_application_federated_identity_credential" {
