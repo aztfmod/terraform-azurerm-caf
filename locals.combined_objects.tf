@@ -153,7 +153,8 @@ locals {
       {
         (local.client_config.landingzone_key) = merge(
           try(module.subscriptions, {}),
-          { ("logged_in_subscription") = { id = data.azurerm_subscription.primary.id } }
+          { ("logged_in_subscription") = { id = data.azurerm_subscription.primary.id } },
+          try(var.data_sources.subscriptions, {})
         )
       }
     ),
