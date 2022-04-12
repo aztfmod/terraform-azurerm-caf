@@ -6,12 +6,12 @@ locals {
   password         = try(var.settings.connection.password, try(data.azurerm_key_vault_secret.vm_password[0].value, null))
   timeout          = try(var.settings.connection.timeout, 30)
   runbook_path     = var.settings.runbook_path
-  private_key_file = "${path.cwd}/pk.key"
-  public_key_file  = "${path.cwd}/pk.pub"
+  private_key_file = format("%s/pk.key", path.cwd)
+  public_key_file  = format("%s/pk.pub", path.cwd)
   host_literals    = try(var.settings.connection.endpoint.host, null)
   host_private_ip  = try(var.settings.connection.endpoint.private_ip_address, null) != null ? coalesce(var.virtual_machines[var.client_config.landingzone_key][var.settings.connection.endpoint.private_ip_address.vm_key].nics[var.settings.connection.endpoint.private_ip_address.nic_key].private_ip_address, var.virtual_machines[var.settings.connection.endpoint.lz_key][var.settings.connection.endpoint.private_ip_address.vm_key].nics[var.settings.connection.endpoint.private_ip_address.nic_key].private_ip_address) : null
   host_public_ip   = try(var.settings.connection.endpoint.public_ip_address_key, null) != null ? coalesce(try(var.public_ip_addresses[var.client_config.landingzone_key][var.settings.connection.endpoint.public_ip_address_key].fqdn, var.public_ip_addresses[var.settings.connection.endpoint.lz_key][var.settings.connection.endpoint.public_ip_address_key].fqdn), try(var.public_ip_addresses[var.client_config.landingzone_key][var.settings.connection.endpoint.public_ip_address_key].ip_address, var.public_ip_addresses[var.settings.connection.endpoint.lz_key][var.settings.connection.endpoint.public_ip_address_key].ip_address)) : null
-  host             = coalesce(local.host_literals, local.host_public_ip, local.host_private_ip)
+  host             = coalesce(local.host_literals, local.host_private_ip, local.host_public_ip)
 }
 
 
@@ -20,18 +20,15 @@ resource "null_resource" "ansible_playbook_linux" {
   count      = lower(var.settings.connection.type) == "ssh" ? 1 : 0
 
   provisioner "local-exec" {
-    command = "ANSIBLE_HOST_KEY_CHECKING=False ansible-playbook -u ${local.user} -i '${local.host},' --private-key ${local.private_key_file} -e 'pub_key=${local.public_key_file}' ${local.runbook_path}"
+    command = "ANSIBLE_HOST_KEY_CHECKING=False ansible-playbook -u ${local.user} -i '${local.host},' --private-key ${local.private_key_file} -e 'pub_key=${local.public_key_file}' ${fileexists(local.runbook_path) ? local.runbook_path : format("%s/%s", path.cwd, local.runbook_path) }"
   }
-  # Commented out the removal of SSH keys as the agent cleans up the workspace after each run.
 
-  # provisioner "local-exec" {
-  #   when    = destroy
-  #   command = "rm ${path.cwd}/pk.pub"
-  # }
-  # provisioner "local-exec" {
-  #   when    = destroy
-  #   command = "rm ${path.cwd}/pk.key"
-  # }
+  provisioner "local-exec" {
+    command = "rm -f ${local.private_key_file}"
+  }
+  provisioner "local-exec" {
+    command = "rm -f ${local.public_key_file}"
+  }
 }
 
 

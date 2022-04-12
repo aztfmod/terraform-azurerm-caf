@@ -29,13 +29,9 @@ runbooks = {
       timeout          = 30
       bastion_settings = {}
     }
-    runbook_path = "/tf/caf/examples/compute/virtual_machine/108-single-linux-ansible-playbook/playbook.yml"
+    #
+    # Full path or relative sub-path to the chdir or lz folder
+    #
+    runbook_path = "examples/compute/virtual_machine/111-single-linux-ansible-playbook/playbook.yml"
   }
 }
-
-# runbooks_associations = {
-#   rba = {
-#     vm_key = "virtual_machines"
-#     runbook_key = "runbook1"
-#   }
-# }
