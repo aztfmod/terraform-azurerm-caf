@@ -33,6 +33,9 @@ vnets = {
         delegation = {
           name               = "serverFarms"
           service_delegation = "Microsoft.Web/serverFarms"
+          actions = [
+            "Microsoft.Network/virtualNetworks/subnets/action"
+          ]
         }
       }
     }
@@ -167,6 +170,10 @@ app_services = {
           }
         ]
       }
+    }
+
+    app_settings = {
+      "WEBSITE_NODE_DEFAULT_VERSION" = "6.9.1"
     }
   }
 }
