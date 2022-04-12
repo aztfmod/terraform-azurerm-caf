@@ -1,5 +1,5 @@
 output "id" {
-  value = local.os_type == "linux" ? try(azurerm_linux_virtual_machine_scale_set.vmss["linux"].id, null) : try(azurerm_windows_virtual_machine_scale_set.vmss["windows"].id, null)
+  value = local.os_type == "linux" ? try(azurerm_linux_virtual_machine_scale_set.vmss["linux"].id, azurerm_linux_virtual_machine_scale_set.vmss_autoscaled["linux"].id, null) : try(azurerm_windows_virtual_machine_scale_set.vmss["windows"].id, null)
 }
 
 output "os_type" {
