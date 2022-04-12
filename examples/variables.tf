@@ -891,3 +891,6 @@ variable "sentinel_dc_threat_intelligence" {
 variable "public_ip_prefixes" {
   default = {}
 }
+variable "runbooks" {
+  default = {}
+}
