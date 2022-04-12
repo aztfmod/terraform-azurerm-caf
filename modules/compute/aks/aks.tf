@@ -80,14 +80,16 @@ resource "azurerm_kubernetes_cluster" "aks" {
     vnet_subnet_id = can(var.settings.default_node_pool.vnet_subnet_id) || can(var.settings.default_node_pool.subnet.resource_id) ? try(var.settings.default_node_pool.vnet_subnet_id, var.settings.default_node_pool.subnet.resource_id) : var.subnets[try(var.settings.default_node_pool.subnet_key, var.settings.default_node_pool.subnet.key)].id
 
     dynamic "upgrade_settings" {
-      for_each = try(var.settings.default_node_pool.upgrade_settings, null) == null ? [] : [1]
+      for_each = try(var.settings.default_node_pool.upgrade_settings[*], {})
+
       content {
         max_surge = upgrade_settings.value.max_surge
       }
     }
 
     dynamic "kubelet_config" {
-      for_each = try(var.settings.default_node_pool.kubelet_config, null) == null ? [] : [1]
+      for_each = try(var.settings.default_node_pool.kubelet_config[*], {})
+
       content {
         allowed_unsafe_sysctls    = try(kubelet_config.value.allowed_unsafe_sysctls, null)
         container_log_max_line    = try(kubelet_config.value.container_log_max_line, null)
@@ -101,12 +103,16 @@ resource "azurerm_kubernetes_cluster" "aks" {
         topology_manager_policy   = try(kubelet_config.value.topology_manager_policy, null)
       }
     }
+
     dynamic "linux_os_config" {
-      for_each = try(var.settings.default_node_pool.linux_os_config, null) == null ? [] : [1]
+      for_each = try(var.settings.default_node_pool.linux_os_config[*], {})
+
       content {
         swap_file_size_mb = try(linux_os_config.value.allowed_unsafe_sysctls, null)
+
         dynamic "sysctl_config" {
-          for_each = try(linux_os_config.value.sysctl_config, null) == null ? [] : [1]
+          for_each = try(linux_os_config.value.sysctl_config[*], {})
+
           content {
             fs_aio_max_nr                      = try(sysctl_config.value.fs_aio_max_nr, null)
             fs_file_max                        = try(sysctl_config.value.fs_file_max, null)
@@ -192,6 +198,7 @@ resource "azurerm_kubernetes_cluster" "aks" {
         content {
           enabled                    = oms_agent.value.enabled
           log_analytics_workspace_id = try(oms_agent.value.log_analytics_workspace_id, try(var.diagnostics.log_analytics[oms_agent.value.log_analytics_key].id, null))
+
           dynamic "oms_agent_identity" {
             for_each = try(oms_agent.value.oms_agent_identity[*], {})
 
@@ -205,7 +212,8 @@ resource "azurerm_kubernetes_cluster" "aks" {
       }
 
       dynamic "ingress_application_gateway" {
-        for_each = can(var.settings.addon_profile.ingress_application_gateway) ? [var.settings.addon_profile.ingress_application_gateway] : []
+        for_each = try(var.settings.addon_profile.ingress_application_gateway[*], {})
+
         content {
           enabled      = ingress_application_gateway.value.enabled
           gateway_name = try(ingress_application_gateway.value.gateway_name, null)
@@ -250,16 +258,17 @@ resource "azurerm_kubernetes_cluster" "aks" {
   }
 
   dynamic "identity" {
-    for_each = try(var.settings.identity, null) == null ? [] : [1]
+    for_each = try(var.settings.identity[*], {})
 
     content {
-      type                      = var.settings.identity.type
-      user_assigned_identity_id = lower(var.settings.identity.type) == "userassigned" ? can(var.settings.identity.user_assigned_identity_id) ? var.settings.identity.user_assigned_identity_id : var.managed_identities[try(var.settings.identity.lz_key, var.client_config.landingzone_key)][var.settings.identity.managed_identity_key].id : null
+      type                      = identity.value.type
+      user_assigned_identity_id = lower(identity.value.type) == "userassigned" ? can(identity.value.user_assigned_identity_id) ? identity.value.user_assigned_identity_id : var.managed_identities[try(identity.value.lz_key, var.client_config.landingzone_key)][identity.value.managed_identity_key].id : null
     }
   }
 
   dynamic "kubelet_identity" {
-    for_each = try(var.settings.kubelet_identity, null) == null ? [] : [1]
+    for_each = try(var.settings.kubelet_identity[*], {})
+
     content {
       client_id                 = can(kubelet_identity.value.client_id) ? kubelet_identity.value.client_id : var.managed_identities[try(var.settings.kubelet_identity.lz_key, var.client_config.landingzone_key)][var.settings.kubelet_identity.managed_identity_key].client_id
       object_id                 = can(kubelet_identity.value.object_id) ? kubelet_identity.value.object_id : var.managed_identities[try(var.settings.kubelet_identity.lz_key, var.client_config.landingzone_key)][var.settings.kubelet_identity.managed_identity_key].principal_id
@@ -270,13 +279,16 @@ resource "azurerm_kubernetes_cluster" "aks" {
   kubernetes_version = try(var.settings.kubernetes_version, null)
 
   dynamic "linux_profile" {
-    for_each = try(var.settings.linux_profile, null) == null ? [] : [1]
+    for_each = try(var.settings.linux_profile[*], {})
+
     content {
-      admin_username = try(var.settings.linux_profile.admin_username, null)
+      admin_username = try(linux_profile.value.admin_username, null)
+
       dynamic "ssh_key" {
-        for_each = try(var.settings.linux_profile.ssh_key, null) == null ? [] : [1]
+        for_each = try(linux_profile.value.ssh_key[*], {})
+
         content {
-          key_data = try(var.settings.linux_profile.ssh_key.key_data, null)
+          key_data = try(ssh_key.value.key_data, null)
         }
       }
     }
@@ -285,20 +297,23 @@ resource "azurerm_kubernetes_cluster" "aks" {
   local_account_disabled = try(var.settings.local_account_disabled, false)
 
   dynamic "maintenance_window" {
-    for_each = try(var.settings.maintenance_window, null) == null ? [] : [1]
+    for_each = try(var.settings.maintenance_window[*], {})
+
     content {
       dynamic "allowed" {
-        for_each = var.settings.maintenance_window.allowed == null ? [] : [1]
+        for_each = try(maintenance_window.value.allowed, {})
+
         content {
-          day   = var.settings.maintenance_window.allowed.day
-          hours = var.settings.maintenance_window.allowed.hours
+          day   = allowed.value.day
+          hours = allowed.value.hours
         }
       }
       dynamic "not_allowed" {
-        for_each = var.settings.maintenance_window.not_allowed == null ? [] : [1]
+        for_each = try(maintenance_window.value.not_allowed, {})
+
         content {
-          end   = var.settings.maintenance_window.not_allowed.end
-          start = var.settings.maintenance_window.not_allowed.start
+          end   = not_allowed.value.end
+          start = not_allowed.value.start
         }
       }
     }
@@ -307,6 +322,7 @@ resource "azurerm_kubernetes_cluster" "aks" {
 
   dynamic "network_profile" {
     for_each = try(var.settings.network_profile[*], {})
+
     content {
       network_plugin     = try(network_profile.value.network_plugin, null)
       network_mode       = try(network_profile.value.network_mode, null)
@@ -320,6 +336,7 @@ resource "azurerm_kubernetes_cluster" "aks" {
 
       dynamic "load_balancer_profile" {
         for_each = try(network_profile.value.load_balancer_profile[*], {})
+
         content {
           managed_outbound_ip_count = try(load_balancer_profile.value.managed_outbound_ip_count, null)
           outbound_ip_prefix_ids    = try(load_balancer_profile.value.outbound_ip_prefix_ids, null)
@@ -359,9 +376,10 @@ resource "azurerm_kubernetes_cluster" "aks" {
 
   dynamic "service_principal" {
     for_each = try(var.settings.service_principal[*], {})
+
     content {
-      client_id     = var.settings.service_principal.client_id
-      client_secret = var.settings.service_principal.client_secret
+      client_id     = service_principal.value.client_id
+      client_secret = service_principal.value.client_secret
     }
   }
 
@@ -377,13 +395,13 @@ resource "azurerm_kubernetes_cluster" "aks" {
 
   dynamic "windows_profile" {
     for_each = try(var.settings.windows_profile[*], {})
+
     content {
-      admin_username = var.settings.windows_profile.admin_username
-      admin_password = var.settings.windows_profile.admin_password
-      license        = try(var.settings.windows_profile.license, null)
+      admin_username = windows_profile.value.admin_username
+      admin_password = windows_profile.value.admin_password
+      license        = try(windows_profile.value.license, null)
 
     }
-
   }
 }
 
@@ -409,8 +427,10 @@ resource "azurerm_kubernetes_cluster_node_pool" "nodepools" {
   enable_host_encryption = try(each.value.enable_host_encryption, false)
   enable_node_public_ip  = try(each.value.enable_node_public_ip, false)
   eviction_policy        = try(each.value.eviction_policy, null)
+
   dynamic "kubelet_config" {
-    for_each = try(each.value.kubelet_config, null) == null ? [] : [1]
+    for_each = try(each.value.kubelet_config[*], {})
+
     content {
       allowed_unsafe_sysctls    = try(kubelet_config.value.allowed_unsafe_sysctls, null)
       container_log_max_line    = try(kubelet_config.value.container_log_max_line, null)
@@ -425,11 +445,14 @@ resource "azurerm_kubernetes_cluster_node_pool" "nodepools" {
     }
   }
   dynamic "linux_os_config" {
-    for_each = try(each.value.linux_os_config, null) == null ? [] : [1]
+    for_each = try(each.value.linux_os_config, {})
+
     content {
       swap_file_size_mb = try(linux_os_config.value.allowed_unsafe_sysctls, null)
+
       dynamic "sysctl_config" {
-        for_each = try(linux_os_config.value.sysctl_config, null) == null ? [] : [1]
+        for_each = try(linux_os_config.value.sysctl_config[*], {})
+
         content {
           fs_aio_max_nr                      = try(sysctl_config.value.fs_aio_max_nr, null)
           fs_file_max                        = try(sysctl_config.value.fs_file_max, null)
@@ -466,18 +489,18 @@ resource "azurerm_kubernetes_cluster_node_pool" "nodepools" {
       transparent_huge_page_enabled = try(linux_os_config.value.transparent_huge_page_enabled, null)
     }
   }
-  fips_enabled             = try(each.value.fips_enabled, false)
-  kubelet_disk_type        = try(each.value.kubelet_disk_type, null)
-  max_pods                 = try(each.value.max_pods, null)
-  mode                     = try(each.value.mode, "User")
-  node_labels              = try(each.value.node_labels, null)
-  node_public_ip_prefix_id = try(each.value.node_public_ip_prefix_id, null)
-  node_taints              = try(each.value.node_taints, null)
-  orchestrator_version     = try(each.value.orchestrator_version, try(var.settings.kubernetes_version, null))
-  os_disk_size_gb          = try(each.value.os_disk_size_gb, null)
-  os_disk_type             = try(each.value.os_disk_type, null)
-  pod_subnet_id            = can(each.value.pod_subnet_key) == false || can(each.value.pod_subnet.key) == false || can(each.value.pod_subnet_id) || can(each.value.pod_subnet.resource_id) ? try(each.value.pod_subnet_id, each.value.pod_subnet.resource_id, null) : var.subnets[try(each.value.pod_subnet.key, each.value.pod_subnet_key)].id
 
+  fips_enabled                 = try(each.value.fips_enabled, false)
+  kubelet_disk_type            = try(each.value.kubelet_disk_type, null)
+  max_pods                     = try(each.value.max_pods, null)
+  mode                         = try(each.value.mode, "User")
+  node_labels                  = try(each.value.node_labels, null)
+  node_public_ip_prefix_id     = try(each.value.node_public_ip_prefix_id, null)
+  node_taints                  = try(each.value.node_taints, null)
+  orchestrator_version         = try(each.value.orchestrator_version, try(var.settings.kubernetes_version, null))
+  os_disk_size_gb              = try(each.value.os_disk_size_gb, null)
+  os_disk_type                 = try(each.value.os_disk_type, null)
+  pod_subnet_id                = can(each.value.pod_subnet_key) == false || can(each.value.pod_subnet.key) == false || can(each.value.pod_subnet_id) || can(each.value.pod_subnet.resource_id) ? try(each.value.pod_subnet_id, each.value.pod_subnet.resource_id, null) : var.subnets[try(each.value.pod_subnet.key, each.value.pod_subnet_key)].id
   os_sku                       = try(each.value.os_sku, null)
   os_type                      = try(each.value.os_type, null)
   priority                     = try(each.value.priority, null)
@@ -485,8 +508,10 @@ resource "azurerm_kubernetes_cluster_node_pool" "nodepools" {
   spot_max_price               = try(each.value.spot_max_price, null)
   tags                         = merge(try(var.settings.default_node_pool.tags, {}), try(each.value.tags, {}))
   ultra_ssd_enabled            = try(each.value.ultra_ssd_enabled, false)
+  
   dynamic "upgrade_settings" {
-    for_each = try(each.value.upgrade_settings, null) == null ? [] : [1]
+    for_each = try(each.value.upgrade_settings[*], {})
+
     content {
       max_surge = upgrade_settings.value.max_surge
     }
