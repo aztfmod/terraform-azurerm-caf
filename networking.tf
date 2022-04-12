@@ -66,16 +66,9 @@ module "virtual_subnets" {
   enforce_private_link_endpoint_network_policies = try(each.value.enforce_private_link_endpoint_network_policies, false)
   enforce_private_link_service_network_policies  = try(each.value.enforce_private_link_service_network_policies, false)
 
-  resource_group_name = coalesce(
-    try(local.combined_objects_networking[each.value.vnet.lz_key][each.value.vnet.key].resource_group_name, null),
-    try(local.combined_objects_networking[local.client_config.landingzone_key][each.value.vnet.key].resource_group_name, null),
-    try(split("/", each.value.vnet.id)[4], null)
-  )
-  virtual_network_name = coalesce(
-    try(local.combined_objects_networking[each.value.vnet.lz_key][each.value.vnet.key].name, null),
-    try(local.combined_objects_networking[local.client_config.landingzone_key][each.value.vnet.key].name, null),
-    try(split("/", each.value.vnet.id)[8], null)
-  )
+  resource_group_name  = can(each.value.vnet.key) ? local.combined_objects_networking[try(each.value.vnet.lz_key, local.client_config.landingzone_key)][each.value.vnet.key].resource_group_name : split("/", each.value.vnet.id)[4])
+  virtual_network_name = can(each.value.vnet.key) ? local.combined_objects_networking[try(each.value.vnet.lz_key, local.client_config.landingzone_key)][each.value.vnet.key].name : split("/", each.value.vnet.id)[8])
+
 }
 
 resource "azurerm_subnet_route_table_association" "rt" {
@@ -207,21 +200,14 @@ resource "azurerm_virtual_network_peering" "peering" {
   for_each   = local.networking.vnet_peerings
 
   name                         = azurecaf_name.peering[each.key].result
-  virtual_network_name         = try(each.value.from.virtual_network_name, null) != null ? each.value.from.virtual_network_name : try(each.value.from.lz_key, null) == null ? try(local.combined_objects_networking[local.client_config.landingzone_key][each.value.from.vnet_key].name, null) : try(local.combined_objects_networking[each.value.from.lz_key][each.value.from.vnet_key].name, null)
-  resource_group_name          = try(each.value.from.resource_group_name, null) != null ? each.value.from.resource_group_name : try(each.value.from.lz_key, null) == null ? try(local.combined_objects_networking[local.client_config.landingzone_key][each.value.from.vnet_key].resource_group_name, null) : try(local.combined_objects_networking[each.value.from.lz_key][each.value.from.vnet_key].resource_group_name, null)
-  remote_virtual_network_id    = try(each.value.to.remote_virtual_network_id, null) != null ? each.value.to.remote_virtual_network_id : try(each.value.to.lz_key, null) == null ? try(local.combined_objects_networking[local.client_config.landingzone_key][each.value.to.vnet_key].id, null) : try(local.combined_objects_networking[each.value.to.lz_key][each.value.to.vnet_key].id, null)
+  virtual_network_name         = can(each.value.from.virtual_network_name) ? each.value.from.virtual_network_name : local.combined_objects_networking[try(each.value.from.lz_key, local.client_config.landingzone_key)][each.value.from.vnet_key].name
+  resource_group_name          = can(each.value.from.resource_group_name) ? each.value.from.resource_group_name : local.combined_objects_networking[try(each.value.from.lz_key, local.client_config.landingzone_key)][each.value.from.vnet_key].resource_group_name
+  remote_virtual_network_id    = can(each.value.to.remote_virtual_network_id) ? each.value.to.remote_virtual_network_id : local.combined_objects_networking[try(each.value.to.lz_key, local.client_config.landingzone_key)][each.value.to.vnet_key].id
   allow_virtual_network_access = try(each.value.allow_virtual_network_access, true)
   allow_forwarded_traffic      = try(each.value.allow_forwarded_traffic, false)
   allow_gateway_transit        = try(each.value.allow_gateway_transit, false)
   use_remote_gateways          = try(each.value.use_remote_gateways, false)
 
-  lifecycle {
-    ignore_changes = [
-      remote_virtual_network_id,
-      resource_group_name,
-      virtual_network_name
-    ]
-  }
 }
 
 #
