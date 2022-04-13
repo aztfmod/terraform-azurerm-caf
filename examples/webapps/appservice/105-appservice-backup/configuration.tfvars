@@ -42,6 +42,24 @@ storage_accounts = {
       }
     }
   }
+  logs = {
+    name               = "sa-logs"
+    resource_group_key = "webapp_backup"
+    # Account types are BlobStorage, BlockBlobStorage, FileStorage, Storage and StorageV2. Defaults to StorageV2
+    account_kind = "BlobStorage"
+    # Account Tier options are Standard and Premium. For BlockBlobStorage and FileStorage accounts only Premium is valid.
+    account_tier = "Standard"
+    #  Valid options are LRS, GRS, RAGRS, ZRS, GZRS and RAGZRS
+    account_replication_type = "LRS" # https://docs.microsoft.com/en-us/azure/storage/common/storage-redundancy
+    containers = {
+      logs = {
+        name = "webapp-logs"
+      }
+      http_logs = {
+        name = "webapp-http-logs"
+      }
+    }
+  }
 }
 
 app_services = {
@@ -49,6 +67,10 @@ app_services = {
     resource_group_key   = "webapp_backup"
     name                 = "webapp-backup"
     app_service_plan_key = "asp1"
+
+    app_settings = {
+      "WEBSITE_NODE_DEFAULT_VERSION" = "6.9.1"
+    }
 
     settings = {
       enabled = true
@@ -81,6 +103,69 @@ app_services = {
           retention_period_in_days = 1
           start_time               = "2021-02-08T00:00:00Z"
         }
+      }
+
+      logs = {
+        application_logs = {
+          file_system_level = "Error"   # can be Warning, Information, Verbose or Off
+          azure_blob_storage = {
+            level             = "Error"   # can be Warning, Information, Verbose or Off
+            retention_in_days = 60
+          }
+        }
+
+        detailed_error_messages_enabled = true
+        failed_request_tracing_enabled  = true
+
+        # lz_key = ""  # if in remote landingzone
+        storage_account_key = "logs"
+        container_key       = "logs"
+
+        sas_policy = {
+          expire_in_days = 30
+          rotation = {
+            #
+            # Set how often the sas token must be rotated. When passed the renewal time, running the terraform plan / apply will change to a new sas token
+            # Only set one of the value
+            #
+
+            # mins = 1 # only recommended for CI and demo
+            days = 7
+            # months = 1
+          }
+        }
+
+        http_logs = {
+          azure_blob_storage = {
+            retention_in_days = 30
+          }
+
+          #
+          # Either azure_blob_storage or file_system can be used but not both at the same time
+          #
+
+          # file_system = {
+          #   retention_in_days = 30
+          #   retention_in_mb   = 2
+          # }
+
+          storage_account_key = "logs"
+          container_key       = "http_logs"
+          sas_policy = {
+            expire_in_days = 30
+            rotation = {
+              #
+              # Set how often the sas token must be rotated. When passed the renewal time, running the terraform plan / apply will change to a new sas token
+              # Only set one of the value
+              #
+
+              # mins = 1 # only recommended for CI and demo
+              days = 7
+              # months = 1
+            }
+          }
+        }
+
       }
     }
   }
