@@ -343,7 +343,7 @@ resource "azurerm_kubernetes_cluster" "aks" {
   private_dns_zone_id                 = try(var.private_dns_zone_id, null)
   private_cluster_public_fqdn_enabled = try(var.settings.private_cluster_public_fqdn_enabled, null)
 
-  Enabled RBAC
+  #Enabled RBAC
   dynamic "role_based_access_control" {
     for_each = try(var.settings.role_based_access_control[*], {})
 
