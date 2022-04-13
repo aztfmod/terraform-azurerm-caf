@@ -5,6 +5,7 @@ module "custom_roles" {
   global_settings      = local.global_settings
   subscription_primary = data.azurerm_subscription.primary.id
   custom_role          = each.value
+  assignable_scopes    = local.assignable_scopes[each.key]
 }
 
 #
@@ -127,7 +128,7 @@ locals {
       (var.current_landingzone_key) = merge(local.combined_objects_log_analytics, local.combined_diagnostics.log_analytics)
     }
   )
-    
+
   logged_in = tomap(
     {
       (var.current_landingzone_key) = {
@@ -140,6 +141,24 @@ locals {
       }
     }
   )
+
+  # Process assingnable_scopes and return a list with the object ids
+  # assignment_type: can be any of the `local.services_roles` keys
+  # attrs:
+  #   id:     An object id provided as string - takes precedence over lz_key / key
+  #   lz_key: Remote landingzone key
+  #   key:    The resource key
+  # example:
+  # local.services_roles["resource_groups"]["LANDING_ZONE_KEY"]["RESOURCE_GROUP_KEY"].id
+  assignable_scopes = {
+    for k, v in try(var.custom_role_definitions, {}) : k => flatten([
+      for assignment_type, attrs in try(v.assignable_scopes, {}) : [
+        for attr in attrs : [
+          try(attr.id, local.services_roles[assignment_type][try(attr.lz_key, var.current_landingzone_key)][attr.key].id)
+        ]
+      ]
+    ])
+  }
 
   roles_to_process = {
     for mapping in
