@@ -1,15 +1,14 @@
 resource "azurerm_traffic_manager_azure_endpoint" "azure_endpoint" {
-
   name                    = var.settings.name
   priority                = try(var.settings.priority, null )
   profile_id              = var.profile_id
   weight                  = try(var.settings.weight, "1" )
   enabled                 = try(var.settings.enabled, "true" )
   geo_mappings            = try(var.settings.geo_mappings , null )
-  #target_resource_id      = var.remote_objects.public_ip_addresses 
   target_resource_id  = coalesce(
         try(var.remote_objects.public_ip_addresses, null),
-        try(var.remote_objects.app_services, null)
+        try(var.remote_objects.app_services, null),
+        try(var.remote_objects.app_services_slot, null)
 
       )
 

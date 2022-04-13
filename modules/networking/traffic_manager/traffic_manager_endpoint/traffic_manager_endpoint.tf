@@ -1,5 +1,4 @@
 resource "azurerm_traffic_manager_endpoint" "endpoint" {
-
   name                = var.settings.name
   resource_group_name = var.resource_group_name
   profile_name        = var.profile_name

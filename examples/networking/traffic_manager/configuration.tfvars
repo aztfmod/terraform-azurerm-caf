@@ -2,20 +2,26 @@ global_settings = {
   default_region = "region1"
   regions = {
     region1 = "southeastasia"
+    region2 = "westus2"
   }
 }
 
 resource_groups = {
   traffic_manager = {
-    name = "trafficmanagervk"
+    name = "trafficmanager-1"
+    region = "region1"
+  }
+  traffic_manager1 = {
+    name = "trafficmanager-2"
+    region = "region2"
   }
 }
 
 traffic_manager_profile = {
   parent = {
-    name =  "trafficmanagervk"
+    name =  "trafficmanager-1"
     resource_group_key = "traffic_manager"
-    profile_status = "Disabled"
+    profile_status = "Enabled"
     traffic_view_enabled = "false"
     max_return = "3"    
     dns_config = {
@@ -30,15 +36,14 @@ traffic_manager_profile = {
        timeout_in_seconds           = 8
        tolerated_number_of_failures = 5
     }
-
-   
     tags = {
-       name = "something"
+       name = "trafficmanager-1"
     }
-  }
+   }
+
   child = {
-    name =  "trafficmanagervks"
-    resource_group_key = "traffic_manager"
+    name =  "trafficmanager-2"
+    resource_group_key = "traffic_manager1"
     profile_status = "Disabled"
     dns_config = {
        relative_name = "trafficmanagervks"
@@ -52,16 +57,15 @@ traffic_manager_profile = {
        timeout_in_seconds           = 8
        tolerated_number_of_failures = 5
     }
-
     tags = {
-       name = "something2"
+       name = "trafficmanager-2"
+     }
     }
-  }
 }
 
 traffic_manager_endpoint = {
   example_1 = {
-      name                = "test"
+      name                = "example-externalEndpoints-1"
       resource_group_key  = "traffic_manager"
       target              = "terraform.io"
       type                = "externalEndpoints"
@@ -69,6 +73,7 @@ traffic_manager_endpoint = {
       weight              = 100
       traffic_manager_profile = {
         key = "parent"
+        # lz_key = ""
       }
       custom_header  = {
         name = "test"
@@ -76,7 +81,7 @@ traffic_manager_endpoint = {
       }
   }
   example_2 = {
-      name                = "test2"
+      name                = "example-externalEndpoints-2"
       resource_group_key  = "traffic_manager"
       target              = "terraforms.io"
       type                = "externalEndpoints"
@@ -84,6 +89,7 @@ traffic_manager_endpoint = {
       weight              = 100
       traffic_manager_profile = {
         key = "parent"
+        # lz_key = ""
       }
   }
 
@@ -93,56 +99,79 @@ traffic_manager_endpoint = {
 
 traffic_manager_external_endpoint = {
   example_1 = {
-        name       = "example-endpoints"
+        name       = "example-external_endpoint"
         weight     = 100
         target     = "www.example.com"
         traffic_manager_profile = {
         key = "child"
+        # lz_key = ""
       }
   }
 }
-/*
+
+
 traffic_manager_nested_endpoint = {
   example_1 = {
-     name                = "example-endpoint"
-     priority            = 100
+     name                    = "example-nested_endpoint"
+     priority                = 100
      minimum_child_endpoints = 5
      custom_header  = {
-        name = "test"
-        value = "host:contoso.com,customheader:contoso"
+        name = "custom_header_1"
+        value = "contoso.com"
       }
      traffic_manager_profile = {
         key = "child"
-  }
+        # lz_key = ""
+      }
      target_traffic_manager_profile = {
         key = "parent"
-  }
+        # lz_key = ""
+     }
+ } 
 }
-}
-*/
+
 
 traffic_manager_azure_endpoint = {
    example_1 = {
-      name = "test123"
+      name = "public_ip_address_example"
       weight = 100
       public_ip_address =  {
         key = "example_vm_pip1_rg1"
+        # lz_key = ""
       }
       traffic_manager_profile = {
         key = "parent"
-  }
+        # lz_key = ""
+      }
    }
    
-    example_2 = {
-      name = "test1234"
+   example_2 = {
+      name = "app_services_example"
       weight = 101
-      app_services_key =  {
-        key = "asp1"
+      app_services =  {
+        key = "webapp1"
+        # lz_key = ""
+      }
+      traffic_manager_profile = {
+        key = "child"
+        # lz_key = ""
+     } 
+   }
+   
+   example_3 = {
+      name = "app_services_slot_example"
+      weight = 103
+      app_services =  {
+        slot_key = "smoke_test"
+        key = "webapp2"
+        # lz_key = ""
       }
       traffic_manager_profile = {
         key = "parent"
-  }
+        # lz_key = ""
+    }
    }
+   
    
 }
 
@@ -155,28 +184,55 @@ public_ip_addresses = {
     allocation_method       = "Static"
     ip_version              = "IPv4"
     idle_timeout_in_minutes = "4"
-    domain_name_label       = "slavko"
+    domain_name_label       = "somednsname"
   }
 }
 
 app_service_plans = {
   asp1 = {
-    resource_group_key = "traffic_manager"
-    name               = "asp-simple-vk"
+    resource_group_key = "traffic_manager1"
+    name               = "asp-simple-1"
 
     sku = {
-      tier = "Standard"
+      tier = "Basic"
       size = "S1"
     }
+
+  }
+  asp2 = {
+    resource_group_key = "traffic_manager1"
+    name               = "asp-simple-2"
+
+    sku = {
+      tier = "Basic"
+      size = "S1"
+    }
+ 
   }
 }
 
 app_services = {
   webapp1 = {
-    resource_group_key   = "traffic_manager"
-    name                 = "webapp-simple-vk"
+    resource_group_key   = "traffic_manager1"
+    name                 = "webapp-simple-1"
     app_service_plan_key = "asp1"
 
+    settings = {
+      enabled = true
+    }
+  }
+  webapp2 = {
+    resource_group_key   = "traffic_manager1"
+    name                 = "webapp-simple-2"
+    app_service_plan_key = "asp2"
+    slots = {
+      smoke_test = {
+        name = "smoke-test1"
+      }
+      ab_test = {
+        name = "AB-testing1"
+      }
+    }
     settings = {
       enabled = true
     }

@@ -43,9 +43,10 @@ module "traffic_manager_nested_endpoint" {
   depends_on = [module.traffic_manager_profile]
   source   = "./modules/networking/traffic_manager/traffic_manager_nested_endpoint"
   for_each = local.networking.traffic_manager_nested_endpoint
+  settings            = each.value
   target_resource_id = local.combined_objects_traffic_manager_profile[try(each.value.target_traffic_manager_profile.lz_key, local.client_config.landingzone_key)][each.value.target_traffic_manager_profile.key].id
   profile_id  = local.combined_objects_traffic_manager_profile[try(each.value.traffic_manager_profile.lz_key, local.client_config.landingzone_key)][each.value.traffic_manager_profile.key].id
-  settings            = each.value
+  
  
  
 }
@@ -64,6 +65,7 @@ module "traffic_manager_azure_endpoint" {
   remote_objects = {
     public_ip_addresses  = try(local.combined_objects_public_ip_addresses[try(each.value.public_ip_addresses.lz_key, local.client_config.landingzone_key)][each.value.public_ip_address.key].id, null)
     app_services         = try(local.combined_objects_app_services[try(each.value.app_services.lz_key, local.client_config.landingzone_key)][each.value.app_services.key].id, null)
+    app_services_slot    = try(local.combined_objects_app_services[try(each.value.app_services.lz_key, local.client_config.landingzone_key)][each.value.app_services.key].slot[each.value.app_services.slot_key].id, null)
   }
 
 }

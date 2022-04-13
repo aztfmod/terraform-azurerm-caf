@@ -102,6 +102,11 @@ locals {
   combined_objects_storage_accounts                               = merge(tomap({ (local.client_config.landingzone_key) = module.storage_accounts }), try(var.remote_objects.storage_accounts, {}))
   combined_objects_storage_containers                             = merge(tomap({ (local.client_config.landingzone_key) = module.storage_containers }), try(var.remote_objects.storage_containers, {}))
   combined_objects_synapse_workspaces                             = merge(tomap({ (local.client_config.landingzone_key) = module.synapse_workspaces }), try(var.remote_objects.synapse_workspaces, {}))
+  combined_objects_traffic_manager_azure_endpoint                 = merge(tomap({ (local.client_config.landingzone_key) = module.traffic_manager_azure_endpoint }), try(var.remote_objects.traffic_manager_azure_endpoint, {}))
+  combined_objects_traffic_manager_endpoint                       = merge(tomap({ (local.client_config.landingzone_key) = module.traffic_manager_endpoint }), try(var.remote_objects.traffic_manager_endpoint, {}))
+  combined_objects_traffic_manager_external_endpoint              = merge(tomap({ (local.client_config.landingzone_key) = module.traffic_manager_external_endpoint }), try(var.remote_objects.traffic_manager_external_endpoint, {}))
+  combined_objects_traffic_manager_nested_endpoint                = merge(tomap({ (local.client_config.landingzone_key) = module.traffic_manager_nested_endpoint }), try(var.remote_objects.traffic_manager_nested_endpoint, {}))
+  combined_objects_traffic_manager_profile                        = merge(tomap({ (local.client_config.landingzone_key) = module.traffic_manager_profile }), try(var.remote_objects.traffic_manager_profile, {}))
   combined_objects_virtual_hub_connections                        = merge(tomap({ (local.client_config.landingzone_key) = azurerm_virtual_hub_connection.vhub_connection }), try(var.remote_objects.vhub_peerings, {}), try(var.remote_objects.virtual_hub_connections, {}))
   combined_objects_virtual_hub_route_tables                       = merge(tomap({ (local.client_config.landingzone_key) = azurerm_virtual_hub_route_table.route_table }), try(var.remote_objects.virtual_hub_route_tables, {}))
   combined_objects_virtual_hubs                                   = merge(tomap({ (local.client_config.landingzone_key) = module.virtual_hubs }), try(var.remote_objects.virtual_hubs, {}))
@@ -118,12 +123,6 @@ locals {
   combined_objects_wvd_applications                               = merge(tomap({ (local.client_config.landingzone_key) = module.wvd_applications }), try(var.remote_objects.wvd_applications, {}))
   combined_objects_wvd_host_pools                                 = merge(tomap({ (local.client_config.landingzone_key) = module.wvd_host_pools }), try(var.remote_objects.wvd_host_pools, {}))
   combined_objects_wvd_workspaces                                 = merge(tomap({ (local.client_config.landingzone_key) = module.wvd_workspaces }), try(var.remote_objects.wvd_workspaces, {}))
-  combined_objects_traffic_manager_profile                        = merge(tomap({ (local.client_config.landingzone_key) = module.traffic_manager_profile }), try(var.remote_objects.traffic_manager_profile, {}))
-  combined_objects_traffic_manager_nested_endpoint                = merge(tomap({ (local.client_config.landingzone_key) = module.traffic_manager_nested_endpoint }), try(var.remote_objects.traffic_manager_nested_endpoint, {}))
-  combined_objects_traffic_manager_endpoint                       = merge(tomap({ (local.client_config.landingzone_key) = module.traffic_manager_endpoint }), try(var.remote_objects.traffic_manager_endpoint, {}))
-  combined_objects_traffic_manager_external_endpoint              = merge(tomap({ (local.client_config.landingzone_key) = module.traffic_manager_external_endpoint }), try(var.remote_objects.traffic_manager_external_endpoint, {}))
-  combined_objects_traffic_manager_azure_endpoint                 = merge(tomap({ (local.client_config.landingzone_key) = module.traffic_manager_azure_endpoint }), try(var.remote_objects.traffic_manager_azure_endpoint, {}))
-
   combined_objects_subscriptions = merge(
     tomap(
       {
