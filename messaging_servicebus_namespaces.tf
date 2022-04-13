@@ -10,9 +10,9 @@ module "servicebus_namespaces" {
   resource_groups = local.combined_objects_resource_groups
 
   remote_objects = {
-    resource_groups   = local.combined_objects_resource_groups
-    vnets             = local.combined_objects_networking
-    private_dns       = local.combined_objects_private_dns
+    resource_groups = local.combined_objects_resource_groups
+    vnets           = local.combined_objects_networking
+    private_dns     = local.combined_objects_private_dns
   }
 
 }

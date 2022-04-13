@@ -13,7 +13,7 @@ resource "azuread_application" "app" {
   public_client              = try(var.settings.public_client, false)
   oauth2_allow_implicit_flow = try(var.settings.oauth2_allow_implicit_flow, false)
   group_membership_claims    = try(var.settings.group_membership_claims, "All")
-  prevent_duplicate_names    = try(var.settings.identifier_uris, false)
+  prevent_duplicate_names    = try(var.settings.prevent_duplicate_names, false)
 
   dynamic "required_resource_access" {
     for_each = var.azuread_api_permissions

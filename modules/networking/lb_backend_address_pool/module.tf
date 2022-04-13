@@ -10,12 +10,8 @@ resource "azurecaf_name" "lb" {
   use_slug      = var.global_settings.use_slug
 }
 resource "azurerm_lb_backend_address_pool" "lb" {
-  name = azurecaf_name.lb.result
-  loadbalancer_id = coalesce(
-    try(var.remote_objects.lb[var.settings.loadbalancer.lz_key][var.settings.loadbalancer.key].id, null),
-    try(var.remote_objects.lb[var.client_config.landingzone_key][var.settings.loadbalancer.key].id, null),
-    try(var.settings.loadbalancer.id, null)
-  )
+  name            = azurecaf_name.lb.result
+  loadbalancer_id = can(var.settings.loadbalancer.id) ? var.settings.loadbalancer.id : var.remote_objects.lb[try(var.settings.loadbalancer.lz_key, var.client_config.landingzone_key)][var.settings.loadbalancer.key].id
   dynamic "tunnel_interface" {
     for_each = try(var.settings.tunnel_interface, null) != null ? [var.settings.tunnel_interface] : []
     content {
