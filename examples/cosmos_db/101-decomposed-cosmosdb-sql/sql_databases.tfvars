@@ -51,7 +51,7 @@ cosmos_dbs = {
     }
 
     # [optional] - Other DB API supoorted - MongoDB, Table, Gramlin GraphDB
-    
+
   }
 }
 
@@ -66,7 +66,7 @@ cosmosdb_sql_databases = {
       # name = "bylc-cosmos-cosmosdb-ex101" #for literals
       # rg_name = "bylc-rg-cosmosdb" #for literals
       # location = "eastus2" #for literals
-    } 
+    }
     containers = {
       container_re1 = {
         name               = "container-ex101"
@@ -78,4 +78,4 @@ cosmosdb_sql_databases = {
       }
     }
   }
-  }
+}

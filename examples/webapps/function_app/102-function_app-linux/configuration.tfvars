@@ -28,7 +28,7 @@ app_service_plans = {
     name               = "azure-functions-test-service-plan"
     resource_group_key = "rg1"
     region             = "region1"
-    kind               = "Linux"
+    kind               = "functionapp"
     reserved           = true
 
     sku = {

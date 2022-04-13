@@ -92,6 +92,7 @@ module "example" {
     dedicated_hosts                     = var.dedicated_hosts
     machine_learning_compute_instance   = var.machine_learning_compute_instance
     proximity_placement_groups          = var.proximity_placement_groups
+    runbooks                            = var.runbooks
     virtual_machine_scale_sets          = var.virtual_machine_scale_sets
     virtual_machines                    = var.virtual_machines
     vmware_private_clouds               = var.vmware_private_clouds
@@ -197,6 +198,7 @@ module "example" {
     private_dns_vnet_links                                  = var.private_dns_vnet_links
     private_endpoints                                       = var.private_endpoints
     public_ip_addresses                                     = var.public_ip_addresses
+    public_ip_prefixes                                      = var.public_ip_prefixes
     route_tables                                            = var.route_tables
     vhub_peerings                                           = var.vhub_peerings
     virtual_hub_connections                                 = var.virtual_hub_connections
@@ -214,14 +216,32 @@ module "example" {
   }
 
   security = {
-    disk_encryption_sets          = var.disk_encryption_sets
-    dynamic_keyvault_secrets      = var.dynamic_keyvault_secrets
-    keyvault_certificate_issuers  = var.keyvault_certificate_issuers
-    keyvault_certificate_requests = var.keyvault_certificate_requests
-    keyvault_keys                 = var.keyvault_keys
-    keyvault_certificates         = var.keyvault_certificates
-    lighthouse_definitions        = var.lighthouse_definitions
+    disk_encryption_sets                = var.disk_encryption_sets
+    dynamic_keyvault_secrets            = var.dynamic_keyvault_secrets
+    keyvault_certificate_issuers        = var.keyvault_certificate_issuers
+    keyvault_certificate_requests       = var.keyvault_certificate_requests
+    keyvault_keys                       = var.keyvault_keys
+    keyvault_certificates               = var.keyvault_certificates
+    lighthouse_definitions              = var.lighthouse_definitions
+    sentinel                            = var.sentinel
+    sentinel_automation_rules           = var.sentinel_automation_rules
+    sentinel_watchlists                 = var.sentinel_watchlists
+    sentinel_watchlist_items            = var.sentinel_watchlist_items
+    sentinel_ar_fusions                 = var.sentinel_ar_fusions
+    sentinel_ar_ml_behavior_analytics   = var.sentinel_ar_ml_behavior_analytics
+    sentinel_ar_ms_security_incidents   = var.sentinel_ar_ms_security_incidents
+    sentinel_ar_scheduled               = var.sentinel_ar_scheduled
+    sentinel_dc_aad                     = var.sentinel_dc_aad
+    sentinel_dc_app_security            = var.sentinel_dc_app_security
+    sentinel_dc_aws                     = var.sentinel_dc_aws
+    sentinel_dc_azure_threat_protection = var.sentinel_dc_azure_threat_protection
+    sentinel_dc_ms_threat_protection    = var.sentinel_dc_ms_threat_protection
+    sentinel_dc_office_365              = var.sentinel_dc_office_365
+    sentinel_dc_security_center         = var.sentinel_dc_security_center
+    sentinel_dc_threat_intelligence     = var.sentinel_dc_threat_intelligence
+
   }
+
   shared_services = {
     consumption_budgets            = var.consumption_budgets
     image_definitions              = var.image_definitions

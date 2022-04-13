@@ -74,6 +74,22 @@ resource "azurerm_key_vault_secret" "sql_admin" {
   key_vault_id = var.keyvault_id
 }
 
+resource "azurerm_key_vault_secret" "mysql_admin_login_name" {
+  count = try(var.settings.administrator_login_password, null) == null ? 1 : 0
+
+  name         = format("%s-login-name", azurecaf_name.mysql.result)
+  value        = format("%s@%s", var.settings.administrator_login, azurerm_mysql_server.mysql.fqdn)
+  key_vault_id = var.keyvault_id
+}
+
+resource "azurerm_key_vault_secret" "mysql_fqdn" {
+  count = try(var.settings.administrator_login_password, null) == null ? 1 : 0
+
+  name         = format("%s-fqdn", azurecaf_name.mysql.result)
+  value        = azurerm_mysql_server.mysql.fqdn
+  key_vault_id = var.keyvault_id
+}
+
 resource "azurerm_mysql_active_directory_administrator" "aad_admin" {
   count = try(var.settings.azuread_administrator, null) == null ? 0 : 1
 
