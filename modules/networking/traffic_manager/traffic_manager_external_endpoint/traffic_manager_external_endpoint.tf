@@ -1,6 +1,4 @@
 resource "azurerm_traffic_manager_external_endpoint" "external_endpoint" {
-
-  
   name              = var.settings.name
   profile_id        = var.profile_id
   weight            = var.settings.weight

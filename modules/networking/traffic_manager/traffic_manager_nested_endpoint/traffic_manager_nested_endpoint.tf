@@ -1,5 +1,4 @@
 resource "azurerm_traffic_manager_nested_endpoint" "nested_endpoint" {
-
   name                    = var.settings.name
   target_resource_id      = var.target_resource_id
   priority                = try(var.settings.priority, null )

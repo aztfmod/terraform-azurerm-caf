@@ -270,6 +270,11 @@ locals {
     private_dns_vnet_links                                  = try(var.networking.private_dns_vnet_links, {})
     public_ip_addresses                                     = try(var.networking.public_ip_addresses, {})
     route_tables                                            = try(var.networking.route_tables, {})
+    traffic_manager_profile                                 = try(var.networking.traffic_manager_profile, {})
+    traffic_manager_nested_endpoint                         = try(var.networking.traffic_manager_nested_endpoint, {})
+    traffic_manager_endpoint                                = try(var.networking.traffic_manager_endpoint, {})
+    traffic_manager_external_endpoint                       = try(var.networking.traffic_manager_external_endpoint, {})
+    traffic_manager_azure_endpoint                          = try(var.networking.traffic_manager_azure_endpoint, {})
     vhub_peerings                                           = try(var.networking.vhub_peerings, {})
     virtual_hub_connections                                 = try(var.networking.virtual_hub_connections, {})
     virtual_hub_er_gateway_connections                      = try(var.networking.virtual_hub_er_gateway_connections, {})
@@ -283,11 +288,6 @@ locals {
     virtual_subnets                                         = try(var.networking.virtual_subnets, {})
     vpn_gateway_connections                                 = try(var.networking.vpn_gateway_connections, {})
     vpn_sites                                               = try(var.networking.vpn_sites, {})
-    traffic_manager_profile                                 = try(var.networking.traffic_manager_profile, {})
-    traffic_manager_nested_endpoint                         = try(var.networking.traffic_manager_nested_endpoint, {})
-    traffic_manager_endpoint                                = try(var.networking.traffic_manager_endpoint, {})
-    traffic_manager_external_endpoint                       = try(var.networking.traffic_manager_external_endpoint, {})
-    traffic_manager_azure_endpoint                          =  try(var.networking.traffic_manager_azure_endpoint, {})
   }
 
   object_id = coalesce(var.logged_user_objectId, var.logged_aad_app_objectId, try(data.azurerm_client_config.current.object_id, null), try(data.azuread_service_principal.logged_in_app.0.object_id, null))
