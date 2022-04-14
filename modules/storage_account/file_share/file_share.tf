@@ -6,7 +6,7 @@ resource "azurerm_storage_share" "fs" {
   storage_account_name = var.storage_account_name
   quota                = try(var.settings.quota, null)
   metadata             = try(var.settings.metadata, null)
-  enabled_protocol     = try(var.settings.enabled_protocol, "SMB")
+  enabled_protocol     = try(var.settings.enabled_protocol, null)
 
   dynamic "acl" {
     for_each = try(var.settings.acl, {})
