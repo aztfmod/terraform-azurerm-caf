@@ -1,7 +1,7 @@
 global_settings = {
   default_region = "region1"
   regions = {
-    region1 = "southeastasia"
+    region1 = "australiaeast"
   }
 }
 
@@ -89,7 +89,7 @@ api_management_api_operation_policy = {
     api_operation = {
       id = "sample"
     }
-    
+
 
     xml_content = <<XML
 <policies>

@@ -13,7 +13,8 @@
     "apim/111-api_management_certificate",
     "apim/112-api_management_gateway",
     "apim/113-api_management_gateway_api",
-    "apim/114-api-management-group"
+    "apim/114-api-management-group",
+    "apim/115-api_management_private_virtual_network",
     "app_gateway/301-agw-v1",
     "compute/vmware_cluster/101-vmware_cluster",
     "logic_app/101-integration_service_environment",
@@ -24,7 +25,6 @@
     "networking/virtual_network_gateway/102-vpn-site-to-site-active-active",
     "networking/virtual_network_gateway/103-vpn-site-to-site-connection",
     "networking/virtual_wan/101-vwan-hub-firewall-legacy",
-    "networking/virtual_wan/102-vwan-hub-firewall-new",
     "networking/virtual_wan/103-vwan-hub-gw",
     "networking/virtual_wan/104-vwan-hub-gw-spp",
     "networking/virtual_wan/105-vwan-hub-route-table",

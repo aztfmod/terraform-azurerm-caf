@@ -1,6 +1,6 @@
 resource "azurecaf_name" "apim" {
   name          = var.settings.name
-  resource_type = "azurerm_data_factory" #"azurerm_api_management_api"
+  resource_type = "azurerm_api_management_group"
   prefixes      = var.global_settings.prefixes
   random_length = var.global_settings.random_length
   clean_input   = true
@@ -23,8 +23,8 @@ resource "azurerm_api_management_group" "apim" {
     try(var.settings.resource_group.name, null)
   )
 
-  display_name        = var.settings.display_name
-  description         = try(var.settings.description, null)
+  display_name = var.settings.display_name
+  description  = try(var.settings.description, null)
   #external_id         = var.settings.external_id
   #type                = var.settings.type
 
@@ -32,7 +32,7 @@ resource "azurerm_api_management_group" "apim" {
     for_each = try(var.settings.timeouts, null) != null ? [var.settings.timeouts] : []
     content {
       create = try(timeouts.value.create, null)
-      read = try(timeouts.value.read, null)
+      read   = try(timeouts.value.read, null)
       update = try(timeouts.value.update, null)
       delete = try(timeouts.value.delete, null)
     }

@@ -1,6 +1,6 @@
 resource "azurecaf_name" "apim" {
   name          = var.settings.name
-  resource_type = "azurerm_data_factory" #"azurerm_api_management_api"
+  resource_type = "azurerm_api_management_gateway"
   prefixes      = var.global_settings.prefixes
   random_length = var.global_settings.random_length
   clean_input   = true
@@ -10,7 +10,7 @@ resource "azurecaf_name" "apim" {
 
 resource "azurerm_api_management_gateway" "apim" {
   name = azurecaf_name.apim.result
-  
+
   api_management_id = coalesce(
     try(var.remote_objects.api_management[var.settings.api_management.lz_key][var.settings.api_management.key].id, null),
     try(var.remote_objects.api_management[var.client_config.landingzone_key][var.settings.api_management.key].id, null),
@@ -27,14 +27,14 @@ resource "azurerm_api_management_gateway" "apim" {
   #   try(var.settings.resource_group.name, null)
   # )
 
-  description         = try(var.settings.description, null)
-  
+  description = try(var.settings.description, null)
+
   dynamic "location_data" {
     for_each = try(var.settings.location_data, null) != null ? [var.settings.location_data] : []
     content {
-      name = try(location_data.value.name, null)
-      region = try(location_data.value.region, null)
-      city = try(location_data.value.city, null)
+      name     = try(location_data.value.name, null)
+      region   = try(location_data.value.region, null)
+      city     = try(location_data.value.city, null)
       district = try(location_data.value.district, null)
     }
   }
