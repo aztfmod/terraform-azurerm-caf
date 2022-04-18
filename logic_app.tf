@@ -145,14 +145,7 @@ module "logic_app_standard" {
   dynamic_app_settings = try(each.value.dynamic_app_settings, {})
   app_settings         = try(each.value.app_settings, null)
   combined_objects     = local.dynamic_app_settings_combined_objects
-  resource_group_name = coalesce(
-    try(local.combined_objects_resource_groups[each.value.resource_group.lz_key][each.value.resource_group.key].name, null),
-    try(local.combined_objects_resource_groups[local.client_config.landingzone_key][each.value.resource_group.key].name, null),
-    try(local.combined_objects_resource_groups[local.client_config.landingzone_key][each.value.resource_group_key].name, null),
-    try(each.value.resource_group.name, null)
-  )
-  location                   = lookup(each.value, "region", null) == null ? local.resource_groups[each.value.resource_group_key].location : local.global_settings.regions[each.value.region]
-  app_service_plan_id        = try(each.value.lz_key, null) == null ? local.combined_objects_app_service_plans[local.client_config.landingzone_key][each.value.app_service_plan_key].id : local.combined_objects_app_service_plans[each.value.lz_key][each.value.app_service_plan_key].id
+  app_service_plan_id        = can(each.value.app_service_plan.id) ? each.value.app_service_plan.id : local.combined_objects_app_service_plans[try(each.value.app_service_plan.lz_key, local.client_config.landingzone_key)][each.value.app_service_plan.key].id 
   settings                   = each.value.settings
   application_insight        = try(each.value.application_insight_key, null) == null ? null : module.azurerm_application_insights[each.value.application_insight_key]
   identity                   = try(each.value.identity, null)
@@ -165,7 +158,10 @@ module "logic_app_standard" {
   #                 null
   #                 )
   global_settings = local.global_settings
-  base_tags       = try(local.global_settings.inherit_tags, false) ? local.resource_groups[each.value.resource_group_key].tags : {}
+  location            = can(local.global_settings.regions[each.value.region]) ? local.global_settings.regions[each.value.region] : local.combined_objects_resource_groups[try(each.value.resource_group.lz_key, local.client_config.landingzone_key)][try(each.value.resource_group.key, each.value.resource_group_key)].location
+  resource_group_name = can(each.value.resource_group.name) || can(each.value.resource_group_name) ? try(each.value.resource_group.name, each.value.resource_group_name) : local.combined_objects_resource_groups[try(each.value.resource_group.lz_key, local.client_config.landingzone_key)][try(each.value.resource_group_key, each.value.resource_group.key)].name
+  base_tags           = try(local.global_settings.inherit_tags, false) ? local.combined_objects_resource_groups[try(each.value.resource_group.lz_key, local.client_config.landingzone_key)][try(each.value.resource_group.key, each.value.resource_group_key)].tags : {}
+
   tags            = try(each.value.tags, null)
 
   remote_objects = {

@@ -1,7 +1,7 @@
 global_settings = {
   default_region = "region1"
   regions = {
-    region1 = "southeastasia"
+    region1 = "australiaeast"
   }
 }
 
@@ -23,8 +23,8 @@ app_service_plans = {
     name               = "asp-simple"
 
     sku = {
-      tier = "Standard"
-      size = "S1"
+      tier = "WorkflowStandard"
+      size = "WS1"
     }
   }
 }
@@ -35,7 +35,9 @@ logic_app_standard = {
     resource_group_key = "logicapp"
     region             = "region1"
 
-    app_service_plan_key = "asp1"
+    app_service_plan = {
+      key = "asp1"
+    }
     storage_account_key  = "sa1"
 
     settings = {

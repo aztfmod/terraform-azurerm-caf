@@ -894,3 +894,6 @@ variable "public_ip_prefixes" {
 variable "runbooks" {
   default = {}
 }
+variable "logic_app_standard" {
+  default = {}
+}
