@@ -15,7 +15,7 @@ resource "azurerm_virtual_hub_connection" "vhub_connection" {
   depends_on = [azurerm_virtual_hub_route_table.route_table, module.azurerm_firewalls]
   for_each   = local.networking.virtual_hub_connections
 
-  #provider = azurerm.vhub
+  provider = azurerm.vhub
 
   name                      = each.value.name
   virtual_hub_id            = can(each.value.virtual_hub.id) ? each.value.virtual_hub.id : local.azurerm_virtual_hub_connection[each.key].virtual_hub_id
