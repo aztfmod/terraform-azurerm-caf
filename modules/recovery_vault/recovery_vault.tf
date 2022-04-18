@@ -18,6 +18,7 @@ resource "azurerm_recovery_services_vault" "asr" {
   sku                 = "Standard"
   tags                = local.tags
   soft_delete_enabled = try(var.settings.soft_delete_enabled, true)
+  storage_mode_type   = try(var.settings.storage_mode_type, "GeoRedundant")
 
   identity {
     type = "SystemAssigned"
