@@ -203,6 +203,7 @@ module "example" {
     vhub_peerings                                           = var.vhub_peerings
     virtual_hub_connections                                 = var.virtual_hub_connections
     virtual_hub_er_gateway_connections                      = var.virtual_hub_er_gateway_connections
+    virtual_hub_route_table_routes                          = var.virtual_hub_route_table_routes
     virtual_hub_route_tables                                = var.virtual_hub_route_tables
     virtual_hubs                                            = var.virtual_hubs
     virtual_network_gateway_connections                     = var.virtual_network_gateway_connections
