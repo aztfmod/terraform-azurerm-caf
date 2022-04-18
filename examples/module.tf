@@ -136,6 +136,7 @@ module "example" {
     postgresql_flexible_servers        = var.postgresql_flexible_servers
     postgresql_servers                 = var.postgresql_servers
     synapse_workspaces                 = var.synapse_workspaces
+    mysql_flexible_server              = var.mysql_flexible_server
     data_explorer = {
       kusto_clusters                         = var.kusto_clusters
       kusto_databases                        = var.kusto_databases
