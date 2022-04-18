@@ -22,3 +22,6 @@ variable "resource_group_name" {
 variable "location" {
 }
 variable "diagnostics" {}
+variable "private_dns" {
+  default = {}
+}
