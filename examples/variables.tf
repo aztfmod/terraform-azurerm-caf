@@ -315,6 +315,21 @@ variable "aks_clusters" {
 variable "azure_container_registries" {
   default = {}
 }
+variable "batch_accounts" {
+  default = {}
+}
+variable "batch_applications" {
+  default = {}
+}
+variable "batch_certificates" {
+  default = {}
+}
+variable "batch_jobs" {
+  default = {}
+}
+variable "batch_pools" {
+  default = {}
+}
 variable "databricks_workspaces" {
   default = {}
 }
