@@ -31,7 +31,7 @@ resource "azurerm_virtual_hub_connection" "vhub_connection" {
           try(routing.value.id, ""),
           try(azurerm_virtual_hub_route_table.route_table[routing.value.virtual_hub_route_table_key].id, ""),
           try(var.remote_objects.virtual_hub_route_tables[try(routing.value.lz_key, local.client_config.landingzone_key)][routing.value.virtual_hub_route_table_key].id, ""),
-          contains(tolist(["defaultRouteTable", "None"]), routing.value.virtual_hub_route_table_key) ? format("%s/hubRouteTables/%s", local.azurerm_virtual_hub_connection[each.key].virtual_hub_id, routing.value.virtual_hub_route_table_key) : "None"
+          contains(tolist(["defaultRouteTable", "noneRouteTable"]), routing.value.virtual_hub_route_table_key) ? format("%s/hubRouteTables/%s", local.azurerm_virtual_hub_connection[each.key].virtual_hub_id, routing.value.virtual_hub_route_table_key) : "noneRouteTable"
         ),
         null
       )
