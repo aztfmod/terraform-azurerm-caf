@@ -21,7 +21,6 @@ resource "azurerm_function_app" "function_app" {
   # client_affinity_enabled    = lookup(var.settings, "client_affinity_enabled", null) deprecated in azurerm >2.81.0
   enabled                         = try(var.settings.enabled, null)
   https_only                      = try(var.settings.https_only, null)
-  key_vault_reference_identity_id = try(var.key_vault_reference_identity_id, null)
   os_type                         = try(var.settings.os_type, null)
   version                         = try(var.settings.version, null)
   storage_account_name            = var.storage_account_name
