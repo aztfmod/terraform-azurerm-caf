@@ -12,5 +12,5 @@ resource "azurerm_mysql_flexible_server_configuration" "mysql" {
   name                = each.value.name
   server_name         = azurerm_mysql_flexible_server.mysql.name
   value               = each.value.value
-  resource_group_name = var.resource_group.name
+  resource_group_name = var.resource_group_name
 }

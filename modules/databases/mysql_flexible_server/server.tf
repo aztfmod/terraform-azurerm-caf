@@ -10,27 +10,27 @@ resource "azurecaf_name" "mysql_flexible_server" {
 }
 
 resource "azurerm_mysql_flexible_server" "mysql" {
- 
-  
+
+
   name                = azurecaf_name.mysql_flexible_server.result
-  resource_group_name = var.resource_group.name
-  location            = var.resource_group.location
+  resource_group_name = var.resource_group_name
+  location            = var.location
   version             = try(var.settings.version, null)
   sku_name            = try(var.settings.sku_name, null)
   zone                = try(var.settings.zone, null)
-  
+
 
   delegated_subnet_id = var.remote_objects.subnet_id
   private_dns_zone_id = var.remote_objects.private_dns_zone_id
-  
+
   create_mode                       = try(var.settings.create_mode, "Default")
   point_in_time_restore_time_in_utc = try(var.settings.create_mode, "PointInTimeRestore") == "PointInTimeRestore" ? try(var.settings.point_in_time_restore_time_in_utc, null) : null
   source_server_id                  = try(var.settings.create_mode, "PointInTimeRestore") == "PointInTimeRestore" ? try(var.settings.source_server_id, null) : null
 
-  administrator_login    = try(var.settings.create_mode, "Default") == "Default" ? try(var.settings.administrator_username, "psqladmin") : null
-  administrator_password = try(var.settings.create_mode, "Default") == "Default" ? try(var.settings.administrator_password, azurerm_key_vault_secret.mysql_administrator_password.0.value) : null 
+  administrator_login          = try(var.settings.create_mode, "Default") == "Default" ? try(var.settings.administrator_username, "psqladmin") : null
+  administrator_password       = try(var.settings.create_mode, "Default") == "Default" ? try(var.settings.administrator_password, azurerm_key_vault_secret.mysql_administrator_password.0.value) : null
   geo_redundant_backup_enabled = try(var.settings.geo_redundant_backup_enabled, false)
-  backup_retention_days = try(var.settings.backup_retention_days, null)
+  backup_retention_days        = try(var.settings.backup_retention_days, null)
 
   dynamic "maintenance_window" {
     for_each = try(var.settings.maintenance_window, null) == null ? [] : [var.settings.maintenance_window]
@@ -50,14 +50,14 @@ resource "azurerm_mysql_flexible_server" "mysql" {
       standby_availability_zone = var.settings.zone == null ? null : var.settings.high_availability.standby_availability_zone
     }
   }
-  
+
   dynamic "storage" {
     for_each = try(var.settings.storage, null) == null ? [] : [var.settings.storage]
 
     content {
-      auto_grow_enabled   = try(var.settings.storage.auto_grow_enabled, "True")
-      iops                = try(var.settings.storage.iops, "360")
-      size_gb             = try(var.settings.storage.size_gb, "20")
+      auto_grow_enabled = try(var.settings.storage.auto_grow_enabled, "True")
+      iops              = try(var.settings.storage.iops, "360")
+      size_gb           = try(var.settings.storage.size_gb, "20")
     }
   }
 
@@ -75,7 +75,7 @@ resource "azurerm_mysql_flexible_server" "mysql" {
 resource "azurerm_key_vault_secret" "mysql_administrator_username" {
   count = lookup(var.settings, "keyvault", null) == null ? 0 : 1
 
-  name         = format("%s-mysql-administrator-username", azurecaf_name.mysql_flexible_server.result )
+  name         = format("%s-mysql-administrator-username", azurecaf_name.mysql_flexible_server.result)
   value        = try(var.settings.administrator_username, "psqladmin")
   key_vault_id = var.remote_objects.keyvault_id
 
@@ -101,7 +101,7 @@ resource "random_password" "mysql_administrator_password" {
 resource "azurerm_key_vault_secret" "mysql_administrator_password" {
   count = lookup(var.settings, "keyvault", null) == null ? 0 : 1
 
-  name         = format("%s-mysql-administrator-password",  azurecaf_name.mysql_flexible_server.result )
+  name         = format("%s-mysql-administrator-password", azurecaf_name.mysql_flexible_server.result)
   value        = try(var.settings.administrator_password, random_password.mysql_administrator_password.0.result)
   key_vault_id = var.remote_objects.keyvault_id
 
@@ -116,7 +116,7 @@ resource "azurerm_key_vault_secret" "mysql_administrator_password" {
 resource "azurerm_key_vault_secret" "mysql_fqdn" {
   count = lookup(var.settings, "keyvault", null) == null ? 0 : 1
 
-  name         = format("%s-mysql-fqdn", azurecaf_name.mysql_flexible_server.result )
+  name         = format("%s-mysql-fqdn", azurecaf_name.mysql_flexible_server.result)
   value        = azurerm_mysql_flexible_server.mysql.fqdn
   key_vault_id = var.remote_objects.keyvault_id
 }
