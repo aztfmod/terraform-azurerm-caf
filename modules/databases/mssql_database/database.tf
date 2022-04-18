@@ -10,24 +10,27 @@ resource "azurecaf_name" "mssqldb" {
 }
 
 resource "azurerm_mssql_database" "mssqldb" {
-  name                        = azurecaf_name.mssqldb.result
-  server_id                   = var.server_id
   auto_pause_delay_in_minutes = try(var.settings.auto_pause_delay_in_minutes, null)
+  collation                   = try(var.settings.collation, null)
   create_mode                 = try(var.settings.create_mode, null)
   creation_source_database_id = try(var.settings.creation_source_database_id, null)
-  collation                   = try(var.settings.collation, null)
   elastic_pool_id             = try(var.elastic_pool_id, null)
+  geo_backup_enabled          = try(var.settings.geo_backup_enabled, false)
   license_type                = try(var.settings.license_type, null)
   max_size_gb                 = try(var.settings.max_size_gb, null)
   min_capacity                = try(var.settings.min_capacity, null)
-  restore_point_in_time       = try(var.settings.restore_point_in_time, null)
+  name                        = azurecaf_name.mssqldb.result
   read_replica_count          = try(var.settings.read_replica_count, null)
   read_scale                  = try(var.settings.read_scale, null)
+  recover_database_id         = try(var.settings.recover_database_id, null)
+  restore_dropped_database_id = try(var.settings.restore_dropped_database_id, null)
+  restore_point_in_time       = try(var.settings.restore_point_in_time, null)
   sample_name                 = try(var.settings.sample_name, null)
+  server_id                   = var.server_id
   sku_name                    = try(var.settings.sku_name, null)
   storage_account_type        = try(var.settings.storage_account_type, null)
-  zone_redundant              = try(var.settings.zone_redundant, null)
   tags                        = local.tags
+  zone_redundant              = try(var.settings.zone_redundant, null)
 
   dynamic "threat_detection_policy" {
     for_each = lookup(var.settings, "threat_detection_policy", {}) == {} ? [] : [1]

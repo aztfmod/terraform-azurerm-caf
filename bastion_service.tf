@@ -24,9 +24,16 @@ resource "azurerm_bastion_host" "host" {
   name = azurecaf_name.host[each.key].result
   tags = try(local.global_settings.inherit_tags, false) ? merge(local.resource_groups[each.value.resource_group_key].tags, try(each.value.tags, null)) : try(each.value.tags, null)
 
-  location            = can(local.global_settings.regions[each.value.region]) ? local.global_settings.regions[each.value.region] : local.combined_objects_resource_groups[try(each.value.resource_group.lz_key, local.client_config.landingzone_key)][try(each.value.resource_group.key, each.value.resource_group_key)].location
-  resource_group_name = can(each.value.resource_group.name) ? each.value.resource_group.name : local.combined_objects_resource_groups[try(each.value.resource_group.lz_key, local.client_config.landingzone_key)][try(each.value.resource_group_key, each.value.resource_group.key)].name
-  sku                 = try(each.value.sku, null)
+  location               = can(local.global_settings.regions[each.value.region]) ? local.global_settings.regions[each.value.region] : local.combined_objects_resource_groups[try(each.value.resource_group.lz_key, local.client_config.landingzone_key)][try(each.value.resource_group.key, each.value.resource_group_key)].location
+  resource_group_name    = can(each.value.resource_group.name) ? each.value.resource_group.name : local.combined_objects_resource_groups[try(each.value.resource_group.lz_key, local.client_config.landingzone_key)][try(each.value.resource_group_key, each.value.resource_group.key)].name
+  sku                    = try(each.value.sku, null)
+  scale_units            = try(each.value.scale_units, null)
+  copy_paste_enabled     = try(each.value.copy_paste_enabled, null)
+  file_copy_enabled      = try(each.value.file_copy_enabled, null)
+  ip_connect_enabled     = try(each.value.ip_connect_enabled, null)
+  shareable_link_enabled = try(each.value.shareable_link_enabled, null) #only supported when sku is Standard
+  tunneling_enabled      = try(each.value.tunneling_enabled, null)      #only supported when sku is Standard
+
 
   ip_configuration {
     name                 = each.value.name
