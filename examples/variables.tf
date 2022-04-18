@@ -537,6 +537,9 @@ variable "vhub_peerings" {
 variable "virtual_hub_connections" {
   default = {}
 }
+variable "virtual_hub_route_table_routes" {
+  default = {}
+}
 variable "virtual_hub_route_tables" {
   default = {}
 }
