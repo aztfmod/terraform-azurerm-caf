@@ -88,6 +88,7 @@ locals {
     azuread_service_principals                 = local.combined_objects_azuread_service_principals
     azuread_users                              = local.combined_objects_azuread_users
     azurerm_firewalls                          = local.combined_objects_azurerm_firewalls
+    batch_accounts                             = local.combined_objects_batch_accounts
     data_factory                               = local.combined_objects_data_factory
     databricks_workspaces                      = local.combined_objects_databricks_workspaces
     dns_zones                                  = local.combined_objects_dns_zones
@@ -127,7 +128,7 @@ locals {
       (var.current_landingzone_key) = merge(local.combined_objects_log_analytics, local.combined_diagnostics.log_analytics)
     }
   )
-    
+
   logged_in = tomap(
     {
       (var.current_landingzone_key) = {
