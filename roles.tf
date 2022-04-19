@@ -73,6 +73,7 @@ locals {
     azuread_service_principals                 = local.combined_objects_azuread_service_principals
     azuread_users                              = local.combined_objects_azuread_users
     azurerm_firewalls                          = local.combined_objects_azurerm_firewalls
+    backup_vaults                              = local.combined_objects_backup_vaults
     batch_accounts                             = local.combined_objects_batch_accounts
     data_factory                               = local.combined_objects_data_factory
     databricks_workspaces                      = local.combined_objects_databricks_workspaces
