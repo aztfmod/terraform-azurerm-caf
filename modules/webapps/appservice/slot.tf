@@ -15,11 +15,11 @@ resource "azurerm_app_service_slot" "slots" {
   https_only              = lookup(var.settings, "https_only", null)
 
   dynamic "identity" {
-    for_each = try(var.identity, null) != null ? [1] : []
+    for_each = try(var.identity, null) == null ? [] : [1]
 
     content {
       type         = try(var.identity.type, null)
-      identity_ids = try(var.identity.identity_ids, null)
+      identity_ids = lower(var.identity.type) == "userassigned" ? local.managed_identities : try(var.identity.identity_ids, null)
     }
   }
 
@@ -69,7 +69,7 @@ resource "azurerm_app_service_slot" "slots" {
     }
   }
 
-  app_settings = var.app_settings
+  app_settings = try(local.app_settings, var.app_settings)
 
   dynamic "connection_string" {
     for_each = var.connection_strings
