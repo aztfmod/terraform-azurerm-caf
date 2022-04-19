@@ -238,7 +238,7 @@ resource "azurerm_linux_virtual_machine_scale_set" "vmss" {
 
   health_probe_id = try(var.load_balancers[try(each.value.lz_key, var.client_config.landingzone_key)][each.value.health_probe.loadbalancer_key].probes[each.value.health_probe.probe_key].id, null)
 
-  # to make sense a change in the name resulted by the provider update does not provoke destroy/recreate of VM
+  # to make sure a change in the name resulted by the provider update does not provoke destroy/recreate of VM
   lifecycle {
     ignore_changes = [
       name
