@@ -111,6 +111,25 @@ storage_accounts = {
               }
             }
           }
+        },
+        rule_3 = {
+          name    = "rule3"
+          enabled = true
+          filters = {
+            filter_specs = {
+              prefix_match = ["container1/prefix3"]
+              blob_types   = ["blockBlob"]
+            }
+          }
+          actions = {
+            base_blob = {
+              blob_specs = {
+                tier_to_cool_after_days_since_last_access_time_greater_than    = 30
+                tier_to_archive_after_days_since_last_access_time_greater_than = 90
+                delete_after_days_since_last_access_time_greater_than          = 365
+              }
+            }
+          }
         }
       }
     }
