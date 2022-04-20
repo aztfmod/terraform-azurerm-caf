@@ -1,7 +1,7 @@
 global_settings = {
   default_region = "region1"
   regions = {
-    region1 = "eastus2"
+    region1 = "australiaeast"
   }
 }
 
@@ -30,6 +30,10 @@ app_services = {
     resource_group_key   = "webapp_simple"
     name                 = "webapp-simple"
     app_service_plan_key = "asp1"
+
+    app_settings = {
+      "WEBSITE_NODE_DEFAULT_VERSION" = "6.9.1"
+    }
 
     settings = {
       enabled = true

@@ -1,8 +1,8 @@
 global_settings = {
   default_region = "region1"
   regions = {
-    region1 = "eastus2"
-    region2 = "centralus"
+    region1 = "australiaeast"
+    region2 = "australiacentral"
   }
 }
 
@@ -187,7 +187,7 @@ mssql_managed_databases = {
   #   name                              = "lz-sql-managed-db-ltr"
   #   mi_server_key                     = "sqlmi1"
   #   createMode                        = "RestoreLongTermRetentionBackup"
-  #   longTermRetentionBackupResourceId = "/subscriptions/1d53e782-9f46-4720-b6b3-cff29106e9f6/resourceGroups/whdz-rg-sqlmi-rg1/providers/Microsoft.Sql/locations/eastus2/longTermRetentionManagedInstances/whdz-sql-lz-sql-mi/longTermRetentionDatabases/whdz-sqldb-lz-sql-managed-db1/longTermRetentionManagedInstanceBackups/7b19016e-3f85-46c0-b4bd-dd5c8f5624f3;132512472960000000"
+  #   longTermRetentionBackupResourceId = "/subscriptions/1d53e782-9f46-4720-b6b3-cff29106e9f6/resourceGroups/whdz-rg-sqlmi-rg1/providers/Microsoft.Sql/locations/australiaeast/longTermRetentionManagedInstances/whdz-sql-lz-sql-mi/longTermRetentionDatabases/whdz-sqldb-lz-sql-managed-db1/longTermRetentionManagedInstanceBackups/7b19016e-3f85-46c0-b4bd-dd5c8f5624f3;132512472960000000"
   # }
 }
 

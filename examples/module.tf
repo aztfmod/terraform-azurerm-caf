@@ -92,6 +92,7 @@ module "example" {
     dedicated_hosts                     = var.dedicated_hosts
     machine_learning_compute_instance   = var.machine_learning_compute_instance
     proximity_placement_groups          = var.proximity_placement_groups
+    runbooks                            = var.runbooks
     virtual_machine_scale_sets          = var.virtual_machine_scale_sets
     virtual_machines                    = var.virtual_machines
     vmware_private_clouds               = var.vmware_private_clouds
@@ -110,8 +111,10 @@ module "example" {
     diagnostics_destinations        = var.diagnostics_destinations
   }
   database = {
+    app_config                         = var.app_config
     azurerm_redis_caches               = var.azurerm_redis_caches
     cosmos_dbs                         = var.cosmos_dbs
+    cosmosdb_sql_databases             = var.cosmosdb_sql_databases
     databricks_workspaces              = var.databricks_workspaces
     database_migration_services        = var.database_migration_services
     database_migration_projects        = var.database_migration_projects
@@ -133,6 +136,7 @@ module "example" {
     postgresql_flexible_servers        = var.postgresql_flexible_servers
     postgresql_servers                 = var.postgresql_servers
     synapse_workspaces                 = var.synapse_workspaces
+    mysql_flexible_server              = var.mysql_flexible_server
     data_explorer = {
       kusto_clusters                         = var.kusto_clusters
       kusto_databases                        = var.kusto_databases
@@ -201,6 +205,7 @@ module "example" {
     public_ip_addresses                                     = var.public_ip_addresses
     relay_namespace                                         = var.relay_namespace
     relay_hybrid_connection                                 = var.relay_hybrid_connection
+    public_ip_prefixes                                      = var.public_ip_prefixes
     route_tables                                            = var.route_tables
     vhub_peerings                                           = var.vhub_peerings
     virtual_hub_connections                                 = var.virtual_hub_connections
@@ -218,14 +223,32 @@ module "example" {
   }
 
   security = {
-    disk_encryption_sets          = var.disk_encryption_sets
-    dynamic_keyvault_secrets      = var.dynamic_keyvault_secrets
-    keyvault_certificate_issuers  = var.keyvault_certificate_issuers
-    keyvault_certificate_requests = var.keyvault_certificate_requests
-    keyvault_keys                 = var.keyvault_keys
-    keyvault_certificates         = var.keyvault_certificates
-    lighthouse_definitions        = var.lighthouse_definitions
+    disk_encryption_sets                = var.disk_encryption_sets
+    dynamic_keyvault_secrets            = var.dynamic_keyvault_secrets
+    keyvault_certificate_issuers        = var.keyvault_certificate_issuers
+    keyvault_certificate_requests       = var.keyvault_certificate_requests
+    keyvault_keys                       = var.keyvault_keys
+    keyvault_certificates               = var.keyvault_certificates
+    lighthouse_definitions              = var.lighthouse_definitions
+    sentinel                            = var.sentinel
+    sentinel_automation_rules           = var.sentinel_automation_rules
+    sentinel_watchlists                 = var.sentinel_watchlists
+    sentinel_watchlist_items            = var.sentinel_watchlist_items
+    sentinel_ar_fusions                 = var.sentinel_ar_fusions
+    sentinel_ar_ml_behavior_analytics   = var.sentinel_ar_ml_behavior_analytics
+    sentinel_ar_ms_security_incidents   = var.sentinel_ar_ms_security_incidents
+    sentinel_ar_scheduled               = var.sentinel_ar_scheduled
+    sentinel_dc_aad                     = var.sentinel_dc_aad
+    sentinel_dc_app_security            = var.sentinel_dc_app_security
+    sentinel_dc_aws                     = var.sentinel_dc_aws
+    sentinel_dc_azure_threat_protection = var.sentinel_dc_azure_threat_protection
+    sentinel_dc_ms_threat_protection    = var.sentinel_dc_ms_threat_protection
+    sentinel_dc_office_365              = var.sentinel_dc_office_365
+    sentinel_dc_security_center         = var.sentinel_dc_security_center
+    sentinel_dc_threat_intelligence     = var.sentinel_dc_threat_intelligence
+
   }
+
   shared_services = {
     consumption_budgets            = var.consumption_budgets
     image_definitions              = var.image_definitions
@@ -314,5 +337,8 @@ module "example" {
     api_management_gateway              = var.api_management_gateway
     api_management_gateway_api          = var.api_management_gateway_api
     api_management_group                = var.api_management_group
+  }
+  purview = {
+    purview_accounts = var.purview_accounts
   }
 }

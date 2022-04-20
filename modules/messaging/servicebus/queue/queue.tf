@@ -20,11 +20,11 @@ resource "azurerm_servicebus_queue" "queue" {
   max_delivery_count                      = try(var.settings.max_delivery_count, null)
   max_size_in_megabytes                   = try(var.settings.max_size_in_megabytes, null)
   name                                    = azurecaf_name.queue.result
-  namespace_name                          = local.servicebus_namespace_name
+  namespace_id                            = local.servicebus_namespace.id
   requires_duplicate_detection            = try(var.settings.requires_duplicate_detection, null)
   requires_session                        = try(var.settings.requires_session, null)
-  resource_group_name                     = local.resource_group_name
-  status                                  = try(var.settings.status, null)
+  # resource_group_name                     = local.resource_group_name
+  status = try(var.settings.status, null)
 
   forward_to = try(coalesce(
     try(var.settings.forward_to.queue.name, null),
@@ -49,9 +49,9 @@ module "queue_auth_rules" {
   settings        = each.value
 
   remote_objects = {
-    servicebus_queue_name     = azurerm_servicebus_queue.queue.name
-    servicebus_namespace_name = local.servicebus_namespace_name
-    resource_group_name       = local.resource_group_name
+    servicebus_queue_id     = azurerm_servicebus_queue.queue.id
+    servicebus_namespace_id = local.servicebus_namespace.id
+    resource_group_name     = local.resource_group_name
   }
 
 }
