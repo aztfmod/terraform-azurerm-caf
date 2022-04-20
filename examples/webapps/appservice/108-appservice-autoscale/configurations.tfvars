@@ -15,7 +15,7 @@ app_service_plans = {
   asp1 = {
     resource_group_key = "rg1"
     name               = "asp-simple"
-    
+
     maximum_elastic_worker_count = 5
 
     sku = {
@@ -44,7 +44,7 @@ monitor_autoscale_settings = {
     enabled            = true
     resource_group_key = "rg1"
 
-    target_resource    = {
+    target_resource = {
       # lz_key = ""
       # vmss_key = ""
       app_service_plan_key = "asp1"
@@ -63,7 +63,7 @@ monitor_autoscale_settings = {
         rules = {
           rule1 = {
             metric_trigger = {
-              
+
               # metric_name = "Percentage CPU" # vmss uses this
               # You can also choose your resource id manually, in case it is required
               # metric_resource_id = "/subscriptions/manual-id"
@@ -76,9 +76,9 @@ monitor_autoscale_settings = {
               operator         = "GreaterThan"
               threshold        = 70
               # You can optionally fill the following fields
-              
+
               # divide_by_instance_count = true
-              
+
               # dimensions = {
               #   dimension1 = {
               #     name     = "App1"

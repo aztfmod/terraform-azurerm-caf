@@ -19,14 +19,14 @@ resource_groups = {
 
 mysql_flexible_server = {
   primary_region1 = {
-    name       = "mysqltest-flexible-server"
-    version    = "5.7"   #Possible values are 5.7, and 8.0.21
-    sku_name   = "GP_Standard_D2ds_v4"
-    
+    name     = "mysqltest-flexible-server"
+    version  = "5.7" #Possible values are 5.7, and 8.0.21
+    sku_name = "GP_Standard_D2ds_v4"
+
     keyvault = {
-     key = "mysql-re1"              # (Required) when auto-generated administrator credentials needed.
-   #   # lz_key      = ""                      # Set the lz_key if the keyvault is remote.
-   }
+      key = "mysql-re1" # (Required) when auto-generated administrator credentials needed.
+      #   # lz_key      = ""                      # Set the lz_key if the keyvault is remote.
+    }
 
     resource_group = {
       key = "mysql_region1"
@@ -35,7 +35,7 @@ mysql_flexible_server = {
     # Auto-generated administrator credentials stored in azure keyvault when not set (recommended).
     #administrator_username  = "psqladminss"
     #administrator_password  = "ComplxP@ssw0rd!!"
-    
+
     vnet = {
       key        = "vnet_region1"
       subnet_key = "mysql"
@@ -61,11 +61,11 @@ mysql_flexible_server = {
     }
 
     mysql_configurations = {
-     mysql_configurations = {
-       name = "interactive_timeout"
-       value = "600"
-     }
- 
+      mysql_configurations = {
+        name  = "interactive_timeout"
+        value = "600"
+      }
+
     }
 
     mysql_databases = {

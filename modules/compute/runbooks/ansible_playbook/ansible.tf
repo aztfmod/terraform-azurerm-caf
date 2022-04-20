@@ -1,5 +1,5 @@
 locals {
-  type = var.settings.connection.type
+  type             = var.settings.connection.type
   port             = try(var.settings.connection.port, null)
   user             = var.settings.connection.user
   private_key      = try(file(var.settings.connection.private_key_file), try(data.azurerm_key_vault_secret.vm_private_key[0].value, null)) #load from file or AKV
@@ -20,7 +20,7 @@ resource "null_resource" "ansible_playbook_linux" {
   count      = lower(var.settings.connection.type) == "ssh" ? 1 : 0
 
   provisioner "local-exec" {
-    command = "ANSIBLE_HOST_KEY_CHECKING=False ansible-playbook -u ${local.user} -i '${local.host},' --private-key ${local.private_key_file} -e 'pub_key=${local.public_key_file}' ${fileexists(local.runbook_path) ? local.runbook_path : format("%s/%s", path.cwd, local.runbook_path) }"
+    command = "ANSIBLE_HOST_KEY_CHECKING=False ansible-playbook -u ${local.user} -i '${local.host},' --private-key ${local.private_key_file} -e 'pub_key=${local.public_key_file}' ${fileexists(local.runbook_path) ? local.runbook_path : format("%s/%s", path.cwd, local.runbook_path)}"
   }
 
   provisioner "local-exec" {

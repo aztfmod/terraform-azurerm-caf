@@ -23,7 +23,7 @@ log_analytics = {
         publisher = "Microsoft"
         product   = "OMSGallery/VMInsights"
       }
-    }      
+    }
   }
 }
 
@@ -366,14 +366,14 @@ virtual_machine_scale_sets = {
       microsoft_monitoring_agent = {
         stopOnMultipleConnections = true
         workspace = {
-          key     = "law1"
+          key = "law1"
           #lz_key  = "examples"
         }
       }
       dependency_agent = {
-        auto_upgrade_minor_version  = true
-        type_handler_version        = "9.5"        
-      }      
+        auto_upgrade_minor_version = true
+        type_handler_version       = "9.5"
+      }
     }
   }
 
@@ -487,16 +487,16 @@ virtual_machine_scale_sets = {
 
     virtual_machine_scale_set_extensions = {
       microsoft_monitoring_agent = {
-       stopOnMultipleConnections = true
-       workspace = {
-         key     = "law1"
-         #lz_key  = "examples"
-       }
+        stopOnMultipleConnections = true
+        workspace = {
+          key = "law1"
+          #lz_key  = "examples"
+        }
       }
       dependency_agent = {
-        auto_upgrade_minor_version  = true
-        type_handler_version        = "9.5"
-      }    
+        auto_upgrade_minor_version = true
+        type_handler_version       = "9.5"
+      }
     }
   }
 }

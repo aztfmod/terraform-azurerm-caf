@@ -851,7 +851,7 @@ variable "relay_hybrid_connection" {
   default = {}
 }
 variable "relay_namespace" {
-    default = {}
+  default = {}
 }
 variable "purview_accounts" {
   default = {}

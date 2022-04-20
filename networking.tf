@@ -336,7 +336,7 @@ module "relay_hybrid_connection" {
 
 
   remote_objects = {
-    resource_group = local.combined_objects_resource_groups
+    resource_group  = local.combined_objects_resource_groups
     relay_namespace = local.combined_objects_relay_namespace
   }
 }

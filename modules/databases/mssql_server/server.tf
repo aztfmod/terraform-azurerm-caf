@@ -15,9 +15,9 @@ resource "azurerm_mssql_server" "mssql" {
 
     content {
       azuread_authentication_only = try(azuread_administrator.value.azuread_authentication_only, null)
-      login_username = try(azuread_administrator.value.login_username, try(var.azuread_groups[var.client_config.landingzone_key][azuread_administrator.value.azuread_group_key].name, var.azuread_groups[azuread_administrator.value.lz_key][azuread_administrator.value.azuread_group_key].name))
-      object_id      = try(azuread_administrator.value.object_id, try(var.azuread_groups[var.client_config.landingzone_key][azuread_administrator.value.azuread_group_key].id, var.azuread_groups[azuread_administrator.value.lz_key][azuread_administrator.value.azuread_group_key].id))
-      tenant_id      = try(azuread_administrator.value.tenant_id, try(var.azuread_groups[var.client_config.landingzone_key][azuread_administrator.value.azuread_group_key].tenant_id, var.azuread_groups[azuread_administrator.value.lz_key][azuread_administrator.value.azuread_group_key].tenant_id))
+      login_username              = try(azuread_administrator.value.login_username, try(var.azuread_groups[var.client_config.landingzone_key][azuread_administrator.value.azuread_group_key].name, var.azuread_groups[azuread_administrator.value.lz_key][azuread_administrator.value.azuread_group_key].name))
+      object_id                   = try(azuread_administrator.value.object_id, try(var.azuread_groups[var.client_config.landingzone_key][azuread_administrator.value.azuread_group_key].id, var.azuread_groups[azuread_administrator.value.lz_key][azuread_administrator.value.azuread_group_key].id))
+      tenant_id                   = try(azuread_administrator.value.tenant_id, try(var.azuread_groups[var.client_config.landingzone_key][azuread_administrator.value.azuread_group_key].tenant_id, var.azuread_groups[azuread_administrator.value.lz_key][azuread_administrator.value.azuread_group_key].tenant_id))
     }
   }
 
@@ -71,7 +71,7 @@ resource "random_password" "sql_admin" {
 
 # Store the generated password into keyvault
 resource "azurerm_key_vault_secret" "sql_admin_password" {
-  count = try(var.settings.azuread_administrator.azuread_authentication_only, false) == false  ? 1 : 0
+  count = try(var.settings.azuread_administrator.azuread_authentication_only, false) == false ? 1 : 0
 
   name         = can(var.settings.keyvault_secret_name) ? var.settings.keyvault_secret_name : format("%s-password", azurecaf_name.mssql.result)
   value        = random_password.sql_admin.0.result
