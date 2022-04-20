@@ -8,12 +8,7 @@ module "event_hub_namespaces" {
   storage_accounts = local.combined_objects_storage_accounts
   client_config    = local.client_config
   base_tags        = try(local.global_settings.inherit_tags, false) ? local.combined_objects_resource_groups[try(each.value.resource_group.lz_key, local.client_config.landingzone_key)][each.value.resource_group_key].tags : {}
-  resource_group = coalesce(
-    try(local.combined_objects_resource_groups[local.client_config.landingzone_key][each.value.resource_group_key], null),
-    try(local.combined_objects_resource_groups[each.value.lz_key][each.value.resource_group_key], null),
-    try(local.combined_objects_resource_groups[local.client_config.landingzone_key][each.value.resource_group.key], null),
-    try(local.combined_objects_resource_groups[each.value.resource_group.lz_key][each.value.resource_group.key], null)
-  )
+  resource_group   = local.combined_objects_resource_groups[try(each.value.lz_key, local.client_config.landingzone_key)][try(each.value.resource_group_key, each.value.resource_group.key)]
 }
 
 output "event_hub_namespaces" {
@@ -28,12 +23,8 @@ module "event_hub_namespace_auth_rules" {
   global_settings = local.global_settings
   namespace_name  = module.event_hub_namespaces[each.value.event_hub_namespace_key].name
   settings        = each.value
-  resource_group = coalesce(
-    try(local.combined_objects_resource_groups[local.client_config.landingzone_key][each.value.resource_group_key], null),
-    try(local.combined_objects_resource_groups[each.value.lz_key][each.value.resource_group_key], null),
-    try(local.combined_objects_resource_groups[local.client_config.landingzone_key][each.value.resource_group.key], null),
-    try(local.combined_objects_resource_groups[each.value.resource_group.lz_key][each.value.resource_group.key], null)
-  )
+  resource_group  = local.combined_objects_resource_groups[try(each.value.lz_key, local.client_config.landingzone_key)][try(each.value.resource_group_key, each.value.resource_group.key)]
+
 
   depends_on = [
     module.event_hub_namespaces
@@ -106,12 +97,8 @@ module "event_hubs" {
   namespace_name     = module.event_hub_namespaces[each.value.event_hub_namespace_key].name
   storage_account_id = try(module.storage_accounts[each.value.storage_account_key].id, null)
   base_tags          = try(local.global_settings.inherit_tags, false) ? local.resource_groups[each.value.resource_group_key].tags : {}
-  resource_group = coalesce(
-    try(local.combined_objects_resource_groups[local.client_config.landingzone_key][each.value.resource_group_key], null),
-    try(local.combined_objects_resource_groups[each.value.lz_key][each.value.resource_group_key], null),
-    try(local.combined_objects_resource_groups[local.client_config.landingzone_key][each.value.resource_group.key], null),
-    try(local.combined_objects_resource_groups[each.value.resource_group.lz_key][each.value.resource_group.key], null)
-  )
+  resource_group     = local.combined_objects_resource_groups[try(each.value.lz_key, local.client_config.landingzone_key)][try(each.value.resource_group_key, each.value.resource_group.key)]
+
 }
 
 module "event_hub_auth_rules" {
@@ -123,12 +110,8 @@ module "event_hub_auth_rules" {
   settings        = each.value
   namespace_name  = module.event_hub_namespaces[each.value.event_hub_namespace_key].name
   eventhub_name   = module.event_hubs[each.value.event_hub_name_key].name
-  resource_group = coalesce(
-    try(local.combined_objects_resource_groups[local.client_config.landingzone_key][each.value.resource_group_key], null),
-    try(local.combined_objects_resource_groups[each.value.lz_key][each.value.resource_group_key], null),
-    try(local.combined_objects_resource_groups[local.client_config.landingzone_key][each.value.resource_group.key], null),
-    try(local.combined_objects_resource_groups[each.value.resource_group.lz_key][each.value.resource_group.key], null)
-  )
+  resource_group  = local.combined_objects_resource_groups[try(each.value.lz_key, local.client_config.landingzone_key)][try(each.value.resource_group_key, each.value.resource_group.key)]
+
 
   depends_on = [
     module.event_hub_namespaces,
@@ -145,12 +128,8 @@ module "event_hub_consumer_groups" {
   settings        = each.value
   namespace_name  = module.event_hub_namespaces[each.value.event_hub_namespace_key].name
   eventhub_name   = module.event_hubs[each.value.event_hub_name_key].name
-  resource_group = coalesce(
-    try(local.combined_objects_resource_groups[local.client_config.landingzone_key][each.value.resource_group_key], null),
-    try(local.combined_objects_resource_groups[each.value.lz_key][each.value.resource_group_key], null),
-    try(local.combined_objects_resource_groups[local.client_config.landingzone_key][each.value.resource_group.key], null),
-    try(local.combined_objects_resource_groups[each.value.resource_group.lz_key][each.value.resource_group.key], null)
-  )
+  resource_group  = local.combined_objects_resource_groups[try(each.value.lz_key, local.client_config.landingzone_key)][try(each.value.resource_group_key, each.value.resource_group.key)]
+
 
   depends_on = [
     module.event_hub_namespaces,

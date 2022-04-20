@@ -35,7 +35,7 @@ You can go to the examples folder, however the usage of the module could be like
 global_settings = {
   default_region = "region1"
   regions = {
-    region1 = "westus"
+    region1 = "australiacentral"
   }
 }
 

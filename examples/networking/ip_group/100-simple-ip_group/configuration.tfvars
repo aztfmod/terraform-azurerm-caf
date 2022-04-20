@@ -2,7 +2,7 @@ global_settings = {
   default_region = "region1"
   regions = {
     region1 = "northeurope" # You can adjust the Azure Region you want to use to deploy AKS and the related services
-    # region2 = "centralus"            # Optional - Add additional regions
+    # region2 = "australiacentral"            # Optional - Add additional regions
   }
 }
 
