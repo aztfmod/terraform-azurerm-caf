@@ -14,11 +14,7 @@ data "azurerm_key_vault_certificate" "trustedcas" {
     if try(value.keyvault_key, null) != null
   }
   name         = each.value.name
-  key_vault_id = try(
-    var.keyvaults[each.value.keyvault.lz_key][each.value.keyvault.key].id,
-    var.keyvaults[var.client_config.landingzone_key][each.value.keyvault.key].id,
-    each.value.keyvault.id
-  )
+  key_vault_id = can(each.value.keyvault.id) ? each.value.keyvault.id : var.keyvaults[try(each.value.keyvault.lz_key, var.client_config.landingzone_key)][each.value.keyvault.key].id
 }
 
 data "azurerm_key_vault_certificate" "manual_certs" {
@@ -27,11 +23,7 @@ data "azurerm_key_vault_certificate" "manual_certs" {
     if try(value.keyvault.certificate_name, null) != null
   }
   name         = each.value.keyvault.certificate_name
-  key_vault_id = try(
-    var.keyvaults[each.value.keyvault.lz_key][each.value.keyvault.key].id,
-    var.keyvaults[var.client_config.landingzone_key][each.value.keyvault.key].id,
-    each.value.keyvault.id
-  )
+  key_vault_id = can(each.value.keyvault.id) ? each.value.keyvault.id : var.keyvaults[try(each.value.keyvault.lz_key, var.client_config.landingzone_key)][each.value.keyvault.key].id
 }
 
 resource "azurerm_application_gateway" "agw" {
