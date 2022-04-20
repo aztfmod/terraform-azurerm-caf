@@ -10,14 +10,10 @@ module "private_endpoint" {
   name                = each.value.name
   location            = var.remote_objects.resource_groups[each.value.resource_group_key].location
   resource_group_name = var.remote_objects.resource_groups[each.value.resource_group_key].name
-  subnet_id = coalesce(
-    try(each.value.subnet_id, null),
-    try(var.remote_objects.vnets[var.client_config.landingzone_key][each.value.vnet_key].subnets[each.value.subnet_key].id, null),
-    try(var.remote_objects.vnets[each.value.lz_key][each.value.vnet_key].subnets[each.value.subnet_key].id, null)
-  )
-  settings        = each.value
-  global_settings = var.global_settings
-  base_tags       = local.tags
-  private_dns     = var.remote_objects.private_dns
-  client_config   = var.client_config
+  subnet_id           = can(each.value.subnet_id) ? each.value.subnet_id : var.remote_objects.vnets[try(each.value.lz_key, var.client_config.landingzone_key)][each.value.vnet_key].subnets[each.value.subnet_key].id
+  settings            = each.value
+  global_settings     = var.global_settings
+  base_tags           = local.tags
+  private_dns         = var.remote_objects.private_dns
+  client_config       = var.client_config
 }
