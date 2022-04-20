@@ -17,11 +17,11 @@ resource_groups = {
 
 mysql_flexible_server = {
   primary_region1 = {
-    name       = "vks-flexible-testservers"
-    version    = "8.0.21"   #Possible values are 5.7, and 8.0.21
-    sku_name   = "GP_Standard_D2ds_v4"
-    
-    
+    name     = "vks-flexible-testservers"
+    version  = "8.0.21" #Possible values are 5.7, and 8.0.21
+    sku_name = "GP_Standard_D2ds_v4"
+
+
 
     resource_group = {
       key = "mysql_region1"
@@ -32,7 +32,7 @@ mysql_flexible_server = {
     #administrator_username  = "psqladmin"
     #administrator_password  = "ComplxP@ssw0rd!"
     keyvault = {
-      key = "mysql_region1"              # (Required) when auto-generated administrator credentials needed.
+      key = "mysql_region1" # (Required) when auto-generated administrator credentials needed.
       # lz_key      = ""                      # Set the lz_key if the keyvault is remote.
     }
 
@@ -52,19 +52,19 @@ mysql_flexible_server = {
 
     # [Optional] Server Configurations
     mysql_configurations = {
-     mysql_configurations = {
-       name = "interactive_timeout"
-       value = "600"
-     }
- 
+      mysql_configurations = {
+        name  = "interactive_timeout"
+        value = "600"
+      }
+
     }
     # [Optional] Database Configurations
     mysql_databases = {
-     flex_mysql_database = {
-        name = "exampledb"
-        collation =  "utf8_unicode_ci"
-        charset   =  "utf8"
-     }
+      flex_mysql_database = {
+        name      = "exampledb"
+        collation = "utf8_unicode_ci"
+        charset   = "utf8"
+      }
     }
 
     tags = {

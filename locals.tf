@@ -125,7 +125,7 @@ locals {
     postgresql_servers                 = try(var.database.postgresql_servers, {})
     synapse_workspaces                 = try(var.database.synapse_workspaces, {})
     mysql_flexible_server              = try(var.database.mysql_flexible_server, {})
-    
+
     data_explorer = {
       kusto_clusters                         = try(var.database.data_explorer.kusto_clusters, {})
       kusto_databases                        = try(var.database.data_explorer.kusto_databases, {})
@@ -221,10 +221,14 @@ locals {
     cognitive_services_account = try(var.cognitive_services.cognitive_services_account, {})
   }
   messaging = {
-    signalr_services      = try(var.messaging.signalr_services, {})
-    servicebus_namespaces = try(var.messaging.servicebus_namespaces, {})
-    servicebus_queues     = try(var.messaging.servicebus_queues, {})
-    servicebus_topics     = try(var.messaging.servicebus_topics, {})
+    signalr_services             = try(var.messaging.signalr_services, {})
+    servicebus_namespaces        = try(var.messaging.servicebus_namespaces, {})
+    servicebus_queues            = try(var.messaging.servicebus_queues, {})
+    servicebus_topics            = try(var.messaging.servicebus_topics, {})
+    eventgrid_domain             = try(var.messaging.eventgrid_domain, {})
+    eventgrid_topic              = try(var.messaging.eventgrid_topic, {})
+    eventgrid_event_subscription = try(var.messaging.eventgrid_event_subscription, {})
+    eventgrid_domain_topic       = try(var.messaging.eventgrid_domain_topic, {})
   }
 
   networking = {
@@ -274,6 +278,8 @@ locals {
     private_dns                                             = try(var.networking.private_dns, {})
     private_dns_vnet_links                                  = try(var.networking.private_dns_vnet_links, {})
     public_ip_addresses                                     = try(var.networking.public_ip_addresses, {})
+    relay_hybrid_connection                                 = try(var.networking.relay_hybrid_connection, {})
+    relay_namespace                                         = try(var.networking.relay_namespace, {})
     public_ip_prefixes                                      = try(var.networking.public_ip_prefixes, {})
     route_tables                                            = try(var.networking.route_tables, {})
     vhub_peerings                                           = try(var.networking.vhub_peerings, {})

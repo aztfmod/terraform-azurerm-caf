@@ -44,17 +44,17 @@ virtual_machines = {
     virtual_machine_extensions = {
       generic_extensions = {
         AAD = {
-          publisher = "Microsoft.Azure.ActiveDirectory"
-          name = "AADLoginForWindows"
+          publisher                  = "Microsoft.Azure.ActiveDirectory"
+          name                       = "AADLoginForWindows"
           type                       = "AADLoginForWindows"
           type_handler_version       = "1.0"
-          auto_upgrade_minor_version = true          
+          auto_upgrade_minor_version = true
         }
         NW = {
-          publisher = "Microsoft.Azure.NetworkWatcher"
-          name = "NetworkWatcher"
-          type = "NetworkWatcherAgentWindows"
-          type_handler_version       = "1.4"
+          publisher               = "Microsoft.Azure.NetworkWatcher"
+          name                    = "NetworkWatcher"
+          type                    = "NetworkWatcherAgentWindows"
+          type_handler_version    = "1.4"
           autoUpgradeMinorVersion = true
         }
       }
