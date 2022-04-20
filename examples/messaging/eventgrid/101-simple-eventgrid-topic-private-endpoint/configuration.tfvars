@@ -32,9 +32,9 @@ vnets = {
 
 eventgrid_topic = {
   egt1 = {
-    name                          = "egt1"
+    name = "egt1"
     resource_group = {
-      key            = "evg_examples"
+      key = "evg_examples"
     }
     region                        = "region1"
     public_network_access_enabled = false

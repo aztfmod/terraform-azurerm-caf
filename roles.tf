@@ -127,7 +127,7 @@ locals {
       (var.current_landingzone_key) = merge(local.combined_objects_log_analytics, local.combined_diagnostics.log_analytics)
     }
   )
-    
+
   logged_in = tomap(
     {
       (var.current_landingzone_key) = {

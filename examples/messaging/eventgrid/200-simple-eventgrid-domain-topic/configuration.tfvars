@@ -15,12 +15,12 @@ resource_groups = {
 
 eventgrid_domains = {
   egd1 = {
-    name               = "egd1"
+    name = "egd1"
     resource_group = {
       key = "evg_examples"
     }
-    sku                = "Standard"
-    region             = "region1"
+    sku    = "Standard"
+    region = "region1"
     tags = {
       Contributor = "Bravent"
     }
@@ -29,9 +29,9 @@ eventgrid_domains = {
 
 eventgrid_domain_topics = {
   egdt = {
-    name                 = "egdt1"
+    name = "egdt1"
     resource_group = {
-      key   = "evg_examples"
+      key = "evg_examples"
     }
     eventgrid_domain = {
       key = "egd1"

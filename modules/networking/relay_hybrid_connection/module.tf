@@ -9,13 +9,13 @@ resource "azurecaf_name" "rhc" {
   use_slug      = var.global_settings.use_slug
 }
 resource "azurerm_relay_hybrid_connection" "rhc" {
-  name = azurecaf_name.rhc.result
+  name                = azurecaf_name.rhc.result
   resource_group_name = var.resource_group_name
   relay_namespace_name = coalesce(
-                            try(var.remote_objects.relay_namespace[var.settings.relay_namespace.lz_key][var.settings.relay_namespace.key].name,null),
-                            try(var.remote_objects.relay_namespace[var.client_config.landingzone_key][var.settings.relay_namespace.key].name,null),
-                            try(var.settings.relay_namespace.name,null)
-                        )
-  requires_client_authorization = try(var.settings.requires_client_authorization,null)
-  user_metadata = try(var.settings.user_metadata,null)
+    try(var.remote_objects.relay_namespace[var.settings.relay_namespace.lz_key][var.settings.relay_namespace.key].name, null),
+    try(var.remote_objects.relay_namespace[var.client_config.landingzone_key][var.settings.relay_namespace.key].name, null),
+    try(var.settings.relay_namespace.name, null)
+  )
+  requires_client_authorization = try(var.settings.requires_client_authorization, null)
+  user_metadata                 = try(var.settings.user_metadata, null)
 }

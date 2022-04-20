@@ -15,11 +15,11 @@ resource_groups = {
 
 eventgrid_topic = {
   egt1 = {
-    name               = "egt1"
+    name = "egt1"
     resource_group = {
       key = "evg_examples"
     }
-    region             = "region1"
+    region = "region1"
     tags = {
       Contributor = "Bravent"
     }

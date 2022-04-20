@@ -36,10 +36,10 @@ storage_account_queues = {
 
 eventgrid_event_subscription = {
   egs1 = {
-    name  = "defaultEventSubscription"
+    name = "defaultEventSubscription"
     scope = {
-      resource_type  = "resource_groups"
-      key   = "rg1"
+      resource_type = "resource_groups"
+      key           = "rg1"
     }
 
     storage_queue_endpoint = {

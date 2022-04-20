@@ -9,9 +9,9 @@ module "eventgrid_domain" {
   location = lookup(each.value, "region", null) == null ? local.resource_groups[each.value.resource_group_key].location : local.global_settings.regions[each.value.region]
 
   remote_objects = {
-        resource_group = local.combined_objects_resource_groups
-        vnets = local.combined_objects_networking
-        private_dns = local.combined_objects_private_dns
+    resource_group = local.combined_objects_resource_groups
+    vnets          = local.combined_objects_networking
+    private_dns    = local.combined_objects_private_dns
   }
 }
 output "eventgrid_domain" {
@@ -29,12 +29,12 @@ module "eventgrid_topic" {
   location = lookup(each.value, "region", null) == null ? local.resource_groups[each.value.resource_group_key].location : local.global_settings.regions[each.value.region]
 
   remote_objects = {
-        resource_group = local.combined_objects_resource_groups
+    resource_group = local.combined_objects_resource_groups
   }
 }
 output "eventgrid_topic" {
   value = module.eventgrid_topic
-} 
+}
 
 module "eventgrid_event_subscription" {
   source   = "./modules/messaging/eventgrid/eventgrid_event_subscription"
@@ -46,19 +46,19 @@ module "eventgrid_event_subscription" {
 
 
   remote_objects = {
-    all = local.remote_objects,
-    functions = local.combined_objects_function_apps,
-    eventhubs = local.combined_objects_event_hubs,
-    servicebus_topic = local.combined_objects_servicebus_topics,
-    servicebus_queues = local.combined_objects_servicebus_queues,
-    storage_accounts = local.combined_objects_storage_accounts,    
-    hybrid_connections = local.combined_objects_relay_hybrid_connection,
+    all                    = local.remote_objects,
+    functions              = local.combined_objects_function_apps,
+    eventhubs              = local.combined_objects_event_hubs,
+    servicebus_topic       = local.combined_objects_servicebus_topics,
+    servicebus_queues      = local.combined_objects_servicebus_queues,
+    storage_accounts       = local.combined_objects_storage_accounts,
+    hybrid_connections     = local.combined_objects_relay_hybrid_connection,
     storage_account_queues = local.combined_objects_storage_account_queues
   }
 }
 output "eventgrid_event_subscription" {
   value = module.eventgrid_event_subscription
-} 
+}
 
 module "eventgrid_domain_topic" {
   source   = "./modules/messaging/eventgrid/eventgrid_domain_topic"
@@ -69,8 +69,8 @@ module "eventgrid_domain_topic" {
   settings        = each.value
 
   remote_objects = {
-        resource_group = local.combined_objects_resource_groups
-        eventgrid_domain = local.combined_objects_eventgrid_domains
+    resource_group   = local.combined_objects_resource_groups
+    eventgrid_domain = local.combined_objects_eventgrid_domains
   }
 }
 output "eventgrid_domain_topic" {
