@@ -17,10 +17,10 @@ resource_groups = {
 
 mysql_flexible_server = {
   primary_re1 = {
-    name       = "flexible-testservers"
-    version    = "8.0.21"   #Possible values are 5.7, and 8.0.21
-    sku_name   = "GP_Standard_D2ds_v4"
-    zone       = "1"
+    name     = "flexible-testservers"
+    version  = "8.0.21" #Possible values are 5.7, and 8.0.21
+    sku_name = "GP_Standard_D2ds_v4"
+    zone     = "1"
 
     resource_group = {
       key = "mysql_region1"
@@ -48,13 +48,13 @@ mysql_flexible_server = {
 
     mysql_configurations = {
       mysql_configurations = {
-       name = "interactive_timeout"
-       value = "600"
-     }
+        name  = "interactive_timeout"
+        value = "600"
+      }
       mysql_configurations1 = {
-       name = "audit_log_include_users"
-       value = "testuser"
-     }
+        name  = "audit_log_include_users"
+        value = "testuser"
+      }
     }
 
     mysql_databases = {
