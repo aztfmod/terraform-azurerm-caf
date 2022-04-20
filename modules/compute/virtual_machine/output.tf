@@ -62,4 +62,9 @@ output "nics" {
   }
 }
 
+output "data_disks" {
+  value = {
+    for key, value in lookup(var.settings, "data_disks", {}) : key => azurerm_managed_disk.disk[key].id
+  }
+}
 
