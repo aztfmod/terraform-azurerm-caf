@@ -72,6 +72,11 @@ locals {
     availability_sets                   = try(var.compute.availability_sets, {})
     azure_container_registries          = try(var.compute.azure_container_registries, {})
     bastion_hosts                       = try(var.compute.bastion_hosts, {})
+    batch_accounts                      = try(var.compute.batch_accounts, {})
+    batch_applications                  = try(var.compute.batch_applications, {})
+    batch_certificates                  = try(var.compute.batch_certificates, {})
+    batch_jobs                          = try(var.compute.batch_jobs, {})
+    batch_pools                         = try(var.compute.batch_pools, {})
     container_groups                    = try(var.compute.container_groups, {})
     dedicated_hosts                     = try(var.compute.dedicated_hosts, {})
     dedicated_host_groups               = try(var.compute.dedicated_host_groups, {})
@@ -86,6 +91,7 @@ locals {
     wvd_workspaces                      = try(var.compute.wvd_workspaces, {})
     virtual_machines                    = try(var.compute.virtual_machines, {})
     virtual_machine_scale_sets          = try(var.compute.virtual_machine_scale_sets, {})
+    runbooks                            = try(var.compute.runbooks, {})
   }
 
   communication = {
@@ -271,10 +277,12 @@ locals {
     private_dns                                             = try(var.networking.private_dns, {})
     private_dns_vnet_links                                  = try(var.networking.private_dns_vnet_links, {})
     public_ip_addresses                                     = try(var.networking.public_ip_addresses, {})
+    public_ip_prefixes                                      = try(var.networking.public_ip_prefixes, {})
     route_tables                                            = try(var.networking.route_tables, {})
     vhub_peerings                                           = try(var.networking.vhub_peerings, {})
     virtual_hub_connections                                 = try(var.networking.virtual_hub_connections, {})
     virtual_hub_er_gateway_connections                      = try(var.networking.virtual_hub_er_gateway_connections, {})
+    virtual_hub_route_table_routes                          = try(var.networking.virtual_hub_route_table_routes, {})
     virtual_hub_route_tables                                = try(var.networking.virtual_hub_route_tables, {})
     virtual_hubs                                            = try(var.networking.virtual_hubs, {})
     virtual_network_gateway_connections                     = try(var.networking.virtual_network_gateway_connections, {})

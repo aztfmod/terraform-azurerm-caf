@@ -23,8 +23,8 @@ vnets = {
     specialsubnets = {}
     subnets = {
       appgw = {
-        name = "appgw"
-        cidr = ["10.1.0.0/28"]
+        name              = "appgw"
+        cidr              = ["10.1.0.0/28"]
         service_endpoints = ["Microsoft.Web"]
       }
       webapp = {
@@ -33,6 +33,9 @@ vnets = {
         delegation = {
           name               = "serverFarms"
           service_delegation = "Microsoft.Web/serverFarms"
+          actions = [
+            "Microsoft.Network/virtualNetworks/subnets/action"
+          ]
         }
       }
     }
@@ -150,15 +153,27 @@ app_services = {
 
     settings = {
       enabled = true
-      ip_restriction = [
-        {
-          name       = "appgw-access"
-          virtual_network_subnet = {
-            vnet_key   = "webapp_appgw"
-            subnet_key = "appgw"
+      site_config = {
+        ip_restriction = [
+          {
+            name        = "appgw-access-by-service-tag"
+            priority    = 100
+            service_tag = "AzureCloud"
+          },
+          {
+            name     = "appgw-access-by-subnet"
+            priority = 101
+            virtual_network_subnet = {
+              vnet_key   = "webapp_appgw"
+              subnet_key = "appgw"
+            }
           }
-        }
-      ]
+        ]
+      }
+    }
+
+    app_settings = {
+      "WEBSITE_NODE_DEFAULT_VERSION" = "6.9.1"
     }
   }
 }
