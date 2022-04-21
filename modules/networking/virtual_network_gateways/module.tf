@@ -33,7 +33,17 @@ resource "azurerm_virtual_network_gateway" "vngw" {
   dynamic "vpn_client_configuration" {
     for_each = try(var.settings.vpn_client_configuration, {})
     content {
-      address_space = vpn_client_configuration.value.address_space
+      address_space        = vpn_client_configuration.value.address_space
+      vpn_auth_types       = try(vpn_client_configuration.value.vpn_auth_types, null)
+      vpn_client_protocols = try(vpn_client_configuration.value.vpn_client_protocols, null)
+
+      aad_audience = try(vpn_client_configuration.value.aad_audience, null)
+      aad_issuer   = try(vpn_client_configuration.value.aad_issuer, null)
+      aad_tenant   = try(vpn_client_configuration.value.aad_tenant, null)
+
+      radius_server_address = try(vpn_client_configuration.value.radius_server_address, null)
+      radius_server_secret  = try(vpn_client_configuration.value.radius_server_secret, null)
+
       root_certificate {
         name             = vpn_client_configuration.value.root_certificate.name
         public_cert_data = vpn_client_configuration.value.root_certificate.public_cert_data
