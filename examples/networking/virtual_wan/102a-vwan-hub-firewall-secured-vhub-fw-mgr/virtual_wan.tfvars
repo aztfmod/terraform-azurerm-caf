@@ -205,7 +205,7 @@ virtual_hub_route_table_routes = {
       key = "hub1"
     }
     # to route to the secure firewall name must be aither 'all_traffic', 'private_traffic', 'public_traffic'
-    name = "all_traffic"
+    name              = "all_traffic"
     destinations_type = "CIDR"
 
     # Configure virtual hub security. Updates will apply globally to all connections.
@@ -215,12 +215,12 @@ virtual_hub_route_table_routes = {
     #
     # Include RFC 1918 prefixes in the private traffic range.
     #
-    destinations = ["0.0.0.0/0","10.0.0.0/8","172.16.0.0/12","192.168.0.0/16"]
+    destinations  = ["0.0.0.0/0", "10.0.0.0/8", "172.16.0.0/12", "192.168.0.0/16"]
     next_hop_type = "ResourceId"
     next_hop = {
       # lz_key = ""
       resource_type = "azurerm_firewall"
-      key = "firewall1"
+      key           = "firewall1"
       # or
       # id = ""
     }
@@ -262,7 +262,7 @@ virtual_hub_connections = {
   vnet_to_hub = {
     name = "vnets-TO-vhub"
     virtual_hub = {
-      key    = "hub1"
+      key = "hub1"
     }
     vnet = {
       vnet_key = "vnet1"
@@ -274,7 +274,7 @@ virtual_hub_connections = {
         virtual_hub_route_table_key = "defaultRouteTable"
         propagated_route_table = {
           # To route vnet to vnet traffic through firewall manager (private traffic)
-          labels                       = ["none"]
+          labels = ["none"]
           # Route internet traffic through firewall manager (private traffic)
           virtual_hub_route_table_keys = ["noneRouteTable"]
         }

@@ -22,12 +22,12 @@ purview_accounts = {
 
 keyvaults = {
   kv = {
-    name                        = "kv"
-    resource_group_key          = "rg1"
-    sku_name                    = "standard"
-    enable_rbac_authorization   = true
-    soft_delete_enabled         = true
-    purge_protection_enabled    = true
+    name                      = "kv"
+    resource_group_key        = "rg1"
+    sku_name                  = "standard"
+    enable_rbac_authorization = true
+    soft_delete_enabled       = true
+    purge_protection_enabled  = true
     tags = {
       env = "Standalone"
     }
