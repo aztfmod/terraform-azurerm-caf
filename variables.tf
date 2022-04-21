@@ -12,6 +12,10 @@ variable "global_settings" {
   }
 }
 
+variable "subscription_id" {
+  default = null
+}
+
 variable "client_config" {
   default = {}
 }
