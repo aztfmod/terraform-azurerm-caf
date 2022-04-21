@@ -76,6 +76,7 @@ locals {
     api_management                             = local.combined_objects_api_management
     app_config                                 = local.combined_objects_app_config
     app_service_environments                   = local.combined_objects_app_service_environments
+    app_service_environments_v3                = local.combined_objects_app_service_environments_v3
     app_service_plans                          = local.combined_objects_app_service_plans
     app_services                               = local.combined_objects_app_services
     application_gateway_platforms              = local.combined_objects_application_gateway_platforms
