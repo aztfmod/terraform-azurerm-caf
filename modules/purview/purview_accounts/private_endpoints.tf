@@ -17,5 +17,5 @@ module "private_endpoint" {
   resource_group_name = var.remote_objects.resource_group[var.client_config.landingzone_key][try(each.value.resource_group.key, each.value.resource_group_key)].name
   resource_id         = azurerm_purview_account.pva.id
   settings            = each.value
-  subnet_id           = var.remote_objects.vnets[try(each.value.lz_key, var.client_config.landingzone_key)][each.value.vnet_key].subnets[each.value.subnet_key].id
+  subnet_id           = can(each.value.subnet_id) ? each.value.subnet_id : var.remote_objects.vnets[try(each.value.lz_key, var.client_config.landingzone_key)][each.value.vnet_key].subnets[each.value.subnet_key].id
 }

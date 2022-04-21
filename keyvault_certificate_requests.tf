@@ -7,7 +7,7 @@ module "keyvault_certificate_requests" {
   source     = "./modules/security/keyvault_certificate_request"
   for_each   = local.security.keyvault_certificate_requests
 
-  keyvault_id               = try(local.combined_objects_keyvaults[each.value.lz_key][each.value.keyvault_key].id, local.combined_objects_keyvaults[local.client_config.landingzone_key][each.value.keyvault_key].id)
+  keyvault_id               = can(each.value.keyvault_id) ? each.value.keyvault_id : local.combined_objects_keyvaults[try(each.value.lz_key, local.client_config.landingzone_key)][each.value.keyvault_key].id
   certificate_issuers       = try(var.security.keyvault_certificate_issuers, {})
   settings                  = each.value
   domain_name_registrations = local.combined_objects_domain_name_registrations

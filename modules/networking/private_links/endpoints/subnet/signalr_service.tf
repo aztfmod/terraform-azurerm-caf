@@ -11,13 +11,10 @@ module "signalr_service" {
   name                = try(each.value.name, each.key)
   private_dns         = var.private_dns
   resource_group_name = try(var.resource_groups[each.value.resource_group_key].name, var.vnet_resource_group_name)
-  resource_id = can(each.value.resource_id) ? each.value.resource_id : coalesce(
-    try(var.remote_objects.signalr_services[var.client_config.landingzone_key][each.key].id, null),
-    try(var.remote_objects.signalr_services[each.value.lz_key][each.key].id, null)
-  )
-  settings          = each.value
-  subnet_id         = var.subnet_id
-  subresource_names = ["signalr"]
+  resource_id         = can(each.value.resource_id) ? each.value.resource_id : var.remote_objects.signalr_services[try(each.value.lz_key, var.client_config.landingzone_key)][each.key].id
+  settings            = each.value
+  subnet_id           = var.subnet_id
+  subresource_names   = ["signalr"]
 }
 
 # module "signalr_service_remote" {

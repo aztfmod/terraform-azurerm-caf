@@ -7,7 +7,7 @@ module "keyvault_keys" {
 
   global_settings = local.global_settings
   settings        = each.value
-  keyvault        = try(local.combined_objects_keyvaults[local.client_config.landingzone_key][each.value.keyvault_key], local.combined_objects_keyvaults[each.value.lz_key][each.value.keyvault_key])
+  keyvault        = local.combined_objects_keyvaults[try(each.value.lz_key, local.client_config.landingzone_key)][each.value.keyvault_key]
 }
 
 

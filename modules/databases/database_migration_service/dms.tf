@@ -15,5 +15,5 @@ resource "azurerm_database_migration_service" "dms" {
   resource_group_name = var.resource_group_name
   sku_name            = var.settings.sku_name
   tags                = local.tags
-  subnet_id = can(var.settings.subnet.id) ? var.settings.subnet.id : var.remote_objects.vnets[try(var.settings.subnet.lz_key, var.client_config.landingzone_key)][var.settings.subnet.vnet_key].subnets[var.settings.subnet.subnet_key].id
+  subnet_id           = can(var.settings.subnet.id) ? var.settings.subnet.id : var.remote_objects.vnets[try(var.settings.subnet.lz_key, var.client_config.landingzone_key)][var.settings.subnet.vnet_key].subnets[var.settings.subnet.subnet_key].id
 }
