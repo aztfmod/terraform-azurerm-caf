@@ -14,11 +14,7 @@ module "mssql_managed_instances" {
 
   global_settings = local.global_settings
   settings        = each.value
-  subnet_id = coalesce(
-    try(each.value.networking.subnet_id, null),
-    try(local.combined_objects_networking[each.value.networking.lz_key][each.value.networking.vnet_key].subnets[each.value.networking.subnet_key].id, null),
-    try(local.combined_objects_networking[local.client_config.landingzone_key][each.value.networking.vnet_key].subnets[each.value.networking.subnet_key].id, null)
-  )
+  subnet_id       = can(each.value.networking.subnet_id) ? each.value.networking.subnet_id : local.combined_objects_networking[try(each.value.networking.lz_key, local.client_config.landingzone_key)][each.value.networking.vnet_key].subnets[each.value.networking.subnet_key].id
 
   location            = can(local.global_settings.regions[each.value.region]) ? local.global_settings.regions[each.value.region] : local.combined_objects_resource_groups[try(each.value.resource_group.lz_key, local.client_config.landingzone_key)][try(each.value.resource_group.key, each.value.resource_group_key)].location
   resource_group_name = can(each.value.resource_group.name) || can(each.value.resource_group_name) ? try(each.value.resource_group.name, each.value.resource_group_name) : local.combined_objects_resource_groups[try(each.value.resource_group.lz_key, local.client_config.landingzone_key)][try(each.value.resource_group_key, each.value.resource_group.key)].name
@@ -42,13 +38,9 @@ module "mssql_managed_instances_secondary" {
   location            = can(local.global_settings.regions[each.value.region]) ? local.global_settings.regions[each.value.region] : local.combined_objects_resource_groups[try(each.value.resource_group.lz_key, local.client_config.landingzone_key)][try(each.value.resource_group.key, each.value.resource_group_key)].location
   resource_group_name = can(each.value.resource_group.name) || can(each.value.resource_group_name) ? try(each.value.resource_group.name, each.value.resource_group_name) : local.combined_objects_resource_groups[try(each.value.resource_group.lz_key, local.client_config.landingzone_key)][try(each.value.resource_group_key, each.value.resource_group.key)].name
   base_tags           = try(local.global_settings.inherit_tags, false) ? local.combined_objects_resource_groups[try(each.value.resource_group.lz_key, local.client_config.landingzone_key)][try(each.value.resource_group.key, each.value.resource_group_key)].tags : {}
-  subnet_id = coalesce(
-    try(each.value.networking.subnet_id, null),
-    try(local.combined_objects_networking[each.value.networking.lz_key][each.value.networking.vnet_key].subnets[each.value.networking.subnet_key].id, null),
-    try(local.combined_objects_networking[local.client_config.landingzone_key][each.value.networking.vnet_key].subnets[each.value.networking.subnet_key].id, null)
-  )
-  primary_server_id = module.mssql_managed_instances[each.value.primary_server.mi_server_key].id
-  keyvault_id       = try(each.value.administratorLoginPassword, null) == null ? module.keyvaults[each.value.keyvault_key].id : null
+  subnet_id           = can(each.value.networking.subnet_id) ? each.value.networking.subnet_id : local.combined_objects_networking[try(each.value.networking.lz_key, local.client_config.landingzone_key)][each.value.networking.vnet_key].subnets[each.value.networking.subnet_key].id
+  primary_server_id   = module.mssql_managed_instances[each.value.primary_server.mi_server_key].id
+  keyvault_id         = try(each.value.administratorLoginPassword, null) == null ? module.keyvaults[each.value.keyvault_key].id : null
 }
 
 module "mssql_mi_failover_groups" {

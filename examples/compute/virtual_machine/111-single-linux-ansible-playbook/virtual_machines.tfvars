@@ -3,8 +3,8 @@ virtual_machines = {
 
   # Configuration to deploy a bastion host linux virtual machine
   example_vm1 = {
-    resource_group_key                   = "vm_region1"
-    provision_vm_agent                   = true
+    resource_group_key = "vm_region1"
+    provision_vm_agent = true
     # boot_diagnostics_storage_account_key = "bootdiag_region1"
 
     os_type = "linux"
