@@ -21,6 +21,12 @@ variable "base_tags" {
   type        = map(any)
 }
 variable "settings" {}
+variable "diagnostic_profiles" {
+  default = {}
+}
+variable "diagnostics" {
+  default = {}
+}
 variable "remote_objects" {}
 variable "tags" {
   default     = null
