@@ -10,6 +10,7 @@ module "wvd_application_groups" {
   host_pool_id        = can(each.value.host_pool_id) ? each.value.host_pool_id : local.combined_objects_wvd_host_pools[try(each.value.lz_key, local.client_config.landingzone_key)][each.value.host_pool_key].id
   workspace_id        = can(each.value.workspace_id) ? each.value.workspace_id : local.combined_objects_wvd_workspaces[try(each.value.lz_key, local.client_config.landingzone_key)][each.value.wvd_workspace_key].id
   diagnostic_profiles = try(each.value.diagnostic_profiles, {})
+  diagnostics         = local.combined_diagnostics
 }
 
 output "wvd_application_groups" {
