@@ -1,0 +1,218 @@
+{
+  "$schema": "https://schema.management.azure.com/schemas/2019-04-01/deploymentTemplate.json#",
+  "contentVersion": "1.0.0.0",
+  "parameters": {
+      "workflows_update_mgmt_email_la_name": {
+
+          "type": "String"
+      },
+      "connections_azureblob_externalid": {
+          "type": "String"
+      },
+      "connections_azurequeues_externalid": {
+          "type": "String"
+      },
+      "connections_office365_externalid": {
+          "type": "String"
+      }
+  },
+  "variables": {},
+  "resources": [
+      {
+          "type": "Microsoft.Logic/workflows",
+          "apiVersion": "2017-07-01",
+          "name": "[parameters('workflows_update_mgmt_email_la_name')]",
+          "location": "westus2",
+          "properties": {
+              "state": "Disabled",
+              "definition": {
+                  "$schema": "https://schema.management.azure.com/providers/Microsoft.Logic/schemas/2016-06-01/workflowdefinition.json#",
+                  "contentVersion": "1.0.0.0",
+                  "parameters": {
+                      "$connections": {
+                          "defaultValue": {},
+                          "type": "Object"
+                      }
+                  },
+                  "triggers": {
+                      "When_there_are_messages_in_a_queue_(V2)": {
+                          "recurrence": {
+                              "frequency": "Minute",
+                              "interval": 3
+                          },
+                          "evaluatedRecurrence": {
+                              "frequency": "Minute",
+                              "interval": 3
+                          },
+                          "splitOn": "@triggerBody()?['QueueMessagesList']?['QueueMessage']",
+                          "type": "ApiConnection",
+                          "inputs": {
+                              "host": {
+                                  "connection": {
+                                      "name": "@parameters('$connections')['azurequeues']['connectionId']"
+                                  }
+                              },
+                              "method": "get",
+                              "path": "/v2/storageAccounts/@{encodeURIComponent(encodeURIComponent('AccountNameFromSettings'))}/queues/@{encodeURIComponent('email')}/message_trigger"
+                          }
+                      }
+                  },
+                  "actions": {
+                      "Condition": {
+                          "actions": {
+                              "Get_blob_content_(V2)": {
+                                  "runAfter": {},
+                                  "type": "ApiConnection",
+                                  "inputs": {
+                                      "host": {
+                                          "connection": {
+                                              "name": "@parameters('$connections')['azureblob']['connectionId']"
+                                          }
+                                      },
+                                      "method": "get",
+                                      "path": "/v2/datasets/@{encodeURIComponent(encodeURIComponent('AccountNameFromSettings'))}/files/@{encodeURIComponent(encodeURIComponent(body('Parse_JSON')?['FilePath']))}/content",
+                                      "queries": {
+                                          "inferContentType": true
+                                      }
+                                  }
+                              },
+                              "Send_an_email_(V2)_2": {
+                                  "runAfter": {
+                                      "Get_blob_content_(V2)": [
+                                          "Succeeded"
+                                      ]
+                                  },
+                                  "type": "ApiConnection",
+                                  "inputs": {
+                                      "body": {
+                                          "Attachments": [
+                                              {
+                                                  "ContentBytes": "@{base64(body('Get_blob_content_(V2)'))}",
+                                                  "Name": "VMList"
+                                              }
+                                          ],
+                                          "Body": "<p>@{body('Parse_JSON')?['bodycontent']}</p>",
+                                          "Subject": "@body('Parse_JSON')?['subject']",
+                                          "To": "@body('Parse_JSON')?['bcc']"
+                                      },
+                                      "host": {
+                                          "connection": {
+                                              "name": "@parameters('$connections')['office365']['connectionId']"
+                                          }
+                                      },
+                                      "method": "post",
+                                      "path": "/v2/Mail"
+                                  }
+                              }
+                          },
+                          "runAfter": {
+                              "Parse_JSON": [
+                                  "Succeeded"
+                              ]
+                          },
+                          "else": {
+                              "actions": {
+                                  "Send_an_email_(V2)_3": {
+                                      "runAfter": {},
+                                      "type": "ApiConnection",
+                                      "inputs": {
+                                          "body": {
+                                              "Body": "<p>@{body('Parse_JSON')?['bodycontent']}</p>",
+                                              "Subject": "@body('Parse_JSON')?['subject']",
+                                              "To": "@body('Parse_JSON')?['bcc']"
+                                          },
+                                          "host": {
+                                              "connection": {
+                                                  "name": "@parameters('$connections')['office365']['connectionId']"
+                                              }
+                                          },
+                                          "method": "post",
+                                          "path": "/v2/Mail"
+                                      }
+                                  }
+                              }
+                          },
+                          "expression": {
+                              "and": [
+                                  {
+                                      "greater": [
+                                          "@length(trim(body('Parse_JSON')?['FilePath']))",
+                                          0
+                                      ]
+                                  }
+                              ]
+                          },
+                          "type": "If"
+                      },
+                      "Delete_message_(V2)": {
+                          "runAfter": {
+                              "Condition": [
+                                  "Succeeded"
+                              ]
+                          },
+                          "type": "ApiConnection",
+                          "inputs": {
+                              "host": {
+                                  "connection": {
+                                      "name": "@parameters('$connections')['azurequeues']['connectionId']"
+                                  }
+                              },
+                              "method": "delete",
+                              "path": "/v2/storageAccounts/@{encodeURIComponent(encodeURIComponent('AccountNameFromSettings'))}/queues/@{encodeURIComponent('email')}/messages/@{encodeURIComponent(triggerBody()?['MessageId'])}",
+                              "queries": {
+                                  "popreceipt": "@triggerBody()?['PopReceipt']"
+                              }
+                          }
+                      },
+                      "Parse_JSON": {
+                          "runAfter": {},
+                          "type": "ParseJson",
+                          "inputs": {
+                              "content": "@triggerBody()?['MessageText']",
+                              "schema": {
+                                  "properties": {
+                                      "FilePath": {
+                                          "type": "string"
+                                      },
+                                      "bcc": {
+                                          "type": "string"
+                                      },
+                                      "bodycontent": {
+                                          "type": "string"
+                                      },
+                                      "subject": {
+                                          "type": "string"
+                                      }
+                                  },
+                                  "type": "object"
+                              }
+                          }
+                      }
+                  },
+                  "outputs": {}
+              },
+              "parameters": {
+                  "$connections": {
+                      "value": {
+                          "azureblob": {
+                              "connectionId": "[parameters('connections_azureblob_externalid')]",
+                              "connectionName": "azureblob",
+                              "id": "/subscriptions/158d9f92-ec1e-433e-8388-6f7157282c13/providers/Microsoft.Web/locations/westus2/managedApis/azureblob"
+                          },
+                          "azurequeues": {
+                              "connectionId": "[parameters('connections_azurequeues_externalid')]",
+                              "connectionName": "azurequeues",
+                              "id": "/subscriptions/158d9f92-ec1e-433e-8388-6f7157282c13/providers/Microsoft.Web/locations/westus2/managedApis/azurequeues"
+                          },
+                          "office365": {
+                              "connectionId": "[parameters('connections_office365_externalid')]",
+                              "connectionName": "office365",
+                              "id": "/subscriptions/158d9f92-ec1e-433e-8388-6f7157282c13/providers/Microsoft.Web/locations/westus2/managedApis/office365"
+                          }
+                      }
+                  }
+              }
+          }
+      }
+  ]
+}

@@ -13,8 +13,6 @@ locals {
   }
   tags = merge(var.tags, local.module_tag, var.base_tags)
 
-  arm_filename = "${path.module}/arm_site_config.json"
-
   app_settings = merge(try(var.app_settings, {}), try(local.dynamic_settings_to_process, {}), var.application_insight == null ? {} :
     {
       "APPINSIGHTS_INSTRUMENTATIONKEY"             = var.application_insight.instrumentation_key,
