@@ -48,7 +48,7 @@ resource "azurerm_databricks_workspace" "ws" {
       #   null
       # )
 
-      virtual_network_id = can(var.settings.custom_parameters.virtual_network_id) || can(var.settings.custom_parameters.vnet_key) == false || can(var.settings.custom_parameters.vnet.key) == false ? try(var.settings.custom_parameters.virtual_network_id, null) : var.vnets[try(var.settings.custom_parameters.lz_key, var.client_config.landingzone_key)][var.settings.custom_parameters.vnet_key].id
+      virtual_network_id = can(var.settings.custom_parameters.virtual_network_id) || can(var.settings.custom_parameters.vnet_key) == false ? try(var.settings.custom_parameters.virtual_network_id, null) : var.vnets[try(var.settings.custom_parameters.lz_key, var.client_config.landingzone_key)][var.settings.custom_parameters.vnet_key].id
       public_subnet_name = can(var.settings.custom_parameters.public_subnet_name) || can(var.settings.custom_parameters.vnet_key) == false || can(var.settings.custom_parameters.vnet.key) == false ? try(var.settings.custom_parameters.public_subnet_name, null) : var.vnets[try(var.settings.custom_parameters.lz_key, var.client_config.landingzone_key)][var.settings.custom_parameters.vnet_key].subnets[var.settings.custom_parameters.public_subnet_key].name
 
       #the NSG-association ID is the subnet-id, so it can be simplified:
