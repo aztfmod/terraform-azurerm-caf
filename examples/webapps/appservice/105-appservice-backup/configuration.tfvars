@@ -107,9 +107,9 @@ app_services = {
 
       logs = {
         application_logs = {
-          file_system_level = "Error"   # can be Warning, Information, Verbose or Off
+          file_system_level = "Error" # can be Warning, Information, Verbose or Off
           azure_blob_storage = {
-            level             = "Error"   # can be Warning, Information, Verbose or Off
+            level             = "Error" # can be Warning, Information, Verbose or Off
             retention_in_days = 60
           }
         }
