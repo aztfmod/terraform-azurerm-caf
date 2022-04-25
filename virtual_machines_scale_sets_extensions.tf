@@ -76,3 +76,18 @@ module "vmss_extension_application_health_extension" {
   extension                         = each.value.virtual_machine_scale_set_extensions.microsoft_azure_health_extension
   extension_name                    = "microsoft_azure_health_extension"
 }
+
+module "vmss_extension_keyvault_extension" {
+  source = "./modules/compute/virtual_machine_scale_set_extensions"
+
+  for_each = {
+    for key, value in try(local.compute.virtual_machine_scale_sets, {}) : key => value
+    if try(value.virtual_machine_scale_set_extensions.microsoft_azure_keyvault, null) != null
+  }
+
+  client_config                = local.client_config
+  virtual_machine_scale_set_id = module.virtual_machine_scale_sets[each.key].id
+  extension                    = each.value.virtual_machine_scale_set_extensions.microsoft_azure_keyvault
+  extension_name               = "microsoft_azure_keyvault"
+  managed_identities           = local.combined_objects_managed_identities
+}
