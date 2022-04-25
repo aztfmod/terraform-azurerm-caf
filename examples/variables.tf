@@ -844,6 +844,26 @@ variable "lb_rule" {
 variable "network_interface_backend_address_pool_association" {
   default = {}
 }
+variable "digital_twins_instances" {
+  description = "Digital Twins Instances"
+  default     = {}
+}
+
+variable "digital_twins_endpoint_eventhubs" {
+  description = "Digital Twins Endpoints Eventhubs"
+  default     = {}
+}
+
+variable "digital_twins_endpoint_eventgrids" {
+  description = "Digital Twins Endpoints Eventgrid"
+  default     = {}
+}
+
+variable "digital_twins_endpoint_servicebuses" {
+  description = "Digital Twins Endpoints Service Bus"
+  default     = {}
+}
+
 variable "monitor_metric_alert" {
   default = {}
 }
