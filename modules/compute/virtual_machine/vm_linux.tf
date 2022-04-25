@@ -122,8 +122,7 @@ resource "azurerm_linux_virtual_machine" "vm" {
   }
 
   source_image_id = try(each.value.source_image_reference, null) == null ? format("%s%s",
-    try(each.value.custom_image_id, var.image_definitions[var.client_config.landingzone_key][each.value.custom_image_key].id,
-    var.image_definitions[each.value.custom_image_lz_key][each.value.custom_image_key].id),
+    try(each.value.custom_image_id, var.image_definitions[try(each.value.custom_image_lz_key, var.client_config.landingzone_key)][each.value.custom_image_key].id),
   try("/versions/${each.value.custom_image_version}", "")) : null
 
   dynamic "identity" {
