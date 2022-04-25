@@ -388,4 +388,10 @@ locals {
     api_management_gateway_api          = try(var.apim.api_management_gateway_api, {})
     api_management_group                = try(var.apim.api_management_group, {})
   }
+  iot = {
+    digital_twins_instances             = try(var.iot.digital_twins_instances, {})
+    digital_twins_endpoint_eventhubs    = try(var.iot.digital_twins_endpoint_eventhubs, {})
+    digital_twins_endpoint_eventgrids   = try(var.iot.digital_twins_endpoint_eventgrids, {})
+    digital_twins_endpoint_servicebuses = try(var.iot.digital_twins_endpoint_servicebuses, {})
+  }
 }
