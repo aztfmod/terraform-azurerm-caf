@@ -73,11 +73,13 @@ jobs:
           az account set -s  ${{ env.ARM_SUBSCRIPTION_ID }}
 
       - name: Terraform Init example
+        id: tf_init
         run: |
           terraform -chdir=${GITHUB_WORKSPACE}/examples \
           init -upgrade=true | grep -P '^- (?=Downloading|Using|Finding|Installing)|^[^-]'
 
       - name: Terraform Plan example
+        id: tf_plan
         run: |
           terraform -chdir=${GITHUB_WORKSPACE}/examples \
             plan \
@@ -90,6 +92,8 @@ jobs:
             -out=${{ env.PLAN_FILE }}
 
       - name: Terraform Apply example
+        id: tf_apply
+        if: steps.tf_plan.outcome == 'success'
         run: |
           terraform -chdir=${GITHUB_WORKSPACE}/examples \
             apply \
@@ -98,7 +102,8 @@ jobs:
             ${{ env.PLAN_FILE }}
 
       - name: Terraform Destroy planning example
-        if: ${{ always() }}
+        id: tf_destroy_plan
+        if: steps.tf_plan.outcome == 'success' 
         run: |
           terraform -chdir=${GITHUB_WORKSPACE}/examples \
             plan \
@@ -112,7 +117,8 @@ jobs:
             -out=${{ env.PLAN_FILE }}-destroy
 
       - name: Terraform Destroy apply example
-        if: ${{ always() }}
+        id: tf_destroy_apply
+        if: steps.tf_destroy_plan.outcome == 'success'
         run: |
           terraform -chdir=${GITHUB_WORKSPACE}/examples \
             apply \
