@@ -29,7 +29,7 @@ diagnostics_destinations = {
   }
 }
 
-diagnostic_settings = {
+diagnostics_definition = {
   azure_data_factory = {
     name = "operational_logs_and_metrics"
     categories = {
@@ -63,12 +63,13 @@ data_factory = {
       #lz_key = ""
       #name = ""
     }
-  }
-  diagnostic_profiles = {
-    central_logs_region1 = {
-      definition_key   = "azure_data_factory"
-      destination_type = "log_analytics"
-      destination_key  = "central_logs"
+    diagnostic_profiles = {
+      central_logs_region1 = {
+        definition_key   = "azure_data_factory"
+        destination_type = "log_analytics"
+        destination_key  = "central_logs"
+      }
     }
   }
+
 }
