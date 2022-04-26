@@ -18,29 +18,26 @@ resource "azurerm_virtual_machine_extension" "keyvault_for_windows" {
         "certificateStoreLocation" : try(var.extension.certificate_store_location, "LocalMachine")
         "observedCertificates" : local.certificate_ids
       }
+      "authenticationSettings": {
+        "msiEndpoint":  try(var.extension.authenticationSettings.msiEndpoint, "http://169.254.169.254/metadata/identity")
+        "msiClientId":  try(var.extension.authenticationSettings.msiClientId, local.managed_identity_client_id)
+      }
     }
   )
 }
-
-#TODO:
-# ,
-#       "authenticationSettings": {
-#         "msiEndpoint":  "http://169.254.169.254/metadata/identity/oauth2/token",
-#         "msiClientId":  <Optional MSI identity e.g.: "c7373ae5-91c2-4165-8ab6-7381d6e75619">
-#       }
 
 # retrive certificates from key vault
 data "azurerm_key_vault_certificate" "certificate" {
   for_each = var.extension_name == "keyvault_for_windows" ? tomap(var.extension.certificates) : tomap({})
 
   name = each.value.name
-  key_vault_id = try(
-    each.value.key_vault_id,
-    var.keyvaults[each.value.lz_key][each.value.keyvault_key].id,
-    var.keyvaults[var.client_config.landingzone_key][each.value.keyvault_key].id
-  )
+  key_vault_id = can(each.value.key_vault_id) ? each.value.key_vault_id : var.keyvaults[try(each.value.lz_key, var.client_config.landingzone_key)][each.value.keyvault_key].id
 }
 
 locals {
   certificate_ids = [for key, value in tomap(data.azurerm_key_vault_certificate.certificate) : value.secret_id]
+  managed_local_identity_client_id  = try(var.managed_identities[var.client_config.landingzone_key][var.extension.managed_identity_key].client_id, "")
+  managed_remote_identity_client_id = try(var.managed_identities[var.extension.lz_key][var.extension.managed_identity_key].client_id, "")
+  provided_identity_client_id       = try(var.extension.managed_identity_id, "")
+  managed_identity_client_id        = try(coalesce(local.managed_local_identity_client_id, local.managed_remote_identity_client_id, local.provided_identity_client_id), "")
 }
