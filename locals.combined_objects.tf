@@ -158,7 +158,7 @@ locals {
   combined_objects_wvd_workspaces                                 = merge(tomap({ (local.client_config.landingzone_key) = module.wvd_workspaces }), try(var.remote_objects.wvd_workspaces, {}))
   combined_objects_backup_vaults                                  = merge(tomap({ (local.client_config.landingzone_key) = module.backup_vaults }), try(var.remote_objects.backup_vaults, {}))
   combined_objects_backup_vault_policies                          = merge(tomap({ (local.client_config.landingzone_key) = local.backup_vault_policies }), try(var.remote_objects.backup_vault_policies, {}))
-  combined_objects_backup_vault_instances                         = merge(tomap({ (local.client_config.landingzone_key) = local.backup_vault_instances }), try(var.remote_objects.backup_vault_instances , {}))
+  combined_objects_backup_vault_instances                         = merge(tomap({ (local.client_config.landingzone_key) = local.backup_vault_instances }), try(var.remote_objects.backup_vault_instances, {}))
 
   combined_objects_subscriptions = merge(
     tomap(
