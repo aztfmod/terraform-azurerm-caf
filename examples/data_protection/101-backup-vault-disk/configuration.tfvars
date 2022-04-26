@@ -64,9 +64,9 @@ backup_vault_policies = {
 }
 
 backup_vault_instances = {
-  instance0 = {
+  data_disk = {
     type                    = "disk"
-    instance_name           = "instancebkp0"
+    instance_name           = "datadisk"
     region                  = "region1"
     backup_vault_key        = "bv0"
     backup_vault_policy_key = "policy0"
@@ -76,6 +76,20 @@ backup_vault_instances = {
     disk = {
       vm_key   = "example_vm1"
       disk_key = "data1"
+    }
+  }
+  os_disk = {
+    type                    = "disk"
+    instance_name           = "osdisk"
+    region                  = "region1"
+    backup_vault_key        = "bv0"
+    backup_vault_policy_key = "policy0"
+    snapshot_resource_group = {
+      key = "bv"
+    }
+    disk = {
+      vm_key  = "example_vm1"
+      os_disk = true
     }
   }
 }
