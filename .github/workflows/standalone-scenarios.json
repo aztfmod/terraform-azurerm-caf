@@ -58,6 +58,7 @@
     "compute/virtual_machine/211-vm-bastion-winrm-agents",
     "compute/virtual_machine/213-vm_generic_extensions",
     "compute/virtual_machine/214-vm-generic_extensions_complex",
+    "compute/virtual_machine/215-vm-keyvault-for-windows-extension",
     "cosmos_db/100-simple-cosmos-db-cassandra",
     "cosmos_db/100-simple-cosmos-db-gremlin",
     "cosmos_db/100-simple-cosmos-db-mongo",
