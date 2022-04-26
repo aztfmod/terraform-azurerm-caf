@@ -12,13 +12,13 @@ resource "azurerm_storage_share" "fs" {
     for_each = try(var.settings.acl, {})
     content {
       id = acl.value.id
-      
+
       dynamic "access_policy" {
         for_each = try(var.settings.access_policy, {})
         content {
           permissions = access_policy.value.permissions
-          start = try(access_policy.value.start, null)
-          expiry = try(access_policy.value.expiry, null)
+          start       = try(access_policy.value.start, null)
+          expiry      = try(access_policy.value.expiry, null)
         }
       }
     }

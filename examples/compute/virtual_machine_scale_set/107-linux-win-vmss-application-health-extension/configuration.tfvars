@@ -290,26 +290,26 @@ virtual_machine_scale_sets = {
       }
     }
 
-    virtual_machine_scale_set_extensions = {
-      microsoft_azure_domainjoin = {
-        domain_name = "test.local"
-        ou_path     = "OU=test,DC=test,DC=local"
-        restart     = "true"
-        # specify the AKV location of the password to retrieve for domain join operation
-        domain_join_username_keyvault = {
-          keyvault_key = "vmsecretskv"
-          #key_vault_id = ""
-          #lz_key       = ""
-          secret_name = "domjoinuser"
-        }
-        domain_join_password_keyvault = {
-          keyvault_key = "vmsecretskv"
-          #key_vault_id = ""
-          #lz_key       = ""
-          secret_name = "domjoinpassword"
-        }
-      }
-    }
+    # virtual_machine_scale_set_extensions = {
+    #   microsoft_azure_domainjoin = {
+    #     domain_name = "test.local"
+    #     ou_path     = "OU=test,DC=test,DC=local"
+    #     restart     = "true"
+    #     # specify the AKV location of the password to retrieve for domain join operation
+    #     domain_join_username_keyvault = {
+    #       keyvault_key = "vmsecretskv"
+    #       #key_vault_id = ""
+    #       #lz_key       = ""
+    #       secret_name = "domjoinuser"
+    #     }
+    #     domain_join_password_keyvault = {
+    #       keyvault_key = "vmsecretskv"
+    #       #key_vault_id = ""
+    #       #lz_key       = ""
+    #       secret_name = "domjoinpassword"
+    #     }
+    #   }
+    # }
 
   }
 
