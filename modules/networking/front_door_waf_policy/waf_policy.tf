@@ -10,7 +10,7 @@ resource "azurerm_frontdoor_firewall_policy" "wafpolicy" {
   tags                              = local.tags
 
   dynamic "custom_rule" {
-    for_each = try(var.settings.custom_rules, null)
+    for_each = try(var.settings.custom_rules, {})
     content {
       action                         = custom_rule.value.action
       enabled                        = try(custom_rule.value.enabled, true)
@@ -35,7 +35,7 @@ resource "azurerm_frontdoor_firewall_policy" "wafpolicy" {
   }
 
   dynamic "managed_rule" {
-    for_each = try(var.settings.managed_rules, null)
+    for_each = try(var.settings.managed_rules, {})
     content {
       type    = managed_rule.value.type
       version = managed_rule.value.version
