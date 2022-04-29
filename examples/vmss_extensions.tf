@@ -8,3 +8,4 @@ moved {
   from = module.vmss_extension_microsoft_azure_domainjoin
   to   = module.example.module.vmss_extension_microsoft_azure_domainjoin
 }
+
