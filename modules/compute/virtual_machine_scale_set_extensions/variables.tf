@@ -22,3 +22,6 @@ variable "virtual_machine_scale_set_os_type" {
 variable "log_analytics_workspaces" {
   default = {}
 }
+variable "remote_objects" {
+  default = {}
+}
