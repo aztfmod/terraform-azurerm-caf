@@ -10,7 +10,7 @@ resource "azurecaf_name" "linux" {
   for_each = local.os_type == "linux" ? var.settings.vmss_settings : {}
 
   name          = each.value.name
-  resource_type = "azurerm_virtual_machine_scale_set"
+  resource_type = "azurerm_linux_virtual_machine_scale_set"
   prefixes      = var.global_settings.prefixes
   random_length = var.global_settings.random_length
   clean_input   = true
@@ -24,7 +24,7 @@ resource "azurecaf_name" "linux_computer_name_prefix" {
   for_each = local.os_type == "linux" ? var.settings.vmss_settings : {}
 
   name          = try(each.value.computer_name_prefix, each.value.name)
-  resource_type = "azurerm_virtual_machine_scale_set"
+  resource_type = "azurerm_linux_virtual_machine_scale_set"
   prefixes      = var.global_settings.prefixes
   random_length = var.global_settings.random_length
   clean_input   = true
@@ -71,7 +71,6 @@ resource "azurerm_linux_virtual_machine_scale_set" "vmss" {
   tags                = merge(local.tags, try(each.value.tags, null))
 
   computer_name_prefix            = azurecaf_name.linux_computer_name_prefix[each.key].result
-  custom_data                     = try(each.value.custom_data, null) == null ? null : filebase64(format("%s/%s", path.cwd, each.value.custom_data))
   disable_password_authentication = try(each.value.disable_password_authentication, true)
   eviction_policy                 = try(each.value.eviction_policy, null)
   max_bid_price                   = try(each.value.max_bid_price, null)
@@ -84,6 +83,12 @@ resource "azurerm_linux_virtual_machine_scale_set" "vmss" {
   upgrade_mode                    = try(each.value.upgrade_mode, null)
   zone_balance                    = try(each.value.zone_balance, null)
   zones                           = try(each.value.zones, null)
+  
+  custom_data = try(
+    local.dynamic_custom_data[each.value.custom_data][each.value.name],
+    try(filebase64(format("%s/%s", path.cwd, each.value.custom_data)), base64encode(each.value.custom_data)),
+    null
+  )  
 
   dynamic "admin_ssh_key" {
     for_each = lookup(each.value, "disable_password_authentication", true) == true ? [1] : []
