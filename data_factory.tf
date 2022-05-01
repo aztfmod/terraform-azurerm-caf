@@ -15,7 +15,7 @@ module "data_factory" {
     private_dns        = local.combined_objects_private_dns
     vnets              = local.combined_objects_networking
     private_endpoints  = try(each.value.private_endpoints, {})
-    resource_groups    = try(each.value.private_endpoints, {}) == {} ? null : local.resource_groups
+    resource_groups    = try(each.value.private_endpoints, {}) == {} ? null : local.combined_objects_resource_groups
   }
 
 
