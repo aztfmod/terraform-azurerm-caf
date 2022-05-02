@@ -37,9 +37,9 @@ resource "azurerm_frontdoor_rules_engine" "fdre" {
             for_each = try(action.value.response_header, null) != null ? [action.value.response_header] : []
 
             content {
-              header_action_type = request_header.value.header_action_type
-              header_name        = request_header.value.header_name
-              value              = request_header.value.value
+              header_action_type = response_header.value.header_action_type
+              header_name        = response_header.value.header_name
+              value              = response_header.value.value
             }
           }
         }
