@@ -23,7 +23,7 @@ module "vmware_clusters" {
   global_settings = local.global_settings
   client_config   = local.client_config
   settings        = each.value
-  vmware_cloud_id = local.combined_objects_vmware_private_clouds[try(each.value.lz_key, local.client_config.landingzone_key)][each.value.vmware_private_cloud_key].id
+  vmware_cloud_id = can(each.value.vmware_cloud_id) ? each.value.vmware_cloud_id : local.combined_objects_vmware_private_clouds[try(each.value.lz_key, local.client_config.landingzone_key)][each.value.vmware_private_cloud_key].id
 }
 
 
@@ -38,7 +38,7 @@ module "vmware_express_route_authorizations" {
   global_settings = local.global_settings
   client_config   = local.client_config
   settings        = each.value
-  vmware_cloud_id = local.combined_objects_vmware_private_clouds[try(each.value.lz_key, local.client_config.landingzone_key)][each.value.vmware_private_cloud_key].id
+  vmware_cloud_id = can(each.value.vmware_cloud_id) ? each.value.vmware_cloud_id : local.combined_objects_vmware_private_clouds[try(each.value.lz_key, local.client_config.landingzone_key)][each.value.vmware_private_cloud_key].id
 }
 
 output "vmware_express_route_authorizations" {

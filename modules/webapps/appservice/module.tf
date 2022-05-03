@@ -34,7 +34,7 @@ resource "azurerm_app_service" "app_service" {
   }
 
   key_vault_reference_identity_id = can(var.settings.key_vault_reference_identity.key) ? var.combined_objects.managed_identities[try(var.settings.identity.lz_key, var.client_config.landingzone_key)][var.settings.key_vault_reference_identity.key].id : try(var.settings.key_vault_reference_identity.id, null)
-  
+
   dynamic "site_config" {
     for_each = lookup(var.settings, "site_config", {}) != {} ? [1] : []
 
@@ -210,16 +210,21 @@ resource "azurerm_app_service" "app_service" {
     for_each = lookup(var.settings, "logs", {}) != {} ? [1] : []
 
     content {
+      detailed_error_messages_enabled = try(var.settings.logs.detailed_error_messages_enabled, null)
+      failed_request_tracing_enabled  = try(var.settings.logs.failed_request_tracing_enabled, null)
+
       dynamic "application_logs" {
         for_each = lookup(var.settings.logs, "application_logs", {}) != {} ? [1] : []
 
         content {
+          file_system_level = try(var.settings.logs.application_logs.file_system_level, null)
+
           dynamic "azure_blob_storage" {
             for_each = lookup(var.settings.logs.application_logs, "azure_blob_storage", {}) != {} ? [1] : []
 
             content {
               level             = var.settings.logs.application_logs.azure_blob_storage.level
-              sas_url           = var.settings.logs.application_logs.azure_blob_storage.sas_url
+              sas_url           = try(var.settings.logs.application_logs.azure_blob_storage.sas_url, local.logs_sas_url)
               retention_in_days = var.settings.logs.application_logs.azure_blob_storage.retention_in_days
             }
           }
@@ -234,7 +239,7 @@ resource "azurerm_app_service" "app_service" {
             for_each = lookup(var.settings.logs.http_logs, "azure_blob_storage", {}) != {} ? [1] : []
 
             content {
-              sas_url           = var.settings.logs.http_logs.azure_blob_storage.sas_url
+              sas_url           = try(var.settings.logs.http_logs.azure_blob_storage.sas_url, local.http_logs_sas_url)
               retention_in_days = var.settings.logs.http_logs.azure_blob_storage.retention_in_days
             }
           }

@@ -14,7 +14,7 @@ resource "azurerm_database_migration_project" "dmp" {
   location            = var.location
   resource_group_name = var.resource_group_name
   tags                = local.tags
-  service_name = can(var.settings.service.name) ? var.settings.service.name : var.database_migration_services[try(var.settings.service.lz_key, var.client_config.landingzone_key)][var.settings.service.key].name
-  source_platform = var.settings.source_platform
-  target_platform = var.settings.target_platform
+  service_name        = can(var.settings.service.name) ? var.settings.service.name : var.database_migration_services[try(var.settings.service.lz_key, var.client_config.landingzone_key)][var.settings.service.key].name
+  source_platform     = var.settings.source_platform
+  target_platform     = var.settings.target_platform
 }

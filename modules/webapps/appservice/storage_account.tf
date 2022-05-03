@@ -1,12 +1,12 @@
 data "azurerm_storage_account" "backup_storage_account" {
-  count = try(var.settings.backup, null) != null ? 1 : 0
+  count = can(var.settings.backup) ? 1 : 0
 
   name                = local.backup_storage_account.name
   resource_group_name = local.backup_storage_account.resource_group_name
 }
 
 data "azurerm_storage_account_blob_container_sas" "backup" {
-  count = try(var.settings.backup, null) != null ? 1 : 0
+  count = can(var.settings.backup) ? 1 : 0
 
   connection_string = data.azurerm_storage_account.backup_storage_account.0.primary_connection_string
   container_name    = local.backup_storage_account.containers[var.settings.backup.container_key].name
@@ -26,10 +26,10 @@ data "azurerm_storage_account_blob_container_sas" "backup" {
 }
 
 data "azurerm_storage_account_blob_container_sas" "logs" {
-  count = try(var.settings.logs, null) != null ? 1 : 0
+  count = can(var.settings.logs) ? 1 : 0
 
   connection_string = data.azurerm_storage_account.backup_storage_account.0.primary_connection_string
-  container_name    = local.backup_storage_account.containers[var.settings.logs.container_key].name
+  container_name    = local.logs_storage_account.containers[var.settings.logs.container_key].name
   https_only        = true
 
   start  = time_rotating.logs_sas[0].id
@@ -47,14 +47,14 @@ data "azurerm_storage_account_blob_container_sas" "logs" {
 
 
 data "azurerm_storage_account_blob_container_sas" "http_logs" {
-  count = try(var.settings.http_logs, null) != null ? 1 : 0
+  count = can(var.settings.logs.http_logs) ? 1 : 0
 
   connection_string = data.azurerm_storage_account.backup_storage_account.0.primary_connection_string
-  container_name    = local.backup_storage_account.containers[var.settings.http_logs.container_key].name
+  container_name    = local.http_logs_storage_account.containers[var.settings.logs.http_logs.container_key].name
   https_only        = true
 
   start  = time_rotating.http_logs_sas[0].id
-  expiry = timeadd(time_rotating.http_logs_sas[0].id, format("%sh", var.settings.http_logs.sas_policy.expire_in_days * 24))
+  expiry = timeadd(time_rotating.http_logs_sas[0].id, format("%sh", var.settings.logs.http_logs.sas_policy.expire_in_days * 24))
 
   permissions {
     read   = true
@@ -67,7 +67,7 @@ data "azurerm_storage_account_blob_container_sas" "http_logs" {
 }
 
 resource "time_rotating" "sas" {
-  count = try(var.settings.backup, null) != null ? 1 : 0
+  count = can(var.settings.backup.sas_policy) ? 1 : 0
 
   rotation_minutes = lookup(var.settings.backup.sas_policy.rotation, "mins", null)
   rotation_days    = lookup(var.settings.backup.sas_policy.rotation, "days", null)
@@ -76,7 +76,7 @@ resource "time_rotating" "sas" {
 }
 
 resource "time_rotating" "logs_sas" {
-  count = try(var.settings.logs, null) != null ? 1 : 0
+  count = can(var.settings.logs.sas_policy) ? 1 : 0
 
   rotation_minutes = lookup(var.settings.logs.sas_policy.rotation, "mins", null)
   rotation_days    = lookup(var.settings.logs.sas_policy.rotation, "days", null)
@@ -85,10 +85,10 @@ resource "time_rotating" "logs_sas" {
 }
 
 resource "time_rotating" "http_logs_sas" {
-  count = try(var.settings.http_logs, null) != null ? 1 : 0
+  count = can(var.settings.logs.http_logs.sas_policy) ? 1 : 0
 
-  rotation_minutes = lookup(var.settings.http_logs.sas_policy.rotation, "mins", null)
-  rotation_days    = lookup(var.settings.http_logs.sas_policy.rotation, "days", null)
-  rotation_months  = lookup(var.settings.http_logs.sas_policy.rotation, "months", null)
-  rotation_years   = lookup(var.settings.http_logs.sas_policy.rotation, "years", null)
+  rotation_minutes = lookup(var.settings.logs.http_logs.sas_policy.rotation, "mins", null)
+  rotation_days    = lookup(var.settings.logs.http_logs.sas_policy.rotation, "days", null)
+  rotation_months  = lookup(var.settings.logs.http_logs.sas_policy.rotation, "months", null)
+  rotation_years   = lookup(var.settings.logs.http_logs.sas_policy.rotation, "years", null)
 }

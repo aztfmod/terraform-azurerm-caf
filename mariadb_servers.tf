@@ -18,9 +18,10 @@ module "mariadb_servers" {
   keyvault_id         = try(each.value.administrator_login_password, null) == null ? module.keyvaults[each.value.keyvault_key].id : null
   storage_accounts    = module.storage_accounts
   vnets               = local.combined_objects_networking
-  subnet_id           = try(each.value.vnet_key, null) == null ? null : try(local.combined_objects_networking[local.client_config.landingzone_key][each.value.vnet_key].subnets[each.value.subnet_key].id, local.combined_objects_networking[each.value.lz_key][each.value.vnet_key].subnets[each.value.subnet_key].id)
-  azuread_groups      = local.combined_objects_azuread_groups
-  private_endpoints   = try(each.value.private_endpoints, {})
-  resource_groups     = try(each.value.private_endpoints, {}) == {} ? null : local.resource_groups
-  private_dns         = local.combined_objects_private_dns
+  subnet_id           = can(each.value.subnet_id) || can(each.value.vnet_key) == false ? try(each.value.subnet_id, null) : local.combined_objects_networking[try(each.value.lz_key, local.client_config.landingzone_key)][each.value.vnet_key].subnets[each.value.subnet_key].id
+
+  azuread_groups    = local.combined_objects_azuread_groups
+  private_endpoints = try(each.value.private_endpoints, {})
+  resource_groups   = try(each.value.private_endpoints, {}) == {} ? null : local.resource_groups
+  private_dns       = local.combined_objects_private_dns
 }

@@ -42,7 +42,7 @@ resource "azurerm_lb_backend_address_pool_address" "backend_address_pool_address
 
   name                    = each.value.backend_address_pool_address_name
   backend_address_pool_id = azurerm_lb_backend_address_pool.backend_address_pool.0.id
-  virtual_network_id      = try(var.vnets[var.client_config.landingzone_key][each.value.vnet_key].id, each.value.virtual_network_id)
+  virtual_network_id      = can(each.value.virtual_network_id) ? each.value.virtual_network_id : var.vnets[try(each.value.lz_key, var.client_config.landingzone_key)][each.value.vnet_key].id
   ip_address              = each.value.ip_address
 }
 
