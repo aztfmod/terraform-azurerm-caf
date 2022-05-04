@@ -429,6 +429,9 @@ variable "diagnostics_destinations" {
 variable "vnet_peerings" {
   default = {}
 }
+variable "vnet_peerings_v1" {
+  default = {}
+}
 
 variable "packer_service_principal" {
   default = {}

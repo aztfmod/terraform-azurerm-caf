@@ -12,6 +12,9 @@ terraform {
       source  = "hashicorp/azuread"
       version = "~> 1.4.0"
     }
+    azapi = {
+      source = "azure/azapi"
+    }
     azurecaf = {
       source  = "aztfmod/azurecaf"
       version = "~> 1.2.0"
@@ -35,7 +38,6 @@ provider "azurerm" {
     }
   }
 }
-
 
 data "azurerm_subscription" "primary" {}
 data "azurerm_client_config" "current" {}
