@@ -210,6 +210,32 @@ resource "azurerm_virtual_network_peering" "peering" {
 
 }
 
+# Allow creating from and to in the same deployment when vnets are in different subscriptions
+# (azurerm does not access the resource id of the vnet in the from)
+# use the variable vnet_peerings_v1
+resource "azapi_resource" "virtualNetworkPeerings" {
+  depends_on = [module.networking]
+  for_each   = local.networking.vnet_peerings_v1
+
+  type      = "Microsoft.Network/virtualNetworks/virtualNetworkPeerings@2021-05-01"
+  name      = each.value.name
+  parent_id = can(each.value.from.id) ? each.value.from.id : local.combined_objects_networking[try(each.value.from.lz_key, local.client_config.landingzone_key)][each.value.from.vnet_key].id
+
+  body = jsonencode({
+    properties = {
+      allowForwardedTraffic     = try(each.value.allow_forwarded_traffic, false)
+      allowGatewayTransit       = try(each.value.allow_gateway_transit, false)
+      allowVirtualNetworkAccess = try(each.value.allow_virtual_network_access, true)
+      doNotVerifyRemoteGateways = try(each.value.do_not_verify_remote_gateways, false)
+      useRemoteGateways         = try(each.value.use_remote_gateways, false)
+      remoteVirtualNetwork = {
+        id = can(each.value.to.remote_virtual_network_id) || can(each.value.to.id) ? try(each.value.to.remote_virtual_network_id, each.value.to.id) : local.combined_objects_networking[try(each.value.to.lz_key, local.client_config.landingzone_key)][each.value.to.vnet_key].id
+      }
+    }
+  })
+
+}
+
 #
 #
 # Route tables and routes
