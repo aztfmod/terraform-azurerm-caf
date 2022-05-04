@@ -215,6 +215,7 @@ module "example" {
     virtual_network_gateways                                = var.virtual_network_gateways
     virtual_wans                                            = var.virtual_wans
     vnet_peerings                                           = var.vnet_peerings
+    vnet_peerings_v1                                        = var.vnet_peerings_v1
     vnets                                                   = var.vnets
     virtual_subnets                                         = var.virtual_subnets
     vpn_gateway_connections                                 = var.vpn_gateway_connections
