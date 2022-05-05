@@ -115,6 +115,13 @@ resource "azurerm_windows_virtual_machine_scale_set" "vmss" {
     disk_size_gb              = try(each.value.os_disk.disk_size_gb, null)
     storage_account_type      = try(each.value.os_disk.storage_account_type, null)
     write_accelerator_enabled = try(each.value.os_disk.write_accelerator_enabled, false)
+
+    dynamic "diff_disk_settings" {
+      for_each = try(each.value.os_disk.diff_disk_settings, {}) == {} ? [] : [1]
+      content {
+        option = try(each.value.os_disk.diff_disk_settings.option, "Local")
+      }
+    }
   }
 
   dynamic "data_disk" {
