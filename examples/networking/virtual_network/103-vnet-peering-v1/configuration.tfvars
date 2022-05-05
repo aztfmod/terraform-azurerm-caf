@@ -480,5 +480,32 @@ vnet_peerings_v1 = {
   #   allow_gateway_transit        = false
   #   use_remote_gateways          = false
   # }
+  # test_TO_hub_re1 = {
+  #   name = "test_TO_hub_re1"
+  #   from = {
+  #     id = "/subscriptions/xxxxxxxxxxxx/resourceGroups/vnet/providers/Microsoft.Network/virtualNetworks/vnet1"
+  #   }
+  #   to = {
+  #     vnet_key = "hub_re1"
+  #   }
+  #   allow_virtual_network_access = true
+  #   allow_forwarded_traffic      = false
+  #   allow_gateway_transit        = false
+  #   use_remote_gateways          = false
+  # }
+
+  # hub_re1_TO_test = {
+  #   name = "hub_re1_TO_test"
+  #   from = {
+  #     vnet_key = "hub_re1"
+  #   }
+  #   to = {
+  #     id = "/subscriptions/xxxxxxxxxxxxx/resourceGroups/vnet/providers/Microsoft.Network/virtualNetworks/vnet1"
+  #   }
+  #   allow_virtual_network_access = true
+  #   allow_forwarded_traffic      = false
+  #   allow_gateway_transit        = false
+  #   use_remote_gateways          = false
+  # }
 
 }
