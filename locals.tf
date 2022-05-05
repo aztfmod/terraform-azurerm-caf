@@ -170,6 +170,12 @@ locals {
     }
   }
 
+  data_protection = {
+    backup_vaults          = try(var.data_protection.backup_vaults, {})
+    backup_vault_policies  = try(var.data_protection.backup_vault_policies, {})
+    backup_vault_instances = try(var.data_protection.backup_vault_instances, {})
+  }
+
   dynamic_app_settings_combined_objects = {
     app_config                  = local.combined_objects_app_config
     azure_container_registries  = local.combined_objects_azure_container_registries
