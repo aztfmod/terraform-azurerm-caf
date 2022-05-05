@@ -915,3 +915,12 @@ variable "public_ip_prefixes" {
 variable "runbooks" {
   default = {}
 }
+variable "backup_vaults" {
+  default = {}
+}
+variable "backup_vault_policies" {
+  default = {}
+}
+variable "backup_vault_instances" {
+  default = {}
+}
