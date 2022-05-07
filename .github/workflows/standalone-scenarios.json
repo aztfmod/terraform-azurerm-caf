@@ -167,6 +167,7 @@
     "networking/virtual_network/103-vnet-peering-v1",
     "networking/virtual_network/200-nsg-flow-logs",
     "networking/virtual_network/201-nsg-flow-logs-v1",
+    "networking/virtual_network/203-nsg-flow-logs-with-existing-la-and-storage",
     "networking/virtual_subnets/100-simple-subnet-rbac",
     "networking/virtual_wan/100-vwan-multi-hubs",
     "networking/virtual_wan/102-vwan-hub-firewall-secured-vhub",
