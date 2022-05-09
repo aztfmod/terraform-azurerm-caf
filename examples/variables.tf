@@ -429,6 +429,9 @@ variable "diagnostics_destinations" {
 variable "vnet_peerings" {
   default = {}
 }
+variable "vnet_peerings_v1" {
+  default = {}
+}
 
 variable "packer_service_principal" {
   default = {}
@@ -910,5 +913,14 @@ variable "public_ip_prefixes" {
   default = {}
 }
 variable "runbooks" {
+  default = {}
+}
+variable "backup_vaults" {
+  default = {}
+}
+variable "backup_vault_policies" {
+  default = {}
+}
+variable "backup_vault_instances" {
   default = {}
 }
