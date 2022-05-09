@@ -15,6 +15,7 @@
     "apim/113-api_management_gateway_api",
     "apim/114-api-management-group",
     "apim/115-api_management_private_virtual_network",
+    "apim/116-api_management_subscription",
     "app_gateway/301-agw-v1",
     "compute/vmware_cluster/101-vmware_cluster",
     "logic_app/101-integration_service_environment",
