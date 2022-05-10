@@ -141,36 +141,36 @@ resource "azurerm_function_app" "function_app" {
         for_each = try(var.settings.site_config.cors, {})
 
         content {
-          allowed_origins     = lookup(cors, "allowed_origins", null)
-          support_credentials = lookup(cors, "support_credentials", null)
+          allowed_origins     = lookup(cors.value, "allowed_origins", null)
+          support_credentials = lookup(cors.value, "support_credentials", null)
         }
       }
       dynamic "ip_restriction" {
         for_each = try(var.settings.site_config.ip_restriction, {})
 
         content {
-          ip_address                = lookup(ip_restriction, "ip_address", null)
-          virtual_network_subnet_id = lookup(ip_restriction, "virtual_network_subnet_id", null)
+          ip_address                = lookup(ip_restriction.value, "ip_address", null)
+          virtual_network_subnet_id = lookup(ip_restriction.value, "virtual_network_subnet_id", null)
         }
       }
       dynamic "scm_ip_restriction" {
         for_each = try(var.settings.site_config.scm_ip_restriction, {})
 
         content {
-          ip_address                = lookup(scm_ip_restriction, "ip_address", null)
-          service_tag               = lookup(scm_ip_restriction, "service_tag", null)
-          virtual_network_subnet_id = lookup(scm_ip_restriction, "virtual_network_subnet_id", null)
-          name                      = lookup(scm_ip_restriction, "name", null)
-          priority                  = lookup(scm_ip_restriction, "priority", null)
-          action                    = lookup(scm_ip_restriction, "action", null)
+          ip_address                = lookup(scm_ip_restriction.value, "ip_address", null)
+          service_tag               = lookup(scm_ip_restriction.value, "service_tag", null)
+          virtual_network_subnet_id = lookup(scm_ip_restriction.value, "virtual_network_subnet_id", null)
+          name                      = lookup(scm_ip_restriction.value, "name", null)
+          priority                  = lookup(scm_ip_restriction.value, "priority", null)
+          action                    = lookup(scm_ip_restriction.value, "action", null)
           dynamic "headers" {
             for_each = try(scm_ip_restriction.headers, {})
 
             content {
-              x_azure_fdid      = lookup(headers, "x_azure_fdid", null)
-              x_fd_health_probe = lookup(headers, "x_fd_health_probe", null)
-              x_forwarded_for   = lookup(headers, "x_forwarded_for", null)
-              x_forwarded_host  = lookup(headers, "x_forwarded_host", null)
+              x_azure_fdid      = lookup(headers.value, "x_azure_fdid", null)
+              x_fd_health_probe = lookup(headers.value, "x_fd_health_probe", null)
+              x_forwarded_for   = lookup(headers.value, "x_forwarded_for", null)
+              x_forwarded_host  = lookup(headers.value, "x_forwarded_host", null)
             }
           }
         }
