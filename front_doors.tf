@@ -3,13 +3,13 @@ module "front_doors" {
   for_each = local.networking.front_doors
 
   resource_group_name = can(each.value.resource_group.name) || can(each.value.resource_group_name) ? try(each.value.resource_group.name, each.value.resource_group_name) : local.combined_objects_resource_groups[try(each.value.resource_group.lz_key, local.client_config.landingzone_key)][try(each.value.resource_group_key, each.value.resource_group.key)].name
-  base_tags           = try(local.global_settings.inherit_tags, false) ? local.combined_objects_resource_groups[try(each.value.resource_group.lz_key, local.client_config.landingzone_key)][try(each.value.resource_group.key, each.value.resource_group_key)].tags : {}
+  base_tags           = try(local.global_settings.inherit_tags, false) ? try(local.combined_objects_resource_groups[try(each.value.resource_group.lz_key, local.client_config.landingzone_key)][try(each.value.resource_group.key, each.value.resource_group_key)].tags, {}) : {}
 
   client_config                 = local.client_config
   diagnostics                   = local.combined_diagnostics
   front_door_waf_policies       = local.combined_objects_front_door_waf_policies
   global_settings               = local.global_settings
-  keyvault_id                   = try(each.value.keyvault_key, null) == null ? null : try(local.combined_objects_keyvaults[local.client_config.landingzone_key][each.value.keyvault_key].id, local.combined_objects_keyvaults[each.value.lz_key][each.value.keyvault_key].id)
+  keyvault_id                   = can(each.value.keyvault_id) || can(each.value.keyvault_key) == false ? try(each.value.keyvault_id, null) : local.combined_objects_keyvaults[try(each.value.lz_key, local.client_config.landingzone_key)][each.value.keyvault_key].id
   keyvault_certificate_requests = local.combined_objects_keyvault_certificate_requests
   settings                      = each.value
 }
