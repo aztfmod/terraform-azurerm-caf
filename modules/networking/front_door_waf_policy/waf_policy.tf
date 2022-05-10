@@ -6,11 +6,11 @@ resource "azurerm_frontdoor_firewall_policy" "wafpolicy" {
   mode                              = try(var.settings.mode, null)
   redirect_url                      = try(var.settings.redirect_url, null)
   custom_block_response_status_code = try(var.settings.custom_block_response_status_code, null)
-  custom_block_response_body        = try(var.settings.custom_block_response_body)
+  custom_block_response_body        = try(var.settings.custom_block_response_body, null)
   tags                              = local.tags
 
   dynamic "custom_rule" {
-    for_each = var.settings.custom_rules
+    for_each = try(var.settings.custom_rules, {})
     content {
       action                         = custom_rule.value.action
       enabled                        = try(custom_rule.value.enabled, true)
@@ -35,7 +35,7 @@ resource "azurerm_frontdoor_firewall_policy" "wafpolicy" {
   }
 
   dynamic "managed_rule" {
-    for_each = var.settings.managed_rules
+    for_each = try(var.settings.managed_rules, {})
     content {
       type    = managed_rule.value.type
       version = managed_rule.value.version

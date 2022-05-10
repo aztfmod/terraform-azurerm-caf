@@ -26,7 +26,7 @@ resource "azurerm_resource_group_template_deployment" "domain" {
         # https://docs.microsoft.com/en-us/rest/api/appservice/topleveldomains/listagreements#examples
         "agreementKeys" = [
           try(var.settings.consent.agreement_key1, "DNRA"),
-          try(var.settings.consent.agreement_key2, "DNRA")
+          try(var.settings.consent.agreement_key2, "DNPA")
         ]
         "agreedAt" = timestamp()
         "agreedBy" = try(var.settings.consent.agreed_by, "100.5.150.200:52212")

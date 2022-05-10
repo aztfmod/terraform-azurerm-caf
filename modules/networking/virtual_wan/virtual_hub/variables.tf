@@ -30,7 +30,7 @@ variable "resource_group_name" {
 
 
 variable "vwan_id" {
-  description = "(Required) Resource ID for the Virtual WAN object"
+  description = "(optional) Resource ID for the Virtual WAN object"
   type        = string
 }
 

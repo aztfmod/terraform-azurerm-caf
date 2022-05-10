@@ -24,16 +24,26 @@ resource "azurerm_virtual_network_gateway" "vngw" {
     for_each = try(var.settings.ip_configuration, {})
     content {
       name                          = ip_configuration.value.ipconfig_name
-      public_ip_address_id          = lookup(ip_configuration.value, "public_ip_address_key", null) == null ? null : try(var.public_ip_addresses[var.client_config.landingzone_key][ip_configuration.value.public_ip_address_key].id, var.public_ip_addresses[ip_configuration.value.lz_key][ip_configuration.value.public_ip_address_key].id)
+      public_ip_address_id          = can(ip_configuration.value.public_ip_address_id) || can(ip_configuration.value.public_ip_address_key) == false ? try(ip_configuration.value.public_ip_address_id, null) : var.public_ip_addresses[try(ip_configuration.value.lz_key, var.client_config.landingzone_key)][ip_configuration.value.public_ip_address_key].id
       private_ip_address_allocation = ip_configuration.value.private_ip_address_allocation
-      subnet_id                     = try(var.vnets[var.client_config.landingzone_key][ip_configuration.value.vnet_key].subnets["GatewaySubnet"].id, var.vnets[ip_configuration.value.lz_key][ip_configuration.value.vnet_key].subnets["GatewaySubnet"].id)
+      subnet_id                     = can(ip_configuration.value.subnet_id) ? ip_configuration.value.subnet_id : var.vnets[try(ip_configuration.value.lz_key, var.client_config.landingzone_key)][ip_configuration.value.vnet_key].subnets["GatewaySubnet"].id
     }
   }
 
   dynamic "vpn_client_configuration" {
     for_each = try(var.settings.vpn_client_configuration, {})
     content {
-      address_space = vpn_client_configuration.value.address_space
+      address_space        = vpn_client_configuration.value.address_space
+      vpn_auth_types       = try(vpn_client_configuration.value.vpn_auth_types, null)
+      vpn_client_protocols = try(vpn_client_configuration.value.vpn_client_protocols, null)
+
+      aad_audience = try(vpn_client_configuration.value.aad_audience, null)
+      aad_issuer   = try(vpn_client_configuration.value.aad_issuer, null)
+      aad_tenant   = try(vpn_client_configuration.value.aad_tenant, null)
+
+      radius_server_address = try(vpn_client_configuration.value.radius_server_address, null)
+      radius_server_secret  = try(vpn_client_configuration.value.radius_server_secret, null)
+
       root_certificate {
         name             = vpn_client_configuration.value.root_certificate.name
         public_cert_data = vpn_client_configuration.value.root_certificate.public_cert_data
