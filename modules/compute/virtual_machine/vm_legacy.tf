@@ -119,7 +119,7 @@ resource "azurerm_virtual_machine" "vm" {
     }
   }
 
-  availability_set_id = try(var.availability_sets[var.client_config.landingzone_key][each.value.availability_set_key].id, var.availability_sets[each.value.availability_sets].id, null)
+  availability_set_id = can(each.value.availability_set) == false || can(each.value.availability_set.id) || can(each.value.availability_set_id) ? try(each.value.availability_set.id, each.value.availability_set_id, null) : var.availability_sets[try(var.client_config.landingzone_key, each.value.availability_set.lz_key)][try(each.value.availability_set_key, each.value.availability_set.key)].id
 
   dynamic "boot_diagnostics" {
     for_each = try(var.boot_diagnostics_storage_account != null ? [1] : var.global_settings.resource_defaults.virtual_machines.use_azmanaged_storage_for_boot_diagnostics == true ? [1] : [], [])
@@ -147,7 +147,7 @@ resource "azurerm_virtual_machine" "vm" {
     name                      = try(each.value.os_disk.name, null)
     write_accelerator_enabled = try(each.value.os_disk.write_accelerator_enabled, false)
     create_option             = each.value.os_disk.create_option
-    image_uri                 = try("${each.value.storage_image_reference.publisher}:${each.value.storage_image_reference.offer}:${each.value.storage_image_reference.sku}:${each.value.storage_image_reference.version}", null)
+    image_uri                 = try(each.value.image_uri, null)
     os_type                   = try(each.value.os_disk.operating_system, null)
     managed_disk_id           = try(each.value.os_disk.managed_disk_id, null)
     managed_disk_type         = try(each.value.os_disk.managed_disk_type, null)
@@ -205,11 +205,11 @@ resource "azurerm_virtual_machine" "vm" {
 
   license_type = try(each.value.license_type, null)
 
-  lifecycle {
-    ignore_changes = [
-      resource_group_name, location
-    ]
-  }
+  # lifecycle {
+  #   ignore_changes = [
+  #     resource_group_name, location
+  #   ]
+  # }
 
 }
 

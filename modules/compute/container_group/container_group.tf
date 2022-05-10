@@ -8,15 +8,41 @@ resource "azurecaf_name" "acg" {
   use_slug      = var.global_settings.use_slug
 }
 
+data "azurerm_key_vault_secret" "image_registry_credential_password" {
+  for_each = {
+    for irc_key, irc in try(var.settings.image_registry_credentials, {}) : irc_key => irc if try(irc.keyvault_key, null) != null
+  }
+  key_vault_id = try(var.combined_resources.keyvaults[try(each.value.lz_key, var.client_config.landingzone_key)][each.value.keyvault_key].id, null)
+  name         = try(var.dynamic_keyvault_secrets[each.value.keyvault_key][each.value.password_secret_key].secret_name, each.value.password_secret_name, null)
+}
+
+data "azurerm_key_vault_secret" "image_registry_credential_username" {
+  for_each = {
+    for irc_key, irc in try(var.settings.image_registry_credentials, {}) : irc_key => irc if try(irc.keyvault_key, null) != null
+  }
+  key_vault_id = try(var.combined_resources.keyvaults[try(each.value.lz_key, var.client_config.landingzone_key)][each.value.keyvault_key].id, null)
+  name         = try(var.dynamic_keyvault_secrets[each.value.keyvault_key][each.value.username_secret_key].secret_name, each.value.username_secret_name, null)
+}
+
 resource "azurerm_container_group" "acg" {
   name                = azurecaf_name.acg.result
   location            = var.location
   resource_group_name = var.resource_group_name
-  os_type             = var.settings.os_type
+  os_type             = try(var.settings.os_type, "Linux")
   dns_name_label      = try(var.settings.dns_name_label, null)
   tags                = merge(local.tags, try(var.settings.tags, null))
   ip_address_type     = try(var.settings.ip_address_type, "Public")
   restart_policy      = try(var.settings.restart_policy, "Always")
+  network_profile_id  = try(var.combined_resources.network_profiles[var.client_config.landingzone_key][var.settings.network_profile.key].id, null)
+
+  dynamic "exposed_port" {
+    for_each = try(var.settings.exposed_port, [])
+
+    content {
+      port     = exposed_port.value.port
+      protocol = upper(exposed_port.value.protocol)
+    }
+  }
 
   # Create containers based on for_each
   dynamic "container" {
@@ -44,8 +70,8 @@ resource "azurerm_container_group" "acg" {
         for_each = try(container.value.ports, {})
 
         content {
-          port     = ports.value.port
-          protocol = ports.value.protocol
+          port     = can(container.value.iterator) ? tonumber(ports.value.port) + container.value.iterator : ports.value.port
+          protocol = try(upper(ports.value.protocol), "TCP")
         }
       }
 
@@ -138,6 +164,15 @@ resource "azurerm_container_group" "acg" {
       nameservers    = var.settings.dns_config.nameservers
       search_domains = var.settings.dns_config.search_domains
       options        = var.settings.dns_config.options
+    }
+  }
+
+  dynamic "image_registry_credential" {
+    for_each = try(var.settings.image_registry_credentials, {})
+    content {
+      server   = image_registry_credential.value.server
+      username = try(data.azurerm_key_vault_secret.image_registry_credential_username[image_registry_credential.key].value, image_registry_credential.value.username)
+      password = try(data.azurerm_key_vault_secret.image_registry_credential_password[image_registry_credential.key].value, image_registry_credential.value.password)
     }
   }
 

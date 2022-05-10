@@ -19,9 +19,11 @@ resource "azurerm_app_service_slot" "slots" {
 
     content {
       type         = try(var.identity.type, null)
-      identity_ids = try(var.identity.identity_ids, null)
+      identity_ids = lower(var.identity.type) == "userassigned" ? local.managed_identities : null
     }
   }
+
+  key_vault_reference_identity_id = can(var.settings.key_vault_reference_identity.key) ? var.combined_objects.managed_identities[try(var.settings.identity.lz_key, var.client_config.landingzone_key)][var.settings.key_vault_reference_identity.key].id : try(var.settings.key_vault_reference_identity.id, null)
 
   dynamic "site_config" {
     for_each = lookup(var.settings, "site_config", {}) != {} ? [1] : []
