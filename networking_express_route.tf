@@ -26,12 +26,9 @@ module "express_route_circuit_authorizations" {
   source   = "./modules/networking/express_route_circuit_authorization"
   for_each = local.networking.express_route_circuit_authorizations
 
-  settings            = each.value
-  resource_group_name = try(local.resource_groups[each.value.resource_group_key].name, null) == null ? module.express_route_circuits[each.value.express_route_key].resource_group_name : local.resource_groups[each.value.resource_group_key].name
-  express_route_circuit_name = coalesce(
-    try(local.combined_objects_express_route_circuits[each.value.lz_key][each.value.express_route_key].name, null),
-    try(local.combined_objects_express_route_circuits[local.client_config.landingzone_key][each.value.express_route_key].name, null)
-  )
+  settings                   = each.value
+  resource_group_name        = try(local.resource_groups[each.value.resource_group_key].name, null) == null ? module.express_route_circuits[each.value.express_route_key].resource_group_name : local.resource_groups[each.value.resource_group_key].name
+  express_route_circuit_name = can(each.value.express_route_circuit_name) ? each.value.express_route_circuit_name : local.combined_objects_express_route_circuits[try(each.value.lz_key, local.client_config.landingzone_key)][each.value.express_route_key].name
 }
 
 #
@@ -46,14 +43,8 @@ module "express_route_circuit_peerings" {
 
   settings = each.value
 
-  resource_group_name = coalesce(
-    try(local.combined_objects_express_route_circuits[each.value.express_route.lz_key][each.value.express_route.key].resource_group_name, null),
-    try(local.combined_objects_express_route_circuits[local.client_config.landingzone_key][each.value.express_route_key].resource_group_name, null)
-  )
-  express_route_circuit_name = coalesce(
-    try(local.combined_objects_express_route_circuits[each.value.express_route.lz_key][each.value.express_route.key].name, null),
-    try(local.combined_objects_express_route_circuits[local.client_config.landingzone_key][each.value.express_route_key].name, null)
-  )
+  resource_group_name        = can(each.value.resource_group_name) ? each.value.resource_group_name : local.combined_objects_express_route_circuits[try(each.value.express_route.lz_key, local.client_config.landingzone_key)][each.value.express_route.key].resource_group_name
+  express_route_circuit_name = can(each.value.express_route_circuit_name) ? each.value.express_route_circuit_name : local.combined_objects_express_route_circuits[try(each.value.express_route.lz_key, local.client_config.landingzone_key)][each.value.express_route.key].name
 }
 
 # Outputs

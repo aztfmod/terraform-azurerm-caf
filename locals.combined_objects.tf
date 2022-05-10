@@ -10,6 +10,7 @@ locals {
   combined_objects_app_config                                     = merge(tomap({ (local.client_config.landingzone_key) = module.app_config }), try(var.remote_objects.app_config, {}))
   combined_objects_app_service_environments                       = merge(tomap({ (local.client_config.landingzone_key) = module.app_service_environments }), try(var.remote_objects.app_service_environments, {}))
   combined_objects_app_service_environments_v3                    = merge(tomap({ (local.client_config.landingzone_key) = module.app_service_environments_v3 }), try(var.remote_objects.app_service_environments_v3, {}))
+  combined_objects_app_service_environments_all                   = merge(local.combined_objects_app_service_environments, local.combined_objects_app_service_environments_v3)
   combined_objects_app_service_plans                              = merge(tomap({ (local.client_config.landingzone_key) = module.app_service_plans }), try(var.remote_objects.app_service_plans, {}))
   combined_objects_app_services                                   = merge(tomap({ (local.client_config.landingzone_key) = module.app_services }), try(var.remote_objects.app_services, {}))
   combined_objects_application_gateway_platforms                  = merge(tomap({ (local.client_config.landingzone_key) = module.application_gateway_platforms }), try(var.remote_objects.application_gateway_platforms, {}))
@@ -127,6 +128,9 @@ locals {
   combined_objects_wvd_applications                               = merge(tomap({ (local.client_config.landingzone_key) = module.wvd_applications }), try(var.remote_objects.wvd_applications, {}))
   combined_objects_wvd_host_pools                                 = merge(tomap({ (local.client_config.landingzone_key) = module.wvd_host_pools }), try(var.remote_objects.wvd_host_pools, {}))
   combined_objects_wvd_workspaces                                 = merge(tomap({ (local.client_config.landingzone_key) = module.wvd_workspaces }), try(var.remote_objects.wvd_workspaces, {}))
+  combined_objects_backup_vaults                                  = merge(tomap({ (local.client_config.landingzone_key) = module.backup_vaults }), try(var.remote_objects.backup_vaults, {}))
+  combined_objects_backup_vault_policies                          = merge(tomap({ (local.client_config.landingzone_key) = local.backup_vault_policies }), try(var.remote_objects.backup_vault_policies, {}))
+  combined_objects_backup_vault_instances                         = merge(tomap({ (local.client_config.landingzone_key) = local.backup_vault_instances }), try(var.remote_objects.backup_vault_instances, {}))
 
   combined_objects_subscriptions = merge(
     tomap(

@@ -153,6 +153,11 @@ module "example" {
       kusto_iothub_data_connections          = var.kusto_iothub_data_connections
     }
   }
+  data_protection = {
+    backup_vaults          = var.backup_vaults
+    backup_vault_policies  = var.backup_vault_policies
+    backup_vault_instances = var.backup_vault_instances
+  }
   messaging = {
     signalr_services      = var.signalr_services
     servicebus_namespaces = var.servicebus_namespaces
@@ -215,6 +220,7 @@ module "example" {
     virtual_network_gateways                                = var.virtual_network_gateways
     virtual_wans                                            = var.virtual_wans
     vnet_peerings                                           = var.vnet_peerings
+    vnet_peerings_v1                                        = var.vnet_peerings_v1
     vnets                                                   = var.vnets
     virtual_subnets                                         = var.virtual_subnets
     vpn_gateway_connections                                 = var.vpn_gateway_connections
