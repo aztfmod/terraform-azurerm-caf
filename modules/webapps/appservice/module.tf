@@ -52,6 +52,7 @@ resource "azurerm_app_service" "app_service" {
       dotnet_framework_version  = lookup(var.settings.site_config, "dotnet_framework_version", null)
       ftps_state                = lookup(var.settings.site_config, "ftps_state", "FtpsOnly")
       number_of_workers         = lookup(var.settings.site_config, "number_of_workers", null)
+      health_check_path         = lookup(var.settings.site_config, "health_check_path", null)
       http2_enabled             = lookup(var.settings.site_config, "http2_enabled", false)
       java_version              = lookup(var.settings.site_config, "java_version", null)
       java_container            = lookup(var.settings.site_config, "java_container", null)
@@ -281,4 +282,13 @@ resource "azurerm_app_service" "app_service" {
       site_config[0].scm_type
     ]
   }
+}
+
+resource "azurerm_app_service_custom_hostname_binding" "app_service" {
+  for_each            = try(var.settings.custom_hostname_binding, {})
+  app_service_name    = azurerm_app_service.app_service.name
+  resource_group_name = var.resource_group_name
+  hostname            = each.value.hostname
+  ssl_state           = try(each.value.ssl_state, null)
+  thumbprint          = try(each.value.thumbprint, null)
 }
