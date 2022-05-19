@@ -1,4 +1,4 @@
-data "azurerm_key_vault_certificate" "manual_certs" {
+data "azurerm_key_vault_certificate" "http_listener_manual_certs" {
   for_each = {
     for key, value in try(var.settings.http_listeners, {}) : key => value
     if can(value.keyvault_certificate.certificate_name)
@@ -31,7 +31,7 @@ resource "null_resource" "set_http_listener" {
       PUBLIC_IP                = try(var.application_gateway.frontend_ip_configurations[each.value.front_end_ip_configuration_key].name, null)
       HOST_NAME                = try(each.value.host_name, null)
       HOST_NAMES               = try(each.value.host_names, null)
-      SSL_CERT                 = can(each.value.keyvault_certificate.certificate_name) || can(each.value.ssl_cert_key) == false ? try(data.azurerm_key_vault_certificate.manual_certs[each.key].id, null) : var.settings.ssl_certs[each.value.ssl_cert_key].name
+      SSL_CERT                 = can(each.value.keyvault_certificate.certificate_name) || can(each.value.ssl_cert_key) == false ? try(data.azurerm_key_vault_certificate.http_listener_manual_certs[each.key].id, null) : var.settings.ssl_certs[each.value.ssl_cert_key].name
       WAF_POLICY               = try(var.application_gateway_waf_policies[try(each.value.waf_policy.lz_key, var.client_config.landingzone_key)][each.value.waf_policy.key].id, null)
     }
   }
