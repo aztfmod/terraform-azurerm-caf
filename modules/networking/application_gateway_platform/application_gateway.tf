@@ -148,6 +148,16 @@ resource "azurerm_application_gateway" "agw" {
     }
   }
 
+  dynamic "trusted_root_certificate" {
+    for_each = {
+      for key, value in try(var.settings.trusted_root_certificates, {}) : key => value
+    }
+    content {
+      name = trusted_root_certificate.value.name
+      data = trusted_root_certificate.value.keyvault.secret_id
+    }
+  }
+
   dynamic "ssl_certificate" {
     for_each = can(var.settings.default.ssl_cert_key) ? [1] : []
 
