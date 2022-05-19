@@ -198,7 +198,6 @@ resource "azurerm_application_gateway" "agw" {
       rewrite_rule_set,
       ssl_certificate,
       tags["managed-by-k8s-ingress"],
-      trusted_root_certificate,
       url_path_map
     ]
   }
