@@ -34,7 +34,7 @@ locals {
       try(var.virtual_hub_route_tables[var.settings.route_table.lz_key][var.settings.route_table.key].id, ""),
       try(var.virtual_hub_route_tables[var.client_config.landingzone_key][var.settings.route_table.key].id, ""),
       try(var.settings.route_table.id, ""),
-      contains(tolist(["defaultRouteTable", "None"]), try(var.settings.route_table.key, "")) ? format("%s/hubRouteTables/%s", var.virtual_hub_id, var.settings.route_table.key) : ""
+      contains(tolist(["defaultRouteTable", "noneRouteTable"]), try(var.settings.route_table.key, "")) ? format("%s/hubRouteTables/%s", var.virtual_hub_id, var.settings.route_table.key) : ""
     ), null)
   }
 
@@ -52,14 +52,14 @@ locals {
           [
             for key in try(var.settings.propagated_route_tables.keys, []) : {
               Id = var.virtual_hub_route_tables[try(var.settings.propagated_route_tables.lz_key, var.client_config.landingzone_key)][key].id
-            } if contains(tolist(["defaultRouteTable", "None"]), key) == false
+            } if contains(tolist(["defaultRouteTable", "noneRouteTable"]), key) == false
           ]
         ),
         flatten(
           [
             for key in try(var.settings.propagated_route_tables.keys, []) : {
               Id = format("%s/hubRouteTables/%s", var.virtual_hub_id, key)
-            } if contains(tolist(["defaultRouteTable", "None"]), key) == true
+            } if contains(tolist(["defaultRouteTable", "noneRouteTable"]), key) == true
           ]
         )
       ]

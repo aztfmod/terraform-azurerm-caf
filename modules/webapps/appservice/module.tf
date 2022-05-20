@@ -33,6 +33,8 @@ resource "azurerm_app_service" "app_service" {
     }
   }
 
+  key_vault_reference_identity_id = can(var.settings.key_vault_reference_identity.key) ? var.combined_objects.managed_identities[try(var.settings.identity.lz_key, var.client_config.landingzone_key)][var.settings.key_vault_reference_identity.key].id : try(var.settings.key_vault_reference_identity.id, null)
+
   dynamic "site_config" {
     for_each = lookup(var.settings, "site_config", {}) != {} ? [1] : []
 
@@ -69,11 +71,25 @@ resource "azurerm_app_service" "app_service" {
         }
       }
       dynamic "ip_restriction" {
-        for_each = lookup(var.settings.site_config, "ip_restriction", {}) != {} ? [1] : []
+        for_each = try(var.settings.site_config.ip_restriction, {})
 
         content {
-          ip_address                = lookup(var.settings.site_config.ip_restriction, "ip_address", null)
-          virtual_network_subnet_id = lookup(var.settings.site_config.ip_restriction, "virtual_network_subnet_id", null)
+          ip_address                = lookup(ip_restriction.value, "ip_address", null)
+          service_tag               = lookup(ip_restriction.value, "service_tag", null)
+          virtual_network_subnet_id = can(ip_restriction.value.virtual_network_subnet_id) || can(ip_restriction.value.virtual_network_subnet.id) || can(ip_restriction.value.virtual_network_subnet.subnet_key) == false ? try(ip_restriction.value.virtual_network_subnet_id, ip_restriction.value.virtual_network_subnet.id, null) : var.combined_objects.networking[try(ip_restriction.value.virtual_network_subnet.lz_key, var.client_config.landingzone_key)][ip_restriction.value.virtual_network_subnet.vnet_key].subnets[ip_restriction.value.virtual_network_subnet.subnet_key].id
+          name                      = lookup(ip_restriction.value, "name", null)
+          priority                  = lookup(ip_restriction.value, "priority", null)
+          action                    = lookup(ip_restriction.value, "action", null)
+          dynamic "headers" {
+            for_each = try(ip_restriction.headers, {})
+
+            content {
+              x_azure_fdid      = lookup(headers.value, "x_azure_fdid", null)
+              x_fd_health_probe = lookup(headers.value, "x_fd_health_probe", null)
+              x_forwarded_for   = lookup(headers.value, "x_forwarded_for", null)
+              x_forwarded_host  = lookup(headers.value, "x_forwarded_host", null)
+            }
+          }
         }
       }
     }
@@ -194,16 +210,21 @@ resource "azurerm_app_service" "app_service" {
     for_each = lookup(var.settings, "logs", {}) != {} ? [1] : []
 
     content {
+      detailed_error_messages_enabled = try(var.settings.logs.detailed_error_messages_enabled, null)
+      failed_request_tracing_enabled  = try(var.settings.logs.failed_request_tracing_enabled, null)
+
       dynamic "application_logs" {
         for_each = lookup(var.settings.logs, "application_logs", {}) != {} ? [1] : []
 
         content {
+          file_system_level = try(var.settings.logs.application_logs.file_system_level, null)
+
           dynamic "azure_blob_storage" {
             for_each = lookup(var.settings.logs.application_logs, "azure_blob_storage", {}) != {} ? [1] : []
 
             content {
               level             = var.settings.logs.application_logs.azure_blob_storage.level
-              sas_url           = var.settings.logs.application_logs.azure_blob_storage.sas_url
+              sas_url           = try(var.settings.logs.application_logs.azure_blob_storage.sas_url, local.logs_sas_url)
               retention_in_days = var.settings.logs.application_logs.azure_blob_storage.retention_in_days
             }
           }
@@ -218,7 +239,7 @@ resource "azurerm_app_service" "app_service" {
             for_each = lookup(var.settings.logs.http_logs, "azure_blob_storage", {}) != {} ? [1] : []
 
             content {
-              sas_url           = var.settings.logs.http_logs.azure_blob_storage.sas_url
+              sas_url           = try(var.settings.logs.http_logs.azure_blob_storage.sas_url, local.http_logs_sas_url)
               retention_in_days = var.settings.logs.http_logs.azure_blob_storage.retention_in_days
             }
           }

@@ -24,6 +24,10 @@ resource "azurerm_role_definition" "custom_role" {
     not_data_actions = lookup(var.custom_role.permissions, "not_data_actions", [])
   }
 
-  assignable_scopes = [lookup(var.custom_role, "scope", var.subscription_primary)]
+  # As recommended by the provider, we're assigning the `scope` object_id as the first
+  # entry for `assignable_scopes`
+  # Also, the distinct function will avoid duplicating entries
+  # https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/resources/role_definition#scope
+  assignable_scopes = distinct(concat([lookup(var.custom_role, "scope", var.subscription_primary)], var.assignable_scopes))
 
 }
