@@ -49,9 +49,9 @@ resource "azurerm_api_management_api_operation" "apim" {
             }
           }
           dynamic "example" {
-            for_each = try(var.settings.example, null) != null ? [var.settings.example] : []
+            for_each = try(var.settings.example, {})
             content {
-              name           = try(example.value.name, null)
+              name           = example.value.name
               summary        = try(example.value.summary, null)
               description    = try(example.value.description, null)
               value          = try(example.value.value, null)
@@ -96,9 +96,9 @@ resource "azurerm_api_management_api_operation" "apim" {
             }
           }
           dynamic "example" {
-            for_each = try(var.settings.example, null) != null ? [var.settings.example] : []
+            for_each = try(var.settings.example, {})
             content {
-              name           = try(example.value.name, null)
+              name           = example.value.name
               summary        = try(example.value.summary, null)
               description    = try(example.value.description, null)
               value          = try(example.value.value, null)

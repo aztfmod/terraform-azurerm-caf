@@ -11,7 +11,6 @@ resource "azurecaf_name" "dflsad" {
 resource "azurerm_data_factory_linked_service_azure_databricks" "dflsad" {
 
   name                = azurecaf_name.dflsad.result
-  resource_group_name = var.resource_group_name
   data_factory_id     = var.remote_objects.data_factory.id
   access_token        = try(var.settings.access_token, null)
 
