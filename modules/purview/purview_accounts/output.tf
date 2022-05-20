@@ -30,3 +30,6 @@ output "rbac_id" {
   value       = azurerm_purview_account.pva.identity[0].principal_id
   description = "The ID of the Purview Account for role assignments."
 }
+# output "managed_resources" {
+#   value       = azurerm_purview_account.pva.managed_resources
+# }

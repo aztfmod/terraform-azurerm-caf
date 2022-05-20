@@ -315,6 +315,21 @@ variable "aks_clusters" {
 variable "azure_container_registries" {
   default = {}
 }
+variable "batch_accounts" {
+  default = {}
+}
+variable "batch_applications" {
+  default = {}
+}
+variable "batch_certificates" {
+  default = {}
+}
+variable "batch_jobs" {
+  default = {}
+}
+variable "batch_pools" {
+  default = {}
+}
 variable "databricks_workspaces" {
   default = {}
 }
@@ -412,6 +427,9 @@ variable "diagnostics_destinations" {
   default = {}
 }
 variable "vnet_peerings" {
+  default = {}
+}
+variable "vnet_peerings_v1" {
   default = {}
 }
 
@@ -535,6 +553,9 @@ variable "vhub_peerings" {
   description = "Use virtual_hub_connections instead of vhub_peerings. It will be removed in version 6.0"
 }
 variable "virtual_hub_connections" {
+  default = {}
+}
+variable "virtual_hub_route_table_routes" {
   default = {}
 }
 variable "virtual_hub_route_tables" {
@@ -886,5 +907,11 @@ variable "sentinel_dc_security_center" {
   default = {}
 }
 variable "sentinel_dc_threat_intelligence" {
+  default = {}
+}
+variable "public_ip_prefixes" {
+  default = {}
+}
+variable "runbooks" {
   default = {}
 }

@@ -72,6 +72,11 @@ locals {
     availability_sets                   = try(var.compute.availability_sets, {})
     azure_container_registries          = try(var.compute.azure_container_registries, {})
     bastion_hosts                       = try(var.compute.bastion_hosts, {})
+    batch_accounts                      = try(var.compute.batch_accounts, {})
+    batch_applications                  = try(var.compute.batch_applications, {})
+    batch_certificates                  = try(var.compute.batch_certificates, {})
+    batch_jobs                          = try(var.compute.batch_jobs, {})
+    batch_pools                         = try(var.compute.batch_pools, {})
     container_groups                    = try(var.compute.container_groups, {})
     dedicated_hosts                     = try(var.compute.dedicated_hosts, {})
     dedicated_host_groups               = try(var.compute.dedicated_host_groups, {})
@@ -86,6 +91,7 @@ locals {
     wvd_workspaces                      = try(var.compute.wvd_workspaces, {})
     virtual_machines                    = try(var.compute.virtual_machines, {})
     virtual_machine_scale_sets          = try(var.compute.virtual_machine_scale_sets, {})
+    runbooks                            = try(var.compute.runbooks, {})
   }
 
   communication = {
@@ -174,6 +180,7 @@ locals {
     mssql_databases             = local.combined_objects_mssql_databases
     mssql_servers               = local.combined_objects_mssql_servers
     storage_accounts            = local.combined_objects_storage_accounts
+    networking                  = local.combined_objects_networking
   }
 
   dynamic_app_config_combined_objects = {
@@ -237,8 +244,8 @@ locals {
     azurerm_firewall_policy_rule_collection_groups          = try(var.networking.azurerm_firewall_policy_rule_collection_groups, {})
     azurerm_firewalls                                       = try(var.networking.azurerm_firewalls, {})
     azurerm_routes                                          = try(var.networking.azurerm_routes, {})
-    cdn_profile                                             = try(var.networking.cdn_profile, {})
     cdn_endpoint                                            = try(var.networking.cdn_endpoint, {})
+    cdn_profile                                             = try(var.networking.cdn_profile, {})
     ddos_services                                           = try(var.networking.ddos_services, {})
     dns_zone_records                                        = try(var.networking.dns_zone_records, {})
     dns_zones                                               = try(var.networking.dns_zones, {})
@@ -249,8 +256,8 @@ locals {
     express_route_connections                               = try(var.networking.express_route_connections, {})
     front_door_waf_policies                                 = try(var.networking.front_door_waf_policies, {})
     front_doors                                             = try(var.networking.front_doors, {})
-    frontdoor_rules_engine                                  = try(var.networking.frontdoor_rules_engine, {})
     frontdoor_custom_https_configuration                    = try(var.networking.frontdoor_custom_https_configuration, {})
+    frontdoor_rules_engine                                  = try(var.networking.frontdoor_rules_engine, {})
     ip_groups                                               = try(var.networking.ip_groups, {})
     lb                                                      = try(var.networking.lb, {})
     lb_backend_address_pool                                 = try(var.networking.lb_backend_address_pool, {})
@@ -270,18 +277,21 @@ locals {
     private_dns                                             = try(var.networking.private_dns, {})
     private_dns_vnet_links                                  = try(var.networking.private_dns_vnet_links, {})
     public_ip_addresses                                     = try(var.networking.public_ip_addresses, {})
+    public_ip_prefixes                                      = try(var.networking.public_ip_prefixes, {})
     route_tables                                            = try(var.networking.route_tables, {})
     vhub_peerings                                           = try(var.networking.vhub_peerings, {})
     virtual_hub_connections                                 = try(var.networking.virtual_hub_connections, {})
     virtual_hub_er_gateway_connections                      = try(var.networking.virtual_hub_er_gateway_connections, {})
+    virtual_hub_route_table_routes                          = try(var.networking.virtual_hub_route_table_routes, {})
     virtual_hub_route_tables                                = try(var.networking.virtual_hub_route_tables, {})
     virtual_hubs                                            = try(var.networking.virtual_hubs, {})
     virtual_network_gateway_connections                     = try(var.networking.virtual_network_gateway_connections, {})
     virtual_network_gateways                                = try(var.networking.virtual_network_gateways, {})
+    virtual_subnets                                         = try(var.networking.virtual_subnets, {})
     virtual_wans                                            = try(var.networking.virtual_wans, {})
     vnet_peerings                                           = try(var.networking.vnet_peerings, {})
+    vnet_peerings_v1                                        = try(var.networking.vnet_peerings_v1, {})
     vnets                                                   = try(var.networking.vnets, {})
-    virtual_subnets                                         = try(var.networking.virtual_subnets, {})
     vpn_gateway_connections                                 = try(var.networking.vpn_gateway_connections, {})
     vpn_sites                                               = try(var.networking.vpn_sites, {})
   }
