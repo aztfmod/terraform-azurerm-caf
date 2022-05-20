@@ -118,24 +118,23 @@ module "public_ip_addresses" {
   name                       = azurecaf_name.public_ip_addresses[each.key].result
   location                   = can(local.global_settings.regions[each.value.region]) ? local.global_settings.regions[each.value.region] : local.combined_objects_resource_groups[try(each.value.resource_group.lz_key, local.client_config.landingzone_key)][try(each.value.resource_group.key, each.value.resource_group_key)].location
   resource_group_name        = can(each.value.resource_group.name) || can(each.value.resource_group_name) ? try(each.value.resource_group.name, each.value.resource_group_name) : local.combined_objects_resource_groups[try(each.value.resource_group.lz_key, local.client_config.landingzone_key)][try(each.value.resource_group_key, each.value.resource_group.key)].name
-  sku                        = try(each.value.sku, "Basic")
+  
   allocation_method          = try(each.value.allocation_method, "Dynamic")
-  ip_version                 = try(each.value.ip_version, "IPv4")
-  idle_timeout_in_minutes    = try(each.value.idle_timeout_in_minutes, null)
+  base_tags                  = try(local.global_settings.inherit_tags, false) ? local.combined_objects_resource_groups[try(each.value.resource_group.lz_key, local.client_config.landingzone_key)][try(each.value.resource_group.key, each.value.resource_group_key)].tags : {}
+  diagnostic_profiles        = try(each.value.diagnostic_profiles, {})
+  diagnostics                = local.combined_diagnostics
   domain_name_label          = try(each.value.domain_name_label, null)
-  reverse_fqdn               = try(each.value.reverse_fqdn, null)
   generate_domain_name_label = try(each.value.generate_domain_name_label, false)
-  tags                       = try(each.value.tags, null)
+  idle_timeout_in_minutes    = try(each.value.idle_timeout_in_minutes, null)
   ip_tags                    = try(each.value.ip_tags, null)
+  ip_version                 = try(each.value.ip_version, "IPv4")
   public_ip_prefix_id        = can(each.value.public_ip_prefix.key) ? local.combined_objects_public_ip_prefixes[try(each.value.public_ip_prefix.lz_key, local.client_config.landingzone_key)][each.value.public_ip_prefix.key].id : try(each.value.public_ip_prefix_id, null)
-  zones = coalesce(
-    try(each.value.availability_zone, ""),
-    try(tostring(each.value.zones[0]), ""),
-    try(each.value.sku, "Basic") == "Basic" ? "No-Zone" : "Zone-Redundant"
-  )
-  diagnostic_profiles = try(each.value.diagnostic_profiles, {})
-  diagnostics         = local.combined_diagnostics
-  base_tags           = try(local.global_settings.inherit_tags, false) ? local.combined_objects_resource_groups[try(each.value.resource_group.lz_key, local.client_config.landingzone_key)][try(each.value.resource_group.key, each.value.resource_group_key)].tags : {}
+  reverse_fqdn               = try(each.value.reverse_fqdn, null)
+  sku                        = try(each.value.sku, "Basic")
+  sku_tier                   = try(each.value.sku_tier, null)
+  tags                       = try(each.value.tags, null)
+  # TODO - kept availability_zone to support smooth migration to azurerm 3.0
+  zones                      = can(each.value.zones) ? each.value.zones : try(tolist(each.value.availability_zone), null)
 }
 
 #

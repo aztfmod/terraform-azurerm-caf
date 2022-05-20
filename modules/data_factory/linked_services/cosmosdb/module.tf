@@ -9,7 +9,6 @@ resource "azurecaf_name" "linked_service_cosmosdb" {
 }
 resource "azurerm_data_factory_linked_service_cosmosdb" "linked_service_cosmosdb" {
   name                     = azurecaf_name.linked_service_cosmosdb.result
-  resource_group_name      = var.resource_group_name
   data_factory_id          = var.data_factory_id
   description              = try(var.settings.description, null)
   integration_runtime_name = try(var.settings.integration_runtime_name, null)

@@ -33,7 +33,7 @@ resource "azurerm_cognitive_account" "service" {
       }
 
       dynamic "virtual_network_rules" {
-        for_each = can(network_acls.value.virtual_network_rules) ? network_acls.value.virtual_network_rules : {}
+        for_each = try(network_acls.value.virtual_network_rules, {})
 
         content {
           subnet_id                            = virtual_network_rules.value.subnet_id

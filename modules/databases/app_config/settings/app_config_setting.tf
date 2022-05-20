@@ -15,7 +15,7 @@ moved {
 }
 
 # create app config settings
-resource "azurerm_template_deployment" "settings" {
+resource "azurerm_resource_group_template_deployment" "settings" {
   name                = azurecaf_name.settings.result
   resource_group_name = var.resource_group_name
 
