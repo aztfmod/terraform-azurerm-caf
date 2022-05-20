@@ -23,7 +23,7 @@ module "sentinel_watchlists" {
   default_duration           = try(each.value.default_duration, null)
   description                = try(each.value.description, null)
   labels                     = try(each.value.labels, null)
-  # item_search_key            = try(each.value.item_search_key, null) #azurerm 3.x
+  item_search_key            = try(each.value.item_search_key, null)
 }
 
 module "sentinel_watchlist_items" {

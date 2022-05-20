@@ -8,14 +8,20 @@ resource "azurecaf_name" "mssqlmi" {
   passthrough   = var.global_settings.passthrough
 }
 
-resource "azurerm_template_deployment" "mssqlmi" {
+# Part of migration from 2.99.0 to 3.7.0
+moved {
+  from = azurerm_template_deployment.mssqlmi
+  to   = azurerm_resource_group_template_deployment.mssqlmi
+}
+
+resource "azurerm_resource_group_template_deployment" "mssqlmi" {
 
   name                = azurecaf_name.mssqlmi.result
   resource_group_name = var.resource_group_name
 
-  template_body = file(local.arm_filename)
+  template_content = file(local.arm_filename)
 
-  parameters_body = jsonencode(local.parameters_body)
+  parameters_content = jsonencode(local.parameters_body)
 
   deployment_mode = "Incremental"
 
@@ -30,7 +36,7 @@ resource "azurerm_template_deployment" "mssqlmi" {
 resource "null_resource" "destroy_sqlmi" {
 
   triggers = {
-    resource_id = lookup(azurerm_template_deployment.mssqlmi.outputs, "id")
+    resource_id = jsondecode(azurerm_resource_group_template_deployment.mssqlmi.output_content).id.value
   }
 
   provisioner "local-exec" {
