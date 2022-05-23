@@ -2,7 +2,7 @@ keyvaults = {
 
   kv1 = {
     name               = "kv"
-    resource_group_key = "rg1"
+    resource_group_key = "ops"
     sku_name           = "standard"
     # Make sure you set a creation policy.
     creation_policies = {
