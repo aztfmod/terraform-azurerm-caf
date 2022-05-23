@@ -32,13 +32,13 @@ diagnostics_definition = {
     categories = {
       log = [
         # ["Category name",  "Diagnostics Enabled(true/false)", "Retention Enabled(true/false)", Retention_period]
-        ["StorageRead", true, false, 14],
-        ["StorageWrite", true, false, 14],
-        ["StorageDelete", true, false, 14]
+        # ["StorageRead", true, false, 14],
+        # ["StorageWrite", true, false, 14],
+        # ["StorageDelete", true, false, 14]
       ]
       metric = [
         #["Category name",  "Diagnostics Enabled(true/false)", "Retention Enabled(true/false)", Retention_period]
-        ["AllMetrics", true, false, 7],
+        ["Transaction", true, false, 7],
       ]
     }
   }
@@ -55,7 +55,7 @@ diagnostics_destinations = {
   storage = {
     all_regions = {
       australiaeast = {
-        storage_account_key = "dsa1_region1"
+        storage_account_key = "dsa1"
       }
     }
   }
