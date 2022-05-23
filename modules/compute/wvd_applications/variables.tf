@@ -6,6 +6,6 @@ variable "application_group_id" {
 }
 
 variable "diagnostic_profiles" {
-  default = null
+  default = {}
 }
 variable "diagnostics" {}

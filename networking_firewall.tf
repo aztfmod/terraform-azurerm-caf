@@ -7,7 +7,7 @@ module "azurerm_firewalls" {
   for_each = local.networking.azurerm_firewalls
 
   client_config       = local.client_config
-  diagnostic_profiles = try(each.value.diagnostic_profiles, null)
+  diagnostic_profiles = try(each.value.diagnostic_profiles, {})
   diagnostics         = local.combined_diagnostics
   global_settings     = local.global_settings
   name                = each.value.name
