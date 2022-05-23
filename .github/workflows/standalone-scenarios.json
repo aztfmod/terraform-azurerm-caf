@@ -89,6 +89,7 @@
     "databricks/101-standard-databricks-vnet",
     "databricks/102-premium-aml",
     "datalake/101-datalake-storage",
+    "diagnostics_profiles/100-multiple-destinations",
     "diagnostics_profiles/200-diagnostics-eventhub-namespaces",
     "diagnostics_profiles/201-multi-eventhub-diagnostics",
     "eventhub/100-simple-eventhub-namespace",
