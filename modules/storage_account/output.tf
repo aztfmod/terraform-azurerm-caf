@@ -71,14 +71,14 @@ output "primary_web_host" {
 }
 
 output "primary_connection_string" {
-  value = try(azurerm_storage_account.stg.primary_connection_string, null)
-  sensitive   = true
+  value     = try(azurerm_storage_account.stg.primary_connection_string, null)
+  sensitive = true
 }
 
 
 output "primary_blob_connection_string" {
-  value = try(azurerm_storage_account.stg.primary_blob_connection_string, null)
-  sensitive   = true
+  value     = try(azurerm_storage_account.stg.primary_blob_connection_string, null)
+  sensitive = true
 }
 
 #output "primary_queue_endpoint" {
