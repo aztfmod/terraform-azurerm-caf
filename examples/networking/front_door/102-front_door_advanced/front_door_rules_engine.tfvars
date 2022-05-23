@@ -1,6 +1,6 @@
 frontdoor_rules_engine = {
   http_security_header = {
-    name = "http_security_header"
+    name               = "http_security_header"
     resource_group_key = "common"
     frontdoor = {
       key = "front_door_corporate"
