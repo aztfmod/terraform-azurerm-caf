@@ -73,3 +73,7 @@ variable "image_definitions" {
 variable "disk_encryption_sets" {}
 
 variable "load_balancers" {}
+
+variable "storage_accounts" {
+  default = {}
+}
