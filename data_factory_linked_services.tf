@@ -4,11 +4,11 @@ module "data_factory_linked_service_azure_blob_storage" {
 
   for_each = local.data_factory.linked_services.azure_blob_storage
 
-  global_settings     = local.global_settings
-  client_config       = local.client_config
-  settings            = each.value
-  data_factory_id     = can(each.value.data_factory.id) ? each.value.data_factory.id : local.combined_objects_data_factory[try(local.client_config.landingzone_key, each.value.data_factory.lz_key)][try(each.value.data_factory.key, each.value.data_factory_key)].id
-  storage_account     = can(each.value.storage_account.key) ? local.combined_objects_storage_accounts[try(each.value.storage_account.lz_key, local.client_config.landingzone_key)][each.value.storage_account.key] : null
+  global_settings = local.global_settings
+  client_config   = local.client_config
+  settings        = each.value
+  data_factory_id = can(each.value.data_factory.id) ? each.value.data_factory.id : local.combined_objects_data_factory[try(local.client_config.landingzone_key, each.value.data_factory.lz_key)][try(each.value.data_factory.key, each.value.data_factory_key)].id
+  storage_account = can(each.value.storage_account.key) ? local.combined_objects_storage_accounts[try(each.value.storage_account.lz_key, local.client_config.landingzone_key)][each.value.storage_account.key] : null
 
   integration_runtime_name = try(
     coalesce(
@@ -32,12 +32,12 @@ module "data_factory_linked_service_cosmosdb" {
 
   for_each = local.data_factory.linked_services.cosmosdb
 
-  global_settings     = local.global_settings
-  client_config       = local.client_config
-  settings            = each.value
-  data_factory_id     = can(each.value.data_factory.id) ? each.value.data_factory.id : local.combined_objects_data_factory[try(local.client_config.landingzone_key, each.value.data_factory.lz_key)][try(each.value.data_factory.key, each.value.data_factory_key)].id
-  account_endpoint    = can(each.value.cosmosdb_account.endpoint) ? each.value.cosmosdb_account.endpoint : local.combined_objects_cosmos_dbs[try(each.value.cosmosdb_account.lz_key, local.client_config.landingzone_key)][each.value.cosmosdb_account.key].endpoint
-  account_key         = can(each.value.cosmosdb_account.account_key) ? each.value.cosmosdb_account.account_key : local.combined_objects_cosmos_dbs[try(each.value.cosmosdb_account.lz_key, local.client_config.landingzone_key)][each.value.cosmosdb_account.key].primary_key
+  global_settings  = local.global_settings
+  client_config    = local.client_config
+  settings         = each.value
+  data_factory_id  = can(each.value.data_factory.id) ? each.value.data_factory.id : local.combined_objects_data_factory[try(local.client_config.landingzone_key, each.value.data_factory.lz_key)][try(each.value.data_factory.key, each.value.data_factory_key)].id
+  account_endpoint = can(each.value.cosmosdb_account.endpoint) ? each.value.cosmosdb_account.endpoint : local.combined_objects_cosmos_dbs[try(each.value.cosmosdb_account.lz_key, local.client_config.landingzone_key)][each.value.cosmosdb_account.key].endpoint
+  account_key      = can(each.value.cosmosdb_account.account_key) ? each.value.cosmosdb_account.account_key : local.combined_objects_cosmos_dbs[try(each.value.cosmosdb_account.lz_key, local.client_config.landingzone_key)][each.value.cosmosdb_account.key].primary_key
 }
 
 output "data_factory_linked_service_cosmosdb" {
@@ -50,10 +50,10 @@ module "data_factory_linked_service_web" {
 
   for_each = local.data_factory.linked_services.web
 
-  global_settings     = local.global_settings
-  client_config       = local.client_config
-  settings            = each.value
-  data_factory_id     = can(each.value.data_factory.id) ? each.value.data_factory.id : local.combined_objects_data_factory[try(local.client_config.landingzone_key, each.value.data_factory.lz_key)][try(each.value.data_factory.key, each.value.data_factory_key)].id
+  global_settings = local.global_settings
+  client_config   = local.client_config
+  settings        = each.value
+  data_factory_id = can(each.value.data_factory.id) ? each.value.data_factory.id : local.combined_objects_data_factory[try(local.client_config.landingzone_key, each.value.data_factory.lz_key)][try(each.value.data_factory.key, each.value.data_factory_key)].id
   #connection_string = try(each.value.lz_key, null) == null ? local.combined_objects_cosmos_dbs[local.client_config.landingzone_key][each.value.cosmos_db_key].name : local.combined_objects_cosmos_dbs[each.value.lz_key][each.value.cosmos_db_key].connection_string
 }
 
@@ -66,10 +66,10 @@ module "data_factory_linked_service_mysql" {
   source   = "./modules/data_factory/linked_services/mysql"
   for_each = local.data_factory.linked_services.mysql
 
-  global_settings     = local.global_settings
-  client_config       = local.client_config
-  settings            = each.value
-  data_factory_id     = can(each.value.data_factory.id) ? each.value.data_factory.id : local.combined_objects_data_factory[try(local.client_config.landingzone_key, each.value.data_factory.lz_key)][try(each.value.data_factory.key, each.value.data_factory_key)].id
+  global_settings = local.global_settings
+  client_config   = local.client_config
+  settings        = each.value
+  data_factory_id = can(each.value.data_factory.id) ? each.value.data_factory.id : local.combined_objects_data_factory[try(local.client_config.landingzone_key, each.value.data_factory.lz_key)][try(each.value.data_factory.key, each.value.data_factory_key)].id
   #connection_string = try(each.value.lz_key, null) == null ? local.combined_objects_cosmos_dbs[local.client_config.landingzone_key][each.value.cosmos_db_key].name : local.combined_objects_cosmos_dbs[each.value.lz_key][each.value.cosmos_db_key].connection_string
 }
 
@@ -78,10 +78,10 @@ module "data_factory_linked_service_postgresql" {
   source   = "./modules/data_factory/linked_services/postgresql"
   for_each = local.data_factory.linked_services.postgresql
 
-  global_settings     = local.global_settings
-  client_config       = local.client_config
-  settings            = each.value
-  data_factory_id     = can(each.value.data_factory.id) ? each.value.data_factory.id : local.combined_objects_data_factory[try(local.client_config.landingzone_key, each.value.data_factory.lz_key)][try(each.value.data_factory.key, each.value.data_factory_key)].id
+  global_settings = local.global_settings
+  client_config   = local.client_config
+  settings        = each.value
+  data_factory_id = can(each.value.data_factory.id) ? each.value.data_factory.id : local.combined_objects_data_factory[try(local.client_config.landingzone_key, each.value.data_factory.lz_key)][try(each.value.data_factory.key, each.value.data_factory_key)].id
 
   #connection_string = try(each.value.lz_key, null) == null ? local.combined_objects_cosmos_dbs[local.client_config.landingzone_key][each.value.cosmos_db_key].name : local.combined_objects_cosmos_dbs[each.value.lz_key][each.value.cosmos_db_key].connection_string
 }
@@ -93,10 +93,10 @@ module "data_factory_linked_service_sql_server" {
   source   = "./modules/data_factory/linked_services/sql_server"
   for_each = local.data_factory.linked_services.sql_server
 
-  global_settings     = local.global_settings
-  client_config       = local.client_config
-  settings            = each.value
-  data_factory_id     = can(each.value.data_factory.id) ? each.value.data_factory.id : local.combined_objects_data_factory[try(local.client_config.landingzone_key, each.value.data_factory.lz_key)][try(each.value.data_factory.key, each.value.data_factory_key)].id
+  global_settings = local.global_settings
+  client_config   = local.client_config
+  settings        = each.value
+  data_factory_id = can(each.value.data_factory.id) ? each.value.data_factory.id : local.combined_objects_data_factory[try(local.client_config.landingzone_key, each.value.data_factory.lz_key)][try(each.value.data_factory.key, each.value.data_factory_key)].id
 
   #connection_string = try(each.value.lz_key, null) == null ? local.combined_objects_cosmos_dbs[local.client_config.landingzone_key][each.value.cosmos_db_key].name : local.combined_objects_cosmos_dbs[each.value.lz_key][each.value.cosmos_db_key].connection_string
 }

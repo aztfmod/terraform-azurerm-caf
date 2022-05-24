@@ -175,7 +175,7 @@ For each resource, the variable ```diagnostic_profiles``` will be used to store 
 diagnostic_profiles = {
       central_logs_region1 = {
         definition_key   = "azure_kubernetes_cluster"
-        destination_type = "log_analytics"
+        destination_type = "log_analytics" # Can be either a string (allowed values "log_analytics", "storage" or "event_hub") or a list of strings (combination of "log_analytics", "storage", "event_hub", no repeat)
         destination_key  = "central_logs"
       }
     }

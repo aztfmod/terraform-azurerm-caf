@@ -229,6 +229,12 @@ variable "messaging" {
   default     = {}
 }
 
+## DataProtection variables
+variable "data_protection" {
+  description = "Configuration object - data protection"
+  default     = {}
+}
+
 ## Networking variables
 variable "networking" {
   description = "Configuration object - networking resources"
