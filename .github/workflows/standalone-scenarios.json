@@ -45,6 +45,7 @@
     "compute/virtual_machine_scale_set/101-linux-win-vmss-agw",
     "compute/virtual_machine_scale_set/102-linux-win-vmss-custom-script-extension",
     "compute/virtual_machine_scale_set/104-linux-win-vmss-as-lb",
+    "compute/virtual_machine_scale_set/106-linux-win-vmss-lb",
     "compute/virtual_machine/101-single-windows-vm",
     "compute/virtual_machine/102-single-vm-data-disks",
     "compute/virtual_machine/104-single-windows-backup",

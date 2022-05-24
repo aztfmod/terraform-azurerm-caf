@@ -29,6 +29,8 @@ module "virtual_machine_scale_sets" {
   image_definitions                = local.combined_objects_image_definitions
   keyvaults                        = local.combined_objects_keyvaults
   load_balancers                   = local.combined_objects_load_balancers
+  lbs                              = local.combined_objects_lb
+  lb_backend_address_pool          = local.combined_objects_lb_backend_address_pool
   managed_identities               = local.combined_objects_managed_identities
   network_security_groups          = try(module.network_security_groups, {})
   proximity_placement_groups       = local.combined_objects_proximity_placement_groups

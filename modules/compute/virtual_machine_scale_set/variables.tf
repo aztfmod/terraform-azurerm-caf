@@ -73,3 +73,9 @@ variable "image_definitions" {
 variable "disk_encryption_sets" {}
 
 variable "load_balancers" {}
+variable "lbs"  {
+  default = {}
+}
+variable "lb_backend_address_pool" {
+  default = {}
+}
