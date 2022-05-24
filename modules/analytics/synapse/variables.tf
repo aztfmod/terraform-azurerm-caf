@@ -5,7 +5,9 @@ variable "settings" {
 variable "global_settings" {
   description = "Global settings object (see module README.md)"
 }
-
+variable "client_config" {
+  description = "Client configuration object (see module README.md)."
+}
 variable "storage_data_lake_gen2_filesystem_id" {
   description = "The ID of the Datalake filesystem to be used by Synapse."
 }
@@ -29,4 +31,13 @@ variable "keyvault_id" {
 variable "base_tags" {
   description = "Base tags for the resource to be inherited from the resource group."
   type        = map(any)
+}
+variable "vnets" {
+  default = {}
+}
+variable "private_endpoints" {
+  default = {}
+}
+variable "private_dns" {
+  default = {}
 }
