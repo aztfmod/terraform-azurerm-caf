@@ -14,11 +14,11 @@ resource_groups = {
 
 api_management = {
   example_apim = {
-    name                 = "example-apim"
-    resource_group_key   = "rg1"
-    publisher_name       = "My Company"
-    publisher_email      = "company@terraform.io"
-    sku_name             = "Consumption_0"
+    name               = "example-apim"
+    resource_group_key = "rg1"
+    publisher_name     = "My Company"
+    publisher_email    = "company@terraform.io"
+    sku_name           = "Consumption_0"
   }
 }
 
@@ -31,6 +31,6 @@ api_management_subscription = {
       key = "rg1"
     }
     display_name = "Example Subscription"
-    state = "active"
+    state        = "active"
   }
 }
