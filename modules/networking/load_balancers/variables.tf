@@ -24,7 +24,7 @@ variable "existing_resources" {
   default = {}
 }
 variable "diagnostic_profiles" {
-  default = null
+  default = {}
 }
 variable "diagnostics" {
   default = null

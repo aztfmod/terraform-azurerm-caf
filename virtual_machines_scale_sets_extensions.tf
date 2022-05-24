@@ -101,12 +101,12 @@ module "vmss_extension_custom_script_data_factory_self_hosted_runtime" {
     if try(value.virtual_machine_scale_set_extensions.data_factory_self_hosted_integration_runtime, null) != null
   }
 
-  client_config                                = local.client_config
-  virtual_machine_scale_set_id                 = module.virtual_machine_scale_sets[each.key].id
-  extension                                    = each.value.virtual_machine_scale_set_extensions.data_factory_self_hosted_integration_runtime
-  extension_name                               = "data_factory_self_hosted_integration_runtime"
-  virtual_machine_scale_set_os_type            = module.virtual_machine_scale_sets[each.key].os_type
-  
+  client_config                     = local.client_config
+  virtual_machine_scale_set_id      = module.virtual_machine_scale_sets[each.key].id
+  extension                         = each.value.virtual_machine_scale_set_extensions.data_factory_self_hosted_integration_runtime
+  extension_name                    = "data_factory_self_hosted_integration_runtime"
+  virtual_machine_scale_set_os_type = module.virtual_machine_scale_sets[each.key].os_type
+
   remote_objects = {
     data_factory_integration_runtime_self_hosted = local.combined_objects_data_factory_integration_runtime_self_hosted
     managed_identities                           = local.combined_objects_managed_identities
