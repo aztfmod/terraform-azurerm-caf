@@ -26,7 +26,7 @@ aks_clusters = {
 
     network_profile = {
       network_plugin    = "azure"
-      load_balancer_sku = "Standard"
+      load_balancer_sku = "standard"
     }
 
     # enable_rbac = true
@@ -37,12 +37,10 @@ aks_clusters = {
       }
     }
 
-    addon_profile = {
-      oms_agent = {
-        enabled           = true
-        log_analytics_key = "central_logs_region1"
-      }
+    oms_agent = {
+      log_analytics_key = "central_logs_region1"
     }
+
     # admin_groups = {
     #   # ids = []
     #   # azuread_groups = {

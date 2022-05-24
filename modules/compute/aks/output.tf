@@ -47,7 +47,3 @@ output "node_resource_group" {
 output "private_fqdn" {
   value = azurerm_kubernetes_cluster.aks.private_fqdn
 }
-
-output "addon_profile" {
-  value = azurerm_kubernetes_cluster.aks.addon_profile
-}
