@@ -51,6 +51,8 @@ module "networking" {
   remote_dns = {
     azurerm_firewall = try(var.remote_objects.azurerm_firewalls, null)
     virtual_machine  = try(var.remote_objects.virtual_machines, null)
+    load_balancers   = try(var.remote_objects.load_balancers, null)
+    lb               = try(var.remote_objects.lb, null)
   }
 }
 
