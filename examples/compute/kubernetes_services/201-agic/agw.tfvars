@@ -1,4 +1,4 @@
-application_gateways = {
+application_gateway_platforms = {
   agw1_az1 = {
     resource_group_key = "aks_re1"
     name               = "app_gateway"
