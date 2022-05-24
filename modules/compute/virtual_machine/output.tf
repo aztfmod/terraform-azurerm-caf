@@ -2,9 +2,10 @@ output "id" {
   value = local.os_type == "linux" ? try(azurerm_linux_virtual_machine.vm["linux"].id, null) : try(azurerm_windows_virtual_machine.vm["windows"].id, null)
 }
 
-# output nic_id {
-#   value = azurerm_network_interface.nic.id
-# }
+output "ip_configuration" {
+  value       = azurerm_network_interface.nic
+  description = "Adding the network_interface.nic to support remote dns on virtual networks"
+}
 
 output "os_type" {
   value = local.os_type
