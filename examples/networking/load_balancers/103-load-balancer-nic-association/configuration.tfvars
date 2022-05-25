@@ -124,12 +124,15 @@ load_balancers = {
     #multiple VMs and NICs can be attached to the Load Balancer. Specify the respective VMs and NICs in the following syntac
     nic_bap_association = {
       bap0 = {
-        vm_key  = "vm1"
-        nic_key = "nic0"
+        resource_type = "virtual_machines"
+        # lz_key = "" # is the resource is remote
+        key           = "vm1"
+        nic_key       = "nic0"
       }
       bap1 = {
-        vm_key  = "vm1"
-        nic_key = "nic1"
+        resource_type = "virtual_machines"
+        key           = "vm1"
+        nic_key       = "nic1"
       }
     }
   }

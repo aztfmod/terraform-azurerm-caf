@@ -12,8 +12,8 @@ module "load_balancers" {
   diagnostics         = local.combined_diagnostics
   global_settings     = local.global_settings
   settings            = each.value
-  existing_resources = {
-    virtual_machines = try(module.virtual_machines, {})
+  combined_objects = {
+    virtual_machines = local.combined_objects_virtual_machines
     #vm scale set will be added later
   }
 }

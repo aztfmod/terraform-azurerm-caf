@@ -49,6 +49,7 @@ module "networking" {
 
   remote_dns = {
     azurerm_firewall = try(var.remote_objects.azurerm_firewalls, null) #assumed from remote lz only
+    load_balancer    = try(var.remote_objects.load_balancers, {})
   }
 }
 
