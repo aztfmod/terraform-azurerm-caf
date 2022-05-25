@@ -47,9 +47,10 @@ module "networking" {
   location            = lookup(each.value, "region", null) == null ? local.combined_objects_resource_groups[try(each.value.resource_group.lz_key, local.client_config.landingzone_key)][try(each.value.resource_group.key, each.value.resource_group_key)].location : local.global_settings.regions[each.value.region]
   base_tags           = try(local.global_settings.inherit_tags, false) ? try(local.combined_objects_resource_groups[try(each.value.resource_group.lz_key, local.client_config.landingzone_key)][try(each.value.resource_group.key, each.value.resource_group_key)].tags, {}) : {}
 
+  #assumed from remote lz only to prevent circula references
   remote_dns = {
-    azurerm_firewall = try(var.remote_objects.azurerm_firewalls, null) #assumed from remote lz only
-    load_balancer    = try(var.remote_objects.load_balancers, {})
+    azurerm_firewall = try(var.remote_objects.azurerm_firewalls, null) 
+    load_balancers   = try(var.remote_objects.load_balancers, null)
   }
 }
 
