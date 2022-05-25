@@ -8,7 +8,7 @@ module "load_balancers" {
   public_ip_addresses = local.combined_objects_public_ip_addresses
   client_config       = local.client_config
   vnets               = local.combined_objects_networking
-  diagnostic_profiles = try(each.value.diagnostic_profiles, null)
+  diagnostic_profiles = try(each.value.diagnostic_profiles, {})
   diagnostics         = local.combined_diagnostics
   global_settings     = local.global_settings
   settings            = each.value

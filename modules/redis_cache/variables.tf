@@ -31,8 +31,20 @@ variable "base_tags" {
 }
 
 variable "diagnostic_profiles" {
-  default = null
+  default = {}
 }
 variable "diagnostics" {
   default = null
+}
+variable "vnets" {
+  default = {}
+}
+variable "private_endpoints" {
+  default = {}
+}
+variable "private_dns" {
+  default = {}
+}
+variable "client_config" {
+  description = "Client configuration object (see module README.md)."
 }

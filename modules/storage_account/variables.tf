@@ -31,3 +31,11 @@ variable "recovery_vaults" {
 variable "private_dns" {
   default = {}
 }
+
+variable "diagnostic_profiles" {
+  default = {}
+}
+
+variable "diagnostics" {
+  default = {}
+}
