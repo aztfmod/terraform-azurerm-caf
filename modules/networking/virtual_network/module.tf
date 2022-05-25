@@ -17,9 +17,11 @@ resource "azurerm_virtual_network" "vnet" {
   address_space       = var.settings.vnet.address_space
   tags                = local.tags
 
-  dns_servers = concat(
-    try(lookup(var.settings.vnet, "dns_servers", [])),
-    try(local.dns_servers_process, [])
+  dns_servers = flatten(
+    concat(
+      try(lookup(var.settings.vnet, "dns_servers", [])),
+      try(local.dns_servers_process, [])
+    )
   )
 
   dynamic "ddos_protection_plan" {
@@ -124,8 +126,13 @@ locals {
     ],
     [
       for obj in try(var.settings.vnet.dns_servers_keys, {}) :
-        var.remote_dns.load_balancers[obj.lz_key][obj.key].private_ip_address
-      if try(obj.resource_type, null) == "load_balancers"
+        var.remote_dns.lb[obj.lz_key][obj.key].private_ip_addresses
+      if try(obj.resource_type, null) == "lb"
+    ],
+    [
+      for obj in try(var.settings.vnet.dns_servers_keys, {}) :
+        var.remote_dns.virtual_machines[obj.lz_key][obj.key].ip_configuration[obj.nic_key].private_ip_addresses
+      if try(obj.resource_type, null) == "virtual_machines"
     ]
   )
 }

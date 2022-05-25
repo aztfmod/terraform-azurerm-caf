@@ -49,11 +49,14 @@ module "networking" {
 
 
   #assumed from remote lz only to prevent circular references
+  #
+  # Does not support legacy load_balancers. Prefer lb
+  #
   remote_dns = {
-    azurerm_firewall = try(var.remote_objects.azurerm_firewalls, null)
-    virtual_machine  = try(var.remote_objects.virtual_machines, null)
-    load_balancers   = try(var.remote_objects.load_balancers, null)
-    lb               = try(var.remote_objects.lb, null)
+    azurerm_firewall  = try(var.remote_objects.azurerm_firewalls, {})
+    azurerm_firewalls = try(var.remote_objects.azurerm_firewalls, {})
+    virtual_machines  = try(var.remote_objects.virtual_machines, {})
+    lb                = try(var.remote_objects.lb, {})
   }
 }
 

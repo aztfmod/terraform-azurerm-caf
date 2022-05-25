@@ -1,3 +1,9 @@
+#
+# Will be deprecated. Prefer using lb
+# examples in /examples/networking/lb
+#
+#
+
 module "load_balancers" {
   source   = "./modules/networking/load_balancers"
   for_each = try(local.networking.load_balancers, {})
