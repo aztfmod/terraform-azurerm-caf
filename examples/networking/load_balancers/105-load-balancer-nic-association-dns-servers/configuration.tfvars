@@ -40,13 +40,11 @@ vnets = {
       name          = "vnet-test-dns"
       address_space = ["10.2.0.0/16"]
       dns_servers_keys = {
-        dc_ilb = [
-          {
-            resource_type = "load_balancers"
-            key           = "lb1"
-            
-          }
-        ]
+        dc_ilb = {
+          resource_type = "load_balancers"
+          # lz_key        = ""  # must be in a remote deployment, no uncomment
+          key           = "lb1"
+        }
       }
     }
     specialsubnets = {}
