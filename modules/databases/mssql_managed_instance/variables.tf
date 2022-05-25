@@ -18,4 +18,4 @@ variable "location" {
 variable "primary_server_id" {
   default = ""
 }
-variable "keyvault_id" {}
+variable "keyvault" {}
