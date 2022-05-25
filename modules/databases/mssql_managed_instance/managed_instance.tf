@@ -74,10 +74,7 @@ resource "azapi_resource" "sqlmi_admin_password" {
     }
   })
 
-  lifecycle {
-    ignore_changes = [body]
-  }
-
+  ignore_missing_property = true
 }
 
 data "external" "sqlmi_admin_password" {
