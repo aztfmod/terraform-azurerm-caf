@@ -12,6 +12,6 @@ variable "name" {
   default = {}
 }
 variable "diagnostic_profiles" {
-  default = null
+  default = {}
 }
 variable "diagnostics" {}

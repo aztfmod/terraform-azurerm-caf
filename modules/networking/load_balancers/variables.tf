@@ -24,7 +24,7 @@ variable "combined_objects" {
   default = {}
 }
 variable "diagnostic_profiles" {
-  default = null
+  default = {}
 }
 variable "diagnostics" {
   default = null

@@ -28,7 +28,10 @@ resource "azurecaf_name" "windows_computer_name_prefix" {
 
 # Name of the Network Interface Cards
 resource "azurecaf_name" "windows_nic" {
-  for_each = local.os_type == "windows" ? var.settings.network_interfaces : {}
+  for_each = {
+    for key, value in var.settings.network_interfaces : key => value
+    if local.os_type == "windows"
+  }
 
   name          = try(each.value.name, null)
   resource_type = "azurerm_network_interface"
@@ -92,7 +95,11 @@ resource "azurerm_windows_virtual_machine_scale_set" "vmss" {
         name                                         = azurecaf_name.windows_nic[network_interface.key].result
         primary                                      = try(network_interface.value.primary, false)
         subnet_id                                    = can(network_interface.value.subnet_id) ? network_interface.value.subnet_id : var.vnets[try(network_interface.value.lz_key, var.client_config.landingzone_key)][network_interface.value.vnet_key].subnets[network_interface.value.subnet_key].id
-        load_balancer_backend_address_pool_ids       = try(local.load_balancer_backend_address_pool_ids, null)
+        load_balancer_backend_address_pool_ids       = can(network_interface.value.load_balancers) ? flatten([
+        for lb, lb_value in try(network_interface.value.load_balancers, {}) : [
+        can(var.lb_backend_address_pool[try(lb_value.lz_key, var.client_config.landingzone_key)][lb_value.lbap_key].id) ? var.lb_backend_address_pool[try(lb_value.lz_key, var.client_config.landingzone_key)][lb_value.lbap_key].id : var.load_balancers[try(lb_value.lz_key, var.client_config.landingzone_key)][lb_value.lb_key].backend_address_pool_id
+      ]
+  ]) : []
         application_gateway_backend_address_pool_ids = try(local.application_gateway_backend_address_pool_ids, null)
         application_security_group_ids               = try(local.application_security_group_ids, null)
       }

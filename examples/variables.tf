@@ -816,6 +816,9 @@ variable "api_management_gateway_api" {
 variable "api_management_group" {
   default = {}
 }
+variable "api_management_subscription" {
+  default = {}
+}
 variable "lb" {
   default = {}
 }
