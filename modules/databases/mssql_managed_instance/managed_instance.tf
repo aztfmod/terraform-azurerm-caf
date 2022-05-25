@@ -57,17 +57,38 @@ resource "random_password" "sqlmi_admin" {
   override_special = "$#%"
 }
 
-# Store the generated password into keyvault
-resource "azurerm_key_vault_secret" "sqlmi_admin_password" {
+# to support keyvault in a different subscription
+resource "azapi_resource" "sqlmi_admin_password" {
   count = try(var.settings.administratorLoginPassword, null) == null ? 1 : 0
 
-  name         = format("%s-password", azurecaf_name.mssqlmi.result)
-  value        = random_password.sqlmi_admin.0.result
-  key_vault_id = var.keyvault_id
+  type      = "Microsoft.KeyVault/vaults/secrets@2021-11-01-preview"
+  name      = format("%s-password-v1", azurecaf_name.mssqlmi.result)
+  parent_id = var.keyvault.id
+
+  body = jsonencode({
+    properties = {
+      attributes = {
+        enabled = true
+      }
+      value = random_password.sqlmi_admin.0.result
+    }
+  })
 
   lifecycle {
-    ignore_changes = [
-      value
-    ]
+    ignore_changes = [body]
   }
+
+}
+
+data "external" "sqlmi_admin_password" {
+  count = try(var.settings.administratorLoginPassword, null) == null ? 1 : 0
+  depends_on = [azapi_resource.sqlmi_admin_password]
+  program = [
+    "bash", "-c",
+    format(
+      "az keyvault secret show -n '%s' --vault-name '%s' --query '{value: value }' -o json",
+      format("%s-password-v1", azurecaf_name.mssqlmi.result),
+      var.keyvault.name
+    )
+  ]
 }
