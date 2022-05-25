@@ -26,6 +26,7 @@ output "primary_blob_endpoint" {
 output "primary_access_key" {
   description = "The endpoint URL for blob storage in the primary location."
   value       = azurerm_storage_account.stg.primary_access_key
+  sensitive   = true
 }
 
 output "containers" {
@@ -70,12 +71,14 @@ output "primary_web_host" {
 }
 
 output "primary_connection_string" {
-  value = try(azurerm_storage_account.stg.primary_connection_string, null)
+  value     = try(azurerm_storage_account.stg.primary_connection_string, null)
+  sensitive = true
 }
 
 
 output "primary_blob_connection_string" {
-  value = try(azurerm_storage_account.stg.primary_blob_connection_string, null)
+  value     = try(azurerm_storage_account.stg.primary_blob_connection_string, null)
+  sensitive = true
 }
 
 #output "primary_queue_endpoint" {
