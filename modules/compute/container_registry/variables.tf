@@ -69,3 +69,7 @@ variable "private_dns" {
 variable "public_network_access_enabled" {
   default = "true"
 }
+
+variable "keyvaults" {
+  default = {}
+}
