@@ -9,17 +9,17 @@ on:
   workflow_dispatch:
     inputs:
       scenario:
-        description: 'Select the scenario you want to run:'
+        description: "Select the scenario you want to run:"
         required: false
         type: choice
-        default: 'standalone-scenarios.json'
+        default: "standalone-scenarios.json"
         options:
-        - standalone-scenarios.json
-        - standalone-scenarios-longrunners.json
+          - standalone-scenarios.json
+          - standalone-scenarios-longrunners.json
 
 env:
-  TF_CLI_ARGS: '-no-color'
-  TF_CLI_ARGS_destroy: '-auto-approve -refresh=false'
+  TF_CLI_ARGS: "-no-color"
+  TF_CLI_ARGS_destroy: "-auto-approve -refresh=false"
   ARM_CLIENT_SECRET: ${{ secrets.ARM_CLIENT_SECRET }}
   ARM_CLIENT_ID: ${{ secrets.ARM_CLIENT_ID }}
   ARM_SUBSCRIPTION_ID: ${{ secrets.ARM_SUBSCRIPTION_ID }}
@@ -103,7 +103,7 @@ jobs:
 
       - name: Terraform Destroy planning example
         id: tf_destroy_plan
-        if: steps.tf_plan.outcome == 'success' 
+        if: steps.tf_plan.outcome == 'success'
         run: |
           terraform -chdir=${GITHUB_WORKSPACE}/examples \
             plan \

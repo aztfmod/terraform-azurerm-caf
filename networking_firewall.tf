@@ -7,7 +7,7 @@ module "azurerm_firewalls" {
   for_each = local.networking.azurerm_firewalls
 
   client_config       = local.client_config
-  diagnostic_profiles = try(each.value.diagnostic_profiles, null)
+  diagnostic_profiles = try(each.value.diagnostic_profiles, {})
   diagnostics         = local.combined_diagnostics
   global_settings     = local.global_settings
   name                = each.value.name
@@ -23,8 +23,7 @@ module "azurerm_firewalls" {
   virtual_hubs        = local.combined_objects_virtual_hubs
   virtual_networks    = local.combined_objects_networking
   virtual_wans        = local.combined_objects_virtual_wans
-
-  firewall_policy_id = can(each.value.firewall_policy.id) || (can(each.value.firewall_policy) && can(each.value.firewall_policy.key) == false) || (can(each.value.firewall_policy) == false && can(each.value.firewall_policy_key) == false) ? try(each.value.firewall_policy.id, null) : local.combined_objects_azurerm_firewall_policies[try(each.value.firewall_policy.lz_key, local.client_config.landingzone_key)][try(each.value.firewall_policy.key, each.value.firewall_policy_key)].id
+  firewall_policy_id  = can(each.value.firewall_policy.id) || (can(each.value.firewall_policy) && can(each.value.firewall_policy.key) == false) || (can(each.value.firewall_policy) == false && can(each.value.firewall_policy_key) == false) ? try(each.value.firewall_policy.id, null) : local.combined_objects_azurerm_firewall_policies[try(each.value.firewall_policy.lz_key, local.client_config.landingzone_key)][try(each.value.firewall_policy.key, each.value.firewall_policy_key)].id
 }
 
 # Firewall rules to apply to the firewall when not using firewall manager.

@@ -3,6 +3,9 @@ terraform {
     azurecaf = {
       source = "aztfmod/azurecaf"
     }
+    azapi = {
+      source = "azure/azapi"
+    }
   }
 
 }
@@ -32,7 +35,7 @@ locals {
       value = var.settings.administratorLogin
     }
     administratorLoginPassword = {
-      value = try(var.settings.administratorLoginPassword, azurerm_key_vault_secret.sqlmi_admin_password.0.value)
+      value = try(var.settings.administratorLoginPassword, data.external.sqlmi_admin_password.0.result.value)
     }
     subnetId = {
       value = var.subnet_id
@@ -75,6 +78,9 @@ locals {
     }
     resourceGroupName = {
       value = var.resource_group_name
+    }
+    zoneRedundant = {
+      value = try(var.settings.zoneRedundant, false)
     }
   }
 }

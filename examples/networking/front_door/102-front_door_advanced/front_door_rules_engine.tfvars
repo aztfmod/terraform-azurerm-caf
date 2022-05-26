@@ -1,9 +1,9 @@
 frontdoor_rules_engine = {
   http_security_header = {
-    name = "http_security_header"
-    resource_group_key = "common"
+    name               = "http_security_header"
+    resource_group_key = "front_door"
     frontdoor = {
-      key = "front_door_corporate"
+      key = "front_door1"
     }
     rule = {
       strict_transport_security = {
