@@ -2,9 +2,10 @@ output "id" {
   value = local.os_type == "linux" ? try(azurerm_linux_virtual_machine.vm["linux"].id, null) : try(azurerm_windows_virtual_machine.vm["windows"].id, null)
 }
 
-# output nic_id {
-#   value = azurerm_network_interface.nic.id
-# }
+output "ip_configuration" {
+  value       = azurerm_network_interface.nic
+  description = "Adding the network_interface.nic to support remote dns on virtual networks"
+}
 
 output "os_type" {
   value = local.os_type
@@ -70,7 +71,7 @@ output "data_disks" {
 
 # azurerm_linux_virtual_machine and azurerm_windows_virtual_machine do not expose the os_disk id by itself
 data "azurerm_managed_disk" "os_disk" {
-  name = local.os_type == "linux" ? try(azurerm_linux_virtual_machine.vm["linux"].os_disk[0].name, null) : try(azurerm_windows_virtual_machine.vm["windows"].os_disk[0].name, null)
+  name                = local.os_type == "linux" ? try(azurerm_linux_virtual_machine.vm["linux"].os_disk[0].name, null) : try(azurerm_windows_virtual_machine.vm["windows"].os_disk[0].name, null)
   resource_group_name = var.resource_group_name
 }
 

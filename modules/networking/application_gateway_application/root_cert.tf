@@ -29,7 +29,7 @@ resource "null_resource" "set_root_cert" {
       APPLICATION_GATEWAY_ID   = var.application_gateway.id
       NAME                     = each.value.name
       CERT_FILE                = try(each.value.cert_file, null)
-      KEY_VAULT_SECRET_ID      = try(data.azurerm_key_vault_certificate.root_certs[each.key].secret_id, null)
+      KEY_VAULT_SECRET_ID      = can(each.value.keyvault.secret_id) || can(each.value.keyvault.certificate_name) || can(each.value.cert_file) ? try(each.value.keyvault.secret_id, data.azurerm_key_vault_certificate.root_certs[each.key].secret_id, null) : each.value.keyvault.secret_id
     }
   }
 }
