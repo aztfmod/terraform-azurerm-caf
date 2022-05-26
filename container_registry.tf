@@ -17,6 +17,7 @@ module "container_registry" {
   base_tags           = try(local.global_settings.inherit_tags, false) ? local.combined_objects_resource_groups[try(each.value.resource_group.lz_key, local.client_config.landingzone_key)][try(each.value.resource_group.key, each.value.resource_group_key)].tags : {}
   private_dns         = local.combined_objects_private_dns
   resource_groups     = local.combined_objects_resource_groups
+  keyvaults           = local.combined_objects_keyvaults
   settings            = each.value
 
   public_network_access_enabled = try(each.value.public_network_access_enabled, "true")
