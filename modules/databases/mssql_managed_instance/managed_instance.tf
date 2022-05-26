@@ -64,7 +64,7 @@ resource "azurerm_key_vault_secret" "sqlmi_admin_password" {
 
   name         = format("%s-password", azurecaf_name.mssqlmi.result)
   value        = random_password.sqlmi_admin.0.result
-  key_vault_id = var.keyvault_id
+  key_vault_id = var.keyvault.id
 
   lifecycle {
     ignore_changes = [
