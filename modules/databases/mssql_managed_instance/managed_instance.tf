@@ -57,6 +57,22 @@ resource "random_password" "sqlmi_admin" {
   override_special = "$#%"
 }
 
+# Both (azapi_resource.azapi_resource) have to be kept to support transition to azapi. Will be removed in next release
+# Store the generated password into keyvault
+resource "azurerm_key_vault_secret" "sqlmi_admin_password" {
+  count = 0
+
+  name         = format("%s-password", azurecaf_name.mssqlmi.result)
+  value        = random_password.sqlmi_admin.0.result
+  key_vault_id = var.keyvault_id
+
+  lifecycle {
+    ignore_changes = [
+      value
+    ]
+  }
+}
+
 # to support keyvault in a different subscription
 resource "azapi_resource" "sqlmi_admin_password" {
   count = try(var.settings.administratorLoginPassword, null) == null ? 1 : 0
