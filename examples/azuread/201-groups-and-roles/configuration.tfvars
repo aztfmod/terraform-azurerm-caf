@@ -65,12 +65,7 @@ azuread_groups = {
       ]
 
     }
-    owners = {
-      user_principal_names = []
-      service_principal_keys = [
-        "app2"
-      ]
-    }
+    owners = []
     prevent_duplicate_name = false
   }
 
