@@ -51,7 +51,7 @@ jobs:
       matrix: ${{fromJSON(needs.load_scenarios.outputs.matrix)}}
 
     container:
-      image: aztfmod/rover:1.1.7-2203.2311
+      image: aztfmod/rover-preview:1.2.1-2205.251610
       options: --user 0
 
     steps:
@@ -136,7 +136,7 @@ jobs:
     needs: [testcases]
 
     container:
-      image: aztfmod/rover:1.1.7-2203.2311
+      image: aztfmod/rover-preview:1.2.1-2205.251610
       options: --user 0
 
     steps:
