@@ -30,7 +30,7 @@ resource "azurerm_template_deployment" "mssqlmi" {
 resource "null_resource" "destroy_sqlmi" {
 
   triggers = {
-    resource_id = lookup(azurerm_template_deployment.mssqlmi.outputs, "id")
+    resource_id = local.output.id
   }
 
   provisioner "local-exec" {
@@ -104,4 +104,20 @@ data "external" "sqlmi_admin_password" {
       var.keyvault.name
     )
   ]
+}
+
+data "azapi_resource" "mssqlmi" {
+  name      = azurecaf_name.mssqlmi.result
+  parent_id = local.parent_id
+  type      = "Microsoft.Sql/managedInstances@2021-11-01-preview"
+
+  response_export_values = ["properties.id"]
+}
+
+locals {
+  parent_id = format("/subscriptions/%s/resourceGroups/%s/providers/Microsoft.Sql/managedInstances/%s", var.client_config.subscription_id, var.resource_group_name, azurecaf_name.mssqlmi.result)
+  output = {
+    id           = jsondecode(data.azapi_resource.mssqlmi.output).properties.id
+    principal_id = try(jsondecode(data.azapi_resource.mssqlmi.identity[0].principal_id), null)
+  }
 }
