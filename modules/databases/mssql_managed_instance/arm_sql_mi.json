@@ -215,6 +215,7 @@
           "properties": {
               "administratorLogin": "[parameters('administratorLogin')]",
               "administratorLoginPassword": "[parameters('administratorLoginPassword')]",
+              "backupStorageRedundancy": "[parameters('storageAccountType')]",
               "collation": "[parameters('collation')]",
               "dnsZonePartner": "[if(equals(parameters('dnsZonePartner'), ''), json('null'), parameters('dnsZonePartner'))]",
               "hardwareFamily": "[parameters('hardwareFamily')]",
@@ -223,6 +224,7 @@
               "proxyOverride": "[parameters('proxyOverride')]",
               "publicDataEndpointEnabled": "[parameters('publicDataEndpointEnabled')]",
               "requestedBackupStorageRedundancy": "[parameters('requestedBackupStorageRedundancy')]",
+              "storageAccountType": "[parameters('storageAccountType')]",
               "storageSizeInGB": "[parameters('storageSizeInGB')]",
               "subnetId": "[parameters('subnetId')]",
               "timezoneId": "[parameters('timezoneId')]",
