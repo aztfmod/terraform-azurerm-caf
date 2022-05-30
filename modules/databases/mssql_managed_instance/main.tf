@@ -70,6 +70,9 @@ locals {
     timezoneId = {
       value = try(var.settings.timezoneId, "UTC")
     }
+    requestedBackupStorageRedundancy = {
+      value = try(var.settings.requestedBackupStorageRedundancy, "Geo")
+    }
     storageAccountType = {
       value = try(var.settings.storageAccountType, "GRS")
     }
