@@ -115,7 +115,7 @@ data "azapi_resource" "mssqlmi" {
 locals {
   parent_id = format("/subscriptions/%s/resourceGroups/%s", var.client_config.subscription_id, var.resource_group_name)
   output = {
-    id           = jsondecode(data.azapi_resource.mssqlmi.id)
-    principal_id = try(jsondecode(data.azapi_resource.mssqlmi.identity[0].principal_id), null)
+    id           = data.azapi_resource.mssqlmi.id
+    principal_id = try(data.azapi_resource.mssqlmi.identity[0].principal_id, null)
   }
 }
