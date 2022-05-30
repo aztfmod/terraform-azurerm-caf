@@ -6,7 +6,7 @@ variable "client_config" {}
 variable "diagnostics" {}
 variable "settings" {}
 variable "location" {}
-variable "subnets" {}
+variable "vnets" {}
 variable "resource_group_name" {}
 variable "admin_group_object_ids" {}
 variable "base_tags" {
