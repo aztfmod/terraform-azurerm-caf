@@ -7,6 +7,7 @@ locals {
     management_logger                              = try(local.combined_objects_api_management_logger, null)
     app_config                                     = try(local.combined_objects_app_config, null)
     app_service_environments                       = try(local.combined_objects_app_service_environments, null)
+    app_service_environments_v3                    = try(local.combined_objects_app_service_environments_v3, null)
     app_service_plans                              = try(local.combined_objects_app_service_plans, null)
     app_services                                   = try(local.combined_objects_app_services, null)
     application_gateway_platforms                  = try(local.combined_objects_application_gateway_platforms, null)

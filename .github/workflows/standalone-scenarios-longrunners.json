@@ -32,6 +32,7 @@
     "networking/virtual_wan/109-vwan-vpn-gateway-connection",
     "redis_cache/100-redis-standard",
     "redis_cache/101-redis-diagnostics",
-    "redis_cache/102-redis-private"
+    "redis_cache/102-redis-private",
+    "webapps/appservice-environment/102-simple_asev3"
   ]
 }

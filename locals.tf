@@ -362,6 +362,7 @@ locals {
 
   webapp = {
     app_service_environments     = try(var.webapp.app_service_environments, {})
+    app_service_environments_v3  = try(var.webapp.app_service_environments_v3, {})
     app_service_plans            = try(var.webapp.app_service_plans, {})
     app_services                 = try(var.webapp.app_services, {})
     azurerm_application_insights = try(var.webapp.azurerm_application_insights, {})
