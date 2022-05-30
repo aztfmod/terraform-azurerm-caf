@@ -59,6 +59,8 @@ mssql_managed_instances = {
     }
     administratorLogin = "adminuser"
     # administratorLoginPassword = "@dm1nu53r@30102020"
+    # if password not set, a random complex passwor will be created and stored in the keyvault
+    # the secret value can be changed after the deployment if needed
 
     //networking
     networking = {
@@ -68,7 +70,7 @@ mssql_managed_instances = {
     keyvault_key = "sqlmi_rg1"
 
     storageSizeInGB = 32
-    vCores          = 8
+    vCores          = 4
   }
 }
 
