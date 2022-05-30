@@ -110,14 +110,12 @@ data "azapi_resource" "mssqlmi" {
   name      = azurecaf_name.mssqlmi.result
   parent_id = local.parent_id
   type      = "Microsoft.Sql/managedInstances@2021-11-01-preview"
-
-  response_export_values = ["properties.id"]
 }
 
 locals {
   parent_id = format("/subscriptions/%s/resourceGroups/%s", var.client_config.subscription_id, var.resource_group_name)
   output = {
-    id           = jsondecode(data.azapi_resource.mssqlmi.output).properties.id
+    id           = jsondecode(data.azapi_resource.mssqlmi.id)
     principal_id = try(jsondecode(data.azapi_resource.mssqlmi.identity[0].principal_id), null)
   }
 }
