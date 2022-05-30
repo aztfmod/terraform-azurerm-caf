@@ -4,5 +4,6 @@ resource "azurerm_sentinel_watchlist" "watchlist" {
   display_name               = var.display_name
   default_duration           = var.default_duration
   description                = var.description
+  item_search_key            = var.item_search_key
   labels                     = var.labels
 }

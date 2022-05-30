@@ -22,8 +22,7 @@ api_management = {
     }
     publisher_name  = "My Company"
     publisher_email = "company@terraform.io"
-
-    sku_name = "Developer_1"
+    sku_name = "Consumption_0"
   }
 }
 
@@ -83,6 +82,7 @@ api_management_product = {
 api_management_subscription = {
   apimsubscr1 = {
     display_name = "Example-Product-Subscription"
+    state        = "active"
     resource_group = {
       key    = "rg1"
     }
@@ -99,6 +99,7 @@ api_management_subscription = {
 
   apimsubscr2 = {
     display_name = "Example-Api-Subscription"
+    state        = "active"
     resource_group = {
       key    = "rg1"
     }

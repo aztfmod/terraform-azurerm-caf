@@ -10,11 +10,11 @@ resource "azurecaf_name" "queue_auth_rule" {
 
 
 resource "azurerm_servicebus_queue_authorization_rule" "queue_auth_rule" {
-  name                = azurecaf_name.queue_auth_rule.result
-  namespace_name      = var.remote_objects.servicebus_namespace_name
-  queue_name          = var.remote_objects.servicebus_queue_name
-  resource_group_name = var.remote_objects.resource_group_name
-  listen              = try(var.settings.listen, null)
-  send                = try(var.settings.send, null)
-  manage              = try(var.settings.manage, null)
+  name = azurecaf_name.queue_auth_rule.result
+  # namespace_id      = var.remote_objects.servicebus_namespace_id
+  queue_id = var.remote_objects.servicebus_queue_id
+  # resource_group_name = var.remote_objects.resource_group_name
+  listen = try(var.settings.listen, null)
+  send   = try(var.settings.send, null)
+  manage = try(var.settings.manage, null)
 }

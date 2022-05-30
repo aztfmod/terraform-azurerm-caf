@@ -43,7 +43,6 @@ resource "null_resource" "aks_registration_preview" {
   }
 }
 ### AKS cluster resource
-
 resource "azurerm_kubernetes_cluster" "aks" {
   depends_on = [
     null_resource.aks_registration_preview
@@ -53,7 +52,6 @@ resource "azurerm_kubernetes_cluster" "aks" {
   resource_group_name = var.resource_group_name
 
   default_node_pool {
-    availability_zones           = try(var.settings.default_node_pool.availability_zones, null)
     enable_auto_scaling          = try(var.settings.default_node_pool.enable_auto_scaling, false)
     enable_host_encryption       = try(var.settings.default_node_pool.enable_host_encryption, false)
     enable_node_public_ip        = try(var.settings.default_node_pool.enable_node_public_ip, false)
@@ -75,6 +73,7 @@ resource "azurerm_kubernetes_cluster" "aks" {
     type                         = try(var.settings.default_node_pool.type, "VirtualMachineScaleSets")
     ultra_ssd_enabled            = try(var.settings.default_node_pool.ultra_ssd_enabled, false)
     vm_size                      = var.settings.default_node_pool.vm_size
+    zones                        = can(var.settings.default_node_pool.availability_zones) || can(var.settings.default_node_pool.zones) == false ? try(var.settings.default_node_pool.availability_zones, null) : var.settings.default_node_pool.zones
 
     pod_subnet_id  = can(var.settings.default_node_pool.pod_subnet_key) == false || can(var.settings.default_node_pool.pod_subnet.key) == false || can(var.settings.default_node_pool.pod_subnet_id) || can(var.settings.default_node_pool.pod_subnet.resource_id) ? try(var.settings.default_node_pool.pod_subnet_id, var.settings.default_node_pool.pod_subnet.resource_id, null) : var.subnets[try(var.settings.default_node_pool.pod_subnet_key, var.settings.default_node_pool.pod_subnet.key)].id
     vnet_subnet_id = can(var.settings.default_node_pool.vnet_subnet_id) || can(var.settings.default_node_pool.subnet.resource_id) ? try(var.settings.default_node_pool.vnet_subnet_id, var.settings.default_node_pool.subnet.resource_id) : var.subnets[try(var.settings.default_node_pool.subnet_key, var.settings.default_node_pool.subnet.key)].id
@@ -149,81 +148,47 @@ resource "azurerm_kubernetes_cluster" "aks" {
   dns_prefix_private_cluster = try(var.settings.dns_prefix_private_cluster, null)
   automatic_channel_upgrade  = try(var.settings.automatic_channel_upgrade, null)
 
-  dynamic "addon_profile" {
-    for_each = lookup(var.settings, "addon_profile", null) == null ? [] : [1]
+
+  dynamic "aci_connector_linux" {
+    for_each = try(var.settings.addon_profile.aci_connector_linux[*], var.settings.aci_connector_linux[*], [])
 
     content {
-      dynamic "aci_connector_linux" {
-        for_each = try(var.settings.addon_profile.aci_connector_linux[*], {})
+      subnet_name = aci_connector_linux.value.subnet_name
+    }
+  }
 
-        content {
-          enabled     = aci_connector_linux.value.enabled
-          subnet_name = aci_connector_linux.value.subnet_name
-        }
-      }
+  azure_policy_enabled = can(var.settings.addon_profile.azure_policy) || can(var.settings.azure_policy_enabled) == false ? try(var.settings.addon_profile.azure_policy.0.enabled, null) : var.settings.azure_policy_enabled
 
-      dynamic "azure_policy" {
-        for_each = try(var.settings.addon_profile.azure_policy[*], {})
+  http_application_routing_enabled = can(var.settings.addon_profile.http_application_routing) || can(var.settings.http_application_routing_enabled) ==false ? try(var.settings.addon_profile.http_application_routing.0.enabled, null) : var.settings.http_application_routing_enabled
 
-        content {
-          enabled = azure_policy.value.enabled
-        }
-      }
+  dynamic "oms_agent" {
+    for_each = try(var.settings.addon_profile.oms_agent[*], var.settings.oms_agent[*], [])
 
-      dynamic "http_application_routing" {
-        for_each = try(var.settings.addon_profile.http_application_routing[*], {})
+    content {
+      log_analytics_workspace_id = can(oms_agent.value.log_analytics_workspace_id) ? oms_agent.value.log_analytics_workspace_id : var.diagnostics.log_analytics[oms_agent.value.log_analytics_key].id
+    }
+  }
 
-        content {
-          enabled = http_application_routing.value.enabled
-        }
-      }
+  dynamic "ingress_application_gateway" {
+    for_each = can(var.settings.addon_profile.ingress_application_gateway) || can(var.settings.ingress_application_gateway) ? try([var.settings.addon_profile.ingress_application_gateway], [var.settings.ingress_application_gateway]) : []
+    content {
+      gateway_name = try(ingress_application_gateway.value.gateway_name, null)
+      gateway_id   = try(ingress_application_gateway.value.gateway_id, try(var.application_gateway.id, null))
+      subnet_cidr  = try(ingress_application_gateway.value.subnet_cidr, null)
+      subnet_id    = try(ingress_application_gateway.value.subnet_id, null)
+    }
+  }
 
-      dynamic "kube_dashboard" {
-        for_each = try(var.settings.addon_profile.kube_dashboard[*], [{ enabled = false }])
-
-        content {
-          enabled = kube_dashboard.value.enabled
-        }
-      }
-
-      dynamic "oms_agent" {
-        for_each = try(var.settings.addon_profile.oms_agent[*], {})
-
-        content {
-          enabled                    = oms_agent.value.enabled
-          log_analytics_workspace_id = try(oms_agent.value.log_analytics_workspace_id, try(var.diagnostics.log_analytics[oms_agent.value.log_analytics_key].id, null))
-          dynamic "oms_agent_identity" {
-            for_each = try(oms_agent.value.oms_agent_identity[*], {})
-
-            content {
-              client_id                 = oms_agent_identity.value.client_id
-              object_id                 = oms_agent_identity.value.object_id
-              user_assigned_identity_id = oms_agent_identity.value.user_assigned_identity_id
-            }
-          }
-        }
-      }
-
-      dynamic "ingress_application_gateway" {
-        for_each = can(var.settings.addon_profile.ingress_application_gateway) ? [var.settings.addon_profile.ingress_application_gateway] : []
-        content {
-          enabled      = ingress_application_gateway.value.enabled
-          gateway_name = try(ingress_application_gateway.value.gateway_name, null)
-          gateway_id   = try(ingress_application_gateway.value.gateway_id, try(var.application_gateway.id, null))
-          subnet_cidr  = try(ingress_application_gateway.value.subnet_cidr, null)
-          subnet_id    = try(ingress_application_gateway.value.subnet_id, null)
-        }
-      }
+  dynamic "key_vault_secrets_provider" {
+    for_each = can(var.settings.addon_profile.azure_keyvault_secrets_provider) || can(var.settings.key_vault_secrets_provider) ? try(var.settings.addon_profile.azure_keyvault_secrets_provider, var.settings.key_vault_secrets_provider) : {}
+    content {
+      secret_rotation_enabled  = key_vault_secrets_provider.value.secret_rotation_enabled
+      secret_rotation_interval = key_vault_secrets_provider.value.secret_rotation_interval
     }
   }
 
   api_server_authorized_ip_ranges = try(var.settings.api_server_authorized_ip_ranges, null)
-
-  disk_encryption_set_id = try(coalesce(
-    try(var.settings.disk_encryption_set_id, ""),
-    try(var.settings.disk_encryption_set.id, "")
-  ), null)
-
+  disk_encryption_set_id          = can(var.settings.disk_encryption_set_id) || can(var.settings.disk_encryption_set.id) == false ? try(var.settings.disk_encryption_set_id, null) : var.settings.disk_encryption_set.id
 
   dynamic "auto_scaler_profile" {
     for_each = try(var.settings.auto_scaler_profile[*], {})
@@ -250,11 +215,20 @@ resource "azurerm_kubernetes_cluster" "aks" {
   }
 
   dynamic "identity" {
-    for_each = try(var.settings.identity, null) == null ? [] : [1]
+    for_each = can(var.settings.identity) && can(var.settings.identity.identity_ids) == false ? [1] : []
 
     content {
-      type                      = var.settings.identity.type
-      user_assigned_identity_id = lower(var.settings.identity.type) == "userassigned" ? can(var.settings.identity.user_assigned_identity_id) ? var.settings.identity.user_assigned_identity_id : var.managed_identities[try(var.settings.identity.lz_key, var.client_config.landingzone_key)][var.settings.identity.managed_identity_key].id : null
+      type         = var.settings.identity.type
+      identity_ids = lower(var.settings.identity.type) == "userassigned" ? can(var.settings.identity.user_assigned_identity_id) ? [var.settings.identity.user_assigned_identity_id] : [var.managed_identities[try(var.settings.identity.lz_key, var.client_config.landingzone_key)][var.settings.identity.managed_identity_key].id] : null
+    }
+  }
+
+  dynamic "identity" {
+    for_each = can(var.settings.identity.identity_ids) ? [1] : []
+
+    content {
+      type         = var.settings.identity.type
+      identity_ids = var.settings.identity.identity_ids
     }
   }
 
@@ -316,14 +290,16 @@ resource "azurerm_kubernetes_cluster" "aks" {
       outbound_type      = try(network_profile.value.outbound_type, null)
       pod_cidr           = try(network_profile.value.pod_cidr, null)
       service_cidr       = try(network_profile.value.service_cidr, null)
-      load_balancer_sku  = try(network_profile.value.load_balancer_sku, null)
+      load_balancer_sku  = try(lower(network_profile.value.load_balancer_sku), null)
 
       dynamic "load_balancer_profile" {
         for_each = try(network_profile.value.load_balancer_profile[*], {})
         content {
+          idle_timeout_in_minutes   = try(load_balancer_profile.value.idle_timeout_in_minutes, null)
           managed_outbound_ip_count = try(load_balancer_profile.value.managed_outbound_ip_count, null)
-          outbound_ip_prefix_ids    = try(load_balancer_profile.value.outbound_ip_prefix_ids, null)
           outbound_ip_address_ids   = try(load_balancer_profile.value.outbound_ip_address_ids, null)
+          outbound_ip_prefix_ids    = try(load_balancer_profile.value.outbound_ip_prefix_ids, null)
+          outbound_ports_allocated  = try(load_balancer_profile.value.outbound_ports_allocated, null)
         }
       }
     }
@@ -334,26 +310,40 @@ resource "azurerm_kubernetes_cluster" "aks" {
   private_dns_zone_id                 = try(var.private_dns_zone_id, null)
   private_cluster_public_fqdn_enabled = try(var.settings.private_cluster_public_fqdn_enabled, null)
 
-  # Enabled RBAC
-  dynamic "role_based_access_control" {
+  #Enabled RBAC
+  dynamic "azure_active_directory_role_based_access_control" {
+    for_each = try(var.settings.azure_active_directory_role_based_access_control[*], {})
+
+    content {
+      managed                = try(azure_active_directory_role_based_access_control.value.managed, true)
+      tenant_id              = try(azure_active_directory_role_based_access_control.value.tenant_id, null)
+
+      # when managed is set to true
+      admin_group_object_ids = try(azure_active_directory_role_based_access_control.value.managed, true) ? try(azure_active_directory_role_based_access_control.value.admin_group_object_ids, try(var.admin_group_object_ids, null)) : null
+      azure_rbac_enabled     = try(azure_active_directory_role_based_access_control.value.managed, true) ? try(azure_active_directory_role_based_access_control.value.azure_rbac_enabled, true) : null
+
+      # when managed is set to false
+      client_app_id          = try(azure_active_directory_role_based_access_control.value.managed, true) == false ? azure_active_directory_role_based_access_control.value.client_app_id : null
+      server_app_id          = try(azure_active_directory_role_based_access_control.value.managed, true) == false ? azure_active_directory_role_based_access_control.value.server_app_id : null
+      server_app_secret      = try(azure_active_directory_role_based_access_control.value.managed, true) == false ? azure_active_directory_role_based_access_control.value.server_app_secret : null
+    }
+  }
+
+  # for backward compatibility with 2.99.0
+  dynamic "azure_active_directory_role_based_access_control" {
     for_each = try(var.settings.role_based_access_control[*], {})
 
     content {
-      enabled = try(role_based_access_control.value.enabled, true)
+      managed   = try(azure_active_directory_role_based_access_control.value.azure_active_directory.managed, true)
+      tenant_id = try(azure_active_directory_role_based_access_control.value.azure_active_directory.tenant_id, null)
 
-      dynamic "azure_active_directory" {
-        for_each = try(var.settings.role_based_access_control.azure_active_directory[*], {})
+      azure_rbac_enabled     = try(azure_active_directory_role_based_access_control.value.enabled, true)
+      admin_group_object_ids = try(azure_active_directory_role_based_access_control.value.azure_active_directory.admin_group_object_ids, try(var.admin_group_object_ids, null))
 
-        content {
-          managed                = azure_active_directory.value.managed
-          azure_rbac_enabled     = try(azure_active_directory.value.azure_rbac_enabled, null)
-          tenant_id              = try(azure_active_directory.value.tenant_id, null)
-          admin_group_object_ids = try(azure_active_directory.value.admin_group_object_ids, try(var.admin_group_object_ids, null))
-          client_app_id          = try(azure_active_directory.value.client_app_id, null)
-          server_app_id          = try(azure_active_directory.value.server_app_id, null)
-          server_app_secret      = try(azure_active_directory.value.server_app_secret, null)
-        }
-      }
+      client_app_id     = try(azure_active_directory_role_based_access_control.value.azure_active_directory.client_app_id, null)
+      server_app_id     = try(azure_active_directory_role_based_access_control.value.azure_active_directory.server_app_id, null)
+      server_app_secret = try(azure_active_directory_role_based_access_control.value.azure_active_directory.server_app_secret, null)
+
     }
   }
 
@@ -404,7 +394,7 @@ resource "azurerm_kubernetes_cluster_node_pool" "nodepools" {
   name                   = each.value.name
   kubernetes_cluster_id  = azurerm_kubernetes_cluster.aks.id
   vm_size                = each.value.vm_size
-  availability_zones     = try(each.value.availability_zones, null)
+  zones                  = can(each.value.availability_zones) || can(each.value.zones) == false ? try(each.value.availability_zones, null) : each.value.zones
   enable_auto_scaling    = try(each.value.enable_auto_scaling, false)
   enable_host_encryption = try(each.value.enable_host_encryption, false)
   enable_node_public_ip  = try(each.value.enable_node_public_ip, false)

@@ -49,7 +49,6 @@ resource "azurerm_lb_backend_address_pool_address" "backend_address_pool_address
 resource "azurerm_lb_probe" "lb_probe" {
   for_each = try(var.settings.probes, {})
 
-  resource_group_name = var.resource_group_name
   loadbalancer_id     = azurerm_lb.lb.id
   name                = each.value.probe_name
   port                = each.value.port
@@ -67,7 +66,6 @@ resource "azurerm_lb_probe" "lb_probe" {
 resource "azurerm_lb_rule" "lb_rule" {
   for_each = try(var.settings.lb_rules, {})
 
-  resource_group_name            = var.resource_group_name
   loadbalancer_id                = azurerm_lb.lb.id
   name                           = each.value.lb_rule_name
   protocol                       = each.value.protocol
@@ -96,7 +94,6 @@ resource "azurerm_lb_rule" "lb_rule" {
 resource "azurerm_lb_outbound_rule" "outbound_rule" {
   for_each = try(var.settings.outbound_rules, {})
 
-  resource_group_name      = var.resource_group_name
   loadbalancer_id          = azurerm_lb.lb.id
   name                     = each.value.name
   protocol                 = each.value.protocol
@@ -151,11 +148,22 @@ resource "azurerm_lb_nat_rule" "nat_rule" {
 resource "azurerm_network_interface_backend_address_pool_association" "vm_nic_bap_association" {
   for_each = {
     for key, value in try(var.settings.nic_bap_association, {}) : key => value
-    if try(value.vm_key, null) != null
+    if try(value.vm_key, null) != null && can(value.nic_key)
   }
 
-  network_interface_id    = var.existing_resources.virtual_machines[each.value.vm_key].nics[each.value.nic_key].id
-  ip_configuration_name   = var.existing_resources.virtual_machines[each.value.vm_key].nics[each.value.nic_key].name # The Name of the IP Configuration within the Network Interface
+  network_interface_id    = var.combined_objects[try(each.value.resource_type, "virtual_machines")][try(each.value.lz_key, var.client_config.landingzone_key)][each.value.vm_key].nics[each.value.nic_key].id
+  ip_configuration_name   = var.combined_objects[try(each.value.resource_type, "virtual_machines")][try(each.value.lz_key, var.client_config.landingzone_key)][each.value.vm_key].nics[each.value.nic_key].name # The Name of the IP Configuration within the Network Interface
+  backend_address_pool_id = azurerm_lb_backend_address_pool.backend_address_pool.0.id
+}
+
+resource "azurerm_network_interface_backend_address_pool_association" "vm_nic_bap_association_key" {
+  for_each = {
+    for key, value in try(var.settings.nic_bap_association, {}) : key => value
+    if try(value.vm_key, null) == null && can(value.nic_key)
+  }
+
+  network_interface_id    = var.combined_objects[try(each.value.resource_type, "virtual_machines")][try(each.value.lz_key, var.client_config.landingzone_key)][each.value.key].nics[each.value.nic_key].id
+  ip_configuration_name   = var.combined_objects[try(each.value.resource_type, "virtual_machines")][try(each.value.lz_key, var.client_config.landingzone_key)][each.value.key].nics[each.value.nic_key].name # The Name of the IP Configuration within the Network Interface
   backend_address_pool_id = azurerm_lb_backend_address_pool.backend_address_pool.0.id
 }
 

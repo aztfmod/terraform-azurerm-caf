@@ -15,4 +15,8 @@ resource "azurerm_purview_account" "pva" {
   public_network_enabled      = try(var.settings.public_network_enabled, null)
   managed_resource_group_name = try(var.settings.managed_resource_group_name, null)
   tags                        = local.tags
+
+  identity {
+    type = "SystemAssigned"
+  }
 }

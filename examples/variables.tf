@@ -18,7 +18,7 @@ variable "landingzone" {
 }
 
 variable "var_folder_path" {
-  default = {}
+  default = ""
 }
 
 variable "provider_azurerm_features_keyvault" {
@@ -765,6 +765,10 @@ variable "active_directory_domain_service" {
 variable "active_directory_domain_service_replica_set" {
   default = {}
 }
+variable "mysql_flexible_server" {
+  default = {}
+}
+
 variable "signalr_services" {
   default = {}
 }
@@ -846,6 +850,26 @@ variable "lb_rule" {
 variable "network_interface_backend_address_pool_association" {
   default = {}
 }
+variable "digital_twins_instances" {
+  description = "Digital Twins Instances"
+  default     = {}
+}
+
+variable "digital_twins_endpoint_eventhubs" {
+  description = "Digital Twins Endpoints Eventhubs"
+  default     = {}
+}
+
+variable "digital_twins_endpoint_eventgrids" {
+  description = "Digital Twins Endpoints Eventgrid"
+  default     = {}
+}
+
+variable "digital_twins_endpoint_servicebuses" {
+  description = "Digital Twins Endpoints Service Bus"
+  default     = {}
+}
+
 variable "monitor_metric_alert" {
   default = {}
 }
@@ -853,6 +877,24 @@ variable "monitor_activity_log_alert" {
   default = {}
 }
 variable "log_analytics_storage_insights" {
+  default = {}
+}
+variable "eventgrid_domain" {
+  default = {}
+}
+variable "eventgrid_topic" {
+  default = {}
+}
+variable "eventgrid_event_subscription" {
+  default = {}
+}
+variable "eventgrid_domain_topic" {
+  default = {}
+}
+variable "relay_hybrid_connection" {
+  default = {}
+}
+variable "relay_namespace" {
   default = {}
 }
 variable "purview_accounts" {
