@@ -5,7 +5,7 @@ output "name" {
 }
 
 output "id" {
-  value       = jsondecode(azurerm_resource_group_template_deployment.mssqlmi.output_content).id.value
+  value       = local.output.id
   description = "SQL MI Id"
 }
 
@@ -14,6 +14,6 @@ output "location" {
 }
 
 output "principal_id" {
-  value       = jsondecode(azurerm_resource_group_template_deployment.mssqlmi.output_content).objectId.value
+  value       = local.output.principal_id
   description = "SQL MI Identity Principal Id"
 }
