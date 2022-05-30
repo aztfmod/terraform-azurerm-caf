@@ -9,7 +9,7 @@ if [ "${user_type}" = "user" ]; then
     az ad app permission admin-consent --id ${application_id}
 
 else
-    resourceId=$(az ad sp show --id "${resourceAppId}" --query "objectId" -o tsv)
+    resourceId=$(az ad sp show --id "${resourceAppId}" --query "id" -o tsv)
     echo " -resourceId: ${resourceId}"
 
     microsoft_graph_endpoint=$(az cloud show | jq -r ".endpoints.microsoftGraphResourceId")
