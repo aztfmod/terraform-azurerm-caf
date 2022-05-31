@@ -15,7 +15,7 @@ module "aks_clusters" {
   global_settings     = local.global_settings
   managed_identities  = local.combined_objects_managed_identities
   settings            = each.value
-  subnets             = try(lookup(each.value, "lz_key", null) == null ? local.combined_objects_networking[local.client_config.landingzone_key][each.value.vnet_key].subnets : local.combined_objects_networking[each.value.lz_key][each.value.vnet_key].subnets, {})
+  vnets               = local.combined_objects_networking
 
   admin_group_object_ids = try(each.value.admin_groups.azuread_group_keys, null) == null ? null : try(
     each.value.admin_groups.ids,
