@@ -154,6 +154,11 @@ module "example" {
       kusto_iothub_data_connections          = var.kusto_iothub_data_connections
     }
   }
+  data_protection = {
+    backup_vaults          = var.backup_vaults
+    backup_vault_policies  = var.backup_vault_policies
+    backup_vault_instances = var.backup_vault_instances
+  }
   messaging = {
     signalr_services             = var.signalr_services
     servicebus_namespaces        = var.servicebus_namespaces
@@ -222,6 +227,7 @@ module "example" {
     virtual_network_gateways                                = var.virtual_network_gateways
     virtual_wans                                            = var.virtual_wans
     vnet_peerings                                           = var.vnet_peerings
+    vnet_peerings_v1                                        = var.vnet_peerings_v1
     vnets                                                   = var.vnets
     virtual_subnets                                         = var.virtual_subnets
     vpn_gateway_connections                                 = var.vpn_gateway_connections
@@ -279,6 +285,7 @@ module "example" {
   webapp = {
     azurerm_application_insights = var.azurerm_application_insights
     app_service_environments     = var.app_service_environments
+    app_service_environments_v3  = var.app_service_environments_v3
     app_service_plans            = var.app_service_plans
     app_services                 = var.app_services
     function_apps                = var.function_apps
@@ -343,6 +350,7 @@ module "example" {
     api_management_gateway              = var.api_management_gateway
     api_management_gateway_api          = var.api_management_gateway_api
     api_management_group                = var.api_management_group
+    api_management_subscription         = var.api_management_subscription
   }
   purview = {
     purview_accounts = var.purview_accounts

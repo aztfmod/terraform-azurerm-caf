@@ -21,7 +21,7 @@ variable "managed_identities" {
   default = null
 }
 variable "diagnostic_profiles" {
-  default = null
+  default = {}
 }
 variable "diagnostics" {
   default = null

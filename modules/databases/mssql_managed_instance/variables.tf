@@ -1,6 +1,7 @@
 variable "global_settings" {
   description = "Global settings object (see module README.md)"
 }
+variable "client_config" {}
 variable "settings" {}
 variable "base_tags" {
   description = "Base tags for the resource to be inherited from the resource group."
@@ -18,4 +19,4 @@ variable "location" {
 variable "primary_server_id" {
   default = ""
 }
-variable "keyvault_id" {}
+variable "keyvault" {}
