@@ -7,7 +7,7 @@ module "aks_clusters" {
   depends_on = [module.networking, module.routes, module.azurerm_firewall_policies]
   for_each   = local.compute.aks_clusters
 
-  base_tags = try(local.global_settings.inherit_tags, false) ? try(local.combined_objects_resource_groups[try(each.value.resource_group.lz_key, local.client_config.landingzone_key)][try(each.value.resource_group.key, each.value.resource_group_key)].tags, {}) : {}
+  base_tags           = try(local.global_settings.inherit_tags, false) ? try(local.combined_objects_resource_groups[try(each.value.resource_group.lz_key, local.client_config.landingzone_key)][try(each.value.resource_group.key, each.value.resource_group_key)].tags, {}) : {}
 
   client_config       = local.client_config
   diagnostic_profiles = try(each.value.diagnostic_profiles, {})
@@ -15,7 +15,7 @@ module "aks_clusters" {
   global_settings     = local.global_settings
   managed_identities  = local.combined_objects_managed_identities
   settings            = each.value
-  subnets             = try(lookup(each.value, "lz_key", null) == null ? local.combined_objects_networking[local.client_config.landingzone_key][each.value.vnet_key].subnets : local.combined_objects_networking[each.value.lz_key][each.value.vnet_key].subnets, {})
+  vnets               = local.combined_objects_networking
 
   admin_group_object_ids = try(each.value.admin_groups.azuread_group_keys, null) == null ? null : try(
     each.value.admin_groups.ids,
