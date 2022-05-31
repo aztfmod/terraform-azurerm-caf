@@ -159,7 +159,7 @@ azurerm_firewall_policy_rule_collection_groups = {
             source_addresses = ["*"]
             # destination_address = "192.168.1.1"
             destination_address_public_ip_key = "pip1"
-            destination_ports                 = ["80", "1000-2000"]
+            destination_ports                 = ["80"]
             translated_address                = "192.168.0.1"
             translated_port                   = "8080"
           }
