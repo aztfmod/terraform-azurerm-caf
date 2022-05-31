@@ -172,6 +172,12 @@ locals {
     }
   }
 
+  data_protection = {
+    backup_vaults          = try(var.data_protection.backup_vaults, {})
+    backup_vault_policies  = try(var.data_protection.backup_vault_policies, {})
+    backup_vault_instances = try(var.data_protection.backup_vault_instances, {})
+  }
+
   dynamic_app_settings_combined_objects = {
     app_config                  = local.combined_objects_app_config
     azure_container_registries  = local.combined_objects_azure_container_registries
@@ -250,8 +256,8 @@ locals {
     azurerm_firewall_policy_rule_collection_groups          = try(var.networking.azurerm_firewall_policy_rule_collection_groups, {})
     azurerm_firewalls                                       = try(var.networking.azurerm_firewalls, {})
     azurerm_routes                                          = try(var.networking.azurerm_routes, {})
-    cdn_profile                                             = try(var.networking.cdn_profile, {})
     cdn_endpoint                                            = try(var.networking.cdn_endpoint, {})
+    cdn_profile                                             = try(var.networking.cdn_profile, {})
     ddos_services                                           = try(var.networking.ddos_services, {})
     dns_zone_records                                        = try(var.networking.dns_zone_records, {})
     dns_zones                                               = try(var.networking.dns_zones, {})
@@ -262,8 +268,8 @@ locals {
     express_route_connections                               = try(var.networking.express_route_connections, {})
     front_door_waf_policies                                 = try(var.networking.front_door_waf_policies, {})
     front_doors                                             = try(var.networking.front_doors, {})
-    frontdoor_rules_engine                                  = try(var.networking.frontdoor_rules_engine, {})
     frontdoor_custom_https_configuration                    = try(var.networking.frontdoor_custom_https_configuration, {})
+    frontdoor_rules_engine                                  = try(var.networking.frontdoor_rules_engine, {})
     ip_groups                                               = try(var.networking.ip_groups, {})
     lb                                                      = try(var.networking.lb, {})
     lb_backend_address_pool                                 = try(var.networking.lb_backend_address_pool, {})
@@ -295,10 +301,11 @@ locals {
     virtual_hubs                                            = try(var.networking.virtual_hubs, {})
     virtual_network_gateway_connections                     = try(var.networking.virtual_network_gateway_connections, {})
     virtual_network_gateways                                = try(var.networking.virtual_network_gateways, {})
+    virtual_subnets                                         = try(var.networking.virtual_subnets, {})
     virtual_wans                                            = try(var.networking.virtual_wans, {})
     vnet_peerings                                           = try(var.networking.vnet_peerings, {})
+    vnet_peerings_v1                                        = try(var.networking.vnet_peerings_v1, {})
     vnets                                                   = try(var.networking.vnets, {})
-    virtual_subnets                                         = try(var.networking.virtual_subnets, {})
     vpn_gateway_connections                                 = try(var.networking.vpn_gateway_connections, {})
     vpn_sites                                               = try(var.networking.vpn_sites, {})
   }
@@ -355,6 +362,7 @@ locals {
 
   webapp = {
     app_service_environments     = try(var.webapp.app_service_environments, {})
+    app_service_environments_v3  = try(var.webapp.app_service_environments_v3, {})
     app_service_plans            = try(var.webapp.app_service_plans, {})
     app_services                 = try(var.webapp.app_services, {})
     azurerm_application_insights = try(var.webapp.azurerm_application_insights, {})
@@ -387,6 +395,7 @@ locals {
     api_management_gateway              = try(var.apim.api_management_gateway, {})
     api_management_gateway_api          = try(var.apim.api_management_gateway_api, {})
     api_management_group                = try(var.apim.api_management_group, {})
+    api_management_subscription         = try(var.apim.api_management_subscription, {})
   }
   iot = {
     digital_twins_instances             = try(var.iot.digital_twins_instances, {})

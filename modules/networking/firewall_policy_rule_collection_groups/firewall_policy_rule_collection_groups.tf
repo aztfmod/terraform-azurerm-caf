@@ -138,10 +138,9 @@ resource "azurerm_firewall_policy_rule_collection_group" "polgroup" {
             ]), null)
           )
           destination_ports = try(rule.value.destination_ports, null)
-          destination_address = try(rule.value.destination_address, try(flatten([
-            for key, value in var.public_ip_addresses : value.ip_address
-            if contains(rule.value.destination_address_public_ip_key, key)
-            ]), null)
+          destination_address = try(
+            rule.value.destination_address,
+            var.public_ip_addresses[rule.value.destination_address_public_ip_key].ip_address
           )
           translated_port    = rule.value.translated_port
           translated_address = rule.value.translated_address

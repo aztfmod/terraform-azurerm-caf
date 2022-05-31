@@ -11,7 +11,7 @@ if [ ${user_type} == "user" ]; then
 
 else
 
-    resourceId=$(az ad sp show --id "${graphId}" --query "objectId" -o tsv)
+    resourceId=$(az ad sp show --id "${graphId}" --query "id" -o tsv)
     echo " -resourceId: ${resourceId}"
 
     URI=$(echo  "https://graph.microsoft.com/beta/servicePrincipals/${resourceId}/appRoleAssignments") && echo " - uri: $URI"

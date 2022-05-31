@@ -151,11 +151,22 @@ resource "azurerm_lb_nat_rule" "nat_rule" {
 resource "azurerm_network_interface_backend_address_pool_association" "vm_nic_bap_association" {
   for_each = {
     for key, value in try(var.settings.nic_bap_association, {}) : key => value
-    if try(value.vm_key, null) != null
+    if try(value.vm_key, null) != null && can(value.nic_key)
   }
 
-  network_interface_id    = var.existing_resources.virtual_machines[each.value.vm_key].nics[each.value.nic_key].id
-  ip_configuration_name   = var.existing_resources.virtual_machines[each.value.vm_key].nics[each.value.nic_key].name # The Name of the IP Configuration within the Network Interface
+  network_interface_id    = var.combined_objects[try(each.value.resource_type, "virtual_machines")][try(each.value.lz_key, var.client_config.landingzone_key)][each.value.vm_key].nics[each.value.nic_key].id
+  ip_configuration_name   = var.combined_objects[try(each.value.resource_type, "virtual_machines")][try(each.value.lz_key, var.client_config.landingzone_key)][each.value.vm_key].nics[each.value.nic_key].name # The Name of the IP Configuration within the Network Interface
+  backend_address_pool_id = azurerm_lb_backend_address_pool.backend_address_pool.0.id
+}
+
+resource "azurerm_network_interface_backend_address_pool_association" "vm_nic_bap_association_key" {
+  for_each = {
+    for key, value in try(var.settings.nic_bap_association, {}) : key => value
+    if try(value.vm_key, null) == null && can(value.nic_key)
+  }
+
+  network_interface_id    = var.combined_objects[try(each.value.resource_type, "virtual_machines")][try(each.value.lz_key, var.client_config.landingzone_key)][each.value.key].nics[each.value.nic_key].id
+  ip_configuration_name   = var.combined_objects[try(each.value.resource_type, "virtual_machines")][try(each.value.lz_key, var.client_config.landingzone_key)][each.value.key].nics[each.value.nic_key].name # The Name of the IP Configuration within the Network Interface
   backend_address_pool_id = azurerm_lb_backend_address_pool.backend_address_pool.0.id
 }
 

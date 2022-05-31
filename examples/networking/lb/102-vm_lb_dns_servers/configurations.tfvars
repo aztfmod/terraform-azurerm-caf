@@ -33,6 +33,33 @@ vnets = {
       }
     }
   }
+  vnet_test_dns = {
+    resource_group_key = "lb"
+    vnet = {
+      name          = "vnet-test-dns"
+      address_space = ["10.2.0.0/16"]
+      dns_servers_keys = {
+        dc_ilb = {
+          resource_type = "lb"
+          # lz_key        = "management"  # must be in a remote deployment, uncomment to reference the load balancer
+          key           = "lb1"
+        }
+        # vm1 = {
+        #   resource_type = "virtual_machines"  # to reference a specific nic to a VM
+        #   lz_key        = "management"
+        #   key           = "vm1"
+        #   nic_key       = "nic0"
+        # }
+      }
+    }
+    specialsubnets = {}
+    subnets = {
+      subnet1 = {
+        name = "test-sn"
+        cidr = ["10.2.1.0/24"]
+      }
+    }
+  }
 }
 
 public_ip_addresses = {
@@ -103,38 +130,47 @@ virtual_machines = {
 
   }
 }
-
-load_balancers = {
+lb = {
   lb1 = {
-    name                      = "lb-test"
-    sku                       = "basic" #SKU must match with the SKU of the PIP
-    resource_group_key        = "lb"
-    backend_address_pool_name = "web-app"
-    nic_key                   = "nic0"
-
-    frontend_ip_configurations = {
-      config1 = {
-        name                          = "config1"
-        vnet_key                      = "vnet_test"
-        subnet_key                    = "subnet1"
-        private_ip_address_allocation = "Dynamic"
-      }
+    name   = "lb-test"
+    region = "region1"
+    resource_group = {
+      key = "lb"
     }
-
-    #multiple VMs and NICs can be attached to the Load Balancer. Specify the respective VMs and NICs in the following syntac
-    nic_bap_association = {
-      bap0 = {
-        vm_key  = "vm1"
-        nic_key = "nic0"
+    frontend_ip_configuration = {
+      name = "config1"
+      subnet = {
+        vnet_key = "vnet_test"
+        key      = "subnet1"
       }
-      bap1 = {
-        vm_key  = "vm1"
-        nic_key = "nic1"
-      }
+      private_ip_address_allocation = "Dynamic"
+    }
+    sku = "basic" #SKU must match with the SKU of the PIP
+  }
+}
+lb_backend_address_pool = {
+  lbap1 = {
+    loadbalancer = {
+      key = "lb1"
+    }
+    name = "BackEndAddressPool"
+  }
+}
+#multiple VMs and NICs can be attached to the Load Balancer. Specify the respective VMs and NICs in the following syntac
+network_interface_backend_address_pool_association = {
+  bap0 = {
+    backend_address_pool = {
+      key = "lbap1"
+      #id = ""
+    }
+    # ip_configuration_name = "0"
+    network_interface = {
+      vm_key  = "vm1"
+      nic_key = "nic0"
+      #id = ""
     }
   }
 }
-
 keyvaults = {
   example_vm_rg1 = {
     name               = "vmsecrets"
