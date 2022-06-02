@@ -21,9 +21,10 @@ managed_identities = {
 
 aks_clusters = {
   cluster_re1 = {
-    name               = "akscluster-re1-001"
-    resource_group_key = "aks_re1"
-    os_type            = "Linux"
+    name                     = "akscluster-re1-001"
+    resource_group_key       = "aks_re1"
+    os_type                  = "Linux"
+    node_resource_group_name = "aks-nodes-re1"
 
     identity = {
       type                 = "UserAssigned"
@@ -37,11 +38,11 @@ aks_clusters = {
       load_balancer_sku = "Standard"
     }
 
-    # enable_rbac = true
     role_based_access_control = {
       enabled = true
       azure_active_directory = {
-        managed = true
+        managed            = true
+        azure_rbac_enabled = true
       }
     }
 
@@ -51,19 +52,14 @@ aks_clusters = {
         log_analytics_key = "central_logs_region1"
       }
       ingress_application_gateway = {
-        enabled = true
-        key     = "agw1_az1"
+        enabled      = true
+        gateway_name = "agw1_az1"
+        subnet_key   = "application_gateway"
+        vnet_key     = "spoke_aks_re1"
       }
     }
-    # admin_groups = {
-    #   # ids = []
-    #   # azuread_groups = {
-    #   #   keys = []
-    #   # }
-    # }
 
     load_balancer_profile = {
-      # Only one option can be set
       managed_outbound_ip_count = 1
     }
 
@@ -76,12 +72,6 @@ aks_clusters = {
       max_pods              = 30
       node_count            = 1
       os_disk_size_gb       = 512
-      tags = {
-        "project" = "system services"
-      }
     }
-
-    node_resource_group_name = "aks-nodes-re1"
-
   }
 }
