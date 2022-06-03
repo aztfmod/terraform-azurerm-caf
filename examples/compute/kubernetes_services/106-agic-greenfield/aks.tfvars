@@ -54,8 +54,11 @@ aks_clusters = {
       ingress_application_gateway = {
         enabled      = true
         gateway_name = "agw1_az1"
-        subnet_key   = "application_gateway"
-        vnet_key     = "spoke_aks_re1"
+        vnet = {
+          # lz_key = ""
+          key          = "spoke_aks_re1"
+          subnet_key   = "application_gateway"
+        }
       }
     }
 
