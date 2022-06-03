@@ -211,7 +211,7 @@ resource "azurerm_kubernetes_cluster" "aks" {
           gateway_name = try(ingress_application_gateway.value.gateway_name, null)
           gateway_id   = try(ingress_application_gateway.value.gateway_id, try(var.application_gateway.id, null))
           subnet_cidr  = try(ingress_application_gateway.value.subnet_cidr, null)
-          subnet_id    = try(ingress_application_gateway.value.subnet_id, ingress_application_gateway.value.vnet.subnet.id, var.vnets[try(ingress_application_gateway.value.vnet.lz_key, var.client_config.landingzone_key)][ingress_application_gateway.value.vnet.key].subnets[ingress_application_gateway.value.vnet.subnet_key].id, null)
+          subnet_id    = try(ingress_application_gateway.value.subnet_id, ingress_application_gateway.value.vnet.subnet_id, var.vnets[try(ingress_application_gateway.value.vnet.lz_key, var.client_config.landingzone_key)][ingress_application_gateway.value.vnet.key].subnets[ingress_application_gateway.value.vnet.subnet_key].id, null)
         }
       }
     }
