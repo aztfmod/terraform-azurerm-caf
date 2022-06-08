@@ -11,6 +11,15 @@ module "azuread_service_principals_membership" {
   group_object_id            = var.azuread_groups[try(each.value.group_lz_key, var.client_config.landingzone_key)][var.group_key].id
 }
 
+module "azuread_apps_membership" {
+  source   = "./membership"
+  for_each = try(var.settings.azuread_apps, {})
+
+  azuread_apps    = var.azuread_apps[try(each.value.lz_key, var.client_config.landingzone_key)]
+  members         = each.value
+  group_object_id = var.azuread_groups[try(each.value.group_lz_key, var.client_config.landingzone_key)][var.group_key].id
+}
+
 module "managed_identities_membership" {
   source   = "./membership"
   for_each = try(var.settings.managed_identities, {})

@@ -39,6 +39,7 @@ module "azuread_groups_membership" {
   group_key                  = each.key
   settings                   = each.value
   group_id                   = try(module.azuread_groups[each.key].id, null)
+  azuread_apps               = local.combined_objects_azuread_apps
   azuread_groups             = local.combined_objects_azuread_groups
   azuread_service_principals = local.combined_objects_azuread_service_principals
   managed_identities         = local.combined_objects_managed_identities

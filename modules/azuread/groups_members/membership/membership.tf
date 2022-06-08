@@ -5,6 +5,13 @@ resource "azuread_group_member" "ids" {
   member_object_id = var.azuread_service_principals[each.key].object_id
 }
 
+resource "azuread_group_member" "app_ids" {
+  for_each = var.azuread_apps != {} ? toset(try(var.members.keys, [])) : []
+
+  group_object_id  = var.group_object_id
+  member_object_id = var.azuread_apps[each.key].azuread_service_principal.object_id
+}
+
 resource "azuread_group_member" "msi_ids" {
   for_each = var.managed_identities != {} ? toset(try(var.members.keys, [])) : []
 
