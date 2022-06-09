@@ -9,8 +9,12 @@ variable "tags" {
   description = "(Required) Tags of the IP Group to be created"
 }
 
-variable "resource_group" {
-  description = "(Required) Resource Group of the IP Group to be created"
+variable "resource_group_name" {
+  description = "(Required) Resource Group name of the IP Group to be created"
+}
+
+variable "location" {
+  description = "(Required) Location of the IP Group to be created"
 }
 
 variable "base_tags" {
