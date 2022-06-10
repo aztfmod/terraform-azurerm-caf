@@ -84,12 +84,55 @@ resource "azurerm_linux_virtual_machine" "vm" {
 
   dedicated_host_id = can(each.value.dedicated_host.key) ? var.dedicated_hosts[try(each.value.dedicated_host.lz_key, var.client_config.landingzone_key)][each.value.dedicated_host.key].id : try(each.value.dedicated_host.id, null)
 
+  # Create local ssh key
   dynamic "admin_ssh_key" {
-    for_each = lookup(each.value, "disable_password_authentication", true) == true ? [1] : []
+    for_each = lookup(each.value, "disable_password_authentication", true) == true && local.create_sshkeys ? [1] : []
 
     content {
       username   = each.value.admin_username
       public_key = local.create_sshkeys ? tls_private_key.ssh[each.key].public_key_openssh : file(var.settings.public_key_pem_file)
+    }
+  }
+
+  # by ssh_public_key_id
+  dynamic "admin_ssh_key" {
+    for_each = {
+      for key, value in try(each.value.admin_ssh_keys, {}) : key => value if can(value.ssh_public_key_id)
+    }
+
+    content {
+      # "Destination path for SSH public keys is currently limited to its default value /home/adminuser/.ssh/authorized_keys  due to a known issue in Linux provisioning agent."
+      # username   = try(admin_ssh_key.value.username, each.value.admin_username)
+      username   = each.value.admin_username
+      public_key = replace(data.external.ssh_public_key_id[admin_ssh_key.key].result.public_ssh_key, "\r\n", "")
+    }
+  }
+
+  # by secret_key_id
+  dynamic "admin_ssh_key" {
+    for_each = {
+      for key, value in try(each.value.admin_ssh_keys, {}) : key => value if can(value.secret_key_id)
+    }
+
+    content {
+      # "Destination path for SSH public keys is currently limited to its default value /home/adminuser/.ssh/authorized_keys  due to a known issue in Linux provisioning agent."
+      # username   = try(admin_ssh_key.value.username, each.value.admin_username)
+      username   = each.value.admin_username
+      public_key = replace(data.external.secret_key_id[admin_ssh_key.key].result.public_ssh_key, "\r\n", "")
+    }
+  }
+
+  # by secret_key_id
+  dynamic "admin_ssh_key" {
+  for_each = {
+    for key, value in try(var.settings.virtual_machine_settings[var.settings.os_type].admin_ssh_keys, {}) : key => value if can(value.keyvault_key)
+  }
+
+    content {
+      # "Destination path for SSH public keys is currently limited to its default value /home/adminuser/.ssh/authorized_keys  due to a known issue in Linux provisioning agent."
+      # username   = try(admin_ssh_key.value.username, each.value.admin_username)
+      username   = each.value.admin_username
+      public_key = replace(data.external.ssh_secret_keyvault[admin_ssh_key.key].result.public_ssh_key, "\r\n", "")
     }
   }
 
@@ -159,37 +202,3 @@ resource "azurerm_linux_virtual_machine" "vm" {
   }
 
 }
-
-#
-# SSH keys to be stored in KV only if public_key_pem_file is not set
-#
-
-resource "azurerm_key_vault_secret" "ssh_private_key" {
-  for_each = local.create_sshkeys ? var.settings.virtual_machine_settings : {}
-
-  name         = try(format("%s-ssh-private-key", azurecaf_name.linux_computer_name[each.key].result), format("%s-ssh-private-key", azurecaf_name.legacy_computer_name[each.key].result))
-  value        = tls_private_key.ssh[each.key].private_key_pem
-  key_vault_id = local.keyvault.id
-
-  lifecycle {
-    ignore_changes = [
-      value, key_vault_id
-    ]
-  }
-}
-
-
-resource "azurerm_key_vault_secret" "ssh_public_key_openssh" {
-  for_each = local.create_sshkeys ? var.settings.virtual_machine_settings : {}
-
-  name         = try(format("%s-ssh-public-key-openssh", azurecaf_name.linux_computer_name[each.key].result), format("%s-ssh-public-key-openssh", azurecaf_name.legacy_computer_name[each.key].result))
-  value        = tls_private_key.ssh[each.key].public_key_openssh
-  key_vault_id = local.keyvault.id
-
-  lifecycle {
-    ignore_changes = [
-      value, key_vault_id
-    ]
-  }
-}
-
