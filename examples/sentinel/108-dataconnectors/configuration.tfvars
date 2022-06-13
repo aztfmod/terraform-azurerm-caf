@@ -97,12 +97,12 @@ sentinel_dc_security_center = {
   }
 }
 
-sentinel_dc_threat_intelligence = {
-  ti1 = {
-    name = "example-ti"
-    log_analytics_workspace = {
-      #lz_key = ""
-      key = "law1"
-    }
-  }
-}
+# sentinel_dc_threat_intelligence = {
+#   ti1 = {
+#     name = "example-ti"
+#     log_analytics_workspace = {
+#       #lz_key = ""
+#       key = "law1"
+#     }
+#   }
+# }

@@ -79,7 +79,8 @@ resource "azurerm_windows_virtual_machine_scale_set" "vmss" {
   zone_balance                 = try(each.value.zone_balance, null)
   zones                        = try(each.value.zones, null)
   upgrade_mode                 = try(each.value.upgrade_mode, null)
-  enable_automatic_updates     = each.value.automatic_os_upgrade_policy.enable_automatic_os_upgrade == true ? false : true
+  # for future releases
+  # enable_automatic_updates     = each.value.automatic_os_upgrade_policy.enable_automatic_os_upgrade == true ? false : true
   timezone                     = try(each.value.timezone, null)
   license_type                 = try(each.value.license_type, null)
 
@@ -274,12 +275,6 @@ resource "azurerm_windows_virtual_machine_scale_set" "vmss" {
   }
 
   health_probe_id = try(var.load_balancers[try(each.value.lz_key, var.client_config.landingzone_key)][each.value.health_probe.loadbalancer_key].probes[each.value.health_probe.probe_key].id, null)
-
-  # lifecycle {
-  #   ignore_changes = [
-  #     resource_group_name, location
-  #   ]
-  # }
 
 }
 
