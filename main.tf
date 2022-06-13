@@ -24,6 +24,7 @@ terraform {
       source = "hashicorp/null"
     }
     random = {
+      version = "~> 3.3.1"
       source = "hashicorp/random"
     }
   }
