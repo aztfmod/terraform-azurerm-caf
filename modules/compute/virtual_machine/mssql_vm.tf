@@ -232,7 +232,7 @@ resource "random_password" "sql_admin_password" {
   length           = 100
   special          = true
   upper            = true
-  number           = true
+  numeric          = true
   override_special = "$#%"
 }
 
@@ -269,7 +269,7 @@ resource "random_password" "encryption_password" {
   length           = 100
   special          = true
   upper            = true
-  number           = true
+  numeric          = true
   override_special = "$#%"
 }
 

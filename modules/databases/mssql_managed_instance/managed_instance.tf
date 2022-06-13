@@ -53,7 +53,7 @@ resource "random_password" "sqlmi_admin" {
   length           = 128
   special          = true
   upper            = true
-  number           = true
+  numeric          = true
   override_special = "$#%"
 }
 
@@ -94,7 +94,7 @@ resource "azapi_resource" "sqlmi_admin_password" {
 }
 
 data "external" "sqlmi_admin_password" {
-  count = try(var.settings.administratorLoginPassword, null) == null ? 1 : 0
+  count      = try(var.settings.administratorLoginPassword, null) == null ? 1 : 0
   depends_on = [azapi_resource.sqlmi_admin_password]
   program = [
     "bash", "-c",
