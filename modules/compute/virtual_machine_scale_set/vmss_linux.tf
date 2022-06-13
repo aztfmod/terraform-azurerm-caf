@@ -10,7 +10,7 @@ resource "azurecaf_name" "linux" {
   for_each = local.os_type == "linux" ? var.settings.vmss_settings : {}
 
   name          = each.value.name
-  resource_type = "azurerm_virtual_machine_scale_set"
+  resource_type = "azurerm_linux_virtual_machine_scale_set"
   prefixes      = var.global_settings.prefixes
   random_length = var.global_settings.random_length
   clean_input   = true
@@ -244,11 +244,12 @@ resource "azurerm_linux_virtual_machine_scale_set" "vmss" {
 
   health_probe_id = try(var.load_balancers[try(each.value.lz_key, var.client_config.landingzone_key)][each.value.health_probe.loadbalancer_key].probes[each.value.health_probe.probe_key].id, null)
 
-  # lifecycle {
-  #   ignore_changes = [
-  #     resource_group_name, location
-  #   ]
-  # }
+  # to make sure a change in the name resulted by the provider update does not provoke destroy/recreate of VM
+  lifecycle {
+    ignore_changes = [
+      name
+    ]
+  }
 
 }
 
