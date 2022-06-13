@@ -393,9 +393,16 @@ variable "identity" {
 variable "apim" {
   default = {}
 }
+
 variable "purview" {
   default = {}
 }
+
 variable "sentinel_watchlists" {
   default = {}
+}
+
+variable "iot" {
+  description = "Configuration object - IoT resources"
+  default     = {}
 }
