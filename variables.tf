@@ -408,6 +408,7 @@ variable "sentinel_watchlists" {
 variable "iot" {
   description = "Configuration object - IoT"
   default = {}
+}
 variable "resource_provider_registration" {
   default = {}
 }
