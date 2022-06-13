@@ -12,4 +12,5 @@ module "nsg_flows" {
   diagnostics       = var.diagnostics
   settings          = var.network_security_group_definition[each.value.nsg_key].flow_logs
   network_watchers  = var.network_watchers
+  tags              = local.tags
 }
