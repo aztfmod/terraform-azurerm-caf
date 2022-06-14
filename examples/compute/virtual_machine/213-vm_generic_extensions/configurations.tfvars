@@ -155,11 +155,11 @@ diagnostic_storage_accounts = {
 
 keyvaults = {
   example_vm_rg1 = {
-    name                        = "vmlinuxakv"
-    resource_group_key          = "vm_region1"
-    sku_name                    = "standard"
+    name               = "vmlinuxakv"
+    resource_group_key = "vm_region1"
+    sku_name           = "standard"
     # soft_delete_enabled         = true
-    # purge_protection_enabled    = true
+    purge_protection_enabled    = true
     enabled_for_disk_encryption = true
     tags = {
       env = "Standalone"
