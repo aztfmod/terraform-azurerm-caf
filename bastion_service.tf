@@ -35,6 +35,8 @@ resource "azurerm_bastion_host" "host" {
   tunneling_enabled      = try(each.value.tunneling_enabled, null)      #only supported when sku is Standard
 
 
+  ip_connect_enabled = try(each.value.ip_connect_enabled, null)
+
   ip_configuration {
     name                 = each.value.name
     subnet_id            = local.combined_objects_networking[try(each.value.vnet.lz_key, local.client_config.landingzone_key)][try(each.value.vnet.vnet_key, each.value.vnet_key)].subnets[try(each.value.vnet.subnet_key, each.value.subnet_key)].id
