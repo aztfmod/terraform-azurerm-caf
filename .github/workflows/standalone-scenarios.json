@@ -166,6 +166,7 @@
     "networking/front_door/102-front_door_advanced",
     "networking/ip_group/100-simple-ip_group",
     "networking/ip_group/101-firewall-ip_group",
+    "networking/ip_group/102-remote-rg-ip_group",
     "networking/lb/100-lb",
     "networking/lb/101-vm_lb",
     "networking/lb/102-vm_lb_dns_servers",
