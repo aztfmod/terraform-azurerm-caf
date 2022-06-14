@@ -211,7 +211,6 @@
     "sentinel/105-ar_ml_behavior_analytics",
     "sentinel/106-ar_ms_security_incident",
     "sentinel/107-ar_scheduled",
-    "sentinel/108-dataconnectors",
     "storage_accounts/100-simple-storage-account-diagnostics",
     "storage_accounts/101-storage-account-with-protection",
     "storage_accounts/102-storage-account-advanced-options",
