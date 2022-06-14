@@ -74,7 +74,7 @@ resource "azurerm_linux_virtual_machine_scale_set" "vmss" {
   tags                = merge(local.tags, try(each.value.tags, null))
 
   computer_name_prefix            = azurecaf_name.linux_computer_name_prefix[each.key].result
-  custom_data                     = try(each.value.custom_data, null) == null ? null : filebase64(format("%s/%s", each.value.custom_data))
+  custom_data                     = try(each.value.custom_data, null) == null ? null : filebase64(each.value.custom_data)
   disable_password_authentication = try(each.value.disable_password_authentication, true)
   eviction_policy                 = try(each.value.eviction_policy, null)
   max_bid_price                   = try(each.value.max_bid_price, null)
@@ -182,10 +182,10 @@ resource "azurerm_linux_virtual_machine_scale_set" "vmss" {
   }
 
   dynamic "boot_diagnostics" {
-    for_each = var.boot_diagnostics_storage_account == {} ? [] : [1]
+    for_each = try(var.boot_diagnostics_storage_account != null ? [1] : var.global_settings.resource_defaults.virtual_machine_scale_sets.use_azmanaged_storage_for_boot_diagnostics == true ? [1] : [], [])
 
     content {
-      storage_account_uri = var.boot_diagnostics_storage_account
+      storage_account_uri = var.boot_diagnostics_storage_account == "" ? null : var.boot_diagnostics_storage_account
     }
   }
 
