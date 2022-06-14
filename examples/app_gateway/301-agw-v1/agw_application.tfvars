@@ -27,6 +27,14 @@ application_gateway_applications_v1 = {
       }
     }
 
+    # frontend_ports to be used only if application configuraiton uses non standards https/https ports i.e anything other than 80/443
+    frontend_ports ={
+      "8443" = {
+        name = "8443"
+        port = 8443
+      }
+    }
+
     http_listeners = {
       public = {
         name                           = "demo_http_listener01"
