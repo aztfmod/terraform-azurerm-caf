@@ -10,15 +10,12 @@ resource "azurecaf_name" "mysql_flexible_server" {
 }
 
 resource "azurerm_mysql_flexible_server" "mysql" {
-
-
   name                = azurecaf_name.mysql_flexible_server.result
   resource_group_name = var.resource_group_name
   location            = var.location
   version             = try(var.settings.version, null)
   sku_name            = try(var.settings.sku_name, null)
   zone                = try(var.settings.zone, null)
-
 
   delegated_subnet_id = var.remote_objects.subnet_id
   private_dns_zone_id = var.remote_objects.private_dns_zone_id
@@ -92,7 +89,7 @@ resource "random_password" "mysql_administrator_password" {
 
   length           = try(var.settings.administrator_password_length, 32)
   upper            = true
-  number           = true
+  numeric          = true
   special          = true
   override_special = "!@"
 }
