@@ -69,3 +69,8 @@ variable "diagnostic_profiles" {
 variable "diagnostics" {
   default = null
 }
+
+variable "vnets" {}
+variable "subnet_id" {}
+variable "private_endpoints" {}
+variable "private_dns" {}
