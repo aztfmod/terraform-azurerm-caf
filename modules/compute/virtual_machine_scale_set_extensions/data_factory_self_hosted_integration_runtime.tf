@@ -23,7 +23,7 @@ resource "azurerm_virtual_machine_scale_set_extension" "adf_shir" {
 locals {
   command_override       = try(var.extension.command_override, "")
   shir_vmss_base_command = try(var.extension.base_command_to_execute, "")
-  shir_vmss_auth_key     = var.remote_objects.data_factory_integration_runtime_self_hosted[try(var.extension.data_factory_self_hosted_integration_runtime.lz_key, var.client_config.landingzone_key)][var.extension.data_factory_self_hosted_integration_runtime.key].auth_key_1
+  shir_vmss_auth_key     = try(var.remote_objects.data_factory_integration_runtime_self_hosted[try(var.extension.data_factory_self_hosted_integration_runtime.lz_key, var.client_config.landingzone_key)][var.extension.data_factory_self_hosted_integration_runtime.key].auth_key_1, var.remote_objects.data_factory_integration_runtime_self_hosted[try(var.extension.data_factory_self_hosted_integration_runtime.lz_key, var.client_config.landingzone_key)][var.extension.data_factory_self_hosted_integration_runtime.key].auth_key_2, "")
   shir_vmss_ext_map_command = {
     commandToExecute = local.command_override == "" ? "${local.shir_vmss_base_command} ${local.shir_vmss_auth_key}" : local.command_override
   }
