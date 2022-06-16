@@ -39,3 +39,7 @@ variable "diagnostic_profiles" {
 variable "diagnostics" {
   default = {}
 }
+
+variable "managed_identities" {
+  default = {}
+}
