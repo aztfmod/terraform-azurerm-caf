@@ -105,9 +105,7 @@ resource "azurerm_windows_virtual_machine" "vm" {
     }
   }
 
-  source_image_id = try(each.value.source_image_reference, null) == null ? format("%s%s",
-    try(each.value.custom_image_id, var.image_definitions[try(each.value.custom_image_lz_key, var.client_config.landingzone_key)][each.value.custom_image_key].id),
-  try("/versions/${each.value.custom_image_version}", "")) : null
+  source_image_id = try(each.value.source_image_reference, null) == null ? format("%s%s", try(each.value.custom_image_id, var.image_definitions[try(each.value.custom_image_lz_key, var.client_config.landingzone_key)][each.value.custom_image_key].id), try("/versions/${each.value.custom_image_version}", "")) : null
 
   dynamic "additional_capabilities" {
     for_each = try(each.value.additional_capabilities, false) == false ? [] : [1]
