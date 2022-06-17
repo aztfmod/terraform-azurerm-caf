@@ -81,8 +81,8 @@ resource "azurerm_windows_virtual_machine_scale_set" "vmss" {
   upgrade_mode                 = try(each.value.upgrade_mode, null)
   # for future releases
   # enable_automatic_updates     = each.value.automatic_os_upgrade_policy.enable_automatic_os_upgrade == true ? false : true
-  timezone                     = try(each.value.timezone, null)
-  license_type                 = try(each.value.license_type, null)
+  timezone     = try(each.value.timezone, null)
+  license_type = try(each.value.license_type, null)
 
   dynamic "network_interface" {
     for_each = try(var.settings.network_interfaces, {})
