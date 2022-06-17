@@ -38,7 +38,7 @@ resource "azurerm_storage_account_customer_managed_key" "cmk" {
 }
 
 module "encryption_scopes" {
-  source   = "./modules/storage_account/encryption_scope"
+  source = "./modules/storage_account/encryption_scope"
   for_each = {
     for key, value in var.storage_accounts : key => value
     if can(value.encryption_scopes)

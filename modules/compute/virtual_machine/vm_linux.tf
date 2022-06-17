@@ -62,7 +62,7 @@ resource "azurerm_linux_virtual_machine" "vm" {
   availability_set_id             = can(each.value.availability_set_key) || can(each.value.availability_set.key) ? var.availability_sets[try(var.client_config.landingzone_key, each.value.availability_set.lz_key)][try(each.value.availability_set_key, each.value.availability_set.key)].id : try(each.value.availability_set.id, each.value.availability_set_id, null)
   computer_name                   = azurecaf_name.linux_computer_name[each.key].result
   disable_password_authentication = try(each.value.disable_password_authentication, true)
-  encryption_at_host_enabled      = try(each.value.encryption_at_host_enabled, null)  
+  encryption_at_host_enabled      = try(each.value.encryption_at_host_enabled, null)
   eviction_policy                 = try(each.value.eviction_policy, null)
   license_type                    = try(each.value.license_type, null)
   location                        = var.location
@@ -125,9 +125,9 @@ resource "azurerm_linux_virtual_machine" "vm" {
 
   # by secret_key_id
   dynamic "admin_ssh_key" {
-  for_each = {
-    for key, value in try(var.settings.virtual_machine_settings[var.settings.os_type].admin_ssh_keys, {}) : key => value if can(value.keyvault_key)
-  }
+    for_each = {
+      for key, value in try(var.settings.virtual_machine_settings[var.settings.os_type].admin_ssh_keys, {}) : key => value if can(value.keyvault_key)
+    }
 
     content {
       # "Destination path for SSH public keys is currently limited to its default value /home/adminuser/.ssh/authorized_keys  due to a known issue in Linux provisioning agent."

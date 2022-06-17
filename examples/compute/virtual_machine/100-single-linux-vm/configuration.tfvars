@@ -41,7 +41,7 @@ virtual_machines = {
     # networking_interface_ids = ["/subscriptions/<subid>/resourceGroups/<rg-name>/providers/Microsoft.Network/networkInterfaces/<nicID>"]
 
     shutdown_schedule = {
-      enabled = true
+      enabled               = true
       daily_recurrence_time = "0100"
       timezone              = "Singapore Standard Time"
       notification_settings = {

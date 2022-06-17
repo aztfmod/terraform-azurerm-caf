@@ -1,4 +1,4 @@
-resource "azurerm_storage_encryption_scope" "versioned" {  
+resource "azurerm_storage_encryption_scope" "versioned" {
   for_each = {
     for key, value in try(var.settings.encryption_scopes, {}) : key => value
     if try(value.keyvault_key.versionless, false) == false
