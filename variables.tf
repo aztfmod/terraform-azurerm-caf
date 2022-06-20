@@ -353,6 +353,11 @@ variable "app_config" {
   default = {}
 }
 
+variable "app_config_entries" {
+  description = "Map of objects describing kv entries to an app config"
+  default     = {}
+}
+
 # variable "local_network_gateways" {
 #   default = {}
 # }
