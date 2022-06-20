@@ -1,4 +1,8 @@
+# TODO(pbourke): This module is deprecated. See var.database.app_config_entries for a newer way of
+# adding data to an appconfig instance.
 module "compute_instance" {
+  for_each = length(local.config_settings) > 0 ? toset(["enabled"]) : toset([])
+
   source     = "./settings"
   depends_on = [azurerm_app_configuration.config]
 

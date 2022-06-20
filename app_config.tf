@@ -13,6 +13,38 @@ module "app_config" {
   tags                = try(each.value.tags, {})
 }
 
+resource "azurerm_app_configuration_key" "kv" {
+  for_each = try(local.config_settings, {})
+
+  configuration_store_id = local.combined_objects_app_config[try(local.database.app_config_entries.lz_key, local.client_config.landingzone_key)][local.database.app_config_entries.key].id
+  key                    = each.key
+  label                  = try(each.value.label, null)
+  value                  = each.value.value
+}
+
 output "app_config" {
   value = module.app_config
+}
+
+locals {
+  dynamic_settings_to_process = {
+    for setting in
+    flatten(
+      [
+        for setting_name, resources in try(local.database.app_config_entries.dynamic_settings, []) : [
+          for resource_type_key, resource in resources : [
+            for object_id_key, object_attributes in resource : {
+              key = setting_name
+              value = {
+                value = try(local.dynamic_app_config_combined_objects[resource_type_key][object_attributes.lz_key][object_id_key][object_attributes.attribute_key], local.combined_objects_app_config[resource_type_key][var.client_config.landingzone_key][object_id_key][object_attributes.attribute_key])
+                label = try(object_attributes.label, null)
+              }
+            }
+          ]
+        ]
+      ]
+    ) : setting.key => setting.value
+  }
+
+  config_settings = merge(try(local.database.app_config_entries.settings, {}), try(local.dynamic_settings_to_process, {}))
 }

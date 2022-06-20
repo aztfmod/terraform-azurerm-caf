@@ -102,6 +102,7 @@ locals {
   }
   database = {
     app_config                         = try(var.database.app_config, {})
+    app_config_entries                 = try(var.database.app_config_entries, {})
     azurerm_redis_caches               = try(var.database.azurerm_redis_caches, {})
     cosmos_dbs                         = try(var.database.cosmos_dbs, {})
     cosmosdb_sql_databases             = try(var.database.cosmosdb_sql_databases, {})
