@@ -31,9 +31,9 @@ sentinel_watchlists = {
       #lz_key = ""
       key = "law1"
     }
-    display_name    = "wl1"
-    description     = "test_description"
-    labels          = ["test1", "test2"]
+    display_name = "wl1"
+    description  = "test_description"
+    labels       = ["test1", "test2"]
     # item_search_key = "Key"
   }
 }

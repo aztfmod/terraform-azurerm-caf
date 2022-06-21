@@ -66,12 +66,12 @@ virtual_machines = {
             #
             # 1 - (azurerm_ssh_public_key)
             # ssh_public_key_id = "/subscriptions/xxxxxx/resourceGroups/yyy/providers/Microsoft.Compute/sshPublicKeys/ssh-key"
-            
+
             # 2 - secret value in keyvault local or remote with lz_key
             # lz_key         = ""
             keyvault_key = "example_vm_rg1"
             secret_name  = "ssh-key"
-            
+
             # 3 - value from keyvault secret_id
             # secret_key_id = "https://xxxx.vault.azure.net/secrets/ssh-key/925267e3xxxxxxx99b4c42c99c418"
           }

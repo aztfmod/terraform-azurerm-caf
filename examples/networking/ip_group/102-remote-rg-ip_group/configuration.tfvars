@@ -15,28 +15,28 @@ resource_groups = {
 
 ip_groups = {
   ip_group1 = {
-    name               = "ip_group1"
-    cidrs              = ["10.0.0.0/20"] # if cidrs is defined all vnet & subnet are ignored
+    name  = "ip_group1"
+    cidrs = ["10.0.0.0/20"] # if cidrs is defined all vnet & subnet are ignored
     resource_group = {
       # lz_key = "" # if the resource group is in a remote landingzone
-      key    = "ip_group_re1"
+      key = "ip_group_re1"
     }
   }
   ip_group2 = {
-    name               = "ip_group2"
+    name = "ip_group2"
     resource_group = {
       # lz_key = "" # if the resource group is in a remote landingzone
-      key    = "ip_group_re1"
+      key = "ip_group_re1"
     }
-    vnet_key           = "vnet_ip_group_re1"
+    vnet_key = "vnet_ip_group_re1"
   }
   ip_group3 = {
-    name               = "ip_group3"
+    name = "ip_group3"
     resource_group = {
       # lz_key = "" # if the resource group is in a remote landingzone
-      key    = "ip_group_re1"
+      key = "ip_group_re1"
     }
-    vnet_key           = "vnet_ip_group_re1"
-    subnet_keys        = ["subnet1", "subnet2"] # can be either unclared or empty, will take vnet cidr instead
+    vnet_key    = "vnet_ip_group_re1"
+    subnet_keys = ["subnet1", "subnet2"] # can be either unclared or empty, will take vnet cidr instead
   }
 }
