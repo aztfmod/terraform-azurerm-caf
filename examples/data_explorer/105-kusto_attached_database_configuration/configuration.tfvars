@@ -68,7 +68,7 @@ kusto_databases = {
     }
     region = "region1"
     kusto_cluster = {
-      key = "kc_node0"
+      key = "kc_node1"
       #lz_key = ""
       #id     = ""
     }
