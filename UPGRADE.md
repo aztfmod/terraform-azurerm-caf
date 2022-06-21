@@ -4,7 +4,7 @@ When upgrading to a newer version of the CAF module, some configuration structur
 
 ## 5.6.0
 
-Version 5.6.0 includes support for azurerm 2.98 which requires your attention if you are deploying the following components:
+Version 5.6.0 includes support for azurerm 2.99 which requires your attention if you are deploying the following components:
 
 - signal_r:
   - The ```features``` block is deprecated, favor of use ```connectivity_logs_enabled```, ```messaging_logs_enabled```, ```live_trace_enabled``` and ```service_mode``` instead. Module has been updated to reflect that. You must update the settings in your configuration file accordingly.

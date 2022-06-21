@@ -4,9 +4,9 @@
 # Keyvault has to be in the same subscription as the VM when local.create_sshkeys is true 
 #
 
-locals {  
+locals {
   # Generate SSH Keys only if a public one is not provided
-  create_sshkeys = (local.os_type == "linux" || local.os_type == "legacy") && can(var.settings.public_key_pem_file) == false && can(var.settings.virtual_machine_settings[var.settings.os_type].admin_ssh_keys) == false 
+  create_sshkeys = (local.os_type == "linux" || local.os_type == "legacy") && can(var.settings.public_key_pem_file) == false && can(var.settings.virtual_machine_settings[var.settings.os_type].admin_ssh_keys) == false
 }
 
 resource "azurerm_key_vault_secret" "ssh_private_key" {
