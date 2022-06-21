@@ -45,7 +45,7 @@ module "kusto_attached_database_configurations" {
   location        = can(local.global_settings.regions[each.value.region]) ? local.global_settings.regions[each.value.region] : local.combined_objects_resource_groups[try(each.value.resource_group.lz_key, local.client_config.landingzone_key)][try(each.value.resource_group.key, each.value.resource_group_key)].location
 
   resource_group_name = can(each.value.resource_group.name) || can(each.value.resource_group_name) ? try(each.value.resource_group.name, each.value.resource_group_name) : local.combined_objects_resource_groups[try(each.value.resource_group.lz_key, local.client_config.landingzone_key)][try(each.value.resource_group_key, each.value.resource_group.key)].name
-  cluster_name        = can(each.value.kusto_cluster_name) ? each.value.kusto_cluster_name : local.combined_objects_kusto_clusters[try(each.value.kusto_cluster.destination.lz_key, local.client_config.landingzone_key)][each.value.kusto_cluster.destination.key].name
+  cluster_name        = can(each.value.cluster_name) ? each.value.cluster_name : local.combined_objects_kusto_clusters[try(each.value.kusto_cluster.destination.lz_key, local.client_config.landingzone_key)][each.value.kusto_cluster.destination.key].name
   cluster_resource_id = can(each.value.kusto_cluster_resource_id) ? each.value.kusto_cluster_resource_id : local.combined_objects_kusto_clusters[try(each.value.kusto_cluster.source.lz_key, local.client_config.landingzone_key)][each.value.kusto_cluster.source.key].id
   database_name       = can(each.value.kusto_database.name) ? each.value.kusto_database.name : local.combined_objects_kusto_databases[try(each.value.kusto_database.lz_key, local.client_config.landingzone_key)][each.value.kusto_database.key].name
 }
