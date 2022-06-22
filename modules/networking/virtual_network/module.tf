@@ -126,12 +126,12 @@ locals {
     ],
     [
       for obj in try(var.settings.vnet.dns_servers_keys, {}) :
-        var.remote_dns.lb[obj.lz_key][obj.key].private_ip_addresses
+      var.remote_dns.lb[obj.lz_key][obj.key].private_ip_addresses
       if contains(["lb"], obj.resource_type)
     ],
     [
       for obj in try(var.settings.vnet.dns_servers_keys, {}) :
-        var.remote_dns.virtual_machines[obj.lz_key][obj.key].ip_configuration[obj.nic_key].private_ip_addresses
+      var.remote_dns.virtual_machines[obj.lz_key][obj.key].ip_configuration[obj.nic_key].private_ip_addresses
       if contains(["virtual_machines", "virtual_machine"], obj.resource_type)
     ]
   )
