@@ -100,6 +100,10 @@ locals {
     storage_accounts                               = try(local.combined_objects_storage_accounts, null)
     storage_containers                             = try(local.combined_objects_storage_containers, null)
     synapse_workspaces                             = try(local.combined_objects_synapse_workspaces, null)
+    traffic_manager_profile                        = try(local.combined_objects_traffic_manager_profile, null)
+    traffic_manager_nested_endpoint                = try(local.combined_objects_traffic_manager_nested_endpoint, null)
+    traffic_manager_azure_endpoint                 = try(local.combined_objects_traffic_manager_azure_endpoint, null)
+    traffic_manager_external_endpoint              = try(local.combined_objects_traffic_manager_external_endpoint, null)
     virtual_hub_connections                        = try(local.combined_objects_virtual_hub_connections, null)
     virtual_hub_route_tables                       = try(local.combined_objects_virtual_hub_route_tables, null)
     virtual_hubs                                   = try(local.combined_objects_virtual_hubs, null)
@@ -117,5 +121,6 @@ locals {
     wvd_host_pools                                 = try(local.combined_objects_wvd_host_pools, null)
     wvd_workspaces                                 = try(local.combined_objects_wvd_workspaces, null)
     subscriptions                                  = try(local.combined_objects_subscriptions, null)
+
   }
 }
