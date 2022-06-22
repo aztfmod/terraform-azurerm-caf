@@ -71,7 +71,7 @@ data "external" "image_versions" { # data source errors if no versions exist
   program = [
     "bash", "-c",
     format(
-      "a=$(az sig image-version list --resource-group %s --gallery-name %s --gallery-image-definition %s -o json --query 'max_by([].{name:name},&name)'); if [[ $a == *name* ]]; then echo $a; else echo '{ \"name\":\"0.0.0\" }'; fi",
+      "a=$(az sig image-version list --resource-group %s --gallery-name %s --gallery-image-definition %s -o json --query 'max_by([].{name:name},&name)'); if [[ $a == *name* ]]; then echo $a; else echo '{ \"name\":\"0.0.10\" }'; fi",
       var.resource_group_name, var.gallery_name, var.image_name
     )
   ]
