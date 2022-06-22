@@ -4,7 +4,7 @@ resource "azurerm_virtual_machine_extension" "AADLogin" {
   virtual_machine_id         = var.virtual_machine_id
   publisher                  = local.aadlogin_publisher
   type                       = local.aadlogin_type
-  type_handler_version       = "0.4"
+  type_handler_version       = var.extension.type_handler_version
   auto_upgrade_minor_version = true
 }
 
