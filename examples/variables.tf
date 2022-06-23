@@ -972,3 +972,16 @@ variable "backup_vault_policies" {
 variable "backup_vault_instances" {
   default = {}
 }
+variable "traffic_manager_azure_endpoint" {
+  default = {}
+}
+variable "traffic_manager_external_endpoint" {
+  default = {}
+}
+variable "traffic_manager_nested_endpoint" {
+  default = {}
+}
+variable "traffic_manager_profile" {
+  default = {}
+}
+

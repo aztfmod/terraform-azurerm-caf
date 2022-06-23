@@ -12,8 +12,22 @@ resource_groups = {
 }
 
 kusto_clusters = {
-  kc1 = {
-    name = "kustocluster"
+  kc_node0 = {
+    name = "kustocluster1_node0"
+    resource_group = {
+      key = "rg1"
+      #lz_key = ""
+      #name   = ""
+    }
+    region = "region1"
+
+    sku = {
+      name     = "Dev(No SLA)_Standard_E2a_v4"
+      capacity = 1
+    }
+  }
+  kc_node1 = {
+    name = "kustocluster1_node1"
     resource_group = {
       key = "rg1"
       #lz_key = ""
@@ -27,8 +41,9 @@ kusto_clusters = {
     }
   }
 }
+
 kusto_databases = {
-  kdb1 = {
+  db1_node0 = {
     name = "kdb1"
     resource_group = {
       key = "rg1"
@@ -37,7 +52,23 @@ kusto_databases = {
     }
     region = "region1"
     kusto_cluster = {
-      key = "kc1"
+      key = "kc_node0"
+      #lz_key = ""
+      #id     = ""
+    }
+    #hot_cache_period   = "P7D"
+    #soft_delete_period = "P31D"
+  }
+  db1_node1 = {
+    name = "kdb1"
+    resource_group = {
+      key = "rg1"
+      #lz_key = ""
+      #name   = ""
+    }
+    region = "region1"
+    kusto_cluster = {
+      key = "kc_node1"
       #lz_key = ""
       #id     = ""
     }
@@ -45,8 +76,9 @@ kusto_databases = {
     #soft_delete_period = "P31D"
   }
 }
+
 kusto_attached_database_configurations = {
-  kadc1 = {
+  db1_config = {
     name = "kadc1"
     resource_group = {
       key = "rg1"
@@ -55,14 +87,19 @@ kusto_attached_database_configurations = {
     }
     region = "region1"
     kusto_cluster = {
-      key = "kc1"
+      source = {
+        key = "kc_node0"
+      }
+      destination = {
+        key = "kc_node1"
+      }
       #lz_key = ""
       #id     = ""
     }
-    database = {
-      key = "kdb1"
+    kusto_database = {
+      key = "db1_node1"
       #lz_key = ""
-      #name   = ""
+      # name   = "db_node1"
     }
     default_principal_modifications_kind = "None"
   }
