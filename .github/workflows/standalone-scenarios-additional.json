@@ -1,9 +1,11 @@
 {
   "config_files": [
     "cognitive_services/100-cognitive-services-account",
-    "compute/batch/batch_certificate/100-batch-certificate",
-    "compute/batch/batch_job/100-batch-job",
+    "compute/batch/batch_certificate/100-batch-certificate - path",
+    "compute/batch/batch_job/100-batch-job - quotas",
+    "compute/batch/batch_pool/100-batch-pool - quotas",
     "compute/virtual_machine/106-marketplace-image-with-plan",
+    "compute/virtual_machine/211-vm-bastion-winrm-agents",
     "compute/vmware_cluster/102-vmware_express_route_authorization",
     "consumption_budget/100-consumption-budget-rg",
     "consumption_budget/101-consumption-budget-subscription",
@@ -24,10 +26,10 @@
     "networking/virtual_wan/104-vwan-hub-gw-spp",
     "networking/virtual_wan/105-vwan-hub-route-table",
     "networking/virtual_wan/106-vwan-hub-routes",
-    "shared_image_gallery/101-packer_service_principal",
     "sentinel/102-watchlist - https://github.com/hashicorp/terraform-provider-azurerm/issues/15851",
     "sentinel/103-watchlist_item - https://github.com/hashicorp/terraform-provider-azurerm/issues/15851",
     "sentinel/108-dataconnectors",
+    "shared_image_gallery/101-packer_service_principal",
     "storage_accounts/108-file-share-nfs - https://github.com/hashicorp/terraform-provider-azurerm/issues/2977"
   ]
 }
