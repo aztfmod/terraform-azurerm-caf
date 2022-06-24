@@ -162,8 +162,8 @@ resource "azurerm_container_group" "acg" {
 
     content {
       nameservers    = var.settings.dns_config.nameservers
-      search_domains = var.settings.dns_config.search_domains
-      options        = var.settings.dns_config.options
+      search_domains = try(var.settings.dns_config.search_domains, null)
+      options        = try(var.settings.dns_config.options, null)
     }
   }
 
