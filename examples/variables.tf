@@ -1008,3 +1008,6 @@ variable "static_sites" {
 variable "aro_clusters" {
   default = {}
 }
+variable "security_center" {
+  default = {}
+}

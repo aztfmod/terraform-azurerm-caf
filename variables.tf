@@ -247,6 +247,12 @@ variable "security" {
   default     = {}
 }
 
+## Security_center variables
+variable "security_center" {
+  description = "Configuration object - security center resources"
+  default     = {}
+}
+
 variable "managed_identities" {
   description = "Configuration object - Azure managed identity resources"
   default     = {}
