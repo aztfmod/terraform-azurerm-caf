@@ -927,3 +927,6 @@ variable "backup_vault_policies" {
 variable "backup_vault_instances" {
   default = {}
 }
+variable "security_center" {
+  default = {}
+}
