@@ -331,6 +331,7 @@ locals {
 
   shared_services = {
     automations                    = try(var.shared_services.automations, {})
+    automation_log_analytics_links = try(var.shared_services.automation_log_analytics_links, {})
     consumption_budgets            = try(var.shared_services.consumption_budgets, {})
     image_definitions              = try(var.shared_services.image_definitions, {})
     log_analytics_storage_insights = try(var.shared_services.log_analytics_storage_insights, {})
