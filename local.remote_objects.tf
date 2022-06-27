@@ -14,6 +14,7 @@ locals {
     application_gateways                           = try(local.combined_objects_application_gateways, null)
     application_insights                           = try(local.combined_objects_application_insights, null)
     application_security_groups                    = try(local.combined_objects_application_security_groups, null)
+    automations                                    = try(local.combined_objects_automations, null)
     availability_sets                              = try(local.combined_objects_availability_sets, null)
     azure_container_registries                     = try(local.combined_objects_azure_container_registries, null)
     azuread_applications                           = try(local.combined_objects_azuread_applications, null)
