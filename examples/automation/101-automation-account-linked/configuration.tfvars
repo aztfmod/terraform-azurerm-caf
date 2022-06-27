@@ -37,7 +37,7 @@ diagnostic_log_analytics = {
 automation_log_analytics_links = {
   link1 = {
     workspace_key          = "region1"
-    automation_account_key = "account1"
+    automation_account_key = "auto1"
     resource_group_key     = "automation"
   }
 }

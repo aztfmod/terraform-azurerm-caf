@@ -481,6 +481,9 @@ variable "automations" {
 variable "automation_log_analytics_links" {
   default = {}
 }
+variable "automation_software_update_configurations" {
+  default = {}
+}
 
 variable "local_network_gateways" {
   default = {}

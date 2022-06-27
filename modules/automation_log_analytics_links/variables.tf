@@ -25,9 +25,11 @@ variable "workspace_id" {
 variable "read_access_id" {
   description = "(Optional) The ID of the readable Resource that will be linked to the workspace."
   type        = string
+  default     = null
 }
 
 variable "write_access_id" {
   description = "(Optional) The ID of the writeable Resource that will be linked to the workspace."
   type        = string
+  default     = null
 }
