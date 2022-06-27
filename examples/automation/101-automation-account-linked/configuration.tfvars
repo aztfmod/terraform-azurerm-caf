@@ -25,12 +25,6 @@ diagnostic_log_analytics = {
     region             = "region1"
     name               = "logre1"
     resource_group_key = "automation"
-    solutions_maps = {
-      Updates = {
-        "publisher" = "Microsoft"
-        "product"   = "OMSGallery/Updates"
-      }
-    }
   }
 }
 
