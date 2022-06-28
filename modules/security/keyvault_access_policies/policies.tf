@@ -187,7 +187,7 @@ module "storage_accounts" {
   source = "./access_policy"
   for_each = {
     for key, access_policy in var.access_policies : key => access_policy
-    if try(access_policy.storage_account_key, null) != null
+    if try(access_policy.mssql_managed_instance_secondary_key, null) != null
   }
 
   keyvault_id = coalesce(
@@ -200,6 +200,25 @@ module "storage_accounts" {
   access_policy = each.value
   tenant_id     = var.resources.storage_accounts[try(each.value.lz_key, var.client_config.landingzone_key)][each.value.storage_account_key].identity.0.tenant_id
   object_id     = var.resources.storage_accounts[try(each.value.lz_key, var.client_config.landingzone_key)][each.value.storage_account_key].identity.0.principal_id
+}
+
+module "app_services" {
+  source = "./access_policy"
+  for_each = {
+    for key, access_policy in var.access_policies : key => access_policy
+    if try(access_policy.app_services_key, null) != null
+  }
+
+  keyvault_id = coalesce(
+    var.keyvault_id,
+    try(var.keyvaults[each.value.keyvault_lz_key][var.keyvault_key].id, null),
+    try(var.keyvaults[var.client_config.landingzone_key][var.keyvault_key].id, null),
+    try(var.keyvaults[each.value.lz_key][var.keyvault_key].id, null) // For backward compatibility
+  )
+
+  access_policy = each.value
+  tenant_id     = var.resources.app_services[try(each.value.lz_key, var.client_config.landingzone_key)][each.value.app_services_key].identity.0.tenant_id
+  object_id     = var.resources.app_services[try(each.value.lz_key, var.client_config.landingzone_key)][each.value.app_services_key].identity.0.principal_id
 }
 
 module "diagnostic_storage_accounts" {
