@@ -481,6 +481,9 @@ variable "event_hubs" {
 variable "automations" {
   default = {}
 }
+variable "automation_log_analytics_links" {
+  default = {}
+}
 
 variable "local_network_gateways" {
   default = {}
