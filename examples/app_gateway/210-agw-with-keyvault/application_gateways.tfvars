@@ -21,6 +21,14 @@ application_gateways = {
       ]
     }
 
+    # Force TLSv1.2 minimum and secure cyphers
+    # https://docs.microsoft.com/en-us/azure/application-gateway/application-gateway-ssl-policy-overview#predefined-tls-policy
+    ssl_profile = {
+      name        = "SecureTLS"
+      policy_type = "Predefined"
+      policy_name = "AppGwSslPolicy20220101S"
+    }
+
     front_end_ip_configurations = {
       public = {
         name          = "public"
