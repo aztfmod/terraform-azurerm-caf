@@ -63,7 +63,8 @@ resource "azurerm_app_service" "app_service" {
       websockets_enabled        = lookup(var.settings.site_config, "websockets_enabled", false)
       scm_type                  = lookup(var.settings.site_config, "scm_type", null)
       acr_use_managed_identity_credentials = lookup(var.settings.site_config, "acr_use_managed_identity_credentials", null)
-      acr_user_managed_identity_client_id  = lookup(var.settings.site_config, "acr_user_managed_identity_client_id", null)
+      //acr_user_managed_identity_client_id  = lookup(var.settings.site_config, "acr_user_managed_identity_client_id", null)
+      acr_user_managed_identity_client_id  = try(var.settings.site_config.acr_user_managed_identity_client_id, try(var.combined_objects.managed_identities[try(var.settings.site_config.acr_user_managed_identity_client_id_lz_key, var.client_config.landingzone_key)][var.settings.site_config.acr_user_managed_identity_client_id_key].client_id, null))
       dynamic "cors" {
         for_each = lookup(var.settings.site_config, "cors", {}) != {} ? [1] : []
 
