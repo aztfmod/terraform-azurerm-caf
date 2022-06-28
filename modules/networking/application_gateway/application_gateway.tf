@@ -48,15 +48,21 @@ resource "azurerm_application_gateway" "agw" {
   }
 
   dynamic "ssl_profile" {
-    for_each = try(var.settings.ssl_profile, null) == null ? [] : [1]
+    for_each = try(var.settings.ssl_profiles, {})
     content {
-      name = try(var.settings.ssl_profile.name, null)
-      ssl_policy {
-        disabled_protocols   = try(var.settings.ssl_profile.disabled_protocols, null)
-        policy_type          = try(var.settings.ssl_profile.policy_type, null)
-        policy_name          = try(var.settings.ssl_profile.policy_name, null)
-        cipher_suites        = try(var.settings.ssl_profile.cipher_suites, null)
-        min_protocol_version = try(var.settings.ssl_profile.min_protocol_version, null)
+      name                             = ssl_profile.value.name
+      trusted_client_certificate_names = try(ssl_profile.trusted_client_certificate_names, null)
+      verify_client_cert_issuer_dn     = try(ssl_profile.verify_client_cert_issuer_dn, null)
+
+      dynamic "ssl_policy" {
+        for_each = try(ssl_profile.value.ssl_policy, null) == null ? [] : [1]
+        content {
+          disabled_protocols   = try(ssl_policy.value.disabled_protocols, null)
+          policy_type          = try(ssl_policy.value.policy_type, null)
+          policy_name          = try(ssl_policy.value.policy_name, null)
+          cipher_suites        = try(ssl_policy.value.cipher_suites, null)
+          min_protocol_version = try(ssl_policy.value.min_protocol_version, null)
+        }
       }
     }
   }
