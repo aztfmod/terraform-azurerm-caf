@@ -222,8 +222,6 @@
     "webapps/appservice/105-appservice-backup",
     "webapps/appservice/106-appservice-diagnostics",
     "webapps/appservice/107-appservice-private",
-    "webapps/appservice/108-appservice-autoscale",
-    "webapps/appservice/108-appservice-storage",
     "webapps/appservice/109-appservice-appgw",
     "webapps/function_app/101-function_app-private",
     "webapps/function_app/102-function_app-linux",
