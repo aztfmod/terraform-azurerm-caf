@@ -197,7 +197,6 @@ resource "azurerm_kubernetes_cluster" "aks" {
   #       }
   #     }
 
-
   api_server_authorized_ip_ranges = try(var.settings.api_server_authorized_ip_ranges, null)
 
   disk_encryption_set_id = try(coalesce(
