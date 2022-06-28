@@ -25,8 +25,8 @@ resource "azurerm_iothub" "iothub" {
   dynamic "endpoint" {
     for_each = lookup(var.settings, "endpoints", {})
     content {
-      name                       = endpoint.key 
-      type                       = try(endpoint.value.type, null) 
+      name                       = endpoint.key
+      type                       = try(endpoint.value.type, null)
       resource_group_name        = can(endpoint.value.resource_group_key) ? var.remote_objects.resource_group[var.client_config.landingzone_key][endpoint.value.resource_group_key].name : null
       batch_frequency_in_seconds = try(endpoint.value.batch_frequency_in_seconds, null)
       max_chunk_size_in_bytes    = try(endpoint.value.max_chunk_size_in_bytes, null)
@@ -68,19 +68,19 @@ resource "azurerm_iothub" "iothub" {
   dynamic "enrichment" {
     for_each = lookup(var.settings, "enrichment", {}) == {} ? [] : [1]
     content {
-      key             = try(var.settings.enrichment.key, null)
-      value           = try(var.settings.enrichment.value, null)
-      endpoint_names  = try(var.settings.enrichment.endpoint_names, null)
+      key            = try(var.settings.enrichment.key, null)
+      value          = try(var.settings.enrichment.value, null)
+      endpoint_names = try(var.settings.enrichment.endpoint_names, null)
     }
   }
 
   dynamic "fallback_route" {
     for_each = lookup(var.settings, "fallback_route", {}) == {} ? [] : [1]
     content {
-      source             = try(var.settings.fallback_route.source, null) 
-      condition          = try(var.settings.fallback_route.condition, null) 
-      endpoint_names     = try(var.settings.fallback_route.endpoint_names, null) 
-      enabled            = try(var.settings.fallback_route.enabled, null) 
+      source         = try(var.settings.fallback_route.source, null)
+      condition      = try(var.settings.fallback_route.condition, null)
+      endpoint_names = try(var.settings.fallback_route.endpoint_names, null)
+      enabled        = try(var.settings.fallback_route.enabled, null)
     }
   }
 
@@ -90,18 +90,22 @@ resource "azurerm_iothub" "iothub" {
       # requires azurerm provider >= 3.0.0
       # authentication_type   = try(var.settings.file_upload.authentication_type, null)
       # identity_id           = try(var.settings.file_upload.identity_id, null)
-      connection_string     = var.settings.file_upload.connection_string
-      container_name        = var.settings.file_upload.container_name 
-      sas_ttl               = try(var.settings.file_upload.sas_ttl, null)
-      notifications         = try(var.settings.file_upload.notifications, null)
-      lock_duration         = try(var.settings.file_upload.lock_duration, null)
-      default_ttl           = try(var.settings.file_upload.default_ttl, null)
-      max_delivery_count    = try(var.settings.file_upload.max_delivery_count, null)
+      connection_string = try(
+        var.remote_objects.storage_accounts[try(var.settings.file_upload.storage_account_lz_key, var.client_config.landingzone_key)][var.settings.file_upload.storage_account_key].primary_blob_connection_string,
+        var.settings.file_upload.connection_string,
+        null
+      )
+      container_name     = var.settings.file_upload.container_name
+      sas_ttl            = try(var.settings.file_upload.sas_ttl, null)
+      notifications      = try(var.settings.file_upload.notifications, null)
+      lock_duration      = try(var.settings.file_upload.lock_duration, null)
+      default_ttl        = try(var.settings.file_upload.default_ttl, null)
+      max_delivery_count = try(var.settings.file_upload.max_delivery_count, null)
     }
   }
 
   # requires azurerm provider >= 2.91
-   
+
   # dynamic "identity" { 
   #   for_each = lookup(var.settings, "identity", {}) == {} ? [] : [1]
   #   content {
