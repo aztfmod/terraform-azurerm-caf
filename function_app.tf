@@ -12,7 +12,7 @@ module "function_apps" {
   location                   = can(local.global_settings.regions[each.value.region]) ? local.global_settings.regions[each.value.region] : local.combined_objects_resource_groups[try(each.value.resource_group.lz_key, local.client_config.landingzone_key)][try(each.value.resource_group.key, each.value.resource_group_key)].location
   app_service_plan_id        = can(each.value.app_service_plan_id) || can(each.value.app_service_plan_key) == false ? try(each.value.app_service_plan_id, null) : local.combined_objects_app_service_plans[try(each.value.lz_key, local.client_config.landingzone_key)][each.value.app_service_plan_key].id
   settings                   = each.value.settings
-  application_insight        = try(each.value.application_insight_key, null) == null ? null : local.combined_objects_application_insights[try(each.value.application_insight_lz_key, local.client_config.landingzone_key)][each.value.application_insight_key]
+  application_insight        = try(each.value.application_insight_key, null) == null ? null : module.azurerm_application_insights[each.value.application_insight_key]
   identity                   = try(each.value.identity, null)
   connection_strings         = try(each.value.connection_strings, {})
   storage_account_name       = try(data.azurerm_storage_account.function_apps[each.key].name, null)
