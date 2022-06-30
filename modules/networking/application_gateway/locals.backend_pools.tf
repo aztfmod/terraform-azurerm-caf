@@ -35,6 +35,6 @@ locals {
         ]
       ), null)
       ip_addresses = try(value.backend_pool.ip_addresses, null)
-    }
+    } if try(value.type, null) != "redirect"
   }
 }
