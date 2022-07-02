@@ -32,6 +32,10 @@ resource "azurerm_virtual_network" "vnet" {
       enable = true
     }
   }
+
+  lifecycle {
+    ignore_changes = [name]
+  }
 }
 
 module "special_subnets" {
