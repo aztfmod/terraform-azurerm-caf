@@ -23,18 +23,17 @@ module "sentinel_watchlists" {
   default_duration           = try(each.value.default_duration, null)
   description                = try(each.value.description, null)
   labels                     = try(each.value.labels, null)
+  # item_search_key            = try(each.value.item_search_key, null) #azurerm 3.x
 }
 
-# Stashing for later use as not implemented in azurerm 2.88.1
+module "sentinel_watchlist_items" {
+  source   = "./modules/security/sentinel/watchlist_item"
+  for_each = try(local.security.sentinel_watchlist_items, {})
 
-# module "sentinel_watchlist_items" {
-#   source   = "./modules/security/sentinel/watchlist_item"
-#   for_each = try(local.security.sentinel_watchlist_items, {})
-
-#   name         = try(each.value.name, null)
-#   watchlist_id = local.combined_objects_sentinel_watchlists[try(each.value.sentinel_watchlist.lz_key, local.client_config.landingzone_key)][each.value.sentinel_watchlist.key].id
-#   properties   = each.value.properties
-# }
+  name         = try(each.value.name, null)
+  watchlist_id = local.combined_objects_sentinel_watchlists[try(each.value.sentinel_watchlist.lz_key, local.client_config.landingzone_key)][each.value.sentinel_watchlist.key].id
+  properties   = each.value.properties
+}
 
 module "sentinel_ar_fusions" {
   source   = "./modules/security/sentinel/ar_fusion"

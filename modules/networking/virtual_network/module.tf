@@ -32,6 +32,10 @@ resource "azurerm_virtual_network" "vnet" {
       enable = true
     }
   }
+
+  lifecycle {
+    ignore_changes = [name]
+  }
 }
 
 module "special_subnets" {
@@ -116,23 +120,23 @@ locals {
   dns_servers_process = can(var.settings.vnet.dns_servers_keys) == false ? [] : concat(
     [
       for obj in try(var.settings.vnet.dns_servers_keys, {}) : #o.ip
-      concat(
+      coalesce(
         try(var.remote_dns[obj.resource_type][obj.lz_key][obj.key].virtual_hub[obj.interface_index].private_ip_address, null),
         try(var.remote_dns[obj.resource_type][obj.lz_key][obj.key].virtual_hub.0.private_ip_address, null),
         try(var.remote_dns[obj.resource_type][obj.lz_key][obj.key].ip_configuration[obj.interface_index].private_ip_address, null),
         try(var.remote_dns[obj.resource_type][obj.lz_key][obj.key].ip_configuration.0.private_ip_address, null)
       )
-      if try(obj.resource_type, null) == "azurerm_firewall"
+      if contains(["azurerm_firewall", "azurerm_firewalls"], obj.resource_type)
     ],
     [
       for obj in try(var.settings.vnet.dns_servers_keys, {}) :
-        var.remote_dns.lb[obj.lz_key][obj.key].private_ip_addresses
-      if try(obj.resource_type, null) == "lb"
+      var.remote_dns.lb[obj.lz_key][obj.key].private_ip_addresses
+      if contains(["lb"], obj.resource_type)
     ],
     [
       for obj in try(var.settings.vnet.dns_servers_keys, {}) :
-        var.remote_dns.virtual_machines[obj.lz_key][obj.key].ip_configuration[obj.nic_key].private_ip_addresses
-      if try(obj.resource_type, null) == "virtual_machines"
+      var.remote_dns.virtual_machines[obj.lz_key][obj.key].ip_configuration[obj.nic_key].private_ip_addresses
+      if contains(["virtual_machines", "virtual_machine"], obj.resource_type)
     ]
   )
 }

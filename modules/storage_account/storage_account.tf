@@ -18,21 +18,23 @@ resource "azurecaf_name" "stg" {
 # Ref : https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/resources/storage_account
 
 resource "azurerm_storage_account" "stg" {
-  name                      = azurecaf_name.stg.result
-  resource_group_name       = var.resource_group_name
-  location                  = var.location
-  account_tier              = try(var.storage_account.account_tier, "Standard")
-  account_replication_type  = try(var.storage_account.account_replication_type, "LRS")
-  account_kind              = try(var.storage_account.account_kind, "StorageV2")
-  access_tier               = try(var.storage_account.access_tier, "Hot")
-  enable_https_traffic_only = try(var.storage_account.nfsv3_enabled, false) ? false : true
-  #if using nfsv3_enabled, then https must be disabled
-  min_tls_version          = try(var.storage_account.min_tls_version, "TLS1_2")
-  allow_blob_public_access = try(var.storage_account.allow_blob_public_access, false)
-  is_hns_enabled           = try(var.storage_account.is_hns_enabled, false)
-  nfsv3_enabled            = try(var.storage_account.nfsv3_enabled, false)
-  large_file_share_enabled = try(var.storage_account.large_file_share_enabled, null)
-  tags                     = merge(var.base_tags, local.tags)
+  access_tier                       = try(var.storage_account.access_tier, "Hot")
+  account_kind                      = try(var.storage_account.account_kind, "StorageV2")
+  account_replication_type          = try(var.storage_account.account_replication_type, "LRS")
+  account_tier                      = try(var.storage_account.account_tier, "Standard")
+  allow_blob_public_access          = try(var.storage_account.allow_blob_public_access, false)
+  enable_https_traffic_only         = try(var.storage_account.enable_https_traffic_only, true)
+  infrastructure_encryption_enabled = try(var.storage_account.infrastructure_encryption_enabled, null)
+  is_hns_enabled                    = try(var.storage_account.is_hns_enabled, false)
+  large_file_share_enabled          = try(var.storage_account.large_file_share_enabled, null)
+  location                          = var.location
+  min_tls_version                   = try(var.storage_account.min_tls_version, "TLS1_2")
+  name                              = azurecaf_name.stg.result
+  nfsv3_enabled                     = try(var.storage_account.nfsv3_enabled, false)
+  queue_encryption_key_type         = try(var.storage_account.queue_encryption_key_type, null)
+  resource_group_name               = var.resource_group_name
+  table_encryption_key_type         = try(var.storage_account.table_encryption_key_type, null)
+  tags                              = merge(var.base_tags, local.tags)
 
 
   dynamic "custom_domain" {
@@ -49,6 +51,15 @@ resource "azurerm_storage_account" "stg" {
 
     content {
       type = "SystemAssigned"
+    }
+  }
+
+  dynamic "identity" {
+    for_each = can(var.storage_account.identity) ? [var.storage_account.identity] : []
+
+    content {
+      type         = identity.value.type
+      identity_ids = local.managed_identities
     }
   }
 

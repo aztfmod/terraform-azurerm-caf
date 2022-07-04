@@ -40,6 +40,18 @@ virtual_machines = {
     # Option to use when BYOI (Bring your Own Interface)
     # networking_interface_ids = ["/subscriptions/<subid>/resourceGroups/<rg-name>/providers/Microsoft.Network/networkInterfaces/<nicID>"]
 
+    shutdown_schedule = {
+      enabled               = true
+      daily_recurrence_time = "0100"
+      timezone              = "Singapore Standard Time"
+      notification_settings = {
+        enabled         = true
+        time_in_minutes = "60"
+        webhook_url     = "https://sample-webhook-url.example.com"
+        # email           = ""
+      }
+    }
+
     networking_interfaces = {
       nic0 = {
         # Value of the keys from networking.tfvars

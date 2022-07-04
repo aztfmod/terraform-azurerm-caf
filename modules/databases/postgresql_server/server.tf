@@ -49,7 +49,7 @@ resource "random_password" "postgresql_admin" {
   length           = 128
   special          = true
   upper            = true
-  number           = true
+  numeric          = true
   override_special = "$#%"
 }
 

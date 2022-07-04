@@ -53,6 +53,7 @@ resource "azurerm_windows_virtual_machine" "vm" {
   availability_set_id          = can(each.value.availability_set_key) || can(each.value.availability_set.key) ? var.availability_sets[try(var.client_config.landingzone_key, each.value.availability_set.lz_key)][try(each.value.availability_set_key, each.value.availability_set.key)].id : try(each.value.availability_set.id, each.value.availability_set_id, null)
   computer_name                = azurecaf_name.windows_computer_name[each.key].result
   enable_automatic_updates     = try(each.value.enable_automatic_updates, null)
+  encryption_at_host_enabled   = try(each.value.encryption_at_host_enabled, null)
   eviction_policy              = try(each.value.eviction_policy, null)
   license_type                 = try(each.value.license_type, null)
   location                     = var.location
@@ -196,7 +197,7 @@ resource "random_password" "admin" {
   min_upper        = 2
   min_lower        = 2
   min_special      = 2
-  number           = true
+  numeric          = true
   special          = true
   override_special = "!@#$%&"
 }

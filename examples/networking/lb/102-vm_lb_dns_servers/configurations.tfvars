@@ -38,19 +38,19 @@ vnets = {
     vnet = {
       name          = "vnet-test-dns"
       address_space = ["10.2.0.0/16"]
-      dns_servers_keys = {
-        dc_ilb = {
-          resource_type = "lb"
-          # lz_key        = "management"  # must be in a remote deployment, uncomment to reference the load balancer
-          key           = "lb1"
-        }
-        # vm1 = {
-        #   resource_type = "virtual_machines"  # to reference a specific nic to a VM
-        #   lz_key        = "management"
-        #   key           = "vm1"
-        #   nic_key       = "nic0"
-        # }
-      }
+      #dns_servers_keys = {
+      # dc_ilb = {
+      #  resource_type = "lb"
+      # lz_key        = "management"  # must be in a remote deployment, uncomment to reference the load balancer
+      # key = "lb1"
+      #}
+      # vm1 = {
+      #   resource_type = "virtual_machines"  # to reference a specific nic to a VM
+      #   lz_key        = "management"
+      #   key           = "vm1"
+      #   nic_key       = "nic0"
+      # }
+      # }
     }
     specialsubnets = {}
     subnets = {
