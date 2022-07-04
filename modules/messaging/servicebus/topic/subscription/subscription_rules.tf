@@ -7,10 +7,10 @@ module "correlation_filter_rules" {
   settings        = each.value
 
   remote_objects = {
-    servicebus_subscription_name = azurerm_servicebus_subscription.subscription.name
-    servicebus_topic_name        = var.remote_objects.servicebus_topic_name
-    servicebus_namespace_name    = var.remote_objects.servicebus_namespace_name
-    resource_group_name          = var.remote_objects.resource_group_name
+    servicebus_subscription_id = azurerm_servicebus_subscription.subscription.id
+    # servicebus_topic_name      = var.remote_objects.servicebus_topic_name
+    # servicebus_namespace_id    = var.remote_objects.servicebus_namespace_id
+    # resource_group_name        = var.remote_objects.resource_group_name
   }
 }
 
@@ -23,9 +23,9 @@ module "sql_filter_rules" {
   settings        = each.value
 
   remote_objects = {
-    servicebus_subscription_name = azurerm_servicebus_subscription.subscription.name
-    servicebus_topic_name        = var.remote_objects.servicebus_topic_name
-    servicebus_namespace_name    = var.remote_objects.servicebus_namespace_name
-    resource_group_name          = var.remote_objects.resource_group_name
+    servicebus_subscription_id = azurerm_servicebus_subscription.subscription.id
+    # servicebus_topic_name      = var.remote_objects.servicebus_topic_name
+    # servicebus_namespace_id    = var.remote_objects.servicebus_namespace_id
+    # resource_group_name        = var.remote_objects.resource_group_name
   }
 }

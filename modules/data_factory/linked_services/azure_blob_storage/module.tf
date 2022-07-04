@@ -11,7 +11,7 @@ resource "azurecaf_name" "lsabs" {
 resource "azurerm_data_factory_linked_service_azure_blob_storage" "linked_service_azure_blob_storage" {
   name                     = azurecaf_name.lsabs.result
   resource_group_name      = var.resource_group_name
-  data_factory_name        = var.data_factory_name
+  data_factory_id          = var.data_factory_id
   description              = try(var.settings.description, null)
   integration_runtime_name = try(var.settings.integration_runtime_name, var.integration_runtime_name)
   annotations              = try(var.settings.annotations, null)

@@ -232,7 +232,7 @@ resource "random_password" "sql_admin_password" {
   length           = 100
   special          = true
   upper            = true
-  number           = true
+  numeric          = true
   override_special = "$#%"
 }
 
@@ -258,18 +258,16 @@ resource "azurerm_key_vault_secret" "sql_admin_password" {
 }
 
 resource "random_password" "encryption_password" {
-  for_each = try(var.settings.virtual_machine_settings, {})
   # Encryption password must be generated on first apply thus condition is removed to ensure creation first.
-
-  # for_each = {
-  #   for key, value in try(var.settings.virtual_machine_settings, {}) : key => value
-  #   if try(value.mssql_settings.auto_backup.encryption_password, null) != null && try(value.mssql_settings.auto_backup.encryption_password.encryption_password_key, null) == null
-  # }
+  for_each = {
+    for key, value in try(var.settings.virtual_machine_settings, {}) : key => value
+    if try(value.mssql_settings.auto_backup.encryption_password, null) != null && try(value.mssql_settings.auto_backup.encryption_password.encryption_password_key, null) == null && try(value.mssql_settings, null) != null
+  }
 
   length           = 100
   special          = true
   upper            = true
-  number           = true
+  numeric          = true
   override_special = "$#%"
 }
 
