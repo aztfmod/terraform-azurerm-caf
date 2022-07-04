@@ -987,4 +987,34 @@ variable "traffic_manager_nested_endpoint" {
 variable "traffic_manager_profile" {
   default = {}
 }
-
+variable "iot_security_solution" {
+  default = {}
+}
+variable "iot_security_device_group" {
+  default = {}
+}
+variable "iot_central_application" {
+  default = {}
+}
+variable "iot_hub" {
+  default = {}
+}
+variable "iot_hub_dps" {
+  default = {}
+}
+variable "iot_hub_shared_access_policy" {
+  default = {}
+}
+variable "iot_dps_certificate" {
+  default = {}
+}
+variable "iot_dps_shared_access_policy" {
+  default = {}
+}
+variable "iot_hub_consumer_groups" {
+  default = {}
+} 
+variable "iot_hub_certificate" {
+  default = {}
+} 
+ 
