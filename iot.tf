@@ -38,24 +38,23 @@ output "iot_hub_consumer_groups" {
   value = module.iot_hub_consumer_groups
 }
 
-# requires azurerm provider >= 2.97.0
-# module "iot_hub_certificate" {
-#   source   = "./modules/iot/iot_hub/certificate"
-#   for_each = try(local.iot.iot_hub_certificate, {})
+module "iot_hub_certificate" {
+  source   = "./modules/iot/iot_hub/certificate"
+  for_each = try(local.iot.iot_hub_certificate, {})
 
-#   global_settings     = local.global_settings
-#   settings            = each.value
-#   iothub_name         = module.iot_hub[each.value.iot_hub_key].id
-#   resource_group_name = can(each.value.resource_group.name) || can(each.value.resource_group_name) ? try(each.value.resource_group.name, each.value.resource_group_name) : local.combined_objects_resource_groups[try(each.value.resource_group.lz_key, local.client_config.landingzone_key)][try(each.value.resource_group_key, each.value.resource_group.key)].name
+  global_settings     = local.global_settings
+  settings            = each.value
+  iothub_name         = module.iot_hub[each.value.iot_hub_key].id
+  resource_group_name = can(each.value.resource_group.name) || can(each.value.resource_group_name) ? try(each.value.resource_group.name, each.value.resource_group_name) : local.combined_objects_resource_groups[try(each.value.resource_group.lz_key, local.client_config.landingzone_key)][try(each.value.resource_group_key, each.value.resource_group.key)].name
   
-#   depends_on = [
-#     module.iot_hub
-#   ]
-# }
+  depends_on = [
+    module.iot_hub
+  ]
+}
 
-# output "iot_hub_certificate" {
-#   value = module.iot_hub_certificate
-# }
+output "iot_hub_certificate" {
+  value = module.iot_hub_certificate
+}
 
 module "iot_hub_dps" {
   source   = "./modules/iot/iot_hub_dps"

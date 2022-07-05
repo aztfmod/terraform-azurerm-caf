@@ -85,6 +85,7 @@ locals {
   combined_objects_iot_security_device_group                      = merge(tomap({ (local.client_config.landingzone_key) = module.iot_security_device_group }), try(var.remote_objects.iot_security_device_group, {}))
   combined_objects_iot_security_solution                          = merge(tomap({ (local.client_config.landingzone_key) = module.iot_security_solution }), try(var.remote_objects.iot_security_solution, {}))
   combined_objects_iot_hub                                        = merge(tomap({ (local.client_config.landingzone_key) = module.iot_hub }), try(var.remote_objects.iot_hub, {}))
+  combined_objects_iot_hub_certificate                            = merge(tomap({ (local.client_config.landingzone_key) = module.iot_hub_certificate }), try(var.remote_objects.iot_hub_certificate, {}))
   combined_objects_iot_hub_dps                                    = merge(tomap({ (local.client_config.landingzone_key) = module.iot_hub_dps }), try(var.remote_objects.iot_hub_dps, {}))
   combined_objects_iot_hub_consumer_groups                        = merge(tomap({ (local.client_config.landingzone_key) = module.iot_hub_consumer_groups }), try(var.remote_objects.iot_hub_consumer_groups, {}))
   combined_objects_iot_dps_certificate                            = merge(tomap({ (local.client_config.landingzone_key) = module.iot_dps_certificate }), try(var.remote_objects.iot_dps_certificate, {}))

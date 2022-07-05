@@ -24,12 +24,11 @@ iot_hub = {
   }
 }
 
-# requires azurerm provider >= 2.97.0
-# iot_hub_certificate = {
-#   csg1 = {
-#     name                = "ioth_consumer_group_1"
-#     iot_hub_key         = "iothub1"
-#     is_verified         = true
-#     certificate_content = "./path/to/cert"
-#   }
-# }
+iot_hub_certificate = {
+  csg1 = {
+    name                = "ioth_consumer_group_1"
+    iot_hub_key         = "iothub1"
+    is_verified         = true
+    certificate_content = "./path/to/cert"
+  }
+}
