@@ -1024,3 +1024,6 @@ variable "iot_hub_certificate" {
   default = {}
 } 
  
+variable "static_sites" {
+  default = {}
+}
