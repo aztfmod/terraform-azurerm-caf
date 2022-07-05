@@ -70,6 +70,7 @@ locals {
     iot_security_device_group                      = try(local.combined_objects_iot_security_device_group, null)
     iot_central_application                        = try(local.combined_objects_iot_central_application, null)
     iot_hub                                        = try(local.combined_objects_iot_hub, null)
+    iot_hub_certificate                            = try(local.combined_objects_iot_hub_certificate, null)
     iot_hub_dps                                    = try(local.combined_objects_iot_hub_dps, null) 
     iot_hub_shared_access_policy                   = try(local.combined_objects_iot_hub_shared_access_policy, null)
     iot_dps_certificate                            = try(local.combined_objects_iot_dps_certificate, null)
