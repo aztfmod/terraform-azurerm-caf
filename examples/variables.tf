@@ -987,4 +987,6 @@ variable "traffic_manager_nested_endpoint" {
 variable "traffic_manager_profile" {
   default = {}
 }
-
+variable "resource_provider_registration" {
+  default = {}
+}
