@@ -52,6 +52,10 @@ azuread_service_principals = {
       key = "test_client"
     }
     app_role_assignment_required = true
+    tags = [
+      "HideApp",
+      "WindowsAzureActiveDirectoryIntegratedApp"
+    ]
   }
 }
 
