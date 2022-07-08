@@ -76,10 +76,6 @@ aks_clusters = {
     node_resource_group_name = "aks-nodes-re1"
 
     addon_profile = {
-      oms_agent = {
-        enabled           = true
-        log_analytics_key = "central_logs_region1"
-      }
       azure_keyvault_secrets_provider = {
         secret_rotation_enabled  = true
         secret_rotation_interval = "2m"
