@@ -1,9 +1,12 @@
-resource "azurerm_resource_provider_registration" "default" {
+resource "azurerm_resource_provider_registration" "features" {
   for_each = var.resource_provider_registration
   name     = each.value.name
 
-  feature {
-    name       = each.value.feature_name
-    registered = each.value.registered
+  dynamic "feature" {
+    for_each = try(each.value.features, {}) == "features" ? [each.value.features] : []
+    content {
+      name       = each.key
+      registered = try(each.value, false)
+    }
   }
 }
