@@ -13,7 +13,8 @@ resource_groups = {
 }
 kusto_clusters = {
   kc1 = {
-    name = "kustocluster"
+    name              = "kustocluster"
+    auto_stop_enabled = false
     resource_group = {
       key = "rg1"
       #lz_key = ""
