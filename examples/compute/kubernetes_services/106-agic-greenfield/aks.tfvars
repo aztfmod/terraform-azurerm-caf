@@ -56,8 +56,8 @@ aks_clusters = {
         gateway_name = "agw1_az1"
         vnet = {
           # lz_key = ""
-          key          = "spoke_aks_re1"
-          subnet_key   = "application_gateway"
+          key        = "spoke_aks_re1"
+          subnet_key = "application_gateway"
         }
       }
     }
