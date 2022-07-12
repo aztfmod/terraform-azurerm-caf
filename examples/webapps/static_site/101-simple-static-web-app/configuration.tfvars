@@ -14,9 +14,9 @@ resource_groups = {
 
 static_sites = {
   s1 = {
-    name                 = "staticsite"
-    resource_group_key   = "rg1"
-    region               = "region1"
+    name               = "staticsite"
+    resource_group_key = "rg1"
+    region             = "region1"
 
     sku_tier = "Standard"
     sku_size = "Standard"
