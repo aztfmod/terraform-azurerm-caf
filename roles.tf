@@ -79,6 +79,7 @@ locals {
     data_factory                               = local.combined_objects_data_factory
     databricks_workspaces                      = local.combined_objects_databricks_workspaces
     dns_zones                                  = local.combined_objects_dns_zones
+    function_apps                              = local.combined_objects_function_apps
     event_hub_namespaces                       = local.combined_objects_event_hub_namespaces
     iot_hub                                    = local.combined_objects_iot_hub
     iot_hub_dps                                = local.combined_objects_iot_hub_dps
