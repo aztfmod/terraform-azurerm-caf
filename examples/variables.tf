@@ -990,3 +990,6 @@ variable "traffic_manager_profile" {
 variable "resource_provider_registration" {
   default = {}
 }
+variable "static_sites" {
+  default = {}
+}
