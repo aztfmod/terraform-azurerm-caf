@@ -13,9 +13,9 @@ resource "azurerm_static_site" "static_site" {
   location            = var.location
   resource_group_name = var.resource_group_name
   tags                = local.tags
-  
-  sku_size            = var.sku_size
-  sku_tier            = var.sku_tier
+
+  sku_size = var.sku_size
+  sku_tier = var.sku_tier
 
   dynamic "identity" {
     for_each = try(var.identity, null) == null ? [] : [1]
