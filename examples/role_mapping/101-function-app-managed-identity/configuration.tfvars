@@ -8,6 +8,7 @@ resource_groups = {
     name   = "example-rg"
     region = "region1"
   }
+}
 
 storage_accounts = {
   stg = {
@@ -21,7 +22,7 @@ storage_accounts = {
 
 app_service_plans = {
   asp = {
-    name               = "asp-example"  
+    name               = "asp-example"
     resource_group_key = "rg"
     region             = "region1"
     kind               = "functionapp"
@@ -37,7 +38,7 @@ function_apps = {
   app = {
     name               = "app-example"
     resource_group_key = "rg"
-    
+
     region               = "region1"
     app_service_plan_key = "asp"
     storage_account_key  = "stg"
@@ -46,7 +47,7 @@ function_apps = {
     }
 
     identity = {
-      type                  = "SystemAssigned"
+      type = "SystemAssigned"
     }
   }
 }
@@ -58,7 +59,7 @@ keyvaults = {
     resource_group_key = "rg"
 
     enable_rbac_authorization = true
-    
+
     creation_policies = {
       logged_in_user = {
         certificate_permissions = ["Get", "List", "Update", "Create", "Import", "Delete", "Purge", "Recover", "Getissuers", "Setissuers", "Listissuers", "Deleteissuers", "Manageissuers", "Restore", "Managecontacts"]
@@ -67,9 +68,9 @@ keyvaults = {
     }
   }
 }
-  
-  
-  
+
+
+
 role_mapping = {
   built_in_role_mapping = {
 
@@ -77,7 +78,7 @@ role_mapping = {
       kv = {
         "Key Vault Certificates Officer" = {
           function_apps = {
-            keys   = ["app"]
+            keys = ["app"]
           }
         }
       }
