@@ -7,7 +7,7 @@ resource "azuread_group" "group" {
   // Note: This module is effected by these bugs:
   // https://github.com/hashicorp/terraform-provider-azuread/issues/464
   // https://github.com/microsoftgraph/msgraph-metadata/issues/92
-  // tldr: If your group is initaly owned by a service principal and you add a user to the owners, you are not able to remove the user from the owners again. At least one user has to stay owner.
+  // tldr: If your group is initially owned by a service principal and you add a user to the owners, you are not able to remove the user from the owners again. At least one user has to stay owner.
 
 }
 data "azuread_user" "main" {
