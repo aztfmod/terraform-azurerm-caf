@@ -8,6 +8,7 @@ module "front_doors" {
   client_config                 = local.client_config
   diagnostics                   = local.combined_diagnostics
   front_door_waf_policies       = local.combined_objects_front_door_waf_policies
+  keyvaults                     = local.combined_objects_keyvaults
   global_settings               = local.global_settings
   keyvault_id                   = can(each.value.keyvault_id) || can(each.value.keyvault_key) == false ? try(each.value.keyvault_id, null) : local.combined_objects_keyvaults[try(each.value.lz_key, local.client_config.landingzone_key)][each.value.keyvault_key].id
   keyvault_certificate_requests = local.combined_objects_keyvault_certificate_requests
@@ -74,22 +75,4 @@ module "frontdoor_rules_engine" {
 }
 output "frontdoor_rules_engine" {
   value = module.frontdoor_rules_engine
-}
-
-module "frontdoor_custom_https_configuration" {
-  source   = "./modules/networking/frontdoor_custom_https_configuration"
-  for_each = local.networking.frontdoor_custom_https_configuration
-
-  global_settings = local.global_settings
-  client_config   = local.client_config
-  settings        = each.value
-
-  remote_objects = {
-    frontdoor      = local.combined_objects_front_door
-    keyvault       = local.combined_objects_keyvaults
-    resource_group = local.combined_objects_resource_groups
-  }
-}
-output "frontdoor_custom_https_configuration" {
-  value = module.frontdoor_custom_https_configuration
 }
