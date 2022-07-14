@@ -112,11 +112,11 @@ front_doors = {
           # }
 
           #### if you uploaded certificate manually in keyvault created by CAF
-            # keyvault = {
-            #   key = "cert_secrets"
-            #   lz_key = ""
-            #   secret_name = "cert_name"
-            # }
+          # keyvault = {
+          #   key = "cert_secrets"
+          #   lz_key = ""
+          #   secret_name = "cert_name"
+          # }
         }
         front_door_waf_policy = {
           key = "wp1"
