@@ -16,7 +16,7 @@ module "caf" {
 |frontend_port| The port for the external endpoint. Port numbers for each Rule must be unique within the Load Balancer. Possible values range between 1 and 65534, inclusive.||True|
 |backend_port| The port used for internal connections on the endpoint. Possible values range between 1 and 65535, inclusive.||True|
 |idle_timeout_in_minutes| Specifies the idle timeout in minutes for TCP connections. Valid values are between `4` and `30` minutes. Defaults to `4` minutes.||False|
-|enable_floating_ip| Are the Floating IPs enabled for this Load Balancer Rule? A "floating” IP is reassigned to a secondary server in case the primary server fails. Required to configure a SQL AlwaysOn Availability Group. Defaults to `false`.||False|
+|enable_floating_ip| Are the Floating IPs enabled for this Load Balancer Rule? A "floatingï¿½ IP is reassigned to a secondary server in case the primary server fails. Required to configure a SQL AlwaysOn Availability Group. Defaults to `false`.||False|
 |enable_tcp_reset| Is TCP Reset enabled for this Load Balancer Rule? Defaults to `false`.||False|
 
 ## Blocks

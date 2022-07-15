@@ -3,10 +3,10 @@
   "contentVersion": "1.0.0.0",
   "parameters": {
     "serverName": {
-      "type": "string"
+    "type": "string"
     },
     "dbName": {
-      "type": "string"
+    "type": "string"
     },
     "weeklyRetention": {
         "type": "string",

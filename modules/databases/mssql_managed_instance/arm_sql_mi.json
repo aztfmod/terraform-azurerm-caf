@@ -199,48 +199,48 @@
     }
   },
   "resources": [
-      {
-          "type": "Microsoft.Sql/managedInstances",
-          "name": "[parameters('managedInstanceName')]",
-          "apiVersion": "2021-11-01-preview",
-          "location": "[parameters('location')]",
-          "sku": {
-              "name": "[parameters('skuName')]",
-              "tier": "[parameters('skuEdition')]"
-          },
-          "tags": "[parameters('managedInstanceTags')]",
-          "identity": {
-              "type": "SystemAssigned"
-          },
-          "properties": {
-              "administratorLogin": "[parameters('administratorLogin')]",
-              "administratorLoginPassword": "[parameters('administratorLoginPassword')]",
-              "backupStorageRedundancy": "[parameters('storageAccountType')]",
-              "collation": "[parameters('collation')]",
-              "dnsZonePartner": "[if(equals(parameters('dnsZonePartner'), ''), json('null'), parameters('dnsZonePartner'))]",
-              "hardwareFamily": "[parameters('hardwareFamily')]",
-              "licenseType": "[parameters('licenseType')]",
-              "minimalTlsVersion": "[parameters('minimalTlsVersion')]",
-              "proxyOverride": "[parameters('proxyOverride')]",
-              "publicDataEndpointEnabled": "[parameters('publicDataEndpointEnabled')]",
-              "requestedBackupStorageRedundancy": "[parameters('requestedBackupStorageRedundancy')]",
-              "storageAccountType": "[parameters('storageAccountType')]",
-              "storageSizeInGB": "[parameters('storageSizeInGB')]",
-              "subnetId": "[parameters('subnetId')]",
-              "timezoneId": "[parameters('timezoneId')]",
-              "vCores": "[parameters('vCores')]",
-              "zoneRedundant": "[parameters('zoneRedundant')]"
-          }
-      }
+    {
+        "type": "Microsoft.Sql/managedInstances",
+        "name": "[parameters('managedInstanceName')]",
+        "apiVersion": "2021-11-01-preview",
+        "location": "[parameters('location')]",
+        "sku": {
+            "name": "[parameters('skuName')]",
+            "tier": "[parameters('skuEdition')]"
+        },
+        "tags": "[parameters('managedInstanceTags')]",
+        "identity": {
+            "type": "SystemAssigned"
+        },
+        "properties": {
+            "administratorLogin": "[parameters('administratorLogin')]",
+            "administratorLoginPassword": "[parameters('administratorLoginPassword')]",
+            "backupStorageRedundancy": "[parameters('storageAccountType')]",
+            "collation": "[parameters('collation')]",
+            "dnsZonePartner": "[if(equals(parameters('dnsZonePartner'), ''), json('null'), parameters('dnsZonePartner'))]",
+            "hardwareFamily": "[parameters('hardwareFamily')]",
+            "licenseType": "[parameters('licenseType')]",
+            "minimalTlsVersion": "[parameters('minimalTlsVersion')]",
+            "proxyOverride": "[parameters('proxyOverride')]",
+            "publicDataEndpointEnabled": "[parameters('publicDataEndpointEnabled')]",
+            "requestedBackupStorageRedundancy": "[parameters('requestedBackupStorageRedundancy')]",
+            "storageAccountType": "[parameters('storageAccountType')]",
+            "storageSizeInGB": "[parameters('storageSizeInGB')]",
+            "subnetId": "[parameters('subnetId')]",
+            "timezoneId": "[parameters('timezoneId')]",
+            "vCores": "[parameters('vCores')]",
+            "zoneRedundant": "[parameters('zoneRedundant')]"
+        }
+    }
   ],
   "outputs": {
-      "id": {
-          "type": "string",
-          "value": "[resourceId(parameters('resourceGroupName'), 'Microsoft.Sql/managedInstances', parameters('managedInstanceName'))]"
-      },
-      "objectId": {
+    "id": {
+        "type": "string",
+        "value": "[resourceId(parameters('resourceGroupName'), 'Microsoft.Sql/managedInstances', parameters('managedInstanceName'))]"
+    },
+    "objectId": {
         "type": "string",
         "value": "[reference(parameters('managedInstanceName'), '2021-11-01-preview', 'Full').identity.principalId]"
-      }
+    }
   }
 }

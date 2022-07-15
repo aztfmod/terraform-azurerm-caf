@@ -3,10 +3,10 @@
   "contentVersion": "1.0.0.0",
   "parameters": {
     "serverName": {
-      "type": "string"
+    "type": "string"
     },
     "dbName": {
-      "type": "string"
+    "type": "string"
     },
     "location": {
         "type": "string",
@@ -67,18 +67,18 @@
   },
   "resources": [
     {
-      "name": "[concat(parameters('serverName'), '/', parameters('dbName'))]",
-      "type": "Microsoft.Sql/managedInstances/databases",
-      "apiVersion": "2020-02-02-preview",
-      "location": "[parameters('location')]",
-      "tags": "[parameters('tags')]",
-      "properties": {
+    "name": "[concat(parameters('serverName'), '/', parameters('dbName'))]",
+    "type": "Microsoft.Sql/managedInstances/databases",
+    "apiVersion": "2020-02-02-preview",
+    "location": "[parameters('location')]",
+    "tags": "[parameters('tags')]",
+    "properties": {
         "collation": "[parameters('collation')]",
         "createMode": "[parameters('createMode')]",
         "sourceDatabaseId": "[if(equals(parameters('sourceDatabaseId'), ''), json('null'), parameters('sourceDatabaseId'))]",
         "longTermRetentionBackupResourceId": "[if(equals(parameters('longTermRetentionBackupResourceId'), ''), json('null'), parameters('longTermRetentionBackupResourceId'))]",
         "restorePointInTime": "[if(equals(parameters('restorePointInTime'), ''), json('null'), parameters('restorePointInTime'))]"
-      }
+    }
     },
     {
         "type": "Microsoft.Sql/managedInstances/databases/backupShortTermRetentionPolicies",
@@ -93,9 +93,9 @@
     }
   ],
   "outputs": {
-      "id": {
-          "type": "string",
-          "value": "[resourceId('Microsoft.Sql/managedInstances/databases', parameters('serverName'), parameters('dbName'))]"
-      }
+    "id": {
+        "type": "string",
+        "value": "[resourceId('Microsoft.Sql/managedInstances/databases', parameters('serverName'), parameters('dbName'))]"
+    }
   }
 }

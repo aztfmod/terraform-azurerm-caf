@@ -27,7 +27,7 @@ public_ip_addresses = {
     zones                   = "Zone-Redundant"
     idle_timeout_in_minutes = "4"
     public_ip_prefix = {
-      # lz_key = 
+      # lz_key =
       key = "example_pipp1_re1"
     }
   }
@@ -43,7 +43,7 @@ public_ip_addresses = {
     zones                   = "Zone-Redundant"
     idle_timeout_in_minutes = "4"
     public_ip_prefix = {
-      # lz_key = 
+      # lz_key =
       key = "example_pipp1_re1"
     }
   }

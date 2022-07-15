@@ -44,7 +44,7 @@
     },
     "tags": {
       "type": "object"
-     },
+    },
     "adminUserName": {
       "type": "string",
       "metadata": {
