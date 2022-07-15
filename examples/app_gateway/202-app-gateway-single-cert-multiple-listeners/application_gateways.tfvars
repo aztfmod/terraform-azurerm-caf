@@ -57,7 +57,7 @@ application_gateways = {
     #        reference with keyvault_key or keyvault_id. Just ensure the appropriate
     #        role_assignment is provisioned for the AGW Managed Identity, and also the 
     #        Service Principal that the pipeline runs under.
-    manual_certificates = {
+    manual_certs_multiple_listeners = {
       wildcard_np_domain_com = {
         certificate_name = "wildcard-np-domain-com"
         keyvault_key     = "cert_kv"
