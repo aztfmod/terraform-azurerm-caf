@@ -1,6 +1,6 @@
 application_gateways = {
   agw_core = {
-    resource_group_key = "main"
+    resource_group_key = "core_services"
     name = "app-gateway"
 
     lz_key     = "connectivity_level3_dev"
