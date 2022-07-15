@@ -1,0 +1,103 @@
+application_gateway_applications = {
+  test_ssl_443 = {
+    application_gateway_key = "agw_core"
+    name                    = "testssl"
+
+    listeners = {
+      public_ssl = {
+        name                           = "testssl-443-public"
+        front_end_ip_configuration_key = "public"
+        front_end_port_key             = "443"
+        host_name                      = "testssl.np.domain.com"
+        request_routing_rule_key       = "default"
+        existing_certificate_key       = "wildcard_np_domain_com" # Set this to the key specified in application_gateways.tfvars
+      }
+    }
+
+    request_routing_rules = {
+      default = {
+        rule_type = "Basic"
+      }
+    }
+
+    backend_http_setting = {
+      port                                = 443
+      protocol                            = "Https"
+      pick_host_name_from_backend_address = true
+      probe_key                           = "google_com"
+    }
+
+    backend_pool = {
+      fqdns = [
+        "www.google.com"
+      ]
+    }
+
+    probes = {
+      google_com = {
+        name                = "probe-google-be-443"
+        protocol            = "Https"
+        path                = "/"
+        host                = "www.google.com"
+        interval            = 10
+        timeout             = 10
+        unhealthy_threshold = 3
+        match = {
+          status_code = ["200-399"]
+        }
+      }
+    }
+  }
+  
+  app2_ssl_443 = {
+    application_gateway_key = "agw_core"
+    name                    = "app2"
+
+    listeners = {
+      public_ssl = {
+        name                           = "app2-443-public"
+        front_end_ip_configuration_key = "public"
+        front_end_port_key             = "443"
+        host_name                      = "app2.np.domain.com"
+        request_routing_rule_key       = "default"
+        existing_certificate_key       = "wildcard_np_domain_com" # Set this to the key specified in application_gateways.tfvars
+      }
+    }
+
+    request_routing_rules = {
+      default = {
+        rule_type = "Basic"
+      }
+    }
+
+    backend_http_setting = {
+      port                                = 443
+      protocol                            = "Https"
+      pick_host_name_from_backend_address = true
+      probe_key                           = "bing_com"
+    }
+
+    backend_pool = {
+      fqdns = [
+        "www.bing.com"
+      ]
+    }
+
+    probes = {
+      bing_com = {
+        name                = "probe-bing-be-443"
+        protocol            = "Https"
+        path                = "/"
+        host                = "www.bing.com"
+        interval            = 10
+        timeout             = 10
+        unhealthy_threshold = 3
+        match = {
+          status_code = ["200-399"]
+        }
+      }
+    }
+  }
+  
+  
+}
