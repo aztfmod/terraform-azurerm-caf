@@ -23,6 +23,6 @@ variable "key_vault_id" {
 }
 
 variable "diagnostic_profiles" {
-  default = null
+  default = {}
 }
 variable "diagnostics" {}

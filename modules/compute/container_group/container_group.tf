@@ -122,7 +122,7 @@ resource "azurerm_container_group" "acg" {
       } //liveness_probe
 
       dynamic "volume" {
-        for_each = try(container.value.volume, null) == null ? [] : [1]
+        for_each = try(container.value.volume, [])
 
         content {
           name                 = volume.value.name
@@ -132,7 +132,7 @@ resource "azurerm_container_group" "acg" {
           storage_account_name = try(volume.value.storage_account_name, null)
           storage_account_key  = try(volume.value.storage_account_key, null)
           share_name           = try(volume.value.share_name, null)
-          secret               = try(volume.share.secret, null)
+          secret               = try(volume.value.secret, null)
 
           dynamic "git_repo" {
             for_each = try(volume.value.git_repo, null) == null ? [] : [1]
@@ -162,8 +162,8 @@ resource "azurerm_container_group" "acg" {
 
     content {
       nameservers    = var.settings.dns_config.nameservers
-      search_domains = var.settings.dns_config.search_domains
-      options        = var.settings.dns_config.options
+      search_domains = try(var.settings.dns_config.search_domains, null)
+      options        = try(var.settings.dns_config.options, null)
     }
   }
 

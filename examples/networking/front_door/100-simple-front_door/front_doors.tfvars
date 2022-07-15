@@ -1,8 +1,7 @@
 front_doors = {
   front_door1 = {
-    name                   = "sales-rg1"
-    resource_group_key     = "front_door"
-    certificate_name_check = false
+    name               = "sales-rg1"
+    resource_group_key = "front_door"
     # Keyvault key hosting the ssl certificates
     keyvault_key = "cert_secrets"
 
@@ -12,23 +11,9 @@ front_doors = {
         frontend_endpoint_keys = ["fe1"]
         accepted_protocols     = ["Http", "Https"]
         patterns_to_match      = ["/*"]
-        enabled                = true
         configuration          = "Forwarding"
         forwarding_configuration = {
-          backend_pool_name                     = "bing"
-          cache_enabled                         = false
-          cache_use_dynamic_compression         = false
-          cache_query_parameter_strip_directive = "StripAll"
-          custom_forwarding_path                = ""
-          forwarding_protocol                   = "MatchRequest"
-        }
-        redirect_configuration = {
-          custom_host         = ""
-          redirect_protocol   = "MatchRequest"
-          redirect_type       = "Found"
-          custom_fragment     = ""
-          custom_path         = ""
-          custom_query_string = ""
+          backend_pool_name = "bing"
         }
       }
     }
@@ -44,19 +29,13 @@ front_doors = {
 
     backend_pool_load_balancing = {
       lb1 = {
-        name                            = "exampleLoadBalancingSettings1"
-        sample_size                     = 4
-        successful_samples_required     = 2
-        additional_latency_milliseconds = 0
+        name = "exampleLoadBalancingSettings1"
       }
     }
 
     backend_pool_health_probe = {
       hp1 = {
-        name                = "exampleHealthProbeSetting1"
-        path                = "/"
-        protocol            = "Https"
-        interval_in_seconds = 120
+        name = "exampleHealthProbeSetting1"
       }
     }
 
@@ -67,34 +46,24 @@ front_doors = {
         health_probe_key   = "hp1"
         backend = {
           be1 = {
-            enabled     = true
             address     = "www.bing.com"
             host_header = "www.bing.com"
             http_port   = 80
             https_port  = 443
-            priority    = 1
-            weight      = 50
           },
           be2 = {
-            enabled     = true
             address     = "www.bing.co.uk"
             host_header = "www.bing.co.uk"
             http_port   = 80
             https_port  = 443
-            priority    = 1
-            weight      = 50
           }
         }
-
       }
     }
 
     frontend_endpoints = {
       fe1 = {
-        name = "exampleFrontendEndpoint1"
-        # host_name                         = "randomabcxyz-FrontDoor.azurefd.net" ?? not used in the code
-        session_affinity_enabled          = false
-        session_affinity_ttl_seconds      = 0
+        name                              = "exampleFrontendEndpoint1"
         custom_https_provisioning_enabled = false
         #Required if custom_https_provisioning_enabled is true
         custom_https_configuration = {
@@ -113,7 +82,7 @@ front_doors = {
         }
         front_door_waf_policy = {
           key = "wp1"
-          # lz_key                    = ""
+          # lz_key = ""
         }
       }
     }
@@ -126,6 +95,5 @@ front_doors = {
         destination_key  = "all_regions"
       }
     }
-
   }
 }

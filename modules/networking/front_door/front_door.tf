@@ -24,6 +24,7 @@ resource "azurerm_frontdoor" "frontdoor" {
       name               = routing_rule.value.name
       accepted_protocols = routing_rule.value.accepted_protocols
       patterns_to_match  = routing_rule.value.patterns_to_match
+      enabled            = try(routing_rule.value.enabled, null)
 
       frontend_endpoints = flatten(
         [
@@ -38,23 +39,23 @@ resource "azurerm_frontdoor" "frontdoor" {
 
         content {
           backend_pool_name                     = routing_rule.value.forwarding_configuration.backend_pool_name
-          cache_enabled                         = routing_rule.value.forwarding_configuration.cache_enabled
-          cache_use_dynamic_compression         = routing_rule.value.forwarding_configuration.cache_use_dynamic_compression #default: false
-          cache_query_parameter_strip_directive = routing_rule.value.forwarding_configuration.cache_query_parameter_strip_directive
-          custom_forwarding_path                = routing_rule.value.forwarding_configuration.custom_forwarding_path
-          forwarding_protocol                   = routing_rule.value.forwarding_configuration.forwarding_protocol
+          cache_enabled                         = try(routing_rule.value.forwarding_configuration.cache_enabled, null)
+          cache_use_dynamic_compression         = try(routing_rule.value.forwarding_configuration.cache_use_dynamic_compression, null)
+          cache_query_parameter_strip_directive = try(routing_rule.value.forwarding_configuration.cache_query_parameter_strip_directive, null)
+          custom_forwarding_path                = try(routing_rule.value.forwarding_configuration.custom_forwarding_path, null)
+          forwarding_protocol                   = try(routing_rule.value.forwarding_configuration.forwarding_protocol, null)
         }
       }
       dynamic "redirect_configuration" {
         for_each = lower(routing_rule.value.configuration) == "redirecting" ? [routing_rule.value.redirect_configuration] : []
 
         content {
-          custom_host         = routing_rule.value.redirect_configuration.custom_host
-          redirect_protocol   = routing_rule.value.redirect_configuration.redirect_protocol
+          custom_host         = try(routing_rule.value.redirect_configuration.custom_host, null)
+          redirect_protocol   = try(routing_rule.value.redirect_configuration.redirect_protocol, null)
           redirect_type       = routing_rule.value.redirect_configuration.redirect_type
-          custom_fragment     = routing_rule.value.redirect_configuration.custom_fragment
-          custom_path         = routing_rule.value.redirect_configuration.custom_path
-          custom_query_string = routing_rule.value.redirect_configuration.custom_query_string
+          custom_fragment     = try(routing_rule.value.redirect_configuration.custom_fragment, null)
+          custom_path         = try(routing_rule.value.redirect_configuration.custom_path, null)
+          custom_query_string = try(routing_rule.value.redirect_configuration.custom_query_string, null)
         }
       }
     }
@@ -70,9 +71,9 @@ resource "azurerm_frontdoor" "frontdoor" {
 
     content {
       name                            = backend_pool_load_balancing.value.name
-      sample_size                     = backend_pool_load_balancing.value.sample_size
-      successful_samples_required     = backend_pool_load_balancing.value.successful_samples_required
-      additional_latency_milliseconds = backend_pool_load_balancing.value.additional_latency_milliseconds
+      sample_size                     = try(backend_pool_load_balancing.value.sample_size, null)
+      successful_samples_required     = try(backend_pool_load_balancing.value.successful_samples_required, null)
+      additional_latency_milliseconds = try(backend_pool_load_balancing.value.additional_latency_milliseconds, null)
     }
   }
 
@@ -81,9 +82,10 @@ resource "azurerm_frontdoor" "frontdoor" {
 
     content {
       name                = backend_pool_health_probe.value.name
-      path                = backend_pool_health_probe.value.path
-      protocol            = backend_pool_health_probe.value.protocol
-      interval_in_seconds = backend_pool_health_probe.value.interval_in_seconds
+      enabled             = try(backend_pool_health_probe.value.enabled, null)
+      path                = try(backend_pool_health_probe.value.path, null)
+      protocol            = try(backend_pool_health_probe.value.protocol, null)
+      interval_in_seconds = try(backend_pool_health_probe.value.interval_in_seconds, null)
     }
   }
 
@@ -98,13 +100,13 @@ resource "azurerm_frontdoor" "frontdoor" {
       dynamic "backend" {
         for_each = backend_pool.value.backend
         content {
-          enabled     = backend.value.enabled
+          enabled     = try(backend.value.enabled, null)
           address     = backend.value.address
           host_header = backend.value.host_header
           http_port   = backend.value.http_port
           https_port  = backend.value.https_port
-          priority    = backend.value.priority
-          weight      = backend.value.weight
+          priority    = try(backend.value.priority, null)
+          weight      = try(backend.value.weight, null)
         }
       }
     }
@@ -116,8 +118,8 @@ resource "azurerm_frontdoor" "frontdoor" {
     content {
       name                                    = frontend_endpoint.value.name
       host_name                               = try(frontend_endpoint.value.host_name, format("%s.azurefd.net", azurecaf_name.frontdoor.result))
-      session_affinity_enabled                = frontend_endpoint.value.session_affinity_enabled
-      session_affinity_ttl_seconds            = frontend_endpoint.value.session_affinity_ttl_seconds
+      session_affinity_enabled                = try(frontend_endpoint.value.session_affinity_enabled, null)
+      session_affinity_ttl_seconds            = try(frontend_endpoint.value.session_affinity_ttl_seconds, null)
       web_application_firewall_policy_link_id = try(frontend_endpoint.value.front_door_waf_policy.key, null) == null ? null : var.front_door_waf_policies[try(frontend_endpoint.value.front_door_waf_policy.lz_key, var.client_config.landingzone_key)][frontend_endpoint.value.front_door_waf_policy.key].id
     }
   }
@@ -135,8 +137,8 @@ resource "azurerm_frontdoor_custom_https_configuration" "frontdoor" {
 
   custom_https_configuration {
     certificate_source                         = each.value.custom_https_configuration.certificate_source
-    azure_key_vault_certificate_vault_id       = try(each.value.custom_https_configuration.azure_key_vault_certificate_vault_id, null) == null ? try(var.keyvault_certificate_requests[var.client_config.landingzone_key][each.value.custom_https_configuration.certificate.key].keyvault_id, var.keyvault_certificate_requests[each.value.custom_https_configuration.certificate.lz_key][each.value.custom_https_configuration.certificate.key].keyvault_id) : each.value.custom_https_configuration.azure_key_vault_certificate_vault_id
-    azure_key_vault_certificate_secret_name    = try(each.value.custom_https_configuration.azure_key_vault_certificate_secret_name, null) == null ? try(var.keyvault_certificate_requests[var.client_config.landingzone_key][each.value.custom_https_configuration.certificate.key].name, var.keyvault_certificate_requests[each.value.custom_https_configuration.certificate.lz_key][each.value.custom_https_configuration.certificate.key].name) : each.value.custom_https_configuration.azure_key_vault_certificate_secret_name
-    azure_key_vault_certificate_secret_version = try(each.value.custom_https_configuration.azure_key_vault_certificate_secret_version, null) == null ? try(var.keyvault_certificate_requests[var.client_config.landingzone_key][each.value.custom_https_configuration.certificate.key].version, var.keyvault_certificate_requests[each.value.custom_https_configuration.certificate.lz_key][each.value.custom_https_configuration.certificate.key].version) : each.value.custom_https_configuration.azure_key_vault_certificate_secret_version
+    azure_key_vault_certificate_vault_id       = can(each.value.custom_https_configuration.keyvault.id) || can(each.value.custom_https_configuration.azure_key_vault_certificate_vault_id) ? try(each.value.custom_https_configuration.keyvault.id, each.value.custom_https_configuration.azure_key_vault_certificate_vault_id) : can(each.value.custom_https_configuration.certificate.key) ? var.keyvault_certificate_requests[try(each.value.custom_https_configuration.certificate.lz_key, var.client_config.landingzone_key)][each.value.custom_https_configuration.certificate.key].keyvault_id : var.keyvaults[try(each.value.custom_https_configuration.keyvault.lz_key, var.client_config.landingzone_key)][each.value.custom_https_configuration.keyvault.key].id
+    azure_key_vault_certificate_secret_name    = can(each.value.custom_https_configuration.keyvault.secret_name) || can(each.value.custom_https_configuration.azure_key_vault_certificate_secret_name) ? try(each.value.custom_https_configuration.azure_key_vault_certificate_secret_nameeach.value.custom_https_configuration.keyvault.secret_name) : var.keyvault_certificate_requests[try(each.value.custom_https_configuration.certificate.lz_key, var.client_config.landingzone_key)][each.value.custom_https_configuration.certificate.key].name
+    azure_key_vault_certificate_secret_version = can(each.value.custom_https_configuration.keyvault.secret_version) || (each.value.custom_https_configuration.azure_key_vault_certificate_secret_version) ? try(each.value.custom_https_configuration.keyvault.secret_version, each.value.custom_https_configuration.azure_key_vault_certificate_secret_version) : can(each.value.custom_https_configuration.certificate.key) ? var.keyvault_certificate_requests[try(each.value.custom_https_configuration.certificate.lz_key, var.client_config.landingzone_key)][each.value.custom_https_configuration.certificate.key].version : null
   }
 }

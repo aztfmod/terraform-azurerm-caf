@@ -1,0 +1,13 @@
+- become: yes
+  hosts: all
+  name: Updates
+  tasks:
+    - name: Update all packages
+      apt:
+        upgrade: dist
+        update_cache: yes
+        cache_valid_time: 3600
+    - name: Install nginx-full
+      apt:
+        name: nginx-full
+        state: latest

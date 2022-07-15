@@ -1,7 +1,7 @@
 global_settings = {
   default_region = "region1"
   regions = {
-    region1 = "eastus2"
+    region1 = "australiaeast"
   }
   random_length = 5
 }
@@ -53,6 +53,10 @@ azuread_service_principals = {
       key = "test_client"
     }
     app_role_assignment_required = true
+    tags = [
+      "HideApp",
+      "WindowsAzureActiveDirectoryIntegratedApp"
+    ]
   }
 }
 

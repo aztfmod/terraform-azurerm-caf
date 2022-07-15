@@ -64,8 +64,13 @@ variable "storage_accounts" {
 }
 
 variable "diagnostic_profiles" {
-  default = null
+  default = {}
 }
 variable "diagnostics" {
   default = null
 }
+
+variable "vnets" {}
+variable "subnet_id" {}
+variable "private_endpoints" {}
+variable "private_dns" {}

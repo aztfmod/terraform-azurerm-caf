@@ -1,3 +1,10 @@
+module "azuread_roles_security_groups" {
+  source   = "./modules/azuread/roles"
+  for_each = try(local.azuread.azuread_roles.azuread_groups, {})
+
+  object_id     = module.azuread_graph_group[each.key].object_id
+  azuread_roles = each.value.roles
+}
 
 module "azuread_roles_applications" {
   source   = "./modules/azuread/roles"

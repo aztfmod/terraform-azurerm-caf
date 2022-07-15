@@ -17,9 +17,11 @@ resource "azurerm_virtual_network" "vnet" {
   address_space       = var.settings.vnet.address_space
   tags                = local.tags
 
-  dns_servers = coalesce(
-    try(lookup(var.settings.vnet, "dns_servers", null)),
-    try(local.dns_servers_process, null)
+  dns_servers = flatten(
+    concat(
+      try(lookup(var.settings.vnet, "dns_servers", [])),
+      try(local.dns_servers_process, [])
+    )
   )
 
   dynamic "ddos_protection_plan" {
@@ -29,6 +31,10 @@ resource "azurerm_virtual_network" "vnet" {
       id     = var.ddos_id != "" ? var.ddos_id : var.global_settings["ddos_protection_plan_id"]
       enable = true
     }
+  }
+
+  lifecycle {
+    ignore_changes = [name]
   }
 }
 
@@ -111,17 +117,26 @@ resource "azurerm_subnet_network_security_group_association" "nsg_vnet_associati
 }
 
 locals {
-  dns_servers_process = [
-    for obj in try(var.settings.vnet.dns_servers_keys, {}) : #o.ip
-    coalesce(
-      try(var.remote_dns[obj.resource_type][obj.lz_key][obj.key].virtual_hub[obj.interface_index].private_ip_address, null),
-      try(var.remote_dns[obj.resource_type][obj.lz_key][obj.key].virtual_hub.0.private_ip_address, null),
-      try(var.remote_dns[obj.resource_type][obj.lz_key][obj.key].ip_configuration[obj.interface_index].private_ip_address, null),
-      try(var.remote_dns[obj.resource_type][obj.lz_key][obj.key].ip_configuration.0.private_ip_address, null),
-      null
-    )
-    # for ip_key, resouce_ip in var.settings.vnet.dns_servers_keys: [
-    #  resouce_ip.ip
-    # ]
-  ]
+  dns_servers_process = can(var.settings.vnet.dns_servers_keys) == false ? [] : concat(
+    [
+      for obj in try(var.settings.vnet.dns_servers_keys, {}) : #o.ip
+      coalesce(
+        try(var.remote_dns[obj.resource_type][obj.lz_key][obj.key].virtual_hub[obj.interface_index].private_ip_address, null),
+        try(var.remote_dns[obj.resource_type][obj.lz_key][obj.key].virtual_hub.0.private_ip_address, null),
+        try(var.remote_dns[obj.resource_type][obj.lz_key][obj.key].ip_configuration[obj.interface_index].private_ip_address, null),
+        try(var.remote_dns[obj.resource_type][obj.lz_key][obj.key].ip_configuration.0.private_ip_address, null)
+      )
+      if contains(["azurerm_firewall", "azurerm_firewalls"], obj.resource_type)
+    ],
+    [
+      for obj in try(var.settings.vnet.dns_servers_keys, {}) :
+      var.remote_dns.lb[obj.lz_key][obj.key].private_ip_addresses
+      if contains(["lb"], obj.resource_type)
+    ],
+    [
+      for obj in try(var.settings.vnet.dns_servers_keys, {}) :
+      var.remote_dns.virtual_machines[obj.lz_key][obj.key].ip_configuration[obj.nic_key].private_ip_addresses
+      if contains(["virtual_machines", "virtual_machine"], obj.resource_type)
+    ]
+  )
 }

@@ -1,7 +1,7 @@
 global_settings = {
   default_region = "region1"
   regions = {
-    region1 = "eastus2"
+    region1 = "australiaeast"
   }
 }
 
@@ -67,7 +67,7 @@ virtual_hub_route_tables = {
           #  lz_key = "secazfw1" # Remote Landing Zone Key from where Azure Firewall Key needs to be retrieved
           resource_type = "azurerm_firewalls" # Only supported value in case of "Secured Virtual HUB" where you need to route Internet Egress from Secured vHUB Firewall.
           #    resource_type = "virtual_hub_connection"  # Only supported value in case mapping route at VNET Connection Level
-          key = "firewall1" # Azure Firewall Key sitting in the Secured Virtual Hub
+          key = "egress-fw" # Azure Firewall Key sitting in the Secured Virtual Hub
         }
         #to cather for external object
         #next_hop_id       = "Azure_Resource_ID"

@@ -26,7 +26,7 @@ resource "random_password" "mariadb_admin" {
   length           = 32
   special          = true
   upper            = true
-  number           = true
+  numeric          = true
   override_special = "_%@"
 
 }
@@ -51,6 +51,22 @@ resource "azurerm_key_vault_secret" "mariadb_admin" {
 
   name         = format("%s-username", azurecaf_name.mariadb.result)
   value        = var.settings.administrator_login
+  key_vault_id = var.keyvault_id
+}
+
+resource "azurerm_key_vault_secret" "mariadb_admin_login_name" {
+  count = try(var.settings.administrator_login_password, null) == null ? 1 : 0
+
+  name         = format("%s-login-name", azurecaf_name.mariadb.result)
+  value        = format("%s@%s", var.settings.administrator_login, azurerm_mariadb_server.mariadb.fqdn)
+  key_vault_id = var.keyvault_id
+}
+
+resource "azurerm_key_vault_secret" "mariadb_fqdn" {
+  count = try(var.settings.administrator_login_password, null) == null ? 1 : 0
+
+  name         = format("%s-fqdn", azurecaf_name.mariadb.result)
+  value        = azurerm_mariadb_server.mariadb.fqdn
   key_vault_id = var.keyvault_id
 }
 

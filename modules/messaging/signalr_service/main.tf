@@ -8,17 +8,7 @@ terraform {
 }
 
 locals {
-  location = coalesce(
-    try(var.settings.location, null),
-    try(var.remote_objects.resource_groups[var.settings.resource_group.lz_key][var.settings.resource_group.key].location, null),
-    try(var.remote_objects.resource_groups[var.client_config.landingzone_key][var.settings.resource_group.key].location, null)
-  )
-  resource_group_name = coalesce(
-    try(var.remote_objects.resource_groups[var.settings.resource_group.lz_key][var.settings.resource_group.key].name, null),
-    try(var.remote_objects.resource_groups[var.client_config.landingzone_key][var.settings.resource_group.key].name, null)
-  )
-  base_tags = try(var.global_settings.inherit_tags, false) ? coalesce(
-    try(var.remote_objects.resource_groups[var.settings.resource_group.lz_key][var.settings.resource_group.key].tags, null),
-    try(var.remote_objects.resource_groups[var.client_config.landingzone_key][var.settings.resource_group.key].tags, null)
-  ) : {}
+  location            = can(var.settings.location) ? var.settings.location : var.remote_objects.resource_groups[try(var.settings.resource_group.lz_key, var.client_config.landingzone_key)][var.settings.resource_group.key].location
+  resource_group_name = can(var.settings.resource_group_name) || can(var.settings.resource_group.name) ? try(var.settings.resource_group_name, var.settings.resource_group.name) : var.remote_objects.resource_groups[try(var.settings.resource_group.lz_key, var.client_config.landingzone_key)][var.settings.resource_group.key].name
+  base_tags           = try(var.global_settings.inherit_tags, false) ? var.remote_objects.resource_groups[try(var.settings.resource_group.lz_key, var.client_config.landingzone_key)][var.settings.resource_group.key].tags : {}
 }

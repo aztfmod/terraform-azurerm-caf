@@ -1,7 +1,7 @@
 global_settings = {
   default_region = "region1"
   regions = {
-    region1 = "eastus2"
+    region1 = "australiaeast"
   }
   random_length = 5
 }
@@ -42,4 +42,10 @@ azuread_groups_membership = {
       key      = "msi1"
     }
   }
+  # ad_group2 = { # ad group key
+  #   # group_lz_key = "" # group lz_key
+  #   members = {
+  #     azuread_service_principal_keys = ["spkey"] # add service principal to group
+  #   }
+  # }
 }

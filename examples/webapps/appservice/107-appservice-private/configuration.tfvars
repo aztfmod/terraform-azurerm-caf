@@ -1,7 +1,7 @@
 global_settings = {
   default_region = "region1"
   regions = {
-    region1 = "eastus2"
+    region1 = "australiaeast"
   }
 }
 
@@ -40,6 +40,10 @@ app_services = {
       subnet_key = "app"
     }
 
+    app_settings = {
+      "WEBSITE_NODE_DEFAULT_VERSION" = "6.9.1"
+    }
+
     settings = {
       enabled = true
     }
@@ -62,6 +66,9 @@ vnets = {
         delegation = {
           name               = "serverFarms"
           service_delegation = "Microsoft.Web/serverFarms"
+          actions = [
+            "Microsoft.Network/virtualNetworks/subnets/action"
+          ]
         }
       }
     }

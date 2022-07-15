@@ -1,17 +1,20 @@
 {
   "config_files": [
-
+    "cognitive_services/100-cognitive-services-account",
+    "compute/batch/batch_certificate/100-batch-certificate - path",
+    "compute/batch/batch_job/100-batch-job - quotas",
+    "compute/batch/batch_pool/100-batch-pool - quotas",
+    "compute/virtual_machine/106-marketplace-image-with-plan",
+    "compute/virtual_machine/211-vm-bastion-winrm-agents",
+    "compute/vmware_cluster/102-vmware_express_route_authorization",
     "consumption_budget/100-consumption-budget-rg",
     "consumption_budget/101-consumption-budget-subscription",
     "consumption_budget/102-consumption-budget-rg-alerts",
     "consumption_budget/103-consumption-budget-subscription-alerts",
     "consumption_budget/104-consumption-budget-subscription-vm",
     "consumption_budget/105-consumption-budget-subscription-aks",
-
-    // Waiting for support to register arm provider - https://github.com/Azure/caf-terraform-landingzones/pull/238
-    "cognitive_services/100-cognitive-services-account"
-
-    // long runners candidates
+    "messaging/signalr/100-signalr-simple",
+    "mssql_mi/200-mi-two-regions",
     "networking/virtual_network_gateway/100-expressroute-gateway",
     "networking/virtual_network_gateway/101-vpn-site-to-site",
     "networking/virtual_network_gateway/102-vpn-site-to-site-active-active",
@@ -23,9 +26,12 @@
     "networking/virtual_wan/104-vwan-hub-gw-spp",
     "networking/virtual_wan/105-vwan-hub-route-table",
     "networking/virtual_wan/106-vwan-hub-routes",
-
-    "mssql_mi/200-mi-two-regions",
-
-    "compute/vmware_cluster/102-vmware_express_route_authorization"
+    "sentinel/102-watchlist - https://github.com/hashicorp/terraform-provider-azurerm/issues/15851",
+    "sentinel/103-watchlist_item - https://github.com/hashicorp/terraform-provider-azurerm/issues/15851",
+    "sentinel/108-dataconnectors",
+    "shared_image_gallery/101-packer_service_principal",
+    "storage_accounts/108-file-share-nfs - https://github.com/hashicorp/terraform-provider-azurerm/issues/2977",
+    "webapps/appservice/108-appservice-autoscale - quota",
+    "webapps/appservice/108-appservice-storage - quota"
   ]
 }

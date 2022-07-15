@@ -14,7 +14,7 @@ data "azurerm_key_vault_certificate" "trustedcas" {
     if try(value.keyvault_key, null) != null
   }
   name         = each.value.name
-  key_vault_id = var.keyvaults[try(each.value.lz_key, var.client_config.landingzone_key)][each.value.keyvault_key].id
+  key_vault_id = can(each.value.keyvault.id) ? each.value.keyvault.id : var.keyvaults[try(each.value.keyvault.lz_key, each.value.lz_key, var.client_config.landingzone_key)][try(each.value.keyvault.key, each.value.keyvault_key)].id
 }
 
 data "azurerm_key_vault_certificate" "manual_certs" {
@@ -23,7 +23,7 @@ data "azurerm_key_vault_certificate" "manual_certs" {
     if try(value.keyvault.certificate_name, null) != null
   }
   name         = each.value.keyvault.certificate_name
-  key_vault_id = var.keyvaults[try(each.value.keyvault.lz_key, var.client_config.landingzone_key)][each.value.keyvault.key].id
+  key_vault_id = can(each.value.keyvault.id) ? each.value.keyvault.id : var.keyvaults[try(each.value.keyvault.lz_key, each.value.lz_key, var.client_config.landingzone_key)][try(each.value.keyvault.key, each.value.keyvault_key)].id
 }
 
 resource "azurerm_application_gateway" "agw" {
@@ -47,14 +47,23 @@ resource "azurerm_application_gateway" "agw" {
     subnet_id = local.ip_configuration["gateway"].subnet_id
   }
 
-  dynamic "ssl_policy" {
-    for_each = can(var.settings.ssl_policy) ? [var.settings.ssl_policy] : []
+  dynamic "ssl_profile" {
+    for_each = try(var.settings.ssl_profiles, {})
     content {
-      disabled_protocols   = try(ssl_policy.value.disabled_protocols, null)
-      policy_type          = try(ssl_policy.value.policy_type, null)
-      policy_name          = try(ssl_policy.value.policy_name, null)
-      cipher_suites        = try(ssl_policy.value.cipher_suites, null)
-      min_protocol_version = try(ssl_policy.value.min_protocol_version, null)
+      name                             = ssl_profile.value.name
+      trusted_client_certificate_names = try(ssl_profile.trusted_client_certificate_names, null)
+      verify_client_cert_issuer_dn     = try(ssl_profile.verify_client_cert_issuer_dn, null)
+
+      dynamic "ssl_policy" {
+        for_each = try(ssl_profile.value.ssl_policy, null) == null ? [] : [1]
+        content {
+          disabled_protocols   = try(ssl_policy.value.disabled_protocols, null)
+          policy_type          = try(ssl_policy.value.policy_type, null)
+          policy_name          = try(ssl_policy.value.policy_name, null)
+          cipher_suites        = try(ssl_policy.value.cipher_suites, null)
+          min_protocol_version = try(ssl_policy.value.min_protocol_version, null)
+        }
+      }
     }
   }
 
@@ -148,6 +157,16 @@ resource "azurerm_application_gateway" "agw" {
     }
   }
 
+  dynamic "trusted_root_certificate" {
+    for_each = {
+      for key, value in try(var.settings.trusted_root_certificates, {}) : key => value
+    }
+    content {
+      name = trusted_root_certificate.value.name
+      data = trusted_root_certificate.value.keyvault.secret_id
+    }
+  }
+
   dynamic "ssl_certificate" {
     for_each = can(var.settings.default.ssl_cert_key) ? [1] : []
 
@@ -188,7 +207,6 @@ resource "azurerm_application_gateway" "agw" {
       rewrite_rule_set,
       ssl_certificate,
       tags["managed-by-k8s-ingress"],
-      trusted_root_certificate,
       url_path_map
     ]
   }

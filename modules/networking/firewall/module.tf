@@ -70,7 +70,7 @@ resource "azurerm_firewall" "fw" {
     for_each = try(var.settings.management_ip_configuration, {})
     content {
       name                 = management_ip_configuration.value.name
-      public_ip_address_id = try(management_ip_configuration.value.public_ip_address_id, null) != null ? management_ip_configuration.value.public_ip_address_id : var.public_ip_addresses[management_ip_configuration.value.public_ip_key].id
+      public_ip_address_id = try(management_ip_configuration.value.public_ip_address_id, null) != null ? management_ip_configuration.value.public_ip_address_id : var.public_ip_addresses[try(management_ip_configuration.value.lz_key, var.client_config.landingzone_key)][management_ip_configuration.value.public_ip_key].id
       subnet_id            = try(management_ip_configuration.value.subnet_id, null) != null ? management_ip_configuration.value.subnet_id : (lookup(management_ip_configuration.value, "lz_key", null) == null ? var.virtual_networks[var.client_config.landingzone_key][management_ip_configuration.value.vnet_key].subnets[management_ip_configuration.value.subnet_key].id : var.virtual_networks[management_ip_configuration.value.lz_key][management_ip_configuration.value.vnet_key].subnets[management_ip_configuration.value.subnet_key].id)
     }
   }
@@ -95,7 +95,7 @@ resource "azurerm_firewall" "fw" {
     }
 
     content {
-      virtual_hub_id = var.virtual_wans[try(virtual_hub.value.lz_key, var.client_config.landingzone_key)][virtual_hub.value.virtual_wan_key].virtual_hubs[virtual_hub.value.virtual_hub_key].id
+      virtual_hub_id = can(var.virtual_hubs[try(virtual_hub.value.lz_key, virtual_hub.value.virtual_hub.lz_key, var.client_config.landingzone_key)][try(virtual_hub.value.virtual_hub.key, virtual_hub.value.virtual_hub_key, virtual_hub.value.key)].id) ? var.virtual_hubs[try(virtual_hub.value.lz_key, virtual_hub.value.virtual_hub.lz_key, var.client_config.landingzone_key)][try(virtual_hub.value.virtual_hub.key, virtual_hub.value.virtual_hub_key, virtual_hub.value.key)].id : var.virtual_wans[try(virtual_hub.value.lz_key, var.client_config.landingzone_key)][virtual_hub.value.virtual_wan_key].virtual_hubs[virtual_hub.value.virtual_hub_key].id
 
       public_ip_count = try(virtual_hub.value.public_ip_count, 1)
     }

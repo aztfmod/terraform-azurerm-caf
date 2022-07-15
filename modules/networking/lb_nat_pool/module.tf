@@ -10,13 +10,9 @@ resource "azurecaf_name" "lb" {
   use_slug      = var.global_settings.use_slug
 }
 resource "azurerm_lb_nat_pool" "lb" {
-  name                = azurecaf_name.lb.result
-  resource_group_name = var.resource_group_name
-  loadbalancer_id = coalesce(
-    try(var.remote_objects.lb[var.settings.loadbalancer.lz_key][var.settings.loadbalancer.key].id, null),
-    try(var.remote_objects.lb[var.client_config.landingzone_key][var.settings.loadbalancer.key].id, null),
-    try(var.settings.loadbalancer.id, null)
-  )
+  name                           = azurecaf_name.lb.result
+  resource_group_name            = var.resource_group_name
+  loadbalancer_id                = can(var.settings.loadbalancer.id) ? var.settings.loadbalancer.id : var.remote_objects.lb[try(var.settings.loadbalancer.lz_key, var.client_config.landingzone_key)][var.settings.loadbalancer.key].id
   frontend_ip_configuration_name = var.settings.frontend_ip_configuration_name
   protocol                       = var.settings.protocol
   frontend_port_start            = var.settings.frontend_port_start

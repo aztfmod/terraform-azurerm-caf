@@ -11,14 +11,15 @@ diagnostics_destinations = {
     central_logs = {
       #log_analytics_key              = "central_logs_region1"
       #log_analytics_destination_type = "Dedicated"
-      log_analytics_resource_id = "/subscriptions/0-0-0-0-0/resourcegroups/eqej-rg-operations/providers/microsoft.operationalinsights/workspaces/eqej-log-logs"
+      log_analytics_resource_id  = "/subscriptions/0-0-0-0-0/resourcegroups/eqej-rg-operations/providers/microsoft.operationalinsights/workspaces/eqej-log-logs"
+      log_analytics_workspace_id = "0-0-0-0-0"
     }
   }
 
   # use existing storage account
   storage = {
     central_storage = {
-      eastus2 = { # region
+      australiaeast = { # region
         storage_account_resource_id = "/subscriptions/0-0-0-0-0/resourcegroups/eqej-rg-operations/providers/Microsoft.Storage/storageAccounts/imfd-log-storage"
       }
     }

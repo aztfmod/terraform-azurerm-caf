@@ -3,7 +3,7 @@ global_settings = {
   regions = {
     region1 = "northeurope"
     region2 = "westeurope"
-    region3 = "eastus2"
+    region3 = "australiaeast"
   }
 }
 

@@ -1,8 +1,8 @@
 global_settings = {
   default_region = "region1"
   regions = {
-    region1 = "eastus2"
-    region2 = "centralus"
+    region1 = "australiaeast"
+    region2 = "australiacentral"
   }
 }
 
@@ -29,7 +29,7 @@ vnets = {
   sqlmi_region1 = {
     resource_group_key = "networking_region1"
     vnet = {
-      name          = "sqlmi-re1"
+      name          = "sqlmi-rg1"
       address_space = ["172.25.88.0/21"]
     }
     subnets = {
@@ -87,7 +87,7 @@ route_tables = {
   }
 }
 
-vnet_peerings = {
+vnet_peerings_v1 = {
 
   # Establish a peering with the devops vnet
   mi_region1-TO-mi_region2 = {
@@ -128,18 +128,20 @@ mssql_managed_instances = {
     sku = {
       name = "GP_Gen5"
     }
-    administratorLogin         = "adminuser"
-    administratorLoginPassword = "@dm1nu53r@30102020"
+    administratorLogin = "adminuser"
+    # administratorLoginPassword = "@dm1nu53r@30102020"
+    # if password not set, a random complex passwor will be created and stored in the keyvault
+    # the secret value can be changed after the deployment if needed
 
     //networking
     networking = {
       vnet_key   = "sqlmi_region1"
       subnet_key = "sqlmi1"
     }
+    keyvault_key = "sqlmi_rg1"
 
     storageSizeInGB = 32
-    vCores          = 8
-
+    vCores          = 4
   }
 }
 
@@ -150,8 +152,8 @@ mssql_managed_instances_secondary = {
     sku = {
       name = "GP_Gen5"
     }
-    administratorLogin         = "adminuser"
-    administratorLoginPassword = "@dm1nu53r@11112020"
+    administratorLogin = "adminuser"
+    # administratorLoginPassword = "@dm1nu53r@11112020"
 
     primary_server = {
       mi_server_key = "sqlmi1"
@@ -165,7 +167,7 @@ mssql_managed_instances_secondary = {
     keyvault_key = "sqlmi_rg1"
 
     storageSizeInGB = 32
-    vCores          = 8
+    vCores          = 4
   }
 }
 
@@ -187,7 +189,7 @@ mssql_managed_databases = {
   #   name                              = "lz-sql-managed-db-ltr"
   #   mi_server_key                     = "sqlmi1"
   #   createMode                        = "RestoreLongTermRetentionBackup"
-  #   longTermRetentionBackupResourceId = "/subscriptions/1d53e782-9f46-4720-b6b3-cff29106e9f6/resourceGroups/whdz-rg-sqlmi-rg1/providers/Microsoft.Sql/locations/eastus2/longTermRetentionManagedInstances/whdz-sql-lz-sql-mi/longTermRetentionDatabases/whdz-sqldb-lz-sql-managed-db1/longTermRetentionManagedInstanceBackups/7b19016e-3f85-46c0-b4bd-dd5c8f5624f3;132512472960000000"
+  #   longTermRetentionBackupResourceId = "/subscriptions/1d53e782-9f46-4720-b6b3-cff29106e9f6/resourceGroups/whdz-rg-sqlmi-rg1/providers/Microsoft.Sql/locations/australiaeast/longTermRetentionManagedInstances/whdz-sql-lz-sql-mi/longTermRetentionDatabases/whdz-sqldb-lz-sql-managed-db1/longTermRetentionManagedInstanceBackups/7b19016e-3f85-46c0-b4bd-dd5c8f5624f3;132512472960000000"
   # }
 }
 

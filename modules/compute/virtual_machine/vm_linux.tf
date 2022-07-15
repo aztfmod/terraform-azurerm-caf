@@ -59,9 +59,10 @@ resource "azurerm_linux_virtual_machine" "vm" {
   admin_password                  = each.value.disable_password_authentication == false ? each.value.admin_password : null
   admin_username                  = each.value.admin_username
   allow_extension_operations      = try(each.value.allow_extension_operations, null)
-  availability_set_id             = can(each.value.availability_set) == false || can(each.value.availability_set.id) || can(each.value.availability_set_id) ? try(each.value.availability_set.id, each.value.availability_set_id, null) : var.availability_sets[try(var.client_config.landingzone_key, each.value.availability_set.lz_key)][try(each.value.availability_set_key, each.value.availability_set.key)].id
+  availability_set_id             = can(each.value.availability_set_key) || can(each.value.availability_set.key) ? var.availability_sets[try(var.client_config.landingzone_key, each.value.availability_set.lz_key)][try(each.value.availability_set_key, each.value.availability_set.key)].id : try(each.value.availability_set.id, each.value.availability_set_id, null)
   computer_name                   = azurecaf_name.linux_computer_name[each.key].result
   disable_password_authentication = try(each.value.disable_password_authentication, true)
+  encryption_at_host_enabled      = try(each.value.encryption_at_host_enabled, null)
   eviction_policy                 = try(each.value.eviction_policy, null)
   license_type                    = try(each.value.license_type, null)
   location                        = var.location
@@ -70,7 +71,7 @@ resource "azurerm_linux_virtual_machine" "vm" {
   network_interface_ids           = local.nic_ids
   priority                        = try(each.value.priority, null)
   provision_vm_agent              = try(each.value.provision_vm_agent, true)
-  proximity_placement_group_id    = try(var.proximity_placement_groups[var.client_config.landingzone_key][each.value.proximity_placement_group_key].id, var.proximity_placement_groups[each.value.proximity_placement_groups].id, null)
+  proximity_placement_group_id    = can(each.value.proximity_placement_group_key) || can(each.value.proximity_placement_group.key) ? var.proximity_placement_groups[try(var.client_config.landingzone_key, var.client_config.landingzone_key)][try(each.value.proximity_placement_group_key, each.value.proximity_placement_group.key)].id : try(each.value.proximity_placement_group_id, each.value.proximity_placement_group.id, null)
   resource_group_name             = var.resource_group_name
   size                            = each.value.size
   tags                            = merge(local.tags, try(each.value.tags, null))
@@ -82,19 +83,57 @@ resource "azurerm_linux_virtual_machine" "vm" {
     null
   )
 
-  dedicated_host_id = try(coalesce(
-    try(each.value.dedicated_host.id, null),
-    var.dedicated_hosts[try(each.value.dedicated_host.lz_key, var.client_config.landingzone_key)][each.value.dedicated_host.key].id,
-    ),
-    null
-  )
+  dedicated_host_id = can(each.value.dedicated_host.key) ? var.dedicated_hosts[try(each.value.dedicated_host.lz_key, var.client_config.landingzone_key)][each.value.dedicated_host.key].id : try(each.value.dedicated_host.id, null)
 
+  # Create local ssh key
   dynamic "admin_ssh_key" {
-    for_each = lookup(each.value, "disable_password_authentication", true) == true ? [1] : []
+    for_each = lookup(each.value, "disable_password_authentication", true) == true && local.create_sshkeys ? [1] : []
 
     content {
       username   = each.value.admin_username
       public_key = local.create_sshkeys ? tls_private_key.ssh[each.key].public_key_openssh : file(var.settings.public_key_pem_file)
+    }
+  }
+
+  # by ssh_public_key_id
+  dynamic "admin_ssh_key" {
+    for_each = {
+      for key, value in try(each.value.admin_ssh_keys, {}) : key => value if can(value.ssh_public_key_id)
+    }
+
+    content {
+      # "Destination path for SSH public keys is currently limited to its default value /home/adminuser/.ssh/authorized_keys  due to a known issue in Linux provisioning agent."
+      # username   = try(admin_ssh_key.value.username, each.value.admin_username)
+      username   = each.value.admin_username
+      public_key = replace(data.external.ssh_public_key_id[admin_ssh_key.key].result.public_ssh_key, "\r\n", "")
+    }
+  }
+
+  # by secret_key_id
+  dynamic "admin_ssh_key" {
+    for_each = {
+      for key, value in try(each.value.admin_ssh_keys, {}) : key => value if can(value.secret_key_id)
+    }
+
+    content {
+      # "Destination path for SSH public keys is currently limited to its default value /home/adminuser/.ssh/authorized_keys  due to a known issue in Linux provisioning agent."
+      # username   = try(admin_ssh_key.value.username, each.value.admin_username)
+      username   = each.value.admin_username
+      public_key = replace(data.external.secret_key_id[admin_ssh_key.key].result.public_ssh_key, "\r\n", "")
+    }
+  }
+
+  # by secret_key_id
+  dynamic "admin_ssh_key" {
+    for_each = {
+      for key, value in try(var.settings.virtual_machine_settings[var.settings.os_type].admin_ssh_keys, {}) : key => value if can(value.keyvault_key)
+    }
+
+    content {
+      # "Destination path for SSH public keys is currently limited to its default value /home/adminuser/.ssh/authorized_keys  due to a known issue in Linux provisioning agent."
+      # username   = try(admin_ssh_key.value.username, each.value.admin_username)
+      username   = each.value.admin_username
+      public_key = replace(data.external.ssh_secret_keyvault[admin_ssh_key.key].result.public_ssh_key, "\r\n", "")
     }
   }
 
@@ -105,6 +144,14 @@ resource "azurerm_linux_virtual_machine" "vm" {
     storage_account_type      = try(each.value.os_disk.storage_account_type, null)
     write_accelerator_enabled = try(each.value.os_disk.write_accelerator_enabled, false)
     disk_encryption_set_id    = try(each.value.os_disk.disk_encryption_set_key, null) == null ? null : try(var.disk_encryption_sets[var.client_config.landingzone_key][each.value.os_disk.disk_encryption_set_key].id, var.disk_encryption_sets[each.value.os_disk.lz_key][each.value.os_disk.disk_encryption_set_key].id, null)
+
+    dynamic "diff_disk_settings" {
+      for_each = try(each.value.diff_disk_settings, false) == false ? [] : [1]
+
+      content {
+        option = each.value.diff_disk_settings.option
+      }
+    }
   }
 
   dynamic "source_image_reference" {
@@ -119,8 +166,7 @@ resource "azurerm_linux_virtual_machine" "vm" {
   }
 
   source_image_id = try(each.value.source_image_reference, null) == null ? format("%s%s",
-    try(each.value.custom_image_id, var.image_definitions[var.client_config.landingzone_key][each.value.custom_image_key].id,
-    var.image_definitions[each.value.custom_image_lz_key][each.value.custom_image_key].id),
+    try(each.value.custom_image_id, var.image_definitions[try(each.value.custom_image_lz_key, var.client_config.landingzone_key)][each.value.custom_image_key].id),
   try("/versions/${each.value.custom_image_version}", "")) : null
 
   dynamic "identity" {
@@ -152,42 +198,9 @@ resource "azurerm_linux_virtual_machine" "vm" {
 
   lifecycle {
     ignore_changes = [
-      os_disk[0].name #for ASR disk restores
+      os_disk[0].name, #for ASR disk restores
+      admin_ssh_key
     ]
   }
 
 }
-
-#
-# SSH keys to be stored in KV only if public_key_pem_file is not set
-#
-
-resource "azurerm_key_vault_secret" "ssh_private_key" {
-  for_each = local.create_sshkeys ? var.settings.virtual_machine_settings : {}
-
-  name         = try(format("%s-ssh-private-key", azurecaf_name.linux_computer_name[each.key].result), format("%s-ssh-private-key", azurecaf_name.legacy_computer_name[each.key].result))
-  value        = tls_private_key.ssh[each.key].private_key_pem
-  key_vault_id = local.keyvault.id
-
-  lifecycle {
-    ignore_changes = [
-      value, key_vault_id
-    ]
-  }
-}
-
-
-resource "azurerm_key_vault_secret" "ssh_public_key_openssh" {
-  for_each = local.create_sshkeys ? var.settings.virtual_machine_settings : {}
-
-  name         = try(format("%s-ssh-public-key-openssh", azurecaf_name.linux_computer_name[each.key].result), format("%s-ssh-public-key-openssh", azurecaf_name.legacy_computer_name[each.key].result))
-  value        = tls_private_key.ssh[each.key].public_key_openssh
-  key_vault_id = local.keyvault.id
-
-  lifecycle {
-    ignore_changes = [
-      value, key_vault_id
-    ]
-  }
-}
-

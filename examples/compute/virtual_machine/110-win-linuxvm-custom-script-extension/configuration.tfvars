@@ -1,7 +1,7 @@
 global_settings = {
   default_region = "region1"
   regions = {
-    region1 = "eastus2"
+    region1 = "australiaeast"
   }
 }
 
@@ -235,6 +235,7 @@ virtual_machines = {
         identity_type             = "UserAssigned" # optional to use managed_identity for download from location specified in fileuri, UserAssigned or SystemAssigned.
         managed_identity_key      = "user_mi"
         automatic_upgrade_enabled = false
+        # timestamp                 = 123456789
         # managed_identity_id       = "id" # optional to define managed identity principal_id directly
         # lz_key                    = "other_lz" # optional for managed identity defined in other lz
       }

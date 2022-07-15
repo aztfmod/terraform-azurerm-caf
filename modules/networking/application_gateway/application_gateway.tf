@@ -13,12 +13,8 @@ data "azurerm_key_vault_certificate" "trustedcas" {
     for key, value in try(var.settings.trusted_root_certificate, {}) : key => value
     if try(value.keyvault_key, null) != null
   }
-  name = each.value.name
-  key_vault_id = try(
-    var.keyvaults[var.client_config.landingzone_key][each.value.keyvault_key].id,
-    var.keyvaults[each.value.lz_key][each.value.keyvault_key].id,
-    each.value.keyvault_id
-  )
+  name         = each.value.name
+  key_vault_id = can(each.value.keyvault_id) ? each.value.keyvault_id : var.keyvaults[try(each.value.lz_key, var.client_config.landingzone_key)][each.value.keyvault_key].id
 }
 
 data "azurerm_key_vault_certificate" "manual_certs" {
@@ -26,12 +22,8 @@ data "azurerm_key_vault_certificate" "manual_certs" {
     for key, value in local.listeners : key => value
     if try(value.keyvault_certificate.certificate_name, null) != null
   }
-  name = each.value.keyvault_certificate.certificate_name
-  key_vault_id = try(
-    var.keyvaults[each.value.keyvault_certificate.lz_key][each.value.keyvault_certificate.keyvault_key].id,
-    var.keyvaults[var.client_config.landingzone_key][each.value.keyvault_certificate.keyvault_key].id,
-    each.value.keyvault_certificate.keyvault_id
-  )
+  name         = each.value.keyvault_certificate.certificate_name
+  key_vault_id = can(each.value.keyvault_certificate.keyvault_id) ? each.value.keyvault_certificate.keyvault_id : var.keyvaults[try(each.value.keyvault_certificate.lz_key, var.client_config.landingzone_key)][each.value.keyvault_certificate.keyvault_key].id
 }
 
 resource "azurerm_application_gateway" "agw" {
@@ -42,7 +34,7 @@ resource "azurerm_application_gateway" "agw" {
   zones              = try(var.settings.zones, null)
   enable_http2       = try(var.settings.enable_http2, true)
   tags               = try(local.tags, null)
-  firewall_policy_id = try(try(var.application_gateway_waf_policies[try(var.settings.waf_policy.lz_key, var.client_config.landingzone_key)][var.settings.waf_policy.key].id, var.settings.firewall_policy_id), null)
+  firewall_policy_id = can(var.settings.firewall_policy_id) || can(var.settings.waf_policy.key) == false ? try(var.settings.firewall_policy_id, null) : var.application_gateway_waf_policies[try(var.settings.waf_policy.lz_key, var.client_config.landingzone_key)][var.settings.waf_policy.key].id
 
   sku {
     name     = var.sku_name
@@ -55,14 +47,23 @@ resource "azurerm_application_gateway" "agw" {
     subnet_id = local.ip_configuration["gateway"].subnet_id
   }
 
-  dynamic "ssl_policy" {
-    for_each = try(var.settings.ssl_policy, null) == null ? [] : [1]
+  dynamic "ssl_profile" {
+    for_each = try(var.settings.ssl_profiles, {})
     content {
-      disabled_protocols   = try(var.settings.ssl_policy.disabled_protocols, null)
-      policy_type          = try(var.settings.ssl_policy.policy_type, null)
-      policy_name          = try(var.settings.ssl_policy.policy_name, null)
-      cipher_suites        = try(var.settings.ssl_policy.cipher_suites, null)
-      min_protocol_version = try(var.settings.ssl_policy.min_protocol_version, null)
+      name                             = ssl_profile.value.name
+      trusted_client_certificate_names = try(ssl_profile.trusted_client_certificate_names, null)
+      verify_client_cert_issuer_dn     = try(ssl_profile.verify_client_cert_issuer_dn, null)
+
+      dynamic "ssl_policy" {
+        for_each = try(ssl_profile.value.ssl_policy, null) == null ? [] : [1]
+        content {
+          disabled_protocols   = try(ssl_policy.value.disabled_protocols, null)
+          policy_type          = try(ssl_policy.value.policy_type, null)
+          policy_name          = try(ssl_policy.value.policy_name, null)
+          cipher_suites        = try(ssl_policy.value.cipher_suites, null)
+          min_protocol_version = try(ssl_policy.value.min_protocol_version, null)
+        }
+      }
     }
   }
 

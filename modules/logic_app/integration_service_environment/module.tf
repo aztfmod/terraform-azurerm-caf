@@ -17,7 +17,7 @@ resource "azurerm_integration_service_environment" "ise" {
   access_endpoint_type = var.settings.access_endpoint_type
   tags                 = merge(local.tags, lookup(var.settings, "tags", {}))
   virtual_network_subnet_ids = try(var.settings.subnets, null) == null ? null : [
-    for key, value in var.settings.subnets : try(var.vnets[var.client_config.landingzone_key][value.vnet_key].subnets[value.subnet_key].id, var.vnets[value.lz_key][value.vnet_key].subnets[value.subnet_key].id)
+    for key, value in var.settings.subnets : var.vnets[try(value.lz_key, var.client_config.landingzone_key)][value.vnet_key].subnets[value.subnet_key].id
   ]
 }
 
