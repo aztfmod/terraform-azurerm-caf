@@ -3,7 +3,6 @@ application_gateways = {
     resource_group_key = "core_services"
     name = "app-gateway"
 
-    lz_key     = "connectivity_level3_dev"
     vnet_key   = "shared_spoke"
     subnet_key = "app-gateway-public"
 
@@ -32,7 +31,6 @@ application_gateways = {
       private = {
         name                          = "private"
         vnet_key                      = "shared_spoke"
-        lz_key                        = "connectivity_level3_dev"
         subnet_key                    = "app-gateway-public"
         subnet_cidr_index             = 0 # It is possible to have more than one cidr block per subnet
         private_ip_offset             = 4 # e.g. cidrhost(10.10.0.0/25,4) = 10.10.0.4 => AGW private IP address
