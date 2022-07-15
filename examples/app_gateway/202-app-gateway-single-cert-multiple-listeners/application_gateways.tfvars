@@ -52,6 +52,20 @@ application_gateways = {
         protocol = "Https"
       }
     }
+    
+    # This is the important block!
+    # NOTE - This example does not provision a certificate in the vault.
+    #        You can manually upload/generate one for your environment, then
+    #        reference with keyvault_key or keyvault_id. Just ensure the appropriate
+    #        role_assignment is provisioned for the AGW Managed Identity, and also the 
+    #        Service Principal that the pipeline runs under.
+    manual_certificates = {
+      wildcard_np_dca = {
+        certificate_name = "wildcard-np-domain-com"
+        keyvault_key     = "cert_kv"
+        # keyvault_id = "/sub/a-b-c-d-e/rg/xyz"
+      }
+    }
 
   }
 }
