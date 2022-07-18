@@ -25,7 +25,7 @@ resource "null_resource" "delete_frontend_port" {
   for_each = try(var.settings.frontend_ports, {})
 
   triggers = {
-    name                     = each.value.name 
+    name                     = each.value.name
     resource_group_name      = var.application_gateway.resource_group_name
     application_gateway_name = var.application_gateway.name
     application_gateway_id   = var.application_gateway.id
