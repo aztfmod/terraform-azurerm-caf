@@ -8,7 +8,7 @@ data "azurerm_key_vault_certificate" "http_listener_manual_certs" {
 }
 
 resource "null_resource" "set_http_listener" {
-  depends_on = [null_resource.set_http_settings, null_resource.set_backend_pools, null_resource.set_ssl_cert, null_resource.set_root_cert]
+  depends_on = [null_resource.set_http_settings, null_resource.set_backend_pools, null_resource.set_ssl_cert, null_resource.set_root_cert, null_resource.set_frontend_port]
 
   for_each = try(var.settings.http_listeners, {})
 
@@ -27,7 +27,7 @@ resource "null_resource" "set_http_listener" {
       APPLICATION_GATEWAY_NAME = var.application_gateway.name
       APPLICATION_GATEWAY_ID   = var.application_gateway.id
       NAME                     = each.value.name
-      PORT                     = var.application_gateway.frontend_ports[each.value.front_end_port_key].name
+      PORT                     = try(var.settings.frontend_ports[each.value.front_end_port_key].name, var.application_gateway.frontend_ports[each.value.front_end_port_key].name)
       PUBLIC_IP                = try(var.application_gateway.frontend_ip_configurations[each.value.front_end_ip_configuration_key].name, null)
       HOST_NAME                = try(each.value.host_name, null)
       HOST_NAMES               = try(each.value.host_names, null)
@@ -38,7 +38,7 @@ resource "null_resource" "set_http_listener" {
 }
 
 resource "null_resource" "delete_http_listener" {
-  depends_on = [null_resource.delete_http_settings, null_resource.delete_backend_pool, null_resource.delete_ssl_cert, null_resource.delete_root_cert]
+  depends_on = [null_resource.delete_http_settings, null_resource.delete_backend_pool, null_resource.delete_ssl_cert, null_resource.delete_root_cert, null_resource.set_frontend_port]
 
   for_each = try(var.settings.http_listeners, {})
 
