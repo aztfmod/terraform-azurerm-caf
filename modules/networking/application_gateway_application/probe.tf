@@ -1,6 +1,6 @@
 
 resource "null_resource" "set_probe" {
- 
+
   for_each = try(var.settings.probes, {})
 
   triggers = {
