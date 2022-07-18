@@ -52,4 +52,3 @@ module "virtual_machine_scale_sets" {
 output "virtual_machine_scale_sets" {
   value = module.virtual_machine_scale_sets
 }
-
