@@ -115,6 +115,13 @@ resource "azurerm_windows_virtual_machine_scale_set" "vmss" {
     disk_size_gb              = try(each.value.os_disk.disk_size_gb, null)
     storage_account_type      = try(each.value.os_disk.storage_account_type, null)
     write_accelerator_enabled = try(each.value.os_disk.write_accelerator_enabled, false)
+
+    dynamic "diff_disk_settings" {
+      for_each = try(each.value.os_disk.diff_disk_settings, {}) == {} ? [] : [1]
+      content {
+        option = try(each.value.os_disk.diff_disk_settings.option, "Local")
+      }
+    }
   }
 
   dynamic "data_disk" {
@@ -168,10 +175,10 @@ resource "azurerm_windows_virtual_machine_scale_set" "vmss" {
   }
 
   dynamic "boot_diagnostics" {
-    for_each = var.boot_diagnostics_storage_account == {} ? [] : [1]
+    for_each = try(var.boot_diagnostics_storage_account != null ? [1] : var.global_settings.resource_defaults.virtual_machine_scale_sets.use_azmanaged_storage_for_boot_diagnostics == true ? [1] : [], [])
 
     content {
-      storage_account_uri = var.boot_diagnostics_storage_account
+      storage_account_uri = var.boot_diagnostics_storage_account == "" ? null : var.boot_diagnostics_storage_account
     }
   }
 
