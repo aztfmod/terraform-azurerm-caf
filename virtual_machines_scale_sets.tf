@@ -8,11 +8,11 @@ module "virtual_machine_scale_sets" {
     module.keyvault_access_policies,
     module.keyvault_access_policies_azuread_apps,
     module.proximity_placement_groups,
-    # module.load_balancers, # This is used in line #32 and therefore should have the same issue
+    module.load_balancers,
     module.application_gateways,
     module.application_security_groups,
-    #module.packer_service_principal, # This leads to cycle as well
-    #module.packer_build,# This leads to cycle as well
+    module.packer_service_principal,
+    module.packer_build,
     module.proximity_placement_groups
   ]
   for_each = local.compute.virtual_machine_scale_sets
@@ -28,7 +28,7 @@ module "virtual_machine_scale_sets" {
   global_settings                  = local.global_settings
   image_definitions                = local.combined_objects_image_definitions
   keyvaults                        = local.combined_objects_keyvaults
-  load_balancers                   = "x" #local.combined_objects_load_balancers # Enabling this leads to cycle error
+  load_balancers                   = local.combined_objects_load_balancers
   lbs                              = local.combined_objects_lb
   lb_backend_address_pool          = local.combined_objects_lb_backend_address_pool
   managed_identities               = local.combined_objects_managed_identities
