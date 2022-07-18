@@ -22,7 +22,7 @@ resource "null_resource" "set_request_routing_rule" {
       LISTENER                 = try(var.settings.http_listeners[each.value.http_listener_key].name, null)
       ADDRESS_POOL             = try(var.settings.backend_pools[each.value.backend_pool_key].name, null)
       HTTP_SETTINGS            = try(var.settings.http_settings[each.value.http_settings_key].name, null)
-      PRIORITY                 = try(each.value.priority, null)
+      PRIORITY                 = each.value.priority
       RULE_TYPE                = try(each.value.rule_type, null)
       REDIRECT_CONFIG          = try(each.value.redirect_config, null)  //TODO
       REWRITE_RULE_SET         = try(each.value.rewrite_rule_set, null) //TODO
@@ -47,7 +47,7 @@ resource "null_resource" "delete_request_routing_rule" {
     command     = format("%s/scripts/delete_resource.sh", path.module)
     when        = destroy
     interpreter = ["/bin/bash"]
-    on_failure  = fail
+    on_failure  = continue
 
     environment = {
       RESOURCE                 = "REQUESTROUTINGRULE"
