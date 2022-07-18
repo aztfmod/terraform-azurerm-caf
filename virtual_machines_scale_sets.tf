@@ -17,11 +17,11 @@ module "virtual_machine_scale_sets" {
   ]
   for_each = local.compute.virtual_machine_scale_sets
 
-  availability_sets                =  local.combined_objects_availability_sets
-  application_gateways             =  local.combined_objects_application_gateways
-  application_security_groups      =  local.combined_objects_application_security_groups
-  base_tags                        =  try(local.global_settings.inherit_tags, false) ? try(local.combined_objects_resource_groups[try(each.value.resource_group.lz_key, local.client_config.landingzone_key)][try(each.value.resource_group.key, each.value.resource_group_key)].tags, {}) : {}
-  boot_diagnostics_storage_account =  try(local.combined_diagnostics.storage_accounts[each.value.boot_diagnostics_storage_account_key].primary_blob_endpoint, {})
+  availability_sets                = local.combined_objects_availability_sets
+  application_gateways             = local.combined_objects_application_gateways
+  application_security_groups      = local.combined_objects_application_security_groups
+  base_tags                        = try(local.global_settings.inherit_tags, false) ? try(local.combined_objects_resource_groups[try(each.value.resource_group.lz_key, local.client_config.landingzone_key)][try(each.value.resource_group.key, each.value.resource_group_key)].tags, {}) : {}
+  boot_diagnostics_storage_account = try(local.combined_diagnostics.storage_accounts[each.value.boot_diagnostics_storage_account_key].primary_blob_endpoint, {})
   client_config                    = local.client_config
   diagnostics                      = local.combined_diagnostics
   disk_encryption_sets             = local.combined_objects_disk_encryption_sets
