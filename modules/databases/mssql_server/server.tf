@@ -11,13 +11,13 @@ resource "azurerm_mssql_server" "mssql" {
   tags                          = local.tags
 
   dynamic "azuread_administrator" {
-    for_each = try(var.settings.azuread_administrator.azuread_authentication_only, false) == true ? [var.settings.azuread_administrator] : []
+    for_each = can(var.settings.azuread_administrator) ? [var.settings.azuread_administrator] : []
 
     content {
       azuread_authentication_only = try(azuread_administrator.value.azuread_authentication_only, null)
-      login_username              = try(azuread_administrator.value.login_username, try(var.azuread_groups[var.client_config.landingzone_key][azuread_administrator.value.azuread_group_key].name, var.azuread_groups[azuread_administrator.value.lz_key][azuread_administrator.value.azuread_group_key].name))
-      object_id                   = try(azuread_administrator.value.object_id, try(var.azuread_groups[var.client_config.landingzone_key][azuread_administrator.value.azuread_group_key].id, var.azuread_groups[azuread_administrator.value.lz_key][azuread_administrator.value.azuread_group_key].id))
-      tenant_id                   = try(azuread_administrator.value.tenant_id, try(var.azuread_groups[var.client_config.landingzone_key][azuread_administrator.value.azuread_group_key].tenant_id, var.azuread_groups[azuread_administrator.value.lz_key][azuread_administrator.value.azuread_group_key].tenant_id))
+      login_username              = try(azuread_administrator.value.login_username, var.azuread_groups[try(azuread_administrator.value.lz_key, var.client_config.landingzone_key)][azuread_administrator.value.azuread_group_key].name)
+      object_id                   = try(azuread_administrator.value.object_id, var.azuread_groups[try(azuread_administrator.value.lz_key, var.client_config.landingzone_key)][azuread_administrator.value.azuread_group_key].id)
+      tenant_id                   = try(azuread_administrator.value.tenant_id, var.azuread_groups[try(azuread_administrator.value.lz_key, var.client_config.landingzone_key)][azuread_administrator.value.azuread_group_key].tenant_id)
     }
   }
 
