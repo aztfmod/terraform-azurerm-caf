@@ -302,7 +302,7 @@ resource "azurerm_application_gateway" "agw" {
   # custom_error_configuration {}
 
   dynamic "redirect_configuration" {
-    for_each = try(var.settings.redirect_configurations)
+    for_each = try(var.settings.redirect_configurations, {})
 
     content {
       name                 = redirect_configuration.value.name
