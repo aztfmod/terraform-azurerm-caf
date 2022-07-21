@@ -58,6 +58,13 @@ resource "azurerm_virtual_network_gateway" "vngw" {
     }
   }
 
+  dynamic "custom_route" {
+    for_each = try(var.settings.custom_route, {})
+    content {
+      address_prefixes = custom_route.value.address_prefixes
+    }
+  }
+
   active_active = try(var.settings.active_active, null)
   enable_bgp    = try(var.settings.enable_bgp, null)
   #vpn_type defaults to 'RouteBased'. Type 'PolicyBased' supported only by Basic SKU
