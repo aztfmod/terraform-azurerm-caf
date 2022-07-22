@@ -95,6 +95,9 @@ servicebus_topics = {
       key = "namespace1"
     }
     name = "topic1"
+    # In case you want to passthrough azurecaf_name prefixes for this resource only
+    # It overrides the global_settings.passthrough parameter
+    # passthrough_caf_name = bool
 
     # auto_delete_on_idle = "P0Y0M0DT0H5M0S"
     # default_message_ttl = "P0Y0M0DT0H5M0S"
@@ -118,6 +121,10 @@ servicebus_topics = {
     subscriptions = {
       sub1 = {
         name               = "subtest1"
+        # In case you want to passthrough azurecaf_name prefixes for this resource only
+        # It overrides the global_settings.passthrough parameter
+        # passthrough_caf_name = bool
+
         max_delivery_count = 1
 
         auto_delete_on_idle                       = "P14DT5M"
@@ -190,6 +197,10 @@ servicebus_topics = {
 servicebus_queues = {
   queue1 = {
     name = "testqueue1"
+    # In case you want to passthrough azurecaf_name prefixes for this resource only
+    # It overrides the global_settings.passthrough parameter
+    # passthrough_caf_name = bool
+
     servicebus_namespace = {
       # lz_key = ""
       key = "namespace1"
