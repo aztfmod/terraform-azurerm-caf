@@ -7,7 +7,6 @@ module "dynamic_keyvault_certificates" {
   for_each = {
     for keyvault_key, secrets in try(var.dynamic_keyvault_certificates, {}) : keyvault_key => {
       for key, value in secrets : key => value
-      if try(value.contents, null) == null
     }
   }
 
