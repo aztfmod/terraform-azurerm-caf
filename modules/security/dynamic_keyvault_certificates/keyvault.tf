@@ -2,7 +2,7 @@ module "certificate" {
   source = "./certificate"
   for_each = {
     for key, value in var.settings : key => value
-    if try(value.value, null) == null
+    if try(value.contents, null) == null
   }
 
   name        = each.value.secret_name
