@@ -3,7 +3,7 @@ resource "azurerm_key_vault_certificate" "certificate" {
   key_vault_id = var.keyvault_id
 
   certificate {
-    contents = base64encode(var.contents)
+    contents = var.contents
     password = try(var.password, null)
   }
 }
