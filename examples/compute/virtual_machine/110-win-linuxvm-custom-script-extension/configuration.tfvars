@@ -237,6 +237,12 @@ virtual_machines = {
         automatic_upgrade_enabled = false
         # managed_identity_id       = "id" # optional to define managed identity principal_id directly
         # lz_key                    = "other_lz" # optional for managed identity defined in other lz
+        timeouts = {
+          create = "35m"
+          read   = "10m"
+          update = "35m"
+          delete = "35m"
+        }
       }
     }
   }
