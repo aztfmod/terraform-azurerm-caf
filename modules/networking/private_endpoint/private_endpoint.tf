@@ -41,9 +41,5 @@ resource "azurerm_private_endpoint" "pep" {
 
     }
   }
-  lifecycle {
-    ignore_changes = [
-      private_dns_zone_group
-    ]
-  }
+
 }
