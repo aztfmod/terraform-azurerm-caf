@@ -458,6 +458,9 @@ variable "cosmos_dbs" {
 variable "dynamic_keyvault_secrets" {
   default = {}
 }
+variable "dynamic_keyvault_certificates" {
+  default = {}
+}
 variable "front_doors" {
   default = {}
 }
