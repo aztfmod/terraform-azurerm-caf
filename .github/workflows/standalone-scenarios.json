@@ -107,6 +107,7 @@
     "keyvault/101-keyvault-policies",
     "keyvault/102-keyvault-cert-issuer",
     "keyvault/104-keyvault-dynamic-secret",
+    "keyvault/105-keyvault-dynamic-certificate",
     "logic_app/100-logic_app_workflow",
     "logic_app/102-logic_app_integration_account",
     "logic_app/103-logic_app_action_http",
