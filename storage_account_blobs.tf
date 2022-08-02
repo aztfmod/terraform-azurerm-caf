@@ -3,7 +3,7 @@
 #
 
 resource "time_sleep" "delay" {
-  depends_on = [azurerm_role_assignment.for]
+  depends_on = [azurerm_role_assignment.for_deferred]
   for_each   = local.storage.storage_account_blobs
 
   create_duration = "300s"
