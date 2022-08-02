@@ -56,6 +56,7 @@ locals {
   )
 
   services_roles = {
+    automations                                = local.combined_objects_automations
     aks_clusters                               = local.combined_objects_aks_clusters
     aks_ingress_application_gateway_identities = local.aks_ingress_application_gateway_identities
     api_management                             = local.combined_objects_api_management
