@@ -80,6 +80,8 @@ locals {
     databricks_workspaces                      = local.combined_objects_databricks_workspaces
     dns_zones                                  = local.combined_objects_dns_zones
     event_hub_namespaces                       = local.combined_objects_event_hub_namespaces
+    iot_hub                                    = local.combined_objects_iot_hub
+    iot_hub_dps                                = local.combined_objects_iot_hub_dps
     keyvaults                                  = local.combined_objects_keyvaults
     kusto_clusters                             = local.combined_objects_kusto_clusters
     logged_in                                  = local.logged_in
