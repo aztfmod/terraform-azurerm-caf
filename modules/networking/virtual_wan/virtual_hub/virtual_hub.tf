@@ -3,6 +3,7 @@ resource "azurecaf_name" "vwan_hub" {
   name          = var.virtual_hub_config.hub_name
   resource_type = "azurerm_virtual_hub"
   prefixes      = var.global_settings.prefixes
+  suffixes      = var.global_settings.suffixes
   random_length = var.global_settings.random_length
   clean_input   = true
   passthrough   = var.global_settings.passthrough
@@ -40,6 +41,7 @@ resource "azurecaf_name" "spp" {
   name          = each.value.name
   resource_type = "azurerm_virtual_hub"
   prefixes      = var.global_settings.prefixes
+  suffixes      = var.global_settings.suffixes
   random_length = var.global_settings.random_length
   clean_input   = true
   passthrough   = var.global_settings.passthrough
@@ -65,6 +67,7 @@ resource "azurerm_virtual_hub_security_partner_provider" "spp" {
 #   name          = each.value.name
 #   resource_type = "azurerm_virtual_hub"
 #   prefixes      = var.global_settings.prefixes
+#   suffixes      = var.global_settings.suffixes
 #   random_length = var.global_settings.random_length
 #   clean_input   = true
 #   passthrough   = var.global_settings.passthrough
@@ -87,6 +90,7 @@ resource "azurecaf_name" "hub_ip" {
   name          = each.value.name
   resource_type = "azurerm_virtual_hub"
   prefixes      = var.global_settings.prefixes
+  suffixes      = var.global_settings.suffixes
   random_length = var.global_settings.random_length
   clean_input   = true
   passthrough   = var.global_settings.passthrough

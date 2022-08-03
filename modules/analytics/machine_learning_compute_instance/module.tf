@@ -2,6 +2,7 @@ resource "azurecaf_name" "mlci" {
   name          = var.settings.name
   resource_type = "azurerm_machine_learning_compute_instance"
   prefixes      = var.global_settings.prefixes
+  suffixes      = var.global_settings.suffixes
   random_length = var.global_settings.random_length
   clean_input   = true
   passthrough   = var.global_settings.passthrough

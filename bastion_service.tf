@@ -9,6 +9,7 @@ resource "azurecaf_name" "host" {
   name          = try(each.value.name, "")
   resource_type = "azurerm_bastion_host"
   prefixes      = local.global_settings.prefixes
+  suffixes      = local.global_settings.suffixes
   random_length = local.global_settings.random_length
   clean_input   = true
   passthrough   = local.global_settings.passthrough

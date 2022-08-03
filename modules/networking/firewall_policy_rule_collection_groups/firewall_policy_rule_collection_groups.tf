@@ -2,6 +2,7 @@ resource "azurecaf_name" "polgroup" {
   name          = var.policy_settings.name
   resource_type = "azurerm_firewall_network_rule_collection"
   prefixes      = var.global_settings.prefixes
+  suffixes      = var.global_settings.suffixes
   random_length = var.global_settings.random_length
   clean_input   = true
   passthrough   = var.global_settings.passthrough
@@ -17,6 +18,7 @@ resource "azurecaf_name" "application_rule" {
   name          = each.value.name
   resource_type = "azurerm_firewall_application_rule_collection"
   prefixes      = var.global_settings.prefixes
+  suffixes      = var.global_settings.suffixes
   random_length = var.global_settings.random_length
   clean_input   = true
   passthrough   = var.global_settings.passthrough
@@ -32,6 +34,7 @@ resource "azurecaf_name" "network_rule" {
   name          = each.value.name
   resource_type = "azurerm_firewall_network_rule_collection"
   prefixes      = var.global_settings.prefixes
+  suffixes      = var.global_settings.suffixes
   random_length = var.global_settings.random_length
   clean_input   = true
   passthrough   = var.global_settings.passthrough
