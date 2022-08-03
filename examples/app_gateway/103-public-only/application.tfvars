@@ -4,6 +4,15 @@ application_gateway_applications = {
     application_gateway_key = "agw1"
     name                    = "demoapp1"
 
+    listeners = {
+      public = {
+        name                           = "demo-app1-80-public"
+        front_end_ip_configuration_key = "public"
+        front_end_port_key             = "80"
+        host_name                      = "cafdemo.com"
+      }
+    }
+
     request_routing_rules = {
       default = {
         rule_type = "Basic"
