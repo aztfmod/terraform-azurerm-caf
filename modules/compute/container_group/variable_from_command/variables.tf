@@ -1,0 +1,2 @@
+variable "trigger" {}
+variable "variables" {}
