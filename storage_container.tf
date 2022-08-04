@@ -1,6 +1,6 @@
 module "storage_containers" {
   source     = "./modules/storage_account/container/"
-  depends_on = [azurerm_role_assignment.for]
+  depends_on = [time_sleep.azurerm_role_assignment_for_deferred]
   for_each   = local.storage.storage_containers
 
   settings             = each.value
