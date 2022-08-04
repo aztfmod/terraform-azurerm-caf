@@ -38,6 +38,20 @@ resource "azurerm_role_assignment" "for_deferred" {
   scope                = each.value.scope_lz_key == null ? local.services_roles_deferred[each.value.scope_resource_key][var.current_landingzone_key][each.value.scope_key_resource].id : local.services_roles_deferred[each.value.scope_resource_key][each.value.scope_lz_key][each.value.scope_key_resource].id
 }
 
+resource "time_sleep" "azurerm_role_assignment_for" {
+  depends_on = [azurerm_role_assignment.for]
+
+  # 2 mins timer on creation
+  create_duration = "2m"
+}
+
+resource "time_sleep" "azurerm_role_assignment_for_deferred" {
+  depends_on = [azurerm_role_assignment.for_deferred]
+
+  # 2 mins timer on creation
+  create_duration = "2m"
+}
+
 data "azurerm_management_group" "level" {
   for_each = {
     for key, value in try(var.role_mapping.built_in_role_mapping.management_group, {}) : key => value
