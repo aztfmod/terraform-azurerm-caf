@@ -34,6 +34,11 @@ container_groups = {
         secure_environment_variables = {
           AGENT_TOKEN = "replace_with_your_token_from_gha"
         }
+        # Call the gh api command to generate an agent token to allow the agent to register in th pool
+        # Note as this command always return a new token, it will force the container to be destroyed and recreated.
+        secure_variables_from_command = {
+          AGENT_TOKEN = "gh api --method POST -H 'Accept: application/vnd.github.v3+json' /repos/orgname/reponame/actions/runners/registration-token | jq -r ' {value: .token}'"
+        }
         environment_variables_from_resources = {
           AGENT_KEYVAULT_NAME = {
             output_key    = "keyvaults"
@@ -45,6 +50,12 @@ container_groups = {
             resource_key  = "rover"
             attribute_key = "id"
           }
+        }
+        # Get value from a command executed in the rover
+        # env | grep USERNAME will return USERNAME=vscode
+        # the following command will then return vscode and assign it to the container env variable USERNAME
+        variables_from_command = {
+          USERNAME = "variable=$(env | grep USERNAME | sed 's/.*=//' ) | jq -n --arg var $variable '{value: $var}'"
         }
       }
 
