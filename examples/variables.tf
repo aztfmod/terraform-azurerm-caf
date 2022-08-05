@@ -832,6 +832,9 @@ variable "api_management_group" {
 variable "api_management_subscription" {
   default = {}
 }
+variable "api_management_product" {
+  default = {}
+}
 variable "lb" {
   default = {}
 }
