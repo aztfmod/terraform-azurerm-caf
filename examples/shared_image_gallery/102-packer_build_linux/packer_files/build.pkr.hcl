@@ -16,6 +16,7 @@ source "azure-arm" "mybuild" {
   virtual_network_name                             = var.virtual_network_name
   virtual_network_subnet_name                      = var.virtual_network_subnet_name
   vm_size                                          = var.vm_size
+  os_disk_size_gb                                  = var.os_disk_size_gb
   azure_tags                                       = local.azure_tags
   shared_gallery_image_version_exclude_from_latest = var.shared_gallery_image_version_exclude_from_latest
   shared_image_gallery_destination {
@@ -82,6 +83,9 @@ variable "virtual_network_subnet_name" {
   default = null
 }
 variable "vm_size" {}
+variable "os_disk_size_gb" {
+  default = null
+}
 #destination sig
 variable "gallery_name" {}
 variable "image_name" {}
