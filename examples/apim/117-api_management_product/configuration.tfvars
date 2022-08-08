@@ -7,14 +7,14 @@ global_settings = {
 
 resource_groups = {
   rg1 = {
-    name   = "example-agw"
+    name   = "example"
     region = "region1"
   }
 }
 
 api_management = {
   example_apim = {
-    name               = "example-apim"
+    name               = "example"
     resource_group_key = "rg1"
     publisher_name     = "My Company"
     publisher_email    = "company@terraform.io"

@@ -331,7 +331,7 @@ module "api_management_subscription" {
 
   api_management_name = can(each.value.api_management.name) ? each.value.api_management.name : local.combined_objects_api_management[try(each.value.api_management.lz_key, local.client_config.landingzone_key)][each.value.api_management.key].name
   resource_group_name = can(each.value.resource_group.name) || can(each.value.resource_group_name) ? try(each.value.resource_group.name, each.value.resource_group_name) : local.combined_objects_resource_groups[try(each.value.resource_group.lz_key, local.client_config.landingzone_key)][try(each.value.resource_group_key, each.value.resource_group.key)].name
-  product_id          = can(each.value.product.product_id) ? each.value.product.product_id : local.combined_objects_api_management_product[try(each.value.product.lz_key, local.client_config.landingzone_key)][each.value.product.key].id
+  product_id          = can(each.value.product.product_id) ? each.value.product.product_id : try(local.combined_objects_api_management_product[try(each.value.product.lz_key, local.client_config.landingzone_key)][each.value.product.key].id, null)
 
   remote_objects = {
     api_management         = local.combined_objects_api_management
