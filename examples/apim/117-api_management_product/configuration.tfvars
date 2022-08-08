@@ -50,3 +50,19 @@ api_management_product = {
     terms = "Some legal terms ..."
   }
 }
+
+api_management_subscription = {
+  example_subscription = {
+    api_management = {
+      key = "example_apim"
+    }
+    resource_group = {
+      key = "rg1"
+    }
+    product = {
+      key = "example_product2"
+    }
+    display_name = "Example Subscription"
+    state        = "active"
+  }
+}
