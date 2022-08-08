@@ -336,7 +336,6 @@ module "api_management_subscription" {
   remote_objects = {
     api_management         = local.combined_objects_api_management
     resource_group         = local.combined_objects_resource_groups
-    api_management_product = local.combined_objects_api_management_product
   }
 }
 output "api_management_subscription" {
