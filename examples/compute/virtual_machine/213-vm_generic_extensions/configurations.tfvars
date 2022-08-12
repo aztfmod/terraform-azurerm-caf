@@ -100,10 +100,9 @@ CUSTOM_DATA
         network_interface_keys = ["nic0"]
 
         os_disk = {
-          name                    = "example_vm1-os"
-          caching                 = "ReadWrite"
-          storage_account_type    = "Standard_LRS"
-          disk_encryption_set_key = "set1"
+          name                 = "example_vm1-os"
+          caching              = "ReadWrite"
+          storage_account_type = "Standard_LRS"
         }
         identity = {
           type = "SystemAssigned" #SystemAssigned OR UserAssigned OR SystemAssigned, UserAssigned
@@ -128,16 +127,14 @@ CUSTOM_DATA
         name                 = "server1-data1"
         storage_account_type = "Standard_LRS"
         # Only Empty is supported. More community contributions required to cover other scenarios
-        create_option           = "Empty"
-        disk_size_gb            = "10"
-        lun                     = 1
-        zones                   = ["1"]
-        disk_encryption_set_key = "set1"
+        create_option = "Empty"
+        disk_size_gb  = "10"
+        lun           = 1
+        zones         = ["1"]
       }
     }
   }
 }
-
 
 diagnostic_storage_accounts = {
   # Stores boot diagnostic for region1
@@ -151,16 +148,11 @@ diagnostic_storage_accounts = {
   }
 }
 
-
-
 keyvaults = {
   example_vm_rg1 = {
-    name                        = "vmlinuxakv"
-    resource_group_key          = "vm_region1"
-    sku_name                    = "standard"
-    soft_delete_enabled         = true
-    purge_protection_enabled    = true
-    enabled_for_disk_encryption = true
+    name               = "vmlinuxakv"
+    resource_group_key = "vm_region1"
+    sku_name           = "standard"
     tags = {
       env = "Standalone"
     }
@@ -173,27 +165,6 @@ keyvaults = {
   }
 }
 
-keyvault_keys = {
-  key1 = {
-    keyvault_key       = "example_vm_rg1"
-    resource_group_key = "vm_region1"
-    name               = "disk-key"
-    key_type           = "RSA"
-    key_size           = "2048"
-    key_opts           = ["encrypt", "decrypt", "sign", "verify", "wrapKey", "unwrapKey"]
-  }
-}
-
-disk_encryption_sets = {
-  set1 = {
-    name               = "deskey1"
-    resource_group_key = "vm_region1"
-    key_vault_key_key  = "key1"
-    keyvault = {
-      key = "example_vm_rg1"
-    }
-  }
-}
 vnets = {
   vnet_region1 = {
     resource_group_key = "vm_region1"

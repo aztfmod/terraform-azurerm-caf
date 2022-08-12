@@ -23,10 +23,10 @@ variable "sku_tier" {
   description = "(Optional) The SKU Tier that should be used for the Public IP. Possible values are Regional and Global. Defaults to Regional."
   type        = string
   default     = "Regional"
-  validation {
-    condition     = contains(["Regional", "Global"], var.sku_tier)
-    error_message = "Provide an allowed value as defined in https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/resources/public_ip#sku_tier."
-  }
+  # validation {
+  #   condition     = contains(["Regional", "Global"], var.sku_tier)
+  #   error_message = "Provide an allowed value as defined in https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/resources/public_ip#sku_tier."
+  # }
 }
 
 variable "allocation_method" {
@@ -87,13 +87,13 @@ variable "tags" {
 
 variable "zones" {
   description = "(Optional) The availability zone to allocate the Public IP in. Possible values are 1, 2, 3. Defaults to null."
-  type        = list
+  type        = list(any)
   default     = null
 
-  validation {
-    condition     = contains(["1", "2", "3"], var.zones)
-    error_message = "Provide an allowed value as defined in https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/resources/public_ip#availability_zone."
-  }
+  # validation {
+  #   condition     = contains(["1", "2", "3"], var.zones)
+  #   error_message = "Provide an allowed value as defined in https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/resources/public_ip#availability_zone."
+  # }
 }
 
 variable "diagnostics" {

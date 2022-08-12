@@ -79,7 +79,7 @@ resource "azurerm_resource_group_template_deployment" "alert" {
   name                = random_string.random1.result
   resource_group_name = var.resource_group_name
 
-  template_content   = file("${path.module}/alert-servicehealth.json")
+  template_content = file("${path.module}/alert-servicehealth.json")
   parameters_content = jsonencode({
     "name"              = azurecaf_name.service_health_alert_name.result
     "actionGroups_name" = azurerm_monitor_action_group.ag1.name

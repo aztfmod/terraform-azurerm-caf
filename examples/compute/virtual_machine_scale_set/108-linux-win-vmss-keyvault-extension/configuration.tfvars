@@ -87,7 +87,8 @@ keyvaults = {
     }
     creation_policies = {
       logged_in_user = {
-        secret_permissions = ["Set", "Get", "List", "Delete", "Purge", "Recover"]
+        secret_permissions      = ["Set", "Get", "List", "Delete", "Purge", "Recover"]
+        certificate_permissions = ["Get", "Create", "Delete", "Purge"]
       }
     }
   }
@@ -270,7 +271,7 @@ virtual_machine_scale_sets = {
     resource_group_key                   = "rg1"
     boot_diagnostics_storage_account_key = "bootdiag1"
     os_type                              = "linux"
-    keyvault_key                         = "kv1"
+    keyvault_key                         = "example_kv_rg1"
 
     vmss_settings = {
       linux = {
@@ -404,7 +405,7 @@ virtual_machine_scale_sets = {
     provision_vm_agent                   = true
     boot_diagnostics_storage_account_key = "bootdiag1"
     os_type                              = "windows"
-    keyvault_key                         = "kv1"
+    keyvault_key                         = "example_kv_rg1"
 
     vmss_settings = {
       windows = {

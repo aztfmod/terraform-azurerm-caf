@@ -150,6 +150,9 @@ variable "subscription_billing_role_assignments" {
 variable "app_service_environments" {
   default = {}
 }
+variable "app_service_environments_v3" {
+  default = {}
+}
 variable "app_service_plans" {
   default = {}
 }
@@ -455,6 +458,9 @@ variable "cosmos_dbs" {
 variable "dynamic_keyvault_secrets" {
   default = {}
 }
+variable "dynamic_keyvault_certificates" {
+  default = {}
+}
 variable "front_doors" {
   default = {}
 }
@@ -476,6 +482,9 @@ variable "event_hubs" {
   default = {}
 }
 variable "automations" {
+  default = {}
+}
+variable "automation_log_analytics_links" {
   default = {}
 }
 
@@ -967,5 +976,23 @@ variable "backup_vault_policies" {
   default = {}
 }
 variable "backup_vault_instances" {
+  default = {}
+}
+variable "traffic_manager_azure_endpoint" {
+  default = {}
+}
+variable "traffic_manager_external_endpoint" {
+  default = {}
+}
+variable "traffic_manager_nested_endpoint" {
+  default = {}
+}
+variable "traffic_manager_profile" {
+  default = {}
+}
+variable "resource_provider_registration" {
+  default = {}
+}
+variable "static_sites" {
   default = {}
 }

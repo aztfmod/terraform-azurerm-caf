@@ -106,6 +106,7 @@ module "vm_extension_generic" {
 
 module "keyvault_for_windows" {
   source = "./modules/compute/virtual_machine_extensions"
+
   for_each = {
     for key, value in try(local.compute.virtual_machines, {}) : key => value
     if try(value.virtual_machine_extensions.keyvault_for_windows, null) != null
@@ -114,6 +115,7 @@ module "keyvault_for_windows" {
   client_config           = local.client_config
   virtual_machine_id      = module.virtual_machines[each.key].id
   virtual_machine_os_type = module.virtual_machines[each.key].os_type
+  managed_identities      = local.combined_objects_managed_identities
   extension               = each.value.virtual_machine_extensions.keyvault_for_windows
   extension_name          = "keyvault_for_windows"
   keyvaults               = local.combined_objects_keyvaults

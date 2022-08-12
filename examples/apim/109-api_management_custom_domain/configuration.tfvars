@@ -70,11 +70,9 @@ api_management_custom_domain = {
     }
     gateways = {
       gw1 = {
-        {
-          host_name = "api.example.com"
-          key_vault_certificate = {
-            certificate_request_key = "example"
-          }
+        host_name = "api.example.com"
+        key_vault_certificate = {
+          certificate_request_key = "example"
         }
       }
     }

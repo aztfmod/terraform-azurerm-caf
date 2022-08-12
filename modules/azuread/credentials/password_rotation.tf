@@ -61,7 +61,7 @@ resource "random_password" "key" {
   length  = local.password_policy.length
   special = local.password_policy.special
   upper   = local.password_policy.upper
-  number  = local.password_policy.number
+  numeric = local.password_policy.number
 }
 
 resource "time_rotating" "key0" {
@@ -77,7 +77,7 @@ resource "random_password" "key0" {
   length  = local.password_policy.length
   special = local.password_policy.special
   upper   = local.password_policy.upper
-  number  = local.password_policy.number
+  numeric = local.password_policy.number
 }
 
 
@@ -94,5 +94,5 @@ resource "random_password" "key1" {
   length  = local.password_policy.length
   special = local.password_policy.special
   upper   = local.password_policy.upper
-  number  = local.password_policy.number
+  numeric = local.password_policy.number
 }

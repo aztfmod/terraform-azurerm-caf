@@ -78,7 +78,7 @@ vnets = {
 }
 
 keyvaults = {
-  example_kv_rg1 = {
+  kv1 = {
     name               = "example_kv_rg1"
     resource_group_key = "rg1"
     sku_name           = "standard"
@@ -95,7 +95,7 @@ keyvaults = {
 
 # Store output attributes into keyvault secret
 dynamic_keyvault_secrets = {
-  example_kv_rg1 = { # Key of the keyvault
+  kv1 = { # Key of the keyvault
     vmadmin-username = {
       secret_name = "vmadmin-username"
       value       = "vmadmin"

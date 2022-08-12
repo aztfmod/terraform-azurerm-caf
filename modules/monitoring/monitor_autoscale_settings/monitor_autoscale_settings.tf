@@ -42,7 +42,7 @@ resource "azurerm_monitor_autoscale_setting" "this" {
             metric_namespace         = try(rule.value.metric_trigger.metric_namespace, null)
             divide_by_instance_count = try(rule.value.metric_trigger.divide_by_instance_count, null)
             dynamic "dimensions" {
-              for_each = try(rule.value.metric_trigger.dimensions, {}) == {} ? [] : [1]
+              for_each = try(rule.value.metric_trigger.dimensions, {})
               content {
                 name     = dimensions.value.name
                 operator = dimensions.value.operator

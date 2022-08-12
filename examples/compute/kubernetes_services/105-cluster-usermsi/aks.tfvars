@@ -38,7 +38,7 @@ aks_clusters = {
     }
 
     azure_active_directory_role_based_access_control = {
-      managed = true
+      managed            = true
       azure_rbac_enabled = true
       # tenant_id = ""
       # admin_group_object_ids = ""

@@ -2,14 +2,18 @@
 
 When upgrading to a newer version of the CAF module, some configuration structures must be updated before applying the modifications.
 
-## 5.6.0
+## 5.7.0
 
 Minimum rover version of 1.1.x. Lower versions not supported anymore.
 
-Version 5.6.0 includes support for azurerm 3.0.2 which requires your attention if you are deploying the following components:
+Version 5.6.0 includes support for azurerm 3.7.0 which requires your attention if you are deploying the following components:
 
 - vpn_gateway_connections:
   - The deprecated field ```propagated_route_tables``` will be removed in favour of the ```propagated_route_table``` property. If you've been using ```propagated_route_tables```, rename with the new name ```propagated_route_table```.
+
+## 5.6.0
+
+Version 5.6.0 includes support for azurerm 2.98 which requires your attention if you are deploying the following components:
 
 - signal_r:
   - The ```features``` block is deprecated, favor of use ```connectivity_logs_enabled```, ```messaging_logs_enabled```, ```live_trace_enabled``` and ```service_mode``` instead. Module has been updated to reflect that. You must update the settings in your configuration file accordingly.

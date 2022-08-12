@@ -40,18 +40,14 @@ resource "azurerm_virtual_hub_connection" "vhub_connection" {
         for_each = try(routing.value.propagated_route_table, null) == null ? [] : [1]
 
         content {
-          labels = try(flatten([for label in routing.value.propagated_route_table.labels : label if try(label, "") != ""]), [])
-          route_table_ids = coalesce(
+          labels = try(routing.value.propagated_route_table.labels, null)
+          route_table_ids = concat(
             flatten(
               [
                 for key in try(routing.value.propagated_route_table.virtual_hub_route_table_keys, []) : contains(tolist(["defaultRouteTable", "noneRouteTable"]), key) ? format("%s/hubRouteTables/%s", local.azurerm_virtual_hub_connection[each.key].virtual_hub_id, key) : local.combined_objects_virtual_hub_route_tables[try(routing.value.lz_key, local.client_config.landingzone_key)][key].id
               ]
             ),
-            flatten(
-              [
-                for id in try(routing.value.propagated_route_table.ids, []) : id
-              ]
-            )
+            try(routing.value.propagated_route_table.ids, [])
           )
         }
       }

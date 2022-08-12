@@ -18,3 +18,10 @@ output "rbac_id" {
   value       = try(azurerm_app_service.app_service.identity.0.principal_id, null)
   description = "The Principal ID of the App Service."
 }
+output "slot" {
+  value = {
+    for key, value in try(var.slots, {}) : key => {
+      id = azurerm_app_service_slot.slots[key].id
+    }
+  }
+}
