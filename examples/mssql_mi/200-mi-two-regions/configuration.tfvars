@@ -152,7 +152,7 @@ mssql_managed_instances_secondary = {
     sku = {
       name = "GP_Gen5"
     }
-    administratorLogin         = "adminuser"
+    administratorLogin = "adminuser"
     # administratorLoginPassword = "@dm1nu53r@11112020"
 
     primary_server = {

@@ -96,11 +96,11 @@ backup_vault_instances = {
 
 keyvaults = {
   example_vm_rg1 = {
-    name                        = "vmlinuxakv"
-    resource_group_key          = "bv"
-    sku_name                    = "standard"
-    soft_delete_enabled         = true
-    purge_protection_enabled    = true
+    name               = "vmlinuxakv"
+    resource_group_key = "bv"
+    sku_name           = "standard"
+    # soft_delete_enabled         = true
+    purge_protection_enabled    = false
     enabled_for_disk_encryption = true
     tags = {
       env = "Standalone"

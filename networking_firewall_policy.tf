@@ -48,7 +48,10 @@ module "azurerm_firewall_policy_rule_collection_groups" {
   source   = "./modules/networking/firewall_policy_rule_collection_groups"
   for_each = local.networking.azurerm_firewall_policy_rule_collection_groups
 
-  depends_on = [time_sleep.after_azurerm_firewall_policies[0]]
+  depends_on = [
+    time_sleep.after_azurerm_firewall_policies[0],
+    module.azurerm_firewalls
+  ]
 
   global_settings     = local.global_settings
   ip_groups           = module.ip_groups
@@ -56,7 +59,6 @@ module "azurerm_firewall_policy_rule_collection_groups" {
   public_ip_addresses = module.public_ip_addresses
 
   firewall_policy_id = can(each.value.firewall_policy_id) || can(module.azurerm_firewall_policies_child[each.value.firewall_policy.key]) ? try(each.value.firewall_policy_id, module.azurerm_firewall_policies_child[each.value.firewall_policy.key].id) : local.combined_objects_azurerm_firewall_policies[try(each.value.firewall_policy.lz_key, local.client_config.landingzone_key)][try(each.value.firewall_policy_key, each.value.firewall_policy.key)].id
-
 }
 
 output "azurerm_firewall_policies" {

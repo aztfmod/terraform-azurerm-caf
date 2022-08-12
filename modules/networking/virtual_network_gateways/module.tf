@@ -20,7 +20,7 @@ resource "azurerm_virtual_network_gateway" "vngw" {
   # VPN SKUs : Basic, VpnGw1, VpnGw2, VpnGw3, VpnGw4,VpnGw5, VpnGw1AZ, VpnGw2AZ, VpnGw3AZ,VpnGw4AZ and VpnGw5AZ
   # SKUs are subject to change. Check Documentation page for updated information
   # The following options may change depending upon SKU type. Check product documentation
-  sku = var.settings.sku
+  sku           = var.settings.sku
   active_active = try(var.settings.active_active, null)
   enable_bgp    = try(var.settings.enable_bgp, null)
   #vpn_type defaults to 'RouteBased'. Type 'PolicyBased' supported only by Basic SKU
@@ -81,11 +81,18 @@ resource "azurerm_virtual_network_gateway" "vngw" {
     }
   }
 
+  dynamic "custom_route" {
+    for_each = try(var.settings.custom_route, {})
+    content {
+      address_prefixes = custom_route.value.address_prefixes
+    }
+  }
+
   dynamic "bgp_settings" {
     for_each = try(var.settings.bgp_settings, {})
     content {
-      asn             = bgp_settings.value.asn
-      peer_weight     = bgp_settings.value.peer_weight
+      asn         = bgp_settings.value.asn
+      peer_weight = bgp_settings.value.peer_weight
 
       dynamic "peering_addresses" {
         for_each = try(bgp_settings.value.peering_addresses, {})
@@ -96,7 +103,7 @@ resource "azurerm_virtual_network_gateway" "vngw" {
       }
     }
   }
-  
+
 
 
   timeouts {

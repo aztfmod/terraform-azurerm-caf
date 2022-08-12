@@ -61,7 +61,7 @@ variable "pip_settings" {
 
 variable "zones" {
   description = "(Optional) The availability zone to allocate the Public IP in. Possible values are Zone-Redundant, 1, 2, 3, and No-Zone. Defaults to Zone-Redundant."
-  type        = list
+  type        = list(any)
   default     = null
 
   validation {

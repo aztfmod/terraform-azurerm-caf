@@ -47,9 +47,10 @@ resource "azurerm_kubernetes_cluster" "aks" {
   depends_on = [
     null_resource.aks_registration_preview
   ]
-  name                = azurecaf_name.aks.result
-  location            = var.location
-  resource_group_name = var.resource_group_name
+  name                              = azurecaf_name.aks.result
+  location                          = var.location
+  resource_group_name               = var.resource_group_name
+  role_based_access_control_enabled = try(var.settings.role_based_access_control_enabled, null)
 
   default_node_pool {
     enable_auto_scaling          = try(var.settings.default_node_pool.enable_auto_scaling, false)
@@ -75,8 +76,8 @@ resource "azurerm_kubernetes_cluster" "aks" {
     vm_size                      = var.settings.default_node_pool.vm_size
     zones                        = can(var.settings.default_node_pool.availability_zones) || can(var.settings.default_node_pool.zones) == false ? try(var.settings.default_node_pool.availability_zones, null) : var.settings.default_node_pool.zones
 
-    pod_subnet_id  = can(var.settings.default_node_pool.pod_subnet_key) == false || can(var.settings.default_node_pool.pod_subnet.key) == false || can(var.settings.default_node_pool.pod_subnet_id) || can(var.settings.default_node_pool.pod_subnet.resource_id) ? try(var.settings.default_node_pool.pod_subnet_id, var.settings.default_node_pool.pod_subnet.resource_id, null) : var.subnets[try(var.settings.default_node_pool.pod_subnet_key, var.settings.default_node_pool.pod_subnet.key)].id
-    vnet_subnet_id = can(var.settings.default_node_pool.vnet_subnet_id) || can(var.settings.default_node_pool.subnet.resource_id) ? try(var.settings.default_node_pool.vnet_subnet_id, var.settings.default_node_pool.subnet.resource_id) : var.subnets[try(var.settings.default_node_pool.subnet_key, var.settings.default_node_pool.subnet.key)].id
+    pod_subnet_id  = can(var.settings.default_node_pool.pod_subnet_key) == false || can(var.settings.default_node_pool.pod_subnet.key) == false || can(var.settings.default_node_pool.pod_subnet_id) || can(var.settings.default_node_pool.pod_subnet.resource_id) ? try(var.settings.default_node_pool.pod_subnet_id, var.settings.default_node_pool.pod_subnet.resource_id, null) : var.vnets[try(var.settings.lz_key, var.client_config.landingzone_key)][var.settings.vnet_key].subnets[try(var.settings.default_node_pool.pod_subnet_key, var.settings.default_node_pool.pod_subnet.key)].id
+    vnet_subnet_id = can(var.settings.default_node_pool.vnet_subnet_id) || can(var.settings.default_node_pool.subnet.resource_id) ? try(var.settings.default_node_pool.vnet_subnet_id, var.settings.default_node_pool.subnet.resource_id) : var.vnets[try(var.settings.lz_key, var.client_config.landingzone_key)][var.settings.vnet_key].subnets[try(var.settings.default_node_pool.subnet_key, var.settings.default_node_pool.subnet.key)].id
 
     dynamic "upgrade_settings" {
       for_each = try(var.settings.default_node_pool.upgrade_settings, null) == null ? [] : [1]
@@ -159,7 +160,7 @@ resource "azurerm_kubernetes_cluster" "aks" {
 
   azure_policy_enabled = can(var.settings.addon_profile.azure_policy) || can(var.settings.azure_policy_enabled) == false ? try(var.settings.addon_profile.azure_policy.0.enabled, null) : var.settings.azure_policy_enabled
 
-  http_application_routing_enabled = can(var.settings.addon_profile.http_application_routing) || can(var.settings.http_application_routing_enabled) ==false ? try(var.settings.addon_profile.http_application_routing.0.enabled, null) : var.settings.http_application_routing_enabled
+  http_application_routing_enabled = can(var.settings.addon_profile.http_application_routing) || can(var.settings.http_application_routing_enabled) == false ? try(var.settings.addon_profile.http_application_routing.0.enabled, null) : var.settings.http_application_routing_enabled
 
   dynamic "oms_agent" {
     for_each = try(var.settings.addon_profile.oms_agent[*], var.settings.oms_agent[*], [])
@@ -315,17 +316,17 @@ resource "azurerm_kubernetes_cluster" "aks" {
     for_each = try(var.settings.azure_active_directory_role_based_access_control[*], {})
 
     content {
-      managed                = try(azure_active_directory_role_based_access_control.value.managed, true)
-      tenant_id              = try(azure_active_directory_role_based_access_control.value.tenant_id, null)
+      managed   = try(azure_active_directory_role_based_access_control.value.managed, true)
+      tenant_id = try(azure_active_directory_role_based_access_control.value.tenant_id, null)
 
       # when managed is set to true
       admin_group_object_ids = try(azure_active_directory_role_based_access_control.value.managed, true) ? try(azure_active_directory_role_based_access_control.value.admin_group_object_ids, try(var.admin_group_object_ids, null)) : null
       azure_rbac_enabled     = try(azure_active_directory_role_based_access_control.value.managed, true) ? try(azure_active_directory_role_based_access_control.value.azure_rbac_enabled, true) : null
 
       # when managed is set to false
-      client_app_id          = try(azure_active_directory_role_based_access_control.value.managed, true) == false ? azure_active_directory_role_based_access_control.value.client_app_id : null
-      server_app_id          = try(azure_active_directory_role_based_access_control.value.managed, true) == false ? azure_active_directory_role_based_access_control.value.server_app_id : null
-      server_app_secret      = try(azure_active_directory_role_based_access_control.value.managed, true) == false ? azure_active_directory_role_based_access_control.value.server_app_secret : null
+      client_app_id     = try(azure_active_directory_role_based_access_control.value.managed, true) == false ? azure_active_directory_role_based_access_control.value.client_app_id : null
+      server_app_id     = try(azure_active_directory_role_based_access_control.value.managed, true) == false ? azure_active_directory_role_based_access_control.value.server_app_id : null
+      server_app_secret = try(azure_active_directory_role_based_access_control.value.managed, true) == false ? azure_active_directory_role_based_access_control.value.server_app_secret : null
     }
   }
 
@@ -381,7 +382,7 @@ resource "random_string" "prefix" {
   length  = 10
   special = false
   upper   = false
-  number  = false
+  numeric = false
 }
 
 #
@@ -466,7 +467,7 @@ resource "azurerm_kubernetes_cluster_node_pool" "nodepools" {
   orchestrator_version     = try(each.value.orchestrator_version, try(var.settings.kubernetes_version, null))
   os_disk_size_gb          = try(each.value.os_disk_size_gb, null)
   os_disk_type             = try(each.value.os_disk_type, null)
-  pod_subnet_id            = can(each.value.pod_subnet_key) == false || can(each.value.pod_subnet.key) == false || can(each.value.pod_subnet_id) || can(each.value.pod_subnet.resource_id) ? try(each.value.pod_subnet_id, each.value.pod_subnet.resource_id, null) : var.subnets[try(each.value.pod_subnet.key, each.value.pod_subnet_key)].id
+  pod_subnet_id            = can(each.value.pod_subnet_key) == false || can(each.value.pod_subnet.key) == false || can(each.value.pod_subnet_id) || can(each.value.pod_subnet.resource_id) ? try(each.value.pod_subnet_id, each.value.pod_subnet.resource_id, null) : var.vnets[try(var.settings.lz_key, var.client_config.landingzone_key)][var.settings.vnet_key].subnets[try(each.value.pod_subnet.key, each.value.pod_subnet_key)].id
 
   os_sku                       = try(each.value.os_sku, null)
   os_type                      = try(each.value.os_type, null)
@@ -482,7 +483,7 @@ resource "azurerm_kubernetes_cluster_node_pool" "nodepools" {
     }
   }
 
-  vnet_subnet_id = can(each.value.subnet.resource_id) || can(each.value.vnet_subnet_id) ? try(each.value.subnet.resource_id, each.value.vnet_subnet_id) : var.subnets[try(each.value.subnet.key, each.value.subnet_key)].id
+  vnet_subnet_id = can(each.value.subnet.resource_id) || can(each.value.vnet_subnet_id) ? try(each.value.subnet.resource_id, each.value.vnet_subnet_id) : var.vnets[try(var.settings.lz_key, var.client_config.landingzone_key)][var.settings.vnet_key].subnets[try(each.value.subnet.key, each.value.subnet_key)].id
 
   max_count  = try(each.value.max_count, null)
   min_count  = try(each.value.min_count, null)

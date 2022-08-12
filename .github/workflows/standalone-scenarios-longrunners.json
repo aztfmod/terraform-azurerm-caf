@@ -26,12 +26,15 @@
     "networking/virtual_network_gateway/102-vpn-site-to-site-active-active",
     "networking/virtual_network_gateway/103-vpn-site-to-site-connection",
     "networking/virtual_wan/101-vwan-hub-firewall-legacy",
+    "networking/virtual_wan/102-vwan-hub-firewall-secured-vhub",
+    "networking/virtual_wan/102a-vwan-hub-firewall-secured-vhub-fw-mgr",
     "networking/virtual_wan/103-vwan-hub-gw",
     "networking/virtual_wan/104-vwan-hub-gw-spp",
     "networking/virtual_wan/105-vwan-hub-route-table",
     "networking/virtual_wan/109-vwan-vpn-gateway-connection",
     "redis_cache/100-redis-standard",
     "redis_cache/101-redis-diagnostics",
-    "redis_cache/102-redis-private"
+    "redis_cache/102-redis-private",
+    "webapps/appservice-environment/102-simple_asev3"
   ]
 }

@@ -3,7 +3,7 @@ terraform {
   required_providers {
     azurerm = {
       source  = "hashicorp/azurerm"
-      version = "~> 3.7.0"
+      version = "~> 3.8.0"
       configuration_aliases = [
         azurerm.vhub
       ]
@@ -24,7 +24,8 @@ terraform {
       source = "hashicorp/null"
     }
     random = {
-      source = "hashicorp/random"
+      version = "~> 3.3.1"
+      source  = "hashicorp/random"
     }
   }
   required_version = ">= 1.1.0"

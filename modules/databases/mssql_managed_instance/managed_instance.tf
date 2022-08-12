@@ -59,7 +59,7 @@ resource "random_password" "sqlmi_admin" {
   length           = 128
   special          = true
   upper            = true
-  number           = true
+  numeric          = true
   override_special = "$#%"
 }
 
@@ -100,7 +100,7 @@ resource "azapi_resource" "sqlmi_admin_password" {
 }
 
 data "external" "sqlmi_admin_password" {
-  count = try(var.settings.administratorLoginPassword, null) == null ? 1 : 0
+  count      = try(var.settings.administratorLoginPassword, null) == null ? 1 : 0
   depends_on = [azapi_resource.sqlmi_admin_password]
   program = [
     "bash", "-c",
@@ -121,7 +121,7 @@ data "azapi_resource" "mssqlmi" {
 locals {
   parent_id = format("/subscriptions/%s/resourceGroups/%s", var.client_config.subscription_id, var.resource_group_name)
   output = {
-    id           = jsondecode(data.azapi_resource.mssqlmi.id)
-    principal_id = try(jsondecode(data.azapi_resource.mssqlmi.identity[0].principal_id), null)
+    id           = data.azapi_resource.mssqlmi.id
+    principal_id = try(data.azapi_resource.mssqlmi.identity[0].principal_id, null)
   }
 }

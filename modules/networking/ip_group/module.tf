@@ -22,8 +22,8 @@ output "cidrs" {
 resource "azurerm_ip_group" "ip_group" {
 
   name                = azurecaf_name.ip_group.result
-  location            = var.resource_group.location
-  resource_group_name = var.resource_group.name
+  location            = var.location
+  resource_group_name = var.resource_group_name
   tags                = local.tags
   cidrs               = local.cidrs
 }

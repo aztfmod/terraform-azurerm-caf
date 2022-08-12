@@ -56,6 +56,15 @@ resource "azurerm_storage_account" "stg" {
     }
   }
 
+  dynamic "identity" {
+    for_each = can(var.storage_account.identity) ? [var.storage_account.identity] : []
+
+    content {
+      type         = identity.value.type
+      identity_ids = local.managed_identities
+    }
+  }
+
   dynamic "blob_properties" {
     for_each = lookup(var.storage_account, "blob_properties", false) == false ? [] : [1]
 

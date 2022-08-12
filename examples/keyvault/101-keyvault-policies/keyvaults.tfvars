@@ -63,6 +63,11 @@ keyvaults = {
         vnet_key           = "vnet_security"
         subnet_key         = "private_link"
         resource_group_key = "kv_region1"
+        # if the private_endpoint must be deployed in a remote resource group
+        # resource_group = {
+        #   lz_key = ""
+        #   key    = ""
+        # }
 
         private_service_connection = {
           name                 = "keyvault-certificates"
@@ -71,17 +76,13 @@ keyvaults = {
         }
 
         # private_dns = {
-        #   dns1 = {
-        #     lz_key          = ""
-        #     private_dns_key = ""
-        #   }
+        #   lz_key = ""
+        #   keys   = ["vaultcore"]
         # }
       }
     }
-
   }
 }
-
 
 vnets = {
   vnet_security = {
@@ -102,7 +103,5 @@ vnets = {
         enforce_private_link_endpoint_network_policies = true
       }
     }
-
   }
 }
-
