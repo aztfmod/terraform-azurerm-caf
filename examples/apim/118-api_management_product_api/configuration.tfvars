@@ -22,23 +22,8 @@ api_management = {
     }
     publisher_name  = "My Company"
     publisher_email = "company@terraform.io"
-    sku_name = "Consumption_0"
-  }
-}
 
-api_management_user = {
-  apimu1 = {
-    user_id = "5931a75ae4bbd512288c680b"
-    resource_group = {
-      key = "rg1"
-    }
-    api_management = {
-      key = "apim1"
-    }
-    first_name = "Example"
-    last_name  = "User"
-    email      = "tom+tfdev@hashicorp.com"
-    state      = "active"
+    sku_name = "Developer_1"
   }
 }
 
@@ -79,38 +64,19 @@ api_management_product = {
   }
 }
 
-api_management_subscription = {
-  apimsubscr1 = {
-    display_name = "Example-Product-Subscription"
-    state        = "active"
+api_management_product_api = {
+  apimprodapi1 = {
     resource_group = {
-      key    = "rg1"
+      key = "rg1"
     }
     api_management = {
       key = "apim1"
     }
-    api_management_product = {
+    product = {
       key = "apimprod1"
     }
-    primary_key   = "key-hash-1"
-    secondary_key = "key-hash-2"
-
-  }
-
-  apimsubscr2 = {
-    display_name = "Example-Api-Subscription"
-    state        = "active"
-    resource_group = {
-      key    = "rg1"
-    }
-    api_management = {
-      key = "apim1"
-    }
-    api_management_api = {
+    api = {
       key = "apimapi1"
-    }
-    api_management_user= {
-      key = "apimu1"
     }
   }
 }

@@ -403,6 +403,12 @@ locals {
     api_management_gateway_api          = try(var.apim.api_management_gateway_api, {})
     api_management_group                = try(var.apim.api_management_group, {})
     api_management_subscription         = try(var.apim.api_management_subscription, {})
+    api_management_product              = try(var.apim.api_management_product, {})
+    api_management_product_api          = try(var.apim.api_management_product_api, {})
+    api_management_product_policy       = try(var.apim.api_management_product_policy, {})
+    api_management_product_group        = try(var.apim.api_management_product_group, {})
+    api_management_named_value          = try(var.apim.api_management_named_value, {})
+    api_management_group_user           = try(var.apim.api_management_group_user, {})
   }
   iot = {
     digital_twins_instances             = try(var.iot.digital_twins_instances, {})

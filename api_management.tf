@@ -340,3 +340,142 @@ module "api_management_subscription" {
 output "api_management_subscription" {
   value = module.api_management_subscription
 }
+
+module "api_management_product" {
+  source   = "./modules/apim/api_management_product"
+  for_each = local.apim.api_management_product
+
+  global_settings = local.global_settings
+  client_config   = local.client_config
+  settings        = each.value
+
+  api_management_name = can(each.value.api_management.name) ? each.value.api_management.name : local.combined_objects_api_management[try(each.value.api_management.lz_key, local.client_config.landingzone_key)][each.value.api_management.key].name
+  resource_group_name = can(each.value.resource_group.name) || can(each.value.resource_group_name) ? try(each.value.resource_group.name, each.value.resource_group_name) : local.combined_objects_resource_groups[try(each.value.resource_group.lz_key, local.client_config.landingzone_key)][try(each.value.resource_group_key, each.value.resource_group.key)].name
+
+  remote_objects = {
+    api_management = local.combined_objects_api_management
+    resource_group = local.combined_objects_resource_groups
+  }
+}
+output "api_management_product" {
+  value = module.api_management_product
+}
+
+module "api_management_product_api" {
+  source   = "./modules/apim/api_management_product_api"
+  for_each = local.apim.api_management_product_api
+
+  global_settings = local.global_settings
+  client_config   = local.client_config
+  settings        = each.value
+
+  api_name            = can(each.value.api.name) ? each.value.api.name : local.combined_objects_api_management_api[try(each.value.api.lz_key, local.client_config.landingzone_key)][each.value.api.key].name
+  api_management_name = can(each.value.api_management.name) ? each.value.api_management.name : local.combined_objects_api_management[try(each.value.api_management.lz_key, local.client_config.landingzone_key)][each.value.api_management.key].name
+  resource_group_name = can(each.value.resource_group.name) || can(each.value.resource_group_name) ? try(each.value.resource_group.name, each.value.resource_group_name) : local.combined_objects_resource_groups[try(each.value.resource_group.lz_key, local.client_config.landingzone_key)][try(each.value.resource_group_key, each.value.resource_group.key)].name
+  product_id          = can(each.value.product.product_id) ? each.value.product.product_id : local.combined_objects_api_management_product[try(each.value.product.lz_key, local.client_config.landingzone_key)][each.value.product.key].product_id
+
+
+  remote_objects = {
+    api_management_api     = local.combined_objects_api_management_api
+    api_management         = local.combined_objects_api_management
+    resource_group         = local.combined_objects_resource_groups
+    api_management_product = local.combined_objects_api_management_product
+  }
+}
+output "api_management_product_api" {
+  value = module.api_management_product_api
+}
+
+module "api_management_product_group" {
+  source   = "./modules/apim/api_management_product_group"
+  for_each = local.apim.api_management_product_group
+
+  global_settings = local.global_settings
+  client_config   = local.client_config
+  settings        = each.value
+
+  group_name          = can(each.value.api_management_group.name) ? each.value.api_management_group.name : local.combined_objects_api_management_group[try(each.value.api_management_group.lz_key, local.client_config.landingzone_key)][each.value.api_management_group.key].name
+  api_management_name = can(each.value.api_management.name) ? each.value.api_management.name : local.combined_objects_api_management[try(each.value.api_management.lz_key, local.client_config.landingzone_key)][each.value.api_management.key].name
+  resource_group_name = can(each.value.resource_group.name) || can(each.value.resource_group_name) ? try(each.value.resource_group.name, each.value.resource_group_name) : local.combined_objects_resource_groups[try(each.value.resource_group.lz_key, local.client_config.landingzone_key)][try(each.value.resource_group_key, each.value.resource_group.key)].name
+  product_id          = can(each.value.product.product_id) ? each.value.product.product_id : local.combined_objects_api_management_product[try(each.value.product.lz_key, local.client_config.landingzone_key)][each.value.product.key].product_id
+
+
+  remote_objects = {
+    api_management_api     = local.combined_objects_api_management_api
+    api_management         = local.combined_objects_api_management
+    resource_group         = local.combined_objects_resource_groups
+    api_management_product = local.combined_objects_api_management_product
+  }
+}
+output "api_management_product_group" {
+  value = module.api_management_product_group
+}
+
+module "api_management_product_policy" {
+  source   = "./modules/apim/api_management_product_policy"
+  for_each = local.apim.api_management_product_policy
+
+  global_settings = local.global_settings
+  client_config   = local.client_config
+  settings        = each.value
+
+
+  api_management_name = can(each.value.api_management.name) ? each.value.api_management.name : local.combined_objects_api_management[try(each.value.api_management.lz_key, local.client_config.landingzone_key)][each.value.api_management.key].name
+  resource_group_name = can(each.value.resource_group.name) || can(each.value.resource_group_name) ? try(each.value.resource_group.name, each.value.resource_group_name) : local.combined_objects_resource_groups[try(each.value.resource_group.lz_key, local.client_config.landingzone_key)][try(each.value.resource_group_key, each.value.resource_group.key)].name
+  product_id          = can(each.value.product.product_id) ? each.value.product.product_id : local.combined_objects_api_management_product[try(each.value.product.lz_key, local.client_config.landingzone_key)][each.value.product.key].product_id
+
+  remote_objects = {
+    api_management         = local.combined_objects_api_management
+    resource_group         = local.combined_objects_resource_groups
+    api_management_product = local.combined_objects_api_management_product
+  }
+}
+output "api_management_product_policy" {
+  value = module.api_management_product_policy
+}
+
+module "azurerm_api_management_group_user" {
+  source   = "./modules/apim/api_management_group_user"
+  for_each = local.apim.api_management_group_user
+
+  global_settings = local.global_settings
+  client_config   = local.client_config
+  settings        = each.value
+
+
+  api_management_name = can(each.value.api_management.name) ? each.value.api_management.name : local.combined_objects_api_management[try(each.value.api_management.lz_key, local.client_config.landingzone_key)][each.value.api_management.key].name
+  resource_group_name = can(each.value.resource_group.name) || can(each.value.resource_group_name) ? try(each.value.resource_group.name, each.value.resource_group_name) : local.combined_objects_resource_groups[try(each.value.resource_group.lz_key, local.client_config.landingzone_key)][try(each.value.resource_group_key, each.value.resource_group.key)].name
+  group_name          = can(each.value.api_management_group.name) ? each.value.api_management_group.name : local.combined_objects_api_management_group[try(each.value.api_management_group.lz_key, local.client_config.landingzone_key)][each.value.api_management_group.key].name
+  user_id             = can(each.value.api_management_user.id) ? each.value.api_management_user.id : local.combined_objects_api_management_group[try(each.value.api_management_user.lz_key, local.client_config.landingzone_key)][each.value.api_management_user.key].id
+
+  remote_objects = {
+    api_management       = local.combined_objects_api_management
+    resource_group       = local.combined_objects_resource_groups
+    api_management_user  = local.combined_objects_api_management_user
+    api_management_group = local.combined_objects_api_management_group
+  }
+}
+output "azurerm_api_management_group_user" {
+  value = module.azurerm_api_management_group_user
+}
+
+module "azurerm_api_management_named_value" {
+  source   = "./modules/apim/api_management_named_value"
+  for_each = local.apim.api_management_named_value
+
+  global_settings = local.global_settings
+  client_config   = local.client_config
+  settings        = each.value
+
+
+  api_management_name = can(each.value.api_management.name) ? each.value.api_management.name : local.combined_objects_api_management[try(each.value.api_management.lz_key, local.client_config.landingzone_key)][each.value.api_management.key].name
+  resource_group_name = can(each.value.resource_group.name) || can(each.value.resource_group_name) ? try(each.value.resource_group.name, each.value.resource_group_name) : local.combined_objects_resource_groups[try(each.value.resource_group.lz_key, local.client_config.landingzone_key)][try(each.value.resource_group_key, each.value.resource_group.key)].name
+
+  remote_objects = {
+    api_management = local.combined_objects_api_management
+    resource_group = local.combined_objects_resource_groups
+  }
+}
+output "azurerm_api_management_named_value" {
+  value = module.azurerm_api_management_named_value
+}
