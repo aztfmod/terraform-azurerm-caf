@@ -1,6 +1,6 @@
 resource "azurecaf_name" "static_site" {
   name          = var.name
-  resource_type = "azurerm_app_service" # FIXME: missing naming convention provider for 'azurerm_static_site' (https://github.com/aztfmod/terraform-provider-azurecaf/issues/178)
+  resource_type = "azurerm_static_site"
   prefixes      = var.global_settings.prefixes
   random_length = var.global_settings.random_length
   clean_input   = true
