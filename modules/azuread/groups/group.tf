@@ -3,7 +3,7 @@ resource "azuread_group" "group" {
   display_name            = var.global_settings.passthrough ? format("%s", var.azuread_groups.name) : format("%s%s", try(format("%s-", var.global_settings.prefixes.0), ""), var.azuread_groups.name)
   description             = lookup(var.azuread_groups, "description", null)
   prevent_duplicate_names = lookup(var.azuread_groups, "prevent_duplicate_names", null)
-  owners = local.owners
+  owners                  = local.owners
   // Note: This module is effected by these bugs:
   // https://github.com/hashicorp/terraform-provider-azuread/issues/464
   // https://github.com/microsoftgraph/msgraph-metadata/issues/92
@@ -11,7 +11,7 @@ resource "azuread_group" "group" {
 
 }
 data "azuread_user" "main" {
-  for_each = try(toset(var.azuread_groups.owners.user_principal_names), {})
+  for_each            = try(toset(var.azuread_groups.owners.user_principal_names), {})
   user_principal_name = each.value
 }
 
@@ -21,7 +21,7 @@ locals {
     [
       var.client_config.object_id
     ],
-      local.ad_user_oids
+    local.ad_user_oids
   )
   ad_user_oids = [ for user in try(var.azuread_groups.owners.user_principal_names, []):
     data.azuread_user.main[user].object_id
