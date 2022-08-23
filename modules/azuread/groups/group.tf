@@ -23,7 +23,7 @@ locals {
     ],
     local.ad_user_oids
   )
-  ad_user_oids = [for user in try(var.azuread_groups.owners.user_principal_names, []) :
+  ad_user_oids = [ for user in try(var.azuread_groups.owners.user_principal_names, []):
     data.azuread_user.main[user].object_id
   ]
 }
