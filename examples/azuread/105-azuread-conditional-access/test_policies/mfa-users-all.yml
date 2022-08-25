@@ -1,0 +1,41 @@
+---
+101-DEMO-MFA-USERS-ALL:
+  state: enabledForReportingButNotEnforced
+  conditions:
+    client_app_types:
+      - browser
+      - mobileAppsAndDesktopClients
+    sign_in_risk_levels: []
+    user_risk_levels: []
+    applications:
+      included_applications:
+        - All
+      excluded_applications:
+        - 0000000a-0000-0000-c000-000000000000
+    locations:
+      included_locations:
+        - All
+      excluded_locations: []
+    platforms:
+      included_platforms:
+        - all
+      excluded_platforms: []
+    users:
+      included_users:
+        - All
+      excluded_users:
+        - break_glass#EXT#@example.onmicrosoft.com
+        - GuestsOrExternalUsers
+      included_groups: []
+      excluded_groups:
+        - Some Group Display Name
+        - 1234abcd-1111-2222-3333-123456789abc
+      included_roles: []
+      excluded_roles: []
+    devices: {}
+  grant_controls:
+    built_in_controls:
+      - mfa
+    operator: OR
+    custom_authentication_factors: []
+    terms_of_use: []
