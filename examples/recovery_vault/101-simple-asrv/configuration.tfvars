@@ -55,7 +55,7 @@ recovery_vaults = {
             weeks    = ["First", "Last"]
           }
           retention_yearly = {
-            count    = 7
+            count    = 77
             weekdays = ["Sunday"]
             weeks    = ["Last"]
             months   = ["January"]
@@ -74,22 +74,7 @@ recovery_vaults = {
             time      = "23:00"
           }
           retention_daily = {
-            count = 1
-          }
-          retention_weekly = {
-            count    = 1
-            weekdays = ["Sunday", "Wednesday", "Friday", "Saturday"]
-          }
-          retention_monthly = {
-            count    = 1
-            weekdays = ["Sunday", "Wednesday"]
-            weeks    = ["First", "Last"]
-          }
-          retention_yearly = {
-            count    = 2
-            weekdays = ["Sunday"]
-            weeks    = ["Last"]
-            months   = ["January"]
+            count = 10
           }
         }
       }

@@ -5,6 +5,7 @@
     "app_gateway/101-private-public",
     "app_gateway/102-waf-policy",
     "app_gateway/103-public-only",
+    "app_gateway/202-app-gateway-single-cert-multiple-listeners",
     "app_gateway/210-agw-with-keyvault",
     "app_gateway/301-agw-v1",
     "app_insights/100-all-attributes",
