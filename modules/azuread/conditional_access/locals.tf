@@ -2,10 +2,6 @@ locals {
   module_output = azuread_conditional_access_policy.conditional_access_policy
 }
 
-locals {
-  module_output = azuread_conditional_access_policy.conditional_access_policy.display_name
-}
-
 data "azuread_user" "included_users" {
   for_each = toset(try(local.included_user_upns, []))
   user_principal_name = each.value
