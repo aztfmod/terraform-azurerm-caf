@@ -12,7 +12,14 @@ resource "azurecaf_name" "plan" {
 resource "azurerm_function_app" "function_app" {
   #To avoid redeploy with existing customer
   lifecycle {
-    ignore_changes = [name]
+    ignore_changes = [ 
+      name,
+      # When integrating a CI/CD pipeline and expecting to run from a deployed package in Azure
+      # you must seed your app settings as part of terraform code for function app to be successfully deployed.
+      # Important Default key pairs: ("WEBSITE_RUN_FROM_PACKAGE" = "", "FUNCTIONS_WORKER_RUNTIME" = "node"
+      app_settings["WEBSITE_RUN_FROM_PACKAGE"], 
+      app_settings["FUNCTIONS_WORKER_RUNTIME"],
+    ]
   }
   name                = azurecaf_name.plan.result
   location            = var.location
