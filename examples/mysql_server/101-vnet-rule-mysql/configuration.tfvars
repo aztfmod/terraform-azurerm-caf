@@ -63,6 +63,11 @@ mysql_servers = {
       mysql_vnet_rule = {
         name = "mysql-vnet-rule"
       }
+      msql_vnet_rule_two = {
+        name = "msql-vnet-rule-two"
+        subnet_key = "mysql_subnet_two"
+        vnet_key = "vnet_region1"
+      }
     }
 
     mysql_databases = {
@@ -112,6 +117,11 @@ vnets = {
       mysql_subnet = {
         name              = "mysql_subnet"
         cidr              = ["10.150.100.0/25"]
+        service_endpoints = ["Microsoft.Sql"]
+      }
+      mysql_subnet_two = {
+        name              = "mysql_subnet_two"
+        cidr              = ["10.150.100.128/25"]
         service_endpoints = ["Microsoft.Sql"]
       }
     }
