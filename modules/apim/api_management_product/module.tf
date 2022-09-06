@@ -4,7 +4,7 @@ resource "azurerm_api_management_product" "apim" {
   display_name          = var.settings.display_name
   product_id            = var.settings.product_id
   description           = try(var.settings.description, null)
-  approval_required     = try(var.settings.approval_required, false)
+  approval_required     = try(var.settings.approval_required, null)
   subscription_required = try(var.settings.subscription_required, false)
   published             = try(var.settings.published, false)
   subscriptions_limit   = try(var.settings.subscriptions_limit, null)
