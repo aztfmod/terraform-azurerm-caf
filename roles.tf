@@ -154,6 +154,7 @@ locals {
     subscriptions                              = local.combined_objects_subscriptions
     synapse_workspaces                         = local.combined_objects_synapse_workspaces
     virtual_subnets                            = local.combined_objects_virtual_subnets
+    virtual_machine_scale_sets                 = local.combined_objects_virtual_machine_scale_sets
     log_analytics                              = local.current_objects_log_analytics
   }
 
