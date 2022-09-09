@@ -53,6 +53,9 @@ cosmos_dbs = {
     # [optional] - Other DB API supoorted - MongoDB, Table, Gramlin GraphDB
     sql_databases = {
       databases_re1 = {
+        # when set to 'true' it will append random generated integer to sql database
+        # defaults to 'true'
+        # add_rnd_num = true
         name       = "cosmos-sql-exdb"
         throughput = 400
         containers = {

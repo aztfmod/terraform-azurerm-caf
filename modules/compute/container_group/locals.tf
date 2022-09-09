@@ -22,20 +22,22 @@ locals {
         for key, value in local.countainers_count : [
           for number in range(value.count) :
           {
-            key                          = format("%s-%s", key, number)
-            iterator                     = number
-            name                         = format("%s-%s", value.name, number)
-            image                        = value.image
-            cpu                          = value.cpu
-            memory                       = value.memory
-            environment_variables        = try(value.environment_variables, null)
-            secure_environment_variables = try(value.secure_environment_variables, null)
-            commands                     = try(value.commands, null)
-            gpu                          = try(value.gpu, null)
-            ports                        = try(value.ports, {})
-            readiness_probe              = try(value.readiness_probe, null)
-            liveness_probe               = try(value.liveness_probe, null)
-            volume                       = try(value.volume, null)
+            key                           = format("%s-%s", key, number)
+            iterator                      = number
+            name                          = format("%s-%s", value.name, number)
+            image                         = value.image
+            cpu                           = value.cpu
+            memory                        = value.memory
+            environment_variables         = try(value.environment_variables, null)
+            variables_from_command        = try(value.variables_from_command, {})
+            secure_environment_variables  = try(value.secure_environment_variables, null)
+            secure_variables_from_command = try(value.secure_variables_from_command, {})
+            commands                      = try(value.commands, null)
+            gpu                           = try(value.gpu, null)
+            ports                         = try(value.ports, {})
+            readiness_probe               = try(value.readiness_probe, null)
+            liveness_probe                = try(value.liveness_probe, null)
+            volume                        = try(value.volume, null)
           }
         ]
       ]

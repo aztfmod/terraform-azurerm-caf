@@ -92,8 +92,12 @@ disk_encryption_sets = {
   set1 = {
     name               = "diskencryptset1"
     resource_group_key = "rg1"
+    # keyvault_key = {  # If in case of remote Kevault Key
+    #   lz_key = ""
+    # }
     key_vault_key_key  = "key1"
     keyvault = {
+      # lz_key = "" # if in case of remote Keyvault
       key = "kv1"
     }
   }
