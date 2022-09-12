@@ -458,6 +458,9 @@ variable "cosmos_dbs" {
 variable "dynamic_keyvault_secrets" {
   default = {}
 }
+variable "dynamic_keyvault_certificates" {
+  default = {}
+}
 variable "front_doors" {
   default = {}
 }
@@ -827,6 +830,9 @@ variable "api_management_group" {
   default = {}
 }
 variable "api_management_subscription" {
+  default = {}
+}
+variable "api_management_product" {
   default = {}
 }
 variable "lb" {

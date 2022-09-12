@@ -359,6 +359,7 @@ module "example" {
     api_management_gateway_api          = var.api_management_gateway_api
     api_management_group                = var.api_management_group
     api_management_subscription         = var.api_management_subscription
+    api_management_product              = var.api_management_product
   }
   purview = {
     purview_accounts = var.purview_accounts

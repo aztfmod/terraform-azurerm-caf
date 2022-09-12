@@ -17,3 +17,6 @@ variable "api_management_name" {
 variable "resource_group_name" {
   description = " The Name of the Resource Group where the API Management subscription exists. Changing this forces a new resource to be created."
 }
+variable "product_id" {
+  description = "The ID of the API Management Product within the API Management Service. Changing this forces a new resource to be created."
+}

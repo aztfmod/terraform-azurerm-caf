@@ -117,10 +117,10 @@ resource "azurerm_data_factory_integration_runtime_azure_ssis" "dfiras" {
     for_each = try(var.settings.vnet_integration, null) != null ? [var.settings.vnet_integration] : []
 
     content {
-      vnet_id     = vnet_integration.value.vnet_id
-      subnet_name = vnet_integration.value.subnet_name
-      subnet_id   = vnet_integration.value.subnet_id
-      public_ips  = vnet_integration.value.public_ips
+      vnet_id     = try(vnet_integration.value.vnet_id, null)
+      subnet_name = try(vnet_integration.value.subnet_name, null)
+      subnet_id   = try(vnet_integration.value.subnet_id, null)
+      public_ips  = try(vnet_integration.value.public_ips, null)
     }
   }
 

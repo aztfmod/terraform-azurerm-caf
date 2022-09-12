@@ -1,6 +1,5 @@
 
 resource "null_resource" "set_probe" {
-  depends_on = [null_resource.set_http_settings, null_resource.set_backend_pools, null_resource.set_http_listener, null_resource.set_ssl_cert, null_resource.set_root_cert, null_resource.set_url_path_map, null_resource.set_url_path_rule, null_resource.set_request_routing_rule]
 
   for_each = try(var.settings.probes, {})
 
@@ -35,7 +34,6 @@ resource "null_resource" "set_probe" {
 }
 
 resource "null_resource" "delete_probe" {
-  depends_on = [null_resource.delete_http_settings, null_resource.delete_backend_pool, null_resource.delete_http_listener, null_resource.delete_ssl_cert, null_resource.delete_root_cert, null_resource.delete_url_path_map, null_resource.delete_url_path_rule, null_resource.delete_request_routing_rule]
 
   for_each = try(var.settings.probes, {})
 
