@@ -68,7 +68,7 @@ resource "azurerm_application_gateway" "agw" {
   }
 
   dynamic "ssl_policy" {
-    for_each = can(var.settings.listener_ssl_policy.default) == null ? [] : [var.settings.listener_ssl_policy.default]
+    for_each = try(var.settings.listener_ssl_policy, {})
     content {
       disabled_protocols   = try(ssl_policy.value.disabled_protocols, null)
       policy_type          = try(ssl_policy.value.policy_type, null)
