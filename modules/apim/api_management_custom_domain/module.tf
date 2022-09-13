@@ -40,20 +40,8 @@ resource "azurerm_api_management_custom_domain" "apim" {
     }
   }
 
-  dynamic "gateway" {
-    for_each = (
-      try(
-        coalesce(
-          var.settings.gateway,
-          var.settings.proxy
-        ),
-      null) != null
-      ? [coalesce(
-        var.settings.gateway,
-        var.settings.proxy
-      )]
-      : []
-    )
+  dynamic "proxy" {
+    for_each = try(var.settings.proxy, null) != null ? [var.settings.proxy] : []
     content {
       host_name            = try(proxy.value.host_name, null)
       certificate          = try(proxy.value.certificate, null)
