@@ -7,6 +7,7 @@ locals {
   combined_objects_api_management_api_operation                   = merge(tomap({ (local.client_config.landingzone_key) = module.api_management_api_operation }), try(var.remote_objects.api_management_api_operation, {}))
   combined_objects_api_management_gateway                         = merge(tomap({ (local.client_config.landingzone_key) = module.api_management_gateway }), try(var.remote_objects.api_management_gateway, {}))
   combined_objects_api_management_logger                          = merge(tomap({ (local.client_config.landingzone_key) = module.api_management_logger }), try(var.remote_objects.api_management_logger, {}))
+  combined_objects_api_management_product                         = merge(tomap({ (local.client_config.landingzone_key) = module.api_management_product }), try(var.remote_objects.api_management_product, {}))
   combined_objects_app_config                                     = merge(tomap({ (local.client_config.landingzone_key) = module.app_config }), try(var.remote_objects.app_config, {}))
   combined_objects_app_service_environments                       = merge(tomap({ (local.client_config.landingzone_key) = module.app_service_environments }), try(var.remote_objects.app_service_environments, {}))
   combined_objects_app_service_environments_all                   = merge(local.combined_objects_app_service_environments, local.combined_objects_app_service_environments_v3)

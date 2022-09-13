@@ -9,6 +9,7 @@
     "app_gateway/301-agw-v1",
     "app_insights/100-all-attributes",
     "app_insights/100-simple",
+    "app_insights/102-workspace-based-central-logs",
     "automation/100-simple-automation-account",
     "automation/101-automation-account-linked",
     "automation/102-automation-msi",
