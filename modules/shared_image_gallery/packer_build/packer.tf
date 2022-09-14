@@ -22,6 +22,7 @@ resource "local_file" "packer_var_file" {
       location                                         = var.location
       vm_size                                          = var.settings.vm_size
       os_disk_size_gb                                  = try(var.settings.os_disk_size_gb, null)
+      license_type                                     = try(var.license_type, null)
       managed_image_resource_group_name                = var.resource_group_name
       build_resource_group_name                        = var.build_resource_group_name
       virtual_network_name                             = try(var.vnet_name, null)
