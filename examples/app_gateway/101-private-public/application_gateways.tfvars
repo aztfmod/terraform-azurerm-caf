@@ -25,7 +25,7 @@ application_gateways = {
         name                          = "private"
         vnet_key                      = "vnet_region1"
         subnet_key                    = "app_gateway_private"
-        subnet_cidr_index             = 0 # It is possible to have more than one cidr block per vnet
+        subnet_cidr_index             = 0 # It is possible to have more than one cidr block per subnet
         private_ip_offset             = 4 # e.g. cidrhost(10.10.0.0/25,4) = 10.10.0.4 => AGW private IP address
         private_ip_address_allocation = "Static"
       }
