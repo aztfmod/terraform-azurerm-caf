@@ -12,8 +12,8 @@ locals {
   private_vnet_local = try(var.vnets[var.client_config.landingzone_key][var.settings.front_end_ip_configurations.private.vnet_key], null)
   public_vnet_local  = try(var.vnets[var.client_config.landingzone_key][var.settings.front_end_ip_configurations.public.vnet_key], null)
 
-  private_subnets_local = try(var.virtual_subnets[var.client_config.landingzone_key][var.settings.front_end_ip_configurations.private.subnet_key], null)
-  public_subnets_local = try(var.virtual_subnets[var.client_config.landingzone_key][var.settings.front_end_ip_configurations.public.subnet_key], null)
+  private_subnets_local = try(var.virtual_subnets[var.client_config.landingzone_key], null)
+  public_subnets_local = try(var.virtual_subnets[var.client_config.landingzone_key], null)
 
   gateway_vnet_remote = try(coalesce(
     try(var.vnets[var.settings.lz_key][var.settings.vnet_key], null),
@@ -27,9 +27,8 @@ locals {
   private_vnet_remote = try(var.vnets[var.settings.front_end_ip_configurations.private.lz_key][var.settings.front_end_ip_configurations.private.vnet_key], null)
   public_vnet_remote  = try(var.vnets[var.settings.front_end_ip_configurations.public.lz_key][var.settings.front_end_ip_configurations.public.vnet_key], null)
 
-  private_subnets_remote = try(var.virtual_subnets[var.settings.front_end_ip_configurations.private.lz_key][var.settings.front_end_ip_configurations.private.subnet_key], null)
-  public_subnets_remote = try(var.virtual_subnets[var.settings.front_end_ip_configurations.public.lz_key][var.settings.front_end_ip_configurations.public.subnet_key], null)
-
+  private_subnets_remote = try(var.virtual_subnets[var.settings.front_end_ip_configurations.private.lz_key], null)
+  public_subnets_remote = try(var.virtual_subnets[var.settings.front_end_ip_configurations.public.lz_key], null)
 
   gateway_vnet = merge(local.gateway_vnet_local, local.gateway_vnet_remote)
   private_vnet = merge(local.private_vnet_local, local.private_vnet_remote)
@@ -45,6 +44,7 @@ locals {
         try(var.settings.subnet_id, null)
       )
     }
+
     private = {
       subnet_id = try(coalesce(
         try(local.private_vnet.subnets[var.settings.front_end_ip_configurations.private.subnet_key].id, null),
@@ -56,6 +56,8 @@ locals {
         try(local.private_subnets[var.settings.front_end_ip_configurations.private.subnet_key].cidr, null),
         try(var.settings.front_end_ip_configurations.private.subnet_cidr, null)
       ), null)
+
+
     }
     public = {
       subnet_id = try(
@@ -66,7 +68,7 @@ locals {
       )
 
       ip_address_id = try(coalesce(
-        try(var.public_ip_addresses[var.client_config.landingzone_key][var.settings.front_end_ip_configurations.public.public_ip_key].id, var.public_ip_addresses[var.settings.front_end_ip_configurations.public.lz_key][var.settings.front_end_ip_configurations.public.public_ip_key].id, null),        
+        try(var.public_ip_addresses[var.client_config.landingzone_key][var.settings.front_end_ip_configurations.public.public_ip_key].id, var.public_ip_addresses[var.settings.front_end_ip_configurations.public.lz_key][var.settings.front_end_ip_configurations.public.public_ip_key].id, null),
         try(var.settings.front_end_ip_configurations.public.public_ip_id, null)
       ), null)
     }
