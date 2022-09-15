@@ -403,6 +403,7 @@ locals {
     api_management_gateway_api          = try(var.apim.api_management_gateway_api, {})
     api_management_group                = try(var.apim.api_management_group, {})
     api_management_subscription         = try(var.apim.api_management_subscription, {})
+    api_management_product              = try(var.apim.api_management_product, {})
   }
   iot = {
     digital_twins_instances             = try(var.iot.digital_twins_instances, {})
