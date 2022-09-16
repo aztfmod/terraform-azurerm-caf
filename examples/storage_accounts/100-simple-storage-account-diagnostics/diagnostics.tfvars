@@ -30,11 +30,21 @@ diagnostics_definition = {
   storage = {
     name = "operational_logs_and_metrics"
     categories = {
+      metric = [
+        #["Category name",  "Diagnostics Enabled(true/false)", "Retention Enabled(true/false)", Retention_period]
+        ["Transaction", true, false, 7],
+        ["Capacity", true, false, 7],
+      ]
+    }
+  }
+  storage_blob = {
+    name = "operational_logs_and_metrics"
+    categories = {
       log = [
         # ["Category name",  "Diagnostics Enabled(true/false)", "Retention Enabled(true/false)", Retention_period]
-        # ["StorageRead", true, false, 14],
-        # ["StorageWrite", true, false, 14],
-        # ["StorageDelete", true, false, 14]
+        ["StorageRead", true, false, 14],
+        ["StorageWrite", true, false, 14],
+        ["StorageDelete", true, false, 14]
       ]
       metric = [
         #["Category name",  "Diagnostics Enabled(true/false)", "Retention Enabled(true/false)", Retention_period]
