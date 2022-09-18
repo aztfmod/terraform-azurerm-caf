@@ -36,6 +36,10 @@ variable "vnets" {
   default = {}
 }
 
+variable "virtual_subnets" {
+  default = {}
+}
+
 variable "network_rule_set" {
   description = " (Optional) A network_rule_set block as documented https://www.terraform.io/docs/providers/azurerm/r/container_registry.html"
   default     = {}
