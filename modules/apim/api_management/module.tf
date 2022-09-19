@@ -26,7 +26,10 @@ resource "azurerm_api_management" "apim" {
         for_each = try(var.settings.virtual_network_configuration, null) != null ? [var.settings.virtual_network_configuration] : []
 
         content {
-          subnet_id = can(virtual_network_configuration.value.subnet_id) ? virtual_network_configuration.value.subnet_id : var.vnets[try(virtual_network_configuration.value.lz_key, var.client_config.landingzone_key)][virtual_network_configuration.value.vnet_key].subnets[virtual_network_configuration.value.subnet_key].id
+          subnet_id = can(virtual_network_configuration.value.subnet_id) ? virtual_network_configuration.value.subnet_id : coalesce(
+            try(var.vnets[try(virtual_network_configuration.value.lz_key, var.client_config.landingzone_key)][virtual_network_configuration.value.vnet_key].subnets[virtual_network_configuration.value.subnet_key].id, null),
+            try(var.virtual_subnets[try(virtual_network_configuration.value.lz_key, var.client_config.landingzone_key)][virtual_network_configuration.value.subnet_key].id, null)
+          )
         }
       }
     }
@@ -209,8 +212,10 @@ resource "azurerm_api_management" "apim" {
 
     content {
 
-      subnet_id = can(virtual_network_configuration.value.subnet_id) ? virtual_network_configuration.value.subnet_id : var.vnets[try(virtual_network_configuration.value.lz_key, var.client_config.landingzone_key)][virtual_network_configuration.value.vnet_key].subnets[virtual_network_configuration.value.subnet_key].id
-
+      subnet_id = can(virtual_network_configuration.value.subnet_id) ? virtual_network_configuration.value.subnet_id : coalesce(
+        try(var.vnets[try(virtual_network_configuration.value.lz_key, var.client_config.landingzone_key)][virtual_network_configuration.value.vnet_key].subnets[virtual_network_configuration.value.subnet_key].id, null),
+        try(var.virtual_subnets[try(virtual_network_configuration.value.lz_key, var.client_config.landingzone_key)][virtual_network_configuration.value.subnet_key].id, null)
+      )
     }
   }
   tags = local.tags
