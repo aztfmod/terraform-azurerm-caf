@@ -48,9 +48,10 @@ resource "azurerm_kubernetes_cluster" "aks" {
   depends_on = [
     null_resource.aks_registration_preview
   ]
-  name                = azurecaf_name.aks.result
-  location            = var.location
-  resource_group_name = var.resource_group_name
+  name                              = azurecaf_name.aks.result
+  location                          = var.location
+  resource_group_name               = var.resource_group_name
+  role_based_access_control_enabled = try(var.settings.role_based_access_control_enabled, null)
 
   default_node_pool {
     availability_zones           = try(var.settings.default_node_pool.availability_zones, null)
@@ -149,73 +150,52 @@ resource "azurerm_kubernetes_cluster" "aks" {
   dns_prefix_private_cluster = try(var.settings.dns_prefix_private_cluster, null)
   automatic_channel_upgrade  = try(var.settings.automatic_channel_upgrade, null)
 
-  dynamic "addon_profile" {
-    for_each = lookup(var.settings, "addon_profile", null) == null ? [] : [1]
+  dynamic "aci_connector_linux" {
+    for_each = try(var.settings.addon_profile.aci_connector_linux[*], var.settings.aci_connector_linux[*], [])
 
     content {
-      dynamic "aci_connector_linux" {
-        for_each = try(var.settings.addon_profile.aci_connector_linux[*], {})
-
-        content {
-          enabled     = aci_connector_linux.value.enabled
-          subnet_name = aci_connector_linux.value.subnet_name
-        }
-      }
-
-      dynamic "azure_policy" {
-        for_each = try(var.settings.addon_profile.azure_policy[*], {})
-
-        content {
-          enabled = azure_policy.value.enabled
-        }
-      }
-
-      dynamic "http_application_routing" {
-        for_each = try(var.settings.addon_profile.http_application_routing[*], {})
-
-        content {
-          enabled = http_application_routing.value.enabled
-        }
-      }
-
-      dynamic "kube_dashboard" {
-        for_each = try(var.settings.addon_profile.kube_dashboard[*], [{ enabled = false }])
-
-        content {
-          enabled = kube_dashboard.value.enabled
-        }
-      }
-
-      dynamic "oms_agent" {
-        for_each = try(var.settings.addon_profile.oms_agent[*], {})
-
-        content {
-          enabled                    = oms_agent.value.enabled
-          log_analytics_workspace_id = try(oms_agent.value.log_analytics_workspace_id, try(var.diagnostics.log_analytics[oms_agent.value.log_analytics_key].id, null))
-          dynamic "oms_agent_identity" {
-            for_each = try(oms_agent.value.oms_agent_identity[*], {})
-
-            content {
-              client_id                 = oms_agent_identity.value.client_id
-              object_id                 = oms_agent_identity.value.object_id
-              user_assigned_identity_id = oms_agent_identity.value.user_assigned_identity_id
-            }
-          }
-        }
-      }
-
-      dynamic "ingress_application_gateway" {
-        for_each = can(var.settings.addon_profile.ingress_application_gateway) ? [var.settings.addon_profile.ingress_application_gateway] : []
-        content {
-          enabled      = ingress_application_gateway.value.enabled
-          gateway_name = try(ingress_application_gateway.value.gateway_name, null)
-          gateway_id   = try(ingress_application_gateway.value.gateway_id, try(var.application_gateway.id, null))
-          subnet_cidr  = try(ingress_application_gateway.value.subnet_cidr, null)
-          subnet_id    = try(ingress_application_gateway.value.subnet_id, null)
-        }
-      }
+      subnet_name = aci_connector_linux.value.subnet_name
     }
   }
+
+  azure_policy_enabled             = can(var.settings.addon_profile.azure_policy) || can(var.settings.azure_policy_enabled) == false ? try(var.settings.addon_profile.azure_policy.0.enabled, null) : var.settings.azure_policy_enabled
+  http_application_routing_enabled = can(var.settings.addon_profile.http_application_routing) || can(var.settings.http_application_routing_enabled) == false ? try(var.settings.addon_profile.http_application_routing.0.enabled, null) : var.settings.http_application_routing_enabled
+
+  dynamic "oms_agent" {
+    for_each = try(var.settings.addon_profile.oms_agent[*], var.settings.oms_agent[*], [])
+
+    content {
+      log_analytics_workspace_id = can(oms_agent.value.log_analytics_workspace_id) ? oms_agent.value.log_analytics_workspace_id : var.diagnostics.log_analytics[oms_agent.value.log_analytics_key].id
+    }
+  }
+
+  dynamic "ingress_application_gateway" {
+    for_each = can(var.settings.addon_profile.ingress_application_gateway) || can(var.settings.ingress_application_gateway) ? try([var.settings.addon_profile.ingress_application_gateway], [var.settings.ingress_application_gateway]) : []
+    content {
+      gateway_name = try(ingress_application_gateway.value.gateway_name, null)
+      gateway_id   = try(ingress_application_gateway.value.gateway_id, try(var.application_gateway.id, null))
+      subnet_cidr  = try(ingress_application_gateway.value.subnet_cidr, null)
+      subnet_id    = try(ingress_application_gateway.value.subnet_id, null)
+    }
+  }
+
+  dynamic "key_vault_secrets_provider" {
+    for_each = can(var.settings.addon_profile.azure_keyvault_secrets_provider) || can(var.settings.key_vault_secrets_provider) ? try([var.settings.addon_profile.azure_keyvault_secrets_provider], [var.settings.key_vault_secrets_provider]) : []
+    content {
+      secret_rotation_enabled  = key_vault_secrets_provider.value.secret_rotation_enabled
+      secret_rotation_interval = key_vault_secrets_provider.value.secret_rotation_interval
+    }
+  }
+
+  # dynamic "addon_profile" {
+  #   for_each = lookup(var.settings, "addon_profile", null) == null ? [] : [1]
+  #     dynamic "kube_dashboard" {
+  #       for_each = try(var.settings.addon_profile.kube_dashboard[*], [{ enabled = false }])
+
+  #       content {
+  #         enabled = kube_dashboard.value.enabled
+  #       }
+  #     }
 
   api_server_authorized_ip_ranges = try(var.settings.api_server_authorized_ip_ranges, null)
 
@@ -334,26 +314,21 @@ resource "azurerm_kubernetes_cluster" "aks" {
   private_dns_zone_id                 = try(var.private_dns_zone_id, null)
   private_cluster_public_fqdn_enabled = try(var.settings.private_cluster_public_fqdn_enabled, null)
 
-  # Enabled RBAC
-  dynamic "role_based_access_control" {
+  #Enabled RBAC
+  dynamic "azure_active_directory_role_based_access_control" {
     for_each = try(var.settings.role_based_access_control[*], {})
 
     content {
-      enabled = try(role_based_access_control.value.enabled, true)
+      managed   = try(azure_active_directory_role_based_access_control.value.azure_active_directory.managed, true)
+      tenant_id = try(azure_active_directory_role_based_access_control.value.azure_active_directory.tenant_id, null)
 
-      dynamic "azure_active_directory" {
-        for_each = try(var.settings.role_based_access_control.azure_active_directory[*], {})
+      azure_rbac_enabled     = try(azure_active_directory_role_based_access_control.value.enabled, true)
+      admin_group_object_ids = try(azure_active_directory_role_based_access_control.value.azure_active_directory.admin_group_object_ids, try(var.admin_group_object_ids, null))
 
-        content {
-          managed                = azure_active_directory.value.managed
-          azure_rbac_enabled     = try(azure_active_directory.value.azure_rbac_enabled, null)
-          tenant_id              = try(azure_active_directory.value.tenant_id, null)
-          admin_group_object_ids = try(azure_active_directory.value.admin_group_object_ids, try(var.admin_group_object_ids, null))
-          client_app_id          = try(azure_active_directory.value.client_app_id, null)
-          server_app_id          = try(azure_active_directory.value.server_app_id, null)
-          server_app_secret      = try(azure_active_directory.value.server_app_secret, null)
-        }
-      }
+      client_app_id     = try(azure_active_directory_role_based_access_control.value.azure_active_directory.client_app_id, null)
+      server_app_id     = try(azure_active_directory_role_based_access_control.value.azure_active_directory.server_app_id, null)
+      server_app_secret = try(azure_active_directory_role_based_access_control.value.azure_active_directory.server_app_secret, null)
+
     }
   }
 
@@ -391,7 +366,7 @@ resource "random_string" "prefix" {
   length  = 10
   special = false
   upper   = false
-  number  = false
+  numeric = false
 }
 
 #

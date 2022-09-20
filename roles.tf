@@ -15,12 +15,53 @@ module "custom_roles" {
 #
 
 resource "azurerm_role_assignment" "for" {
-  for_each = try(local.roles_to_process, {})
+  for_each = {
+    for key, value in try(local.roles_to_process, {}) : key => value 
+    if contains(keys(local.services_roles), value.scope_resource_key)
+  }
 
   principal_id         = each.value.object_id_resource_type == "object_ids" ? each.value.object_id_key_resource : each.value.object_id_lz_key == null ? local.services_roles[each.value.object_id_resource_type][var.current_landingzone_key][each.value.object_id_key_resource].rbac_id : local.services_roles[each.value.object_id_resource_type][each.value.object_id_lz_key][each.value.object_id_key_resource].rbac_id
   role_definition_id   = each.value.mode == "custom_role_mapping" ? module.custom_roles[each.value.role_definition_name].role_definition_resource_id : null
   role_definition_name = each.value.mode == "built_in_role_mapping" ? each.value.role_definition_name : null
   scope                = each.value.scope_lz_key == null ? local.services_roles[each.value.scope_resource_key][var.current_landingzone_key][each.value.scope_key_resource].id : local.services_roles[each.value.scope_resource_key][each.value.scope_lz_key][each.value.scope_key_resource].id
+}
+
+resource "azurerm_role_assignment" "for_deferred" {
+  for_each = {
+    for key, value in try(local.roles_to_process, {}) : key => value 
+    if contains(keys(local.services_roles_deferred), value.scope_resource_key)
+  }
+
+  principal_id         = each.value.object_id_resource_type == "object_ids" ? each.value.object_id_key_resource : each.value.object_id_lz_key == null ? local.services_roles_deferred[each.value.object_id_resource_type][var.current_landingzone_key][each.value.object_id_key_resource].rbac_id : local.services_roles_deferred[each.value.object_id_resource_type][each.value.object_id_lz_key][each.value.object_id_key_resource].rbac_id
+  role_definition_id   = each.value.mode == "custom_role_mapping" ? module.custom_roles[each.value.role_definition_name].role_definition_resource_id : null
+  role_definition_name = each.value.mode == "built_in_role_mapping" ? each.value.role_definition_name : null
+  scope                = each.value.scope_lz_key == null ? local.services_roles_deferred[each.value.scope_resource_key][var.current_landingzone_key][each.value.scope_key_resource].id : local.services_roles_deferred[each.value.scope_resource_key][each.value.scope_lz_key][each.value.scope_key_resource].id
+}
+
+resource "time_sleep" "azurerm_role_assignment_for" {
+  depends_on = [azurerm_role_assignment.for]
+  count = length(
+    {
+      for key, value in try(local.roles_to_process, {}) : key => value 
+      if contains(keys(local.services_roles), value.scope_resource_key)
+    }
+  ) > 0 ? 1 : 0
+
+  # 2 mins timer on creation
+  create_duration = "2m"
+}
+
+resource "time_sleep" "azurerm_role_assignment_for_deferred" {
+  depends_on = [azurerm_role_assignment.for_deferred]
+  count = length(
+    {
+      for key, value in try(local.roles_to_process, {}) : key => value 
+      if contains(keys(local.services_roles_deferred), value.scope_resource_key)
+    }
+  ) > 0 ? 1 : 0
+
+  # 2 mins timer on creation
+  create_duration = "2m"
 }
 
 data "azurerm_management_group" "level" {
@@ -55,12 +96,19 @@ locals {
     }
   )
 
+  # Nested objects that must be processed after the services_roles
+  services_roles_deferred = {
+    storage_containers                         = local.combined_objects_storage_containers
+  }
+
   services_roles = {
+    automations                                = local.combined_objects_automations
     aks_clusters                               = local.combined_objects_aks_clusters
     aks_ingress_application_gateway_identities = local.aks_ingress_application_gateway_identities
     api_management                             = local.combined_objects_api_management
     app_config                                 = local.combined_objects_app_config
     app_service_environments                   = local.combined_objects_app_service_environments
+    app_service_environments_v3                = local.combined_objects_app_service_environments_v3
     app_service_plans                          = local.combined_objects_app_service_plans
     app_services                               = local.combined_objects_app_services
     application_gateway_platforms              = local.combined_objects_application_gateway_platforms
@@ -78,6 +126,7 @@ locals {
     data_factory                               = local.combined_objects_data_factory
     databricks_workspaces                      = local.combined_objects_databricks_workspaces
     dns_zones                                  = local.combined_objects_dns_zones
+    function_apps                              = local.combined_objects_function_apps
     event_hub_namespaces                       = local.combined_objects_event_hub_namespaces
     keyvaults                                  = local.combined_objects_keyvaults
     kusto_clusters                             = local.combined_objects_kusto_clusters
@@ -102,7 +151,6 @@ locals {
     recovery_vaults                            = local.combined_objects_recovery_vaults
     resource_groups                            = local.combined_objects_resource_groups
     storage_accounts                           = local.combined_objects_storage_accounts
-    storage_containers                         = local.combined_objects_storage_containers
     subscriptions                              = local.combined_objects_subscriptions
     synapse_workspaces                         = local.combined_objects_synapse_workspaces
     virtual_subnets                            = local.combined_objects_virtual_subnets

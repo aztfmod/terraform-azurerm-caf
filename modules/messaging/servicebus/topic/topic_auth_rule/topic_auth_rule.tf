@@ -10,11 +10,11 @@ resource "azurecaf_name" "topic_auth_rule" {
 
 
 resource "azurerm_servicebus_topic_authorization_rule" "topic_auth_rule" {
-  name                = azurecaf_name.topic_auth_rule.result
-  namespace_name      = var.remote_objects.servicebus_namespace_name
-  topic_name          = var.remote_objects.servicebus_topic_name
-  resource_group_name = var.remote_objects.resource_group_name
-  listen              = try(var.settings.listen, null)
-  send                = try(var.settings.send, null)
-  manage              = try(var.settings.manage, null)
+  name = azurecaf_name.topic_auth_rule.result
+  # namespace_id      = var.remote_objects.servicebus_namespace_id
+  topic_id = var.remote_objects.servicebus_topic_id
+  # resource_group_name = var.remote_objects.resource_group_name
+  listen = try(var.settings.listen, null)
+  send   = try(var.settings.send, null)
+  manage = try(var.settings.manage, null)
 }

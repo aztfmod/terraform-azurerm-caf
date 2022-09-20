@@ -32,9 +32,9 @@ resource "azurerm_kusto_cluster" "kusto" {
       identity_ids = local.managed_identities
     }
   }
-  enable_disk_encryption  = try(var.settings.enable_disk_encryption, null)
-  enable_streaming_ingest = try(var.settings.enable_streaming_ingest, null)
-  enable_purge            = try(var.settings.enable_purge, null)
+  disk_encryption_enabled     = try(var.settings.enable_disk_encryption, var.settings.disk_encryption_enabled, null)
+  streaming_ingestion_enabled = try(var.settings.enable_streaming_ingest, var.settings.streaming_ingestion_enabled, null)
+  purge_enabled               = try(var.settings.enable_purge, var.settings.purge_enabled, null)
   dynamic "virtual_network_configuration" {
     for_each = try(var.settings.virtual_network_configuration, null) != null ? [var.settings.virtual_network_configuration] : []
     content {
@@ -55,5 +55,6 @@ resource "azurerm_kusto_cluster" "kusto" {
   trusted_external_tenants = try(var.settings.trusted_external_tenants, null)
   zones                    = try(var.settings.zones, null)
   engine                   = try(var.settings.engine, null)
+  auto_stop_enabled        = try(var.settings.auto_stop_enabled, null)
   tags                     = local.tags
 }

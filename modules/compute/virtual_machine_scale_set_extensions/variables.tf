@@ -19,3 +19,9 @@ variable "keyvaults" {
 variable "virtual_machine_scale_set_os_type" {
   default = {}
 }
+variable "log_analytics_workspaces" {
+  default = {}
+}
+variable "remote_objects" {
+  default = {}
+}

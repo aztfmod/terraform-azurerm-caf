@@ -63,7 +63,19 @@ resource "azurerm_monitor_action_group" "this" {
       use_common_alert_schema = try(email_receiver.value.use_common_alert_schema, false)
     }
   }
-
+  dynamic "event_hub_receiver" {
+    for_each = try(var.settings.event_hub_receiver, {})
+    content {
+      name = event_hub_receiver.value.name
+      event_hub_id = coalesce(
+        try(var.remote_objects.event_hub_namespaces[event_hub_receiver.value.event_hub.lz_key][event_hub_receiver.value.event_hub.key].id, null),
+        try(var.remote_objects.event_hub_namespaces[var.client_config.landingzone_key][event_hub_receiver.value.event_hub.key].id, null),
+        try(event_hub_receiver.value.event_hub.key, null)
+      )
+      tenant_id               = try(event_hub_receiver.value.tenant_id, null)
+      use_common_alert_schema = try(event_hub_receiver.value.use_common_alert_schema, null)
+    }
+  }
   dynamic "itsm_receiver" {
     for_each = try(var.settings.itsm_receiver, {})
     content {

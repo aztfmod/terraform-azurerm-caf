@@ -17,9 +17,8 @@ module "mssql_databases" {
   storage_accounts    = module.storage_accounts
   diagnostic_profiles = try(each.value.diagnostic_profiles, {})
   diagnostics         = local.combined_diagnostics
-  location            = can(local.global_settings.regions[each.value.region]) ? local.global_settings.regions[each.value.region] : local.combined_objects_resource_groups[try(each.value.resource_group.lz_key, local.client_config.landingzone_key)][try(each.value.resource_group.key, each.value.resource_group_key)].location
+  location            = can(local.global_settings.regions[each.value.region]) || can(each.value.region) ? try(local.global_settings.regions[each.value.region], each.value.region) : local.combined_objects_resource_groups[try(each.value.resource_group.lz_key, local.client_config.landingzone_key)][try(each.value.resource_group.key, each.value.resource_group_key)].location
   base_tags           = try(local.global_settings.inherit_tags, false) ? try(local.combined_objects_resource_groups[try(each.value.resource_group.lz_key, local.client_config.landingzone_key)][try(each.value.resource_group.key, each.value.resource_group_key)].tags, {}) : {}
-
 }
 
 

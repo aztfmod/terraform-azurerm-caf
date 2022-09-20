@@ -10,7 +10,7 @@ resource "azurecaf_name" "schedule" {
 resource "azurerm_data_factory_trigger_schedule" "schedule" {
   name                = azurecaf_name.schedule.name
   resource_group_name = var.resource_group_name
-  data_factory_name   = var.data_factory_name
+  data_factory_id     = var.data_factory_id
   pipeline_name       = var.pipeline_name
   start_time          = try(var.settings.start_time, null)
   end_time            = try(var.settings.end_time, null)

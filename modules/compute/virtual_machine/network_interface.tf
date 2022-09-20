@@ -60,7 +60,10 @@ resource "azurerm_network_interface" "nic" {
     private_ip_address_version    = lookup(each.value, "private_ip_address_version", null)
     private_ip_address            = lookup(each.value, "private_ip_address", null)
     primary                       = lookup(each.value, "primary", null)
-    public_ip_address_id          = can(each.value.public_address_id) || can(each.value.public_ip_address_key) == false ? try(each.value.public_address_id, null) : var.public_ip_addresses[try(each.value.lz_key, var.client_config.landingzone_key)][each.value.public_ip_address_key].id
+    public_ip_address_id          = can(each.value.public_address_id) || can(try(each.value.public_ip_address.key, each.value.public_ip_address_key)) == false ? try(each.value.public_address_id, null) : var.public_ip_addresses[try(each.value.public_ip_address.lz_key, var.client_config.landingzone_key)][try(each.value.public_ip_address.key, each.value.public_ip_address_key)].id
+
+    # Public ip address id logic in previous version was bugged, as it checks for var.client_config.landingzone_key prior to each.value.lz_key. thus, in the new logic to ensure backward compatible, only each.public_ip_address.lz_key is considered and not each.value.lz_key for public ip.
+
   }
 
   dynamic "ip_configuration" {
@@ -73,7 +76,7 @@ resource "azurerm_network_interface" "nic" {
       private_ip_address_version    = lookup(ip_configuration.value, "private_ip_address_version", null)
       private_ip_address            = lookup(ip_configuration.value, "private_ip_address", null)
       primary                       = lookup(ip_configuration.value, "primary", null)
-      public_ip_address_id          = can(ip_configuration.value.public_address_id) || can(ip_configuration.value.public_ip_address_key) == false ? try(ip_configuration.value.public_address_id, null) : var.public_ip_addresses[try(ip_configuration.value.lz_key, var.client_config.landingzone_key)][ip_configuration.value.public_ip_address_key].id
+      public_ip_address_id          = can(ip_configuration.value.public_address_id) || can(try(ip_configuration.value.public_address_id.key, ip_configuration.value.public_ip_address_key)) == false ? try(ip_configuration.value.public_address_id, null) : var.public_ip_addresses[try(ip_configuration.value.public_ip_address.lz_key, var.client_config.landingzone_key)][try(ip_configuration.value.public_ip_address.key, ip_configuration.value.public_ip_address_key)].id
     }
   }
 }

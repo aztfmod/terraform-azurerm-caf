@@ -76,16 +76,16 @@ log_analytics = {
 #   }
 # }
 
-sentinel_dc_office_365 = {
-  office1 = {
-    name = "example-office"
-    log_analytics_workspace = {
-      #lz_key = ""
-      key = "law1"
-    }
-    teams_enabled = "false"
-  }
-}
+# sentinel_dc_office_365 = {
+#   office1 = {
+#     name = "example-office"
+#     log_analytics_workspace = {
+#       #lz_key = ""
+#       key = "law1"
+#     }
+#     teams_enabled = "false"
+#   }
+# }
 
 sentinel_dc_security_center = {
   sc1 = {
@@ -97,12 +97,12 @@ sentinel_dc_security_center = {
   }
 }
 
-sentinel_dc_threat_intelligence = {
-  ti1 = {
-    name = "example-ti"
-    log_analytics_workspace = {
-      #lz_key = ""
-      key = "law1"
-    }
-  }
-}
+# sentinel_dc_threat_intelligence = {
+#   ti1 = {
+#     name = "example-ti"
+#     log_analytics_workspace = {
+#       #lz_key = ""
+#       key = "law1"
+#     }
+#   }
+# }

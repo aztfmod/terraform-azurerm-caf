@@ -12,7 +12,7 @@ resource "azurerm_data_factory_linked_service_azure_databricks" "dflsad" {
 
   name                = azurecaf_name.dflsad.result
   resource_group_name = var.resource_group_name
-  data_factory_name   = var.remote_objects.data_factory.name
+  data_factory_id     = var.remote_objects.data_factory.id
   access_token        = try(var.settings.access_token, null)
 
   dynamic "key_vault_password" {
