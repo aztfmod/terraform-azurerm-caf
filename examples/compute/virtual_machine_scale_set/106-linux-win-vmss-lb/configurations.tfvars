@@ -126,8 +126,8 @@ lb = {
     frontend_ip_configuration = {
       name = "PrivateIPAddress"
       subnet = {
-        vnet_key   = "vnet1"
-        key        = "subnet2"
+        vnet_key = "vnet1"
+        key      = "subnet2"
       }
     }
     sku = "Standard"
@@ -336,14 +336,14 @@ virtual_machine_scale_sets = {
           }
         }
       }
-        nic1 = {
+      nic1 = {
         # Value of the keys from networking.tfvars
         name       = "1"
         vnet_key   = "vnet1"
         subnet_key = "subnet2"
         #subnet_id  = "/subscriptions/97958dac-XXXX-XXXX-XXXX-9f436fa73bd4/resourceGroups/xbvt-rg-vmss-agw-exmp-rg/providers/Microsoft.Network/virtualNetworks/xbvt-vnet-vmss/subnets/xbvt-snet-compute"
-        }
       }
+    }
     ultra_ssd_enabled = false # required if planning to use UltraSSD_LRS
 
     data_disks = {

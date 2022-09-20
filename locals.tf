@@ -3,7 +3,7 @@ resource "random_string" "prefix" {
   length  = 4
   special = false
   upper   = false
-  number  = false
+  numeric = false
 }
 
 locals {
@@ -129,6 +129,8 @@ locals {
     postgresql_flexible_servers        = try(var.database.postgresql_flexible_servers, {})
     postgresql_servers                 = try(var.database.postgresql_servers, {})
     synapse_workspaces                 = try(var.database.synapse_workspaces, {})
+    mysql_flexible_server              = try(var.database.mysql_flexible_server, {})
+
     data_explorer = {
       kusto_clusters                         = try(var.database.data_explorer.kusto_clusters, {})
       kusto_databases                        = try(var.database.data_explorer.kusto_databases, {})
@@ -230,10 +232,14 @@ locals {
     cognitive_services_account = try(var.cognitive_services.cognitive_services_account, {})
   }
   messaging = {
-    signalr_services      = try(var.messaging.signalr_services, {})
-    servicebus_namespaces = try(var.messaging.servicebus_namespaces, {})
-    servicebus_queues     = try(var.messaging.servicebus_queues, {})
-    servicebus_topics     = try(var.messaging.servicebus_topics, {})
+    signalr_services             = try(var.messaging.signalr_services, {})
+    servicebus_namespaces        = try(var.messaging.servicebus_namespaces, {})
+    servicebus_queues            = try(var.messaging.servicebus_queues, {})
+    servicebus_topics            = try(var.messaging.servicebus_topics, {})
+    eventgrid_domain             = try(var.messaging.eventgrid_domain, {})
+    eventgrid_topic              = try(var.messaging.eventgrid_topic, {})
+    eventgrid_event_subscription = try(var.messaging.eventgrid_event_subscription, {})
+    eventgrid_domain_topic       = try(var.messaging.eventgrid_domain_topic, {})
   }
 
   networking = {
@@ -283,8 +289,14 @@ locals {
     private_dns                                             = try(var.networking.private_dns, {})
     private_dns_vnet_links                                  = try(var.networking.private_dns_vnet_links, {})
     public_ip_addresses                                     = try(var.networking.public_ip_addresses, {})
+    relay_hybrid_connection                                 = try(var.networking.relay_hybrid_connection, {})
+    relay_namespace                                         = try(var.networking.relay_namespace, {})
     public_ip_prefixes                                      = try(var.networking.public_ip_prefixes, {})
     route_tables                                            = try(var.networking.route_tables, {})
+    traffic_manager_profile                                 = try(var.networking.traffic_manager_profile, {})
+    traffic_manager_nested_endpoint                         = try(var.networking.traffic_manager_nested_endpoint, {})
+    traffic_manager_external_endpoint                       = try(var.networking.traffic_manager_external_endpoint, {})
+    traffic_manager_azure_endpoint                          = try(var.networking.traffic_manager_azure_endpoint, {})
     vhub_peerings                                           = try(var.networking.vhub_peerings, {})
     virtual_hub_connections                                 = try(var.networking.virtual_hub_connections, {})
     virtual_hub_er_gateway_connections                      = try(var.networking.virtual_hub_er_gateway_connections, {})
@@ -330,19 +342,21 @@ locals {
   }
 
   shared_services = {
-    automations                    = try(var.shared_services.automations, {})
-    consumption_budgets            = try(var.shared_services.consumption_budgets, {})
-    image_definitions              = try(var.shared_services.image_definitions, {})
-    log_analytics_storage_insights = try(var.shared_services.log_analytics_storage_insights, {})
-    monitor_autoscale_settings     = try(var.shared_services.monitor_autoscale_settings, {})
-    monitor_action_groups          = try(var.shared_services.monitor_action_groups, {})
-    monitoring                     = try(var.shared_services.monitoring, {})
-    monitor_metric_alert           = try(var.shared_services.monitor_metric_alert, {})
-    monitor_activity_log_alert     = try(var.shared_services.monitor_activity_log_alert, {})
-    packer_service_principal       = try(var.shared_services.packer_service_principal, {})
-    packer_build                   = try(var.shared_services.packer_build, {})
-    recovery_vaults                = try(var.shared_services.recovery_vaults, {})
-    shared_image_galleries         = try(var.shared_services.shared_image_galleries, {})
+    automations                               = try(var.shared_services.automations, {})
+    automation_log_analytics_links            = try(var.shared_services.automation_log_analytics_links, {})
+    automation_software_update_configurations = try(var.shared_services.automation_software_update_configurations, {})
+    consumption_budgets                       = try(var.shared_services.consumption_budgets, {})
+    image_definitions                         = try(var.shared_services.image_definitions, {})
+    log_analytics_storage_insights            = try(var.shared_services.log_analytics_storage_insights, {})
+    monitor_autoscale_settings                = try(var.shared_services.monitor_autoscale_settings, {})
+    monitor_action_groups                     = try(var.shared_services.monitor_action_groups, {})
+    monitoring                                = try(var.shared_services.monitoring, {})
+    monitor_metric_alert                      = try(var.shared_services.monitor_metric_alert, {})
+    monitor_activity_log_alert                = try(var.shared_services.monitor_activity_log_alert, {})
+    packer_service_principal                  = try(var.shared_services.packer_service_principal, {})
+    packer_build                              = try(var.shared_services.packer_build, {})
+    recovery_vaults                           = try(var.shared_services.recovery_vaults, {})
+    shared_image_galleries                    = try(var.shared_services.shared_image_galleries, {})
   }
 
   storage = {
@@ -354,10 +368,12 @@ locals {
 
   webapp = {
     app_service_environments     = try(var.webapp.app_service_environments, {})
+    app_service_environments_v3  = try(var.webapp.app_service_environments_v3, {})
     app_service_plans            = try(var.webapp.app_service_plans, {})
     app_services                 = try(var.webapp.app_services, {})
     azurerm_application_insights = try(var.webapp.azurerm_application_insights, {})
     function_apps                = try(var.webapp.function_apps, {})
+    static_sites                 = try(var.webapp.static_sites, {})
   }
 
   enable = {
@@ -387,5 +403,12 @@ locals {
     api_management_gateway_api          = try(var.apim.api_management_gateway_api, {})
     api_management_group                = try(var.apim.api_management_group, {})
     api_management_subscription         = try(var.apim.api_management_subscription, {})
+    api_management_product              = try(var.apim.api_management_product, {})
+  }
+  iot = {
+    digital_twins_instances             = try(var.iot.digital_twins_instances, {})
+    digital_twins_endpoint_eventhubs    = try(var.iot.digital_twins_endpoint_eventhubs, {})
+    digital_twins_endpoint_eventgrids   = try(var.iot.digital_twins_endpoint_eventgrids, {})
+    digital_twins_endpoint_servicebuses = try(var.iot.digital_twins_endpoint_servicebuses, {})
   }
 }

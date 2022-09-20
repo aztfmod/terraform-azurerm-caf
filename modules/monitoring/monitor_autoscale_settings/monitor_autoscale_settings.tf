@@ -12,8 +12,9 @@ resource "azurerm_monitor_autoscale_setting" "this" {
   name                = azurecaf_name.this_name.result
   resource_group_name = var.resource_group_name
   location            = var.location
-  target_resource_id  = var.target_resource_id
-  enabled             = var.settings.enabled
+  target_resource_id  = local.target_resource_id
+
+  enabled = var.settings.enabled
 
   dynamic "profile" {
     for_each = var.settings.profiles
@@ -27,11 +28,11 @@ resource "azurerm_monitor_autoscale_setting" "this" {
       }
 
       dynamic "rule" {
-        for_each = try(profile.value.rules, {}) == "rules" ? [profile.value.rules] : []
+        for_each = try(profile.value.rules, {})
         content {
           metric_trigger {
             metric_name              = rule.value.metric_trigger.metric_name
-            metric_resource_id       = try(rule.value.metric_trigger.metric_resource_id, var.target_resource_id)
+            metric_resource_id       = try(rule.value.metric_trigger.metric_resource_id, local.target_resource_id)
             time_grain               = rule.value.metric_trigger.time_grain
             statistic                = rule.value.metric_trigger.statistic
             time_window              = rule.value.metric_trigger.time_window
@@ -41,7 +42,7 @@ resource "azurerm_monitor_autoscale_setting" "this" {
             metric_namespace         = try(rule.value.metric_trigger.metric_namespace, null)
             divide_by_instance_count = try(rule.value.metric_trigger.divide_by_instance_count, null)
             dynamic "dimensions" {
-              for_each = try(rule.value.metric_trigger.dimensions, {}) == {} ? [] : [1]
+              for_each = try(rule.value.metric_trigger.dimensions, {})
               content {
                 name     = dimensions.value.name
                 operator = dimensions.value.operator

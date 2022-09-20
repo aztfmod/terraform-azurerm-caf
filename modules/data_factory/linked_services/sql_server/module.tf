@@ -10,7 +10,7 @@ resource "azurecaf_name" "linked" {
 resource "azurerm_data_factory_linked_service_sql_server" "linked_service_sql_server" {
   name                     = azurecaf_name.linked.name
   resource_group_name      = var.resource_group_name
-  data_factory_name        = var.data_factory_name
+  data_factory_id          = var.data_factory_id
   description              = try(var.settings.description, null)
   integration_runtime_name = try(var.settings.integration_runtime_name, null)
   annotations              = try(var.settings.annotations, null)

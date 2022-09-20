@@ -28,5 +28,5 @@ resource "random_password" "pwd" {
   length  = local.password_policy.length
   special = local.password_policy.special
   upper   = local.password_policy.upper
-  number  = local.password_policy.number
+  numeric = local.password_policy.number
 }

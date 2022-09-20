@@ -351,3 +351,43 @@ module "network_watchers" {
   tags                = try(each.value.tags, null)
   global_settings     = local.global_settings
 }
+
+
+
+
+module "relay_hybrid_connection" {
+  source   = "./modules/networking/relay_hybrid_connection"
+  for_each = local.networking.relay_hybrid_connection
+
+  global_settings     = local.global_settings
+  client_config       = local.client_config
+  settings            = each.value
+  resource_group_name = can(each.value.resource_group.name) ? each.value.resource_group.name : local.combined_objects_resource_groups[try(each.value.resource_group.lz_key, local.client_config.landingzone_key)][each.value.resource_group.key].name
+
+  remote_objects = {
+    resource_group  = local.combined_objects_resource_groups
+    relay_namespace = local.combined_objects_relay_namespace
+  }
+}
+output "relay_hybrid_connection" {
+  value = module.relay_hybrid_connection
+}
+
+module "relay_namespace" {
+  source   = "./modules/networking/relay_namespace"
+  for_each = local.networking.relay_namespace
+
+  global_settings = local.global_settings
+  client_config   = local.client_config
+  settings        = each.value
+
+  resource_group_name = can(each.value.resource_group.name) ? each.value.resource_group.name : local.combined_objects_resource_groups[try(each.value.resource_group.lz_key, local.client_config.landingzone_key)][each.value.resource_group.key].name
+  location            = can(local.global_settings.regions[each.value.region]) ? local.global_settings.regions[each.value.region] : local.combined_objects_resource_groups[try(each.value.resource_group.lz_key, local.client_config.landingzone_key)][try(each.value.resource_group.key, each.value.resource_group_key)].location
+
+  remote_objects = {
+    resource_group = local.combined_objects_resource_groups
+  }
+}
+output "relay_namespace" {
+  value = module.relay_namespace
+}

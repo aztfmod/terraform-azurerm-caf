@@ -7,8 +7,8 @@ module "namespace_auth_rules" {
   settings        = each.value
 
   remote_objects = {
-    servicebus_namespace_name = azurerm_servicebus_namespace.namespace.name
-    resource_group_name       = local.resource_group_name
+    servicebus_namespace_id = azurerm_servicebus_namespace.namespace.id
+    resource_group_name     = local.resource_group_name
   }
 
 }

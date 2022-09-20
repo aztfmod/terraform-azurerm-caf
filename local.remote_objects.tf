@@ -7,6 +7,7 @@ locals {
     management_logger                              = try(local.combined_objects_api_management_logger, null)
     app_config                                     = try(local.combined_objects_app_config, null)
     app_service_environments                       = try(local.combined_objects_app_service_environments, null)
+    app_service_environments_v3                    = try(local.combined_objects_app_service_environments_v3, null)
     app_service_plans                              = try(local.combined_objects_app_service_plans, null)
     app_services                                   = try(local.combined_objects_app_services, null)
     application_gateway_platforms                  = try(local.combined_objects_application_gateway_platforms, null)
@@ -14,6 +15,7 @@ locals {
     application_gateways                           = try(local.combined_objects_application_gateways, null)
     application_insights                           = try(local.combined_objects_application_insights, null)
     application_security_groups                    = try(local.combined_objects_application_security_groups, null)
+    automations                                    = try(local.combined_objects_automations, null)
     availability_sets                              = try(local.combined_objects_availability_sets, null)
     azure_container_registries                     = try(local.combined_objects_azure_container_registries, null)
     azuread_applications                           = try(local.combined_objects_azuread_applications, null)
@@ -99,6 +101,10 @@ locals {
     storage_accounts                               = try(local.combined_objects_storage_accounts, null)
     storage_containers                             = try(local.combined_objects_storage_containers, null)
     synapse_workspaces                             = try(local.combined_objects_synapse_workspaces, null)
+    traffic_manager_profile                        = try(local.combined_objects_traffic_manager_profile, null)
+    traffic_manager_nested_endpoint                = try(local.combined_objects_traffic_manager_nested_endpoint, null)
+    traffic_manager_azure_endpoint                 = try(local.combined_objects_traffic_manager_azure_endpoint, null)
+    traffic_manager_external_endpoint              = try(local.combined_objects_traffic_manager_external_endpoint, null)
     virtual_hub_connections                        = try(local.combined_objects_virtual_hub_connections, null)
     virtual_hub_route_tables                       = try(local.combined_objects_virtual_hub_route_tables, null)
     virtual_hubs                                   = try(local.combined_objects_virtual_hubs, null)
@@ -116,5 +122,6 @@ locals {
     wvd_host_pools                                 = try(local.combined_objects_wvd_host_pools, null)
     wvd_workspaces                                 = try(local.combined_objects_wvd_workspaces, null)
     subscriptions                                  = try(local.combined_objects_subscriptions, null)
+
   }
 }

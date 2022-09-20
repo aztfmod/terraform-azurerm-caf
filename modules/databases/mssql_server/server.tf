@@ -9,21 +9,24 @@ resource "azurerm_mssql_server" "mssql" {
   connection_policy             = try(var.settings.connection_policy, null)
   minimum_tls_version           = try(var.settings.minimum_tls_version, null)
   tags                          = local.tags
+
+
   dynamic "azuread_administrator" {
-    for_each = lookup(var.settings, "azuread_administrator", {}) == {} ? [] : [1]
+    for_each = can(var.settings.azuread_administrator) ? [var.settings.azuread_administrator] : []
 
     content {
-      login_username = try(var.settings.azuread_administrator.login_username, try(var.azuread_groups[var.client_config.landingzone_key][var.settings.azuread_administrator.azuread_group_key].name, var.azuread_groups[var.settings.azuread_administrator.lz_key][var.settings.azuread_administrator.azuread_group_key].name))
-      object_id      = try(var.settings.azuread_administrator.object_id, try(var.azuread_groups[var.client_config.landingzone_key][var.settings.azuread_administrator.azuread_group_key].id, var.azuread_groups[var.settings.azuread_administrator.lz_key][var.settings.azuread_administrator.azuread_group_key].id))
-      tenant_id      = try(var.settings.azuread_administrator.tenant_id, try(var.azuread_groups[var.client_config.landingzone_key][var.settings.azuread_administrator.azuread_group_key].tenant_id, var.azuread_groups[var.settings.azuread_administrator.lz_key][var.settings.azuread_administrator.azuread_group_key].tenant_id))
+      azuread_authentication_only = try(var.settings.azuread_administrator.azuread_authentication_only, false)
+      login_username              = try(var.settings.azuread_administrator.login_username, try(var.azuread_groups[var.client_config.landingzone_key][var.settings.azuread_administrator.azuread_group_key].name, var.azuread_groups[var.settings.azuread_administrator.lz_key][var.settings.azuread_administrator.azuread_group_key].name))
+      object_id                   = try(var.settings.azuread_administrator.object_id, try(var.azuread_groups[var.client_config.landingzone_key][var.settings.azuread_administrator.azuread_group_key].id, var.azuread_groups[var.settings.azuread_administrator.lz_key][var.settings.azuread_administrator.azuread_group_key].id))
+      tenant_id                   = try(var.settings.azuread_administrator.tenant_id, try(var.azuread_groups[var.client_config.landingzone_key][var.settings.azuread_administrator.azuread_group_key].tenant_id, var.azuread_groups[var.settings.azuread_administrator.lz_key][var.settings.azuread_administrator.azuread_group_key].tenant_id))
     }
   }
 
   dynamic "identity" {
-    for_each = lookup(var.settings, "identity", {}) == {} ? [] : [1]
+    for_each = can(var.settings.identity) ? [var.settings.identity] : []
 
     content {
-      type = var.settings.identity.type
+      type = identity.value.type
     }
   }
 
@@ -63,7 +66,7 @@ resource "random_password" "sql_admin" {
   length           = 128
   special          = true
   upper            = true
-  number           = true
+  numeric          = true
   override_special = "$#%"
 }
 

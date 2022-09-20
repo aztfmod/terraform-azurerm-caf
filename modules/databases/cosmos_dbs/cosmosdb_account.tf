@@ -22,6 +22,7 @@ resource "azurerm_cosmosdb_account" "cosmos_account" {
   enable_multiple_write_locations   = try(var.settings.enable_multiple_write_locations, false)
   enable_automatic_failover         = try(var.settings.enable_automatic_failover, null)
   is_virtual_network_filter_enabled = try(var.settings.is_virtual_network_filter_enabled, null)
+  create_mode                       = try(var.settings.create_mode, null)
   public_network_access_enabled     = try(var.settings.public_network_access_enabled, true)
 
   dynamic "consistency_policy" {
@@ -51,6 +52,20 @@ resource "azurerm_cosmosdb_account" "cosmos_account" {
 
     content {
       name = capabilities.value
+    }
+  }
+  dynamic "restore" {
+    for_each = try(var.settings.restore, null) != null ? [var.settings.restore] : []
+    content {
+      source_cosmosdb_account_id = try(restore.value.source_cosmosdb_account_id, null)
+      restore_timestamp_in_utc   = try(restore.value.restore_timestamp_in_utc, null)
+      dynamic "database" {
+        for_each = try(var.settings.database, null) != null ? [var.settings.database] : []
+        content {
+          name             = try(database.value.name, null)
+          collection_names = try(database.value.collection_names, null)
+        }
+      }
     }
   }
 }

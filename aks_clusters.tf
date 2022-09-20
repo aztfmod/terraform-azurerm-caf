@@ -7,7 +7,7 @@ module "aks_clusters" {
   depends_on = [module.networking, module.routes, module.azurerm_firewall_policies]
   for_each   = local.compute.aks_clusters
 
-  base_tags           = try(local.global_settings.inherit_tags, false) ? try(local.combined_objects_resource_groups[try(each.value.resource_group.lz_key, local.client_config.landingzone_key)][try(each.value.resource_group.key, each.value.resource_group_key)].tags, {}) : {}
+  base_tags = try(local.global_settings.inherit_tags, false) ? try(local.combined_objects_resource_groups[try(each.value.resource_group.lz_key, local.client_config.landingzone_key)][try(each.value.resource_group.key, each.value.resource_group_key)].tags, {}) : {}
 
   client_config       = local.client_config
   diagnostic_profiles = try(each.value.diagnostic_profiles, {})
@@ -24,7 +24,7 @@ module "aks_clusters" {
     ]
   )
 
-  application_gateway = can(each.value.addon_profile.ingress_application_gateway) ? local.combined_objects_application_gateway_platforms[try(each.value.addon_profile.ingress_application_gateway.lz_key, local.client_config.landingzone_key)][each.value.addon_profile.ingress_application_gateway.key] : null
+  application_gateway = can(each.value.addon_profile.ingress_application_gateway.key) ? local.combined_objects_application_gateway_platforms[try(each.value.addon_profile.ingress_application_gateway.lz_key, local.client_config.landingzone_key)][each.value.addon_profile.ingress_application_gateway.key] : null
   private_dns_zone_id = can(each.value.private_dns_zone.id) || can(each.value.private_dns_zone.key) == false ? try(each.value.private_dns_zone.id, null) : local.combined_objects_private_dns[try(each.value.private_dns_zone.lz_key, local.client_config.landingzone_key)][each.value.private_dns_zone.key].id
   location            = can(local.global_settings.regions[each.value.region]) ? local.global_settings.regions[each.value.region] : local.combined_objects_resource_groups[try(each.value.resource_group.lz_key, local.client_config.landingzone_key)][try(each.value.resource_group.key, each.value.resource_group_key)].location
   resource_group_name = can(each.value.resource_group.name) || can(each.value.resource_group_name) ? try(each.value.resource_group.name, each.value.resource_group_name) : local.combined_objects_resource_groups[try(each.value.resource_group.lz_key, local.client_config.landingzone_key)][try(each.value.resource_group_key, each.value.resource_group.key)].name

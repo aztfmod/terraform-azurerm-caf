@@ -78,8 +78,11 @@ resource "azurerm_windows_virtual_machine_scale_set" "vmss" {
   scale_in_policy              = try(each.value.scale_in_policy, null)
   zone_balance                 = try(each.value.zone_balance, null)
   zones                        = try(each.value.zones, null)
-  timezone                     = try(each.value.timezone, null)
-  license_type                 = try(each.value.license_type, null)
+  upgrade_mode                 = try(each.value.upgrade_mode, null)
+  # for future releases
+  # enable_automatic_updates     = each.value.automatic_os_upgrade_policy.enable_automatic_os_upgrade == true ? false : true
+  timezone     = try(each.value.timezone, null)
+  license_type = try(each.value.license_type, null)
 
   dynamic "network_interface" {
     for_each = try(var.settings.network_interfaces, {})
@@ -92,14 +95,14 @@ resource "azurerm_windows_virtual_machine_scale_set" "vmss" {
       network_security_group_id     = try(network_interface.value.network_security_group_id, null)
 
       ip_configuration {
-        name                                         = azurecaf_name.windows_nic[network_interface.key].result
-        primary                                      = try(network_interface.value.primary, false)
-        subnet_id                                    = can(network_interface.value.subnet_id) ? network_interface.value.subnet_id : var.vnets[try(network_interface.value.lz_key, var.client_config.landingzone_key)][network_interface.value.vnet_key].subnets[network_interface.value.subnet_key].id
-        load_balancer_backend_address_pool_ids       = can(network_interface.value.load_balancers) ? flatten([
-        for lb, lb_value in try(network_interface.value.load_balancers, {}) : [
-        can(var.lb_backend_address_pool[try(lb_value.lz_key, var.client_config.landingzone_key)][lb_value.lbap_key].id) ? var.lb_backend_address_pool[try(lb_value.lz_key, var.client_config.landingzone_key)][lb_value.lbap_key].id : var.load_balancers[try(lb_value.lz_key, var.client_config.landingzone_key)][lb_value.lb_key].backend_address_pool_id
-      ]
-  ]) : []
+        name      = azurecaf_name.windows_nic[network_interface.key].result
+        primary   = try(network_interface.value.primary, false)
+        subnet_id = can(network_interface.value.subnet_id) ? network_interface.value.subnet_id : var.vnets[try(network_interface.value.lz_key, var.client_config.landingzone_key)][network_interface.value.vnet_key].subnets[network_interface.value.subnet_key].id
+        load_balancer_backend_address_pool_ids = can(network_interface.value.load_balancers) ? flatten([
+          for lb, lb_value in try(network_interface.value.load_balancers, {}) : [
+            can(var.lb_backend_address_pool[try(lb_value.lz_key, var.client_config.landingzone_key)][lb_value.lbap_key].id) ? var.lb_backend_address_pool[try(lb_value.lz_key, var.client_config.landingzone_key)][lb_value.lbap_key].id : var.load_balancers[try(lb_value.lz_key, var.client_config.landingzone_key)][lb_value.lb_key].backend_address_pool_id
+          ]
+        ]) : []
         application_gateway_backend_address_pool_ids = try(local.application_gateway_backend_address_pool_ids, null)
         application_security_group_ids               = try(local.application_security_group_ids, null)
       }
@@ -112,6 +115,13 @@ resource "azurerm_windows_virtual_machine_scale_set" "vmss" {
     disk_size_gb              = try(each.value.os_disk.disk_size_gb, null)
     storage_account_type      = try(each.value.os_disk.storage_account_type, null)
     write_accelerator_enabled = try(each.value.os_disk.write_accelerator_enabled, false)
+
+    dynamic "diff_disk_settings" {
+      for_each = try(each.value.os_disk.diff_disk_settings, {}) == {} ? [] : [1]
+      content {
+        option = try(each.value.os_disk.diff_disk_settings.option, "Local")
+      }
+    }
   }
 
   dynamic "data_disk" {
@@ -165,10 +175,10 @@ resource "azurerm_windows_virtual_machine_scale_set" "vmss" {
   }
 
   dynamic "boot_diagnostics" {
-    for_each = var.boot_diagnostics_storage_account == {} ? [] : [1]
+    for_each = try(var.boot_diagnostics_storage_account != null ? [1] : var.global_settings.resource_defaults.virtual_machine_scale_sets.use_azmanaged_storage_for_boot_diagnostics == true ? [1] : [], [])
 
     content {
-      storage_account_uri = var.boot_diagnostics_storage_account
+      storage_account_uri = var.boot_diagnostics_storage_account == "" ? null : var.boot_diagnostics_storage_account
     }
   }
 
@@ -273,12 +283,6 @@ resource "azurerm_windows_virtual_machine_scale_set" "vmss" {
 
   health_probe_id = try(var.load_balancers[try(each.value.lz_key, var.client_config.landingzone_key)][each.value.health_probe.loadbalancer_key].probes[each.value.health_probe.probe_key].id, null)
 
-  # lifecycle {
-  #   ignore_changes = [
-  #     resource_group_name, location
-  #   ]
-  # }
-
 }
 
 
@@ -288,7 +292,7 @@ resource "random_password" "admin" {
   min_upper        = 2
   min_lower        = 2
   min_special      = 2
-  number           = true
+  numeric          = true
   special          = true
   override_special = "!@#$%&"
 }
