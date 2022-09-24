@@ -37,6 +37,7 @@ module "virtual_machine_scale_sets" {
   recovery_vaults             = local.combined_objects_recovery_vaults
   settings                    = each.value
   vnets                       = local.combined_objects_networking
+  virtual_subnets             = local.combined_objects_virtual_subnets 
 
   # if boot_diagnostics_storage_account_key is points to a valid storage account, pass the endpoint
   # if boot_diagnostics_storage_account_key is empty string, pass empty string

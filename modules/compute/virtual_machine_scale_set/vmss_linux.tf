@@ -110,7 +110,10 @@ resource "azurerm_linux_virtual_machine_scale_set" "vmss" {
       ip_configuration {
         name      = azurecaf_name.linux_nic[network_interface.key].result
         primary   = try(network_interface.value.primary, false)
-        subnet_id = can(network_interface.value.subnet_id) ? network_interface.value.subnet_id : var.vnets[try(network_interface.value.lz_key, var.client_config.landingzone_key)][network_interface.value.vnet_key].subnets[network_interface.value.subnet_key].id
+        subnet_id = can(network_interface.value.subnet_id) ? network_interface.value.subnet_id : coalesce(
+          try(var.vnets[try(network_interface.value.lz_key, var.client_config.landingzone_key)][network_interface.value.vnet_key].subnets[network_interface.value.subnet_key].id, null),
+          try(var.virtual_subnets[try(network_interface.value.lz_key, var.client_config.landingzone_key)][network_interface.value.subnet_key].id, null)
+        )
         load_balancer_backend_address_pool_ids = can(network_interface.value.load_balancers) ? flatten([
           for lb, lb_value in try(network_interface.value.load_balancers, {}) : [
             can(var.lb_backend_address_pool[try(lb_value.lz_key, var.client_config.landingzone_key)][lb_value.lbap_key].id) ? var.lb_backend_address_pool[try(lb_value.lz_key, var.client_config.landingzone_key)][lb_value.lbap_key].id : var.load_balancers[try(lb_value.lz_key, var.client_config.landingzone_key)][lb_value.lb_key].backend_address_pool_id
@@ -301,7 +304,10 @@ resource "azurerm_linux_virtual_machine_scale_set" "vmss_autoscaled" {
       ip_configuration {
         name                                         = azurecaf_name.linux_nic[network_interface.key].result
         primary                                      = try(network_interface.value.primary, false)
-        subnet_id                                    = can(network_interface.value.subnet_id) ? network_interface.value.subnet_id : var.vnets[try(network_interface.value.lz_key, var.client_config.landingzone_key)][network_interface.value.vnet_key].subnets[network_interface.value.subnet_key].id
+        subnet_id                                    = can(network_interface.value.subnet_id) ? network_interface.value.subnet_id : coalesce(
+          try(var.vnets[try(network_interface.value.lz_key, var.client_config.landingzone_key)][network_interface.value.vnet_key].subnets[network_interface.value.subnet_key].id, null),
+          try(var.virtual_subnets[try(network_interface.value.lz_key, var.client_config.landingzone_key)][network_interface.value.subnet_key].id, null)
+        )
         ####################################################################
         # load_balancer_backend_address_pool_ids       = try(local.load_balancer_backend_address_pool_ids, null)
         # Copied from azurerm_linux_virtual_machine_scale_set resource above to auto-scaled here as
