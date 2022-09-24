@@ -16,6 +16,7 @@ variable "location" {
 variable "storage_accounts" {}
 variable "azuread_groups" {}
 variable "vnets" {}
+variable "virtual_subnets" {}
 variable "private_endpoints" {}
 variable "resource_groups" {}
 variable "base_tags" {
