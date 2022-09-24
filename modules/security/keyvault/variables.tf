@@ -9,6 +9,9 @@ variable "settings" {}
 variable "vnets" {
   default = {}
 }
+variable "virtual_subnets" {
+  default = {}
+}
 variable "azuread_groups" {
   default = {}
 }

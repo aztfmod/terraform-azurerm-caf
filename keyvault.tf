@@ -9,6 +9,7 @@ module "keyvaults" {
   resource_groups    = local.combined_objects_resource_groups
   diagnostics        = local.combined_diagnostics
   vnets              = local.combined_objects_networking
+  virtual_subnets    = local.combined_objects_virtual_subnets 
   azuread_groups     = local.combined_objects_azuread_groups
   managed_identities = local.combined_objects_managed_identities
   base_tags          = try(local.global_settings.inherit_tags, false) ? try(local.combined_objects_resource_groups[try(each.value.resource_group.lz_key, local.client_config.landingzone_key)][try(each.value.resource_group.key, each.value.resource_group_key)].tags, {}) : {}
