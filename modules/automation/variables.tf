@@ -36,3 +36,11 @@ variable "remote_objects" {
 
 variable "client_config" {}
 variable "private_endpoints" {}
+variable "automation_schedule" {
+  frequency               = string
+  interval                = 1
+  timezone                = string
+  start_time              = "2014-04-15T18:00:15+02:00"
+  description             = "Specifies the Azure automation account schedule information."
+  week_days               = ["Friday"]
+}
