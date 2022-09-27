@@ -51,6 +51,7 @@ application_gateway_applications_v1 = {
         backend_pool_key  = "demo"
         http_settings_key = "demo"
         url_path_map_key  = "demo"
+        priority          = "10000" #Priority is mandatory
       }
     }
 
