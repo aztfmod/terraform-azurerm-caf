@@ -25,7 +25,6 @@ module "postgresql_servers" {
   private_endpoints   = try(each.value.private_endpoints, {})
   resource_groups     = try(each.value.private_endpoints, {}) == {} ? null : local.resource_groups
   private_dns         = local.combined_objects_private_dns
-  virtual_subnets     = local.combined_objects_virtual_subnets
   diagnostics         = local.combined_diagnostics
   diagnostic_profiles = try(each.value.diagnostic_profiles, {})
 }
