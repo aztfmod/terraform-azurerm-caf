@@ -26,7 +26,7 @@ resource "azurerm_automation_schedule" "automation_schedule" {
 
     content {
       day         = monthly_occurrence.day
-      occurence   = monthly_occurrence.occurence
+      occurrence   = monthly_occurrence.occurrence
     }
   }
 }
