@@ -484,6 +484,12 @@ variable "event_hubs" {
 variable "automations" {
   default = {}
 }
+variable "automation_schedules" {
+  default = {}
+}
+variable "automation_runbooks" {
+  default = {}
+}
 variable "automation_log_analytics_links" {
   default = {}
 }
