@@ -24,6 +24,41 @@ output "automations" {
 
 }
 
+module "automation_runbooks" {
+  source   = "./modules/automation/runbook"
+  for_each = local.shared_services.automation_runbooks
+
+  global_settings = local.global_settings
+  settings        = each.value
+
+  automation_account_name = module.automations[each.value.automation_account_key].name
+  runbook_type            = each.value.runbook_type
+
+  location = try(
+    local.global_settings.regions[each.value.region],
+    local.combined_objects_resource_groups[each.value.resource_group.lz_key][each.value.resource_group.key].location,
+    local.combined_objects_resource_groups[each.value.resource_group.lz_key][each.value.resource_group_key].location,
+    local.combined_objects_resource_groups[local.client_config.landingzone_key][each.value.resource_group.key].location,
+    local.combined_objects_resource_groups[local.client_config.landingzone_key][each.value.resource_group_key].location
+  )
+  base_tags = try(local.global_settings.inherit_tags, false) ? coalesce(
+    try(local.combined_objects_resource_groups[each.value.resource_group.lz_key][each.value.resource_group.key].tags, null),
+    try(local.combined_objects_resource_groups[each.value.resource_group.lz_key][each.value.resource_group_key].tags, null),
+    try(local.combined_objects_resource_groups[local.client_config.landingzone_key][each.value.resource_group.key].tags, null),
+    try(local.combined_objects_resource_groups[local.client_config.landingzone_key][each.value.resource_group_key].tags, null)
+  ) : {}
+  resource_group_name = try(
+    local.combined_objects_resource_groups[each.value.resource_group.lz_key][each.value.resource_group.key].name,
+    local.combined_objects_resource_groups[each.value.resource_group.lz_key][each.value.resource_group_key].name,
+    local.combined_objects_resource_groups[local.client_config.landingzone_key][each.value.resource_group.key].name,
+    local.combined_objects_resource_groups[local.client_config.landingzone_key][each.value.resource_group_key].name
+  )
+}
+
+output "automation_runbooks" {
+  value = module.automation_runbooks
+}
+
 module "automation_log_analytics_links" {
   source     = "./modules/automation_log_analytics_links"
   depends_on = [module.automations, module.log_analytics]
