@@ -110,5 +110,31 @@ application_gateway_applications_v1 = {
         match_status_codes = "200-499"
       }
     }
+
+    rewrite_rule_sets = {
+      rrs1 = {
+        name = "test_rewrite_rule_set"
+      }
+    }
+
+    rewrite_rules = {
+      rr1 = {
+        name = "test_rr"
+        rewrite_rule_set_key = "rrs1"
+        request_headers = "Content-Type=application/json"
+        sequence = "1"
+      }
+    }
+
+    rewrite_rule_conditions = {
+      rrc1 = {
+        rewrite_rule_set_key = "rrs1"
+        rewrite_rule_key = "rr1"
+        variable = "http_req_Accept"
+        ignore_case = true
+        negate = true
+        pattern = "test"
+      }
+    }
   }
 }
