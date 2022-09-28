@@ -33,5 +33,20 @@ storage_accounts = {
       }
     }
 
+    diagnostic_profiles_blob = {
+      central_logs_region1 = {
+        name             = "log_and_metrics_log_analytics"
+        definition_key   = "storage_blob"
+        destination_type = "log_analytics"
+        destination_key  = "central_logs"
+      }
+      dsa1 = {
+        name             = "log_and_metrics_log_storage"
+        definition_key   = "storage_blob"
+        destination_type = "storage"
+        destination_key  = "all_regions"
+      }
+    }
+
   }
 }

@@ -30,6 +30,8 @@ module "virtual_machine_scale_sets" {
   load_balancers              = local.combined_objects_load_balancers
   managed_identities          = local.combined_objects_managed_identities
   network_security_groups     = try(module.network_security_groups, {})
+  lbs                         = local.combined_objects_lb
+  lb_backend_address_pool     = local.combined_objects_lb_backend_address_pool
   proximity_placement_groups  = local.combined_objects_proximity_placement_groups
   public_ip_addresses         = local.combined_objects_public_ip_addresses
   recovery_vaults             = local.combined_objects_recovery_vaults
