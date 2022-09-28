@@ -51,6 +51,6 @@ automation_runbooks = {
 
     description = "Read script content from file"
 
-    script_file = "../../../landingzone/configuration/level-2/30_backup/scripts/test.ps1"
+    script_file = "./scripts/test.ps1"
   }
 }
