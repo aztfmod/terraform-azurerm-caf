@@ -53,8 +53,16 @@ resource "azurerm_container_group" "acg" {
       image                        = container.value.image
       cpu                          = container.value.cpu
       memory                       = container.value.memory
-      environment_variables        = merge(try(container.value.environment_variables, null), try(local.environment_variables_from_resources[container.key], null))
-      secure_environment_variables = try(container.value.secure_environment_variables, null)
+      environment_variables        = merge(
+        try(container.value.environment_variables, null), 
+        try(local.environment_variables_from_resources[container.key], null),
+        try(module.variables_from_command[container.key].variables, null)
+      )
+      secure_environment_variables = merge(
+        try(container.value.secure_environment_variables, null),
+        try(module.secure_variables_from_command[container.key].variables, null)
+      )
+
       commands                     = try(container.value.commands, null)
 
       dynamic "gpu" {
@@ -185,4 +193,9 @@ resource "azurerm_container_group" "acg" {
   #     }
   #   }
   # }
+
+  timeouts {
+    create = "2h"
+    update = "2h"
+  }
 }
