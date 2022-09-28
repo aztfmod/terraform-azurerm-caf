@@ -23,7 +23,6 @@ resource "azurerm_automation_runbook" "automation_runbook" {
 
     content {
       uri         = publish_content_link.uri
-      occurence   = monthly_occurrence.occurence
     }
   }
 }
