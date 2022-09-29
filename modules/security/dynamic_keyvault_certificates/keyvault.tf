@@ -1,5 +1,5 @@
 module "certificate" {
-  source = "./certificate"
+  source   = "./certificate"
   for_each = var.settings
 
   name        = each.value.secret_name
