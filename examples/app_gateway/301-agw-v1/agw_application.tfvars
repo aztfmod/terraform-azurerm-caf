@@ -52,6 +52,7 @@ application_gateway_applications_v1 = {
         http_settings_key = "demo"
         url_path_map_key  = "demo"
         priority          = "10000" #Priority is mandatory
+        rewrite_rule_set_key = "rrs1"
       }
     }
 
@@ -79,6 +80,7 @@ application_gateway_applications_v1 = {
         rule_name         = "test_path_rule"
         backend_pool_key  = "demo"
         http_settings_key = "demo"
+        rewrite_rule_set_key = "rrs1"
       }
     }
 
