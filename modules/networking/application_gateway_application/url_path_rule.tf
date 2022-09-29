@@ -24,7 +24,7 @@ resource "null_resource" "set_url_path_rule" {
       ADDRESS_POOL             = try(var.settings.backend_pools[each.value.backend_pool_key].name, null)
       HTTP_SETTINGS            = try(var.settings.http_settings[each.value.http_settings_key].name, null)
       REDIRECT_CONFIG          = try(each.value.redirect_config, null)
-      REWRITE_RULE_SET         = try(each.value.rewrite_rule_set, null)
+      REWRITE_RULE_SET         = try(var.settings.rewrite_rule_sets[each.value.rewrite_rule_set_key].name, null)
       WAF_POLICY               = try(each.value.waf_policy, null)
     }
   }
