@@ -51,10 +51,10 @@ locals {
     }
   }
 
-  private_cidr = coalesce(
+  private_cidr = try(coalesce(
     try(local.ip_configuration.private.cidr[var.settings.front_end_ip_configurations.private.subnet_cidr_index], null),
     try(var.settings.front_end_ip_configurations.private.subnet_cidr, null)
-  )
+  ), null)
   private_ip_address = try(cidrhost(local.private_cidr, var.settings.front_end_ip_configurations.private.private_ip_offset), null)
 
 }
