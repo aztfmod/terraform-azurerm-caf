@@ -30,7 +30,7 @@ locals {
     // If we could reuse a RG, would use that logic: var.combined_resources.resource_groups[try(var.settings.cluster_profile.resource_group.lz_key, var.client_config.landingzone_key)][var.settings.cluster_profile.resource_group.key].id
     version              = var.settings.cluster_profile.version
     fipsValidatedModules = try(var.settings.cluster_profile.fips_validated_modules, null)
-    pullSecret           = can(var.settings.cluster_profile.pull_secret.secret_id) ? var.settings.cluster_profile.pull_secret.secret_id : try(var.settings.cluster_profile.pull_secret.secret, null)
+    pullSecret           = can(var.settings.cluster_profile.pull_secret.secret_id) ? data.azurerm_key_vault_secret.pull_secret[0].value : try(var.settings.cluster_profile.pull_secret.secret, null)
   }
 
   api_server_profile = {
@@ -67,6 +67,6 @@ data "azurerm_key_vault_secret" "password" {
 ## direct pull secret with secret_id literals
 data "azurerm_key_vault_secret" "pull_secret" {
   count        = can(var.settings.cluster_profile.pull_secret.secret_id) ? 1 : 0
-  name         = format("%s-client-secret", var.settings.service_principal.keyvault.secret_prefix)
+  name         = var.settings.cluster_profile.pull_secret.secret_name
   key_vault_id = var.settings.cluster_profile.pull_secret.secret_id
 }
