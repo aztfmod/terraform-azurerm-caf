@@ -1033,3 +1033,6 @@ variable "iot_hub_certificate" {
 variable "static_sites" {
   default = {}
 }
+variable "aro_clusters" {
+  default = {}
+}
