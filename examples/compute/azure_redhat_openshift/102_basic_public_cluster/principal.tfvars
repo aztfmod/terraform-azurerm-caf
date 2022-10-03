@@ -42,13 +42,6 @@ azuread_service_principals = {
       "AzureRedHatOpenShift"
     ]
   }
-  # redhat_openshift_rp = {
-  #   # azuread_application = {
-  #   #   application_id = "004c3094-aa2e-47f3-87aa-f82a155ada54"
-  #   #   // well-know GUID for ARO PaaS Application 
-  #   #   //get to object_ID to then get the role assignment done
-  #   # }
-  # }
 }
 
 azuread_credential_policies = {
@@ -106,25 +99,6 @@ role_mapping = {
             //}
           }
         }
-
-        # "User Access Administrator" = {
-        #   azuread_service_principals = {
-        #     keys = ["sp1"]
-        #   }
-        # }
-        # "Network Contributor" = {
-        #   object_ids = {
-        #     keys = ["004c3094-aa2e-47f3-87aa-f82a155ada54"]
-        #     // object ID from ARO RP ID
-        #     // add capability to specify SP by name: azuread_service_principal_names = {
-        #     // # keys = []
-        #     // cond data source to crack the names to GUID
-        #     //}
-        #   }
-        #   azuread_service_principals = {
-        #     keys = ["sp1"]
-        #   }
-        # }
       }
     }
 
