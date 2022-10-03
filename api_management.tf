@@ -334,8 +334,8 @@ module "api_management_subscription" {
   product_id          = can(each.value.product.product_id) ? each.value.product.product_id : try(local.combined_objects_api_management_product[try(each.value.product.lz_key, local.client_config.landingzone_key)][each.value.product.key].id, null)
 
   remote_objects = {
-    api_management         = local.combined_objects_api_management
-    resource_group         = local.combined_objects_resource_groups
+    api_management = local.combined_objects_api_management
+    resource_group = local.combined_objects_resource_groups
   }
 }
 output "api_management_subscription" {
