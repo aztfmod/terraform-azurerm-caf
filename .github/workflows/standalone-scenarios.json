@@ -27,6 +27,8 @@
     "compute/availability_set/100-simple-availabilityset",
     "compute/availability_set/101-availabilityset-with-proximity-placement-group",
     "compute/azure_virtual_desktop/wvd_resources",
+    "compute/azure_redhat_openshift/101_basic_private_cluster",
+    "compute/azure_redhat_openshift/102_basic_public_cluster",
     "compute/batch/batch_account/100-batch-account-storage",
     "compute/batch/batch_account/100-batch-account",
     "compute/batch/batch_account/200-batch-account-private-endpoint",
