@@ -29,4 +29,15 @@ resource "azurerm_automation_schedule" "automation_schedule" {
       occurrence = monthly_occurrence.occurrence
     }
   }
+
+  dynamic "timeouts" {
+    for_each = lookup(var.settings, "timeouts", {}) == {} ? [] : [1]
+
+    content {
+      create = try(var.settings.timeouts.create, "30m")
+      read   = try(var.settings.timeouts.read, "30m")
+      update = try(var.settings.timeouts.update, "30m")
+      delete = try(var.settings.timeouts.delete, "30m")
+    }
+  }
 }
