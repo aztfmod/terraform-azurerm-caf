@@ -13,7 +13,7 @@ resource "azurerm_automation_schedule" "automation_schedule" {
   name                    = azurecaf_name.automation_schedule.result
   resource_group_name     = var.resource_group_name
   automation_account_name = var.automation_account_name
-  frequency               = var.settings.frequency
+  frequency               = var.frequency
   interval                = try(var.settings.interval, null)
   timezone                = try(var.settings.timezone, null)
   start_time              = try(var.settings.start_time, null)
