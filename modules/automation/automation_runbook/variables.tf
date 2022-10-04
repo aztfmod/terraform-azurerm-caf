@@ -32,10 +32,5 @@ variable "base_tags" {
   type        = map(any)
 }
 
-variable "remote_objects" {
-  description = "(Required) Specifies the supported Azure location where to create the resource. Changing this forces a new resource to be created."
-  default     = {}
-}
-
 variable "client_config" {}
 
