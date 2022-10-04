@@ -344,6 +344,7 @@ locals {
 
   shared_services = {
     automations                               = try(var.shared_services.automations, {})
+    automation_job_schedules                  = try(var.shared_services.automation_job_schedules, {})
     automation_schedules                      = try(var.shared_services.automation_schedules, {})
     automation_runbooks                       = try(var.shared_services.automation_runbooks, {})
     automation_log_analytics_links            = try(var.shared_services.automation_log_analytics_links, {})
