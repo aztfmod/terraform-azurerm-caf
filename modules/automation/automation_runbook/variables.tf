@@ -4,6 +4,16 @@ variable "resource_group_name" {
 }
 variable "automation_account_name" {}
 
+variable "runbook_type" {
+  description = "(Required) Type of the runbook"
+  type        = string
+
+  validation {
+    condition     = contains(["Graph", "GraphPowerShell", "GraphPowerShellWorkflow", "PowerShellWorkflow", "PowerShell", "Script"], var.runbook_type)
+    error_message = "The type of the runbook can be either Graph, GraphPowerShell, GraphPowerShellWorkflow, PowerShellWorkflow, PowerShell or Script."
+  }
+}
+
 variable "location" {
   description = "(Required) Specifies the supported Azure location where to create the resource. Changing this forces a new resource to be created."
   type        = string
