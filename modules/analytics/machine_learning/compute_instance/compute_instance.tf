@@ -11,21 +11,15 @@ resource "azurecaf_name" "ci" {
   use_slug      = var.global_settings.use_slug
 }
 
-# Part of migration from 2.99.0 to 3.7.0
-moved {
-  from = azurerm_template_deployment.mlci
-  to   = azurerm_resource_group_template_deployment.mlci
-}
-
 # create compute instance
-resource "azurerm_resource_group_template_deployment" "mlci" {
+resource "azurerm_template_deployment" "mlci" {
 
   name                = azurecaf_name.ci.result
   resource_group_name = var.resource_group_name
 
-  template_content = file(local.arm_filename)
+  template_body = file(local.arm_filename)
 
-  parameters_content = jsonencode(local.parameters_body)
+  parameters_body = jsonencode(local.parameters_body)
 
   deployment_mode = "Incremental"
 
