@@ -69,6 +69,7 @@ locals {
 
   compute = {
     aks_clusters                        = try(var.compute.aks_clusters, {})
+    aro_clusters                        = try(var.compute.aro_clusters, {})
     availability_sets                   = try(var.compute.availability_sets, {})
     azure_container_registries          = try(var.compute.azure_container_registries, {})
     bastion_hosts                       = try(var.compute.bastion_hosts, {})
@@ -343,6 +344,8 @@ locals {
 
   shared_services = {
     automations                               = try(var.shared_services.automations, {})
+    automation_schedules                      = try(var.shared_services.automation_schedules, {})
+    automation_runbooks                       = try(var.shared_services.automation_runbooks, {})
     automation_log_analytics_links            = try(var.shared_services.automation_log_analytics_links, {})
     automation_software_update_configurations = try(var.shared_services.automation_software_update_configurations, {})
     consumption_budgets                       = try(var.shared_services.consumption_budgets, {})

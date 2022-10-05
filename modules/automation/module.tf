@@ -9,6 +9,7 @@ resource "azurecaf_name" "auto_account" {
   use_slug      = var.global_settings.use_slug
 }
 
+
 resource "azurerm_automation_account" "auto_account" {
   name                          = azurecaf_name.auto_account.result
   location                      = var.location
@@ -26,4 +27,3 @@ resource "azurerm_automation_account" "auto_account" {
     }
   }
 }
-
