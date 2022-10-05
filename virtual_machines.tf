@@ -33,7 +33,6 @@ module "virtual_machines" {
   settings                    = each.value
   storage_accounts            = local.combined_objects_storage_accounts
   vnets                       = local.combined_objects_networking
-  subnet_id                   = can(each.value.subnet_id) || can(each.value.vnet_key) == false ? try(each.value.subnet_id, null) : try(local.combined_objects_virtual_subnets[try(each.value.lz_key, local.client_config.landingzone_key)][each.value.subnet_key].id, local.combined_objects_networking[try(each.value.lz_key, local.client_config.landingzone_key)][each.value.vnet_key].subnets[each.value.subnet_key].id)
 
   # if boot_diagnostics_storage_account_key is points to a valid storage account, pass the endpoint
   # if boot_diagnostics_storage_account_key is empty string, pass empty string
