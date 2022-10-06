@@ -48,26 +48,26 @@ application_gateway_platforms = {
         protocol = "Https"
       }
     }
-    
+
     #default: wont be able to change after creation as this is required for agw tf resource
     default = {
-      frontend_port_key             = "80"              
-      frontend_ip_configuration_key = "public"         
-      backend_address_pool_name     = "default-beap"    
-      http_setting_name             = "default-be-htst" 
+      frontend_port_key             = "80"
+      frontend_ip_configuration_key = "public"
+      backend_address_pool_name     = "default-beap"
+      http_setting_name             = "default-be-htst"
       listener_name                 = "default-httplstn"
       request_routing_rule_name     = "default-rqrt"
       cookie_based_affinity         = "Disabled"
       request_timeout               = "60"
-      rule_type                     = "Basic" 
+      rule_type                     = "Basic"
     }
 
     listener_ssl_policy = {
       default = {
         policy_type          = "Predefined"
         policy_name          = "AppGwSslPolicy20170401S"
-        min_protocol_version = "TLSv1_2"  
+        min_protocol_version = "TLSv1_2"
       }
-    } 
+    }
   }
 }
