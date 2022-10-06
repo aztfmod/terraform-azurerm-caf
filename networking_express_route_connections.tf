@@ -15,6 +15,7 @@ module "express_route_connections" {
 
   express_route_circuit_peering_id = coalesce(
     try(local.combined_objects_express_route_circuit_peerings[each.value.circuit_peering.lz_key][each.value.circuit_peering.key].id, null),
+    try(local.combined_objects_express_route_circuit_peerings[local.client_config.landingzone_key][each.value.circuit_peering.key].id, null),
     try(each.value.express_route_circuit_peering_id, null)
   )
 
