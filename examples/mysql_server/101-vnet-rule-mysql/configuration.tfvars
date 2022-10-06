@@ -64,9 +64,9 @@ mysql_servers = {
         name = "mysql-vnet-rule"
       }
       msql_vnet_rule_two = {
-        name = "msql-vnet-rule-two"
+        name       = "msql-vnet-rule-two"
         subnet_key = "mysql_subnet_two"
-        vnet_key = "vnet_region1"
+        vnet_key   = "vnet_region1"
       }
     }
 
