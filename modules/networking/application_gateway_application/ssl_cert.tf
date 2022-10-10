@@ -8,8 +8,15 @@ data "azurerm_key_vault_certificate" "manual_certs" {
   key_vault_id = var.keyvaults[try(each.value.keyvault.lz_key, var.client_config.landingzone_key)][each.value.keyvault.key].id
 }
 
-resource "null_resource" "set_ssl_cert" {
+resource "time_sleep" "frontend_ports_replica" {
   depends_on = [null_resource.set_backend_pools, null_resource.set_frontend_port]
+
+  # 2 mins timer on creation
+  create_duration = "2m"
+}
+
+resource "null_resource" "set_ssl_cert" {
+  depends_on = [time_sleep.frontend_ports_replica]
 
   for_each = try(var.settings.ssl_certs, {})
 
