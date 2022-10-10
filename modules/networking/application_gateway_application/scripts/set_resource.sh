@@ -86,7 +86,7 @@ case "${RESOURCE}" in
         port=$([ -z "${PORT}" ] && echo "" || echo "--port ${PORT} ")
 
         execute_with_backoff az network application-gateway frontend-port create -g ${RG_NAME} \
-            --gateway-name ${APPLICATION_GATEWAY_NAME} -n ${NAME} ${PORT}
+            --gateway-name ${APPLICATION_GATEWAY_NAME} -n ${NAME} ${port}
         ;;
     HTTPSETTINGS)
         protocol=$([ -z "${PROTOCOL}" ] && echo "" || echo "--protocol ${PROTOCOL} ")
