@@ -1,5 +1,5 @@
 module "application_gateways" {
-  depends_on = [module.keyvault_certificate_requests]
+  depends_on = [module.keyvault_certificates, module.keyvault_certificate_requests]
   source     = "./modules/networking/application_gateway"
   for_each   = local.networking.application_gateways
 
