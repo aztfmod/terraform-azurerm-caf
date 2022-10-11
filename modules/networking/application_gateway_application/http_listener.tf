@@ -31,7 +31,7 @@ resource "null_resource" "set_http_listener" {
       PUBLIC_IP                = try(var.application_gateway.frontend_ip_configurations[each.value.front_end_ip_configuration_key].name, null)
       HOST_NAME                = try(each.value.host_name, null)
       HOST_NAMES               = try(each.value.host_names, null)
-      SSL_CERT                 = can(each.value.keyvault_certificate.certificate_name) || can(each.value.ssl_cert_key) == false ? try(data.azurerm_key_vault_certificate.http_listener_manual_certs[each.key].id, null) : coalesce(var.settings.ssl_certs[each.value.ssl_cert_key].name, var.application_gateway.ssl_certs[each.value.ssl_cert_key].name)
+      SSL_CERT                 = can(each.value.keyvault_certificate.certificate_name) || can(each.value.ssl_cert_key) == false ? try(data.azurerm_key_vault_certificate.http_listener_manual_certs[each.key].id, null) : try(coalesce(var.settings.ssl_certs[each.value.ssl_cert_key].name, var.application_gateway.ssl_certs[each.value.ssl_cert_key].name), null)
       WAF_POLICY               = try(var.application_gateway_waf_policies[try(each.value.waf_policy.lz_key, var.client_config.landingzone_key)][each.value.waf_policy.key].id, null)
     }
   }
