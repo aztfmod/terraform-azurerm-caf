@@ -14,6 +14,10 @@ output "frontend_ports" {
   value = var.settings.front_end_ports
 }
 
+output "ssl_certs" {
+  value = var.settings.ssl_certs
+}
+
 output "private_ip_address" {
   value = local.private_ip_address
 }
