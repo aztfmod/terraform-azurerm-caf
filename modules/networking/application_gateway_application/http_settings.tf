@@ -30,7 +30,7 @@ resource "null_resource" "set_http_settings" {
       HOST_NAME                   = try(each.value.host_name, null)
       HOST_NAME_FROM_BACKEND_POOL = try(each.value.host_name_from_backend_pool, null)
       OVERRIDE_PATH               = try(each.value.path, null)
-      PROBE                       = coalesce(try(each.value.probe, null), try(var.settings.probes[each.value.probe_key].name, null))
+      PROBE                       = try(coalesce(each.value.probe, var.settings.probes[each.value.probe_key].name), null)
       ROOT_CERTS                  = try(each.value.root_certs, null) //TODO
     }
   }
