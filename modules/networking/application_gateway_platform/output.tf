@@ -15,7 +15,7 @@ output "frontend_ports" {
 }
 
 output "ssl_certificates" {
-  value = var.settings.ssl_certs
+  value = try(var.settings.ssl_certs, null)
 }
 
 output "private_ip_address" {
