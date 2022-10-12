@@ -14,7 +14,7 @@ output "frontend_ports" {
   value = var.settings.front_end_ports
 }
 
-output "ssl_certs" {
+output "ssl_certificates" {
   value = var.settings.ssl_certs
 }
 
