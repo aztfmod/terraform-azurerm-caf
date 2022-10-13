@@ -4,7 +4,7 @@ resource "azuread_application" "app" {
 
   owners = [
     var.client_config.object_id,
-    try(var.settings.owners, null)
+    var.settings.owners
   ]
 
   reply_urls                 = try(var.settings.reply_urls, null)
