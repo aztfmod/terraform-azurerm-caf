@@ -111,6 +111,7 @@ azuread_apps = {
   test_client = {
     useprefix                    = true
     application_name             = "test_client"
+    owners                       = "custom_owner"
     app_role_assignment_required = true
     keyvaults = {
       test_client = {
