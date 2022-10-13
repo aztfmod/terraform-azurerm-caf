@@ -83,10 +83,10 @@ case "${RESOURCE}" in
             --gateway-name ${APPLICATION_GATEWAY_NAME} -n ${NAME} ${servers}
         ;;
     FRONTENDPORT)
-        servers=$([ -z "${ADDRESS_POOL}" ] && echo "" || echo "--servers ${ADDRESS_POOL} ")
+        port=$([ -z "${PORT}" ] && echo "" || echo "--port ${PORT} ")
 
-        execute_with_backoff az network application-gateway address-pool create -g ${RG_NAME} \
-            --gateway-name ${APPLICATION_GATEWAY_NAME} -n ${NAME} ${servers}
+        execute_with_backoff az network application-gateway frontend-port create -g ${RG_NAME} \
+            --gateway-name ${APPLICATION_GATEWAY_NAME} -n ${NAME} ${port}
         ;;
     HTTPSETTINGS)
         protocol=$([ -z "${PROTOCOL}" ] && echo "" || echo "--protocol ${PROTOCOL} ")
