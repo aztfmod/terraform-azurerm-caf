@@ -86,7 +86,7 @@ case "${RESOURCE}" in
         execute_with_backoff az network application-gateway address-pool delete -g ${RG_NAME} --gateway-name ${APPLICATION_GATEWAY_NAME} -n ${NAME}
         ;;
     FRONTENDPORT)
-        execute_with_backoff az network application-gateway address-pool delete -g ${RG_NAME} --gateway-name ${APPLICATION_GATEWAY_NAME} -n ${NAME}
+        execute_with_backoff az network application-gateway frontend-port delete -g ${RG_NAME} --gateway-name ${APPLICATION_GATEWAY_NAME} -n ${NAME}
         ;;
     HTTPSETTINGS)
         execute_with_backoff az network application-gateway http-settings delete -g ${RG_NAME} --gateway-name ${APPLICATION_GATEWAY_NAME} -n ${NAME}
