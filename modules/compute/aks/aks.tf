@@ -180,7 +180,7 @@ resource "azurerm_kubernetes_cluster" "aks" {
   }
 
   dynamic "key_vault_secrets_provider" {
-    for_each = can(var.settings.addon_profile.azure_keyvault_secrets_provider) || can(var.settings.key_vault_secrets_provider) ? try(var.settings.addon_profile.azure_keyvault_secrets_provider, var.settings.key_vault_secrets_provider) : {}
+    for_each = can(var.settings.addon_profile.azure_keyvault_secrets_provider) || can(var.settings.key_vault_secrets_provider) ? try([var.settings.addon_profile.azure_keyvault_secrets_provider], [var.settings.key_vault_secrets_provider]) : []
     content {
       secret_rotation_enabled  = key_vault_secrets_provider.value.secret_rotation_enabled
       secret_rotation_interval = key_vault_secrets_provider.value.secret_rotation_interval

@@ -31,10 +31,11 @@ resource "azurerm_application_gateway" "agw" {
   resource_group_name = var.resource_group_name
   location            = var.location
 
-  zones              = try(var.settings.zones, null)
-  enable_http2       = try(var.settings.enable_http2, true)
-  tags               = try(local.tags, null)
-  firewall_policy_id = try(try(var.application_gateway_waf_policies[try(var.settings.waf_policy.lz_key, var.client_config.landingzone_key)][var.settings.waf_policy.key].id, var.settings.firewall_policy_id), null)
+  zones                             = try(var.settings.zones, null)
+  enable_http2                      = try(var.settings.enable_http2, true)
+  tags                              = try(local.tags, null)
+  firewall_policy_id                = can(var.settings.firewall_policy_id) == true ? var.settings.firewall_policy_id : (can(var.settings.waf_policy.key) == true ? var.application_gateway_waf_policies[try(var.settings.waf_policy.lz_key, var.client_config.landingzone_key)][var.settings.waf_policy.key].id : null)
+  force_firewall_policy_association = can(var.settings.firewall_policy_id) == false && can(var.settings.waf_policy.key) == false ? false : true
 
   sku {
     name     = var.sku_name
@@ -64,6 +65,17 @@ resource "azurerm_application_gateway" "agw" {
           min_protocol_version = try(ssl_policy.value.min_protocol_version, null)
         }
       }
+    }
+  }
+
+  dynamic "ssl_policy" {
+    for_each = try(var.settings.listener_ssl_policy, {})
+    content {
+      disabled_protocols   = try(ssl_policy.value.disabled_protocols, null)
+      policy_type          = try(ssl_policy.value.policy_type, null)
+      policy_name          = try(ssl_policy.value.policy_name, null)
+      cipher_suites        = try(ssl_policy.value.cipher_suites, null)
+      min_protocol_version = try(ssl_policy.value.min_protocol_version, null)
     }
   }
 

@@ -53,8 +53,16 @@ resource "azurerm_container_group" "acg" {
       image                        = container.value.image
       cpu                          = container.value.cpu
       memory                       = container.value.memory
-      environment_variables        = merge(try(container.value.environment_variables, null), try(local.environment_variables_from_resources[container.key], null))
-      secure_environment_variables = try(container.value.secure_environment_variables, null)
+      environment_variables        = merge(
+        try(container.value.environment_variables, null), 
+        try(local.environment_variables_from_resources[container.key], null),
+        try(module.variables_from_command[container.key].variables, null)
+      )
+      secure_environment_variables = merge(
+        try(container.value.secure_environment_variables, null),
+        try(module.secure_variables_from_command[container.key].variables, null)
+      )
+
       commands                     = try(container.value.commands, null)
 
       dynamic "gpu" {
@@ -122,7 +130,7 @@ resource "azurerm_container_group" "acg" {
       } //liveness_probe
 
       dynamic "volume" {
-        for_each = try(container.value.volume, null) == null ? [] : [1]
+        for_each = try(container.value.volume, [])
 
         content {
           name                 = volume.value.name
@@ -132,7 +140,7 @@ resource "azurerm_container_group" "acg" {
           storage_account_name = try(volume.value.storage_account_name, null)
           storage_account_key  = try(volume.value.storage_account_key, null)
           share_name           = try(volume.value.share_name, null)
-          secret               = try(volume.share.secret, null)
+          secret               = try(volume.value.secret, null)
 
           dynamic "git_repo" {
             for_each = try(volume.value.git_repo, null) == null ? [] : [1]
@@ -185,4 +193,9 @@ resource "azurerm_container_group" "acg" {
   #     }
   #   }
   # }
+
+  timeouts {
+    create = "2h"
+    update = "2h"
+  }
 }

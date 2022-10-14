@@ -22,6 +22,7 @@ mysql_flexible_server = {
     name     = "mysqltest-flexible-server"
     version  = "5.7" #Possible values are 5.7, and 8.0.21
     sku_name = "GP_Standard_D2ds_v4"
+    zone     = 1
 
     keyvault = {
       key = "mysql-re1" # (Required) when auto-generated administrator credentials needed.
