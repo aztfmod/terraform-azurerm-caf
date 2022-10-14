@@ -47,7 +47,7 @@ resource "null_resource" "delete_request_routing_rule" {
     command     = format("%s/scripts/delete_resource.sh", path.module)
     when        = destroy
     interpreter = ["/bin/bash"]
-    on_failure  = fail
+    on_failure  = continue
 
     environment = {
       RESOURCE                 = "REQUESTROUTINGRULE"

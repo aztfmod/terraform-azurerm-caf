@@ -102,5 +102,15 @@ virtual_network_gateways = {
         }
       }
     }
+
+    # Add custom routes for to define what networks are available for a P2S client connection
+    custom_route = {
+      vpn_routes = {
+        address_prefixes = [
+          "10.20.30.0/24",
+          "192.168.162.0/24",
+        ]
+      }
+    }
   }
 }

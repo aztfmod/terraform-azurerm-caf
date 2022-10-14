@@ -9,7 +9,8 @@ output "azuread_application" {
     id             = azuread_application.app.id
     object_id      = azuread_application.app.object_id
     application_id = azuread_application.app.application_id
-    name           = azuread_application.app.name
+    #deprecated
+    #name           = azuread_application.app.name
   }
 
 }
