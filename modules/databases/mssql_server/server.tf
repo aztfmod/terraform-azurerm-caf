@@ -61,7 +61,7 @@ resource "azurecaf_name" "mssql" {
 
 # Generate sql server random admin password if not provided in the attribute administrator_login_password
 resource "random_password" "sql_admin" {
-  count = try(var.settings.administrator_login_password, null) == null ? 1 : 0
+  count = try(var.settings.azuread_administrator.azuread_authentication_only, false) == false ? 1 : 0
 
   length           = 128
   special          = true
@@ -72,7 +72,7 @@ resource "random_password" "sql_admin" {
 
 # Store the generated password into keyvault
 resource "azurerm_key_vault_secret" "sql_admin_password" {
-  count = try(var.settings.administrator_login_password, null) == null ? 1 : 0
+  count = try(var.settings.azuread_administrator.azuread_authentication_only, false) == false ? 1 : 0
 
   name         = can(var.settings.keyvault_secret_name) ? var.settings.keyvault_secret_name : format("%s-password", azurecaf_name.mssql.result)
   value        = random_password.sql_admin.0.result
