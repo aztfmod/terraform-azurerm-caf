@@ -29,7 +29,7 @@ resource "null_resource" "set_http_listener" {
 }
 
 resource "null_resource" "delete_http_listener" {
-  depends_on = [null_resource.delete_http_settings, null_resource.delete_backend_pool, null_resource.delete_ssl_cert, null_resource.delete_root_cert, null_resource.set_frontend_port]
+  depends_on = [null_resource.delete_http_settings, null_resource.delete_backend_pool, null_resource.delete_ssl_cert, null_resource.delete_root_cert, null_resource.delete_frontend_port]
 
   for_each = try(var.settings.http_listeners, {})
 

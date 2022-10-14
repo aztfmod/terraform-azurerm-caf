@@ -37,7 +37,7 @@ resource "null_resource" "set_http_settings" {
 }
 
 resource "null_resource" "delete_http_settings" {
-  depends_on = [null_resource.set_probe, null_resource.delete_backend_pool, null_resource.delete_ssl_cert, null_resource.delete_root_cert]
+  depends_on = [null_resource.delete_probe, null_resource.delete_backend_pool, null_resource.delete_ssl_cert, null_resource.delete_root_cert]
 
   for_each = try(var.settings.http_settings, {})
 
