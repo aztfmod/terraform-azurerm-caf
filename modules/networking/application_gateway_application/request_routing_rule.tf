@@ -22,7 +22,7 @@ resource "null_resource" "set_request_routing_rule" {
       LISTENER                 = try(var.settings.http_listeners[each.value.http_listener_key].name, null)
       ADDRESS_POOL             = try(var.settings.backend_pools[each.value.backend_pool_key].name, null)
       HTTP_SETTINGS            = try(var.settings.http_settings[each.value.http_settings_key].name, null)
-      PRIORITY                 = try(each.value.priority, "1") #Priority is mandatory
+      PRIORITY                 = each.value.priority
       RULE_TYPE                = try(each.value.rule_type, null)
       REDIRECT_CONFIG          = try(each.value.redirect_config, null)  #TODO
       REWRITE_RULE_SET         = try(var.settings.rewrite_rule_sets[each.value.rewrite_rule_set_key].name, null)
