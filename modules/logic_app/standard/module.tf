@@ -22,15 +22,16 @@ resource "azurerm_logic_app_standard" "logic_app_standard" {
     for_each = lookup(var.settings, "site_config", {}) != {} ? [1] : []
 
     content {
-      always_on                 = lookup(var.settings.site_config, "enabled", null)
+      # numberOfWorkers           = lookup(each.value.site_config, "numberOfWorkers", 1)  # defined in ARM template below
+      always_on                 = lookup(var.settings.site_config, "enabled", false)
       dotnet_framework_version  = lookup(var.settings.site_config, "dotnet_framework_version", null)
-      ftps_state                = lookup(var.settings.site_config, "ftps_state", null)
-      http2_enabled             = lookup(var.settings.site_config, "http2_enabled", null)
+      ftps_state                = lookup(var.settings.site_config, "ftps_state", "FtpsOnly")
+      http2_enabled             = lookup(var.settings.site_config, "http2_enabled", false)
       linux_fx_version          = lookup(var.settings.site_config, "linux_fx_version", null)
-      min_tls_version           = lookup(var.settings.site_config, "min_tls_version", null)
-      use_32_bit_worker_process = lookup(var.settings.site_config, "use_32_bit_worker_process", null)
-      vnet_route_all_enabled    = lookup(var.settings.site_config, "enabled", null)
-      websockets_enabled        = lookup(var.settings.site_config, "enabled", null)
+      min_tls_version           = lookup(var.settings.site_config, "min_tls_version", "1.2")
+      use_32_bit_worker_process = lookup(var.settings.site_config, "use_32_bit_worker_process", false)
+      vnet_route_all_enabled    = lookup(var.settings.site_config, "enabled", false)
+      websockets_enabled        = lookup(var.settings.site_config, "enabled", false)
 
       dynamic "cors" {
         for_each = lookup(var.settings.site_config, "cors", {}) != {} ? [1] : []
@@ -45,11 +46,9 @@ resource "azurerm_logic_app_standard" "logic_app_standard" {
 }
 
 resource "azurerm_app_service_virtual_network_swift_connection" "vnet_config" {
-  depends_on = [azurerm_logic_app_standard.logic_app_standard]
-  count      = lookup(var.settings, "vnet_integration", {}) != {} ? 1 : 0
+  depends_on     = [azurerm_logic_app_standard.logic_app_standard]
 
   app_service_id = azurerm_logic_app_standard.logic_app_standard.id
-  subnet_id = can(var.vnet_integration.subnet_id) ? var.vnet_integration.subnet_id : try(var.vnets[try(var.vnet_integration.lz_key, var.client_config.landingzone_key)][var.vnet_integration.vnet_key].subnets[var.vnet_integration.subnet_key].id,
-  try(var.virtual_subnets[var.client_config.landingzone_key][var.vnet_integration.subnet_key].id, var.virtual_subnets[var.vnet_integration.lz_key][var.vnet_integration.subnet_key].id))
-
+  subnet_id      = can(var.vnet_integration.subnet_id) ? var.vnet_integration.subnet_id : try(var.vnets[try(var.vnet_integration.lz_key, var.client_config.landingzone_key)][var.vnet_integration.vnet_key].subnets[var.vnet_integration.subnet_key].id,
+                    try(var.virtual_subnets[var.client_config.landingzone_key][var.vnet_integration.subnet_key].id, var.virtual_subnets[var.vnet_integration.lz_key][var.vnet_integration.subnet_key].id))
 }
