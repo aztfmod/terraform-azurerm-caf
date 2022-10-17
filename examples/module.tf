@@ -340,6 +340,7 @@ module "example" {
     logic_app_trigger_http_request = var.logic_app_trigger_http_request
     logic_app_trigger_recurrence   = var.logic_app_trigger_recurrence
     logic_app_workflow             = var.logic_app_workflow
+    logic_app_standard             = var.logic_app_standard
   }
   identity = {
     active_directory_domain_service             = var.active_directory_domain_service

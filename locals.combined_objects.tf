@@ -90,6 +90,7 @@ locals {
   combined_objects_log_analytics                                  = merge(tomap({ (local.client_config.landingzone_key) = module.log_analytics }), try(var.remote_objects.log_analytics, {}))
   combined_objects_logic_app_integration_account                  = merge(tomap({ (local.client_config.landingzone_key) = module.logic_app_integration_account }), try(var.remote_objects.logic_app_integration_account, {}))
   combined_objects_logic_app_workflow                             = merge(tomap({ (local.client_config.landingzone_key) = module.logic_app_workflow }), try(var.remote_objects.logic_app_workflow, {}))
+  combined_objects_logic_app_standard                             = merge(tomap({ (local.client_config.landingzone_key) = module.logic_app_standard }), try(var.remote_objects.logic_app_standard, {}))
   combined_objects_machine_learning                               = merge(tomap({ (local.client_config.landingzone_key) = module.machine_learning_workspaces }), try(var.remote_objects.machine_learning_workspaces, {}))
   combined_objects_managed_identities                             = merge(tomap({ (local.client_config.landingzone_key) = module.managed_identities }), try(var.remote_objects.managed_identities, {}))
   combined_objects_monitor_action_groups                          = merge(tomap({ (local.client_config.landingzone_key) = module.monitor_action_groups }), try(var.remote_objects.monitor_action_groups, {}))
