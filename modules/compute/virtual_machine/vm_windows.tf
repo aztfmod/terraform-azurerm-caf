@@ -15,7 +15,7 @@ resource "azurecaf_name" "windows" {
 resource "azurecaf_name" "windows_computer_name" {
   for_each = local.os_type == "windows" ? var.settings.virtual_machine_settings : {}
 
-  name          = try(each.value.computer_name, each.value.name)
+  name          = substr(try(each.value.computer_name, each.value.name), 0, 14)
   resource_type = "azurerm_windows_virtual_machine"
   prefixes      = var.global_settings.prefixes
   random_length = var.global_settings.random_length
