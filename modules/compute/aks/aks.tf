@@ -83,7 +83,7 @@ resource "azurerm_kubernetes_cluster" "aks" {
     dynamic "upgrade_settings" {
       for_each = try(var.settings.default_node_pool.upgrade_settings, null) == null ? [] : [1]
       content {
-        max_surge = upgrade_settings.value.max_surge
+        max_surge = var.settings.default_node_pool.upgrade_settings.max_surge
       }
     }
 
@@ -463,7 +463,7 @@ resource "azurerm_kubernetes_cluster_node_pool" "nodepools" {
   dynamic "upgrade_settings" {
     for_each = try(each.value.upgrade_settings, null) == null ? [] : [1]
     content {
-      max_surge = upgrade_settings.value.max_surge
+      max_surge = each.value.upgrade_settings.max_surge
     }
   }
 
