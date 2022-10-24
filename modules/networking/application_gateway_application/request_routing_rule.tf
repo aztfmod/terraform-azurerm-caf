@@ -1,6 +1,6 @@
 
 resource "null_resource" "set_request_routing_rule" {
-  depends_on = [null_resource.set_http_settings, null_resource.set_backend_pools, null_resource.set_http_listener, null_resource.set_ssl_cert, null_resource.set_root_cert, null_resource.set_url_path_map, null_resource.set_url_path_rule]
+  depends_on = [null_resource.set_http_settings, null_resource.set_backend_pools, null_resource.set_http_listener, null_resource.set_ssl_cert, null_resource.set_root_cert, null_resource.set_rewrite_rule_set, null_resource.set_rewrite_rule, null_resource.set_rewrite_rule_condition, null_resource.set_url_path_map, null_resource.set_url_path_rule]
 
   for_each = try(var.settings.request_routing_rules, {})
 
@@ -24,15 +24,15 @@ resource "null_resource" "set_request_routing_rule" {
       HTTP_SETTINGS            = try(var.settings.http_settings[each.value.http_settings_key].name, null)
       PRIORITY                 = each.value.priority
       RULE_TYPE                = try(each.value.rule_type, null)
-      REDIRECT_CONFIG          = try(each.value.redirect_config, null)  //TODO
-      REWRITE_RULE_SET         = try(each.value.rewrite_rule_set, null) //TODO
+      REDIRECT_CONFIG          = try(each.value.redirect_config, null)  #TODO
+      REWRITE_RULE_SET         = try(var.settings.rewrite_rule_sets[each.value.rewrite_rule_set_key].name, null)
       URL_PATH_MAP             = try(var.settings.url_path_maps[each.value.url_path_map_key].name, null)
     }
   }
 }
 
 resource "null_resource" "delete_request_routing_rule" {
-  depends_on = [null_resource.delete_http_settings, null_resource.delete_backend_pool, null_resource.delete_http_listener, null_resource.delete_ssl_cert, null_resource.delete_root_cert, null_resource.delete_url_path_map, null_resource.delete_url_path_rule]
+  depends_on = [null_resource.delete_http_settings, null_resource.delete_backend_pool, null_resource.delete_http_listener, null_resource.delete_ssl_cert, null_resource.delete_root_cert, null_resource.delete_rewrite_rule_set, null_resource.delete_rewrite_rule, null_resource.delete_rewrite_rule_condition, null_resource.delete_url_path_map, null_resource.delete_url_path_rule]
 
   for_each = try(var.settings.request_routing_rules, {})
 

@@ -59,7 +59,8 @@ application_gateway_applications_v1 = {
         backend_pool_key  = "demo"
         http_settings_key = "demo"
         url_path_map_key  = "demo"
-        priority          = 100
+        priority          = "10000"
+        rewrite_rule_set_key = "rrs1"
       }
     }
 
@@ -87,6 +88,7 @@ application_gateway_applications_v1 = {
         rule_name         = "test_path_rule"
         backend_pool_key  = "demo"
         http_settings_key = "demo"
+        rewrite_rule_set_key = "rrs1"
       }
     }
 
@@ -116,6 +118,32 @@ application_gateway_applications_v1 = {
         threshold          = "3"
         min_servers        = "0"
         match_status_codes = "200-499"
+      }
+    }
+
+    rewrite_rule_sets = {
+      rrs1 = {
+        name = "test_rewrite_rule_set"
+      }
+    }
+
+    rewrite_rules = {
+      rr1 = {
+        name = "test_rr"
+        rewrite_rule_set_key = "rrs1"
+        request_headers = "Content-Type=application/json"
+        sequence = "1"
+      }
+    }
+
+    rewrite_rule_conditions = {
+      rrc1 = {
+        rewrite_rule_set_key = "rrs1"
+        rewrite_rule_key = "rr1"
+        variable = "http_req_Accept"
+        ignore_case = true
+        negate = true
+        pattern = "test"
       }
     }
   }
