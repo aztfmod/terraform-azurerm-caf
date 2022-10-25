@@ -8,7 +8,7 @@ global_settings = {
 resource_groups = {
   ioth_region1 = {
     name   = "iothub-rg1"
-    region = "westeurope"
+    region = "region1"
   }  
 }
  

@@ -29,6 +29,6 @@ iot_dps_certificate = {
     name                = "iot_dps_certificate_1"
     iot_dps_key         = "iothub1" 
     resource_group_key  = "ioth_region1"
-    certificate_content = "./cert.txt"
+    certificate_content = "iot/201-iot-hub-dps-certificate/cert.txt"
   }
 }

@@ -27,6 +27,7 @@ iot_hub = {
 iot_hub_certificate = {
   csg1 = {
     name                = "ioth_consumer_group_1"
+    resource_group_key = "ioth_region1"
     iot_hub_key         = "iothub1"
     is_verified         = true
     certificate_content = "./path/to/cert"
