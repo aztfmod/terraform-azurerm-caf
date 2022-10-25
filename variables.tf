@@ -397,9 +397,11 @@ variable "identity" {
 variable "apim" {
   default = {}
 }
+
 variable "purview" {
   default = {}
 }
+
 variable "sentinel_watchlists" {
   default = {}
 }
