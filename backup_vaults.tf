@@ -46,21 +46,6 @@ locals {
   backup_vault_policies = merge(module.backup_vault_policies_blob_storage, module.backup_vault_policies_disk)
 }
 
-module "backup_vault_policies_disk" {
-  source = "./modules/backup_vault/backup_vault_policy_disk"
-  for_each = {
-    for key, value in local.data_protection.backup_vault_policies : key => value
-    if value.type == "disk"
-  }
-
-  settings = each.value
-  vault_id = lookup(each.value, "backup_vault_key") == null ? null : module.backup_vaults[each.value.backup_vault_key].id
-}
-
-locals {
-  backup_vault_policies = merge(module.backup_vault_policies_blob_storage, module.backup_vault_policies_disk)
-}
-
 output "backup_vault_policies" {
   value = local.backup_vault_policies
 }
