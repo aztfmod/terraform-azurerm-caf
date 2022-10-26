@@ -35,8 +35,7 @@ resource "null_resource" "set_probe" {
 }
 
 resource "null_resource" "delete_probe" {
-  depends_on = [null_resource.delete_http_settings, null_resource.delete_backend_pool, null_resource.delete_http_listener, null_resource.delete_ssl_cert, null_resource.delete_root_cert, null_resource.delete_rewrite_rule_set, null_resource.delete_rewrite_rule, null_resource.delete_rewrite_rule_condition, null_resource.delete_url_path_map, null_resource.delete_url_path_rule, null_resource.delete_request_routing_rule]
-
+  
   for_each = try(var.settings.probes, {})
 
   triggers = {

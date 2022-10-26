@@ -1029,41 +1029,12 @@ variable "iot_hub_consumer_groups" {
 variable "iot_hub_certificate" {
   default = {}
 } 
- 
+variable "resource_provider_registration" {
+  default = {}
+}
 variable "static_sites" {
   default = {}
 }
 variable "aro_clusters" {
   default = {}
 }
-variable "iot_security_solution" {
-  default = {}
-}
-variable "iot_security_device_group" {
-  default = {}
-}
-variable "iot_central_application" {
-  default = {}
-}
-variable "iot_hub" {
-  default = {}
-}
-variable "iot_hub_dps" {
-  default = {}
-}
-variable "iot_hub_shared_access_policy" {
-  default = {}
-}
-variable "iot_dps_certificate" {
-  default = {}
-}
-variable "iot_dps_shared_access_policy" {
-  default = {}
-}
-variable "iot_hub_consumer_groups" {
-  default = {}
-} 
-variable "iot_hub_certificate" {
-  default = {}
-} 
- 
