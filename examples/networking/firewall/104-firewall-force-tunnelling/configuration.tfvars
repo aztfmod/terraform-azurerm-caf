@@ -105,6 +105,16 @@ diagnostics_definition = {
         ["AzureFirewallApplicationRule", true, false, 7],
         ["AzureFirewallNetworkRule", true, false, 7],
         ["AzureFirewallDnsProxy", true, false, 7],
+        ["AZFWApplicationRule", true, false, 7],
+        ["AZFWApplicationRuleAggregation", true, false, 7],
+        ["AZFWDnsQuery", true, false, 7],
+        ["AZFWFqdnResolveFailure", true, false, 7],
+        ["AZFWIdpsSignature", true, false, 7],
+        ["AZFWNatRule", true, false, 7],
+        ["AZFWNatRuleAggregation", true, false, 7],
+        ["AZFWNetworkRule", true, false, 7],
+        ["AZFWNetworkRuleAggregation", true, false, 7],
+        ["AZFWThreatIntel", true, false, 7],
       ]
       metric = [
         #["Category name",  "Diagnostics Enabled(true/false)", "Retention Enabled(true/false)", Retention_period]

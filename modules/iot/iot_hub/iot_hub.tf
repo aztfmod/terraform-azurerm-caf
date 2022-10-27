@@ -105,7 +105,6 @@ resource "azurerm_iothub" "iothub" {
   }
 
   # requires azurerm provider >= 2.91
-
   # dynamic "identity" { 
   #   for_each = lookup(var.settings, "identity", {}) == {} ? [] : [1]
   #   content {

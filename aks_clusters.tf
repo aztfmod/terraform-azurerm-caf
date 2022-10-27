@@ -4,7 +4,7 @@ output "aks_clusters" {
 
 module "aks_clusters" {
   source     = "./modules/compute/aks"
-  depends_on = [module.networking, module.routes, module.azurerm_firewall_policies]
+  depends_on = [module.networking, module.routes, module.azurerm_firewall_policies, module.application_gateways, module.application_gateway_platforms, module.application_gateway_applications]
   for_each   = local.compute.aks_clusters
 
   base_tags = try(local.global_settings.inherit_tags, false) ? try(local.combined_objects_resource_groups[try(each.value.resource_group.lz_key, local.client_config.landingzone_key)][try(each.value.resource_group.key, each.value.resource_group_key)].tags, {}) : {}

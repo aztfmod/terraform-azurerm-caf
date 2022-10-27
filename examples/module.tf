@@ -24,6 +24,7 @@ module "example" {
   role_mapping                          = var.role_mapping
   storage_accounts                      = var.storage_accounts
   subscription_billing_role_assignments = var.subscription_billing_role_assignments
+  resource_provider_registration        = var.resource_provider_registration
   tags                                  = local.tags
 
   azuread = {
@@ -84,6 +85,7 @@ module "example" {
   }
   compute = {
     aks_clusters                        = var.aks_clusters
+    aro_clusters                        = var.aro_clusters
     availability_sets                   = var.availability_sets
     azure_container_registries          = var.azure_container_registries
     batch_accounts                      = var.batch_accounts
@@ -267,6 +269,8 @@ module "example" {
 
   shared_services = {
     automations                    = var.automations
+    automation_schedules           = var.automation_schedules
+    automation_runbooks            = var.automation_runbooks
     automation_log_analytics_links = var.automation_log_analytics_links
     consumption_budgets            = var.consumption_budgets
     image_definitions              = var.image_definitions
@@ -295,6 +299,7 @@ module "example" {
     app_service_plans            = var.app_service_plans
     app_services                 = var.app_services
     function_apps                = var.function_apps
+    static_sites                 = var.static_sites
   }
   data_factory = {
     data_factory                                 = var.data_factory

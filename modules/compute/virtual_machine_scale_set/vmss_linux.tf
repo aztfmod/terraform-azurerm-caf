@@ -182,10 +182,10 @@ resource "azurerm_linux_virtual_machine_scale_set" "vmss" {
   }
 
   dynamic "boot_diagnostics" {
-    for_each = var.boot_diagnostics_storage_account == {} ? [] : [1]
+    for_each = try(var.boot_diagnostics_storage_account != null ? [1] : var.global_settings.resource_defaults.virtual_machine_scale_sets.use_azmanaged_storage_for_boot_diagnostics == true ? [1] : [], [])
 
     content {
-      storage_account_uri = var.boot_diagnostics_storage_account
+      storage_account_uri = var.boot_diagnostics_storage_account == "" ? null : var.boot_diagnostics_storage_account
     }
   }
 
@@ -299,9 +299,13 @@ resource "azurerm_linux_virtual_machine_scale_set" "vmss_autoscaled" {
       network_security_group_id     = try(network_interface.value.network_security_group_id, null)
 
       ip_configuration {
-        name                                         = azurecaf_name.linux_nic[network_interface.key].result
-        primary                                      = try(network_interface.value.primary, false)
-        subnet_id                                    = can(network_interface.value.subnet_id) ? network_interface.value.subnet_id : var.vnets[try(network_interface.value.lz_key, var.client_config.landingzone_key)][network_interface.value.vnet_key].subnets[network_interface.value.subnet_key].id
+        name    = azurecaf_name.linux_nic[network_interface.key].result
+        primary = try(network_interface.value.primary, false)
+        subnet_id = coalesce(
+          try(network_interface.value.subnet_id, null),
+          try(var.vnets[var.client_config.landingzone_key][network_interface.value.vnet_key].subnets[network_interface.value.subnet_key].id, null),
+          try(var.vnets[network_interface.value.lz_key][network_interface.value.vnet_key].subnets[network_interface.value.subnet_key].id, null)
+        )
         load_balancer_backend_address_pool_ids       = try(local.load_balancer_backend_address_pool_ids, null)
         application_gateway_backend_address_pool_ids = try(local.application_gateway_backend_address_pool_ids, null)
         application_security_group_ids               = try(local.application_security_group_ids, null)

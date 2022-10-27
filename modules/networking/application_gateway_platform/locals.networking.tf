@@ -28,14 +28,14 @@ locals {
       )
     }
     private = {
-      subnet_id = coalesce(
+      subnet_id = try(coalesce(
         try(local.private_vnet.subnets[var.settings.front_end_ip_configurations.private.subnet_key].id, null),
         try(var.settings.front_end_ip_configurations.private.subnet_id, null)
-      )
-      cidr = coalesce(
+      ), null)
+      cidr = try(coalesce(
         try(local.private_vnet.subnets[var.settings.front_end_ip_configurations.private.subnet_key].cidr, null),
         try(var.settings.front_end_ip_configurations.private.subnet_cidr, null)
-      )
+      ), null)
     }
     public = {
       subnet_id = try(
@@ -44,17 +44,17 @@ locals {
         null
       )
 
-      ip_address_id = coalesce(
+      ip_address_id = try(coalesce(
         try(var.public_ip_addresses[var.client_config.landingzone_key][var.settings.front_end_ip_configurations.public.public_ip_key].id, var.public_ip_addresses[var.settings.front_end_ip_configurations.public.lz_key][var.settings.front_end_ip_configurations.public.public_ip_key].id, null),
         try(var.settings.front_end_ip_configurations.public.public_ip_id, null)
-      )
+      ), null)
     }
   }
 
-  private_cidr = coalesce(
+  private_cidr = try(coalesce(
     try(local.ip_configuration.private.cidr[var.settings.front_end_ip_configurations.private.subnet_cidr_index], null),
     try(var.settings.front_end_ip_configurations.private.subnet_cidr, null)
-  )
-  private_ip_address = cidrhost(local.private_cidr, var.settings.front_end_ip_configurations.private.private_ip_offset)
+  ), null)
+  private_ip_address = try(cidrhost(local.private_cidr, var.settings.front_end_ip_configurations.private.private_ip_offset), null)
 
 }

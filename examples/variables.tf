@@ -484,6 +484,12 @@ variable "event_hubs" {
 variable "automations" {
   default = {}
 }
+variable "automation_schedules" {
+  default = {}
+}
+variable "automation_runbooks" {
+  default = {}
+}
 variable "automation_log_analytics_links" {
   default = {}
 }
@@ -1023,4 +1029,12 @@ variable "iot_hub_consumer_groups" {
 variable "iot_hub_certificate" {
   default = {}
 } 
- 
+variable "resource_provider_registration" {
+  default = {}
+}
+variable "static_sites" {
+  default = {}
+}
+variable "aro_clusters" {
+  default = {}
+}

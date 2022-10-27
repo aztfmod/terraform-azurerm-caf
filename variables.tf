@@ -407,11 +407,8 @@ variable "sentinel_watchlists" {
 }
 variable "iot" {
   description = "Configuration object - IoT"
-  default = {
-    # digital_twins_instances                 = {}
-    # digital_twins_endpoint_eventhubs                 = {}
-    # digital_twins_endpoint_eventgrids = {}
-    # digital_twins_endpoint_servicebuses = {}
-
-  }
+  default = {}
+}
+variable "resource_provider_registration" {
+  default = {}
 }

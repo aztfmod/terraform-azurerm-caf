@@ -62,7 +62,7 @@ resource "azurerm_firewall" "fw" {
     content {
       name                 = ip_configuration.value.name
       public_ip_address_id = can(ip_configuration.value.public_ip_id) ? ip_configuration.value.public_ip_id : var.public_ip_addresses[try(ip_configuration.value.lz_key, var.client_config.landingzone_key)][ip_configuration.value.public_ip_key].id
-      subnet_id            = try(ip_configuration.value.subnet_id, null) != null ? ip_configuration.value.subnet_id : (lookup(ip_configuration.value, "lz_key", null) == null ? var.virtual_networks[var.client_config.landingzone_key][ip_configuration.value.vnet_key].subnets[ip_configuration.value.subnet_key].id : var.virtual_networks[ip_configuration.value.lz_key][ip_configuration.value.vnet_key].subnets[ip_configuration.value.subnet_key].id)
+      subnet_id            = try(ip_configuration.value.subnet_id, null) != null ? ip_configuration.value.subnet_id : try(ip_configuration.value.subnet_key, null) != null ? try(ip_configuration.value.lz_key, null) == null ? var.virtual_networks[var.client_config.landingzone_key][ip_configuration.value.vnet_key].subnets[ip_configuration.value.subnet_key].id : var.virtual_networks[ip_configuration.value.lz_key][ip_configuration.value.vnet_key].subnets[ip_configuration.value.subnet_key].id : null
     }
   }
 

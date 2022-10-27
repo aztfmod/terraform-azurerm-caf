@@ -3,20 +3,24 @@ module "storage_accounts" {
   source   = "./modules/storage_account"
   for_each = var.storage_accounts
 
-  base_tags           = try(local.global_settings.inherit_tags, false) ? try(local.combined_objects_resource_groups[try(each.value.resource_group.lz_key, local.client_config.landingzone_key)][try(each.value.resource_group.key, each.value.resource_group_key)].tags, {}) : {}
-  client_config       = local.client_config
-  diagnostic_profiles = try(each.value.diagnostic_profiles, {})
-  diagnostics         = local.combined_diagnostics
-  global_settings     = local.global_settings
-  location            = can(local.global_settings.regions[each.value.region]) ? local.global_settings.regions[each.value.region] : local.combined_objects_resource_groups[try(each.value.resource_group.lz_key, local.client_config.landingzone_key)][try(each.value.resource_group.key, each.value.resource_group_key)].location
-  managed_identities  = local.combined_objects_managed_identities
-  private_dns         = local.combined_objects_private_dns
-  private_endpoints   = try(each.value.private_endpoints, {})
-  recovery_vaults     = local.combined_objects_recovery_vaults
-  resource_group_name = can(each.value.resource_group.name) || can(each.value.resource_group_name) ? try(each.value.resource_group.name, each.value.resource_group_name) : local.combined_objects_resource_groups[try(each.value.resource_group.lz_key, local.client_config.landingzone_key)][try(each.value.resource_group_key, each.value.resource_group.key)].name
-  resource_groups     = try(each.value.private_endpoints, {}) == {} ? null : local.resource_groups
-  storage_account     = each.value
-  vnets               = local.combined_objects_networking
+  base_tags                 = try(local.global_settings.inherit_tags, false) ? try(local.combined_objects_resource_groups[try(each.value.resource_group.lz_key, local.client_config.landingzone_key)][try(each.value.resource_group.key, each.value.resource_group_key)].tags, {}) : {}
+  client_config             = local.client_config
+  diagnostic_profiles       = try(each.value.diagnostic_profiles, {})
+  diagnostic_profiles_blob  = try(each.value.diagnostic_profiles_blob, {})
+  diagnostic_profiles_queue = try(each.value.diagnostic_profiles_queue, {})
+  diagnostic_profiles_table = try(each.value.diagnostic_profiles_table, {})
+  diagnostic_profiles_file  = try(each.value.diagnostic_profiles_file, {})
+  diagnostics               = local.combined_diagnostics
+  global_settings           = local.global_settings
+  location                  = can(local.global_settings.regions[each.value.region]) ? local.global_settings.regions[each.value.region] : local.combined_objects_resource_groups[try(each.value.resource_group.lz_key, local.client_config.landingzone_key)][try(each.value.resource_group.key, each.value.resource_group_key)].location
+  managed_identities        = local.combined_objects_managed_identities
+  private_dns               = local.combined_objects_private_dns
+  private_endpoints         = try(each.value.private_endpoints, {})
+  recovery_vaults           = local.combined_objects_recovery_vaults
+  resource_group_name       = can(each.value.resource_group.name) || can(each.value.resource_group_name) ? try(each.value.resource_group.name, each.value.resource_group_name) : local.combined_objects_resource_groups[try(each.value.resource_group.lz_key, local.client_config.landingzone_key)][try(each.value.resource_group_key, each.value.resource_group.key)].name
+  resource_groups           = try(each.value.private_endpoints, {}) == {} ? null : local.resource_groups
+  storage_account           = each.value
+  vnets                     = local.combined_objects_networking
 }
 
 output "storage_accounts" {
