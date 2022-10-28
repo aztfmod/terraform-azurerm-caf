@@ -25,3 +25,7 @@ output "resource_group_name" {
 output "location" {
   value = var.location
 }
+
+output "id" {
+  value = azurerm_cosmosdb_account.cosmos_account.id
+}
