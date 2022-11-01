@@ -69,7 +69,8 @@ resource "azurerm_monitor_action_group" "ag1" {
 
 }
 
-resource "azurerm_template_deployment" "alert1" {
+// Replaced with azapi_resource
+/* resource "azurerm_template_deployment" "alert1" {
   name                = random_string.random1.result
   resource_group_name = var.resource_group_name
 
@@ -80,6 +81,67 @@ resource "azurerm_template_deployment" "alert1" {
     "region"            = var.location
   }
   deployment_mode = "Incremental"
+}
+*/
+
+resource "azapi_resource" "alert1" {
+  type = "Microsoft.Insights/activityLogAlerts@2020-10-01"
+  name = random_string.random1.result
+  location = var.location
+  parent_id = data.azurerm_client_config.current.subscription_id
+  tags = merge(var.base_tags, local.module_tag, try(var.settings.tags, null))
+  body = jsonencode({
+    properties = {
+      actions = {
+        actionGroups = [
+          {
+            actionGroupId = azurerm_monitor_action_group.ag1.id
+            webhookProperties = {}
+          }
+        ]
+      }
+      condition = {
+        allOf = [
+          {
+            equals = "ServiceHealth"
+            field = "category"
+          },
+          {
+            containsAny = [var.location]
+            field = "RegionName"
+          }
+        ]
+      }
+      description = ""
+      enabled = true
+      scopes = [
+        data.azurerm_client_config.current.subscription_id
+      ]
+    }
+  })
+}
+
+resource "azurerm_monitor_activity_log_alert" "alert1" {
+  name = random_string.random1.result
+  resource_group_name = var.resource_group_name
+
+  scopes              = [azurerm_resource_group.example.id]
+  description         = "This alert will monitor a specific storage account updates."
+
+  criteria {
+    resource_id    = azurerm_storage_account.to_monitor.id
+    operation_name = "Microsoft.Storage/storageAccounts/write"
+    category       = "Recommendation"
+  }
+
+  action {
+    action_group_id = azurerm_monitor_action_group.ag1.id
+
+    webhook_properties = {
+      from = "terraform"
+    }
+  }
+
 }
 
 

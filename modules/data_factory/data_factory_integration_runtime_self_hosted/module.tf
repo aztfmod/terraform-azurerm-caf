@@ -12,5 +12,5 @@ resource "azurerm_data_factory_integration_runtime_self_hosted" "dfirsh" {
   data_factory_id = var.data_factory_id
   name            = azurecaf_name.dfirsh.result
 
-  resource_group_name = var.resource_group_name
+  # resource_group_name = var.resource_group_name  // blinQ: Not supported argument
 }

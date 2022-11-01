@@ -175,7 +175,7 @@ module "public_ip_prefixes" {
   sku                 = try(each.value.sku, "Standard")
   ip_version          = try(each.value.ip_version, "IPv4")
   tags                = try(each.value.tags, null)
-  zones               = try(each.value.zones, "Zone-Redundant")
+  zones               = try(each.value.zones, ["Zone-Redundant"])
   prefix_length       = try(each.value.prefix_length, 28)
   create_pips         = try(each.value.create_pips, false)
   diagnostic_profiles = try(each.value.diagnostic_profiles, {})

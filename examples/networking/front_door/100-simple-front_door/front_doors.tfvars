@@ -18,8 +18,11 @@ front_doors = {
       }
     }
 
-    # Following optional argument can be used to set a time out value between 0-240. If not passed, by default it will be set to 60
+    # Following optional argument can be used to set a time out value between 0-240. If not passed, by default it will be set to 60. Global for all backend pools.
     # backend_pools_send_receive_timeout_seconds = 120
+
+    # Following optional argument can be used to certificate check, defaults to false. Global for all backend pools.
+    # enforce_backend_pools_certificate_name_check
 
     # Following optional argument can be used to disable Front Door Load Balancer
     # load_balancer_enabled  =  false

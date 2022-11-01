@@ -7,9 +7,14 @@ container_groups = {
     name               = "rover"
     region             = "region1"
     resource_group_key = "rg1"
-    ip_address_type    = "Public"
+    ip_address_type    = "Public"  // Public, Private or None. Private require subnet_ids to be configured.
     os_type            = "Linux"
     restart_policy     = "Never" // Possible values are 'Always'(default) 'Never' 'OnFailure'
+    # subnet_ids = {                    // Optional
+    #   name = "my-vnet"                // If you configure name a new vnet will be provisioned with this name, or ..
+    #   lz_key =                        // reference existing vnet with lz_key and vnet_key
+    #   vnet_key =      
+    # }
 
     containers = {
       roverxpreview = {

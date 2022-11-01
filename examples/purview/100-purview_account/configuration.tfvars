@@ -14,6 +14,7 @@ purview_accounts = {
   pva1 = {
     name   = "pva1"
     region = "region1"
+    # identity_type = "SystemAssigned"      # Optional, Module defaults to only valid option "SystemAssigned"
     resource_group = {
       key = "rg1"
     }

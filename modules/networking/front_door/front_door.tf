@@ -14,8 +14,18 @@ resource "azurecaf_name" "frontdoor" {
 resource "azurerm_frontdoor" "frontdoor" {
   name                                         = azurecaf_name.frontdoor.result
   resource_group_name                          = var.resource_group_name
-  enforce_backend_pools_certificate_name_check = try(var.settings.certificate_name_check, false)
   tags                                         = local.tags
+
+  dynamic "backend_pool_settings" {
+    for_each = var.settings.backend_pool_settings
+
+    content {
+      backend_pools_send_receive_timeout_seconds = try(var.settings.backend_pools_send_receive_timeout_seconds, 60)
+      enforce_backend_pools_certificate_name_check = try(var.settings.backend_pools_certificate_name_check, var.settings.certificate_name_check, false)
+
+    }
+    
+  }
 
   dynamic "routing_rule" {
     for_each = var.settings.routing_rule
@@ -61,7 +71,7 @@ resource "azurerm_frontdoor" "frontdoor" {
     }
   }
 
-  backend_pools_send_receive_timeout_seconds = try(var.settings.backend_pools_send_receive_timeout_seconds, 60)
+  
   load_balancer_enabled                      = try(var.settings.load_balancer_enabled, true)
   friendly_name                              = try(var.settings.backend_pool.name, null)
 

@@ -33,7 +33,8 @@ resource "azurerm_container_group" "acg" {
   tags                = merge(local.tags, try(var.settings.tags, null))
   ip_address_type     = try(var.settings.ip_address_type, "Public")
   restart_policy      = try(var.settings.restart_policy, "Always")
-  network_profile_id  = try(var.combined_resources.network_profiles[var.client_config.landingzone_key][var.settings.network_profile.key].id, null)
+  # network_profile_id  = try(var.combined_resources.network_profiles[var.client_config.landingzone_key][var.settings.network_profile.key].id, null)     # Deprecaited from azurerm v3.16, replaced with subnet_ids. 
+  subnet_ids = can(var.settings.subnet_ids.vnet_key) == true ? var.combined_resources.vnet[try(var.settings.subnet_ids.lz_key, var.client_config.landingzone_key)][var.settings.subnet_ids.vnet_key].id : try(var.settings.sbunet_ids.name, null)
 
   dynamic "exposed_port" {
     for_each = try(var.settings.exposed_port, [])
