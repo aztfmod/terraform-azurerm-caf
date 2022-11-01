@@ -100,6 +100,7 @@
     "databricks/100-standard-databricks-no-vnet",
     "databricks/101-standard-databricks-vnet",
     "databricks/102-premium-aml",
+    "databricks/102-premium-databricks-vnet-private-endpoint",
     "datalake/101-datalake-storage",
     "diagnostics_profiles/100-multiple-destinations",
     "diagnostics_profiles/200-diagnostics-eventhub-namespaces",
