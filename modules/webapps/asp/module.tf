@@ -16,6 +16,7 @@ resource "azurerm_app_service_plan" "asp" {
   resource_group_name          = var.resource_group_name
   kind                         = try(var.kind, null)
   maximum_elastic_worker_count = lookup(var.settings, "maximum_elastic_worker_count", null)
+  zone_redundant               = try(var.zone_redundant, null)
 
   # For kind=Linux must be set to true and for kind=Windows must be set to false
   reserved         = lookup(var.settings, "reserved", null) == null ? null : var.settings.reserved

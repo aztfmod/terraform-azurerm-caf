@@ -26,6 +26,11 @@ variable "kind" {
   default     = "Windows"
 }
 
+variable "zone_redundant" {
+  description = "(Optional) Specifies if the App Service Plan should be Zone Redundant. Changing this forces a new resource to be created."
+  default     = false
+}
+
 variable "global_settings" {
   description = "Global settings object (see module README.md)"
 }

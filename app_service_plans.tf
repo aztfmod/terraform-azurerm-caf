@@ -11,6 +11,7 @@ module "app_service_plans" {
 
   tags            = try(each.value.tags, null)
   kind            = try(each.value.kind, null)
+  zone_redundant  = try(each.value.zone_redundant, null)
   settings        = each.value
   global_settings = local.global_settings
 }
