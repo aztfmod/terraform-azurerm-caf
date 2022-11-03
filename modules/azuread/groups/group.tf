@@ -4,6 +4,10 @@ resource "azuread_group" "group" {
   description             = lookup(var.azuread_groups, "description", null)
   prevent_duplicate_names = lookup(var.azuread_groups, "prevent_duplicate_names", null)
   owners                  = local.owners
+  assignable_to_role      = try(var.azuread_groups.assignable_to_role, false)
+  # if assignable_to_role is true, security_enabled must be true
+  security_enabled = try(var.azuread_groups.security_enabled, var.azuread_groups.assignable_to_role, true)
+  mail_enabled     = lookup(var.azuread_groups, "mail_enabled", false)
   // Note: This module is effected by these bugs:
   // https://github.com/hashicorp/terraform-provider-azuread/issues/464
   // https://github.com/microsoftgraph/msgraph-metadata/issues/92

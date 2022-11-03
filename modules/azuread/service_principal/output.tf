@@ -18,10 +18,10 @@ output "object_id" {
 output "display_name" {
   value = azuread_service_principal.app.object_id
 }
-
-output "oauth2_permissions" {
-  value = azuread_service_principal.app.oauth2_permissions
-}
+# commented out b/c attributes no longer valid with azuread provider 2.30+
+# output "oauth2_permissions" {
+#   value = azuread_service_principal.app.oauth2_permissions
+# }
 output "rbac_id" {
   value       = azuread_service_principal.app.object_id
   description = "This attribute is used to set the role assignment"

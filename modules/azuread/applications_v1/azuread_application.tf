@@ -9,16 +9,16 @@ resource "azuread_application" "app" {
       var.client_config.object_id
     ]
   )
-
-  available_to_other_tenants = try(var.settings.available_to_other_tenants, false)
-  homepage                   = try(var.settings.homepage, null)
-  group_membership_claims    = try(var.settings.group_membership_claims, "All")
-  identifier_uris            = try(var.settings.identifier_uris, null)
-  logout_url                 = try(var.settings.logout_url, null)
-  oauth2_allow_implicit_flow = try(var.settings.oauth2_allow_implicit_flow, false)
-  prevent_duplicate_names    = try(var.settings.prevent_duplicate_names, false)
-  public_client              = try(var.settings.public_client, false)
-  reply_urls                 = try(var.settings.reply_urls, null)
+  # commented out b/c attributes no longer valid with azuread provider 2.30+
+  # available_to_other_tenants = try(var.settings.available_to_other_tenants, false)
+  # homepage                   = try(var.settings.homepage, null)
+  group_membership_claims = try(var.settings.group_membership_claims, ["All"])
+  identifier_uris         = try(var.settings.identifier_uris, null)
+  # commented out b/c attributes no longer valid with azuread provider 2.30+
+  # logout_url                 = try(var.settings.logout_url, null)
+  # oauth2_allow_implicit_flow = try(var.settings.oauth2_allow_implicit_flow, false)
+  # prevent_duplicate_names    = try(var.settings.prevent_duplicate_names, false)
+  # public_client              = try(var.settings.public_client, false)
 
   dynamic "required_resource_access" {
     for_each = var.azuread_api_permissions

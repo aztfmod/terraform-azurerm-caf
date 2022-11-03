@@ -9,7 +9,10 @@ output "azuread_application" {
     id             = azuread_application.app.id
     object_id      = azuread_application.app.object_id
     application_id = azuread_application.app.application_id
-    name           = azuread_application.app.name
+    display_name   = azuread_application.app.display_name
+    # keeping name attribute for backwards compatibility
+    name = azuread_application.app.display_name
+
   }
 
 }
