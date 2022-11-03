@@ -68,11 +68,11 @@ module "virtual_subnets" {
   global_settings = local.global_settings
   settings        = each.value
 
-  name                                           = each.value.name
-  address_prefixes                               = try(each.value.cidr, [])
-  service_endpoints                              = try(each.value.service_endpoints, [])
-  enforce_private_link_endpoint_network_policies = try(each.value.enforce_private_link_endpoint_network_policies, false)
-  enforce_private_link_service_network_policies  = try(each.value.enforce_private_link_service_network_policies, false)
+  name                                          = each.value.name
+  address_prefixes                              = try(each.value.cidr, [])
+  service_endpoints                             = try(each.value.service_endpoints, [])
+  private_endpoint_network_policies_enabled     = try(each.value.private_endpoint_network_policies_enabled, false)
+  private_link_service_network_policies_enabled = try(each.value.private_link_service_network_policies_enabled, true)
 
   resource_group_name  = can(each.value.vnet.key) ? local.combined_objects_networking[try(each.value.vnet.lz_key, local.client_config.landingzone_key)][each.value.vnet.key].resource_group_name : split("/", each.value.vnet.id)[4]
   virtual_network_name = can(each.value.vnet.key) ? local.combined_objects_networking[try(each.value.vnet.lz_key, local.client_config.landingzone_key)][each.value.vnet.key].name : split("/", each.value.vnet.id)[8]
@@ -136,14 +136,10 @@ module "public_ip_addresses" {
   tags                       = try(each.value.tags, null)
   ip_tags                    = try(each.value.ip_tags, null)
   public_ip_prefix_id        = can(each.value.public_ip_prefix.key) ? local.combined_objects_public_ip_prefixes[try(each.value.public_ip_prefix.lz_key, local.client_config.landingzone_key)][each.value.public_ip_prefix.key].id : try(each.value.public_ip_prefix_id, null)
-  zones = coalesce(
-    try(each.value.availability_zone, ""),
-    try(tostring(each.value.zones[0]), ""),
-    try(each.value.sku, "Basic") == "Basic" ? "No-Zone" : "Zone-Redundant"
-  )
-  diagnostic_profiles = try(each.value.diagnostic_profiles, {})
-  diagnostics         = local.combined_diagnostics
-  base_tags           = try(local.global_settings.inherit_tags, false) ? try(local.combined_objects_resource_groups[try(each.value.resource_group.lz_key, local.client_config.landingzone_key)][try(each.value.resource_group.key, each.value.resource_group_key)].tags, {}) : {}
+  zones                      = try(each.value.zones, null)
+  diagnostic_profiles        = try(each.value.diagnostic_profiles, {})
+  diagnostics                = local.combined_diagnostics
+  base_tags                  = try(local.global_settings.inherit_tags, false) ? try(local.combined_objects_resource_groups[try(each.value.resource_group.lz_key, local.client_config.landingzone_key)][try(each.value.resource_group.key, each.value.resource_group_key)].tags, {}) : {}
 }
 
 #
@@ -175,7 +171,7 @@ module "public_ip_prefixes" {
   sku                 = try(each.value.sku, "Standard")
   ip_version          = try(each.value.ip_version, "IPv4")
   tags                = try(each.value.tags, null)
-  zones               = try(each.value.zones, ["Zone-Redundant"])
+  zones               = try(each.value.zones, null)
   prefix_length       = try(each.value.prefix_length, 28)
   create_pips         = try(each.value.create_pips, false)
   diagnostic_profiles = try(each.value.diagnostic_profiles, {})

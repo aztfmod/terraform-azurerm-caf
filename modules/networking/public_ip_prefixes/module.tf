@@ -1,4 +1,4 @@
-# Last review :  AzureRM version 2.95.0
+# Last review :  AzureRM version 3.29.1
 # Ref : https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/resources/public_ip_prefix
 
 resource "azurerm_public_ip_prefix" "pip_prefix" {
@@ -8,7 +8,7 @@ resource "azurerm_public_ip_prefix" "pip_prefix" {
   prefix_length       = var.prefix_length
   tags                = local.tags
   sku                 = var.sku
-  zones               = var.zones
+  zones                = var.zones
   ip_version          = var.ip_version
 
 }

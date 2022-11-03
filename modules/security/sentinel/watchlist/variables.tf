@@ -16,3 +16,6 @@ variable "description" {
 variable "labels" {
   default = null
 }
+variable "item_search_key" {
+  default = null
+}

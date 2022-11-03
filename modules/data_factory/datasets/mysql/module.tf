@@ -9,7 +9,7 @@ resource "azurecaf_name" "dataset" {
 }
 resource "azurerm_data_factory_dataset_mysql" "dataset" {
   name                  = azurecaf_name.dataset.name
-  resource_group_name   = var.resource_group_name
+  # resource_group_name      = var.resource_group_name     // blinQ: Not supported argument with azurerm v3.29.1
   data_factory_id       = var.data_factory_id
   linked_service_name   = var.linked_service_name
   table_name            = try(var.settings.table_name, null)

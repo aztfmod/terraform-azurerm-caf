@@ -30,6 +30,13 @@ cognitive_services_account = {
     # network_acls = {
     #   default_action = "Allow"
     #   ip_rules       = ["10.10.10.0/16"]
+    #   virtual_network_rules = {
+    #       lz_key = 
+    #       vnet_key =
+    #       subnet_key =
+    #       ignore_missing_vnet_service_endpoint = bool       # (Optional) Whether ignore missing vnet service endpoint or not. Default to false
+    #   }
+    }
     # }
   }
   test_account-2 = {

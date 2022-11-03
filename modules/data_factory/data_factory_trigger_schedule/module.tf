@@ -9,7 +9,7 @@ resource "azurecaf_name" "schedule" {
 }
 resource "azurerm_data_factory_trigger_schedule" "schedule" {
   name                = azurecaf_name.schedule.name
-  resource_group_name = var.resource_group_name
+  # resource_group_name = var.resource_group_name    // Argument not supported any more
   data_factory_id     = var.data_factory_id
   pipeline_name       = var.pipeline_name
   start_time          = try(var.settings.start_time, null)

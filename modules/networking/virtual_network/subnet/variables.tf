@@ -12,12 +12,12 @@ variable "address_prefixes" {
   description = "(Optional) The address prefixes to use for the subnet."
   default     = []
 }
-variable "enforce_private_link_endpoint_network_policies" {
-  description = "(Optional) Enable or Disable network policies for the private link endpoint on the subnet. Default value is false. Conflicts with enforce_private_link_service_network_policies."
+variable "private_endpoint_network_policies_enabled" {
+  description = "(Optional) Enable or Disable network policies for the private link endpoint on the subnet. Default value is false. Conflicts with private_link_service_network_policies_enabled."
   default     = null
 }
-variable "enforce_private_link_service_network_policies" {
-  description = "(Optional) Enable or Disable network policies for the private link service on the subnet. Default valule is false. Conflicts with enforce_private_link_endpoint_network_policies."
+variable "private_link_service_network_policies_enabled" {
+  description = "(Optional) Enable or Disable network policies for the private link service on the subnet. Default valule is true. Conflicts with private_endpoint_network_policies_enabled."
   default     = null
 }
 variable "service_endpoints" {

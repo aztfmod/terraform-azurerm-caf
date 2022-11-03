@@ -75,7 +75,7 @@ resource "azurerm_windows_virtual_machine_scale_set" "vmss" {
   priority                     = try(each.value.priority, null)
   provision_vm_agent           = try(each.value.provision_vm_agent, true)
   proximity_placement_group_id = can(each.value.proximity_placement_group_key) || can(each.value.proximity_placement_group.key) ? var.proximity_placement_groups[try(var.client_config.landingzone_key, var.client_config.landingzone_key)][try(each.value.proximity_placement_group_key, each.value.proximity_placement_group.key)].id : try(each.value.proximity_placement_group_id, each.value.proximity_placement_group.id, null)
-  scale_in_policy              = try(each.value.scale_in_policy, null)
+  # scale_in_policy                 = try(each.value.scale_in_policy, null)   // blinQ: scale_in_policy` will be removed in favour of the `scale_in` code block in version 4.0 of the AzureRM Provider.
   zone_balance                 = try(each.value.zone_balance, null)
   zones                        = try(each.value.zones, null)
   upgrade_mode                 = try(each.value.upgrade_mode, null)
@@ -131,8 +131,8 @@ resource "azurerm_windows_virtual_machine_scale_set" "vmss" {
       caching                   = data_disk.value.caching
       create_option             = try(data_disk.value.create_option, null)
       disk_encryption_set_id    = try(data_disk.value.disk_encryption_set_key, null) == null ? null : try(var.disk_encryption_sets[var.client_config.landingzone_key][data_disk.value.disk_encryption_set_key].id, var.disk_encryption_sets[data_disk.value.lz_key][data_disk.value.disk_encryption_set_key].id, null)
-      disk_iops_read_write      = try(data_disk.value.storage_account_type == "UltraSSD_LRS" ? data_disk.value.disk_iops_read_write : null, null)
-      disk_mbps_read_write      = try(data_disk.value.storage_account_type == "UltraSSD_LRS" ? data_disk.value.disk_mbps_read_write : null, null)
+      # disk_iops_read_write      = try(data_disk.value.storage_account_type == "UltraSSD_LRS" ? data_disk.value.disk_iops_read_write : null, null)  //blinQ: Not supported by azurerm 3.29.1: An argument named "disk_iops_read_write" is not expected here.
+      # disk_mbps_read_write      = try(data_disk.value.storage_account_type == "UltraSSD_LRS" ? data_disk.value.disk_mbps_read_write : null, null)  //blinQ: Not supported by azurerm 3.29.1: An argument named "disk_iops_read_write" is not expected here.
       disk_size_gb              = data_disk.value.disk_size_gb
       lun                       = data_disk.value.lun
       storage_account_type      = data_disk.value.storage_account_type
@@ -278,6 +278,14 @@ resource "azurerm_windows_virtual_machine_scale_set" "vmss" {
     content {
       enabled      = each.value.automatic_instance_repair.enabled
       grace_period = each.value.automatic_instance_repair.grace_period
+    }
+  }
+
+  dynamic "scale_in" {
+    for_each = can(each.value.scale_in.rule) ? [1] : [0]
+    content {
+      rule = each.value.scale_in.rule
+      force_deletion_enabled = try(each.value.scale_in.force_deletion_enabled, false)
     }
   }
 

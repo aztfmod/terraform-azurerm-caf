@@ -18,12 +18,18 @@ resource "azurerm_cognitive_account" "service" {
   qna_runtime_endpoint = var.settings.kind == "QnAMaker" ? var.settings.qna_runtime_endpoint : try(var.settings.qna_runtime_endpoint, null)
 
   dynamic "network_acls" {
-    for_each = try(var.settings.network_acls, null) == null ? [] : [1]
+    for_each = can(var.settings.network_acls) == true ? [1] : [0]
     content {
       default_action             = var.settings.network_acls.default_action
       ip_rules                   = try(var.settings.network_acls.ip_rules, null)
       # virtual_network_subnet_ids = try(var.settings.network_acls.virtual_network_subnet_ids, null)
-      virtual_network_rules = try(var.settings.virtual_network_rules, {})
+      dynamic "virtual_network_rules" {
+        for_each = can(var.settings.network_acls.virtual_network_rules) == true ? [1] : [0]
+        content {
+          subnet_id = var.remote_objects.vnets[try(each.value.lz_key, var.client_config.landingzone_key)][each.value.vnet_key].subnets[each.value.subnet_key].id
+          ignore_missing_vnet_service_endpoint = var.settings.network_acls.virtual_network_rules.ignore_missing_vnet_service_endpoint
+        }
+      } 
     }
   }
 

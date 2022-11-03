@@ -88,8 +88,8 @@ resource "azapi_resource" "alert1" {
   type = "Microsoft.Insights/activityLogAlerts@2020-10-01"
   name = random_string.random1.result
   location = var.location
-  parent_id = data.azurerm_client_config.current.subscription_id
-  tags = merge(var.base_tags, local.module_tag, try(var.settings.tags, null))
+  parent_id = var.subscription_id
+  tags = var.tags
   body = jsonencode({
     properties = {
       actions = {
@@ -115,12 +115,16 @@ resource "azapi_resource" "alert1" {
       description = ""
       enabled = true
       scopes = [
-        data.azurerm_client_config.current.subscription_id
+        var.subscription_id
       ]
     }
   })
 }
 
+
+# blinQ: What is this, point at azurerm_resource_group.example.id, this module need to be updated and tested.
+
+/*
 resource "azurerm_monitor_activity_log_alert" "alert1" {
   name = random_string.random1.result
   resource_group_name = var.resource_group_name
@@ -143,6 +147,7 @@ resource "azurerm_monitor_activity_log_alert" "alert1" {
   }
 
 }
+*/
 
 
 data "azurerm_role_definition" "arm_role" {

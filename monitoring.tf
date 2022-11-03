@@ -5,6 +5,8 @@ module "service_health_alerts" {
   settings            = each.value
   location            = can(local.global_settings.regions[each.value.region]) ? local.global_settings.regions[each.value.region] : local.combined_objects_resource_groups[try(each.value.resource_group.lz_key, local.client_config.landingzone_key)][try(each.value.resource_group.key, each.value.resource_group_key)].location
   resource_group_name = can(each.value.resource_group.name) || can(each.value.resource_group_name) ? try(each.value.resource_group.name, each.value.resource_group_name) : local.combined_objects_resource_groups[try(each.value.resource_group.lz_key, local.client_config.landingzone_key)][try(each.value.resource_group_key, each.value.resource_group.key)].name
+  subscription_id     = data.azurerm_client_config.current.subscription_id
+  tags                = merge(local.global_settings.tags, local.shared_services.monitoring.tags, null)
 
 }
 

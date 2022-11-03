@@ -16,6 +16,7 @@ resource "azurerm_mssql_database" "mssqldb" {
   creation_source_database_id = try(var.settings.creation_source_database_id, null)
   elastic_pool_id             = try(var.elastic_pool_id, null)
   geo_backup_enabled          = try(var.settings.geo_backup_enabled, null)
+  ledger_enabled              = try(var.settings.ledger_enabled, null)
   license_type                = try(var.settings.license_type, null)
   max_size_gb                 = try(var.settings.max_size_gb, null)
   min_capacity                = try(var.settings.min_capacity, null)
@@ -43,7 +44,7 @@ resource "azurerm_mssql_database" "mssqldb" {
       retention_days             = try(var.settings.threat_detection_policy.retention_days, null)
       storage_endpoint           = try(data.azurerm_storage_account.mssqldb_tdp.0.primary_blob_endpoint, null)
       storage_account_access_key = try(data.azurerm_storage_account.mssqldb_tdp.0.primary_access_key, null)
-      use_server_default         = try(var.settings.threat_detection_policy.use_server_default, null)
+      # use_server_default         = try(var.settings.threat_detection_policy.use_server_default, null)   // blinQ: Not available Argument in azurerm v3.29.1
     }
   }
 

@@ -48,6 +48,7 @@ output "private_fqdn" {
   value = azurerm_kubernetes_cluster.aks.private_fqdn
 }
 
-output "addon_profile" {
-  value = azurerm_kubernetes_cluster.aks.addon_profile
-}
+# blinQ: Argument not available in azurerm v3.29.1
+#output "addon_profile" {
+#  value = azurerm_kubernetes_cluster.aks.addon_profile
+#}

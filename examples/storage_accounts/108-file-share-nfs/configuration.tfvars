@@ -28,6 +28,7 @@ storage_accounts = {
     }
 
     network = {
+      public_network_access_enabled = true
       default_action = "Deny"
       subnets = {
         subnet1 = {

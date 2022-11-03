@@ -19,7 +19,7 @@ resource "azurerm_signalr_service" "signalr_service" {
   connectivity_logs_enabled = try(var.settings.connectivity_logs_enabled, null)
   messaging_logs_enabled    = try(var.settings.messaging_logs_enabled, null)
   service_mode              = try(var.settings.service_mode, null)
-  live_trace_enabled        = try(var.settings.live_trace_enabled, null)
+  # live_trace_enabled        = try(var.settings.live_trace_enabled, null)  //blinQ: `live_trace_enabled` has been deprecated in favor of `live_trace` and will be removed in 4.0.
 
   sku {
     name     = var.settings.sku.name
@@ -51,6 +51,16 @@ resource "azurerm_signalr_service" "signalr_service" {
       category_pattern = try(upstream_endpoint.value.category_pattern, null)
       event_pattern    = try(upstream_endpoint.value.event_pattern, null)
       hub_pattern      = try(upstream_endpoint.value.hub_pattern, null)
+    }
+  }
+
+  dynamic "live_trace" {
+    for_each = can(var.settings.live_trace) ? [1] : [0]
+    content {
+      enabled = try(var.settings.live_trace.enabled, true)
+      messaging_logs_enabled = try(var.settings.live_trace.messaging_logs_enabled, true)
+      connectivity_logs_enabled = try(var.settings.live_trace.connectivity_logs_enabled, true)
+      http_request_logs_enabled = try(var.settings.live_trace.http_request_logs_enabled, true)
     }
   }
 

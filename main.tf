@@ -14,8 +14,8 @@ terraform {
       version = "~> 1.4.0"
     }
     azapi = {
-      source  = "azure/azapi"
-      version = "~> 1.0.0"
+      source  = "Azure/azapi"
+      version = "=1.0.0"
     }
     azurecaf = {
       source  = "aztfmod/azurecaf"

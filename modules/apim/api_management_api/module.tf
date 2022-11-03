@@ -54,8 +54,8 @@ resource "azurerm_api_management_api" "apim" {
       bearer_token_sending_methods = try(openid_authentication.value.bearer_token_sending_methods, null)
     }
   }
-  service_url       = try(var.settings.service_url, null)
-  soap_pass_through = try(var.settings.soap_pass_through, null)
+  service_url = try(var.settings.service_url, null)
+  api_type    = try(var.settings.api_type, null)
   dynamic "subscription_key_parameter_names" {
     for_each = try(var.settings.subscription_key_parameter_names, null) != null ? [var.settings.subscription_key_parameter_names] : []
 
