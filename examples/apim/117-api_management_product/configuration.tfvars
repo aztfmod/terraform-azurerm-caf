@@ -32,6 +32,8 @@ api_management_product = {
     }
     product_id = "example-product1"
     display_name = "Example Product 1"
+    subscription_required = false
+    published = false
   }
   example_product2 = {
     api_management = {
@@ -65,4 +67,15 @@ api_management_subscription = {
     display_name = "Example Subscription"
     state        = "active"
   }
+  example_subscription2 = {
+  api_management = {
+    key = "example_apim"
+  }
+  resource_group = {
+    key = "rg1"
+  }
+  display_name = "Example Subscription"
+  state        = "active"
+}
+
 }
