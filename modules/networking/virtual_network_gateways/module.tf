@@ -17,7 +17,8 @@ resource "azurerm_virtual_network_gateway" "vngw" {
   # VPN SKUs : Basic, VpnGw1, VpnGw2, VpnGw3, VpnGw4,VpnGw5, VpnGw1AZ, VpnGw2AZ, VpnGw3AZ,VpnGw4AZ and VpnGw5AZ
   # SKUs are subject to change. Check Documentation page for updated information
   # The following options may change depending upon SKU type. Check product documentation
-  sku = var.settings.sku
+  sku        = var.settings.sku
+  generation = try(var.settings.generation, "Generation2")
 
   #Create multiple IPs only if active-active mode is enabled.
   dynamic "ip_configuration" {
