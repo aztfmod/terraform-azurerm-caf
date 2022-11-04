@@ -60,7 +60,8 @@ module "group_keys" {
 
   group_object_id = var.group_id
   # old version of code was assuming azuread_groups was a one-dimensional map of group keys, but it is not
-  # member_object_id = var.azuread_groups[each.key].id
   # azuread_groups is a map of maps lz -> group 
+  # member_object_id = var.azuread_groups[each.key].id
+  # TODO: current design has shortcoming, all of the defined group_keys must be in the same landing zone
   member_object_id = try(var.azuread_groups[var.client_config.landingzone_key][each.key].id, var.azuread_groups[var.settings.group_lz_key][each.key].id)
 }
