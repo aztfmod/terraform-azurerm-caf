@@ -44,6 +44,7 @@ output "public_client" {
 output "reply_urls" {
   value = azuread_application.app.reply_urls
 }
-output "type" {
-  value = azuread_application.app.type
-}
+# deprecated
+# output "type" {
+#   value = azuread_application.app.type
+# }
