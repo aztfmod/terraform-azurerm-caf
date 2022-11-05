@@ -33,7 +33,9 @@ resource "azurerm_private_dns_cname_record" "cname_records" {
   resource_group_name = var.resource_group_name
   zone_name           = azurerm_private_dns_zone.private_dns.name
   ttl                 = each.value.ttl
-  record              = each.value.records
+  # azurerm_private_dns_cname_record has argument "record" (singular) so this is confusing
+  # supporting "records" for backwards compatibility, but adding "record" to align with resource argument
+  record = try(each.value.records, each.value.record)
 }
 
 resource "azurerm_private_dns_mx_record" "mx_records" {
