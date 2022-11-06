@@ -17,8 +17,14 @@ module "container_groups" {
   combined_resources = {
     keyvaults          = local.combined_objects_keyvaults
     managed_identities = local.combined_objects_managed_identities
-    network_profiles   = local.combined_objects_network_profiles
+    # network_profiles   = local.combined_objects_network_profiles  //blinQ: Deprecaited from azurerm v3.16, replaced with subnet_ids. 
   }
+
+  remote_objects = {
+    networking      = local.combined_objects_networking
+    virtual_subnets = local.combined_objects_virtual_subnets
+  }
+
 }
 
 module "network_profiles" {
