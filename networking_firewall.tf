@@ -22,7 +22,7 @@ module "azurerm_firewalls" {
   virtual_hubs        = local.combined_objects_virtual_hubs
   virtual_networks    = local.combined_objects_networking
   virtual_wans        = local.combined_objects_virtual_wans
-  firewall_policy_id  = can(each.value.firewall_policy.id) || (can(each.value.firewall_policy) && can(each.value.firewall_policy.key) == false) || (can(each.value.firewall_policy) == false && can(each.value.firewall_policy_key) == false) ? try(each.value.firewall_policy.id, null) : try(local.combined_objects_azurerm_firewall_policies[try(each.value.firewall_policy.lz_key, local.client_config.landingzone_key)][try(each.value.firewall_policy.key, each.value.firewall_policy_key)].id, module.azurerm_firewall_policies_child[try(each.value.firewall_policy.key, each.value.firewall_policy_key)])
+  firewall_policy_id  = can(each.value.firewall_policy.id) || (can(each.value.firewall_policy) && can(each.value.firewall_policy.key) == false) || (can(each.value.firewall_policy) == false && can(each.value.firewall_policy_key) == false) ? try(each.value.firewall_policy.id, null) : try(local.combined_objects_azurerm_firewall_policies[try(each.value.firewall_policy.lz_key, local.client_config.landingzone_key)][try(each.value.firewall_policy.key, each.value.firewall_policy_key)].id, module.azurerm_firewall_policies_child[try(each.value.firewall_policy.key, each.value.firewall_policy_key)].id)
 }
 
 # Firewall rules to apply to the firewall when not using firewall manager.
