@@ -132,7 +132,7 @@ resource "azurerm_frontdoor_custom_https_configuration" "frontdoor" {
     if try(value.custom_https_provisioning_enabled, false)
   }
 
-  frontend_endpoint_id              = azurerm_frontdoor.frontdoor.frontend_endpoint[each.value.name].id
+  frontend_endpoint_id              = azurerm_frontdoor.frontdoor.frontend_endpoints[each.value.name]
   custom_https_provisioning_enabled = try(each.value.custom_https_provisioning_enabled, false)
 
   custom_https_configuration {
