@@ -16,6 +16,10 @@ module "virtual_network_gateways" {
   ]
 }
 
+output "virtual_network_gateways" {
+  value = module.virtual_network_gateways
+}
+
 module "virtual_network_gateway_connections" {
   source   = "./modules/networking/virtual_network_gateway_connections"
   for_each = try(local.networking.virtual_network_gateway_connections, {})
@@ -51,6 +55,11 @@ module "virtual_network_gateway_connections" {
 
 }
 
+output "virtual_network_gateway_connections" {
+  value = module.virtual_network_gateway_connections
+}
+
+
 module "local_network_gateways" {
   source              = "./modules/networking/local_network_gateways"
   for_each            = try(local.networking.local_network_gateways, {})
@@ -61,3 +70,8 @@ module "local_network_gateways" {
   base_tags           = try(local.global_settings.inherit_tags, false) ? try(local.combined_objects_resource_groups[try(each.value.resource_group.lz_key, local.client_config.landingzone_key)][try(each.value.resource_group.key, each.value.resource_group_key)].tags, {}) : {}
 
 }
+
+output "local_network_gateways" {
+  value = module.local_network_gateways
+}
+
