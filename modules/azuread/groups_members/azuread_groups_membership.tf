@@ -8,7 +8,7 @@ module "azuread_service_principals_membership" {
 
   azuread_service_principals = var.azuread_service_principals[try(each.value.lz_key, var.client_config.landingzone_key)]
   members                    = each.value
-  group_object_id            = var.azuread_groups[try(each.value.group_lz_key, var.client_config.landingzone_key)][var.group_key].id
+  group_object_id  = can(var.group_id) ? var.group_id : var.azuread_groups[try(var.settings.group_lz_key, var.client_config.landingzone_key)][var.group_key].id
 }
 
 module "managed_identities_membership" {
@@ -18,7 +18,7 @@ module "managed_identities_membership" {
   managed_identities = var.managed_identities[try(each.value.lz_key, var.client_config.landingzone_key)]
   members            = each.value
 
-  group_object_id = var.azuread_groups[try(each.value.group_lz_key, var.client_config.landingzone_key)][var.group_key].id
+  group_object_id  = can(var.group_id) ? var.group_id : var.azuread_groups[try(var.settings.group_lz_key, var.client_config.landingzone_key)][var.group_key].id
 }
 
 module "mssql_servers_membership" {
