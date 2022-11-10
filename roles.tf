@@ -37,8 +37,8 @@ resource "azurerm_role_assignment" "for_deferred" {
     if contains(keys(local.services_roles_deferred), value.scope_resource_key)
   }
 
-  principal_id         = each.value.object_id_resource_type == "object_ids" ? each.value.object_id_key_resource : each.value.object_id_lz_key == null ? local.services_roles[each.value.object_id_resource_type][var.current_landingzone_key][each.value.object_id_key_resource].rbac_id : local.services_roles[each.value.object_id_resource_type][each.value.object_id_lz_key][each.value.object_id_key_resource].rbac_id
-  role_definition_id   = each.value.mode == "custom_role_mapping" ? module.custom_roles[each.value.role_definition_name].role_definition_resource_id : null
+  principal_id         = each.value.object_id_resource_type == "object_ids" ? each.value.object_id_key_resource : each.value.object_id_lz_key == null ? local.services_roles_deferred[each.value.object_id_resource_type][var.current_landingzone_key][each.value.object_id_key_resource].rbac_id : local.services_roles_deferred[each.value.object_id_resource_type][each.value.object_id_lz_key][each.value.object_id_key_resource].rbac_id
+  role_definition_id   = each.value.mode == "custom_role_mapping" ? try(module.custom_roles[each.value.role_definition_name].role_definition_resource_id, local.combined_objects_custom_roles[each.value.role_lz_key][each.value.role_definition_name].role_definition_resource_id) : null
   role_definition_name = each.value.mode == "built_in_role_mapping" ? each.value.role_definition_name : null
   scope                = each.value.scope_lz_key == null ? local.services_roles_deferred[each.value.scope_resource_key][var.current_landingzone_key][each.value.scope_key_resource].id : local.services_roles_deferred[each.value.scope_resource_key][each.value.scope_lz_key][each.value.scope_key_resource].id
 }
@@ -160,11 +160,11 @@ locals {
     purview_accounts                           = local.combined_objects_purview_accounts
     recovery_vaults                            = local.combined_objects_recovery_vaults
     resource_groups                            = local.combined_objects_resource_groups
-    route_tables                               = local.combined_objects_route_tables
-    servicebus_namespaces                      = local.combined_objects_servicebus_namespaces
+    shared_image_galleries                     = local.combined_objects_shared_image_galleries
     storage_accounts                           = local.combined_objects_storage_accounts
     subscriptions                              = local.combined_objects_subscriptions
     synapse_workspaces                         = local.combined_objects_synapse_workspaces
+    virtual_machine_scale_sets                 = local.combined_objects_virtual_machine_scale_sets
     virtual_subnets                            = local.combined_objects_virtual_subnets
     virtual_machine_scale_sets                 = local.combined_objects_virtual_machine_scale_sets
     wvd_application_groups                     = local.combined_objects_wvd_application_groups
