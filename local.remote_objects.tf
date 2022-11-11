@@ -71,6 +71,7 @@ locals {
     log_analytics                                  = try(local.combined_objects_log_analytics, null)
     logic_app_integration_account                  = try(local.combined_objects_logic_app_integration_account, null)
     logic_app_workflow                             = try(local.combined_objects_logic_app_workflow, null)
+    logic_app_standard                             = try(local.combined_objects_logic_app_standard, null)
     machine_learning                               = try(local.combined_objects_machine_learning, null)
     managed_identities                             = try(local.combined_objects_managed_identities, null)
     monitor_action_groups                          = try(local.combined_objects_monitor_action_groups, null)
