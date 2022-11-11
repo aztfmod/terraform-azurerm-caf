@@ -13,9 +13,11 @@ module "private_endpoint" {
     try(var.virtual_subnets[var.client_config.landingzone_key][each.value.subnet_key].id, null),
     try(var.virtual_subnets[each.value.lz_key][each.value.subnet_key].id, null)
   )
-  settings        = each.value
-  global_settings = var.global_settings
-  base_tags       = var.base_tags
-  private_dns     = var.private_dns
-  client_config   = var.client_config
+  
+  settings            = each.value
+  global_settings     = var.global_settings
+  base_tags           = var.base_tags
+  private_dns         = var.private_dns
+  client_config       = var.client_config
+
 }
