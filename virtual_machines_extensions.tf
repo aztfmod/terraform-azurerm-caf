@@ -140,3 +140,33 @@ module "vm_extension_linux_diagnostic" {
     diagnostic_storage_account       = local.combined_objects_diagnostic_storage_accounts[try(each.value.storage_account.lz_key, local.client_config.landingzone_key)][each.value.virtual_machine_extensions.linux_diagnostic.diagnostic_storage_account_key]
   }
 }
+
+module "vm_extension_azure_monitor_agent" {
+  source = "./modules/compute/virtual_machine_extensions"
+
+  for_each = {
+    for key, value in try(local.compute.virtual_machines, {}) : key => value
+    if try(value.virtual_machine_extensions.azure_monitor_agent, null) != null
+  }
+
+  client_config            = local.client_config
+  virtual_machine_id       = module.virtual_machines[each.key].id
+  virtual_machine_os_type  = module.virtual_machines[each.key].os_type
+  extension                = each.value.virtual_machine_extensions.azure_monitor_agent
+  extension_name           = "azure_monitor_agent"
+}
+
+module "vm_extension_dependency_agent" {
+  source = "./modules/compute/virtual_machine_extensions"
+
+  for_each = {
+    for key, value in try(local.compute.virtual_machines, {}) : key => value
+    if try(value.virtual_machine_extensions.dependency_agent, null) != null
+  }
+
+  client_config           = local.client_config
+  virtual_machine_id      = module.virtual_machines[each.key].id
+  virtual_machine_os_type = module.virtual_machines[each.key].os_type
+  extension               = each.value.virtual_machine_extensions.dependency_agent
+  extension_name          = "dependency_agent"
+}
