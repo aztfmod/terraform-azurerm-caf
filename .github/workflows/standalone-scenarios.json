@@ -67,6 +67,8 @@
     "compute/virtual_machine/214-vm-generic_extensions_complex",
     "compute/virtual_machine/215-vm-keyvault-for-windows-extension",
     "compute/virtual_machine/216-vm-linux_diagnostic_extensions",
+    "compute/virtual_machine/217-vm-linux-dependency-agent-extension",
+    "compute/virtual-machine/218-vm-linux-azure-monitor-agent-extension",
     "cosmos_db/100-simple-cosmos-db-cassandra",
     "cosmos_db/100-simple-cosmos-db-gremlin",
     "cosmos_db/100-simple-cosmos-db-mongo",
