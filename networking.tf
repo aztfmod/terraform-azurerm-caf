@@ -79,6 +79,7 @@ module "virtual_subnets" {
 
 }
 
+# Covers subnets defined via the standalone 'virtual_subnets' block
 resource "azurerm_subnet_route_table_association" "rt" {
   for_each = {
     for key, subnet in local.networking.virtual_subnets : key => subnet
@@ -86,6 +87,17 @@ resource "azurerm_subnet_route_table_association" "rt" {
   }
 
   subnet_id      = lookup(module.virtual_subnets, each.key, null).id
+  route_table_id = module.route_tables[each.value.route_table_key].id
+}
+
+# Covers subnets defined as part of a vnet block
+resource "azurerm_subnet_route_table_association" "rt_nested" {
+  for_each = {
+    for key, subnet in merge(lookup(local.networking.vnets, "subnets", {}), lookup(local.networking.vnets, "specialsubnets", {})) : key => subnet
+    if try(subnet.route_table_key, null) != null
+  }
+
+  subnet_id      = coalesce(lookup(module.networking.subnets, each.key, null), lookup(module.networking.special_subnets, each.key, null)).id
   route_table_id = module.route_tables[each.value.route_table_key].id
 }
 
