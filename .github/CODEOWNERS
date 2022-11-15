@@ -1,0 +1,22 @@
+# All files code reviewers
+*       @Platform-Engineering-Services/terraform-code-managers
+
+# Readme file update approvers
+*.md    @Platform-Engineering-Services/terraform-doc-managers
+
+# Documentation approvers
+docs/*  @Platform-Engineering-Services/terraform-doc-managers
+
+#.github owners
+.github/*       @Platform-Engineering-Services/terraform-code-managers
+
+# Configuration approvers
+group_vars/*    @Platform-Engineering-Services/terraform-change-managers
+host_vars/*     @Platform-Engineering-Services/terraform-change-managers
+
+#Custom terraform module approvers
+library/*       @Platform-Engineering-Services/terraform-custom-managers
+
+#Playbook Owners
+*.yaml  @Platform-Engineering-Services/terraform-playbook-managers
+*.yml   @Platform-Engineering-Services/terraform-playbook-managers
