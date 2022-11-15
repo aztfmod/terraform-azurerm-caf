@@ -45,9 +45,12 @@ resource "azurerm_virtual_network_gateway" "vngw" {
       radius_server_address = try(vpn_client_configuration.value.radius_server_address, null)
       radius_server_secret  = try(vpn_client_configuration.value.radius_server_secret, null)
 
-      root_certificate {
-        name             = vpn_client_configuration.value.root_certificate.name
-        public_cert_data = vpn_client_configuration.value.root_certificate.public_cert_data
+      dynamic "root_certificate" {
+        for_each = try(vpn_client_configuration.value.root_certificate, {})
+        content {
+          name             = vpn_client_configuration.value.root_certificate.name
+          public_cert_data = vpn_client_configuration.value.root_certificate.public_cert_data
+        }
       }
       dynamic "revoked_certificate" {
         for_each = try(vpn_client_configuration.value.revoked_certificate, {})
