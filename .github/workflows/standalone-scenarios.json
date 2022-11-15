@@ -70,6 +70,7 @@
     "cosmos_db/100-simple-cosmos-db-mongo",
     "cosmos_db/100-simple-cosmos-db-sql",
     "cosmos_db/100-simple-cosmos-db-table",
+    "cosmos_db/100-cosmos-db-sql-role-mapping",
     "cosmos_db/101-decomposed-cosmosdb-sql",
     "cosmos_db/101-private-endpoint-cosmos-db",
     "data_explorer/101-kusto_clusters_basic",
