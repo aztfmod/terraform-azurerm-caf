@@ -1,0 +1,122 @@
+{
+  "$schema": "https://schema.management.azure.com/schemas/2019-04-01/deploymentTemplate.json",
+  "contentVersion": "1.0.0.0",
+  "parameters": {
+    "dnsZoneId": {
+      "type": "string",
+      "defaultValue": "${dnsZoneId}"
+    },
+    "targetDnsType": {
+      "type": "string",
+      "defaultValue": "${targetDnsType}"
+    },
+    "dnsType": {
+      "type": "string",
+      "defaultValue": "${dnsType}"
+    }
+  },
+  "variables": {
+    "empty": []
+  },
+  "resources": [
+    {
+      "type": "Microsoft.DomainRegistration/domains",
+      "apiVersion": "2019-08-01",
+      "name": "${name}",
+      "location": "global",
+      "properties": {
+        "consent": {
+          "agreementKeys": [
+            "${consent.agreementKeys[0]}",
+            "${consent.agreementKeys[1]}"
+          ],
+          "agreedAt": "${consent.agreedAt}",
+          "agreedBy": "${consent.agreedBy}"
+        },
+        "privacy": "${privacy}",
+        "autoRenew": "${autoRenew}",
+        "targetDnsType": "[if(empty(parameters('targetDnsType')), variables('empty'), parameters('targetDnsType'))]",
+        "dnsType": "[if(empty(parameters('dnsType')), variables('empty'), parameters('dnsType'))]",
+        "dnsZoneId": "[if(empty(parameters('dnsZoneId')), variables('empty'), parameters('dnsZoneId'))]",
+        "contactAdmin": {
+          "addressMailing": {
+            "address1": "${contactAdmin.address1}",
+            "address2": "${contactAdmin.address2}",
+            "city": "${contactAdmin.city}",
+            "country": "${contactAdmin.country}",
+            "postalCode": "${contactAdmin.postalCode}",
+            "state": "${contactAdmin.state}"
+          },
+          "email": "${contactAdmin.email}",
+          "fax": "${contactAdmin.fax}",
+          "jobTitle": "${contactAdmin.jobTitle}",
+          "nameFirst": "${contactAdmin.nameFirst}",
+          "nameLast": "${contactAdmin.nameLast}",
+          "nameMiddle": "${contactAdmin.nameMiddle}",
+          "organization": "${contactAdmin.organization}",
+          "phone": "${contactAdmin.phone}"
+        },
+        "contactBilling": {
+          "addressMailing": {
+            "address1": "${contactBilling.address1}",
+            "address2": "${contactBilling.address2}",
+            "city": "${contactBilling.city}",
+            "country": "${contactBilling.country}",
+            "postalCode": "${contactBilling.postalCode}",
+            "state": "${contactBilling.state}"
+          },
+          "email": "${contactBilling.email}",
+          "fax": "${contactBilling.fax}",
+          "jobTitle": "${contactBilling.jobTitle}",
+          "nameFirst": "${contactBilling.nameFirst}",
+          "nameLast": "${contactBilling.nameLast}",
+          "nameMiddle": "${contactBilling.nameMiddle}",
+          "organization": "${contactBilling.organization}",
+          "phone": "${contactBilling.phone}"
+        },
+        "contactRegistrant": {
+          "addressMailing": {
+            "address1": "${contactRegistrant.address1}",
+            "address2": "${contactRegistrant.address2}",
+            "city": "${contactRegistrant.city}",
+            "country": "${contactRegistrant.country}",
+            "postalCode": "${contactRegistrant.postalCode}",
+            "state": "${contactRegistrant.state}"
+          },
+          "email": "${contactRegistrant.email}",
+          "fax": "${contactRegistrant.fax}",
+          "jobTitle": "${contactRegistrant.jobTitle}",
+          "nameFirst": "${contactRegistrant.nameFirst}",
+          "nameLast": "${contactRegistrant.nameLast}",
+          "nameMiddle": "${contactRegistrant.nameMiddle}",
+          "organization": "${contactRegistrant.organization}",
+          "phone": "${contactRegistrant.phone}"
+        },
+        "contactTech": {
+          "addressMailing": {
+            "address1": "${contactTechnical.address1}",
+            "address2": "${contactTechnical.address2}",
+            "city": "${contactTechnical.city}",
+            "country": "${contactTechnical.country}",
+            "postalCode": "${contactTechnical.postalCode}",
+            "state": "${contactTechnical.state}"
+          },
+          "email": "${contactTechnical.email}",
+          "fax": "${contactTechnical.fax}",
+          "jobTitle": "${contactTechnical.jobTitle}",
+          "nameFirst": "${contactTechnical.nameFirst}",
+          "nameLast": "${contactTechnical.nameLast}",
+          "nameMiddle": "${contactTechnical.nameMiddle}",
+          "organization": "${contactTechnical.organization}",
+          "phone": "${contactTechnical.phone}"
+        }
+      }
+    }
+  ],
+  "outputs": {
+    "id": {
+    "type": "string",
+    "value": "[resourceId('Microsoft.DomainRegistration/domains', '${name}')]"
+    }
+  }
+}

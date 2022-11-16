@@ -1,0 +1,42 @@
+{
+    "name": "Azure CAF module",
+
+    // Update the 'dockerComposeFile' list if you have more compose files or use different names.
+    "dockerComposeFile": "docker-compose.yml",
+
+    // The 'service' property is the name of the service for the container that VS Code should
+    // use. Update this value and .devcontainer/docker-compose.yml to the real service name.
+    "service": "rover",
+
+    // Container user to use in VSCode Online and GitHub Codespaces
+    "remoteUser": "vscode",
+
+    // The optional 'workspaceFolder' property is the path VS Code should open by default when
+    // connected. This is typically a volume mount in .devcontainer/docker-compose.yml
+    "workspaceFolder": "/tf/caf",
+
+    // Use 'settings' to set *default* container specific settings.json values on container create.
+    // You can edit these settings after create using File > Preferences > Settings > Remote.
+    "settings": {
+        "files.eol": "\n",
+        "editor.tabSize": 2,
+        "terminal.integrated.scrollback": 32000,
+    },
+
+    // Uncomment the next line if you want start specific services in your Docker Compose config.
+    // "runServices": [],
+
+    // Uncomment this like if you want to keep your containers running after VS Code shuts down.
+    // "shutdownAction": "none",
+
+    // Uncomment the next line to run commands after the container is created.
+    "postCreateCommand": "sudo cp -R /tmp/.ssh-localhost/* ~/.ssh && sudo chown -R $(whoami):$(whoami) /tf/caf ~/.ssh && sudo chmod 400 ~/.ssh/* && git config --global core.editor vi && pre-commit install && pre-commit autoupdate",
+
+    // Add the IDs of extensions you want installed when the container is created in the array below.
+    "extensions": [
+        "hashicorp.terraform",
+        "mutantdino.resourcemonitor",
+        "ms-azure-devops.azure-pipelines",
+        "omartawfik.github-actions-vscode"
+    ]
+}

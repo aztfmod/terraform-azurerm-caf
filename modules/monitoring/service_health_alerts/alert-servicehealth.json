@@ -1,0 +1,66 @@
+{
+    "$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#",
+    "contentVersion": "1.0.0.0",
+    "parameters": {
+        "actionGroups_name": {
+            "type": "String"
+        },
+
+        "name": {
+          "type": "String"
+        },
+
+        "region" : {
+            "type": "String"
+        }
+
+    },
+    "variables": {
+        "alertScope":"[concat('/','subscriptions','/',subscription().subscriptionId)]",
+        "region": "[split(parameters('region'),',')]"
+    },
+
+    "resources": [
+
+           {
+            "comments": "Service Health Activity Log Alert",
+            "type": "microsoft.insights/activityLogAlerts",
+            "name": "[parameters('name')]",
+            "apiVersion": "2017-04-01",
+            "location": "Global",
+            "tags": {},
+            "scale": null,
+            "properties": {
+                "scopes": [
+                    "[variables('alertScope')]"
+                ],
+                "condition": {
+                    "allOf": [
+                        {
+                            "field": "category",
+                            "equals": "ServiceHealth",
+                            "containsAny": null
+                        },
+
+                        {
+                            "field": "properties.impactedServices[*].ImpactedRegions[*].RegionName",
+                            "equals": null,
+                            "containsAny": "[variables('region')]"
+                        }
+                    ]
+                },
+                "actions": {
+                    "actionGroups": [
+                        {
+                            "actionGroupId": "[resourceId('microsoft.insights/actionGroups', parameters('actionGroups_name'))]",
+                            "webhookProperties": {}
+                        }
+                    ]
+                },
+                "enabled": true,
+                "description": ""
+            }
+
+        }
+    ]
+}

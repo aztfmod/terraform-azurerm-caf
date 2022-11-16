@@ -1,0 +1,28 @@
+{
+  "$schema": "https://schema.management.azure.com/schemas/2019-04-01/deploymentTemplate.json#",
+  "contentVersion": "1.0.0.0",
+  "parameters": {
+    "name": {
+      "type": "String"
+    },
+    "labels": {
+      "type": "Array"
+    },
+    "routes": {
+      "type": "Array"
+    }
+  },
+  "variables": {},
+  "resources": [
+    {
+      "name": "[parameters('name')]",
+      "type": "Microsoft.Network/virtualHubs/hubRouteTables",
+      "apiVersion": "2020-07-01",
+      "properties": {
+        "routes": "[parameters('routes')]",
+        "labels": "[parameters('labels')]"
+      }
+    }
+  ],
+  "outputs": {}
+}

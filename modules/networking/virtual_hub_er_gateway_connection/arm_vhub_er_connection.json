@@ -1,0 +1,52 @@
+{
+  "$schema": "https://schema.management.azure.com/schemas/2019-04-01/deploymentTemplate.json#",
+  "contentVersion": "1.0.0.0",
+  "parameters": {
+    "authorization_key": {
+      "type": "String"
+    },
+    "enable_internet_security": {
+      "type": "Bool"
+    },
+    "express_route_circuit_peering_id": {
+      "type": "String"
+    },
+    "resource_name": {
+      "type": "String"
+    },
+    "associatedRouteTable": {
+      "type": "Object"
+    },
+    "propagatedRouteTables": {
+      "type": "Object"
+    },
+    "vnetRoutes": {
+      "type": "Object"
+    },
+    "routing_weight": {
+      "type": "Int"
+    }
+  },
+  "variables": {},
+  "resources": [
+    {
+      "name": "[parameters('resource_name')]",
+      "type": "Microsoft.Network/expressRouteGateways/expressRouteConnections",
+      "apiVersion": "2021-02-01",
+      "properties": {
+        "expressRouteCircuitPeering": {
+          "id": "[parameters('express_route_circuit_peering_id')]"
+        },
+        "authorizationKey": "[parameters('authorization_key')]",
+        "routingWeight": "[parameters('routing_weight')]",
+        "enableInternetSecurity": "[parameters('enable_internet_security')]",
+        "routingConfiguration": {
+          "associatedRouteTable": "[parameters('associatedRouteTable')]",
+          "propagatedRouteTables": "[parameters('propagatedRouteTables')]",
+          "vnetRoutes": "[parameters('vnetRoutes')]"
+        }
+      }
+    }
+  ],
+  "outputs": {}
+}

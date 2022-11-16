@@ -1,0 +1,53 @@
+{
+  "$schema": "https://schema.management.azure.com/schemas/2019-04-01/deploymentTemplate.json#",
+  "contentVersion": "1.0.0.0",
+  "parameters": {
+    "serverName": {
+      "type": "string"
+    },
+    "dbName": {
+      "type": "string"
+    },
+    "weeklyRetention": {
+        "type": "string",
+        "defaultValue": "",
+        "metadata": {
+            "description": "The weekly retention policy for an LTR backup in an ISO 8601 format."
+        }
+    },
+    "monthlyRetention": {
+        "type": "string",
+        "defaultValue": "",
+        "metadata": {
+            "description": "The monthly retention policy for an LTR backup in an ISO 8601 format."
+        }
+    },
+    "yearlyRetention": {
+        "type": "string",
+        "defaultValue": "",
+        "metadata": {
+            "description": "The yearly retention policy for an LTR backup in an ISO 8601 format."
+        }
+    },
+    "weekOfYear": {
+        "type": "int",
+        "defaultValue": 0,
+        "metadata": {
+            "description": "The week of year to take the yearly backup in an ISO 8601 format."
+        }
+    }
+  },
+  "resources": [
+    {
+        "type": "Microsoft.Sql/managedInstances/databases/backupLongTermRetentionPolicies",
+        "apiVersion": "2018-06-01-preview",
+        "name": "[concat(parameters('serverName'), '/', parameters('dbName'), '/default')]",
+        "properties": {
+            "weeklyRetention": "[if(equals(parameters('weeklyRetention'), ''), json('null'), parameters('weeklyRetention'))]",
+            "monthlyRetention": "[if(equals(parameters('monthlyRetention'), ''), json('null'), parameters('monthlyRetention'))]",
+            "yearlyRetention": "[if(equals(parameters('yearlyRetention'), ''), json('null'), parameters('yearlyRetention'))]",
+            "weekOfYear": "[if(equals(parameters('weekOfYear'), 0), json('null'), parameters('weekOfYear'))]"
+        }
+    }
+  ]
+}

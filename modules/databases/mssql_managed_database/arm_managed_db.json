@@ -1,0 +1,101 @@
+{
+  "$schema": "https://schema.management.azure.com/schemas/2019-04-01/deploymentTemplate.json#",
+  "contentVersion": "1.0.0.0",
+  "parameters": {
+    "serverName": {
+      "type": "string"
+    },
+    "dbName": {
+      "type": "string"
+    },
+    "location": {
+        "type": "string",
+        "defaultValue": "[resourceGroup().location]",
+        "metadata": {
+            "description": "The location of the Managed Instance. Default is the location of the selected resource group."
+        }
+    },
+    "collation": {
+        "type": "string",
+        "defaultValue": "SQL_Latin1_General_CP1_CI_AS",
+        "metadata": {
+            "description": "Collation of the Managed DB."
+        }
+    },
+    "createMode": {
+        "type": "string",
+        "defaultValue": "Default",
+        "metadata": {
+            "description": "Managed DB Creation Mode."
+        }
+    },
+    "sourceDatabaseId": {
+        "type": "string",
+        "defaultValue": "",
+        "metadata": {
+            "description": "(createMode: PointInTimeRestore)The resource identifier of the source database associated with create operation of this database."
+        }
+    },
+    "restorePointInTime": {
+        "type": "string",
+        "defaultValue": "",
+        "metadata": {
+            "description": "(createMode: PointInTimeRestore) Specifies the point in time (ISO8601 format) of the source database that will be restored to create the new database."
+        }
+    },
+    "longTermRetentionBackupResourceId": {
+        "type": "string",
+        "defaultValue": "",
+        "metadata": {
+            "description": "(createMode: RestoreLongTermRetentionBackup)The name of the Long Term Retention backup to be used for restore of this managed database."
+        }
+    },
+    "retentionDays": {
+        "type": "int",
+        "defaultValue": 7,
+        "metadata": {
+            "description": "The backup retention period in days."
+        }
+    },
+    "tags": {
+        "type": "object",
+        "defaultValue": {},
+        "metadata": {
+            "description": "Resource tags to associate with the instance."
+        }
+    }
+  },
+  "resources": [
+    {
+      "name": "[concat(parameters('serverName'), '/', parameters('dbName'))]",
+      "type": "Microsoft.Sql/managedInstances/databases",
+      "apiVersion": "2020-02-02-preview",
+      "location": "[parameters('location')]",
+      "tags": "[parameters('tags')]",
+      "properties": {
+        "collation": "[parameters('collation')]",
+        "createMode": "[parameters('createMode')]",
+        "sourceDatabaseId": "[if(equals(parameters('sourceDatabaseId'), ''), json('null'), parameters('sourceDatabaseId'))]",
+        "longTermRetentionBackupResourceId": "[if(equals(parameters('longTermRetentionBackupResourceId'), ''), json('null'), parameters('longTermRetentionBackupResourceId'))]",
+        "restorePointInTime": "[if(equals(parameters('restorePointInTime'), ''), json('null'), parameters('restorePointInTime'))]"
+      }
+    },
+    {
+        "type": "Microsoft.Sql/managedInstances/databases/backupShortTermRetentionPolicies",
+        "apiVersion": "2017-03-01-preview",
+        "name": "[concat(parameters('serverName'), '/', parameters('dbName'), '/default')]",
+        "dependsOn": [
+            "[resourceId('Microsoft.Sql/managedInstances/databases', parameters('serverName'), parameters('dbName'))]"
+        ],
+        "properties": {
+            "retentionDays": "[parameters('retentionDays')]"
+        }
+    }
+  ],
+  "outputs": {
+      "id": {
+          "type": "string",
+          "value": "[resourceId('Microsoft.Sql/managedInstances/databases', parameters('serverName'), parameters('dbName'))]"
+      }
+  }
+}

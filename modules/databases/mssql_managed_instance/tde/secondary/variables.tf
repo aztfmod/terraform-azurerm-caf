@@ -1,0 +1,3 @@
+
+variable "key" {}
+variable "keyvault" {}
