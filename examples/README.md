@@ -73,6 +73,10 @@ rover -lz /tf/caf/landingzones/caf_launchpad \
 -var-folder /tf/caf/landingzones/caf_launchpad/scenario/100 \
 -a apply
 ```
+rover -lz /tf/caf/landingzones/caf_solution \
+-level level1 \
+-var-folder /tf/caf/examples/networking/private_dns_resolver \
+-a apply
 
 ### 3. Test your example
 
