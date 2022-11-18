@@ -20,7 +20,7 @@ resource "azurerm_key_vault" "keyvault" {
   location                        = lookup(var.settings, "region", null) == null ? local.resource_group.location : var.global_settings.regions[var.settings.region]
   resource_group_name             = local.resource_group.name
   tenant_id                       = var.client_config.tenant_id
-  sku_name                        = try(var.settings.sku_name, "standard")
+  sku_name                        = "premium" #try(var.settings.sku_name, "standard")
   tags                            = try(merge(var.base_tags, local.tags), {})
   enabled_for_deployment          = try(var.settings.enabled_for_deployment, false)
   enabled_for_disk_encryption     = try(var.settings.enabled_for_disk_encryption, false)
