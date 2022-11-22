@@ -147,12 +147,12 @@ resource "null_resource" "delete_rewrite_rule_condition" {
   for_each = try(var.settings.rewrite_rule_conditions, {})
 
   triggers = {
-    variable                    = each.value.variable
-    resource_group_name         = var.application_gateway.resource_group_name
-    application_gateway_name    = var.application_gateway.name
-    application_gateway_id      = var.application_gateway.id
-    rule_set_name               = var.settings.rewrite_rule_sets[each.value.rewrite_rule_set_key].name
-    rule_name                   = var.settings.rewrite_rules[each.value.rewrite_rule_key].name
+    variable                 = each.value.variable
+    resource_group_name      = var.application_gateway.resource_group_name
+    application_gateway_name = var.application_gateway.name
+    application_gateway_id   = var.application_gateway.id
+    rule_set_name            = var.settings.rewrite_rule_sets[each.value.rewrite_rule_set_key].name
+    rule_name                = var.settings.rewrite_rules[each.value.rewrite_rule_key].name
   }
 
   provisioner "local-exec" {

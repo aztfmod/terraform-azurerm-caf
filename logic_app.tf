@@ -134,3 +134,29 @@ module "logic_app_workflow" {
 output "logic_app_workflow" {
   value = module.logic_app_workflow
 }
+
+module "logic_app_standard" {
+  source = "./modules/logic_app/standard"
+
+  for_each = local.logic_app.logic_app_standard
+
+  global_settings   = local.global_settings
+  client_config     = local.client_config
+  settings          = each.value
+  resource_groups   = local.combined_objects_resource_groups
+  storage_accounts  = local.combined_objects_storage_accounts
+  app_service_plans = local.combined_objects_app_service_plans
+  app_settings      = try(each.value.app_settings, null)
+  subnets           = local.combined_objects_networking
+  identity          = try(each.value.identity, null)
+  private_endpoints = try(each.value.private_endpoints, {})
+  private_dns       = local.combined_objects_private_dns
+  vnets             = local.combined_objects_networking
+  virtual_subnets   = local.combined_objects_virtual_subnets
+  base_tags         = try(local.global_settings.inherit_tags, false) ? local.resource_groups[each.value.resource_group_key].tags : {}
+  vnet_integration  = try(each.value.vnet_integration, {})
+}
+
+output "logic_app_standard" {
+  value = module.logic_app_standard
+}
