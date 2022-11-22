@@ -180,10 +180,10 @@ lb_rule = {
         key = "lbap1"
       }
     }
-    name                           = "LBRule"
+    name                           = "LBRule1"
     protocol                       = "Tcp"
-    frontend_port                  = 3389
-    backend_port                   = 3389
+    frontend_port                  = 3390
+    backend_port                   = 3390
     frontend_ip_configuration_name = "PublicIPAddress"
     disable_outbound_snat          = true
   }
