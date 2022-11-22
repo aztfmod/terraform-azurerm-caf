@@ -165,4 +165,26 @@ lb_rule = {
     frontend_ip_configuration_name = "PublicIPAddress"
     disable_outbound_snat          = true
   }
+  lbr2 = {
+    resource_group = {
+      key = "rg1"
+    }
+    loadbalancer = {
+      key = "lb1"
+    }
+    probe = {
+      key = "lbp1"
+    }
+    backend_address_pool = {
+      lbap1 = {
+        key = "lbap1"
+      }
+    }
+    name                           = "LBRule"
+    protocol                       = "Tcp"
+    frontend_port                  = 3389
+    backend_port                   = 3389
+    frontend_ip_configuration_name = "PublicIPAddress"
+    disable_outbound_snat          = true
+  }
 }
