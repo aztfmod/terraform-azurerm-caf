@@ -28,4 +28,5 @@ resource "azurerm_monitor_private_link_scoped_service" "mplss" {
   resource_group_name = var.resource_group_name
   scope_name          = azurerm_monitor_private_link_scope.mpls.name
   linked_resource_id  = var.linked_resource_id
+  depends_on          = [module.private_endpoint]
 }
