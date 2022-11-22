@@ -105,6 +105,7 @@
     "databricks/102-premium-databricks-vnet-private-endpoint",
     "datalake/101-datalake-storage",
     "diagnostics_profiles/100-multiple-destinations",
+    "diagnostics_profiles/101-log-analytics-destination-type-profile",
     "diagnostics_profiles/200-diagnostics-eventhub-namespaces",
     "diagnostics_profiles/201-multi-eventhub-diagnostics",
     "digital_twins/100-basic",
