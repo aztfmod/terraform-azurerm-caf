@@ -50,7 +50,7 @@ aro_clusters = {
       #}
       version = "4.10.20"
       resource_group = {
-        # cant be an existing RG, you can specify the name of the RG to create with id="" or just a name="" 
+        # cant be an existing RG, you can specify the name of the RG to create with id="" or just a name=""
         # id = "resource_group_id"
         name = "aro-res"
       }

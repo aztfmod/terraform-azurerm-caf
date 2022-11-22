@@ -26,4 +26,3 @@ resource "azurerm_traffic_manager_external_endpoint" "external_endpoint" {
     }
   }
 }
-  
