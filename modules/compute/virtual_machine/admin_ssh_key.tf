@@ -1,7 +1,7 @@
 
 #
 # SSH keys to be stored in KV only if public_key_pem_file is not set
-# Keyvault has to be in the same subscription as the VM when local.create_sshkeys is true 
+# Keyvault has to be in the same subscription as the VM when local.create_sshkeys is true
 #
 
 locals {

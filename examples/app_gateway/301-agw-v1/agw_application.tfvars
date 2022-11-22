@@ -53,13 +53,13 @@ application_gateway_applications_v1 = {
 
     request_routing_rules = {
       default = {
-        name              = "default_demo_app1"
-        rule_type         = "PathBasedRouting"
-        http_listener_key = "public"
-        backend_pool_key  = "demo"
-        http_settings_key = "demo"
-        url_path_map_key  = "demo"
-        priority          = "10000"
+        name                 = "default_demo_app1"
+        rule_type            = "PathBasedRouting"
+        http_listener_key    = "public"
+        backend_pool_key     = "demo"
+        http_settings_key    = "demo"
+        url_path_map_key     = "demo"
+        priority             = "10000"
         rewrite_rule_set_key = "rrs1"
       }
     }
@@ -83,11 +83,11 @@ application_gateway_applications_v1 = {
 
     url_path_maps = {
       demo = {
-        name              = "test_path_map"
-        paths             = "/test/*"
-        rule_name         = "test_path_rule"
-        backend_pool_key  = "demo"
-        http_settings_key = "demo"
+        name                 = "test_path_map"
+        paths                = "/test/*"
+        rule_name            = "test_path_rule"
+        backend_pool_key     = "demo"
+        http_settings_key    = "demo"
         rewrite_rule_set_key = "rrs1"
       }
     }
@@ -129,21 +129,21 @@ application_gateway_applications_v1 = {
 
     rewrite_rules = {
       rr1 = {
-        name = "test_rr"
+        name                 = "test_rr"
         rewrite_rule_set_key = "rrs1"
-        request_headers = "Content-Type=application/json"
-        sequence = "1"
+        request_headers      = "Content-Type=application/json"
+        sequence             = "1"
       }
     }
 
     rewrite_rule_conditions = {
       rrc1 = {
         rewrite_rule_set_key = "rrs1"
-        rewrite_rule_key = "rr1"
-        variable = "http_req_Accept"
-        ignore_case = true
-        negate = true
-        pattern = "test"
+        rewrite_rule_key     = "rr1"
+        variable             = "http_req_Accept"
+        ignore_case          = true
+        negate               = true
+        pattern              = "test"
       }
     }
   }
