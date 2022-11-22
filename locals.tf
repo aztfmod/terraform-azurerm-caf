@@ -370,13 +370,14 @@ locals {
   }
 
   webapp = {
-    app_service_environments     = try(var.webapp.app_service_environments, {})
-    app_service_environments_v3  = try(var.webapp.app_service_environments_v3, {})
-    app_service_plans            = try(var.webapp.app_service_plans, {})
-    app_services                 = try(var.webapp.app_services, {})
-    azurerm_application_insights = try(var.webapp.azurerm_application_insights, {})
-    function_apps                = try(var.webapp.function_apps, {})
-    static_sites                 = try(var.webapp.static_sites, {})
+    app_service_environments              = try(var.webapp.app_service_environments, {})
+    app_service_environments_v3           = try(var.webapp.app_service_environments_v3, {})
+    app_service_plans                     = try(var.webapp.app_service_plans, {})
+    app_services                          = try(var.webapp.app_services, {})
+    azurerm_application_insights          = try(var.webapp.azurerm_application_insights, {})
+    azurerm_application_insights_web_test = try(var.webapp.azurerm_application_insights_web_test, {})
+    function_apps                         = try(var.webapp.function_apps, {})
+    static_sites                          = try(var.webapp.static_sites, {})
   }
 
   enable = {
@@ -389,7 +390,7 @@ locals {
     active_directory_domain_service_replica_set = try(var.identity.active_directory_domain_service_replica_set, {})
   }
 
-  
+
   apim = {
     api_management                      = try(var.apim.api_management, {})
     api_management_api                  = try(var.apim.api_management_api, {})
