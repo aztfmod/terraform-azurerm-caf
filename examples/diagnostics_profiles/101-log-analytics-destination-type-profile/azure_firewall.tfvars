@@ -21,7 +21,7 @@ azurerm_firewalls = {
         name             = "operational_logs"
         definition_key   = "azure_firewall"
         destination_type = "log_analytics"
-        destination_key  = "central_logs_region1"
+        destination_key  = "central_logs"
         # Here the log_analytics_destination type is set.
         log_analytics_destination_type = "Dedicated"
       }
@@ -29,7 +29,7 @@ azurerm_firewalls = {
         name             = "archive_logs"
         definition_key   = "azure_firewall"
         destination_type = "storage"
-        destination_key  = "dsa1_region1"
+        destination_key  = "central_logs"
       }
     }
   }
@@ -53,13 +53,13 @@ vnets = {
         name             = "operational_logs"
         definition_key   = "networking_all"
         destination_type = "log_analytics"
-        destination_key  = "central_logs_region1"
+        destination_key  = "central_logs"
       }
       p2 = {
         name             = "archive_logs"
         definition_key   = "networking_all"
         destination_type = "storage"
-        destination_key  = "dsa1_region1"
+        destination_key  = "central_logs"
       }
     }
   }
@@ -82,13 +82,13 @@ public_ip_addresses = {
         name             = "operational_logs"
         definition_key   = "public_ip_address"
         destination_type = "log_analytics"
-        destination_key  = "central_logs_region1"
+        destination_key  = "central_logs"
       }
       p2 = {
         name             = "archive_logs"
         definition_key   = "public_ip_address"
         destination_type = "storage"
-        destination_key  = "dsa1_region1"
+        destination_key  = "central_logs"
       }
     }
   }
