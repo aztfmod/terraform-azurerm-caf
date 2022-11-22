@@ -11,6 +11,7 @@
     "app_insights/100-all-attributes",
     "app_insights/100-simple",
     "app_insights/102-workspace-based-central-logs",
+    "app_insights/103-web-test",
     "automation/100-simple-automation-account",
     "automation/101-automation-account-linked",
     "automation/102-automation-msi",

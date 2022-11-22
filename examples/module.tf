@@ -294,13 +294,14 @@ module "example" {
 
   }
   webapp = {
-    azurerm_application_insights = var.azurerm_application_insights
-    app_service_environments     = var.app_service_environments
-    app_service_environments_v3  = var.app_service_environments_v3
-    app_service_plans            = var.app_service_plans
-    app_services                 = var.app_services
-    function_apps                = var.function_apps
-    static_sites                 = var.static_sites
+    azurerm_application_insights          = var.azurerm_application_insights
+    azurerm_application_insights_web_test = var.azurerm_application_insights_web_test
+    app_service_environments              = var.app_service_environments
+    app_service_environments_v3           = var.app_service_environments_v3
+    app_service_plans                     = var.app_service_plans
+    app_services                          = var.app_services
+    function_apps                         = var.function_apps
+    static_sites                          = var.static_sites
   }
   data_factory = {
     data_factory                                 = var.data_factory
@@ -375,6 +376,5 @@ module "example" {
     digital_twins_endpoint_eventhubs    = var.digital_twins_endpoint_eventhubs
     digital_twins_endpoint_eventgrids   = var.digital_twins_endpoint_eventgrids
     digital_twins_endpoint_servicebuses = var.digital_twins_endpoint_servicebuses
-
   }
 }
