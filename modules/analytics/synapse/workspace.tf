@@ -58,8 +58,8 @@ resource "azurerm_synapse_workspace" "ws" {
 
     content {
       account_name    = var.settings.github_repo.account_name
-      branch_name     = var.settings.github_repo.project_name
-      repository_name = var.settings.github_repo.branch_name
+      branch_name     = var.settings.github_repo.branch_name
+      repository_name = var.settings.github_repo.repository_name
       root_folder     = var.settings.github_repo.root_folder
       git_url         = var.settings.github_repo.git_url
     }
