@@ -14,7 +14,7 @@ resource "azurerm_postgresql_flexible_server" "postgresql" {
   location            = var.location
   version             = try(var.settings.version, null)
   sku_name            = try(var.settings.sku_name, null)
-  zone                = try(var.settings.zone, null)
+  zone                = try(var.settings.zone, 1)
   storage_mb          = try(var.settings.storage_mb, null)
 
   delegated_subnet_id = var.remote_objects.subnet_id
@@ -39,14 +39,14 @@ resource "azurerm_postgresql_flexible_server" "postgresql" {
     }
   }
 
-  dynamic "high_availability" {
-    for_each = try(var.settings.high_availability, null) == null ? [] : [var.settings.high_availability]
+  # dynamic "high_availability" {
+  #   for_each = try(var.settings.high_availability, null) == null ? [] : [var.settings.high_availability]
 
-    content {
-      mode                      = "ZoneRedundant"
-      standby_availability_zone = var.settings.zone == null ? null : var.settings.high_availability.standby_availability_zone
-    }
-  }
+  #   content {
+  #     mode                      = "ZoneRedundant"
+  #     standby_availability_zone = var.settings.zone == null ? null : var.settings.high_availability.standby_availability_zone
+  #   }
+  # }
 
   lifecycle {
     ignore_changes = [
