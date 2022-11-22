@@ -227,6 +227,7 @@ locals {
     logic_app_trigger_http_request  = try(var.logic_app.logic_app_trigger_http_request, {})
     logic_app_trigger_recurrence    = try(var.logic_app.logic_app_trigger_recurrence, {})
     logic_app_workflow              = try(var.logic_app.logic_app_workflow, {})
+    logic_app_standard              = try(var.logic_app.logic_app_standard, {})
   }
 
   cognitive_services = {

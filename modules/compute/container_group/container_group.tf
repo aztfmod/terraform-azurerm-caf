@@ -49,12 +49,12 @@ resource "azurerm_container_group" "acg" {
     for_each = local.combined_containers
 
     content {
-      name                         = container.value.name
-      image                        = container.value.image
-      cpu                          = container.value.cpu
-      memory                       = container.value.memory
-      environment_variables        = merge(
-        try(container.value.environment_variables, null), 
+      name   = container.value.name
+      image  = container.value.image
+      cpu    = container.value.cpu
+      memory = container.value.memory
+      environment_variables = merge(
+        try(container.value.environment_variables, null),
         try(local.environment_variables_from_resources[container.key], null),
         try(module.variables_from_command[container.key].variables, null)
       )
@@ -63,7 +63,7 @@ resource "azurerm_container_group" "acg" {
         try(module.secure_variables_from_command[container.key].variables, null)
       )
 
-      commands                     = try(container.value.commands, null)
+      commands = try(container.value.commands, null)
 
       dynamic "gpu" {
         for_each = try(container.value.gpu, null) == null ? [] : [1]

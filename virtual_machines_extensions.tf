@@ -120,3 +120,23 @@ module "keyvault_for_windows" {
   extension_name          = "keyvault_for_windows"
   keyvaults               = local.combined_objects_keyvaults
 }
+
+module "vm_extension_linux_diagnostic" {
+  source = "./modules/compute/virtual_machine_extensions"
+
+  for_each = {
+    for key, value in try(local.compute.virtual_machines, {}) : key => value
+    if try(value.virtual_machine_extensions.linux_diagnostic, null) != null
+  }
+
+  client_config      = local.client_config
+  virtual_machine_id = module.virtual_machines[each.key].id
+  extension          = each.value.virtual_machine_extensions.linux_diagnostic
+  extension_name     = "linux_diagnostic"
+
+  settings = {
+    var_folder_path            = var.var_folder_path
+    diagnostics                = local.combined_diagnostics
+    diagnostic_storage_account = local.combined_objects_diagnostic_storage_accounts[try(each.value.storage_account.lz_key, local.client_config.landingzone_key)][each.value.virtual_machine_extensions.linux_diagnostic.diagnostic_storage_account_key]
+  }
+}
