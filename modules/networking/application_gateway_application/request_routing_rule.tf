@@ -24,7 +24,7 @@ resource "null_resource" "set_request_routing_rule" {
       HTTP_SETTINGS            = try(var.settings.http_settings[each.value.http_settings_key].name, null)
       PRIORITY                 = each.value.priority
       RULE_TYPE                = try(each.value.rule_type, null)
-      REDIRECT_CONFIG          = try(each.value.redirect_config, null)  #TODO
+      REDIRECT_CONFIG          = try(each.value.redirect_config, null) #TODO
       REWRITE_RULE_SET         = try(var.settings.rewrite_rule_sets[each.value.rewrite_rule_set_key].name, null)
       URL_PATH_MAP             = try(var.settings.url_path_maps[each.value.url_path_map_key].name, null)
     }

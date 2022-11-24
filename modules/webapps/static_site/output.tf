@@ -16,7 +16,7 @@ output "api_key" {
 output "custom_domain" {
   value = {
     for key, value in try(var.custom_domains, {}) : key => {
-      id = azurerm_static_site_custom_domain.custom_domains[key].id
+      id               = azurerm_static_site_custom_domain.custom_domains[key].id
       validation_token = azurerm_static_site_custom_domain.custom_domains[key].validation_token
     }
   }

@@ -24,7 +24,7 @@ resource "azurerm_synapse_workspace" "ws" {
   tags                                 = local.tags
 
   dynamic "aad_admin" {
-    for_each = try(var.settings.aad_admin, {})
+    for_each = try(var.settings.aad_admin, {}) == {} ? [] : [1]
 
     content {
       login     = var.settings.aad_admin.login
@@ -34,13 +34,13 @@ resource "azurerm_synapse_workspace" "ws" {
   }
 
   dynamic "azure_devops_repo" {
-    for_each = try(var.settings.azure_devops_repo, {})
+    for_each = try(var.settings.azure_devops_repo, {}) == {} ? [] : [1]
 
     content {
       account_name    = var.settings.azure_devops_repo.account_name
       branch_name     = var.settings.azure_devops_repo.branch_name
       project_name    = var.settings.azure_devops_repo.project_name
-      repository_name = var.settings.azure_devops_repo.branch_name
+      repository_name = var.settings.azure_devops_repo.repository_name
       root_folder     = var.settings.azure_devops_repo.root_folder
     }
   }
@@ -54,12 +54,12 @@ resource "azurerm_synapse_workspace" "ws" {
   }
 
   dynamic "github_repo" {
-    for_each = try(var.settings.github_repo, {})
+    for_each = try(var.settings.github_repo, {}) == {} ? [] : [1]
 
     content {
       account_name    = var.settings.github_repo.account_name
-      branch_name     = var.settings.github_repo.project_name
-      repository_name = var.settings.github_repo.branch_name
+      branch_name     = var.settings.github_repo.branch_name
+      repository_name = var.settings.github_repo.repository_name
       root_folder     = var.settings.github_repo.root_folder
       git_url         = var.settings.github_repo.git_url
     }

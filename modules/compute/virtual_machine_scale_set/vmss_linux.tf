@@ -302,9 +302,9 @@ resource "azurerm_linux_virtual_machine_scale_set" "vmss_autoscaled" {
       network_security_group_id     = try(network_interface.value.network_security_group_id, null)
 
       ip_configuration {
-        name                                         = azurecaf_name.linux_nic[network_interface.key].result
-        primary                                      = try(network_interface.value.primary, false)
-        subnet_id                                    = can(network_interface.value.subnet_id) ? network_interface.value.subnet_id : coalesce(
+        name      = azurecaf_name.linux_nic[network_interface.key].result
+        primary   = try(network_interface.value.primary, false)
+        subnet_id = can(network_interface.value.subnet_id) ? network_interface.value.subnet_id : coalesce(
           try(var.vnets[try(network_interface.value.lz_key, var.client_config.landingzone_key)][network_interface.value.vnet_key].subnets[network_interface.value.subnet_key].id, null),
           try(var.virtual_subnets[try(network_interface.value.lz_key, var.client_config.landingzone_key)][network_interface.value.subnet_key].id, null)
         )
