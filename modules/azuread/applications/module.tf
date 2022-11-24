@@ -15,6 +15,30 @@ resource "azuread_application" "app" {
   group_membership_claims    = try(var.settings.group_membership_claims, "All")
   prevent_duplicate_names    = try(var.settings.prevent_duplicate_names, false)
 
+  dynamic "api" {
+    for_each = try(each.value.api, null) != null ? [1] : []
+
+    content {
+      known_client_applications      = try(api.value.known_client_applications, [])
+      mapped_claims_enabled          = try(api.value.mapped_claims_enabled, null)
+      requested_access_token_version = try(api.value.requested_access_token_version, null)
+
+      dynamic "oauth2_permission_scope" {
+        for_each = try(each.value.api.oauth2_permission_scopes, [])
+        content {
+          admin_consent_description  = oauth2_permission_scope.value.admin_consent_description
+          admin_consent_display_name = oauth2_permission_scope.value.admin_consent_display_name
+          id                         = oauth2_permission_scope.value.id
+          enabled                    = try(oauth2_permission_scope.value.enabled, null)
+          type                       = try(oauth2_permission_scope.value.type, null)
+          user_consent_description   = try(oauth2_permission_scope.value.user_consent_description, null)
+          user_consent_display_name  = try(oauth2_permission_scope.value.user_consent_display_name, null)
+          value                      = try(oauth2_permission_scope.value.value, null)
+        }
+      }
+    }
+  }
+
   dynamic "required_resource_access" {
     for_each = var.azuread_api_permissions
 
