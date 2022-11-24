@@ -12,5 +12,5 @@ before_install:
 - docker pull bridgecrew/yor
 
 script:
-- docker run -v $(pwd):/lint -w /lint ghcr.io/antonbabenko/pre-commit-terraform run -a
+- travis_wait 90 docker run -v $(pwd):/lint -w /lint ghcr.io/antonbabenko/pre-commit-terraform run -a
 - docker run --tty --volume $(pwd):/tf bridgecrew/yor tag --directory /tf
