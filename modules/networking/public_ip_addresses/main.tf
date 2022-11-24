@@ -4,3 +4,16 @@ locals {
   }
   tags = merge(var.base_tags, local.module_tag, var.tags)
 }
+
+terraform {
+  required_providers {
+    azurerm = {
+      source  = "hashicorp/azurerm"
+      version = "~> 2.63"
+    }
+    azurecaf = {
+      source = "aztfmod/azurecaf"
+    }
+  }
+
+}

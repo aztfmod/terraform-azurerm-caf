@@ -1,3 +1,11 @@
+variable "global_settings" {
+  description = "Global settings object (see module README.md)"
+}
+
+variable "settings" {
+  description = "Used for general parameter."
+}
+
 variable "name" {
   description = "(Required) Specifies the name of the Data Factory Linked Service. Changing this forces a new resource to be created. Must be globally unique"
 }
