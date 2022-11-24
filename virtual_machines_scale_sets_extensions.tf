@@ -113,3 +113,17 @@ module "vmss_extension_custom_script_data_factory_self_hosted_runtime" {
     storage_accounts                             = local.combined_objects_storage_accounts
   }
 }
+
+module "vmss_extension_generic" {
+  source = "./modules/compute/virtual_machine_scale_set_extensions"
+  for_each = {
+    for key, value in try(local.compute.virtual_machine_scale_sets, {}) : key => value
+    if try(value.virtual_machine_scale_set_extensions.generic_extensions, null) != null
+  }
+
+  client_config                     = local.client_config
+  virtual_machine_scale_set_id      = module.virtual_machine_scale_sets[each.key].id
+  virtual_machine_scale_set_os_type = module.virtual_machine_scale_sets[each.key].os_type
+  extension                         = each.value.virtual_machine_scale_set_extensions.generic_extensions
+  extension_name                    = "generic_extension"
+}
