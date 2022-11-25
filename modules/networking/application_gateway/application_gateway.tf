@@ -268,7 +268,7 @@ resource "azurerm_application_gateway" "agw" {
 
     content {
       name                = ssl_certificate.value.name
-      key_vault_secret_id = ssl_certificate.value.secret_id
+      key_vault_secret_id = ssl_certificate.value.versionless_secret_id
     }
   }
 
