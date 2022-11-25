@@ -29,14 +29,14 @@ repos:
     - id: terraform_fmt
     - id: terraform_validate
       exclude: '^[^/]+$'
+    - id: terraform_docs
+    - id: terraform_docs_without_aggregate_type_defaults
     #- id: terraform_tflint
     #- id: terraform_tfsec
     #- id: terraform_checkov
-    #- id: terraform_docs
-    #- id: terraform_docs_without_aggregate_type_defaults
     #- id: tfupdate
     #- id: infracost_breakdown
-
+    #- id: terrascan
 
 # Automatic tagging best practices - commented out since it breaks workflow of https://github.com/antonbabenko/pre-commit-terraform
 # - repo: https://github.com/bridgecrewio/yor
