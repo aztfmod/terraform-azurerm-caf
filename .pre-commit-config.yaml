@@ -7,7 +7,6 @@ repos:
 #      args: ['-l', '-i', '2', '-ci', '-sr', '-w']
 #    - id: shellcheck
 
-
 # Dockerfile linter
 # - repo: https://github.com/hadolint/hadolint
 #   rev: v2.10.0
