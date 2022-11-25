@@ -25,7 +25,7 @@ resource "azurerm_role_assignment" "for" {
   }
 
   principal_id         = each.value.object_id_resource_type == "object_ids" ? each.value.object_id_key_resource : each.value.object_id_lz_key == null ? local.services_roles[each.value.object_id_resource_type][var.current_landingzone_key][each.value.object_id_key_resource].rbac_id : local.services_roles[each.value.object_id_resource_type][each.value.object_id_lz_key][each.value.object_id_key_resource].rbac_id
-  role_definition_id   = each.value.mode == "custom_role_mapping" ? local.combined_objects_custom_roles[each.value.role_lz_key != null ? each.value.role_lz_key : var.current_landingzone_key][each.value.role_definition_name].role_definition_resource_id : null
+  role_definition_id   = each.value.mode == "custom_role_mapping" ? try(module.custom_roles[each.value.role_definition_name].role_definition_resource_id, local.combined_objects_custom_roles[each.value.role_lz_key][each.value.role_definition_name].role_definition_resource_id) : null
   role_definition_name = each.value.mode == "built_in_role_mapping" ? each.value.role_definition_name : null
   scope                = each.value.scope_lz_key == null ? local.services_roles[each.value.scope_resource_key][var.current_landingzone_key][each.value.scope_key_resource].id : local.services_roles[each.value.scope_resource_key][each.value.scope_lz_key][each.value.scope_key_resource].id
 }
