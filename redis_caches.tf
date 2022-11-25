@@ -16,6 +16,7 @@ module "redis_caches" {
   tags                = try(each.value.tags, null)
   private_endpoints   = try(each.value.private_endpoints, {})
   vnets               = local.combined_objects_networking
+  virtual_subnets     = local.combined_objects_virtual_subnets
   private_dns         = local.combined_objects_private_dns
 }
 

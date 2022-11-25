@@ -39,6 +39,9 @@ variable "diagnostics" {
 variable "vnets" {
   default = {}
 }
+variable "virtual_subnets" {
+  default = {}
+}
 variable "private_endpoints" {
   default = {}
 }
