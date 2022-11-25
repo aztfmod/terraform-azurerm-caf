@@ -9,7 +9,6 @@ services:
 before_install:
 - docker pull ghcr.io/antonbabenko/pre-commit-terraform
 - docker run --entrypoint cat ghcr.io/antonbabenko/pre-commit-terraform /usr/bin/tools_versions_info
-- docker pull bridgecrew/yor
 
 script:
 - travis_wait 90 docker run -v $(pwd):/lint -w /lint ghcr.io/antonbabenko/pre-commit-terraform run -a
