@@ -28,9 +28,7 @@ repos:
     - id: terraform_fmt
     - id: terraform_validate
       exclude: '^[^/]+$'
-    - id: terraform_docs
-      args:
-        - --hook-config=--path-to-file=README.md
+    #- id: terraform_docs
     - id: terraform_docs_without_aggregate_type_defaults
     #- id: terraform_tflint
     #- id: terraform_tfsec
