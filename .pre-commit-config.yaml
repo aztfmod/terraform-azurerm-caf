@@ -28,9 +28,13 @@ repos:
     - id: terraform_fmt
     - id: terraform_validate
       exclude: '^[^/]+$'
-    #- id: terraform_docs
+    - id: terraform_docs
+      exclude: .travis
     - id: terraform_docs_without_aggregate_type_defaults
+      exclude: .travis
     #- id: terraform_tflint
+    #  args:
+    #    - --args=--no-color
     #- id: terraform_tfsec
     #- id: terraform_checkov
     #- id: tfupdate
