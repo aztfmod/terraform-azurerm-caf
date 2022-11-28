@@ -51,6 +51,14 @@ azuread_groups_membership = {
       }
     }
   }
+  ad_group_referenced_by_id = {
+    group_id = "xxxxxxx-yyyy-zzzz-92e4-e32193379dbf"
+    managed_identities = {
+      managed_identities = {
+        keys = ["level4_provisioner"]
+      }
+    }
+  }
   # ad_group2 = { # ad group key
   #   # group_lz_key = "" # group lz_key
   #   members = {
