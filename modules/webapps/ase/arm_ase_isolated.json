@@ -1,0 +1,75 @@
+{
+    "$schema": "https://schema.management.azure.com/schemas/2019-04-01/deploymentTemplate.json#",
+    "contentVersion": "1.0.0.0",
+    "parameters": {
+        "aseName": {
+            "type": "string"
+        },
+        "location": {
+            "type": "string"
+        },
+        "kind": {
+            "type": "string"
+        },
+        "zone": {
+            "type": "string"
+        },
+        "internalLoadBalancingMode": {
+            "type": "string"
+        },
+        "subnet_id": {
+            "type": "string"
+        },
+        "subnet_name": {
+            "type": "string"
+        },
+        "aseResourceGroupName": {
+            "type": "string"
+        },
+        "frontEndSize": {
+            "type": "string",
+            "defaultValue": "Standard_D1_V2",
+            "metadata": {
+                "description": "Instance size for the front-end pool."
+            }
+        },
+        "frontEndCount": {
+            "type": "string",
+            "defaultValue": "2",
+            "metadata": {
+                "description": "Number of instances in the front-end pool.  Minimum of two."
+            }
+        },
+        "resourceTags": {
+            "type": "object"
+        }
+    },
+    "resources": [
+        {
+            "apiVersion": "2019-08-01",
+            "type": "Microsoft.Web/hostingEnvironments",
+            "name": "[parameters('aseName')]",
+            "kind": "[parameters('kind')]",
+            "location": "[parameters('location')]",
+            "zones": "[if(empty(parameters('zone')),json('null'),array(parameters('zone')))]",
+            "tags": "[parameters('resourceTags')]",
+            "properties": {
+                "name": "[parameters('aseName')]",
+                "location": "[parameters('location')]",
+                "internalLoadBalancingMode": "[parameters('internalLoadBalancingMode')]",
+                "multiSize": "[parameters('frontEndSize')]",
+                "multiRoleCount": "[parameters('frontEndCount')]",
+                "virtualNetwork": {
+                    "id": "[parameters('subnet_id')]",
+                    "subnet": "[parameters('subnet_name')]"
+                }
+            }
+        }
+    ],
+    "outputs": {
+        "id": {
+            "type": "string",
+            "value": "[resourceId(parameters('aseResourceGroupName'), 'Microsoft.Web/hostingEnvironments', parameters('aseName'))]"
+        }
+    }
+}

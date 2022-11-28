@@ -1,0 +1,36 @@
+version: ""
+
+formatter: markdown
+
+header-from: main.tf
+footer-from: ""
+
+sections:
+  hide: []
+  show: [inputs]
+
+content: ""
+
+output:
+  mode: inject
+
+output-values:
+  enabled: false
+  from: ""
+
+sort:
+  enabled: true
+  by: required
+
+settings:
+  anchor: true
+  color: true
+  default: true
+  description: false
+  escape: true
+  html: true
+  indent: 3
+  lockfile: true
+  required: true
+  sensitive: true
+  type: true

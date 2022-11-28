@@ -1,0 +1,23 @@
+{
+    "$schema": "http://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#",
+    "contentVersion": "1.0.0.0",
+    "parameters": {
+        "name": {
+            "type": "string"
+        },
+        "numberOfWorkers": {
+            "type": "string",
+            "defaultValue": 1
+        }
+    },
+    "resources": [
+        {
+            "type": "Microsoft.Web/sites/config",
+            "apiVersion": "2019-08-01",
+            "name": "[concat(parameters('name'), '/web')]",
+            "properties": {
+              "numberOfWorkers": "[parameters('numberOfWorkers')]"
+            }
+        }
+    ]
+}

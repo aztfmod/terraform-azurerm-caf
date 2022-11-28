@@ -1,0 +1,246 @@
+{
+  "$schema": "https://schema.management.azure.com/schemas/2019-04-01/deploymentTemplate.json#",
+  "contentVersion": "1.0.0.0",
+  "parameters": {
+    "managedInstanceName": {
+        "type": "string",
+        "metadata": {
+            "description": "The name of the Managed Instance."
+        }
+    },
+    "location": {
+        "type": "string",
+        "defaultValue": "[resourceGroup().location]",
+        "metadata": {
+            "description": "The location of the Managed Instance. Default is the location of the selected resource group."
+        }
+    },
+    "skuName": {
+        "type": "string",
+        "defaultValue": "GP_Gen5",
+        "allowedValues": [
+            "GP_Gen4",
+            "GP_Gen5",
+            "BC_Gen4",
+            "BC_Gen5"
+        ],
+        "metadata": {
+            "description": "Managed instance SKU. If SKU is not set, skuEdition and hardwareFamily values have to be populated."
+        }
+    },
+    "skuEdition": {
+        "type": "string",
+        "defaultValue": "GeneralPurpose",
+        "allowedValues": [
+            "GeneralPurpose",
+            "BusinessCritical"
+        ],
+        "metadata": {
+            "description": "SKU Edition for the Managed Instance. In case skuName is set this parameter is ignored."
+        }
+    },
+    "administratorLogin": {
+        "type": "string",
+        "metadata": {
+            "description": "The login of the Managed Instance admin."
+        }
+    },
+    "administratorLoginPassword": {
+        "type": "securestring",
+        "metadata": {
+            "description": "The password of the Managed Instance admin."
+        }
+    },
+    "subnetId": {
+        "type": "string",
+        "metadata": {
+            "description": "The subnet id where the Managed Instance will be deployed."
+        }
+    },
+    "storageSizeInGB": {
+        "type": "int",
+        "defaultValue": 256,
+        "minValue": 32,
+        "metadata": {
+            "description": "Determines how much Storage size in GB to associate with instance. Increments of 32 GB allowed only."
+        }
+    },
+    "vCores": {
+        "type": "int",
+        "defaultValue": 4,
+        "allowedValues": [
+            4,
+            8,
+            16,
+            24,
+            32,
+            40,
+            64,
+            80
+        ],
+        "metadata": {
+            "description": "The number of vCores."
+        }
+    },
+    "licenseType": {
+        "type": "string",
+        "defaultValue": "LicenseIncluded",
+        "allowedValues": [
+            "LicenseIncluded",
+            "BasePrice"
+        ],
+        "metadata": {
+            "description": "Determines license pricing model. Select 'LicenseIncluded' for a regular price inclusive of a new SQL license. Select 'Base Price' for a discounted AHB price for bringing your own SQL licenses."
+        }
+    },
+    "hardwareFamily": {
+        "type": "string",
+        "defaultValue": "Gen5",
+        "allowedValues": [
+            "Gen4",
+            "Gen5"
+        ],
+        "metadata": {
+            "description": "Compute generation for the instance. In case skuName is set this parameter is ignored."
+        }
+    },
+    "dnsZonePartner": {
+        "type": "string",
+        "defaultValue": "",
+        "metadata": {
+            "description": "The resource id of another Managed Instance whose DNS zone this Managed Instance will share after creation."
+        }
+    },
+    "collation": {
+        "type": "string",
+        "defaultValue": "SQL_Latin1_General_CP1_CI_AS",
+        "metadata": {
+            "description": "Collation of the Managed Instance."
+        }
+    },
+    "proxyOverride": {
+        "type": "string",
+        "defaultValue": "Proxy",
+        "allowedValues": [
+            "Proxy",
+            "Redirect"
+        ],
+        "metadata": {
+            "description": "Determines connection type for private endpoint. Proxy connection type enables proxy connectivity to Managed Instance. Redirect mode enables direct connectivity to the instance resulting in improved latency and throughput."
+        }
+    },
+    "publicDataEndpointEnabled": {
+        "type": "bool",
+        "defaultValue": false,
+        "metadata": {
+            "description": "Determines whether public data endpoint will be enabled, required for clients outside of the connected virtual networks. Public endpoint will always default to Proxy connection mode."
+        }
+    },
+    "minimalTlsVersion": {
+        "type": "string",
+        "defaultValue": "1.2",
+        "allowedValues": [
+            "1.0",
+            "1.1",
+            "1.2"
+        ],
+        "metadata": {
+            "description": "The minimum TLS version enforced by the Managed Instance for inbound connections."
+        }
+    },
+    "timezoneId": {
+        "type": "string",
+        "defaultValue": "UTC",
+        "metadata": {
+            "description": "Id of the timezone. Allowed values are timezones supported by Windows."
+        }
+    },
+    "storageAccountType": {
+        "type": "string",
+        "defaultValue": "GRS",
+        "allowedValues": [
+            "GRS",
+            "ZRS",
+            "LRS"
+        ],
+        "metadata": {
+            "description": "Option for configuring backup storage redundancy. Selecting 'GRS' will enable 'RA-GRS'."
+        }
+    },
+    "managedInstanceTags": {
+        "type": "object",
+        "defaultValue": {},
+        "metadata": {
+            "description": "Resource tags to associate with the instance."
+        }
+    },
+    "resourceGroupName": {
+        "type": "string"
+    },
+    "zoneRedundant": {
+        "type": "bool",
+        "defaultValue": false,
+        "metadata": {
+            "description": "Whether or not the multi-az is enabled."
+        }
+    },
+    "requestedBackupStorageRedundancy": {
+        "type": "string",
+        "defaultValue": "Geo",
+        "metadata": {
+            "description": "The storage account type used to store backups for this database."
+        },
+        "allowedValues": [
+            "Geo",
+            "GeoZone",
+            "Local",
+            "Zone"
+        ]
+    }
+  },
+  "resources": [
+      {
+          "type": "Microsoft.Sql/managedInstances",
+          "name": "[parameters('managedInstanceName')]",
+          "apiVersion": "2021-11-01-preview",
+          "location": "[parameters('location')]",
+          "sku": {
+              "name": "[parameters('skuName')]",
+              "tier": "[parameters('skuEdition')]"
+          },
+          "tags": "[parameters('managedInstanceTags')]",
+          "identity": {
+              "type": "SystemAssigned"
+          },
+          "properties": {
+              "administratorLogin": "[parameters('administratorLogin')]",
+              "administratorLoginPassword": "[parameters('administratorLoginPassword')]",
+              "backupStorageRedundancy": "[parameters('storageAccountType')]",
+              "collation": "[parameters('collation')]",
+              "dnsZonePartner": "[if(equals(parameters('dnsZonePartner'), ''), json('null'), parameters('dnsZonePartner'))]",
+              "hardwareFamily": "[parameters('hardwareFamily')]",
+              "licenseType": "[parameters('licenseType')]",
+              "minimalTlsVersion": "[parameters('minimalTlsVersion')]",
+              "proxyOverride": "[parameters('proxyOverride')]",
+              "publicDataEndpointEnabled": "[parameters('publicDataEndpointEnabled')]",
+              "requestedBackupStorageRedundancy": "[parameters('requestedBackupStorageRedundancy')]",
+              "storageAccountType": "[parameters('storageAccountType')]",
+              "storageSizeInGB": "[parameters('storageSizeInGB')]",
+              "subnetId": "[parameters('subnetId')]",
+              "timezoneId": "[parameters('timezoneId')]",
+              "vCores": "[parameters('vCores')]",
+              "zoneRedundant": "[parameters('zoneRedundant')]"
+          }
+      }
+  ],
+  "outputs": {
+      "id": {
+          "type": "string",
+          "value": "[resourceId(parameters('resourceGroupName'), 'Microsoft.Sql/managedInstances', parameters('managedInstanceName'))]"
+      },
+      "objectId": {
+        "type": "string",
+        "value": "[reference(parameters('managedInstanceName'), '2021-11-01-preview', 'Full').identity.principalId]"
+      }
+  }
+}

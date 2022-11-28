@@ -1,0 +1,12 @@
+<FirstLogonCommands>
+    <SynchronousCommand>
+        <CommandLine>cmd /c "copy C:\AzureData\CustomData.bin C:\setup.ps1"</CommandLine
+        ><Description>CopyScript</Description>
+        <Order>10</Order>
+    </SynchronousCommand>
+    <SynchronousCommand>
+        <CommandLine>powershell.exe -sta -ExecutionPolicy Unrestricted -file C:\setup.ps1</CommandLine
+        ><Description>RunScript</Description>
+        <Order>11</Order>
+    </SynchronousCommand>
+</FirstLogonCommands>
