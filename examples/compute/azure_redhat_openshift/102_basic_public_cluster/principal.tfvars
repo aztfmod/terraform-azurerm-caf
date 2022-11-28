@@ -92,7 +92,7 @@ role_mapping = {
           }
           object_ids = {
             keys = ["004c3094-aa2e-47f3-87aa-f82a155ada54"]
-            // To get the value for your tenant use the following coommand: 
+            // To get the value for your tenant use the following coommand:
             // az ad sp list --display-name "Azure Red Hat OpenShift RP" --query "[0].id" -o tsv
             // Todo get object ID from ARO RP ID
             // add capability to specify SP by name: azuread_service_principal_names = {

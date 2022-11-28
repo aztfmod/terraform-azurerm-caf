@@ -24,7 +24,9 @@ variable "app_services" {
 variable "vnets" {
   default = {}
 }
-
+variable "virtual_subnets" {
+  default = {}
+}
 variable "sku_name" {
   type        = string
   default     = "Standard_v2"
