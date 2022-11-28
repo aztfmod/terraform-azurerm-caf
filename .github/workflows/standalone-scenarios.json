@@ -57,6 +57,7 @@
     "compute/virtual_machine_scale_set/106-vmss_monitoring",
     "compute/virtual_machine_scale_set/107-linux-win-vmss-application-health-extension",
     "compute/virtual_machine_scale_set/108-linux-win-vmss-keyvault-extension",
+    "compute/virtual_machine_scale_set/109-linux-win-vmss-generic-extension",
     "compute/virtual_machine/101-single-windows-vm",
     "compute/virtual_machine/102-single-vm-data-disks",
     "compute/virtual_machine/104-single-windows-backup",
