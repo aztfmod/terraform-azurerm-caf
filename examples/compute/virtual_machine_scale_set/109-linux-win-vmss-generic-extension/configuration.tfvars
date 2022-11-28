@@ -45,11 +45,6 @@ role_mapping = {
   built_in_role_mapping = {
     storage_accounts = {
       sa1 = {
-        "Storage Blob Data Reader" = {
-          managed_identities = {
-            keys = ["user_mi"]
-          }
-        }
         "Storage Blob Data Contributor" = {
           logged_in = {
             keys = ["user"]
@@ -78,7 +73,7 @@ vnets = {
 }
 
 keyvaults = {
-  example_vm_rg1 = {
+  kv1 = {
     name               = "vmsecretskv"
     resource_group_key = "rg1"
     sku_name           = "standard"
@@ -95,7 +90,7 @@ keyvaults = {
 
 # Store output attributes into keyvault secret
 dynamic_keyvault_secrets = {
-  example_vm_rg1 = { # Key of the keyvault
+  kv1 = { # Key of the keyvault
     vmadmin-username = {
       secret_name = "vmadmin-username"
       value       = "vmadmin"
@@ -226,15 +221,7 @@ virtual_machine_scale_sets = {
         }
 
         identity = {
-          # type = "SystemAssigned"
-          type                  = "UserAssigned"
-          managed_identity_keys = ["example_mi"]
-
-          remote = {
-            lz_key_name = {
-              managed_identity_keys = []
-            }
-          }
+          type = "SystemAssigned"
         }
 
         # custom_image_id = ""
@@ -298,7 +285,7 @@ virtual_machine_scale_sets = {
         azure_monitor_agent = {
           name                       = "AzureMonitorLinuxAgent"
           publisher                  = "Microsoft.Azure.Monitor"
-          type                       = "AzureMonitorLinuxAgent" 
+          type                       = "AzureMonitorLinuxAgent"
           type_handler_version       = "1.22"
           auto_upgrade_minor_version = true
           automatic_upgrade_enabled  = false
@@ -411,7 +398,7 @@ virtual_machine_scale_sets = {
         azure_monitor_agent = {
           name                       = "AzureMonitorWindowsAgent"
           publisher                  = "Microsoft.Azure.Monitor"
-          type                       = "AzureMonitorWindowsAgent" 
+          type                       = "AzureMonitorWindowsAgent"
           type_handler_version       = "1.9"
           auto_upgrade_minor_version = true
           automatic_upgrade_enabled  = false
