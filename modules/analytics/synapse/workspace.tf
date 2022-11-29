@@ -56,32 +56,6 @@ resource "azurerm_synapse_workspace" "ws" {
       key_versionless_id = try(var.settings.customer_managed_key_versionless_id, null)
     }
   }
-
-  dynamic "azure_devops_repo" {
-    for_each = try(var.settings.azure_devops_repo, null) != null ? [var.settings.azure_devops_repo] : []
-    content {
-      account_name    = try(azure_devops_repo.value.account_name, null)
-      branch_name     = try(azure_devops_repo.value.branch_name, null)
-      last_commit_id  = try(azure_devops_repo.value.last_commit_id, null)
-      project_name    = try(azure_devops_repo.value.project_name, null)
-      repository_name = try(azure_devops_repo.value.repository_name, null)
-      root_folder     = try(azure_devops_repo.value.root_folder, null)
-      tenant_id       = try(azure_devops_repo.value.tenant_id, null)
-    }
-  }
-
-  dynamic "github_repo" {
-    for_each = try(var.settings.github_repo, null) != null ? [var.settings.github_repo] : []
-    content {
-      account_name    = try(github_repo.value.account_name, null)
-      branch_name     = try(github_repo.value.branch_name, null)
-      last_commit_id  = try(github_repo.value.last_commit_id, null)
-      repository_name = try(github_repo.value.repository_name, null)
-      root_folder     = try(github_repo.value.root_folder, null)
-      git_url         = try(github_repo.value.git_url, null)
-    }
-  }
-  
   # Generate sql server random admin password if not provided in the attribute administrator_login_password
   resource "random_password" "sql_admin" {
     count = try(var.settings.sql_administrator_login_password, null) == null ? 1 : 0
@@ -107,6 +81,36 @@ resource "azurerm_synapse_workspace" "ws" {
       ]
     }
   }
+
+
+  dynamic "azure_devops_repo" {
+    for_each = try(var.settings.azure_devops_repo, null) != null ? [var.settings.azure_devops_repo] : []
+    content {
+      account_name    = try(azure_devops_repo.value.account_name, null)
+      branch_name     = try(azure_devops_repo.value.branch_name, null)
+      last_commit_id  = try(azure_devops_repo.value.last_commit_id, null)
+      project_name    = try(azure_devops_repo.value.project_name, null)
+      repository_name = try(azure_devops_repo.value.repository_name, null)
+      root_folder     = try(azure_devops_repo.value.root_folder, null)
+      tenant_id       = try(azure_devops_repo.value.tenant_id, null)
+    }
+  }
+
+  dynamic "github_repo" {
+    for_each = try(var.settings.github_repo, null) != null ? [var.settings.github_repo] : []
+    content {
+      account_name    = try(github_repo.value.account_name, null)
+      branch_name     = try(github_repo.value.branch_name, null)
+      last_commit_id  = try(github_repo.value.last_commit_id, null)
+      repository_name = try(github_repo.value.repository_name, null)
+      root_folder     = try(github_repo.value.root_folder, null)
+      git_url         = try(github_repo.value.git_url, null)
+    }
+  }
+
+
+
+
 
   resource "azurerm_key_vault_secret" "sql_admin" {
     count = try(var.settings.sql_administrator_login_password, null) == null ? 1 : 0
