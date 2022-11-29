@@ -25,3 +25,16 @@ output "application_insights" {
   value     = module.azurerm_application_insights
   sensitive = true
 }
+
+module "azurerm_application_insights_web_test" {
+  source   = "./modules/app_insights/web_test"
+  for_each = local.webapp.azurerm_application_insights_web_test
+
+  name                    = lookup(each.value, "name", null)
+  location                = can(local.global_settings.regions[each.value.region]) ? local.global_settings.regions[each.value.region] : local.combined_objects_resource_groups[try(each.value.resource_group.lz_key, local.client_config.landingzone_key)][try(each.value.resource_group.key, each.value.resource_group_key)].location
+  resource_group_name     = can(each.value.resource_group.name) || can(each.value.resource_group_name) ? try(each.value.resource_group.name, each.value.resource_group_name) : local.combined_objects_resource_groups[try(each.value.resource_group.lz_key, local.client_config.landingzone_key)][try(each.value.resource_group_key, each.value.resource_group.key)].name
+  application_insights_id = can(each.value.application_insights_id) ? try(each.value.application_insights_id, null) : local.combined_objects_application_insights[try(each.value.application_insights.lz_key, local.client_config.landingzone_key)][try(each.value.application_insights_key, each.value.application_insights.key)].id
+
+  global_settings = local.global_settings
+  settings        = each.value
+}
