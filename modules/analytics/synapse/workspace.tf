@@ -32,7 +32,16 @@ resource "azurerm_synapse_workspace" "ws" {
       tenant_id = var.settings.aad_admin.tenant_id
     }
   }
+  
+  dynamic "identity" {
+    for_each = try(var.settings.identity, null) == null ? [] : [1]
 
+    content {
+      type         = var.settings.identity.type
+      identity_ids = var.settings.identity.ids
+    }
+  }
+  
   dynamic "azure_devops_repo" {
     for_each = try(var.settings.azure_devops_repo, {}) == {} ? [] : [1]
 
