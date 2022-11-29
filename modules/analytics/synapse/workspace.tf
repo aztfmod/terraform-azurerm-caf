@@ -37,11 +37,11 @@ resource "azurerm_synapse_workspace" "ws" {
     for_each = try(var.settings.azure_devops_repo, {}) == {} ? [] : [1]
 
     content {
-      account_name    = var.settings.azure_devops_repo.account_name
-      branch_name     = var.settings.azure_devops_repo.branch_name
-      project_name    = var.settings.azure_devops_repo.project_name
-      repository_name = var.settings.azure_devops_repo.repository_name
-      root_folder     = var.settings.azure_devops_repo.root_folder
+      account_name    = try(var.settings.azure_devops_repo.account_name, null)
+      branch_name     = try(var.settings.azure_devops_repo.branch_name, null)
+      project_name    = try(var.settings.azure_devops_repo.project_name, null)
+      repository_name = try(var.settings.azure_devops_repo.repository_name, null)
+      root_folder     = try(var.settings.azure_devops_repo.root_folder, null)
     }
   }
 
@@ -57,11 +57,11 @@ resource "azurerm_synapse_workspace" "ws" {
     for_each = try(var.settings.github_repo, {}) == {} ? [] : [1]
 
     content {
-      account_name    = var.settings.github_repo.account_name
-      branch_name     = var.settings.github_repo.branch_name
-      repository_name = var.settings.github_repo.repository_name
-      root_folder     = var.settings.github_repo.root_folder
-      git_url         = var.settings.github_repo.git_url
+      account_name    = try(var.settings.github_repo.account_name, null)
+      branch_name     = try(var.settings.github_repo.branch_name, null)
+      repository_name = try(var.settings.github_repo.repository_name, null)
+      root_folder     = try(var.settings.github_repo.root_folder, null)
+      git_url         = try(var.settings.github_repo.git_url, null)
     }
   }
 
