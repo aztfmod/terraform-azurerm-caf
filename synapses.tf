@@ -14,6 +14,10 @@ module "synapse_workspaces" {
   vnets                                = local.combined_objects_networking
   private_dns                          = local.combined_objects_private_dns
   private_endpoints                    = try(each.value.private_endpoints, {})
+
+  remote_objects = {
+    managed_identities = local.combined_objects_managed_identities
+  }
 }
 
 output "synapse_workspaces" {
