@@ -1,6 +1,5 @@
-# terraform provider: https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/resources/static_site
-
 terraform {
+  required_version = ">= 0.13"
   required_providers {
     azurerm = {
       source  = "hashicorp/azurerm"
