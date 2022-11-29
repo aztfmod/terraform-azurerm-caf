@@ -21,11 +21,16 @@ terraform {
       version = "~> 1.2.0"
     }
     null = {
-      source = "hashicorp/null"
+      source  = "hashicorp/null"
+      version = "~> 3.2.1"
     }
     random = {
       version = "~> 3.3.1"
       source  = "hashicorp/random"
+    }
+    time = {
+      source  = "hashicorp/time"
+      version = "~> 0.9.1"
     }
   }
   required_version = ">= 1.1.0"

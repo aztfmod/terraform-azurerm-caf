@@ -16,5 +16,17 @@ terraform {
       source  = "aztfmod/azurecaf"
       version = "~> 1.2.0"
     }
+    local = {
+      source  = "hashicorp/local"
+      version = "~> 2.2.3"
+    }
+    external = {
+      source  = "hashicorp/external"
+      version = "~> 2.2.3"
+    }
+    null = {
+      source  = "hashicorp/null"
+      version = "~> 3.2.1"
+    }
   }
 }

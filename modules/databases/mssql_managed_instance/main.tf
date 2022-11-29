@@ -10,7 +10,20 @@ terraform {
       version = "~> 1.2.0"
     }
     azapi = {
-      source = "azure/azapi"
+      source  = "azure/azapi"
+      version = "~> 0.2.0"
+    }
+    external = {
+      source  = "hashicorp/external"
+      version = "~> 2.2.3"
+    }
+    null = {
+      source  = "hashicorp/null"
+      version = "~> 3.2.1"
+    }
+    random = {
+      version = "~> 3.3.1"
+      source  = "hashicorp/random"
     }
   }
 

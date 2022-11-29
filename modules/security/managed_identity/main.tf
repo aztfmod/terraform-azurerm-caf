@@ -9,6 +9,14 @@ terraform {
       source  = "aztfmod/azurecaf"
       version = "~> 1.2.0"
     }
+    external = {
+      source  = "hashicorp/external"
+      version = "~> 2.2.3"
+    }
+    time = {
+      source  = "hashicorp/time"
+      version = "~> 0.9.1"
+    }
   }
 
 }

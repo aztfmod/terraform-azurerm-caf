@@ -9,6 +9,14 @@ terraform {
       source  = "aztfmod/azurecaf"
       version = "~> 1.2.0"
     }
+    random = {
+      version = "~> 3.3.1"
+      source  = "hashicorp/random"
+    }
+    time = {
+      source  = "hashicorp/time"
+      version = "~> 0.9.1"
+    }
   }
 }
 

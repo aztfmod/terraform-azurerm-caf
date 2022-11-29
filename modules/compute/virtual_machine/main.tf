@@ -9,6 +9,18 @@ terraform {
       source  = "aztfmod/azurecaf"
       version = "~> 1.2.0"
     }
+    tls = {
+      source  = "hashicorp/tls"
+      version = "~> 4.0.4"
+    }
+    external = {
+      source  = "hashicorp/external"
+      version = "~> 2.2.3"
+    }
+    random = {
+      version = "~> 3.3.1"
+      source  = "hashicorp/random"
+    }
   }
 
 }
