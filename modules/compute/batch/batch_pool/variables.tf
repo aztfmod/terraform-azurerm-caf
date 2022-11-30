@@ -17,5 +17,6 @@ variable "batch_certificates" {
   default = {}
 }
 variable "vnets" {
+  type    = map(any)
   default = {}
 }

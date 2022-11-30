@@ -44,6 +44,7 @@ variable "location" {
 }
 
 variable "vnets" {
+  type        = map(any)
   description = "Virtual networks objects - contains all virtual networks that could potentially be used by the module."
 }
 

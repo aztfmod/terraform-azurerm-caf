@@ -3,6 +3,7 @@ variable "global_settings" {
   description = "Global settings object (see module README.md)"
 }
 variable "vnets" {
+  type        = map(any)
   description = "Virtual networks configuration object"
 }
 variable "client_config" {

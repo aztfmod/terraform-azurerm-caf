@@ -30,7 +30,9 @@ variable "settings" {
   type = any
 }
 
-variable "vnets" {}
+variable "vnets" {
+  type = map(any)
+}
 
 # Security
 variable "public_key_pem_file" {

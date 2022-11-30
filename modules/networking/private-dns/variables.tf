@@ -22,6 +22,7 @@ variable "vnet_links" {
 }
 
 variable "vnets" {
+  type    = map(any)
   default = {}
 }
 variable "base_tags" {

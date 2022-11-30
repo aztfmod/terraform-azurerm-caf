@@ -19,7 +19,9 @@ variable "location" {
 }
 variable "storage_accounts" {}
 variable "azuread_groups" {}
-variable "vnets" {}
+variable "vnets" {
+  type = map(any)
+}
 variable "private_endpoints" {}
 variable "resource_groups" {}
 variable "base_tags" {

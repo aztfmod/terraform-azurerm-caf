@@ -25,6 +25,7 @@ variable "tags" {
   default = null
 }
 variable "vnets" {
+  type    = map(any)
   default = null
 }
 variable "pips" {

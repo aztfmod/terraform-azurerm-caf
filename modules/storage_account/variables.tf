@@ -16,6 +16,7 @@ variable "location" {
   description = "(Required) Specifies the supported Azure location where to create the resource. Changing this forces a new resource to be created."
 }
 variable "vnets" {
+  type    = map(any)
   default = {}
 }
 variable "private_endpoints" {

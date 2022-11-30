@@ -15,7 +15,9 @@ variable "location" {
   type = string
 }
 variable "account_name" {}
-variable "vnets" {}
+variable "vnets" {
+  type = map(any)
+}
 
 variable "base_tags" {
   default = {}

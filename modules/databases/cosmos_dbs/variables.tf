@@ -26,4 +26,6 @@ variable "resource_groups" {}
 variable "private_dns" {
   default = {}
 }
-variable "vnets" {}
+variable "vnets" {
+  type = map(any)
+}

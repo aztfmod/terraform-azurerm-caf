@@ -78,7 +78,9 @@ variable "diagnostics" {
   default = null
 }
 
-variable "vnets" {}
+variable "vnets" {
+  type = map(any)
+}
 variable "subnet_id" {}
 variable "private_endpoints" {}
 variable "private_dns" {}

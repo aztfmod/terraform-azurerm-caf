@@ -179,6 +179,7 @@ variable "azurerm_routes" {
   default = {}
 }
 variable "vnets" {
+  type    = map(any)
   default = {}
 }
 variable "virtual_subnets" {

@@ -37,6 +37,7 @@ variable "georeplications" {
 }
 
 variable "vnets" {
+  type    = map(any)
   default = {}
 }
 

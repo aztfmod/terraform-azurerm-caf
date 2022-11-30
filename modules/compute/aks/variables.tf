@@ -15,7 +15,9 @@ variable "settings" {
 variable "location" {
   type = string
 }
-variable "vnets" {}
+variable "vnets" {
+  type = map(any)
+}
 variable "resource_group_name" {
   type = string
 }

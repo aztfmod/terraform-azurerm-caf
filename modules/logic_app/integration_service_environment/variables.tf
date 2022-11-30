@@ -38,6 +38,7 @@ variable "settings" {
 #  description = "(Required) The type of access endpoint to use for the Integration Service Environment"
 #}
 variable "vnets" {
+  type        = map(any)
   default     = {}
   description = "(Required) A list of virtual network subnet ids to be used by Integration Service Environment"
 }

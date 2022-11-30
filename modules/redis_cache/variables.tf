@@ -39,6 +39,7 @@ variable "diagnostics" {
   default = null
 }
 variable "vnets" {
+  type    = map(any)
   default = {}
 }
 variable "private_endpoints" {

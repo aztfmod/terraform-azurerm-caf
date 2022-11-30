@@ -36,6 +36,7 @@ variable "base_tags" {
   type        = map(any)
 }
 variable "vnets" {
+  type    = map(any)
   default = {}
 }
 variable "private_endpoints" {

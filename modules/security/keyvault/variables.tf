@@ -11,6 +11,7 @@ variable "settings" {
   type = any
 }
 variable "vnets" {
+  type    = map(any)
   default = {}
 }
 variable "azuread_groups" {

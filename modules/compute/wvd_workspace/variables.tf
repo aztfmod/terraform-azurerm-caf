@@ -17,8 +17,8 @@ variable "wvd_workspaces" {
   default = {}
 }
 variable "name" {
-  type = string
-  #  default = {}
+  type    = any
+  default = {}
 }
 variable "diagnostic_profiles" {
   default = {}

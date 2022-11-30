@@ -20,7 +20,9 @@ variable "location" {
 variable "keyvault_id" {}
 variable "storage_accounts" {}
 variable "azuread_groups" {}
-variable "vnets" {}
+variable "vnets" {
+  type = map(any)
+}
 variable "subnet_id" {}
 variable "private_endpoints" {}
 variable "resource_groups" {}
