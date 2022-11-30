@@ -21,6 +21,7 @@ variable "base_tags" {
 variable "private_endpoints" {}
 variable "vnets" {}
 variable "client_config" {
+  type        = map(any)
   description = "Client configuration object (see module README.md)."
 }
 variable "resource_groups" {}

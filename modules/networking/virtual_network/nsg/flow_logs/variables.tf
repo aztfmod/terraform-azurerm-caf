@@ -8,6 +8,7 @@ variable "resource_location" {
 }
 
 variable "client_config" {
+  type        = map(any)
   description = "client_config object (see module README.md)"
 }
 

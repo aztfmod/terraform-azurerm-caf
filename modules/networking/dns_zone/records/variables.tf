@@ -1,7 +1,9 @@
 variable "base_tags" {
   default = {}
 }
-variable "client_config" {}
+variable "client_config" {
+  type = map(any)
+}
 variable "resource_group_name" {}
 variable "records" {}
 variable "target_resources" {

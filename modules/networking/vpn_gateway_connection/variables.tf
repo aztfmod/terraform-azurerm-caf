@@ -7,5 +7,7 @@ variable "global_settings" {
 }
 variable "vpn_gateway_id" {}
 variable "vpn_sites" {}
-variable "client_config" {}
+variable "client_config" {
+  type = map(any)
+}
 variable "route_tables" {}

@@ -24,5 +24,6 @@ variable "combined_objects_logic_app_workflow" {
   default = null
 }
 variable "client_config" {
+  type    = map(any)
   default = null
 }

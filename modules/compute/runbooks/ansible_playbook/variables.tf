@@ -16,5 +16,6 @@ variable "keyvaults" {
 }
 
 variable "client_config" {
+  type        = map(any)
   description = "client_config object"
 }

@@ -1,7 +1,9 @@
 
 variable "resource_group_name" {}
 variable "location" {}
-variable "client_config" {}
+variable "client_config" {
+  type = map(any)
+}
 variable "global_settings" {
   type = any
 

@@ -2,6 +2,7 @@ variable "virtual_machine_scale_set_id" {}
 variable "extension" {}
 variable "extension_name" {}
 variable "client_config" {
+  type        = map(any)
   description = "Client configuration object (see module README.md)."
 }
 variable "managed_identities" {

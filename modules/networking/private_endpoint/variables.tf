@@ -35,6 +35,7 @@ variable "subresource_names" {
   default = []
 }
 variable "client_config" {
+  type    = map(any)
   default = {}
 }
 variable "private_dns" {

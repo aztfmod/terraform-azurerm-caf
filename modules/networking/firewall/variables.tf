@@ -65,6 +65,7 @@ variable "virtual_networks" {
 }
 
 variable "client_config" {
+  type    = map(any)
   default = {}
 }
 

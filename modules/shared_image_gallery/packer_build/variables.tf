@@ -3,7 +3,9 @@ variable "build_resource_group_name" {
   default = {}
 }
 variable "location" {}
-variable "client_config" {}
+variable "client_config" {
+  type = map(any)
+}
 variable "global_settings" {
   type = any
 

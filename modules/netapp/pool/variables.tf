@@ -2,7 +2,9 @@ variable "global_settings" {
   type = any
 
 }
-variable "client_config" {}
+variable "client_config" {
+  type = map(any)
+}
 variable "settings" {
   type = any
 }

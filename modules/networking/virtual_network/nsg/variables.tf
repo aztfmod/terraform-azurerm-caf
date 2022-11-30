@@ -1,4 +1,6 @@
-variable "client_config" {}
+variable "client_config" {
+  type = map(any)
+}
 variable "resource_group" {
   description = "(Required) Map of the resource groups to create"
   type        = string

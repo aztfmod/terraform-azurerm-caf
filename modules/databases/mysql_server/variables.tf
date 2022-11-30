@@ -6,6 +6,7 @@ variable "settings" {
   type = any
 }
 variable "client_config" {
+  type        = map(any)
   description = "Client configuration object (see module README.md)."
 }
 variable "resource_group_name" {

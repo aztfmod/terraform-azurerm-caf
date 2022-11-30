@@ -1,4 +1,6 @@
-variable "client_config" {}
+variable "client_config" {
+  type = map(any)
+}
 variable "virtual_hub_route_tables" {
   default = {}
 }

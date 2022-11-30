@@ -35,4 +35,6 @@ variable "combined_objects" {
   default = {}
 }
 
-variable "client_config" {}
+variable "client_config" {
+  type = map(any)
+}

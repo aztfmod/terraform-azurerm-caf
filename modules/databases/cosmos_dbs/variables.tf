@@ -18,6 +18,7 @@ variable "base_tags" {
   type        = map(any)
 }
 variable "client_config" {
+  type        = map(any)
   description = "Client configuration object (see module README.md)."
 }
 variable "private_endpoints" {}

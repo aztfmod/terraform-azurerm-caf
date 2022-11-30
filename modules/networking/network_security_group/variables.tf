@@ -33,6 +33,7 @@ variable "network_watchers" {
 }
 
 variable "client_config" {
+  type        = map(any)
   description = "client_config object (see module README.md)"
 }
 

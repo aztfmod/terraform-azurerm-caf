@@ -47,5 +47,6 @@ variable "public_ip_addresses" {
   description = "Combined object for public ip addresses"
 }
 variable "client_config" {
+  type = map(any)
 
 }

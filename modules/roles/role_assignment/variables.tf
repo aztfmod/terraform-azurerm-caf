@@ -17,5 +17,6 @@ variable "object_id" {
   default = {}
 }
 variable "client_config" {
+  type        = map(any)
   description = "Client configuration object (see module README.md)."
 }

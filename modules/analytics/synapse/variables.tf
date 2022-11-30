@@ -8,6 +8,7 @@ variable "global_settings" {
   description = "Global settings object (see module README.md)"
 }
 variable "client_config" {
+  type        = map(any)
   description = "Client configuration object (see module README.md)."
 }
 variable "storage_data_lake_gen2_filesystem_id" {

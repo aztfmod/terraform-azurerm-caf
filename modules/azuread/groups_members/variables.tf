@@ -4,7 +4,9 @@ variable "settings" {
 variable "group_id" {
   default = null
 }
-variable "client_config" {}
+variable "client_config" {
+  type = map(any)
+}
 variable "group_key" {
   default = null
 }

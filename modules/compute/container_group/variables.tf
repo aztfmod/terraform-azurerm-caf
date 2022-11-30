@@ -1,5 +1,7 @@
 variable "base_tags" {}
-variable "client_config" {}
+variable "client_config" {
+  type = map(any)
+}
 variable "diagnostic_profiles" {}
 variable "combined_diagnostics" {}
 variable "combined_resources" {

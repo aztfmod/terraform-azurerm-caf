@@ -7,7 +7,9 @@ variable "settings" {
   # }
 }
 variable "subscription_key" {}
-variable "client_config" {}
+variable "client_config" {
+  type = map(any)
+}
 variable "global_settings" {
   type        = any
   description = "Global settings object (see module README.md)"

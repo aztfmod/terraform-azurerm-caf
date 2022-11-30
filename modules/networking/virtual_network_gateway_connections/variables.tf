@@ -19,6 +19,7 @@ variable "global_settings" {
 }
 variable "diagnostics" {}
 variable "client_config" {
+  type        = map(any)
   description = "Client configuration object (see module README.md)."
 }
 variable "express_route_circuit_id" {}
