@@ -14,8 +14,8 @@ variable "tags" {
   default = null
 }
 variable "location" {
-  description = "(Required) Specifies the supported Azure location where to create the resource. Changing this forces a new resource to be created."
   type        = string
+  description = "(Required) Specifies the supported Azure location where to create the resource. Changing this forces a new resource to be created."
 }
 variable "base_tags" {
   description = "Base tags for the resource to be inherited from the resource group."

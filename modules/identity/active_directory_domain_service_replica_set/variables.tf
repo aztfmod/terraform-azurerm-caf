@@ -7,6 +7,7 @@ variable "remote_objects" {
   description = "The remote objects the module depends on."
 }
 variable "location" {
+  type        = string
   description = "Region of the the Replica Set."
 }
 variable "client_config" {

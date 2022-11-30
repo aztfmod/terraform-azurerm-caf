@@ -7,6 +7,7 @@ variable "name" {
 }
 
 variable "location" {
+  type        = string
   description = "(Required) Location of the Azure Firewall to be created"
 }
 

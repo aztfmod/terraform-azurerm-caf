@@ -19,7 +19,9 @@ variable "settings" {
 variable "resource_group_name" {
   type = string
 }
-variable "location" {}
+variable "location" {
+  type = string
+}
 variable "keyvault" {
   default = null
 }

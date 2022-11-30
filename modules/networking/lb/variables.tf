@@ -25,5 +25,6 @@ variable "resource_group_name" {
   description = " The name of the Resource Group in which to create the Load Balancer."
 }
 variable "location" {
+  type        = string
   description = " The key of the location in which to create the Load Balancer."
 }

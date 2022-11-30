@@ -8,6 +8,7 @@ variable "global_settings" {
 }
 
 variable "location" {
+  type        = string
   description = "(Required) Resource Location"
 }
 

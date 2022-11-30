@@ -15,6 +15,7 @@ variable "zone" {
 }
 
 variable "location" {
+  type        = string
   description = "(Required) Resource Location"
 }
 

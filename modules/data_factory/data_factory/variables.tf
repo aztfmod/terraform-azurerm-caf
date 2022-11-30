@@ -7,6 +7,7 @@ variable "client_config" {
   description = "Client configuration object (see module README.md)."
 }
 variable "location" {
+  type        = string
   description = "Specifies the supported Azure location where to create the resource. Changing this forces a new resource to be created."
   default     = null
 }

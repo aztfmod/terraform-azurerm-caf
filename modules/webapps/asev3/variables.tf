@@ -15,6 +15,7 @@ variable "resource_group_name" {
   description = "(Required) The name of the resource group where to create the resource."
 }
 variable "location" {
+  type        = string
   description = "(Required) Resource Location"
 }
 variable "private_dns" {

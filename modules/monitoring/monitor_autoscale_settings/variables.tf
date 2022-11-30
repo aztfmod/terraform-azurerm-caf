@@ -8,7 +8,9 @@ variable "client_config" {
 variable "resource_group_name" {
   type = string
 }
-variable "location" {}
+variable "location" {
+  type = string
+}
 variable "virtual_machine_scale_sets" {
   default = {}
 }

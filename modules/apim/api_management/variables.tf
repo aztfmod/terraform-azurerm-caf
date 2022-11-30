@@ -14,6 +14,7 @@ variable "settings" {
   description = "(Required) Used to handle passthrough paramenters."
 }
 variable "location" {
+  type        = string
   description = "(Required) Region in which the resource will be deployed"
 }
 variable "remote_objects" {

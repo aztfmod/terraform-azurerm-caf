@@ -10,7 +10,9 @@ variable "diagnostics" {}
 variable "settings" {
   type = any
 }
-variable "location" {}
+variable "location" {
+  type = string
+}
 variable "vnets" {}
 variable "resource_group_name" {
   type = string

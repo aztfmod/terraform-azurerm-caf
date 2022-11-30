@@ -2,7 +2,9 @@
 variable "resource_group_name" {
   type = string
 }
-variable "location" {}
+variable "location" {
+  type = string
+}
 variable "diagnostics" {}
 variable "client_config" {
   type = map(any)

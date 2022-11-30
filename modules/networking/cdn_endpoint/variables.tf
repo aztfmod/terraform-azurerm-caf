@@ -21,8 +21,9 @@ variable "base_tags" {
   default     = {}
 }
 variable "location" {
+  type        = string
   description = "location for the resource."
-  default     = {}
+  #  default     = {}
 }
 variable "resource_group_name" {
   type        = string

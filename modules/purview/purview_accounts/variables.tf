@@ -25,6 +25,7 @@ variable "resource_group_name" {
   description = " The name of the Resource Group where the Purview Account should exist. Changing this forces a new Purview Account to be created."
 }
 variable "location" {
+  type = string
 }
 variable "diagnostics" {}
 variable "private_dns" {

@@ -2,7 +2,9 @@ variable "settings" {
   type = any
 }
 variable "name" {}
-variable "location" {}
+variable "location" {
+  type = string
+}
 variable "resource_group_name" {
   type = string
 }

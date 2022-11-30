@@ -19,8 +19,8 @@ variable "tags" {
   default     = null
 }
 variable "location" {
-  description = "(Required) Resource Location"
   type        = string
+  description = "(Required) Resource Location"
   default     = null
 }
 variable "resource_group_name" {

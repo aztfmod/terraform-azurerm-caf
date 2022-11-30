@@ -3,7 +3,9 @@ variable "global_settings" {
   description = "Global settings object (see module README.md)"
 }
 variable "cloud" {}
-variable "location" {}
+variable "location" {
+  type = string
+}
 variable "settings" {
   type = any
 }

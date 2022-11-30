@@ -28,6 +28,7 @@ variable "client_config" {
 }
 
 # variable "location" {
+#type = string
 #   description = "Specifies the supported Azure location where to create the resource. Changing this forces a new resource to be created."
 #   type        = string
 # }
@@ -38,6 +39,7 @@ variable "resource_group_name" {
 }
 
 variable "location" {
+  type        = string
   description = "The location where to create the resource."
 }
 

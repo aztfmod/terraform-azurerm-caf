@@ -25,6 +25,7 @@ variable "resource_group_name" {
   description = " The name of the resource group in which to"
 }
 variable "location" {
+  type        = string
   description = "location for the resource."
-  default     = {}
+  #  default     = {}
 }

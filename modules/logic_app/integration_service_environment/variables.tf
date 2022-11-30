@@ -7,6 +7,7 @@ variable "client_config" {
   description = "Client configuration object (see module README.md)."
 }
 variable "location" {
+  type        = string
   description = "(Required) The Azure Region where the Integration Service Environment should exist"
 }
 variable "resource_group_name" {

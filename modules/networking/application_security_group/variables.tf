@@ -8,6 +8,7 @@ variable "base_tags" {
 }
 
 variable "location" {
+  type        = string
   description = "location of the resource"
 }
 variable "settings" {

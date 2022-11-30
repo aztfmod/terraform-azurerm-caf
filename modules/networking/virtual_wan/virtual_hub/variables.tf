@@ -14,8 +14,8 @@ variable "virtual_hub_config" {
 }
 
 variable "location" {
-  description = "(Required) Location where to create the hub resources"
   type        = string
+  description = "(Required) Location where to create the hub resources"
 }
 
 variable "resource_group_name" {

@@ -4,7 +4,9 @@ variable "settings" {
 variable "resource_group_name" {
   type = string
 }
-variable "location" {}
+variable "location" {
+  type = string
+}
 variable "account_name" {}
 variable "pool_name" {}
 variable "service_level" {}

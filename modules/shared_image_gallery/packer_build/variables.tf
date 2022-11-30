@@ -4,7 +4,9 @@ variable "resource_group_name" {
 variable "build_resource_group_name" {
   default = {}
 }
-variable "location" {}
+variable "location" {
+  type = string
+}
 variable "client_config" {
   type = map(any)
 }

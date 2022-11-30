@@ -16,6 +16,7 @@ variable "resource_group_name" {
 }
 
 variable "location" {
+  type        = string
   description = "(Required) Location of the IP Group to be created"
 }
 

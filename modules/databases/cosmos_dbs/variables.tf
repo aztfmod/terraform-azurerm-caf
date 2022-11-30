@@ -3,8 +3,8 @@ variable "global_settings" {
   description = "Global settings object (see module README.md)"
 }
 variable "location" {
-  description = "(Required) Specifies the supported Azure location where to create the resource. Changing this forces a new resource to be created."
   type        = string
+  description = "(Required) Specifies the supported Azure location where to create the resource. Changing this forces a new resource to be created."
 }
 variable "resource_group_name" {
   type        = string

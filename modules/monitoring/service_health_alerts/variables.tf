@@ -8,5 +8,7 @@ variable "global_settings" {
   type = any
 
 }
-variable "location" {}
+variable "location" {
+  type = string
+}
 

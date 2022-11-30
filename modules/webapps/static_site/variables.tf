@@ -12,6 +12,7 @@ variable "name" {
 }
 
 variable "location" {
+  type        = string
   description = "(Required) Resource Location"
 }
 
