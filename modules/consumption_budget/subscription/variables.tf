@@ -3,6 +3,7 @@ variable "client_config" {
 }
 
 variable "global_settings" {
+  type        = any
   description = "Global settings object"
 }
 

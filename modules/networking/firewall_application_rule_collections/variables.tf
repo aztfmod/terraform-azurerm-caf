@@ -12,6 +12,7 @@ variable "rule_collections" {
 
 variable "azurerm_firewall_application_rule_collection_definition" {}
 variable "global_settings" {
+  type        = any
   description = "Global settings object (see module README.md)"
 }
 

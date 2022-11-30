@@ -20,5 +20,6 @@ variable "profiles" {
 }
 
 variable "global_settings" {
+  type    = any
   default = {}
 }

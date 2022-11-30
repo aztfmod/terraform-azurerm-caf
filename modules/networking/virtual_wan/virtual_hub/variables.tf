@@ -5,6 +5,7 @@ variable "prefix" {
 }
 
 variable "global_settings" {
+  type        = any
   description = "global settings"
 }
 

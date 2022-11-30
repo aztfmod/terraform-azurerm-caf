@@ -10,6 +10,7 @@ variable "location" {
 }
 variable "diagnostics" {}
 variable "global_settings" {
+  type        = any
   description = "Global settings object (see module README.md)"
 }
 # variable express_route_circuits {}

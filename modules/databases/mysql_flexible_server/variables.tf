@@ -10,6 +10,7 @@ variable "client_config" {
 }
 
 variable "global_settings" {
+  type        = any
   description = "Global settings object (see module README.md)"
   default     = {}
 }

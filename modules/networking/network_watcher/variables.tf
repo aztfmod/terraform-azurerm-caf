@@ -18,5 +18,6 @@ variable "base_tags" {
   type        = map(any)
 }
 variable "global_settings" {
+  type        = any
   description = "Global settings object (see module README.md)"
 }

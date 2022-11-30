@@ -1,5 +1,6 @@
 # Global settings
 variable "global_settings" {
+  type        = any
   description = "Global settings object for the current deployment."
   default = {
     passthrough    = false

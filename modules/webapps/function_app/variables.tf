@@ -1,6 +1,9 @@
 variable "settings" {}
 
-variable "global_settings" {}
+variable "global_settings" {
+  type = any
+
+}
 
 variable "location" {
   description = "(Required) Resource Location"

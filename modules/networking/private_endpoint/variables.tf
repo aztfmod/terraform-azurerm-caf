@@ -22,6 +22,7 @@ variable "location" {
 variable "subnet_id" {}
 variable "settings" {}
 variable "global_settings" {
+  type        = any
   description = "Global settings object (see module README.md)"
 }
 variable "base_tags" {

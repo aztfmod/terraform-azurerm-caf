@@ -1,4 +1,5 @@
 variable "global_settings" {
+  type = any
   default = {
     default_region = "region1"
     regions = {

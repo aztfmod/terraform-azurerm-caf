@@ -36,6 +36,7 @@ variable "link_nsg_to_subnet" {
 }
 
 variable "global_settings" {
+  type        = any
   description = "Global settings object (see module README.md)"
 }
 

@@ -28,10 +28,10 @@ repos:
     - id: terraform_fmt
     - id: terraform_validate
       exclude: '^[^/]+$'                                      #excluding since it contains azurerm.vhub provider
-    - id: terraform_docs
-      exclude: .travis
-    - id: terraform_docs_without_aggregate_type_defaults
-      exclude: .travis
+    #- id: terraform_docs
+    #  exclude: .travis
+    #- id: terraform_docs_without_aggregate_type_defaults
+    #  exclude: .travis
     - id: terraform_tflint
       exclude: examples                                       #excluding example tfvars since no need to fix it
       args:

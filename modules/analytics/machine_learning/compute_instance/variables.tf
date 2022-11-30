@@ -1,5 +1,6 @@
 variable "settings" {}
 variable "global_settings" {
+  type        = any
   description = "Global settings object (see module README.md)"
 }
 variable "machine_learning_workspace_name" {}

@@ -1,5 +1,8 @@
 variable "settings" {}
-variable "global_settings" {}
+variable "global_settings" {
+  type = any
+
+}
 variable "location" {}
 variable "resource_group_name" {
   description = "Name of the existing resource group to deploy the virtual machine"

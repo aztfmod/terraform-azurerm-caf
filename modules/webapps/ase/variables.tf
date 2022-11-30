@@ -54,6 +54,7 @@ variable "front_end_count" {
 }
 
 variable "global_settings" {
+  type        = any
   description = "Global settings object (see module README.md)"
 }
 

@@ -1,5 +1,8 @@
 variable "settings" {}
 variable "resource_group_name" {}
-variable "global_settings" {}
+variable "global_settings" {
+  type = any
+
+}
 variable "location" {}
 

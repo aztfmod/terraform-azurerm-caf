@@ -6,7 +6,10 @@ variable "combined_resources" {
   description = "Provide a map of combined resources for environment_variables_from_resources"
   default     = {}
 }
-variable "global_settings" {}
+variable "global_settings" {
+  type = any
+
+}
 variable "location" {}
 variable "resource_group_name" {}
 variable "settings" {}

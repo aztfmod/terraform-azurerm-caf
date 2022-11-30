@@ -11,6 +11,7 @@ variable "tags" {
   default = {}
 }
 variable "global_settings" {
+  type        = any
   description = "Global settings object (see module README.md)"
 }
 variable "front_door_waf_policies" {

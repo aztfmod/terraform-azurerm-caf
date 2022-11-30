@@ -1,4 +1,7 @@
-variable "global_settings" {}
+variable "global_settings" {
+  type = any
+
+}
 variable "settings" {}
 variable "resource_group" {
   description = "Resource group objects."

@@ -1,4 +1,7 @@
-variable "global_settings" {}
+variable "global_settings" {
+  type = any
+
+}
 variable "client_config" {}
 variable "resource_group_name" {}
 variable "location" {}

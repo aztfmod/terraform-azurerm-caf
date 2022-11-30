@@ -1,5 +1,8 @@
 variable "settings" {}
-variable "global_settings" {}
+variable "global_settings" {
+  type = any
+
+}
 
 variable "application_group_id" {
   default = {}

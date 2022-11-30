@@ -11,4 +11,7 @@ variable "export_policy_rule" {
 variable "tags" {
   default = {}
 }
-variable "global_settings" {}
+variable "global_settings" {
+  type = any
+
+}
