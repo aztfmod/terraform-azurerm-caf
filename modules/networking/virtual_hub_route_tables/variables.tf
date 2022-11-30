@@ -1,7 +1,9 @@
 variable "client_config" {
   type = map(any)
 }
-variable "name" {}
+variable "name" {
+  type = string
+}
 variable "remote_objects" {
   type = map(any)
 }

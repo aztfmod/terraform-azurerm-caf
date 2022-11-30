@@ -1,4 +1,5 @@
 variable "name" {
+  type    = string
   default = null
 }
 variable "log_analytics_workspace_id" {

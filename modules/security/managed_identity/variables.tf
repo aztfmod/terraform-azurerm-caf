@@ -2,7 +2,9 @@ variable "client_config" {
   type        = map(any)
   description = "Client configuration object"
 }
-variable "name" {}
+variable "name" {
+  type = string
+}
 variable "global_settings" {
   type        = any
   description = "Global settings object (see module README.md)"

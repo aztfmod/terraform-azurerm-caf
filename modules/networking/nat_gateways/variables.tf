@@ -1,7 +1,9 @@
 variable "settings" {
   type = any
 }
-variable "name" {}
+variable "name" {
+  type = string
+}
 variable "location" {
   type = string
 }

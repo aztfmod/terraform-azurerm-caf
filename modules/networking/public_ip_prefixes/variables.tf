@@ -1,6 +1,6 @@
 variable "name" {
-  description = "(Required) Specifies the name of the Public IP Prefix resource . Changing this forces a new resource to be created."
   type        = string
+  description = "(Required) Specifies the name of the Public IP Prefix resource . Changing this forces a new resource to be created."
 }
 variable "resource_group_name" {
   type        = string

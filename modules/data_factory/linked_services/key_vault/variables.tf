@@ -10,6 +10,7 @@ variable "settings" {
 }
 
 variable "name" {
+  type        = string
   description = "(Required) Specifies the name of the Data Factory Linked Service Key Vault. Changing this forces a new resource to be created. Must be globally unique."
 }
 

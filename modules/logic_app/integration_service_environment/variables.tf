@@ -23,6 +23,7 @@ variable "settings" {
   type = any
 }
 #variable "name" {
+#type = string
 #  description = "(Required) The name of the Integration Service Environment"
 #}
 

@@ -8,6 +8,7 @@ variable "tags" {
 }
 
 variable "name" {
+  type        = string
   description = "(Required) Name of the App Service"
 }
 

@@ -1,4 +1,5 @@
 variable "name" {
+  type        = string
   description = "(Required) The name of the subnet. Changing this forces a new resource to be created."
 }
 variable "resource_group_name" {

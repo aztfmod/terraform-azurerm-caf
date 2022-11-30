@@ -25,6 +25,8 @@ variable "availability_sets" {}
 variable "tags" {
   default = null
 }
-variable "name" {}
+variable "name" {
+  type = string
+}
 variable "ppg_id" {}
 variable "proximity_placement_groups" {}

@@ -9,6 +9,7 @@ variable "client_config" {
 }
 
 variable "name" {
+  type        = string
   description = "(Required) Name of the Digital Twins Endpoint Eventhub"
 }
 

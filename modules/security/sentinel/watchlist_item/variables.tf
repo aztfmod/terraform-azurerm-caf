@@ -1,4 +1,5 @@
 variable "name" {
+  type    = string
   default = null
 }
 variable "watchlist_id" {

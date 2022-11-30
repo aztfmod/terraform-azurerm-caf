@@ -1,4 +1,5 @@
 variable "name" {
+  type    = string
   default = null
 }
 variable "display_name" {

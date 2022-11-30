@@ -9,8 +9,8 @@ variable "tags" {
 }
 
 variable "name" {
-  description = "(Required) Specifies the name of the Application Insights component. Changing this forces a new resource to be created."
   type        = string
+  description = "(Required) Specifies the name of the Application Insights component. Changing this forces a new resource to be created."
 }
 
 variable "resource_group_name" {

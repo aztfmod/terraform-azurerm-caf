@@ -3,6 +3,7 @@ variable "global_settings" {
   description = "Global settings object (see module README.md)"
 }
 variable "name" {
+  type        = string
   description = "(Required) Name of the IP Group to be created"
 }
 

@@ -18,6 +18,7 @@ variable "existingDnsType" {
   default     = ""
 }
 variable "name" {
+  type        = string
   description = "Name of the domain to purchase. When set to '' a random name is generated (recommended for CI)."
   default     = ""
 }

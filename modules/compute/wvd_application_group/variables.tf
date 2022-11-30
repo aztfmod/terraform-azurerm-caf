@@ -17,7 +17,8 @@ variable "wvd_host_pools" {
   default = {}
 }
 variable "name" {
-  default = {}
+  type = string
+  #  default = {}
 }
 variable "host_pool_id" {
   default = {}

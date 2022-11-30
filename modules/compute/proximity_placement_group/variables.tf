@@ -21,4 +21,6 @@ variable "base_tags" {
 variable "tags" {
   default = null
 }
-variable "name" {}
+variable "name" {
+  type = string
+}

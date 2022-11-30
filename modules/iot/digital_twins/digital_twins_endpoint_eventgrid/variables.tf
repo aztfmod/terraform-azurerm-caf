@@ -8,6 +8,7 @@ variable "client_config" {
   description = "Client configuration object (see module README.md)."
 }
 variable "name" {
+  type        = string
   description = "(Required) Name of the Digital Twins Endpoint Eventhub"
 }
 
