@@ -3,7 +3,9 @@ variable "resource_group_name" {
   type        = string
 }
 variable "mi_name" {}
-variable "settings" {}
+variable "settings" {
+  type = any
+}
 variable "user_principal_name" {
   default = null
 }

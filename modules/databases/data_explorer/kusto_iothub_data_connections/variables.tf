@@ -13,6 +13,7 @@ variable "resource_group_name" {
   description = "(Required) Specifies the Resource Group where the Kusto Database should exist. Changing this forces a new resource to be created."
 }
 variable "settings" {
+  type        = any
   description = "Settings configuration object (see module README.md)."
 }
 variable "cluster_name" {

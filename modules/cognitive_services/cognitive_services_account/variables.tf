@@ -15,5 +15,7 @@ variable "resource_group_name" {
   type        = string
 }
 
-variable "settings" {}
+variable "settings" {
+  type = any
+}
 

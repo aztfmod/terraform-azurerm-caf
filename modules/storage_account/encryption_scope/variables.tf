@@ -3,6 +3,7 @@ variable "client_config" {
 }
 
 variable "settings" {
+  type        = any
   description = "Storage account object."
 }
 

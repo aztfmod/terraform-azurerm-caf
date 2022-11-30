@@ -19,7 +19,9 @@ variable "location" {
   type        = string
 }
 
-variable "settings" {}
+variable "settings" {
+  type = any
+}
 
 variable "kind" {
   description = "(Optional) The kind of the App Service Plan to create. Possible values are Windows (also available as App), Linux, elastic (for Premium Consumption) and FunctionApp (for a Consumption Plan). Defaults to Windows. Changing this forces a new resource to be created."

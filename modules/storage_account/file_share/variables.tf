@@ -1,4 +1,6 @@
-variable "settings" {}
+variable "settings" {
+  type = any
+}
 variable "storage_account_name" {}
 variable "storage_account_id" {}
 variable "recovery_vault" {

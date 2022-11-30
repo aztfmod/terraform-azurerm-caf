@@ -1,4 +1,6 @@
-variable "settings" {}
+variable "settings" {
+  type = any
+}
 variable "group_id" {
   default = null
 }

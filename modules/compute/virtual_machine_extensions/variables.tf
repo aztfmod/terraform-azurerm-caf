@@ -2,6 +2,7 @@ variable "virtual_machine_id" {}
 variable "extension" {}
 variable "extension_name" {}
 variable "settings" {
+  type    = any
   default = {}
 }
 variable "client_config" {

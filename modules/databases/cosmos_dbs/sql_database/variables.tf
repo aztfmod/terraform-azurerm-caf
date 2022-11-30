@@ -1,4 +1,6 @@
-variable "settings" {}
+variable "settings" {
+  type = any
+}
 variable "global_settings" {
   type        = any
   description = "Global settings object (see module README.md)"

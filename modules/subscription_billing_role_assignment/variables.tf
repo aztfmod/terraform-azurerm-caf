@@ -1,6 +1,8 @@
 variable "client_config" {}
 variable "principals" {}
-variable "settings" {}
+variable "settings" {
+  type = any
+}
 variable "cloud" {}
 variable "keyvaults" {}
 variable "billing_role_definition_name" {

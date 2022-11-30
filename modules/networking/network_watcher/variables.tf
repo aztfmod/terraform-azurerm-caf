@@ -7,6 +7,7 @@ variable "location" {
   type        = string
 }
 variable "settings" {
+  type    = any
   default = {}
 }
 variable "tags" {

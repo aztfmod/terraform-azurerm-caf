@@ -9,6 +9,7 @@ variable "virtual_machine_scale_sets" {
   default = {}
 }
 variable "settings" {
+  type        = any
   default     = {}
   description = "Configuration object for the monitor autoscale setting resource"
 }

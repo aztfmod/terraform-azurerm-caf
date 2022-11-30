@@ -1,4 +1,5 @@
 variable "settings" {
+  type    = any
   default = {}
 }
 variable "resource_group_name" {

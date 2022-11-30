@@ -27,6 +27,8 @@ variable "vnet" {
   description = "(Required) Vnet CIDRs of the IP Group to be created"
 }
 
-variable "settings" {}
+variable "settings" {
+  type = any
+}
 
 variable "client_config" {}

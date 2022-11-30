@@ -9,6 +9,7 @@ variable "client_config" {
   description = "Client configuration object (see module README.md)."
 }
 variable "settings" {
+  type        = any
   description = "(Required) Used to handle passthrough paramenters."
 }
 variable "location" {

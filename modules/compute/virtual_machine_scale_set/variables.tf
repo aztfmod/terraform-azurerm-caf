@@ -25,7 +25,9 @@ variable "boot_diagnostics_storage_account" {
   default     = {}
 }
 
-variable "settings" {}
+variable "settings" {
+  type = any
+}
 
 variable "vnets" {}
 

@@ -1,5 +1,7 @@
 variable "client_config" {}
-variable "settings" {}
+variable "settings" {
+  type = any
+}
 variable "virtual_hub_route_tables" {
   default = {}
 }

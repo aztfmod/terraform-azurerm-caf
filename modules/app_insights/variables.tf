@@ -87,4 +87,5 @@ variable "diagnostics" {
   default = null
 }
 variable "settings" {
+  type = any
 }

@@ -2,7 +2,9 @@ variable "global_settings" {
   type = any
 
 }
-variable "settings" {}
+variable "settings" {
+  type = any
+}
 variable "resource_group" {
   description = "Resource group objects."
 }

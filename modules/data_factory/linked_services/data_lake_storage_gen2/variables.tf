@@ -4,6 +4,7 @@ variable "global_settings" {
 }
 
 variable "settings" {
+  type        = any
   description = "Used for general parameter."
 }
 

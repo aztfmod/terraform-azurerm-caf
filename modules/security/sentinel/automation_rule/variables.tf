@@ -5,6 +5,7 @@ variable "display_name" {
   default = null
 }
 variable "settings" {
+  type    = any
   default = null
 }
 variable "log_analytics_workspace_id" {

@@ -1,4 +1,6 @@
-variable "settings" {}
+variable "settings" {
+  type = any
+}
 variable "vault_id" {}
 variable "global_settings" {
   type        = any

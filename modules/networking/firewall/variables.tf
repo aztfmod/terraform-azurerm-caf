@@ -31,7 +31,9 @@ variable "public_ip_id" {
 variable "diagnostics" {
   default = {}
 }
-variable "settings" {}
+variable "settings" {
+  type = any
+}
 
 variable "diagnostic_profiles" {
   default = {}

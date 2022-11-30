@@ -12,7 +12,9 @@ variable "base_tags" {
 variable "diagnostics" {
   default = {}
 }
-variable "settings" {}
+variable "settings" {
+  type = any
+}
 variable "resource_group_name" {}
 variable "location" {}
 variable "keyvault" {

@@ -3,7 +3,9 @@ variable "resource_group_name" {
   type        = string
 }
 variable "client_config" {}
-variable "settings" {}
+variable "settings" {
+  type = any
+}
 variable "global_settings" {
   type        = any
   description = "Global settings object (see module README.md)"

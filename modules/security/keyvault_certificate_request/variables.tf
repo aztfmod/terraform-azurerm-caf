@@ -2,7 +2,9 @@ variable "certificate_issuers" {
   default = {}
 }
 variable "keyvault_id" {}
-variable "settings" {}
+variable "settings" {
+  type = any
+}
 variable "domain_name_registrations" {
   default = {}
 }

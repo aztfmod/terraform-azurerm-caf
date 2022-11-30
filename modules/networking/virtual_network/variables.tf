@@ -18,6 +18,7 @@ variable "diagnostics" {
 }
 
 variable "settings" {
+  type        = any
   description = "(Required) configuration object describing the networking configuration, as described in README"
 }
 

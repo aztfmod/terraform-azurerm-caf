@@ -1,4 +1,5 @@
 variable "settings" {
+  type        = any
   description = "Configuration object for the Synapse workspace."
 }
 

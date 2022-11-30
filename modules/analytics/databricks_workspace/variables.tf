@@ -1,4 +1,5 @@
 variable "settings" {
+  type        = any
   description = "Configuration object for the Databricks workspace."
   # # optional fields supported after TF14
   # type = object({

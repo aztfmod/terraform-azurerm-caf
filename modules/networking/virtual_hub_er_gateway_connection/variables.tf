@@ -7,6 +7,8 @@ variable "express_route_circuit_id" {}
 variable "express_route_gateway_name" {}
 variable "location" {}
 variable "resource_group_name" {}
-variable "settings" {}
+variable "settings" {
+  type = any
+}
 variable "virtual_hub_id" {}
 variable "virtual_network_gateway_id" {}

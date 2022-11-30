@@ -10,7 +10,9 @@ variable "base_tags" {
 variable "location" {
   description = "location of the resource"
 }
-variable "settings" {}
+variable "settings" {
+  type = any
+}
 
 variable "global_settings" {
   type        = any

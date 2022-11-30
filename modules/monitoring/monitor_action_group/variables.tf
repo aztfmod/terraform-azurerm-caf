@@ -9,6 +9,7 @@ variable "resource_group_name" {
 }
 
 variable "settings" {
+  type        = any
   description = "Configuration object for the monitor action group"
 }
 variable "remote_objects" {

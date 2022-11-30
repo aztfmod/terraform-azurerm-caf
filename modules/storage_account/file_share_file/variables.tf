@@ -1,2 +1,4 @@
 variable "share_id" {}
-variable "settings" {}
+variable "settings" {
+  type = any
+}

@@ -5,7 +5,9 @@ variable "resource_group_name" {
 variable "location" {
   description = "location of the resource"
 }
-variable "settings" {}
+variable "settings" {
+  type = any
+}
 variable "base_tags" {
   description = "Base tags for the resource to be inherited from the resource group."
   type        = map(any)

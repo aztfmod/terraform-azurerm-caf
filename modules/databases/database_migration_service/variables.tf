@@ -3,6 +3,7 @@ variable "global_settings" {
   description = "Global settings object (see module README.md)"
 }
 variable "settings" {
+  type        = any
   description = "Configuration object for the database migration service. Refer to documentation for details."
 }
 variable "resource_group_name" {

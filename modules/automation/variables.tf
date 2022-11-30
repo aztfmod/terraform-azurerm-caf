@@ -4,6 +4,7 @@ variable "location" {
 }
 
 variable "settings" {
+  type        = any
   description = "Configuration object for the Automation account."
   # # optional fields supported after TF14
   # type = object({

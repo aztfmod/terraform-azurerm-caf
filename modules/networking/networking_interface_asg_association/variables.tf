@@ -25,6 +25,7 @@ variable "application_security_groups" {
 }
 
 variable "settings" {
+  type    = any
   default = {}
 }
 

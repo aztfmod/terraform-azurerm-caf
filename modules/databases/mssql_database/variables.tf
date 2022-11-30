@@ -4,7 +4,9 @@ variable "global_settings" {
 }
 variable "cloud" {}
 variable "location" {}
-variable "settings" {}
+variable "settings" {
+  type = any
+}
 variable "server_id" {}
 variable "server_name" {}
 variable "storage_accounts" {}

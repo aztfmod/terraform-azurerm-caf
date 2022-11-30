@@ -44,5 +44,6 @@ variable "trigger_threshold" {
   default = null
 }
 variable "settings" {
+  type    = any
   default = null
 }

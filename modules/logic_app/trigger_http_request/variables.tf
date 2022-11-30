@@ -6,6 +6,7 @@ variable "client_config" {
   description = "Client configuration object (see module README.md)."
 }
 variable "settings" {
+  type        = any
   description = "Settings object (see module README.md)."
 }
 variable "logic_app_id" {

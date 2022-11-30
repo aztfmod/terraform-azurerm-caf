@@ -3,6 +3,7 @@ variable "global_settings" {
   default = {}
 }
 variable "settings" {
+  type    = any
   default = {}
 }
 variable "client_config" {

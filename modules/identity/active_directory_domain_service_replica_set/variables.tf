@@ -1,4 +1,5 @@
 variable "settings" {
+  type        = any
   description = "(Required) Used to handle passthrough paramenters."
 }
 variable "remote_objects" {

@@ -6,7 +6,9 @@ variable "client_config" {
   description = "Client configuration object (see module README.md)."
 }
 variable "resource_groups" {}
-variable "settings" {}
+variable "settings" {
+  type = any
+}
 variable "vnets" {
   default = {}
 }

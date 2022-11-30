@@ -7,5 +7,7 @@ variable "global_settings" {
   type = any
 
 }
-variable "settings" {}
+variable "settings" {
+  type = any
+}
 variable "base_tags" {}

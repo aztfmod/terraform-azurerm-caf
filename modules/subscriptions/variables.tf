@@ -1,4 +1,5 @@
 variable "settings" {
+  type = any
   # Commenting as current validation rule cannot verify if the var.subscription_key == "logged_in_subscription")
   # validation {
   #   condition     = can(var.settings.subscription_id) || (can(var.settings.billing_account_name) && (can(var.settings.enrollment_account_name) || can([var.settings.billing_profile_name, var.settings.invoice_section_name])))

@@ -10,6 +10,7 @@ variable "location" {
   type        = string
 }
 variable "settings" {
+  type        = any
   description = "Settings configuration object (see module README.md)."
 }
 variable "resource_group_name" {

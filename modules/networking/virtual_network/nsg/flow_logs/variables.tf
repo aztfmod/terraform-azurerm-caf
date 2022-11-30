@@ -16,6 +16,7 @@ variable "diagnostics" {
 }
 
 variable "settings" {
+  type    = any
   default = {}
 }
 

@@ -13,6 +13,7 @@ variable "resource_group_name" {
   description = "Name of the existing resource group to deploy the virtual machine"
 }
 variable "settings" {
+  type        = any
   description = "Settings configuration object (see module README.md)."
 }
 variable "cluster_name" {

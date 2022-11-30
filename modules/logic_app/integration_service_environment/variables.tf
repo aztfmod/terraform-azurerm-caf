@@ -16,7 +16,9 @@ variable "base_tags" {
   type        = map(any)
 }
 
-variable "settings" {}
+variable "settings" {
+  type = any
+}
 #variable "name" {
 #  description = "(Required) The name of the Integration Service Environment"
 #}

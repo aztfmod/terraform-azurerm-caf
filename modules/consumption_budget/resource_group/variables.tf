@@ -12,5 +12,6 @@ variable "local_combined_resources" {
 }
 
 variable "settings" {
+  type        = any
   description = "Configuration object for the consumption budget resource group"
 }

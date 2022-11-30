@@ -3,7 +3,9 @@ variable "global_settings" {
 
 }
 variable "client_config" {}
-variable "settings" {}
+variable "settings" {
+  type = any
+}
 
 variable "name" {
   description = "(Required) Specifies the name of the Data Factory Linked Service Key Vault. Changing this forces a new resource to be created. Must be globally unique."

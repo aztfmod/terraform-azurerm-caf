@@ -13,6 +13,7 @@ variable "private_dns" {
 }
 
 variable "settings" {
+  type = any
 }
 
 variable "base_tags" {

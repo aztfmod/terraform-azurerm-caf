@@ -1,4 +1,6 @@
-variable "settings" {}
+variable "settings" {
+  type = any
+}
 variable "resource_group_name" {}
 variable "location" {}
 variable "account_name" {}

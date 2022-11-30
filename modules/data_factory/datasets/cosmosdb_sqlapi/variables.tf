@@ -6,6 +6,7 @@ variable "client_config" {
   description = "Client configuration object (see module README.md)."
 }
 variable "settings" {
+  type        = any
   description = "Used for general parameter."
 }
 variable "resource_group_name" {
