@@ -15,6 +15,7 @@ variable "tags" {
 }
 
 variable "resource_group_name" {
+  type        = string
   description = "(Required) Resource Group of the Azure Firewall to be created"
 }
 

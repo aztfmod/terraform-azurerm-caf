@@ -13,7 +13,9 @@ variable "global_settings" {
 
 }
 variable "location" {}
-variable "resource_group_name" {}
+variable "resource_group_name" {
+  type = string
+}
 variable "settings" {
   type = any
 }

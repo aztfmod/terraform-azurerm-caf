@@ -12,8 +12,8 @@ variable "location" {
 }
 
 variable "resource_group_name" {
-  description = "Name of the existing resource group to deploy the virtual machine"
   type        = string
+  description = "Name of the existing resource group to deploy the virtual machine"
 }
 
 variable "settings" {

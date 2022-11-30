@@ -20,6 +20,7 @@ variable "base_tags" {
   default     = {}
 }
 variable "resource_group_name" {
+  type        = string
   description = " The name of the Resource Group in which to create the Load Balancer."
 }
 variable "location" {

@@ -23,5 +23,6 @@ variable "frontdoor_name" {
   description = " The name of the Front Door instance. Changing this forces a new resource to be created."
 }
 variable "resource_group_name" {
+  type        = string
   description = " The name of the resource group. Changing this forces a new resource to be created."
 }

@@ -10,6 +10,7 @@ variable "location" {
   description = "(Required) The Azure Region where the Integration Service Environment should exist"
 }
 variable "resource_group_name" {
+  type        = string
   description = "(Required) The name of the Resource Group where the Integration Service Environment should exist"
 }
 variable "base_tags" {

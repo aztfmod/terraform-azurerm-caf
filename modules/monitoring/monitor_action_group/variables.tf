@@ -4,8 +4,8 @@ variable "global_settings" {
 }
 
 variable "resource_group_name" {
-  description = "The name of the resource group in which to create the Action Group instance"
   type        = string
+  description = "The name of the resource group in which to create the Action Group instance"
 }
 
 variable "settings" {

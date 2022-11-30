@@ -1,6 +1,6 @@
 variable "resource_group_name" {
-  description = "The name of the resource group where to create the resource."
   type        = string
+  description = "The name of the resource group where to create the resource."
 }
 
 variable "global_settings" {

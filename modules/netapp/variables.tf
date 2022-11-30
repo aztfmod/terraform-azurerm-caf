@@ -8,7 +8,9 @@ variable "client_config" {
 variable "settings" {
   type = any
 }
-variable "resource_group_name" {}
+variable "resource_group_name" {
+  type = string
+}
 variable "location" {}
 variable "base_tags" {
   default = {}

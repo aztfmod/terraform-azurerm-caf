@@ -1,7 +1,7 @@
 
 variable "resource_group_name" {
-  description = "(Required) Name of the resource group where to create the resource. Changing this forces a new resource to be created. "
   type        = string
+  description = "(Required) Name of the resource group where to create the resource. Changing this forces a new resource to be created. "
 }
 
 variable "location" {

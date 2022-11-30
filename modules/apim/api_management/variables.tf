@@ -26,5 +26,6 @@ variable "base_tags" {
   default     = {}
 }
 variable "resource_group_name" {
+  type        = string
   description = " The name of the Resource Group in which the API Management Service should be exist. Changing this forces a new resource to be created."
 }

@@ -20,5 +20,6 @@ variable "base_tags" {
   default     = {}
 }
 variable "resource_group_name" {
+  type        = string
   description = " The name of the Resource Group where the Communication Service should exist. Changing this forces a new Communication Service to be created."
 }

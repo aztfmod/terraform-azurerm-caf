@@ -17,6 +17,7 @@ variable "global_settings" {
 }
 
 variable "resource_group_name" {
+  type        = string
   description = "(Required) The name of the Resource Group where the resource should exist. Changing this forces a new resource to be created."
 }
 

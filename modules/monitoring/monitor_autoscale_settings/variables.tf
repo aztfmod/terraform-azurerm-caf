@@ -5,7 +5,9 @@ variable "global_settings" {
 variable "client_config" {
   type = map(any)
 }
-variable "resource_group_name" {}
+variable "resource_group_name" {
+  type = string
+}
 variable "location" {}
 variable "virtual_machine_scale_sets" {
   default = {}

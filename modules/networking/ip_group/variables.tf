@@ -11,6 +11,7 @@ variable "tags" {
 }
 
 variable "resource_group_name" {
+  type        = string
   description = "(Required) Resource Group name of the IP Group to be created"
 }
 

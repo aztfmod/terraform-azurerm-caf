@@ -24,5 +24,6 @@ variable "location" {
   default     = null
 }
 variable "resource_group_name" {
+  type        = string
   description = "(Required) Resource group of the Logic App"
 }

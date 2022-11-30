@@ -8,7 +8,9 @@ variable "authorization_key" {}
 variable "express_route_circuit_id" {}
 variable "express_route_gateway_name" {}
 variable "location" {}
-variable "resource_group_name" {}
+variable "resource_group_name" {
+  type = string
+}
 variable "settings" {
   type = any
 }

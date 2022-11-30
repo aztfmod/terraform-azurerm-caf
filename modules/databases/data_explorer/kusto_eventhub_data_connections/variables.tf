@@ -15,6 +15,7 @@ variable "settings" {
   description = "Settings configuration object (see module README.md)."
 }
 variable "resource_group_name" {
+  type        = string
   description = "(Required) Specifies the Resource Group where the Kusto Database should exist. Changing this forces a new resource to be created."
 }
 variable "cluster_name" {

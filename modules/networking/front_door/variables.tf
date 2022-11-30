@@ -23,7 +23,9 @@ variable "keyvault_certificate_requests" {
 variable "keyvaults" {
   default = {}
 }
-variable "resource_group_name" {}
+variable "resource_group_name" {
+  type = string
+}
 variable "settings" {
   type = any
 }

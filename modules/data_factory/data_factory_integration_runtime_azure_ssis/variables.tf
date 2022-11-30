@@ -23,6 +23,7 @@ variable "data_factory_id" {
   description = " Specifies the ID of the Data Factory the Azure-SSIS Integration Runtime belongs to. Changing this forces a new resource to be created."
 }
 variable "resource_group_name" {
+  type        = string
   description = " The name of the resource group in which to create the Azure-SSIS Integration Runtime. Changing this forces a new resource to be created."
 }
 

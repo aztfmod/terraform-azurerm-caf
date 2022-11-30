@@ -1,4 +1,6 @@
-variable "resource_group_name" {}
+variable "resource_group_name" {
+  type = string
+}
 variable "build_resource_group_name" {
   default = {}
 }

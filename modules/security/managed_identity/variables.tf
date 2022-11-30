@@ -22,5 +22,6 @@ variable "base_tags" {
   type        = map(any)
 }
 variable "resource_group_name" {
+  type        = string
   description = "Name of the existing resource group to deploy the resource"
 }

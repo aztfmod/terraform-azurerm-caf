@@ -16,6 +16,7 @@ variable "location" {
 }
 
 variable "resource_group_name" {
+  type        = string
   description = "(Required) Resource group of the Static Site"
 }
 

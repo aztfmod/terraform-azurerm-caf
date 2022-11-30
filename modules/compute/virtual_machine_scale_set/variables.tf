@@ -13,6 +13,7 @@ variable "location" {
 variable "application_security_groups" {}
 variable "application_gateways" {}
 variable "resource_group_name" {
+  type        = string
   description = "Name of the existing resource group to deploy the virtual machine"
 }
 

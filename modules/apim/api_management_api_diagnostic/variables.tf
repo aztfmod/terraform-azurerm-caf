@@ -29,5 +29,6 @@ variable "api_name" {
   description = " The name of the API in the API Management Service instance. Changing this forces a new API Management Service API Diagnostics Logs to be created."
 }
 variable "resource_group_name" {
+  type        = string
   description = " The name of the Resource Group where the API Management Service API Diagnostics Logs should exist. Changing this forces a new API Management Service API Diagnostics Logs to be created."
 }

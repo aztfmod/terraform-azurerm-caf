@@ -7,5 +7,6 @@ variable "recovery_vault" {
   default = {}
 }
 variable "resource_group_name" {
+  type    = string
   default = ""
 }

@@ -12,7 +12,9 @@ variable "settings" {
 }
 variable "location" {}
 variable "vnets" {}
-variable "resource_group_name" {}
+variable "resource_group_name" {
+  type = string
+}
 variable "admin_group_object_ids" {}
 variable "base_tags" {
   description = "Base tags for the resource to be inherited from the resource group."

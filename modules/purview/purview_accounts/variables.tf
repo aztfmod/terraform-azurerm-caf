@@ -20,6 +20,7 @@ variable "base_tags" {
   default     = {}
 }
 variable "resource_group_name" {
+  type        = string
   description = " The name of the Resource Group where the Purview Account should exist. Changing this forces a new Purview Account to be created."
 }
 variable "location" {

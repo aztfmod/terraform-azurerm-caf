@@ -33,6 +33,7 @@ variable "client_config" {
 # }
 
 variable "resource_group_name" {
+  type        = string
   description = "The resource group object where to create the resource."
 }
 

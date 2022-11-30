@@ -19,8 +19,8 @@ variable "location" {
 }
 
 variable "resource_group_name" {
-  description = "(Required) Name of the resource group to create the hub resources"
   type        = string
+  description = "(Required) Name of the resource group to create the hub resources"
 }
 
 

@@ -16,7 +16,9 @@ variable "diagnostics" {
 variable "settings" {
   type = any
 }
-variable "resource_group_name" {}
+variable "resource_group_name" {
+  type = string
+}
 variable "location" {}
 variable "keyvault" {
   default = null

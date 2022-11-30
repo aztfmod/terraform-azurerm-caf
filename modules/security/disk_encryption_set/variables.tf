@@ -13,5 +13,7 @@ variable "settings" {
 }
 variable "keyvault_id" {}
 variable "key_vault_key_id" {}
-variable "resource_group_name" {}
+variable "resource_group_name" {
+  type = string
+}
 variable "location" {}

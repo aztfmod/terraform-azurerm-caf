@@ -1,4 +1,6 @@
-variable "resource_group_name" {}
+variable "resource_group_name" {
+  type = string
+}
 variable "mi_name" {}
 variable "keyvault_key" {}
 variable "is_secondary_tde" {

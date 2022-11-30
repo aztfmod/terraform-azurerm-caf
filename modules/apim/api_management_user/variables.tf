@@ -23,5 +23,6 @@ variable "api_management_name" {
   description = " The name of the API Management Service in which the User should be created. Changing this forces a new resource to be created."
 }
 variable "resource_group_name" {
+  type        = string
   description = " The name of the Resource Group in which the API Management Service exists. Changing this forces a new resource to be created."
 }
