@@ -27,15 +27,16 @@ repos:
   hooks:
     - id: terraform_fmt
     - id: terraform_validate
-      exclude: '^[^/]+$'
+      exclude: networking_virtual_hub_connection.tf           #excluding since it contains azurerm.vhub provider
     - id: terraform_docs
       exclude: .travis
     - id: terraform_docs_without_aggregate_type_defaults
       exclude: .travis
-    #- id: terraform_tflint
-    #  args:
-    #    - --args=--no-color
-    #    - --args=--disable-rule=terraform_unused_declarations
+    - id: terraform_tflint
+      exclude: examples                                       #excluding example tfvars since no need to fix it
+      args:
+        - --args=--disable-rule=terraform_unused_declarations #it is under azure control,variable/local declaraed might be used in future
+        - --args=--disable-rule=terraform_typed_variables     #there is around 2K warning, separate PR will be raised to fix this
     #- id: terraform_tfsec
     #- id: terraform_checkov
     #- id: tfupdate
