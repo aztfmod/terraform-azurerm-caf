@@ -15,8 +15,8 @@ variable "location" {
   type        = string
 }
 variable "remote_objects" {
-  description = "Combined objects for virtual networks used in the module."
   type        = map(any)
+  description = "Combined objects for virtual networks used in the module."
 }
 variable "base_tags" {
   description = "Base tags for the resource to be inherited from the resource group."

@@ -71,5 +71,6 @@ variable "dynamic_app_settings" {
 }
 
 variable "remote_objects" {
+  type    = map(any)
   default = null
 }

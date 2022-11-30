@@ -143,6 +143,7 @@ variable "billing" {
 }
 
 variable "remote_objects" {
+  type        = map(any)
   description = "Allow the landing zone to retrieve remote tfstate objects and pass them to the CAF module."
   default     = {}
 }

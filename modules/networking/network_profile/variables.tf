@@ -10,7 +10,9 @@ variable "settings" {
   type = any
 }
 variable "resource_group" {}
-variable "remote_objects" {}
+variable "remote_objects" {
+  type = map(any)
+}
 variable "base_tags" {
   default = {}
 }

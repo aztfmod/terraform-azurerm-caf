@@ -24,5 +24,6 @@ variable "log_analytics_workspaces" {
   default = {}
 }
 variable "remote_objects" {
+  type    = map(any)
   default = {}
 }

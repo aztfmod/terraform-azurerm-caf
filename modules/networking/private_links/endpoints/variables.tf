@@ -12,7 +12,9 @@ variable "settings" {
 variable "resource_groups" {}
 variable "private_endpoints" {}
 variable "private_dns" {}
-variable "remote_objects" {}
+variable "remote_objects" {
+  type = map(any)
+}
 variable "vnet" {}
 variable "base_tags" {
   description = "Base tags for the resource to be inherited from the resource group."

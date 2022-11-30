@@ -32,7 +32,9 @@ variable "diagnostic_profiles" {
 variable "diagnostics" {
   default = {}
 }
-variable "remote_objects" {}
+variable "remote_objects" {
+  type = map(any)
+}
 variable "tags" {
   default     = null
   description = "(Optional) A mapping of tags to assign to the resource"

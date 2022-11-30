@@ -3,6 +3,7 @@ variable "settings" {
   description = "(Required) Used to handle passthrough paramenters."
 }
 variable "remote_objects" {
+  type        = map(any)
   description = "The remote objects the module depends on."
 }
 variable "location" {

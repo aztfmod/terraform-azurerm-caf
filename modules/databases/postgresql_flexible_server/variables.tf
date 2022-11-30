@@ -22,6 +22,7 @@ variable "resource_group_name" {
 }
 
 variable "remote_objects" {
+  type        = map(any)
   description = "(Required) Specifies the supported Azure location where to create the resource. Changing this forces a new resource to be created."
   default     = {}
 }

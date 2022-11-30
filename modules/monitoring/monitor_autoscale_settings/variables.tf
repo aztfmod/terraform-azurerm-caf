@@ -18,5 +18,6 @@ variable "settings" {
   description = "Configuration object for the monitor autoscale setting resource"
 }
 variable "remote_objects" {
+  type    = map(any)
   default = {}
 }
