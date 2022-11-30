@@ -21,6 +21,7 @@ variable "managed_identities" {
 }
 # For diagnostics settings
 variable "diagnostics" {
+  type    = map(any)
   default = {}
 }
 variable "base_tags" {

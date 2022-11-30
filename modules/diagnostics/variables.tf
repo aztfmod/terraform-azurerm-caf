@@ -8,6 +8,7 @@ variable "resource_location" {
 }
 
 variable "diagnostics" {
+  type        = map(any)
   description = "(Required) Contains the diagnostics setting object."
 }
 

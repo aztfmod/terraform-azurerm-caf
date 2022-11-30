@@ -17,5 +17,6 @@ variable "global_settings" {
 
 # For diagnostics settings
 variable "diagnostics" {
+  type    = map(any)
   default = {}
 }

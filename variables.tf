@@ -165,6 +165,7 @@ variable "log_analytics" {
 }
 
 variable "diagnostics" {
+  type        = map(any)
   description = "Configuration object - Diagnostics object."
   default     = {}
 }

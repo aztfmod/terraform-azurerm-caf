@@ -44,6 +44,7 @@ variable "managed_identities" {
 }
 
 variable "diagnostics" {
+  type    = map(any)
   default = {}
 }
 variable "public_ip_addresses" {

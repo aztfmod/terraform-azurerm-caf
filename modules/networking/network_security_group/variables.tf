@@ -10,6 +10,7 @@ variable "location" {
 }
 
 variable "diagnostics" {
+  type        = map(any)
   description = "(Required) Diagnostics object with the definitions and destination services"
 }
 

@@ -33,4 +33,6 @@ variable "key_vault_id" {
 variable "diagnostic_profiles" {
   default = {}
 }
-variable "diagnostics" {}
+variable "diagnostics" {
+  type = map(any)
+}

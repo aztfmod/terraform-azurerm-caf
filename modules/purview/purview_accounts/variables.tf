@@ -27,7 +27,9 @@ variable "resource_group_name" {
 variable "location" {
   type = string
 }
-variable "diagnostics" {}
+variable "diagnostics" {
+  type = map(any)
+}
 variable "private_dns" {
   default = {}
 }

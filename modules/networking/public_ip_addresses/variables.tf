@@ -88,6 +88,7 @@ variable "zones" {
 }
 
 variable "diagnostics" {
+  type        = map(any)
   description = "(Optional) Diagnostics objects where to deploy the diagnostics profiles."
   default     = {}
 }

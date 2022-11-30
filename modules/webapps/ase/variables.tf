@@ -33,6 +33,7 @@ variable "subnet_name" {}
 variable "internalLoadBalancingMode" {}
 
 variable "diagnostics" {
+  type    = map(any)
   default = null
 }
 

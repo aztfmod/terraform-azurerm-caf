@@ -11,6 +11,7 @@ variable "base_tags" {
   type        = map(any)
 }
 variable "diagnostics" {
+  type    = map(any)
   default = {}
 }
 variable "settings" {

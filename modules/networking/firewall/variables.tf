@@ -31,6 +31,7 @@ variable "public_ip_id" {
 }
 
 variable "diagnostics" {
+  type    = map(any)
   default = {}
 }
 variable "settings" {

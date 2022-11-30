@@ -22,6 +22,7 @@ variable "private_dns" {
   default = {}
 }
 variable "diagnostics" {
+  type    = map(any)
   default = null
 }
 variable "diagnostic_profiles" {

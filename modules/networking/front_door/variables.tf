@@ -6,7 +6,9 @@ variable "client_config" {
   type        = map(any)
   description = "Client configuration object (see module README.md)."
 }
-variable "diagnostics" {}
+variable "diagnostics" {
+  type = map(any)
+}
 variable "front_door_waf_policies" {
   default = {}
 }

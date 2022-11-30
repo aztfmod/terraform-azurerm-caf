@@ -13,6 +13,7 @@ variable "client_config" {
 }
 
 variable "diagnostics" {
+  type        = map(any)
   description = "(Required) Contains the diagnostics setting object."
 }
 

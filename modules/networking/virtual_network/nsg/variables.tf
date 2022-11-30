@@ -23,6 +23,7 @@ variable "location" {
 }
 
 variable "diagnostics" {
+  type = map(any)
 
 }
 

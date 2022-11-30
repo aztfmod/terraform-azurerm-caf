@@ -10,7 +10,9 @@ variable "location" {
   type        = string
   description = "(Required) Specifies the supported Azure location where to create the resource. Changing this forces a new resource to be created."
 }
-variable "diagnostics" {}
+variable "diagnostics" {
+  type = map(any)
+}
 variable "global_settings" {
   type        = any
   description = "Global settings object (see module README.md)"

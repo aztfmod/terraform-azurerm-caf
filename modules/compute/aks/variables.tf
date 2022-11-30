@@ -6,7 +6,9 @@ variable "global_settings" {
 variable "client_config" {
   type = map(any)
 }
-variable "diagnostics" {}
+variable "diagnostics" {
+  type = map(any)
+}
 variable "settings" {
   type = any
 }

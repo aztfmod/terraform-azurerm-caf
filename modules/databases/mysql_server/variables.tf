@@ -31,6 +31,7 @@ variable "network_security_group_definition" {
   default = null
 }
 variable "diagnostics" {
+  type    = map(any)
   default = {}
 }
 variable "base_tags" {
