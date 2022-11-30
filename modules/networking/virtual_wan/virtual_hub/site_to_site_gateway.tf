@@ -16,7 +16,7 @@ resource "azurerm_vpn_gateway" "s2s_gateway" {
   depends_on = [azurerm_virtual_hub.vwan_hub]
   count      = try(var.virtual_hub_config.deploy_s2s, false) ? 1 : 0
 
-  name                = azurecaf_name.s2s_gateway.0.result
+  name                = azurecaf_name.s2s_gateway[0].result
   location            = var.location
   resource_group_name = var.resource_group_name
   tags                = local.tags

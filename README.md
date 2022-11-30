@@ -64,7 +64,9 @@ contact [opencode@microsoft.com](mailto:opencode@microsoft.com) with any additio
 | <a name="requirement_azuread"></a> [azuread](#requirement\_azuread) | ~> 2.30.0 |
 | <a name="requirement_azurecaf"></a> [azurecaf](#requirement\_azurecaf) | ~> 1.2.0 |
 | <a name="requirement_azurerm"></a> [azurerm](#requirement\_azurerm) | ~> 2.99 |
+| <a name="requirement_null"></a> [null](#requirement\_null) | ~> 3.2.1 |
 | <a name="requirement_random"></a> [random](#requirement\_random) | ~> 3.3.1 |
+| <a name="requirement_time"></a> [time](#requirement\_time) | ~> 0.9.1 |
 
 ## Providers
 
@@ -76,7 +78,7 @@ contact [opencode@microsoft.com](mailto:opencode@microsoft.com) with any additio
 | <a name="provider_azurerm"></a> [azurerm](#provider\_azurerm) | ~> 2.99 |
 | <a name="provider_azurerm.vhub"></a> [azurerm.vhub](#provider\_azurerm.vhub) | ~> 2.99 |
 | <a name="provider_random"></a> [random](#provider\_random) | ~> 3.3.1 |
-| <a name="provider_time"></a> [time](#provider\_time) | n/a |
+| <a name="provider_time"></a> [time](#provider\_time) | ~> 0.9.1 |
 
 ## Modules
 

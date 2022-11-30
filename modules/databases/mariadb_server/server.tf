@@ -4,7 +4,7 @@ resource "azurerm_mariadb_server" "mariadb" {
   resource_group_name = var.resource_group_name
 
   administrator_login          = var.settings.administrator_login
-  administrator_login_password = try(var.settings.administrator_login_password, azurerm_key_vault_secret.mariadb_admin_password.0.value)
+  administrator_login_password = try(var.settings.administrator_login_password, azurerm_key_vault_secret.mariadb_admin_password[0].value)
 
   sku_name   = var.settings.sku_name
   storage_mb = var.settings.storage_mb
@@ -36,7 +36,7 @@ resource "azurerm_key_vault_secret" "mariadb_admin_password" {
   count = try(var.settings.administrator_login_password, null) == null ? 1 : 0
 
   name         = format("%s-password", azurecaf_name.mariadb.result)
-  value        = random_password.mariadb_admin.0.result
+  value        = random_password.mariadb_admin[0].result
   key_vault_id = var.keyvault_id
 
   lifecycle {

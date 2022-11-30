@@ -122,9 +122,9 @@ locals {
       for obj in try(var.settings.vnet.dns_servers_keys, {}) : #o.ip
       coalesce(
         try(var.remote_dns[obj.resource_type][obj.lz_key][obj.key].virtual_hub[obj.interface_index].private_ip_address, null),
-        try(var.remote_dns[obj.resource_type][obj.lz_key][obj.key].virtual_hub.0.private_ip_address, null),
+        try(var.remote_dns[obj.resource_type][obj.lz_key][obj.key].virtual_hub[0].private_ip_address, null),
         try(var.remote_dns[obj.resource_type][obj.lz_key][obj.key].ip_configuration[obj.interface_index].private_ip_address, null),
-        try(var.remote_dns[obj.resource_type][obj.lz_key][obj.key].ip_configuration.0.private_ip_address, null)
+        try(var.remote_dns[obj.resource_type][obj.lz_key][obj.key].ip_configuration[0].private_ip_address, null)
       )
       if contains(["azurerm_firewall", "azurerm_firewalls"], obj.resource_type)
     ],

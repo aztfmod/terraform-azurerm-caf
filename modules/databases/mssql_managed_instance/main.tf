@@ -1,14 +1,29 @@
 terraform {
+  required_version = ">= 0.13"
   required_providers {
     azurerm = {
       source  = "hashicorp/azurerm"
       version = "~> 2.99"
     }
     azurecaf = {
-      source = "aztfmod/azurecaf"
+      source  = "aztfmod/azurecaf"
+      version = "~> 1.2.0"
     }
     azapi = {
-      source = "azure/azapi"
+      source  = "azure/azapi"
+      version = "~> 0.2.0"
+    }
+    external = {
+      source  = "hashicorp/external"
+      version = "~> 2.2.3"
+    }
+    null = {
+      source  = "hashicorp/null"
+      version = "~> 3.2.1"
+    }
+    random = {
+      version = "~> 3.3.1"
+      source  = "hashicorp/random"
     }
   }
 
@@ -39,7 +54,7 @@ locals {
       value = var.settings.administratorLogin
     }
     administratorLoginPassword = {
-      value = try(var.settings.administratorLoginPassword, data.external.sqlmi_admin_password.0.result.value)
+      value = try(var.settings.administratorLoginPassword, data.external.sqlmi_admin_password[0].result.value)
     }
     subnetId = {
       value = var.subnet_id
