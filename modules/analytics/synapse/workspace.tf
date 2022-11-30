@@ -17,7 +17,7 @@ resource "azurerm_synapse_workspace" "ws" {
   location                             = var.location
   storage_data_lake_gen2_filesystem_id = var.storage_data_lake_gen2_filesystem_id
   sql_administrator_login              = var.settings.sql_administrator_login
-  sql_administrator_login_password     = try(var.settings.sql_administrator_login_password, random_password.sql_admin.0.result)
+  sql_administrator_login_password     = try(var.settings.sql_administrator_login_password, random_password.sql_admin[0].result)
   managed_virtual_network_enabled      = try(var.settings.managed_virtual_network_enabled, false)
   sql_identity_control_enabled         = try(var.settings.sql_identity_control_enabled, null)
   managed_resource_group_name          = try(var.settings.managed_resource_group_name, null)
@@ -83,7 +83,7 @@ resource "azurerm_key_vault_secret" "sql_admin_password" {
   count = try(var.settings.sql_administrator_login_password, null) == null ? 1 : 0
 
   name         = format("%s-synapse-sql-admin-password", azurerm_synapse_workspace.ws.name)
-  value        = random_password.sql_admin.0.result
+  value        = random_password.sql_admin[0].result
   key_vault_id = var.keyvault_id
 
   lifecycle {

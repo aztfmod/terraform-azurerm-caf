@@ -63,9 +63,9 @@ resource "time_sleep" "wait_new_password_propagation" {
   destroy_duration = "15m"
 
   triggers = {
-    key  = try(time_rotating.key.0.rotation_rfc3339, null)
-    key0 = try(time_rotating.key0.0.rotation_rfc3339, null)
-    key1 = try(time_rotating.key1.0.rotation_rfc3339, null)
+    key  = try(time_rotating.key[0].rotation_rfc3339, null)
+    key0 = try(time_rotating.key0[0].rotation_rfc3339, null)
+    key1 = try(time_rotating.key1[0].rotation_rfc3339, null)
   }
 }
 
@@ -79,7 +79,7 @@ resource "azurerm_key_vault_secret" "client_secret" {
   depends_on = [time_sleep.wait_new_password_propagation]
 
   name            = format("%s-client-secret", each.value.secret_prefix)
-  value           = local.random_key == "key0" ? sensitive(azuread_application_password.key0.0.value) : try(sensitive(azuread_application_password.key1.0.value), sensitive(azuread_application_password.key.0.value))
+  value           = local.random_key == "key0" ? sensitive(azuread_application_password.key0[0].value) : try(sensitive(azuread_application_password.key1[0].value), sensitive(azuread_application_password.key[0].value))
   key_vault_id    = try(each.value.lz_key, null) == null ? var.keyvaults[var.client_config.landingzone_key][each.key].id : var.keyvaults[each.value.lz_key][each.key].id
   expiration_date = local.random_key == "key0" ? local.expiration_date.key0 : try(local.expiration_date.key1, local.expiration_date.key)
 

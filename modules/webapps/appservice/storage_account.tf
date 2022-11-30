@@ -8,7 +8,7 @@ data "azurerm_storage_account" "backup_storage_account" {
 data "azurerm_storage_account_blob_container_sas" "backup" {
   count = can(var.settings.backup) ? 1 : 0
 
-  connection_string = data.azurerm_storage_account.backup_storage_account.0.primary_connection_string
+  connection_string = data.azurerm_storage_account.backup_storage_account[0].primary_connection_string
   container_name    = local.backup_storage_account.containers[var.settings.backup.container_key].name
   https_only        = true
 
@@ -28,7 +28,7 @@ data "azurerm_storage_account_blob_container_sas" "backup" {
 data "azurerm_storage_account_blob_container_sas" "logs" {
   count = can(var.settings.logs) ? 1 : 0
 
-  connection_string = data.azurerm_storage_account.backup_storage_account.0.primary_connection_string
+  connection_string = data.azurerm_storage_account.backup_storage_account[0].primary_connection_string
   container_name    = local.logs_storage_account.containers[var.settings.logs.container_key].name
   https_only        = true
 
@@ -49,7 +49,7 @@ data "azurerm_storage_account_blob_container_sas" "logs" {
 data "azurerm_storage_account_blob_container_sas" "http_logs" {
   count = can(var.settings.logs.http_logs) ? 1 : 0
 
-  connection_string = data.azurerm_storage_account.backup_storage_account.0.primary_connection_string
+  connection_string = data.azurerm_storage_account.backup_storage_account[0].primary_connection_string
   container_name    = local.http_logs_storage_account.containers[var.settings.logs.http_logs.container_key].name
   https_only        = true
 

@@ -36,5 +36,5 @@ output "soft_delete_enabled" {
 
 output "rbac_id" {
   description = "Principal Id of the Vault"
-  value       = try(azurerm_recovery_services_vault.asr.identity.0.principal_id, null)
+  value       = try(azurerm_recovery_services_vault.asr.identity[0].principal_id, null)
 }

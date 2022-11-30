@@ -63,7 +63,7 @@ resource "azurerm_key_vault_secret" "sqlmi_admin_password" {
   count = 0
 
   name         = format("%s-password", azurecaf_name.mssqlmi.result)
-  value        = random_password.sqlmi_admin.0.result
+  value        = random_password.sqlmi_admin[0].result
   key_vault_id = var.keyvault.id
 
   lifecycle {
@@ -86,7 +86,7 @@ resource "azapi_resource" "sqlmi_admin_password" {
       attributes = {
         enabled = true
       }
-      value = random_password.sqlmi_admin.0.result
+      value = random_password.sqlmi_admin[0].result
     }
   })
 

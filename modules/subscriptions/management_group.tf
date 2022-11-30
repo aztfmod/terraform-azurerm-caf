@@ -4,7 +4,7 @@ resource "null_resource" "mg" {
   count = try(var.settings.management_group_id, null) == null ? 0 : 1
 
   triggers = {
-    subscription_id = try(azurerm_subscription.sub.0.subscription_id, var.settings.subscription_id)
+    subscription_id = try(azurerm_subscription.sub[0].subscription_id, var.settings.subscription_id)
     mg_id           = var.settings.management_group_id
   }
 

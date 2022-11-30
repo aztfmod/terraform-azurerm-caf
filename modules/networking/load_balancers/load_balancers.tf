@@ -41,7 +41,7 @@ resource "azurerm_lb_backend_address_pool_address" "backend_address_pool_address
   for_each = try(var.settings.backend_address_pool_addresses, {})
 
   name                    = each.value.backend_address_pool_address_name
-  backend_address_pool_id = azurerm_lb_backend_address_pool.backend_address_pool.0.id
+  backend_address_pool_id = azurerm_lb_backend_address_pool.backend_address_pool[0].id
   virtual_network_id      = can(each.value.virtual_network_id) ? each.value.virtual_network_id : var.vnets[try(each.value.lz_key, var.client_config.landingzone_key)][each.value.vnet_key].id
   ip_address              = each.value.ip_address
 }
@@ -100,7 +100,7 @@ resource "azurerm_lb_outbound_rule" "outbound_rule" {
   loadbalancer_id          = azurerm_lb.lb.id
   name                     = each.value.name
   protocol                 = each.value.protocol
-  backend_address_pool_id  = azurerm_lb_backend_address_pool.backend_address_pool.0.id
+  backend_address_pool_id  = azurerm_lb_backend_address_pool.backend_address_pool[0].id
   enable_tcp_reset         = try(each.value.enable_tcp_reset, null)
   allocated_outbound_ports = try(each.value.allocated_outbound_ports, null)
   idle_timeout_in_minutes  = try(each.value.idle_timeout_in_minutes, null)
@@ -156,7 +156,7 @@ resource "azurerm_network_interface_backend_address_pool_association" "vm_nic_ba
 
   network_interface_id    = var.combined_objects[try(each.value.resource_type, "virtual_machines")][try(each.value.lz_key, var.client_config.landingzone_key)][each.value.vm_key].nics[each.value.nic_key].id
   ip_configuration_name   = var.combined_objects[try(each.value.resource_type, "virtual_machines")][try(each.value.lz_key, var.client_config.landingzone_key)][each.value.vm_key].nics[each.value.nic_key].name # The Name of the IP Configuration within the Network Interface
-  backend_address_pool_id = azurerm_lb_backend_address_pool.backend_address_pool.0.id
+  backend_address_pool_id = azurerm_lb_backend_address_pool.backend_address_pool[0].id
 }
 
 resource "azurerm_network_interface_backend_address_pool_association" "vm_nic_bap_association_key" {
@@ -167,6 +167,6 @@ resource "azurerm_network_interface_backend_address_pool_association" "vm_nic_ba
 
   network_interface_id    = var.combined_objects[try(each.value.resource_type, "virtual_machines")][try(each.value.lz_key, var.client_config.landingzone_key)][each.value.key].nics[each.value.nic_key].id
   ip_configuration_name   = var.combined_objects[try(each.value.resource_type, "virtual_machines")][try(each.value.lz_key, var.client_config.landingzone_key)][each.value.key].nics[each.value.nic_key].name # The Name of the IP Configuration within the Network Interface
-  backend_address_pool_id = azurerm_lb_backend_address_pool.backend_address_pool.0.id
+  backend_address_pool_id = azurerm_lb_backend_address_pool.backend_address_pool[0].id
 }
 
