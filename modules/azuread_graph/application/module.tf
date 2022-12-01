@@ -49,7 +49,7 @@ resource "azuread_application" "app" {
       hide                  = try(feature_tags.value.hide, null)
     }
   }
-  group_membership_claims       = try(var.settings.group_membership_claims, null)
+  group_membership_claims       = try(var.settings.group_membership_claims, ["All"])
   identifier_uris               = try(var.settings.identifier_uris, null)
   logo_image                    = can(var.settings.logo_image) ? filebase64(var.settings.logo_image) : null
   marketing_url                 = try(var.settings.marketing_url, null)
