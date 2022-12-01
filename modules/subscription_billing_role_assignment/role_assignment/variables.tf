@@ -1,7 +1,9 @@
 variable "billing_scope_id" {}
 variable "principal_id" {}
 variable "role_definition_id" {}
-variable "tenant_id" {}
+variable "tenant_id" {
+  type = string
+}
 variable "settings" {
   type = any
 }

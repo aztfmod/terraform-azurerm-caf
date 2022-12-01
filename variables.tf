@@ -59,8 +59,8 @@ variable "cloud" {
 }
 
 variable "tenant_id" {
-  description = "Azure AD Tenant ID for the current deployment."
   type        = string
+  description = "Azure AD Tenant ID for the current deployment."
   default     = null
 }
 

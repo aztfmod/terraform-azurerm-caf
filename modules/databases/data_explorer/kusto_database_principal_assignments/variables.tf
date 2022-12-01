@@ -28,5 +28,6 @@ variable "principal_id" {
   description = "Required) The object id of the principal. Changing this forces a new resource to be created."
 }
 variable "tenant_id" {
+  type        = string
   description = "(Required) The tenant id in which the principal resides. Changing this forces a new resource to be created."
 }
