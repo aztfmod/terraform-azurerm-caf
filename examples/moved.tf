@@ -7,7 +7,7 @@ moved {
   to   = module.example.module.azuread_graph_group_member
 }
 moved {
-  from = module.example.module.azuread_applications
+  from = module.example.module.azuread_applications_v1
   to   = module.example.module.azuread_graph_application
 }
 moved {
