@@ -20,7 +20,9 @@ variable "location" {
 variable "storage_accounts" {
   type = map(any)
 }
-variable "azuread_groups" {}
+variable "azuread_groups" {
+  type = map(any)
+}
 variable "vnets" {
   type = map(any)
 }

@@ -17,6 +17,7 @@ variable "vnets" {
   default = {}
 }
 variable "azuread_groups" {
+  type    = map(any)
   default = {}
 }
 variable "managed_identities" {

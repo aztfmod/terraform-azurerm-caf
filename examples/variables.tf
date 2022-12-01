@@ -257,6 +257,7 @@ variable "azuread_service_principal_passwords" {
   default = {}
 }
 variable "azuread_groups" {
+  type    = map(any)
   default = {}
 }
 variable "azuread_roles" {

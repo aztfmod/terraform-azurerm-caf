@@ -3,6 +3,7 @@ variable "global_settings" {
   description = "Global settings object (see module README.md)"
 }
 variable "azuread_groups" {
+  type        = map(any)
   description = "Set of groups to be created."
 }
 variable "tenant_id" {

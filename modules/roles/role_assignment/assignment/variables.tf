@@ -7,7 +7,9 @@ variable "role_definition_id" {
 }
 variable "keys" {}
 variable "azuread_apps" {}
-variable "azuread_groups" {}
+variable "azuread_groups" {
+  type = map(any)
+}
 variable "managed_identities" {
   type = map(any)
 }

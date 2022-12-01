@@ -11,6 +11,7 @@ variable "group_key" {
   default = null
 }
 variable "azuread_groups" {
+  type    = map(any)
   default = {}
 }
 variable "azuread_apps" {

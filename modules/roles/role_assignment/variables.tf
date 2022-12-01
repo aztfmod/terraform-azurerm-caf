@@ -8,6 +8,7 @@ variable "azuread_apps" {
   default = {}
 }
 variable "azuread_groups" {
+  type    = map(any)
   default = {}
 }
 variable "managed_identities" {
