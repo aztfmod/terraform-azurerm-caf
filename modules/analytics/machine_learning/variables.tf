@@ -30,8 +30,8 @@ variable "resource_groups" {
 }
 
 variable "keyvault_id" {
-  description = "The ID of the Key Vault to be used by the machine learning workspace."
   type        = string
+  description = "The ID of the Key Vault to be used by the machine learning workspace."
 }
 
 variable "storage_account_id" {

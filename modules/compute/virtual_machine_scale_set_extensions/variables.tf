@@ -13,6 +13,7 @@ variable "storage_accounts" {
   default = {}
 }
 variable "keyvault_id" {
+  type    = string
   default = null
 }
 variable "keyvaults" {

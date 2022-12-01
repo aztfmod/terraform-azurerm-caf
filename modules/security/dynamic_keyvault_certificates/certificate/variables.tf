@@ -3,4 +3,6 @@ variable "name" {
 }
 variable "password" {}
 variable "contents" {}
-variable "keyvault_id" {}
+variable "keyvault_id" {
+  type = string
+}

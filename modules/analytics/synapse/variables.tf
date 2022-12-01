@@ -26,8 +26,8 @@ variable "resource_group_name" {
 }
 
 variable "keyvault_id" {
-  description = "The ID of the Key Vault to be used by the Synapse workspace."
   type        = string
+  description = "The ID of the Key Vault to be used by the Synapse workspace."
   default     = null
 }
 

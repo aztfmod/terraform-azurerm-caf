@@ -17,7 +17,9 @@ variable "location" {
   type        = string
   description = "(Required) Specifies the supported Azure location where to create the resource. Changing this forces a new resource to be created."
 }
-variable "keyvault_id" {}
+variable "keyvault_id" {
+  type = string
+}
 variable "storage_accounts" {}
 variable "azuread_groups" {}
 variable "vnets" {

@@ -11,7 +11,9 @@ variable "base_tags" {
 variable "settings" {
   type = any
 }
-variable "keyvault_id" {}
+variable "keyvault_id" {
+  type = string
+}
 variable "key_vault_key_id" {}
 variable "resource_group_name" {
   type = string

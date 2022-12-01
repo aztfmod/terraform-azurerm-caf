@@ -19,6 +19,7 @@ variable "base_tags" {
 }
 variable "password" {}
 variable "keyvault_id" {
+  type    = string
   default = null
 }
 variable "organization_id" {

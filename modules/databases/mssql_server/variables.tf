@@ -36,7 +36,9 @@ variable "private_dns" {
   type    = map(any)
   default = {}
 }
-variable "keyvault_id" {}
+variable "keyvault_id" {
+  type = string
+}
 variable "remote_objects" {
   type = map(any)
 }

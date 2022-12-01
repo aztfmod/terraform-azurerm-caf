@@ -6,6 +6,7 @@ variable "keyvault_key" {
   default = null
 }
 variable "keyvault_id" {
+  type    = string
   default = null
 }
 

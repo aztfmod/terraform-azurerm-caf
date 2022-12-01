@@ -1,7 +1,9 @@
 variable "certificate_issuers" {
   default = {}
 }
-variable "keyvault_id" {}
+variable "keyvault_id" {
+  type = string
+}
 variable "settings" {
   type = any
 }
