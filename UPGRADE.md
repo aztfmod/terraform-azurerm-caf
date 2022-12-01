@@ -2,6 +2,44 @@
 
 When upgrading to a newer version of the CAF module, some configuration structures must be updated before applying the modifications.
 
+## 6.0.0
+
+Version 6.0.0 adds support for azuread 2.30.0 which requires your attention.
+
+### azuread
+
+In order to update: 
+1. Add ```moved``` blocks to the module root calls as exhibited in [./examples/moved.tf](./examples/moved.tf). For any call to the module, replace the ```azuread``` with ```azuread_graph``` as follow:
+
+```hcl
+moved {
+  from = module.example.module.azuread_groups
+  to   = module.example.module.azuread_graph_group
+}
+moved {
+  from = module.example.module.azuread_groups_membership
+  to   = module.example.module.azuread_graph_group_member
+}
+moved {
+  from = module.example.module.azuread_applicationsv1
+  to   = module.example.module.azuread_graph_application
+}
+moved {
+  from = module.example.module.azuread_users
+  to   = module.example.module.azuread_graph_user
+}
+moved {
+  from = module.example.module.azuread_service_principals
+  to   = module.example.module.azuread_graph_service_principal
+}
+```
+2. Refresh the configuration with ```terraform refresh``` in order to import in the state file all the changes made outside of Terraform.
+3. Plan the configuration with ```terraform plan``` and carefully review the changes
+4. Apply the configuration with ```terraform apply```
+
+#### azuread_group
+If a group has no owner, the logged in user will be added to the group as owner. Check https://registry.terraform.io/providers/hashicorp/azuread/latest/docs/resources/group#owners for more information.
+
 ## 5.6.0
 
 Version 5.6.0 includes support for azurerm 2.99 which requires your attention if you are deploying the following components:

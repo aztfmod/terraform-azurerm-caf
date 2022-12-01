@@ -22,11 +22,12 @@ managed_identities = {
 
 azuread_groups = {
   ad_group1 = {
-    display_name           = "test"
-    security_enabled       = true
-    name                   = "example-group1"
-    description            = "Provide read and write access"
-    members                = []
+    display_name     = "test"
+    security_enabled = true
+    name             = "example-group1"
+    description      = "Provide read and write access"
+    # Do not use nested blocks for the members, use azuread_groups_membership as exhibited below
+    # members                = []
     owners                 = []
     prevent_duplicate_name = false
   }
