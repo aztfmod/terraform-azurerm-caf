@@ -21,6 +21,7 @@ variable "base_tags" {
   default     = {}
 }
 variable "api_management_name" {
+  type        = string
   description = " The name of the API Management Service. Changing this forces a new resource to be created."
 }
 variable "api_name" {

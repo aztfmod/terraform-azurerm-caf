@@ -24,6 +24,7 @@ variable "api_management_logger_id" {
   description = " The ID (name) of the Diagnostics Logger."
 }
 variable "api_management_name" {
+  type        = string
   description = " The name of the API Management Service instance. Changing this forces a new API Management Service API Diagnostics Logs to be created."
 }
 variable "api_name" {

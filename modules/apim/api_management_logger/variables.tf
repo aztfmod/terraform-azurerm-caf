@@ -25,5 +25,6 @@ variable "resource_group_name" {
   description = " The name of the Resource Group in which the API Management Service exists. Changing this forces a new resource to be created."
 }
 variable "api_management_name" {
+  type        = string
   description = " The name of the API Management Service. Changing this forces a new resource to be created."
 }
