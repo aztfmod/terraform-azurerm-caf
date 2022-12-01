@@ -33,5 +33,6 @@ variable "base_tags" {
 }
 variable "subresource_names" {}
 variable "private_dns" {
+  type    = map(any)
   default = {}
 }

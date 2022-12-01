@@ -41,5 +41,6 @@ variable "client_config" {
   default = {}
 }
 variable "private_dns" {
+  type    = map(any)
   default = {}
 }

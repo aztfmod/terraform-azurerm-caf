@@ -11,6 +11,7 @@ variable "virtual_network_id" {
 }
 
 variable "private_dns" {
+  type = map(any)
 }
 
 variable "settings" {

@@ -39,5 +39,6 @@ variable "base_tags" {
   type        = map(any)
 }
 variable "private_dns" {
+  type    = map(any)
   default = {}
 }

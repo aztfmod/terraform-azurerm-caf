@@ -43,5 +43,6 @@ variable "private_endpoints" {
   default = {}
 }
 variable "private_dns" {
+  type    = map(any)
   default = {}
 }

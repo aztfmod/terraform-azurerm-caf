@@ -8,7 +8,9 @@ variable "client_config" {
 }
 variable "resource_groups" {}
 variable "private_endpoints" {}
-variable "private_dns" {}
+variable "private_dns" {
+  type = map(any)
+}
 variable "remote_objects" {
   type = map(any)
 }

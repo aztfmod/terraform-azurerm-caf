@@ -32,6 +32,7 @@ variable "recovery_vaults" {
   default = {}
 }
 variable "private_dns" {
+  type    = map(any)
   default = {}
 }
 

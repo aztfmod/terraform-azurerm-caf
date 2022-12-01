@@ -24,6 +24,7 @@ variable "client_config" {
 variable "private_endpoints" {}
 variable "resource_groups" {}
 variable "private_dns" {
+  type    = map(any)
   default = {}
 }
 variable "vnets" {

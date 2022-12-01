@@ -303,6 +303,7 @@ variable "managed_identities" {
   default = {}
 }
 variable "private_dns" {
+  type    = map(any)
   default = {}
 }
 variable "synapse_workspaces" {

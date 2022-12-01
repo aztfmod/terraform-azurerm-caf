@@ -70,6 +70,7 @@ variable "base_tags" {
 }
 
 variable "private_dns" {
+  type    = map(any)
   default = {}
 }
 

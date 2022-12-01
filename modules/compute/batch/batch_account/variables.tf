@@ -43,6 +43,7 @@ variable "vnets" {
   default = {}
 }
 variable "private_dns" {
+  type    = map(any)
   default = {}
 }
 variable "private_endpoints" {

@@ -33,5 +33,6 @@ variable "identity" {
   default = null
 }
 variable "private_dns" {
+  type    = map(any)
   default = {}
 }

@@ -19,6 +19,7 @@ variable "location" {
   description = "(Required) Resource Location"
 }
 variable "private_dns" {
+  type    = map(any)
   default = {}
 }
 variable "diagnostics" {

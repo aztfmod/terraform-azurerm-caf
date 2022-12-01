@@ -65,6 +65,7 @@ variable "global_settings" {
 }
 
 variable "private_dns" {
+  type    = map(any)
   default = {}
 }
 
