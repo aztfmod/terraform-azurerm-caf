@@ -5,7 +5,7 @@ data "azuread_application_template" "template" {
 }
 
 resource "azuread_application" "app" {
-  display_name = try(var.settings.display_name, var.settings.application_name, null)
+  display_name = var.global_settings.passthrough || try(var.settings.global_settings.passthrough, false) || can(var.settings.useprefix == false) ? var.settings.application_name : format("%v%s", try(format("%s-", var.global_settings.prefixes[0]), ""), var.settings.application_name)
   dynamic "api" {
     for_each = try(var.settings.api, null) != null ? [var.settings.api] : []
     content {
@@ -49,7 +49,7 @@ resource "azuread_application" "app" {
       hide                  = try(feature_tags.value.hide, null)
     }
   }
-  group_membership_claims       = try(var.settings.group_membership_claims, null)
+  group_membership_claims       = try(var.settings.group_membership_claims, ["All"])
   identifier_uris               = try(var.settings.identifier_uris, null)
   logo_image                    = can(var.settings.logo_image) ? filebase64(var.settings.logo_image) : null
   marketing_url                 = try(var.settings.marketing_url, null)
@@ -86,7 +86,12 @@ resource "azuread_application" "app" {
       }
     }
   }
-  owners                = try(var.settings.owners, null)
+  owners = coalescelist(
+    try(var.settings.owners, []),
+    [
+      var.client_config.object_id
+    ]
+  )
   privacy_statement_url = try(var.settings.privacy_statement_url, null)
   dynamic "public_client" {
     for_each = try(var.settings.public_client, null) != null ? [var.settings.public_client] : []

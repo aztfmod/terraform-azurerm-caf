@@ -2,7 +2,7 @@
 data "azuread_application_published_app_ids" "well_known" {}
 
 resource "azuread_service_principal" "serp" {
-  application_id               = can(var.settings.azuread_application.key) == false ? try(var.settings.azuread_application.id, data.azuread_application_published_app_ids.well_known.result[var.settings.azuread_application.well_known_key]) : var.remote_objects.azuread_applications[try(var.settings.azuread_application.lz_key, var.client_config.landingzone_key)][var.settings.azuread_application.key].application_id
+  application_id               = can(var.settings.application.key) == false ? try(var.settings.application.id, data.azuread_application_published_app_ids.well_known.result[var.settings.application.well_known_key]) : var.remote_objects.azuread_applications[try(var.settings.application.lz_key, var.client_config.landingzone_key)][var.settings.application.key].application_id
   account_enabled              = try(var.settings.account_enabled, null)
   alternative_names            = try(var.settings.alternative_names, null)
   app_role_assignment_required = try(var.settings.app_role_assignment_required, null)
