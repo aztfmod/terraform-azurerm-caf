@@ -19,6 +19,7 @@ variable "wvd_host_pools" {
   default = {}
 }
 variable "managed_identities" {
+  type    = map(any)
   default = {}
 }
 variable "storage_accounts" {

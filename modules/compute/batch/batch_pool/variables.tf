@@ -11,6 +11,7 @@ variable "settings" {
 }
 variable "batch_account" {}
 variable "managed_identities" {
+  type    = map(any)
   default = {}
 }
 variable "batch_certificates" {

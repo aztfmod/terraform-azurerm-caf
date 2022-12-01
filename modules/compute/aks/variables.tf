@@ -34,6 +34,7 @@ variable "private_dns_zone_id" {
   default = null
 }
 variable "managed_identities" {
+  type    = map(any)
   default = {}
 }
 variable "application_gateway" {

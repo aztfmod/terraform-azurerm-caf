@@ -24,6 +24,7 @@ variable "key_vault_id" {}
 variable "tenant_id" {}
 variable "subscription" {}
 variable "managed_identities" {
+  type    = map(any)
   default = {}
 }
 variable "vnet_name" {

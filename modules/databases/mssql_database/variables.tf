@@ -23,6 +23,7 @@ variable "sqlcmd_dbname" {
   default = null
 }
 variable "managed_identities" {
+  type    = map(any)
   default = null
 }
 variable "diagnostic_profiles" {

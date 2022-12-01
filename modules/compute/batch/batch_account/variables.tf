@@ -33,6 +33,7 @@ variable "storage_account_id" {
   default = null
 }
 variable "managed_identities" {
+  type    = map(any)
   default = {}
 }
 variable "resource_groups" {

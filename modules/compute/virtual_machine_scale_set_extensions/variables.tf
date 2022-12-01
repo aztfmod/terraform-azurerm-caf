@@ -6,6 +6,7 @@ variable "client_config" {
   description = "Client configuration object (see module README.md)."
 }
 variable "managed_identities" {
+  type    = map(any)
   default = {}
 }
 variable "storage_accounts" {

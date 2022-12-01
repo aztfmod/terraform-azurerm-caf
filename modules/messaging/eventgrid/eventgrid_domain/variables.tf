@@ -26,6 +26,7 @@ variable "location" {
   default     = null
 }
 variable "managed_identities" {
+  type    = map(any)
   default = null
 }
 variable "private_endpoints" {

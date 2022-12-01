@@ -301,6 +301,7 @@ variable "diagnostic_log_analytics" {
   default = {}
 }
 variable "managed_identities" {
+  type    = map(any)
   default = {}
 }
 variable "private_dns" {

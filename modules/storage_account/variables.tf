@@ -48,5 +48,6 @@ variable "diagnostics" {
 }
 
 variable "managed_identities" {
+  type    = map(any)
   default = {}
 }

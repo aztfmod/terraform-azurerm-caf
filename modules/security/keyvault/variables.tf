@@ -20,6 +20,7 @@ variable "azuread_groups" {
   default = {}
 }
 variable "managed_identities" {
+  type    = map(any)
   default = {}
 }
 # For diagnostics settings

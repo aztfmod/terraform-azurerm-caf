@@ -20,6 +20,7 @@ variable "azuread_service_principals" {
   default = {}
 }
 variable "managed_identities" {
+  type    = map(any)
   default = {}
 }
 variable "mssql_servers" {

@@ -41,6 +41,7 @@ variable "public_key_pem_file" {
 }
 
 variable "managed_identities" {
+  type    = map(any)
   default = {}
 }
 

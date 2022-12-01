@@ -253,6 +253,7 @@ variable "security" {
 }
 
 variable "managed_identities" {
+  type        = map(any)
   description = "Configuration object - Azure managed identity resources"
   default     = {}
 }
