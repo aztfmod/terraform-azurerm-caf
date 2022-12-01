@@ -16,6 +16,7 @@ variable "resource_group_name" {
 }
 
 variable "data_factory_id" {
+  type        = string
   description = "(Required) The Data Factory ID in which to associate the Dataset with"
 }
 

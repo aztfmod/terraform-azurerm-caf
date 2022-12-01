@@ -21,6 +21,7 @@ variable "base_tags" {
   default     = {}
 }
 variable "data_factory_id" {
+  type        = string
   description = " Changing this forces a new Data Factory Self-hosted Integration Runtime to be created."
 }
 variable "resource_group_name" {
