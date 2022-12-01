@@ -21,7 +21,9 @@ variable "client_config" {
   type        = map(any)
   description = "Client configuration object (see module README.md)."
 }
-variable "private_endpoints" {}
+variable "private_endpoints" {
+  type = map(any)
+}
 variable "resource_groups" {
   type = map(any)
 }

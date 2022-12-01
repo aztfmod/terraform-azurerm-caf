@@ -481,6 +481,7 @@ variable "dns_zone_records" {
 }
 
 variable "private_endpoints" {
+  type    = map(any)
   default = {}
 }
 

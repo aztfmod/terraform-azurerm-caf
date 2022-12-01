@@ -42,4 +42,6 @@ variable "remote_objects" {
 variable "client_config" {
   type = map(any)
 }
-variable "private_endpoints" {}
+variable "private_endpoints" {
+  type = map(any)
+}

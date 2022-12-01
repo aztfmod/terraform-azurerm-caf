@@ -20,6 +20,7 @@ variable "vnets" {
   default = {}
 }
 variable "private_endpoints" {
+  type    = map(any)
   default = {}
 }
 variable "resource_groups" {

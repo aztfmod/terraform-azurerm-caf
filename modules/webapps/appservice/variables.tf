@@ -84,7 +84,9 @@ variable "vnets" {
   type = map(any)
 }
 variable "subnet_id" {}
-variable "private_endpoints" {}
+variable "private_endpoints" {
+  type = map(any)
+}
 variable "private_dns" {
   type = map(any)
 }

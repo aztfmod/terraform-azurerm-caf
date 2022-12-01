@@ -22,7 +22,9 @@ variable "azuread_groups" {}
 variable "vnets" {
   type = map(any)
 }
-variable "private_endpoints" {}
+variable "private_endpoints" {
+  type = map(any)
+}
 variable "resource_groups" {
   type = map(any)
 }

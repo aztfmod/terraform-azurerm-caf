@@ -30,6 +30,7 @@ variable "managed_identities" {
   default = null
 }
 variable "private_endpoints" {
+  type    = map(any)
   default = {}
 }
 variable "diagnostic_profiles" {
