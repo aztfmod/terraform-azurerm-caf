@@ -6,7 +6,9 @@ variable "settings" {
   type = any
 }
 variable "cloud" {}
-variable "keyvaults" {}
+variable "keyvaults" {
+  type = map(any)
+}
 variable "billing_role_definition_name" {
   default = "Enrollment account subscription creator"
 

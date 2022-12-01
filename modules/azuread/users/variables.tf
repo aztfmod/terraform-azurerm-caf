@@ -9,7 +9,9 @@ variable "client_config" {
 variable "settings" {
   type = any
 }
-variable "keyvaults" {}
+variable "keyvaults" {
+  type = map(any)
+}
 variable "password_policy" {
   description = "Map to define the password policy to apply"
   default = {

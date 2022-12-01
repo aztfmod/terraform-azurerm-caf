@@ -15,6 +15,7 @@ variable "client_config" {
 }
 variable "user_type" {}
 variable "keyvaults" {
+  type    = map(any)
   default = {}
 }
 

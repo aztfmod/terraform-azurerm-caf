@@ -262,6 +262,7 @@ variable "azuread_roles" {
   default = {}
 }
 variable "keyvaults" {
+  type    = map(any)
   default = {}
 }
 variable "keyvault_access_policies" {

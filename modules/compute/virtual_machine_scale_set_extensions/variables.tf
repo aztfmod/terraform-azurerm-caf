@@ -16,6 +16,7 @@ variable "keyvault_id" {
   default = null
 }
 variable "keyvaults" {
+  type    = map(any)
   default = {}
 }
 variable "virtual_machine_scale_set_os_type" {

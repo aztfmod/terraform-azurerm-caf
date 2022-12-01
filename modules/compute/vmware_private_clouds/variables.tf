@@ -26,6 +26,7 @@ variable "tags" {
   default = null
 }
 variable "keyvaults" {
+  type        = map(any)
   description = "Keyvault to store the nsxt_password and the vcenter_password"
   default     = {}
 }

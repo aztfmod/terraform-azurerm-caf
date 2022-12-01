@@ -23,6 +23,7 @@ variable "keyvault_certificate_requests" {
   default = {}
 }
 variable "keyvaults" {
+  type    = map(any)
   default = {}
 }
 variable "resource_group_name" {

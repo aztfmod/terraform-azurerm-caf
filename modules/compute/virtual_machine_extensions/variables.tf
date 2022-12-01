@@ -13,6 +13,7 @@ variable "keyvault_id" {
   default = null
 }
 variable "keyvaults" {
+  type    = map(any)
   default = {}
 }
 variable "wvd_host_pools" {

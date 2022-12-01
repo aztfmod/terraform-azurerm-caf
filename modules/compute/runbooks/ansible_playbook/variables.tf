@@ -12,6 +12,7 @@ variable "virtual_machines" {
 }
 
 variable "keyvaults" {
+  type        = map(any)
   description = "AKV object"
 }
 

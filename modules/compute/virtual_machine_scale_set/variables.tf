@@ -18,6 +18,7 @@ variable "resource_group_name" {
 }
 
 variable "keyvaults" {
+  type        = any
   description = "Keyvault to store the SSH public and private keys when not provided by the var.public_key_pem_file or retrieve admin username and password"
   default     = ""
 }

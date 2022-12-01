@@ -259,6 +259,7 @@ variable "managed_identities" {
 }
 
 variable "keyvaults" {
+  type        = map(any)
   description = "Configuration object - Azure Key Vault resources"
   default     = {}
 }

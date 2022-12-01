@@ -1,4 +1,5 @@
 variable "keyvaults" {
+  type    = map(any)
   default = {}
 }
 variable "keyvault_key" {
