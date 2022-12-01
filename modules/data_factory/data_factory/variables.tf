@@ -38,6 +38,7 @@ variable "remote_objects" {
   type = map(any)
 }
 variable "tags" {
+  type        = map(any)
   default     = null
   description = "(Optional) A mapping of tags to assign to the resource"
 }

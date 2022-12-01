@@ -43,6 +43,7 @@ variable "vnets" {
   description = "(Required) A list of virtual network subnet ids to be used by Integration Service Environment"
 }
 variable "tags" {
+  type        = map(any)
   description = "(Required) map of tags for the deployment"
   default     = null
 }

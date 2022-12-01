@@ -13,6 +13,7 @@ variable "location" {
 }
 
 variable "tags" {
+  type        = map(any)
   description = "(Required) Tags of the Azure Firewall to be created"
 }
 

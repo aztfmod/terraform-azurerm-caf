@@ -8,6 +8,7 @@ variable "name" {
 }
 
 variable "tags" {
+  type        = map(any)
   description = "(Required) Tags of the IP Group to be created"
 }
 

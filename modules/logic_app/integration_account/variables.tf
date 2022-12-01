@@ -15,6 +15,7 @@ variable "base_tags" {
   type        = map(any)
 }
 variable "tags" {
+  type        = map(any)
   description = "(Required) map of tags for the deployment"
   default     = null
 }

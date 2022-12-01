@@ -107,8 +107,8 @@ variable "use_msi" {
 }
 
 variable "tags" {
-  description = "Tags to be used for this resource deployment."
   type        = map(any)
+  description = "Tags to be used for this resource deployment."
   default     = null
 }
 

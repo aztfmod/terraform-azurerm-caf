@@ -11,8 +11,8 @@ variable "settings" {
   default = {}
 }
 variable "tags" {
-  description = "(Required) Map of tags to be applied to the resource"
   type        = map(any)
+  description = "(Required) Map of tags to be applied to the resource"
 }
 variable "base_tags" {
   description = "Base tags for the resource to be inherited from the resource group."

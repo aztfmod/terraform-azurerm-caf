@@ -18,8 +18,8 @@ variable "base_tags" {
 }
 
 variable "tags" {
-  description = "(Required) map of tags for the deployment"
   type        = map(any)
+  description = "(Required) map of tags for the deployment"
 }
 
 variable "location" {

@@ -9,8 +9,8 @@ variable "location" {
 }
 
 variable "tags" {
-  description = "(Required) Map of tags to be applied to the resource"
   type        = map(any)
+  description = "(Required) Map of tags to be applied to the resource"
 }
 
 variable "redis" {}

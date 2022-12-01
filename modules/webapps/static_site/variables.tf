@@ -4,6 +4,7 @@ variable "client_config" {
 }
 
 variable "tags" {
+  type        = map(any)
   description = "(Required) map of tags for the deployment"
 }
 

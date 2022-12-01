@@ -23,6 +23,7 @@ variable "settings" {
 }
 variable "availability_sets" {}
 variable "tags" {
+  type    = map(any)
   default = null
 }
 variable "name" {

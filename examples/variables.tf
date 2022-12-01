@@ -142,8 +142,8 @@ variable "logged_aad_app_objectId" {
   default = null
 }
 variable "tags" {
-  default = null
   type    = map(any)
+  default = null
 }
 variable "subscription_billing_role_assignments" {
   default = {}

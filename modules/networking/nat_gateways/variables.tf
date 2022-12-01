@@ -30,7 +30,7 @@ variable "base_tags" {
   default = {}
 }
 variable "tags" {
+  type        = map(any)
   description = "(Optional) Tags for the resource to be deployed."
   default     = null
-  type        = map(any)
 }

@@ -71,9 +71,9 @@ variable "reverse_fqdn" {
 }
 
 variable "tags" {
+  type        = map(any)
   description = "(Optional) Tags for the resource to be deployed."
   default     = null
-  type        = map(any)
 }
 
 variable "zones" {

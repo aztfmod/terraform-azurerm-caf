@@ -22,6 +22,7 @@ variable "settings" {
   type = any
 }
 variable "tags" {
+  type    = map(any)
   default = null
 }
 variable "dedicated_host_group_id" {

@@ -21,6 +21,7 @@ variable "app_service_plan_id" {
 }
 
 variable "tags" {
+  type        = map(any)
   description = "(Required) map of tags for the deployment"
 }
 

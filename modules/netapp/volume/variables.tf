@@ -15,6 +15,7 @@ variable "export_policy_rule" {
   default = {}
 }
 variable "tags" {
+  type    = map(any)
   default = {}
 }
 variable "global_settings" {

@@ -16,6 +16,6 @@ variable "location" {
   description = "(Required) Specifies the supported Azure location where to create the resource. Changing this forces a new resource to be created."
 }
 variable "tags" {
-  description = "(Required) Map of tags to be applied to the resource"
   type        = map(any)
+  description = "(Required) Map of tags to be applied to the resource"
 }

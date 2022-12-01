@@ -14,6 +14,7 @@ variable "subnets" {
 }
 
 variable "tags" {
+  type        = map(any)
   description = "tags of the resource"
 }
 

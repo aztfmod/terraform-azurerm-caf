@@ -10,6 +10,7 @@ variable "base_tags" {
   type        = map(any)
 }
 variable "tags" {
+  type    = map(any)
   default = {}
 }
 variable "global_settings" {
