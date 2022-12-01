@@ -21,6 +21,7 @@ variable "name" {
   default = {}
 }
 variable "diagnostic_profiles" {
+  type    = map(any)
   default = {}
 }
 variable "diagnostics" {

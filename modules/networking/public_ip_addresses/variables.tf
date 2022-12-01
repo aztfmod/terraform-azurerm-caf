@@ -94,6 +94,7 @@ variable "diagnostics" {
 }
 
 variable "diagnostic_profiles" {
+  type        = map(any)
   description = "(Optional) Diagnostics profile settings to be deployed for the resource."
   default     = {}
 }

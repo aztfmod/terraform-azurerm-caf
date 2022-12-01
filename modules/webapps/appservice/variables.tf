@@ -72,6 +72,7 @@ variable "storage_accounts" {
 }
 
 variable "diagnostic_profiles" {
+  type    = map(any)
   default = {}
 }
 variable "diagnostics" {

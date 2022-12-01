@@ -30,6 +30,7 @@ variable "combined_objects" {
   default = {}
 }
 variable "diagnostic_profiles" {
+  type    = map(any)
   default = {}
 }
 variable "diagnostics" {

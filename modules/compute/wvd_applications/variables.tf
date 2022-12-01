@@ -11,6 +11,7 @@ variable "application_group_id" {
 }
 
 variable "diagnostic_profiles" {
+  type    = map(any)
   default = {}
 }
 variable "diagnostics" {

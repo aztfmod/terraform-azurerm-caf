@@ -38,5 +38,6 @@ variable "diagnostics" {
   default = {}
 }
 variable "diagnostic_profiles" {
+  type    = map(any)
   default = {}
 }

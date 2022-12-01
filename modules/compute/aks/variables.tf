@@ -27,6 +27,7 @@ variable "base_tags" {
   type        = map(any)
 }
 variable "diagnostic_profiles" {
+  type    = map(any)
   default = {}
 }
 variable "private_dns_zone_id" {

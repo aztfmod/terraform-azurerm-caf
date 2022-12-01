@@ -59,6 +59,7 @@ variable "base_tags" {
 }
 
 variable "diagnostic_profiles" {
+  type    = map(any)
   default = {}
 }
 

@@ -2,7 +2,9 @@ variable "base_tags" {}
 variable "client_config" {
   type = map(any)
 }
-variable "diagnostic_profiles" {}
+variable "diagnostic_profiles" {
+  type = map(any)
+}
 variable "combined_diagnostics" {}
 variable "combined_resources" {
   description = "Provide a map of combined resources for environment_variables_from_resources"

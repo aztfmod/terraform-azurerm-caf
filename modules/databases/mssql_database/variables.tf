@@ -26,6 +26,7 @@ variable "managed_identities" {
   default = null
 }
 variable "diagnostic_profiles" {
+  type    = map(any)
   default = {}
 }
 variable "diagnostics" {

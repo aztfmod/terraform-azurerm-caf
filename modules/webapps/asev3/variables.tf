@@ -26,5 +26,6 @@ variable "diagnostics" {
   default = null
 }
 variable "diagnostic_profiles" {
+  type    = map(any)
   default = null
 }

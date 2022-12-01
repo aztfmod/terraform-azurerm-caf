@@ -32,6 +32,7 @@ variable "private_endpoints" {
   default = {}
 }
 variable "diagnostic_profiles" {
+  type    = map(any)
   default = null
 }
 variable "diagnostics" {

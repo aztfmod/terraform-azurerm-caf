@@ -82,6 +82,7 @@ variable "workspace_id" {
   default     = null
 }
 variable "diagnostic_profiles" {
+  type    = map(any)
   default = {}
 }
 variable "diagnostics" {

@@ -47,6 +47,7 @@ variable "network_rule_set" {
 }
 
 variable "diagnostic_profiles" {
+  type    = map(any)
   default = {}
 }
 
