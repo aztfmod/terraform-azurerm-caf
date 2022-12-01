@@ -177,6 +177,7 @@ variable "event_hub_namespaces" {
 }
 
 # variable "subnet_id" {
+#  type = string
 #   default = {}
 # }
 

@@ -27,6 +27,7 @@ variable "resource_group_name" {
 }
 
 variable "subnet_id" {
+  type        = string
   description = "(Required) Name of the Virtual Network for the ASE"
 }
 

@@ -15,7 +15,9 @@ variable "location" {
   description = "(Required) Specifies the supported Azure location where the resource exists. Changing this forces a new resource to be created."
 }
 
-variable "subnet_id" {}
+variable "subnet_id" {
+  type = string
+}
 variable "settings" {
   type = any
 }

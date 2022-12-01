@@ -23,6 +23,7 @@ variable "resource_group_name" {
 }
 
 variable "subnet_id" {
+  type        = string
   description = "(Required) ID for the subnet where to deploy the Azure Firewall"
   default     = null
 }

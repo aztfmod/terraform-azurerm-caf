@@ -25,7 +25,9 @@ variable "azuread_groups" {}
 variable "vnets" {
   type = map(any)
 }
-variable "subnet_id" {}
+variable "subnet_id" {
+  type = string
+}
 variable "private_endpoints" {
   type = map(any)
 }

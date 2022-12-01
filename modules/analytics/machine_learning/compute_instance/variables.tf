@@ -6,7 +6,9 @@ variable "global_settings" {
   description = "Global settings object (see module README.md)"
 }
 variable "machine_learning_workspace_name" {}
-variable "subnet_id" {}
+variable "subnet_id" {
+  type = string
+}
 variable "resource_group_name" {
   type        = string
   description = "(Required) The name of the resource group where to create the resource."

@@ -18,7 +18,9 @@ variable "private_dns" {
 variable "remote_objects" {
   type = map(any)
 }
-variable "subnet_id" {}
+variable "subnet_id" {
+  type = string
+}
 variable "vnet_resource_group_name" {}
 variable "vnet_location" {}
 variable "base_tags" {

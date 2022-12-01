@@ -10,7 +10,9 @@ variable "location" {
 variable "account_name" {}
 variable "pool_name" {}
 variable "service_level" {}
-variable "subnet_id" {}
+variable "subnet_id" {
+  type = string
+}
 variable "export_policy_rule" {
   default = {}
 }

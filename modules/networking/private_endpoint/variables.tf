@@ -22,7 +22,9 @@ variable "location" {
   default     = null
 }
 
-variable "subnet_id" {}
+variable "subnet_id" {
+  type = string
+}
 variable "settings" {
   type = any
 }
