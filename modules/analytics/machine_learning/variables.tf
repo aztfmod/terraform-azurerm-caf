@@ -25,6 +25,7 @@ variable "global_settings" {
 }
 
 variable "resource_groups" {
+  type        = map(any)
   description = "(Required) The resource group objects where to create the resource."
 }
 

@@ -17,6 +17,7 @@ variable "resource_group_name" {
   default     = null
 }
 variable "resource_groups" {
+  type        = map(any)
   description = "combined objetcs of the resource groups. Either resource_group_name or resource_groups is required."
   default     = {}
 }

@@ -36,6 +36,7 @@ variable "managed_identities" {
   default = {}
 }
 variable "resource_groups" {
+  type    = map(any)
   default = {}
 }
 variable "vnets" {

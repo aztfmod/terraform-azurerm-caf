@@ -22,7 +22,9 @@ variable "client_config" {
   description = "Client configuration object (see module README.md)."
 }
 variable "private_endpoints" {}
-variable "resource_groups" {}
+variable "resource_groups" {
+  type = map(any)
+}
 variable "private_dns" {
   type    = map(any)
   default = {}

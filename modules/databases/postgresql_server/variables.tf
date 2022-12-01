@@ -25,7 +25,9 @@ variable "vnets" {
 }
 variable "subnet_id" {}
 variable "private_endpoints" {}
-variable "resource_groups" {}
+variable "resource_groups" {
+  type = map(any)
+}
 variable "base_tags" {
   description = "Base tags for the resource to be inherited from the resource group."
   type        = map(any)

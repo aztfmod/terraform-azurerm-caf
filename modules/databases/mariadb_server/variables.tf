@@ -25,7 +25,9 @@ variable "vnets" {
 }
 variable "subnet_id" {}
 variable "private_endpoints" {}
-variable "resource_groups" {}
+variable "resource_groups" {
+  type = map(any)
+}
 variable "diagnostic_profiles" {
   type    = map(any)
   default = {}

@@ -61,6 +61,7 @@ variable "private_endpoints" {
 }
 
 variable "resource_groups" {
+  type    = map(any)
   default = {}
 }
 

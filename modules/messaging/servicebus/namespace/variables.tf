@@ -16,6 +16,7 @@ variable "remote_objects" {
   default     = {}
 }
 variable "resource_groups" {
+  type        = map(any)
   description = "Combined resource groups object."
   default     = {}
 }

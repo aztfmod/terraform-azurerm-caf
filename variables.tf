@@ -113,6 +113,7 @@ variable "tags" {
 }
 
 variable "resource_groups" {
+  type        = map(any)
   description = "Configuration object - Resource groups."
   default     = {}
 }

@@ -23,6 +23,7 @@ variable "private_endpoints" {
   default = {}
 }
 variable "resource_groups" {
+  type    = map(any)
   default = {}
 }
 variable "base_tags" {

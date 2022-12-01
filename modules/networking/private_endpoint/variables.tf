@@ -11,6 +11,7 @@ variable "resource_group_name" {
   default     = null
 }
 variable "resource_groups" {
+  type        = map(any)
   description = "The combined_objects of the resource groups. Changing this forces a new resource to be created."
   default     = {}
 }

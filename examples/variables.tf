@@ -167,6 +167,7 @@ variable "diagnostics_definition" {
   default = {}
 }
 variable "resource_groups" {
+  type    = map(any)
   default = {}
 }
 variable "network_security_group_definition" {

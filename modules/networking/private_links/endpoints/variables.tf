@@ -9,7 +9,9 @@ variable "client_config" {
 variable "settings" {
   type = any
 }
-variable "resource_groups" {}
+variable "resource_groups" {
+  type = map(any)
+}
 variable "private_endpoints" {}
 variable "private_dns" {
   type = map(any)
