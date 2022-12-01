@@ -25,6 +25,7 @@ variable "managed_identities" {
   default = {}
 }
 variable "storage_accounts" {
+  type    = map(any)
   default = {}
 }
 variable "virtual_machine_os_type" {

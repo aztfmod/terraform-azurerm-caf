@@ -10,6 +10,7 @@ variable "managed_identities" {
   default = {}
 }
 variable "storage_accounts" {
+  type    = map(any)
   default = {}
 }
 variable "keyvault_id" {

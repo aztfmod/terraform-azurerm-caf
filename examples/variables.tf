@@ -235,6 +235,7 @@ variable "mssql_mi_secondary_tdes" {
   default = {}
 }
 variable "storage_accounts" {
+  type    = map(any)
   default = {}
 }
 variable "azuread_credential_policies" {

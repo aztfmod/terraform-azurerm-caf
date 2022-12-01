@@ -28,4 +28,6 @@ variable "identity" {}
 variable "settings" {
   type = any
 }
-variable "storage_accounts" {}
+variable "storage_accounts" {
+  type = map(any)
+}

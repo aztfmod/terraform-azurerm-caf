@@ -59,6 +59,7 @@ variable "recovery_vaults" {
 }
 
 variable "storage_accounts" {
+  type    = map(any)
   default = {}
 }
 

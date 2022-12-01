@@ -17,7 +17,9 @@ variable "location" {
   type        = string
   description = "(Required) Specifies the supported Azure location where to create the resource. Changing this forces a new resource to be created."
 }
-variable "storage_accounts" {}
+variable "storage_accounts" {
+  type = map(any)
+}
 variable "azuread_groups" {}
 variable "vnets" {
   type = map(any)

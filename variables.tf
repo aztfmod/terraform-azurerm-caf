@@ -294,6 +294,7 @@ variable "dynamic_keyvault_secrets" {
 
 ## Storage variables
 variable "storage_accounts" {
+  type        = map(any)
   description = "Configuration object - Storage account resources"
   default     = {}
 }

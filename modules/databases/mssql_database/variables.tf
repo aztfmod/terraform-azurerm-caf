@@ -11,7 +11,9 @@ variable "settings" {
 }
 variable "server_id" {}
 variable "server_name" {}
-variable "storage_accounts" {}
+variable "storage_accounts" {
+  type = map(any)
+}
 variable "elastic_pool_id" {
   default = null
 }

@@ -20,7 +20,9 @@ variable "location" {
 variable "keyvault_id" {
   type = string
 }
-variable "storage_accounts" {}
+variable "storage_accounts" {
+  type = map(any)
+}
 variable "azuread_groups" {}
 variable "vnets" {
   type = map(any)

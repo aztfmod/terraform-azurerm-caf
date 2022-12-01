@@ -68,6 +68,7 @@ variable "combined_objects" {
   default = {}
 }
 variable "storage_accounts" {
+  type    = map(any)
   default = {}
 }
 
