@@ -27,7 +27,9 @@ variable "client_config" {
   type        = map(any)
   description = "Client configuration object (see module README.md)."
 }
-variable "public_ip_addresses" {}
+variable "public_ip_addresses" {
+  type = map(any)
+}
 
 
 

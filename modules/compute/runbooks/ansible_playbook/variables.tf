@@ -4,6 +4,7 @@ variable "settings" {
 }
 
 variable "public_ip_addresses" {
+  type        = map(any)
   description = "Public IP addresses object"
 }
 

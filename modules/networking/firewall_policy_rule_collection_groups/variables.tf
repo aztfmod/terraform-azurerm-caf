@@ -17,6 +17,7 @@ variable "ip_groups" {
 }
 
 variable "public_ip_addresses" {
+  type        = map(any)
   description = "(Optional) A map of destination IP addresses (including CIDR)."
   default     = {}
 }

@@ -291,6 +291,7 @@ variable "bastion_hosts" {
   default = {}
 }
 variable "public_ip_addresses" {
+  type    = map(any)
   default = {}
 }
 variable "diagnostic_storage_accounts" {

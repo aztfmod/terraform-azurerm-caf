@@ -52,6 +52,7 @@ variable "diagnostics" {
   default = {}
 }
 variable "public_ip_addresses" {
+  type    = map(any)
   default = {}
 }
 

@@ -52,6 +52,7 @@ variable "base_tags" {
 }
 
 variable "public_ip_addresses" {
+  type = map(any)
 
 }
 

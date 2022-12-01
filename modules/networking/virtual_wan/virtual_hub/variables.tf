@@ -44,6 +44,7 @@ variable "virtual_networks" {
   description = "Combined object for Virtual Networks"
 }
 variable "public_ip_addresses" {
+  type        = map(any)
   description = "Combined object for public ip addresses"
 }
 variable "client_config" {
