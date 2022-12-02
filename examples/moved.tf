@@ -18,3 +18,7 @@ moved {
   from = module.example.module.azuread_service_principals
   to   = module.example.module.azuread_graph_service_principal
 }
+moved {
+  from = module.example.module.azuread_service_principal_passwords
+  to   = module.example.module.azuread_graph_service_principal_password
+}

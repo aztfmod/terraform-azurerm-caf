@@ -66,12 +66,6 @@ azuread_service_principal_passwords = {
       key = "sp1"
     }
     password_policy = {
-      # Length of the password
-      length  = 250
-      special = false
-      upper   = true
-      number  = true
-
       # Define the number of days the password is valid. It must be more than the rotation frequency
       expire_in_days = 10
       rotation = {
