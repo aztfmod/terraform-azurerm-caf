@@ -321,7 +321,7 @@ module "azuread_graph_user" {
   client_config   = local.client_config
   settings        = each.value
   remote_objects = {
-    #aad = local.aad
+    keyvaults = local.combined_objects_keyvaults
   }
 }
 output "azuread_graph_user" {
