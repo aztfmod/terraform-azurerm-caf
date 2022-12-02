@@ -9,6 +9,12 @@ variable "resource_group_name" {
   type        = string
   description = "(Required) The name of the resource group where to create the resource."
 }
-variable "primaryManagedInstanceId" {}
-variable "partnerManagedInstanceId" {}
-variable "partnerRegion" {}
+variable "primaryManagedInstanceId" {
+  type = any
+}
+variable "partnerManagedInstanceId" {
+  type = any
+}
+variable "partnerRegion" {
+  type = any
+}

@@ -3,7 +3,7 @@ variable "global_settings" {
   description = "Global settings object (see module README.md)"
 }
 variable "client_config" {
-  type        = map(any)
+  type        = any
   description = "Client configuration object (see module README.md)."
 }
 variable "settings" {

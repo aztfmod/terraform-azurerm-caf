@@ -9,12 +9,13 @@ variable "global_settings" {
 }
 
 variable "tags" {
-  type        = map(any)
+  type        = any
   description = "(Optional) A mapping of tags to assign to the resource"
   default     = {}
 }
 
 variable "resource_group" {
+  type        = any
   description = "(Required) A resource_group object."
 }
 

@@ -15,22 +15,28 @@ variable "location" {
 }
 variable "base_tags" {
   description = "Base tags for the resource to be inherited from the resource group."
-  type        = map(any)
+  type        = any
 }
-variable "password" {}
+variable "password" {
+  type = any
+}
 variable "keyvault_id" {
   type    = string
   default = null
 }
 variable "organization_id" {
+  type    = any
   default = null
 }
 variable "provider_name" {
+  type    = any
   default = null
 }
 variable "account_id" {
+  type    = any
   default = null
 }
 variable "issuer_name" {
+  type    = any
   default = null
 }

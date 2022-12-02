@@ -13,4 +13,6 @@ variable "location" {
   type        = string
   description = "(Required) Specifies the supported Azure location where to create the resource. Changing this forces a new resource to be created."
 }
-variable "cosmosdb_account_name" {}
+variable "cosmosdb_account_name" {
+  type = any
+}

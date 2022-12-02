@@ -2,7 +2,7 @@ variable "settings" {
   type = any
 }
 variable "resource_groups" {
-  type = map(any)
+  type = any
 }
 variable "resource_group_name" {
   type        = string
@@ -13,7 +13,7 @@ variable "location" {
   description = "(Required) Specifies the supported Azure location where to create the resource. Changing this forces a new resource to be created."
 }
 variable "diagnostics" {
-  type = map(any)
+  type = any
 }
 variable "global_settings" {
   type        = any
@@ -21,17 +21,18 @@ variable "global_settings" {
 }
 variable "base_tags" {
   description = "Base tags for the resource to be inherited from the resource group."
-  type        = map(any)
+  type        = any
 }
 
 variable "virtual_networks" {
+  type        = any
   description = "Combined object for Virtual Networks"
 }
 variable "public_ip_addresses" {
-  type        = map(any)
+  type        = any
   description = "Combined object for public ip addresses"
 }
 variable "client_config" {
-  type = map(any)
+  type = any
 
 }

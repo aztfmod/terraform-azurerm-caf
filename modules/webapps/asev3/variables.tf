@@ -7,7 +7,7 @@ variable "settings" {
 }
 variable "base_tags" {
   description = "Base tags for the resource to be inherited from the resource group."
-  type        = map(any)
+  type        = any
 }
 variable "subnet_id" {
   type = string
@@ -21,14 +21,14 @@ variable "location" {
   description = "(Required) Resource Location"
 }
 variable "private_dns" {
-  type    = map(any)
+  type    = any
   default = {}
 }
 variable "diagnostics" {
-  type    = map(any)
+  type    = any
   default = null
 }
 variable "diagnostic_profiles" {
-  type    = map(any)
+  type    = any
   default = null
 }

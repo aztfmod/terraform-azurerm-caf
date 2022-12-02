@@ -477,7 +477,7 @@ contact [opencode@microsoft.com](mailto:opencode@microsoft.com) with any additio
 | <a name="input_storage_accounts"></a> [storage\_accounts](#input\_storage\_accounts) | Configuration object - Storage account resources | `map` | `{}` | no |
 | <a name="input_subscription_billing_role_assignments"></a> [subscription\_billing\_role\_assignments](#input\_subscription\_billing\_role\_assignments) | Configuration object - subscription billing roleassignments. | `map` | `{}` | no |
 | <a name="input_subscriptions"></a> [subscriptions](#input\_subscriptions) | Configuration object - Subscriptions resources. | `map` | `{}` | no |
-| <a name="input_tags"></a> [tags](#input\_tags) | Tags to be used for this resource deployment. | `map(any)` | `null` | no |
+| <a name="input_tags"></a> [tags](#input\_tags) | Tags to be used for this resource deployment. | `any` | `null` | no |
 | <a name="input_tenant_id"></a> [tenant\_id](#input\_tenant\_id) | Azure AD Tenant ID for the current deployment. | `string` | `null` | no |
 | <a name="input_tfstates"></a> [tfstates](#input\_tfstates) | Terraform states configuration object. Used in the context of landing zone deployment. | `map` | `{}` | no |
 | <a name="input_use_msi"></a> [use\_msi](#input\_use\_msi) | Deployment using an MSI for authentication. | `bool` | `false` | no |

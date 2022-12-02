@@ -1,15 +1,20 @@
 variable "client_config" {
-  type = map(any)
+  type = any
 }
-variable "principals" {}
+variable "principals" {
+  type = any
+}
 variable "settings" {
   type = any
 }
-variable "cloud" {}
+variable "cloud" {
+  type = any
+}
 variable "keyvaults" {
-  type = map(any)
+  type = any
 }
 variable "billing_role_definition_name" {
+  type    = any
   default = "Enrollment account subscription creator"
 
   validation {

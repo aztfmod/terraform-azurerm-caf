@@ -3,9 +3,10 @@ variable "global_settings" {
 
 }
 variable "client_config" {
-  type = map(any)
+  type = any
 }
 variable "base_tags" {
+  type    = any
   default = {}
 }
 variable "settings" {
@@ -14,7 +15,9 @@ variable "settings" {
 variable "keyvault_id" {
   type = string
 }
-variable "key_vault_key_id" {}
+variable "key_vault_key_id" {
+  type = any
+}
 variable "resource_group_name" {
   type = string
 }

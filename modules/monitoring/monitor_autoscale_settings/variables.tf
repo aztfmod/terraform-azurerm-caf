@@ -3,7 +3,7 @@ variable "global_settings" {
 
 }
 variable "client_config" {
-  type = map(any)
+  type = any
 }
 variable "resource_group_name" {
   type = string
@@ -12,6 +12,7 @@ variable "location" {
   type = string
 }
 variable "virtual_machine_scale_sets" {
+  type    = any
   default = {}
 }
 variable "settings" {
@@ -20,6 +21,6 @@ variable "settings" {
   description = "Configuration object for the monitor autoscale setting resource"
 }
 variable "remote_objects" {
-  type    = map(any)
+  type    = any
   default = {}
 }

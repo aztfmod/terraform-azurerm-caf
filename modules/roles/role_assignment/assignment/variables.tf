@@ -1,19 +1,27 @@
-variable "scope" {}
+variable "scope" {
+  type = any
+}
 variable "role_definition_name" {
+  type    = any
   default = null
 }
 variable "role_definition_id" {
+  type    = any
   default = null
 }
-variable "keys" {}
-variable "azuread_apps" {}
+variable "keys" {
+  type = any
+}
+variable "azuread_apps" {
+  type = any
+}
 variable "azuread_groups" {
-  type = map(any)
+  type = any
 }
 variable "managed_identities" {
-  type = map(any)
+  type = any
 }
 variable "client_config" {
-  type        = map(any)
+  type        = any
   description = "Client configuration object (see module README.md)."
 }

@@ -15,22 +15,22 @@ variable "settings" {
 }
 variable "base_tags" {
   description = "Base tags for the resource to be inherited from the resource group."
-  type        = map(any)
+  type        = any
 }
 variable "client_config" {
-  type        = map(any)
+  type        = any
   description = "Client configuration object (see module README.md)."
 }
 variable "private_endpoints" {
-  type = map(any)
+  type = any
 }
 variable "resource_groups" {
-  type = map(any)
+  type = any
 }
 variable "private_dns" {
-  type    = map(any)
+  type    = any
   default = {}
 }
 variable "vnets" {
-  type = map(any)
+  type = any
 }

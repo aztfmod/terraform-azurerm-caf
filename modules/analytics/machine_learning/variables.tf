@@ -15,7 +15,7 @@ variable "settings" {
 }
 
 variable "client_config" {
-  type        = map(any)
+  type        = any
   description = "Client configuration object (see module README.md)."
 }
 
@@ -25,7 +25,7 @@ variable "global_settings" {
 }
 
 variable "resource_groups" {
-  type        = map(any)
+  type        = any
   description = "(Required) The resource group objects where to create the resource."
 }
 
@@ -35,8 +35,8 @@ variable "keyvault_id" {
 }
 
 variable "storage_account_id" {
-  description = "The ID of the Storage Account to be used by the nachine learning workspace."
   type        = string
+  description = "The ID of the Storage Account to be used by the nachine learning workspace."
 }
 variable "application_insights_id" {
   description = "The ID of the App Insights to be used by the nachine learning workspace."
@@ -45,14 +45,15 @@ variable "application_insights_id" {
 
 variable "base_tags" {
   description = "Base tags for the resource to be inherited from the resource group."
-  type        = map(any)
+  type        = any
 }
 
 variable "vnets" {
-  type        = map(any)
+  type        = any
   description = "Virtual networks objects - contains all virtual networks that could potentially be used by the module."
 }
 
 variable "container_registry_id" {
+  type    = string
   default = ""
 }

@@ -10,7 +10,7 @@ variable "location" {
 }
 
 variable "diagnostics" {
-  type        = map(any)
+  type        = any
   description = "(Required) Diagnostics object with the definitions and destination services"
 }
 
@@ -25,20 +25,22 @@ variable "global_settings" {
 }
 variable "base_tags" {
   description = "Base tags for the resource to be inherited from the resource group."
-  type        = map(any)
+  type        = any
 }
 
 variable "network_watchers" {
+  type        = any
   description = "Optional - Network Watches Object"
   default     = {}
 }
 
 variable "client_config" {
-  type        = map(any)
+  type        = any
   description = "client_config object (see module README.md)"
 }
 
 variable "application_security_groups" {
+  type        = any
   description = "Application Security Groups to attach the NSG"
   default     = {}
 }

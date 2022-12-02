@@ -1,4 +1,6 @@
-variable "subscription_id" {}
+variable "subscription_id" {
+  type = any
+}
 variable "name" {
   type = string
 }

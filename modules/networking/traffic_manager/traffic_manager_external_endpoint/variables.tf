@@ -4,6 +4,7 @@ variable "settings" {
 }
 
 variable "profile_id" {
+  type    = any
   default = {}
 }
 

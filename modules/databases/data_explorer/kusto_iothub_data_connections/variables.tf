@@ -3,7 +3,7 @@ variable "global_settings" {
   description = "Global settings object (see module README.md)"
 }
 variable "client_config" {
-  type        = map(any)
+  type        = any
   description = "Client configuration object (see module README.md)."
 }
 variable "location" {
@@ -19,14 +19,18 @@ variable "settings" {
   description = "Settings configuration object (see module README.md)."
 }
 variable "cluster_name" {
+  type        = any
   description = "(Required) Specifies the name of the Kusto Cluster this data connection will be added to. Changing this forces a new resource to be created."
 }
 variable "database_name" {
+  type        = any
   description = "(Required) Specifies the name of the Kusto Database this data connection will be added to. Changing this forces a new resource to be created."
 }
 variable "iothub_id" {
+  type        = any
   description = "(Required) Specifies the resource id of the IotHub this data connection will use for ingestion. Changing this forces a new resource to be created."
 }
 variable "consumer_group" {
+  type        = any
   description = " (Required) Specifies the EventHub consumer group this data connection will use for ingestion. Changing this forces a new resource to be created."
 }

@@ -3,7 +3,7 @@ variable "global_settings" {
   description = "Global settings object (see module README.md)"
 }
 variable "client_config" {
-  type        = map(any)
+  type        = any
   description = "Client configuration object (see module README.md)."
 }
 variable "location" {
@@ -18,11 +18,12 @@ variable "resource_group_name" {
 
 variable "base_tags" {
   description = "Base tags for the resource to be inherited from the resource group."
-  type        = map(any)
+  type        = any
 }
 
 
 variable "application_security_groups" {
+  type    = any
   default = {}
 }
 
@@ -32,12 +33,15 @@ variable "settings" {
 }
 
 variable "network_interface_id" {
+  type    = any
   default = {}
 }
 variable "application_security_group_id" {
+  type    = any
   default = {}
 }
 
 variable "existing_resources" {
+  type    = any
   default = {}
 }

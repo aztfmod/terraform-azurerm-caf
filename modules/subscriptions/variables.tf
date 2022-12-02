@@ -6,9 +6,11 @@ variable "settings" {
   #   error_message = "You need to either specify an existing subscription_id, an enrollment_account_name ( Enterprise Agreement ), or a billing_profile_name and invoice_section_name ( MCA )."
   # }
 }
-variable "subscription_key" {}
+variable "subscription_key" {
+  type = any
+}
 variable "client_config" {
-  type = map(any)
+  type = any
 }
 variable "global_settings" {
   type        = any
@@ -17,6 +19,6 @@ variable "global_settings" {
 
 # For diagnostics settings
 variable "diagnostics" {
-  type    = map(any)
+  type    = any
   default = {}
 }

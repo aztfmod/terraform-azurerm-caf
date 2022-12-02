@@ -1,4 +1,6 @@
-variable "resource_id" {}
+variable "resource_id" {
+  type = any
+}
 
 variable "name" {
   type        = string
@@ -11,7 +13,7 @@ variable "resource_group_name" {
   default     = null
 }
 variable "resource_groups" {
-  type        = map(any)
+  type        = any
   description = "The combined_objects of the resource groups. Changing this forces a new resource to be created."
   default     = {}
 }
@@ -34,16 +36,17 @@ variable "global_settings" {
 }
 variable "base_tags" {
   description = "Base tags for the resource to be inherited from the resource group."
-  type        = map(any)
+  type        = any
 }
 variable "subresource_names" {
+  type    = any
   default = []
 }
 variable "client_config" {
-  type    = map(any)
+  type    = any
   default = {}
 }
 variable "private_dns" {
-  type    = map(any)
+  type    = any
   default = {}
 }

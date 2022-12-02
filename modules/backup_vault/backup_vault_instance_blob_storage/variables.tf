@@ -5,10 +5,12 @@ variable "location" {
 variable "settings" {
   type = any
 }
-variable "vault_id" {}
+variable "vault_id" {
+  type = any
+}
 variable "storage_account_id" {
-  description = "Identifier of the storage account ID to be used."
   type        = string
+  description = "Identifier of the storage account ID to be used."
 }
 variable "backup_policy_id" {
   description = "The ID of the backup vault policy to be applied."

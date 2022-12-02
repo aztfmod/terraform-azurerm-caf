@@ -1,5 +1,5 @@
 variable "client_config" {
-  type        = map(any)
+  type        = any
   description = "Client configuration object"
 }
 
@@ -9,6 +9,7 @@ variable "global_settings" {
 }
 
 variable "local_combined_resources" {
+  type        = any
   description = "object of local combined resources"
 }
 

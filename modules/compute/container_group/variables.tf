@@ -1,12 +1,17 @@
-variable "base_tags" {}
+variable "base_tags" {
+  type = any
+}
 variable "client_config" {
-  type = map(any)
+  type = any
 }
 variable "diagnostic_profiles" {
-  type = map(any)
+  type = any
 }
-variable "combined_diagnostics" {}
+variable "combined_diagnostics" {
+  type = any
+}
 variable "combined_resources" {
+  type        = any
   description = "Provide a map of combined resources for environment_variables_from_resources"
   default     = {}
 }
@@ -24,6 +29,7 @@ variable "settings" {
   type = any
 }
 variable "dynamic_keyvault_secrets" {
+  type        = any
   description = "Provide credenrials for private image registries"
   default     = {}
 }

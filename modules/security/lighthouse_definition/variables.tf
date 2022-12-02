@@ -1,7 +1,9 @@
 variable "client_config" {
-  type = map(any)
+  type = any
 }
 variable "settings" {
   type = any
 }
-variable "resources" {}
+variable "resources" {
+  type = any
+}

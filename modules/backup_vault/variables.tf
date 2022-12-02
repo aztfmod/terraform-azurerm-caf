@@ -7,27 +7,29 @@ variable "global_settings" {
   description = "Global settings object (see module README.md)"
 }
 variable "resource_groups" {
-  type = map(any)
+  type = any
 }
 variable "resource_group_name" {
   type        = string
   description = "(Required) The name of the resource group where to create the resource."
 }
 variable "diagnostics" {
-  type = map(any)
+  type = any
 }
 variable "base_tags" {
   description = "Base tags for the resource to be inherited from the resource group."
-  type        = map(any)
+  type        = any
 }
 variable "client_config" {
-  type        = map(any)
+  type        = any
   description = "Client configuration object (see module README.md)."
 }
-variable "identity" {}
+variable "identity" {
+  type = any
+}
 variable "settings" {
   type = any
 }
 variable "storage_accounts" {
-  type = map(any)
+  type = any
 }

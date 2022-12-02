@@ -11,10 +11,10 @@ variable "settings" {
 }
 variable "base_tags" {
   description = "Base tags for the resource to be inherited from the resource group."
-  type        = map(any)
+  type        = any
 }
 variable "tags" {
-  type    = map(any)
+  type    = any
   default = {}
 }
 variable "global_settings" {

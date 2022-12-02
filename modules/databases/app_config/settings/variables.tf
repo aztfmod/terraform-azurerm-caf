@@ -9,7 +9,7 @@ variable "global_settings" {
 }
 
 variable "tags" {
-  type        = map(any)
+  type        = any
   description = "Map of tags to be applied to the resource"
 }
 

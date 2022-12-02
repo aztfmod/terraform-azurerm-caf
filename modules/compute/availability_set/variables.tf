@@ -3,7 +3,7 @@ variable "global_settings" {
   description = "Global settings object (see module README.md)"
 }
 variable "client_config" {
-  type        = map(any)
+  type        = any
   description = "Client configuration object (see module README.md)."
 }
 variable "location" {
@@ -16,18 +16,24 @@ variable "resource_group_name" {
 }
 variable "base_tags" {
   description = "Base tags for the resource to be inherited from the resource group."
-  type        = map(any)
+  type        = any
 }
 variable "settings" {
   type = any
 }
-variable "availability_sets" {}
+variable "availability_sets" {
+  type = any
+}
 variable "tags" {
-  type    = map(any)
+  type    = any
   default = null
 }
 variable "name" {
   type = string
 }
-variable "ppg_id" {}
-variable "proximity_placement_groups" {}
+variable "ppg_id" {
+  type = any
+}
+variable "proximity_placement_groups" {
+  type = any
+}

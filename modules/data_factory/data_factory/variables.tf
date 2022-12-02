@@ -3,7 +3,7 @@ variable "global_settings" {
   description = "Global settings object (see module README.md)"
 }
 variable "client_config" {
-  type        = map(any)
+  type        = any
   description = "Client configuration object (see module README.md)."
 }
 variable "location" {
@@ -17,30 +17,30 @@ variable "resource_group_name" {
   default     = null
 }
 variable "resource_groups" {
-  type        = map(any)
+  type        = any
   description = "combined objetcs of the resource groups. Either resource_group_name or resource_groups is required."
   default     = {}
 }
 variable "base_tags" {
   description = "Base tags for the resource to be inherited from the resource group."
-  type        = map(any)
+  type        = any
 }
 variable "settings" {
   type = any
 }
 variable "diagnostic_profiles" {
-  type    = map(any)
+  type    = any
   default = {}
 }
 variable "diagnostics" {
-  type    = map(any)
+  type    = any
   default = {}
 }
 variable "remote_objects" {
-  type = map(any)
+  type = any
 }
 variable "tags" {
-  type        = map(any)
+  type        = any
   default     = null
   description = "(Optional) A mapping of tags to assign to the resource"
 }

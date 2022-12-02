@@ -9,11 +9,13 @@ variable "location" {
 }
 
 variable "tags" {
-  type        = map(any)
+  type        = any
   description = "(Required) Map of tags to be applied to the resource"
 }
 
-variable "redis" {}
+variable "redis" {
+  type = any
+}
 
 variable "subnet_id" {
   type        = string
@@ -28,30 +30,30 @@ variable "global_settings" {
 
 variable "base_tags" {
   description = "Base tags for the resource to be inherited from the resource group."
-  type        = map(any)
+  type        = any
 }
 
 variable "diagnostic_profiles" {
-  type    = map(any)
+  type    = any
   default = {}
 }
 variable "diagnostics" {
-  type    = map(any)
+  type    = any
   default = null
 }
 variable "vnets" {
-  type    = map(any)
+  type    = any
   default = {}
 }
 variable "private_endpoints" {
-  type    = map(any)
+  type    = any
   default = {}
 }
 variable "private_dns" {
-  type    = map(any)
+  type    = any
   default = {}
 }
 variable "client_config" {
-  type        = map(any)
+  type        = any
   description = "Client configuration object (see module README.md)."
 }

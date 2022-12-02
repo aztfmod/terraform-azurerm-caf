@@ -7,10 +7,13 @@ variable "settings" {
   default = {}
 }
 variable "client_config" {
-  type        = map(any)
+  type        = any
   description = "Client configuration object (see module README.md)."
 }
 variable "azuread_api_permissions" {
+  type    = any
   default = {}
 }
-variable "user_type" {}
+variable "user_type" {
+  type = any
+}

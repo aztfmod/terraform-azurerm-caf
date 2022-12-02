@@ -1,5 +1,5 @@
 variable "tags" {
-  type        = map(any)
+  type        = any
   description = "(Required) map of tags for the deployment"
 }
 
@@ -9,10 +9,12 @@ variable "name" {
 }
 
 variable "kind" {
+  type        = any
   description = "(Required) Kind of resource. Possible value are ASEV2"
 }
 
 variable "zone" {
+  type        = any
   description = "(Required) Availability Zone of resource. Possible value are 1, 2 or 3"
 }
 
@@ -31,21 +33,26 @@ variable "subnet_id" {
   description = "(Required) Name of the Virtual Network for the ASE"
 }
 
-variable "subnet_name" {}
+variable "subnet_name" {
+  type = any
+}
 
-variable "internalLoadBalancingMode" {}
+variable "internalLoadBalancingMode" {
+  type = any
+}
 
 variable "diagnostics" {
-  type    = map(any)
+  type    = any
   default = null
 }
 
 variable "diagnostic_profiles" {
-  type    = map(any)
+  type    = any
   default = {}
 }
 
 variable "front_end_size" {
+  type        = string
   description = "Instance size for the front-end pool."
   default     = "Standard_D1_V2"
 
@@ -56,6 +63,7 @@ variable "front_end_size" {
 }
 
 variable "front_end_count" {
+  type        = string
   description = "Number of instances in the front-end pool.  Minimum of two."
   default     = "2"
 }
@@ -66,7 +74,7 @@ variable "global_settings" {
 }
 
 variable "private_dns" {
-  type    = map(any)
+  type    = any
   default = {}
 }
 
@@ -76,5 +84,5 @@ variable "settings" {
 
 variable "base_tags" {
   description = "Base tags for the resource to be inherited from the resource group."
-  type        = map(any)
+  type        = any
 }

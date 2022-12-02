@@ -1,10 +1,10 @@
 variable "client_config" {
-  type        = map(any)
+  type        = any
   description = "Client configuration object (see module README.md)."
 }
 
 variable "tags" {
-  type        = map(any)
+  type        = any
   description = "(Required) map of tags for the deployment"
 }
 
@@ -45,6 +45,7 @@ variable "sku_size" {
   }
 }
 variable "identity" {
+  type    = any
   default = null
 }
 
@@ -55,15 +56,15 @@ variable "global_settings" {
 
 variable "base_tags" {
   description = "Base tags for the resource to be inherited from the resource group."
-  type        = map(any)
+  type        = any
 }
 
 variable "diagnostic_profiles" {
-  type    = map(any)
+  type    = any
   default = {}
 }
 
 variable "diagnostics" {
-  type    = map(any)
+  type    = any
   default = null
 }

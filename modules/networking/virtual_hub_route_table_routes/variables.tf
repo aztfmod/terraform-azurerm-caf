@@ -1,10 +1,12 @@
 variable "client_config" {
-  type = map(any)
+  type = any
 }
 variable "remote_objects" {
-  type = map(any)
+  type = any
 }
-variable "route_table_id" {}
+variable "route_table_id" {
+  type = any
+}
 variable "settings" {
   type = any
 }

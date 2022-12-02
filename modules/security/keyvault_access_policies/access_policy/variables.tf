@@ -4,5 +4,9 @@ variable "keyvault_id" {
 variable "tenant_id" {
   type = string
 }
-variable "object_id" {}
-variable "access_policy" {}
+variable "object_id" {
+  type = any
+}
+variable "access_policy" {
+  type = any
+}

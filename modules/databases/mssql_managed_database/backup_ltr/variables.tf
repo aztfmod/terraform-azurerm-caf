@@ -1,5 +1,9 @@
-variable "server_name" {}
-variable "db_name" {}
+variable "server_name" {
+  type = any
+}
+variable "db_name" {
+  type = any
+}
 variable "settings" {
   type = any
 }

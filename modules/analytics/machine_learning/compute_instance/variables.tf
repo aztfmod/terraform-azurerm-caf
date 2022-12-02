@@ -5,7 +5,9 @@ variable "global_settings" {
   type        = any
   description = "Global settings object (see module README.md)"
 }
-variable "machine_learning_workspace_name" {}
+variable "machine_learning_workspace_name" {
+  type = any
+}
 variable "subnet_id" {
   type = string
 }
@@ -18,6 +20,6 @@ variable "location" {
   description = "(Required) Specifies the supported Azure location where to create the resource. Changing this forces a new resource to be created."
 }
 variable "tags" {
-  type        = map(any)
+  type        = any
   description = "(Required) Map of tags to be applied to the resource"
 }

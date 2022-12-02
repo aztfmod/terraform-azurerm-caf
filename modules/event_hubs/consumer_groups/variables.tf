@@ -6,14 +6,15 @@ variable "settings" {
   type = any
 }
 variable "resource_group" {
+  type        = any
   description = "Resource group objects."
 }
 variable "client_config" {
-  type = map(any)
+  type = any
 }
 variable "namespace_name" {
+  type        = any
   description = "Name of the Event Hub Namespace."
-  type        = string
 }
 variable "eventhub_name" {
   description = "Name of the Event Hub."

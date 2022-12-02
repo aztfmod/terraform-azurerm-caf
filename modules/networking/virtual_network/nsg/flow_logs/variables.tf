@@ -1,19 +1,21 @@
 
 variable "resource_id" {
+  type        = any
   description = "(Required) Fully qualified Azure resource identifier for which you enable diagnostics."
 }
 
 variable "resource_location" {
+  type        = any
   description = "(Required) location of the resource"
 }
 
 variable "client_config" {
-  type        = map(any)
+  type        = any
   description = "client_config object (see module README.md)"
 }
 
 variable "diagnostics" {
-  type        = map(any)
+  type        = any
   description = "(Required) Contains the diagnostics setting object."
 }
 
@@ -28,5 +30,6 @@ variable "global_settings" {
 }
 
 variable "network_watchers" {
+  type    = any
   default = {}
 }

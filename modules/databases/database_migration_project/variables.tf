@@ -15,18 +15,19 @@ variable "location" {
 }
 
 variable "remote_objects" {
-  type        = map(any)
+  type        = any
   description = "Combined objects for virtual networks used in the module."
 }
 variable "base_tags" {
   description = "Base tags for the resource to be inherited from the resource group."
-  type        = map(any)
+  type        = any
 }
 variable "client_config" {
-  type        = map(any)
+  type        = any
   description = "Client configuration object (see module README.md)."
 }
 
 variable "database_migration_services" {
+  type        = any
   description = "Combined object with the database migration services."
 }

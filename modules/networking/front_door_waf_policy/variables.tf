@@ -7,10 +7,10 @@ variable "settings" {
 }
 variable "base_tags" {
   description = "Base tags for the resource to be inherited from the resource group."
-  type        = map(any)
+  type        = any
 }
 variable "tags" {
-  type    = map(any)
+  type    = any
   default = {}
 }
 variable "global_settings" {
@@ -18,6 +18,7 @@ variable "global_settings" {
   description = "Global settings object (see module README.md)"
 }
 variable "front_door_waf_policies" {
+  type    = any
   default = {}
 }
 

@@ -14,29 +14,30 @@ variable "resource_group_name" {
   description = "(Required) The name of the resource group where to create the resource."
 }
 variable "diagnostics" {
-  type = map(any)
+  type = any
 }
 variable "base_tags" {
   description = "Base tags for the resource to be inherited from the resource group."
-  type        = map(any)
+  type        = any
 }
 variable "private_endpoints" {
-  type = map(any)
+  type = any
 }
 variable "vnets" {
-  type = map(any)
+  type = any
 }
 variable "client_config" {
-  type        = map(any)
+  type        = any
   description = "Client configuration object (see module README.md)."
 }
 variable "resource_groups" {
-  type = map(any)
+  type = any
 }
 variable "identity" {
+  type    = any
   default = null
 }
 variable "private_dns" {
-  type    = map(any)
+  type    = any
   default = {}
 }

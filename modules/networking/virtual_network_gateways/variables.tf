@@ -8,7 +8,7 @@ variable "location" {
 }
 variable "base_tags" {
   description = "Base tags for the resource to be inherited from the resource group."
-  type        = map(any)
+  type        = any
 }
 variable "settings" {
   type = any
@@ -18,17 +18,17 @@ variable "global_settings" {
   description = "Global settings object (see module README.md)"
 }
 variable "diagnostics" {
-  type = map(any)
+  type = any
 }
 variable "vnets" {
-  type = map(any)
+  type = any
 }
 variable "client_config" {
-  type        = map(any)
+  type        = any
   description = "Client configuration object (see module README.md)."
 }
 variable "public_ip_addresses" {
-  type = map(any)
+  type = any
 }
 
 

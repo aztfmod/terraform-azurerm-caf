@@ -4,20 +4,21 @@ variable "settings" {
 }
 
 variable "public_ip_addresses" {
-  type        = map(any)
+  type        = any
   description = "Public IP addresses object"
 }
 
 variable "virtual_machines" {
+  type        = any
   description = "VM objects"
 }
 
 variable "keyvaults" {
-  type        = map(any)
+  type        = any
   description = "AKV object"
 }
 
 variable "client_config" {
-  type        = map(any)
+  type        = any
   description = "client_config object"
 }

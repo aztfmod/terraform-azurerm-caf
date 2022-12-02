@@ -3,16 +3,17 @@ variable "global_settings" {
   description = "Global settings object (see module README.md)"
 }
 variable "client_config" {
-  type        = map(any)
+  type        = any
   description = "Client configuration object (see module README.md)."
 }
 variable "settings" {
   type = any
 }
 variable "keyvaults" {
-  type = map(any)
+  type = any
 }
 variable "password_policy" {
+  type        = any
   description = "Map to define the password policy to apply"
   default = {
     # Length of the password

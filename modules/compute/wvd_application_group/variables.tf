@@ -12,8 +12,11 @@ variable "resource_group_name" {
   type        = string
   description = "Name of the existing resource group to deploy the virtual machine"
 }
-variable "base_tags" {}
+variable "base_tags" {
+  type = any
+}
 variable "wvd_host_pools" {
+  type    = any
   default = {}
 }
 variable "name" {
@@ -21,20 +24,23 @@ variable "name" {
   default = {}
 }
 variable "host_pool_id" {
+  type    = any
   default = {}
 }
 variable "workspace_id" {
+  type    = any
   default = {}
 }
 
 variable "key_vault_id" {
+  type    = any
   default = {}
 }
 
 variable "diagnostic_profiles" {
-  type    = map(any)
+  type    = any
   default = {}
 }
 variable "diagnostics" {
-  type = map(any)
+  type = any
 }

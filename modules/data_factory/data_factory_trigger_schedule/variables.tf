@@ -3,7 +3,7 @@ variable "global_settings" {
   description = "Global settings object (see module README.md)"
 }
 variable "client_config" {
-  type        = map(any)
+  type        = any
   description = "Client configuration object (see module README.md)."
 }
 variable "settings" {
@@ -19,5 +19,6 @@ variable "data_factory_id" {
   description = "(Required) The Data Factory ID in which to associate the Schedule Trigger with"
 }
 variable "pipeline_name" {
+  type        = any
   description = "(Required) The Data Factory Pipeline name that the trigger will act on"
 }

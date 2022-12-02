@@ -1,2 +1,6 @@
-variable "object_id" {}
-variable "azuread_roles" {}
+variable "object_id" {
+  type = any
+}
+variable "azuread_roles" {
+  type = any
+}

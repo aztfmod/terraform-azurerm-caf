@@ -4,6 +4,7 @@ variable "resource_group_name" {
 }
 
 variable "base_tags" {
+  type        = any
   description = "tags of the resource"
 }
 

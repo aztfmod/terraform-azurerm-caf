@@ -11,8 +11,8 @@ variable "location" {
   description = "(Required) Specifies the supported Azure location where to create the resource. Changing this forces a new resource to be created."
 }
 variable "sku" {
-  description = "(Optional) The SKU of the Public IP. Accepted values are Basic and Standard. Defaults to Basic."
   type        = string
+  description = "(Optional) The SKU of the Public IP. Accepted values are Basic and Standard. Defaults to Basic."
   default     = "Basic"
   validation {
     condition     = contains(["Basic", "Standard"], var.sku)
@@ -43,7 +43,7 @@ variable "ip_version" {
 }
 
 variable "tags" {
-  type        = map(any)
+  type        = any
   description = "(Optional) Tags for the resource to be deployed."
   default     = null
 }
@@ -55,6 +55,7 @@ variable "create_pips" {
 }
 
 variable "pip_settings" {
+  type        = any
   description = "(Optional) PIP settings when create_ips = true."
   default     = {}
 }
@@ -71,18 +72,18 @@ variable "zones" {
 }
 
 variable "diagnostics" {
-  type        = map(any)
+  type        = any
   description = "(Optional) Diagnostics objects where to deploy the diagnostics profiles."
   default     = {}
 }
 
 variable "diagnostic_profiles" {
-  type        = map(any)
+  type        = any
   description = "(Optional) Diagnostics profile settings to be deployed for the resource."
   default     = {}
 }
 
 variable "base_tags" {
   description = "Base tags for the resource to be inherited from the resource group."
-  type        = map(any)
+  type        = any
 }

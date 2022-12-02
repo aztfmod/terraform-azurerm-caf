@@ -25,23 +25,23 @@ variable "resource_group_name" {
 }
 
 variable "diagnostics" {
-  type = map(any)
+  type = any
 }
 
 variable "base_tags" {
   description = "Base tags for the resource to be inherited from the resource group."
-  type        = map(any)
+  type        = any
 }
 
 variable "remote_objects" {
-  type        = map(any)
+  type        = any
   description = "(Required) Specifies the supported Azure location where to create the resource. Changing this forces a new resource to be created."
   default     = {}
 }
 
 variable "client_config" {
-  type = map(any)
+  type = any
 }
 variable "private_endpoints" {
-  type = map(any)
+  type = any
 }

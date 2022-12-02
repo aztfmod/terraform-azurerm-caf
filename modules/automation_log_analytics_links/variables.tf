@@ -20,8 +20,8 @@ variable "resource_group_name" {
 }
 
 variable "workspace_id" {
+  type        = any
   description = "(Required) The Log Analytics Workspace id"
-  type        = string
 }
 
 variable "read_access_id" {

@@ -3,7 +3,7 @@ variable "settings" {
   description = "(Required) Used to handle passthrough paramenters."
 }
 variable "remote_objects" {
-  type        = map(any)
+  type        = any
   description = "The remote objects the module depends on."
 }
 variable "location" {
@@ -11,6 +11,6 @@ variable "location" {
   description = "Region of the the Replica Set."
 }
 variable "client_config" {
-  type        = map(any)
+  type        = any
   description = "Client configuration object (see module README.md)."
 }

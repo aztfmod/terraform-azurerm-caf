@@ -3,7 +3,7 @@ variable "global_settings" {
 
 }
 variable "client_config" {
-  type = map(any)
+  type = any
 }
 variable "settings" {
   type = any
@@ -15,8 +15,9 @@ variable "location" {
   type = string
 }
 variable "base_tags" {
+  type    = any
   default = {}
 }
 variable "vnets" {
-  type = map(any)
+  type = any
 }

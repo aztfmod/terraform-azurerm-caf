@@ -1,4 +1,6 @@
-variable "aws_role_arn" {}
+variable "aws_role_arn" {
+  type = any
+}
 variable "name" {
   type = string
 }

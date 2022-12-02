@@ -7,23 +7,26 @@ variable "settings" {
   default = {}
 }
 variable "client_config" {
-  type        = map(any)
+  type        = any
   description = "Client configuration object (see module README.md)."
 }
 variable "keyvaults" {
-  type    = map(any)
+  type    = any
   default = {}
 }
 
 variable "service_principal_id" {
+  type        = any
   description = "(Required) The ID of the Service Principal for which this password should be created."
 }
 
 variable "service_principal_application_id" {
+  type        = any
   description = "(Required) The App ID of the Application for which to create a Service Principal."
 }
 
 variable "password_policy" {
+  type        = any
   description = "Default password policy applies when not set in tfvars."
   default = {
     # Length of the password

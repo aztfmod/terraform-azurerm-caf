@@ -4,10 +4,10 @@ variable "global_settings" {
   description = "Global settings object (see module README.md)"
 }
 variable "client_config" {
-  type = map(any)
+  type = any
 }
 variable "diagnostics" {
-  type = map(any)
+  type = any
 }
 variable "settings" {
   type = any
@@ -16,27 +16,31 @@ variable "location" {
   type = string
 }
 variable "vnets" {
-  type = map(any)
+  type = any
 }
 variable "resource_group_name" {
   type = string
 }
-variable "admin_group_object_ids" {}
+variable "admin_group_object_ids" {
+  type = any
+}
 variable "base_tags" {
   description = "Base tags for the resource to be inherited from the resource group."
-  type        = map(any)
+  type        = any
 }
 variable "diagnostic_profiles" {
-  type    = map(any)
+  type    = any
   default = {}
 }
 variable "private_dns_zone_id" {
+  type    = any
   default = null
 }
 variable "managed_identities" {
-  type    = map(any)
+  type    = any
   default = {}
 }
 variable "application_gateway" {
+  type    = any
   default = {}
 }

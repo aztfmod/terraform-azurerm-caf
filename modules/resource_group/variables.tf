@@ -3,7 +3,7 @@ variable "global_settings" {
   description = "Global settings object (see module README.md)"
 }
 variable "tags" {
-  type        = map(any)
+  type        = any
   description = "(Required) Map of tags to be applied to the resource"
 }
 variable "settings" {

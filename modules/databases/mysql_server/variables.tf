@@ -6,7 +6,7 @@ variable "settings" {
   type = any
 }
 variable "client_config" {
-  type        = map(any)
+  type        = any
   description = "Client configuration object (see module README.md)."
 }
 variable "resource_group_name" {
@@ -21,39 +21,40 @@ variable "keyvault_id" {
   type = string
 }
 variable "storage_accounts" {
-  type = map(any)
+  type = any
 }
 variable "azuread_groups" {
-  type = map(any)
+  type = any
 }
 variable "vnets" {
-  type = map(any)
+  type = any
 }
 variable "subnet_id" {
   type = string
 }
 variable "private_endpoints" {
-  type = map(any)
+  type = any
 }
 variable "resource_groups" {
-  type = map(any)
+  type = any
 }
 variable "diagnostic_profiles" {
-  type    = map(any)
+  type    = any
   default = {}
 }
 variable "network_security_group_definition" {
+  type    = any
   default = null
 }
 variable "diagnostics" {
-  type    = map(any)
+  type    = any
   default = {}
 }
 variable "base_tags" {
   description = "Base tags for the resource to be inherited from the resource group."
-  type        = map(any)
+  type        = any
 }
 variable "private_dns" {
-  type    = map(any)
+  type    = any
   default = {}
 }

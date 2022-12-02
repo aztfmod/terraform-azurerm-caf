@@ -3,7 +3,7 @@ variable "global_settings" {
   description = "Global settings object (see module README.md)"
 }
 variable "client_config" {
-  type        = map(any)
+  type        = any
   description = "Client configuration object (see module README.md)."
 }
 variable "settings" {
@@ -19,13 +19,16 @@ variable "data_factory_id" {
   description = "(Required) The Data Factory ID in which to associate the Linked Service with. Changing this forces a new resource."
 }
 variable "connection_string" {
+  type    = any
   default = null
 }
 variable "integration_runtime_name" {
+  type        = any
   description = "(Optional) The integration runtime reference to associate with the Data Factory Linked Service."
   default     = null
 }
 variable "storage_account" {
+  type        = any
   description = "Storage account to attach"
   default     = null
 }

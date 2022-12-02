@@ -7,13 +7,14 @@ variable "global_settings" {
 }
 
 variable "application_group_id" {
+  type    = any
   default = {}
 }
 
 variable "diagnostic_profiles" {
-  type    = map(any)
+  type    = any
   default = {}
 }
 variable "diagnostics" {
-  type = map(any)
+  type = any
 }

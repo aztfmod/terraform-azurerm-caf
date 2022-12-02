@@ -3,16 +3,19 @@ variable "global_settings" {
   description = "Global settings object (see module README.md)"
 }
 variable "client_config" {
-  type        = map(any)
+  type        = any
   description = "Client configuration object (see module README.md)."
 }
 variable "settings" {
   type = any
 }
-variable "resource_group" {}
+variable "resource_group" {
+  type = any
+}
 variable "remote_objects" {
-  type = map(any)
+  type = any
 }
 variable "base_tags" {
+  type    = any
   default = {}
 }

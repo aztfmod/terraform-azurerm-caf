@@ -3,7 +3,7 @@ variable "global_settings" {
   description = "Global settings object (see module README.md)"
 }
 variable "client_config" {
-  type        = map(any)
+  type        = any
   description = "Client configuration object (see module README.md)."
 }
 variable "settings" {
@@ -21,5 +21,6 @@ variable "data_factory_id" {
 }
 
 variable "linked_service_name" {
+  type        = any
   description = "(Required) The Data Factory Linked Service name in which to associate the Dataset with"
 }

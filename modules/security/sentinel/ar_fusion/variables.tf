@@ -7,8 +7,10 @@ variable "log_analytics_workspace_id" {
   default = null
 }
 variable "alert_rule_template_guid" {
+  type    = any
   default = null
 }
 variable "enabled" {
+  type    = any
   default = null
 }

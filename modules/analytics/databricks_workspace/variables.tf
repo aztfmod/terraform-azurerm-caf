@@ -23,7 +23,7 @@ variable "global_settings" {
 }
 
 variable "client_config" {
-  type        = map(any)
+  type        = any
   description = "Client configuration object (see module README.md)."
 }
 
@@ -44,20 +44,21 @@ variable "location" {
 }
 
 variable "vnets" {
-  type        = map(any)
+  type        = any
   description = "Virtual networks objects - contains all virtual networks that could potentially be used by the module."
 }
 
 variable "aml" {
+  type        = any
   description = "Azure Machine Learning objects - contains all AML workspaces that could potentially be used by the module."
 }
 
 variable "base_tags" {
   description = "Base tags for the resource to be inherited from the resource group."
-  type        = map(any)
+  type        = any
 }
 
 variable "diagnostics" {
-  type        = map(any)
+  type        = any
   description = "(Required) Diagnostics object with the definitions and destination services"
 }

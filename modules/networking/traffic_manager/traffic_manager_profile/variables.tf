@@ -10,5 +10,6 @@ variable "location" {
   #  default = {}
 }
 variable "base_tags" {
+  type    = any
   default = {}
 }

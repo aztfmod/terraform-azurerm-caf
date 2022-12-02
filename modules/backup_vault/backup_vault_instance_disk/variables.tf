@@ -5,7 +5,9 @@ variable "location" {
 variable "settings" {
   type = any
 }
-variable "vault_id" {}
+variable "vault_id" {
+  type = any
+}
 variable "disk_id" {
   description = "Identifier of the disk to be used."
   type        = string

@@ -2,13 +2,14 @@ variable "resource_group_name" {
   type = string
 }
 variable "build_resource_group_name" {
+  type    = any
   default = {}
 }
 variable "location" {
   type = string
 }
 variable "client_config" {
-  type = map(any)
+  type = any
 }
 variable "global_settings" {
   type = any
@@ -17,22 +18,34 @@ variable "global_settings" {
 variable "settings" {
   type = any
 }
-variable "base_tags" {}
-variable "gallery_name" {}
-variable "image_name" {}
-variable "key_vault_id" {}
+variable "base_tags" {
+  type = any
+}
+variable "gallery_name" {
+  type = any
+}
+variable "image_name" {
+  type = any
+}
+variable "key_vault_id" {
+  type = any
+}
 variable "tenant_id" {
   type = string
 }
-variable "subscription" {}
+variable "subscription" {
+  type = any
+}
 variable "managed_identities" {
-  type    = map(any)
+  type    = any
   default = {}
 }
 variable "vnet_name" {
+  type    = any
   default = {}
 }
 variable "subnet_name" {
+  type    = any
   default = {}
 }
 

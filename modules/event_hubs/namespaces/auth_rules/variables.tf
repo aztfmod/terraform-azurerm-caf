@@ -5,8 +5,12 @@ variable "global_settings" {
 variable "settings" {
   type = any
 }
-variable "resource_group" {}
-variable "client_config" {
-  type = map(any)
+variable "resource_group" {
+  type = any
 }
-variable "namespace_name" {}
+variable "client_config" {
+  type = any
+}
+variable "namespace_name" {
+  type = any
+}

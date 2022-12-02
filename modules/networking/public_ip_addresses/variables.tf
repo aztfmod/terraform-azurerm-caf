@@ -11,8 +11,8 @@ variable "location" {
   description = "(Required) Specifies the supported Azure location where to create the resource. Changing this forces a new resource to be created."
 }
 variable "sku" {
-  description = "(Optional) The SKU of the Public IP. Accepted values are Basic and Standard. Defaults to Basic."
   type        = string
+  description = "(Optional) The SKU of the Public IP. Accepted values are Basic and Standard. Defaults to Basic."
   default     = "Basic"
   validation {
     condition     = contains(["Basic", "Standard"], var.sku)
@@ -71,7 +71,7 @@ variable "reverse_fqdn" {
 }
 
 variable "tags" {
-  type        = map(any)
+  type        = any
   description = "(Optional) Tags for the resource to be deployed."
   default     = null
 }
@@ -88,13 +88,13 @@ variable "zones" {
 }
 
 variable "diagnostics" {
-  type        = map(any)
+  type        = any
   description = "(Optional) Diagnostics objects where to deploy the diagnostics profiles."
   default     = {}
 }
 
 variable "diagnostic_profiles" {
-  type        = map(any)
+  type        = any
   description = "(Optional) Diagnostics profile settings to be deployed for the resource."
   default     = {}
 }
@@ -102,7 +102,7 @@ variable "diagnostic_profiles" {
 variable "ip_tags" {
   description = "(Optional) A mapping of IP tags to assign to the public IP."
   default     = {}
-  type        = map(any)
+  type        = any
 }
 
 variable "public_ip_prefix_id" {
@@ -113,5 +113,5 @@ variable "public_ip_prefix_id" {
 
 variable "base_tags" {
   description = "Base tags for the resource to be inherited from the resource group."
-  type        = map(any)
+  type        = any
 }

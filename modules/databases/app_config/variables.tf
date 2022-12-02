@@ -14,11 +14,11 @@ variable "resource_group_name" {
 
 variable "base_tags" {
   description = "Base tags for the resource to be inherited from the resource group."
-  type        = map(any)
+  type        = any
 }
 
 variable "tags" {
-  type        = map(any)
+  type        = any
   description = "(Required) map of tags for the deployment"
 }
 
@@ -33,9 +33,10 @@ variable "name" {
 }
 
 variable "combined_objects" {
+  type    = any
   default = {}
 }
 
 variable "client_config" {
-  type = map(any)
+  type = any
 }

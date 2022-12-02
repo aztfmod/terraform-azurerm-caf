@@ -1,4 +1,6 @@
 variable "settings" {
   type = any
 }
-variable "keyvault" {}
+variable "keyvault" {
+  type = any
+}

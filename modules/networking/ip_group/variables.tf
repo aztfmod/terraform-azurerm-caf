@@ -8,7 +8,7 @@ variable "name" {
 }
 
 variable "tags" {
-  type        = map(any)
+  type        = any
   description = "(Required) Tags of the IP Group to be created"
 }
 
@@ -24,10 +24,11 @@ variable "location" {
 
 variable "base_tags" {
   description = "Base tags for the resource to be inherited from the resource group."
-  type        = map(any)
+  type        = any
 }
 
 variable "vnet" {
+  type        = any
   description = "(Required) Vnet CIDRs of the IP Group to be created"
 }
 
@@ -36,5 +37,5 @@ variable "settings" {
 }
 
 variable "client_config" {
-  type = map(any)
+  type = any
 }

@@ -3,7 +3,7 @@ variable "global_settings" {
   description = "Global settings object (see module README.md)"
 }
 variable "client_config" {
-  type        = map(any)
+  type        = any
   description = "Client configuration object (see module README.md)."
 }
 variable "settings" {
@@ -11,13 +11,13 @@ variable "settings" {
   description = "(Required) Used to handle passthrough paramenters."
 }
 variable "remote_objects" {
-  type        = map(any)
+  type        = any
   description = "(Required) Specifies the supported Azure location where to create the resource. Changing this forces a new resource to be created."
   default     = {}
 }
 variable "base_tags" {
   description = "Base tags for the resource to be inherited from the resource group."
-  type        = map(any)
+  type        = any
   default     = {}
 }
 variable "location" {
@@ -26,18 +26,18 @@ variable "location" {
   default     = null
 }
 variable "managed_identities" {
-  type    = map(any)
+  type    = any
   default = null
 }
 variable "private_endpoints" {
-  type    = map(any)
+  type    = any
   default = {}
 }
 variable "diagnostic_profiles" {
-  type    = map(any)
+  type    = any
   default = null
 }
 variable "diagnostics" {
-  type    = map(any)
+  type    = any
   default = null
 }

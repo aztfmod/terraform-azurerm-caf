@@ -3,7 +3,7 @@ variable "global_settings" {
   description = "Global settings object (see module README.md)"
 }
 variable "client_config" {
-  type        = map(any)
+  type        = any
   description = "Client configuration object (see module README.md)."
 }
 variable "settings" {
@@ -11,5 +11,6 @@ variable "settings" {
   description = "Settings object (see module README.md)."
 }
 variable "logic_app_id" {
+  type        = any
   description = "(Required) Specifies the ID of the Logic App Workflow"
 }

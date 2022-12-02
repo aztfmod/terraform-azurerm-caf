@@ -1,10 +1,10 @@
 variable "client_config" {
-  type        = map(any)
+  type        = any
   description = "Client configuration object (see module README.md)."
 }
 
 variable "tags" {
-  type        = map(any)
+  type        = any
   description = "(Required) map of tags for the deployment"
 }
 
@@ -24,29 +24,36 @@ variable "resource_group_name" {
 }
 
 variable "app_service_plan_id" {
+  type = any
 }
 
 variable "identity" {
+  type    = any
   default = null
 }
 
 variable "connection_strings" {
+  type    = any
   default = {}
 }
 
 variable "app_settings" {
+  type    = any
   default = null
 }
 
 variable "dynamic_app_settings" {
+  type    = any
   default = {}
 }
 
 variable "slots" {
+  type    = any
   default = {}
 }
 
 variable "application_insight" {
+  type    = any
   default = null
 }
 
@@ -61,35 +68,36 @@ variable "global_settings" {
 
 variable "base_tags" {
   description = "Base tags for the resource to be inherited from the resource group."
-  type        = map(any)
+  type        = any
 }
 
 variable "combined_objects" {
+  type    = any
   default = {}
 }
 variable "storage_accounts" {
-  type    = map(any)
+  type    = any
   default = {}
 }
 
 variable "diagnostic_profiles" {
-  type    = map(any)
+  type    = any
   default = {}
 }
 variable "diagnostics" {
-  type    = map(any)
+  type    = any
   default = null
 }
 
 variable "vnets" {
-  type = map(any)
+  type = any
 }
 variable "subnet_id" {
   type = string
 }
 variable "private_endpoints" {
-  type = map(any)
+  type = any
 }
 variable "private_dns" {
-  type = map(any)
+  type = any
 }

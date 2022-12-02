@@ -13,6 +13,6 @@ variable "settings" {
   description = "Configuration object for the monitor action group"
 }
 variable "remote_objects" {
-  type        = map(any)
+  type        = any
   description = "Handle remote combined objects"
 }

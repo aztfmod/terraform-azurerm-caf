@@ -2,7 +2,7 @@ variable "settings" {
   type = any
 }
 variable "resource_groups" {
-  type = map(any)
+  type = any
 }
 variable "resource_group_name" {
   type        = string
@@ -13,7 +13,7 @@ variable "location" {
   description = "(Required) Specifies the supported Azure location where to create the resource. Changing this forces a new resource to be created."
 }
 variable "diagnostics" {
-  type = map(any)
+  type = any
 }
 variable "global_settings" {
   type        = any

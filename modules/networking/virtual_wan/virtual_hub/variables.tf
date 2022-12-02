@@ -10,6 +10,7 @@ variable "global_settings" {
 }
 
 variable "virtual_hub_config" {
+  type        = any
   description = "core_networking"
 }
 
@@ -36,18 +37,19 @@ variable "vwan_id" {
 }
 
 variable "tags" {
-  type    = map(any)
+  type    = any
   default = {}
 }
 
 variable "virtual_networks" {
+  type        = any
   description = "Combined object for Virtual Networks"
 }
 variable "public_ip_addresses" {
-  type        = map(any)
+  type        = any
   description = "Combined object for public ip addresses"
 }
 variable "client_config" {
-  type = map(any)
+  type = any
 
 }

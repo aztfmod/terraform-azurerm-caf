@@ -15,6 +15,7 @@ variable "subnet_id" {
   default = ""
 }
 variable "public_ip_address_id" {
+  type    = any
   default = ""
 }
 variable "idle_timeout_in_minutes" {
@@ -28,10 +29,11 @@ variable "idle_timeout_in_minutes" {
   }
 }
 variable "base_tags" {
+  type    = any
   default = {}
 }
 variable "tags" {
-  type        = map(any)
+  type        = any
   description = "(Optional) Tags for the resource to be deployed."
   default     = null
 }

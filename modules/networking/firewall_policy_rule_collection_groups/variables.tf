@@ -1,4 +1,5 @@
 variable "policy_settings" {
+  type        = any
   description = "(Required) Azure Firewall Policy Configuration"
 }
 
@@ -8,16 +9,18 @@ variable "global_settings" {
 }
 
 variable "firewall_policy_id" {
+  type        = any
   description = "(Required) The ID of the Firewall Policy where the Firewall Policy Rule Collection Group should exist. Changing this forces a new Firewall Policy Rule Collection Group to be created."
 }
 
 variable "ip_groups" {
+  type        = any
   description = "(Optional) Specifies a map of source IP groups."
   default     = {}
 }
 
 variable "public_ip_addresses" {
-  type        = map(any)
+  type        = any
   description = "(Optional) A map of destination IP addresses (including CIDR)."
   default     = {}
 }

@@ -3,7 +3,7 @@ variable "global_settings" {
   description = "Global settings object (see module README.md)"
 }
 variable "client_config" {
-  type        = map(any)
+  type        = any
   description = "Client configuration object (see module README.md)."
 }
 variable "settings" {
@@ -11,12 +11,12 @@ variable "settings" {
   description = "(Required) The configuration for each module"
 }
 variable "remote_objects" {
-  type        = map(any)
+  type        = any
   description = "(Required) Specifies the supported Azure location where to create the resource. Changing this forces a new resource to be created."
   default     = {}
 }
 variable "resource_groups" {
-  type        = map(any)
+  type        = any
   description = "Combined resource groups object."
   default     = {}
 }

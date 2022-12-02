@@ -6,10 +6,10 @@ variable "location" {
   type = string
 }
 variable "diagnostics" {
-  type = map(any)
+  type = any
 }
 variable "client_config" {
-  type = map(any)
+  type = any
 }
 variable "global_settings" {
   type = any
@@ -18,5 +18,9 @@ variable "global_settings" {
 variable "settings" {
   type = any
 }
-variable "base_tags" {}
-variable "gallery_name" {}
+variable "base_tags" {
+  type = any
+}
+variable "gallery_name" {
+  type = any
+}

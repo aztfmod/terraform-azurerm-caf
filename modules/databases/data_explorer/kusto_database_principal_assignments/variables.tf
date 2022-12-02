@@ -3,7 +3,7 @@ variable "global_settings" {
   description = "Global settings object (see module README.md)"
 }
 variable "client_config" {
-  type        = map(any)
+  type        = any
   description = "Client configuration object (see module README.md)."
 }
 variable "location" {
@@ -19,12 +19,15 @@ variable "settings" {
   description = "Settings configuration object (see module README.md)."
 }
 variable "cluster_name" {
+  type        = any
   description = "(Required) The name of the cluster in which to create the resource. Changing this forces a new resource to be created."
 }
 variable "database_name" {
+  type        = any
   description = "(Required) The name of the database in which to create the resource. Changing this forces a new resource to be created."
 }
 variable "principal_id" {
+  type        = any
   description = "Required) The object id of the principal. Changing this forces a new resource to be created."
 }
 variable "tenant_id" {

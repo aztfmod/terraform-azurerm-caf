@@ -3,26 +3,28 @@ variable "global_settings" {
   description = "Global settings object (see module README.md)"
 }
 variable "client_config" {
-  type        = map(any)
+  type        = any
   description = "Client configuration object (see module README.md)."
 }
 variable "settings" {
   type = any
 }
 variable "resource_groups" {
-  type = map(any)
+  type = any
 }
 variable "private_endpoints" {
-  type = map(any)
+  type = any
 }
 variable "private_dns" {
-  type = map(any)
+  type = any
 }
 variable "remote_objects" {
-  type = map(any)
+  type = any
 }
-variable "vnet" {}
+variable "vnet" {
+  type = any
+}
 variable "base_tags" {
   description = "Base tags for the resource to be inherited from the resource group."
-  type        = map(any)
+  type        = any
 }

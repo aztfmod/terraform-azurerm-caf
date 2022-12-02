@@ -1,15 +1,16 @@
 variable "base_tags" {
   description = "Base tags for the resource to be inherited from the resource group."
-  type        = map(any)
+  type        = any
 }
 variable "client_config" {
-  type        = map(any)
+  type        = any
   description = "Client configuration object (see module README.md)."
 }
 variable "diagnostics" {
-  type = map(any)
+  type = any
 }
 variable "front_door_waf_policies" {
+  type    = any
   default = {}
 }
 variable "global_settings" {
@@ -21,10 +22,11 @@ variable "keyvault_id" {
   default = null
 }
 variable "keyvault_certificate_requests" {
+  type    = any
   default = {}
 }
 variable "keyvaults" {
-  type    = map(any)
+  type    = any
   default = {}
 }
 variable "resource_group_name" {
@@ -34,7 +36,7 @@ variable "settings" {
   type = any
 }
 variable "tags" {
-  type    = map(any)
+  type    = any
   default = {}
 }
 

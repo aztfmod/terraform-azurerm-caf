@@ -13,7 +13,7 @@ variable "location" {
 }
 
 variable "tags" {
-  type        = map(any)
+  type        = any
   description = "(Required) Tags of the Azure Firewall to be created"
 }
 
@@ -29,12 +29,13 @@ variable "subnet_id" {
 }
 
 variable "public_ip_id" {
+  type        = any
   description = "(Optional) Public IP address identifier. IP address must be of type static and standard."
   default     = null
 }
 
 variable "diagnostics" {
-  type    = map(any)
+  type    = any
   default = {}
 }
 variable "settings" {
@@ -42,41 +43,46 @@ variable "settings" {
 }
 
 variable "diagnostic_profiles" {
-  type    = map(any)
+  type    = any
   default = {}
 }
 
 variable "base_tags" {
   description = "Base tags for the resource to be inherited from the resource group."
-  type        = map(any)
+  type        = any
 }
 
 variable "public_ip_addresses" {
-  type = map(any)
+  type = any
 
 }
 
 variable "public_ip_keys" {
+  type    = any
   default = {}
 }
 
 variable "virtual_wans" {
+  type    = any
   default = {}
 }
 
 variable "virtual_hubs" {
+  type    = any
   default = {}
 }
 
 variable "virtual_networks" {
+  type = any
 
 }
 
 variable "client_config" {
-  type    = map(any)
+  type    = any
   default = {}
 }
 
 variable "firewall_policy_id" {
+  type    = any
   default = null
 }

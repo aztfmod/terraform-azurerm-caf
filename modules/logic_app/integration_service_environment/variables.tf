@@ -3,7 +3,7 @@ variable "global_settings" {
   description = "Global settings object (see module README.md)"
 }
 variable "client_config" {
-  type        = map(any)
+  type        = any
   description = "Client configuration object (see module README.md)."
 }
 variable "location" {
@@ -16,7 +16,7 @@ variable "resource_group_name" {
 }
 variable "base_tags" {
   description = "Base tags for the resource to be inherited from the resource group."
-  type        = map(any)
+  type        = any
 }
 
 variable "settings" {
@@ -38,12 +38,12 @@ variable "settings" {
 #  description = "(Required) The type of access endpoint to use for the Integration Service Environment"
 #}
 variable "vnets" {
-  type        = map(any)
+  type        = any
   default     = {}
   description = "(Required) A list of virtual network subnet ids to be used by Integration Service Environment"
 }
 variable "tags" {
-  type        = map(any)
+  type        = any
   description = "(Required) map of tags for the deployment"
   default     = null
 }

@@ -5,16 +5,18 @@ variable "global_settings" {
 variable "settings" {
   type = any
 }
-variable "resource_group" {}
+variable "resource_group" {
+  type = any
+}
 variable "base_tags" {
   description = "Base tags for the resource to be inherited from the resource group."
-  type        = map(any)
+  type        = any
 }
 variable "client_config" {
-  type        = map(any)
+  type        = any
   description = "Client configuration object (see module README.md)."
 }
 variable "storage_accounts" {
-  type    = map(any)
+  type    = any
   default = {}
 }

@@ -18,10 +18,11 @@ variable "resource_group_name" {
 }
 
 variable "app_service_plan_id" {
+  type = any
 }
 
 variable "tags" {
-  type        = map(any)
+  type        = any
   description = "(Required) map of tags for the deployment"
 }
 
@@ -32,48 +33,59 @@ variable "name" {
 
 
 variable "storage_account_access_key" {
+  type    = any
   default = null
 }
 
 variable "storage_account_name" {
+  type    = any
   default = null
 }
 
 variable "identity" {
+  type    = any
   default = null
 }
 
 variable "connection_strings" {
+  type    = any
   default = {}
 }
 
 variable "app_settings" {
+  type    = any
   default = null
 }
 
 variable "slots" {
+  type    = any
   default = {}
 }
 
 variable "application_insight" {
+  type    = any
   default = null
 }
 
-variable "base_tags" {}
+variable "base_tags" {
+  type = any
+}
 
 variable "combined_objects" {
+  type    = any
   default = {}
 }
 
 variable "client_config" {
-  type = map(any)
+  type = any
 }
 
 variable "dynamic_app_settings" {
+  type    = any
   default = {}
 }
 
 variable "remote_objects" {
-  type    = map(any)
+  type    = any
   default = null
 }

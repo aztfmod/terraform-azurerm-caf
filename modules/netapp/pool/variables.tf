@@ -3,7 +3,7 @@ variable "global_settings" {
 
 }
 variable "client_config" {
-  type = map(any)
+  type = any
 }
 variable "settings" {
   type = any
@@ -14,11 +14,14 @@ variable "resource_group_name" {
 variable "location" {
   type = string
 }
-variable "account_name" {}
+variable "account_name" {
+  type = any
+}
 variable "vnets" {
-  type = map(any)
+  type = any
 }
 
 variable "base_tags" {
+  type    = any
   default = {}
 }

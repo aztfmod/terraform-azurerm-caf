@@ -8,5 +8,9 @@ variable "global_settings" {
 variable "resource_group_name" {
   type = string
 }
-variable "cosmosdb_account_name" {}
-variable "database_name" {}
+variable "cosmosdb_account_name" {
+  type = any
+}
+variable "database_name" {
+  type = any
+}

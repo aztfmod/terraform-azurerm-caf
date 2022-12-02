@@ -7,17 +7,24 @@ variable "resource_group_name" {
 variable "location" {
   type = string
 }
-variable "account_name" {}
-variable "pool_name" {}
-variable "service_level" {}
+variable "account_name" {
+  type = any
+}
+variable "pool_name" {
+  type = any
+}
+variable "service_level" {
+  type = any
+}
 variable "subnet_id" {
   type = string
 }
 variable "export_policy_rule" {
+  type    = any
   default = {}
 }
 variable "tags" {
-  type    = map(any)
+  type    = any
   default = {}
 }
 variable "global_settings" {
