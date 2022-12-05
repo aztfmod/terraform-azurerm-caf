@@ -159,3 +159,49 @@ private_dns = {
 
   }
 }
+
+## Metric Monitoring Configuration
+monitor_action_groups = {
+  example = {
+    action_group_name  = "example-ag-name"
+    resource_group_key = "mysql_region1"
+    shortname          = "example"
+
+    tags = {
+      first_tag  = "example1",
+      second_tag = "example2",
+    }
+  }
+}
+
+monitor_metric_alert = {
+  mysql-cpu-utilization = {
+    name           = "mysql-cpu-utilization"
+    resource_group = { key = "mysql_region1" }
+    description    = "Action will be triggered when cpu utilization is greater than 90% in the last 30 min."
+    severity       = 2
+    frequency      = "PT15M"
+    window_size    = "PT30M"
+
+    criteria = {
+      metric_namespace = "Microsoft.DBforMySQL/flexibleServers"
+      metric_name      = "cpu_percent"
+      aggregation      = "Average"
+      operator         = "GreaterThan"
+      threshold        = 90
+    }
+
+    scopes = {
+      scope1 = {
+        resource_type = "mysql_flexible_server"
+        key           = "primary_re1"
+      }
+    }
+
+    action = {
+      action_group = {
+        key = "example"
+      }
+    }
+  }
+}
