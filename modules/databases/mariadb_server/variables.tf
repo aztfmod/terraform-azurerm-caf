@@ -1,29 +1,49 @@
 variable "global_settings" {
+  type        = any
   description = "Global settings object (see module README.md)"
 }
 variable "client_config" {
+  type        = any
   description = "Client configuration object (see module README.md)."
 }
-variable "settings" {}
+variable "settings" {
+  type = any
+}
 variable "resource_group_name" {
-  description = "(Required) The name of the resource group where to create the resource."
   type        = string
+  description = "(Required) The name of the resource group where to create the resource."
 }
 variable "location" {
-  description = "(Required) Specifies the supported Azure location where to create the resource. Changing this forces a new resource to be created."
   type        = string
+  description = "(Required) Specifies the supported Azure location where to create the resource. Changing this forces a new resource to be created."
 }
-variable "keyvault_id" {}
-variable "storage_accounts" {}
-variable "azuread_groups" {}
-variable "vnets" {}
-variable "subnet_id" {}
-variable "private_endpoints" {}
-variable "resource_groups" {}
+variable "keyvault_id" {
+  type = string
+}
+variable "storage_accounts" {
+  type = any
+}
+variable "azuread_groups" {
+  type = any
+}
+variable "vnets" {
+  type = any
+}
+variable "subnet_id" {
+  type = string
+}
+variable "private_endpoints" {
+  type = any
+}
+variable "resource_groups" {
+  type = any
+}
 variable "diagnostic_profiles" {
+  type    = any
   default = {}
 }
 variable "diagnostics" {
+  type    = any
   default = {}
 }
 variable "base_tags" {
@@ -31,5 +51,6 @@ variable "base_tags" {
   type        = map(any)
 }
 variable "private_dns" {
+  type    = any
   default = {}
 }

@@ -1,25 +1,33 @@
 variable "azure_firewall_name" {
+  type        = any
   description = "(Required) Specifies the name of the Firewall in which the Network Rule Collection should be created. Changing this forces a new resource to be created."
 }
 
 variable "resource_group_name" {
+  type        = string
   description = "(Required) Specifies the name of the Resource Group in which the Firewall exists. Changing this forces a new resource to be created."
 }
 
 variable "rule_collections" {
+  type        = any
   description = "(Required) One or more rules as defined https://www.terraform.io/docs/providers/azurerm/r/firewall_nat_rule_collection.html"
 }
 
-variable "azurerm_firewall_nat_rule_collection_definition" {}
+variable "azurerm_firewall_nat_rule_collection_definition" {
+  type = any
+}
 
 variable "global_settings" {
+  type        = any
   description = "Global settings object (see module README.md)"
 }
 
 variable "ip_groups" {
+  type    = any
   default = {}
 }
 
 variable "public_ip_addresses" {
+  type    = any
   default = {}
 }

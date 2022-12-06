@@ -5,21 +5,23 @@ variable "prefix" {
 }
 
 variable "global_settings" {
+  type        = any
   description = "global settings"
 }
 
 variable "virtual_hub_config" {
+  type        = any
   description = "core_networking"
 }
 
 variable "location" {
-  description = "(Required) Location where to create the hub resources"
   type        = string
+  description = "(Required) Location where to create the hub resources"
 }
 
 variable "resource_group_name" {
-  description = "(Required) Name of the resource group to create the hub resources"
   type        = string
+  description = "(Required) Name of the resource group to create the hub resources"
 }
 
 
@@ -35,16 +37,19 @@ variable "vwan_id" {
 }
 
 variable "tags" {
-  type    = map(any)
+  type    = any
   default = {}
 }
 
 variable "virtual_networks" {
+  type        = any
   description = "Combined object for Virtual Networks"
 }
 variable "public_ip_addresses" {
+  type        = any
   description = "Combined object for public ip addresses"
 }
 variable "client_config" {
+  type = any
 
 }

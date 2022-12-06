@@ -1,3 +1,9 @@
-variable "name" {}
-variable "value" {}
-variable "keyvault_id" {}
+variable "name" {
+  type = string
+}
+variable "value" {
+  type = any
+}
+variable "keyvault_id" {
+  type = string
+}

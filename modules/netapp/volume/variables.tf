@@ -1,14 +1,33 @@
-variable "settings" {}
-variable "resource_group_name" {}
-variable "location" {}
-variable "account_name" {}
-variable "pool_name" {}
-variable "service_level" {}
-variable "subnet_id" {}
+variable "settings" {
+  type = any
+}
+variable "resource_group_name" {
+  type = string
+}
+variable "location" {
+  type = string
+}
+variable "account_name" {
+  type = any
+}
+variable "pool_name" {
+  type = any
+}
+variable "service_level" {
+  type = any
+}
+variable "subnet_id" {
+  type = string
+}
 variable "export_policy_rule" {
+  type    = any
   default = {}
 }
 variable "tags" {
+  type    = any
   default = {}
 }
-variable "global_settings" {}
+variable "global_settings" {
+  type = any
+
+}

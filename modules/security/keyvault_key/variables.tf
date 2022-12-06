@@ -1,3 +1,10 @@
-variable "global_settings" {}
-variable "settings" {}
-variable "keyvault" {}
+variable "global_settings" {
+  type = any
+
+}
+variable "settings" {
+  type = any
+}
+variable "keyvault" {
+  type = any
+}

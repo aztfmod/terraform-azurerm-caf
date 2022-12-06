@@ -1,10 +1,15 @@
 variable "global_settings" {
+  type        = any
   description = "Global settings object (see module README.md)"
 }
 variable "client_config" {
+  type        = any
   description = "Client configuration object (see module README.md)."
 }
-variable "settings" {}
+variable "settings" {
+  type = any
+}
 variable "batch_pool_id" {
+  type    = any
   default = null
 }

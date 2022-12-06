@@ -1,9 +1,23 @@
-variable "global_settings" {}
-variable "client_config" {}
-variable "settings" {}
-variable "resource_group_name" {}
-variable "location" {}
+variable "global_settings" {
+  type = any
+
+}
+variable "client_config" {
+  type = any
+}
+variable "settings" {
+  type = any
+}
+variable "resource_group_name" {
+  type = string
+}
+variable "location" {
+  type = string
+}
 variable "base_tags" {
+  type    = map(any)
   default = {}
 }
-variable "vnets" {}
+variable "vnets" {
+  type = any
+}

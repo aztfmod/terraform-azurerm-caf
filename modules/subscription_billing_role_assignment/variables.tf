@@ -1,9 +1,20 @@
-variable "client_config" {}
-variable "principals" {}
-variable "settings" {}
-variable "cloud" {}
-variable "keyvaults" {}
+variable "client_config" {
+  type = any
+}
+variable "principals" {
+  type = any
+}
+variable "settings" {
+  type = any
+}
+variable "cloud" {
+  type = any
+}
+variable "keyvaults" {
+  type = any
+}
 variable "billing_role_definition_name" {
+  type    = any
   default = "Enrollment account subscription creator"
 
   validation {

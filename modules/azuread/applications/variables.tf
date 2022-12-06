@@ -1,21 +1,29 @@
 variable "global_settings" {
+  type    = any
   default = {}
 }
 variable "settings" {
+  type    = any
   default = {}
 }
 variable "azuread_api_permissions" {
+  type    = any
   default = {}
 }
 variable "client_config" {
+  type        = any
   description = "Client configuration object (see module README.md)."
 }
-variable "user_type" {}
+variable "user_type" {
+  type = any
+}
 variable "keyvaults" {
+  type    = any
   default = {}
 }
 
 variable "password_policy" {
+  type        = any
   description = "Default password policy applies when not set in tfvars."
   default = {
     # Length of the password

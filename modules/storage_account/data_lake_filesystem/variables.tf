@@ -1,2 +1,6 @@
-variable "settings" {}
-variable "storage_account_id" {}
+variable "settings" {
+  type = any
+}
+variable "storage_account_id" {
+  type = string
+}

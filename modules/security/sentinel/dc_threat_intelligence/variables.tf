@@ -1,3 +1,9 @@
-variable "tenant_id" {}
-variable "name" {}
-variable "log_analytics_workspace_id" {}
+variable "tenant_id" {
+  type = string
+}
+variable "name" {
+  type = string
+}
+variable "log_analytics_workspace_id" {
+  type = string
+}

@@ -1,22 +1,32 @@
 variable "global_settings" {
+  type        = any
   description = "Global settings object (see module README.md)"
 }
 variable "client_config" {
+  type        = any
   description = "Client configuration object (see module README.md)."
 }
-variable "resource_groups" {}
-variable "settings" {}
+variable "resource_groups" {
+  type = any
+}
+variable "settings" {
+  type = any
+}
 variable "vnets" {
+  type    = any
   default = {}
 }
 variable "azuread_groups" {
+  type    = any
   default = {}
 }
 variable "managed_identities" {
+  type    = any
   default = {}
 }
 # For diagnostics settings
 variable "diagnostics" {
+  type    = any
   default = {}
 }
 variable "base_tags" {
@@ -24,5 +34,6 @@ variable "base_tags" {
   type        = map(any)
 }
 variable "private_dns" {
+  type    = any
   default = {}
 }

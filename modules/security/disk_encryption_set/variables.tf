@@ -1,10 +1,26 @@
-variable "global_settings" {}
-variable "client_config" {}
+variable "global_settings" {
+  type = any
+
+}
+variable "client_config" {
+  type = any
+}
 variable "base_tags" {
+  type    = map(any)
   default = {}
 }
-variable "settings" {}
-variable "keyvault_id" {}
-variable "key_vault_key_id" {}
-variable "resource_group_name" {}
-variable "location" {}
+variable "settings" {
+  type = any
+}
+variable "keyvault_id" {
+  type = string
+}
+variable "key_vault_key_id" {
+  type = any
+}
+variable "resource_group_name" {
+  type = string
+}
+variable "location" {
+  type = string
+}

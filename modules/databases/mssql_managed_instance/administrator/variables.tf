@@ -1,15 +1,22 @@
 variable "resource_group_name" {
-  description = "(Required) The name of the resource group where to create the resource."
   type        = string
+  description = "(Required) The name of the resource group where to create the resource."
 }
-variable "mi_name" {}
-variable "settings" {}
+variable "mi_name" {
+  type = any
+}
+variable "settings" {
+  type = any
+}
 variable "user_principal_name" {
+  type    = any
   default = null
 }
 variable "group_name" {
+  type    = any
   default = null
 }
 variable "group_id" {
+  type    = any
   default = null
 }

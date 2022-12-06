@@ -1,3 +1,9 @@
-variable "client_config" {}
-variable "settings" {}
-variable "resources" {}
+variable "client_config" {
+  type = any
+}
+variable "settings" {
+  type = any
+}
+variable "resources" {
+  type = any
+}

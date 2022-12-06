@@ -1,4 +1,5 @@
 variable "global_settings" {
+  type = any
   default = {
     default_region = "region1"
     regions = {
@@ -27,6 +28,7 @@ variable "provider_azurerm_features_keyvault" {
   }
 }
 # variable "cloud" {
+#   type = any
 #   default = {}
 # }
 # variable "acrLoginServerEndpoint" {
@@ -141,10 +143,11 @@ variable "logged_aad_app_objectId" {
   default = null
 }
 variable "tags" {
+  type    = any
   default = null
-  type    = map(any)
 }
 variable "subscription_billing_role_assignments" {
+  type    = any
   default = {}
 }
 variable "app_service_environments" {
@@ -163,21 +166,26 @@ variable "consumption_budgets" {
   default = {}
 }
 variable "diagnostics_definition" {
+  type    = any
   default = {}
 }
 variable "resource_groups" {
+  type    = any
   default = {}
 }
 variable "network_security_group_definition" {
+  type    = any
   default = {}
 }
 variable "route_tables" {
+  type    = any
   default = {}
 }
 variable "azurerm_routes" {
   default = {}
 }
 variable "vnets" {
+  type    = any
   default = {}
 }
 variable "virtual_subnets" {
@@ -187,6 +195,7 @@ variable "azurerm_redis_caches" {
   default = {}
 }
 variable "mssql_servers" {
+  type    = any
   default = {}
 }
 variable "mssql_managed_instances" {
@@ -232,6 +241,7 @@ variable "mssql_mi_secondary_tdes" {
   default = {}
 }
 variable "storage_accounts" {
+  type    = any
   default = {}
 }
 variable "azuread_credential_policies" {
@@ -247,48 +257,60 @@ variable "azuread_groups_membership" {
   default = {}
 }
 variable "azuread_service_principals" {
+  type    = any
   default = {}
 }
 variable "azuread_service_principal_passwords" {
   default = {}
 }
 variable "azuread_groups" {
+  type    = any
   default = {}
 }
 variable "azuread_roles" {
+  type    = any
   default = {}
 }
 variable "keyvaults" {
+  type    = any
   default = {}
 }
 variable "keyvault_access_policies" {
+  type    = any
   default = {}
 }
 variable "keyvault_certificate_issuers" {
+  type    = any
   default = {}
 }
 variable "keyvault_keys" {
+  type    = any
   default = {}
 }
 variable "keyvault_certificate_requests" {
+  type    = any
   default = {}
 }
 variable "keyvault_certificates" {
   default = {}
 }
 variable "virtual_machines" {
+  type    = any
   default = {}
 }
 variable "virtual_machine_scale_sets" {
+  type    = any
   default = {}
 }
 variable "bastion_hosts" {
   default = {}
 }
 variable "public_ip_addresses" {
+  type    = any
   default = {}
 }
 variable "diagnostic_storage_accounts" {
+  type    = any
   default = {}
 }
 variable "diagnostic_event_hub_namespaces" {
@@ -298,9 +320,11 @@ variable "diagnostic_log_analytics" {
   default = {}
 }
 variable "managed_identities" {
+  type    = any
   default = {}
 }
 variable "private_dns" {
+  type    = any
   default = {}
 }
 variable "synapse_workspaces" {
@@ -310,6 +334,7 @@ variable "azurerm_application_insights" {
   default = {}
 }
 variable "role_mapping" {
+  type    = any
   default = {}
 }
 variable "aks_clusters" {
@@ -325,6 +350,7 @@ variable "batch_applications" {
   default = {}
 }
 variable "batch_certificates" {
+  type    = any
   default = {}
 }
 variable "batch_jobs" {
@@ -349,21 +375,25 @@ variable "monitoring" {
   default = {}
 }
 variable "virtual_hubs" {
+  type    = any
   default = {}
 }
 variable "virtual_wans" {
   default = {}
 }
 variable "event_hub_namespaces" {
+  type    = any
   default = {}
 }
 variable "application_gateways" {
+  type    = any
   default = {}
 }
 variable "application_gateway_platforms" {
   default = {}
 }
 variable "application_gateway_applications" {
+  type    = any
   default = {}
 }
 variable "application_gateway_applications_v1" {
@@ -385,6 +415,7 @@ variable "cosmos_db" {
   default = {}
 }
 variable "log_analytics" {
+  type    = any
   default = {}
 }
 variable "logic_app_workflow" {
@@ -394,15 +425,19 @@ variable "logic_app_integration_account" {
   default = {}
 }
 variable "recovery_vaults" {
+  type    = any
   default = {}
 }
 variable "availability_sets" {
+  type    = any
   default = {}
 }
 variable "proximity_placement_groups" {
+  type    = any
   default = {}
 }
 variable "network_watchers" {
+  type    = any
   default = {}
 }
 variable "virtual_network_gateways" {
@@ -423,10 +458,12 @@ variable "shared_image_galleries" {
 }
 
 variable "image_definitions" {
+  type    = any
   default = {}
 }
 
 variable "diagnostics_destinations" {
+  type    = any
   default = {}
 }
 variable "vnet_peerings" {
@@ -445,10 +482,12 @@ variable "packer_build" {
 }
 
 variable "azuread_api_permissions" {
+  type    = any
   default = {}
 }
 
 variable "keyvault_access_policies_azuread_apps" {
+  type    = any
   default = {}
 }
 
@@ -456,6 +495,7 @@ variable "cosmos_dbs" {
   default = {}
 }
 variable "dynamic_keyvault_secrets" {
+  type    = any
   default = {}
 }
 variable "dynamic_keyvault_certificates" {
@@ -465,9 +505,11 @@ variable "front_doors" {
   default = {}
 }
 variable "front_door_waf_policies" {
+  type    = any
   default = {}
 }
 variable "dns_zones" {
+  type    = any
   default = {}
 }
 variable "dns_zone_records" {
@@ -475,10 +517,12 @@ variable "dns_zone_records" {
 }
 
 variable "private_endpoints" {
+  type    = any
   default = {}
 }
 
 variable "event_hubs" {
+  type    = any
   default = {}
 }
 variable "automations" {
@@ -493,33 +537,40 @@ variable "local_network_gateways" {
 }
 
 variable "domain_name_registrations" {
+  type    = any
   default = {}
 }
 
 variable "azuread_apps" {
+  type    = any
   default = {}
-  type    = map(any)
 }
+
 variable "azuread_users" {
   default = {}
-  type    = map(any)
+  type    = any
 }
 variable "custom_role_definitions" {
+  type    = any
   default = {}
 }
 variable "azurerm_firewalls" {
   default = {}
 }
 variable "azurerm_firewall_network_rule_collection_definition" {
+  type    = any
   default = {}
 }
 variable "azurerm_firewall_application_rule_collection_definition" {
+  type    = any
   default = {}
 }
 variable "azurerm_firewall_nat_rule_collection_definition" {
+  type    = any
   default = {}
 }
 variable "event_hub_auth_rules" {
+  type    = any
   default = {}
 }
 
@@ -528,22 +579,27 @@ variable "netapp_accounts" {
 }
 
 variable "load_balancers" {
+  type    = any
   default = {}
 }
 
 variable "ip_groups" {
+  type    = any
   default = {}
 }
 variable "container_groups" {
   default = {}
 }
 variable "event_hub_namespace_auth_rules" {
+  type    = any
   default = {}
 }
 variable "event_hub_consumer_groups" {
+  type    = any
   default = {}
 }
 variable "application_security_groups" {
+  type    = any
   default = {}
 }
 
@@ -555,6 +611,7 @@ variable "azurerm_firewall_policy_rule_collection_groups" {
   default = {}
 }
 variable "disk_encryption_sets" {
+  type    = any
   default = {}
 }
 variable "vhub_peerings" {
@@ -568,6 +625,7 @@ variable "virtual_hub_route_table_routes" {
   default = {}
 }
 variable "virtual_hub_route_tables" {
+  type    = any
   default = {}
 }
 variable "virtual_hub_er_gateway_connections" {
@@ -580,6 +638,7 @@ variable "wvd_workspaces" {
   default = {}
 }
 variable "wvd_host_pools" {
+  type    = any
   default = {}
 }
 variable "wvd_applications" {
@@ -592,9 +651,11 @@ variable "dedicated_host_groups" {
   default = {}
 }
 variable "dedicated_hosts" {
+  type    = any
   default = {}
 }
 variable "vpn_sites" {
+  type    = any
   default = {}
 }
 variable "vpn_gateway_connections" {
@@ -634,12 +695,14 @@ variable "cognitive_services_account" {
   default = {}
 }
 variable "database_migration_services" {
+  type    = any
   default = {}
 }
 variable "database_migration_projects" {
   default = {}
 }
 variable "data_factory" {
+  type    = any
   default = {}
 }
 variable "data_factory_pipeline" {
@@ -836,6 +899,7 @@ variable "lb" {
   default = {}
 }
 variable "lb_backend_address_pool" {
+  type    = any
   default = {}
 }
 variable "lb_backend_address_pool_address" {
@@ -910,6 +974,7 @@ variable "purview_accounts" {
   default = {}
 }
 variable "app_config" {
+  type    = any
   default = {}
 }
 variable "cosmosdb_sql_databases" {
@@ -922,6 +987,7 @@ variable "sentinel_automation_rules" {
   default = {}
 }
 variable "sentinel_watchlists" {
+  type    = any
   default = {}
 }
 variable "sentinel_watchlist_items" {
@@ -991,6 +1057,7 @@ variable "traffic_manager_profile" {
   default = {}
 }
 variable "resource_provider_registration" {
+  type    = any
   default = {}
 }
 variable "static_sites" {

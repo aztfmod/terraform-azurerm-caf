@@ -1,11 +1,21 @@
-variable "settings" {}
-variable "name" {}
-variable "location" {}
-variable "resource_group_name" {}
+variable "settings" {
+  type = any
+}
+variable "name" {
+  type = string
+}
+variable "location" {
+  type = string
+}
+variable "resource_group_name" {
+  type = string
+}
 variable "subnet_id" {
+  type    = string
   default = ""
 }
 variable "public_ip_address_id" {
+  type    = any
   default = ""
 }
 variable "idle_timeout_in_minutes" {
@@ -19,10 +29,11 @@ variable "idle_timeout_in_minutes" {
   }
 }
 variable "base_tags" {
+  type    = map(any)
   default = {}
 }
 variable "tags" {
+  type        = any
   description = "(Optional) Tags for the resource to be deployed."
   default     = null
-  type        = map(any)
 }

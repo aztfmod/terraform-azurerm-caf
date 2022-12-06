@@ -1,29 +1,48 @@
 variable "global_settings" {
+  type        = any
   description = "Global settings object (see module README.md)"
 }
 variable "client_config" {
+  type        = any
   description = "Client configuration object (see module README.md)."
 }
-variable "settings" {}
+variable "settings" {
+  type = any
+}
 variable "resource_group_name" {
-  description = "(Required) The name of the resource group where to create the resource."
   type        = string
+  description = "(Required) The name of the resource group where to create the resource."
 }
 variable "location" {
-  description = "(Required) Specifies the supported Azure location where to create the resource. Changing this forces a new resource to be created."
   type        = string
+  description = "(Required) Specifies the supported Azure location where to create the resource. Changing this forces a new resource to be created."
 }
-variable "storage_accounts" {}
-variable "azuread_groups" {}
-variable "vnets" {}
-variable "private_endpoints" {}
-variable "resource_groups" {}
+variable "storage_accounts" {
+  type = any
+}
+variable "azuread_groups" {
+  type = any
+}
+variable "vnets" {
+  type = any
+}
+variable "private_endpoints" {
+  type = any
+}
+variable "resource_groups" {
+  type = any
+}
 variable "base_tags" {
   description = "Base tags for the resource to be inherited from the resource group."
   type        = map(any)
 }
 variable "private_dns" {
+  type    = any
   default = {}
 }
-variable "keyvault_id" {}
-variable "remote_objects" {}
+variable "keyvault_id" {
+  type = string
+}
+variable "remote_objects" {
+  type = any
+}

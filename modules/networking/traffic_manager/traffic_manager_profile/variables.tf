@@ -1,12 +1,15 @@
 variable "settings" {
+  type    = any
   default = {}
 }
 variable "resource_group_name" {
-  default = {}
+  type = string
 }
 variable "location" {
-  default = {}
+  type = string
+  #  default = {}
 }
 variable "base_tags" {
+  type    = map(any)
   default = {}
 }

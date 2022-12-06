@@ -1,2 +1,6 @@
-variable "subnet_id" {}
-variable "nat_gateway_id" {}
+variable "subnet_id" {
+  type = string
+}
+variable "nat_gateway_id" {
+  type = any
+}

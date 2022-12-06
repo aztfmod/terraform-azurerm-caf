@@ -1,10 +1,13 @@
 variable "global_settings" {
+  type        = any
   description = "Global settings object (see module README.md)"
 }
 variable "client_config" {
+  type        = any
   description = "Client configuration object (see module README.md)."
 }
 variable "settings" {
+  type        = any
   description = "Settings object (see module README.md)."
 }
 variable "base_tags" {
@@ -12,15 +15,17 @@ variable "base_tags" {
   type        = map(any)
 }
 variable "tags" {
+  type        = any
   description = "(Required) map of tags for the deployment"
   default     = null
 }
 variable "location" {
-  description = "(Required) Resource Location"
   type        = string
+  description = "(Required) Resource Location"
   default     = null
 }
 variable "resource_group_name" {
+  type        = string
   description = "(Required) Resource group of the Logic App"
 }
 variable "integration_service_environment_id" {

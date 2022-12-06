@@ -36,7 +36,6 @@ repos:
       exclude: examples                                       #excluding example tfvars since no need to fix it
       args:
         - --args=--disable-rule=terraform_unused_declarations #it is under azure control,variable/local declaraed might be used in future
-        - --args=--disable-rule=terraform_typed_variables     #there is around 2K warning, separate PR will be raised to fix this
     #- id: terraform_tfsec
     #- id: terraform_checkov
     #- id: tfupdate

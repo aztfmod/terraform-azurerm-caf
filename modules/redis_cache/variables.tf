@@ -1,27 +1,30 @@
 variable "resource_group_name" {
-  description = "(Required) The name of the resource group where to create the resource."
   type        = string
+  description = "(Required) The name of the resource group where to create the resource."
 }
 
 variable "location" {
-  description = "(Required) Specifies the supported Azure location where to create the resource. Changing this forces a new resource to be created."
   type        = string
+  description = "(Required) Specifies the supported Azure location where to create the resource. Changing this forces a new resource to be created."
 }
 
 variable "tags" {
+  type        = any
   description = "(Required) Map of tags to be applied to the resource"
-  type        = map(any)
 }
 
-variable "redis" {}
+variable "redis" {
+  type = any
+}
 
 variable "subnet_id" {
-  description = "The ID of the Subnet within which the Redis Cache should be deployed"
   type        = string
+  description = "The ID of the Subnet within which the Redis Cache should be deployed"
   default     = null
 }
 
 variable "global_settings" {
+  type        = any
   description = "Global settings object (see module README.md)"
 }
 
@@ -31,20 +34,26 @@ variable "base_tags" {
 }
 
 variable "diagnostic_profiles" {
+  type    = any
   default = {}
 }
 variable "diagnostics" {
+  type    = any
   default = null
 }
 variable "vnets" {
+  type    = any
   default = {}
 }
 variable "private_endpoints" {
+  type    = any
   default = {}
 }
 variable "private_dns" {
+  type    = any
   default = {}
 }
 variable "client_config" {
+  type        = any
   description = "Client configuration object (see module README.md)."
 }

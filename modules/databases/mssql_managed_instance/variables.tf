@@ -1,22 +1,32 @@
 variable "global_settings" {
+  type        = any
   description = "Global settings object (see module README.md)"
 }
-variable "client_config" {}
-variable "settings" {}
+variable "client_config" {
+  type = any
+}
+variable "settings" {
+  type = any
+}
 variable "base_tags" {
   description = "Base tags for the resource to be inherited from the resource group."
   type        = map(any)
 }
-variable "subnet_id" {}
+variable "subnet_id" {
+  type = string
+}
 variable "resource_group_name" {
-  description = "(Required) The name of the resource group where to create the resource."
   type        = string
+  description = "(Required) The name of the resource group where to create the resource."
 }
 variable "location" {
-  description = "(Required) Specifies the supported Azure location where to create the resource. Changing this forces a new resource to be created."
   type        = string
+  description = "(Required) Specifies the supported Azure location where to create the resource. Changing this forces a new resource to be created."
 }
 variable "primary_server_id" {
+  type    = string
   default = ""
 }
-variable "keyvault" {}
+variable "keyvault" {
+  type = any
+}

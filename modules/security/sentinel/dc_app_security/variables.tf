@@ -1,5 +1,15 @@
-variable "tenant_id" {}
-variable "name" {}
-variable "log_analytics_workspace_id" {}
-variable "alerts_enabled" {}
-variable "discovery_logs_enabled" {}
+variable "tenant_id" {
+  type = string
+}
+variable "name" {
+  type = string
+}
+variable "log_analytics_workspace_id" {
+  type = string
+}
+variable "alerts_enabled" {
+  type = any
+}
+variable "discovery_logs_enabled" {
+  type = any
+}
