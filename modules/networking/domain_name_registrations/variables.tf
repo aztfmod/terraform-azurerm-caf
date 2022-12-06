@@ -5,7 +5,7 @@ variable "settings" {
   type = any
 }
 variable "base_tags" {
-  type = any
+  type = map(any)
 }
 variable "dns_zone_id" {
   type        = string

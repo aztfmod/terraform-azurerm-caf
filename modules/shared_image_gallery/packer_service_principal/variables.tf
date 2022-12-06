@@ -16,7 +16,7 @@ variable "settings" {
   type = any
 }
 variable "base_tags" {
-  type = any
+  type = map(any)
 }
 variable "gallery_name" {
   type = any

@@ -74,7 +74,7 @@ variable "availability_sets" {
 
 variable "base_tags" {
   description = "Base tags for the resource to be inherited from the resource group."
-  type        = any
+  type        = map(any)
 }
 
 variable "proximity_placement_groups" {

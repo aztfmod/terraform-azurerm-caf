@@ -6,7 +6,7 @@ variable "client_config" {
   type = any
 }
 variable "base_tags" {
-  type    = any
+  type    = map(any)
   default = {}
 }
 variable "settings" {

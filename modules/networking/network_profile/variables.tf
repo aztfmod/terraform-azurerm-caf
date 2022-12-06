@@ -16,6 +16,6 @@ variable "remote_objects" {
   type = any
 }
 variable "base_tags" {
-  type    = any
+  type    = map(any)
   default = {}
 }

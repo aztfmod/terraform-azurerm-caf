@@ -30,7 +30,7 @@ variable "resource_groups" {
   default = {}
 }
 variable "base_tags" {
-  type    = any
+  type    = map(any)
   default = {}
 }
 variable "recovery_vaults" {

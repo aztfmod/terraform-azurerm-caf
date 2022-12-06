@@ -68,7 +68,7 @@ variable "application_insight" {
 }
 
 variable "base_tags" {
-  type = any
+  type = map(any)
 }
 
 variable "combined_objects" {

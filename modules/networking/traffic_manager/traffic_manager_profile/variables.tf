@@ -10,6 +10,6 @@ variable "location" {
   #  default = {}
 }
 variable "base_tags" {
-  type    = any
+  type    = map(any)
   default = {}
 }

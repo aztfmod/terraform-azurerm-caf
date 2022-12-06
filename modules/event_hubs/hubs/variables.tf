@@ -10,7 +10,7 @@ variable "resource_group" {
   description = "Resource group objects."
 }
 variable "base_tags" {
-  type = any
+  type = map(any)
 }
 variable "client_config" {
   type = any

@@ -15,7 +15,7 @@ variable "location" {
   type = string
 }
 variable "base_tags" {
-  type    = any
+  type    = map(any)
   default = {}
 }
 variable "vnets" {

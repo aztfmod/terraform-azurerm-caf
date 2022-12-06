@@ -1,5 +1,5 @@
 variable "base_tags" {
-  type    = any
+  type    = map(any)
   default = {}
 }
 variable "client_config" {

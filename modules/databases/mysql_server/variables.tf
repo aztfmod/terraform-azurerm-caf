@@ -52,7 +52,7 @@ variable "diagnostics" {
 }
 variable "base_tags" {
   description = "Base tags for the resource to be inherited from the resource group."
-  type        = any
+  type        = map(any)
 }
 variable "private_dns" {
   type    = any

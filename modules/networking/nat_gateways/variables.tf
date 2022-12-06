@@ -29,7 +29,7 @@ variable "idle_timeout_in_minutes" {
   }
 }
 variable "base_tags" {
-  type    = any
+  type    = map(any)
   default = {}
 }
 variable "tags" {

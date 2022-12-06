@@ -22,6 +22,6 @@ variable "vnets" {
 }
 
 variable "base_tags" {
-  type    = any
+  type    = map(any)
   default = {}
 }
