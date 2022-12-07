@@ -51,4 +51,3 @@ keyvault_access_policies = {
     }
   }
 }
-

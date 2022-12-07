@@ -40,4 +40,3 @@ module "network_profiles" {
 output "container_groups" {
   value = module.container_groups
 }
-

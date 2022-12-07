@@ -66,4 +66,3 @@ resource "azurerm_vpn_server_configuration" "p2s_configuration" {
   }
 
 }
-

@@ -48,5 +48,3 @@ variable "subnet_name" {
   type    = any
   default = {}
 }
-
-

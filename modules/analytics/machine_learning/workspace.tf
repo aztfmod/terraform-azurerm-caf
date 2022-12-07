@@ -31,5 +31,3 @@ resource "azurerm_machine_learning_workspace" "ws" {
     type = "SystemAssigned"
   }
 }
-
-

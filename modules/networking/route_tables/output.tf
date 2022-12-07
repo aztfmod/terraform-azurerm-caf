@@ -7,4 +7,3 @@ output "name" {
   value = azurerm_route_table.rt.name
 
 }
-

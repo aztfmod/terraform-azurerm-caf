@@ -36,6 +36,3 @@ variable "virtual_network_gateway_id" {
 variable "local_network_gateway_id" {
   type = any
 }
-
-
-

@@ -96,4 +96,3 @@ azuread_roles = {
     ]
   }
 }
-

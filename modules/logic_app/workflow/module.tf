@@ -20,5 +20,3 @@ resource "azurerm_logic_app_workflow" "la" {
   parameters                         = try(var.settings.parameters, null)
   tags                               = local.tags
 }
-
-

@@ -44,4 +44,3 @@ variable "tags" {
   default     = null
   description = "(Optional) A mapping of tags to assign to the resource"
 }
-

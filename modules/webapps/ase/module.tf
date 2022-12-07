@@ -52,4 +52,3 @@ data "azurerm_app_service_environment" "ase" {
   name                = azurecaf_name.ase.result
   resource_group_name = var.resource_group_name
 }
-

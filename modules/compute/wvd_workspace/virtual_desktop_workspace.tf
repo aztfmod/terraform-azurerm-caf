@@ -17,4 +17,3 @@ resource "azurerm_virtual_desktop_workspace" "wvdws" {
   description   = try(var.settings.description, null)
   tags          = local.tags
 }
-

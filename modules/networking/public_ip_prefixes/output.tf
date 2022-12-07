@@ -9,4 +9,3 @@ output "ip_prefix" {
   value       = azurerm_public_ip_prefix.pip_prefix.ip_prefix
 
 }
-

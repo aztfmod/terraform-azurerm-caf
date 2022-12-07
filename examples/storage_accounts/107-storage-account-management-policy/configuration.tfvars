@@ -121,4 +121,3 @@ storage_accounts = {
     }
   }
 }
-

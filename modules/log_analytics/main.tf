@@ -20,4 +20,3 @@ locals {
   }
   tags = merge(var.base_tags, local.module_tag, try(var.log_analytics.tags, null))
 }
-

@@ -202,5 +202,3 @@ diagnostic_storage_accounts = {
     access_tier              = "Cool"
   }
 }
-
-

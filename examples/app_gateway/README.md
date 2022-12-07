@@ -27,4 +27,3 @@ resource_to_be_created = {
 ```
 
 You can review complete set of examples on the [GitHub repository](https://github.com/aztfmod/terraform-azurerm-caf/tree/master/examples/app_gateway).
-

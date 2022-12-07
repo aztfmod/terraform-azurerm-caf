@@ -54,6 +54,3 @@ case "${METHOD}" in
         echo "Role '${AD_ROLE_NAME}' unassigned to azure ad principal ${SERVICE_PRINCIPAL_OBJECT_ID}"
         ;;
 esac
-
-
-

@@ -36,4 +36,3 @@ SET @dbusernames = $(DBUSERNAMES)
 
     SET @dbusernames = stuff(@dbusernames, 1, charindex(',', @dbusernames+','), '')
   END
-

@@ -126,4 +126,3 @@ resource "azurerm_data_factory_integration_runtime_azure_ssis" "dfiras" {
 
   description = try(var.settings.description, null)
 }
-

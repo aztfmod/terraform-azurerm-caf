@@ -78,7 +78,3 @@ resource "azurecaf_name" "mariadb" {
   clean_input   = true
   passthrough   = var.global_settings.passthrough
 }
-
-
-
-

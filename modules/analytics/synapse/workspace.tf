@@ -142,4 +142,3 @@ resource "azurerm_synapse_firewall_rule" "wrkspc_firewalls" {
   start_ip_address = each.value.start_ip
   end_ip_address   = each.value.end_ip
 }
-

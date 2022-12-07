@@ -169,4 +169,3 @@ resource "azurerm_network_interface_backend_address_pool_association" "vm_nic_ba
   ip_configuration_name   = var.combined_objects[try(each.value.resource_type, "virtual_machines")][try(each.value.lz_key, var.client_config.landingzone_key)][each.value.key].nics[each.value.nic_key].name # The Name of the IP Configuration within the Network Interface
   backend_address_pool_id = azurerm_lb_backend_address_pool.backend_address_pool[0].id
 }
-

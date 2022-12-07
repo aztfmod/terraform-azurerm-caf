@@ -69,5 +69,3 @@ resource "azurerm_cosmosdb_account" "cosmos_account" {
     }
   }
 }
-
-

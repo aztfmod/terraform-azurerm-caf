@@ -20,4 +20,3 @@ resource "azurerm_virtual_machine_scale_set_extension" "vmss_ext_mma" {
     "stopOnMultipleConnections" = try(var.extension.stopOnMultipleConnections, true)
   })
 }
-

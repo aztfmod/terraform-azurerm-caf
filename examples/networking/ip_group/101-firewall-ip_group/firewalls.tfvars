@@ -22,5 +22,3 @@ azurerm_firewalls = {
     ]
   }
 }
-
-

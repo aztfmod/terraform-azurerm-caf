@@ -10,4 +10,3 @@ resource "azurerm_virtual_desktop_application" "da" {
   icon_path                    = try(var.settings.icon_path, null)
   icon_index                   = try(var.settings.icon_index, null)
 }
-

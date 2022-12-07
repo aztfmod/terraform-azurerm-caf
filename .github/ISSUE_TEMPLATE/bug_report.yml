@@ -1,12 +1,12 @@
 name: Bug Report
-description: Please find this form to report an unexpected behavior or suspected bug. 
+description: Please find this form to report an unexpected behavior or suspected bug.
 labels: [bug, need triage]
 title: 'Bug report-'
 body:
   - type: markdown
     attributes:
       value: |
-        Thanks for using the CAF Terraform module! 
+        Thanks for using the CAF Terraform module!
 
         Please note the following repo might need to updated also:
 

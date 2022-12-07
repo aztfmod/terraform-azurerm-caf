@@ -24,4 +24,3 @@ variable "base_tags" {
   type        = map(any)
   default     = {}
 }
-

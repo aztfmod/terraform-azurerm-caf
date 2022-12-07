@@ -52,4 +52,3 @@ output "virtual_machines" {
   value = module.virtual_machines
 
 }
-

@@ -16,4 +16,3 @@ resource "azurerm_key_vault_secret" "tenant_id" {
   value        = try(each.value.tenant_id, var.client_config.tenant_id)
   key_vault_id = try(each.value.lz_key, null) == null ? var.keyvaults[var.client_config.landingzone_key][each.key].id : var.keyvaults[each.value.lz_key][each.key].id
 }
-

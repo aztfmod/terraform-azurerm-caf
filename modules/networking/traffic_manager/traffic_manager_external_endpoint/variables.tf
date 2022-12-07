@@ -7,4 +7,3 @@ variable "profile_id" {
   type    = any
   default = {}
 }
-

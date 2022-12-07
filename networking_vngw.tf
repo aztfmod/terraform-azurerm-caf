@@ -74,4 +74,3 @@ module "local_network_gateways" {
 output "local_network_gateways" {
   value = module.local_network_gateways
 }
-

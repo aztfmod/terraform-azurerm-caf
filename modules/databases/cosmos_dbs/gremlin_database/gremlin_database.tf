@@ -33,4 +33,3 @@ output "gremlin_graphs" {
   value = module.gremlin_graphs
 
 }
-

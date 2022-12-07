@@ -19,4 +19,3 @@ variable "resource_group_name" {
 variable "settings" {
   type = any
 }
-

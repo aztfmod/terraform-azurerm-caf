@@ -25,4 +25,3 @@ resource_to_be_created = {
   }
 }
 ```
-
