@@ -85,6 +85,16 @@ module "nsg" {
   virtual_network_name              = azurerm_virtual_network.vnet.name
 }
 
+resource "azurerm_subnet_route_table_association" "rt" {
+  for_each = {
+    for key, subnet in merge(lookup(var.settings, "subnets", {}), lookup(var.settings, "specialsubnets", {})) : key => subnet
+    if try(subnet.route_table_key, null) != null
+  }
+
+  subnet_id      = coalesce(lookup(module.subnets, each.key, null), lookup(module.special_subnets, each.key, null)).id
+  route_table_id = var.route_tables[each.value.route_table_key].id
+}
+
 resource "azurerm_subnet_network_security_group_association" "nsg_vnet_association" {
   for_each = {
     for key, value in try(var.settings.subnets, {}) : key => value
