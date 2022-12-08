@@ -6,6 +6,12 @@ go:
 services:
   - docker
 
+jobs:
+  include:
+    - stage: Markdown test
+      if: branch != master
+      script: scripts/markdownscan.sh
+
 before_install:
 - docker pull ghcr.io/antonbabenko/pre-commit-terraform
 - docker run --entrypoint cat ghcr.io/antonbabenko/pre-commit-terraform /usr/bin/tools_versions_info
