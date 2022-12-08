@@ -44,3 +44,22 @@ azurerm_application_insights_web_test = {
 XML
   }
 }
+
+azurerm_application_insights_standard_web_test = {
+  web_test = {
+    name               = "example-standard-web-test"
+    resource_group_key = "rg1"
+    application_insights = {
+      key = "webapp"
+    }
+    frequency                         = 300
+    timeout                           = 60
+    enabled                           = true
+    geo_locations                     = ["us-tx-sn1-azr", "us-il-ch1-azr"]
+    retry_enabled                     = true
+    description                       = "A sample standard Web test"
+    request_url                       = "http://microsoft.com"
+    ssl_check_enabled                 = true
+    ssl_cert_remaining_lifetime_check = 30
+  }
+}
