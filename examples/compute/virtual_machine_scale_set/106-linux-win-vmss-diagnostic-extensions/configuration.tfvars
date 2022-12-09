@@ -1,14 +1,7 @@
 global_settings = {
   default_region = "region1"
   regions = {
-    region1 = "australiaeast"
-  }
-  resource_defaults = {
-    virtual_machine_scale_sets = {
-      # set the below to enable az managed boot diagostics for vms
-      # this will be override if a user managed storage account is defined for the vm
-      # use_azmanaged_storage_for_boot_diagnostics = true
-    }
+    region1 = "southeastasia"
   }
 }
 
@@ -181,10 +174,7 @@ load_balancers = {
 
 virtual_machine_scale_sets = {
   vmss1 = {
-    resource_group_key = "rg1"
-    # when boot_diagnostics_storage_account_key is empty string "", boot diagnostics will be put on azure managed storage
-    # when boot_diagnostics_storage_account_key is a non-empty string, it needs to point to the key of a user managed storage defined in diagnostic_storage_accounts
-    # if boot_diagnostics_storage_account_key is not defined, but global_settings.resource_defaults.virtual_machine_scale_sets.use_azmanaged_storage_for_boot_diagnostics is true, boot diagnostics will be put on azure managed storage
+    resource_group_key                   = "rg1"
     boot_diagnostics_storage_account_key = "bootdiag1"
     os_type                              = "linux"
     keyvault_key                         = "kv1"
@@ -225,17 +215,6 @@ virtual_machine_scale_sets = {
           # lz_key = ""
         }
 
-        identity = {
-          # type = "SystemAssigned"
-          type                  = "UserAssigned"
-          managed_identity_keys = ["example_mi"]
-
-          remote = {
-            lz_key_name = {
-              managed_identity_keys = []
-            }
-          }
-        }
 
         # custom_image_id = ""
 
@@ -294,26 +273,15 @@ virtual_machine_scale_sets = {
     }
 
     virtual_machine_scale_set_extensions = {
-      microsoft_azure_domainjoin = {
-        domain_name = "test.local"
-        ou_path     = "OU=test,DC=test,DC=local"
-        restart     = "true"
-        # specify the AKV location of the password to retrieve for domain join operation
-        domain_join_username_keyvault = {
-          keyvault_key = "vmsecretskv"
-          #key_vault_id = ""
-          #lz_key       = ""
-          secret_name = "domjoinuser"
-        }
-        domain_join_password_keyvault = {
-          keyvault_key = "vmsecretskv"
-          #key_vault_id = ""
-          #lz_key       = ""
-          secret_name = "domjoinpassword"
-        }
+      da_extension = {
+        name                       = "DAExtension"
+        publisher                  = "Microsoft.Azure.Monitoring.DependencyAgent"
+        type                       = "DependencyAgentLinux"
+        type_handler_version       = "9.5"
+        auto_upgrade_minor_version = false
       }
-    }
 
+    }
   }
 
   vmss2 = {
@@ -355,10 +323,6 @@ virtual_machine_scale_sets = {
           disk_size_gb         = 128
         }
 
-        identity = {
-          type                  = "SystemAssigned"
-          managed_identity_keys = []
-        }
 
         source_image_reference = {
           publisher = "MicrosoftWindowsServer"
@@ -420,18 +384,6 @@ virtual_machine_scale_sets = {
         ou_path     = "OU=test,DC=test,DC=local"
         restart     = "true"
         # specify the AKV location of the password to retrieve for domain join operation
-        domain_join_username_keyvault = {
-          keyvault_key = "vmsecretskv"
-          #key_vault_id = ""
-          #lz_key       = ""
-          secret_name = "domjoinuser"
-        }
-        domain_join_password_keyvault = {
-          keyvault_key = "vmsecretskv"
-          #key_vault_id = ""
-          #lz_key       = ""
-          secret_name = "domjoinpassword"
-        }
       }
     }
 

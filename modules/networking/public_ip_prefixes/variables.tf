@@ -61,8 +61,8 @@ variable "pip_settings" {
 
 variable "zones" {
   description = "(Optional) The availability zone to allocate the Public IP in. Possible values are Zone-Redundant, 1, 2, 3, and No-Zone. Defaults to Zone-Redundant."
-  type        = string
-  default     = "Zone-Redundant"
+  type        = list(any)
+  default     = null
 
   validation {
     condition     = contains(["Zone-Redundant", "No-Zone", "1", "2", "3"], var.zones)

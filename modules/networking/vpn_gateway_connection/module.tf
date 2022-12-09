@@ -53,19 +53,21 @@ resource "azurerm_vpn_gateway_connection" "vpn_gateway_connection" {
   }
 
   dynamic "routing" {
-    for_each = lookup(var.settings, "routing", null) == null ? [] : [1]
+    for_each = can(var.settings.routing) ? [var.settings.routing] : []
     content {
-      associated_route_table = coalesce(
-        try(var.route_tables[try(var.settings.routing.associated_route_table.lz_key, var.client_config.landingzone_key)][var.settings.routing.associated_route_table.key].id, null),
-        try(var.settings.routing.associated_route_table.id, null)
-      )
+      associated_route_table = can(routing.value.associated_route_table.key) ? var.route_tables[try(routing.value.associated_route_table.lz_key, var.client_config.landingzone_key)][routing.value.associated_route_table.key].id : try(routing.value.associated_route_table.id, null)
 
-      propagated_route_tables = [
-        for key, value in var.settings.routing.propagated_route_tables : coalesce(
-          try(var.route_tables[try(value.lz_key, var.client_config.landingzone_key)][value.key].id, null),
-          try(value.id, null)
-        )
-      ]
+      dynamic "propagated_route_table" {
+        # propagated_route_tables kept to smooth the migration to azurerm 3.0
+        for_each = can(routing.value.propagated_route_table) ? routing.value.propagated_route_table : routing.value.propagated_route_tables
+
+        content {
+          route_table_ids = can(propagated_route_table.value.id) ? propagated_route_table.value.id : var.route_tables[try(propagated_route_table.value.lz_key, var.client_config.landingzone_key)][propagated_route_table.value.key].id
+
+          labels = try(propagated_route_table.value.labels, null)
+        }
+      }
+
     }
   }
 }

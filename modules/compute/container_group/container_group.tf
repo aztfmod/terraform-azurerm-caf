@@ -33,7 +33,7 @@ resource "azurerm_container_group" "acg" {
   tags                = merge(local.tags, try(var.settings.tags, null))
   ip_address_type     = try(var.settings.ip_address_type, "Public")
   restart_policy      = try(var.settings.restart_policy, "Always")
-  network_profile_id  = try(var.combined_resources.network_profiles[var.client_config.landingzone_key][var.settings.network_profile.key].id, null)
+  network_profile_id  = try(var.combined_resources.network_profiles[try(var.settings.network_profile.lz_key, var.client_config.landingzone_key)][var.settings.network_profile.key].id, null)
 
   dynamic "exposed_port" {
     for_each = try(var.settings.exposed_port, [])
@@ -49,12 +49,12 @@ resource "azurerm_container_group" "acg" {
     for_each = local.combined_containers
 
     content {
-      name                         = container.value.name
-      image                        = container.value.image
-      cpu                          = container.value.cpu
-      memory                       = container.value.memory
-      environment_variables        = merge(
-        try(container.value.environment_variables, null), 
+      name   = container.value.name
+      image  = container.value.image
+      cpu    = container.value.cpu
+      memory = container.value.memory
+      environment_variables = merge(
+        try(container.value.environment_variables, null),
         try(local.environment_variables_from_resources[container.key], null),
         try(module.variables_from_command[container.key].variables, null)
       )
@@ -63,7 +63,7 @@ resource "azurerm_container_group" "acg" {
         try(module.secure_variables_from_command[container.key].variables, null)
       )
 
-      commands                     = try(container.value.commands, null)
+      commands = try(container.value.commands, null)
 
       dynamic "gpu" {
         for_each = try(container.value.gpu, null) == null ? [] : [1]
