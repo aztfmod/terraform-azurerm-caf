@@ -14,6 +14,8 @@ locals {
     application_gateway_waf_policies               = try(local.combined_objects_application_gateway_waf_policies, null)
     application_gateways                           = try(local.combined_objects_application_gateways, null)
     application_insights                           = try(local.combined_objects_application_insights, null)
+    application_insights_web_test                  = try(local.combined_objects_application_insights_web_test, null)
+    application_insights_standard_web_test         = try(local.combined_objects_application_insights_standard_web_test, null)
     application_security_groups                    = try(local.combined_objects_application_security_groups, null)
     automations                                    = try(local.combined_objects_automations, null)
     availability_sets                              = try(local.combined_objects_availability_sets, null)

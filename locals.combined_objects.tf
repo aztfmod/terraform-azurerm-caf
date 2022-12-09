@@ -18,6 +18,8 @@ locals {
   combined_objects_application_gateway_waf_policies               = merge(tomap({ (local.client_config.landingzone_key) = module.application_gateway_waf_policies }), try(var.remote_objects.application_gateway_waf_policies, {}))
   combined_objects_application_gateways                           = merge(tomap({ (local.client_config.landingzone_key) = module.application_gateways }), try(var.remote_objects.application_gateways, {}))
   combined_objects_application_insights                           = merge(tomap({ (local.client_config.landingzone_key) = module.azurerm_application_insights }), try(var.remote_objects.azurerm_application_insights, {}))
+  combined_objects_application_insights_web_test                  = merge(tomap({ (local.client_config.landingzone_key) = module.azurerm_application_insights_web_test }), try(var.remote_objects.azurerm_application_insights_web_test, {}))
+  combined_objects_application_insights_standard_web_test         = merge(tomap({ (local.client_config.landingzone_key) = module.azurerm_application_insights_standard_web_test }), try(var.remote_objects.azurerm_application_insights_standard_web_test, {}))
   combined_objects_application_security_groups                    = merge(tomap({ (local.client_config.landingzone_key) = module.application_security_groups }), try(var.remote_objects.application_security_groups, {}))
   combined_objects_automations                                    = merge(tomap({ (local.client_config.landingzone_key) = module.automations }), try(var.remote_objects.automations, {}))
   combined_objects_availability_sets                              = merge(tomap({ (local.client_config.landingzone_key) = module.availability_sets }), try(var.remote_objects.availability_sets, {}))
