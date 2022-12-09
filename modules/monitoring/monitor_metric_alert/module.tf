@@ -63,8 +63,15 @@ resource "azurerm_monitor_metric_alert" "mma" {
   dynamic "application_insights_web_test_location_availability_criteria" {
     for_each = try(var.settings.application_insights_web_test_location_availability_criteria, null) != null ? [var.settings.application_insights_web_test_location_availability_criteria] : []
     content {
-      web_test_id           = try(application_insights_web_test_location_availability_criteria.value.web_test_id, null)
-      component_id          = try(application_insights_web_test_location_availability_criteria.value.component_id, null)
+      web_test_id = try(
+        var.remote_objects["application_insights_standard_web_test"][try(var.client_config.landingzone_key, application_insights_web_test_location_availability_criteria.value.web_test.lz_key)][application_insights_web_test_location_availability_criteria.value.web_test.key].id,
+        var.remote_objects["application_insights_web_test"][try(var.client_config.landingzone_key, application_insights_web_test_location_availability_criteria.value.web_test.lz_key)][application_insights_web_test_location_availability_criteria.value.web_test.key].id,
+        application_insights_web_test_location_availability_criteria.value.web_test_id,
+      )
+      component_id = try(
+        var.remote_objects["application_insights"][try(var.client_config.landingzone_key, application_insights_web_test_location_availability_criteria.value.component.lz_key)][application_insights_web_test_location_availability_criteria.value.component.key].id,
+        application_insights_web_test_location_availability_criteria.value.component_id,
+      )
       failed_location_count = try(application_insights_web_test_location_availability_criteria.value.failed_location_count, null)
     }
   }
