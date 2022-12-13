@@ -72,13 +72,13 @@ contact [opencode@microsoft.com](mailto:opencode@microsoft.com) with any additio
 
 | Name | Version |
 |------|---------|
-| <a name="provider_azapi"></a> [azapi](#provider\_azapi) | 0.2.1 |
-| <a name="provider_azuread"></a> [azuread](#provider\_azuread) | 2.30.0 |
-| <a name="provider_azurecaf"></a> [azurecaf](#provider\_azurecaf) | 1.2.23 |
-| <a name="provider_azurerm"></a> [azurerm](#provider\_azurerm) | 2.99.0 |
-| <a name="provider_azurerm.vhub"></a> [azurerm.vhub](#provider\_azurerm.vhub) | 2.99.0 |
-| <a name="provider_random"></a> [random](#provider\_random) | 3.3.2 |
-| <a name="provider_time"></a> [time](#provider\_time) | 0.9.1 |
+| <a name="provider_azapi"></a> [azapi](#provider\_azapi) | ~> 0.2.0 |
+| <a name="provider_azuread"></a> [azuread](#provider\_azuread) | ~> 2.30.0 |
+| <a name="provider_azurecaf"></a> [azurecaf](#provider\_azurecaf) | ~> 1.2.0 |
+| <a name="provider_azurerm"></a> [azurerm](#provider\_azurerm) | ~> 2.99 |
+| <a name="provider_azurerm.vhub"></a> [azurerm.vhub](#provider\_azurerm.vhub) | ~> 2.99 |
+| <a name="provider_random"></a> [random](#provider\_random) | ~> 3.3.1 |
+| <a name="provider_time"></a> [time](#provider\_time) | ~> 0.9.1 |
 
 ## Modules
 

@@ -11,7 +11,7 @@ mdl -l
 mdl -r ~MD001,~MD002,~MD009,~MD013 -v docs/
 
 status=$?
- 
+
 if test $status -eq 0
 then
 	echo "Markdown file validation is completed successfully."
