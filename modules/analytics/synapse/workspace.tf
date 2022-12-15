@@ -45,7 +45,7 @@ resource "azurerm_synapse_workspace" "ws" {
       tenant_id       = try(azure_devops_repo.value.tenant_id, null)
     }
   }
-  
+
   dynamic "sql_aad_admin" {
     for_each = try(var.settings.sql_aad_admin, null) != null ? [var.settings.sql_aad_admin] : []
     content {
@@ -54,15 +54,7 @@ resource "azurerm_synapse_workspace" "ws" {
       tenant_id = try(sql_aad_admin.value.tenant_id, null)
     }
   }
-
-  dynamic "identity" {
-    for_each = can(var.settings.identity) ? [var.settings.identity] : []
-    content {
-      type         = identity.value.type
-      identity_ids = concat(local.managed_identities, try(identity.value.identity_ids, []))
-    }
-  }
-
+  
   dynamic "customer_managed_key" {
     for_each = try(var.settings.customer_managed_key_versionless_id, null) == null ? [] : [1]
 
