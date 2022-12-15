@@ -32,6 +32,20 @@ resource "azurerm_synapse_workspace" "ws" {
     }
   }
 
+
+  dynamic "azure_devops_repo" {
+    for_each = try(var.settings.azure_devops_repo, null) != null ? [var.settings.azure_devops_repo] : []
+    content {
+      account_name    = try(azure_devops_repo.value.account_name, null)
+      branch_name     = try(azure_devops_repo.value.branch_name, null)
+      last_commit_id  = try(azure_devops_repo.value.last_commit_id, null)
+      project_name    = try(azure_devops_repo.value.project_name, null)
+      repository_name = try(azure_devops_repo.value.repository_name, null)
+      root_folder     = try(azure_devops_repo.value.root_folder, null)
+      tenant_id       = try(azure_devops_repo.value.tenant_id, null)
+    }
+  }
+  
   dynamic "sql_aad_admin" {
     for_each = try(var.settings.sql_aad_admin, null) != null ? [var.settings.sql_aad_admin] : []
     content {
@@ -54,19 +68,6 @@ resource "azurerm_synapse_workspace" "ws" {
 
     content {
       key_versionless_id = try(var.settings.customer_managed_key_versionless_id, null)
-    }
-  }
-
-  dynamic "azure_devops_repo" {
-    for_each = try(var.settings.azure_devops_repo, null) != null ? [var.settings.azure_devops_repo] : []
-    content {
-      account_name    = try(azure_devops_repo.value.account_name, null)
-      branch_name     = try(azure_devops_repo.value.branch_name, null)
-      last_commit_id  = try(azure_devops_repo.value.last_commit_id, null)
-      project_name    = try(azure_devops_repo.value.project_name, null)
-      repository_name = try(azure_devops_repo.value.repository_name, null)
-      root_folder     = try(azure_devops_repo.value.root_folder, null)
-      tenant_id       = try(azure_devops_repo.value.tenant_id, null)
     }
   }
 

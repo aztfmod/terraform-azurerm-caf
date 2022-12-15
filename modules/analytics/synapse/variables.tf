@@ -41,4 +41,3 @@ variable "private_endpoints" {
 variable "private_dns" {
   default = {}
 }
-variable "remote_objects" {}
