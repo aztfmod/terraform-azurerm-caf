@@ -91,14 +91,3 @@ resource "azurerm_key_vault_secret" "postgresql_fqdn" {
   value        = azurerm_postgresql_server.postgresql.fqdn
   key_vault_id = var.keyvault_id
 }
-
-
-
-
-
-
-
-
-
-
-

@@ -11,4 +11,3 @@ variable "global_settings" {
 variable "location" {
   type = string
 }
-

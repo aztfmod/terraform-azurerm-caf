@@ -210,7 +210,7 @@ virtual_hub_route_table_routes = {
 
     # Configure virtual hub security. Updates will apply globally to all connections.
     #
-    # If your organization uses public IP ranges in Virtual Networks and Branch Offices, you will need to specify those IP prefixes explicitly. 
+    # If your organization uses public IP ranges in Virtual Networks and Branch Offices, you will need to specify those IP prefixes explicitly.
     # The public IP prefixes can be specified individually or as aggregates.
     #
     # Include RFC 1918 prefixes in the private traffic range.

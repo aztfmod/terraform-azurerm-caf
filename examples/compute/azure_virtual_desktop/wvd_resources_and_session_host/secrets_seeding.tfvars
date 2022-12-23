@@ -28,5 +28,3 @@ dynamic_keyvault_secrets = {
     }
   }
 }
-
-

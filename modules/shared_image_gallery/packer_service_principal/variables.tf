@@ -33,4 +33,3 @@ variable "tenant_id" {
 variable "subscription" {
   type = any
 }
-

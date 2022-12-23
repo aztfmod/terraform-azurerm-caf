@@ -36,4 +36,3 @@ output "dedicated_hosts" {
   value = module.dedicated_hosts
 
 }
-

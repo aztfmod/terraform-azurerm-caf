@@ -26,4 +26,3 @@ resource "azurerm_automation_account" "auto_account" {
     }
   }
 }
-

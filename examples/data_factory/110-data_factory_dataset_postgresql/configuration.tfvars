@@ -58,4 +58,3 @@ data_factory_dataset_postgresql = {
     }
   }
 }
-

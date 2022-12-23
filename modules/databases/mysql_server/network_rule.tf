@@ -6,4 +6,3 @@ resource "azurerm_mysql_virtual_network_rule" "mysql_vnet_rules" {
   server_name         = azurerm_mysql_server.mysql.name
   subnet_id           = var.subnet_id
 }
-

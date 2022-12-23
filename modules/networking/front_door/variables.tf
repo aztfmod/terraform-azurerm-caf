@@ -39,4 +39,3 @@ variable "tags" {
   type    = any
   default = {}
 }
-

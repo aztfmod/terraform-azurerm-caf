@@ -36,4 +36,3 @@ data "azurerm_key_vault_secret" "host_pool_token" {
     try(var.keyvaults[var.extension.host_pool.lz_key][var.extension.host_pool.keyvault_key].id, var.keyvaults[var.client_config.landingzone_key][var.extension.host_pool.keyvault_key].id)
   )
 }
-

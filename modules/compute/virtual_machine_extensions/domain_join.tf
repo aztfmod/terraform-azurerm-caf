@@ -48,4 +48,3 @@ data "azurerm_key_vault_secret" "domain_join_username" {
     try(var.keyvaults[var.extension.domain_join_username_keyvault.lz_key][var.extension.domain_join_username_keyvault.keyvault_key].id, var.keyvaults[var.client_config.landingzone_key][var.extension.domain_join_username_keyvault.keyvault_key].id)
   )
 }
-

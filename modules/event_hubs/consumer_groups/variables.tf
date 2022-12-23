@@ -20,4 +20,3 @@ variable "eventhub_name" {
   description = "Name of the Event Hub."
   type        = string
 }
-

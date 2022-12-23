@@ -123,4 +123,3 @@ integration_service_environment = {
 ## Outputs
 | Name | Description |
 |------|-------------|
-

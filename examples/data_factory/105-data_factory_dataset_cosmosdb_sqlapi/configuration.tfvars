@@ -96,4 +96,3 @@ data_factory_dataset_cosmosdb_sqlapi = {
     collection_name = "bar"
   }
 }
-

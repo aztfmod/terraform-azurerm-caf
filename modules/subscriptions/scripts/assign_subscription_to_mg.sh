@@ -26,6 +26,3 @@ case "${METHOD}" in
         echo "Subscription removed from Management Group."
         ;;
 esac
-
-
-

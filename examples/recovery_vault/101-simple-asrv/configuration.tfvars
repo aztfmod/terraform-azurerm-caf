@@ -82,4 +82,3 @@ recovery_vaults = {
   }
 
 }
-

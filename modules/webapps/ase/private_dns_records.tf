@@ -14,4 +14,3 @@ resource "azurerm_private_dns_a_record" "a_records" {
     ignore_changes = [records]
   }
 }
-

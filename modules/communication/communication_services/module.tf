@@ -14,4 +14,3 @@ resource "azurerm_communication_service" "acs" {
   data_location       = try(var.settings.data_location, null)
   tags                = local.tags
 }
-

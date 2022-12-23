@@ -64,4 +64,3 @@ digital_twins_endpoint_eventhubs = {
 
   }
 }
-

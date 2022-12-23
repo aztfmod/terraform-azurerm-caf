@@ -706,4 +706,3 @@ contact [opencode@microsoft.com](mailto:opencode@microsoft.com) with any additio
 | <a name="output_wvd_host_pools"></a> [wvd\_host\_pools](#output\_wvd\_host\_pools) | n/a |
 | <a name="output_wvd_workspaces"></a> [wvd\_workspaces](#output\_wvd\_workspaces) | n/a |
 <!-- END OF PRE-COMMIT-TERRAFORM DOCS HOOK -->
-

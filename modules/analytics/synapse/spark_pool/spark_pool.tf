@@ -41,4 +41,3 @@ resource "azurerm_synapse_spark_pool" "spark_pool" {
 
   tags = local.tags
 }
-

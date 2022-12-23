@@ -97,5 +97,3 @@ storage_accounts = {
     }
   }
 }
-
-

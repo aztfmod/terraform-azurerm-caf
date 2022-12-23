@@ -34,7 +34,7 @@ You can read about some reasons for this structure in this [nicely put article][
 
 ### Description
 
-We’re using the following template to create user stories. 
+We’re using the following template to create user stories.
 
 Since we have mentioned the type of user, the user story can refer to it with “I”.
 This is useful for **consistency** and to **avoid repetition** in the Acceptance criteria.
@@ -90,9 +90,9 @@ Also, here are a few points that need to be addressed:
 * Here goes whatever useful information can exist…
 ```
 
-# Sprint Ready Checklist 
-1. - [ ] Acceptance criteria defined 
-2. - [ ] Team understands acceptance criteria 
-3. - [ ] Team has defined solution / steps to satisfy acceptance criteria 
-4. - [ ] Acceptance criteria is verifiable / testable 
+# Sprint Ready Checklist
+1. - [ ] Acceptance criteria defined
+2. - [ ] Team understands acceptance criteria
+3. - [ ] Team has defined solution / steps to satisfy acceptance criteria
+4. - [ ] Acceptance criteria is verifiable / testable
 5. - [ ] External / 3rd Party dependencies identified

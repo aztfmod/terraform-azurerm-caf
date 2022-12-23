@@ -14,6 +14,3 @@ resource_groups = {
     name = "example-virtual-machine-nsg-rg1"
   }
 }
-
-
-

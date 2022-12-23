@@ -17,4 +17,3 @@ resource "azurerm_shared_image_gallery" "gallery" {
   location            = var.location
   description         = var.settings.description
 }
-

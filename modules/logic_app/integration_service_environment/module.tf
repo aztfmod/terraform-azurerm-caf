@@ -20,4 +20,3 @@ resource "azurerm_integration_service_environment" "ise" {
     for key, value in var.settings.subnets : var.vnets[try(value.lz_key, var.client_config.landingzone_key)][value.vnet_key].subnets[value.subnet_key].id
   ]
 }
-

@@ -41,5 +41,3 @@ resource "azurerm_app_service_plan" "asp" {
     ignore_changes = [app_service_environment_id]
   }
 }
-
-

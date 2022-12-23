@@ -12,4 +12,3 @@ variable "tags" {
   type        = any
   description = "(Required) Map of tags to be applied to the resource"
 }
-

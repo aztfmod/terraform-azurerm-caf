@@ -58,4 +58,3 @@ resource "azurerm_data_factory" "df" {
   #customer_managed_key_id         = try(var.settings.customer_managed_key_id)
   tags = local.tags
 }
-

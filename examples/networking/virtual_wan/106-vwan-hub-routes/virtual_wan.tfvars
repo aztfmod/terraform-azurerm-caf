@@ -39,4 +39,3 @@ virtual_wans = {
     }
   }
 }
-

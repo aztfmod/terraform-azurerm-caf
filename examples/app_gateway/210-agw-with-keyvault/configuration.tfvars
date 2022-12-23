@@ -11,7 +11,3 @@ resource_groups = {
     name = "example-app-gateway-re1"
   }
 }
-
-
-
-

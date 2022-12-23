@@ -40,4 +40,3 @@ resource "azurerm_eventhub" "evhub" {
     }
   }
 }
-

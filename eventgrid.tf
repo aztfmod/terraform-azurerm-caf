@@ -75,4 +75,4 @@ module "eventgrid_domain_topic" {
 }
 output "eventgrid_domain_topic" {
   value = module.eventgrid_domain_topic
-} 
+}

@@ -31,4 +31,3 @@ locals {
     data.azuread_user.main[user].object_id
   ]
 }
-

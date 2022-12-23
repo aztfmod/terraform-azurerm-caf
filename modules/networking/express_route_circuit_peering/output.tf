@@ -13,4 +13,3 @@ output "primary_azure_port" {
 output "secondary_azure_port" {
   value = azurerm_express_route_circuit_peering.peering.secondary_azure_port
 }
-

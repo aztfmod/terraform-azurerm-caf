@@ -64,4 +64,3 @@ storage_accounts = {
     }
   }
 }
-
