@@ -42,6 +42,7 @@ module "azuread_graph_application" {
   settings        = each.value
   base_tags       = try(local.global_settings.inherit_tags, false) ? local.resource_groups[each.value.resource_group_key].tags : {}
   remote_objects = {
+    azuread_applications = try(var.remote_objects.azuread_applications, {})
   }
 }
 
@@ -95,6 +96,7 @@ module "azuread_graph_application_certificate" {
   settings        = each.value
   remote_objects = {
     azuread_applications = local.combined_objects_azuread_applications
+    keyvault_certificates = local.combined_objects_keyvault_certificates
   }
 }
 output "azuread_graph_application_certificate" {

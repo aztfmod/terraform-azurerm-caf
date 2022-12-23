@@ -22,7 +22,7 @@ locals {
     azuread_administrative_units                          = try(var.azuread.azuread_administrative_units, {})
     azuread_administrative_unit_members                   = try(var.azuread.azuread_administrative_unit_members, {})
     azuread_groups_memberships                            = try(var.azuread.azuread_groups_memberships, {})
-    azuread_application_certificates                      = try(var.azuread.azureaazuread_application_certificated_administrative_units, {})
+    azuread_application_certificates                      = try(var.azuread.azuread_application_certificates, {})
     azuread_application_federated_identity_credentials    = try(var.azuread.azuread_application_federated_identity_credentials, {})
     azuread_application_passwords                         = try(var.azuread.azuread_application_passwords, {})
     azuread_application_pre_authorizeds                   = try(var.azuread.azuread_application_pre_authorizeds, {})

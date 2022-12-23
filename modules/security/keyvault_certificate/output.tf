@@ -21,3 +21,7 @@ output "thumbprint" {
 output "certificate_attribute" {
   value = azurerm_key_vault_certificate.cert.certificate_attribute
 }
+
+output "certificate_data" {
+  value = azurerm_key_vault_certificate.cert.certificate_data
+}

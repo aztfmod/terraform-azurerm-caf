@@ -5,14 +5,14 @@ data "azuread_application_template" "template" {
 }
 
 resource "azuread_application" "app" {
-  display_name = var.global_settings.passthrough || try(var.settings.global_settings.passthrough, false) || var.settings.useprefix == false ? var.settings.application_name : format("%v%s", try(format("%s-", var.global_settings.prefixes[0]), ""), var.settings.application_name)
+  display_name = var.global_settings.passthrough || try(var.settings.global_settings.passthrough, false) || try(var.settings.useprefix, false) == false ? var.settings.application_name : format("%v%s", try(format("%s-", var.global_settings.prefixes[0]), ""), var.settings.application_name)
   dynamic "api" {
     for_each = try(var.settings.api, null) != null ? [var.settings.api] : []
     content {
       known_client_applications = try(api.value.known_client_applications, null)
       mapped_claims_enabled     = try(api.value.mapped_claims_enabled, null)
       dynamic "oauth2_permission_scope" {
-        for_each = try(api.value.oauth2_permission_scope, null) != null ? [api.value.oauth2_permission_scope] : []
+        for_each = try(api.value.oauth2_permission_scopes, null) != null ? api.value.oauth2_permission_scopes : []
         content {
           id                         = oauth2_permission_scope.value.id
           admin_consent_description  = try(oauth2_permission_scope.value.admin_consent_description, null)
@@ -28,7 +28,7 @@ resource "azuread_application" "app" {
     }
   }
   dynamic "app_role" {
-    for_each = try(var.settings.app_role, null) != null ? [var.settings.app_role] : []
+    for_each = try(var.settings.app_roles, null) != null ? var.settings.app_roles : []
     content {
       id                   = app_role.value.id
       allowed_member_types = app_role.value.allowed_member_types
@@ -58,7 +58,7 @@ resource "azuread_application" "app" {
     for_each = try(var.settings.optional_claims, null) != null ? [var.settings.optional_claims] : []
     content {
       dynamic "access_token" {
-        for_each = try(optional_claims.value.access_token, null) != null ? [optional_claims.value.access_token] : []
+        for_each = try(optional_claims.value.access_tokens, null) != null ? optional_claims.value.access_tokens : []
         content {
           name                  = access_token.value.name
           source                = try(access_token.value.source, null)
@@ -67,7 +67,7 @@ resource "azuread_application" "app" {
         }
       }
       dynamic "id_token" {
-        for_each = try(optional_claims.value.id_token, null) != null ? [optional_claims.value.id_token] : []
+        for_each = try(optional_claims.value.id_tokens, null) != null ? optional_claims.value.id_tokens : []
         content {
           name                  = id_token.value.name
           source                = try(id_token.value.source, null)
@@ -76,7 +76,7 @@ resource "azuread_application" "app" {
         }
       }
       dynamic "saml2_token" {
-        for_each = try(optional_claims.value.saml2_token, null) != null ? [optional_claims.value.saml2_token] : []
+        for_each = try(optional_claims.value.saml2_tokens, null) != null ? optional_claims.value.saml2_tokens : []
         content {
           name                  = saml2_token.value.name
           source                = try(saml2_token.value.source, null)
@@ -94,19 +94,19 @@ resource "azuread_application" "app" {
   )
   privacy_statement_url = try(var.settings.privacy_statement_url, null)
   dynamic "public_client" {
-    for_each = try(var.settings.public_client, null) != null ? [var.settings.public_client] : []
+    for_each = try(var.settings.public_clients, null) != null ? var.settings.public_clients : []
     content {
       redirect_uris = try(public_client.value.redirect_uris, null)
     }
   }
   dynamic "required_resource_access" {
-    for_each = try(var.settings.required_resource_access, null) != null ? [var.settings.required_resource_access] : []
+    for_each = try(var.settings.required_resources_access, null) != null ? var.settings.required_resources_access : []
     content {
-      resource_app_id = can(required_resource_access.value.resource_app.id) ? required_resource_access.value.resource_app.id : data.azuread_application_published_app_ids.well_known.result[required_resource_access.value.resource_app.well_known_key]
+      resource_app_id = can(required_resource_access.value.resource_app.id) ? required_resource_access.value.resource_app.id : try(var.remote_objects.azuread_applications[try(var.settings.azuread_application.lz_key, var.client_config.landingzone_key)][required_resource_access.value.resource_app.key].application_id, data.azuread_application_published_app_ids.well_known.result[required_resource_access.value.resource_app.well_known_key])
       dynamic "resource_access" {
-        for_each = try(required_resource_access.value.resource_access, null) != null ? [required_resource_access.value.resource_access] : []
+        for_each = try(required_resource_access.value.resources_access, null) != null ? required_resource_access.value.resources_access : []
         content {
-          id   = resource_access.value.id
+          id   = can(required_resource_access.value.resource_app.id) ? resource_access.value.id : var.remote_objects.azuread_applications[try(var.settings.azuread_application.lz_key, var.client_config.landingzone_key)][resource_access.value.key].oauth2_permission_scope_ids[var.settings.azuread_application.scope_id]
           type = resource_access.value.type
         }
       }
