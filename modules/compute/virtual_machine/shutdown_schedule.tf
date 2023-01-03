@@ -1,7 +1,7 @@
 resource "azurerm_dev_test_global_vm_shutdown_schedule" "enabled" {
   count = can(var.settings.shutdown_schedule) ? 1 : 0
 
-  virtual_machine_id = azurerm_linux_virtual_machine.vm[local.os_type].id
+  virtual_machine_id = local.os_type == "linux" ? azurerm_linux_virtual_machine.vm["linux"].id : azurerm_windows_virtual_machine.vm["windows"].id
   location           = var.location
   enabled            = try(var.settings.shutdown_schedule.enabled, null)
 
