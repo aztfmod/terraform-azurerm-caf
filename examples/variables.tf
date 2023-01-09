@@ -312,6 +312,9 @@ variable "azurerm_application_insights" {
 variable "azurerm_application_insights_web_test" {
   default = {}
 }
+variable "azurerm_application_insights_standard_web_test" {
+  default = {}
+}
 variable "role_mapping" {
   default = {}
 }
