@@ -1,4 +1,4 @@
-resource "azurecaf_name" "appiwt" {
+data "azurecaf_name" "appiwt" {
   name          = var.name
   resource_type = "azurerm_application_insights_web_test"
   prefixes      = var.global_settings.prefixes
@@ -10,7 +10,7 @@ resource "azurecaf_name" "appiwt" {
 
 resource "azapi_resource" "appiwt" {
   type      = "Microsoft.Insights/webtests@2022-06-15"
-  name      = azurecaf_name.appiwt.result
+  name      = data.azurecaf_name.appiwt.result
   tags      = local.tags
   parent_id = var.resource_group_id
   location  = var.location
@@ -18,7 +18,7 @@ resource "azapi_resource" "appiwt" {
     properties = {
       Kind               = "standard"
       Name               = var.name
-      SyntheticMonitorId = azurecaf_name.appiwt.result
+      SyntheticMonitorId = data.azurecaf_name.appiwt.result
       Description        = try(var.settings.description, "")
       Enabled            = try(var.settings.enabled, true)
       Frequency          = try(var.settings.frequency, 300)
