@@ -29,6 +29,7 @@ resource "azurerm_app_service_plan" "asp" {
   }
 
   app_service_environment_id = var.app_service_environment_id
+  zone_redundant             = lookup(var.settings, "zone_redundant", null)
   tags                       = local.tags
 
   timeouts {
