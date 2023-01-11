@@ -14,6 +14,7 @@ module "batch_accounts" {
   storage_account_id  = try(module.storage_accounts[each.value.storage_account_key].id, null)
   resource_groups     = local.combined_objects_resource_groups
   vnets               = local.combined_objects_networking
+  virtual_subnets     = local.combined_objects_virtual_subnets
   private_dns         = local.combined_objects_private_dns
   private_endpoints   = try(each.value.private_endpoints, {})
 }
