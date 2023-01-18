@@ -34,6 +34,31 @@ resource "azuread_application" "app" {
     }
   }
 
+  dynamic "optional_claims" {
+    for_each = try(var.settings.optional_claims, null) != null ? [1] : []
+
+    content {
+      dynamic "access_token" {
+        for_each = try(var.settings.optional_claims.access_token, {})
+        content {
+          name                  = access_token.value.name
+          source                = try(access_token.value.source, null)
+          essential             = try(access_token.value.essential, null)
+          additional_properties = try(access_token.value.additional_properties, [])
+        }
+      }
+
+      dynamic "id_token" {
+        for_each = try(var.settings.optional_claims.id_token, {})
+        content {
+          name                  = id_token.value.name
+          source                = try(id_token.value.source, null)
+          essential             = try(id_token.value.essential, null)
+          additional_properties = try(id_token.value.additional_properties, [])
+        }
+      }
+    }
+  }
 }
 
 resource "azuread_service_principal" "app" {

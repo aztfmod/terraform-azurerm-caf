@@ -30,8 +30,10 @@ api_management_product = {
     resource_group = {
       key = "rg1"
     }
-    product_id = "example-product1"
-    display_name = "Example Product 1"
+    product_id            = "example-product1"
+    display_name          = "Example Product 1"
+    subscription_required = false
+    published             = false
   }
   example_product2 = {
     api_management = {
@@ -40,14 +42,14 @@ api_management_product = {
     resource_group = {
       key = "rg1"
     }
-    product_id = "example-product2"
-    display_name = "Example Product 2"
-    description = "This is a example api product"
-    approval_required = true
+    product_id            = "example-product2"
+    display_name          = "Example Product 2"
+    description           = "This is a example api product"
+    approval_required     = true
     subscription_required = true
-    published = true
-    subscriptions_limit = 50
-    terms = "Some legal terms ..."
+    published             = true
+    subscriptions_limit   = 50
+    terms                 = "Some legal terms ..."
   }
 }
 
@@ -65,4 +67,15 @@ api_management_subscription = {
     display_name = "Example Subscription"
     state        = "active"
   }
+  example_subscription2 = {
+    api_management = {
+      key = "example_apim"
+    }
+    resource_group = {
+      key = "rg1"
+    }
+    display_name = "Example Subscription"
+    state        = "active"
+  }
+
 }
