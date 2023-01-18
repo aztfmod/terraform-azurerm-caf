@@ -279,8 +279,8 @@ mssql_mi_administrators = {
     login              = "sqlmiadmin-khairi"
 
     # group key or existing group OID or upn supported
-    azuread_group_key  = "sql_mi_admins"
-    # azuread_group_id   = "<specify existing azuread group's Object Id (OID) here>"     
+    azuread_group_key = "sql_mi_admins"
+    # azuread_group_id   = "<specify existing azuread group's Object Id (OID) here>"
     # user_principal_name = ""
   }
 }

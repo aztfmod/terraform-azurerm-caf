@@ -27,4 +27,4 @@ resource "azurerm_traffic_manager_nested_endpoint" "nested_endpoint" {
       scope = try(var.settings.subnet.scope, null)
     }
   }
-}  
+}

@@ -95,7 +95,7 @@ disk_encryption_sets = {
     # keyvault_key = {  # If in case of remote Kevault Key
     #   lz_key = ""
     # }
-    key_vault_key_key  = "key1"
+    key_vault_key_key = "key1"
     keyvault = {
       # lz_key = "" # if in case of remote Keyvault
       key = "kv1"
