@@ -230,6 +230,7 @@
     "storage_accounts/106-storage-account-queue",
     "storage_accounts/107-storage-account-management-policy",
     "storage_accounts/109-storage-account-advanced-options-cmk",
+    "storage_accounts/110-file-share-with-acl",
     "storage_container/101-storage_container",
     "synapse_analytics/100-synapse",
     "synapse_analytics/101-synapse-sparkpool",

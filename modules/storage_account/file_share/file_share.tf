@@ -9,12 +9,12 @@ resource "azurerm_storage_share" "fs" {
   enabled_protocol     = try(var.settings.enabled_protocol, null)
 
   dynamic "acl" {
-    for_each = try(var.settings.acl, {})
+    for_each = try(var.settings.acl, null) != null ? [var.settings.acl] : []
     content {
       id = acl.value.id
 
       dynamic "access_policy" {
-        for_each = try(var.settings.access_policy, {})
+        for_each = try(acl.value.access_policy, null) != null ? [acl.value.access_policy] : []
         content {
           permissions = access_policy.value.permissions
           start       = try(access_policy.value.start, null)
