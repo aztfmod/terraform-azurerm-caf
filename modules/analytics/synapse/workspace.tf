@@ -24,24 +24,26 @@ resource "azurerm_synapse_workspace" "ws" {
   tags                                 = local.tags
 
   dynamic "aad_admin" {
-    for_each = try(var.settings.aad_admin, {}) == {} ? [] : [1]
+    for_each = try(var.settings.aad_admin, null) != null ? [var.settings.aad_admin] : []
 
     content {
-      login     = var.settings.aad_admin.login
-      object_id = var.settings.aad_admin.object_id
-      tenant_id = var.settings.aad_admin.tenant_id
+      login     = try(aad_admin.value.login, null)
+      object_id = try(aad_admin.value.object_id, null)
+      tenant_id = try(aad_admin.value.tenant_id, null)
     }
   }
 
   dynamic "azure_devops_repo" {
-    for_each = try(var.settings.azure_devops_repo, {}) == {} ? [] : [1]
+    for_each = try(var.settings.azure_devops_repo, null) != null ? [var.settings.azure_devops_repo] : []
 
     content {
-      account_name    = var.settings.azure_devops_repo.account_name
-      branch_name     = var.settings.azure_devops_repo.branch_name
-      project_name    = var.settings.azure_devops_repo.project_name
-      repository_name = var.settings.azure_devops_repo.repository_name
-      root_folder     = var.settings.azure_devops_repo.root_folder
+      account_name    = try(azure_devops_repo.value.account_name, null)
+      branch_name     = try(azure_devops_repo.value.branch_name, null)
+      last_commit_id  = try(azure_devops_repo.value.last_commit_id, null)
+      project_name    = try(azure_devops_repo.value.project_name, null)
+      repository_name = try(azure_devops_repo.value.repository_name, null)
+      root_folder     = try(azure_devops_repo.value.root_folder, null)
+      tenant_id       = try(azure_devops_repo.value.tenant_id, null)
     }
   }
 
@@ -54,14 +56,15 @@ resource "azurerm_synapse_workspace" "ws" {
   }
 
   dynamic "github_repo" {
-    for_each = try(var.settings.github_repo, {}) == {} ? [] : [1]
+    for_each = try(var.settings.github_repo, null) != null ? [var.settings.github_repo] : []
 
     content {
-      account_name    = var.settings.github_repo.account_name
-      branch_name     = var.settings.github_repo.branch_name
-      repository_name = var.settings.github_repo.repository_name
-      root_folder     = var.settings.github_repo.root_folder
-      git_url         = var.settings.github_repo.git_url
+      account_name    = try(github_repo.value.account_name, null)
+      branch_name     = try(github_repo.value.branch_name, null)
+      last_commit_id  = try(github_repo.value.last_commit_id, null)
+      repository_name = try(github_repo.value.repository_name, null)
+      root_folder     = try(github_repo.value.root_folder, null)
+      git_url         = try(github_repo.value.git_url, null)
     }
   }
 
