@@ -111,9 +111,9 @@ application_gateway_applications = {
 
     request_routing_rules = {
       public-80 = {
-        name = "public-80"
+        name      = "public-80"
         rule_type = "Basic"
-        priority = 110
+        priority  = 110
       }
     }
 
