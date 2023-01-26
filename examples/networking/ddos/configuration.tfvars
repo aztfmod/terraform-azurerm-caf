@@ -24,9 +24,9 @@ ddos_services = {
 vnets = {
   vnet1 = {
     # ddos_services_lz_key = "" #If the reference of Remote DDOS subscription plan is being inferred
-    ddos_services_key    = "ddos"
-    resource_group_key   = "ddosrg"
-    vnet                 = {
+    ddos_services_key  = "ddos"
+    resource_group_key = "ddosrg"
+    vnet = {
       name          = "test-vnet"
       address_space = ["10.0.0.0/16"]
     }
