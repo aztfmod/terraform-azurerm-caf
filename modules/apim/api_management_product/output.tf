@@ -9,7 +9,7 @@ output "product_id" {
 }
 
 output "policy_id" {
-  value       = azurerm_api_management_product_policy.apim.id
+  value       = azurerm_api_management_product_policy.apim[0].id
   description = "The ID of the API Management Product Policy."
 }
 
