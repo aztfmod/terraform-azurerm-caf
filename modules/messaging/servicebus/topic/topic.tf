@@ -16,6 +16,7 @@ resource "azurerm_servicebus_topic" "topic" {
   enable_express                          = try(var.settings.enable_express, null)
   enable_partitioning                     = try(var.settings.enable_partitioning, null)
   max_size_in_megabytes                   = try(var.settings.max_size_in_megabytes, null)
+  max_message_size_in_kilobytes           = try(var.settings.max_message_size_in_kilobytes, null)
   name                                    = azurecaf_name.topic.result
   namespace_id                            = local.servicebus_namespace.id
   requires_duplicate_detection            = try(var.settings.requires_duplicate_detection, null)

@@ -30,8 +30,10 @@ api_management_product = {
     resource_group = {
       key = "rg1"
     }
-    product_id   = "example-product1"
-    display_name = "Example Product 1"
+    product_id            = "example-product1"
+    display_name          = "Example Product 1"
+    subscription_required = false
+    published             = false
   }
   example_product2 = {
     api_management = {
@@ -48,6 +50,19 @@ api_management_product = {
     published             = true
     subscriptions_limit   = 50
     terms                 = "Some legal terms ..."
+
+    policy = {
+      xml_content = <<XML
+<policies>
+  <inbound>
+    <find-and-replace from="xyz" to="abc" />
+  </inbound>
+</policies>
+XML
+
+      # xml_file = "apim/117-api_management_product/policies/example-policy.xml"
+      # xml_link = "https://github.com/Azure/api-management-policy-snippets/blob/master/examples/Filter%20response%20content%20based%20on%20product%20name.policy.xml"
+    }
   }
 }
 
@@ -65,4 +80,15 @@ api_management_subscription = {
     display_name = "Example Subscription"
     state        = "active"
   }
+  example_subscription2 = {
+    api_management = {
+      key = "example_apim"
+    }
+    resource_group = {
+      key = "rg1"
+    }
+    display_name = "Example Subscription"
+    state        = "active"
+  }
+
 }

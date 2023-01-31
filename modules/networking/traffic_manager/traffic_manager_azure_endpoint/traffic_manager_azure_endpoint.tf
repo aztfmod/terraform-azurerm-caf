@@ -29,4 +29,4 @@ resource "azurerm_traffic_manager_azure_endpoint" "azure_endpoint" {
       scope = try(var.settings.subnet.scope, null)
     }
   }
-}  
+}
