@@ -60,6 +60,7 @@ api_management_product = {
 </policies>
 XML
 
+      # xml_file = "apim/117-api_management_product/policies/example-policy.xml"
       # xml_link = "https://github.com/Azure/api-management-policy-snippets/blob/master/examples/Filter%20response%20content%20based%20on%20product%20name.policy.xml"
     }
   }
