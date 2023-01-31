@@ -8,6 +8,9 @@ output "key_id" {
 output "service_principal_id" {
   value = azuread_service_principal_password.pwd.service_principal_id
 }
+output "service_principal_password" {
+  value = azuread_service_principal_password.pwd.value
+}
 output "end_date" {
   value = azuread_service_principal_password.pwd.end_date
 }
