@@ -17,6 +17,7 @@ module "static_sites" {
   diagnostic_profiles = try(each.value.diagnostic_profiles, null)
   diagnostics         = local.combined_diagnostics
   tags                = try(each.value.tags, null)
+  custom_domains      = try(each.value.custom_domains, {})
 }
 
 output "static_sites" {
