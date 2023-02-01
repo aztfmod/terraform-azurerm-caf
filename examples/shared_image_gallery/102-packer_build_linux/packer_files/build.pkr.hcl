@@ -12,7 +12,7 @@ source "azure-arm" "mybuild" {
   private_virtual_network_with_public_ip           = var.private_virtual_network_with_public_ip
   subscription_id                                  = var.subscription_id
   tenant_id                                        = var.tenant_id
-  user_assigned_managed_identities                 = var.managed_identity
+  user_assigned_managed_identities                 = [var.managed_identity]
   virtual_network_name                             = var.virtual_network_name
   virtual_network_subnet_name                      = var.virtual_network_subnet_name
   vm_size                                          = var.vm_size
