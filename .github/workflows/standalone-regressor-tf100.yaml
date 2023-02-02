@@ -38,12 +38,12 @@ jobs:
     outputs:
       matrix: ${{ steps.load_scenarios.outputs.matrix }}
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v3
       - id: load_scenarios
         run: |
           cases=$((
             cat ./.github/workflows/${{ github.event.inputs.scenario }}) | jq -c .)
-          echo "::set-output name=matrix::${cases}"
+          echo "matrix=${cases}" >> $GITHUB_OUTPUT
 
   testcases:
     name: test
@@ -60,7 +60,7 @@ jobs:
 
     steps:
       - name: Checkout with tag ${{ github.event.inputs.base_version }}
-        uses: actions/checkout@v2
+        uses: actions/checkout@v3
         with:
           ref: ${{ github.event.inputs.base_version }}
 
@@ -104,7 +104,7 @@ jobs:
             ${{ env.PLAN_FILE }}
 
       - name: Checkout from selected branch
-        uses: actions/checkout@v2
+        uses: actions/checkout@v3
 
       - name: Terraform Init example with selected branch
         run: |
