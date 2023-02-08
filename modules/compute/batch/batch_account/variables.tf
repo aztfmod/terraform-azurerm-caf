@@ -23,6 +23,9 @@ variable "key_vault_key_id" {
 variable "storage_account_id" {
   default = null
 }
+variable "storage_account_authentication_mode" {
+  default = null
+}
 variable "managed_identities" {
   default = {}
 }
