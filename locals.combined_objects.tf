@@ -147,6 +147,8 @@ locals {
   combined_objects_vmware_private_clouds                          = merge(tomap({ (local.client_config.landingzone_key) = module.vmware_private_clouds }), try(var.remote_objects.vmware_private_clouds, {}))
   combined_objects_vpn_gateway_connections                        = merge(tomap({ (local.client_config.landingzone_key) = module.vpn_gateway_connections }), try(var.remote_objects.vpn_gateway_connections, {}))
   combined_objects_vpn_sites                                      = merge(tomap({ (local.client_config.landingzone_key) = module.vpn_sites }), try(var.remote_objects.vpn_sites, {}))
+  combined_objects_web_pubsubs                                    = merge(tomap({ (local.client_config.landingzone_key) = module.web_pubsubs }), try(var.remote_objects.web_pubsubs, {}))
+  combined_objects_web_pubsub_hubs                                = merge(tomap({ (local.client_config.landingzone_key) = module.web_pubsub_hubs }), try(var.remote_objects.web_pubsub_hubs, {}))
   combined_objects_wvd_application_groups                         = merge(tomap({ (local.client_config.landingzone_key) = module.wvd_application_groups }), try(var.remote_objects.wvd_application_groups, {}))
   combined_objects_wvd_applications                               = merge(tomap({ (local.client_config.landingzone_key) = module.wvd_applications }), try(var.remote_objects.wvd_applications, {}))
   combined_objects_wvd_host_pools                                 = merge(tomap({ (local.client_config.landingzone_key) = module.wvd_host_pools }), try(var.remote_objects.wvd_host_pools, {}))
