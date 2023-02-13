@@ -18,6 +18,20 @@ resource "azurerm_container_registry" "acr" {
 
   public_network_access_enabled = var.public_network_access_enabled
 
+  quarantine_policy_enabled = var.quarantine_policy_enabled
+  zone_redundancy_enabled   = var.zone_redundancy_enabled
+  export_policy_enabled     = var.export_policy_enabled
+
+  trust_policy {
+    enabled = lookup(var.trust_policy, "enabled", false)
+  }
+
+  retention_policy {
+    enabled = lookup(var.retention_policy, "enabled", false)
+    days = lookup(var.retention_policy, "days", 7)
+  }
+
+
   dynamic "network_rule_set" {
     for_each = try(var.network_rule_set, {})
 
@@ -48,6 +62,7 @@ resource "azurerm_container_registry" "acr" {
 
     content {
       location = var.global_settings.regions[georeplications.key]
+      regional_endpoint_enabled = try(georeplications.value.regional_endpoint_enabled, false)
       tags     = try(georeplications.value.tags)
     }
   }

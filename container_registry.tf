@@ -20,7 +20,11 @@ module "container_registry" {
   settings            = each.value
 
   public_network_access_enabled = try(each.value.public_network_access_enabled, "true")
-
+  quarantine_policy_enabled = try(each.value.quarantine_policy_enabled, false)
+  zone_redundancy_enabled   = try(each.value.zone_redundancy_enabled, false)
+  export_policy_enabled     = try(each.value.export_policy_enabled, true)
+  trust_policy              = try(each.value.trust_policy, {})
+  retention_policy          = try(each.value.retention_policy, {})
 }
 
 output "azure_container_registries" {
