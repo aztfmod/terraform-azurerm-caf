@@ -84,6 +84,11 @@ variable "quarantine_policy_enabled" {
   default = false
 }
 
+variable "regional_endpoint_enabled" {
+  type = bool
+  default = false
+}
+
 variable "retention_policy" {
   default = {}
 }
