@@ -27,30 +27,18 @@ azure_container_registries = {
 
     #public_network_access_enabled = "false" #Only able to control when sku = "premium"
 
-    zone_redundancy_enabled = false
-    quarantine_policy_enabled = true
-    trust_policy = {
-      enabled = true
-    }
-    retention_policy = {
-      enabled = true
-      days = 7
-    }
-
     georeplications = {
       region2 = {
         tags = {
           region = "australiacentral"
           type   = "acr_replica"
         }
-        regional_endpoint_enabled = true
       }
       region3 = {
         tags = {
           region = "westeurope"
           type   = "acr_replica"
         }
-        regional_endpoint_enabled = false
       }
     }
     network_rule_set = {
