@@ -1,6 +1,7 @@
 resource "azurerm_key_vault_certificate" "csr" {
   name         = var.settings.name
   key_vault_id = var.keyvault_id
+  tags         = try(merge(var.base_tags, local.tags), {})
 
   certificate_policy {
     issuer_parameters {
