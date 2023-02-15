@@ -4,6 +4,16 @@ variable "resource_group_name" {
 }
 variable "automation_account_name" {}
 
+variable "frequency" {
+  description = "(Required) Frequency of the schedule"
+  type        = string
+
+  validation {
+    condition     = contains(["OneTime", "Day", "Hour", "Week", "Month"], var.frequency)
+    error_message = "The Frequency can be either OneTime, Day, Hour, Week, or Month."
+  }
+}
+
 variable "location" {
   description = "(Required) Specifies the supported Azure location where to create the resource. Changing this forces a new resource to be created."
   type        = string

@@ -20,7 +20,7 @@ resource "azurerm_automation_runbook" "automation_runbook" {
   description             = try(var.settings.description, null)
   runbook_type            = var.settings.runbook_type
 
-  content = try(var.settings.content, null)
+  content = try(local.script_content, null)
 
   dynamic "publish_content_link" {
     for_each = try(var.settings.publish_content_link, null) == null ? [] : [1]
@@ -42,6 +42,7 @@ resource "azurerm_automation_runbook" "automation_runbook" {
   }
 }
 
-# locals {
-#   script_content = try(var.settings.script_file, null) != null ? file(var.settings.script_file) : var.settings.content
-# }
+locals {
+  # try to get script payload either from a given file or read directly from var.settings.content
+  script_content = try(var.settings.script_file, null) != null ? file(var.settings.script_file) : try(var.settings.content, null)
+}

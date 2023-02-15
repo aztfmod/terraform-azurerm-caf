@@ -48,3 +48,17 @@ automation_schedules = {
     week_days              = ["Friday"]
   }
 }
+
+automation_job_schedules = {
+  job_schedule_01 = {
+    name                    = "jsched_runbook1_friday"
+    resource_group_key      = "automation"
+    automation_account_key  = "auto1"
+    automation_schedule_key = "schedule1"
+    automation_runbook_key  = "runbook1"
+    parameters = {
+      paRam1 = "value1"
+      FOO    = 1
+    }
+  }
+}

@@ -13,7 +13,7 @@ resource "azurerm_automation_schedule" "automation_schedule" {
   name                    = azurecaf_name.automation_schedule.result
   resource_group_name     = var.resource_group_name
   automation_account_name = var.automation_account_name
-  frequency               = var.settings.frequency
+  frequency               = var.frequency
   interval                = try(var.settings.interval, null)
   timezone                = try(var.settings.timezone, null)
   start_time              = try(var.settings.start_time, null)
@@ -27,6 +27,17 @@ resource "azurerm_automation_schedule" "automation_schedule" {
     content {
       day        = monthly_occurrence.day
       occurrence = monthly_occurrence.occurrence
+    }
+  }
+
+  dynamic "timeouts" {
+    for_each = lookup(var.settings, "timeouts", {}) == {} ? [] : [1]
+
+    content {
+      create = try(var.settings.timeouts.create, "30m")
+      read   = try(var.settings.timeouts.read, "30m")
+      update = try(var.settings.timeouts.update, "30m")
+      delete = try(var.settings.timeouts.delete, "30m")
     }
   }
 }

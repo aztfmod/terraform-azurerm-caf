@@ -499,6 +499,9 @@ variable "automation_schedules" {
 variable "automation_runbooks" {
   default = {}
 }
+variable "automation_job_schedules" {
+  default = {}
+}
 variable "automation_log_analytics_links" {
   default = {}
 }
