@@ -1,6 +1,6 @@
 data "azurerm_key_vault_secret" "password" {
   count        = lower(var.settings.certificate_policy.issuer_key_or_name) == "self" ? 0 : 1
-  name         = var.certificate_issuers[var.settings.certificate_policy.issuer_key_or_name].cert_password_key
+  name         = try(var.certificate_issuers[var.settings.certificate_policy.issuer_key_or_name].cert_password_key, var.certificate_issuers[var.settings.certificate_policy.issuer_key_or_name].cert_password_secret_name)  # added password_secret_name for remote lz which does not output secretname
   key_vault_id = var.keyvault_id
 }
 

@@ -17,10 +17,10 @@ data "azurerm_key_vault_secret" "certificate_issuer_password" {
   depends_on = [module.dynamic_keyvault_secrets]
   for_each = {
     for key, value in local.security.keyvault_certificate_issuers : key => value
-    if try(value.cert_password_key, null) != null
+    if try(value.cert_password_key, null) != null || try(value.cert_password_secret_name, null) != null
   }
 
-  name         = var.security.dynamic_keyvault_secrets[each.value.keyvault_key][each.value.cert_password_key].secret_name
+  name         = try(var.security.dynamic_keyvault_secrets[each.value.keyvault_key][each.value.cert_password_key].secret_name, each.value.cert_password_secret_name) # added password_secret_name for remote lz which does not output secretname
   key_vault_id = can(each.value.key_vault_id) ? each.value.key_vault_id : local.combined_objects_keyvaults[try(each.value.lz_key, local.client_config.landingzone_key)][each.value.keyvault_key].id
 }
 
