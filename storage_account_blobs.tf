@@ -3,7 +3,7 @@
 #
 
 resource "time_sleep" "delay" {
-  depends_on = [azurerm_role_assignment.for_deferred]
+  #depends_on = [azurerm_role_assignment.for] # NOTE: Deactivated this direct dependency due to Cycle error
   for_each   = local.storage.storage_account_blobs
 
   create_duration = "300s"
