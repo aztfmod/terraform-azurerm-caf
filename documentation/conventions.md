@@ -86,6 +86,7 @@ resource "azurecaf_name" "caf_name_vnet" {
   name          = var.settings.vnet.name
   resource_type = "azurerm_virtual_network"
   prefixes      = var.global_settings.prefixes
+  suffixes      = var.global_settings.suffixes
   random_length = var.global_settings.random_length
   clean_input   = true
   passthrough   = var.global_settings.passthrough
@@ -108,7 +109,7 @@ Documentation for all supported field is provided in the [documentation here](ht
 
 ### CEC2: Using global_settings configuration object
 
-An object called ```global_settings``` is created and used by the module. It governs the creation of resources based on a set of common criteria (naming convention, prefixes, region of the deployment, name of the environment, tags inheritance settings, etc.), the content of this object is defined in ```locals.tf``` of the root module. The content of this variable can be customized when the module is called in order to inherit and shared the configuration settings consistently across landing zones.
+An object called ```global_settings``` is created and used by the module. It governs the creation of resources based on a set of common criteria (naming convention, prefixes, suffixes, region of the deployment, name of the environment, tags inheritance settings, etc.), the content of this object is defined in ```locals.tf``` of the root module. The content of this variable can be customized when the module is called in order to inherit and shared the configuration settings consistently across landing zones.
 
 The default content is:
 

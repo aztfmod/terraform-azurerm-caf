@@ -3,6 +3,7 @@ resource "azurecaf_name" "mma" {
   name          = var.settings.name
   resource_type = "azurerm_data_factory" #"azurerm_monitor_metric_alert"
   prefixes      = var.global_settings.prefixes
+  suffixes      = var.global_settings.suffixes
   random_length = var.global_settings.random_length
   clean_input   = true
   passthrough   = var.global_settings.passthrough

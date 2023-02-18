@@ -2,6 +2,7 @@ resource "azurecaf_name" "kusto" {
   name          = var.settings.name
   resource_type = "azurerm_kusto_cluster" #azurerm_kusto_cluster_principal_assignment
   prefixes      = var.global_settings.prefixes
+  suffixes      = var.global_settings.suffixes
   random_length = var.global_settings.random_length
   clean_input   = true
   passthrough   = var.global_settings.passthrough

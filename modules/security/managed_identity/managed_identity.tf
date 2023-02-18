@@ -2,6 +2,7 @@ resource "azurecaf_name" "msi" {
   name          = var.name
   resource_type = "azurerm_user_assigned_identity"
   prefixes      = try(var.settings.naming_convention.prefixes, var.global_settings.prefixes)
+  suffixes      = try(var.settings.naming_convention.suffixes, var.global_settings.suffixes)
   random_length = try(var.settings.naming_convention.random_length, var.global_settings.random_length)
   clean_input   = true
   passthrough   = try(var.settings.naming_convention.passthrough, var.global_settings.passthrough)

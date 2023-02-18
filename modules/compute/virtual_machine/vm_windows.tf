@@ -5,6 +5,7 @@ resource "azurecaf_name" "windows" {
   name          = each.value.name
   resource_type = "azurerm_windows_virtual_machine"
   prefixes      = var.global_settings.prefixes
+  suffixes      = var.global_settings.suffixes
   random_length = var.global_settings.random_length
   clean_input   = true
   passthrough   = var.global_settings.passthrough
@@ -18,6 +19,7 @@ resource "azurecaf_name" "windows_computer_name" {
   name          = try(each.value.computer_name, each.value.name)
   resource_type = "azurerm_windows_virtual_machine"
   prefixes      = var.global_settings.prefixes
+  suffixes      = var.global_settings.suffixes
   random_length = var.global_settings.random_length
   clean_input   = true
   passthrough   = var.global_settings.passthrough
@@ -31,6 +33,7 @@ resource "azurecaf_name" "os_disk_windows" {
   name          = try(each.value.os_disk.name, null)
   resource_type = "azurerm_managed_disk"
   prefixes      = var.global_settings.prefixes
+  suffixes      = var.global_settings.suffixes
   random_length = var.global_settings.random_length
   clean_input   = true
   passthrough   = var.global_settings.passthrough

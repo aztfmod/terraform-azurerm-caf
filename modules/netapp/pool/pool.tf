@@ -1,6 +1,7 @@
 resource "azurecaf_name" "pool" {
   name          = var.settings.name
   prefixes      = var.global_settings.prefixes
+  suffixes      = var.global_settings.suffixes
   resource_type = "azurerm_netapp_pool"
   random_length = var.global_settings.random_length
   clean_input   = true

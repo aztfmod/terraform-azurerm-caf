@@ -2,6 +2,7 @@ resource "azurecaf_name" "frontdoor" {
   name          = var.settings.name
   resource_type = "azurerm_frontdoor"
   prefixes      = try(var.settings.global_settings.prefixes, var.global_settings.prefixes)
+  suffixes      = try(var.settings.global_settings.suffixes, var.global_settings.suffixes)
   random_length = try(var.settings.global_settings.random_length, var.global_settings.random_length)
   clean_input   = true
   passthrough   = try(var.settings.global_settings.passthrough, var.global_settings.passthrough)
