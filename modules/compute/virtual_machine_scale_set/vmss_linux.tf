@@ -138,8 +138,6 @@ resource "azurerm_linux_virtual_machine_scale_set" "vmss" {
       caching                   = data_disk.value.caching
       create_option             = try(data_disk.value.create_option, null)
       disk_encryption_set_id    = try(data_disk.value.disk_encryption_set_key, null) == null ? null : try(var.disk_encryption_sets[var.client_config.landingzone_key][data_disk.value.disk_encryption_set_key].id, var.disk_encryption_sets[data_disk.value.lz_key][data_disk.value.disk_encryption_set_key].id, null)
-      disk_iops_read_write      = try(data_disk.value.storage_account_type == "UltraSSD_LRS" ? data_disk.value.disk_iops_read_write : null, null)
-      disk_mbps_read_write      = try(data_disk.value.storage_account_type == "UltraSSD_LRS" ? data_disk.value.disk_mbps_read_write : null, null)
       disk_size_gb              = data_disk.value.disk_size_gb
       lun                       = data_disk.value.lun
       storage_account_type      = data_disk.value.storage_account_type
@@ -334,8 +332,6 @@ resource "azurerm_linux_virtual_machine_scale_set" "vmss_autoscaled" {
       caching                   = data_disk.value.caching
       create_option             = try(data_disk.value.create_option, null)
       disk_encryption_set_id    = try(data_disk.value.disk_encryption_set_key, null) == null ? null : try(var.disk_encryption_sets[var.client_config.landingzone_key][data_disk.value.disk_encryption_set_key].id, var.disk_encryption_sets[data_disk.value.lz_key][data_disk.value.disk_encryption_set_key].id, null)
-      disk_iops_read_write      = try(data_disk.value.storage_account_type == "UltraSSD_LRS" ? data_disk.value.disk_iops_read_write : null, null)
-      disk_mbps_read_write      = try(data_disk.value.storage_account_type == "UltraSSD_LRS" ? data_disk.value.disk_mbps_read_write : null, null)
       disk_size_gb              = data_disk.value.disk_size_gb
       lun                       = data_disk.value.lun
       storage_account_type      = data_disk.value.storage_account_type

@@ -76,7 +76,8 @@ locals {
   combined_objects_front_door_waf_policies                        = merge(tomap({ (local.client_config.landingzone_key) = module.front_door_waf_policies }), try(var.remote_objects.front_door_waf_policies, {}))
   combined_objects_function_apps                                  = merge(tomap({ (local.client_config.landingzone_key) = module.function_apps }), try(var.remote_objects.function_apps, {}))
   combined_objects_image_definitions                              = merge(tomap({ (local.client_config.landingzone_key) = module.image_definitions }), try(var.remote_objects.image_definitions, {}))
-  combined_objects_integration_service_environment                = merge(tomap({ (local.client_config.landingzone_key) = module.integration_service_environment }), try(var.remote_objects.integration_service_environment, {}))
+  # (!) DEPRECATED
+  #combined_objects_integration_service_environment                = merge(tomap({ (local.client_config.landingzone_key) = module.integration_service_environment }), try(var.remote_objects.integration_service_environment, {}))
   combined_objects_keyvault_certificate_requests                  = merge(tomap({ (local.client_config.landingzone_key) = module.keyvault_certificate_requests }), try(var.remote_objects.keyvault_certificate_requests, {}))
   combined_objects_keyvault_certificates                          = merge(tomap({ (local.client_config.landingzone_key) = module.keyvault_certificates }), try(var.remote_objects.keyvault_certificates, {}))
   combined_objects_keyvault_keys                                  = merge(tomap({ (local.client_config.landingzone_key) = module.keyvault_keys }), try(var.remote_objects.keyvault_keys, {}))
@@ -162,4 +163,3 @@ locals {
   )
 
 }
- 

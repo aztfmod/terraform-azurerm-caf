@@ -5,6 +5,6 @@ output "name" {
 }
 
 output "id" {
-  value       = lookup(azurerm_template_deployment.manageddb.outputs, "id")
+  value       = azurerm_resource_group_template_deployment.manageddb.id
   description = "SQL Managed DB Id"
 }

@@ -20,9 +20,17 @@ resource "azurerm_cognitive_account" "service" {
   dynamic "network_acls" {
     for_each = try(var.settings.network_acls, null) == null ? [] : [1]
     content {
-      default_action             = var.settings.network_acls.default_action
-      ip_rules                   = try(var.settings.network_acls.ip_rules, null)
-      virtual_network_subnet_ids = try(var.settings.network_acls.virtual_network_subnet_ids, null)
+      default_action = var.settings.network_acls.default_action
+      ip_rules       = try(var.settings.network_acls.ip_rules, null)
+
+      dynamic "virtual_network_rules" {
+        for_each = try(var.settings.network_acls.virtual_network_rules.*, [])
+
+        content {
+          subnet_id                            = virtual_network_rules.value.subnet_id
+          ignore_missing_vnet_service_endpoint = try(virtual_network_rules.value.ignore_missing_vnet_service_endpoint, null)
+        }
+      }
     }
   }
 

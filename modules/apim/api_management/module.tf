@@ -159,7 +159,6 @@ resource "azurerm_api_management" "apim" {
       tls_rsa_with_aes128_gcm_sha256_ciphers_enabled      = try(security.value.tls_rsa_with_aes128_gcm_sha256_ciphers_enabled, null)
       tls_rsa_with_aes256_cbc_sha256_ciphers_enabled      = try(security.value.tls_rsa_with_aes256_cbc_sha256_ciphers_enabled, null)
       tls_rsa_with_aes256_cbc_sha_ciphers_enabled         = try(security.value.tls_rsa_with_aes256_cbc_sha_ciphers_enabled, null)
-      enable_triple_des_ciphers                           = try(security.value.enable_triple_des_ciphers, null)
       triple_des_ciphers_enabled                          = try(security.value.triple_des_ciphers_enabled, null)
       # disable_backend_ssl30                               = try(security.value.disable_backend_ssl30, null)
       # disable_backend_tls10                               = try(security.value.disable_backend_tls10, null)

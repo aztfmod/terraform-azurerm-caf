@@ -71,12 +71,11 @@ module "virtual_subnets" {
   name                                           = each.value.name
   address_prefixes                               = try(each.value.cidr, [])
   service_endpoints                              = try(each.value.service_endpoints, [])
-  enforce_private_link_endpoint_network_policies = try(each.value.enforce_private_link_endpoint_network_policies, false)
-  enforce_private_link_service_network_policies  = try(each.value.enforce_private_link_service_network_policies, false)
+  private_endpoint_network_policies_enabled      = try(each.value.private_endpoint_network_policies_enabled, each.value.enforce_private_link_endpoint_network_policies, null)
+  private_link_service_network_policies_enabled  = try(each.value.private_link_service_network_policies_enabled, each.value.enforce_private_link_service_network_policies, null)
 
   resource_group_name  = can(each.value.vnet.key) ? local.combined_objects_networking[try(each.value.vnet.lz_key, local.client_config.landingzone_key)][each.value.vnet.key].resource_group_name : split("/", each.value.vnet.id)[4]
   virtual_network_name = can(each.value.vnet.key) ? local.combined_objects_networking[try(each.value.vnet.lz_key, local.client_config.landingzone_key)][each.value.vnet.key].name : split("/", each.value.vnet.id)[8]
-
 }
 
 resource "azurerm_subnet_route_table_association" "rt" {
@@ -136,14 +135,10 @@ module "public_ip_addresses" {
   tags                       = try(each.value.tags, null)
   ip_tags                    = try(each.value.ip_tags, null)
   public_ip_prefix_id        = can(each.value.public_ip_prefix.key) ? local.combined_objects_public_ip_prefixes[try(each.value.public_ip_prefix.lz_key, local.client_config.landingzone_key)][each.value.public_ip_prefix.key].id : try(each.value.public_ip_prefix_id, null)
-  zones = coalesce(
-    try(each.value.availability_zone, ""),
-    try(tostring(each.value.zones[0]), ""),
-    try(each.value.sku, "Basic") == "Basic" ? "No-Zone" : "Zone-Redundant"
-  )
-  diagnostic_profiles = try(each.value.diagnostic_profiles, {})
-  diagnostics         = local.combined_diagnostics
-  base_tags           = try(local.global_settings.inherit_tags, false) ? try(local.combined_objects_resource_groups[try(each.value.resource_group.lz_key, local.client_config.landingzone_key)][try(each.value.resource_group.key, each.value.resource_group_key)].tags, {}) : {}
+  zones                      = try(each.value.zones, [])
+  diagnostic_profiles        = try(each.value.diagnostic_profiles, {})
+  diagnostics                = local.combined_diagnostics
+  base_tags                  = try(local.global_settings.inherit_tags, false) ? try(local.combined_objects_resource_groups[try(each.value.resource_group.lz_key, local.client_config.landingzone_key)][try(each.value.resource_group.key, each.value.resource_group_key)].tags, {}) : {}
 }
 
 #
@@ -215,7 +210,6 @@ resource "azurerm_virtual_network_peering" "peering" {
   allow_forwarded_traffic      = try(each.value.allow_forwarded_traffic, false)
   allow_gateway_transit        = try(each.value.allow_gateway_transit, false)
   use_remote_gateways          = try(each.value.use_remote_gateways, false)
-
 }
 
 # Allow creating from and to in the same deployment when vnets are in different subscriptions
@@ -241,7 +235,6 @@ resource "azapi_resource" "virtualNetworkPeerings" {
       }
     }
   })
-
 }
 
 #
@@ -300,7 +293,6 @@ module "routes" {
     try(local.combined_objects_azurerm_firewalls[try(each.value.private_ip_keys.azurerm_firewall.lz_key, local.client_config.landingzone_key)][each.value.private_ip_keys.azurerm_firewall.key].ip_configuration[each.value.private_ip_keys.azurerm_firewall.interface_index].private_ip_address, null),
     try(local.combined_objects_azurerm_firewalls[try(each.value.lz_key, local.client_config.landingzone_key)][each.value.private_ip_keys.azurerm_firewall.key].ip_configuration[each.value.private_ip_keys.azurerm_firewall.interface_index].private_ip_address, null)
   ), null) : null
-
 }
 
 #

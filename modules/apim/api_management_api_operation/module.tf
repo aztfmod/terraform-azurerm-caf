@@ -58,7 +58,6 @@ resource "azurerm_api_management_api_operation" "apim" {
           #     external_value = try(example.value.external_value, null)
           #   }
           # }
-          sample    = try(representation.value.sample, null)
           schema_id = try(representation.value.schema_id, null)
           type_name = try(representation.value.type_name, null)
         }
@@ -106,7 +105,6 @@ resource "azurerm_api_management_api_operation" "apim" {
           #     external_value = try(example.value.external_value, null)
           #   }
           # }
-          sample    = try(representation.value.sample, null)
           schema_id = try(representation.value.schema_id, null)
           type_name = try(representation.value.type_name, null)
         }

@@ -48,6 +48,6 @@ output "private_fqdn" {
   value = azurerm_kubernetes_cluster.aks.private_fqdn
 }
 
-output "addon_profile" {
-  value = azurerm_kubernetes_cluster.aks.addon_profile
+output "oidc_issuer_url" {
+  value = azurerm_kubernetes_cluster.aks.oidc_issuer_url
 }

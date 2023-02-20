@@ -12,10 +12,11 @@ resource "azurecaf_name" "frontdoor" {
 # Tested with AzureRM 2.57.0
 
 resource "azurerm_frontdoor" "frontdoor" {
-  name                                         = azurecaf_name.frontdoor.result
-  resource_group_name                          = var.resource_group_name
-  enforce_backend_pools_certificate_name_check = try(var.settings.certificate_name_check, false)
-  tags                                         = local.tags
+  name                  = azurecaf_name.frontdoor.result
+  resource_group_name   = var.resource_group_name
+  tags                  = local.tags
+  load_balancer_enabled = try(var.settings.load_balancer_enabled, true)
+  friendly_name         = try(var.settings.backend_pool.name, null)
 
   dynamic "routing_rule" {
     for_each = var.settings.routing_rule
@@ -61,11 +62,6 @@ resource "azurerm_frontdoor" "frontdoor" {
     }
   }
 
-  backend_pools_send_receive_timeout_seconds = try(var.settings.backend_pools_send_receive_timeout_seconds, 60)
-  load_balancer_enabled                      = try(var.settings.load_balancer_enabled, true)
-  friendly_name                              = try(var.settings.backend_pool.name, null)
-
-
   dynamic "backend_pool_load_balancing" {
     for_each = var.settings.backend_pool_load_balancing
 
@@ -86,6 +82,15 @@ resource "azurerm_frontdoor" "frontdoor" {
       path                = try(backend_pool_health_probe.value.path, null)
       protocol            = try(backend_pool_health_probe.value.protocol, null)
       interval_in_seconds = try(backend_pool_health_probe.value.interval_in_seconds, null)
+    }
+  }
+
+  dynamic "backend_pool_settings" {
+    for_each = var.settings.backend_pool_settings.*
+
+    content {
+      backend_pools_send_receive_timeout_seconds = try(backend_pool_settings.value.backend_pools_send_receive_timeout_seconds, null)
+      enforce_backend_pools_certificate_name_check = try(backend_pool_settings.value.enforce_backend_pools_certificate_name_check, false)
     }
   }
 

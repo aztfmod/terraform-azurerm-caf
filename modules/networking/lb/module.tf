@@ -18,7 +18,7 @@ resource "azurerm_lb" "lb" {
     for_each = try(var.settings.frontend_ip_configuration, null) != null ? [var.settings.frontend_ip_configuration] : []
     content {
       name                                               = try(frontend_ip_configuration.value.name, null)
-      availability_zone                                  = try(frontend_ip_configuration.value.availability_zone, null)
+      zones                                              = try(frontend_ip_configuration.value.zones, null)
       subnet_id                                          = can(frontend_ip_configuration.value.subnet.key) ? var.remote_objects.virtual_network[try(frontend_ip_configuration.value.subnet.lz_key, var.client_config.landingzone_key)][frontend_ip_configuration.value.subnet.vnet_key].subnets[frontend_ip_configuration.value.subnet.key].id : try(frontend_ip_configuration.value.subnet.id, null)
       gateway_load_balancer_frontend_ip_configuration_id = try(frontend_ip_configuration.value.gateway_load_balancer_frontend_ip_configuration_id, null)
       private_ip_address                                 = try(frontend_ip_configuration.value.private_ip_address, null)

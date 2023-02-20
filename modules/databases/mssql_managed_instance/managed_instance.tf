@@ -8,16 +8,12 @@ resource "azurecaf_name" "mssqlmi" {
   passthrough   = var.global_settings.passthrough
 }
 
-resource "azurerm_template_deployment" "mssqlmi" {
-
+resource "azurerm_resource_group_template_deployment" "mssqlmi" {
+  deployment_mode     = "Incremental"
   name                = azurecaf_name.mssqlmi.result
   resource_group_name = var.resource_group_name
-
-  template_body = file(local.arm_filename)
-
-  parameters_body = jsonencode(local.parameters_body)
-
-  deployment_mode = "Incremental"
+  template_content    = file(local.arm_filename)
+  parameters_content  = jsonencode(local.parameters_body)
 
   timeouts {
     create = "10h"
@@ -28,7 +24,6 @@ resource "azurerm_template_deployment" "mssqlmi" {
 }
 
 resource "null_resource" "destroy_sqlmi" {
-
   triggers = {
     resource_id = local.output.id
   }
@@ -43,7 +38,6 @@ resource "null_resource" "destroy_sqlmi" {
       RESOURCE_IDS = self.triggers.resource_id
     }
   }
-
 }
 
 # Generate sql server random admin password if not provided in the attribute administrator_login_password

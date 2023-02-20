@@ -5,4 +5,5 @@ resource "azurerm_sentinel_watchlist" "watchlist" {
   default_duration           = var.default_duration
   description                = var.description
   labels                     = var.labels
+  item_search_key            = var.item_search_key
 }

@@ -43,7 +43,6 @@ resource "azurerm_mssql_database" "mssqldb" {
       retention_days             = try(var.settings.threat_detection_policy.retention_days, null)
       storage_endpoint           = try(data.azurerm_storage_account.mssqldb_tdp.0.primary_blob_endpoint, null)
       storage_account_access_key = try(data.azurerm_storage_account.mssqldb_tdp.0.primary_access_key, null)
-      use_server_default         = try(var.settings.threat_detection_policy.use_server_default, null)
     }
   }
 

@@ -59,13 +59,6 @@ resource "azurerm_vpn_gateway_connection" "vpn_gateway_connection" {
         try(var.route_tables[try(var.settings.routing.associated_route_table.lz_key, var.client_config.landingzone_key)][var.settings.routing.associated_route_table.key].id, null),
         try(var.settings.routing.associated_route_table.id, null)
       )
-
-      propagated_route_tables = [
-        for key, value in var.settings.routing.propagated_route_tables : coalesce(
-          try(var.route_tables[try(value.lz_key, var.client_config.landingzone_key)][value.key].id, null),
-          try(value.id, null)
-        )
-      ]
     }
   }
 }

@@ -9,15 +9,12 @@ resource "azurecaf_name" "settings" {
 }
 
 # create app config settings
-resource "azurerm_template_deployment" "settings" {
+resource "azurerm_resource_group_template_deployment" "settings" {
+  deployment_mode     = "Incremental"
   name                = azurecaf_name.settings.result
   resource_group_name = var.resource_group_name
-
-  template_body = file(local.arm_filename)
-
-  parameters_body = jsonencode(local.parameters_body)
-
-  deployment_mode = "Incremental"
+  template_content    = file(local.arm_filename)
+  parameters_content  = jsonencode(local.parameters_body)
 
   timeouts {
     create = "1h"

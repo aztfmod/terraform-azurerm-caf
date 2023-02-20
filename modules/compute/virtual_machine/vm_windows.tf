@@ -68,6 +68,7 @@ resource "azurerm_windows_virtual_machine" "vm" {
   tags                         = merge(local.tags, try(each.value.tags, null))
   timezone                     = try(each.value.timezone, null)
   zone                         = try(each.value.zone, null)
+  patch_assessment_mode        = try(each.value.patch_assessment_mode, null)
 
   custom_data = try(
     try(filebase64(format("%s/%s", path.cwd, each.value.custom_data)), base64encode(each.value.custom_data)),

@@ -11,7 +11,6 @@ resource "azurecaf_name" "lb" {
 }
 resource "azurerm_lb_outbound_rule" "lb" {
   name                    = azurecaf_name.lb.result
-  resource_group_name     = var.resource_group_name
   loadbalancer_id         = can(var.settings.loadbalancer.id) ? var.settings.loadbalancer.id : var.remote_objects.lb[try(var.settings.loadbalancer.lz_key, var.client_config.landingzone_key)][var.settings.loadbalancer.key].id
   backend_address_pool_id = can(var.settings.backend_address_pool.id) ? var.settings.backend_address_pool.id : var.remote_objects.lb_backend_address_pool[try(var.settings.backend_address_pool.lz_key, var.client_config.landingzone_key)][var.settings.backend_address_pool.key].id
 

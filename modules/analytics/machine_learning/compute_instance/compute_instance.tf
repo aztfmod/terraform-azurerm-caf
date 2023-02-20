@@ -12,16 +12,12 @@ resource "azurecaf_name" "ci" {
 }
 
 # create compute instance
-resource "azurerm_template_deployment" "mlci" {
-
+resource "azurerm_resource_group_template_deployment" "mlci" {
+  deployment_mode = "Incremental"
   name                = azurecaf_name.ci.result
   resource_group_name = var.resource_group_name
-
-  template_body = file(local.arm_filename)
-
-  parameters_body = jsonencode(local.parameters_body)
-
-  deployment_mode = "Incremental"
+  template_content    = file(local.arm_filename)
+  parameters_content  = jsonencode(local.parameters_body)
 
   timeouts {
     create = "10h"

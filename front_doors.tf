@@ -13,6 +13,7 @@ module "front_doors" {
   keyvault_id                   = can(each.value.keyvault_id) || can(each.value.keyvault_key) == false ? try(each.value.keyvault_id, null) : local.combined_objects_keyvaults[try(each.value.lz_key, local.client_config.landingzone_key)][each.value.keyvault_key].id
   keyvault_certificate_requests = local.combined_objects_keyvault_certificate_requests
   settings                      = each.value
+  location                      = can(local.global_settings.regions[each.value.region]) ? local.global_settings.regions[each.value.region] : local.combined_objects_resource_groups[try(each.value.resource_group.lz_key, local.client_config.landingzone_key)][try(each.value.resource_group.key, each.value.resource_group_key)].location
 }
 
 output "front_doors" {

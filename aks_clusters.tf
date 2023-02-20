@@ -14,6 +14,7 @@ module "aks_clusters" {
   diagnostics         = local.combined_diagnostics
   global_settings     = local.global_settings
   managed_identities  = local.combined_objects_managed_identities
+  keyvaults           = local.combined_objects_keyvaults
   settings            = each.value
   vnets               = local.combined_objects_networking
 
@@ -28,5 +29,4 @@ module "aks_clusters" {
   private_dns_zone_id = can(each.value.private_dns_zone.id) || can(each.value.private_dns_zone.key) == false ? try(each.value.private_dns_zone.id, null) : local.combined_objects_private_dns[try(each.value.private_dns_zone.lz_key, local.client_config.landingzone_key)][each.value.private_dns_zone.key].id
   location            = can(local.global_settings.regions[each.value.region]) ? local.global_settings.regions[each.value.region] : local.combined_objects_resource_groups[try(each.value.resource_group.lz_key, local.client_config.landingzone_key)][try(each.value.resource_group.key, each.value.resource_group_key)].location
   resource_group_name = can(each.value.resource_group.name) || can(each.value.resource_group_name) ? try(each.value.resource_group.name, each.value.resource_group_name) : local.combined_objects_resource_groups[try(each.value.resource_group.lz_key, local.client_config.landingzone_key)][try(each.value.resource_group_key, each.value.resource_group.key)].name
-
 }

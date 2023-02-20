@@ -30,7 +30,7 @@ resource "azurerm_network_security_group" "nsg_obj" {
       priority                     = value.priority
       direction                    = value.direction
       access                       = value.access
-      protocol                     = value.protocol
+      protocol                     = title(lower(value.protocol))
       source_port_range            = lookup(value, "source_port_range", "")
       source_port_ranges           = lookup(value, "source_port_ranges", [])
       destination_port_range       = lookup(value, "destination_port_range", "")

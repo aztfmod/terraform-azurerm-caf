@@ -76,6 +76,7 @@ resource "azurerm_linux_virtual_machine" "vm" {
   size                            = each.value.size
   tags                            = merge(local.tags, try(each.value.tags, null))
   zone                            = try(each.value.zone, null)
+  patch_assessment_mode           = try(each.value.patch_assessment_mode, null)
 
   custom_data = try(
     local.dynamic_custom_data[each.value.custom_data][each.value.name],

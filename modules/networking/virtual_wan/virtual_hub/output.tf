@@ -15,7 +15,7 @@ output "name" {
 
 output "firewall_id" {
   description = "Resource ID of the Azure Firewall for Virtual Hub"
-  value       = try(var.virtual_hub_config.deploy_firewall, false) ? azurerm_template_deployment.arm_template_vhub_firewall.*.outputs.resourceID : null
+  value       = try(var.virtual_hub_config.deploy_firewall, false) ? azurerm_resource_group_template_deployment.arm_template_vhub_firewall.*.id : null
 }
 
 # output virtual network gateway objects: p2s, s2s, er objects

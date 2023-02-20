@@ -25,3 +25,6 @@ variable "managed_identities" {
 variable "application_gateway" {
   default = {}
 }
+variable "keyvaults" {
+  default = {}
+}

@@ -11,7 +11,6 @@ resource "azurecaf_name" "lb" {
 }
 resource "azurerm_lb_probe" "lb" {
   name                = azurecaf_name.lb.result
-  resource_group_name = var.resource_group_name
   loadbalancer_id     = can(var.settings.loadbalancer.id) ? var.settings.loadbalancer.id : var.remote_objects.lb[try(var.settings.loadbalancer.lz_key, var.client_config.landingzone_key)][var.settings.loadbalancer.key].id
   protocol            = try(var.settings.protocol, null)
   port                = var.settings.port

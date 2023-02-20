@@ -60,7 +60,7 @@ locals {
     express_route_circuits                         = try(local.combined_objects_express_route_circuits, null)
     front_door                                     = try(local.combined_objects_front_door, null)
     front_door_waf_policies                        = try(local.combined_objects_front_door_waf_policies, null)
-    integration_service_environment                = try(local.combined_objects_integration_service_environment, null)
+    #integration_service_environment                = try(local.combined_objects_integration_service_environment, null) # (!) DEPRECATED
     keyvault_certificates                          = try(local.combined_objects_keyvault_certificates, null)
     keyvault_certificate_requests                  = try(local.combined_objects_keyvault_certificate_requests, null)
     keyvault_keys                                  = try(local.combined_objects_keyvault_keys, null)

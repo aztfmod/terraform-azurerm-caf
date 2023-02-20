@@ -60,14 +60,9 @@ variable "pip_settings" {
 }
 
 variable "zones" {
-  description = "(Optional) The availability zone to allocate the Public IP in. Possible values are Zone-Redundant, 1, 2, 3, and No-Zone. Defaults to Zone-Redundant."
-  type        = string
-  default     = "Zone-Redundant"
-
-  validation {
-    condition     = contains(["Zone-Redundant", "No-Zone", "1", "2", "3"], var.zones)
-    error_message = "Provide an allowed value as defined in https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/resources/public_ip#availability_zone."
-  }
+  description = "(Optional) Specifies a list of Availability Zones in which this Public IP Prefix should be located. Changing this forces a new Public IP Prefix to be created."
+  type        = list
+  default     = []
 }
 
 variable "diagnostics" {

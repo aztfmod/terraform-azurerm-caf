@@ -8,22 +8,17 @@ resource "azurecaf_name" "mifailover" {
   passthrough   = var.global_settings.passthrough
 }
 
-resource "azurerm_template_deployment" "mifailover" {
-
+resource "azurerm_resource_group_template_deployment" "mifailover" {
+  deployment_mode     = "Incremental"
   name                = azurecaf_name.mifailover.result
   resource_group_name = var.resource_group_name
-
-  template_body = file(local.arm_filename)
-
-  parameters_body = jsonencode(local.parameters_body)
-
-  deployment_mode = "Incremental"
+  template_content    = file(local.arm_filename)
+  parameters_content  = jsonencode(local.parameters_body)
 }
 
 resource "null_resource" "destroy_mifailover" {
-
   triggers = {
-    resource_id = lookup(azurerm_template_deployment.mifailover.outputs, "id")
+    resource_id = azurerm_resource_group_template_deployment.mifailover.id
   }
 
   provisioner "local-exec" {

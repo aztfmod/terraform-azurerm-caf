@@ -280,22 +280,20 @@ resource "azurerm_app_service" "app_service" {
   }
 }
 
-resource "azurerm_template_deployment" "site_config" {
-  depends_on = [azurerm_app_service.app_service]
-
+resource "azurerm_resource_group_template_deployment" "site_config" {
   count = lookup(var.settings, "numberOfWorkers", {}) != {} ? 1 : 0
 
+  deployment_mode     = "Incremental"
   name                = azurecaf_name.app_service.result
   resource_group_name = var.resource_group_name
+  template_content    = file(local.arm_filename)
 
-  template_body = file(local.arm_filename)
-
-  parameters = {
+  parameters_content = jsonencode({
     "numberOfWorkers" = tonumber(var.settings.numberOfWorkers)
     "name"            = azurecaf_name.app_service.result
-  }
+  })
 
-  deployment_mode = "Incremental"
+  depends_on = [azurerm_app_service.app_service]
 }
 
 resource "azurerm_app_service_custom_hostname_binding" "app_service" {

@@ -8,22 +8,17 @@ resource "azurecaf_name" "manageddb" {
   passthrough   = var.global_settings.passthrough
 }
 
-resource "azurerm_template_deployment" "manageddb" {
-
+resource "azurerm_resource_group_template_deployment" "manageddb" {
+  deployment_mode     = "Incremental"
   name                = azurecaf_name.manageddb.result
   resource_group_name = var.resource_group_name
-
-  template_body = file(local.arm_filename)
-
-  parameters_body = jsonencode(local.parameters_body)
-
-  deployment_mode = "Incremental"
+  template_content    = file(local.arm_filename)
+  parameters_content  = jsonencode(local.parameters_body)
 }
 
 resource "null_resource" "destroy_manageddb" {
-
   triggers = {
-    resource_id = lookup(azurerm_template_deployment.manageddb.outputs, "id")
+    resource_id = azurerm_resource_group_template_deployment.manageddb.id
   }
 
   provisioner "local-exec" {
@@ -36,5 +31,4 @@ resource "null_resource" "destroy_manageddb" {
       RESOURCE_IDS = self.triggers.resource_id
     }
   }
-
 }

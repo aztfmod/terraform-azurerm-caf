@@ -13,20 +13,20 @@ resource "azurecaf_name" "virtualhub_fw" {
 
 
 # As per https://docs.microsoft.com/en-us/azure/templates/microsoft.network/2019-09-01/azurefirewalls
-resource "azurerm_template_deployment" "arm_template_vhub_firewall" {
+resource "azurerm_resource_group_template_deployment" "arm_template_vhub_firewall" {
   count               = try(var.virtual_hub_config.deploy_firewall, false) ? 1 : 0
+
+  deployment_mode     = "Incremental"
   name                = azurecaf_name.virtualhub_fw.0.result
   resource_group_name = var.resource_group_name
+  template_content    = file("${path.module}/arm_template_vhub_firewall.json")
 
-  template_body = file("${path.module}/arm_template_vhub_firewall.json")
-
-  parameters = {
+  parameters_content = jsonencode({
     "vwan_id"  = azurerm_virtual_hub.vwan_hub.id,
     "name"     = var.virtual_hub_config.firewall_name,
     "location" = var.location,
     "Tier"     = "Standard",
-  }
-  deployment_mode = "Incremental"
+  })
 }
 
 
@@ -34,7 +34,7 @@ resource "null_resource" "arm_template_vhub_firewall" {
   count = try(var.virtual_hub_config.deploy_firewall, false) ? 1 : 0
 
   triggers = {
-    resource_id = azurerm_template_deployment.arm_template_vhub_firewall[0].outputs.resourceID
+    resource_id = azurerm_resource_group_template_deployment.arm_template_vhub_firewall[0].id
   }
 
   provisioner "local-exec" {
