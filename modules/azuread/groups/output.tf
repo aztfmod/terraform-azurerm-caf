@@ -4,12 +4,10 @@ output "id" {
 
 }
 
-# deprecated
-# output "name" {
-#   description = "The name of the group created."
-#   value       = azuread_group.group.name
-
-# }
+output "display_name" {
+  description = "The name of the group created."
+  value       = azuread_group.group.display_name
+}
 
 output "tenant_id" {
   description = "The tenand_id of the group created."
