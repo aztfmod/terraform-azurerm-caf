@@ -60,4 +60,11 @@ resource "azurerm_monitor_diagnostic_setting" "diagnostics" {
       }
     }
   }
+
+  lifecycle {
+    ignore_changes = [
+      # https://github.com/hashicorp/terraform-provider-azurerm/issues/20140
+      log_analytics_destination_type
+    ]
+  }
 }
