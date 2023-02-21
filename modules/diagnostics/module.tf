@@ -45,9 +45,7 @@ resource "azurerm_monitor_diagnostic_setting" "diagnostics" {
   }
 
   dynamic "metric" {
-    for_each = [
-      for v in try(var.diagnostics.diagnostics_definition[each.value.definition_key].categories.metric, []) : v if v.1
-    ]
+    for_each = try(var.diagnostics.diagnostics_definition[each.value.definition_key].categories.metric, [])
 
     content {
       category = metric.value.0
