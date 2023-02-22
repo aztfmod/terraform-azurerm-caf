@@ -69,3 +69,26 @@ variable "private_dns" {
 variable "public_network_access_enabled" {
   default = "true"
 }
+
+variable "quarantine_policy_enabled" {
+  type = bool
+  default = false
+}
+
+variable "retention_policy" {
+  default = {}
+}
+
+variable "trust_policy" {
+  default = {}
+}
+
+variable "zone_redundancy_enabled" {
+  type = bool
+  default = false
+}
+
+variable "export_policy_enabled" {
+  type = bool
+  default = true
+}
