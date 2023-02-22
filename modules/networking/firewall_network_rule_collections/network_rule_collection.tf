@@ -37,6 +37,7 @@ resource "azurerm_firewall_network_rule_collection" "rule" {
         if contains(rule.value.destination_ip_groups_keys, key)
         ]), null)
       )
+      destination_fqdns = try(rule.value.destination_fqdns, null)
       destination_ports = rule.value.destination_ports
       protocols         = rule.value.protocols
     }
