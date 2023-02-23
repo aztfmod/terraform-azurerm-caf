@@ -86,14 +86,14 @@ variable "tags" {
 }
 
 variable "zones" {
-  description = "(Optional) The availability zone to allocate the Public IP in. Possible values are 1, 2, 3. Defaults to null."
-  type        = list(any)
-  default     = null
+  description = "The availability zone to allocate the Public IP in. Possible values are 1, 2, 3. Defaults to null."
+  type        = list(string)
+  nullable    = true
 
-  # validation {
-  #   condition     = contains(["1", "2", "3"], var.zones)
-  #   error_message = "Provide an allowed value as defined in https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/resources/public_ip#availability_zone."
-  # }
+  validation {
+    condition     = setunion(["1", "2", "3"], var.zones == null ? [""] : var.zones) == toset(["1", "2", "3"])
+    error_message = "Update behavior to mandate specifying the zones in order to avoid accidental resources destructions. https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/resources/public_ip#zone."
+  }
 }
 
 variable "diagnostics" {
