@@ -30,11 +30,13 @@ application_gateway_applications = {
     request_routing_rules = {
       default = {
         rule_type = "Basic"
+        priority  = 10
         #rewrite_rule_set_key = "rule_set_1"
       }
       path_based = {
         rule_type        = "PathBasedRouting"
         url_path_map_key = "path_map_1"
+        priority         = 11
       }
     }
 
