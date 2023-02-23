@@ -14,8 +14,8 @@ resource "azurerm_batch_account" "account" {
   location                            = var.location
   pool_allocation_mode                = try(var.settings.pool_allocation_mode, null)
   public_network_access_enabled       = try(var.settings.public_network_access_enabled, null)
-  storage_account_id                  = var.storage_account_id
-  storage_account_authentication_mode = var.storage_account_authentication_mode
+  storage_account_id                  = try(var.storage_account_id, null)
+  storage_account_authentication_mode = can(var.storage_account_id) ? var.storage_account_authentication_mode : null
   tags                                = local.tags
 
   dynamic "identity" {
