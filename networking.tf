@@ -141,8 +141,8 @@ module "public_ip_addresses" {
   sku                        = try(each.value.sku, "Basic")
   sku_tier                   = try(each.value.sku_tier, null)
   tags                       = try(each.value.tags, null)
-  # TODO - kept availability_zone to support smooth migration to azurerm 3.0
-  zones = can(each.value.zones) ? each.value.zones : try(tolist(each.value.availability_zone), null)
+  # Zone behavior kept to support smooth migration to azurerm 3.x
+  zones = try(each.value.sku, "Basic") == "Basic" ? [] : try(each.value.zones, null) == null ? ["1", "2", "3"] : each.value.zones
 }
 
 #
@@ -174,7 +174,7 @@ module "public_ip_prefixes" {
   sku                 = try(each.value.sku, "Standard")
   ip_version          = try(each.value.ip_version, "IPv4")
   tags                = try(each.value.tags, null)
-  zones               = try(each.value.zones, null)
+  zones               = try(each.value.zones, [])
   prefix_length       = try(each.value.prefix_length, 28)
   create_pips         = try(each.value.create_pips, false)
   diagnostic_profiles = try(each.value.diagnostic_profiles, {})
