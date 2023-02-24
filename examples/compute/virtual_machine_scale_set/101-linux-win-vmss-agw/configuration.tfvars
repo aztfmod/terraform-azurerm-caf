@@ -102,8 +102,8 @@ application_gateways = {
     name               = "app_gateway_example"
     vnet_key           = "vnet1"
     subnet_key         = "subnet2"
-    sku_name           = "WAF_v2"
-    sku_tier           = "WAF_v2"
+    sku_name           = "Standard_v2"
+    sku_tier           = "Standard_v2"
     capacity = {
       autoscale = {
         minimum_scale_unit = 0
@@ -162,6 +162,7 @@ application_gateway_applications = {
     request_routing_rules = {
       default = {
         rule_type = "Basic"
+        priority  = 100
       }
     }
 
@@ -194,6 +195,7 @@ application_gateway_applications = {
     request_routing_rules = {
       default = {
         rule_type = "Basic"
+        priority  = 101
       }
     }
 
