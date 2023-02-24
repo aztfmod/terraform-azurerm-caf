@@ -1,4 +1,4 @@
-resource "azurecaf_name" "disk" {
+data "azurecaf_name" "disk" {
   for_each = lookup(var.settings, "data_disks", {})
 
   name          = each.value.name
@@ -8,19 +8,12 @@ resource "azurecaf_name" "disk" {
   clean_input   = true
   passthrough   = var.global_settings.passthrough
   use_slug      = var.global_settings.use_slug
-
-  lifecycle {
-    ignore_changes = [
-      name #for ASR disk restores
-    ]
-  }
-
 }
 
 resource "azurerm_managed_disk" "disk" {
   for_each = lookup(var.settings, "data_disks", {})
 
-  name                   = azurecaf_name.disk[each.key].result
+  name                   = data.azurecaf_name.disk[each.key].result
   location               = var.location
   resource_group_name    = var.resource_group_name
   storage_account_type   = each.value.storage_account_type
