@@ -12,7 +12,7 @@ resource "azurerm_api_management_api_operation" "apim" {
     content {
       description = try(request.value.description, null)
       dynamic "header" {
-        for_each = try(var.settings.header, null) != null ? [var.settings.header] : []
+        for_each = try(request.value.headers, null) != null ? request.value.headers : {}
         content {
           name          = try(header.value.name, null)
           required      = try(header.value.required, null)
@@ -23,7 +23,7 @@ resource "azurerm_api_management_api_operation" "apim" {
         }
       }
       dynamic "query_parameter" {
-        for_each = try(var.settings.query_parameter, null) != null ? [var.settings.query_parameter] : []
+        for_each = try(request.value.query_parameters, null) != null ? request.value.query_parameters : {}
         content {
           name          = try(query_parameter.value.name, null)
           required      = try(query_parameter.value.required, null)
@@ -38,7 +38,7 @@ resource "azurerm_api_management_api_operation" "apim" {
         content {
           content_type = try(representation.value.content_type, null)
           dynamic "form_parameter" {
-            for_each = try(var.settings.form_parameter, null) != null ? [var.settings.form_parameter] : []
+            for_each = try(var.settings.form_parameters, null) != null ? var.settings.form_parameters : {}
             content {
               name          = try(form_parameter.value.name, null)
               required      = try(form_parameter.value.required, null)
@@ -71,7 +71,7 @@ resource "azurerm_api_management_api_operation" "apim" {
       status_code = try(response.value.status_code, null)
       description = try(response.value.description, null)
       dynamic "header" {
-        for_each = try(var.settings.header, null) != null ? [var.settings.header] : []
+        for_each = try(var.settings.headers, null) != null ? var.settings.headers : {}
         content {
           name          = try(header.value.name, null)
           required      = try(header.value.required, null)
@@ -86,7 +86,7 @@ resource "azurerm_api_management_api_operation" "apim" {
         content {
           content_type = try(representation.value.content_type, null)
           dynamic "form_parameter" {
-            for_each = try(var.settings.form_parameter, null) != null ? [var.settings.form_parameter] : []
+            for_each = try(var.settings.form_parameters, null) != null ? var.settings.form_parameters : {}
             content {
               name          = try(form_parameter.value.name, null)
               required      = try(form_parameter.value.required, null)
@@ -114,7 +114,7 @@ resource "azurerm_api_management_api_operation" "apim" {
     }
   }
   dynamic "template_parameter" {
-    for_each = try(var.settings.template_parameter, null) != null ? [var.settings.template_parameter] : []
+    for_each = try(var.settings.template_parameters, null) != null ? var.settings.template_parameters : {}
     content {
       name          = try(template_parameter.value.name, null)
       required      = try(template_parameter.value.required, null)
