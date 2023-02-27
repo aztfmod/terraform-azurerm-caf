@@ -2,7 +2,7 @@
 
 When upgrading to a newer version of the CAF module, some configuration structures must be updated before applying the modifications.
 
-## vnext
+## 5.7.0
 
 If you are running then module inside rover, the minimum version is 1.1.x. Lower versions not supported anymore.
 
@@ -33,9 +33,12 @@ Plan: 0 to add, 2 to change, 3 to destroy.
 ```
 
 Other resources updates needed:
+- application gateway
+```priority``` field now mandatory if you are using ```*v2``` SKU as per [3.44.1](https://registry.terraform.io/providers/hashicorp/azurerm/3.44.1/docs/resources/application_gateway)
+
 - public ip
-Change in the provider from [2.99](https://registry.terraform.io/providers/hashicorp/azurerm/2.99.0/docs/resources/public_ip) to [3.44.1](https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/resources/public_ip):
-- ```availability_zone``` becomes ```zones```: and nolonger supports the arguments ```No-Zone```, ```Zone-Redundant```. If you have configuration files using the availability_zone argument, you will need to adjust it using the zones argument with the right value.
+Change in the provider from [2.99](https://registry.terraform.io/providers/hashicorp/azurerm/2.99.0/docs/resources/public_ip) to [3.44.1](https://registry.terraform.io/providers/hashicorp/azurerm/3.44.1/docs/resources/public_ip):
+- ```availability_zone``` becomes ```zones``` and nolonger supports the arguments ```No-Zone```, ```Zone-Redundant```. If you have configuration files using the availability_zone argument, you will need to adjust it using the zones argument with the right value.
 
 - vpn_gateway_connections:
   - The deprecated field ```propagated_route_tables``` will be removed in favour of the ```propagated_route_table``` property. If you've been using ```propagated_route_tables```, rename with the new name ```propagated_route_table```.
