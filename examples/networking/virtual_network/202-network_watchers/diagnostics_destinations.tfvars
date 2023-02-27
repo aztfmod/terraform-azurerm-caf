@@ -41,10 +41,10 @@ diagnostics_destinations = {
 
   storage = {
     all_regions = {
-      australiaeast = {
+      eastus = {
         storage_account_key = "diaglogs_region1"
       }
-      australiacentral = {
+      westus = {
         storage_account_key = "diaglogs_region2"
       }
     }
