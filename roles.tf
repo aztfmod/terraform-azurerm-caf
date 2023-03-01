@@ -223,7 +223,7 @@ locals {
       ]
     ]) : format("%s_%s_%s_%s", mapping.object_id_resource_type, mapping.scope_key_resource, replace(mapping.role_definition_name, " ", "_"), mapping.object_id_key_resource) => mapping
   }
-
+}
 # The code transform this input format to
 #   custom_role_mapping = {
 #     subscription_keys = {
