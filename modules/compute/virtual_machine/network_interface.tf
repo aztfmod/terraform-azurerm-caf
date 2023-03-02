@@ -44,8 +44,8 @@ resource "azurerm_network_interface" "nic" {
   #   ignore_changes = [resource_group_name, location]
   # }
   name                = azurecaf_name.nic[each.key].result
-  location            = var.location
-  resource_group_name = var.resource_group_name
+  location            = local.location
+  resource_group_name = local.resource_group_name
 
   dns_servers                   = lookup(each.value, "dns_servers", null)
   enable_ip_forwarding          = lookup(each.value, "enable_ip_forwarding", false)

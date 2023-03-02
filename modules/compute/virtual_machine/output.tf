@@ -72,7 +72,7 @@ output "data_disks" {
 # azurerm_linux_virtual_machine and azurerm_windows_virtual_machine do not expose the os_disk id by itself
 data "azurerm_managed_disk" "os_disk" {
   name                = local.os_type == "linux" ? try(azurerm_linux_virtual_machine.vm["linux"].os_disk[0].name, null) : try(azurerm_windows_virtual_machine.vm["windows"].os_disk[0].name, null)
-  resource_group_name = var.resource_group_name
+  resource_group_name = local.resource_group_name
 }
 
 output "os_disk_id" {

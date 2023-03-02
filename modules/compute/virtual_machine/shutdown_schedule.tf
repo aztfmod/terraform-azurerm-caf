@@ -2,7 +2,7 @@ resource "azurerm_dev_test_global_vm_shutdown_schedule" "enabled" {
   count = can(var.settings.shutdown_schedule) ? 1 : 0
 
   virtual_machine_id = azurerm_linux_virtual_machine.vm[local.os_type].id
-  location           = var.location
+  location           = local.location
   enabled            = try(var.settings.shutdown_schedule.enabled, null)
 
   daily_recurrence_time = var.settings.shutdown_schedule.daily_recurrence_time
