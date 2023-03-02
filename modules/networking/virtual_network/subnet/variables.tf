@@ -12,14 +12,23 @@ variable "address_prefixes" {
   description = "(Optional) The address prefixes to use for the subnet."
   default     = []
 }
-variable "enforce_private_link_endpoint_network_policies" {
-  description = "(Optional) Enable or Disable network policies for the private link endpoint on the subnet. Default value is false. Conflicts with enforce_private_link_service_network_policies."
-  default     = null
+variable "private_endpoint_network_policies_enabled" {
+  description = "(Optional) Enable or Disable network policies for the private endpoint on the subnet. Setting this to true will Enable the policy and setting this to false will Disable the policy. Defaults to true."
+  nullable    = true
 }
-variable "enforce_private_link_service_network_policies" {
-  description = "(Optional) Enable or Disable network policies for the private link service on the subnet. Default valule is false. Conflicts with enforce_private_link_endpoint_network_policies."
-  default     = null
+variable "private_link_service_network_policies_enabled" {
+  description = "(Optional) Enable or Disable network policies for the private link service on the subnet. Setting this to true will Enable the policy and setting this to false will Disable the policy. Defaults to true."
+  nullable    = true
 }
+# Retired
+# variable "enforce_private_link_endpoint_network_policies" {
+#   description = "(Optional) Enable or Disable network policies for the private link endpoint on the subnet. Default value is false. Conflicts with enforce_private_link_service_network_policies."
+#   default     = null
+# }
+# variable "enforce_private_link_service_network_policies" {
+#   description = "(Optional) Enable or Disable network policies for the private link service on the subnet. Default valule is false. Conflicts with enforce_private_link_endpoint_network_policies."
+#   default     = null
+# }
 variable "service_endpoints" {
   description = "(Optional) The list of Service endpoints to associate with the subnet. Possible values include: Microsoft.AzureActiveDirectory, Microsoft.AzureCosmosDB, Microsoft.ContainerRegistry, Microsoft.EventHub, Microsoft.KeyVault, Microsoft.ServiceBus, Microsoft.Sql, Microsoft.Storage and Microsoft.Web."
   default     = []
