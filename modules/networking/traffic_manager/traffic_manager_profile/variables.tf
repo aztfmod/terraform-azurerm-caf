@@ -1,12 +1,10 @@
 variable "settings" {
   default = {}
 }
-variable "resource_group_name" {
-  default = {}
-}
-variable "location" {
-  default = {}
+variable "resource_group" {
+  description = "Resource group object"
 }
 variable "base_tags" {
-  default = {}
+  description = "Base tags for the resource to be inherited from the resource group."
+  type        = bool
 }
