@@ -21,7 +21,7 @@ resource "azurecaf_name" "aadds" {
 resource "azurerm_active_directory_domain_service" "aadds" {
   name                  = azurecaf_name.aadds.result
   resource_group_name   = local.resource_group_name
-  location              = try(local.location, var.location, var.settings.location)
+  location              = local.location
   domain_name           = var.settings.domain_name
   filtered_sync_enabled = try(var.settings.filtered_sync_enabled, null)
   sku                   = var.settings.sku

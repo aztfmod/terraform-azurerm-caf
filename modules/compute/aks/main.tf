@@ -14,8 +14,8 @@ locals {
     null)
   )
 
-  location            = var.resource_group.location
-  resource_group_name = try(var.resource_group.name, var.resource_group_name)
+  location            = coalesce(var.location, var.resource_group.location)
+  resource_group_name = coalesce(var.resource_group_name, var.resource_group.name)
 }
 
 terraform {
