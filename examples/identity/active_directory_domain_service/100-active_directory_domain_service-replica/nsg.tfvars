@@ -4,6 +4,9 @@ network_security_group_definition = {
     resource_group_key = "rg"
     region             = "region1"
     name               = "nsg-aadds-re1"
+    tags = {
+      application_category = "domain controllers"
+    }
     nsg = [
       {
         name                       = "Debugging for support."
