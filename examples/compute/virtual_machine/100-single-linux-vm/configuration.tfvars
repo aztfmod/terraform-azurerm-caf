@@ -4,11 +4,11 @@ global_settings = {
   regions = {
     region1 = "australiaeast"
   }
-  
-  # inherit_tags = false
-   tags = {
-      base = "seeeetandalone2"
-    }
+
+  inherit_tags = true
+  tags = {
+    base = "seeeetandalone2"
+  }
   resource_defaults = {
     virtual_machines = {
       # set the below to enable az managed boot diagostics for vms
@@ -36,7 +36,7 @@ resource_groups = {
     tags = {
       env = "standalone3"
     }
-}
+  }
 }
 
 # Virtual machines
@@ -145,8 +145,8 @@ CUSTOM_DATA
         lun                     = 1
         zones                   = ["1"]
         disk_encryption_set_key = "set1"
-         tags = {
-          env2 = "standalone2"
+        tags = {
+          # env2 = "standalone2"
           base = "seeeetandalone3333333"
         }
       }

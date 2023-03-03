@@ -3,8 +3,8 @@
 
 resource "azurerm_public_ip" "pip" {
   name                    = var.name
-  resource_group_name     = var.resource_group_name
-  location                = var.location
+  resource_group_name     = local.resource_group_name
+  location                = local.location
   allocation_method       = var.allocation_method
   sku                     = var.sku
   ip_version              = var.ip_version
@@ -12,7 +12,7 @@ resource "azurerm_public_ip" "pip" {
   domain_name_label       = var.generate_domain_name_label ? var.name : var.domain_name_label
   reverse_fqdn            = var.reverse_fqdn
   availability_zone       = var.zones
-  tags                    = local.tags
+  tags                    = merge(local.tags, try(var.tags, {}))
   public_ip_prefix_id     = var.public_ip_prefix_id
   ip_tags                 = var.ip_tags
 }
