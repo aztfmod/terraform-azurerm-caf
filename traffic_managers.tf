@@ -2,9 +2,10 @@ module "traffic_manager_profile" {
   source   = "./modules/networking/traffic_manager/traffic_manager_profile"
   for_each = local.networking.traffic_manager_profile
 
-  settings       = each.value
-  resource_group = local.combined_objects_resource_groups[try(each.value.resource_group.lz_key, local.client_config.landingzone_key)][try(each.value.resource_group.key, each.value.resource_group_key)]
-  base_tags      = local.global_settings.inherit_tags
+  global_settings = local.global_settings
+  settings        = each.value
+  resource_group  = local.combined_objects_resource_groups[try(each.value.resource_group.lz_key, local.client_config.landingzone_key)][try(each.value.resource_group.key, each.value.resource_group_key)]
+  base_tags       = local.global_settings.inherit_tags
 }
 
 output "traffic_manager_profile" {

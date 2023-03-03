@@ -49,8 +49,8 @@ resource "azurerm_kubernetes_cluster" "aks" {
     null_resource.aks_registration_preview
   ]
   name                              = azurecaf_name.aks.result
-  location                          = var.location
-  resource_group_name               = var.resource_group_name
+  location                          = local.location
+  resource_group_name               = local.resource_group_name
   role_based_access_control_enabled = try(var.settings.role_based_access_control_enabled, null)
 
   default_node_pool {
@@ -72,7 +72,7 @@ resource "azurerm_kubernetes_cluster" "aks" {
     os_disk_size_gb              = try(var.settings.default_node_pool.os_disk_size_gb, null)
     os_disk_type                 = try(var.settings.default_node_pool.os_disk_type, null)
     os_sku                       = try(var.settings.default_node_pool.os_sku, null)
-    tags                         = merge(try(var.settings.default_node_pool.tags, {}), local.tags)
+    tags                         = merge(local.tags, try(var.settings.default_node_pool.tags, {}))
     type                         = try(var.settings.default_node_pool.type, "VirtualMachineScaleSets")
     ultra_ssd_enabled            = try(var.settings.default_node_pool.ultra_ssd_enabled, false)
     vm_size                      = var.settings.default_node_pool.vm_size
@@ -458,7 +458,7 @@ resource "azurerm_kubernetes_cluster_node_pool" "nodepools" {
   priority                     = try(each.value.priority, null)
   proximity_placement_group_id = try(each.value.proximity_placement_group_id, null)
   spot_max_price               = try(each.value.spot_max_price, null)
-  tags                         = merge(try(var.settings.default_node_pool.tags, {}), try(each.value.tags, {}))
+  tags                         = merge(local.tags, try(var.settings.default_node_pool.tags, {}), try(each.value.tags, {}))
   ultra_ssd_enabled            = try(each.value.ultra_ssd_enabled, false)
   dynamic "upgrade_settings" {
     for_each = try(each.value.upgrade_settings, null) == null ? [] : [1]
