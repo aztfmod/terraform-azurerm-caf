@@ -11,8 +11,8 @@ resource "azurecaf_name" "apim" {
 resource "azurerm_api_management" "apim" {
   name = azurecaf_name.apim.result
 
-  location            = var.location
-  resource_group_name = var.resource_group_name
+  location            = local.location
+  resource_group_name = local.resource_group_name
   publisher_name      = var.settings.publisher_name
   publisher_email     = var.settings.publisher_email
   sku_name            = var.settings.sku_name
@@ -213,6 +213,6 @@ resource "azurerm_api_management" "apim" {
 
     }
   }
-  tags = local.tags
+  tags = merge(local.tags, var.settings.tags, {})
 
 }
