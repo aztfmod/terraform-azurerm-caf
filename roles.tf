@@ -213,7 +213,7 @@ locals {
             for scope_key_resource, role_mapping in role_mappings : [                                                                    #     "kv_sql_prod" = {
               for role_definition_name, resources in role_mapping : [                                                                    #       "Key Vault Secrets Officer" = {
                 for object_id_key, object_resources in resources : [                                                                     #          azuread_groups = {
-                  for object_id_lz_key, object_resource in object_resources : [                                                          #             "identity_level2" = {
+                  for object_id_lz_keys, object_resource in object_resources : [                                                          #             "identity_level2" = {
                     for object_id_key_resource in(can(object_resources.keys)) ? object_resources.keys : object_resource.keys : [         #                keys = ["admin_sql"]                  # Support for legacy variable format
                       {                                                                                                                  # "keyvaults_Key_Vault_Secrets_Officer_admin_sql" = {
                         mode                    = key_mode                                                                               #   "mode" = "built_in_role_mapping"
@@ -223,13 +223,13 @@ locals {
                         role_definition_name    = role_definition_name
                         object_id_resource_type = object_id_key
                         object_id_key_resource  = object_id_key_resource                                                                 #   "object_id_key_resource" = "admin_sql"
-                        object_id_lz_key        = can(object_resources.keys) ? try(object_resources.lz_key, null) : object_id_lz_key     # Support for previous variable format without lz_key level before object_id_key_resource
+                        object_id_lz_key        = can(object_resources.keys) ? try(object_resources.lz_key, null) : object_id_lz_keys     # Support for previous variable format without lz_key level before object_id_key_resource
                       }
                     ]
-                  ] 
-                ]
+                  ] if object_id_lz_keys != "lz_key"                                                                                     # Support for legacy variable format
+                ] if object_id_key != "lz_key"
               ] if role_definition_name != "lz_key"
-            ]
+            ] 
           ]
         ]
       ]
