@@ -215,10 +215,10 @@ locals {
                       object_id_lz_key        = can(object_resources.keys) ? try(object_resources.lz_key, null) : object_id_lz_key     # Support for legacy variable format
                     }
                   ]
-                ] 
-              ]
+                ] if object_id_key != "lz_key"                                                                                      # Support for legacy variable format
+              ] if object_id_lz_key != "lz_key" 
             ] if role_definition_name != "lz_key"
-          ]
+          ] 
         ]
       ]
     ]) : format("%s_%s_%s_%s", mapping.object_id_resource_type, mapping.scope_key_resource, replace(mapping.role_definition_name, " ", "_"), mapping.object_id_key_resource) => mapping
