@@ -2,8 +2,9 @@
 # Ref : https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/resources/
 
 module "static_sites" {
-  source   = "./modules/webapps/static_site"
-  for_each = local.webapp.static_sites
+  source     = "./modules/webapps/static_site"
+  for_each   = local.webapp.static_sites
+  depends_on = [module.networking]
 
   name                = each.value.name
   client_config       = local.client_config
@@ -17,6 +18,9 @@ module "static_sites" {
   diagnostic_profiles = try(each.value.diagnostic_profiles, null)
   diagnostics         = local.combined_diagnostics
   tags                = try(each.value.tags, null)
+  private_endpoints   = try(each.value.private_endpoints, {})
+  vnets               = local.combined_objects_networking
+  private_dns         = local.combined_objects_private_dns
 }
 
 output "static_sites" {
