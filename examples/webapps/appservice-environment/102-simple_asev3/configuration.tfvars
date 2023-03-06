@@ -3,6 +3,10 @@ global_settings = {
   regions = {
     region1 = "australiaeast"
   }
+  inherit_tags = true
+  tags = {
+    env = "to_be_set"
+  }
 }
 
 resource_groups = {
@@ -31,6 +35,9 @@ app_service_environments_v3 = {
     vnet_key                  = "ase_region1"
     subnet_key                = "ase1"
     internalLoadBalancingMode = "Web, Publishing"
+    tags = {
+      env = "uat"
+    }
   }
 }
 
@@ -64,6 +71,9 @@ app_service_plans = {
       size             = "I1v2"
       capacity         = "1"
       per_site_scaling = true
+    }
+    tags = {
+      project = "mobile app"
     }
   }
 }
