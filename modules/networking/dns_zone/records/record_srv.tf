@@ -8,7 +8,7 @@ resource "azurerm_dns_srv_record" "srv" {
   tags                = merge(var.base_tags, try(each.value.tags, {}))
 
   dynamic "record" {
-    for_each = each.value.records
+    for_each = try(each.value.records, each.value.record)  # In this context, record make more sense than records.
 
     content {
       priority = record.value.priority
