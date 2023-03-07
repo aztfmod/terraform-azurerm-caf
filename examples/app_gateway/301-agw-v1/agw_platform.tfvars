@@ -62,5 +62,10 @@ application_gateway_platforms = {
       rule_type                     = "Basic"
     }
 
+    tags = {
+      env     = "uat"
+      project = "public mobile app"
+    }
+
   }
 }

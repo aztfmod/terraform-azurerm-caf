@@ -109,5 +109,6 @@ application_gateway_applications_v1 = {
         match_status_codes = "200-499"
       }
     }
+
   }
 }
