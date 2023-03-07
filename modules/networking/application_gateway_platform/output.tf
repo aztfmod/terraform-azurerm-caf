@@ -19,5 +19,5 @@ output "private_ip_address" {
 }
 
 output "resource_group_name" {
-  value = var.resource_group_name
+  value = local.resource_group_name
 }
