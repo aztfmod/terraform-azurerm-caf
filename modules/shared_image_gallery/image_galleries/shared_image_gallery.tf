@@ -13,8 +13,8 @@ resource "azurecaf_name" "sig_name" {
 # creates Shared Image Gallery
 resource "azurerm_shared_image_gallery" "gallery" {
   name                = azurecaf_name.sig_name.result
-  resource_group_name = var.resource_group_name
-  location            = var.location
+  resource_group_name = local.resource_group_name
+  location            = local.location
   description         = var.settings.description
 }
 
