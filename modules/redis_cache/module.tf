@@ -13,12 +13,12 @@ resource "azurecaf_name" "redis" {
 # NOTE: the Name used for Redis needs to be globally unique
 resource "azurerm_redis_cache" "redis" {
   name                = azurecaf_name.redis.result
-  location            = var.location
-  resource_group_name = var.resource_group_name
+  location            = local.location
+  resource_group_name = local.resource_group_name
   capacity            = var.redis.capacity
   family              = var.redis.family
   sku_name            = var.redis.sku_name
-  tags                = local.tags
+  tags                = merge(local.tags, try(var.tags, null))
 
   enable_non_ssl_port           = lookup(var.redis, "enable_non_ssl_port", null)
   minimum_tls_version           = lookup(var.redis, "minimum_tls_version", "1.2")
