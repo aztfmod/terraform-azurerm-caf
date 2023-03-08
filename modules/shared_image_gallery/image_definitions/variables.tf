@@ -7,4 +7,3 @@ variable "global_settings" {}
 variable "settings" {}
 variable "base_tags" {}
 variable "gallery_name" {}
-variable "hyper_v_generation" {}
