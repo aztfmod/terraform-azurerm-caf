@@ -3,6 +3,10 @@ global_settings = {
   regions = {
     region1 = "australiaeast"
   }
+  inherit_tags = true
+  tags = {
+    example = "/examples/app_gateway/102-waf-policy"
+  }
 }
 
 resource_groups = {
