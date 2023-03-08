@@ -32,3 +32,13 @@ variable "resource_group_name" {
   type        = string
   description = " The name of the Resource Group in which the API Management Service should be exist. Changing this forces a new resource to be created."
 }
+variable "diagnostic_profiles" {
+  type        = any
+  description = "Diagnostic logging profiles to apply"
+  default     = {}
+}
+variable "diagnostics" {
+  type        = any
+  description = "Details about the diagnostics"
+  default     = {}
+}
