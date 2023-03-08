@@ -26,6 +26,7 @@ resource "azurerm_redis_cache" "redis" {
   public_network_access_enabled = lookup(var.redis, "public_network_access_enabled", null)
   shard_count                   = lookup(var.redis, "shard_count", null)
   zones                         = lookup(var.redis, "zones", null)
+  redis_version                 = lookup(var.redis, "redis_version", null)
   subnet_id                     = try(var.subnet_id, null)
 
   dynamic "redis_configuration" {
