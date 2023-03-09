@@ -77,6 +77,7 @@ locals {
     batch_certificates                  = try(var.compute.batch_certificates, {})
     batch_jobs                          = try(var.compute.batch_jobs, {})
     batch_pools                         = try(var.compute.batch_pools, {})
+    container_app_environment           = try(var.compute.container_app_environment, {})
     container_groups                    = try(var.compute.container_groups, {})
     dedicated_hosts                     = try(var.compute.dedicated_hosts, {})
     dedicated_host_groups               = try(var.compute.dedicated_host_groups, {})
