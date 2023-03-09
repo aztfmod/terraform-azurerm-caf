@@ -65,7 +65,7 @@ resource "azapi_resource" "container_app_env" {
       #     workloadProfileType = "string"
       #   }
       # ]
-      # zoneRedundant = bool
+      zoneRedundant = var.settings.zone_redundant
     }
     sku = {
       name = var.settings.sku
