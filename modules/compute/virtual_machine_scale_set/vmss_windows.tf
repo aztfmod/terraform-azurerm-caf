@@ -72,12 +72,14 @@ resource "azurerm_windows_virtual_machine_scale_set" "vmss" {
   custom_data                  = try(each.value.custom_data, null) == null ? null : filebase64(format("%s/%s", path.cwd, each.value.custom_data))
   eviction_policy              = try(each.value.eviction_policy, null)
   max_bid_price                = try(each.value.max_bid_price, null)
+  overprovision                = try(each.value.overprovision, null)
   priority                     = try(each.value.priority, null)
   provision_vm_agent           = try(each.value.provision_vm_agent, true)
   proximity_placement_group_id = can(each.value.proximity_placement_group_key) || can(each.value.proximity_placement_group.key) ? var.proximity_placement_groups[try(var.client_config.landingzone_key, var.client_config.landingzone_key)][try(each.value.proximity_placement_group_key, each.value.proximity_placement_group.key)].id : try(each.value.proximity_placement_group_id, each.value.proximity_placement_group.id, null)
   scale_in_policy              = try(each.value.scale_in_policy, null)
   zone_balance                 = try(each.value.zone_balance, null)
   zones                        = try(each.value.zones, null)
+  single_placement_group       = try(each.value.single_placement_group, null)
   upgrade_mode                 = try(each.value.upgrade_mode, null)
   # for future releases
   # enable_automatic_updates     = each.value.automatic_os_upgrade_policy.enable_automatic_os_upgrade == true ? false : true
@@ -115,6 +117,13 @@ resource "azurerm_windows_virtual_machine_scale_set" "vmss" {
     disk_size_gb              = try(each.value.os_disk.disk_size_gb, null)
     storage_account_type      = try(each.value.os_disk.storage_account_type, null)
     write_accelerator_enabled = try(each.value.os_disk.write_accelerator_enabled, false)
+
+    dynamic "diff_disk_settings" {
+      for_each = try(each.value.os_disk.diff_disk_settings, {}) == {} ? [] : [1]
+      content {
+        option = try(each.value.os_disk.diff_disk_settings.option, "Local")
+      }
+    }
   }
 
   dynamic "data_disk" {
@@ -168,10 +177,10 @@ resource "azurerm_windows_virtual_machine_scale_set" "vmss" {
   }
 
   dynamic "boot_diagnostics" {
-    for_each = var.boot_diagnostics_storage_account == {} ? [] : [1]
+    for_each = try(var.boot_diagnostics_storage_account != null ? [1] : var.global_settings.resource_defaults.virtual_machine_scale_sets.use_azmanaged_storage_for_boot_diagnostics == true ? [1] : [], [])
 
     content {
-      storage_account_uri = var.boot_diagnostics_storage_account
+      storage_account_uri = var.boot_diagnostics_storage_account == "" ? null : var.boot_diagnostics_storage_account
     }
   }
 

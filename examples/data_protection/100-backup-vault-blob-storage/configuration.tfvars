@@ -23,7 +23,7 @@ backup_vaults = {
   bv0 = {
     backup_vault_name  = "bckp-level0"
     resource_group_key = "bv"
-    datastore_type     = "SnapshotStore" #Proper type of vault for storage blob backup
+    datastore_type     = "VaultStore" #Proper type of vault for storage blob backup
     redundancy         = "LocallyRedundant"
     region             = "region1"
     #Next block enables System Assigned managed identity

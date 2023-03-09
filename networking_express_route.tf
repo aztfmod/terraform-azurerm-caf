@@ -43,8 +43,8 @@ module "express_route_circuit_peerings" {
 
   settings = each.value
 
-  resource_group_name        = can(each.value.resource_group_name) ? each.value.resource_group_name : local.combined_objects_express_route_circuits[try(each.value.express_route.lz_key, local.client_config.landingzone_key)][each.value.express_route.key].resource_group_name
-  express_route_circuit_name = can(each.value.express_route_circuit_name) ? each.value.express_route_circuit_name : local.combined_objects_express_route_circuits[try(each.value.express_route.lz_key, local.client_config.landingzone_key)][each.value.express_route.key].name
+  resource_group_name        = can(each.value.resource_group_name) ? each.value.resource_group_name : local.combined_objects_express_route_circuits[try(each.value.express_route.lz_key, local.client_config.landingzone_key)][try(each.value.express_route.key, each.value.express_route_key)].resource_group_name
+  express_route_circuit_name = can(each.value.express_route_circuit_name) ? each.value.express_route_circuit_name : local.combined_objects_express_route_circuits[try(each.value.express_route.lz_key, local.client_config.landingzone_key)][try(each.value.express_route.key, each.value.express_route_key)].name
 }
 
 # Outputs

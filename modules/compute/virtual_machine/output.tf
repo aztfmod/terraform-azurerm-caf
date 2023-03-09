@@ -78,3 +78,8 @@ data "azurerm_managed_disk" "os_disk" {
 output "os_disk_id" {
   value = data.azurerm_managed_disk.os_disk.id
 }
+
+output "identity" {
+  value       = local.os_type == "linux" ? try(azurerm_linux_virtual_machine.vm["linux"].identity, null) : try(azurerm_windows_virtual_machine.vm["windows"].identity, null)
+  description = "The identity block of the virtual machine"
+}
