@@ -15,8 +15,8 @@ variable "settings" {
     }), null)
     vnet = optional(object({
       lz_key                   = optional(string)
-      vnet_key                 = string
-      subnet_key               = string
+      vnet_key                 = optional(string)
+      subnet_key               = optional(string)
       subnet_id                = optional(string)
       docker_bridge_cidr       = optional(string, "10.1.0.1/16")
       internal                 = optional(bool, true)
