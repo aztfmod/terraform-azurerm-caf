@@ -20,7 +20,7 @@ mysql_flexible_server = {
     name     = "vks-flexible-testservers"
     version  = "8.0.21" #Possible values are 5.7, and 8.0.21
     sku_name = "GP_Standard_D2ds_v4"
-
+    zone     = 1
     resource_group = {
       key = "mysql_region1"
       # lz_key = ""                           # Set the lz_key if the resource group is remote.

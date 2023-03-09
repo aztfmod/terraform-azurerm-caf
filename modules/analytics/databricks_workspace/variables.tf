@@ -53,3 +53,15 @@ variable "base_tags" {
 variable "diagnostics" {
   description = "(Required) Diagnostics object with the definitions and destination services"
 }
+
+variable "private_endpoints" {
+  default = {}
+}
+
+variable "resource_groups" {
+  default = {}
+}
+
+variable "private_dns" {
+  default = {}
+}

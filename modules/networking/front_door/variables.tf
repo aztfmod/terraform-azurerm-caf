@@ -18,6 +18,9 @@ variable "keyvault_id" {
 variable "keyvault_certificate_requests" {
   default = {}
 }
+variable "keyvaults" {
+  default = {}
+}
 variable "resource_group_name" {}
 variable "settings" {}
 variable "tags" {
