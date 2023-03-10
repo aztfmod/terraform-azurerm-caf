@@ -182,10 +182,10 @@ resource "azurerm_linux_virtual_machine_scale_set" "vmss" {
   }
 
   dynamic "boot_diagnostics" {
-    for_each = var.boot_diagnostics_storage_account == {} ? [] : [1]
+    for_each = try(var.boot_diagnostics_storage_account != null ? [1] : var.global_settings.resource_defaults.virtual_machine_scale_sets.use_azmanaged_storage_for_boot_diagnostics == true ? [1] : [], [])
 
     content {
-      storage_account_uri = var.boot_diagnostics_storage_account
+      storage_account_uri = var.boot_diagnostics_storage_account == "" ? null : var.boot_diagnostics_storage_account
     }
   }
 
@@ -299,10 +299,19 @@ resource "azurerm_linux_virtual_machine_scale_set" "vmss_autoscaled" {
       network_security_group_id     = try(network_interface.value.network_security_group_id, null)
 
       ip_configuration {
-        name                                         = azurecaf_name.linux_nic[network_interface.key].result
-        primary                                      = try(network_interface.value.primary, false)
-        subnet_id                                    = can(network_interface.value.subnet_id) ? network_interface.value.subnet_id : var.vnets[try(network_interface.value.lz_key, var.client_config.landingzone_key)][network_interface.value.vnet_key].subnets[network_interface.value.subnet_key].id
-        load_balancer_backend_address_pool_ids       = try(local.load_balancer_backend_address_pool_ids, null)
+        name      = azurecaf_name.linux_nic[network_interface.key].result
+        primary   = try(network_interface.value.primary, false)
+        subnet_id = can(network_interface.value.subnet_id) ? network_interface.value.subnet_id : var.vnets[try(network_interface.value.lz_key, var.client_config.landingzone_key)][network_interface.value.vnet_key].subnets[network_interface.value.subnet_key].id
+        ####################################################################
+        # load_balancer_backend_address_pool_ids       = try(local.load_balancer_backend_address_pool_ids, null)
+        # Copied from azurerm_linux_virtual_machine_scale_set resource above to auto-scaled here as
+        # load_balancer_backend_address_pool_ids was an undefined variable in this context
+        load_balancer_backend_address_pool_ids = can(network_interface.value.load_balancers) ? flatten([
+          for lb, lb_value in try(network_interface.value.load_balancers, {}) : [
+            can(var.lb_backend_address_pool[try(lb_value.lz_key, var.client_config.landingzone_key)][lb_value.lbap_key].id) ? var.lb_backend_address_pool[try(lb_value.lz_key, var.client_config.landingzone_key)][lb_value.lbap_key].id : var.load_balancers[try(lb_value.lz_key, var.client_config.landingzone_key)][lb_value.lb_key].backend_address_pool_id
+          ]
+        ]) : []
+        ####################################################################
         application_gateway_backend_address_pool_ids = try(local.application_gateway_backend_address_pool_ids, null)
         application_security_group_ids               = try(local.application_security_group_ids, null)
       }

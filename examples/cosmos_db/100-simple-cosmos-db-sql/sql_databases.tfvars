@@ -53,15 +53,62 @@ cosmos_dbs = {
     # [optional] - Other DB API supoorted - MongoDB, Table, Gramlin GraphDB
     sql_databases = {
       databases_re1 = {
+        # when set to 'true' it will append random generated integer to sql database
+        # defaults to 'true'
+        # add_rnd_num = true
         name       = "cosmos-sql-exdb"
         throughput = 400
+
         containers = {
-          container_re1 = {
+          container1 = {
             name               = "container-ex101"
-            partition_key_path = "/definition/id"
-            throughput         = 400
+            partition_key_path = "/partitionKeyPath"
+
             unique_key = {
-              path = ["/definition/idlong", "/definition/idshort"]
+              paths = ["/uniquePath1", "/uniquePath2"]
+            }
+
+            autoscale_settings = {
+              max_throughput = 4000
+            }
+
+            indexing_policy = {
+              included_paths = {
+                path1 = "/*"
+              }
+
+              excluded_paths = {
+                path1 = "/excludedPath/?"
+              }
+
+              spatial_indexes = {
+                path1 = "/spatialIndexPath1/?"
+                path2 = "/spatialIndexPath2/?"
+              }
+
+              composite_indexes = {
+                composite_index1 = {
+                  index1 = {
+                    path  = "/indexPath1"
+                    order = "Descending"
+                  }
+                  index2 = {
+                    path  = "/indexPath2"
+                    order = "Descending"
+                  }
+                }
+
+                composite_index2 = {
+                  index1 = {
+                    path  = "/indexPath1"
+                    order = "Ascending"
+                  }
+                  index2 = {
+                    path  = "/indexPath2"
+                    order = "Ascending"
+                  }
+                }
+              }
             }
           }
         }
@@ -69,5 +116,3 @@ cosmos_dbs = {
     }
   }
 }
-
-

@@ -4,7 +4,6 @@ variable "global_settings" {
 variable "client_config" {
   description = "Client configuration object (see module README.md)."
 }
-variable "resource_groups" {}
 variable "settings" {}
 variable "vnets" {
   default = {}
@@ -19,10 +18,13 @@ variable "managed_identities" {
 variable "diagnostics" {
   default = {}
 }
-variable "base_tags" {
-  description = "Base tags for the resource to be inherited from the resource group."
-  type        = map(any)
-}
 variable "private_dns" {
   default = {}
+}
+variable "resource_group" {
+  description = "Resource group object"
+}
+variable "base_tags" {
+  description = "Base tags for the resource to be inherited from the resource group."
+  type        = bool
 }

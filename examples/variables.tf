@@ -309,6 +309,12 @@ variable "synapse_workspaces" {
 variable "azurerm_application_insights" {
   default = {}
 }
+variable "azurerm_application_insights_web_test" {
+  default = {}
+}
+variable "azurerm_application_insights_standard_web_test" {
+  default = {}
+}
 variable "role_mapping" {
   default = {}
 }
@@ -390,6 +396,9 @@ variable "log_analytics" {
 variable "logic_app_workflow" {
   default = {}
 }
+variable "logic_app_standard" {
+  default = {}
+}
 variable "logic_app_integration_account" {
   default = {}
 }
@@ -458,6 +467,9 @@ variable "cosmos_dbs" {
 variable "dynamic_keyvault_secrets" {
   default = {}
 }
+variable "dynamic_keyvault_certificates" {
+  default = {}
+}
 variable "front_doors" {
   default = {}
 }
@@ -479,6 +491,12 @@ variable "event_hubs" {
   default = {}
 }
 variable "automations" {
+  default = {}
+}
+variable "automation_schedules" {
+  default = {}
+}
+variable "automation_runbooks" {
   default = {}
 }
 variable "automation_log_analytics_links" {
@@ -829,6 +847,9 @@ variable "api_management_group" {
 variable "api_management_subscription" {
   default = {}
 }
+variable "api_management_product" {
+  default = {}
+}
 variable "lb" {
   default = {}
 }
@@ -987,4 +1008,18 @@ variable "traffic_manager_nested_endpoint" {
 variable "traffic_manager_profile" {
   default = {}
 }
-
+variable "resource_provider_registration" {
+  default = {}
+}
+variable "static_sites" {
+  default = {}
+}
+variable "aro_clusters" {
+  default = {}
+}
+variable "web_pubsubs" {
+  default = {}
+}
+variable "web_pubsub_hubs" {
+  default = {}
+}

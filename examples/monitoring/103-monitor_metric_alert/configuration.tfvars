@@ -21,12 +21,12 @@ monitor_action_groups = {
     email_receiver = {
       email_alert1 = {
         name                    = "email_alert_servicehealth_me"
-        email_address           = "email1@domain"
+        email_address           = "joe@contoso.com"
         use_common_alert_schema = false
       } #remove the following block if additional email alerts aren't needed.
       email_alert2 = {
         name                    = "email_alert_servicehealth_somoneelse"
-        email_address           = "email2@domain"
+        email_address           = "jane@contoso.com"
         use_common_alert_schema = false
       }
     }

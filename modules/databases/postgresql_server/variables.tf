@@ -11,13 +11,13 @@ variable "azuread_groups" {}
 variable "vnets" {}
 variable "subnet_id" {}
 variable "private_endpoints" {}
-variable "private_dns" {
+variable "diagnostic_profiles" {
   default = {}
+}
+variable "network_security_group_definition" {
+  default = null
 }
 variable "diagnostics" {
-  default = {}
-}
-variable "diagnostic_profiles" {
   default = {}
 }
 variable "resource_group" {
@@ -27,3 +27,7 @@ variable "base_tags" {
   description = "Base tags for the resource to be inherited from the resource group."
   type        = bool
 }
+variable "private_dns" {
+  default = {}
+}
+variable "virtual_subnets" {}
