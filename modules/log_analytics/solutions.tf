@@ -6,7 +6,7 @@ resource "azurerm_log_analytics_solution" "solution" {
   resource_group_name   = local.resource_group_name
   workspace_resource_id = azurerm_log_analytics_workspace.law.id
   workspace_name        = azurerm_log_analytics_workspace.law.name
-  tags                  = local.tags
+  tags                  = merge(local.tags, try(each.value.tags, {}))
 
   plan {
     publisher      = lookup(each.value, "publisher")
