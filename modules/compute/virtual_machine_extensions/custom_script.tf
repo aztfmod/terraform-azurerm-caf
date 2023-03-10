@@ -10,11 +10,21 @@ resource "azurerm_virtual_machine_extension" "custom_script" {
   settings = jsonencode(
     {
       fileUris  = local.fileuris,
-      timestamp = try(toint(var.extension.timestamp), 12345678)
+      timestamp = try(tonumber(var.extension.timestamp), 1234568)
     }
   )
 
   protected_settings = jsonencode(local.protected_settings)
+
+  dynamic "timeouts" {
+    for_each = try(var.extension.timeouts, null) != null ? [var.extension.timeouts] : []
+    content {
+      create = try(timeouts.value.create, null)
+      read   = try(timeouts.value.read, null)
+      update = try(timeouts.value.update, null)
+      delete = try(timeouts.value.delete, null)
+    }
+  }
 }
 
 locals {

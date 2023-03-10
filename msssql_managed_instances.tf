@@ -64,7 +64,7 @@ module "mssql_mi_administrators" {
   mi_name             = try(module.mssql_managed_instances[each.value.mi_server_key].name, module.mssql_managed_instances_secondary[each.value.mi_server_key].name)
   settings            = each.value
   user_principal_name = try(each.value.user_principal_name, null)
-  group_id            = try(local.combined_objects_azuread_groups[try(each.value.lz_key, local.client_config.landingzone_key)][each.value.azuread_group_key].id, null)
+  group_id            = try(each.value.azuread_group_id, local.combined_objects_azuread_groups[try(each.value.lz_key, local.client_config.landingzone_key)][each.value.azuread_group_key].id, null)
   group_name          = try(local.combined_objects_azuread_groups[try(each.value.lz_key, local.client_config.landingzone_key)][each.value.azuread_group_key].name, null)
 }
 
