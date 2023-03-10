@@ -7,6 +7,14 @@ variable "client_config" {
 variable "storage_account" {
   description = "Storage account configuration object"
 }
+variable "location" {
+  description = "(Optional) Resource Location"
+  default     = null
+}
+variable "resource_group_name" {
+  description = "(Optional) Resource group object to deploy the virtual machine"
+  default     = null
+}
 variable "resource_group" {
   description = "Resource group object"
 }
