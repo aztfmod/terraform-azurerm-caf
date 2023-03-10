@@ -6,6 +6,10 @@ keyvaults = {
 
     enabled_for_deployment = true
 
+    tags = {
+      sensitive = "true"
+    }
+
     creation_policies = {
       logged_in_user = {
         certificate_permissions = ["Get", "List", "Update", "Create", "Import", "Delete", "Purge", "Recover"]

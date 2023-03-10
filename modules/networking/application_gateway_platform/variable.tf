@@ -7,7 +7,7 @@ variable "client_config" {
 }
 variable "diagnostics" {}
 variable "location" {
-  description = "(Required) Resource Location"
+  description = "(Optional) Resource Location"
   default     = null
 }
 variable "resource_group_name" {
