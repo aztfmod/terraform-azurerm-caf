@@ -13,7 +13,7 @@ resource "azapi_resource" "container_app_env" {
   type = "Microsoft.App/managedEnvironments@2022-10-01"
 
   parent_id = local.resource_group.id
-  location  = var.settings.region == null ? local.resource_group.location : var.global_settings.regions[var.settings.region]
+  location  = try(var.global_settings.regions[var.settings.region], local.resource_group.location)
   tags      = local.tags
 
   name = azurecaf_name.container_app_env.result
@@ -46,9 +46,10 @@ resource "azapi_resource" "container_app_env" {
       }
       # daprAIConnectionString = "string"
       # daprAIInstrumentationKey = "string"
-      vnetConfiguration = var.settings.vnet != null ? {
+      # only define vnet configuration if vnet_key is not null
+      vnetConfiguration = var.settings.vnet.vnet_key != null ? {
         dockerBridgeCidr       = var.settings.vnet.docker_bridge_cidr
-        infrastructureSubnetId = var.settings.vnet.subnet_id != null ? var.settings.vnet.subnet_id : var.vnets[var.settings.vnet.lz_key == null ? var.client_config.landingzone_key : var.settings.vnet.lz_key][var.settings.vnet.vnet_key].subnets[var.settings.vnet.subnet_key].id
+        infrastructureSubnetId = try(var.vnets[coalesce(var.settings.vnet.lz_key, var.client_config.landingzone_key)][var.settings.vnet.vnet_key].subnets[var.settings.vnet.subnet_key].id, null)
         internal               = var.settings.vnet.internal
         # outboundSettings = {
         #   outBoundType = "string"
