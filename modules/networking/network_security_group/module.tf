@@ -21,7 +21,7 @@ resource "azurerm_network_security_group" "nsg" {
 
 locals {
   security_rules = {
-    for value in var.settings.nsg : format("%s-%s", value.direction, value.priority) => {
+    for value in try(var.settings.nsg, {}) : format("%s-%s", value.direction, value.priority) => {
       name                         = value.name
       description                  = lookup(value, "description", "")
       priority                     = value.priority
