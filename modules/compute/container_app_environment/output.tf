@@ -11,6 +11,5 @@ output "static_ip" {
 }
 
 output "vnet_configuration" {
-  value = jsondecode(azapi_resource.container_app_env.output).properties.vnetConfiguration
+  value = var.settings.vnet.vnet_key != null ? jsondecode(azapi_resource.container_app_env.output).properties.vnetConfiguration : null
 }
-# jsondecode(data.azapi_resource.container_apps["catalog_search"].output)
