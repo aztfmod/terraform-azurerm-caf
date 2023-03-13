@@ -1,8 +1,8 @@
 resource "azurerm_mysql_server" "mysql" {
 
   name                = azurecaf_name.mysql.result
-  resource_group_name = var.resource_group_name
-  location            = var.location
+  resource_group_name = local.resource_group_name
+  location            = local.location
   version             = var.settings.version
   sku_name            = var.settings.sku_name
 
@@ -94,7 +94,7 @@ resource "azurerm_mysql_active_directory_administrator" "aad_admin" {
   count = try(var.settings.azuread_administrator, null) == null ? 0 : 1
 
   server_name         = azurerm_mysql_server.mysql.name
-  resource_group_name = var.resource_group_name
+  resource_group_name = local.resource_group_name
   login               = try(var.settings.azuread_administrator.login_username, var.azuread_groups[var.settings.azuread_administrator.azuread_group_key].name)
   tenant_id           = try(var.settings.azuread_administrator.tenant_id, var.azuread_groups[var.settings.azuread_administrator.azuread_group_key].tenant_id)
   object_id           = try(var.settings.azuread_administrator.object_id, var.azuread_groups[var.settings.azuread_administrator.azuread_group_key].id)
