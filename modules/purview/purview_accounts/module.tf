@@ -14,5 +14,5 @@ resource "azurerm_purview_account" "pva" {
   resource_group_name         = local.resource_group_name
   public_network_enabled      = try(var.settings.public_network_enabled, null)
   managed_resource_group_name = try(var.settings.managed_resource_group_name, null)
-  tags                        = merge(local.tags, try(var.settings.tags, null))
+  tags                        = local.tags
 }
