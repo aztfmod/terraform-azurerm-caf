@@ -10,7 +10,7 @@ variable "resource_group" {
   description = "Resource group object to deploy the virtual machine"
 }
 variable "base_tags" {
-  description = "tags of the resource"
+  description = "Enable tags inheritence."
   type        = bool
 }
 variable "settings" {}
