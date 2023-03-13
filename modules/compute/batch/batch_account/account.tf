@@ -10,8 +10,8 @@ resource "azurecaf_name" "account" {
 
 resource "azurerm_batch_account" "account" {
   name                          = azurecaf_name.account.result
-  resource_group_name           = var.resource_group_name
-  location                      = var.location
+  resource_group_name           = local.resource_group_name
+  location                      = local.location
   pool_allocation_mode          = try(var.settings.pool_allocation_mode, null)
   public_network_access_enabled = try(var.settings.public_network_access_enabled, null)
   storage_account_id            = var.storage_account_id
