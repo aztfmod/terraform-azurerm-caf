@@ -14,7 +14,7 @@ resource "azurerm_eventhub_namespace" "evh" {
   resource_group_name      = local.resource_group_name
   sku                      = var.settings.sku
   capacity                 = try(var.settings.capacity, null)
-  tags                     = merge(local.tags, try(var.settings.tags, {}))
+  tags                     = local.tags
   auto_inflate_enabled     = try(var.settings.auto_inflate_enabled, null)
   dedicated_cluster_id     = try(var.settings.dedicated_cluster_id, null)
   maximum_throughput_units = try(var.settings.maximum_throughput_units, null)
