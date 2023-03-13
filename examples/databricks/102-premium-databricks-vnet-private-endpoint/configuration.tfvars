@@ -6,6 +6,10 @@ global_settings = {
   regions = {
     region1 = "uksouth"
   }
+  inherit_tags = true
+  tags = {
+    global = "global"
+  }
 }
 
 #
@@ -15,6 +19,9 @@ resource_groups = {
   databricks_re1 = {
     name   = "databricks-re1"
     region = "region1"
+    tags = {
+      rg = "rg"
+    }
   }
 }
 
@@ -28,6 +35,9 @@ databricks_workspaces = {
     sku                                   = "premium"
     public_network_access_enabled         = false
     network_security_group_rules_required = "NoAzureDatabricksRules"
+    tags = {
+      ws = "ws"
+    }
     custom_parameters = {
       no_public_ip       = true
       public_subnet_key  = "databricks_public"
