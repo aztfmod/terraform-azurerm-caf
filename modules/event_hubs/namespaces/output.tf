@@ -18,6 +18,11 @@ output "location" {
   description = "Location of the service"
 }
 
+output "tags" {
+  value       = azurerm_eventhub_namespace.evh.tags
+  description = "A mapping of tags to assign to the resource."
+}
+
 output "event_hubs" {
   value = module.event_hubs
 }
