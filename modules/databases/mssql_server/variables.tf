@@ -49,3 +49,8 @@ variable "remote_objects" {
 variable "diagnostics" {
   type = any
 }
+
+variable "managed_identities" {
+  type    = any
+  default = {}
+}

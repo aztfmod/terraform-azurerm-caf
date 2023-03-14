@@ -9,6 +9,8 @@ resource "azurerm_mssql_server" "mssql" {
   connection_policy             = try(var.settings.connection_policy, null)
   minimum_tls_version           = try(var.settings.minimum_tls_version, null)
   tags                          = local.tags
+  # this doesn't work when the identity block is dynamic (provider throws an error)
+  # primary_user_assigned_identity_id = local.primary_user_assigned_identity_id
 
   dynamic "azuread_administrator" {
     for_each = try(var.settings.azuread_administrator.azuread_authentication_only, false) == true ? [var.settings.azuread_administrator] : []
@@ -22,13 +24,15 @@ resource "azurerm_mssql_server" "mssql" {
   }
 
   dynamic "identity" {
-    for_each = can(var.settings.identity) ? [var.settings.identity] : []
+    for_each = try(var.settings.identity, null) == null ? [] : [1]
 
     content {
-      type = identity.value.type
+      type = "SystemAssigned"
+      # ideally we could assign managed identities, but it's not feasible to do this in dynamic block b/c this resource also required primary_user_assigned_identity_id attribute
+      # type = length(local.managed_identities) > 0 ? "UserAssigned" : "SystemAssigned"
+      # user_assigned_identity_ids = local.managed_identities
     }
   }
-
 }
 
 resource "azurerm_mssql_firewall_rule" "firewall_rules" {

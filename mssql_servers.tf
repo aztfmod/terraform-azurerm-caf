@@ -30,6 +30,7 @@ module "mssql_servers" {
   remote_objects = {
     keyvault_keys = local.combined_objects_keyvault_keys
   }
+  managed_identities = local.combined_objects_managed_identities
 }
 
 data "azurerm_storage_account" "mssql_auditing" {
