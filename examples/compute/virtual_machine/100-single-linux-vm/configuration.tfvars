@@ -7,7 +7,7 @@ global_settings = {
 
   inherit_tags = true
   tags = {
-    base = "seeeetandalone2"
+    # base = "seeeetandalone2"
   }
   resource_defaults = {
     virtual_machines = {
@@ -31,12 +31,12 @@ resource_groups = {
       env = "standalone3"
     }
   }
-  vm2_region1 = {
-    name = "example-virtual-machine-rg3"
-    tags = {
-      env = "standalone3"
-    }
-  }
+  # vm2_region1 = {
+  #   name = "example-virtual-machine-rg3"
+  #   tags = {
+  #     env = "standalone3"
+  #   }
+  # }
 }
 
 # Virtual machines
@@ -197,6 +197,9 @@ keyvault_keys = {
     key_type           = "RSA"
     key_size           = "2048"
     key_opts           = ["encrypt", "decrypt", "sign", "verify", "wrapKey", "unwrapKey"]
+    tags = {
+      encryption = "rsa-204"
+    new_tag = "yes" }
   }
 }
 
