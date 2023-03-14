@@ -6,10 +6,14 @@ module "vmware_private_clouds" {
   global_settings          = local.global_settings
   client_config            = local.client_config
   settings                 = each.value
-  resource_group           = local.combined_objects_resource_groups[try(each.value.resource_group.lz_key, local.client_config.landingzone_key)][try(each.value.resource_group.key, each.value.resource_group_key)]
-  base_tags                = local.global_settings.inherit_tags
   keyvaults                = local.combined_objects_keyvaults
   dynamic_keyvault_secrets = local.security.dynamic_keyvault_secrets #module.dynamic_keyvault_secrets
+
+  base_tags           = local.global_settings.inherit_tags
+  resource_group      = local.combined_objects_resource_groups[try(each.value.resource_group.lz_key, local.client_config.landingzone_key)][try(each.value.resource_group_key, each.value.resource_group.key)]
+  resource_group_name = can(each.value.resource_group.name) || can(each.value.resource_group_name) ? try(each.value.resource_group.name, each.value.resource_group_name) : null
+  location            = try(local.global_settings.regions[each.value.region], null)
+
 }
 
 output "vmware_private_clouds" {
