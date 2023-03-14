@@ -12,6 +12,8 @@ module "keyvault_certificate_requests" {
   settings                  = each.value
   domain_name_registrations = local.combined_objects_domain_name_registrations
   client_config             = local.client_config
+  inherit_tags              = local.global_settings.inherit_tags
+  tags                      = can(each.value.keyvault_id) ? {} : local.combined_objects_keyvaults[try(each.value.lz_key, local.client_config.landingzone_key)][each.value.keyvault_key].base_tags
 }
 
 output "keyvault_certificate_requests" {
