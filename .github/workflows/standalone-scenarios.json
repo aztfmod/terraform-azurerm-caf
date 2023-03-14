@@ -195,7 +195,6 @@
     "networking/virtual_network/100-subnet-delegation",
     "networking/virtual_network/101-vnet-peering-nsg",
     "networking/virtual_network/103-vnet-peering-v1",
-    "networking/virtual_network/200-nsg-flow-logs",
     "networking/virtual_network/201-nsg-flow-logs-v1",
     "networking/virtual_subnets/100-simple-subnet-rbac",
     "networking/virtual_wan/100-vwan-multi-hubs",
