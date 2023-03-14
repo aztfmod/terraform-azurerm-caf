@@ -14,12 +14,12 @@ data "azurecaf_name" "wps" {
 
 resource "azurerm_web_pubsub" "wps" {
   name                          = data.azurecaf_name.wps.result
-  resource_group_name           = can(var.settings.resource_group.name) ? var.settings.resource_group.name : var.remote_objects.resource_groups[try(var.settings.resource_group.lz_key, var.client_config.landingzone_key)][var.settings.resource_group.key].name
-  location                      = var.location
+  resource_group_name           = local.resource_group_name
+  location                      = local.location
   sku                           = var.settings.sku
   capacity                      = try(var.settings.capacity, null)
   public_network_access_enabled = try(var.settings.public_network_access_enabled, null)
-  tags                          = merge(var.base_tags, local.tags)
+  tags                          = local.tags
 
   dynamic "live_trace" {
     for_each = lookup(var.settings, "live_trace", {}) == {} ? [] : [1]
