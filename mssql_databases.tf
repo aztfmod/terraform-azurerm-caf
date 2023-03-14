@@ -44,8 +44,8 @@ resource "azurerm_mssql_database_extended_auditing_policy" "mssqldb" {
   log_monitoring_enabled                  = try(each.value.extended_auditing_policy.log_monitoring_enabled, false)
   enabled                                 = true
   database_id                             = module.mssql_databases[each.key].id
-  storage_endpoint                        = data.azurerm_storage_account.mssqldb_auditing[each.key].primary_blob_endpoint
-  storage_account_access_key              = data.azurerm_storage_account.mssqldb_auditing[each.key].primary_access_key
+  storage_endpoint                        = try(data.azurerm_storage_account.mssqldb_auditing[each.key].primary_blob_endpoint, null)
+  storage_account_access_key              = try(data.azurerm_storage_account.mssqldb_auditing[each.key].primary_access_key, null)
   storage_account_access_key_is_secondary = false
   retention_in_days                       = try(each.value.extended_auditing_policy.retention_in_days, null)
 }
