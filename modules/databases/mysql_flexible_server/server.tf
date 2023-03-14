@@ -24,7 +24,7 @@ resource "azurerm_mysql_flexible_server" "mysql" {
   point_in_time_restore_time_in_utc = try(var.settings.create_mode, "PointInTimeRestore") == "PointInTimeRestore" ? try(var.settings.point_in_time_restore_time_in_utc, null) : null
   source_server_id                  = try(var.settings.create_mode, "PointInTimeRestore") == "PointInTimeRestore" ? try(var.settings.source_server_id, null) : null
 
-  administrator_login          = try(var.settings.create_mode, "Default") == "Default" ? try(var.settings.administrator_username, "psqladmin") : null
+  administrator_login          = try(var.settings.create_mode, "Default") == "Default" ? try(var.settings.administrator_username, "mysqladmin") : null
   administrator_password       = try(var.settings.create_mode, "Default") == "Default" ? try(var.settings.administrator_password, azurerm_key_vault_secret.mysql_administrator_password.0.value) : null
   geo_redundant_backup_enabled = try(var.settings.geo_redundant_backup_enabled, false)
   backup_retention_days        = try(var.settings.backup_retention_days, null)
@@ -73,7 +73,7 @@ resource "azurerm_key_vault_secret" "mysql_administrator_username" {
   count = lookup(var.settings, "keyvault", null) == null ? 0 : 1
 
   name         = format("%s-mysql-administrator-username", azurecaf_name.mysql_flexible_server.result)
-  value        = try(var.settings.administrator_username, "psqladmin")
+  value        = try(var.settings.administrator_username, "mysqladmin")
   key_vault_id = var.remote_objects.keyvault_id
 
   lifecycle {
