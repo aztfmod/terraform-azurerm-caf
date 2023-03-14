@@ -27,7 +27,7 @@ module "mssql_databases" {
 data "azurerm_storage_account" "mssqldb_auditing" {
   for_each = {
     for key, value in local.database.mssql_databases : key => value
-    if try(value.extended_auditing_policy, null) != null
+    if try(value.extended_auditing_policy.storage_account, null) != null
   }
 
   name                = module.storage_accounts[each.value.extended_auditing_policy.storage_account.key].name

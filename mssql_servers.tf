@@ -36,7 +36,7 @@ module "mssql_servers" {
 data "azurerm_storage_account" "mssql_auditing" {
   for_each = {
     for key, value in local.database.mssql_servers : key => value
-    if try(value.extended_auditing_policy, null) != null
+    if try(value.extended_auditing_policy.storage_account, null) != null
   }
 
   name                = module.storage_accounts[each.value.extended_auditing_policy.storage_account.key].name
@@ -53,8 +53,8 @@ resource "azurerm_mssql_server_extended_auditing_policy" "mssql" {
 
   log_monitoring_enabled                  = try(each.value.extended_auditing_policy.log_monitoring_enabled, false)
   server_id                               = module.mssql_servers[each.key].id
-  storage_endpoint                        = data.azurerm_storage_account.mssql_auditing[each.key].primary_blob_endpoint
-  storage_account_access_key              = data.azurerm_storage_account.mssql_auditing[each.key].primary_access_key
+  storage_endpoint                        = try(data.azurerm_storage_account.mssql_auditing[each.key].primary_blob_endpoint, null)
+  storage_account_access_key              = try(data.azurerm_storage_account.mssql_auditing[each.key].primary_access_key, null)
   storage_account_access_key_is_secondary = false
   retention_in_days                       = try(each.value.extended_auditing_policy.retention_in_days, null)
 }
