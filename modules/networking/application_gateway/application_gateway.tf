@@ -246,8 +246,8 @@ resource "azurerm_application_gateway" "agw" {
     for_each = try(local.certificate_keys)
 
     content {
-      name                = ssl_certificate.value
-      key_vault_secret_id = var.keyvault_certificates[ssl_certificate.value].secret_id
+      name                = ssl_certificate.value.key
+      key_vault_secret_id = var.keyvault_certificates[ssl_certificate.value.lz_key][ssl_certificate.value.key].secret_id
       # data     = try(ssl_certificate.value.key_vault_secret_id, null) == null ? ssl_certificate.value.data : null
       # password = try(ssl_certificate.value.data, null) != null ? ssl_certificate.value.password : null
     }
@@ -257,8 +257,8 @@ resource "azurerm_application_gateway" "agw" {
     for_each = try(local.certificate_request_keys)
 
     content {
-      name                = ssl_certificate.value
-      key_vault_secret_id = var.keyvault_certificate_requests[ssl_certificate.value].secret_id
+      name                = ssl_certificate.value.key
+      key_vault_secret_id = var.keyvault_certificate_requests[ssl_certificate.value.lz_key][ssl_certificate.value.key].secret_id
     }
   }
 
