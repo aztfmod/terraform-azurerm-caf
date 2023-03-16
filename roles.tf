@@ -159,6 +159,7 @@ locals {
     wvd_host_pools                             = local.combined_objects_wvd_host_pools
     wvd_workspaces                             = local.combined_objects_wvd_workspaces
     log_analytics                              = local.current_objects_log_analytics
+    route_tables                               = local.combined_objects_route_tables
   }
 
   current_objects_log_analytics = tomap(
