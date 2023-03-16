@@ -82,7 +82,7 @@ resource "azurerm_linux_virtual_machine" "vm" {
 
   # Create local ssh key
   dynamic "admin_ssh_key" {
-    for_each = lookup(each.value, "disable_password_authentication", true) == true && local.create_sshkeys ? [1] : []
+    for_each = lookup(each.value, "disable_password_authentication", true) == true && can(var.settings.public_key_pem_file) ? [1] : []
 
     content {
       username   = each.value.admin_username
