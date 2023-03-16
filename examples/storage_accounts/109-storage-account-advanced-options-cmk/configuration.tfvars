@@ -5,6 +5,10 @@ global_settings = {
   }
 }
 
+provider_azurerm_features_keyvault = {
+  purge_soft_delete_on_destroy = false
+}
+
 resource_groups = {
   test = {
     name = "test"

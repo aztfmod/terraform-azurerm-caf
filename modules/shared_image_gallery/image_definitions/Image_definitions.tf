@@ -15,6 +15,7 @@ resource "azurerm_shared_image" "image" {
   resource_group_name = local.resource_group_name
   location            = local.location
   os_type             = var.settings.os_type
+  hyper_v_generation  = try(var.settings.hyper_v_generation, null)
   identifier {
     publisher = var.settings.publisher
     offer     = var.settings.offer
