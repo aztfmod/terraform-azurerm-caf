@@ -21,18 +21,25 @@ managed_identities = {
 
 keyvaults = {
   kv_client = {
-    name               = "testkv"
-    resource_group_key = "wps_examples"
-    sku_name           = "standard"
+    name                = "testkv"
+    resource_group_key  = "wps_examples"
+    sku_name            = "standard"
     soft_delete_enabled = true
+
+    creation_policies = {
+      # Required for the ci pipeline principal_id to update KV policies set in keyvault_access_policies
+      logged_in_user = {
+        secret_permissions = ["Set", "Get", "List", "Delete", "Purge", "Recover"]
+      }
+    }
   }
 }
 
 keyvault_access_policies = {
   kv_client = {
     hub_usermsi = {
-      managed_identity_key    = "hub_usermsi"
-      secret_permissions = ["Set", "Get", "List", "Delete", "Purge"]
+      managed_identity_key = "hub_usermsi"
+      secret_permissions   = ["Set", "Get", "List", "Delete", "Purge"]
     }
   }
 }
