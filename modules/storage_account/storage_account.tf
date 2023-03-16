@@ -34,7 +34,7 @@ resource "azurerm_storage_account" "stg" {
   queue_encryption_key_type         = try(var.storage_account.queue_encryption_key_type, null)
   resource_group_name               = local.resource_group_name
   table_encryption_key_type         = try(var.storage_account.table_encryption_key_type, null)
-  tags                              = merge(local.tags, local.caf_tags, try(var.storage_account.tags, null))
+  tags                              = merge(local.tags, try(var.storage_account.tags, null), local.caf_tags)
 
 
   dynamic "custom_domain" {
