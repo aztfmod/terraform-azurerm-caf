@@ -21,7 +21,7 @@ resource "azurerm_key_vault" "keyvault" {
   resource_group_name             = local.resource_group_name
   tenant_id                       = var.client_config.tenant_id
   sku_name                        = try(var.settings.sku_name, "standard")
-  tags                            = merge(local.tags, local.caf_tags, try(var.settings.tags, null))
+  tags                            = merge(local.tags, try(var.settings.tags, null), local.caf_tags)
   enabled_for_deployment          = try(var.settings.enabled_for_deployment, false)
   enabled_for_disk_encryption     = try(var.settings.enabled_for_disk_encryption, false)
   enabled_for_template_deployment = try(var.settings.enabled_for_template_deployment, false)
