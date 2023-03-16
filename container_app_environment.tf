@@ -12,6 +12,6 @@ module "container_app_environment" {
   private_dns     = local.combined_objects_private_dns
 }
 
-output "container_app_environment" {
+output "container_app_environments" {
   value = module.container_app_environment
 }
