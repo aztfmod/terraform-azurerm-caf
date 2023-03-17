@@ -37,13 +37,13 @@ app_service_environments = {
     internalLoadBalancingMode = "3"
 
 
-    diagnostic_profiles = {
-      ase = {
-        definition_key   = "ase"
-        destination_type = "log_analytics"
-        destination_key  = "central_logs"
-      }
-    }
+    # diagnostic_profiles = {
+    #   ase = {
+    #     definition_key   = "ase"
+    #     destination_type = "log_analytics"
+    #     destination_key  = "central_logs"
+    #   }
+    # }
   }
 }
 
@@ -111,13 +111,13 @@ vnets = {
     }
 
     # you can setup up to 5 keys - vnet diganostic
-    diagnostic_profiles = {
-      vnet = {
-        definition_key   = "networking_all"
-        destination_type = "log_analytics"
-        destination_key  = "central_logs"
-      }
-    }
+    # diagnostic_profiles = {
+    #   vnet = {
+    #     definition_key   = "networking_all"
+    #     destination_type = "log_analytics"
+    #     destination_key  = "central_logs"
+    #   }
+    # }
 
   }
 }
@@ -125,19 +125,23 @@ vnets = {
 network_security_group_definition = {
   ase = {
 
-    diagnostic_profiles = {
-      nsg = {
-        definition_key   = "network_security_group"
-        destination_type = "storage"
-        destination_key  = "all_regions"
-      }
-      operations = {
-        name             = "operations"
-        definition_key   = "network_security_group"
-        destination_type = "log_analytics"
-        destination_key  = "central_logs"
-      }
+    tags = {
+      env = "to_be_set"
     }
+
+    # diagnostic_profiles = {
+    #   nsg = {
+    #     definition_key   = "network_security_group"
+    #     destination_type = "storage"
+    #     destination_key  = "all_regions"
+    #   }
+    #   operations = {
+    #     name             = "operations"
+    #     definition_key   = "network_security_group"
+    #     destination_type = "log_analytics"
+    #     destination_key  = "central_logs"
+    #   }
+    # }
 
     nsg = [
       {
@@ -331,30 +335,30 @@ network_security_group_definition = {
   }
 }
 
-diagnostics_definition = {
-  ase = {
-    name = "operational_logs_and_metrics"
-    categories = {
-      log = [
-        # ["Category name",  "Diagnostics Enabled(true/false)", "Retention Enabled(true/false)", Retention_period]
-        ["AppServiceEnvironmentPlatformLogs", true, true, 5],
-      ]
-      # metric = [
-      #   #["Category name",  "Diagnostics Enabled(true/false)", "Retention Enabled(true/false)", Retention_period]
-      #   ["AllMetrics", false, false, 7],
-      # ]
-    }
-  }
+# diagnostics_definition = {
+#   ase = {
+#     name = "operational_logs_and_metrics"
+#     categories = {
+#       log = [
+#         # ["Category name",  "Diagnostics Enabled(true/false)", "Retention Enabled(true/false)", Retention_period]
+#         ["AppServiceEnvironmentPlatformLogs", true, true, 5],
+#       ]
+#       # metric = [
+#       #   #["Category name",  "Diagnostics Enabled(true/false)", "Retention Enabled(true/false)", Retention_period]
+#       #   ["AllMetrics", false, false, 7],
+#       # ]
+#     }
+#   }
 
-  # Overwrite the one defined in the launchpad
-  network_security_group = {
-    name = "operational_logs_and_metrics"
-    categories = {
-      log = [
-        # ["Category name",  "Diagnostics Enabled(true/false)", "Retention Enabled(true/false)", Retention_period]
-        ["NetworkSecurityGroupEvent", true, false, 14],
-        ["NetworkSecurityGroupRuleCounter", true, false, 14],
-      ]
-    }
-  }
-}
+#   # Overwrite the one defined in the launchpad
+#   network_security_group = {
+#     name = "operational_logs_and_metrics"
+#     categories = {
+#       log = [
+#         # ["Category name",  "Diagnostics Enabled(true/false)", "Retention Enabled(true/false)", Retention_period]
+#         ["NetworkSecurityGroupEvent", true, false, 14],
+#         ["NetworkSecurityGroupRuleCounter", true, false, 14],
+#       ]
+#     }
+#   }
+# }

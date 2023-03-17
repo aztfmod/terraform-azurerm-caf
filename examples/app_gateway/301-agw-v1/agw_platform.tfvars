@@ -63,5 +63,10 @@ application_gateway_platforms = {
       priority                      = 50
     }
 
+    tags = {
+      env     = "uat"
+      project = "public mobile app"
+    }
+
   }
 }

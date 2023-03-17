@@ -13,5 +13,5 @@ variable "vnet_resource_group_name" {}
 variable "vnet_location" {}
 variable "base_tags" {
   description = "Base tags for the resource to be inherited from the resource group."
-  type        = map(any)
+  type        = bool
 }

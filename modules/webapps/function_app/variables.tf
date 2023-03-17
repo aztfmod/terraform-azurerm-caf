@@ -4,17 +4,21 @@ variable "global_settings" {}
 
 variable "location" {
   description = "(Required) Resource Location"
+  default     = null
 }
-
 variable "resource_group_name" {
-  description = "(Required) Resource group of the App Service"
+  description = "Resource group object to deploy the virtual machine"
+  default     = null
 }
-
-variable "app_service_plan_id" {
+variable "resource_group" {
+  description = "Resource group object to deploy the virtual machine"
 }
 
 variable "tags" {
-  description = "(Required) map of tags for the deployment"
+  default = null
+}
+
+variable "app_service_plan_id" {
 }
 
 variable "name" {
@@ -50,7 +54,10 @@ variable "application_insight" {
   default = null
 }
 
-variable "base_tags" {}
+variable "base_tags" {
+  description = "Base tags for the resource to be inherited from the resource group."
+  type        = bool
+}
 
 variable "combined_objects" {
   default = {}

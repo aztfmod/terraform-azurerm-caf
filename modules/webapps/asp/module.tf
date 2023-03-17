@@ -12,8 +12,8 @@ resource "azurecaf_name" "plan" {
 
 resource "azurerm_app_service_plan" "asp" {
   name                         = azurecaf_name.plan.result
-  location                     = var.location
-  resource_group_name          = var.resource_group_name
+  location                     = local.location
+  resource_group_name          = local.resource_group_name
   kind                         = try(var.kind, null)
   maximum_elastic_worker_count = lookup(var.settings, "maximum_elastic_worker_count", null)
 
@@ -29,8 +29,7 @@ resource "azurerm_app_service_plan" "asp" {
   }
 
   app_service_environment_id = var.app_service_environment_id
-  zone_redundant             = lookup(var.settings, "zone_redundant", null)
-  tags                       = local.tags
+  tags                       = merge(local.tags, try(var.settings.tags, {}))
 
   timeouts {
     create = "5h"

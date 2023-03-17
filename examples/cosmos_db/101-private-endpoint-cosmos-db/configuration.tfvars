@@ -1,5 +1,9 @@
 global_settings = {
   default_region = "region1"
+  inherit_tags   = true
+  tags = {
+    global = "global"
+  }
   regions = {
     region1 = "northeurope"
     region2 = "australiacentral"
@@ -10,6 +14,9 @@ resource_groups = {
   cosmosdb_region1 = {
     name   = "cosmosdb"
     region = "region1"
+    tags = {
+      rg = "rg"
+    }
   }
 }
 

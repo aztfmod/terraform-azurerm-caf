@@ -10,12 +10,12 @@ output "name" {
 
 output "location" {
   description = "The location of the Storage Account"
-  value       = var.location
+  value       = local.location
 }
 
 output "resource_group_name" {
   description = "The resource group name of the Storage Account"
-  value       = var.resource_group_name
+  value       = local.resource_group_name
 }
 
 output "primary_blob_endpoint" {

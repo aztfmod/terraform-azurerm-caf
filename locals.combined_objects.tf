@@ -28,6 +28,7 @@ locals {
   combined_objects_azuread_apps                                   = merge(tomap({ (local.client_config.landingzone_key) = module.azuread_applications }), try(var.remote_objects.azuread_apps, {}))
   combined_objects_azuread_groups                                 = merge(tomap({ (local.client_config.landingzone_key) = module.azuread_groups }), try(var.remote_objects.azuread_groups, {}))
   combined_objects_azuread_service_principals                     = merge(tomap({ (local.client_config.landingzone_key) = module.azuread_service_principals }), try(var.remote_objects.azuread_service_principals, {}))
+  combined_objects_azuread_service_principal_passwords            = merge(tomap({ (local.client_config.landingzone_key) = module.azuread_service_principal_passwords }), try(var.remote_objects.azuread_service_principal_passwords, {}))
   combined_objects_azuread_users                                  = merge(tomap({ (local.client_config.landingzone_key) = module.azuread_users }), try(var.remote_objects.azuread_users, {}))
   combined_objects_azurerm_firewall_policies                      = merge(tomap({ (local.client_config.landingzone_key) = module.azurerm_firewall_policies }), try(var.remote_objects.azurerm_firewall_policies, {}))
   combined_objects_azurerm_firewalls                              = merge(tomap({ (local.client_config.landingzone_key) = module.azurerm_firewalls }), try(var.remote_objects.azurerm_firewalls, {}))
@@ -147,10 +148,13 @@ locals {
   combined_objects_vmware_private_clouds                          = merge(tomap({ (local.client_config.landingzone_key) = module.vmware_private_clouds }), try(var.remote_objects.vmware_private_clouds, {}))
   combined_objects_vpn_gateway_connections                        = merge(tomap({ (local.client_config.landingzone_key) = module.vpn_gateway_connections }), try(var.remote_objects.vpn_gateway_connections, {}))
   combined_objects_vpn_sites                                      = merge(tomap({ (local.client_config.landingzone_key) = module.vpn_sites }), try(var.remote_objects.vpn_sites, {}))
+  combined_objects_web_pubsubs                                    = merge(tomap({ (local.client_config.landingzone_key) = module.web_pubsubs }), try(var.remote_objects.web_pubsubs, {}))
+  combined_objects_web_pubsub_hubs                                = merge(tomap({ (local.client_config.landingzone_key) = module.web_pubsub_hubs }), try(var.remote_objects.web_pubsub_hubs, {}))
   combined_objects_wvd_application_groups                         = merge(tomap({ (local.client_config.landingzone_key) = module.wvd_application_groups }), try(var.remote_objects.wvd_application_groups, {}))
   combined_objects_wvd_applications                               = merge(tomap({ (local.client_config.landingzone_key) = module.wvd_applications }), try(var.remote_objects.wvd_applications, {}))
   combined_objects_wvd_host_pools                                 = merge(tomap({ (local.client_config.landingzone_key) = module.wvd_host_pools }), try(var.remote_objects.wvd_host_pools, {}))
   combined_objects_wvd_workspaces                                 = merge(tomap({ (local.client_config.landingzone_key) = module.wvd_workspaces }), try(var.remote_objects.wvd_workspaces, {}))
+  combined_objects_route_tables                                   = merge(tomap({ (local.client_config.landingzone_key) = module.route_tables }), try(var.remote_objects.route_tables, {}))
 
   combined_objects_subscriptions = merge(
     tomap(

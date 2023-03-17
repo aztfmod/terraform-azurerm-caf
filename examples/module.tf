@@ -171,6 +171,8 @@ module "example" {
     eventgrid_topic              = var.eventgrid_topic
     eventgrid_event_subscription = var.eventgrid_event_subscription
     eventgrid_domain_topic       = var.eventgrid_domain_topic
+    web_pubsubs                  = var.web_pubsubs
+    web_pubsub_hubs              = var.web_pubsub_hubs
   }
   networking = {
     application_gateway_applications                        = var.application_gateway_applications
