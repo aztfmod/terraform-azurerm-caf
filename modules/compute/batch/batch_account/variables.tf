@@ -20,15 +20,6 @@ variable "storage_account_id" {
 variable "storage_account_authentication_mode" {
   default = null
 }
-variable "managed_identities" {
-  default = {}
-}
-variable "vnets" {
-  default = {}
-}
-variable "private_dns" {
-  default = {}
-}
 variable "private_endpoints" {
   default = {}
 }
@@ -47,3 +38,4 @@ variable "base_tags" {
   description = "Base tags for the resource to be inherited from the resource group."
   type        = bool
 }
+variable "remote_objects" {}
