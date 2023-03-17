@@ -15,7 +15,10 @@ resource_groups = {
   aks_jumpbox_re1 = {
     name = "aks-jumpbox-re1"
   }
-
+  devops_re1 = {
+    name   = "devops-re1"
+    region = "region1"
+  }
 }
 
 storage_accounts = {
