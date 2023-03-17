@@ -19,17 +19,10 @@ module "container_registry" {
   settings            = each.value
 
   public_network_access_enabled = try(each.value.public_network_access_enabled, "true")
-
   base_tags           = local.global_settings.inherit_tags
   resource_group      = local.combined_objects_resource_groups[try(each.value.resource_group.lz_key, local.client_config.landingzone_key)][try(each.value.resource_group_key, each.value.resource_group.key)]
   resource_group_name = can(each.value.resource_group.name) || can(each.value.resource_group_name) ? try(each.value.resource_group.name, each.value.resource_group_name) : null
   location            = try(local.global_settings.regions[each.value.region], null)
-
-  quarantine_policy_enabled = try(each.value.quarantine_policy_enabled, false)
-  zone_redundancy_enabled   = try(each.value.zone_redundancy_enabled, false)
-  export_policy_enabled     = try(each.value.export_policy_enabled, true)
-  trust_policy              = try(each.value.trust_policy, {})
-  retention_policy          = try(each.value.retention_policy, {})
 }
 
 output "azure_container_registries" {
