@@ -20,6 +20,9 @@ variable "public_ip_addresses" {
 variable "vnets" {
   default = {}
 }
+variable "virtual_subnets" {
+  default = {}
+}
 
 variable "sku_name" {
   type        = string

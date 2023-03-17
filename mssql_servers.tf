@@ -16,6 +16,7 @@ module "mssql_servers" {
   storage_accounts  = module.storage_accounts
   azuread_groups    = local.combined_objects_azuread_groups
   vnets             = local.combined_objects_networking
+  virtual_subnets   = local.combined_objects_virtual_subnets 
   private_endpoints = try(each.value.private_endpoints, {})
   resource_groups   = local.combined_objects_resource_groups
   private_dns       = local.combined_objects_private_dns

@@ -13,6 +13,7 @@ module "recovery_vaults" {
   resource_group_name = can(each.value.resource_group.name) || can(each.value.resource_group_name) ? try(each.value.resource_group.name, each.value.resource_group_name) : local.combined_objects_resource_groups[try(each.value.resource_group.lz_key, local.client_config.landingzone_key)][try(each.value.resource_group_key, each.value.resource_group.key)].name
   base_tags           = try(local.global_settings.inherit_tags, false) ? try(local.combined_objects_resource_groups[try(each.value.resource_group.lz_key, local.client_config.landingzone_key)][try(each.value.resource_group.key, each.value.resource_group_key)].tags, {}) : {}
   vnets               = try(local.combined_objects_networking, {})
+  virtual_subnets     = try(local.combined_objects_virtual_subnets, {})
   private_endpoints   = try(each.value.private_endpoints, {})
   private_dns         = local.combined_objects_private_dns
 

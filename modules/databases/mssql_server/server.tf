@@ -45,7 +45,10 @@ resource "azurerm_mssql_virtual_network_rule" "network_rules" {
 
   name      = each.value.name
   server_id = azurerm_mssql_server.mssql.id
-  subnet_id = can(each.value.subnet_id) ? each.value.subnet_id : var.vnets[try(each.value.lz_key, var.client_config.landingzone_key)][each.value.vnet_key].subnets[each.value.subnet_key].id
+  subnet_id = can(each.value.subnet_id) ? each.value.subnet_id : coalesce(
+    try(var.vnets[try(each.value.lz_key, var.client_config.landingzone_key)][each.value.vnet_key].subnets[each.value.subnet_key].id, null),
+    try(var.virtual_subnets[try(each.value.lz_key, var.client_config.landingzone_key)][each.value.subnet_key].id, null)
+  )
 }
 
 resource "azurecaf_name" "mssql" {

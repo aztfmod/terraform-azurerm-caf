@@ -14,6 +14,7 @@ module "load_balancers" {
   public_ip_addresses = local.combined_objects_public_ip_addresses
   client_config       = local.client_config
   vnets               = local.combined_objects_networking
+  virtual_subnets     = local.combined_objects_virtual_subnets  
   diagnostic_profiles = try(each.value.diagnostic_profiles, {})
   diagnostics         = local.combined_diagnostics
   global_settings     = local.global_settings

@@ -32,6 +32,9 @@ variable "resource_groups" {
 variable "vnets" {
   default = {}
 }
+variable "virtual_subnets" {
+  default = {}
+}
 variable "private_dns" {
   default = {}
 }

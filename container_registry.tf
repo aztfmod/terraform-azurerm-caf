@@ -10,6 +10,7 @@ module "container_registry" {
   tags                = try(each.value.tags, {})
   network_rule_set    = try(each.value.network_rule_set, {})
   vnets               = local.combined_objects_networking
+  virtual_subnets     = local.combined_objects_virtual_subnets
   georeplications     = try(each.value.georeplications, {})
   diagnostics         = local.combined_diagnostics
   diagnostic_profiles = try(each.value.diagnostic_profiles, {})

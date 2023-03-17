@@ -17,6 +17,7 @@ variable "base_tags" {
 }
 variable "private_endpoints" {}
 variable "vnets" {}
+variable "virtual_subnets" {}
 variable "client_config" {
   description = "Client configuration object (see module README.md)."
 }
