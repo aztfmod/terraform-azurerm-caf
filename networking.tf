@@ -123,8 +123,8 @@ module "public_ip_addresses" {
   for_each = local.networking.public_ip_addresses
 
   name                       = azurecaf_name.public_ip_addresses[each.key].result
-  base_tags           = local.global_settings.inherit_tags
-  resource_group      = local.combined_objects_resource_groups[try(each.value.resource_group.lz_key, local.client_config.landingzone_key)][try(each.value.resource_group_key, each.value.resource_group.key)]
+  base_tags                  = local.global_settings.inherit_tags
+  resource_group             = local.combined_objects_resource_groups[try(each.value.resource_group.lz_key, local.client_config.landingzone_key)][try(each.value.resource_group_key, each.value.resource_group.key)]
   global_settings            = local.global_settings
   allocation_method          = try(each.value.allocation_method, "Dynamic")
   diagnostic_profiles        = try(each.value.diagnostic_profiles, {})

@@ -387,9 +387,6 @@ variable "postgresql_flexible_servers" {
 variable "postgresql_servers" {
   default = {}
 }
-variable "cosmos_db" {
-  default = {}
-}
 variable "log_analytics" {
   default = {}
 }

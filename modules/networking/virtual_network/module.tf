@@ -41,31 +41,31 @@ resource "azurerm_virtual_network" "vnet" {
 module "special_subnets" {
   source = "./subnet"
 
-  for_each                                       = lookup(var.settings, "specialsubnets", {})
-  name                                           = each.value.name
-  global_settings                                = var.global_settings
-  virtual_network_name                           = azurerm_virtual_network.vnet.name
-  address_prefixes                               = lookup(each.value, "cidr", [])
-  service_endpoints                              = lookup(each.value, "service_endpoints", [])
-  resource_group_name                            = local.resource_group_name
-  private_endpoint_network_policies_enabled = try(each.value.private_endpoint_network_policies_enabled, each.value.enforce_private_link_endpoint_network_policies, null)
-  private_link_service_network_policies_enabled  = try(each.value.private_link_service_network_policies_enabled, each.value.enforce_private_link_service_network_policies, null)
-  settings                                       = each.value
+  for_each                                      = lookup(var.settings, "specialsubnets", {})
+  name                                          = each.value.name
+  global_settings                               = var.global_settings
+  virtual_network_name                          = azurerm_virtual_network.vnet.name
+  address_prefixes                              = lookup(each.value, "cidr", [])
+  service_endpoints                             = lookup(each.value, "service_endpoints", [])
+  resource_group_name                           = local.resource_group_name
+  private_endpoint_network_policies_enabled     = try(each.value.private_endpoint_network_policies_enabled, each.value.enforce_private_link_endpoint_network_policies, null)
+  private_link_service_network_policies_enabled = try(each.value.private_link_service_network_policies_enabled, each.value.enforce_private_link_service_network_policies, null)
+  settings                                      = each.value
 }
 
 module "subnets" {
   source = "./subnet"
 
-  for_each                                       = lookup(var.settings, "subnets", {})
-  name                                           = each.value.name
-  resource_group_name                            = local.resource_group_name
-  global_settings                                = var.global_settings
-  address_prefixes                               = lookup(each.value, "cidr", [])
-  service_endpoints                              = lookup(each.value, "service_endpoints", [])
+  for_each                                      = lookup(var.settings, "subnets", {})
+  name                                          = each.value.name
+  resource_group_name                           = local.resource_group_name
+  global_settings                               = var.global_settings
+  address_prefixes                              = lookup(each.value, "cidr", [])
+  service_endpoints                             = lookup(each.value, "service_endpoints", [])
   virtual_network_name                          = azurerm_virtual_network.vnet.name
-  private_endpoint_network_policies_enabled = try(each.value.private_endpoint_network_policies_enabled, each.value.enforce_private_link_endpoint_network_policies, null)
-  private_link_service_network_policies_enabled  = try(each.value.private_link_service_network_policies_enabled, each.value.enforce_private_link_service_network_policies, null)
-  settings                                       = each.value
+  private_endpoint_network_policies_enabled     = try(each.value.private_endpoint_network_policies_enabled, each.value.enforce_private_link_endpoint_network_policies, null)
+  private_link_service_network_policies_enabled = try(each.value.private_link_service_network_policies_enabled, each.value.enforce_private_link_service_network_policies, null)
+  settings                                      = each.value
 }
 
 module "nsg" {
