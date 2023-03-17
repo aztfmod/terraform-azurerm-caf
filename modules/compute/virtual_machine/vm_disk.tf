@@ -14,21 +14,20 @@ resource "azurerm_managed_disk" "disk" {
   for_each = lookup(var.settings, "data_disks", {})
 
   name                   = data.azurecaf_name.disk[each.key].result
-  location               = var.location
-  resource_group_name    = var.resource_group_name
+  location               = local.location
+  resource_group_name    = local.resource_group_name
   storage_account_type   = each.value.storage_account_type
   create_option          = each.value.create_option
   disk_size_gb           = each.value.disk_size_gb
   zone                   = try(each.value.zone, each.value.zones[0], null)
   disk_iops_read_write   = try(each.value.disk_iops_read_write, null)
   disk_mbps_read_write   = try(each.value.disk.disk_mbps_read_write, null)
-  tags                   = local.tags
+  tags                   = merge(local.tags, try(each.value.tags, {}))
   disk_encryption_set_id = try(each.value.disk_encryption_set_key, null) == null ? null : var.disk_encryption_sets[try(each.value.lz_key, var.client_config.landingzone_key)][each.value.disk_encryption_set_key].id
 
   lifecycle {
     ignore_changes = [
       name, #for ASR disk restores
-      resource_group_name, location
     ]
   }
 
@@ -37,10 +36,7 @@ resource "azurerm_managed_disk" "disk" {
 resource "azurerm_virtual_machine_data_disk_attachment" "disk" {
   for_each = lookup(var.settings, "data_disks", {})
 
-  managed_disk_id = coalesce(
-    try(each.value.restored_disk_id, null),
-    try(azurerm_managed_disk.disk[each.key].id, null)
-  )
+  managed_disk_id           = can(azurerm_managed_disk.disk[each.key].id) ? azurerm_managed_disk.disk[each.key].id : each.value.restored_disk_id
   virtual_machine_id        = local.os_type == "linux" ? azurerm_linux_virtual_machine.vm["linux"].id : azurerm_windows_virtual_machine.vm["windows"].id
   lun                       = each.value.lun
   caching                   = lookup(each.value, "caching", "None")

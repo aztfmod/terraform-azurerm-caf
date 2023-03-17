@@ -67,9 +67,9 @@ resource "azurerm_linux_virtual_machine_scale_set" "vmss" {
   admin_username      = each.value.admin_username
   admin_password      = each.value.disable_password_authentication == false ? each.value.admin_password : null
   instances           = each.value.instances
-  location            = var.location
+  location            = local.location
   name                = azurecaf_name.linux[each.key].result
-  resource_group_name = var.resource_group_name
+  resource_group_name = local.resource_group_name
   sku                 = each.value.sku
   tags                = merge(local.tags, try(each.value.tags, null))
 
@@ -258,9 +258,9 @@ resource "azurerm_linux_virtual_machine_scale_set" "vmss_autoscaled" {
   admin_username      = each.value.admin_username
   admin_password      = each.value.disable_password_authentication == false ? each.value.admin_password : null
   instances           = each.value.instances
-  location            = var.location
+  location            = local.location
   name                = azurecaf_name.linux[each.key].result
-  resource_group_name = var.resource_group_name
+  resource_group_name = local.resource_group_name
   sku                 = each.value.sku
   tags                = merge(local.tags, try(each.value.tags, null))
 

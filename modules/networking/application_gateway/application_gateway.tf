@@ -28,8 +28,8 @@ data "azurerm_key_vault_certificate" "manual_certs" {
 
 resource "azurerm_application_gateway" "agw" {
   name                = azurecaf_name.agw.result
-  resource_group_name = var.resource_group_name
-  location            = var.location
+  resource_group_name = local.resource_group_name
+  location            = local.location
 
   zones                             = try(var.settings.zones, null)
   enable_http2                      = try(var.settings.enable_http2, true)

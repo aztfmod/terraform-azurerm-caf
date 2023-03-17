@@ -3,6 +3,10 @@ global_settings = {
   regions = {
     region1 = "australiaeast"
   }
+  inherit_tags = true
+  tags = {
+    example = "app_gateway/100-simple-app-gateway"
+  }
 }
 
 
@@ -29,6 +33,9 @@ application_gateways = {
     }
     zones        = ["1"]
     enable_http2 = true
+    tags = {
+      project = "demo"
+    }
 
     front_end_ip_configurations = {
       public = {

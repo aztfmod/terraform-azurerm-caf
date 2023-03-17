@@ -10,8 +10,8 @@ resource "azurecaf_name" "postgresql_flexible_server" {
 
 resource "azurerm_postgresql_flexible_server" "postgresql" {
   name                = azurecaf_name.postgresql_flexible_server.result
-  resource_group_name = var.resource_group_name
-  location            = var.location
+  resource_group_name = local.resource_group_name
+  location            = local.location
   version             = try(var.settings.version, null)
   sku_name            = try(var.settings.sku_name, null)
   zone                = try(var.settings.zone, null)

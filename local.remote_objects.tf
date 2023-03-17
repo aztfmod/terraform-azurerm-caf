@@ -24,6 +24,7 @@ locals {
     azuread_apps                                   = try(local.combined_objects_azuread_apps, null)
     azuread_groups                                 = try(local.combined_objects_azuread_groups, null)
     azuread_service_principals                     = try(local.combined_objects_azuread_service_principals, null)
+    azuread_service_principal_passwords            = try(local.combined_objects_azuread_service_principal_passwords, null)
     azuread_users                                  = try(local.combined_objects_azuread_users, null)
     firewall_policies                              = try(local.combined_objects_azurerm_firewall_policies, null)
     firewalls                                      = try(local.combined_objects_azurerm_firewalls, null)
@@ -123,11 +124,12 @@ locals {
     vmware_private_clouds                          = try(local.combined_objects_vmware_private_clouds, null)
     vpn_gateway_connections                        = try(local.combined_objects_vpn_gateway_connections, null)
     vpn_sites                                      = try(local.combined_objects_vpn_sites, null)
+    web_pubsubs                                    = try(local.combined_objects_web_pubsubs, null)
+    web_pubsub_hubs                                = try(local.combined_objects_web_pubsub_hubs, null)
     wvd_application_groups                         = try(local.combined_objects_wvd_application_groups, null)
     wvd_applications                               = try(local.combined_objects_wvd_applications, null)
     wvd_host_pools                                 = try(local.combined_objects_wvd_host_pools, null)
     wvd_workspaces                                 = try(local.combined_objects_wvd_workspaces, null)
     subscriptions                                  = try(local.combined_objects_subscriptions, null)
-
   }
 }

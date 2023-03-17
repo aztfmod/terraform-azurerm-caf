@@ -4,11 +4,18 @@ global_settings = {
   regions = {
     region1 = "australiaeast"
   }
+  inherit_tags = true
+  tags = {
+    example = "examples/automation/103-automation-private-endpoints"
+  }
 }
 
 resource_groups = {
   automation = {
     name = "automation"
+    tags = {
+      project = "aztfmod"
+    }
   }
 }
 
@@ -17,6 +24,10 @@ automations = {
     name               = "automation"
     sku                = "Basic"
     resource_group_key = "automation"
+
+    tags = {
+      resource = "automation"
+    }
 
     private_endpoints = {
       # Require enforce_private_link_endpoint_network_policies set to true on the subnet
@@ -27,6 +38,10 @@ automations = {
         # lz_key     = ""
         vnet_key   = "vnet_region1"
         subnet_key = "auto_subnet"
+
+        tags = {
+          networking = "private endpoint"
+        }
 
         private_service_connection = {
           name                 = "auto-private-link"
@@ -62,6 +77,10 @@ vnets = {
         enforce_private_link_endpoint_network_policies = true
       }
     }
+
+    tags = {
+      resource = "vnet"
+    }
   }
 }
 
@@ -71,11 +90,18 @@ private_dns = {
     name               = "privatelink.azure-automation.net"
     resource_group_key = "automation"
 
+    tags = {
+      resource = "private dns"
+    }
+
     vnet_links = {
       vnlk1 = {
         name = "auto-vnet-link"
         # lz_key   = ""
         vnet_key = "vnet_region1"
+        tags = {
+          net_team = "noc1"
+        }
       }
     }
   }

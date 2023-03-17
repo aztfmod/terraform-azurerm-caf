@@ -7,6 +7,6 @@ resource "azurerm_private_dns_a_record" "a_records" {
   zone_name           = lookup(each.value, "lz_key", null) == null ? var.private_dns[each.value.private_dns_key].name : var.private_dns[each.value.lz_key][each.value.private_dns_key].name
   ttl                 = each.value.ttl
   records             = azurerm_app_service_environment_v3.asev3.internal_inbound_ip_addresses
-  tags                = merge(try(each.value.tags, {}), local.tags)
+  tags                = merge(local.tags, try(each.value.tags, {}))
 }
 

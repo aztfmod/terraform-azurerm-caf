@@ -28,12 +28,12 @@ data "azurerm_key_vault_certificate" "manual_certs" {
 
 resource "azurerm_application_gateway" "agw" {
   name                = azurecaf_name.agw.result
-  resource_group_name = var.resource_group_name
-  location            = var.location
+  resource_group_name = local.resource_group_name
+  location            = local.location
 
   zones                             = try(var.settings.zones, null)
   enable_http2                      = try(var.settings.enable_http2, true)
-  tags                              = try(local.tags, null)
+  tags                              = merge(local.tags, try(var.settings.tags, {}))
   firewall_policy_id                = can(var.settings.firewall_policy_id) == true ? var.settings.firewall_policy_id : (can(var.settings.waf_policy.key) == true ? var.application_gateway_waf_policies[try(var.settings.waf_policy.lz_key, var.client_config.landingzone_key)][var.settings.waf_policy.key].id : null)
   force_firewall_policy_association = can(var.settings.firewall_policy_id) == false && can(var.settings.waf_policy.key) == false ? false : true
 
