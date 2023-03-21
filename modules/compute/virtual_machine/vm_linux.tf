@@ -65,14 +65,14 @@ resource "azurerm_linux_virtual_machine" "vm" {
   encryption_at_host_enabled      = try(each.value.encryption_at_host_enabled, null)
   eviction_policy                 = try(each.value.eviction_policy, null)
   license_type                    = try(each.value.license_type, null)
-  location                        = var.location
+  location                        = local.location
   max_bid_price                   = try(each.value.max_bid_price, null)
   name                            = azurecaf_name.linux[each.key].result
   network_interface_ids           = local.nic_ids
   priority                        = try(each.value.priority, null)
   provision_vm_agent              = try(each.value.provision_vm_agent, true)
   proximity_placement_group_id    = can(each.value.proximity_placement_group_key) || can(each.value.proximity_placement_group.key) ? var.proximity_placement_groups[try(var.client_config.landingzone_key, var.client_config.landingzone_key)][try(each.value.proximity_placement_group_key, each.value.proximity_placement_group.key)].id : try(each.value.proximity_placement_group_id, each.value.proximity_placement_group.id, null)
-  resource_group_name             = var.resource_group_name
+  resource_group_name             = local.resource_group_name
   size                            = each.value.size
   tags                            = merge(local.tags, try(each.value.tags, null))
   zone                            = try(each.value.zone, null)

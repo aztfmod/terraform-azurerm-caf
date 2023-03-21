@@ -13,15 +13,15 @@ resource "azurecaf_name" "ws" {
 # Tested with : AzureRM 2.57.0
 resource "azurerm_synapse_workspace" "ws" {
   name                                 = azurecaf_name.ws.result
-  resource_group_name                  = var.resource_group_name
-  location                             = var.location
+  resource_group_name                  = local.resource_group_name
+  location                             = local.location
   storage_data_lake_gen2_filesystem_id = var.storage_data_lake_gen2_filesystem_id
   sql_administrator_login              = var.settings.sql_administrator_login
   sql_administrator_login_password     = try(var.settings.sql_administrator_login_password, random_password.sql_admin.0.result)
   managed_virtual_network_enabled      = try(var.settings.managed_virtual_network_enabled, false)
   sql_identity_control_enabled         = try(var.settings.sql_identity_control_enabled, null)
   managed_resource_group_name          = try(var.settings.managed_resource_group_name, null)
-  tags                                 = local.tags
+  tags                                 = merge(local.tags, try(var.settings.tags, null))
 
   dynamic "aad_admin" {
     for_each = try(var.settings.aad_admin, null) != null ? [var.settings.aad_admin] : []
@@ -116,7 +116,7 @@ resource "azurerm_key_vault_secret" "synapse_rg_name" {
   count = try(var.settings.sql_administrator_login_password, null) == null ? 1 : 0
 
   name         = format("%s-synapse-resource-group-name", azurerm_synapse_workspace.ws.name)
-  value        = var.resource_group_name
+  value        = local.resource_group_name
   key_vault_id = var.keyvault_id
 }
 

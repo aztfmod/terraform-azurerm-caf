@@ -4,6 +4,7 @@ global_settings = {
     region1 = "australiaeast"
     region2 = "australiasoutheast"
   }
+  inherit_tags = true
 }
 
 resource_groups = {

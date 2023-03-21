@@ -1,6 +1,6 @@
 locals {
   # Need to update the storage tags if the environment tag is updated with the rover command line
-  tags = lookup(var.storage_account, "tags", null) == null ? null : lookup(var.storage_account.tags, "environment", null) == null ? var.storage_account.tags : merge(lookup(var.storage_account, "tags", {}), { "environment" : var.global_settings.environment })
+  caf_tags = lookup(var.storage_account, "tags", null) == null ? null : lookup(var.storage_account.tags, "environment", null) == null ? var.storage_account.tags : merge(lookup(var.storage_account, "tags", {}), { "environment" : var.global_settings.environment })
 }
 
 # naming convention
@@ -27,14 +27,14 @@ resource "azurerm_storage_account" "stg" {
   infrastructure_encryption_enabled = try(var.storage_account.infrastructure_encryption_enabled, null)
   is_hns_enabled                    = try(var.storage_account.is_hns_enabled, false)
   large_file_share_enabled          = try(var.storage_account.large_file_share_enabled, null)
-  location                          = var.location
+  location                          = local.location
   min_tls_version                   = try(var.storage_account.min_tls_version, "TLS1_2")
   name                              = azurecaf_name.stg.result
   nfsv3_enabled                     = try(var.storage_account.nfsv3_enabled, false)
   queue_encryption_key_type         = try(var.storage_account.queue_encryption_key_type, null)
-  resource_group_name               = var.resource_group_name
+  resource_group_name               = local.resource_group_name
   table_encryption_key_type         = try(var.storage_account.table_encryption_key_type, null)
-  tags                              = merge(var.base_tags, local.tags)
+  tags                              = merge(local.tags, try(var.storage_account.tags, null), local.caf_tags)
 
 
   dynamic "custom_domain" {
@@ -246,7 +246,7 @@ module "file_share" {
   storage_account_id   = azurerm_storage_account.stg.id
   settings             = each.value
   recovery_vault       = local.recovery_vault
-  resource_group_name  = var.resource_group_name
+  resource_group_name  = local.resource_group_name
 }
 
 module "management_policy" {

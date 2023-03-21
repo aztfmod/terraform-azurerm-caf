@@ -3,6 +3,7 @@ global_settings = {
   regions = {
     region1 = "australiaeast"
   }
+  inherit_tags = true
 }
 
 provider_azurerm_features_keyvault = {

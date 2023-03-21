@@ -69,5 +69,9 @@ aks_clusters = {
       }
     }
 
+    tags = {
+      cluster = "finance"
+    }
+
   }
 }

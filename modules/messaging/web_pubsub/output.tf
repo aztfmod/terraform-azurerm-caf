@@ -40,7 +40,7 @@ output "secondary_connection_string" {
 
 output "location" {
   description = "The location of the Web PubSub service"
-  value       = var.location
+  value       = local.location
 }
 
 output "resource_group_name" {

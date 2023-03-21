@@ -62,11 +62,11 @@ resource "azurerm_windows_virtual_machine_scale_set" "vmss" {
   admin_password      = try(each.value.admin_password_key, null) == null ? random_password.admin[local.os_type].result : local.admin_password
   admin_username      = try(each.value.admin_username_key, null) == null ? each.value.admin_username : local.admin_username
   instances           = each.value.instances
-  location            = var.location
+  location            = local.location
   name                = azurecaf_name.windows[each.key].result
-  resource_group_name = var.resource_group_name
+  resource_group_name = local.resource_group_name
   sku                 = each.value.sku
-  tags                = merge(local.tags, try(each.value.tags, null))
+  tags                = merge(local.tags, try(each.value.tags, {}))
 
   computer_name_prefix         = azurecaf_name.windows_computer_name_prefix[each.key].result
   custom_data                  = try(each.value.custom_data, null) == null ? null : filebase64(format("%s/%s", path.cwd, each.value.custom_data))

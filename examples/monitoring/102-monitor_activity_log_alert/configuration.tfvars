@@ -32,13 +32,13 @@ monitor_action_groups = {
     }
 
     #more alert settings can be dynamically added/removed by commenting in/out the following blocks
-    sms_receiver = {
-      sms_alert1 = {
-        name         = "sms_alert_servicehealth"
-        country_code = "65"
-        phone_number = "0000000"
-      }
-    }
+    # sms_receiver = {
+    #   sms_alert1 = {
+    #     name         = "sms_alert_servicehealth"
+    #     country_code = "65"
+    #     phone_number = "0000000"
+    #   }
+    # }
 
     webhook_receiver = {
       webhook1 = {

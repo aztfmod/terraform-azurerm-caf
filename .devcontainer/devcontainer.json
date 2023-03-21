@@ -17,11 +17,7 @@
 
     // Use 'settings' to set *default* container specific settings.json values on container create.
     // You can edit these settings after create using File > Preferences > Settings > Remote.
-    "settings": {
-        "files.eol": "\n",
-        "editor.tabSize": 2,
-        "terminal.integrated.scrollback": 32000,
-    },
+
 
     // Uncomment the next line if you want start specific services in your Docker Compose config.
     // "runServices": [],
@@ -33,10 +29,13 @@
     "postCreateCommand": "sudo cp -R /tmp/.ssh-localhost/* ~/.ssh && sudo chown -R $(whoami):$(whoami) /tf/caf ~/.ssh && sudo chmod 400 ~/.ssh/* && git config --global core.editor vi && pre-commit install && pre-commit autoupdate",
 
     // Add the IDs of extensions you want installed when the container is created in the array below.
-    "extensions": [
-        "hashicorp.terraform",
-        "mutantdino.resourcemonitor",
-        "ms-azure-devops.azure-pipelines",
-        "omartawfik.github-actions-vscode"
-    ]
+    "customizations": {
+        "vscode": {
+            "extensions": [
+				"hashicorp.terraform",
+				"mutantdino.resourcemonitor",
+				"eamodio.gitlens"
+			]
+        }
+    }
 }
