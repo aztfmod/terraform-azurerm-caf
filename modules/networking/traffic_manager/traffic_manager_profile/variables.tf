@@ -1,12 +1,17 @@
+variable "global_settings" {
+  description = "Global settings object (see module README.md)"
+}
 variable "settings" {
   default = {}
 }
 variable "resource_group_name" {
-  default = {}
+  description = "Resource group object to deploy the virtual machine"
+  default     = null
 }
-variable "location" {
-  default = {}
+variable "resource_group" {
+  description = "Resource group object to deploy the virtual machine"
 }
 variable "base_tags" {
-  default = {}
+  description = "Base tags for the resource to be inherited from the resource group."
+  type        = bool
 }

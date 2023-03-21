@@ -3,7 +3,8 @@ module "private_endpoint" {
   source   = "../../networking/private_endpoint"
   for_each = var.private_endpoints
 
-  base_tags           = local.tags
+  tags                = local.tags
+  base_tags           = var.base_tags
   client_config       = var.client_config
   global_settings     = var.global_settings
   location            = var.resource_groups[try(each.value.resource_group.lz_key, var.client_config.landingzone_key)][try(each.value.resource_group.key, each.value.resource_group_key)].location

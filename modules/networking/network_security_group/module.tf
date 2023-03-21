@@ -10,12 +10,18 @@ resource "azurecaf_name" "nsg" {
 
 resource "azurerm_network_security_group" "nsg" {
   name                = azurecaf_name.nsg.result
-  resource_group_name = var.resource_group_name
-  location            = var.location
-  tags                = local.tags
+  resource_group_name = local.resource_group_name
+  location            = local.location
+  tags                = merge(local.tags, try(var.settings.tags, {}))
 
   security_rule = can(var.settings.nsg) == false ? [] : [
-    for value in var.settings.nsg : {
+    for key, value in local.security_rules : value
+  ]
+}
+
+locals {
+  security_rules = {
+    for value in try(var.settings.nsg, {}) : format("%s-%s", value.direction, value.priority) => {
       name                         = value.name
       description                  = lookup(value, "description", "")
       priority                     = value.priority
@@ -80,8 +86,7 @@ resource "azurerm_network_security_group" "nsg" {
         []
       )
     }
-
-  ]
+  }
 }
 
 output "id" {

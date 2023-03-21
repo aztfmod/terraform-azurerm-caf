@@ -12,8 +12,8 @@ resource "azurecaf_name" "caf_name_vnet" {
 
 resource "azurerm_virtual_network" "vnet" {
   name                = azurecaf_name.caf_name_vnet.result
-  location            = var.location
-  resource_group_name = var.resource_group_name
+  location            = local.location
+  resource_group_name = local.resource_group_name
   address_space       = var.settings.vnet.address_space
   tags                = local.tags
 
@@ -44,7 +44,7 @@ module "special_subnets" {
   for_each                                       = lookup(var.settings, "specialsubnets", {})
   name                                           = each.value.name
   global_settings                                = var.global_settings
-  resource_group_name                            = var.resource_group_name
+  resource_group_name                            = local.resource_group_name
   virtual_network_name                           = azurerm_virtual_network.vnet.name
   address_prefixes                               = lookup(each.value, "cidr", [])
   service_endpoints                              = lookup(each.value, "service_endpoints", [])
@@ -59,7 +59,7 @@ module "subnets" {
   for_each                                       = lookup(var.settings, "subnets", {})
   name                                           = each.value.name
   global_settings                                = var.global_settings
-  resource_group_name                            = var.resource_group_name
+  resource_group_name                            = local.resource_group_name
   virtual_network_name                           = azurerm_virtual_network.vnet.name
   address_prefixes                               = lookup(each.value, "cidr", [])
   service_endpoints                              = lookup(each.value, "service_endpoints", [])
@@ -75,10 +75,10 @@ module "nsg" {
   client_config                     = var.client_config
   diagnostics                       = var.diagnostics
   global_settings                   = var.global_settings
-  location                          = var.location
+  location                          = local.location
   network_security_groups           = var.network_security_groups
   network_security_group_definition = var.network_security_group_definition
-  resource_group                    = var.resource_group_name
+  resource_group                    = local.resource_group_name
   subnets                           = try(var.settings.subnets, {})
   network_watchers                  = var.network_watchers
   tags                              = local.tags

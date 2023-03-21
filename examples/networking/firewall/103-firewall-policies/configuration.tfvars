@@ -152,15 +152,15 @@ azurerm_firewall_policy_rule_collection_groups = {
       }
       group2 = {
         name     = "network_rule_collection2"
-        priority = 500
+        priority = 600
         action   = "Deny"
         rules = {
           rule1 = {
-            name                  = "network_rule_collection1_rule1"
-            protocols             = ["TCP", "UDP"]
-            source_addresses      = ["10.0.0.1"]
-            destination_fqdns     = ["www.microsoft.com"]
-            destination_ports     = ["80", "1000-2000"]
+            name              = "network_rule_collection1_rule1"
+            protocols         = ["TCP", "UDP"]
+            source_addresses  = ["10.0.0.1"]
+            destination_fqdns = ["www.microsoft.com"]
+            destination_ports = ["80", "1000-2000"]
           }
         }
       }

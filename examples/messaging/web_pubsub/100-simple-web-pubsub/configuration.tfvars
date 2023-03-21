@@ -3,6 +3,7 @@ global_settings = {
   regions = {
     region1 = "southeastasia"
   }
+  inherit_tags = true
 }
 
 resource_groups = {
