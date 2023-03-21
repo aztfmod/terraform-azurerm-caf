@@ -61,6 +61,19 @@ locals {
     ) : format("%s-%s", probe.value.app_key, probe.value.probe_key) => probe.value
   }
 
+  redirect_configurations = {
+    for redirect_config in
+    flatten(
+      [
+        for app_key, config in var.application_gateway_applications : [
+          for key, value in try(config.redirect_configurations, []) : {
+            value = merge({ app_key = app_key, redirect_config_key = key }, value)
+          }
+        ]
+      ]
+    ) : format("%s-%s", redirect_config.value.app_key, redirect_config.value.redirect_config_key) => redirect_config.value
+  }
+
   rewrite_rule_sets = {
     for rewrite_rule_set in
     flatten(
