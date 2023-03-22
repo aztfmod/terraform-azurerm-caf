@@ -72,7 +72,7 @@ cosmos_dbs = {
             index_policies = {
               index_policy_1 = {
                 automatic      = true
-                indexing_mode  = "Consistent"
+                indexing_mode  = "consistent"
                 included_paths = ["/*"]
                 excluded_paths = ["/\"_etag\"/?"]
               }

@@ -5,7 +5,7 @@ output "id" {
 
 output "location" {
   description = "Azure Region where the resource exists"
-  value       = var.location
+  value       = local.location
 }
 
 output "postgresql_flexible_server_administrator_username" {
@@ -63,5 +63,5 @@ output "postgresql_flexible_server_firewall_rule_id" {
 
 output "resource_group_name" {
   description = "Name of the Resource Group where the resource exists."
-  value       = var.resource_group_name
+  value       = local.resource_group_name
 }

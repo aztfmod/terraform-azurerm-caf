@@ -20,7 +20,7 @@ aks_clusters = {
 
     network_policy = {
       network_plugin    = "azure"
-      load_balancer_sku = "Standard"
+      load_balancer_sku = "standard"
     }
 
     private_cluster_enabled = true
@@ -67,6 +67,10 @@ aks_clusters = {
           "project" = "user services"
         }
       }
+    }
+
+    tags = {
+      cluster = "finance"
     }
 
   }

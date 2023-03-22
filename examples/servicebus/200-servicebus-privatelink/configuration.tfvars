@@ -42,9 +42,9 @@ servicebus_namespaces = {
       key = "rg1"
     }
     name     = "jstestbusaztfmod"
-    sku      = "premium" # basic | standard | premium
-    capacity = 1         # capacity only for premium: 1,2,4,8,16 otherwise 0
-    # zone_redundant = false # only true for premium
+    sku      = "Premium" # Basic | standard | Premium
+    capacity = 1         # capacity only for Premium: 1,2,4,8,16 otherwise 0
+    # zone_redundant = false # only true for Premium
     # tags = {} # optional
     namespace_auth_rules = {
       rule1 = {

@@ -1,14 +1,12 @@
+variable "global_settings" {
+  description = "Global settings object (see module README.md)"
+}
 variable "name" {
   description = "(Required) Specifies the name of the Public IP resource . Changing this forces a new resource to be created."
   type        = string
 }
-variable "resource_group_name" {
+variable "resource_group" {
   description = "(Required) The name of the resource group where to create the resource."
-  type        = string
-}
-variable "location" {
-  description = "(Required) Specifies the supported Azure location where to create the resource. Changing this forces a new resource to be created."
-  type        = string
 }
 variable "sku" {
   description = "(Optional) The SKU of the Public IP. Accepted values are Basic and Standard. Defaults to Basic."
@@ -18,6 +16,15 @@ variable "sku" {
     condition     = contains(["Basic", "Standard"], var.sku)
     error_message = "Provide an allowed value as defined in https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/resources/public_ip#sku."
   }
+}
+variable "sku_tier" {
+  description = "(Optional) The SKU Tier that should be used for the Public IP. Possible values are Regional and Global. Defaults to Regional."
+  type        = string
+  default     = "Regional"
+  # validation {
+  #   condition     = contains(["Regional", "Global"], var.sku_tier)
+  #   error_message = "Provide an allowed value as defined in https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/resources/public_ip#sku_tier."
+  # }
 }
 
 variable "allocation_method" {
@@ -77,13 +84,13 @@ variable "tags" {
 }
 
 variable "zones" {
-  description = "(Optional) The availability zone to allocate the Public IP in. Possible values are Zone-Redundant, 1, 2, 3, and No-Zone. Defaults to Zone-Redundant."
-  type        = string
-  default     = "Zone-Redundant"
+  description = "The availability zone to allocate the Public IP in. Possible values are 1, 2, 3. Defaults to null."
+  type        = list(string)
+  nullable    = true
 
   validation {
-    condition     = contains(["Zone-Redundant", "No-Zone", "1", "2", "3"], var.zones)
-    error_message = "Provide an allowed value as defined in https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/resources/public_ip#availability_zone."
+    condition     = setunion(["1", "2", "3"], var.zones == null ? [""] : var.zones) == toset(["1", "2", "3"])
+    error_message = "Update behavior to mandate specifying the zones in order to avoid accidental resources destructions. https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/resources/public_ip#zone."
   }
 }
 
@@ -111,5 +118,5 @@ variable "public_ip_prefix_id" {
 
 variable "base_tags" {
   description = "Base tags for the resource to be inherited from the resource group."
-  type        = map(any)
+  type        = bool
 }
