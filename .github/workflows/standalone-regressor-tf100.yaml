@@ -55,7 +55,7 @@ jobs:
       matrix: ${{fromJSON(needs.load_scenarios.outputs.matrix)}}
 
     container:
-      image: aztfmod/rover:1.3.4-2301.1603
+      image: aztfmod/rover-preview:1.3.9-2303.090804
       options: --user 0
 
     steps:
@@ -111,6 +111,16 @@ jobs:
           terraform -chdir=${GITHUB_WORKSPACE}/examples \
           init -upgrade=true | grep -P '^- (?=Downloading|Using|Finding|Installing)|^[^-]'
 
+      - name: Terraform Refresh example with selected branch
+        run: |
+          terraform -chdir=${GITHUB_WORKSPACE}/examples \
+            refresh \
+            ${{ env.PARAMETER_FILES }} \
+            -var tags='{testing_job_id='"${{ github.run_id }}"'}' \
+            -var var_folder_path=${{ env.CURRENT_FOLDER }} \
+            -input=false \
+            -state=${{ env.STATE_FILE }}
+
       - name: Terraform Plan example with selected branch
         run: |
           terraform -chdir=${GITHUB_WORKSPACE}/examples \
@@ -165,7 +175,7 @@ jobs:
     needs: [testcases]
 
     container:
-      image: aztfmod/rover:1.3.4-2301.1603
+      image: aztfmod/rover-preview:1.3.9-2303.090804
       options: --user 0
 
     steps:

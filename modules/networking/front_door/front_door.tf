@@ -9,13 +9,12 @@ resource "azurecaf_name" "frontdoor" {
 }
 
 # Ref : https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/resources/frontdoor
-# Tested with AzureRM 2.57.0
+# Tested with AzureRM 3.0.1
 
 resource "azurerm_frontdoor" "frontdoor" {
-  name                                         = azurecaf_name.frontdoor.result
-  resource_group_name                          = var.resource_group_name
-  enforce_backend_pools_certificate_name_check = try(var.settings.certificate_name_check, false)
-  tags                                         = local.tags
+  name                = azurecaf_name.frontdoor.result
+  resource_group_name = var.resource_group_name
+  tags                = local.tags
 
   dynamic "routing_rule" {
     for_each = var.settings.routing_rule
@@ -61,9 +60,8 @@ resource "azurerm_frontdoor" "frontdoor" {
     }
   }
 
-  backend_pools_send_receive_timeout_seconds = try(var.settings.backend_pools_send_receive_timeout_seconds, 60)
-  load_balancer_enabled                      = try(var.settings.load_balancer_enabled, true)
-  friendly_name                              = try(var.settings.backend_pool.name, null)
+  load_balancer_enabled = try(var.settings.load_balancer_enabled, true)
+  friendly_name         = try(var.settings.backend_pool.name, null)
 
 
   dynamic "backend_pool_load_balancing" {
@@ -110,6 +108,11 @@ resource "azurerm_frontdoor" "frontdoor" {
         }
       }
     }
+  }
+
+  backend_pool_settings {
+    backend_pools_send_receive_timeout_seconds   = try(var.settings.backend_pools_send_receive_timeout_seconds, 60)
+    enforce_backend_pools_certificate_name_check = try(var.settings.certificate_name_check, false)
   }
 
   dynamic "frontend_endpoint" {

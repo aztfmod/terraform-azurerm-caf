@@ -1,6 +1,6 @@
 locals {
   # Need to update the storage tags if the environment tag is updated with the rover command line
-  tags = lookup(var.storage_account, "tags", null) == null ? null : lookup(var.storage_account.tags, "environment", null) == null ? var.storage_account.tags : merge(lookup(var.storage_account, "tags", {}), { "environment" : var.global_settings.environment })
+  caf_tags = lookup(var.storage_account, "tags", null) == null ? null : lookup(var.storage_account.tags, "environment", null) == null ? var.storage_account.tags : merge(lookup(var.storage_account, "tags", {}), { "environment" : var.global_settings.environment })
 }
 
 # naming convention
@@ -18,23 +18,25 @@ resource "azurecaf_name" "stg" {
 # Ref : https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/resources/storage_account
 
 resource "azurerm_storage_account" "stg" {
-  access_tier                       = try(var.storage_account.access_tier, "Hot")
-  account_kind                      = try(var.storage_account.account_kind, "StorageV2")
-  account_replication_type          = try(var.storage_account.account_replication_type, "LRS")
+  name                              = azurecaf_name.stg.result
   account_tier                      = try(var.storage_account.account_tier, "Standard")
-  allow_blob_public_access          = try(var.storage_account.allow_blob_public_access, false)
+  account_replication_type          = try(var.storage_account.account_replication_type, "LRS")
+  account_kind                      = try(var.storage_account.account_kind, "StorageV2")
+  access_tier                       = try(var.storage_account.access_tier, "Hot")
+  allow_nested_items_to_be_public   = try(var.storage_account.allow_nested_items_to_be_public, var.storage_account.allow_blob_public_access, false)
+  cross_tenant_replication_enabled  = try(var.storage_account.cross_tenant_replication_enabled, null)
+  edge_zone                         = try(var.storage_account.edge_zone, null)
   enable_https_traffic_only         = try(var.storage_account.enable_https_traffic_only, true)
   infrastructure_encryption_enabled = try(var.storage_account.infrastructure_encryption_enabled, null)
-  is_hns_enabled                    = try(var.storage_account.is_hns_enabled, false)
   large_file_share_enabled          = try(var.storage_account.large_file_share_enabled, null)
-  location                          = var.location
+  location                          = local.location
   min_tls_version                   = try(var.storage_account.min_tls_version, "TLS1_2")
-  name                              = azurecaf_name.stg.result
+  is_hns_enabled                    = try(var.storage_account.is_hns_enabled, false)
   nfsv3_enabled                     = try(var.storage_account.nfsv3_enabled, false)
   queue_encryption_key_type         = try(var.storage_account.queue_encryption_key_type, null)
-  resource_group_name               = var.resource_group_name
+  resource_group_name               = local.resource_group_name
   table_encryption_key_type         = try(var.storage_account.table_encryption_key_type, null)
-  tags                              = merge(var.base_tags, local.tags)
+  tags                              = merge(local.tags, try(var.storage_account.tags, null), local.caf_tags)
 
 
   dynamic "custom_domain" {
@@ -206,6 +208,44 @@ resource "azurerm_storage_account" "stg" {
     }
   }
 
+  dynamic "share_properties" {
+    for_each = can(var.storage_account.share_properties) ? [1] : []
+
+    content {
+      dynamic "cors_rule" {
+        for_each = can(var.storage_account.share_properties.cors_rule) ? [1] : []
+
+        content {
+          allowed_headers    = var.storage_account.share_properties.cors_rule.allowed_headers
+          allowed_methods    = var.storage_account.share_properties.cors_rule.allowed_methods
+          allowed_origins    = var.storage_account.share_properties.cors_rule.allowed_origins
+          exposed_headers    = var.storage_account.share_properties.cors_rule.exposed_headers
+          max_age_in_seconds = var.storage_account.share_properties.cors_rule.max_age_in_seconds
+        }
+      }
+
+      dynamic "retention_policy" {
+        for_each = can(var.storage_account.share_properties.retention_policy) ? [1] : []
+
+        content {
+          days = try(var.storage_account.share_properties.retention_policy.days, 7)
+        }
+      }
+
+      dynamic "smb" {
+        for_each = can(var.storage_account.share_properties.smb) ? [1] : []
+
+        content {
+          versions                        = try(var.storage_account.share_properties.smb.versions, null)
+          authentication_types            = try(var.storage_account.share_properties.smb.authentication_types, null)
+          kerberos_ticket_encryption_type = try(var.storage_account.share_properties.smb.kerberos_ticket_encryption_type, null)
+          channel_encryption_type         = try(var.storage_account.share_properties.smb.channel_encryption_type, null)
+        }
+      }
+
+    }
+  }
+
   lifecycle {
     ignore_changes = [
       location, resource_group_name
@@ -246,7 +286,7 @@ module "file_share" {
   storage_account_id   = azurerm_storage_account.stg.id
   settings             = each.value
   recovery_vault       = local.recovery_vault
-  resource_group_name  = var.resource_group_name
+  resource_group_name  = local.resource_group_name
 }
 
 module "management_policy" {

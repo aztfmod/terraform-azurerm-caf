@@ -10,11 +10,10 @@ resource "azurecaf_name" "wvdws" {
 
 resource "azurerm_virtual_desktop_workspace" "wvdws" {
   name                = azurecaf_name.wvdws.result
-  location            = var.location
-  resource_group_name = var.resource_group_name
-
-  friendly_name = try(var.settings.friendly_name, null)
-  description   = try(var.settings.description, null)
-  tags          = local.tags
+  location            = local.location
+  resource_group_name = local.resource_group_name
+  friendly_name       = try(var.settings.friendly_name, null)
+  description         = try(var.settings.description, null)
+  tags                = merge(local.tags, try(var.settings.tags, null))
 }
 

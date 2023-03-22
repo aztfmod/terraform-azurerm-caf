@@ -62,12 +62,12 @@ keyvault_access_policies = {
   kv1 = {
     logged_in_user = {
       secret_permissions = ["Set", "Get", "List", "Delete", "Purge", "Recover"]
-      key_permissions    = ["decrypt", "encrypt", "sign", "unwrapKey", "verify", "wrapKey", "List", "Get", "Create", "Purge"]
+      key_permissions    = ["Decrypt", "Encrypt", "Sign", "UnwrapKey", "Verify", "WrapKey", "List", "Get", "Create", "Purge"]
     }
     disk_encryption_sets = {
       disk_encryption_set_key = "set1"
       # lz_key = "example" # for remote disk_encryption_set
-      key_permissions = ["decrypt", "encrypt", "sign", "unwrapKey", "verify", "wrapKey", "List", "Get", "Create", "Purge"]
+      key_permissions = ["Decrypt", "Encrypt", "Sign", "UnwrapKey", "Verify", "WrapKey", "List", "Get", "Create", "Purge"]
     }
   }
 }
@@ -79,7 +79,7 @@ keyvault_keys = {
     name               = "disk-key"
     key_type           = "RSA"
     key_size           = 2048
-    key_opts           = ["decrypt", "encrypt", "sign", "unwrapKey", "verify", "wrapKey"]
+    key_opts           = ["Decrypt", "Encrypt", "Sign", "UnwrapKey", "Verify", "WrapKey"]
 
     # curve = ""
     # not_before_date = ""

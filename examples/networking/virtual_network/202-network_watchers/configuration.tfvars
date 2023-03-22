@@ -107,11 +107,11 @@ bastion_hosts = {
 
 }
 
-
-network_watchers = {
-  network_watcher_1 = {
-    name               = "nwwatcher_eastus"
-    resource_group_key = "vnet_hub_re1"
-    region             = "region1"
-  }
-}
+# only need to create them once on a subscription
+# network_watchers = {
+#   network_watcher_1 = {
+#     name               = "nwwatcher_eastus"
+#     resource_group_key = "vnet_hub_re1"
+#     region             = "region1"
+#   }
+# }
