@@ -36,5 +36,13 @@ locals {
       ), null)
       ip_addresses = try(value.backend_pool.ip_addresses, null)
     }
+    # only add item to backend map if it's pointing to something
+    if try(flatten(
+      [
+        local.backend_pools_app_services[key],
+        local.backend_pools_fqdn[key]
+      ]
+    ), null) != null ||
+    try(value.backend_pool.ip_addresses, null) != null
   }
 }
