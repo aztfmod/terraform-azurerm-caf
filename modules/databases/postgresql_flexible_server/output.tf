@@ -3,6 +3,10 @@ output "location" {
   value       = var.location
 }
 
+output "rbac_id" {
+  value = try(azurerm_postgresql_flexible_server.postgresql.identity[0].principal_id, null)
+}
+
 output "postgresql_flexible_server_administrator_username" {
   description = "Administrator username of PostgreSQL flexible server"
   value       = azurerm_postgresql_flexible_server.postgresql.administrator_login

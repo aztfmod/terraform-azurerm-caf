@@ -28,14 +28,14 @@ resource "azurerm_postgresql_flexible_server" "postgresql" {
   administrator_password = try(var.settings.create_mode, "Default") == "Default" ? try(var.settings.administrator_password, azurerm_key_vault_secret.postgresql_administrator_password.0.value) : null
 
   geo_redundant_backup_enabled = try(var.settings.geo_redundant_backup_enabled, null)
-  backup_retention_days = try(var.settings.backup_retention_days, null)
+  backup_retention_days        = try(var.settings.backup_retention_days, null)
 
   dynamic "authentication" {
     for_each = try(var.settings.authentication.*, {})
 
     content {
       active_directory_auth_enabled = try(authentication.value.active_directory_auth_enabled, null)
-      password_auth_enabled = try(authentication.value.password_auth_enabled, null)
+      password_auth_enabled         = try(authentication.value.password_auth_enabled, null)
       tenant_id = authentication.value.active_directory_auth_enabled ? try(
         authentication.value.tenant_id,
         var.client_config.tenant_id,
@@ -48,7 +48,7 @@ resource "azurerm_postgresql_flexible_server" "postgresql" {
     for_each = try(var.settings.customer_managed_key.*, {})
 
     content {
-      key_vault_key_id = try(customer_managed_key.value.key_vault_key_id, null)
+      key_vault_key_id                  = try(customer_managed_key.value.key_vault_key_id, null)
       primary_user_assigned_identity_id = try(customer_managed_key.value.primary_user_assigned_identity_id, null)
     }
   }
@@ -57,7 +57,7 @@ resource "azurerm_postgresql_flexible_server" "postgresql" {
     for_each = try(var.settings.identity.*, {})
 
     content {
-      type = try(identity.value.type, null)
+      type         = try(identity.value.type, null)
       identity_ids = local.identity_ids
     }
   }
@@ -90,6 +90,27 @@ resource "azurerm_postgresql_flexible_server" "postgresql" {
   }
 
   tags = merge(local.tags, lookup(var.settings, "tags", {}))
+}
+
+# Adds an Azure AD Service Principal, if AD auth is enabled
+resource "azurerm_postgresql_flexible_server_active_directory_administrator" "postgresql" {
+  count = try(var.settings.authentication.active_directory_auth_enabled, false) == true ? 1 : 0
+
+  server_name         = azurerm_postgresql_flexible_server.postgresql.name
+  resource_group_name = var.resource_group_name
+  principal_type      = try(var.settings.authentication.principal_type, "Group")
+  tenant_id = try(
+    var.settings.authentication.service_principal.tenant_id,
+    var.remote_objects.azuread_groups[try(var.settings.authentication.service_principal.lz_key, var.client_config.landingzone_key)][var.settings.authentication.service_principal.azuread_group_key].tenant_id
+  )
+  object_id = try(
+    var.settings.authentication.service_principal.object_id,
+    var.remote_objects.azuread_groups[try(var.settings.authentication.service_principal.lz_key, var.client_config.landingzone_key)][var.settings.authentication.service_principal.azuread_group_key].id
+  )
+  principal_name = try(
+    var.settings.authentication.service_principal.principal_name,
+    var.remote_objects.azuread_groups[try(var.settings.authentication.service_principal.lz_key, var.client_config.landingzone_key)][var.settings.authentication.service_principal.azuread_group_key].display_name
+  )
 }
 
 # Store the postgresql_flexible_server administrator_username into keyvault if the attribute keyvault{} is defined.

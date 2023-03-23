@@ -54,3 +54,11 @@ module "azuread_roles_mssql_server" {
   object_id     = module.mssql_servers[each.key].rbac_id
   azuread_roles = each.value.roles
 }
+
+module "azuread_roles_postgresql_flexible_servers" {
+  source   = "./modules/azuread/roles"
+  for_each = try(local.azuread.azuread_roles.postgresql_flexible_servers, {})
+
+  object_id     = module.postgresql_flexible_servers[each.key].rbac_id
+  azuread_roles = each.value.roles
+}
