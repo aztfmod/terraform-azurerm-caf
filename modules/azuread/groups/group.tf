@@ -3,7 +3,7 @@ resource "azuread_group" "group" {
   display_name            = var.global_settings.passthrough ? format("%s", var.azuread_groups.name) : format("%s%s", try(format("%s-", var.global_settings.prefixes.0), ""), var.azuread_groups.name)
   description             = lookup(var.azuread_groups, "description", null)
   prevent_duplicate_names = lookup(var.azuread_groups, "prevent_duplicate_names", null)
-  owners                  = local.owners
+  owners                  = length(local.owners) > 0 ? local.owners : null
   // Note: This module is effected by these bugs:
   // https://github.com/hashicorp/terraform-provider-azuread/issues/464
   // https://github.com/microsoftgraph/msgraph-metadata/issues/92
