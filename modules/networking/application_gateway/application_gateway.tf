@@ -201,6 +201,7 @@ resource "azurerm_application_gateway" "agw" {
       name                                = var.application_gateway_applications[backend_http_settings.key].name
       cookie_based_affinity               = try(backend_http_settings.value.cookie_based_affinity, "Disabled")
       affinity_cookie_name                = try(backend_http_settings.value.affinity_cookie_name, null)
+      path                                = try(backend_http_settings.value.path, null)
       port                                = backend_http_settings.value.port
       protocol                            = backend_http_settings.value.protocol
       request_timeout                     = try(backend_http_settings.value.request_timeout, 30)
