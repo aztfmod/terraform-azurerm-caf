@@ -27,7 +27,40 @@ resource "azurerm_postgresql_flexible_server" "postgresql" {
   administrator_login    = try(var.settings.create_mode, "Default") == "Default" ? try(var.settings.administrator_username, "pgadmin") : null
   administrator_password = try(var.settings.create_mode, "Default") == "Default" ? try(var.settings.administrator_password, azurerm_key_vault_secret.postgresql_administrator_password.0.value) : null
 
+  geo_redundant_backup_enabled = try(var.settings.geo_redundant_backup_enabled, null)
   backup_retention_days = try(var.settings.backup_retention_days, null)
+
+  dynamic "authentication" {
+    for_each = try(var.settings.authentication.*, {})
+
+    content {
+      active_directory_auth_enabled = try(authentication.value.active_directory_auth_enabled, null)
+      password_auth_enabled = try(authentication.value.password_auth_enabled, null)
+      tenant_id = authentication.value.active_directory_auth_enabled ? try(
+        authentication.value.tenant_id,
+        var.client_config.tenant_id,
+        null
+      ) : null
+    }
+  }
+
+  dynamic "customer_managed_key" {
+    for_each = try(var.settings.customer_managed_key.*, {})
+
+    content {
+      key_vault_key_id = try(customer_managed_key.value.key_vault_key_id, null)
+      primary_user_assigned_identity_id = try(customer_managed_key.value.primary_user_assigned_identity_id, null)
+    }
+  }
+
+  dynamic "identity" {
+    for_each = try(var.settings.identity.*, {})
+
+    content {
+      type = try(identity.value.type, null)
+      identity_ids = local.identity_ids
+    }
+  }
 
   dynamic "maintenance_window" {
     for_each = try(var.settings.maintenance_window, null) == null ? [] : [var.settings.maintenance_window]
@@ -51,6 +84,7 @@ resource "azurerm_postgresql_flexible_server" "postgresql" {
   lifecycle {
     ignore_changes = [
       private_dns_zone_id,
+      zone,
       tags
     ]
   }
