@@ -22,7 +22,10 @@ resource_groups = {
       public_exposure = "portal"
     }
   }
-
+  devops_re1 = {
+    name   = "devops-re1"
+    region = "region1"
+  }
 }
 
 storage_accounts = {

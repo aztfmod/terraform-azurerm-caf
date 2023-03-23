@@ -2,8 +2,7 @@ resource "azuread_application" "app" {
 
   display_name = var.global_settings.passthrough || try(var.settings.global_settings.passthrough, false) ? var.settings.application_name : format("%v%s", try(format("%s-", var.global_settings.prefixes[0]), ""), var.settings.application_name)
 
-
-  owners = coalescelist(
+  owners = concat(
     try(var.settings.owners, []),
     [
       var.client_config.object_id
