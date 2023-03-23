@@ -17,6 +17,7 @@
     "automation/102-automation-msi",
     "automation/103-automation-private-endpoints",
     "automation/104-automation-schedule-runbook",
+    "examples/aadb2c/100-simple-aadb2c-directory",
     "azuread/100-azuread-application-with-sevice-principle-with-builtin-roles",
     "azuread/100-sevice-principle-with-builtin-roles",
     "azuread/101-azuread-application-with-service-principle-with-custom-roles",
