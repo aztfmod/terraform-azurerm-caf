@@ -33,3 +33,9 @@ variable "managed_identities" {
 variable "application_gateway" {
   default = {}
 }
+variable "private_endpoints" {
+  default = {}
+}
+variable "private_dns" {
+  default = {}
+}
