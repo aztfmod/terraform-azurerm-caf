@@ -5,9 +5,6 @@ variable "name" {
   description = "(Required) Specifies the name of the Public IP resource . Changing this forces a new resource to be created."
   type        = string
 }
-variable "resource_group" {
-  description = "(Required) The name of the resource group where to create the resource."
-}
 variable "sku" {
   description = "(Optional) The SKU of the Public IP. Accepted values are Basic and Standard. Defaults to Basic."
   type        = string
@@ -116,6 +113,17 @@ variable "public_ip_prefix_id" {
   type        = string
 }
 
+variable "location" {
+  description = "location of the resource if different from the resource group."
+  default     = null
+}
+variable "resource_group_name" {
+  description = "Resource group object to deploy the virtual machine"
+  default     = null
+}
+variable "resource_group" {
+  description = "Resource group object to deploy the virtual machine"
+}
 variable "base_tags" {
   description = "Base tags for the resource to be inherited from the resource group."
   type        = bool
