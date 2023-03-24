@@ -43,8 +43,10 @@ module "networking" {
   settings                          = each.value
   tags                              = try(each.value.tags, null)
 
-  resource_group = local.combined_objects_resource_groups[try(each.value.resource_group.lz_key, local.client_config.landingzone_key)][try(each.value.resource_group.key, each.value.resource_group_key)]
-  base_tags      = local.global_settings.inherit_tags
+  base_tags           = local.global_settings.inherit_tags
+  resource_group      = local.combined_objects_resource_groups[try(each.value.resource_group.lz_key, local.client_config.landingzone_key)][try(each.value.resource_group_key, each.value.resource_group.key)]
+  resource_group_name = can(each.value.resource_group.name) || can(each.value.resource_group_name) ? try(each.value.resource_group.name, each.value.resource_group_name) : null
+  location            = try(local.global_settings.regions[each.value.region], null)
 
 
   #assumed from remote lz only to prevent circular references
@@ -123,8 +125,6 @@ module "public_ip_addresses" {
   for_each = local.networking.public_ip_addresses
 
   name                       = azurecaf_name.public_ip_addresses[each.key].result
-  base_tags                  = local.global_settings.inherit_tags
-  resource_group             = local.combined_objects_resource_groups[try(each.value.resource_group.lz_key, local.client_config.landingzone_key)][try(each.value.resource_group_key, each.value.resource_group.key)]
   global_settings            = local.global_settings
   allocation_method          = try(each.value.allocation_method, "Dynamic")
   diagnostic_profiles        = try(each.value.diagnostic_profiles, {})
@@ -141,6 +141,11 @@ module "public_ip_addresses" {
   tags                       = try(each.value.tags, null)
   # Zone behavior kept to support smooth migration to azurerm 3.x
   zones = try(each.value.sku, "Basic") == "Basic" ? [] : try(each.value.zones, null) == null ? ["1", "2", "3"] : each.value.zones
+
+  base_tags           = local.global_settings.inherit_tags
+  resource_group      = local.combined_objects_resource_groups[try(each.value.resource_group.lz_key, local.client_config.landingzone_key)][try(each.value.resource_group_key, each.value.resource_group.key)]
+  resource_group_name = can(each.value.resource_group.name) || can(each.value.resource_group_name) ? try(each.value.resource_group.name, each.value.resource_group_name) : null
+  location            = try(local.global_settings.regions[each.value.region], null)
 }
 
 #
