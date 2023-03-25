@@ -33,7 +33,7 @@ module "private_dns" {
 }
 
 # would prefer to pass this into private_dns module, but terraform for_each cannot be done with map keys
-# that are derived from resource attributes 
+# that are derived from resource attributes
 resource "azurerm_private_dns_a_record" "wildcard" {
   count = var.settings.vnet.vnet_key != null && var.settings.vnet.internal ? 1 : 0
   depends_on = [
