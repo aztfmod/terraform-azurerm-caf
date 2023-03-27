@@ -7,12 +7,12 @@ variable "settings" {
 }
 
 variable "resource_group_name" {
-  description = "Resource group object to deploy the virtual machine"
+  description = "Resource group object to deploy the Azure B2C Tenant"
   default     = null
 }
 
 variable "resource_group" {
-  description = "Resource group object to deploy the virtual machine"
+  description = "Resource group object to deploy the Azure B2C Tenant"
 }
 
 variable "base_tags" {
