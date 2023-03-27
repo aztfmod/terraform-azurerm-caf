@@ -7,7 +7,7 @@ variable "settings" {
 }
 
 variable "resource_group_name" {
-  description = "Resource group object to deploy the Azure B2C Tenant"
+  description = "Name of the resource group to deploy the Azure B2C Tenant"
   default     = null
 }
 
