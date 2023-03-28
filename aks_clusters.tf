@@ -17,7 +17,7 @@ module "aks_clusters" {
   settings            = each.value
   vnets               = local.combined_objects_networking
 
-  admin_group_object_ids = try(each.value.admin_groups.azuread_group_keys, null) == null ? null : try(
+  admin_group_object_ids = try(each.value.admin_groups, null) == null ? null : try(
     each.value.admin_groups.ids,
     [
       for group_key in try(each.value.admin_groups.azuread_groups.keys, {}) : local.combined_objects_azuread_groups[local.client_config.landingzone_key][group_key].id
