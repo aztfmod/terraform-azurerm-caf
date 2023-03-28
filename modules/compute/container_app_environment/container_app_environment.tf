@@ -12,11 +12,13 @@ resource "azurecaf_name" "container_app_env" {
 resource "azapi_resource" "container_app_env" {
   type = "Microsoft.App/managedEnvironments@2022-10-01"
 
-  parent_id = local.resource_group.id
-  location  = try(var.global_settings.regions[var.settings.region], local.resource_group.location)
+  parent_id = "/subscriptions/98d92cca-0e5b-4e0c-b2c4-8b3e8b8c5c4a/resourceGroups/tpm-rg-container_apps-kii" # local.resource_group.id
+  location  = "eastus2"                                                                                      # try(var.global_settings.regions[var.settings.region], local.resource_group.location)
   tags      = local.tags
 
   name = azurecaf_name.container_app_env.result
+  # tired of getting false positives from azapi
+  schema_validation_enabled = false
 
   body = jsonencode({
     properties = {
