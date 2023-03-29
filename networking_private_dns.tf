@@ -26,8 +26,8 @@ output "private_dns" {
 #
 
 module "private_dns_vnet_links_v1" {
-  source     = "./modules/networking/private_dns_vnet_link_v1"
-  for_each   = {
+  source = "./modules/networking/private_dns_vnet_link_v1"
+  for_each = {
     for key, value in local.networking.private_dns_vnet_links : key => value
     if try(value.version, "") == "v1"
   }
@@ -46,8 +46,8 @@ module "private_dns_vnet_links_v1" {
 #
 
 module "private_dns_vnet_links" {
-  source     = "./modules/networking/private_dns_vnet_link"
-  for_each   = {
+  source = "./modules/networking/private_dns_vnet_link"
+  for_each = {
     for key, value in local.networking.private_dns_vnet_links : key => value
     if can(value.version) == false
   }

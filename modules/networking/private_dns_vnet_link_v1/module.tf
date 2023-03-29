@@ -1,4 +1,4 @@
-data "azurecaf_name" "pnetlk" {
+resource "azurecaf_name" "pnetlk" {
   for_each = var.settings.private_dns_zones
 
   name          = each.value.name
@@ -13,14 +13,14 @@ data "azurecaf_name" "pnetlk" {
 resource "azapi_resource" "vnet_links" {
   for_each = var.settings.private_dns_zones
 
-  type = "Microsoft.Network/privateDnsZones/virtualNetworkLinks@2020-06-01"
-  name = data.azurecaf_name.pnetlk[each.key].result
-  location = "Global"
-  parent_id = can(each.value.id) ? each.value.id : var.private_dns[try(each.value.lz_key, var.client_config.landingzone_key)][each.value.key].id
+  type      = "Microsoft.Network/privateDnsZones/virtualNetworkLinks@2020-06-01"
+  name      = azurecaf_name.pnetlk[each.key].result
+  location  = "Global"
+  parent_id = can(each.value.id) || can(each.value.dns_parent_id) ? try(each.value.id, each.value.dns_parent_id) : var.private_dns[try(each.value.lz_key, var.client_config.landingzone_key)][each.value.key].id
 
-  tags =  var.inherit_tags ? merge(
+  tags = var.inherit_tags ? merge(
     var.global_settings.tags,
-    can(each.value.id) ? {} : var.private_dns[try(each.value.lz_key, var.client_config.landingzone_key)][each.value.key].base_tags,
+    can(each.value.id) || can(each.value.dns_parent_id) ? {} : var.private_dns[try(each.value.lz_key, var.client_config.landingzone_key)][each.value.key].base_tags,
     try(var.settings.tags, {})
   ) : try(var.settings.tags, {})
 
@@ -35,14 +35,3 @@ resource "azapi_resource" "vnet_links" {
     }
   )
 }
-
-# resource "azurerm_private_dns_zone_virtual_network_link" "vnet_links" {
-#   for_each = var.settings.private_dns_zones
-
-#   name                  = azurecaf_name.pnetlk[each.key].result
-#   resource_group_name   = can(each.value.resource_group_name) ? each.value.resource_group_name : var.private_dns[try(each.value.lz_key, var.client_config.landingzone_key)][each.value.key].resource_group_name
-#   private_dns_zone_name = can(each.value.private_dns_zone_name) ? each.value.private_dns_zone_name : var.private_dns[try(each.value.lz_key, var.client_config.landingzone_key)][each.value.key].name
-#   virtual_network_id    = var.virtual_network_id
-#   registration_enabled  = try(each.value.registration_enabled, false)
-#   tags                  = merge(var.base_tags, local.module_tag, try(each.value.tags, null))
-# }
