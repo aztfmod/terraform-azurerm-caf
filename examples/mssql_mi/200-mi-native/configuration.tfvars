@@ -112,6 +112,7 @@ mssql_managed_instances = {
     #proxy_override               = "Redirect"
     identity = {
       type = "SystemAssigned"
+
     }
     public_data_endpoint_enabled = false
     #service_principal
@@ -130,64 +131,6 @@ mssql_managed_instances = {
   }
 }
 
-# mssql_managed_instances_secondary = {
-#   sqlmi2 = {
-#     version = "v1"
-#     resource_group = {
-#       key = "sqlmi_region1"
-#     }
-#     name                = "lz-sql-mi-aztf-sec"
-#     administrator_login = "adminuser"
-#     #administrator_login_password = "@dm1nu53r@30102020"
-#     ## if password not set, a random complex passwor will be created and stored in the keyvault
-#     ## the secret value can be changed after the deployment if needed
-#     ## When administrator_login_password use the following keyvault to store the password
-
-#     authentication_mode = "sql_only"
-#     # "aad_only", "hybrid"
-#     administrators = {
-#       azuread_only_authentication = false
-#       principal_type              = "Group"
-#       sid                         = "a016736e-6c31-485e-a7d4-5b927171bd99"
-#       login                       = "AAD DC Administrators"
-#       tenantId                    = "c2fe6ea2-ee35-4265-95f6-46e9a9b4ec96"
-#     }
-#     #collation = "" */
-#     #dns_zone_partner=""
-#     primary_server = {
-#       mi_server_key = "sqlmi1"
-#     }
-#     #instance_pool_id=""
-#     keyvault = {
-#       key = "sqlmi_rg1"
-#     }
-#     license_type = "LicenseIncluded"
-#     # mi_create_mode = "d" #"Default" "PointInTimeRestore"
-#     #restore_point_in_time
-#     minimal_tls_version = "1.2"
-#     //networking
-#     networking = {
-#       vnet_key   = "sqlmi_region1"
-#       subnet_key = "sqlmi1"
-#     }
-#     #proxy_override               = "Redirect"
-
-#     public_data_endpoint_enabled = false
-#     #service_principal
-#     sku = {
-#       name = "GP_Gen5"
-#     }
-#     #sku = "ss"
-#     backup_storage_redundancy = "LRS"
-#     storage_size_in_gb        = 32
-#     vcores                    = 4
-#     zone_redundant            = "false"
-#     # transparent_data_encryption = {
-#     #   encryption_type  = "SMK"                                                                                          #SMK/CMK
-#     #   key_vault_key_id = "https://kvsandpit3d007f9f500190f.vault.azure.net/keys/mikey/7adec60d2b2c42a882397d732fc2aa24" # not needed for SMK
-#     # }
-#   }
-# }
 
 mssql_managed_databases = {
   managed_db1 = {
@@ -197,6 +140,15 @@ mssql_managed_databases = {
 
   }
 }
+
+managed_identities = {
+  mi1 = {
+    name               = "mssql-msi"
+    resource_group_key = "sqlmi-re0"
+
+  }
+}
+
 
 # azuread_roles = {
 #   mssql_managed_instances = {
@@ -229,23 +181,24 @@ azuread_groups = {
   }
 }
 
-# mssql_mi_failover_groups = {
-#   failover-mi = {
-#     version = "v1"
-#     resource_group_key = "sqlmi_region1"
-#     name               = "failover-test"
-#     primary_server = {
-#       mi_server_key = "sqlmi1"
-#     }
-#     secondary_server = {
-#       mi_server_key = "sqlmi2"
-#     }
-#     readWriteEndpoint = {
-#       failoverPolicy                         = "Automatic"
-#       failoverWithDataLossGracePeriodMinutes = 60
-#     }
-#   }
-# }
+mssql_mi_failover_groups = {
+  failover-mi = {
+    version            = "v1"
+    resource_group_key = "sqlmi_region1"
+    name               = "failover-test"
+    primary_server = {
+      mi_server_key = "sqlmi1"
+    }
+    secondary_server = {
+      mi_server_key = "sqlmi2"
+    }
+    readWriteEndpoint = {
+      failoverPolicy                         = "Automatic"
+      failoverWithDataLossGracePeriodMinutes = 60
+    }
+  }
+}
+
 ## specify azuread_groups key OR you can import existing azuread group by using group OID as shown below
 
 # mssql_mi_administrators= {

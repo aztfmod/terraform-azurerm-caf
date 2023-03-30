@@ -24,7 +24,16 @@ resource "azurerm_mssql_managed_instance" "mssqlmi" {
   timezone_id          = try(var.settings.timezone_id, "UTC")
   storage_account_type = var.settings.backup_storage_redundancy
   dns_zone_partner_id  = try(var.settings.primary_server_id, null)
-  # identity             = {local.identity}
+
+  dynamic "identity" {
+    for_each = can(var.settings.identity) ? [1] : []
+
+    content {
+      type         = var.settings.identity.type
+      identity_ids = var.settings.identity.type == "UserAssigned" ? local.managed_identities : []
+    }
+  }
+
 
 
 }
