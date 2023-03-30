@@ -16,6 +16,10 @@ variable "location" {
   type        = string
 }
 
+variable "managed_identities" {
+
+}
+
 variable "keyvault" {}
 
 variable "primary_server_id" {}
