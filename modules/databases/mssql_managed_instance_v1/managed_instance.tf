@@ -45,7 +45,7 @@ data "azurecaf_name" "mssqlmi" {
 #   }
 
 # }
-
+#
 resource "azurerm_mssql_managed_instance" "mssqlmi" {
   name                         = data.azurecaf_name.mssqlmi.result
   resource_group_name          = var.resource_group_name
@@ -61,6 +61,7 @@ resource "azurerm_mssql_managed_instance" "mssqlmi" {
   minimum_tls_version  = try(var.settings.minimal_tls_version, null)
   timezone_id          = try(var.settings.timezone_id, "UTC")
   storage_account_type = var.settings.backup_storage_redundancy
+  dns_zone_partner_id =    try(var.settings.primary_server_id,null)
 
   # depends_on = [
   #   azurerm_subnet_network_security_group_association.example,

@@ -9,7 +9,7 @@ resource "azurecaf_name" "mifailover" {
 }
 
 # resource "azurerm_template_deployment" "mifailover" {
-
+#
 #   name                = azurecaf_name.mifailover.result
 #   resource_group_name = var.resource_group_name
 

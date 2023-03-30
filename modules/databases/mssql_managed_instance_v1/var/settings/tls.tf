@@ -27,3 +27,4 @@ variable "minimal_tls_version" {
 output "minimal_tls_version" {
   value = var.minimal_tls_version
 }
+#

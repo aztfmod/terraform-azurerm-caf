@@ -25,3 +25,4 @@ variable "license_type" {
 output "license_type" {
   value = var.license_type
 }
+#
