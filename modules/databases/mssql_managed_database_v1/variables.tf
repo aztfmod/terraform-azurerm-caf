@@ -3,20 +3,8 @@ variable "global_settings" {
 }
 variable "server_id" {}
 
-variable "base_tags" {
-  description = "Base tags for the resource to be inherited from the resource group."
-  type        = map(any)
-}
-variable "resource_group_name" {
-  description = "(Required) The name of the resource group where to create the resource."
-  type        = string
-}
-variable "location" {
-  description = "(Required) Specifies the supported Azure location where to create the resource. Changing this forces a new resource to be created."
-  type        = string
-}
 variable "sourceDatabaseId" {
-  default = ""
+  default = null
 }
 
 variable "settings" {
@@ -28,7 +16,9 @@ variable "settings" {
             "long_term_retention_policy",
             "managed_instance_id",
             "name",
-            "short_term_retention_policy"
+            "short_term_retention_policy",
+            "version",
+            "mi_server_key"
           ], k
         )
       ]
@@ -40,7 +30,9 @@ variable "settings" {
           "long_term_retention_policy",
           "managed_instance_id",
           "name",
-          "short_term_retention_policy"
+          "short_term_retention_policy",
+          "version",
+          "mi_server_key"
         ]
       )
       )

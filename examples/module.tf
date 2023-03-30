@@ -131,6 +131,7 @@ module "example" {
     mssql_databases                    = var.mssql_databases
     mssql_elastic_pools                = var.mssql_elastic_pools
     mssql_failover_groups              = var.mssql_failover_groups
+    mssql_managed_databases            = var.mssql_managed_databases
     mssql_managed_databases_backup_ltr = var.mssql_managed_databases_backup_ltr
     mssql_managed_databases_restore    = var.mssql_managed_databases_restore
     mssql_managed_instances            = var.mssql_managed_instances

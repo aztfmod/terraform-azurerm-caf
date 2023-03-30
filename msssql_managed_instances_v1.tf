@@ -16,6 +16,12 @@ output "mssql_mi_failover_groups" {
     module.mssql_mi_failover_groups_v1
   )
 }
+
+output "combined_objects_mssql_managed_instances" {
+  value = local.combined_objects_mssql_managed_instances
+}
+
+
 module "mssql_managed_instances_v1" {
   source = "./modules/databases/mssql_managed_instance_v1"
   for_each = {
@@ -64,7 +70,7 @@ module "mssql_mi_failover_groups_v1" {
     if try(value.version, "") == "v1"
   }
   depends_on = [module.mssql_managed_instances_secondary]
-  
+
   global_settings     = local.global_settings
   settings            = each.value
   resource_group_name = can(each.value.resource_group.name) || can(each.value.resource_group_name) ? try(each.value.resource_group.name, each.value.resource_group_name) : local.combined_objects_resource_groups[try(each.value.resource_group.lz_key, local.client_config.landingzone_key)][try(each.value.resource_group_key, each.value.resource_group.key)].name
@@ -117,3 +123,4 @@ module "mssql_mi_failover_groups_v1" {
 #   mi_name      = module.mssql_managed_instances[each.value.mi_server_key].name
 #   keyvault_key = try(local.combined_objects_keyvault_keys[try(each.value.lz_key, local.client_config.landingzone_key)][each.value.keyvault_key_key], null)
 # }
+

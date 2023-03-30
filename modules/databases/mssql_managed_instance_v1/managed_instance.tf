@@ -8,44 +8,6 @@ data "azurecaf_name" "mssqlmi" {
   passthrough   = var.global_settings.passthrough
 }
 
-# resource "azapi_resource" "mssqlmi" {
-
-#   name = data.azurecaf_name.mssqlmi.result
-
-#   parent_id = var.resource_group_id
-#   location  = var.location
-#   type      = "Microsoft.Sql/managedInstances@2022-08-01-preview"
-#   #tags = local.tags
-#   body = jsonencode({
-#     sku        = local.sku
-#     properties =  {
-
-#       administratorLogin               = try(var.settings.administrator_login,null)
-#       administratorLoginPassword       = try(var.settings.administrator_login_password, data.external.sqlmi_admin_password.0.result.value)
-#       administrators                   = try(local.administrators,null)
-#       collation                        = try(var.settings.collation, null)
-#       licenseType                      = try(var.settings.license_type, "BasePrice")
-#       minimalTlsVersion                = try(var.settings.minimal_tls_version, null)
-#       proxyOverride                    = try(var.settings.proxy_override, "Redirect")
-#       publicDataEndpointEnabled        = try(var.settings.public_data_endpoint_enabled, null)
-#       subnetId                         = var.subnet_id
-#       timezoneId                       = try(var.settings.timezone_id, "UTC")
-#       vCores                           = var.settings.vcores
-#       storageSizeInGB                  = try(var.settings.storage_size_in_gb, null)
-#       requestedBackupStorageRedundancy = var.settings.backup_storage_redundancy
-#       authentication_mode               = var.settings.authentication_mode
-#     }
-#   })
-
-#   timeouts {
-#     create = "10h"
-#     update = "10h"
-#     delete = "10h"
-#     read   = "5m"
-#   }
-
-# }
-#
 resource "azurerm_mssql_managed_instance" "mssqlmi" {
   name                         = data.azurecaf_name.mssqlmi.result
   resource_group_name          = var.resource_group_name
@@ -61,12 +23,10 @@ resource "azurerm_mssql_managed_instance" "mssqlmi" {
   minimum_tls_version  = try(var.settings.minimal_tls_version, null)
   timezone_id          = try(var.settings.timezone_id, "UTC")
   storage_account_type = var.settings.backup_storage_redundancy
-  dns_zone_partner_id =    try(var.settings.primary_server_id,null)
+  dns_zone_partner_id  = try(var.settings.primary_server_id, null)
+  # identity             = {local.identity}
 
-  # depends_on = [
-  #   azurerm_subnet_network_security_group_association.example,
-  #   azurerm_subnet_route_table_association.example,
-  # ]
+
 }
 
 resource "azurerm_mssql_managed_instance_active_directory_administrator" "aadadmin" {
@@ -90,11 +50,15 @@ module "var_settings" {
   proxy_override            = try(var.settings.proxy_override, null)
   administrators            = try(var.settings.administrators, null)
   authentication_mode       = try(var.settings.authentication_mode, null)
+  identity                  = try(var.settings.identity, null)
 }
 
 locals {
   sku = {
     name = module.var_sku.name
+  }
+  identity = {
+    type = module.var_identity.type
   }
 }
 
@@ -103,6 +67,14 @@ module "var_sku" {
 
   name = module.var_settings.sku.name
 }
+
+
+module "var_identity" {
+  source = "./var/identity"
+
+  type = module.var_settings.identity.type
+}
+
 
 module "var_admin" {
   source = "./var/admin"
