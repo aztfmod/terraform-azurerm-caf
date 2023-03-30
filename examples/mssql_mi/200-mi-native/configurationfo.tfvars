@@ -228,23 +228,7 @@ azuread_groups = {
   }
 }
 
-# mssql_mi_failover_groups = {
-#   failover-mi = {
-#     version = "v1"
-#     resource_group_key = "sqlmi_region1"
-#     name               = "failover-test"
-#     primary_server = {
-#       mi_server_key = "sqlmi1"
-#     }
-#     secondary_server = {
-#       mi_server_key = "sqlmi2"
-#     }
-#     readWriteEndpoint = {
-#       failoverPolicy                         = "Automatic"
-#       failoverWithDataLossGracePeriodMinutes = 60
-#     }
-#   }
-# }
+
 ## specify azuread_groups key OR you can import existing azuread group by using group OID as shown below
 
 # mssql_mi_administrators= {
