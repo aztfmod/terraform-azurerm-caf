@@ -3,6 +3,7 @@ global_settings = {
   regions = {
     region1 = "australiaeast"
   }
+  inherit_tags = true
 }
 
 resource_groups = {
@@ -21,6 +22,10 @@ event_hub_namespaces = {
     region             = "region1"
     vnet_key           = "vnet_region1"
     subnet_key         = "evh_subnet"
+
+    tags = {
+      diagnostics = "false"
+    }
 
     private_endpoints = {
       # Require enforce_private_link_endpoint_network_policies set to true on the subnet

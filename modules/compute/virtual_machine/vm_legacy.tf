@@ -30,8 +30,8 @@ resource "azurerm_virtual_machine" "vm" {
   for_each = local.os_type == "legacy" ? var.settings.virtual_machine_settings : {}
 
   name                             = each.value.name
-  location                         = var.location
-  resource_group_name              = var.resource_group_name
+  location                         = local.location
+  resource_group_name              = local.resource_group_name
   vm_size                          = each.value.size
   network_interface_ids            = local.nic_ids
   zones                            = try([each.value.zones], null)

@@ -1,7 +1,7 @@
 resource "azurerm_mariadb_server" "mariadb" {
   name                = azurecaf_name.mariadb.result
-  location            = var.location
-  resource_group_name = var.resource_group_name
+  location            = local.location
+  resource_group_name = local.resource_group_name
 
   administrator_login          = var.settings.administrator_login
   administrator_login_password = try(var.settings.administrator_login_password, azurerm_key_vault_secret.mariadb_admin_password.0.value)

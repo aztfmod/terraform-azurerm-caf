@@ -60,6 +60,12 @@ application_gateway_platforms = {
       cookie_based_affinity         = "Disabled"
       request_timeout               = "60"
       rule_type                     = "Basic"
+      priority                      = 50
+    }
+
+    tags = {
+      env     = "uat"
+      project = "public mobile app"
     }
 
   }

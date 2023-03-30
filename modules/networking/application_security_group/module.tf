@@ -10,9 +10,9 @@ resource "azurecaf_name" "asg" {
 
 resource "azurerm_application_security_group" "asg" {
   name                = azurecaf_name.asg.result
-  location            = var.location
-  resource_group_name = var.resource_group_name
-  tags                = local.tags
+  location            = local.location
+  resource_group_name = local.resource_group_name
+  tags                = merge(local.tags, try(var.settings.tags, {}))
 }
 
 

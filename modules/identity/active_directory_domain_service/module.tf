@@ -1,21 +1,31 @@
 
 resource "azurecaf_name" "aadds" {
   name          = var.settings.name
-  resource_type = "azurerm_data_factory" #"azurerm_active_directory_domain_service"
+  resource_type = "azurerm_data_factory"
   prefixes      = var.global_settings.prefixes
   random_length = var.global_settings.random_length
   clean_input   = true
   passthrough   = var.global_settings.passthrough
   use_slug      = var.global_settings.use_slug
 }
+# Need provider to be updated to support the resource type. Then uncomment
+# data "azurecaf_name" "aadds" {
+#   name          = var.settings.name
+#   resource_type = "azurerm_active_directory_domain_service"
+#   prefixes      = var.global_settings.prefixes
+#   random_length = var.global_settings.random_length
+#   clean_input   = true
+#   passthrough   = var.global_settings.passthrough
+#   use_slug      = var.global_settings.use_slug
+# }
 resource "azurerm_active_directory_domain_service" "aadds" {
   name                  = azurecaf_name.aadds.result
-  resource_group_name   = var.resource_group_name
-  location              = var.remote_objects.location
+  resource_group_name   = local.resource_group_name
+  location              = local.location
   domain_name           = var.settings.domain_name
   filtered_sync_enabled = try(var.settings.filtered_sync_enabled, null)
   sku                   = var.settings.sku
-  tags                  = local.tags
+  tags                  = merge(local.tags, try(var.settings.tags, {}))
 
   dynamic "secure_ldap" {
     for_each = can(var.settings.secure_ldap) ? [var.settings.secure_ldap] : []
@@ -39,10 +49,9 @@ resource "azurerm_active_directory_domain_service" "aadds" {
   dynamic "initial_replica_set" {
     for_each = can(var.settings.initial_replica_set) ? [var.settings.initial_replica_set] : []
     content {
-      subnet_id = coalesce(
-        try(var.remote_objects.vnets[initial_replica_set.value.subnet.lz_key][initial_replica_set.value.subnet.vnet_key].subnets[initial_replica_set.value.subnet.key].id, null),
-        try(var.remote_objects.vnets[var.client_config.landingzone_key][initial_replica_set.value.subnet.vnet_key].subnets[initial_replica_set.value.subnet.key].id, null),
-        try(initial_replica_set.subnet.value.subnet_id, null)
+      subnet_id = can(initial_replica_set.subnet.value.subnet_id) ? initial_replica_set.subnet.value.subnet_id : try(
+        var.vnets[initial_replica_set.value.subnet.lz_key][initial_replica_set.value.subnet.vnet_key].subnets[initial_replica_set.value.subnet.key].id,
+        var.vnets[var.client_config.landingzone_key][initial_replica_set.value.subnet.vnet_key].subnets[initial_replica_set.value.subnet.key].id
       )
     }
   }
@@ -60,6 +69,7 @@ resource "azurerm_active_directory_domain_service" "aadds" {
 
   lifecycle {
     ignore_changes = [
+      name,
       initial_replica_set[0].subnet_id
     ]
   }

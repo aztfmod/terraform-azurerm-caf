@@ -17,5 +17,8 @@ app_config = {
     name               = "appConf1"
     resource_group_key = "rg1"
     location           = "region1"
+    tags = {
+      project = "sales"
+    }
   }
 }

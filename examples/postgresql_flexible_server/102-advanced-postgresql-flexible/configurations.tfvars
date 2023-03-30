@@ -22,7 +22,7 @@ postgresql_flexible_servers = {
     version    = "13"
     sku_name   = "MO_Standard_E4s_v3"
     storage_mb = 131072
-    zone       = "1"
+    zone       = 1
 
     resource_group = {
       key = "postgresql_region1"

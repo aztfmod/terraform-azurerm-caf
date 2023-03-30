@@ -22,7 +22,7 @@ locals {
   }
 
   client_config = var.client_config == {} ? {
-    client_id               = data.azurerm_client_config.current.client_id
+    client_id               = data.azuread_client_config.current.client_id
     landingzone_key         = var.current_landingzone_key
     logged_aad_app_objectId = local.object_id
     logged_user_objectId    = local.object_id
@@ -233,6 +233,7 @@ locals {
   cognitive_services = {
     cognitive_services_account = try(var.cognitive_services.cognitive_services_account, {})
   }
+
   messaging = {
     signalr_services             = try(var.messaging.signalr_services, {})
     servicebus_namespaces        = try(var.messaging.servicebus_namespaces, {})
@@ -242,6 +243,8 @@ locals {
     eventgrid_topic              = try(var.messaging.eventgrid_topic, {})
     eventgrid_event_subscription = try(var.messaging.eventgrid_event_subscription, {})
     eventgrid_domain_topic       = try(var.messaging.eventgrid_domain_topic, {})
+    web_pubsubs                  = try(var.messaging.web_pubsubs, {})
+    web_pubsub_hubs              = try(var.messaging.web_pubsub_hubs, {})
   }
 
   networking = {
@@ -316,7 +319,7 @@ locals {
     vpn_sites                                               = try(var.networking.vpn_sites, {})
   }
 
-  object_id = coalesce(var.logged_user_objectId, var.logged_aad_app_objectId, try(data.azurerm_client_config.current.object_id, null), try(data.azuread_service_principal.logged_in_app.0.object_id, null))
+  object_id = coalesce(var.logged_user_objectId, var.logged_aad_app_objectId, try(data.azuread_client_config.current.object_id, null), try(data.azuread_service_principal.logged_in_app.0.object_id, null))
 
   security = {
     disk_encryption_sets                = try(var.security.disk_encryption_sets, {})

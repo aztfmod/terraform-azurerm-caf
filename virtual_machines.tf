@@ -33,6 +33,8 @@ module "virtual_machines" {
   settings                    = each.value
   storage_accounts            = local.combined_objects_storage_accounts
   vnets                       = local.combined_objects_networking
+  resource_group              = local.combined_objects_resource_groups[try(each.value.resource_group.lz_key, local.client_config.landingzone_key)][try(each.value.resource_group.key, each.value.resource_group_key)]
+  base_tags                   = local.global_settings.inherit_tags
 
   # if boot_diagnostics_storage_account_key is points to a valid storage account, pass the endpoint
   # if boot_diagnostics_storage_account_key is empty string, pass empty string
@@ -42,9 +44,6 @@ module "virtual_machines" {
     each.value.boot_diagnostics_storage_account_key == "" ? "" : each.value.throw_error,
   can(tostring(each.value.boot_diagnostics_storage_account_key)) ? each.value.throw_error : null)
 
-  location            = can(local.global_settings.regions[each.value.region]) ? local.global_settings.regions[each.value.region] : local.combined_objects_resource_groups[try(each.value.resource_group.lz_key, local.client_config.landingzone_key)][try(each.value.resource_group.key, each.value.resource_group_key)].location
-  resource_group_name = can(each.value.resource_group.name) || can(each.value.resource_group_name) ? try(each.value.resource_group.name, each.value.resource_group_name) : local.combined_objects_resource_groups[try(each.value.resource_group.lz_key, local.client_config.landingzone_key)][try(each.value.resource_group_key, each.value.resource_group.key)].name
-  base_tags           = try(local.global_settings.inherit_tags, false) ? try(local.combined_objects_resource_groups[try(each.value.resource_group.lz_key, local.client_config.landingzone_key)][try(each.value.resource_group.key, each.value.resource_group_key)].tags, {}) : {}
 }
 
 

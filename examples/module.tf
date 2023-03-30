@@ -27,6 +27,7 @@ module "example" {
   resource_provider_registration        = var.resource_provider_registration
   var_folder_path                       = var.var_folder_path
   tags                                  = local.tags
+  environment                           = var.environment
 
   azuread = {
     azuread_api_permissions             = var.azuread_api_permissions
@@ -128,6 +129,7 @@ module "example" {
     database_migration_projects        = var.database_migration_projects
     machine_learning_workspaces        = var.machine_learning_workspaces
     mariadb_servers                    = var.mariadb_servers
+    mariadb_databases                  = var.mariadb_databases
     mssql_databases                    = var.mssql_databases
     mssql_elastic_pools                = var.mssql_elastic_pools
     mssql_failover_groups              = var.mssql_failover_groups
@@ -172,6 +174,8 @@ module "example" {
     eventgrid_topic              = var.eventgrid_topic
     eventgrid_event_subscription = var.eventgrid_event_subscription
     eventgrid_domain_topic       = var.eventgrid_domain_topic
+    web_pubsubs                  = var.web_pubsubs
+    web_pubsub_hubs              = var.web_pubsub_hubs
   }
   networking = {
     application_gateway_applications                        = var.application_gateway_applications
@@ -243,29 +247,30 @@ module "example" {
   }
 
   security = {
-    disk_encryption_sets                = var.disk_encryption_sets
-    dynamic_keyvault_secrets            = var.dynamic_keyvault_secrets
-    keyvault_certificate_issuers        = var.keyvault_certificate_issuers
-    keyvault_certificate_requests       = var.keyvault_certificate_requests
-    keyvault_keys                       = var.keyvault_keys
-    keyvault_certificates               = var.keyvault_certificates
-    lighthouse_definitions              = var.lighthouse_definitions
-    sentinel                            = var.sentinel
-    sentinel_automation_rules           = var.sentinel_automation_rules
-    sentinel_watchlists                 = var.sentinel_watchlists
-    sentinel_watchlist_items            = var.sentinel_watchlist_items
-    sentinel_ar_fusions                 = var.sentinel_ar_fusions
-    sentinel_ar_ml_behavior_analytics   = var.sentinel_ar_ml_behavior_analytics
-    sentinel_ar_ms_security_incidents   = var.sentinel_ar_ms_security_incidents
-    sentinel_ar_scheduled               = var.sentinel_ar_scheduled
-    sentinel_dc_aad                     = var.sentinel_dc_aad
-    sentinel_dc_app_security            = var.sentinel_dc_app_security
-    sentinel_dc_aws                     = var.sentinel_dc_aws
-    sentinel_dc_azure_threat_protection = var.sentinel_dc_azure_threat_protection
-    sentinel_dc_ms_threat_protection    = var.sentinel_dc_ms_threat_protection
-    sentinel_dc_office_365              = var.sentinel_dc_office_365
-    sentinel_dc_security_center         = var.sentinel_dc_security_center
-    sentinel_dc_threat_intelligence     = var.sentinel_dc_threat_intelligence
+    disk_encryption_sets                  = var.disk_encryption_sets
+    dynamic_keyvault_secrets              = var.dynamic_keyvault_secrets
+    keyvault_certificate_issuers          = var.keyvault_certificate_issuers
+    keyvault_certificate_requests         = var.keyvault_certificate_requests
+    keyvault_access_policies_azuread_apps = var.keyvault_access_policies_azuread_apps
+    keyvault_keys                         = var.keyvault_keys
+    keyvault_certificates                 = var.keyvault_certificates
+    lighthouse_definitions                = var.lighthouse_definitions
+    sentinel                              = var.sentinel
+    sentinel_automation_rules             = var.sentinel_automation_rules
+    sentinel_watchlists                   = var.sentinel_watchlists
+    sentinel_watchlist_items              = var.sentinel_watchlist_items
+    sentinel_ar_fusions                   = var.sentinel_ar_fusions
+    sentinel_ar_ml_behavior_analytics     = var.sentinel_ar_ml_behavior_analytics
+    sentinel_ar_ms_security_incidents     = var.sentinel_ar_ms_security_incidents
+    sentinel_ar_scheduled                 = var.sentinel_ar_scheduled
+    sentinel_dc_aad                       = var.sentinel_dc_aad
+    sentinel_dc_app_security              = var.sentinel_dc_app_security
+    sentinel_dc_aws                       = var.sentinel_dc_aws
+    sentinel_dc_azure_threat_protection   = var.sentinel_dc_azure_threat_protection
+    sentinel_dc_ms_threat_protection      = var.sentinel_dc_ms_threat_protection
+    sentinel_dc_office_365                = var.sentinel_dc_office_365
+    sentinel_dc_security_center           = var.sentinel_dc_security_center
+    sentinel_dc_threat_intelligence       = var.sentinel_dc_threat_intelligence
 
   }
 

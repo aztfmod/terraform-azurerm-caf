@@ -9,6 +9,9 @@ keyvaults = {
         secret_permissions      = ["Set", "Get", "List", "Delete", "Purge"]
       }
     }
+    tags = {
+      external_certificates = "true"
+    }
 
   }
 }
