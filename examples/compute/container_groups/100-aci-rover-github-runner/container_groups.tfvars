@@ -53,9 +53,11 @@ container_groups = {
         }
         # Get value from a command executed in the rover
         # env | grep USERNAME will return USERNAME=vscode
-        # the following command will then return vscode and assign it to the container env variable USERNAME
+        # the following command will then return vscode and assign it to the container env variable
+        # 1 - set the value to variable, strip the USERNAME= and only keep the value using sed --> variable=$(env | grep USERNAME | sed 's/.*=//' )
+        # 2 - build the json return value with jq and take $variable as input from step1 --> jq -n --arg var $variable '{value: $var}'
         variables_from_command = {
-          USERNAME = "variable=$(env | grep USERNAME | sed 's/.*=//' ) | jq -n --arg var $variable '{value: $var}'"
+          USERNAME = "variable=$(env | grep USERNAME | sed 's/.*=//' ) && jq -n --arg var $variable '{value: $var}'"
         }
       }
 

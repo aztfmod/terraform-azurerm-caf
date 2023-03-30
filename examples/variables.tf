@@ -387,9 +387,6 @@ variable "postgresql_flexible_servers" {
 variable "postgresql_servers" {
   default = {}
 }
-variable "cosmos_db" {
-  default = {}
-}
 variable "log_analytics" {
   default = {}
 }
@@ -1015,5 +1012,11 @@ variable "static_sites" {
   default = {}
 }
 variable "aro_clusters" {
+  default = {}
+}
+variable "web_pubsubs" {
+  default = {}
+}
+variable "web_pubsub_hubs" {
   default = {}
 }

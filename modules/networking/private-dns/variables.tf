@@ -8,6 +8,11 @@ variable "name" {
 }
 
 variable "resource_group_name" {
+  default = null
+}
+
+variable "resource_group" {
+  default = {}
 }
 
 variable "records" {
@@ -22,7 +27,7 @@ variable "vnets" {
 }
 variable "base_tags" {
   description = "Base tags for the resource to be inherited from the resource group."
-  type        = map(any)
+  type        = bool
 }
 variable "tags" {
   default = {}

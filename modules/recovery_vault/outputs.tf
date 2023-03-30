@@ -26,7 +26,7 @@ output "replication_policies" {
 
 output "resource_group_name" {
   description = "Output the resource group name"
-  value       = var.resource_group_name
+  value       = local.resource_group_name
 }
 
 output "soft_delete_enabled" {

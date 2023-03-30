@@ -12,13 +12,14 @@
 
 resource "azurerm_automation_runbook" "automation_runbook" {
   name                    = var.settings.name
-  location                = var.location
-  resource_group_name     = var.resource_group_name
+  location                = local.location
+  resource_group_name     = local.resource_group_name
   automation_account_name = var.automation_account_name
   log_verbose             = try(var.settings.log_verbose, null)
   log_progress            = try(var.settings.log_progress, null)
   description             = try(var.settings.description, null)
   runbook_type            = var.settings.runbook_type
+  tags                    = local.tags
 
   content = try(var.settings.content, null)
 

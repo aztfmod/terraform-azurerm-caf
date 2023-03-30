@@ -11,6 +11,7 @@ network_security_group_definition = {
 
     flow_logs = {
       version = 2
+      name    = "empty_nsg_flow_log"
       enabled = true
       storage_account = {
         storage_account_destination = "all_regions"
@@ -169,6 +170,7 @@ network_security_group_definition = {
 
     flow_logs = {
       version = 2
+      name    = "application_gateway_flow_log"
       enabled = true
       storage_account = {
         storage_account_destination = "all_regions"
@@ -241,6 +243,7 @@ network_security_group_definition = {
     }
     flow_logs = {
       version = 2
+      name    = "api_management_flow_log"
       enabled = true
       storage_account = {
         storage_account_destination = "all_regions"
@@ -455,10 +458,13 @@ network_security_group_definition = {
     flow_logs = {
       version = 2
       enabled = true
-
-      network_watcher_key = "network_watcher_1"
-      lz_key              = "lz_key" #Put the Landing Zone Key here.
-
+      name    = "jumpbox_flow_log"
+      # we pick the default network watcher inside #NetworkWatcherRG
+      # we use the network watcher in the current region (created by default)
+      # this can be overwritten by specifying the following fields:
+      # network_watcher_key = "key"
+      # network_watcher_rg_key = "rg"
+      # lz_key = "lz_key"
       storage_account = {
         storage_account_destination = "all_regions"
         retention = {
