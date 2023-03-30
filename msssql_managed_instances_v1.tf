@@ -10,7 +10,12 @@ output "mssql_managed_instances_secondary" {
     module.mssql_managed_instances_secondary_v1
   )
 }
-
+output "mssql_mi_failover_groups" {
+  value = merge(
+    module.mssql_mi_failover_groups,
+    module.mssql_mi_failover_groups_v1
+  )
+}
 module "mssql_managed_instances_v1" {
   source = "./modules/databases/mssql_managed_instance_v1"
   for_each = {
@@ -29,7 +34,7 @@ module "mssql_managed_instances_v1" {
   resource_group_id   = local.combined_objects_resource_groups[try(each.value.resource_group.lz_key, local.client_config.landingzone_key)][try(each.value.resource_group_key, each.value.resource_group.key)].id
   base_tags           = try(local.global_settings.inherit_tags, false) ? try(local.combined_objects_resource_groups[try(each.value.resource_group.lz_key, local.client_config.landingzone_key)][try(each.value.resource_group.key, each.value.resource_group_key)].tags, {}) : {}
   keyvault            = can(each.value.administrator_login_password) ? null : local.combined_objects_keyvaults[try(each.value.keyvault.lz_key, local.client_config.landingzone_key)][try(each.value.keyvault.key, each.value.keyvault_key)]
-
+  primary_server_id   = null
 }
 
 module "mssql_managed_instances_secondary_v1" {
@@ -58,6 +63,8 @@ module "mssql_mi_failover_groups_v1" {
     for key, value in local.database.mssql_mi_failover_groups : key => value
     if try(value.version, "") == "v1"
   }
+  depends_on = [module.mssql_managed_instances_secondary]
+  
   global_settings     = local.global_settings
   settings            = each.value
   resource_group_name = can(each.value.resource_group.name) || can(each.value.resource_group_name) ? try(each.value.resource_group.name, each.value.resource_group_name) : local.combined_objects_resource_groups[try(each.value.resource_group.lz_key, local.client_config.landingzone_key)][try(each.value.resource_group_key, each.value.resource_group.key)].name

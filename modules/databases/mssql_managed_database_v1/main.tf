@@ -12,6 +12,6 @@ locals {
     "module" = basename(abspath(path.module))
   }
   tags = merge(var.base_tags, local.module_tag, try(var.settings.tags, null))
-  # this is the format required by ARM templates
+  #  this is the format required by ARM templates
 
 }

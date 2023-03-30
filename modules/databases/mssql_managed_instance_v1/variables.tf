@@ -15,11 +15,10 @@ variable "location" {
   description = "(Required) Specifies the supported Azure location where to create the resource. Changing this forces a new resource to be created."
   type        = string
 }
-variable "primary_server_id" {
-  default = ""
-}
+
 variable "keyvault" {}
 
+variable "primary_server_id" {}
 
 variable "resource_group_id" {}
 
@@ -34,7 +33,7 @@ variable "settings" {
             "authentication_mode",
             "administrators",
             "collation",
-            "primary_server_id",
+            "primary_server",
             "instance_pool_id",
             "keyvault",
             "license_type",
@@ -67,7 +66,7 @@ variable "settings" {
           "authentication_mode",
           "administrators",
           "collation",
-          "primary_server_id",
+          "primary_server",
           "instance_pool_id",
           "keyvault",
           "license_type",
@@ -76,6 +75,7 @@ variable "settings" {
           "name",
           "networking",
           "proxy_override",
+          "primary_server_id",
           "public_data_endpoint_enabled",
           "resource_group",
           "service_principal",

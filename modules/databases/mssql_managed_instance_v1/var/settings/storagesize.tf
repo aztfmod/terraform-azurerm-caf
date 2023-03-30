@@ -12,3 +12,4 @@ variable "storage_size_in_gb" {
 output "storage_size_in_gb" {
   value = var.storage_size_in_gb
 }
+#

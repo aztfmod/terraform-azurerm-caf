@@ -25,3 +25,4 @@ variable "mi_create_mode" {
 output "mi_create_mode" {
   value = var.mi_create_mode
 }
+#

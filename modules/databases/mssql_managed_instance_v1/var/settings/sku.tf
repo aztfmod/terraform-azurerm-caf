@@ -19,3 +19,4 @@ variable "sku" {
 output "sku" {
   value = var.sku
 }
+#
