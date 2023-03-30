@@ -9,3 +9,6 @@ output "objects" {
   )
   sensitive = true
 }
+output "combined_objects_mssql_managed_instances" {
+  value = module.example.combined_objects_mssql_managed_instances
+}

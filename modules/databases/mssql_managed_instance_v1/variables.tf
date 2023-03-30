@@ -30,29 +30,30 @@ variable "settings" {
           [
             "administrator_login_password",
             "administrator_login",
-            "authentication_mode",
             "administrators",
+            "authentication_mode",
+            "backup_storage_redundancy",
             "collation",
-            "primary_server",
+            "identity",
             "instance_pool_id",
             "keyvault",
             "license_type",
-            "minimal_tls_version",
             "mi_create_mode",
+            "minimal_tls_version",
             "name",
             "networking",
+            "primary_server",
             "proxy_override",
             "public_data_endpoint_enabled",
             "resource_group",
+            "restore_point_in_time",
             "service_principal",
             "sku",
-            "backup_storage_redundancy",
             "storage_size_in_gb",
             "timezone_id",
             "vcores",
             "version",
-            "zone_redundant",
-            "restore_point_in_time"
+            "zone_redundant"
           ], k
         )
       ]
@@ -63,30 +64,31 @@ variable "settings" {
         [
           "administrator_login_password",
           "administrator_login",
-          "authentication_mode",
           "administrators",
+          "authentication_mode",
+          "backup_storage_redundancy",
           "collation",
-          "primary_server",
+          "identity",
           "instance_pool_id",
           "keyvault",
           "license_type",
-          "minimal_tls_version",
           "mi_create_mode",
+          "minimal_tls_version",
           "name",
           "networking",
+          "primary_server",
           "proxy_override",
-          "primary_server_id",
           "public_data_endpoint_enabled",
           "resource_group",
+          "restore_point_in_time",
           "service_principal",
           "sku",
-          "backup_storage_redundancy",
           "storage_size_in_gb",
           "timezone_id",
           "vcores",
           "version",
-          "zone_redundant",
-          "restore_point_in_time"
+          "zone_redundant"
+
         ]
       )
       )
