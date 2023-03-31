@@ -3,10 +3,6 @@ variable "global_settings" {
 }
 variable "server_id" {}
 
-variable "sourceDatabaseId" {
-  default = null
-}
-
 variable "settings" {
   validation {
     condition = alltrue(
@@ -14,9 +10,8 @@ variable "settings" {
         for k in keys(var.settings) : contains(
           [
             "long_term_retention_policy",
-            "managed_instance_id",
             "name",
-            "short_term_retention_policy",
+            "short_term_retention_days",
             "version",
             "mi_server_key"
           ], k
@@ -28,9 +23,8 @@ variable "settings" {
         keys(var.settings),
         [
           "long_term_retention_policy",
-          "managed_instance_id",
           "name",
-          "short_term_retention_policy",
+          "short_term_retention_days",
           "version",
           "mi_server_key"
         ]

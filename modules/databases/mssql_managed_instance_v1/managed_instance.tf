@@ -15,15 +15,16 @@ resource "azurerm_mssql_managed_instance" "mssqlmi" {
   administrator_login          = try(var.settings.administrator_login, null)
   administrator_login_password = try(var.settings.administrator_login_password, data.external.sqlmi_admin_password.0.result.value)
 
-  license_type         = try(var.settings.license_type, "BasePrice")
-  subnet_id            = var.subnet_id
-  sku_name             = local.sku.name
-  vcores               = var.settings.vcores
-  storage_size_in_gb   = try(var.settings.storage_size_in_gb, null)
-  minimum_tls_version  = try(var.settings.minimal_tls_version, null)
-  timezone_id          = try(var.settings.timezone_id, "UTC")
-  storage_account_type = var.settings.backup_storage_redundancy
-  dns_zone_partner_id  = try(var.settings.primary_server_id, null)
+  license_type                   = try(var.settings.license_type, "BasePrice")
+  subnet_id                      = var.subnet_id
+  sku_name                       = local.sku.name
+  vcores                         = var.settings.vcores
+  storage_size_in_gb             = try(var.settings.storage_size_in_gb, null)
+  maintenance_configuration_name = try(var.settings.maintenance_configuration_name, null)
+  minimum_tls_version            = try(var.settings.minimal_tls_version, null)
+  timezone_id                    = try(var.settings.timezone_id, "UTC")
+  storage_account_type           = var.settings.backup_storage_redundancy
+  dns_zone_partner_id            = can(var.primary_server_id != null) ? var.primary_server_id : null
 
   dynamic "identity" {
     for_each = can(var.settings.identity) ? [1] : []
@@ -33,8 +34,6 @@ resource "azurerm_mssql_managed_instance" "mssqlmi" {
       identity_ids = var.settings.identity.type == "UserAssigned" ? local.managed_identities : []
     }
   }
-
-
 
 }
 
@@ -101,7 +100,7 @@ locals {
     login                     = var.settings.administrators.login
     principalType             = var.settings.administrators.principal_type
     sid                       = var.settings.administrators.sid
-    tenantId                  = var.settings.administrators.tenantId
+    tenantId                  = can(var.settings.administrators.tenant_id) ? var.settings.administrators.tenant_id : var.client_config.tenant_id
   } : null
 }
 
