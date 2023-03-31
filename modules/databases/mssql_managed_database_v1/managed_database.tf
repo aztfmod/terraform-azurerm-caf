@@ -9,9 +9,22 @@ resource "azurecaf_name" "manageddb" {
 }
 
 resource "azurerm_mssql_managed_database" "sqlmanageddatabase" {
-  name                = azurecaf_name.manageddb.name
-  managed_instance_id = try(var.server_id, null)
+  name                = azurecaf_name.manageddb.result
+  managed_instance_id = var.server_id
 
+
+  short_term_retention_days = try(var.settings.short_term_retention_days, null)
+
+  dynamic "long_term_retention_policy" {
+    for_each = can(var.settings.long_term_retention_policy) ? [1] : []
+
+    content {
+      weekly_retention  = try(var.settings.long_term_retention_policy.weekly_retention, null)
+      monthly_retention = try(var.settings.long_term_retention_policy.monthly_retention, null)
+      yearly_retention  = try(var.settings.long_term_retention_policy.yearly_retention, null)
+      week_of_year      = try(var.settings.long_term_retention_policy.week_of_year, null)
+    }
+  }
 
 }
 

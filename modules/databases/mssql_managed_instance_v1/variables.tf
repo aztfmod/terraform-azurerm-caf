@@ -17,8 +17,9 @@ variable "location" {
 }
 
 variable "managed_identities" {
-
 }
+
+
 
 variable "keyvault" {}
 
@@ -44,6 +45,7 @@ variable "settings" {
             "license_type",
             "mi_create_mode",
             "minimal_tls_version",
+            "maintenance_configuration_name",
             "name",
             "networking",
             "primary_server",
@@ -78,6 +80,7 @@ variable "settings" {
           "license_type",
           "mi_create_mode",
           "minimal_tls_version",
+          "maintenance_configuration_name",
           "name",
           "networking",
           "primary_server",

@@ -16,17 +16,17 @@ resource_groups = {
     region = "region2"
   }
   sqlmi_region1 = {
-    name   = "sqlmi-re1"
+    name   = "sqlmi-re0"
     region = "region1"
   }
   sqlmi_region2 = {
-    name   = "sqlmi-re2"
+    name   = "sqlmi-re1"
     region = "region2"
   }
 }
 
 vnets = {
-  sqlmi_re1 = {
+  sqlmi_region1 = {
     resource_group_key = "networking_region1"
     vnet = {
       name          = "sqlmi-rg1"
@@ -93,7 +93,7 @@ vnet_peerings_v1 = {
   mi_region1-TO-mi_region2 = {
     name = "mi_region1-TO-mi_region2"
     from = {
-      vnet_key = "sqlmi_re1"
+      vnet_key = "sqlmi_region1"
     }
     to = {
       vnet_key = "sqlmi_region2"
@@ -111,7 +111,7 @@ vnet_peerings_v1 = {
       vnet_key = "sqlmi_region2"
     }
     to = {
-      vnet_key = "sqlmi_re1"
+      vnet_key = "sqlmi_region1"
     }
     allow_virtual_network_access = true
     allow_forwarded_traffic      = false
@@ -125,7 +125,7 @@ mssql_managed_instances = {
   sqlmi1 = {
     version = "v1"
     resource_group = {
-      key = "sqlmi_re1"
+      key = "sqlmi_region1"
     }
     name                = "lz-sql-mi-aztf"
     administrator_login = "adminuser"
@@ -201,7 +201,7 @@ mssql_managed_instances_secondary = {
       principal_type              = "Group"
       sid                         = "a016736e-6c31-485e-a7d4-5b927171bd99"
       login                       = "AAD DC Administrators"
-      tenantId                    = "c2fe6ea2-ee35-4265-95f6-46e9a9b4ec96"
+      #tenantId                    = "c2fe6ea2-ee35-4265-95f6-46e9a9b4ec96"
     }
     #collation = "" */
     #dns_zone_partner=""
@@ -219,16 +219,19 @@ mssql_managed_instances_secondary = {
       subnet_key = "sqlmi1"
     }
     #proxy_override               = "Redirect"
+    maintenance_configuration_name = "SQL_Default"
+    #service_principal
     identity = {
       type = "UserAssigned"
       key  = "mi1"
 
     }
+
     primary_server = {
       mi_server_key = "sqlmi1"
     }
     public_data_endpoint_enabled = false
-    #service_principal
+
     sku = {
       name = "GP_Gen5"
     }
@@ -246,19 +249,28 @@ mssql_managed_instances_secondary = {
 
 mssql_managed_databases = {
   managed_db1 = {
-    resource_group_key = "sqlmi_region1"
-    name               = "lz-sql-managed-db1"
-    mi_server_key      = "sqlmi1"
-    # retentionDays      = 20
-    # collation          = "Greek_CS_AI"
+    version = "v1"
+
+    name          = "lz-sql-managed-db1"
+    mi_server_key = "sqlmi1"
+
+    short_term_retention_days = 30
+
+    long_term_retention_policy = {
+      weekly_retention  = "P12W"
+      monthly_retention = "P12M"
+      yearly_retention  = "P5Y"
+      week_of_year      = 16
+    }
+
   }
   managed_db2 = {
-    resource_group_key = "sqlmi_region1"
-    name               = "lz-sql-managed-db2"
-    mi_server_key      = "sqlmi1"
+    version       = "v1"
+    name          = "lz-sql-managed-db2"
+    mi_server_key = "sqlmi1"
   }
   # managed_db_ltr = {
-  #   resource_group_key                = "sqlmi_re1"
+  #   resource_group_key                = "sqlmi_region1"
   #   name                              = "lz-sql-managed-db-ltr"
   #   mi_server_key                     = "sqlmi1"
   #   createMode                        = "RestoreLongTermRetentionBackup"
@@ -286,7 +298,7 @@ managed_identities = {
 
 # mssql_managed_databases_restore = {
 #   managed_db_restore = {
-#     resource_group_key  = "sqlmi_re1"
+#     resource_group_key  = "sqlmi_region1"
 #     name                = "lz-sql-managed-db-restore"
 #     mi_server_key       = "sqlmi1"
 #     createMode          = "PointInTimeRestore"
@@ -295,21 +307,11 @@ managed_identities = {
 #   }
 # }
 
-# mssql_managed_databases_backup_ltr = {
-#   sqlmi1 = {
-#     resource_group_key = "sqlmi_re1"
-#     mi_server_key      = "sqlmi1"
-#     database_key       = "managed_db1"
 
-#     weeklyRetention  = "P12W"
-#     monthlyRetention = "P12M"
-#     yearlyRetention  = "P5Y"
-#     weekOfYear       = 16
-#   }
-# }
 
 mssql_mi_failover_groups = {
   failover-mi = {
+    version            = "v1"
     resource_group_key = "sqlmi_region1"
     name               = "failover-test"
     primary_server = {
@@ -318,9 +320,10 @@ mssql_mi_failover_groups = {
     secondary_server = {
       mi_server_key = "sqlmi2"
     }
-    readWriteEndpoint = {
-      failoverPolicy                         = "Automatic"
-      failoverWithDataLossGracePeriodMinutes = 60
+    readonly_endpoint_failover_policy_enabled = false
+    read_write_endpoint_failover_policy = {
+      mode          = "Automatic"
+      grace_minutes = 60
     }
   }
 }
@@ -342,7 +345,7 @@ mssql_mi_failover_groups = {
   }
 } */
 
-/* azuread_groups = {
+azuread_groups = {
   sql_mi_admins = {
     name        = "sql-mi-admins"
     description = "Administrators of the SQL MI."
@@ -361,11 +364,11 @@ mssql_mi_failover_groups = {
     }
     prevent_duplicate_name = false
   }
-} */
+}
 
 /* mssql_mi_administrators = {
   sqlmi1 = {
-    resource_group_key = "sqlmi_re1"
+    resource_group_key = "sqlmi_region1"
     mi_server_key      = "sqlmi1"
     login              = "sqlmiadmin-khairi"
 
@@ -391,7 +394,7 @@ keyvaults = {
 
   # tde_primary = {
   #   name               = "mi-tde-primary"
-  #   resource_group_key = "sqlmi_re1"
+  #   resource_group_key = "sqlmi_region1"
   #   sku_name           = "standard"
 
   #   creation_policies = {
@@ -459,7 +462,7 @@ keyvaults = {
 
 # mssql_mi_tdes = {
 #   sqlmi1 = {
-#     resource_group_key = "sqlmi_re1"
+#     resource_group_key = "sqlmi_region1"
 #     mi_server_key      = "sqlmi1"
 #     keyvault_key_key   = "tde_mi"
 #   }

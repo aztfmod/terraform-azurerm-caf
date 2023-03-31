@@ -51,28 +51,28 @@ route_tables = {
 }
 
 mssql_managed_instances = {
-  # sqlmi0 = {
-  #   resource_group_key = "sqlmi_region1"
-  #   name               = "lz-sql-mi-v0"
-  #   sku = {
-  #     name = "GP_Gen5"
-  #   }
+  sqlmi0 = {
+    resource_group_key = "sqlmi_region1"
+    name               = "lz-sql-mi-v0"
+    sku = {
+      name = "GP_Gen5"
+    }
 
-  #   administratorLogin = "adminuser"
-  #   #administrator_login_password = "@dm1nu53r@30102020"
-  #   # if password not set, a random complex passwor will be created and stored in the keyvault
-  #   # the secret value can be changed after the deployment if needed
+    administratorLogin = "adminuser"
+    #administrator_login_password = "@dm1nu53r@30102020"
+    # if password not set, a random complex passwor will be created and stored in the keyvault
+    # the secret value can be changed after the deployment if needed
 
-  #   //networking
-  #   networking = {
-  #     vnet_key   = "sqlmi_region1"
-  #     subnet_key = "sqlmi1"
-  #   }
-  #   keyvault_key = "sqlmi_rg1"
+    //networking
+    networking = {
+      vnet_key   = "sqlmi_region1"
+      subnet_key = "sqlmi1"
+    }
+    keyvault_key = "sqlmi_rg1"
 
-  #storageSizeInGB = 32
-  #   vCores          = 4
-  # }
+    storageSizeInGB = 32
+    vCores          = 4
+  }
   sqlmi1 = {
     version = "v1"
     resource_group = {
@@ -111,7 +111,8 @@ mssql_managed_instances = {
     }
     #proxy_override               = "Redirect"
     identity = {
-      type = "SystemAssigned"
+      type = "UserAssigned"
+      key  = "mi1"
 
     }
     public_data_endpoint_enabled = false
@@ -131,7 +132,6 @@ mssql_managed_instances = {
   }
 }
 
-
 mssql_managed_databases = {
   managed_db1 = {
     version       = "v1"
@@ -144,21 +144,21 @@ mssql_managed_databases = {
 managed_identities = {
   mi1 = {
     name               = "mssql-msi"
-    resource_group_key = "sqlmi-re0"
+    resource_group_key = "sqlmi_region1"
 
   }
 }
 
 
-# azuread_roles = {
-#   mssql_managed_instances = {
-#     sqlmi1 = {
-#       roles = [
-#         "Directory Readers"
-#       ]
-#     }
-#   }
-# }
+/* azuread_roles = {
+   mssql_managed_instances = {
+     sqlmi1 = {
+       roles = [
+         "Directory Readers"
+       ]
+     }
+   }
+} */
 
 azuread_groups = {
   sql_mi_admins = {
@@ -181,23 +181,7 @@ azuread_groups = {
   }
 }
 
-mssql_mi_failover_groups = {
-  failover-mi = {
-    version            = "v1"
-    resource_group_key = "sqlmi_region1"
-    name               = "failover-test"
-    primary_server = {
-      mi_server_key = "sqlmi1"
-    }
-    secondary_server = {
-      mi_server_key = "sqlmi2"
-    }
-    readWriteEndpoint = {
-      failoverPolicy                         = "Automatic"
-      failoverWithDataLossGracePeriodMinutes = 60
-    }
-  }
-}
+
 
 ## specify azuread_groups key OR you can import existing azuread group by using group OID as shown below
 

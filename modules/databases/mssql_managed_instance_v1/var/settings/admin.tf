@@ -19,7 +19,7 @@ administrators = {
       principal_type              = string
       sid                         = string
       login                       = string
-      tenantId                    = string
+      tenantId                    = optional(string)
     }
   )
 
