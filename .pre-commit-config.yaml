@@ -7,7 +7,8 @@ repos:
     - id: check-merge-conflict
     - id: check-vcs-permalinks
     - id: forbid-new-submodules
-    - id: no-commit-to-branch
+    # no need to prevent commit to main since we use a fork approach for PRs
+    # - id: no-commit-to-branch
 
     # Common errors
     - id: end-of-file-fixer
@@ -71,10 +72,11 @@ repos:
     - id: terraform_fmt
     - id: terraform_validate
       exclude: '^[^/]+$'                                      #excluding since it contains azurerm.vhub provider
-    - id: terraform_docs
-      exclude: .travis
-    - id: terraform_docs_without_aggregate_type_defaults
-      exclude: .travis
+    # disable these until we have a better process around updating TF docs
+    # - id: terraform_docs
+    #   exclude: .travis
+    # - id: terraform_docs_without_aggregate_type_defaults
+    #   exclude: .travis
     - id: terraform_tflint
       exclude: examples                                       #excluding example tfvars since no need to fix it
       args:
