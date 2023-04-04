@@ -2,7 +2,7 @@
 terraform {
   required_providers {
     azurerm = {
-      source = "hashicorp/azurerm"
+      source  = "hashicorp/azurerm"
       version = "~> 3.50.0"
       configuration_aliases = [
         azurerm.vhub
@@ -31,7 +31,9 @@ terraform {
   required_version = ">= 1.1.0"
 }
 
-provider "azapi" {}
+provider "azapi" {
+  skip_provider_registration = true
+}
 
 data "azurerm_subscription" "primary" {}
 data "azurerm_client_config" "current" {}
