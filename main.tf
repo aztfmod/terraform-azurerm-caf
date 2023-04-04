@@ -14,7 +14,7 @@ terraform {
     }
     azapi = {
       source  = "azure/azapi"
-      version = "~> 1.3.0"
+      version = "~> 1.4.0"
     }
     azurecaf = {
       source  = "aztfmod/azurecaf"
@@ -31,6 +31,7 @@ terraform {
   required_version = ">= 1.1.0"
 }
 
+provider "azapi" {}
 
 data "azurerm_subscription" "primary" {}
 data "azurerm_client_config" "current" {}

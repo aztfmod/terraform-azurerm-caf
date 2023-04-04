@@ -131,12 +131,13 @@ resource "random_password" "sqlmi_admin" {
   numeric          = true
   override_special = "$#%"
 }
+
 #to support keyvault in a different subscription
 resource "azapi_resource" "sqlmi_admin_password" {
-  count = (can(var.settings.administrator_login_password)) ? 0 : 1
+  count = can(var.settings.administrator_login_password) ? 0 : 1
 
   type      = "Microsoft.KeyVault/vaults/secrets@2022-07-01"
-  name      = format("%s-password-v1", data.azurecaf_name.mssqlmi.result)
+  name      = format("%s-password", data.azurecaf_name.mssqlmi.result)
   parent_id = var.keyvault.id
 
   body = jsonencode({
@@ -171,7 +172,7 @@ data "external" "sqlmi_admin_password" {
     "bash", "-c",
     format(
       "az keyvault secret show -n '%s' --vault-name '%s' --query '{value: value }' -o json",
-      format("%s-password-v1", data.azurecaf_name.mssqlmi.result),
+      format("%s-password", data.azurecaf_name.mssqlmi.result),
       var.keyvault.name
     )
   ]
