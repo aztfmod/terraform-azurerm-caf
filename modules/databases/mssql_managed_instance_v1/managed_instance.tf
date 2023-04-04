@@ -50,11 +50,11 @@ module "tde" {
 
 resource "azurerm_mssql_managed_instance_active_directory_administrator" "aadadmin" {
   count                       = var.settings.authentication_mode != "sql_only" ? 1 : 0
+  azuread_authentication_only = local.administrators.azuread_authentication_only
+  login_username              = local.administrators.login_username
   managed_instance_id         = azurerm_mssql_managed_instance.mssqlmi.id
-  login_username              = var.settings.administrators.login
-  object_id                   = var.settings.administrators.sid
-  tenant_id                   = var.settings.administrators.tenantId
-  azuread_authentication_only = var.settings.authentication_mode == "aad_only" ? true : false
+  object_id                   = local.administrators.object_id
+  tenant_id                   = local.administrators.tenant_id
 }
 
 module "var_settings" {
@@ -68,9 +68,9 @@ module "var_settings" {
   storage_size_in_gb        = try(var.settings.storage_size_in_gb, null)
   license_type              = try(var.settings.license_type, null)
   proxy_override            = try(var.settings.proxy_override, null)
-  administrators            = try(var.settings.administrators, null)
-  authentication_mode       = try(var.settings.authentication_mode, null)
-  identity                  = try(var.settings.identity, null)
+  # administrators            = try(var.settings.administrators, null)
+  authentication_mode = try(var.settings.authentication_mode, null)
+  identity            = try(var.settings.identity, null)
 }
 
 locals {
@@ -96,23 +96,20 @@ module "var_identity" {
 }
 
 
-module "var_admin" {
-  source = "./var/admin"
-  count  = var.settings.authentication_mode != "sql_only" ? 1 : 0
-  #principal_type = var.settings.authentication_mode != "sql_only" ? module.var_settings.administrators.principal_type : null
-  principal_type = module.var_settings.administrators.principal_type
-}
+# module "var_admin" {
+#   source = "./var/admin"
+#   count  = var.settings.authentication_mode != "sql_only" ? 1 : 0
+# }
 
 locals {
 
   administrators = var.settings.authentication_mode != "sql_only" ? {
 
-    administratorType         = "ActiveDirectory"
-    azureADOnlyAuthentication = var.settings.authentication_mode != "aad_only" ? true : false
-    login                     = var.settings.administrators.login
-    principalType             = var.settings.administrators.principal_type
-    sid                       = var.settings.administrators.sid
-    tenantId                  = can(var.settings.administrators.tenant_id) ? var.settings.administrators.tenant_id : var.client_config.tenant_id
+    administratorType           = "ActiveDirectory"
+    azuread_authentication_only = var.settings.authentication_mode != "aad_only" ? true : false
+    login_username              = var.settings.administrators.login
+    object_id                   = var.group_id != null || can(var.settings.administrators.sid) ? try(var.group_id, var.settings.administrators.sid) : null
+    tenant_id                   = can(var.settings.administrators.tenant_id) ? var.settings.administrators.tenant_id : var.client_config.tenant_id
   } : null
 }
 

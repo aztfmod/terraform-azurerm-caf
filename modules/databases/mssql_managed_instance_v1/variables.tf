@@ -19,7 +19,11 @@ variable "location" {
 variable "managed_identities" {
 }
 
-
+variable "group_id" {
+  description = "The ID of the Azure Active Directory Group that should be granted access to the Managed Instance Administrators."
+  type        = string
+  default     = null
+}
 
 variable "keyvault" {}
 
