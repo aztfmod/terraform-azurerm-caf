@@ -19,6 +19,3 @@ variable "location" {
   description = "(Required) The Azure Region where the SQL Instance Failover Group exists. Changing this forces a new resource to be created."
   type        = string
 }
-
-
-#
