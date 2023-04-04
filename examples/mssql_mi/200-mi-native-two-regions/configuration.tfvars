@@ -134,14 +134,20 @@ mssql_managed_instances = {
     ## the secret value can be changed after the deployment if needed
     ## When administrator_login_password use the following keyvault to store the password
 
-    authentication_mode = "sql_only"
+    authentication_mode = "aad_only"
     # "aad_only", "hybrid"
     administrators = {
-      azuread_only_authentication = false
-      principal_type              = "Group"
-      sid                         = "a016736e-6c31-485e-a7d4-5b927171bd99"
-      login                       = "AAD DC Administrators"
-      tenantId                    = "c2fe6ea2-ee35-4265-95f6-46e9a9b4ec96"
+      # Set the group explicitly with object id (sid)
+      # principal_type              = "Group"
+      # sid                         = "a016736e-6c31-485e-a7d4-5b927171bd99"
+      # login                       = "AAD DC Administrators"
+      # tenantId                    = "c2fe6ea2-ee35-4265-95f6-46e9a9b4ec96"
+
+      # group key or existing group OID or upn supported
+      azuread_group_key = "sql_mi_admins"
+      login             = "AAD DC Administrators"
+      # azuread_group_id   = "<specify existing azuread group's Object Id (OID) here>"
+
     }
     #collation = "" */
     #dns_zone_partner=""
@@ -197,14 +203,19 @@ mssql_managed_instances_secondary = {
     ## the secret value can be changed after the deployment if needed
     ## When administrator_login_password use the following keyvault to store the password
 
-    authentication_mode = "sql_only"
+    authentication_mode = "aad_only"
     # "aad_only", "hybrid"
     administrators = {
-      azuread_only_authentication = false
-      principal_type              = "Group"
-      sid                         = "a016736e-6c31-485e-a7d4-5b927171bd99"
-      login                       = "AAD DC Administrators"
-      #tenantId                    = "c2fe6ea2-ee35-4265-95f6-46e9a9b4ec96"
+      # principal_type              = "Group"
+      # sid                         = "a016736e-6c31-485e-a7d4-5b927171bd99"
+      # login                       = "AAD DC Administrators"
+      # #tenantId                    = "c2fe6ea2-ee35-4265-95f6-46e9a9b4ec96"
+
+      # group key or existing group OID or upn supported (require authentication_mode = "aad_only")
+      login             = "AAD DC Administrators"
+      azuread_group_key = "sql_mi_admins"
+      # azuread_group_id   = "<specify existing azuread group's Object Id (OID) here>"
+
     }
     #collation = "" */
     #dns_zone_partner=""
