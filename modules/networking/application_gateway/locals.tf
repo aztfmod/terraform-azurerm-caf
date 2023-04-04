@@ -61,6 +61,19 @@ locals {
     ) : format("%s-%s", probe.value.app_key, probe.value.probe_key) => probe.value
   }
 
+  redirect_configurations = {
+    for redirect_config in
+    flatten(
+      [
+        for app_key, config in var.application_gateway_applications : [
+          for key, value in try(config.redirect_configurations, []) : {
+            value = merge({ app_key = app_key, redirect_config_key = key }, value)
+          }
+        ]
+      ]
+    ) : format("%s-%s", redirect_config.value.app_key, redirect_config.value.redirect_config_key) => redirect_config.value
+  }
+
   rewrite_rule_sets = {
     for rewrite_rule_set in
     flatten(
@@ -74,11 +87,19 @@ locals {
     ) : format("%s-%s", rewrite_rule_set.value.app_key, rewrite_rule_set.value.rewrite_rule_set_key) => rewrite_rule_set.value
   }
 
-  certificate_keys = distinct(flatten([
-    for key, value in local.listeners : [try(value.keyvault_certificate.certificate_key, [])]
-  ]))
+  certificate_keys = {
+    for key, value in local.listeners : key => {
+      lz_key = try(value.keyvault_certificate.lz_key, var.client_config.landingzone_key)
+      key    = value.keyvault_certificate.certificate_key,
+    }
+    if try(value.keyvault_certificate.certificate_key, null) != null
+  }
 
-  certificate_request_keys = distinct(flatten([
-    for key, value in local.listeners : [try(value.keyvault_certificate_request.key, [])]
-  ]))
+  certificate_request_keys = {
+    for key, value in local.listeners : key => {
+      lz_key = try(value.keyvault_certificate_request.lz_key, var.client_config.landingzone_key)
+      key    = value.keyvault_certificate_request.key,
+    }
+    if try(value.keyvault_certificate_request.key, null) != null
+  }
 }

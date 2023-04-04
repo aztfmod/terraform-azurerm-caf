@@ -46,3 +46,11 @@ variable "keyvault_id" {
 variable "remote_objects" {
   type = any
 }
+variable "diagnostics" {
+  type = any
+}
+
+variable "managed_identities" {
+  type    = any
+  default = {}
+}

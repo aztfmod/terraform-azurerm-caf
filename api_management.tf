@@ -14,6 +14,9 @@ module "api_management" {
     resource_group     = local.combined_objects_resource_groups
     managed_identities = local.combined_objects_managed_identities
   }
+
+  diagnostic_profiles = try(each.value.diagnostic_profiles, {})
+  diagnostics         = local.combined_diagnostics
 }
 output "api_management" {
   value = module.api_management

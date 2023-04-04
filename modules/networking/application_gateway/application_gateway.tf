@@ -120,11 +120,17 @@ resource "azurerm_application_gateway" "agw" {
       name                       = "${try(local.request_routing_rules[format("%s-%s", request_routing_rule.value.app_key, request_routing_rule.value.request_routing_rule_key)].rule.prefix, "")}${request_routing_rule.value.name}"
       rule_type                  = try(local.request_routing_rules[format("%s-%s", request_routing_rule.value.app_key, request_routing_rule.value.request_routing_rule_key)].rule.rule_type, "Basic")
       http_listener_name         = request_routing_rule.value.name
-      backend_http_settings_name = local.backend_http_settings[request_routing_rule.value.app_key].name
-      backend_address_pool_name  = local.backend_pools[request_routing_rule.value.app_key].name
-      url_path_map_name = try(local.request_routing_rules[format("%s-%s", request_routing_rule.value.app_key, request_routing_rule.value.request_routing_rule_key)].rule.url_path_map_name,
-      try(local.url_path_maps[format("%s-%s", request_routing_rule.value.app_key, local.request_routing_rules[format("%s-%s", request_routing_rule.value.app_key, request_routing_rule.value.request_routing_rule_key)].rule.url_path_map_key)].name, null))
-      rewrite_rule_set_name = try(local.rewrite_rule_sets[format("%s-%s", request_routing_rule.value.app_key, local.request_routing_rules[format("%s-%s", request_routing_rule.value.app_key, request_routing_rule.value.request_routing_rule_key)].rule.rewrite_rule_set_key)].name, null)
+      backend_http_settings_name = try(local.backend_http_settings[request_routing_rule.value.app_key].name, null)
+      backend_address_pool_name  = try(local.backend_pools[request_routing_rule.value.app_key].name, null)
+      url_path_map_name = try(
+        local.request_routing_rules[format("%s-%s", request_routing_rule.value.app_key, request_routing_rule.value.request_routing_rule_key)].rule.url_path_map_name,
+        try(
+          local.url_path_maps[format("%s-%s", request_routing_rule.value.app_key, local.request_routing_rules[format("%s-%s", request_routing_rule.value.app_key, request_routing_rule.value.request_routing_rule_key)].rule.url_path_map_key)].name,
+          null
+        )
+      )
+      rewrite_rule_set_name       = try(local.rewrite_rule_sets[format("%s-%s", request_routing_rule.value.app_key, local.request_routing_rules[format("%s-%s", request_routing_rule.value.app_key, request_routing_rule.value.request_routing_rule_key)].rule.rewrite_rule_set_key)].name, null)
+      redirect_configuration_name = try(local.redirect_configurations[format("%s-%s", request_routing_rule.value.app_key, local.request_routing_rules[format("%s-%s", request_routing_rule.value.app_key, request_routing_rule.value.request_routing_rule_key)].rule.redirect_configuration_key)].name, null)
     }
   }
 
@@ -140,15 +146,17 @@ resource "azurerm_application_gateway" "agw" {
         for_each = try(url_path_map.value.path_rules, [])
 
         content {
-          backend_address_pool_name  = try(var.application_gateway_applications[path_rule.value.backend_pool.app_key].name, var.application_gateway_applications[url_path_map.value.app_key].name)
-          backend_http_settings_name = try(var.application_gateway_applications[path_rule.value.backend_http_setting.app_key].name, var.application_gateway_applications[url_path_map.value.app_key].name)
-          name                       = path_rule.value.name
-          paths                      = path_rule.value.paths
-          rewrite_rule_set_name      = try(local.rewrite_rule_sets[format("%s-%s", url_path_map.value.app_key, path_rule.value.rewrite_rule_set_key)].name, null)
+          backend_address_pool_name   = try(var.application_gateway_applications[path_rule.value.backend_pool.app_key].name, var.application_gateway_applications[url_path_map.value.app_key].name)
+          backend_http_settings_name  = try(var.application_gateway_applications[path_rule.value.backend_http_setting.app_key].name, var.application_gateway_applications[url_path_map.value.app_key].name)
+          name                        = path_rule.value.name
+          paths                       = path_rule.value.paths
+          rewrite_rule_set_name       = try(local.rewrite_rule_sets[format("%s-%s", url_path_map.value.app_key, path_rule.value.rewrite_rule_set_key)].name, null)
+          redirect_configuration_name = try(local.redirect_configurations[format("%s-%s", url_path_map.value.app_key, path_rule.value.redirect_config_key)].name, null)
         }
       }
     }
   }
+
   dynamic "probe" {
     for_each = try(local.probes)
 
@@ -173,6 +181,19 @@ resource "azurerm_application_gateway" "agw" {
     }
   }
 
+  dynamic "redirect_configuration" {
+    for_each = try(local.redirect_configurations)
+
+    content {
+      name                 = redirect_configuration.value.name
+      redirect_type        = redirect_configuration.value.redirect_type
+      target_listener_name = try(redirect_configuration.value.target_listener_name, null)
+      target_url           = try(redirect_configuration.value.target_url, null)
+      include_path         = try(redirect_configuration.value.include_path, false)
+      include_query_string = try(redirect_configuration.value.include_query_string, false)
+    }
+  }
+
   dynamic "backend_http_settings" {
     for_each = local.backend_http_settings
 
@@ -180,6 +201,7 @@ resource "azurerm_application_gateway" "agw" {
       name                                = var.application_gateway_applications[backend_http_settings.key].name
       cookie_based_affinity               = try(backend_http_settings.value.cookie_based_affinity, "Disabled")
       affinity_cookie_name                = try(backend_http_settings.value.affinity_cookie_name, null)
+      path                                = try(backend_http_settings.value.path, null)
       port                                = backend_http_settings.value.port
       protocol                            = backend_http_settings.value.protocol
       request_timeout                     = try(backend_http_settings.value.request_timeout, 30)
@@ -238,16 +260,13 @@ resource "azurerm_application_gateway" "agw" {
 
   # }
 
-  # probe {
-
-  # }
 
   dynamic "ssl_certificate" {
     for_each = try(local.certificate_keys)
 
     content {
-      name                = ssl_certificate.value
-      key_vault_secret_id = var.keyvault_certificates[ssl_certificate.value].secret_id
+      name                = ssl_certificate.value.key
+      key_vault_secret_id = var.keyvault_certificates[ssl_certificate.value.lz_key][ssl_certificate.value.key].secret_id
       # data     = try(ssl_certificate.value.key_vault_secret_id, null) == null ? ssl_certificate.value.data : null
       # password = try(ssl_certificate.value.data, null) != null ? ssl_certificate.value.password : null
     }
@@ -257,8 +276,8 @@ resource "azurerm_application_gateway" "agw" {
     for_each = try(local.certificate_request_keys)
 
     content {
-      name                = ssl_certificate.value
-      key_vault_secret_id = var.keyvault_certificate_requests[ssl_certificate.value].secret_id
+      name                = ssl_certificate.value.key
+      key_vault_secret_id = var.keyvault_certificate_requests[ssl_certificate.value.lz_key][ssl_certificate.value.key].secret_id
     }
   }
 
@@ -300,8 +319,6 @@ resource "azurerm_application_gateway" "agw" {
   }
 
   # custom_error_configuration {}
-
-  # redirect_configuration {}
 
   # autoscale_configuration {}
 

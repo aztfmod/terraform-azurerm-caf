@@ -28,7 +28,7 @@ module "private_dns_vnet_links" {
   for_each   = try(local.networking.private_dns_vnet_links, {})
   depends_on = [module.private_dns]
 
-  base_tags          = {}
+  base_tags          = try(local.global_settings.inherit_tags, false) ? try(local.combined_objects_resource_groups[try(each.value.resource_group.lz_key, local.client_config.landingzone_key)][try(each.value.resource_group.key, each.value.resource_group_key)].tags, {}) : {}
   global_settings    = local.global_settings
   client_config      = local.client_config
   virtual_network_id = local.combined_objects_networking[try(each.value.lz_key, local.client_config.landingzone_key)][each.value.vnet_key].id
@@ -38,4 +38,21 @@ module "private_dns_vnet_links" {
 
 output "private_dns_vnet_links" {
   value = module.private_dns_vnet_links
+}
+
+module "private_dns_records" {
+  source     = "./modules/networking/private-dns/records"
+  for_each   = try(local.networking.private_dns_records, {})
+  depends_on = [module.private_dns]
+
+  base_tags           = {}
+  global_settings     = local.global_settings
+  client_config       = local.client_config
+  resource_group_name = can(each.value.private_dns_zone.resource_group_name) ? each.value.private_dns_zone.resource_group_name : local.combined_objects_private_dns[try(each.value.private_dns_zone.lz_key, local.client_config.landingzone_key)][each.value.private_dns_zone.key].resource_group_name
+  records             = each.value.records
+  zone_name           = can(each.value.private_dns_zone.name) ? each.value.private_dns_zone.name : local.combined_objects_private_dns[try(each.value.private_dns_zone.lz_key, local.client_config.landingzone_key)][each.value.private_dns_zone.key].name
+}
+
+output "private_dns_records" {
+  value = module.private_dns_records
 }

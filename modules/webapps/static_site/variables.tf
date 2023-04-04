@@ -44,6 +44,7 @@ variable "sku_size" {
     error_message = "Allowed values are Free or Standard."
   }
 }
+
 variable "identity" {
   type    = any
   default = null
@@ -67,4 +68,24 @@ variable "diagnostic_profiles" {
 variable "diagnostics" {
   type    = any
   default = null
+}
+
+variable "private_endpoints" {
+  type    = any
+  default = {}
+}
+
+variable "private_dns" {
+  type    = any
+  default = {}
+}
+
+variable "subnet_id" {
+  type    = string
+  default = ""
+}
+
+variable "vnets" {
+  type    = any
+  default = {}
 }

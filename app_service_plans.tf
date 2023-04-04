@@ -13,6 +13,7 @@ module "app_service_plans" {
   kind            = try(each.value.kind, null)
   settings        = each.value
   global_settings = local.global_settings
+  diagnostics     = local.combined_diagnostics
 }
 
 output "app_service_plans" {
