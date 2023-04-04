@@ -33,6 +33,7 @@ resource "azurerm_resource_group_template_deployment" "mssqlmi" {
   }
 }
 
+
 resource "null_resource" "destroy_sqlmi" {
 
   triggers = {

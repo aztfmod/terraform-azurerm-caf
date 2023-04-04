@@ -57,6 +57,7 @@ variable "settings" {
             "sku",
             "storage_size_in_gb",
             "timezone_id",
+            "transparent_data_encryption",
             "vcores",
             "version",
             "zone_redundant"
@@ -92,6 +93,7 @@ variable "settings" {
           "sku",
           "storage_size_in_gb",
           "timezone_id",
+          "transparent_data_encryption",
           "vcores",
           "version",
           "zone_redundant"

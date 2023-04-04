@@ -37,6 +37,17 @@ resource "azurerm_mssql_managed_instance" "mssqlmi" {
 
 }
 
+module "tde" {
+  count = can(var.settings.transparent_data_encryption.enabled == true) ? 1 : 0
+  depends_on = [
+    azurerm_mssql_managed_instance.mssqlmi
+  ]
+  source           = "./tde"
+  sqlmi_id         = azurerm_mssql_managed_instance.mssqlmi.id
+  key_vault_key_id = null
+}
+
+
 resource "azurerm_mssql_managed_instance_active_directory_administrator" "aadadmin" {
   count                       = var.settings.authentication_mode != "sql_only" ? 1 : 0
   managed_instance_id         = azurerm_mssql_managed_instance.mssqlmi.id
@@ -47,6 +58,7 @@ resource "azurerm_mssql_managed_instance_active_directory_administrator" "aadadm
 }
 
 module "var_settings" {
+
   source = "./var/settings"
 
   vcores                    = try(var.settings.vcores, null)
