@@ -174,6 +174,9 @@ mssql_managed_instances = {
     storage_size_in_gb        = 32
     vcores                    = 4
     zone_redundant            = "false"
+    transparent_data_encryption = {
+      enabled = true
+    }
     # transparent_data_encryption = {
     #   encryption_type  = "SMK"                                                                                          #SMK/CMK
     #   key_vault_key_id = "https://kvsandpit3d007f9f500190f.vault.azure.net/keys/mikey/7adec60d2b2c42a882397d732fc2aa24" # not needed for SMK
@@ -240,6 +243,9 @@ mssql_managed_instances_secondary = {
     storage_size_in_gb        = 32
     vcores                    = 4
     zone_redundant            = "false"
+    transparent_data_encryption = {
+      enabled = true
+    }
     # transparent_data_encryption = {
     #   encryption_type  = "SMK"                                                                                          #SMK/CMK
     #   key_vault_key_id = "https://kvsandpit3d007f9f500190f.vault.azure.net/keys/mikey/7adec60d2b2c42a882397d732fc2aa24" # not needed for SMK
