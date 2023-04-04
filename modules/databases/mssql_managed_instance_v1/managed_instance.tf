@@ -31,7 +31,7 @@ resource "azurerm_mssql_managed_instance" "mssqlmi" {
 
     content {
       type         = var.settings.identity.type
-      identity_ids = var.settings.identity.type == "UserAssigned" ? local.managed_identities : []
+      identity_ids = local.managed_identities
     }
   }
 

@@ -166,8 +166,8 @@ mssql_managed_instances = {
     }
     #proxy_override               = "Redirect"
     identity = {
-      type = "UserAssigned"
-      key  = "mi1"
+      type                  = "UserAssigned"
+      managed_identity_keys = ["mi1"]
 
     }
     public_data_endpoint_enabled = false
@@ -236,9 +236,8 @@ mssql_managed_instances_secondary = {
     maintenance_configuration_name = "SQL_Default"
     #service_principal
     identity = {
-      type = "UserAssigned"
-      key  = "mi1"
-
+      type                  = "UserAssigned"
+      managed_identity_keys = ["mi2"]
     }
 
     primary_server = {
@@ -383,19 +382,6 @@ azuread_groups = {
   }
 }
 
-/* mssql_mi_administrators = {
-  sqlmi1 = {
-    resource_group_key = "sqlmi_region1"
-    mi_server_key      = "sqlmi1"
-    login              = "sqlmiadmin-khairi"
-
-    # group key or existing group OID or upn supported
-    azuread_group_key = "sql_mi_admins"
-    # azuread_group_id   = "<specify existing azuread group's Object Id (OID) here>"
-    # user_principal_name = ""
-  }
-} */
-
 keyvaults = {
   sqlmi_rg1 = {
     name               = "sqlmirg1"
@@ -409,63 +395,71 @@ keyvaults = {
     }
   }
 
-  # tde_primary = {
-  #   name               = "mi-tde-primary"
-  #   resource_group_key = "sqlmi_region1"
-  #   sku_name           = "standard"
+  tde_primary = {
+    name                       = "mi-tde-primary"
+    resource_group_key         = "sqlmi_region1"
+    sku_name                   = "standard"
+    purge_protection_enabled   = true
+    soft_delete_retention_days = 90
+    creation_policies = {
+      logged_in_user = {
+        key_permissions = ["Get", "List", "Update", "Create", "Import", "Delete", "Recover", "Backup", "Restore", "Purge"]
+      }
+    }
+  }
+  tde_secondary = {
+    name                       = "mi-tde-secondary"
+    resource_group_key         = "sqlmi_region2"
+    sku_name                   = "standard"
+    purge_protection_enabled   = true
+    soft_delete_retention_days = 90
 
-  #   creation_policies = {
-  #     logged_in_user = {
-  #       key_permissions = ["get", "list", "update", "create", "import", "delete", "recover", "backup", "restore", "purge"]
-  #     }
-  #   }
-  # }
-  # tde_secondary = {
-  #   name               = "mi-tde-secondary"
-  #   resource_group_key = "sqlmi_region2"
-  #   sku_name           = "standard"
-
-  #   creation_policies = {
-  #     logged_in_user = {
-  #       key_permissions = ["get", "list", "update", "create", "import", "delete", "recover", "backup", "restore", "purge"]
-  #     }
-  #   }
-  # }
+    creation_policies = {
+      logged_in_user = {
+        key_permissions = ["Get", "List", "Update", "Create", "Import", "Delete", "Recover", "Backup", "Restore", "Purge"]
+      }
+    }
+  }
 }
 
-# keyvault_access_policies = {
-#   # A maximum of 16 access policies per keyvault
-#   tde_primary = {
-#     sqlmi1 = {
-#       mssql_managed_instance_key = "sqlmi1"
-#       key_permissions            = ["get", "UnwrapKey", "WrapKey"]
-#     }
-#     sqlmi2 = {
-#       mssql_managed_instance_secondary_key = "sqlmi2"
-#       key_permissions                      = ["get", "UnwrapKey", "WrapKey"]
-#     }
-#   }
-#   tde_secondary = {
-#     sqlmi1 = {
-#       mssql_managed_instance_key = "sqlmi1"
-#       key_permissions            = ["get", "UnwrapKey", "WrapKey"]
-#     }
-#     sqlmi2 = {
-#       mssql_managed_instance_secondary_key = "sqlmi2"
-#       key_permissions                      = ["get", "UnwrapKey", "WrapKey"]
-#     }
-#   }
-# }
+keyvault_access_policies = {
+  # A maximum of 16 access policies per keyvault
+  tde_primary = {
+    sqlmi1 = {
+      mssql_managed_instance_key = "sqlmi1"
+      key_permissions            = ["Get", "UnwrapKey", "WrapKey"]
+    }
+    sqlmi2 = {
+      mssql_managed_instance_secondary_key = "sqlmi2"
+      key_permissions                      = ["Get", "UnwrapKey", "WrapKey"]
+    }
+  }
+  tde_secondary = {
+    sqlmi1 = {
+      mssql_managed_instance_key = "sqlmi1"
+      key_permissions            = ["Get", "UnwrapKey", "WrapKey"]
+    }
+    sqlmi2 = {
+      mssql_managed_instance_secondary_key = "sqlmi2"
+      key_permissions                      = ["Get", "UnwrapKey", "WrapKey"]
+    }
+  }
+}
 
-# keyvault_keys = {
-#   tde_mi = {
-#     keyvault_key = "tde_primary"
-#     name         = "TDE"
-#     key_type     = "RSA"
-#     key_opts     = ["Encrypt", "Decrypt", "Sign", "Verify", "WrapKey", "UnwrapKey"]
-#     key_size     = 2048
-#   }
-# }
+keyvault_keys = {
+  tde_mi = {
+    keyvault_key = "tde_primary"
+    name         = "TDE"
+    key_type     = "RSA"
+    key_opts     = ["encrypt", "decrypt", "sign", "verify", "wrapKey", "unwrapKey"]
+    key_size     = 2048
+    backups = {
+      tde_secondary = {
+        key = "tde_secondary"
+      }
+    }
+  }
+}
 
 //TDE
 # mssql_mi_secondary_tdes = {
