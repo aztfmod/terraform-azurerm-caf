@@ -3,40 +3,52 @@ global_settings = {
   regions = {
     region1 = "australiaeast"
   }
+  inherit_tags = true
+  tags = {
+    example = "examples/networking/private_dns_vnet_link/100_pvtdns_vnetlink"
+  }
 }
 
 resource_groups = {
   private_dns_region1 = {
     name   = "private-dns-rg"
     region = "region1"
+    tags = {
+      rg_key = "private_dns_region1"
+    }
   }
 }
 
 private_dns_vnet_links = {
   vnet_pvtdns_link1 = {
+    #
+    # 
+    #
+    version  = "v1"
     vnet_key = "vnet_test"
+    tags = {
+      private_dns_vnet_links = "vnet_pvtdns_link1"
+    }
     #lz_key = "remote landing zone key for vnet"
     private_dns_zones = {
       dns_zone1 = {
         name = "dns1-lnk"
         key  = "dns1"
         #lz_key = "provide the landing zone key of private dns zone"
+        # dns_parent_id = "resource id of the private dns zone"
       }
-      # dns_zone2 = {
-      #   name     = "vnet1-link2"
-      #   key = "dnszone2_key"
-      # }
     }
   }
-  # vnet_pvtdns_link2 = {
-  #   vnet_key = "vnet_key2"
-  #   private_dns_zones = {
-  #     dns_zone1 = {
-  #       name     = "vnet2-link1"
-  #       key = "dnszone1_key"
-  #     }
-  #   }
-  # }
+  vnet_pvtdns_link2 = {
+    vnet_key = "vnet_test"
+    # lz_key = ""
+    private_dns_zones = {
+      dns_zone2 = {
+        name = "vnet2-link1"
+        key  = "dns2"
+      }
+    }
+  }
 }
 
 vnets = {
@@ -59,6 +71,10 @@ private_dns = {
   dns1 = {
     name               = "test-dns.mysite.com"
     resource_group_key = "private_dns_region1"
+
+    tags = {
+      private_dns_key = "dns1"
+    }
 
     records = {
       a_records = {
@@ -88,6 +104,14 @@ private_dns = {
           }
         }
       }
+    }
+  }
+  dns2 = {
+    name               = "test2-dns.mysite.com"
+    resource_group_key = "private_dns_region1"
+
+    tags = {
+      private_dns_key = "dns2"
     }
   }
 }
