@@ -7,6 +7,10 @@ resource "random_string" "prefix" {
 }
 
 locals {
+  aadb2c = {
+    aadb2c_directory = try(var.aadb2c.aadb2c_directory, {})
+  }
+
   azuread = {
     azuread_api_permissions             = try(var.azuread.azuread_api_permissions, {})
     azuread_applications                = try(var.azuread.azuread_applications, {})

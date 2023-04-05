@@ -29,6 +29,10 @@ module "example" {
   tags                                  = local.tags
   environment                           = var.environment
 
+  aadb2c = {
+    aadb2c_directory = var.aadb2c_directory
+  }
+
   azuread = {
     azuread_api_permissions             = var.azuread_api_permissions
     azuread_applications                = var.azuread_applications
