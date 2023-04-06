@@ -1,4 +1,4 @@
-resource "azurecaf_name" "sqlmifailover" {
+data "azurecaf_name" "sqlmifailover" {
 
   name          = var.settings.name
   resource_type = "azurerm_sql_failover_group"
@@ -8,11 +8,10 @@ resource "azurecaf_name" "sqlmifailover" {
   passthrough   = var.global_settings.passthrough
 }
 
-resource "azurerm_sql_managed_instance_failover_group" "sqlmi_failover_group" {
-  name                        = azurecaf_name.sqlmifailover.result
-  resource_group_name         = var.resource_group_name
+resource "azurerm_mssql_managed_instance_failover_group" "sqlmi_failover_group" {
+  name                        = data.azurecaf_name.sqlmifailover.result
   location                    = var.location
-  managed_instance_name       = var.managed_instance_name
+  managed_instance_id         = var.managed_instance_id
   partner_managed_instance_id = var.partner_managed_instance_id
 
   dynamic "read_write_endpoint_failover_policy" {

@@ -77,36 +77,71 @@ module "mssql_mi_failover_groups_v1" {
   depends_on                  = [module.mssql_managed_instances_secondary_v1]
   global_settings             = local.global_settings
   settings                    = each.value
-  resource_group_name         = can(each.value.resource_group.name) || can(each.value.resource_group_name) ? try(each.value.resource_group.name, each.value.resource_group_name) : local.combined_objects_resource_groups[try(each.value.resource_group.lz_key, local.client_config.landingzone_key)][try(each.value.resource_group_key, each.value.resource_group.key)].name
-  managed_instance_name       = local.combined_objects_mssql_managed_instances[try(each.value.primary_server.lz_key, local.client_config.landingzone_key)][each.value.primary_server.mi_server_key].name
+  location                    = local.combined_objects_mssql_managed_instances[try(each.value.primary_server.lz_key, local.client_config.landingzone_key)][each.value.primary_server.mi_server_key].location
+  managed_instance_id         = local.combined_objects_mssql_managed_instances[try(each.value.primary_server.lz_key, local.client_config.landingzone_key)][each.value.primary_server.mi_server_key].id
   partner_managed_instance_id = local.combined_objects_mssql_managed_instances_secondary[try(each.value.secondary_server.lz_key, local.client_config.landingzone_key)][each.value.secondary_server.mi_server_key].id
-  location                    = local.combined_objects_mssql_managed_instances_secondary[try(each.value.secondary_server.lz_key, local.client_config.landingzone_key)][each.value.secondary_server.mi_server_key].location
+}
 
+
+
+module "mssql_mi_administrators_v1" {
+  source = "./modules/databases/mssql_managed_instance_v1/administrator"
+
+  for_each = {
+    for key, value in local.database.mssql_managed_instances : key => value
+    if try(value.version, "") == "v1" && try(value.authentication_mode, "aad_only") != "sql_only"
+  }
+
+  depends_on = [module.managed_identities]
+
+  managed_instance_id = module.mssql_managed_instances_v1[each.key].id
+  settings            = each.value.administrators
+  group_id            = can(each.value.administrators.azuread_group_id) ? each.value.administrators.azuread_group_id : local.combined_objects_azuread_groups[try(each.value.administrators.lz_key, local.client_config.landingzone_key)][each.value.administrators.azuread_group_key].id
+  tenant_id           = can(each.value.administrators.tenant_id) ? each.value.administrators.tenant_id : local.combined_objects_azuread_groups[try(each.value.administrators.lz_key, local.client_config.landingzone_key)][each.value.administrators.azuread_group_key].tenant_id
+}
+
+module "mssql_mi_administrators_secondary_v1" {
+  source = "./modules/databases/mssql_managed_instance_v1/administrator"
+
+  for_each = {
+    for key, value in local.database.mssql_managed_instances_secondary : key => value
+    if try(value.version, "") == "v1" && try(value.authentication_mode, "aad_only") != "sql_only"
+  }
+
+  depends_on = [module.managed_identities]
+
+  managed_instance_id = module.mssql_managed_instances_secondary_v1[each.key].id
+  settings            = each.value.administrators
+  group_id            = can(each.value.administrators.azuread_group_id) ? each.value.administrators.azuread_group_id : local.combined_objects_azuread_groups[try(each.value.administrators.lz_key, local.client_config.landingzone_key)][each.value.administrators.azuread_group_key].id
+  tenant_id           = can(each.value.administrators.tenant_id) ? each.value.administrators.tenant_id : local.combined_objects_azuread_groups[try(each.value.administrators.lz_key, local.client_config.landingzone_key)][each.value.administrators.azuread_group_key].tenant_id
 }
 
 #Both initial setup and rotation of the TDE protector must be done on the secondary first, and then on primary.
-# module "mssql_mi_tde_v1" {
-#   source     = "./modules/databases/mssql_managed_instance/tde"
-#   depends_on = [module.mssql_mi_secondary_tde]
+module "mssql_mi_tde_v1" {
+  source     = "./modules/databases/mssql_managed_instance_v1/tde"
+  depends_on = [module.keyvault_access_policies]
 
-#   //depends_on =
-#   for_each = local.database.mssql_mi_tdes
+  //depends_on =
+  for_each = {
+    for key, value in local.database.mssql_mi_tdes : key => value
+    if try(value.version, "") == "v1"
+  }
 
-#   resource_group_name = can(each.value.resource_group.name) || can(each.value.resource_group_name) ? try(each.value.resource_group.name, each.value.resource_group_name) : local.combined_objects_resource_groups[try(each.value.resource_group.lz_key, local.client_config.landingzone_key)][try(each.value.resource_group_key, each.value.resource_group.key)].name
-
-#   mi_name      = module.mssql_managed_instances[each.value.mi_server_key].name
-#   keyvault_key = try(local.combined_objects_keyvault_keys[try(each.value.lz_key, local.client_config.landingzone_key)][each.value.keyvault_key_key], null)
-# }
+  managed_instance_id = can(each.value.mi_server.id) ? each.value.mi_server.id : module.mssql_managed_instances_v1[each.value.mi_server.key].id
+  key_vault_key_id    = can(each.value.keyvault_key) ? try(each.value.keyvault_key.id, local.combined_objects_keyvault_keys[try(each.value.keyvault_key.lz_key, local.client_config.landingzone_key)][each.value.keyvault_key.key].id) : null
+}
 
 
-# module "mssql_mi_secondary_tde_v1" {
-#   source = "./modules/databases/mssql_managed_instance_v1/tde"
+module "mssql_mi_secondary_tde_v1" {
+  source     = "./modules/databases/mssql_managed_instance_v1/tde"
+  depends_on = [module.mssql_mi_tde_v1, module.keyvault_access_policies]
 
-#   for_each = {
-#     forlocal.database.mssql_mi_secondary_tdes
+  for_each = {
+    for key, value in local.database.mssql_mi_secondary_tdes : key => value
+    if try(value.version, "") == "v1"
+  }
 
-#   managed_instance_id            = module.mssql_managed_instances_secondary[each.value.mi_server_key].name
-#   keyvault_key       = try(local.combined_objects_keyvault_keys[try(each.value.lz_key, local.client_config.landingzone_key)][each.value.keyvault_key_key], null)
-#   is_secondary_tde   = true
-#   secondary_keyvault = try(local.combined_objects_keyvaults[try(each.value.lz_key, local.client_config.landingzone_key)][each.value.secondary_keyvault_key], null)
-# }
+  managed_instance_id = can(each.value.mi_server.id) ? each.value.mi_server.id : module.mssql_managed_instances_secondary_v1[each.value.mi_server.key].id
+  key_vault_key_id    = can(each.value.keyvault_key) ? try(each.value.keyvault_key.id, local.combined_objects_keyvault_keys[try(each.value.keyvault_key.lz_key, local.client_config.landingzone_key)][each.value.keyvault_key.key].id) : null
+  # is_secondary_tde   = true
+}

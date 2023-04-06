@@ -1,11 +1,5 @@
-variable "sqlmi_id" {}
-/* variable "keyvault_key" {} */
-/* variable "is_secondary_tde" {
-  default = false
-} */
-/* variable "secondary_keyvault" {
-  default = {}
-} */
+variable "managed_instance_id" {}
 variable "key_vault_key_id" {
-  default = false
+  description = "(Optional) To use customer managed keys from Azure Key Vault, provide the AKV Key ID. To use service managed keys, omit this field."
+  default     = null
 }
