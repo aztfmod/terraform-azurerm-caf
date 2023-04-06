@@ -13,7 +13,7 @@ resource "azurerm_mssql_managed_instance" "mssqlmi" {
   resource_group_name          = var.resource_group_name
   location                     = var.location
   administrator_login          = try(var.settings.administrator_login, null)
-  administrator_login_password = try(var.settings.administrator_login_password, data.external.sqlmi_admin_password.0.result.value)
+  administrator_login_password = try(var.settings.administrator_login_password, random_password.sqlmi_admin.0.result)
 
   license_type                   = try(var.settings.license_type, "BasePrice")
   subnet_id                      = var.subnet_id
@@ -35,26 +35,12 @@ resource "azurerm_mssql_managed_instance" "mssqlmi" {
     }
   }
 
-}
+  lifecycle {
+    ignore_changes = [
+      name
+    ]
+  }
 
-module "tde" {
-  count = can(var.settings.transparent_data_encryption.enabled == true) ? 1 : 0
-  depends_on = [
-    azurerm_mssql_managed_instance.mssqlmi
-  ]
-  source           = "./tde"
-  sqlmi_id         = azurerm_mssql_managed_instance.mssqlmi.id
-  key_vault_key_id = null
-}
-
-
-resource "azurerm_mssql_managed_instance_active_directory_administrator" "aadadmin" {
-  count                       = var.settings.authentication_mode != "sql_only" ? 1 : 0
-  azuread_authentication_only = local.administrators.azuread_authentication_only
-  login_username              = local.administrators.login_username
-  managed_instance_id         = azurerm_mssql_managed_instance.mssqlmi.id
-  object_id                   = local.administrators.object_id
-  tenant_id                   = local.administrators.tenant_id
 }
 
 module "var_settings" {
@@ -95,27 +81,8 @@ module "var_identity" {
   type = module.var_settings.identity.type
 }
 
-
-# module "var_admin" {
-#   source = "./var/admin"
-#   count  = var.settings.authentication_mode != "sql_only" ? 1 : 0
-# }
-
-locals {
-
-  administrators = var.settings.authentication_mode != "sql_only" ? {
-
-    administratorType           = "ActiveDirectory"
-    azuread_authentication_only = var.settings.authentication_mode != "aad_only" ? true : false
-    login_username              = var.settings.administrators.login
-    object_id                   = var.group_id != null || can(var.settings.administrators.sid) ? try(var.group_id, var.settings.administrators.sid) : null
-    tenant_id                   = can(var.settings.administrators.tenant_id) ? var.settings.administrators.tenant_id : var.client_config.tenant_id
-  } : null
-}
-
 module "var_login" {
-  source = "./var/login"
-  #count                        = var.settings.authentication_mode != "aad_only" ? 1 : 0
+  source                       = "./var/login"
   administrator_login          = var.settings.administrator_login
   administrator_login_password = can(var.settings.administrator_login_password) ? var.settings.administrator_login_password : random_password.sqlmi_admin.0.result
   keyvault                     = var.settings.keyvault
@@ -130,69 +97,26 @@ resource "random_password" "sqlmi_admin" {
   upper            = true
   numeric          = true
   override_special = "$#%"
+
 }
 
-#to support keyvault in a different subscription
-resource "azapi_resource" "sqlmi_admin_password" {
+# Create the random password in the keyvault if not provided in the attribute administrator_login_password
+# in the same subscription as the sql server
+resource "azurerm_key_vault_secret" "sqlmi_admin_password" {
   count = can(var.settings.administrator_login_password) ? 0 : 1
 
-  type      = "Microsoft.KeyVault/vaults/secrets@2022-07-01"
-  name      = format("%s-password", data.azurecaf_name.mssqlmi.result)
-  parent_id = var.keyvault.id
+  name         = format("%s-password", azurerm_mssql_managed_instance.mssqlmi.name)
+  value        = random_password.sqlmi_admin.0.result
+  key_vault_id = var.keyvault.id
+  # tags         = local.tags
 
-  body = jsonencode({
-    properties = {
-      attributes = {
-        enabled = true
-      }
-      value = random_password.sqlmi_admin.0.result
-    }
-  })
-
-  ignore_missing_property = true
+  lifecycle {
+    replace_triggered_by = [
+      random_password.sqlmi_admin.0.id
+    ]
+  }
 }
 
-# data "external" "sqlmi_admin_password" {
-#   count      = try(var.settings.administrator_login_password, null) == null ? 1 : 0
-#   depends_on = [azapi_resource.sqlmi_admin_password]
-#   program = [
-#     "bash", "-c",
-#     format(
-#       "az keyvault secret show -n '%s' --vault-name '%s' --query '{value: value }' -o json",
-#       format("%s-password-v1", data.azurecaf_name.mssqlmi.result),
-#       var.keyvault.name
-#     )
-#   ]
-# }
-
-data "external" "sqlmi_admin_password" {
-  count      = can(var.settings.administrator_login_password) ? 0 : 1
-  depends_on = [azapi_resource.sqlmi_admin_password]
-  program = [
-    "bash", "-c",
-    format(
-      "az keyvault secret show -n '%s' --vault-name '%s' --query '{value: value }' -o json",
-      format("%s-password", data.azurecaf_name.mssqlmi.result),
-      var.keyvault.name
-    )
-  ]
-}
-
-
-
-# resource "azurerm_key_vault_secret" "sqlmi_admin_password" {
-#   count = 0
-
-#   name         = format("%s-password", var.settings.name)
-#   value        = random_password.sqlmi_admin.0.result
-#   key_vault_id = var.keyvault.id
-
-#   lifecycle {
-#     ignore_changes = [
-#       value
-#     ]
-#   }
-# }
-
-
-
+# to support keyvault in a different subscription -
+# Need to revert to azurerm as azpi does not support delete secret when soft-delete is enabled
+#

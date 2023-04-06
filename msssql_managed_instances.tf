@@ -75,8 +75,10 @@ module "mssql_mi_administrators" {
 module "mssql_mi_secondary_tde" {
   source = "./modules/databases/mssql_managed_instance/tde"
 
-  //depends_on =
-  for_each = local.database.mssql_mi_secondary_tdes
+  for_each = {
+    for key, value in local.database.mssql_mi_secondary_tdes : key => value
+    if can(value.version) == false
+  }
 
   resource_group_name = can(each.value.resource_group.name) || can(each.value.resource_group_name) ? try(each.value.resource_group.name, each.value.resource_group_name) : local.combined_objects_resource_groups[try(each.value.resource_group.lz_key, local.client_config.landingzone_key)][try(each.value.resource_group_key, each.value.resource_group.key)].name
 
@@ -91,8 +93,11 @@ module "mssql_mi_tde" {
   source     = "./modules/databases/mssql_managed_instance/tde"
   depends_on = [module.mssql_mi_secondary_tde]
 
-  //depends_on =
-  for_each = local.database.mssql_mi_tdes
+  for_each = {
+    for key, value in local.database.mssql_mi_tdes : key => value
+    if can(value.version) == false
+  }
+
 
   resource_group_name = can(each.value.resource_group.name) || can(each.value.resource_group_name) ? try(each.value.resource_group.name, each.value.resource_group_name) : local.combined_objects_resource_groups[try(each.value.resource_group.lz_key, local.client_config.landingzone_key)][try(each.value.resource_group_key, each.value.resource_group.key)].name
 

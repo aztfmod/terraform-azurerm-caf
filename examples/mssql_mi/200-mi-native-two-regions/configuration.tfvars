@@ -2,121 +2,26 @@ global_settings = {
   default_region = "region1"
   regions = {
     region1 = "australiaeast"
-    region2 = "australiaeast"
+    region2 = "japaneast"
   }
 }
 
 resource_groups = {
   networking_region1 = {
-    name   = "mi-networking-re1"
+    name   = "sqlmi-networking-re1"
     region = "region1"
   }
   networking_region2 = {
-    name   = "mi-networking-re2"
+    name   = "sqlmi-networking-re2"
     region = "region2"
   }
   sqlmi_region1 = {
-    name   = "sqlmi-re0"
+    name   = "sqlmi-db-re1"
     region = "region1"
   }
   sqlmi_region2 = {
-    name   = "sqlmi-re1"
+    name   = "sqlmi-db-re2"
     region = "region2"
-  }
-}
-
-vnets = {
-  sqlmi_region1 = {
-    resource_group_key = "networking_region1"
-    vnet = {
-      name          = "sqlmi-rg1"
-      address_space = ["172.25.88.0/21"]
-    }
-    subnets = {
-      sqlmi1 = {
-        name            = "sqlmi1"
-        cidr            = ["172.25.88.0/24"]
-        nsg_key         = "sqlmi1"
-        route_table_key = "sqlmi1"
-        delegation = {
-          name               = "sqlmidelegation"
-          service_delegation = "Microsoft.Sql/managedInstances"
-          actions = [
-            "Microsoft.Network/virtualNetworks/subnets/join/action",
-            "Microsoft.Network/virtualNetworks/subnets/prepareNetworkPolicies/action",
-            "Microsoft.Network/virtualNetworks/subnets/unprepareNetworkPolicies/action"
-          ]
-        }
-      }
-    }
-  }
-  sqlmi_region2 = {
-    resource_group_key = "networking_region2"
-    vnet = {
-      name          = "sqlmi-re2"
-      address_space = ["172.25.96.0/21"]
-    }
-    subnets = {
-      sqlmi2 = {
-        name            = "sqlmi2"
-        cidr            = ["172.25.96.0/24"]
-        nsg_key         = "sqlmi2"
-        route_table_key = "sqlmi2"
-        delegation = {
-          name               = "sqlmidelegation"
-          service_delegation = "Microsoft.Sql/managedInstances"
-          actions = [
-            "Microsoft.Network/virtualNetworks/subnets/join/action",
-            "Microsoft.Network/virtualNetworks/subnets/prepareNetworkPolicies/action",
-            "Microsoft.Network/virtualNetworks/subnets/unprepareNetworkPolicies/action"
-          ]
-        }
-      }
-    }
-  }
-}
-
-route_tables = {
-  sqlmi1 = {
-    name               = "sqlmi1"
-    resource_group_key = "networking_region1"
-  }
-  sqlmi2 = {
-    name               = "sqlmi2"
-    resource_group_key = "networking_region2"
-  }
-}
-
-vnet_peerings_v1 = {
-
-  # Establish a peering with the devops vnet
-  mi_region1-TO-mi_region2 = {
-    name = "mi_region1-TO-mi_region2"
-    from = {
-      vnet_key = "sqlmi_region1"
-    }
-    to = {
-      vnet_key = "sqlmi_region2"
-    }
-    allow_virtual_network_access = true
-    allow_forwarded_traffic      = false
-    allow_gateway_transit        = false
-    use_remote_gateways          = false
-  }
-
-  # Inbound peer with the devops vnet
-  mi_region2-TO-mi_region1 = {
-    name = "mi_region2-TO-mi_region1-TO-ase_region1"
-    from = {
-      vnet_key = "sqlmi_region2"
-    }
-    to = {
-      vnet_key = "sqlmi_region1"
-    }
-    allow_virtual_network_access = true
-    allow_forwarded_traffic      = false
-    allow_gateway_transit        = false
-    use_remote_gateways          = false
   }
 }
 
@@ -127,7 +32,7 @@ mssql_managed_instances = {
     resource_group = {
       key = "sqlmi_region1"
     }
-    name                = "lz-sql-mi-aztf"
+    name                = "sqlmi1"
     administrator_login = "adminuser"
     #administrator_login_password = "@dm1nu53r@30102020"
     ## if password not set, a random complex passwor will be created and stored in the keyvault
@@ -141,11 +46,11 @@ mssql_managed_instances = {
       # principal_type              = "Group"
       # sid                         = "a016736e-6c31-485e-a7d4-5b927171bd99"
       # login                       = "AAD DC Administrators"
-      # tenantId                    = "c2fe6ea2-ee35-4265-95f6-46e9a9b4ec96"
+      # tenant_id                    = "c2fe6ea2-ee35-4265-95f6-46e9a9b4ec96"
 
       # group key or existing group OID or upn supported
       azuread_group_key = "sql_mi_admins"
-      login             = "AAD DC Administrators"
+      login_username    = "AAD DC Administrators"
       # azuread_group_id   = "<specify existing azuread group's Object Id (OID) here>"
 
     }
@@ -175,7 +80,6 @@ mssql_managed_instances = {
     sku = {
       name = "GP_Gen5"
     }
-    #sku = "ss"
     backup_storage_redundancy = "LRS"
     storage_size_in_gb        = 32
     vcores                    = 4
@@ -183,85 +87,9 @@ mssql_managed_instances = {
     transparent_data_encryption = {
       enabled = true
     }
-    # transparent_data_encryption = {
-    #   encryption_type  = "SMK"                                                                                          #SMK/CMK
-    #   key_vault_key_id = "https://kvsandpit3d007f9f500190f.vault.azure.net/keys/mikey/7adec60d2b2c42a882397d732fc2aa24" # not needed for SMK
-    # }
   }
 }
 
-mssql_managed_instances_secondary = {
-  sqlmi2 = {
-    version = "v1"
-    resource_group = {
-      key = "sqlmi_region2"
-    }
-    name                = "lz-sql-mi-aztf"
-    administrator_login = "adminuser"
-    #administrator_login_password = "@dm1nu53r@30102020"
-    ## if password not set, a random complex passwor will be created and stored in the keyvault
-    ## the secret value can be changed after the deployment if needed
-    ## When administrator_login_password use the following keyvault to store the password
-
-    authentication_mode = "aad_only"
-    # "aad_only", "hybrid"
-    administrators = {
-      # principal_type              = "Group"
-      # sid                         = "a016736e-6c31-485e-a7d4-5b927171bd99"
-      # login                       = "AAD DC Administrators"
-      # #tenantId                    = "c2fe6ea2-ee35-4265-95f6-46e9a9b4ec96"
-
-      # group key or existing group OID or upn supported (require authentication_mode = "aad_only")
-      login             = "AAD DC Administrators"
-      azuread_group_key = "sql_mi_admins"
-      # azuread_group_id   = "<specify existing azuread group's Object Id (OID) here>"
-
-    }
-    #collation = "" */
-    #dns_zone_partner=""
-    #instance_pool_id=""
-    keyvault = {
-      key = "sqlmi_rg1"
-    }
-    license_type = "LicenseIncluded"
-    # mi_create_mode = "d" #"Default" "PointInTimeRestore"
-    #restore_point_in_time
-    minimal_tls_version = "1.2"
-    //networking
-    networking = {
-      vnet_key   = "sqlmi_region1"
-      subnet_key = "sqlmi1"
-    }
-    #proxy_override               = "Redirect"
-    maintenance_configuration_name = "SQL_Default"
-    #service_principal
-    identity = {
-      type                  = "UserAssigned"
-      managed_identity_keys = ["mi2"]
-    }
-
-    primary_server = {
-      mi_server_key = "sqlmi1"
-    }
-    public_data_endpoint_enabled = false
-
-    sku = {
-      name = "GP_Gen5"
-    }
-    #sku = "ss"
-    backup_storage_redundancy = "LRS"
-    storage_size_in_gb        = 32
-    vcores                    = 4
-    zone_redundant            = "false"
-    transparent_data_encryption = {
-      enabled = true
-    }
-    # transparent_data_encryption = {
-    #   encryption_type  = "SMK"                                                                                          #SMK/CMK
-    #   key_vault_key_id = "https://kvsandpit3d007f9f500190f.vault.azure.net/keys/mikey/7adec60d2b2c42a882397d732fc2aa24" # not needed for SMK
-    # }
-  }
-}
 
 mssql_managed_databases = {
   managed_db1 = {
@@ -299,12 +127,14 @@ mssql_managed_databases = {
 
 managed_identities = {
   mi1 = {
-    name               = "mssql-msi"
+    name               = "mssql-mi1"
+    region             = "region1"
     resource_group_key = "sqlmi_region1"
 
   }
   mi2 = {
-    name               = "mssql-msi"
+    name               = "mssql-m2"
+    region             = "region2"
     resource_group_key = "sqlmi_region2"
 
   }
@@ -325,156 +155,3 @@ managed_identities = {
 
 
 
-mssql_mi_failover_groups = {
-  failover-mi = {
-    version            = "v1"
-    resource_group_key = "sqlmi_region1"
-    name               = "failover-test"
-    primary_server = {
-      mi_server_key = "sqlmi1"
-    }
-    secondary_server = {
-      mi_server_key = "sqlmi2"
-    }
-    readonly_endpoint_failover_policy_enabled = false
-    read_write_endpoint_failover_policy = {
-      mode          = "Automatic"
-      grace_minutes = 60
-    }
-  }
-}
-
-/* azuread_roles = {
-  mssql_managed_instances = {
-    sqlmi1 = {
-      roles = [
-        "Directory Readers"
-      ]
-    }
-  }
-  mssql_managed_instances_secondary = {
-    sqlmi2 = {
-      roles = [
-        "Directory Readers"
-      ]
-    }
-  }
-} */
-
-azuread_groups = {
-  sql_mi_admins = {
-    name        = "sql-mi-admins"
-    description = "Administrators of the SQL MI."
-    members = {
-      user_principal_names = []
-      object_ids = [
-      ]
-      group_keys             = []
-      service_principal_keys = []
-    }
-    owners = {
-      user_principal_names = [
-      ]
-      service_principal_keys = []
-      object_ids             = []
-    }
-    prevent_duplicate_name = false
-  }
-}
-
-keyvaults = {
-  sqlmi_rg1 = {
-    name               = "sqlmirg1"
-    resource_group_key = "sqlmi_region1"
-    sku_name           = "standard"
-
-    creation_policies = {
-      logged_in_user = {
-        secret_permissions = ["Set", "Get", "List", "Delete", "Purge"]
-      }
-    }
-  }
-
-  tde_primary = {
-    name                       = "mi-tde-primary"
-    resource_group_key         = "sqlmi_region1"
-    sku_name                   = "standard"
-    purge_protection_enabled   = true
-    soft_delete_retention_days = 90
-    creation_policies = {
-      logged_in_user = {
-        key_permissions = ["Get", "List", "Update", "Create", "Import", "Delete", "Recover", "Backup", "Restore", "Purge"]
-      }
-    }
-  }
-  tde_secondary = {
-    name                       = "mi-tde-secondary"
-    resource_group_key         = "sqlmi_region2"
-    sku_name                   = "standard"
-    purge_protection_enabled   = true
-    soft_delete_retention_days = 90
-
-    creation_policies = {
-      logged_in_user = {
-        key_permissions = ["Get", "List", "Update", "Create", "Import", "Delete", "Recover", "Backup", "Restore", "Purge"]
-      }
-    }
-  }
-}
-
-keyvault_access_policies = {
-  # A maximum of 16 access policies per keyvault
-  tde_primary = {
-    sqlmi1 = {
-      mssql_managed_instance_key = "sqlmi1"
-      key_permissions            = ["Get", "UnwrapKey", "WrapKey"]
-    }
-    sqlmi2 = {
-      mssql_managed_instance_secondary_key = "sqlmi2"
-      key_permissions                      = ["Get", "UnwrapKey", "WrapKey"]
-    }
-  }
-  tde_secondary = {
-    sqlmi1 = {
-      mssql_managed_instance_key = "sqlmi1"
-      key_permissions            = ["Get", "UnwrapKey", "WrapKey"]
-    }
-    sqlmi2 = {
-      mssql_managed_instance_secondary_key = "sqlmi2"
-      key_permissions                      = ["Get", "UnwrapKey", "WrapKey"]
-    }
-  }
-}
-
-keyvault_keys = {
-  tde_mi = {
-    keyvault_key = "tde_primary"
-    name         = "TDE"
-    key_type     = "RSA"
-    key_opts     = ["encrypt", "decrypt", "sign", "verify", "wrapKey", "unwrapKey"]
-    key_size     = 2048
-    backups = {
-      tde_secondary = {
-        key = "tde_secondary"
-      }
-    }
-  }
-}
-
-//TDE
-# mssql_mi_secondary_tdes = {
-#   sqlmi2 = {
-#     resource_group_key     = "sqlmi_region2"
-#     mi_server_key          = "sqlmi2"
-#     keyvault_key_key       = "tde_mi"
-#     secondary_keyvault_key = "tde_secondary"
-#   }
-# }
-
-# mssql_mi_tdes = {
-#   sqlmi1 = {
-#     resource_group_key = "sqlmi_region1"
-#     mi_server_key      = "sqlmi1"
-#     keyvault_key_key   = "tde_mi"
-#   }
-# }
