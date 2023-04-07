@@ -47,7 +47,7 @@ An Action Group will be created and your choice of Notifications type can be cho
 ##  Input Syntax
 ```hcl
   # refer example configuration file
-   monitoring = {
+  monitoring = {
     service_health_alerts = {
         enable_service_health_alerts = true/false
         name = "<string>"
@@ -73,10 +73,10 @@ An Action Group will be created and your choice of Notifications type can be cho
         #comment out this block exclude this configuration completely
         sms_alert_settings = {
           sms_alert1 = {
-             name = "<string>"
-             country_code ="<countryCode>"
-             phone_number = "<phoneNumber>"
-           } #follow the syntax of email alert settings to have one or more alerts
+            name = "<string>"
+            country_code ="<countryCode>"
+            phone_number = "<phoneNumber>"
+          } #follow the syntax of email alert settings to have one or more alerts
         }
 
         #comment out this block exclude this configuration completely

@@ -38,7 +38,7 @@ function execute_with_backoff {
           sleep 10
           if [[ ! -f "$FILE" ]]
           then
-               echo "creating semaphore"
+              echo "creating semaphore"
               touch "$FILE"
               break
           fi

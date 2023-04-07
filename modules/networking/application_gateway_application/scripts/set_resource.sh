@@ -24,26 +24,26 @@ function execute_with_backoff {
         STATUS=$(az rest --method GET --url $APPLICATION_GATEWAY_ID?api-version=$API_VERSION --query "{status:properties.provisioningState}" -o tsv)
         if [[ "$STATUS" == "Succeeded" ]]
         then
-          break
+        break
         fi
     done
 
     if [[ ! -f "$FILE" ]]
     then
-      echo "creating semaphore"
-      touch "$FILE"
+    echo "creating semaphore"
+    touch "$FILE"
     else
-      echo "waiting semaphore to be removed"
-      while [[ -f "$FILE" ]]
-      do
-          sleep 10
-          if [[ ! -f "$FILE" ]]
-          then
-               echo "creating semaphore"
-              touch "$FILE"
-              break
-          fi
-      done
+    echo "waiting semaphore to be removed"
+    while [[ -f "$FILE" ]]
+    do
+        sleep 10
+        if [[ ! -f "$FILE" ]]
+        then
+                echo "creating semaphore"
+            touch "$FILE"
+            break
+        fi
+    done
     fi
     echo "running command"
 
@@ -54,7 +54,7 @@ function execute_with_backoff {
 
     if [[ $exitCode == 0 ]]
     then
-      break
+    break
     fi
 
     echo "Failure! Return code ${exitCode} - Retrying in $timeout.." 1>&2
@@ -148,7 +148,7 @@ case "${RESOURCE}" in
         keyvaultsecretid=$([ -z "${KEY_VAULT_SECRET_ID}" ] && echo "" || echo "--key-vault-secret-id ${KEY_VAULT_SECRET_ID} ")
 
         execute_with_backoff az network application-gateway root-cert create --gateway-name ${APPLICATION_GATEWAY_NAME} --resource-group ${RG_NAME} \
-         --name ${NAME} ${certfile}${keyvaultsecretid}
+        --name ${NAME} ${certfile}${keyvaultsecretid}
         ;;
     PATHMAP)
         addresspool=$([ -z "${ADDRESS_POOL}" ] && echo "" || echo "--address-pool ${ADDRESS_POOL} ")

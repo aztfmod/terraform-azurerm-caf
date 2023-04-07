@@ -7,7 +7,7 @@
         },
 
         "name": {
-          "type": "String"
+        "type": "String"
         },
 
         "region" : {
@@ -22,7 +22,7 @@
 
     "resources": [
 
-           {
+            {
             "comments": "Service Health Activity Log Alert",
             "type": "microsoft.insights/activityLogAlerts",
             "name": "[parameters('name')]",

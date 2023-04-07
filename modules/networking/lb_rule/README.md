@@ -17,9 +17,9 @@ module "caf" {
 |backend_port| The port used for internal connections on the endpoint. Possible values range between 0 and 65535, inclusive.||True|
 |backend_address_pool_ids| A list of reference to a Backend Address Pool over which this Load Balancing Rule operates.||False|
 |probe_id| A reference to a Probe used by this Load Balancing Rule.||False|
-|enable_floating_ip| Are the Floating IPs enabled for this Load Balncer Rule? A "floating” IP is reassigned to a secondary server in case the primary server fails. Required to configure a SQL AlwaysOn Availability Group. Defaults to `false`.||False|
+|enable_floating_ip| Are the Floating IPs enabled for this Load Balncer Rule? A "floatingï¿½ IP is reassigned to a secondary server in case the primary server fails. Required to configure a SQL AlwaysOn Availability Group. Defaults to `false`.||False|
 |idle_timeout_in_minutes| Specifies the idle timeout in minutes for TCP connections. Valid values are between `4` and `30` minutes. Defaults to `4` minutes.||False|
-|load_distribution| Specifies the load balancing distribution type to be used by the Load Balancer. Possible values are: `Default` – The load balancer is configured to use a 5 tuple hash to map traffic to available servers. `SourceIP` – The load balancer is configured to use a 2 tuple hash to map traffic to available servers. `SourceIPProtocol` – The load balancer is configured to use a 3 tuple hash to map traffic to available servers. Also known as Session Persistence, where  the options are called `None`, `Client IP` and `Client IP and Protocol` respectively.||False|
+|load_distribution| Specifies the load balancing distribution type to be used by the Load Balancer. Possible values are: `Default` ï¿½ The load balancer is configured to use a 5 tuple hash to map traffic to available servers. `SourceIP` ï¿½ The load balancer is configured to use a 2 tuple hash to map traffic to available servers. `SourceIPProtocol` ï¿½ The load balancer is configured to use a 3 tuple hash to map traffic to available servers. Also known as Session Persistence, where  the options are called `None`, `Client IP` and `Client IP and Protocol` respectively.||False|
 |disable_outbound_snat| Is snat enabled for this Load Balancer Rule? Default `false`.||False|
 |enable_tcp_reset| Is TCP Reset enabled for this Load Balancer Rule? Defaults to `false`.||False|
 
