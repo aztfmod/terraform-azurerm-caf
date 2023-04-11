@@ -11,7 +11,7 @@ module "keyvault_certificate_issuers" {
   settings        = each.value
   keyvault_id     = can(each.value.keyvault_id) ? each.value.keyvault_id : local.combined_objects_keyvaults[try(each.value.lz_key, local.client_config.landingzone_key)][each.value.keyvault_key].id
   # password        = try(data.azurerm_key_vault_secret.certificate_issuer_password[each.key].value, each.value.cert_issuer_password)
-  password        = can(each.value.cert_secret_name) ? jsondecode(data.azapi_resource.certificate_issuer_password.output).properties.0.value : data.azurerm_key_vault_secret.certificate_issuer_password[0].value
+  password        = can(each.value.cert_secret_name) ? jsondecode(data.azapi_resource.certificate_issuer_password.0.output).properties.value : data.azurerm_key_vault_secret.certificate_issuer_password[0].value
 }
 
 data "azurerm_key_vault_secret" "certificate_issuer_password" {
