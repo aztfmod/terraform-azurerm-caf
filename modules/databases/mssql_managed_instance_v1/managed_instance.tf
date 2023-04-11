@@ -30,7 +30,7 @@ resource "azurerm_mssql_managed_instance" "mssqlmi" {
     for_each = can(var.settings.identity) ? [1] : []
 
     content {
-      type         = var.settings.identity.type
+      type         = module.var_identity.0.type
       identity_ids = local.managed_identities
     }
   }
@@ -63,9 +63,6 @@ locals {
   sku = {
     name = module.var_sku.name
   }
-  identity = {
-    type = module.var_identity.type
-  }
 }
 
 module "var_sku" {
@@ -77,6 +74,7 @@ module "var_sku" {
 
 module "var_identity" {
   source = "./var/identity"
+  count = can(var.settings.identity) ? 1 : 0
 
   type = module.var_settings.identity.type
 }
