@@ -10,14 +10,14 @@ module "keyvault_certificate_issuers" {
   global_settings = local.global_settings
   settings        = each.value
   keyvault_id     = can(each.value.keyvault_id) ? each.value.keyvault_id : local.combined_objects_keyvaults[try(each.value.lz_key, local.client_config.landingzone_key)][each.value.keyvault_key].id
-  password        = can(each.value.cert_secret_name) ? jsondecode(data.azapi_resource.certificate_issuer_password[each.key].output).properties.value : data.azurerm_key_vault_secret.certificate_issuer_password[0].value
+  password        = can(each.value.cert_secret_name) ? jsondecode(data.azapi_resource.certificate_issuer_password[each.key].output).properties.value : data.azurerm_key_vault_secret.certificate_issuer_password[each.key].value
 }
 
 data "azurerm_key_vault_secret" "certificate_issuer_password" {
   depends_on = [module.dynamic_keyvault_secrets]
   for_each = {
     for key, value in local.security.keyvault_certificate_issuers : key => value
-    if try(value.cert_password_key, null) != null
+    if can(value.cert_password_key)
   }
 
   name         = var.security.dynamic_keyvault_secrets[each.value.keyvault_key][each.value.cert_password_key].secret_name
@@ -28,7 +28,7 @@ data "azapi_resource" "certificate_issuer_password" {
   depends_on = [module.dynamic_keyvault_secrets]
   for_each = {
     for key, value in local.security.keyvault_certificate_issuers : key => value
-    if try(value.cert_secret_name, null) != null
+    if can(value.cert_secret_name)
   }
 
   type      = "Microsoft.KeyVault/vaults/secrets@2022-07-01"
