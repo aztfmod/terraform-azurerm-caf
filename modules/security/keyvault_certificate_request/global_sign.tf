@@ -1,9 +1,3 @@
-# data "azurerm_key_vault_secret" "password" {
-#   count        = lower(var.settings.certificate_policy.issuer_key_or_name) == "self" ? 0 : 1
-#   name         = var.certificate_issuers[var.settings.certificate_policy.issuer_key_or_name].cert_password_key
-#   key_vault_id = var.keyvault_id
-# }
-
 data "azapi_resource" "password" {
   count        = lower(var.settings.certificate_policy.issuer_key_or_name) == "self" ? 0 : 1
   
