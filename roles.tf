@@ -99,6 +99,8 @@ locals {
   # Nested objects that must be processed after the services_roles
   services_roles_deferred = {
     storage_containers = local.combined_objects_storage_containers
+    # Virtual Machines depend on packer_build, and packer_build depends on azurerm_role_assignment.for
+    virtual_machines = local.combined_objects_virtual_machines
   }
 
   services_roles = {
