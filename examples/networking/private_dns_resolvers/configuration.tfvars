@@ -67,11 +67,11 @@ virtual_subnets = {
 }
 
 
-
 private_dns_resolvers = {
   dns_resolver1 = {
     name               = "test-dns-resolver1"
     resource_group_key = "private_dns_resolver_region1"
+    region = "southeastasia"
     vnet = {
       #lz_key = ""
       key = "vnet1"
