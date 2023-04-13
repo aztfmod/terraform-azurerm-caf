@@ -19,4 +19,9 @@ variable "settings" {
     sid            = optional(string)
     tenant_id      = optional(string)
   })
+
+}
+variable "aad_only_auth" {
+  default  = false
+  nullable = false
 }

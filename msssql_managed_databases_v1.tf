@@ -4,6 +4,7 @@ output "mssql_managed_databases" {
 
 }
 
+
 module "mssql_managed_databases_v1" {
   source = "./modules/databases/mssql_managed_database_v1"
   for_each = {
@@ -14,26 +15,19 @@ module "mssql_managed_databases_v1" {
   settings        = each.value
   server_id       = can(each.value.server_id) ? each.value.server_id : local.combined_objects_mssql_managed_instances[try(each.value.lz_key, local.client_config.landingzone_key)][each.value.mi_server_key].id
 }
-#
-# module "mssql_managed_databases_restore" {
-#   source   = "./modules/databases/mssql_managed_database"
-#   for_each = local.database.mssql_managed_databases_restore
 
-#   global_settings     = local.global_settings
-#   settings            = each.value
-#   server_name         = can(each.value.server_name) ? each.value.server_name : local.combined_objects_mssql_managed_instances[try(each.value.lz_key, local.client_config.landingzone_key)][each.value.mi_server_key].name
-#   sourceDatabaseId    = try(each.value.createMode, null) == "PointInTimeRestore" ? module.mssql_managed_databases[each.value.source_database_key].id : ""
-#   location            = can(local.global_settings.regions[each.value.region]) ? local.global_settings.regions[each.value.region] : local.combined_objects_resource_groups[try(each.value.resource_group.lz_key, local.client_config.landingzone_key)][try(each.value.resource_group.key, each.value.resource_group_key)].location
-#   resource_group_name = can(each.value.resource_group.name) || can(each.value.resource_group_name) ? try(each.value.resource_group.name, each.value.resource_group_name) : local.combined_objects_resource_groups[try(each.value.resource_group.lz_key, local.client_config.landingzone_key)][try(each.value.resource_group_key, each.value.resource_group.key)].name
-#   base_tags           = try(local.global_settings.inherit_tags, false) ? try(local.combined_objects_resource_groups[try(each.value.resource_group.lz_key, local.client_config.landingzone_key)][try(each.value.resource_group.key, each.value.resource_group_key)].tags, {}) : {}
-# }
 
-# module "mssql_managed_databases_backup_ltr" {
-#   source   = "./modules/databases/mssql_managed_database/backup_ltr"
-#   for_each = local.database.mssql_managed_databases_backup_ltr
-
-#   settings            = each.value
-#   server_name         = can(each.value.server_name) ? each.value.server_name : local.combined_objects_mssql_managed_instances[try(each.value.lz_key, local.client_config.landingzone_key)][each.value.mi_server_key].name
-#   db_name             = try(module.mssql_managed_databases[each.value.database_key].name, module.mssql_managed_databases_restore[each.value.database_key].name)
-#   resource_group_name = can(each.value.resource_group.name) || can(each.value.resource_group_name) ? try(each.value.resource_group.name, each.value.resource_group_name) : local.combined_objects_resource_groups[try(each.value.resource_group.lz_key, local.client_config.landingzone_key)][try(each.value.resource_group_key, each.value.resource_group.key)].name
-# }
+module "mssql_managed_databases_restore_v1" {
+  source = "./modules/databases/mssql_managed_database_restore_v1"
+  for_each = {
+    for key, value in local.database.mssql_managed_databases_restore : key => value
+    if try(value.version, "") == "v1"
+  }
+  base_tags          = local.global_settings.inherit_tags
+  global_settings    = local.global_settings
+  settings           = each.value
+  source_database_id = try(each.value.properties.create_mode, null) == "PointInTimeRestore" ? can(each.value.properties.source_database.id) ? each.value.properties.source_database.id : local.combined_objects_mssql_managed_databases[try(each.value.lz_key, local.client_config.landingzone_key)][each.value.properties.source_database.database_key].id : null
+  server_id          = can(each.value.server_id) ? each.value.server_id : local.combined_objects_mssql_managed_instances[try(each.value.lz_key, local.client_config.landingzone_key)][each.value.mi_server_key].id
+  server_location    = can(each.value.server_id) ? each.value.server_location : local.combined_objects_mssql_managed_instances[try(each.value.lz_key, local.client_config.landingzone_key)][each.value.mi_server_key].location
+  server_tags        = can(each.value.server_id) ? try(each.value.server_tags, null) : try(local.combined_objects_mssql_managed_instances[try(each.value.lz_key, local.client_config.landingzone_key)][each.value.mi_server_key].tags, null)
+}
