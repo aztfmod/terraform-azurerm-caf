@@ -98,6 +98,7 @@ module "mssql_mi_administrators_v1" {
   settings            = each.value.administrators
   group_id            = can(each.value.administrators.azuread_group_id) ? each.value.administrators.azuread_group_id : local.combined_objects_azuread_groups[try(each.value.administrators.lz_key, local.client_config.landingzone_key)][each.value.administrators.azuread_group_key].id
   tenant_id           = can(each.value.administrators.tenant_id) ? each.value.administrators.tenant_id : local.combined_objects_azuread_groups[try(each.value.administrators.lz_key, local.client_config.landingzone_key)][each.value.administrators.azuread_group_key].tenant_id
+  aad_only_auth       = each.value.authentication_mode == "aad_only" ? true : false
 }
 
 module "mssql_mi_administrators_secondary_v1" {
@@ -114,6 +115,7 @@ module "mssql_mi_administrators_secondary_v1" {
   settings            = each.value.administrators
   group_id            = can(each.value.administrators.azuread_group_id) ? each.value.administrators.azuread_group_id : local.combined_objects_azuread_groups[try(each.value.administrators.lz_key, local.client_config.landingzone_key)][each.value.administrators.azuread_group_key].id
   tenant_id           = can(each.value.administrators.tenant_id) ? each.value.administrators.tenant_id : local.combined_objects_azuread_groups[try(each.value.administrators.lz_key, local.client_config.landingzone_key)][each.value.administrators.azuread_group_key].tenant_id
+  aad_only_auth       = each.value.authentication_mode == "aad_only" ? true : false
 }
 
 #Both initial setup and rotation of the TDE protector must be done on the secondary first, and then on primary.

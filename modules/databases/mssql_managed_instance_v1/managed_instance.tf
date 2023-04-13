@@ -74,7 +74,6 @@ module "var_sku" {
   name = module.var_settings.sku.name
 }
 
-
 module "var_identity" {
   source = "./var/identity"
 
