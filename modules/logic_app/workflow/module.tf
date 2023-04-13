@@ -17,11 +17,9 @@ resource "azurerm_logic_app_workflow" "la" {
   logic_app_integration_account_id   = try(var.settings.logic_app_integration_account_id, null)
   workflow_schema                    = try(var.settings.workflow_schema, null)
   workflow_version                   = try(var.settings.workflow_version, null)
-  # parameters                         = try(var.settings.parameters, null)
-  # workflow_parameters                = try(var.settings.workflow_parameters, null)
-  workflow_parameters = {"$connections" = jsonencode({ "defaultValue" = {}, "type" = "Object" })}
-  parameters          = {"$connections" = jsonencode(var.settings.connections)}
-  tags                = local.tags
+  workflow_parameters                = {"$connections" = jsonencode({ "defaultValue" = {}, "type" = "Object" })}
+  parameters                         = {"$connections" = jsonencode(try(var.settings.connections), null)}
+  tags                               = local.tags
 }
 
 
