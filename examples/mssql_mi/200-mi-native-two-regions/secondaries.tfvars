@@ -14,7 +14,7 @@ mssql_managed_instances_secondary = {
     ## the secret value can be changed after the deployment if needed
     ## When administrator_login_password use the following keyvault to store the password
 
-    authentication_mode = "aad_only"
+    authentication_mode = "hybrid"
     # "aad_only", "hybrid"
     administrators = {
       # principal_type              = "Group"
