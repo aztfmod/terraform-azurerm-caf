@@ -30,7 +30,7 @@ module "mssql_managed_instances_v1" {
     for key, value in local.database.mssql_managed_instances : key => value
     if try(value.version, "") == "v1"
   }
-  depends_on = [module.routes]
+  depends_on = [module.routes, module.azuread_roles_msi]
 
   global_settings     = local.global_settings
   client_config       = local.client_config
@@ -52,7 +52,7 @@ module "mssql_managed_instances_secondary_v1" {
     for key, value in local.database.mssql_managed_instances_secondary : key => value
     if try(value.version, "") == "v1"
   }
-  depends_on = [module.routes]
+  depends_on = [module.routes, module.azuread_roles_msi]
 
   global_settings     = local.global_settings
   client_config       = local.client_config

@@ -7,8 +7,6 @@ azuread_roles = {
         "Directory Readers"
       ]
     }
-  }
-  managed_identities = {
     mi2 = {
       version = "v1"
       roles = [
