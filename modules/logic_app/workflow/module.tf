@@ -17,8 +17,26 @@ resource "azurerm_logic_app_workflow" "la" {
   logic_app_integration_account_id   = try(var.settings.logic_app_integration_account_id, null)
   workflow_schema                    = try(var.settings.workflow_schema, null)
   workflow_version                   = try(var.settings.workflow_version, null)
-  parameters                         = try(var.settings.parameters, null)
-  workflow_parameters                = try(var.settings.workflow_parameters, null)
+  # parameters                         = try(var.settings.parameters, null)
+  # workflow_parameters                = try(var.settings.workflow_parameters, null)
+  workflow_parameters = {"$connections" = jsonencode({ "defaultValue" = {}, "type" = "Object" })}
+  parameters = {
+      "$connections" = jsonencode(
+        {
+          sql_1 = {
+            connectionId   = "/subscriptions/a150bd99-8dcd-4969-91c2-c9147f56439d/resourceGroups/rg-sga3d-mia-solution/providers/Microsoft.Web/connections/sql-1"
+            connectionName = "sql-1"
+            id             = "/subscriptions/a150bd99-8dcd-4969-91c2-c9147f56439d/providers/Microsoft.Web/locations/uksouth/managedApis/sql"
+          }
+          sqldw = {
+            connectionId   = "/subscriptions/a150bd99-8dcd-4969-91c2-c9147f56439d/resourceGroups/rg-sga3d-mia-solution/providers/Microsoft.Web/connections/sqldw-5"
+            connectionName = "sqldw-5"
+            id             = "/subscriptions/a150bd99-8dcd-4969-91c2-c9147f56439d/providers/Microsoft.Web/locations/uksouth/managedApis/sqldw"
+          }
+        }
+      )
+    }
+  
   tags                               = local.tags
 }
 
