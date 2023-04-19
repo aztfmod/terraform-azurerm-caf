@@ -18,12 +18,11 @@ variable "azuread_groups" {}
 variable "vnets" {}
 variable "private_endpoints" {}
 variable "resource_groups" {}
-variable "base_tags" {
-  description = "Base tags for the resource to be inherited from the resource group."
-  type        = map(any)
-}
 variable "private_dns" {
   default = {}
 }
 variable "keyvault_id" {}
 variable "remote_objects" {}
+variable "tags" {
+  default = {}
+}

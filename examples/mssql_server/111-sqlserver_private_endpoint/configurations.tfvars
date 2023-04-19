@@ -1,5 +1,6 @@
 global_settings = {
   default_region = "region1"
+  inherit_tags   = true
   regions = {
     region1 = "australiaeast"
     region2 = "australiacentral"
@@ -72,7 +73,9 @@ mssql_servers = {
         subnet_key = "web"
         #subnet_id          = "/subscriptions/97958dac-f75b-4ee3-9a07-9f436fa73bd4/resourceGroups/ppga-rg-sql-rg1/providers/Microsoft.Network/virtualNetworks/ppga-vnet-testvnet1/subnets/ppga-snet-web-subnet"
         resource_group_key = "sql_region1"
-
+        tags = {
+          segment = "pe-sales"
+        }
         private_service_connection = {
           name                 = "sales-sql-rg1"
           is_manual_connection = false

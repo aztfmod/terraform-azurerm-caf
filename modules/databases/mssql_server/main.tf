@@ -8,8 +8,9 @@ terraform {
 }
 
 locals {
-  module_tag = {
-    "module" = basename(abspath(path.module))
-  }
-  tags = merge(var.base_tags, local.module_tag, try(var.settings.tags, null))
+  tags = var.global_settings.inherit_tags ? merge(
+    var.global_settings.tags,
+    var.tags
+  ) : null
+
 }
