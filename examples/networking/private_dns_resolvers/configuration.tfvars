@@ -84,7 +84,11 @@ private_dns_resolvers = {
 private_dns_resolver_inbound_endpoints = {
   inbound_endpoint1 = {
     name                     = "test-inbound-endpint1"
-    private_dns_resolver_key = "dns_resolver1"
+    region = "southeastasia"
+    private_dns_resolver = {
+      key ="dns_resolver1"
+      #lz_key = ""
+    }
     ip_configurations = {
       ip_config1 = {
         #subnet_id=""

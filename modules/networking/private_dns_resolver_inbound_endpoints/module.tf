@@ -11,9 +11,13 @@ resource "azurecaf_name" "pvtdnsrie" {
 
 
 resource "azurerm_private_dns_resolver_inbound_endpoint" "pvt_dns_resolver_inbound_endpoint" {
-  name                = azurecaf_name.pvtdnsrie.result
-  resource_group_name = var.resource_group.name
-  virtual_network_id  = var.virtual_network_id
-  location            = var.location
-  tags                = merge(local.tags, try(var.settings.tags, null))
+  name                    = azurecaf_name.pvtdnsrie.result
+  private_dns_resolver_id = var.private_dns_resolver_id
+  location                = var.location
+  tags                    = merge(local.tags, try(var.settings.tags, null))
+  ip_configurations {
+    private_ip_allocation_method = "Dynamic"
+    subnet_id                    = var.subnet_id
+
+  }
 }

@@ -8,13 +8,13 @@ variable "client_config" {
 variable "settings" {
 }
 
-variable "resource_group" {
-}
-
 variable "location" {
 }
 
-variable "virtual_network_id" {
+variable "private_dns_resolver_id" {
+}
+variable "subnet_id" {
+
 }
 variable "inherit_tags" {
   description = "Base tags for the resource to be inherited from the resource group."
