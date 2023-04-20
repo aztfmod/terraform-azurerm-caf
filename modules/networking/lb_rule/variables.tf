@@ -24,11 +24,3 @@ variable "resource_group_name" {
   type        = string
   description = " The name of the resource group in which to create the resource."
 }
-
-variable "probes" {
-  description = "Map of load balancer probes that rule may reference"
-}
-
-variable "backend_address_pool" {
-  description = "Map of backend address pools that rule may reference"
-}
