@@ -44,7 +44,6 @@ virtual_subnets = {
       }
     }
   }
-
   outbound = {
     name    = "uutbound-subnet"
     cidr    = ["172.33.2.0/28"]
@@ -107,7 +106,11 @@ private_dns_resolver_inbound_endpoints = {
 private_dns_resolver_outbound_endpoints = {
   outbound_endpoint1 = {
     name                 = "test-outbound-endpoint1"
-    pvt_dns_resolver_key = "dns_resolver1"
+    private_dns_resolver = {
+      key ="dns_resolver1"
+      #lz_key = ""
+    }
+    region = "southeastasia"
     #subnet_id =""
     vnet = {
       #lz_key = ""

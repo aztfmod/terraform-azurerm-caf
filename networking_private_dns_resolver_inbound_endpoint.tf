@@ -11,16 +11,16 @@ module "private_dns_resolver_inbound_endpoints" {
   location                = try(local.global_settings.regions[each.value.region], each.value.region)
 
   subnet_ids = compact(concat(
-   [
-      for key,value in each.value.ip_configurations :
+    [
+      for key, value in each.value.ip_configurations :
       can(value.subnet_id) || can(value.vnet.key) == false ? try(value.subnet_id, null) : try(local.combined_objects_networking[try(value.vnet.lz_key, local.client_config.landingzone_key)][value.vnet.key].subnets[value.vnet.subnet_key].id, "")
     ],
     [
-      for key,value in each.value.ip_configurations :
+      for key, value in each.value.ip_configurations :
       can(value.subnet_id) || can(value.vnet.key) == false ? try(value.subnet_id, null) : try(local.combined_objects_virtual_subnets[try(value.vnet.lz_key, local.client_config.landingzone_key)][value.vnet.subnet_key].id, "")
     ]
   ))
-  
+
 }
 
 output "private_dns_resolver_inbound_endpoints" {
