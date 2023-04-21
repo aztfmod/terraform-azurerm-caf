@@ -13,8 +13,8 @@ module "private_dns_resolver_outbound_endpoints" {
   subnet_id = try(
     can(each.value.subnet_id) || can(each.value.vnet.key) == false ? try(each.value.subnet_id, null) : try(local.combined_objects_virtual_subnets[try(each.value.vnet.lz_key, local.client_config.landingzone_key)][each.value.vnet.subnet_key].id),
     can(each.value.subnet_id) || can(each.value.vnet.key) == false ? try(each.value.subnet_id, null) : try(local.combined_objects_networking[try(each.value.vnet.lz_key, local.client_config.landingzone_key)][each.value.vnet.key].subnets[each.value.vnet.subnet_key].id)
-    
-    
+
+
   )
 
 }
