@@ -1024,16 +1024,16 @@ variable "aadb2c_directory" {
   default = {}
 }
 variable "private_dns_resolvers" {
-  default = {} 
+  default = {}
 }
 variable "private_dns_resolver_inbound_endpoints" {
-  default = {} 
+  default = {}
 }
 variable "private_dns_resolver_outbound_endpoints" {
-  default = {} 
+  default = {}
 }
 variable "private_dns_resolver_dns_forwarding_rulesets" {
-  default = {} 
+  default = {}
 }
 
 variable "private_dns_resolver_virtual_network_links" {
