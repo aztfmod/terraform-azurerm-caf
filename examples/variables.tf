@@ -1023,3 +1023,6 @@ variable "web_pubsub_hubs" {
 variable "aadb2c_directory" {
   default = {}
 }
+variable "preview_features" {
+  default = {}
+}

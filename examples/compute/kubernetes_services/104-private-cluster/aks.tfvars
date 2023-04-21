@@ -1,3 +1,9 @@
+preview_features = {
+  "Microsoft.ContainerService" = [
+    "AKS-KedaPreview",
+    "TrustedAccessPreview"
+  ]
+}
 aks_clusters = {
   cluster_re1 = {
     name               = "akscluster-001"

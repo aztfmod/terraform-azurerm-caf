@@ -35,44 +35,9 @@ resource "azurecaf_name" "rg_node" {
   use_slug      = var.global_settings.use_slug
 }
 
-
-# Needed as introduced in >2.79.1 - https://github.com/hashicorp/terraform-provider-azurerm/issues/13585
-# resource "null_resource" "aks_registration_preview" {
-#   provisioner "local-exec" {
-#     command = "az feature register --namespace Microsoft.ContainerService -n AutoUpgradePreview"
-#   }
-# }
-
-# aks_preview_features = [
-#       "AKS-KedaPreview",
-#       "AKS-VPAPreview"
-#     ]
-
-resource "null_resource" "aks_registration_preview" {
-  for_each = toset(try(var.settings.aks_preview_features,[]))
-
-  provisioner "local-exec" {
-    command = <<-EOT
-      az feature register --namespace Microsoft.ContainerService -n ${each.value}
-      while true; do
-        registration_state=$(az feature show --namespace Microsoft.ContainerService -n ${each.value} --query "properties.state" -o tsv)
-        if [ "$registration_state" == "Registered" ]; then
-          break
-        else
-          echo "Waiting for feature ${each.value} registration to complete..."
-          sleep 10
-        fi
-      done
-    EOT
-  }
-}
-
 ### AKS cluster resource
 
 resource "azurerm_kubernetes_cluster" "aks" {
-  depends_on = [
-    null_resource.aks_registration_preview
-  ]
   name                              = azurecaf_name.aks.result
   location                          = local.location
   resource_group_name               = local.resource_group_name
