@@ -57,3 +57,13 @@ variable "client_config" {
   type        = any
   description = "Client configuration object (see module README.md)."
 }
+
+variable "redis_firewall_rules" {
+  type = map(object({
+    name     = optional(string, null)
+    start_ip = string
+    end_ip   = string
+  }))
+  default     = null
+  description = "Map of firewall rules to associate with redis cache"
+}
