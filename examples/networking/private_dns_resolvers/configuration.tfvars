@@ -22,6 +22,13 @@ vnets = {
       address_space = ["172.33.0.0/16"]
     }
   }
+  vnet2 = {
+    resource_group_key = "private_dns_resolver_region1"
+    vnet = {
+      name          = "test-vnet1"
+      address_space = ["168.33.0.0/16"]
+    }
+  }
 }
 
 
@@ -144,9 +151,25 @@ private_dns_resolver_dns_forwarding_rulesets = {
 private_dns_resolver_virtual_network_links = {
   dns_resolver_virtual_network_link1 = {
     name = "test-dns-resolver-virtual-network-link1"
-    vent = {
+    region ="southeastasia"
+    vnet = {
       #lz_key = ""
-      key = ""
+      key = "vnet1"
+      #id = ""
+    }
+    dns_forwarding_ruleset = {
+      #lz_key = ""
+      #id = ""
+      key = "dns_forwarding_ruleset1"
+    }
+
+  }
+  dns_resolver_virtual_network_link2 = {
+    name = "test-dns-resolver-virtual-network-link2"
+    region ="southeastasia"
+    vnet = {
+      #lz_key = ""
+      key = "vnet2"
       #id = ""
     }
     dns_forwarding_ruleset = {

@@ -1,12 +1,12 @@
 
-module "private_dns_resolvers_dns_forwarding_ruleset" {
+module "private_dns_resolver_dns_forwarding_ruleset" {
   source   = "./modules/networking/private_dns_resolvers_dns_forwarding_ruleset"
   for_each = local.networking.private_dns_resolver_dns_forwarding_rulesets
 
   global_settings = local.global_settings
   client_config   = local.client_config
   settings        = each.value
-  resource_group     = local.combined_objects_resource_groups[try(each.value.resource_group.lz_key, local.client_config.landingzone_key)][try(each.value.resource_group_key, each.value.resource_group.key)].name
+  resource_group  = local.combined_objects_resource_groups[try(each.value.resource_group.lz_key, local.client_config.landingzone_key)][try(each.value.resource_group_key, each.value.resource_group.key)].name
   inherit_tags    = local.global_settings.inherit_tags
   location        = try(local.global_settings.regions[each.value.region], each.value.region)
 
@@ -19,6 +19,6 @@ module "private_dns_resolvers_dns_forwarding_ruleset" {
 
 }
 
-output "private_dns_resolvers_dns_forwarding_ruleset" {
-  value = module.private_dns_resolvers_dns_forwarding_ruleset
+output "private_dns_resolver_dns_forwarding_ruleset" {
+  value = module.private_dns_resolver_dns_forwarding_ruleset
 }
