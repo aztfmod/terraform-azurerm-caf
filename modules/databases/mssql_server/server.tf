@@ -1,7 +1,7 @@
 resource "azurerm_mssql_server" "mssql" {
   name                          = azurecaf_name.mssql.result
-  resource_group_name           = var.resource_group_name
-  location                      = var.location
+  resource_group_name           = local.resource_group_name
+  location                      = local.location
   version                       = try(var.settings.version, "12.0")
   administrator_login           = try(var.settings.azuread_administrator.azuread_authentication_only, false) == true ? null : var.settings.administrator_login
   administrator_login_password  = try(var.settings.azuread_administrator.azuread_authentication_only, false) == true ? null : try(var.settings.administrator_login_password, azurerm_key_vault_secret.sql_admin_password.0.value)
