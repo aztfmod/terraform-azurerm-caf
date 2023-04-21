@@ -62,3 +62,5 @@ variable "diagnostics" {
 variable "managed_identities" {
   default = {}
 }
+
+variable "var_folder_path" {}

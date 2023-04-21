@@ -227,6 +227,7 @@ module "container" {
 
   storage_account_name = azurerm_storage_account.stg.name
   settings             = each.value
+  var_folder_path      = var.var_folder_path
 }
 
 module "data_lake_filesystem" {

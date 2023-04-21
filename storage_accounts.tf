@@ -16,6 +16,7 @@ module "storage_accounts" {
   private_endpoints         = try(each.value.private_endpoints, {})
   recovery_vaults           = local.combined_objects_recovery_vaults
   storage_account           = each.value
+  var_folder_path           = var.var_folder_path
   vnets                     = local.combined_objects_networking
 
   base_tags           = local.global_settings.inherit_tags
