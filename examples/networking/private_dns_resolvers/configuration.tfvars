@@ -126,7 +126,11 @@ private_dns_resolver_outbound_endpoints = {
 private_dns_resolver_dns_forwarding_rulesets = {
   dns_forwarding_ruleset1 = {
     name               = "test-forwarding-ruleset1"
-    resource_group_key = "private_dns_resolver_region1"
+    region  = "southeastasia"
+    resource_group ={
+      #lz_key = ""
+      key = "private_dns_resolver_region1"
+    }
     dns_resolver_outbound_endpoints = {
       outbound_endpoint1 = {
         #lz_key =""
