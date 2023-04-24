@@ -12,8 +12,8 @@ resource "azurecaf_name" "iothub_certificate" {
 
 resource "azurerm_iothub_certificate" "certificate" {
   name                = azurecaf_name.iothub_certificate.result
-  resource_group_name = var.resource_group_name
+  resource_group_name = local.resource_group_name
   iothub_name         = var.iothub_name
   is_verified         = try(var.settings.is_verified, null)
-  certificate_content = filebase64( var.settings.certificate_content )
+  certificate_content = filebase64(format("%s/%s", path.cwd, var.settings.certificate_content))
 }

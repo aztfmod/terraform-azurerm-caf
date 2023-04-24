@@ -9,7 +9,11 @@ variable "location" {
 }
 
 variable "resource_group_name" {
-  description = "(Required) Resource group of the App Service"
+  description = "(Required) Resource group of the Iot Security Solution."
+}
+
+variable "resource_group" {
+  description = "Resource group object to deploy the Iot Security Solution."
 }
 
 variable "iothub_ids" {
@@ -18,6 +22,5 @@ variable "iothub_ids" {
 
 variable "base_tags" {
   description = "Base tags for the resource to be inherited from the resource group."
-  type        = map(any)
-  default     = {}
+  type        = bool
 }

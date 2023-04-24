@@ -12,8 +12,8 @@ resource "azurecaf_name" "iothdps" {
 
 resource "azurerm_iothub_dps" "iothubdps" {
   name                = azurecaf_name.iothdps.result
-  resource_group_name = var.resource_group_name
-  location            = var.location
+  resource_group_name = local.resource_group_name
+  location            = local.location
   allocation_policy   = try(var.settings.allocation_policy, null)
 
   public_network_access_enabled = try(var.settings.public_network_access_enabled, true)
@@ -24,18 +24,17 @@ resource "azurerm_iothub_dps" "iothubdps" {
   }
 
   dynamic "linked_hub" {
-    for_each = lookup(var.settings, "linked_hub", {}) == {} ? [] : [1]
+    for_each = try(var.settings.linked_hubs, {})
     content {
-      connection_string       = var.settings.linked_hub.connection_string
-      location                = var.settings.linked_hub.location
+      connection_string       = var.remote_objects.iot_hub_shared_access_policy[try(linked_hub.value.shared_access_policy.lz_key, var.client_config.landingzone_key)][linked_hub.value.shared_access_policy.key].primary_connection_string
+      location                = var.remote_objects.iot_hub[try(linked_hub.value.iot_hub.lz_key, var.client_config.landingzone_key)][linked_hub.value.iot_hub.key].location
       apply_allocation_policy = try(var.settings.linked_hub.apply_allocation_policy, null)
       allocation_weight       = try(var.settings.linked_hub.allocation_weight, null)
-      hostname                = try(var.settings.linked_hub.hostname, null)
     }
   }
 
   dynamic "ip_filter_rule" {
-    for_each = lookup(var.settings, "ip_filter_rule", {}) == {} ? [] : [1]
+    for_each = try(var.settings.ip_filter_rule, null) == null ? [] : [1]
     content {
       name    = var.settings.ip_filter_rule.name
       ip_mask = var.settings.ip_filter_rule.ip_mask

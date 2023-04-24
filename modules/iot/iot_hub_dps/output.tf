@@ -2,6 +2,10 @@ output "id" {
   value = azurerm_iothub_dps.iothubdps.id
 }
 
+output "name" {
+  value = azurerm_iothub_dps.iothubdps.name
+}
+
 output "device_provisioning_host_name" {
   value = azurerm_iothub_dps.iothubdps.device_provisioning_host_name
 }

@@ -8,6 +8,10 @@ variable "resource_group_name" {
   description = "(Required) Resource group"
 }
 
+variable "resource_group" {
+  description = "Resource group object to deploy the IoT Hub DPS certificate"
+}
+
 variable "iot_dps_name" {
   description = "(Required) The name of the IoT Hub. Changing this forces a new resource to be created"
 }

@@ -12,7 +12,7 @@ resource "azurecaf_name" "iothub_dps_shared_access_policy" {
 
 resource "azurerm_iothub_dps_shared_access_policy" "access_policy" {
   name                = azurecaf_name.iothub_dps_shared_access_policy.result
-  resource_group_name = var.resource_group_name
+  resource_group_name = local.resource_group_name
   iothub_dps_name     = var.iot_dps_name
 
   enrollment_write   = try(var.settings.enrollment_write, null)

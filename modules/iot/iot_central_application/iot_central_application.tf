@@ -11,10 +11,10 @@ resource "azurecaf_name" "iotcentral_application" {
 }
 
 resource "azurerm_iotcentral_application" "iotcentralapplication" {
-  name                   = azurecaf_name.iotcentral_application.result 
-  resource_group_name    = var.resource_group_name
-  location               = var.location
-  sub_domain             = var.settings.sub_domain
+  name                = azurecaf_name.iotcentral_application.result
+  resource_group_name = local.resource_group_name
+  location            = local.location
+  sub_domain          = var.settings.sub_domain
 
   display_name = var.settings.display_name
   sku          = var.settings.sku
