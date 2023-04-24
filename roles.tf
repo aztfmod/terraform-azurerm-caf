@@ -99,6 +99,7 @@ locals {
   # Nested objects that must be processed after the services_roles
   services_roles_deferred = {
     storage_containers = local.combined_objects_storage_containers
+    logged_in          = local.logged_in
   }
 
   services_roles = {
