@@ -5,9 +5,13 @@ variable "global_settings" {
 }
 
 variable "resource_group_name" {
-  description = "(Required) Resource group of the App Service"
+  description = "(Required) Resource group of the IoT Hub shared access policy"
 }
 
-variable "iot_hub_name" {
+variable "resource_group" {
+  description = "Resource group object to deploy the IoT Hub shared access policy"
+}
+
+variable "iothub_name" {
   description = "(Required) The name of the IoT Hub. Changing this forces a new resource to be created"
 }

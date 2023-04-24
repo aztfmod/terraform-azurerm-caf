@@ -9,7 +9,7 @@ resource_groups = {
   ioth_region1 = {
     name   = "iothub-rg1"
     region = "region1"
-  }  
+  }
 }
 
 iot_hub = {
@@ -26,19 +26,20 @@ iot_hub = {
 
 iot_security_solution = {
   csg1 = {
-    name                = "iot-security-solution-1"
-    resource_group_key  = "ioth_region1" 
-    display_name        = "Iot Security Solution"
-    iothub_keys         = [ "iothub1" ]
-    # or: iothub_ids           = [ "iothub1" ]
+    name               = "iot-security-solution-1"
+    resource_group_key = "ioth_region1"
+    display_name       = "Iot Security Solution"
+    iot_hub_keys       = ["iothub1"]
   }
 }
 
 iot_security_device_group = {
   csg1 = {
-    name          = "example-device-security-group"
-    iot_hub_key   = "iothub1"
-    allow_rule    = {
+    name = "example-device-security-group"
+    iot_hub = {
+      key = "iothub1"
+    }
+    allow_rule = {
       connection_to_ips_not_allowed = ["10.0.0.0/24"]
     }
     range_rules = {

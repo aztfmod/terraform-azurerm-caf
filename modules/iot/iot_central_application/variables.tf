@@ -12,8 +12,11 @@ variable "resource_group_name" {
   description = "(Required) Resource group"
 }
 
+variable "resource_group" {
+  description = "Resource group object to deploy the IoT central application"
+}
+
 variable "base_tags" {
   description = "Base tags for the resource to be inherited from the resource group."
-  type        = map(any)
-  default     = {}
+  type        = bool
 }

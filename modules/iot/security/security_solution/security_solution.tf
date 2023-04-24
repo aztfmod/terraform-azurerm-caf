@@ -12,8 +12,8 @@ resource "azurecaf_name" "iot_security_solution" {
 
 resource "azurerm_iot_security_solution" "securitysolution" {
   name                = azurecaf_name.iot_security_solution.result
-  resource_group_name = var.resource_group_name
-  location            = var.location
+  resource_group_name = local.resource_group_name
+  location            = local.location
   iothub_ids          = var.iothub_ids
   display_name        = var.settings.display_name
 

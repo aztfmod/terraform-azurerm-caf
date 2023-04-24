@@ -13,6 +13,6 @@ resource "azurecaf_name" "iothub_consumer_group" {
 resource "azurerm_iothub_consumer_group" "iothubconsumergroup" {
   name                   = azurecaf_name.iothub_consumer_group.result
   iothub_name            = var.iothub_name
-  resource_group_name    = var.resource_group_name
+  resource_group_name    = local.resource_group_name
   eventhub_endpoint_name = var.settings.eventhub_endpoint_name
 }

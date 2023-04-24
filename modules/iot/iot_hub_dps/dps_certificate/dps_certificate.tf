@@ -12,7 +12,7 @@ resource "azurecaf_name" "iothub_dps_certificate" {
 
 resource "azurerm_iothub_dps_certificate" "certificate" {
   name                = azurecaf_name.iothub_dps_certificate.result
-  resource_group_name = var.resource_group_name
+  resource_group_name = local.resource_group_name
   iot_dps_name        = var.iot_dps_name
-  certificate_content = filebase64( var.settings.certificate_content )
+  certificate_content = filebase64(format("%s/%s", path.cwd, var.settings.certificate_content))
 }
