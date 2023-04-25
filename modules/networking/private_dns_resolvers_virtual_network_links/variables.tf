@@ -13,10 +13,5 @@ variable "location" {
 
 variable "dns_forwarding_ruleset_id" {
 }
-variable "virtual_network_id" {
-}
-
-variable "inherit_tags" {
-  description = "Base tags for the resource to be inherited from the resource group."
-  type        = bool
+variable "virtual_networks" {
 }

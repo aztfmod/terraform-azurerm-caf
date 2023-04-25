@@ -1,6 +1,6 @@
 
-module "private_dns_resolver_dns_forwarding_ruleset" {
-  source   = "./modules/networking/private_dns_resolvers_dns_forwarding_ruleset"
+module "private_dns_resolver_dns_forwarding_rulesets" {
+  source   = "./modules/networking/private_dns_resolvers_dns_forwarding_rulesets"
   for_each = local.networking.private_dns_resolver_dns_forwarding_rulesets
 
   global_settings = local.global_settings
@@ -19,6 +19,6 @@ module "private_dns_resolver_dns_forwarding_ruleset" {
 
 }
 
-output "private_dns_resolver_dns_forwarding_ruleset" {
-  value = module.private_dns_resolver_dns_forwarding_ruleset
+output "private_dns_resolver_dns_forwarding_rulesets" {
+  value = module.private_dns_resolver_dns_forwarding_rulesets
 }
