@@ -116,7 +116,7 @@ locals {
   combined_objects_private_dns                                    = merge(tomap({ (local.client_config.landingzone_key) = module.private_dns }), try(var.remote_objects.private_dns, {}))
   combined_objects_private_dns_resolvers                          = merge(tomap({ (local.client_config.landingzone_key) = module.private_dns_resolvers }), try(var.remote_objects.private_dns_resolvers, {}))
   combined_objects_private_dns_resolver_outbound_endpoints        = merge(tomap({ (local.client_config.landingzone_key) = module.private_dns_resolver_outbound_endpoints }), try(var.remote_objects.private_dns_resolver_outbound_endpoints, {}))
-  combined_objects_private_dns_resolver_dns_forwarding_ruleset    = merge(tomap({ (local.client_config.landingzone_key) = module.private_dns_resolver_dns_forwarding_ruleset }), try(var.remote_objects.private_dns_resolver_dns_forwarding_ruleset, {}))
+  combined_objects_private_dns_resolver_dns_forwarding_rulesets   = merge(tomap({ (local.client_config.landingzone_key) = module.private_dns_resolver_dns_forwarding_rulesets }), try(var.remote_objects.private_dns_resolver_dns_forwarding_rulesets, {}))
   combined_objects_private_endpoints                              = merge(tomap({ (local.client_config.landingzone_key) = module.private_endpoints }), try(var.remote_objects.private_endpoints, {}))
   combined_objects_proximity_placement_groups                     = merge(tomap({ (local.client_config.landingzone_key) = module.proximity_placement_groups }), try(var.remote_objects.proximity_placement_groups, {}))
   combined_objects_public_ip_addresses                            = merge(tomap({ (local.client_config.landingzone_key) = module.public_ip_addresses }), try(var.remote_objects.public_ip_addresses, {}))

@@ -1,5 +1,6 @@
 resource "azurecaf_name" "pvtdnsrvnl" {
-  name          = var.settings.name
+  for_each      = var.settings.virtual_network_links
+  name          = each.value.name
   resource_type = "azurerm_private_dns_resolver_virtual_network_link"
   prefixes      = var.global_settings.prefixes
   random_length = var.global_settings.random_length
@@ -11,11 +12,10 @@ resource "azurecaf_name" "pvtdnsrvnl" {
 
 
 resource "azurerm_private_dns_resolver_virtual_network_link" "pvt_dns_resolver_virtual_network_link" {
-  name                      = azurecaf_name.pvtdnsrvnl.result
+  for_each                  = var.settings.virtual_network_links
+  name                      = azurecaf_name.pvtdnsrvnl[each.key].result
   dns_forwarding_ruleset_id = var.dns_forwarding_ruleset_id
-  # location                  = var.location
-  #tags                      = merge(local.tags, try(var.settings.tags, null))
-  virtual_network_id        = var.virtual_network_id
-
+  virtual_network_id        = can(each.value.id) ? try(each.value.id, null) : var.virtual_networks[try(each.value.lz_key, var.client_config.landingzone_key)][each.value.key].id
+  metadata                  = can(var.settings.metadata) ? try(var.settings.metadata, {}) : {}
 }
 
