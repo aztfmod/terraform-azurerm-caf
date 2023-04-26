@@ -15,7 +15,7 @@ module "recovery_vaults" {
 
   # support for CMK encryption
   key_id      = try(local.combined_objects_keyvault_keys[try(each.value.encryption.keyvault_key.lz_key, local.client_config.landingzone_key)][try(each.value.encryption.key_vault_key_key, each.value.encryption.key_vault_key.key)].id, null)
-  keyvault_id = try(local.combined_objects_keyvaults[try(each.value.encryption.keyvault.lz_key, local.client_config.landingzone_key)][each.value.encryption.keyvault.key].id, null)
+  # keyvault_id = try(local.combined_objects_keyvaults[try(each.value.encryption.keyvault.lz_key, local.client_config.landingzone_key)][each.value.encryption.keyvault.key].id, null)
 }
 
 output "recovery_vaults" {
