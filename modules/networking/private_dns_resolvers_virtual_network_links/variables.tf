@@ -8,9 +8,6 @@ variable "client_config" {
 variable "settings" {
 }
 
-variable "location" {
-}
-
 variable "dns_forwarding_ruleset_id" {
 }
 variable "virtual_networks" {

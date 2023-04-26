@@ -16,6 +16,9 @@ variable "private_dns_resolver_id" {
 variable "subnet_id" {
 }
 
+variable "tags" {
+  default = null
+}
 variable "inherit_tags" {
   description = "Base tags for the resource to be inherited from the resource group."
   type        = bool

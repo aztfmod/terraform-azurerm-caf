@@ -45,10 +45,8 @@ virtual_subnets = {
     }
     delegation = {
       name = "Microsoft.Network.dnsResolvers"
-      service_delegation = {
-        actions = ["Microsoft.Network/virtualNetworks/subnets/join/action"]
-        name    = "Microsoft.Network/dnsResolvers"
-      }
+      service_delegation = "Microsoft.Network/dnsResolvers"
+      actions = ["Microsoft.Network/virtualNetworks/subnets/join/action"]
     }
   }
   outbound = {
@@ -63,10 +61,8 @@ virtual_subnets = {
     }
     delegation = {
       name = "Microsoft.Network.dnsResolvers"
-      service_delegation = {
-        actions = ["Microsoft.Network/virtualNetworks/subnets/join/action"]
-        name    = "Microsoft.Network/dnsResolvers"
-      }
+      service_delegation = "Microsoft.Network/dnsResolvers"
+      actions = ["Microsoft.Network/virtualNetworks/subnets/join/action"]
     }
   }
 
@@ -90,7 +86,6 @@ private_dns_resolvers = {
 private_dns_resolver_inbound_endpoints = {
   inbound_endpoint1 = {
     name   = "test-inbound-endpint1"
-    region = "southeastasia"
     private_dns_resolver = {
       key = "dns_resolver1"
       #lz_key = ""
@@ -117,7 +112,6 @@ private_dns_resolver_outbound_endpoints = {
       key = "dns_resolver1"
       #lz_key = ""
     }
-    region = "southeastasia"
     #subnet_id =""
     vnet = {
       #lz_key = ""
@@ -133,7 +127,6 @@ private_dns_resolver_outbound_endpoints = {
 private_dns_resolver_dns_forwarding_rulesets = {
   dns_forwarding_ruleset1 = {
     name   = "test-forwarding-ruleset1"
-    region = "southeastasia"
     resource_group = {
       #lz_key = ""
       key = "private_dns_resolver_region1"
@@ -153,7 +146,6 @@ private_dns_resolver_forwarding_rules = {
     name   = "test-forwarding-rule1"
     domain_name  ="test.local."
     enabled      = true
-    region = "southeastasia"
     dns_forwarding_ruleset ={
     #lz_key =""
     #id=""
@@ -179,7 +171,6 @@ private_dns_resolver_forwarding_rules = {
 
 private_dns_resolver_virtual_network_links = {
   dns_resolver_virtual_network_link1 = {
-    region = "southeastasia"
     dns_forwarding_ruleset ={
     #lz_key =""
     #id=""

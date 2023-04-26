@@ -1,4 +1,4 @@
-resource "azurecaf_name" "pvtdnsroe" {
+data "azurecaf_name" "pvtdnsroe" {
   name          = var.settings.name
   resource_type = "azurerm_private_dns_resolver_outbound_endpoint"
   prefixes      = var.global_settings.prefixes
@@ -11,11 +11,11 @@ resource "azurecaf_name" "pvtdnsroe" {
 
 
 resource "azurerm_private_dns_resolver_outbound_endpoint" "pvt_dns_resolver_outbound_endpoint" {
-  name                    = azurecaf_name.pvtdnsroe.result
+  name                    = data.azurecaf_name.pvtdnsroe.result
   private_dns_resolver_id = var.private_dns_resolver_id
-  location                = var.location
+  location                = local.location
   tags                    = merge(local.tags, try(var.settings.tags, null))
   subnet_id               = var.subnet_id
-    
-  }
+
+}
 

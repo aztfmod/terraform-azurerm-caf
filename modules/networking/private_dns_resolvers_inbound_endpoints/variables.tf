@@ -17,6 +17,9 @@ variable "subnet_ids" {
   type = list(string)
 }
 
+variable "tags" {
+  default = {}
+}
 variable "inherit_tags" {
   description = "Base tags for the resource to be inherited from the resource group."
   type        = bool

@@ -1,4 +1,4 @@
-resource "azurecaf_name" "pvtdnsr" {
+data "azurecaf_name" "pvtdnsr" {
   name          = var.settings.name
   resource_type = "azurerm_private_dns_resolver"
   prefixes      = var.global_settings.prefixes
@@ -11,9 +11,9 @@ resource "azurecaf_name" "pvtdnsr" {
 
 
 resource "azurerm_private_dns_resolver" "pvt_dns_resolver" {
-  name                = azurecaf_name.pvtdnsr.result
-  resource_group_name = var.resource_group.name
+  name                = data.azurecaf_name.pvtdnsr.result
+  resource_group_name = local.resource_group_name
   virtual_network_id  = var.virtual_network_id
-  location            = var.location
+  location            = local.location
   tags                = merge(local.tags, try(var.settings.tags, null))
 }
