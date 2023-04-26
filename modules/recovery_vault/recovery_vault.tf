@@ -1,4 +1,4 @@
-# Tested with :  AzureRM version 2.61.0
+# Tested with :  AzureRM version 2.99.0
 # Ref : https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/resources/recovery_services_vault
 
 resource "azurecaf_name" "asr_rg_vault" {
@@ -24,4 +24,11 @@ resource "azurerm_recovery_services_vault" "asr" {
     type = "SystemAssigned"
   }
 
+  dynamic "encryption" {
+    count = can(var.settings.encryption) ? 1 : 0
+
+    key_id                            = var.key_id
+    infrastructure_encryption_enabled = try(var.settings.encryption.infrastructure_encryption_enabled, true)
+    use_system_assigned_identity      = true # only value possible in AzureRM provider 2.99.0
+  }
 }
