@@ -26,7 +26,7 @@ output "iot_hub" {
 
 module "iot_hub_consumer_groups" {
   source   = "./modules/iot/consumer_groups"
-  for_each = try(local.iot.iot_hub_consumer_groups, {})
+  for_each = local.iot.iot_hub_consumer_groups
 
   global_settings     = local.global_settings
   settings            = each.value
@@ -41,15 +41,15 @@ output "iot_hub_consumer_groups" {
 
 module "iot_hub_certificate" {
   source   = "./modules/iot/iot_hub/certificate"
-  for_each = try(local.iot.iot_hub_certificate, {})
+  for_each = local.iot.iot_hub_certificate
 
-  global_settings       = local.global_settings
-  client_config         = local.client_config
-  settings              = each.value
-  iothub_name           = local.combined_objects_iot_hub[try(each.value.iot_hub.lz_key, local.client_config.landingzone_key)][each.value.iot_hub.key].name
-  resource_group        = local.combined_objects_resource_groups[try(each.value.resource_group.lz_key, local.client_config.landingzone_key)][try(each.value.resource_group_key, each.value.resource_group.key)]
-  resource_group_name   = can(each.value.resource_group.name) || can(each.value.resource_group_name) ? try(each.value.resource_group.name, each.value.resource_group_name) : null
-  keyvault_certificates = local.combined_objects_keyvault_certificates
+  global_settings     = local.global_settings
+  client_config       = local.client_config
+  settings            = each.value
+  iothub_name         = local.combined_objects_iot_hub[try(each.value.iot_hub.lz_key, local.client_config.landingzone_key)][each.value.iot_hub.key].name
+  resource_group      = local.combined_objects_resource_groups[try(each.value.resource_group.lz_key, local.client_config.landingzone_key)][try(each.value.resource_group_key, each.value.resource_group.key)]
+  resource_group_name = can(each.value.resource_group.name) || can(each.value.resource_group_name) ? try(each.value.resource_group.name, each.value.resource_group_name) : null
+  keyvaults           = local.combined_objects_keyvaults
 }
 
 output "iot_hub_certificate" {
@@ -58,7 +58,7 @@ output "iot_hub_certificate" {
 
 module "iot_hub_shared_access_policy" {
   source   = "./modules/iot/iot_hub/shared_access_policy"
-  for_each = try(local.iot.iot_hub_shared_access_policy, {})
+  for_each = local.iot.iot_hub_shared_access_policy
 
   global_settings     = local.global_settings
   settings            = each.value
@@ -95,7 +95,7 @@ output "iot_hub_dps" {
 
 module "iot_dps_certificate" {
   source   = "./modules/iot/iot_hub_dps/dps_certificate"
-  for_each = try(local.iot.iot_dps_certificate, {})
+  for_each = local.iot.iot_dps_certificate
 
   settings            = each.value
   global_settings     = local.global_settings
@@ -110,7 +110,7 @@ output "iot_dps_certificate" {
 
 module "iot_dps_shared_access_policy" {
   source   = "./modules/iot/iot_hub_dps/shared_access_policy"
-  for_each = try(local.iot.iot_dps_shared_access_policy, {})
+  for_each = local.iot.iot_dps_shared_access_policy
 
   global_settings     = local.global_settings
   settings            = each.value
@@ -125,7 +125,7 @@ output "iot_dps_shared_access_policy" {
 
 module "iot_central_application" {
   source   = "./modules/iot/iot_central_application"
-  for_each = try(local.iot.iot_central_application, {})
+  for_each = local.iot.iot_central_application
 
   global_settings     = local.global_settings
   settings            = each.value
@@ -141,7 +141,7 @@ output "iot_central_application" {
 
 module "iot_security_solution" {
   source   = "./modules/iot/security/security_solution"
-  for_each = try(local.iot.iot_security_solution, {})
+  for_each = local.iot.iot_security_solution
 
   global_settings = local.global_settings
   settings        = each.value
@@ -164,7 +164,7 @@ output "iot_security_solution" {
 
 module "iot_security_device_group" {
   source   = "./modules/iot/security/device_group"
-  for_each = try(local.iot.iot_security_device_group, {})
+  for_each = local.iot.iot_security_device_group
 
   global_settings = local.global_settings
   settings        = each.value

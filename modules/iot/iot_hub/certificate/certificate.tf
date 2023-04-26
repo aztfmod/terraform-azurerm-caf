@@ -15,5 +15,17 @@ resource "azurerm_iothub_certificate" "certificate" {
   resource_group_name = local.resource_group_name
   iothub_name         = var.iothub_name
   is_verified         = try(var.settings.is_verified, null)
-  certificate_content = filebase64(format("%s/%s", path.cwd, var.settings.certificate_content))
+  certificate_content = try(
+    data.azurerm_key_vault_secret.certificate["enabled"].value,
+    filebase64(format("%s/%s", path.cwd, var.settings.certificate_content))
+  )
+}
+
+data "azurerm_key_vault_secret" "certificate" {
+  for_each = try(var.settings.keyvault_secret, null) != null ? toset(["enabled"]) : toset([])
+  name     = var.settings.keyvault_secret.secret_name
+  key_vault_id = try(
+    var.settings.keyvault_secret.key_vault_id,
+    var.keyvaults[try(var.settings.keyvault_secret.lz_key, var.client_config.landingzone_key)][var.settings.keyvault_secret.keyvault_key].id,
+  )
 }

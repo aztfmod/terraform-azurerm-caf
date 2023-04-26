@@ -20,6 +20,6 @@ variable "iothub_name" {
   description = "(Required) The name of the IoT Hub. Changing this forces a new resource to be created"
 }
 
-variable "keyvault_certificates" {
+variable "keyvaults" {
   default = {}
 }
