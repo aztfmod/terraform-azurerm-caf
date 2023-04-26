@@ -14,7 +14,7 @@ module "recovery_vaults" {
   base_tags         = local.global_settings.inherit_tags
 
   # support for CMK encryption
-  key_id      = local.combined_objects_keyvault_keys[try(each.value.encryption.keyvault_key.lz_key, local.client_config.landingzone_key)][try(each.value.encryption.key_vault_key_key, each.value.encryption.key_vault_key.key)].id
+  key_id = try(local.combined_objects_keyvault_keys[try(each.value.encryption.keyvault_key.lz_key, local.client_config.landingzone_key)][try(each.value.encryption.key_vault_key_key, each.value.encryption.key_vault_key.key)].id, null)
   # keyvault_id = try(local.combined_objects_keyvaults[try(each.value.encryption.keyvault.lz_key, local.client_config.landingzone_key)][each.value.encryption.keyvault.key].id, null)
 }
 
