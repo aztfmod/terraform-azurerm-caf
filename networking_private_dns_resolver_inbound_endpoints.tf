@@ -6,9 +6,10 @@ module "private_dns_resolver_inbound_endpoints" {
   global_settings         = local.global_settings
   client_config           = local.client_config
   settings                = each.value
-  private_dns_resolver_id = can(each.value.private_dns_resolver_id) ? each.value.private_dns_resolver_id : local.combined_objects_private_dns_resolvers[try(each.value.private_dns_resolver.lz_key, local.client_config.landingzone_key)][each.value.private_dns_resolver.key].id
+  private_dns_resolver_id = can(each.value.private_dns_resolver_id) || can(each.value.private_dns_resolver.id) ? try(each.value.private_dns_resolver_id, each.value.private_dns_resolver.id) : local.combined_objects_private_dns_resolvers[try(each.value.private_dns_resolver.lz_key, local.client_config.landingzone_key)][each.value.private_dns_resolver.key].id
   inherit_tags            = local.global_settings.inherit_tags
-  location                = try(local.global_settings.regions[each.value.region], each.value.region)
+  location                = can(each.value.private_dns_resolver_id) || can(each.value.private_dns_resolver.id) || can(each.value.region) ? local.global_settings.regions[each.value.region] : local.combined_objects_private_dns_resolvers[try(each.value.private_dns_resolver.lz_key, local.client_config.landingzone_key)][each.value.private_dns_resolver.key].location
+  tags                    = can(each.value.private_dns_resolver_id) || can(each.value.private_dns_resolver.id) || local.global_settings.inherit_tags == false ? null : try(local.combined_objects_private_dns_resolvers[try(each.value.private_dns_resolver.lz_key, local.client_config.landingzone_key)][each.value.private_dns_resolver.key].tags, {})
 
   subnet_ids = compact(concat(
     [

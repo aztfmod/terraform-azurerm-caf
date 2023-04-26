@@ -1,4 +1,4 @@
-resource "azurecaf_name" "pvtdnsrfrs" {
+data "azurecaf_name" "pvtdnsrfrs" {
   name          = var.settings.name
   resource_type = "azurerm_private_dns_resolver_dns_forwarding_ruleset"
   prefixes      = var.global_settings.prefixes
@@ -11,9 +11,9 @@ resource "azurecaf_name" "pvtdnsrfrs" {
 
 
 resource "azurerm_private_dns_resolver_dns_forwarding_ruleset" "pvt_dns_resolver_forwarding_ruleset" {
-  name                                       = azurecaf_name.pvtdnsrfrs.result
-  resource_group_name                        = var.resource_group
-  location                                   = var.location
+  name                                       = data.azurecaf_name.pvtdnsrfrs.result
+  resource_group_name                        = local.resource_group_name
+  location                                   = local.location
   tags                                       = merge(local.tags, try(var.settings.tags, null))
   private_dns_resolver_outbound_endpoint_ids = toset(var.outbound_endpoint_ids)
 

@@ -26,7 +26,7 @@ resource "azurerm_subnet" "subnet" {
       name = var.settings.delegation.name
 
       service_delegation {
-        name    = var.settings.delegation.service_delegation.name
+        name    = var.settings.delegation.service_delegation
         actions = lookup(var.settings.delegation, "actions", null)
       }
     }
