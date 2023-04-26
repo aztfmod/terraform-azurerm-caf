@@ -1036,6 +1036,10 @@ variable "private_dns_resolver_dns_forwarding_rulesets" {
   default = {}
 }
 
+variable "private_dns_resolver_forwarding_rules" {
+  default = {}
+}
+
 variable "private_dns_resolver_virtual_network_links" {
   default = {}
 

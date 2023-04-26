@@ -52,7 +52,7 @@ virtual_subnets = {
     }
   }
   outbound = {
-    name    = "uutbound-subnet"
+    name    = "outbound-subnet"
     cidr    = ["172.33.2.0/28"]
     nsg_key = "empty_nsg"
     # service_endpoints = ["Microsoft.ServiceBus"]
@@ -148,12 +148,43 @@ private_dns_resolver_dns_forwarding_rulesets = {
   }
 }
 
+private_dns_resolver_forwarding_rules = {
+  dns_forwarding_rule1 = {
+    name   = "test-forwarding-rule1"
+    domain_name  ="test.local."
+    enabled      = true
+    region = "southeastasia"
+    dns_forwarding_ruleset ={
+    #lz_key =""
+    #id=""
+    key = "dns_forwarding_ruleset1"
+    }
+    target_dns_servers  = {
+      dns_server1 = {
+        ip_address  = "10.10.1.10"
+        port = "53"
+      }
+      dns_server2 = {
+        ip_address  = "10.10.2.21"
+        port = "53"
+      }
+    }
+    metadata = {
+      key = "value"
+    }
+  }
+}
+
+
+
 private_dns_resolver_virtual_network_links = {
   dns_resolver_virtual_network_link1 = {
-    #lz_key = ""
-    #id = ""
-    key    = "dns_forwarding_ruleset1"
     region = "southeastasia"
+    dns_forwarding_ruleset ={
+    #lz_key =""
+    #id=""
+    key = "dns_forwarding_ruleset1"
+    }    
     virtual_network_links = {
       vnet1 = {
         #lz_key = ""
