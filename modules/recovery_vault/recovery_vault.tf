@@ -25,7 +25,7 @@ resource "azurerm_recovery_services_vault" "asr" {
   }
 
   dynamic "encryption" {
-    count = can(var.settings.encryption) ? 1 : 0
+    for_each = can(var.settings.encryption) ? [1] : []
 
     key_id                            = var.key_id
     infrastructure_encryption_enabled = try(var.settings.encryption.infrastructure_encryption_enabled, true)
