@@ -300,6 +300,7 @@ locals {
     private_dns_resolver_inbound_endpoints                  = try(var.networking.private_dns_resolver_inbound_endpoints, {})
     private_dns_resolver_outbound_endpoints                 = try(var.networking.private_dns_resolver_outbound_endpoints, {})
     private_dns_resolver_dns_forwarding_rulesets            = try(var.networking.private_dns_resolver_dns_forwarding_rulesets, {})
+    private_dns_resolver_forwarding_rules                   = try(var.networking.private_dns_resolver_forwarding_rules, {})
     private_dns_resolver_virtual_network_links              = try(var.networking.private_dns_resolver_virtual_network_links, {})
     private_dns_vnet_links                                  = try(var.networking.private_dns_vnet_links, {})
     public_ip_addresses                                     = try(var.networking.public_ip_addresses, {})
