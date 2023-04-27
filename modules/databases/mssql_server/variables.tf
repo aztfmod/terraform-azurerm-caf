@@ -17,6 +17,7 @@ variable "storage_accounts" {}
 variable "azuread_groups" {}
 variable "vnets" {}
 variable "private_endpoints" {}
+variable "resource_groups" {}
 variable "resource_group" {}
 variable "base_tags" {
   description = "Base tags for the resource to be inherited from the resource group."
