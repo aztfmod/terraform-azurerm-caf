@@ -1026,3 +1026,23 @@ variable "aadb2c_directory" {
 variable "preview_features" {
   default = {}
 }
+variable "private_dns_resolvers" {
+  default = {}
+}
+variable "private_dns_resolver_inbound_endpoints" {
+  default = {}
+}
+variable "private_dns_resolver_outbound_endpoints" {
+  default = {}
+}
+variable "private_dns_resolver_dns_forwarding_rulesets" {
+  default = {}
+}
+
+variable "private_dns_resolver_forwarding_rules" {
+  default = {}
+}
+
+variable "private_dns_resolver_virtual_network_links" {
+  default = {}
+}

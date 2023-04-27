@@ -222,6 +222,12 @@ module "example" {
     network_security_group_definition                       = var.network_security_group_definition
     network_watchers                                        = var.network_watchers
     private_dns                                             = var.private_dns
+    private_dns_resolvers                                   = var.private_dns_resolvers
+    private_dns_resolver_inbound_endpoints                  = var.private_dns_resolver_inbound_endpoints
+    private_dns_resolver_outbound_endpoints                 = var.private_dns_resolver_outbound_endpoints
+    private_dns_resolver_dns_forwarding_rulesets            = var.private_dns_resolver_dns_forwarding_rulesets
+    private_dns_resolver_forwarding_rules                   = var.private_dns_resolver_forwarding_rules
+    private_dns_resolver_virtual_network_links              = var.private_dns_resolver_virtual_network_links
     private_dns_vnet_links                                  = var.private_dns_vnet_links
     private_endpoints                                       = var.private_endpoints
     public_ip_addresses                                     = var.public_ip_addresses
