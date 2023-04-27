@@ -34,7 +34,7 @@ variable "vcores" {
     )
   }
 }
-output "vCores" {
+output "vcores" {
   value = var.vcores
 }
 #

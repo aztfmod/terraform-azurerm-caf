@@ -11,7 +11,7 @@ mssql_managed_instances = {
     ## the secret value can be changed after the deployment if needed
     ## When administrator_login_password use the following keyvault to store the password
 
-    authentication_mode = "aad_only"
+    authentication_mode = "hybrid"
     # "aad_only", "hybrid"
     administrators = {
       # Set the group explicitly with object id (sid)
@@ -29,14 +29,14 @@ mssql_managed_instances = {
     keyvault = {
       key = "sqlmi_rg1"
     }
-    license_type        = "LicenseIncluded"
+    license_type        = "BasePrice" #BasePrice (Hybrid Benefit) or LicenseIncluded (Pay-As-You-Go)
     minimal_tls_version = "1.2"
     //networking
     networking = {
       vnet_key   = "sqlmi_region1"
       subnet_key = "sqlmi1"
     }
-    #proxy_override               = "Redirect"
+    proxy_override = "Default" #"Default,Proxy,Redirect"   #terraform sets the value to redirect if not set.
     identity = {
       type                  = "UserAssigned"
       managed_identity_keys = ["mi1"]
@@ -46,11 +46,13 @@ mssql_managed_instances = {
     sku = {
       name = "GP_Gen5"
     }
-    backup_storage_redundancy = "LRS"
+    backup_storage_redundancy = "GRS" #
     storage_size_in_gb        = 32
     vcores                    = 4
     transparent_data_encryption = {
       enabled = true
     }
+
   }
 }
+

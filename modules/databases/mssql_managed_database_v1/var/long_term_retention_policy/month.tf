@@ -1,21 +1,12 @@
 variable "monthly_retention" {
-  description = "The monthly retention policy for an LTR backup in an ISO 8601 format. Valid value is between 1 to 520 weeks GP_Gen5, GP_G8IM, GP_G8IH, BC_Gen5, BC_G8IM, BC_G8IH"
+  description = "The monthly retention policy for an LTR backup in an ISO 8601 format. Value should be in the following format P{1-12}M example: P2M or P12M"
 
   validation {
-    condition = contains(
-      [
-        "P1Y", "P1Y", "P1Y", "P30D"
-      ],
+    condition = can(regex("^P(1[0-2]|[1-9])M$", var.monthly_retention)
+      ,
       var.monthly_retention
     )
-    error_message = format("Not supported value: '%s'. \nAdjust your configuration file with a supported value: %s",
-      var.monthly_retention,
-      join(", ",
-        [
-          "P1Y", "P1Y", "P1Y", "P30D"
-        ]
-      )
-    )
+    error_message = format("Not supported value: '%s'. \nAdjust your configuration file with a supported value in the following format P{1-12}M example: P2M or P12M:", var.monthly_retention)
   }
 }
 output "monthly_retention" {

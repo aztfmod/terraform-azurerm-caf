@@ -13,7 +13,7 @@ resource "azurerm_mssql_managed_database" "sqlmanageddatabase" {
   managed_instance_id = var.server_id
 
 
-  short_term_retention_days = try(var.settings.short_term_retention_days, null)
+  short_term_retention_days = module.var_settings.short_term_retention_days
 
   dynamic "long_term_retention_policy" {
     for_each = can(var.settings.long_term_retention_policy) ? [1] : []
@@ -28,5 +28,8 @@ resource "azurerm_mssql_managed_database" "sqlmanageddatabase" {
 
 }
 
-
-
+#module for variable validation
+module "var_settings" {
+  source                    = "./var/settings"
+  short_term_retention_days = try(var.settings.short_term_retention_days, null)
+}

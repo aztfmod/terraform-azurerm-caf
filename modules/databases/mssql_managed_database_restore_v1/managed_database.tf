@@ -89,11 +89,11 @@ module "var_settings" {
 locals {
   create_mode                    = try(module.var_settings.create_mode, null)
   short_term_retention_days      = module.var_settings.short_term_retention_days
-  source_database_id             = try(var.source_database_id, null)
+  source_database_id             = try(var.settings.properties.is_source_database_deleted, null) != true ? try(var.source_database_id, null) : null
   restore_point_datetime         = try(var.settings.properties.restore_point_datetime, null)
   long_term_retention_backup_id  = try(var.settings.properties.long_term_retention_backup_id, null)
   recoverable_database_id        = try(var.settings.properties.recoverable_database_id, null)
-  restorable_dropped_database_id = try(var.settings.properties.restorable_dropped_databaseId, null)
+  restorable_dropped_database_id = try(var.settings.properties.is_source_database_deleted, null) == true ? try(var.settings.properties.source_database.id, null) : null
   long_term_retention_policy = {
     weekly_retention  = try(var.settings.long_term_retention_policy.weekly_retention, null)
     monthly_retention = try(var.settings.long_term_retention_policy.monthly_retention, null)
