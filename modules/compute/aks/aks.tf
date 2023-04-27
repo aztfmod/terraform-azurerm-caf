@@ -35,19 +35,9 @@ resource "azurecaf_name" "rg_node" {
   use_slug      = var.global_settings.use_slug
 }
 
-
-# Needed as introduced in >2.79.1 - https://github.com/hashicorp/terraform-provider-azurerm/issues/13585
-resource "null_resource" "aks_registration_preview" {
-  provisioner "local-exec" {
-    command = "az feature register --namespace Microsoft.ContainerService -n AutoUpgradePreview"
-  }
-}
 ### AKS cluster resource
 
 resource "azurerm_kubernetes_cluster" "aks" {
-  depends_on = [
-    null_resource.aks_registration_preview
-  ]
   name                              = azurecaf_name.aks.result
   location                          = local.location
   resource_group_name               = local.resource_group_name
@@ -358,6 +348,7 @@ resource "azurerm_kubernetes_cluster" "aks" {
   }
 
   node_resource_group                 = azurecaf_name.rg_node.result
+  oidc_issuer_enabled                 = try(var.settings.oidc_issuer_enabled, null)
   private_cluster_enabled             = try(var.settings.private_cluster_enabled, null)
   private_dns_zone_id                 = try(var.private_dns_zone_id, null)
   private_cluster_public_fqdn_enabled = try(var.settings.private_cluster_public_fqdn_enabled, null)
@@ -420,6 +411,8 @@ resource "azurerm_kubernetes_cluster" "aks" {
       keda_enabled = try(workload_autoscaler_profile.value.keda_enabled, null)
     }
   }
+
+  workload_identity_enabled = try(var.settings.workload_identity_enabled, null)
 
   dynamic "http_proxy_config" {
     for_each = try(var.settings.http_proxy_config[*], {})
