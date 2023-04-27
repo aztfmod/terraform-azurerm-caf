@@ -394,4 +394,5 @@ module "example" {
     digital_twins_endpoint_eventgrids   = var.digital_twins_endpoint_eventgrids
     digital_twins_endpoint_servicebuses = var.digital_twins_endpoint_servicebuses
   }
+  preview_features = var.preview_features
 }

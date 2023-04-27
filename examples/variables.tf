@@ -1023,6 +1023,9 @@ variable "web_pubsub_hubs" {
 variable "aadb2c_directory" {
   default = {}
 }
+variable "preview_features" {
+  default = {}
+}
 variable "private_dns_resolvers" {
   default = {}
 }
@@ -1042,5 +1045,4 @@ variable "private_dns_resolver_forwarding_rules" {
 
 variable "private_dns_resolver_virtual_network_links" {
   default = {}
-
 }
