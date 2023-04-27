@@ -10,8 +10,8 @@ module "private_endpoint" {
 
   resource_id         = azurerm_mssql_server.mssql.id
   name                = each.value.name
-  location            = local.location
-  resource_group_name = local.resource_group_name
+  location            = var.resource_groups[try(each.value.resource_group.lz_key, var.client_config.landingzone_key)][try(each.value.resource_group.key, each.value.resource_group_key)].location
+  resource_group_name = var.resource_groups[try(each.value.resource_group.lz_key, var.client_config.landingzone_key)][try(each.value.resource_group.key, each.value.resource_group_key)].name
   subnet_id           = can(each.value.subnet_id) ? each.value.subnet_id : var.vnets[try(each.value.lz_key, var.client_config.landingzone_key)][each.value.vnet_key].subnets[each.value.subnet_key].id
 
   settings        = each.value
