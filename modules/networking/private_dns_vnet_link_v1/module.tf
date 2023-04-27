@@ -20,7 +20,7 @@ resource "azapi_resource" "vnet_links" {
 
   tags = var.inherit_tags ? merge(
     var.global_settings.tags,
-    can(each.value.id) || can(each.value.dns_parent_id) ? {} : try(var.private_dns[try(each.value.lz_key, var.client_config.landingzone_key)][each.value.key].base_tags,{}),
+    can(each.value.id) || can(each.value.dns_parent_id) ? {} : try(var.private_dns[try(each.value.lz_key, var.client_config.landingzone_key)][each.value.key].base_tags, {}),
     try(var.settings.tags, {})
   ) : try(var.settings.tags, {})
 
