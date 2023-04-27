@@ -27,7 +27,7 @@ resource "null_resource" "register_feature_preview" {
       az feature register --namespace ${each.value.namespace} -n ${each.value.feature}
       while true; do
         feature_status=$(az feature show --namespace ${each.value.namespace} -n ${each.value.feature} --query "properties.state" -o tsv)
-        if [ "$feature_status" == "Registered" ]; then
+        if [ -n "$feature_status" ] && [ "$feature_status" = "Registered" ]; then
           break
         else
           echo "Waiting for feature registration to complete..."
