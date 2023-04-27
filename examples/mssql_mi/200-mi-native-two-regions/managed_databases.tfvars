@@ -24,18 +24,7 @@ mssql_managed_databases = {
       yearly_retention  = "P1Y"
       week_of_year      = 1
     }
-  }
-  managed_db3 = {
-    version       = "v1"
-    name          = "lz-sql-managed-db3"
-    mi_server_key = "sqlmi1"
-    long_term_retention_policy = {
-      weekly_retention  = "P4W"
-      monthly_retention = "P3M"
-      yearly_retention  = "P2Y"
-      week_of_year      = 11
-    }
-  }
+    short_term_retention_days = 7
 
-
+  }
 }

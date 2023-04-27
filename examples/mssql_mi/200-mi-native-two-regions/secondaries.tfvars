@@ -31,14 +31,14 @@ mssql_managed_instances_secondary = {
     keyvault = {
       key = "sqlmi_rg1"
     }
-    license_type        = "LicenseIncluded"
+    license_type        = "BasePrice" #BasePrice (Hybrid Benefit) or LicenseIncluded (Pay-As-You-Go)
     minimal_tls_version = "1.2"
     //networking
     networking = {
       vnet_key   = "sqlmi_region2"
       subnet_key = "sqlmi2"
     }
-    #proxy_override               = "Redirect"
+    proxy_override                 = "Default" #"Default,Proxy,Redirect"
     maintenance_configuration_name = "SQL_Default"
     #service_principal
     identity = {
@@ -49,7 +49,7 @@ mssql_managed_instances_secondary = {
     primary_server = {
       mi_server_key = "sqlmi1"
     }
-    public_data_endpoint_enabled = false
+    public_data_endpoint_enabled = true
 
     sku = {
       name = "GP_Gen5"
@@ -82,13 +82,3 @@ mssql_mi_failover_groups = {
     }
   }
 }
-
-//TDE
-# mssql_mi_secondary_tdes = {
-#   sqlmi2 = {
-#     resource_group_key     = "sqlmi_region2"
-#     mi_server_key          = "sqlmi2"
-#     keyvault_key_key       = "tde_mi"
-#     secondary_keyvault_key = "tde_secondary"
-#   }
-# }
