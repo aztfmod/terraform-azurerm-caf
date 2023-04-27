@@ -51,4 +51,13 @@ resource "azurerm_container_registry" "acr" {
       tags     = try(georeplications.value.tags)
     }
   }
+
+  dynamic "retention_policy" {
+    for_each = var.retention_policy == null ? [] : [1]
+
+    content {
+      days    = var.retention_policy.days
+      enabled = true
+    }
+  }
 }

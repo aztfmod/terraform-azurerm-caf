@@ -84,3 +84,11 @@ variable "public_network_access_enabled" {
   type    = any
   default = "true"
 }
+
+variable "retention_policy" {
+  type = object({
+    days = optional(number, 0)
+  })
+  description = "(Optional) Structure describing untagged container retention policy"
+  default     = null
+}
