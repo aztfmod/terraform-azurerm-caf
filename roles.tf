@@ -98,8 +98,11 @@ locals {
 
   # Nested objects that must be processed after the services_roles
   services_roles_deferred = {
-    storage_containers = local.combined_objects_storage_containers
-    logged_in          = local.logged_in
+    azuread_groups             = local.combined_objects_azuread_groups
+    azuread_service_principals = local.combined_objects_azuread_service_principals
+    logged_in                  = local.logged_in
+    managed_identities         = local.combined_objects_managed_identities
+    storage_containers         = local.combined_objects_storage_containers
   }
 
   services_roles = {
