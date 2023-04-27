@@ -8,12 +8,6 @@ resource "azurecaf_name" "manageddb" {
   passthrough   = var.global_settings.passthrough
 }
 
-# Part of migration from 2.99.0 to 3.7.0
-moved {
-  from = azurerm_template_deployment.manageddb
-  to   = azurerm_resource_group_template_deployment.manageddb
-}
-
 resource "azurerm_resource_group_template_deployment" "manageddb" {
 
   name                = azurecaf_name.manageddb.result
