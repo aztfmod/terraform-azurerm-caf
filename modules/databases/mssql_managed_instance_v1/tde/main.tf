@@ -3,9 +3,6 @@ terraform {
     azurecaf = {
       source = "aztfmod/azurecaf"
     }
-    restful = {
-      source = "magodo/restful"
-    }
   }
 
 }
