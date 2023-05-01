@@ -14,9 +14,9 @@ azuread_applications = {
       mapped_claims_enabled          = true
       requested_access_token_version = 2
 
-      known_client_applications = [
-        "someID"
-      ]
+      # known_client_applications = [
+      #   "someID"
+      # ]
 
       oauth2_permission_scopes = [
         {
