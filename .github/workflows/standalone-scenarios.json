@@ -134,6 +134,7 @@
     "logic_app/105-logic_app_trigger_http_request",
     "logic_app/106-logic_app_trigger_recurrence",
     "logic_app/107-logic_app_trigger_custom",
+    "logic_app/109-logic_app_standard_vnet_integration",
     "machine_learning/100-aml",
     "machine_learning/101-aml-vnet",
     "machine_learning/102-aml-compute_instance",

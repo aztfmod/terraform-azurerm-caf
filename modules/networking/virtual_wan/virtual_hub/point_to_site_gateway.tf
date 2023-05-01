@@ -42,7 +42,7 @@ resource "azurerm_point_to_site_vpn_gateway" "p2s_gateway" {
   }
 
   timeouts {
-    create = "60m"
+    create = "120m"
     delete = "120m"
   }
 
