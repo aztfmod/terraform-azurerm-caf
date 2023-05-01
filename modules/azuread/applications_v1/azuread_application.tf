@@ -16,15 +16,15 @@ resource "azuread_application" "app" {
   fallback_public_client_enabled = try(var.settings.public_client, false)
 
   dynamic "api" {
-    for_each = try(each.value.api, null) != null ? [1] : []
+    for_each = try(var.settings.api, null) != null ? [1] : []
 
     content {
-      known_client_applications      = try(api.value.known_client_applications, [])
-      mapped_claims_enabled          = try(api.value.mapped_claims_enabled, null)
-      requested_access_token_version = try(api.value.requested_access_token_version, null)
+      known_client_applications      = try(var.settings.api.known_client_applications, [])
+      mapped_claims_enabled          = try(var.settings.api.mapped_claims_enabled, null)
+      requested_access_token_version = try(var.settings.api.requested_access_token_version, null)
 
       dynamic "oauth2_permission_scope" {
-        for_each = try(each.value.api.oauth2_permission_scopes, [])
+        for_each = try(var.settings.api.oauth2_permission_scopes, [])
         content {
           admin_consent_description  = oauth2_permission_scope.value.admin_consent_description
           admin_consent_display_name = oauth2_permission_scope.value.admin_consent_display_name
