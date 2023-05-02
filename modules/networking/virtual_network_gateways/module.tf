@@ -45,8 +45,11 @@ resource "azurerm_virtual_network_gateway" "vngw" {
       radius_server_secret  = try(vpn_client_configuration.value.radius_server_secret, null)
 
       root_certificate {
-        name             = vpn_client_configuration.value.root_certificate.name
-        public_cert_data = vpn_client_configuration.value.root_certificate.public_cert_data
+        name = vpn_client_configuration.value.root_certificate.name
+        public_cert_data = try(
+          replace(replace(data.azurerm_key_vault_secret.vpn_client_configuration_root_certificate[vpn_client_configuration.key].value, "-----BEGIN CERTIFICATE-----", ""), "-----END CERTIFICATE-----", ""),
+          vpn_client_configuration.value.root_certificate.public_cert_data
+        )
       }
       dynamic "revoked_certificate" {
         for_each = try(vpn_client_configuration.value.revoked_certificate, {})
@@ -86,4 +89,16 @@ resource "azurerm_virtual_network_gateway" "vngw" {
 
   tags = local.tags
 
+}
+
+data "azurerm_key_vault_secret" "vpn_client_configuration_root_certificate" {
+  for_each = {
+    for key, value in try(var.settings.vpn_client_configuration, {}) : key => value
+    if try(value.root_certificate.keyvault_secret, null) != null
+  }
+  name = each.value.root_certificate.keyvault_secret.secret_name
+  key_vault_id = try(
+    each.value.root_certificate.keyvault_secret.key_vault_id,
+    var.keyvaults[try(each.value.root_certificate.keyvault_secret.lz_key, var.client_config.landingzone_key)][each.value.root_certificate.keyvault_secret.keyvault_key].id,
+  )
 }
