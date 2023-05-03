@@ -27,6 +27,8 @@ machine_learning_workspaces = {
     application_insights_key = "ml_app_insight"
     #sku_name                 = "Enterprise" # disabling this will set up Basic
     #Commenting sku_name as deprecated - per https://docs.microsoft.com/en-us/azure/machine-learning/concept-workspace#what-happened-to-enterprise-edition
+
+    # Don't create compute_instances [deprecated] - See examples 102 and 103 for machine_learning_compute_instance
     compute_instances = {
       compute_instance_re1 = {
         computeInstanceName   = "inst25"
