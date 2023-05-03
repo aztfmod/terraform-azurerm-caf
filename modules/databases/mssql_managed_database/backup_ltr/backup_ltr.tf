@@ -1,12 +1,15 @@
-
-resource "azurerm_template_deployment" "backupltr" {
+moved {
+  from = azurerm_template_deployment.backupltr
+  to   = azurerm_resource_group_template_deployment.backupltr
+}
+resource "azurerm_resource_group_template_deployment" "backupltr" {
 
   name                = format("%s-%s-LTR", var.server_name, var.server_name)
   resource_group_name = var.resource_group_name
 
-  template_body = file(local.arm_filename)
+  template_content = file(local.arm_filename)
 
-  parameters_body = jsonencode(local.parameters_body)
+  parameters_content = jsonencode(local.parameters_content)
 
   deployment_mode = "Incremental"
 }

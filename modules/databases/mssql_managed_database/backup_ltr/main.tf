@@ -14,7 +14,7 @@ locals {
   arm_filename = "${path.module}/arm_backup_ltr.json"
 
   # this is the format required by ARM templates
-  parameters_body = {
+  parameters_content = {
     serverName = {
       value = var.server_name
     }
