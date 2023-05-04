@@ -38,7 +38,7 @@ variable "provider_azurerm_features_log_analytics_workspace" {
 
 variable "provider_azurerm_features_resource_group" {
   default = {
-    prevent_deletion_if_contains_resources = false # for CI....
+    prevent_deletion_if_contains_resources = true
   }
 }
 
