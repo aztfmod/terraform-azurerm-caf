@@ -7,18 +7,6 @@ terraform {
 
 provider "azurerm" {
   features {
-    key_vault {
-      purge_soft_delete_on_destroy = var.provider_azurerm_features_keyvault.purge_soft_delete_on_destroy
-    }
-  }
-}
-
-provider "azurerm" {
-  alias                      = "vhub"
-  skip_provider_registration = true
-  subscription_id            = data.azurerm_client_config.default.subscription_id
-  tenant_id                  = data.azurerm_client_config.default.tenant_id
-  features {
     api_management {
       purge_soft_delete_on_destroy = var.provider_azurerm_features_api_management.purge_soft_delete_on_destroy
       # recover_soft_deleted_api_managements = var.provider_azurerm_features_api_management.recover_soft_deleted_api_managements
@@ -59,6 +47,14 @@ provider "azurerm" {
       scale_to_zero_before_deletion = var.provider_azurerm_features_virtual_machine_scale_set.scale_to_zero_before_deletion
     }
   }
+}
+
+provider "azurerm" {
+  alias                      = "vhub"
+  skip_provider_registration = true
+  subscription_id            = data.azurerm_client_config.default.subscription_id
+  tenant_id                  = data.azurerm_client_config.default.tenant_id
+  features {}
 }
 
 data "azurerm_client_config" "default" {}
