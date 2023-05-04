@@ -39,7 +39,6 @@ resource "azurerm_app_service" "app_service" {
     for_each = lookup(var.settings, "site_config", {}) != {} ? [1] : []
 
     content {
-      # numberOfWorkers           = lookup(each.value.site_config, "numberOfWorkers", 1)  # defined in ARM template below
       always_on                 = lookup(var.settings.site_config, "always_on", false)
       app_command_line          = lookup(var.settings.site_config, "app_command_line", null)
       default_documents         = lookup(var.settings.site_config, "default_documents", null)
@@ -62,6 +61,7 @@ resource "azurerm_app_service" "app_service" {
       use_32_bit_worker_process = lookup(var.settings.site_config, "use_32_bit_worker_process", false)
       websockets_enabled        = lookup(var.settings.site_config, "websockets_enabled", false)
       scm_type                  = lookup(var.settings.site_config, "scm_type", null)
+      number_of_workers         = can(var.settings.numberOfWorkers) || can(var.settings.site_config.number_of_workers) ? try(var.settings.numberOfWorkers, var.settings.site_config.number_of_workers) : 1
 
       dynamic "cors" {
         for_each = lookup(var.settings.site_config, "cors", {}) != {} ? [1] : []
@@ -275,31 +275,6 @@ resource "azurerm_app_service" "app_service" {
       site_config[0].scm_type
     ]
   }
-}
-
-moved {
-  from = azurerm_template_deployment.site_config
-  to   = azurerm_resource_group_template_deployment.site_config
-}
-
-resource "azurerm_resource_group_template_deployment" "site_config" {
-  depends_on = [azurerm_app_service.app_service]
-
-  count = lookup(var.settings, "numberOfWorkers", {}) != {} ? 1 : 0
-
-  name                = azurecaf_name.app_service.result
-  resource_group_name = local.resource_group_name
-
-  template_content = file(local.arm_filename)
-
-  parameters_content = jsonencode(
-    {
-      "numberOfWorkers" = tonumber(var.settings.numberOfWorkers)
-      "name"            = azurecaf_name.app_service.result
-    }
-  )
-
-  deployment_mode = "Incremental"
 }
 
 resource "azurerm_app_service_custom_hostname_binding" "app_service" {

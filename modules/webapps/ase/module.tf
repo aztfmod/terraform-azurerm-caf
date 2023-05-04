@@ -8,11 +8,6 @@ resource "azurecaf_name" "ase" {
   use_slug      = var.global_settings.use_slug
 }
 
-moved {
-  from = azurerm_template_deployment.ase
-  to   = azurerm_resource_group_template_deployment.ase
-}
-
 resource "azurerm_resource_group_template_deployment" "ase" {
 
   name                = azurecaf_name.ase.result
