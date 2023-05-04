@@ -69,21 +69,23 @@ resource "azurerm_monitor_action_group" "ag1" {
 
 }
 
-moved {
-  from = azurerm_template_deployment.alert1
-  to   = azurerm_resource_group_template_deployment.alert1
-}
 
 resource "azurerm_resource_group_template_deployment" "alert1" {
-  name                = random_string.random1.result
+  name                = "alert1"
   resource_group_name = var.resource_group_name
 
   template_content = file("${path.module}/alert-servicehealth.json")
   parameters_content = jsonencode(
     {
-      "name"              = azurecaf_name.service_health_alert_name.result
-      "actionGroups_name" = azurerm_monitor_action_group.ag1.name
-      "region"            = var.location
+      name = {
+        value = azurecaf_name.service_health_alert_name.result
+      }
+      actionGroups_name = {
+        value = azurerm_monitor_action_group.ag1.name
+      }
+      region = {
+        value = var.location
+      }
     }
   )
   deployment_mode = "Incremental"
