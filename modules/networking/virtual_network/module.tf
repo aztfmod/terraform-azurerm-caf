@@ -23,12 +23,12 @@ resource "azurerm_virtual_network" "vnet" {
       try(local.dns_servers_process, [])
     )
   )
-
+  # setup ddos protection plan if ddos id is defined in variable or in global_settings
   dynamic "ddos_protection_plan" {
-    for_each = var.ddos_id != "" || can(var.global_settings["ddos_protection_plan_id"]) ? [1] : []
+    for_each = can(coalesce(var.ddos_id)) || can(var.global_settings["ddos_protection_plan_id"]) ? [1] : []
 
     content {
-      id     = var.ddos_id != "" ? var.ddos_id : var.global_settings["ddos_protection_plan_id"]
+      id     = can(coalesce(var.ddos_id)) ? var.ddos_id : var.global_settings["ddos_protection_plan_id"]
       enable = true
     }
   }
