@@ -22,16 +22,16 @@ resource "azurerm_resource_group_template_deployment" "arm_template_vhub_firewal
 
   parameters_content = jsonencode(
     {
-      vwan_id  = {
+      vwan_id = {
         value = azurerm_virtual_hub.vwan_hub.id
       }
-      name     = {
+      name = {
         value = var.virtual_hub_config.firewall_name
       }
       location = {
         value = var.location
       }
-      Tier     = {
+      Tier = {
         value = "Standard"
       }
     }

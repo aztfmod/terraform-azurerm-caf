@@ -8,14 +8,9 @@ resource "azurecaf_name" "settings" {
   use_slug      = var.global_settings.use_slug
 }
 
-moved {
-  from = azurerm_template_deployment.settings
-  to   = azurerm_resource_group_template_deployment.settings
-}
-
 # create app config settings
 resource "azurerm_resource_group_template_deployment" "settings" {
-  name                = azurecaf_name.settings.result
+  name                = "settings"
   resource_group_name = var.resource_group_name
 
   template_content = file(local.arm_filename)
