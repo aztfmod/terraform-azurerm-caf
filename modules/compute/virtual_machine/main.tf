@@ -10,10 +10,20 @@ terraform {
 
 locals {
   os_type = lower(var.settings.os_type)
-  # Generate SSH Keys only if a public one is not provided
-  create_sshkeys = (local.os_type == "linux" || local.os_type == "legacy") && try(var.settings.public_key_pem_file == "", true)
   module_tag = {
     "module" = basename(abspath(path.module))
   }
-  tags = merge(var.base_tags, local.module_tag, try(var.settings.tags, null))
+  tags = var.base_tags ? merge(
+    var.global_settings.tags,
+    try(var.resource_group.tags, null),
+    local.module_tag,
+    try(var.settings.tags, null)
+    ) : merge(
+    local.module_tag,
+    try(var.settings.tags,
+    null)
+  )
+
+  location            = var.resource_group.location
+  resource_group_name = var.resource_group.name
 }

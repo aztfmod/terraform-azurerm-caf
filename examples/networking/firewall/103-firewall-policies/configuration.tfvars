@@ -72,6 +72,11 @@ azurerm_firewall_policies = {
     region             = "region1"
     sku                = "Premium"
 
+    # Required if you want to use Network rules with FQDNs
+    dns = {
+      proxy_enabled = true
+    }
+
     #   threat_intelligence_mode = "Alert"
 
     #   threat_intelligence_allowlist = {
@@ -145,27 +150,41 @@ azurerm_firewall_policy_rule_collection_groups = {
           }
         }
       }
+      group2 = {
+        name     = "network_rule_collection2"
+        priority = 600
+        action   = "Deny"
+        rules = {
+          rule1 = {
+            name              = "network_rule_collection1_rule1"
+            protocols         = ["TCP", "UDP"]
+            source_addresses  = ["10.0.0.1"]
+            destination_fqdns = ["www.microsoft.com"]
+            destination_ports = ["80", "1000-2000"]
+          }
+        }
+      }
     }
 
-    # nat_rule_collections = {
-    #   group1 = {
-    #     name     = "nat_rule_collection1"
-    #     priority = 300
-    #     action   = "Dnat"
-    #     rules = {
-    #       rule1 = {
-    #         name                = "nat_rule_collection1_rule1"
-    #         protocols           = ["TCP"]
-    #         source_addresses    = ["*"]
-    #         destination_address = "192.168.1.1"
-    #         # destination_address_public_ip_key = "pip_key"
-    #         destination_ports   = ["80", "1000-2000"]
-    #         translated_address  = "192.168.0.1"
-    #         translated_port     = "8080"
-    #       }
-    #     }
-    #   }
-    # }
+    nat_rule_collections = {
+      group1 = {
+        name     = "nat_rule_collection1"
+        priority = 300
+        action   = "Dnat"
+        rules = {
+          rule1 = {
+            name             = "nat_rule_collection1_rule1"
+            protocols        = ["TCP"]
+            source_addresses = ["*"]
+            # destination_address = "192.168.1.1"
+            destination_address_public_ip_key = "pip1"
+            destination_ports                 = ["80"]
+            translated_address                = "192.168.0.1"
+            translated_port                   = "8080"
+          }
+        }
+      }
+    }
   }
 
 }

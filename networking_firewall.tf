@@ -1,13 +1,12 @@
 module "azurerm_firewalls" {
   depends_on = [
-    module.azurerm_firewall_policies,
-    module.azurerm_firewall_policy_rule_collection_groups
+    module.azurerm_firewall_policies
   ]
   source   = "./modules/networking/firewall"
   for_each = local.networking.azurerm_firewalls
 
   client_config       = local.client_config
-  diagnostic_profiles = try(each.value.diagnostic_profiles, null)
+  diagnostic_profiles = try(each.value.diagnostic_profiles, {})
   diagnostics         = local.combined_diagnostics
   global_settings     = local.global_settings
   name                = each.value.name
@@ -16,15 +15,14 @@ module "azurerm_firewalls" {
   public_ip_keys      = can(each.value.public_ip_keys) ? each.value.public_ip_keys : null
   location            = can(local.global_settings.regions[each.value.region]) ? local.global_settings.regions[each.value.region] : local.combined_objects_resource_groups[try(each.value.resource_group.lz_key, local.client_config.landingzone_key)][try(each.value.resource_group.key, each.value.resource_group_key)].location
   resource_group_name = can(each.value.resource_group.name) || can(each.value.resource_group_name) ? try(each.value.resource_group.name, each.value.resource_group_name) : local.combined_objects_resource_groups[try(each.value.resource_group.lz_key, local.client_config.landingzone_key)][try(each.value.resource_group_key, each.value.resource_group.key)].name
-  base_tags           = try(local.global_settings.inherit_tags, false) ? local.combined_objects_resource_groups[try(each.value.resource_group.lz_key, local.client_config.landingzone_key)][try(each.value.resource_group.key, each.value.resource_group_key)].tags : {}
+  base_tags           = try(local.global_settings.inherit_tags, false) ? try(local.combined_objects_resource_groups[try(each.value.resource_group.lz_key, local.client_config.landingzone_key)][try(each.value.resource_group.key, each.value.resource_group_key)].tags, {}) : {}
   settings            = each.value
   subnet_id           = try(module.networking[each.value.vnet_key].subnets["AzureFirewallSubnet"].id, null)
   tags                = try(each.value.tags, null)
   virtual_hubs        = local.combined_objects_virtual_hubs
   virtual_networks    = local.combined_objects_networking
   virtual_wans        = local.combined_objects_virtual_wans
-
-  firewall_policy_id = can(each.value.firewall_policy.id) || (can(each.value.firewall_policy) && can(each.value.firewall_policy.key) == false) || (can(each.value.firewall_policy) == false && can(each.value.firewall_policy_key) == false) ? try(each.value.firewall_policy.id, null) : local.combined_objects_azurerm_firewall_policies[try(each.value.firewall_policy.lz_key, local.client_config.landingzone_key)][try(each.value.firewall_policy.key, each.value.firewall_policy_key)].id
+  firewall_policy_id  = can(each.value.firewall_policy.id) || (can(each.value.firewall_policy) && can(each.value.firewall_policy.key) == false) || (can(each.value.firewall_policy) == false && can(each.value.firewall_policy_key) == false) ? try(each.value.firewall_policy.id, null) : local.combined_objects_azurerm_firewall_policies[try(each.value.firewall_policy.lz_key, local.client_config.landingzone_key)][try(each.value.firewall_policy.key, each.value.firewall_policy_key)].id
 }
 
 # Firewall rules to apply to the firewall when not using firewall manager.

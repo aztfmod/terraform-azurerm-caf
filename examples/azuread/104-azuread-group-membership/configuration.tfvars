@@ -51,4 +51,10 @@ azuread_groups_membership = {
       }
     }
   }
+  # ad_group2 = { # ad group key
+  #   # group_lz_key = "" # group lz_key
+  #   members = {
+  #     azuread_service_principal_keys = ["spkey"] # add service principal to group
+  #   }
+  # }
 }

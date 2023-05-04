@@ -1,5 +1,9 @@
 global_settings = {
   default_region = "region1"
+  inherit_tags   = true
+  tags = {
+    global = "global"
+  }
   regions = {
     region1 = "northeurope"
     region2 = "australiacentral"
@@ -10,16 +14,20 @@ resource_groups = {
   cosmosdb_region1 = {
     name   = "cosmosdb"
     region = "region1"
+    tags = {
+      rg = "rg"
+    }
   }
 }
 
 cosmos_dbs = {
   cosmosdb_account_re1 = {
-    name                      = "cosmosdb-ex101"
-    resource_group_key        = "cosmosdb_region1"
-    offer_type                = "Standard"
-    kind                      = "GlobalDocumentDB"
-    enable_automatic_failover = "true"
+    name                          = "cosmosdb-ex101"
+    resource_group_key            = "cosmosdb_region1"
+    offer_type                    = "Standard"
+    kind                          = "GlobalDocumentDB"
+    enable_automatic_failover     = "true"
+    public_network_access_enabled = false
 
     consistency_policy = {
       consistency_level       = "BoundedStaleness"

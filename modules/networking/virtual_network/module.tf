@@ -12,15 +12,19 @@ resource "azurecaf_name" "caf_name_vnet" {
 
 resource "azurerm_virtual_network" "vnet" {
   name                = azurecaf_name.caf_name_vnet.result
-  location            = var.location
-  resource_group_name = var.resource_group_name
+  location            = local.location
+  resource_group_name = local.resource_group_name
   address_space       = var.settings.vnet.address_space
   tags                = local.tags
 
-  dns_servers = coalesce(
-    try(lookup(var.settings.vnet, "dns_servers", null)),
-    try(local.dns_servers_process, null)
+  dns_servers = flatten(
+    concat(
+      try(lookup(var.settings.vnet, "dns_servers", [])),
+      try(local.dns_servers_process, [])
+    )
   )
+
+  bgp_community = try(var.settings.vnet.bgp_community, null)
 
   dynamic "ddos_protection_plan" {
     for_each = var.ddos_id != "" || can(var.global_settings["ddos_protection_plan_id"]) ? [1] : []
@@ -30,6 +34,10 @@ resource "azurerm_virtual_network" "vnet" {
       enable = true
     }
   }
+
+  lifecycle {
+    ignore_changes = [name]
+  }
 }
 
 module "special_subnets" {
@@ -38,7 +46,7 @@ module "special_subnets" {
   for_each                                       = lookup(var.settings, "specialsubnets", {})
   name                                           = each.value.name
   global_settings                                = var.global_settings
-  resource_group_name                            = var.resource_group_name
+  resource_group_name                            = local.resource_group_name
   virtual_network_name                           = azurerm_virtual_network.vnet.name
   address_prefixes                               = lookup(each.value, "cidr", [])
   service_endpoints                              = lookup(each.value, "service_endpoints", [])
@@ -53,7 +61,7 @@ module "subnets" {
   for_each                                       = lookup(var.settings, "subnets", {})
   name                                           = each.value.name
   global_settings                                = var.global_settings
-  resource_group_name                            = var.resource_group_name
+  resource_group_name                            = local.resource_group_name
   virtual_network_name                           = azurerm_virtual_network.vnet.name
   address_prefixes                               = lookup(each.value, "cidr", [])
   service_endpoints                              = lookup(each.value, "service_endpoints", [])
@@ -69,10 +77,10 @@ module "nsg" {
   client_config                     = var.client_config
   diagnostics                       = var.diagnostics
   global_settings                   = var.global_settings
-  location                          = var.location
+  location                          = local.location
   network_security_groups           = var.network_security_groups
   network_security_group_definition = var.network_security_group_definition
-  resource_group                    = var.resource_group_name
+  resource_group                    = local.resource_group_name
   subnets                           = try(var.settings.subnets, {})
   network_watchers                  = var.network_watchers
   tags                              = local.tags
@@ -111,17 +119,26 @@ resource "azurerm_subnet_network_security_group_association" "nsg_vnet_associati
 }
 
 locals {
-  dns_servers_process = [
-    for obj in try(var.settings.vnet.dns_servers_keys, {}) : #o.ip
-    coalesce(
-      try(var.remote_dns[obj.resource_type][obj.lz_key][obj.key].virtual_hub[obj.interface_index].private_ip_address, null),
-      try(var.remote_dns[obj.resource_type][obj.lz_key][obj.key].virtual_hub.0.private_ip_address, null),
-      try(var.remote_dns[obj.resource_type][obj.lz_key][obj.key].ip_configuration[obj.interface_index].private_ip_address, null),
-      try(var.remote_dns[obj.resource_type][obj.lz_key][obj.key].ip_configuration.0.private_ip_address, null),
-      null
-    )
-    # for ip_key, resouce_ip in var.settings.vnet.dns_servers_keys: [
-    #  resouce_ip.ip
-    # ]
-  ]
+  dns_servers_process = can(var.settings.vnet.dns_servers_keys) == false ? [] : concat(
+    [
+      for obj in try(var.settings.vnet.dns_servers_keys, {}) : #o.ip
+      coalesce(
+        try(var.remote_dns[obj.resource_type][obj.lz_key][obj.key].virtual_hub[obj.interface_index].private_ip_address, null),
+        try(var.remote_dns[obj.resource_type][obj.lz_key][obj.key].virtual_hub.0.private_ip_address, null),
+        try(var.remote_dns[obj.resource_type][obj.lz_key][obj.key].ip_configuration[obj.interface_index].private_ip_address, null),
+        try(var.remote_dns[obj.resource_type][obj.lz_key][obj.key].ip_configuration.0.private_ip_address, null)
+      )
+      if contains(["azurerm_firewall", "azurerm_firewalls"], obj.resource_type)
+    ],
+    [
+      for obj in try(var.settings.vnet.dns_servers_keys, {}) :
+      var.remote_dns.lb[obj.lz_key][obj.key].private_ip_addresses
+      if contains(["lb"], obj.resource_type)
+    ],
+    [
+      for obj in try(var.settings.vnet.dns_servers_keys, {}) :
+      var.remote_dns.virtual_machines[obj.lz_key][obj.key].ip_configuration[obj.nic_key].private_ip_addresses
+      if contains(["virtual_machines", "virtual_machine"], obj.resource_type)
+    ]
+  )
 }

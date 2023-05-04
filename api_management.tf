@@ -6,10 +6,11 @@ module "api_management" {
   client_config   = local.client_config
   settings        = each.value
 
-  location = can(local.global_settings.regions[each.value.region]) ? local.global_settings.regions[each.value.region] : local.combined_objects_resource_groups[try(each.value.resource_group.lz_key, local.client_config.landingzone_key)][try(each.value.resource_group.key, each.value.resource_group_key)].location
-  vnets    = local.combined_objects_networking
-
-  resource_group_name = can(each.value.resource_group.name) || can(each.value.resource_group_name) ? try(each.value.resource_group.name, each.value.resource_group_name) : local.combined_objects_resource_groups[try(each.value.resource_group.lz_key, local.client_config.landingzone_key)][try(each.value.resource_group_key, each.value.resource_group.key)].name
+  vnets               = local.combined_objects_networking
+  base_tags           = local.global_settings.inherit_tags
+  resource_group      = local.combined_objects_resource_groups[try(each.value.resource_group.lz_key, local.client_config.landingzone_key)][try(each.value.resource_group_key, each.value.resource_group.key)]
+  resource_group_name = can(each.value.resource_group.name) || can(each.value.resource_group_name) ? try(each.value.resource_group.name, each.value.resource_group_name) : null
+  location            = try(local.global_settings.regions[each.value.region], null)
 
   remote_objects = {
     resource_group     = local.combined_objects_resource_groups
@@ -320,4 +321,45 @@ module "api_management_group" {
 }
 output "api_management_group" {
   value = module.api_management_group
+}
+
+module "api_management_subscription" {
+  source   = "./modules/apim/api_management_subscription"
+  for_each = local.apim.api_management_subscription
+
+  global_settings = local.global_settings
+  client_config   = local.client_config
+  settings        = each.value
+
+  api_management_name = can(each.value.api_management.name) ? each.value.api_management.name : local.combined_objects_api_management[try(each.value.api_management.lz_key, local.client_config.landingzone_key)][each.value.api_management.key].name
+  resource_group_name = can(each.value.resource_group.name) || can(each.value.resource_group_name) ? try(each.value.resource_group.name, each.value.resource_group_name) : local.combined_objects_resource_groups[try(each.value.resource_group.lz_key, local.client_config.landingzone_key)][try(each.value.resource_group_key, each.value.resource_group.key)].name
+  product_id          = can(each.value.product.product_id) || can(each.value.product.key) == false ? try(each.value.product.product_id, null) : local.combined_objects_api_management_product[try(each.value.product.lz_key, local.client_config.landingzone_key)][each.value.product.key].id
+
+  remote_objects = {
+    api_management = local.combined_objects_api_management
+    resource_group = local.combined_objects_resource_groups
+  }
+}
+output "api_management_subscription" {
+  value = module.api_management_subscription
+}
+
+module "api_management_product" {
+  source   = "./modules/apim/api_management_product"
+  for_each = local.apim.api_management_product
+
+  global_settings = local.global_settings
+  client_config   = local.client_config
+  settings        = each.value
+
+  api_management_name = can(each.value.api_management.name) ? each.value.api_management.name : local.combined_objects_api_management[try(each.value.api_management.lz_key, local.client_config.landingzone_key)][each.value.api_management.key].name
+  resource_group_name = can(each.value.resource_group.name) || can(each.value.resource_group_name) ? try(each.value.resource_group.name, each.value.resource_group_name) : local.combined_objects_resource_groups[try(each.value.resource_group.lz_key, local.client_config.landingzone_key)][try(each.value.resource_group_key, each.value.resource_group.key)].name
+
+  remote_objects = {
+    api_management = local.combined_objects_api_management
+    resource_group = local.combined_objects_resource_groups
+  }
+}
+output "api_management_product" {
+  value = module.api_management_product
 }

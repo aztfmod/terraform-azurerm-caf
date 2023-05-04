@@ -67,7 +67,7 @@
     },
     "vCores": {
         "type": "int",
-        "defaultValue": 8,
+        "defaultValue": 4,
         "allowedValues": [
             4,
             8,
@@ -176,13 +176,33 @@
     },
     "resourceGroupName": {
         "type": "string"
+    },
+    "zoneRedundant": {
+        "type": "bool",
+        "defaultValue": false,
+        "metadata": {
+            "description": "Whether or not the multi-az is enabled."
+        }
+    },
+    "requestedBackupStorageRedundancy": {
+        "type": "string",
+        "defaultValue": "Geo",
+        "metadata": {
+            "description": "The storage account type used to store backups for this database."
+        },
+        "allowedValues": [
+            "Geo",
+            "GeoZone",
+            "Local",
+            "Zone"
+        ]
     }
   },
   "resources": [
       {
           "type": "Microsoft.Sql/managedInstances",
           "name": "[parameters('managedInstanceName')]",
-          "apiVersion": "2020-02-02-preview",
+          "apiVersion": "2021-11-01-preview",
           "location": "[parameters('location')]",
           "sku": {
               "name": "[parameters('skuName')]",
@@ -195,19 +215,21 @@
           "properties": {
               "administratorLogin": "[parameters('administratorLogin')]",
               "administratorLoginPassword": "[parameters('administratorLoginPassword')]",
-              "subnetId": "[parameters('subnetId')]",
-              "storageSizeInGB": "[parameters('storageSizeInGB')]",
-              "vCores": "[parameters('vCores')]",
-              "licenseType": "[parameters('licenseType')]",
-              "hardwareFamily": "[parameters('hardwareFamily')]",
-              "dnsZonePartner": "[if(equals(parameters('dnsZonePartner'), ''), json('null'), parameters('dnsZonePartner'))]",
+              "backupStorageRedundancy": "[parameters('storageAccountType')]",
               "collation": "[parameters('collation')]",
+              "dnsZonePartner": "[if(equals(parameters('dnsZonePartner'), ''), json('null'), parameters('dnsZonePartner'))]",
+              "hardwareFamily": "[parameters('hardwareFamily')]",
+              "licenseType": "[parameters('licenseType')]",
+              "minimalTlsVersion": "[parameters('minimalTlsVersion')]",
               "proxyOverride": "[parameters('proxyOverride')]",
               "publicDataEndpointEnabled": "[parameters('publicDataEndpointEnabled')]",
-              "minimalTlsVersion": "[parameters('minimalTlsVersion')]",
-              "timezoneId": "[parameters('timezoneId')]",
+              "requestedBackupStorageRedundancy": "[parameters('requestedBackupStorageRedundancy')]",
               "storageAccountType": "[parameters('storageAccountType')]",
-              "backupStorageRedundancy": "[parameters('storageAccountType')]"
+              "storageSizeInGB": "[parameters('storageSizeInGB')]",
+              "subnetId": "[parameters('subnetId')]",
+              "timezoneId": "[parameters('timezoneId')]",
+              "vCores": "[parameters('vCores')]",
+              "zoneRedundant": "[parameters('zoneRedundant')]"
           }
       }
   ],
@@ -218,7 +240,7 @@
       },
       "objectId": {
         "type": "string",
-        "value": "[reference(parameters('managedInstanceName'), '2020-02-02-preview', 'Full').identity.principalId]"
+        "value": "[reference(parameters('managedInstanceName'), '2021-11-01-preview', 'Full').identity.principalId]"
       }
   }
 }

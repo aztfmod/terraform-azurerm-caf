@@ -19,3 +19,9 @@ variable "base_tags" {
 variable "resource_group_name" {
   description = " The name of the resource group in which to create the resource."
 }
+variable "backend_address_pool_ids" {
+  description = "A list of reference to a Backend Address Pool over which this Load Balancing Rule operates."
+}
+variable "probe_id" {
+  description = "A reference to a Probe used by this Load Balancing Rule."
+}

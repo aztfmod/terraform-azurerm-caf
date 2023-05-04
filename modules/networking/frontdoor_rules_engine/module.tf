@@ -15,7 +15,7 @@ resource "azurerm_frontdoor_rules_engine" "fdre" {
   resource_group_name = var.resource_group_name
 
   dynamic "rule" {
-    for_each = try(var.settings.rule, null) != null ? [var.settings.rule] : []
+    for_each = try(var.settings.rule, {})
 
     content {
       name     = rule.value.name
@@ -25,7 +25,7 @@ resource "azurerm_frontdoor_rules_engine" "fdre" {
 
         content {
           dynamic "request_header" {
-            for_each = try(action.value.request_header, null) != null ? [action.value.request_header] : []
+            for_each = try(action.value.request_header, {})
 
             content {
               header_action_type = request_header.value.header_action_type
@@ -34,18 +34,18 @@ resource "azurerm_frontdoor_rules_engine" "fdre" {
             }
           }
           dynamic "response_header" {
-            for_each = try(action.value.response_header, null) != null ? [action.value.response_header] : []
+            for_each = try(action.value.response_header, {})
 
             content {
-              header_action_type = request_header.value.header_action_type
-              header_name        = request_header.value.header_name
-              value              = request_header.value.value
+              header_action_type = response_header.value.header_action_type
+              header_name        = response_header.value.header_name
+              value              = response_header.value.value
             }
           }
         }
       }
       dynamic "match_condition" {
-        for_each = try(rule.value.match_condition, null) != null ? [rule.value.match_condition] : []
+        for_each = try(rule.value.match_condition, {})
 
         content {
           variable         = match_condition.value.variable

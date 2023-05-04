@@ -14,10 +14,14 @@ output "frontend_ports" {
   value = var.settings.front_end_ports
 }
 
+output "ssl_certificates" {
+  value = try(var.settings.ssl_certs, null)
+}
+
 output "private_ip_address" {
   value = local.private_ip_address
 }
 
 output "resource_group_name" {
-  value = var.resource_group_name
+  value = local.resource_group_name
 }

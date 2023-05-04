@@ -59,6 +59,8 @@ mssql_managed_instances = {
     }
     administratorLogin = "adminuser"
     # administratorLoginPassword = "@dm1nu53r@30102020"
+    # if password not set, a random complex passwor will be created and stored in the keyvault
+    # the secret value can be changed after the deployment if needed
 
     //networking
     networking = {
@@ -68,7 +70,7 @@ mssql_managed_instances = {
     keyvault_key = "sqlmi_rg1"
 
     storageSizeInGB = 32
-    vCores          = 8
+    vCores          = 4
   }
 }
 
@@ -111,14 +113,17 @@ azuread_groups = {
   }
 }
 
+## specify azuread_groups key OR you can import existing azuread group by using group OID as shown below
+
 mssql_mi_administrators = {
   sqlmi1 = {
     resource_group_key = "sqlmi_region1"
     mi_server_key      = "sqlmi1"
     login              = "sqlmiadmin-khairi"
-    azuread_group_key  = "sql_mi_admins"
 
-    # group key or upn supported
+    # group key or existing group OID or upn supported
+    azuread_group_key = "sql_mi_admins"
+    # azuread_group_id   = "<specify existing azuread group's Object Id (OID) here>"
     # user_principal_name = ""
   }
 }

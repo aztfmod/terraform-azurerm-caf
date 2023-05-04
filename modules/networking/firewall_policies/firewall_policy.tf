@@ -17,6 +17,7 @@ resource "azurerm_firewall_policy" "fwpol" {
   location            = local.location
 
   sku                      = try(var.settings.sku, null)
+  private_ip_ranges        = try(var.settings.private_ip_ranges, null)
   base_policy_id           = var.base_policy_id
   threat_intelligence_mode = try(var.settings.threat_intelligence_mode, "Alert")
   tags                     = local.tags

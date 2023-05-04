@@ -16,6 +16,10 @@ vnets = {
       }
     }
 
+    tags = {
+      cost_center = "987654"
+    }
+
   }
 }
 

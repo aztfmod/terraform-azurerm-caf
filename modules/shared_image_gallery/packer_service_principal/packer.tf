@@ -19,16 +19,16 @@ resource "local_file" "packer_template" {
       image_publisher                   = var.settings.image_publisher
       image_offer                       = var.settings.image_offer
       image_sku                         = var.settings.image_sku
-      location                          = var.location
+      location                          = local.location
       vm_size                           = var.settings.vm_size
-      managed_image_resource_group_name = var.resource_group_name
+      managed_image_resource_group_name = local.resource_group_name
 
       managed_image_name    = var.settings.managed_image_name
       ansible_playbook_path = var.settings.ansible_playbook_path
 
       //shared_image_gallery destination values. If publishing to a different Subscription, change the following arguments and supply the values as variables
       subscription        = var.subscription
-      resource_group      = var.resource_group_name
+      resource_group      = local.resource_group_name
       gallery_name        = var.gallery_name
       image_name          = var.image_name
       image_version       = var.settings.shared_image_gallery_destination.image_version
@@ -53,7 +53,7 @@ data "azurerm_shared_image_version" "image_version" {
   name                = var.settings.shared_image_gallery_destination.image_version
   gallery_name        = var.gallery_name
   image_name          = var.image_name
-  resource_group_name = var.resource_group_name
+  resource_group_name = local.resource_group_name
   depends_on = [
     null_resource.create_image
   ]

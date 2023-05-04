@@ -229,6 +229,12 @@ variable "messaging" {
   default     = {}
 }
 
+## DataProtection variables
+variable "data_protection" {
+  description = "Configuration object - data protection"
+  default     = {}
+}
+
 ## Networking variables
 variable "networking" {
   description = "Configuration object - networking resources"
@@ -300,6 +306,10 @@ variable "shared_services" {
     # monitoring = {}
     # recovery_vaults = {}
   }
+}
+
+variable "var_folder_path" {
+  default = ""
 }
 
 # variable "virtual_network_gateways" {
@@ -392,4 +402,21 @@ variable "purview" {
 }
 variable "sentinel_watchlists" {
   default = {}
+}
+variable "iot" {
+  description = "Configuration object - IoT"
+  default = {
+    # digital_twins_instances                 = {}
+    # digital_twins_endpoint_eventhubs                 = {}
+    # digital_twins_endpoint_eventgrids = {}
+    # digital_twins_endpoint_servicebuses = {}
+
+  }
+}
+variable "resource_provider_registration" {
+  default = {}
+}
+variable "aadb2c" {
+  description = "Configuration object - AAD B2C resources"
+  default     = {}
 }

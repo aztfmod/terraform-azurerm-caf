@@ -5,7 +5,7 @@ output "name" {
 }
 
 output "id" {
-  value       = lookup(azurerm_template_deployment.mssqlmi.outputs, "id")
+  value       = local.output.id
   description = "SQL MI Id"
 }
 
@@ -14,6 +14,6 @@ output "location" {
 }
 
 output "principal_id" {
-  value       = lookup(azurerm_template_deployment.mssqlmi.outputs, "objectId")
+  value       = local.output.principal_id
   description = "SQL MI Identity Principal Id"
 }

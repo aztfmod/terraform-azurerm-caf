@@ -9,7 +9,7 @@ module "integration_service_environment" {
   settings            = each.value
   location            = can(local.global_settings.regions[each.value.region]) ? local.global_settings.regions[each.value.region] : local.combined_objects_resource_groups[try(each.value.resource_group.lz_key, local.client_config.landingzone_key)][try(each.value.resource_group.key, each.value.resource_group_key)].location
   resource_group_name = can(each.value.resource_group.name) || can(each.value.resource_group_name) ? try(each.value.resource_group.name, each.value.resource_group_name) : local.combined_objects_resource_groups[try(each.value.resource_group.lz_key, local.client_config.landingzone_key)][try(each.value.resource_group_key, each.value.resource_group.key)].name
-  base_tags           = try(local.global_settings.inherit_tags, false) ? local.combined_objects_resource_groups[try(each.value.resource_group.lz_key, local.client_config.landingzone_key)][try(each.value.resource_group.key, each.value.resource_group_key)].tags : {}
+  base_tags           = try(local.global_settings.inherit_tags, false) ? try(local.combined_objects_resource_groups[try(each.value.resource_group.lz_key, local.client_config.landingzone_key)][try(each.value.resource_group.key, each.value.resource_group_key)].tags, {}) : {}
   vnets               = local.combined_objects_networking
 }
 
@@ -60,7 +60,7 @@ module "logic_app_integration_account" {
   settings            = each.value
   location            = can(local.global_settings.regions[each.value.region]) ? local.global_settings.regions[each.value.region] : local.combined_objects_resource_groups[try(each.value.resource_group.lz_key, local.client_config.landingzone_key)][try(each.value.resource_group.key, each.value.resource_group_key)].location
   resource_group_name = can(each.value.resource_group.name) || can(each.value.resource_group_name) ? try(each.value.resource_group.name, each.value.resource_group_name) : local.combined_objects_resource_groups[try(each.value.resource_group.lz_key, local.client_config.landingzone_key)][try(each.value.resource_group_key, each.value.resource_group.key)].name
-  base_tags           = try(local.global_settings.inherit_tags, false) ? local.combined_objects_resource_groups[try(each.value.resource_group.lz_key, local.client_config.landingzone_key)][try(each.value.resource_group.key, each.value.resource_group_key)].tags : {}
+  base_tags           = try(local.global_settings.inherit_tags, false) ? try(local.combined_objects_resource_groups[try(each.value.resource_group.lz_key, local.client_config.landingzone_key)][try(each.value.resource_group.key, each.value.resource_group_key)].tags, {}) : {}
 
 }
 
@@ -126,11 +126,37 @@ module "logic_app_workflow" {
   settings                           = each.value
   location                           = can(local.global_settings.regions[each.value.region]) ? local.global_settings.regions[each.value.region] : local.combined_objects_resource_groups[try(each.value.resource_group.lz_key, local.client_config.landingzone_key)][try(each.value.resource_group.key, each.value.resource_group_key)].location
   resource_group_name                = can(each.value.resource_group.name) || can(each.value.resource_group_name) ? try(each.value.resource_group.name, each.value.resource_group_name) : local.combined_objects_resource_groups[try(each.value.resource_group.lz_key, local.client_config.landingzone_key)][try(each.value.resource_group_key, each.value.resource_group.key)].name
-  base_tags                          = try(local.global_settings.inherit_tags, false) ? local.combined_objects_resource_groups[try(each.value.resource_group.lz_key, local.client_config.landingzone_key)][try(each.value.resource_group.key, each.value.resource_group_key)].tags : {}
+  base_tags                          = try(local.global_settings.inherit_tags, false) ? try(local.combined_objects_resource_groups[try(each.value.resource_group.lz_key, local.client_config.landingzone_key)][try(each.value.resource_group.key, each.value.resource_group_key)].tags, {}) : {}
   integration_service_environment_id = try(local.combined_objects_integration_service_environment[try(each.value.lz_key, local.client_config.landingzone_key)][each.value.integration_service_environment_key].id, null)
   logic_app_integration_account_id   = try(local.combined_objects_logic_app_integration_account[try(each.value.lz_key, local.client_config.landingzone_key)][each.value.logic_app_integration_account_key].id, null)
 }
 
 output "logic_app_workflow" {
   value = module.logic_app_workflow
+}
+
+module "logic_app_standard" {
+  source = "./modules/logic_app/standard"
+
+  for_each = local.logic_app.logic_app_standard
+
+  global_settings   = local.global_settings
+  client_config     = local.client_config
+  settings          = each.value
+  resource_groups   = local.combined_objects_resource_groups
+  storage_accounts  = local.combined_objects_storage_accounts
+  app_service_plans = local.combined_objects_app_service_plans
+  app_settings      = try(each.value.app_settings, null)
+  subnets           = local.combined_objects_networking
+  identity          = try(each.value.identity, null)
+  private_endpoints = try(each.value.private_endpoints, {})
+  private_dns       = local.combined_objects_private_dns
+  vnets             = local.combined_objects_networking
+  virtual_subnets   = local.combined_objects_virtual_subnets
+  base_tags         = try(local.global_settings.inherit_tags, false) ? local.resource_groups[each.value.resource_group_key].tags : {}
+  vnet_integration  = try(each.value.vnet_integration, {})
+}
+
+output "logic_app_standard" {
+  value = module.logic_app_standard
 }

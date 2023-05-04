@@ -2,7 +2,9 @@ application_security_groups = {
   bastion = {
     name               = "bastionappsecgw1"
     resource_group_key = "vm_region1"
-
+    tags = {
+      asg = "bastion"
+    }
   }
 
   app_server = {

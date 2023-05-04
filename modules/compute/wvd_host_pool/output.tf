@@ -7,14 +7,14 @@ output "name" {
 }
 
 output "token" {
-  value     = tostring(azurerm_virtual_desktop_host_pool.wvdpool.registration_info[0].token)
+  value     = azurerm_virtual_desktop_host_pool_registration_info.wvdpool.token
   sensitive = true
 }
 
 output "resource_group_name" {
-  value = var.resource_group_name
+  value = local.resource_group_name
 }
 
 output "location" {
-  value = var.location
+  value = local.location
 }

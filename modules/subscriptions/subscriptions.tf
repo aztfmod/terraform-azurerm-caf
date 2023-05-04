@@ -21,7 +21,7 @@ resource "azurerm_subscription" "sub" {
   subscription_id   = try(var.settings.subscription_id, null) != null ? var.settings.subscription_id : null
   billing_scope_id  = try(var.settings.billing_scope_id, null) == null ? try(data.azurerm_billing_enrollment_account_scope.sub.0.id, data.azurerm_billing_mca_account_scope.sub.0.id, null) : var.settings.billing_scope_id
   workload          = try(var.settings.workload, null)
-  tags              = try(var.settings.tags, null)
+  tags              = try(var.tags, null)
 
   lifecycle {
     ignore_changes = [

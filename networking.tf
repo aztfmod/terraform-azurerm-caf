@@ -43,12 +43,21 @@ module "networking" {
   settings                          = each.value
   tags                              = try(each.value.tags, null)
 
-  resource_group_name = local.combined_objects_resource_groups[try(each.value.resource_group.lz_key, local.client_config.landingzone_key)][try(each.value.resource_group.key, each.value.resource_group_key)].name
-  location            = lookup(each.value, "region", null) == null ? local.combined_objects_resource_groups[try(each.value.resource_group.lz_key, local.client_config.landingzone_key)][try(each.value.resource_group.key, each.value.resource_group_key)].location : local.global_settings.regions[each.value.region]
-  base_tags           = try(local.global_settings.inherit_tags, false) ? local.combined_objects_resource_groups[try(each.value.resource_group.lz_key, local.client_config.landingzone_key)][try(each.value.resource_group.key, each.value.resource_group_key)].tags : {}
+  base_tags           = local.global_settings.inherit_tags
+  resource_group      = local.combined_objects_resource_groups[try(each.value.resource_group.lz_key, local.client_config.landingzone_key)][try(each.value.resource_group_key, each.value.resource_group.key)]
+  resource_group_name = can(each.value.resource_group.name) || can(each.value.resource_group_name) ? try(each.value.resource_group.name, each.value.resource_group_name) : null
+  location            = try(local.global_settings.regions[each.value.region], null)
 
+
+  #assumed from remote lz only to prevent circular references
+  #
+  # Does not support legacy load_balancers. Prefer lb
+  #
   remote_dns = {
-    azurerm_firewall = try(var.remote_objects.azurerm_firewalls, null) #assumed from remote lz only
+    azurerm_firewall  = try(var.remote_objects.azurerm_firewalls, {})
+    azurerm_firewalls = try(var.remote_objects.azurerm_firewalls, {})
+    virtual_machines  = try(var.remote_objects.virtual_machines, {})
+    lb                = try(var.remote_objects.lb, {})
   }
 }
 
@@ -116,8 +125,7 @@ module "public_ip_addresses" {
   for_each = local.networking.public_ip_addresses
 
   name                       = azurecaf_name.public_ip_addresses[each.key].result
-  location                   = can(local.global_settings.regions[each.value.region]) ? local.global_settings.regions[each.value.region] : local.combined_objects_resource_groups[try(each.value.resource_group.lz_key, local.client_config.landingzone_key)][try(each.value.resource_group.key, each.value.resource_group_key)].location
-  resource_group_name        = can(each.value.resource_group.name) || can(each.value.resource_group_name) ? try(each.value.resource_group.name, each.value.resource_group_name) : local.combined_objects_resource_groups[try(each.value.resource_group.lz_key, local.client_config.landingzone_key)][try(each.value.resource_group_key, each.value.resource_group.key)].name
+  global_settings            = local.global_settings
   sku                        = try(each.value.sku, "Basic")
   allocation_method          = try(each.value.allocation_method, "Dynamic")
   ip_version                 = try(each.value.ip_version, "IPv4")
@@ -135,7 +143,11 @@ module "public_ip_addresses" {
   )
   diagnostic_profiles = try(each.value.diagnostic_profiles, {})
   diagnostics         = local.combined_diagnostics
-  base_tags           = try(local.global_settings.inherit_tags, false) ? local.combined_objects_resource_groups[try(each.value.resource_group.lz_key, local.client_config.landingzone_key)][try(each.value.resource_group.key, each.value.resource_group_key)].tags : {}
+
+  base_tags           = local.global_settings.inherit_tags
+  resource_group      = local.combined_objects_resource_groups[try(each.value.resource_group.lz_key, local.client_config.landingzone_key)][try(each.value.resource_group_key, each.value.resource_group.key)]
+  resource_group_name = can(each.value.resource_group.name) || can(each.value.resource_group_name) ? try(each.value.resource_group.name, each.value.resource_group_name) : null
+  location            = try(local.global_settings.regions[each.value.region], null)
 }
 
 #
@@ -172,7 +184,7 @@ module "public_ip_prefixes" {
   create_pips         = try(each.value.create_pips, false)
   diagnostic_profiles = try(each.value.diagnostic_profiles, {})
   diagnostics         = local.combined_diagnostics
-  base_tags           = try(local.global_settings.inherit_tags, false) ? local.combined_objects_resource_groups[try(each.value.resource_group.lz_key, local.client_config.landingzone_key)][try(each.value.resource_group.key, each.value.resource_group_key)].tags : {}
+  base_tags           = try(local.global_settings.inherit_tags, false) ? try(local.combined_objects_resource_groups[try(each.value.resource_group.lz_key, local.client_config.landingzone_key)][try(each.value.resource_group.key, each.value.resource_group_key)].tags, {}) : {}
 }
 
 #
@@ -210,6 +222,32 @@ resource "azurerm_virtual_network_peering" "peering" {
 
 }
 
+# Allow creating from and to in the same deployment when vnets are in different subscriptions
+# (azurerm does not access the resource id of the vnet in the from)
+# use the variable vnet_peerings_v1
+resource "azapi_resource" "virtualNetworkPeerings" {
+  depends_on = [module.networking]
+  for_each   = local.networking.vnet_peerings_v1
+
+  type      = "Microsoft.Network/virtualNetworks/virtualNetworkPeerings@2021-05-01"
+  name      = each.value.name
+  parent_id = can(each.value.from.id) ? each.value.from.id : local.combined_objects_networking[try(each.value.from.lz_key, local.client_config.landingzone_key)][each.value.from.vnet_key].id
+
+  body = jsonencode({
+    properties = {
+      allowForwardedTraffic     = try(each.value.allow_forwarded_traffic, false)
+      allowGatewayTransit       = try(each.value.allow_gateway_transit, false)
+      allowVirtualNetworkAccess = try(each.value.allow_virtual_network_access, true)
+      doNotVerifyRemoteGateways = try(each.value.do_not_verify_remote_gateways, false)
+      useRemoteGateways         = try(each.value.use_remote_gateways, false)
+      remoteVirtualNetwork = {
+        id = can(each.value.to.remote_virtual_network_id) || can(each.value.to.id) ? try(each.value.to.remote_virtual_network_id, each.value.to.id) : local.combined_objects_networking[try(each.value.to.lz_key, local.client_config.landingzone_key)][each.value.to.vnet_key].id
+      }
+    }
+  })
+
+}
+
 #
 #
 # Route tables and routes
@@ -234,7 +272,7 @@ module "route_tables" {
   name                          = azurecaf_name.route_tables[each.key].result
   location                      = can(local.global_settings.regions[each.value.region]) ? local.global_settings.regions[each.value.region] : local.combined_objects_resource_groups[try(each.value.resource_group.lz_key, local.client_config.landingzone_key)][try(each.value.resource_group.key, each.value.resource_group_key)].location
   resource_group_name           = can(each.value.resource_group.name) || can(each.value.resource_group_name) ? try(each.value.resource_group.name, each.value.resource_group_name) : local.combined_objects_resource_groups[try(each.value.resource_group.lz_key, local.client_config.landingzone_key)][try(each.value.resource_group_key, each.value.resource_group.key)].name
-  base_tags                     = try(local.global_settings.inherit_tags, false) ? local.combined_objects_resource_groups[try(each.value.resource_group.lz_key, local.client_config.landingzone_key)][try(each.value.resource_group.key, each.value.resource_group_key)].tags : {}
+  base_tags                     = try(local.global_settings.inherit_tags, false) ? try(local.combined_objects_resource_groups[try(each.value.resource_group.lz_key, local.client_config.landingzone_key)][try(each.value.resource_group.key, each.value.resource_group_key)].tags, {}) : {}
   disable_bgp_route_propagation = try(each.value.disable_bgp_route_propagation, null)
   tags                          = try(each.value.tags, null)
 }
@@ -312,8 +350,48 @@ module "network_watchers" {
 
   location            = can(local.global_settings.regions[each.value.region]) ? local.global_settings.regions[each.value.region] : local.combined_objects_resource_groups[try(each.value.resource_group.lz_key, local.client_config.landingzone_key)][try(each.value.resource_group.key, each.value.resource_group_key)].location
   resource_group_name = can(each.value.resource_group.name) || can(each.value.resource_group_name) ? try(each.value.resource_group.name, each.value.resource_group_name) : local.combined_objects_resource_groups[try(each.value.resource_group.lz_key, local.client_config.landingzone_key)][try(each.value.resource_group_key, each.value.resource_group.key)].name
-  base_tags           = try(local.global_settings.inherit_tags, false) ? local.combined_objects_resource_groups[try(each.value.resource_group.lz_key, local.client_config.landingzone_key)][try(each.value.resource_group.key, each.value.resource_group_key)].tags : {}
+  base_tags           = try(local.global_settings.inherit_tags, false) ? try(local.combined_objects_resource_groups[try(each.value.resource_group.lz_key, local.client_config.landingzone_key)][try(each.value.resource_group.key, each.value.resource_group_key)].tags, {}) : {}
   settings            = each.value
   tags                = try(each.value.tags, null)
   global_settings     = local.global_settings
+}
+
+
+
+
+module "relay_hybrid_connection" {
+  source   = "./modules/networking/relay_hybrid_connection"
+  for_each = local.networking.relay_hybrid_connection
+
+  global_settings     = local.global_settings
+  client_config       = local.client_config
+  settings            = each.value
+  resource_group_name = can(each.value.resource_group.name) ? each.value.resource_group.name : local.combined_objects_resource_groups[try(each.value.resource_group.lz_key, local.client_config.landingzone_key)][each.value.resource_group.key].name
+
+  remote_objects = {
+    resource_group  = local.combined_objects_resource_groups
+    relay_namespace = local.combined_objects_relay_namespace
+  }
+}
+output "relay_hybrid_connection" {
+  value = module.relay_hybrid_connection
+}
+
+module "relay_namespace" {
+  source   = "./modules/networking/relay_namespace"
+  for_each = local.networking.relay_namespace
+
+  global_settings = local.global_settings
+  client_config   = local.client_config
+  settings        = each.value
+
+  resource_group_name = can(each.value.resource_group.name) ? each.value.resource_group.name : local.combined_objects_resource_groups[try(each.value.resource_group.lz_key, local.client_config.landingzone_key)][each.value.resource_group.key].name
+  location            = can(local.global_settings.regions[each.value.region]) ? local.global_settings.regions[each.value.region] : local.combined_objects_resource_groups[try(each.value.resource_group.lz_key, local.client_config.landingzone_key)][try(each.value.resource_group.key, each.value.resource_group_key)].location
+
+  remote_objects = {
+    resource_group = local.combined_objects_resource_groups
+  }
+}
+output "relay_namespace" {
+  value = module.relay_namespace
 }

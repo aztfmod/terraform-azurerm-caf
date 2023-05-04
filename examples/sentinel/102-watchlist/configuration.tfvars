@@ -34,5 +34,6 @@ sentinel_watchlists = {
     display_name = "wl1"
     description  = "test_description"
     labels       = ["test1", "test2"]
+    # item_search_key = "Key"
   }
 }
