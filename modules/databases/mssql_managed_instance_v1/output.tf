@@ -21,3 +21,7 @@ output "identity" {
   value       = can(var.settings.identity) ? azurerm_mssql_managed_instance.mssqlmi.identity : null
   description = "SQL Managed Instance identities"
 }
+output "dns_zone_id" {
+  value       = local.dns_zone_id
+  description = "this is the zone id extracted from sql managed instance server fqdn and can be used while creating private dns zone for the managed instance"
+}

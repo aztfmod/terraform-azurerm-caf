@@ -120,3 +120,8 @@ resource "azurerm_key_vault_secret" "sqlmi_admin_password" {
 # to support keyvault in a different subscription -
 # Need to revert to azurerm as azpi does not support delete secret when soft-delete is enabled
 #
+
+locals {
+  dns_zone_id = split(".", azurerm_mssql_managed_instance.mssqlmi.fqdn)[1]
+
+}
