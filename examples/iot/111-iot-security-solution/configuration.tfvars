@@ -29,7 +29,11 @@ iot_security_solution = {
     name               = "iot-security-solution-1"
     resource_group_key = "ioth_region1"
     display_name       = "Iot Security Solution"
-    iot_hub_keys       = ["iothub1"]
+    iot_hub = {
+      iothub1 = {
+        key = "iothub1"
+      }
+    }
   }
 }
 
