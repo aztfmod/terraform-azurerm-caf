@@ -146,10 +146,8 @@ module "iot_security_solution" {
   global_settings = local.global_settings
   settings        = each.value
   iothub_ids = try(
-    each.value.iothubs_ids,
-    [
-      for key, value in try(each.value.iothubs, {}) : local.combined_objects_iot_hub[try(each.value.iothub.value.lz_key, local.client_config.landingzone_key)][each.value.iothub.value.key].id
-    ]
+    each.value.iot_hub_ids,
+    [for key, value in try(each.value.iot_hub, {}) : local.combined_objects_iot_hub[try(value.lz_key, local.client_config.landingzone_key)][value.key].id]
   )
 
   base_tags           = local.global_settings.inherit_tags

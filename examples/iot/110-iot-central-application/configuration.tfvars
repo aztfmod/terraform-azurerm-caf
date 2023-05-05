@@ -18,8 +18,9 @@ iot_central_application = {
     resource_group_key = "ioth_region1"
     sub_domain         = "example-iotcentral-app-subdomain"
     display_name       = "example-iotcentral-app-display-name"
-    sku                = "S1"
-    template           = "iotc-default@1.0.0"
+    sku                = "ST1"
+    # https://learn.microsoft.com/en-us/azure/iot-central/core/overview-iot-central-admin#custom-templates
+    template = "iotc-pnp-preview"
     tags = {
       Foo = "Bar"
     }
