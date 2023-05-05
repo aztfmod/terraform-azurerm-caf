@@ -364,6 +364,7 @@ locals {
     monitoring                                = try(var.shared_services.monitoring, {})
     monitor_metric_alert                      = try(var.shared_services.monitor_metric_alert, {})
     monitor_activity_log_alert                = try(var.shared_services.monitor_activity_log_alert, {})
+    monitor_private_link_scope                = try(var.shared_services.monitor_private_link_scope, {})
     packer_service_principal                  = try(var.shared_services.packer_service_principal, {})
     packer_build                              = try(var.shared_services.packer_build, {})
     recovery_vaults                           = try(var.shared_services.recovery_vaults, {})

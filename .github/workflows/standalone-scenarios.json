@@ -153,6 +153,7 @@
     "monitoring/102-monitor_activity_log_alert",
     "monitoring/103-monitor_metric_alert",
     "monitoring/104-log_analytics_storage_insights",
+    "monitoring/105-monitor_private_link_scope_private_dns",
     "mssql_server/101-sqlserver-simple",
     "mssql_server/102-sqlserver-extend",
     "mssql_server/104-sqlserver-elastic_pools",
