@@ -144,22 +144,3 @@ vnets = {
   }
 
 }
-
-## Private DNS Configuration
-private_dns = {
-  dns1 = {
-    name               = "sample.private.postgres.database.azure.com"
-    resource_group_key = "postgresql_region1"
-
-    # records = {}
-
-    vnet_links = {
-      vnlk1 = {
-        name     = "postgresql-vnet-link"
-        vnet_key = "vnet_region1"
-        # lz_key   = ""
-      }
-    }
-
-  }
-}
