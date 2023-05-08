@@ -47,7 +47,7 @@ postgresql_flexible_servers = {
     #   key = "dns1"
     #   # lz_key      = ""                      # Set the lz_key if the private_dns_zone is remote.
     # }
-    # set the private_dns_zone_id to reference existing private dns zone created outside of caf
+    # set the private_dns_zone_id to reference non-caf private dns zone created outside of terraform-azurerm-caf
     private_dns_zone_id    = "/subscriptions/xxxx/xxxx/xxxx/xxxx/xxxx/xxxx/xxxx.postgres.database.azure.com"
 
     postgresql_configurations = {
