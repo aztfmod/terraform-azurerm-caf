@@ -34,6 +34,7 @@ module "diagnostic_storage_accounts" {
   resource_group_name = can(each.value.resource_group.name) || can(each.value.resource_group_name) ? try(each.value.resource_group.name, each.value.resource_group_name) : null
   location            = try(local.global_settings.regions[each.value.region], null)
   base_tags           = local.global_settings.inherit_tags
+  var_folder_path     = var.var_folder_path
 }
 
 resource "azurerm_storage_account_customer_managed_key" "diasacmk" {
