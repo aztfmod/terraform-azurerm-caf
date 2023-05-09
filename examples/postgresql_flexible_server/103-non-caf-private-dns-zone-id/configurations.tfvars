@@ -90,9 +90,7 @@ postgresql_flexible_servers = {
     tags = {
       segment = "sales"
     }
-
   }
-
 }
 
 ## Keyvault configuration
@@ -142,5 +140,4 @@ vnets = {
       }
     }
   }
-
 }
