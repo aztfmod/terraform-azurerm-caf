@@ -33,5 +33,5 @@ module "disk_encryption_sets_external" {
 
 
 output "disk_encryption_sets" {
-  value = module.disk_encryption_sets
+  value = merge(module.disk_encryption_sets, module.disk_encryption_sets_external)
 }
