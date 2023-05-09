@@ -49,26 +49,26 @@ repos:
 - repo: https://github.com/antonbabenko/pre-commit-terraform
   rev:  v1.76.0 # Get the latest from: https://github.com/antonbabenko/pre-commit-terraform/releases
   hooks:
-    - id: tfupdate
-      name: Limit azurecaf provider version
-      args:
-        - --args=provider aztfmod/azurecaf
-        - --args=--version "~> 1.2.0"
-    - id: tfupdate
-      name: Limit azuread provider version
-      args:
-        - --args=provider azuread
-        - --args=--version "~> 2.30.0"
-    - id: tfupdate
-      name: Limit terraform version
-      args:
-        - --args=terraform
-        - --args=--version ">= 1.1.0"
-    - id: tfupdate
-      name: Limit azuredevops provider version
-      args:
-        - --args=provider microsoft/azuredevops
-        - --args=--version "~> 0.1.3"
+    # - id: tfupdate
+    #   name: Limit azurecaf provider version
+    #   args:
+    #     - --args=provider aztfmod/azurecaf
+    #     - --args=--version "~> 1.2.0"
+    # - id: tfupdate
+    #   name: Limit azuread provider version
+    #   args:
+    #     - --args=provider azuread
+    #     - --args=--version "~> 2.30.0"
+    # - id: tfupdate
+    #   name: Limit terraform version
+    #   args:
+    #     - --args=terraform
+    #     - --args=--version ">= 1.1.0"
+    # - id: tfupdate
+    #   name: Limit azuredevops provider version
+    #   args:
+    #     - --args=provider microsoft/azuredevops
+    #     - --args=--version "~> 0.1.3"
     - id: terraform_fmt
     - id: terraform_validate
       exclude: '^[^/]+$'                                      #excluding since it contains azurerm.vhub provider
