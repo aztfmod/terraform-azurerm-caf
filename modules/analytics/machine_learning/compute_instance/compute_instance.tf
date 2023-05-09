@@ -14,7 +14,7 @@ resource "azurecaf_name" "ci" {
 # create compute instance
 resource "azurerm_resource_group_template_deployment" "mlci" {
 
-  name                = "mlci"
+  name                = format("mlci-%s", azurecaf_name.ci.result)
   resource_group_name = var.resource_group_name
 
   template_content = file(local.arm_filename)
