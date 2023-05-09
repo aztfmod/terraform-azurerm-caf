@@ -8,14 +8,14 @@ resource "azurecaf_name" "mssqlmi" {
   passthrough   = var.global_settings.passthrough
 }
 
-resource "azurerm_template_deployment" "mssqlmi" {
+resource "azurerm_resource_group_template_deployment" "mssqlmi" {
 
-  name                = azurecaf_name.mssqlmi.result
+  name                = "mssqlmi"
   resource_group_name = var.resource_group_name
 
-  template_body = file(local.arm_filename)
+  template_content = file(local.arm_filename)
 
-  parameters_body = jsonencode(local.parameters_body)
+  parameters_content = jsonencode(local.parameters_body)
 
   deployment_mode = "Incremental"
 
@@ -25,25 +25,6 @@ resource "azurerm_template_deployment" "mssqlmi" {
     delete = "10h"
     read   = "5m"
   }
-}
-
-resource "null_resource" "destroy_sqlmi" {
-
-  triggers = {
-    resource_id = local.output.id
-  }
-
-  provisioner "local-exec" {
-    command     = format("%s/scripts/destroy_resource.sh", path.module)
-    when        = destroy
-    interpreter = ["/bin/bash"]
-    on_failure  = fail
-
-    environment = {
-      RESOURCE_IDS = self.triggers.resource_id
-    }
-  }
-
 }
 
 # Generate sql server random admin password if not provided in the attribute administrator_login_password
@@ -107,15 +88,17 @@ data "external" "sqlmi_admin_password" {
 }
 
 data "azapi_resource" "mssqlmi" {
+  depends_on = [azurerm_resource_group_template_deployment.mssqlmi]
+
   name      = azurecaf_name.mssqlmi.result
   parent_id = local.parent_id
-  type      = "Microsoft.Sql/managedInstances@2021-11-01-preview"
+  type      = "Microsoft.Sql/managedInstances@2021-11-01"
 }
 
 locals {
   parent_id = format("/subscriptions/%s/resourceGroups/%s", var.client_config.subscription_id, var.resource_group_name)
   output = {
-    id           = data.azapi_resource.mssqlmi.id
-    principal_id = try(data.azapi_resource.mssqlmi.identity[0].principal_id, null)
+    id           = jsondecode(azurerm_resource_group_template_deployment.mssqlmi.output_content).id.value
+    principal_id = jsondecode(azurerm_resource_group_template_deployment.mssqlmi.output_content).objectId.value
   }
 }
