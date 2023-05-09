@@ -25,7 +25,7 @@ resource "azurerm_machine_learning_workspace" "ws" {
   description                   = try(var.settings.description, null)
   friendly_name                 = try(var.settings.friendly_name, null)
   high_business_impact          = try(var.settings.high_business_impact, null)
-  public_network_access_enabled = try(var.settings.public_network_access_enabled, null)
+  public_network_access_enabled = try(var.settings.public_network_access_enabled, true)
 
   identity {
     #Hardcoded as the only supported value is SystemAssigned as per azurerm 2.40

@@ -11,7 +11,7 @@ locals {
   arm_filename = "${path.module}/arm_mi_failover_group.json"
 
   # this is the format required by ARM templates
-  parameters_content = {
+  parameters_body = {
     name = {
       value = azurecaf_name.mifailover.result
     }
