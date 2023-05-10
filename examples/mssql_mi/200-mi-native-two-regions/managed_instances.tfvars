@@ -54,5 +54,6 @@ mssql_managed_instances = {
     }
 
   }
+  # Don't add secondary servers here but in the variable mssql_managed_instances_secondary
 }
 

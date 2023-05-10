@@ -22,4 +22,8 @@ resource "azurerm_mssql_managed_instance_failover_group" "sqlmi_failover_group" 
       grace_minutes = var.settings.read_write_endpoint_failover_policy.mode == "Automatic" ? var.settings.read_write_endpoint_failover_policy.grace_minutes : null
     }
   }
+
+  lifecycle {
+    ignore_changes = [name]
+  }
 }
