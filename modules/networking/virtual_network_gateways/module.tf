@@ -46,7 +46,7 @@ resource "azurerm_virtual_network_gateway" "vngw" {
 
       root_certificate {
         name = vpn_client_configuration.value.root_certificate.name
-        public_cert_data = try(
+        public_cert_data = can(vpn_client_configuration.key) ? replace(replace(data.azurerm_key_vault_secret.vpn_client_configuration_root_certificate[vpn_client_configuration.key].value, "-----BEGIN CERTIFICATE-----", ""), "-----END CERTIFICATE-----", "") : vpn_client_configuration.value.root_certificate.public_cert_data
           replace(replace(data.azurerm_key_vault_secret.vpn_client_configuration_root_certificate[vpn_client_configuration.key].value, "-----BEGIN CERTIFICATE-----", ""), "-----END CERTIFICATE-----", ""),
           vpn_client_configuration.value.root_certificate.public_cert_data
         )
