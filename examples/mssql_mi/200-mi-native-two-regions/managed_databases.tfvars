@@ -22,7 +22,7 @@ mssql_managed_databases = {
       weekly_retention  = "P6W"
       monthly_retention = "P4M"
       yearly_retention  = "P1Y"
-      week_of_year      = 1
+      week_of_year      = 2
     }
     short_term_retention_days = 7
 
