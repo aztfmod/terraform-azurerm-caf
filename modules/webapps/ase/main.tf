@@ -15,7 +15,7 @@ locals {
   arm_filename = "${path.module}/arm_ase_isolated.json"
 
   # this is the format required by ARM templates
-  parameters_body = {
+  parameters_content = {
     aseName = {
       value = azurecaf_name.ase.result
     }
