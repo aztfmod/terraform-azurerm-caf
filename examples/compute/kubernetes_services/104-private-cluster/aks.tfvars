@@ -39,10 +39,10 @@ aks_clusters = {
 
     private_endpoints = {
       pe1 = {
-        name               = "aks-pe"
+        name = "aks-pe"
         #lz_key             = "" # for vnets created in different lz
-        vnet_key           = "spoke_devops_re1"
-        subnet_key         = "private_endpoints"
+        vnet_key   = "spoke_devops_re1"
+        subnet_key = "private_endpoints"
         private_service_connection = {
           name                 = "aks-psc"
           is_manual_connection = false

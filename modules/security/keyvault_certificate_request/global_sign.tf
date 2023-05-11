@@ -1,13 +1,13 @@
 data "azapi_resource" "password" {
-  count        = lower(var.settings.certificate_policy.issuer_key_or_name) == "self" ? 0 : 1
-  
+  count = lower(var.settings.certificate_policy.issuer_key_or_name) == "self" ? 0 : 1
+
   type      = "Microsoft.KeyVault/vaults/secrets@2022-07-01"
   parent_id = var.keyvault_id
 
   name = try(
     var.certificate_issuers[var.settings.certificate_policy.issuer_key_or_name].cert_password_key,
     var.certificate_issuers[var.settings.certificate_policy.issuer_key_or_name].cert_secret_name
-    ) # added password_secret_name for remote lz which does not output secretname
+  ) # added password_secret_name for remote lz which does not output secretname
 }
 
 locals {
