@@ -16,7 +16,7 @@ resource "azurerm_iothub_certificate" "certificate" {
   iothub_name         = var.iothub_name
   is_verified         = try(var.settings.is_verified, null)
   certificate_content = try(
-    data.azurerm_key_vault_secret.certificate["enabled"].value,
+    replace(replace(replace(data.azurerm_key_vault_secret.certificate["enabled"].value, "-----BEGIN CERTIFICATE-----", ""), "-----END CERTIFICATE-----", ""), "\n", ""),
     filebase64(format("%s/%s", path.cwd, var.settings.certificate_content))
   )
 }
