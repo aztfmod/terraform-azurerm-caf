@@ -1,4 +1,4 @@
-cdn_profile = {
+cdn_profiles = {
   example_profile = {
     name = "exampleprofile"
     resource_group = {
@@ -9,7 +9,7 @@ cdn_profile = {
   }
 }
 
-cdn_endpoint = {
+cdn_endpoints = {
   example_endpoint = {
     name   = "exampleendpoint"
     region = "region1"

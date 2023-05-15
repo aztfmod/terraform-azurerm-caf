@@ -192,8 +192,8 @@ module "example" {
     azurerm_firewall_policy_rule_collection_groups          = var.azurerm_firewall_policy_rule_collection_groups
     azurerm_firewalls                                       = var.azurerm_firewalls
     azurerm_routes                                          = var.azurerm_routes
-    cdn_profile                                             = var.cdn_profile
-    cdn_endpoint                                            = var.cdn_endpoint
+    cdn_profiles                                            = var.cdn_profiles
+    cdn_endpoints                                           = var.cdn_endpoints
     dns_zone_records                                        = var.dns_zone_records
     dns_zones                                               = var.dns_zones
     domain_name_registrations                               = var.domain_name_registrations
