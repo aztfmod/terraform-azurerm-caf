@@ -9,13 +9,18 @@ output "name" {
 }
 
 output "resource_group_name" {
-  value       = var.resource_group.name
+  value       = local.resource_group_name
   description = "Name of the resource group"
 }
 
 output "location" {
   value       = local.location
   description = "Location of the service"
+}
+
+output "tags" {
+  value       = azurerm_eventhub_namespace.evh.tags
+  description = "A mapping of tags to assign to the resource."
 }
 
 output "event_hubs" {

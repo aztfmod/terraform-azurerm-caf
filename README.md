@@ -60,10 +60,10 @@ contact [opencode@microsoft.com](mailto:opencode@microsoft.com) with any additio
 | Name | Version |
 |------|---------|
 | <a name="requirement_terraform"></a> [terraform](#requirement\_terraform) | >= 1.1.0 |
-| <a name="requirement_azapi"></a> [azapi](#requirement\_azapi) | ~> 0.2.0 |
+| <a name="requirement_azapi"></a> [azapi](#requirement\_azapi) | ~> 1.4.0 |
 | <a name="requirement_azuread"></a> [azuread](#requirement\_azuread) | ~> 2.30.0 |
 | <a name="requirement_azurecaf"></a> [azurecaf](#requirement\_azurecaf) | ~> 1.2.0 |
-| <a name="requirement_azurerm"></a> [azurerm](#requirement\_azurerm) | ~> 2.99 |
+| <a name="requirement_azurerm"></a> [azurerm](#requirement\_azurerm) | ~> 3.48 |
 | <a name="requirement_null"></a> [null](#requirement\_null) | ~> 3.2.1 |
 | <a name="requirement_random"></a> [random](#requirement\_random) | ~> 3.3.1 |
 | <a name="requirement_time"></a> [time](#requirement\_time) | ~> 0.9.1 |
@@ -72,11 +72,12 @@ contact [opencode@microsoft.com](mailto:opencode@microsoft.com) with any additio
 
 | Name | Version |
 |------|---------|
-| <a name="provider_azapi"></a> [azapi](#provider\_azapi) | ~> 0.2.0 |
+| <a name="provider_azapi"></a> [azapi](#provider\_azapi) | ~> 1.4.0 |
 | <a name="provider_azuread"></a> [azuread](#provider\_azuread) | ~> 2.30.0 |
 | <a name="provider_azurecaf"></a> [azurecaf](#provider\_azurecaf) | ~> 1.2.0 |
-| <a name="provider_azurerm"></a> [azurerm](#provider\_azurerm) | ~> 2.99 |
-| <a name="provider_azurerm.vhub"></a> [azurerm.vhub](#provider\_azurerm.vhub) | ~> 2.99 |
+| <a name="provider_azurerm"></a> [azurerm](#provider\_azurerm) | ~> 3.48 |
+| <a name="provider_azurerm.vhub"></a> [azurerm.vhub](#provider\_azurerm.vhub) | ~> 3.48 |
+| <a name="provider_null"></a> [null](#provider\_null) | ~> 3.2.1 |
 | <a name="provider_random"></a> [random](#provider\_random) | ~> 3.3.1 |
 | <a name="provider_time"></a> [time](#provider\_time) | ~> 0.9.1 |
 
@@ -84,6 +85,7 @@ contact [opencode@microsoft.com](mailto:opencode@microsoft.com) with any additio
 
 | Name | Source | Version |
 |------|--------|---------|
+| <a name="module_aadb2c_directory"></a> [aadb2c\_directory](#module\_aadb2c\_directory) | ./modules/aadb2c/aadb2c_directory | n/a |
 | <a name="module_active_directory_domain_service"></a> [active\_directory\_domain\_service](#module\_active\_directory\_domain\_service) | ./modules/identity/active_directory_domain_service | n/a |
 | <a name="module_active_directory_domain_service_replica_set"></a> [active\_directory\_domain\_service\_replica\_set](#module\_active\_directory\_domain\_service\_replica\_set) | ./modules/identity/active_directory_domain_service_replica_set | n/a |
 | <a name="module_aks_clusters"></a> [aks\_clusters](#module\_aks\_clusters) | ./modules/compute/aks | n/a |
@@ -102,6 +104,7 @@ contact [opencode@microsoft.com](mailto:opencode@microsoft.com) with any additio
 | <a name="module_api_management_gateway_api"></a> [api\_management\_gateway\_api](#module\_api\_management\_gateway\_api) | ./modules/apim/api_management_gateway_api | n/a |
 | <a name="module_api_management_group"></a> [api\_management\_group](#module\_api\_management\_group) | ./modules/apim/api_management_group | n/a |
 | <a name="module_api_management_logger"></a> [api\_management\_logger](#module\_api\_management\_logger) | ./modules/apim/api_management_logger | n/a |
+| <a name="module_api_management_product"></a> [api\_management\_product](#module\_api\_management\_product) | ./modules/apim/api_management_product | n/a |
 | <a name="module_api_management_subscription"></a> [api\_management\_subscription](#module\_api\_management\_subscription) | ./modules/apim/api_management_subscription | n/a |
 | <a name="module_api_management_user"></a> [api\_management\_user](#module\_api\_management\_user) | ./modules/apim/api_management_user | n/a |
 | <a name="module_app_config"></a> [app\_config](#module\_app\_config) | ./modules/databases/app_config | n/a |
@@ -114,7 +117,10 @@ contact [opencode@microsoft.com](mailto:opencode@microsoft.com) with any additio
 | <a name="module_application_gateway_waf_policies"></a> [application\_gateway\_waf\_policies](#module\_application\_gateway\_waf\_policies) | ./modules/networking/application_gateway_waf_policies | n/a |
 | <a name="module_application_gateways"></a> [application\_gateways](#module\_application\_gateways) | ./modules/networking/application_gateway | n/a |
 | <a name="module_application_security_groups"></a> [application\_security\_groups](#module\_application\_security\_groups) | ./modules/networking/application_security_group | n/a |
+| <a name="module_aro"></a> [aro](#module\_aro) | ./modules/compute/azure_redhat_openshift | n/a |
 | <a name="module_automation_log_analytics_links"></a> [automation\_log\_analytics\_links](#module\_automation\_log\_analytics\_links) | ./modules/automation_log_analytics_links | n/a |
+| <a name="module_automation_runbooks"></a> [automation\_runbooks](#module\_automation\_runbooks) | ./modules/automation/automation_runbook | n/a |
+| <a name="module_automation_schedules"></a> [automation\_schedules](#module\_automation\_schedules) | ./modules/automation/automation_schedule | n/a |
 | <a name="module_automations"></a> [automations](#module\_automations) | ./modules/automation | n/a |
 | <a name="module_availability_sets"></a> [availability\_sets](#module\_availability\_sets) | ./modules/compute/availability_set | n/a |
 | <a name="module_azuread_applications"></a> [azuread\_applications](#module\_azuread\_applications) | ./modules/azuread/applications | n/a |
@@ -134,6 +140,8 @@ contact [opencode@microsoft.com](mailto:opencode@microsoft.com) with any additio
 | <a name="module_azuread_service_principals"></a> [azuread\_service\_principals](#module\_azuread\_service\_principals) | ./modules/azuread/service_principal | n/a |
 | <a name="module_azuread_users"></a> [azuread\_users](#module\_azuread\_users) | ./modules/azuread/users | n/a |
 | <a name="module_azurerm_application_insights"></a> [azurerm\_application\_insights](#module\_azurerm\_application\_insights) | ./modules/app_insights | n/a |
+| <a name="module_azurerm_application_insights_standard_web_test"></a> [azurerm\_application\_insights\_standard\_web\_test](#module\_azurerm\_application\_insights\_standard\_web\_test) | ./modules/app_insights/standard_web_test | n/a |
+| <a name="module_azurerm_application_insights_web_test"></a> [azurerm\_application\_insights\_web\_test](#module\_azurerm\_application\_insights\_web\_test) | ./modules/app_insights/web_test | n/a |
 | <a name="module_azurerm_firewall_application_rule_collections"></a> [azurerm\_firewall\_application\_rule\_collections](#module\_azurerm\_firewall\_application\_rule\_collections) | ./modules/networking/firewall_application_rule_collections | n/a |
 | <a name="module_azurerm_firewall_nat_rule_collections"></a> [azurerm\_firewall\_nat\_rule\_collections](#module\_azurerm\_firewall\_nat\_rule\_collections) | ./modules/networking/firewall_nat_rule_collections | n/a |
 | <a name="module_azurerm_firewall_network_rule_collections"></a> [azurerm\_firewall\_network\_rule\_collections](#module\_azurerm\_firewall\_network\_rule\_collections) | ./modules/networking/firewall_network_rule_collections | n/a |
@@ -161,6 +169,7 @@ contact [opencode@microsoft.com](mailto:opencode@microsoft.com) with any additio
 | <a name="module_communication_services_diagnostics"></a> [communication\_services\_diagnostics](#module\_communication\_services\_diagnostics) | ./modules/diagnostics | n/a |
 | <a name="module_consumption_budgets_resource_groups"></a> [consumption\_budgets\_resource\_groups](#module\_consumption\_budgets\_resource\_groups) | ./modules/consumption_budget/resource_group | n/a |
 | <a name="module_consumption_budgets_subscriptions"></a> [consumption\_budgets\_subscriptions](#module\_consumption\_budgets\_subscriptions) | ./modules/consumption_budget/subscription | n/a |
+| <a name="module_container_app_environment"></a> [container\_app\_environment](#module\_container\_app\_environment) | ./modules/compute/container_app_environment | n/a |
 | <a name="module_container_groups"></a> [container\_groups](#module\_container\_groups) | ./modules/compute/container_group | n/a |
 | <a name="module_container_registry"></a> [container\_registry](#module\_container\_registry) | ./modules/compute/container_registry | n/a |
 | <a name="module_cosmos_dbs"></a> [cosmos\_dbs](#module\_cosmos\_dbs) | ./modules/databases/cosmos_dbs | n/a |
@@ -259,6 +268,7 @@ contact [opencode@microsoft.com](mailto:opencode@microsoft.com) with any additio
 | <a name="module_logic_app_action_custom"></a> [logic\_app\_action\_custom](#module\_logic\_app\_action\_custom) | ./modules/logic_app/action_custom | n/a |
 | <a name="module_logic_app_action_http"></a> [logic\_app\_action\_http](#module\_logic\_app\_action\_http) | ./modules/logic_app/action_http | n/a |
 | <a name="module_logic_app_integration_account"></a> [logic\_app\_integration\_account](#module\_logic\_app\_integration\_account) | ./modules/logic_app/integration_account | n/a |
+| <a name="module_logic_app_standard"></a> [logic\_app\_standard](#module\_logic\_app\_standard) | ./modules/logic_app/standard | n/a |
 | <a name="module_logic_app_trigger_custom"></a> [logic\_app\_trigger\_custom](#module\_logic\_app\_trigger\_custom) | ./modules/logic_app/trigger_custom | n/a |
 | <a name="module_logic_app_trigger_http_request"></a> [logic\_app\_trigger\_http\_request](#module\_logic\_app\_trigger\_http\_request) | ./modules/logic_app/trigger_http_request | n/a |
 | <a name="module_logic_app_trigger_recurrence"></a> [logic\_app\_trigger\_recurrence](#module\_logic\_app\_trigger\_recurrence) | ./modules/logic_app/trigger_recurrence | n/a |
@@ -278,12 +288,21 @@ contact [opencode@microsoft.com](mailto:opencode@microsoft.com) with any additio
 | <a name="module_mssql_managed_databases"></a> [mssql\_managed\_databases](#module\_mssql\_managed\_databases) | ./modules/databases/mssql_managed_database | n/a |
 | <a name="module_mssql_managed_databases_backup_ltr"></a> [mssql\_managed\_databases\_backup\_ltr](#module\_mssql\_managed\_databases\_backup\_ltr) | ./modules/databases/mssql_managed_database/backup_ltr | n/a |
 | <a name="module_mssql_managed_databases_restore"></a> [mssql\_managed\_databases\_restore](#module\_mssql\_managed\_databases\_restore) | ./modules/databases/mssql_managed_database | n/a |
+| <a name="module_mssql_managed_databases_restore_v1"></a> [mssql\_managed\_databases\_restore\_v1](#module\_mssql\_managed\_databases\_restore\_v1) | ./modules/databases/mssql_managed_database_restore_v1 | n/a |
+| <a name="module_mssql_managed_databases_v1"></a> [mssql\_managed\_databases\_v1](#module\_mssql\_managed\_databases\_v1) | ./modules/databases/mssql_managed_database_v1 | n/a |
 | <a name="module_mssql_managed_instances"></a> [mssql\_managed\_instances](#module\_mssql\_managed\_instances) | ./modules/databases/mssql_managed_instance | n/a |
 | <a name="module_mssql_managed_instances_secondary"></a> [mssql\_managed\_instances\_secondary](#module\_mssql\_managed\_instances\_secondary) | ./modules/databases/mssql_managed_instance | n/a |
+| <a name="module_mssql_managed_instances_secondary_v1"></a> [mssql\_managed\_instances\_secondary\_v1](#module\_mssql\_managed\_instances\_secondary\_v1) | ./modules/databases/mssql_managed_instance_v1 | n/a |
+| <a name="module_mssql_managed_instances_v1"></a> [mssql\_managed\_instances\_v1](#module\_mssql\_managed\_instances\_v1) | ./modules/databases/mssql_managed_instance_v1 | n/a |
 | <a name="module_mssql_mi_administrators"></a> [mssql\_mi\_administrators](#module\_mssql\_mi\_administrators) | ./modules/databases/mssql_managed_instance/administrator | n/a |
+| <a name="module_mssql_mi_administrators_secondary_v1"></a> [mssql\_mi\_administrators\_secondary\_v1](#module\_mssql\_mi\_administrators\_secondary\_v1) | ./modules/databases/mssql_managed_instance_v1/administrator | n/a |
+| <a name="module_mssql_mi_administrators_v1"></a> [mssql\_mi\_administrators\_v1](#module\_mssql\_mi\_administrators\_v1) | ./modules/databases/mssql_managed_instance_v1/administrator | n/a |
 | <a name="module_mssql_mi_failover_groups"></a> [mssql\_mi\_failover\_groups](#module\_mssql\_mi\_failover\_groups) | ./modules/databases/mssql_managed_instance/failover_group | n/a |
+| <a name="module_mssql_mi_failover_groups_v1"></a> [mssql\_mi\_failover\_groups\_v1](#module\_mssql\_mi\_failover\_groups\_v1) | ./modules/databases/mssql_managed_instance_v1/failover_group | n/a |
 | <a name="module_mssql_mi_secondary_tde"></a> [mssql\_mi\_secondary\_tde](#module\_mssql\_mi\_secondary\_tde) | ./modules/databases/mssql_managed_instance/tde | n/a |
+| <a name="module_mssql_mi_secondary_tde_v1"></a> [mssql\_mi\_secondary\_tde\_v1](#module\_mssql\_mi\_secondary\_tde\_v1) | ./modules/databases/mssql_managed_instance_v1/tde | n/a |
 | <a name="module_mssql_mi_tde"></a> [mssql\_mi\_tde](#module\_mssql\_mi\_tde) | ./modules/databases/mssql_managed_instance/tde | n/a |
+| <a name="module_mssql_mi_tde_v1"></a> [mssql\_mi\_tde\_v1](#module\_mssql\_mi\_tde\_v1) | ./modules/databases/mssql_managed_instance_v1/tde | n/a |
 | <a name="module_mssql_servers"></a> [mssql\_servers](#module\_mssql\_servers) | ./modules/databases/mssql_server | n/a |
 | <a name="module_mysql_flexible_server"></a> [mysql\_flexible\_server](#module\_mysql\_flexible\_server) | ./modules/databases/mysql_flexible_server | n/a |
 | <a name="module_mysql_servers"></a> [mysql\_servers](#module\_mysql\_servers) | ./modules/databases/mysql_server | n/a |
@@ -299,7 +318,15 @@ contact [opencode@microsoft.com](mailto:opencode@microsoft.com) with any additio
 | <a name="module_postgresql_flexible_servers"></a> [postgresql\_flexible\_servers](#module\_postgresql\_flexible\_servers) | ./modules/databases/postgresql_flexible_server | n/a |
 | <a name="module_postgresql_servers"></a> [postgresql\_servers](#module\_postgresql\_servers) | ./modules/databases/postgresql_server | n/a |
 | <a name="module_private_dns"></a> [private\_dns](#module\_private\_dns) | ./modules/networking/private-dns | n/a |
+| <a name="module_private_dns_records"></a> [private\_dns\_records](#module\_private\_dns\_records) | ./modules/networking/private-dns/records | n/a |
+| <a name="module_private_dns_resolver_dns_forwarding_rulesets"></a> [private\_dns\_resolver\_dns\_forwarding\_rulesets](#module\_private\_dns\_resolver\_dns\_forwarding\_rulesets) | ./modules/networking/private_dns_resolvers_dns_forwarding_rulesets | n/a |
+| <a name="module_private_dns_resolver_forwarding_rules"></a> [private\_dns\_resolver\_forwarding\_rules](#module\_private\_dns\_resolver\_forwarding\_rules) | ./modules/networking/private_dns_resolvers_forwarding_rules | n/a |
+| <a name="module_private_dns_resolver_inbound_endpoints"></a> [private\_dns\_resolver\_inbound\_endpoints](#module\_private\_dns\_resolver\_inbound\_endpoints) | ./modules/networking/private_dns_resolvers_inbound_endpoints | n/a |
+| <a name="module_private_dns_resolver_outbound_endpoints"></a> [private\_dns\_resolver\_outbound\_endpoints](#module\_private\_dns\_resolver\_outbound\_endpoints) | ./modules/networking/private_dns_resolvers_outbound_endpoints | n/a |
+| <a name="module_private_dns_resolvers"></a> [private\_dns\_resolvers](#module\_private\_dns\_resolvers) | ./modules/networking/private-dns-resolvers | n/a |
+| <a name="module_private_dns_resolvers_virtual_network_links"></a> [private\_dns\_resolvers\_virtual\_network\_links](#module\_private\_dns\_resolvers\_virtual\_network\_links) | ./modules/networking/private_dns_resolvers_virtual_network_links | n/a |
 | <a name="module_private_dns_vnet_links"></a> [private\_dns\_vnet\_links](#module\_private\_dns\_vnet\_links) | ./modules/networking/private_dns_vnet_link | n/a |
+| <a name="module_private_dns_vnet_links_v1"></a> [private\_dns\_vnet\_links\_v1](#module\_private\_dns\_vnet\_links\_v1) | ./modules/networking/private_dns_vnet_link_v1 | n/a |
 | <a name="module_private_endpoints"></a> [private\_endpoints](#module\_private\_endpoints) | ./modules/networking/private_links/endpoints | n/a |
 | <a name="module_proximity_placement_groups"></a> [proximity\_placement\_groups](#module\_proximity\_placement\_groups) | ./modules/compute/proximity_placement_group | n/a |
 | <a name="module_public_ip_addresses"></a> [public\_ip\_addresses](#module\_public\_ip\_addresses) | ./modules/networking/public_ip_addresses | n/a |
@@ -359,6 +386,7 @@ contact [opencode@microsoft.com](mailto:opencode@microsoft.com) with any additio
 | <a name="module_vm_extension_custom_scriptextension"></a> [vm\_extension\_custom\_scriptextension](#module\_vm\_extension\_custom\_scriptextension) | ./modules/compute/virtual_machine_extensions | n/a |
 | <a name="module_vm_extension_diagnostics"></a> [vm\_extension\_diagnostics](#module\_vm\_extension\_diagnostics) | ./modules/compute/virtual_machine_extensions | n/a |
 | <a name="module_vm_extension_generic"></a> [vm\_extension\_generic](#module\_vm\_extension\_generic) | ./modules/compute/virtual_machine_extensions | n/a |
+| <a name="module_vm_extension_linux_diagnostic"></a> [vm\_extension\_linux\_diagnostic](#module\_vm\_extension\_linux\_diagnostic) | ./modules/compute/virtual_machine_extensions | n/a |
 | <a name="module_vm_extension_microsoft_azure_domainjoin"></a> [vm\_extension\_microsoft\_azure\_domainjoin](#module\_vm\_extension\_microsoft\_azure\_domainjoin) | ./modules/compute/virtual_machine_extensions | n/a |
 | <a name="module_vm_extension_monitoring_agent"></a> [vm\_extension\_monitoring\_agent](#module\_vm\_extension\_monitoring\_agent) | ./modules/compute/virtual_machine_extensions | n/a |
 | <a name="module_vm_extension_session_host_dscextension"></a> [vm\_extension\_session\_host\_dscextension](#module\_vm\_extension\_session\_host\_dscextension) | ./modules/compute/virtual_machine_extensions | n/a |
@@ -366,6 +394,7 @@ contact [opencode@microsoft.com](mailto:opencode@microsoft.com) with any additio
 | <a name="module_vmss_extension_custom_script_data_factory_self_hosted_runtime"></a> [vmss\_extension\_custom\_script\_data\_factory\_self\_hosted\_runtime](#module\_vmss\_extension\_custom\_script\_data\_factory\_self\_hosted\_runtime) | ./modules/compute/virtual_machine_scale_set_extensions | n/a |
 | <a name="module_vmss_extension_custom_scriptextension"></a> [vmss\_extension\_custom\_scriptextension](#module\_vmss\_extension\_custom\_scriptextension) | ./modules/compute/virtual_machine_scale_set_extensions | n/a |
 | <a name="module_vmss_extension_dependency_agent"></a> [vmss\_extension\_dependency\_agent](#module\_vmss\_extension\_dependency\_agent) | ./modules/compute/virtual_machine_scale_set_extensions | n/a |
+| <a name="module_vmss_extension_generic"></a> [vmss\_extension\_generic](#module\_vmss\_extension\_generic) | ./modules/compute/virtual_machine_scale_set_extensions | n/a |
 | <a name="module_vmss_extension_keyvault_extension"></a> [vmss\_extension\_keyvault\_extension](#module\_vmss\_extension\_keyvault\_extension) | ./modules/compute/virtual_machine_scale_set_extensions | n/a |
 | <a name="module_vmss_extension_microsoft_azure_domainjoin"></a> [vmss\_extension\_microsoft\_azure\_domainjoin](#module\_vmss\_extension\_microsoft\_azure\_domainjoin) | ./modules/compute/virtual_machine_scale_set_extensions | n/a |
 | <a name="module_vmss_extension_microsoft_monitoring_agent"></a> [vmss\_extension\_microsoft\_monitoring\_agent](#module\_vmss\_extension\_microsoft\_monitoring\_agent) | ./modules/compute/virtual_machine_scale_set_extensions | n/a |
@@ -374,6 +403,8 @@ contact [opencode@microsoft.com](mailto:opencode@microsoft.com) with any additio
 | <a name="module_vmware_private_clouds"></a> [vmware\_private\_clouds](#module\_vmware\_private\_clouds) | ./modules/compute/vmware_private_clouds | n/a |
 | <a name="module_vpn_gateway_connections"></a> [vpn\_gateway\_connections](#module\_vpn\_gateway\_connections) | ./modules/networking/vpn_gateway_connection | n/a |
 | <a name="module_vpn_sites"></a> [vpn\_sites](#module\_vpn\_sites) | ./modules/networking/vpn_site | n/a |
+| <a name="module_web_pubsub_hubs"></a> [web\_pubsub\_hubs](#module\_web\_pubsub\_hubs) | ./modules/messaging/web_pubsub/hub | n/a |
+| <a name="module_web_pubsubs"></a> [web\_pubsubs](#module\_web\_pubsubs) | ./modules/messaging/web_pubsub | n/a |
 | <a name="module_wvd_application_groups"></a> [wvd\_application\_groups](#module\_wvd\_application\_groups) | ./modules/compute/wvd_application_group | n/a |
 | <a name="module_wvd_applications"></a> [wvd\_applications](#module\_wvd\_applications) | ./modules/compute/wvd_applications | n/a |
 | <a name="module_wvd_host_pools"></a> [wvd\_host\_pools](#module\_wvd\_host\_pools) | ./modules/compute/wvd_host_pool | n/a |
@@ -393,11 +424,12 @@ contact [opencode@microsoft.com](mailto:opencode@microsoft.com) with any additio
 | [azurecaf_name.routes](https://registry.terraform.io/providers/aztfmod/azurecaf/latest/docs/resources/name) | resource |
 | [azurerm_app_service_virtual_network_swift_connection.vnet_config](https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/resources/app_service_virtual_network_swift_connection) | resource |
 | [azurerm_bastion_host.host](https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/resources/bastion_host) | resource |
+| [azurerm_mssql_database_extended_auditing_policy.mssqldb](https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/resources/mssql_database_extended_auditing_policy) | resource |
 | [azurerm_mssql_server_extended_auditing_policy.mssql](https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/resources/mssql_server_extended_auditing_policy) | resource |
-| [azurerm_mssql_server_extended_auditing_policy.mssqldb](https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/resources/mssql_server_extended_auditing_policy) | resource |
 | [azurerm_network_ddos_protection_plan.ddos_protection_plan](https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/resources/network_ddos_protection_plan) | resource |
 | [azurerm_resource_provider_registration.default](https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/resources/resource_provider_registration) | resource |
 | [azurerm_role_assignment.for](https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/resources/role_assignment) | resource |
+| [azurerm_role_assignment.for_deferred](https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/resources/role_assignment) | resource |
 | [azurerm_storage_account_customer_managed_key.cmk](https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/resources/storage_account_customer_managed_key) | resource |
 | [azurerm_storage_account_customer_managed_key.diasacmk](https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/resources/storage_account_customer_managed_key) | resource |
 | [azurerm_subnet_network_security_group_association.nsg_vnet_association_version](https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/resources/subnet_network_security_group_association) | resource |
@@ -405,9 +437,13 @@ contact [opencode@microsoft.com](mailto:opencode@microsoft.com) with any additio
 | [azurerm_virtual_hub_connection.vhub_connection](https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/resources/virtual_hub_connection) | resource |
 | [azurerm_virtual_hub_route_table.route_table](https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/resources/virtual_hub_route_table) | resource |
 | [azurerm_virtual_network_peering.peering](https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/resources/virtual_network_peering) | resource |
+| [null_resource.register_feature_preview](https://registry.terraform.io/providers/hashicorp/null/latest/docs/resources/resource) | resource |
 | [random_string.prefix](https://registry.terraform.io/providers/hashicorp/random/latest/docs/resources/string) | resource |
 | [time_sleep.after_azurerm_firewall_policies](https://registry.terraform.io/providers/hashicorp/time/latest/docs/resources/sleep) | resource |
+| [time_sleep.azurerm_role_assignment_for](https://registry.terraform.io/providers/hashicorp/time/latest/docs/resources/sleep) | resource |
+| [time_sleep.azurerm_role_assignment_for_deferred](https://registry.terraform.io/providers/hashicorp/time/latest/docs/resources/sleep) | resource |
 | [time_sleep.delay](https://registry.terraform.io/providers/hashicorp/time/latest/docs/resources/sleep) | resource |
+| [azuread_client_config.current](https://registry.terraform.io/providers/hashicorp/azuread/latest/docs/data-sources/client_config) | data source |
 | [azuread_service_principal.front_door](https://registry.terraform.io/providers/hashicorp/azuread/latest/docs/data-sources/service_principal) | data source |
 | [azuread_service_principal.logged_in_app](https://registry.terraform.io/providers/hashicorp/azuread/latest/docs/data-sources/service_principal) | data source |
 | [azurerm_client_config.current](https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/data-sources/client_config) | data source |
@@ -422,6 +458,7 @@ contact [opencode@microsoft.com](mailto:opencode@microsoft.com) with any additio
 
 | Name | Description | Type | Default | Required |
 |------|-------------|------|---------|:--------:|
+| <a name="input_aadb2c"></a> [aadb2c](#input\_aadb2c) | Configuration object - AAD B2C resources | `any` | `{}` | no |
 | <a name="input_apim"></a> [apim](#input\_apim) | n/a | `any` | `{}` | no |
 | <a name="input_app_config"></a> [app\_config](#input\_app\_config) | n/a | `any` | `{}` | no |
 | <a name="input_azuread"></a> [azuread](#input\_azuread) | Configuration object - Azure Active Directory resources | `any` | `{}` | no |
@@ -437,6 +474,7 @@ contact [opencode@microsoft.com](mailto:opencode@microsoft.com) with any additio
 | <a name="input_custom_role_definitions"></a> [custom\_role\_definitions](#input\_custom\_role\_definitions) | Configuration object - Custom role definitions | `any` | `{}` | no |
 | <a name="input_data_factory"></a> [data\_factory](#input\_data\_factory) | Configuration object - Azure Data Factory resources | `any` | `{}` | no |
 | <a name="input_data_protection"></a> [data\_protection](#input\_data\_protection) | Configuration object - data protection | `any` | `{}` | no |
+| <a name="input_data_sources"></a> [data\_sources](#input\_data\_sources) | Data gathering for resources not managed by CAF Module | `any` | `{}` | no |
 | <a name="input_database"></a> [database](#input\_database) | Configuration object - databases resources | `any` | `{}` | no |
 | <a name="input_diagnostic_storage_accounts"></a> [diagnostic\_storage\_accounts](#input\_diagnostic\_storage\_accounts) | Configuration object - Storage account for diagnostics resources | `any` | `{}` | no |
 | <a name="input_diagnostics"></a> [diagnostics](#input\_diagnostics) | Configuration object - Diagnostics object. | `any` | `{}` | no |
@@ -464,6 +502,7 @@ contact [opencode@microsoft.com](mailto:opencode@microsoft.com) with any additio
 | <a name="input_managed_identities"></a> [managed\_identities](#input\_managed\_identities) | Configuration object - Azure managed identity resources | `any` | `{}` | no |
 | <a name="input_messaging"></a> [messaging](#input\_messaging) | Configuration object - messaging resources | `any` | `{}` | no |
 | <a name="input_networking"></a> [networking](#input\_networking) | Configuration object - networking resources | `any` | `{}` | no |
+| <a name="input_preview_features"></a> [preview\_features](#input\_preview\_features) | n/a | `map` | `{}` | no |
 | <a name="input_purview"></a> [purview](#input\_purview) | n/a | `any` | `{}` | no |
 | <a name="input_random_strings"></a> [random\_strings](#input\_random\_strings) | Configuration object - Random string generator resources | `any` | `{}` | no |
 | <a name="input_remote_objects"></a> [remote\_objects](#input\_remote\_objects) | Allow the landing zone to retrieve remote tfstate objects and pass them to the CAF module. | `any` | `{}` | no |
@@ -490,6 +529,7 @@ contact [opencode@microsoft.com](mailto:opencode@microsoft.com) with any additio
 | Name | Description |
 |------|-------------|
 | <a name="output_aad_apps"></a> [aad\_apps](#output\_aad\_apps) | n/a |
+| <a name="output_aadb2c_directory"></a> [aadb2c\_directory](#output\_aadb2c\_directory) | n/a |
 | <a name="output_active_directory_domain_service"></a> [active\_directory\_domain\_service](#output\_active\_directory\_domain\_service) | n/a |
 | <a name="output_active_directory_domain_service_replica_set"></a> [active\_directory\_domain\_service\_replica\_set](#output\_active\_directory\_domain\_service\_replica\_set) | n/a |
 | <a name="output_aks_clusters"></a> [aks\_clusters](#output\_aks\_clusters) | n/a |
@@ -508,6 +548,7 @@ contact [opencode@microsoft.com](mailto:opencode@microsoft.com) with any additio
 | <a name="output_api_management_gateway_api"></a> [api\_management\_gateway\_api](#output\_api\_management\_gateway\_api) | n/a |
 | <a name="output_api_management_group"></a> [api\_management\_group](#output\_api\_management\_group) | n/a |
 | <a name="output_api_management_logger"></a> [api\_management\_logger](#output\_api\_management\_logger) | n/a |
+| <a name="output_api_management_product"></a> [api\_management\_product](#output\_api\_management\_product) | n/a |
 | <a name="output_api_management_subscription"></a> [api\_management\_subscription](#output\_api\_management\_subscription) | n/a |
 | <a name="output_api_management_user"></a> [api\_management\_user](#output\_api\_management\_user) | n/a |
 | <a name="output_app_config"></a> [app\_config](#output\_app\_config) | n/a |
@@ -522,7 +563,10 @@ contact [opencode@microsoft.com](mailto:opencode@microsoft.com) with any additio
 | <a name="output_application_gateways"></a> [application\_gateways](#output\_application\_gateways) | n/a |
 | <a name="output_application_insights"></a> [application\_insights](#output\_application\_insights) | n/a |
 | <a name="output_application_security_groups"></a> [application\_security\_groups](#output\_application\_security\_groups) | n/a |
+| <a name="output_aro"></a> [aro](#output\_aro) | n/a |
 | <a name="output_automation_log_analytics_links"></a> [automation\_log\_analytics\_links](#output\_automation\_log\_analytics\_links) | n/a |
+| <a name="output_automation_runbooks"></a> [automation\_runbooks](#output\_automation\_runbooks) | n/a |
+| <a name="output_automation_schedules"></a> [automation\_schedules](#output\_automation\_schedules) | n/a |
 | <a name="output_automations"></a> [automations](#output\_automations) | n/a |
 | <a name="output_availability_sets"></a> [availability\_sets](#output\_availability\_sets) | n/a |
 | <a name="output_azure_container_registries"></a> [azure\_container\_registries](#output\_azure\_container\_registries) | n/a |
@@ -548,9 +592,12 @@ contact [opencode@microsoft.com](mailto:opencode@microsoft.com) with any additio
 | <a name="output_cdn_profile"></a> [cdn\_profile](#output\_cdn\_profile) | n/a |
 | <a name="output_client_config"></a> [client\_config](#output\_client\_config) | n/a |
 | <a name="output_cognitive_services_account"></a> [cognitive\_services\_account](#output\_cognitive\_services\_account) | n/a |
+| <a name="output_combined_objects_mssql_managed_instances"></a> [combined\_objects\_mssql\_managed\_instances](#output\_combined\_objects\_mssql\_managed\_instances) | n/a |
+| <a name="output_combined_objects_mssql_managed_instances_secondary"></a> [combined\_objects\_mssql\_managed\_instances\_secondary](#output\_combined\_objects\_mssql\_managed\_instances\_secondary) | n/a |
 | <a name="output_communication_services"></a> [communication\_services](#output\_communication\_services) | n/a |
 | <a name="output_consumption_budgets_resource_groups"></a> [consumption\_budgets\_resource\_groups](#output\_consumption\_budgets\_resource\_groups) | n/a |
 | <a name="output_consumption_budgets_subscriptions"></a> [consumption\_budgets\_subscriptions](#output\_consumption\_budgets\_subscriptions) | n/a |
+| <a name="output_container_app_environments"></a> [container\_app\_environments](#output\_container\_app\_environments) | n/a |
 | <a name="output_container_groups"></a> [container\_groups](#output\_container\_groups) | n/a |
 | <a name="output_cosmos_dbs"></a> [cosmos\_dbs](#output\_cosmos\_dbs) | n/a |
 | <a name="output_cosmosdb_sql_databases"></a> [cosmosdb\_sql\_databases](#output\_cosmosdb\_sql\_databases) | n/a |
@@ -593,6 +640,7 @@ contact [opencode@microsoft.com](mailto:opencode@microsoft.com) with any additio
 | <a name="output_event_hub_auth_rules"></a> [event\_hub\_auth\_rules](#output\_event\_hub\_auth\_rules) | n/a |
 | <a name="output_event_hub_namespace_auth_rules"></a> [event\_hub\_namespace\_auth\_rules](#output\_event\_hub\_namespace\_auth\_rules) | n/a |
 | <a name="output_event_hub_namespaces"></a> [event\_hub\_namespaces](#output\_event\_hub\_namespaces) | n/a |
+| <a name="output_event_hubs"></a> [event\_hubs](#output\_event\_hubs) | n/a |
 | <a name="output_eventgrid_domain"></a> [eventgrid\_domain](#output\_eventgrid\_domain) | n/a |
 | <a name="output_eventgrid_domain_topic"></a> [eventgrid\_domain\_topic](#output\_eventgrid\_domain\_topic) | n/a |
 | <a name="output_eventgrid_event_subscription"></a> [eventgrid\_event\_subscription](#output\_eventgrid\_event\_subscription) | n/a |
@@ -611,7 +659,7 @@ contact [opencode@microsoft.com](mailto:opencode@microsoft.com) with any additio
 | <a name="output_keyvault_certificate_issuers"></a> [keyvault\_certificate\_issuers](#output\_keyvault\_certificate\_issuers) | n/a |
 | <a name="output_keyvault_certificate_requests"></a> [keyvault\_certificate\_requests](#output\_keyvault\_certificate\_requests) | n/a |
 | <a name="output_keyvault_certificates"></a> [keyvault\_certificates](#output\_keyvault\_certificates) | n/a |
-| <a name="output_keyvault_keys"></a> [keyvault\_keys](#output\_keyvault\_keys) | n/a |
+| <a name="output_keyvault_keys"></a> [keyvault\_keys](#output\_keyvault\_keys) | [try(each.value.lz\_key, local.client\_config.landingzone\_key)][each.value.keyvault\_key].id |
 | <a name="output_keyvaults"></a> [keyvaults](#output\_keyvaults) | n/a |
 | <a name="output_kusto_attached_database_configurations"></a> [kusto\_attached\_database\_configurations](#output\_kusto\_attached\_database\_configurations) | n/a |
 | <a name="output_kusto_clusters"></a> [kusto\_clusters](#output\_kusto\_clusters) | n/a |
@@ -632,6 +680,7 @@ contact [opencode@microsoft.com](mailto:opencode@microsoft.com) with any additio
 | <a name="output_logic_app_action_custom"></a> [logic\_app\_action\_custom](#output\_logic\_app\_action\_custom) | n/a |
 | <a name="output_logic_app_action_http"></a> [logic\_app\_action\_http](#output\_logic\_app\_action\_http) | n/a |
 | <a name="output_logic_app_integration_account"></a> [logic\_app\_integration\_account](#output\_logic\_app\_integration\_account) | n/a |
+| <a name="output_logic_app_standard"></a> [logic\_app\_standard](#output\_logic\_app\_standard) | n/a |
 | <a name="output_logic_app_trigger_custom"></a> [logic\_app\_trigger\_custom](#output\_logic\_app\_trigger\_custom) | n/a |
 | <a name="output_logic_app_trigger_http_request"></a> [logic\_app\_trigger\_http\_request](#output\_logic\_app\_trigger\_http\_request) | n/a |
 | <a name="output_logic_app_trigger_recurrence"></a> [logic\_app\_trigger\_recurrence](#output\_logic\_app\_trigger\_recurrence) | n/a |
@@ -648,6 +697,7 @@ contact [opencode@microsoft.com](mailto:opencode@microsoft.com) with any additio
 | <a name="output_mssql_managed_databases"></a> [mssql\_managed\_databases](#output\_mssql\_managed\_databases) | n/a |
 | <a name="output_mssql_managed_instances"></a> [mssql\_managed\_instances](#output\_mssql\_managed\_instances) | n/a |
 | <a name="output_mssql_managed_instances_secondary"></a> [mssql\_managed\_instances\_secondary](#output\_mssql\_managed\_instances\_secondary) | n/a |
+| <a name="output_mssql_mi_failover_groups"></a> [mssql\_mi\_failover\_groups](#output\_mssql\_mi\_failover\_groups) | n/a |
 | <a name="output_mssql_servers"></a> [mssql\_servers](#output\_mssql\_servers) | n/a |
 | <a name="output_mysql_flexible_server"></a> [mysql\_flexible\_server](#output\_mysql\_flexible\_server) | n/a |
 | <a name="output_mysql_servers"></a> [mysql\_servers](#output\_mysql\_servers) | n/a |
@@ -659,6 +709,13 @@ contact [opencode@microsoft.com](mailto:opencode@microsoft.com) with any additio
 | <a name="output_postgresql_flexible_servers"></a> [postgresql\_flexible\_servers](#output\_postgresql\_flexible\_servers) | n/a |
 | <a name="output_postgresql_servers"></a> [postgresql\_servers](#output\_postgresql\_servers) | n/a |
 | <a name="output_private_dns"></a> [private\_dns](#output\_private\_dns) | n/a |
+| <a name="output_private_dns_records"></a> [private\_dns\_records](#output\_private\_dns\_records) | n/a |
+| <a name="output_private_dns_resolver_dns_forwarding_rulesets"></a> [private\_dns\_resolver\_dns\_forwarding\_rulesets](#output\_private\_dns\_resolver\_dns\_forwarding\_rulesets) | n/a |
+| <a name="output_private_dns_resolver_forwarding_rules"></a> [private\_dns\_resolver\_forwarding\_rules](#output\_private\_dns\_resolver\_forwarding\_rules) | n/a |
+| <a name="output_private_dns_resolver_inbound_endpoints"></a> [private\_dns\_resolver\_inbound\_endpoints](#output\_private\_dns\_resolver\_inbound\_endpoints) | n/a |
+| <a name="output_private_dns_resolver_outbound_endpoints"></a> [private\_dns\_resolver\_outbound\_endpoints](#output\_private\_dns\_resolver\_outbound\_endpoints) | n/a |
+| <a name="output_private_dns_resolvers"></a> [private\_dns\_resolvers](#output\_private\_dns\_resolvers) | n/a |
+| <a name="output_private_dns_resolvers_virtual_network_links"></a> [private\_dns\_resolvers\_virtual\_network\_links](#output\_private\_dns\_resolvers\_virtual\_network\_links) | n/a |
 | <a name="output_private_dns_vnet_links"></a> [private\_dns\_vnet\_links](#output\_private\_dns\_vnet\_links) | n/a |
 | <a name="output_private_endpoints"></a> [private\_endpoints](#output\_private\_endpoints) | n/a |
 | <a name="output_proximity_placement_groups"></a> [proximity\_placement\_groups](#output\_proximity\_placement\_groups) | n/a |
@@ -701,6 +758,8 @@ contact [opencode@microsoft.com](mailto:opencode@microsoft.com) with any additio
 | <a name="output_vnets"></a> [vnets](#output\_vnets) | n/a |
 | <a name="output_vpn_gateway_connections"></a> [vpn\_gateway\_connections](#output\_vpn\_gateway\_connections) | n/a |
 | <a name="output_vpn_sites"></a> [vpn\_sites](#output\_vpn\_sites) | n/a |
+| <a name="output_web_pubsub_hubs"></a> [web\_pubsub\_hubs](#output\_web\_pubsub\_hubs) | n/a |
+| <a name="output_web_pubsubs"></a> [web\_pubsubs](#output\_web\_pubsubs) | n/a |
 | <a name="output_wvd_application_groups"></a> [wvd\_application\_groups](#output\_wvd\_application\_groups) | n/a |
 | <a name="output_wvd_applications"></a> [wvd\_applications](#output\_wvd\_applications) | n/a |
 | <a name="output_wvd_host_pools"></a> [wvd\_host\_pools](#output\_wvd\_host\_pools) | n/a |

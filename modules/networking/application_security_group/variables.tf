@@ -1,22 +1,26 @@
 variable "resource_group_name" {
   type        = string
-  description = "(Required) The name of the resource group where to create the resource."
-}
-
-variable "base_tags" {
-  type        = any
-  description = "tags of the resource"
+  description = "Resource group object to deploy the virtual machine"
+  default     = null
 }
 
 variable "location" {
   type        = string
-  description = "location of the resource"
+  description = "(Optional) Resource Location"
+  default     = null
 }
 variable "settings" {
   type = any
 }
-
 variable "global_settings" {
   type        = any
   description = "Global settings object (see module README.md)"
+}
+variable "resource_group" {
+  type        = any
+  description = "Resource group object to deploy the virtual machine"
+}
+variable "base_tags" {
+  description = "Enable tags inheritence."
+  type        = bool
 }

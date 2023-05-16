@@ -4,7 +4,7 @@ resource "azurerm_redis_firewall_rule" "redis_firewall_rule" {
 
   name                = coalesce(each.value.name, each.key)
   redis_cache_name    = azurerm_redis_cache.redis.name
-  resource_group_name = var.resource_group_name
+  resource_group_name = local.resource_group_name
   start_ip            = each.value.start_ip
   end_ip              = each.value.end_ip
 }

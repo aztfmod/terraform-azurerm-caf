@@ -3,6 +3,10 @@ global_settings = {
   regions = {
     region1 = "australiaeast"
   }
+  inherit_tags = true
+  tags = {
+    env = "to_be_set"
+  }
 }
 
 resource_groups = {
@@ -22,6 +26,9 @@ app_service_plans = {
       tier = "Standard"
       size = "S1"
     }
+    tags = {
+      env = "uat"
+    }
   }
 }
 
@@ -37,6 +44,9 @@ app_services = {
 
     settings = {
       enabled = true
+    }
+    tags = {
+      project = "Mobile app"
     }
   }
 }

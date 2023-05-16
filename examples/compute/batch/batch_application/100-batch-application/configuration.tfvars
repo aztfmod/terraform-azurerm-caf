@@ -16,9 +16,10 @@ resource_groups = {
 
 batch_accounts = {
   batch1 = {
-    name                = "batch"
-    resource_group_key  = "batch_region1"
-    storage_account_key = "batch_region1"
+    name                                = "batch"
+    resource_group_key                  = "batch_region1"
+    storage_account_key                 = "batch_region1"
+    storage_account_authentication_mode = "StorageKeys"
   }
 }
 

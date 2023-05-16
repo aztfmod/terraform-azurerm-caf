@@ -12,7 +12,7 @@ aks_clusters = {
 
     network_policy = {
       network_plugin    = "azure"
-      load_balancer_sku = "Standard"
+      load_balancer_sku = "standard"
     }
 
     enable_rbac = true

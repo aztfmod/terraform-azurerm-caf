@@ -15,20 +15,24 @@ variable "remote_objects" {
   description = "(Required) Specifies the supported Azure location where to create the resource. Changing this forces a new resource to be created."
   default     = {}
 }
-variable "base_tags" {
-  description = "Base tags for the resource to be inherited from the resource group."
-  type        = map(any)
-  default     = {}
+variable "location" {
+  description = "location of the resource if different from the resource group."
+  default     = null
 }
 variable "resource_group_name" {
-  type        = string
-  description = " The name of the Resource Group where the Purview Account should exist. Changing this forces a new Purview Account to be created."
+  description = "Resource group object to deploy the virtual machine"
+  default     = null
 }
-variable "location" {
-  type = string
+variable "resource_group" {
+  description = "Resource group object to deploy the virtual machine"
+}
+variable "base_tags" {
+  description = "Base tags for the resource to be inherited from the resource group."
+  type        = bool
 }
 variable "diagnostics" {
-  type = any
+  type    = any
+  default = {}
 }
 variable "private_dns" {
   type    = any

@@ -4,8 +4,8 @@ resource "azurerm_app_service_slot" "slots" {
   for_each = var.slots
 
   name                = each.value.name
-  location            = var.location
-  resource_group_name = var.resource_group_name
+  location            = local.location
+  resource_group_name = local.resource_group_name
   app_service_plan_id = var.app_service_plan_id
   app_service_name    = azurerm_app_service.app_service.name
   tags                = local.tags

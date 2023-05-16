@@ -3,11 +3,12 @@ global_settings = {
   regions = {
     region1 = "australiaeast"
   }
+  inherit_tags = true
 }
 
 provider_azurerm_features_keyvault = {
   // set to true to cleanup the CI
-  purge_soft_delete_on_destroy = true
+  purge_soft_delete_on_destroy = false
 }
 
 resource_groups = {

@@ -14,23 +14,24 @@ variable "settings" {
   type        = any
   description = "(Required) Used to handle passthrough paramenters."
 }
-variable "location" {
-  type        = string
-  description = "(Required) Region in which the resource will be deployed"
-}
 variable "remote_objects" {
   type        = any
   description = "(Required) Specifies the supported Azure location where to create the resource. Changing this forces a new resource to be created."
   default     = {}
 }
-variable "base_tags" {
-  description = "Base tags for the resource to be inherited from the resource group."
-  type        = map(any)
-  default     = {}
+variable "location" {
+  type        = string
+  description = "location of the resource if different from the resource group."
+  default     = null
 }
 variable "resource_group_name" {
   type        = string
-  description = " The name of the Resource Group in which the API Management Service should be exist. Changing this forces a new resource to be created."
+  description = "The name of the Resource Group in which the API Management Service should be exist. Changing this forces a new resource to be created."
+  default     = null
+}
+variable "resource_group" {
+  type        = any
+  description = "Resource group object"
 }
 variable "diagnostic_profiles" {
   type        = any
@@ -41,4 +42,8 @@ variable "diagnostics" {
   type        = any
   description = "Details about the diagnostics"
   default     = {}
+}
+variable "base_tags" {
+  description = "Base tags for the resource to be inherited from the resource group."
+  type        = bool
 }

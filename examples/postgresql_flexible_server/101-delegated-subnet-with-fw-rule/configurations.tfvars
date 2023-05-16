@@ -21,6 +21,7 @@ postgresql_flexible_servers = {
     region     = "region1"
     version    = "12"
     sku_name   = "MO_Standard_E4s_v3"
+    zone       = 2
     storage_mb = 131072
 
     resource_group = {
@@ -73,9 +74,9 @@ postgresql_flexible_servers = {
 
     postgresql_databases = {
       postgresql_database = {
-        name      = "sampledb"
-        charset   = "UTF8"
-        collation = "English_United States.1252"
+        name = "sampledb"
+        # charset   = "UTF8"
+        # collation = "English_United States.1252"
       }
     }
 

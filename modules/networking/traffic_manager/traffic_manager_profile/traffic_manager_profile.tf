@@ -1,8 +1,8 @@
 resource "azurerm_traffic_manager_profile" "traffic_manager_profile" {
   name                   = var.settings.name
-  resource_group_name    = var.resource_group_name
+  resource_group_name    = local.resource_group_name
   traffic_routing_method = var.settings.traffic_routing_method
-  tags                   = merge(var.base_tags, try(var.settings.tags, {}))
+  tags                   = merge(local.tags, try(var.settings.tags, null))
   profile_status         = try(var.settings.profile_status, null)
   traffic_view_enabled   = try(var.settings.traffic_view_enabled, null)
   max_return             = try(var.settings.max_return, null)

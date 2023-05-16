@@ -1,12 +1,11 @@
 variable "global_settings" {
   type = any
-
 }
 variable "settings" {
   type = any
 }
-variable "resource_group" {
-  type = any
+variable "resource_group_name" {
+  type = string
 }
 variable "client_config" {
   type = any

@@ -182,7 +182,7 @@ Otherwise, you can follow [this gist](https://gist.github.com/etiennejeanneaurev
 
 Ensure your PATH environment variable looks for `bash.exe` in `C:\Program Files\Git\bin` (the one present in `C:\Windows\System32\bash.exe` does not work with `pre-commit.exe`)
 
-For `checkov`, you may need to also set your `PYTHONPATH` environment variable with the path to your Python modules.  
+For `checkov`, you may need to also set your `PYTHONPATH` environment variable with the path to your Python modules.
 E.g. `C:\Users\USERNAME\AppData\Local\Programs\Python\Python39\Lib\site-packages`
 
 </details>
@@ -269,7 +269,7 @@ Check the [source file](https://github.com/antonbabenko/pre-commit-terraform/blo
 
 > All, except deprecated hooks: `checkov`, `terraform_docs_replace`
 
-You can use environment variables for the `--args` section.  
+You can use environment variables for the `--args` section.
 Note: You _must_ use the `${ENV_VAR}` definition, `$ENV_VAR` will not expand.
 
 Config example:
@@ -774,7 +774,7 @@ Sample configuration:
         - --args=--version 2.5.0 # Will be pined to specified version
     ```
 
-Check [`tfupdate` usage instructions](https://github.com/minamijoyo/tfupdate#usage) for other available options and usage examples.  
+Check [`tfupdate` usage instructions](https://github.com/minamijoyo/tfupdate#usage) for other available options and usage examples.
 No need to pass `--recursive .` as it is added automatically.
 
 ## Authors

@@ -1,9 +1,9 @@
 resource "azurerm_web_application_firewall_policy" "wafpolicy" {
 
   name                = var.settings.name
-  resource_group_name = var.resource_group_name
-  location            = var.location
-  tags                = local.tags
+  resource_group_name = local.resource_group_name
+  location            = local.location
+  tags                = merge(local.tags, try(var.settings.tags, {}))
 
   dynamic "custom_rules" {
     for_each = try(var.settings.custom_rules, {})

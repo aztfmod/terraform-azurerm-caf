@@ -8,14 +8,14 @@ resource "azurecaf_name" "mssqlmi" {
   passthrough   = var.global_settings.passthrough
 }
 
-resource "azurerm_template_deployment" "mssqlmi" {
+resource "azurerm_resource_group_template_deployment" "mssqlmi" {
 
   name                = azurecaf_name.mssqlmi.result
   resource_group_name = var.resource_group_name
 
-  template_body = file(local.arm_filename)
+  template_content = file(local.arm_filename)
 
-  parameters_body = jsonencode(local.parameters_body)
+  parameters_content = jsonencode(local.parameters_body)
 
   deployment_mode = "Incremental"
 
@@ -26,6 +26,7 @@ resource "azurerm_template_deployment" "mssqlmi" {
     read   = "5m"
   }
 }
+
 
 resource "null_resource" "destroy_sqlmi" {
 

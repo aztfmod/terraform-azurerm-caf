@@ -21,10 +21,6 @@ variable "resource_groups" {
   description = "combined objetcs of the resource groups. Either resource_group_name or resource_groups is required."
   default     = {}
 }
-variable "base_tags" {
-  description = "Base tags for the resource to be inherited from the resource group."
-  type        = map(any)
-}
 variable "settings" {
   type = any
 }
@@ -43,4 +39,12 @@ variable "tags" {
   type        = any
   default     = null
   description = "(Optional) A mapping of tags to assign to the resource"
+}
+variable "resource_group" {
+  type        = any
+  description = "Resource group object to deploy the virtual machine"
+}
+variable "base_tags" {
+  description = "Base tags for the resource to be inherited from the resource group."
+  type        = bool
 }

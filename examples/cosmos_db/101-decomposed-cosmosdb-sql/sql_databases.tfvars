@@ -73,7 +73,7 @@ cosmosdb_sql_databases = {
         partition_key_path = "/definition/id"
         throughput         = 400
         unique_key = {
-          path = ["/definition/idlong", "/definition/idshort"]
+          paths = ["/definition/idlong", "/definition/idshort"]
         }
       }
     }

@@ -216,6 +216,14 @@ virtual_machine_scale_sets = {
           version   = "latest"
         }
 
+        #custom_data - Users can either reference a local file path or a block of code as seen below.
+        # custom_data                     = "scripts/cloud-init/install-rover-tools.config"
+        # custom_data                     = "/tf/caf/configuration/project/scripts/cloud-init/install-rover-tools.config"
+        custom_data = <<CUSTOM_DATA
+#!/bin/bash
+echo "Execute your super awesome commands here!"
+CUSTOM_DATA
+
       }
     }
 

@@ -1,3 +1,8 @@
+output "id" {
+  description = "ID of the MYSQL flexible server"
+  value       = azurerm_mysql_flexible_server.mysql.id
+}
+
 output "location" {
   description = "Azure Region where the resource exists"
   value       = var.location

@@ -13,6 +13,14 @@ variable "domain_name_registrations" {
   default = {}
 }
 variable "client_config" {
-  type        = any
   description = "Client Config"
+  type        = map(any)
+}
+variable "tags" {
+  default     = {}
+  description = "Tags injected from the root module."
+  nullable    = false
+}
+variable "inherit_tags" {
+  type = bool
 }

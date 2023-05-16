@@ -6,6 +6,10 @@ network_security_group_definition = {
   empty_nsg = {
   }
 
+  tags = {
+    cost_center = "123456"
+  }
+
   application_gateway = {
 
     nsg = [

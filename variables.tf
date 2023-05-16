@@ -157,6 +157,12 @@ variable "remote_objects" {
   default     = {}
 }
 
+variable "data_sources" {
+  type        = any
+  description = "Data gathering for resources not managed by CAF Module"
+  default     = {}
+}
+
 ## Diagnostics settings
 variable "diagnostics_definition" {
   type        = any
@@ -473,5 +479,13 @@ variable "iot" {
 }
 variable "resource_provider_registration" {
   type    = any
+  default = {}
+}
+variable "aadb2c" {
+  type        = any
+  description = "Configuration object - AAD B2C resources"
+  default     = {}
+}
+variable "preview_features" {
   default = {}
 }

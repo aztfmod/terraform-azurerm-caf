@@ -3,6 +3,10 @@ global_settings = {
   regions = {
     region1 = "australiaeast"
   }
+  inherit_tags = true
+  tags = {
+    example = "app_gateway/100-simple-app-gateway"
+  }
 }
 
 
@@ -29,6 +33,9 @@ application_gateways = {
     }
     zones        = ["1"]
     enable_http2 = true
+    tags = {
+      project = "demo"
+    }
 
     front_end_ip_configurations = {
       public = {
@@ -127,7 +134,7 @@ public_ip_addresses = {
     sku                     = "Standard"
     allocation_method       = "Static"
     ip_version              = "IPv4"
-    availability_zone       = "1"
+    zones                   = ["1"]
     idle_timeout_in_minutes = "4"
 
   }

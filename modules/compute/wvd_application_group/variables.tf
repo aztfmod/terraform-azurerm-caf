@@ -6,14 +6,21 @@ variable "global_settings" {
 
 }
 variable "location" {
-  type = string
+  type        = string
+  description = "location of the resource if different from the resource group."
+  default     = null
 }
 variable "resource_group_name" {
   type        = string
   description = "Name of the existing resource group to deploy the virtual machine"
+  default     = null
+}
+variable "resource_group" {
+  description = "Resource group object to deploy the virtual machine"
 }
 variable "base_tags" {
-  type = map(any)
+  description = "Base tags for the resource to be inherited from the resource group."
+  type        = bool
 }
 variable "wvd_host_pools" {
   type    = any

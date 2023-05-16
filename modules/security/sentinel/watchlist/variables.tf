@@ -22,3 +22,6 @@ variable "labels" {
   type    = any
   default = null
 }
+variable "item_search_key" {
+  default = null
+}

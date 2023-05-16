@@ -9,16 +9,23 @@ resource "azurecaf_name" "vgw" {
 }
 
 resource "azurerm_virtual_network_gateway" "vngw" {
-  name                = azurecaf_name.vgw.result
-  location            = var.location
-  resource_group_name = var.resource_group_name
-  type                = var.settings.type #ExpressRoute or VPN
+  name                       = azurecaf_name.vgw.result
+  edge_zone                  = try(var.settings.edge_zone, null)
+  generation                 = try(var.settings.generation, null)
+  location                   = var.location
+  private_ip_address_enabled = try(var.settings.private_ip_address_enabled, null)
+  resource_group_name        = var.resource_group_name
+  type                       = var.settings.type #ExpressRoute or VPN
   # ExpressRoute SKUs : Basic, Standard, HighPerformance, UltraPerformance
   # VPN SKUs : Basic, VpnGw1, VpnGw2, VpnGw3, VpnGw4,VpnGw5, VpnGw1AZ, VpnGw2AZ, VpnGw3AZ,VpnGw4AZ and VpnGw5AZ
   # SKUs are subject to change. Check Documentation page for updated information
   # The following options may change depending upon SKU type. Check product documentation
-  sku        = var.settings.sku
-  generation = try(var.settings.generation, "Generation2")
+  sku           = var.settings.sku
+  active_active = try(var.settings.active_active, null)
+  enable_bgp    = try(var.settings.enable_bgp, null)
+  #vpn_type defaults to 'RouteBased'. Type 'PolicyBased' supported only by Basic SKU
+  vpn_type = try(var.settings.vpn_type, null)
+  tags     = local.tags
 
   #Create multiple IPs only if active-active mode is enabled.
   dynamic "ip_configuration" {
@@ -52,8 +59,23 @@ resource "azurerm_virtual_network_gateway" "vngw" {
           public_cert_data = vpn_client_configuration.value.root_certificate.public_cert_data
         }
       }
+      dynamic "root_certificate" {
+        for_each = try(vpn_client_configuration.value.root_certificates, {})
+
+        content {
+          name             = root_certificate.value.name
+          public_cert_data = root_certificate.value.public_cert_data
+        }
+      }
       dynamic "revoked_certificate" {
         for_each = try(vpn_client_configuration.value.revoked_certificate, {})
+        content {
+          name       = revoked_certificate.value.name
+          thumbprint = revoked_certificate.value.thumbprint
+        }
+      }
+      dynamic "revoked_certificate" {
+        for_each = try(vpn_client_configuration.value.revoked_certificates, {})
         content {
           name       = revoked_certificate.value.name
           thumbprint = revoked_certificate.value.thumbprint
@@ -69,25 +91,27 @@ resource "azurerm_virtual_network_gateway" "vngw" {
     }
   }
 
-  active_active = try(var.settings.active_active, null)
-  enable_bgp    = try(var.settings.enable_bgp, null)
-  #vpn_type defaults to 'RouteBased'. Type 'PolicyBased' supported only by Basic SKU
-  vpn_type = try(var.settings.vpn_type, null)
-
   dynamic "bgp_settings" {
     for_each = try(var.settings.bgp_settings, {})
     content {
-      asn             = bgp_settings.value.asn
-      peering_address = bgp_settings.value.peering_address
-      peer_weight     = bgp_settings.value.peer_weight
+      asn         = bgp_settings.value.asn
+      peer_weight = bgp_settings.value.peer_weight
+
+      dynamic "peering_addresses" {
+        for_each = try(bgp_settings.value.peering_addresses, {})
+        content {
+          ip_configuration_name = peering_addresses.value.ip_configuration_name
+          apipa_addresses       = peering_addresses.value.apipa_addresses
+        }
+      }
     }
   }
+
+
 
   timeouts {
     create = "60m"
     delete = "60m"
   }
-
-  tags = local.tags
 
 }

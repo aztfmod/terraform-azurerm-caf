@@ -58,6 +58,13 @@ function execute_with_backoff {
     fi
 
     echo "Failure! Return code ${exitCode} - Retrying in $timeout.." 1>&2
+
+    if [[ -f "$FILE" ]]
+    then
+      echo "remove semaphore"
+      rm -rf "$FILE"
+    fi
+
     sleep $timeout
     attempt=$(( attempt + 1 ))
     timeout=$(( timeout * 2 ))
@@ -83,10 +90,10 @@ case "${RESOURCE}" in
             --gateway-name ${APPLICATION_GATEWAY_NAME} -n ${NAME} ${servers}
         ;;
     FRONTENDPORT)
-        servers=$([ -z "${ADDRESS_POOL}" ] && echo "" || echo "--servers ${ADDRESS_POOL} ")
+        port=$([ -z "${PORT}" ] && echo "" || echo "--port ${PORT} ")
 
-        execute_with_backoff az network application-gateway address-pool create -g ${RG_NAME} \
-            --gateway-name ${APPLICATION_GATEWAY_NAME} -n ${NAME} ${servers}
+        execute_with_backoff az network application-gateway frontend-port create -g ${RG_NAME} \
+            --gateway-name ${APPLICATION_GATEWAY_NAME} -n ${NAME} ${port}
         ;;
     HTTPSETTINGS)
         protocol=$([ -z "${PROTOCOL}" ] && echo "" || echo "--protocol ${PROTOCOL} ")
@@ -179,5 +186,29 @@ case "${RESOURCE}" in
         execute_with_backoff az network application-gateway probe create -g ${RG_NAME} \
             --gateway-name ${APPLICATION_GATEWAY_NAME} -n ${NAME} --protocol ${PROTOCOL} \
             --path ${PROBEPATH} ${host}${hostnamefromhttpsettings}${interval}${matchbody}${matchstatuscodes}${minservers}${port}${threshold}${timeout}
+        ;;
+    REWRITERULESET)
+        execute_with_backoff az network application-gateway rewrite-rule set create -g ${RG_NAME} --gateway-name ${APPLICATION_GATEWAY_NAME} -n ${NAME}
+        ;;
+    REWRITERULE)
+        enablereroute=$([ -z "${ENABLE_REROUTE}" ] && echo "" || echo "--enable-reroute ${ENABLE_REROUTE} ")
+        modifiedpath=$([ -z "${MODIFIED_PATH}" ] && echo "" || echo "--modified-path ${MODIFIED_PATH} ")
+        modifiedquerystring=$([ -z "${MODIFIED_QUERY_STRING}" ] && echo "" || echo "--modified-query-string ${MODIFIED_QUERY_STRING} ")
+        requestheaders=$([ -z "${REQUEST_HEADERS}" ] && echo "" || echo "--request-headers ${REQUEST_HEADERS} ")
+        responseheaders=$([ -z "${RESPONSE_HEADERS}" ] && echo "" || echo "--response-headers ${RESPONSE_HEADERS} ")
+        sequence=$([ -z "${SEQUENCE}" ] && echo "" || echo "--sequence ${SEQUENCE} ")
+
+        execute_with_backoff az network application-gateway rewrite-rule create -g ${RG_NAME} \
+            --gateway-name ${APPLICATION_GATEWAY_NAME} -n ${NAME} --rule-set-name ${RULE_SET_NAME}\
+            ${enablereroute} ${modifiedpath} ${modifiedquerystring} ${requestheaders} ${responseheaders} ${sequence}
+        ;;
+    REWRITERULECONDITION)
+        ignorecase=$([ -z "${IGNORE_CASE}" ] && echo "" || echo "--ignore-case ${IGNORE_CASE} ")
+        negate=$([ -z "${NEGATE}" ] && echo "" || echo "--negate ${NEGATE} ")
+        pattern=$([ -z "${PATTERN}" ] && echo "" || echo "--pattern ${PATTERN} ")
+
+        execute_with_backoff az network application-gateway rewrite-rule condition create -g ${RG_NAME} \
+            --gateway-name ${APPLICATION_GATEWAY_NAME} --variable ${VARIABLE} --rule-set-name ${RULE_SET_NAME} --rule-name ${RULE_NAME}\
+            ${ignorecase} ${negate} ${pattern}
         ;;
 esac

@@ -25,7 +25,13 @@ module "example" {
   storage_accounts                      = var.storage_accounts
   subscription_billing_role_assignments = var.subscription_billing_role_assignments
   resource_provider_registration        = var.resource_provider_registration
+  var_folder_path                       = var.var_folder_path
   tags                                  = local.tags
+  environment                           = var.environment
+
+  aadb2c = {
+    aadb2c_directory = var.aadb2c_directory
+  }
 
   azuread = {
     azuread_api_permissions             = var.azuread_api_permissions
@@ -85,6 +91,7 @@ module "example" {
   }
   compute = {
     aks_clusters                        = var.aks_clusters
+    aro_clusters                        = var.aro_clusters
     availability_sets                   = var.availability_sets
     azure_container_registries          = var.azure_container_registries
     batch_accounts                      = var.batch_accounts
@@ -126,9 +133,11 @@ module "example" {
     database_migration_projects        = var.database_migration_projects
     machine_learning_workspaces        = var.machine_learning_workspaces
     mariadb_servers                    = var.mariadb_servers
+    mariadb_databases                  = var.mariadb_databases
     mssql_databases                    = var.mssql_databases
     mssql_elastic_pools                = var.mssql_elastic_pools
     mssql_failover_groups              = var.mssql_failover_groups
+    mssql_managed_databases            = var.mssql_managed_databases
     mssql_managed_databases_backup_ltr = var.mssql_managed_databases_backup_ltr
     mssql_managed_databases_restore    = var.mssql_managed_databases_restore
     mssql_managed_instances            = var.mssql_managed_instances
@@ -169,6 +178,8 @@ module "example" {
     eventgrid_topic              = var.eventgrid_topic
     eventgrid_event_subscription = var.eventgrid_event_subscription
     eventgrid_domain_topic       = var.eventgrid_domain_topic
+    web_pubsubs                  = var.web_pubsubs
+    web_pubsub_hubs              = var.web_pubsub_hubs
   }
   networking = {
     application_gateway_applications                        = var.application_gateway_applications
@@ -211,6 +222,12 @@ module "example" {
     network_security_group_definition                       = var.network_security_group_definition
     network_watchers                                        = var.network_watchers
     private_dns                                             = var.private_dns
+    private_dns_resolvers                                   = var.private_dns_resolvers
+    private_dns_resolver_inbound_endpoints                  = var.private_dns_resolver_inbound_endpoints
+    private_dns_resolver_outbound_endpoints                 = var.private_dns_resolver_outbound_endpoints
+    private_dns_resolver_dns_forwarding_rulesets            = var.private_dns_resolver_dns_forwarding_rulesets
+    private_dns_resolver_forwarding_rules                   = var.private_dns_resolver_forwarding_rules
+    private_dns_resolver_virtual_network_links              = var.private_dns_resolver_virtual_network_links
     private_dns_vnet_links                                  = var.private_dns_vnet_links
     private_endpoints                                       = var.private_endpoints
     public_ip_addresses                                     = var.public_ip_addresses
@@ -240,34 +257,37 @@ module "example" {
   }
 
   security = {
-    disk_encryption_sets                = var.disk_encryption_sets
-    dynamic_keyvault_secrets            = var.dynamic_keyvault_secrets
-    keyvault_certificate_issuers        = var.keyvault_certificate_issuers
-    keyvault_certificate_requests       = var.keyvault_certificate_requests
-    keyvault_keys                       = var.keyvault_keys
-    keyvault_certificates               = var.keyvault_certificates
-    lighthouse_definitions              = var.lighthouse_definitions
-    sentinel                            = var.sentinel
-    sentinel_automation_rules           = var.sentinel_automation_rules
-    sentinel_watchlists                 = var.sentinel_watchlists
-    sentinel_watchlist_items            = var.sentinel_watchlist_items
-    sentinel_ar_fusions                 = var.sentinel_ar_fusions
-    sentinel_ar_ml_behavior_analytics   = var.sentinel_ar_ml_behavior_analytics
-    sentinel_ar_ms_security_incidents   = var.sentinel_ar_ms_security_incidents
-    sentinel_ar_scheduled               = var.sentinel_ar_scheduled
-    sentinel_dc_aad                     = var.sentinel_dc_aad
-    sentinel_dc_app_security            = var.sentinel_dc_app_security
-    sentinel_dc_aws                     = var.sentinel_dc_aws
-    sentinel_dc_azure_threat_protection = var.sentinel_dc_azure_threat_protection
-    sentinel_dc_ms_threat_protection    = var.sentinel_dc_ms_threat_protection
-    sentinel_dc_office_365              = var.sentinel_dc_office_365
-    sentinel_dc_security_center         = var.sentinel_dc_security_center
-    sentinel_dc_threat_intelligence     = var.sentinel_dc_threat_intelligence
+    disk_encryption_sets                  = var.disk_encryption_sets
+    dynamic_keyvault_secrets              = var.dynamic_keyvault_secrets
+    keyvault_certificate_issuers          = var.keyvault_certificate_issuers
+    keyvault_certificate_requests         = var.keyvault_certificate_requests
+    keyvault_access_policies_azuread_apps = var.keyvault_access_policies_azuread_apps
+    keyvault_keys                         = var.keyvault_keys
+    keyvault_certificates                 = var.keyvault_certificates
+    lighthouse_definitions                = var.lighthouse_definitions
+    sentinel                              = var.sentinel
+    sentinel_automation_rules             = var.sentinel_automation_rules
+    sentinel_watchlists                   = var.sentinel_watchlists
+    sentinel_watchlist_items              = var.sentinel_watchlist_items
+    sentinel_ar_fusions                   = var.sentinel_ar_fusions
+    sentinel_ar_ml_behavior_analytics     = var.sentinel_ar_ml_behavior_analytics
+    sentinel_ar_ms_security_incidents     = var.sentinel_ar_ms_security_incidents
+    sentinel_ar_scheduled                 = var.sentinel_ar_scheduled
+    sentinel_dc_aad                       = var.sentinel_dc_aad
+    sentinel_dc_app_security              = var.sentinel_dc_app_security
+    sentinel_dc_aws                       = var.sentinel_dc_aws
+    sentinel_dc_azure_threat_protection   = var.sentinel_dc_azure_threat_protection
+    sentinel_dc_ms_threat_protection      = var.sentinel_dc_ms_threat_protection
+    sentinel_dc_office_365                = var.sentinel_dc_office_365
+    sentinel_dc_security_center           = var.sentinel_dc_security_center
+    sentinel_dc_threat_intelligence       = var.sentinel_dc_threat_intelligence
 
   }
 
   shared_services = {
     automations                    = var.automations
+    automation_schedules           = var.automation_schedules
+    automation_runbooks            = var.automation_runbooks
     automation_log_analytics_links = var.automation_log_analytics_links
     consumption_budgets            = var.consumption_budgets
     image_definitions              = var.image_definitions
@@ -290,13 +310,15 @@ module "example" {
 
   }
   webapp = {
-    azurerm_application_insights = var.azurerm_application_insights
-    app_service_environments     = var.app_service_environments
-    app_service_environments_v3  = var.app_service_environments_v3
-    app_service_plans            = var.app_service_plans
-    app_services                 = var.app_services
-    function_apps                = var.function_apps
-    static_sites                 = var.static_sites
+    azurerm_application_insights                   = var.azurerm_application_insights
+    azurerm_application_insights_web_test          = var.azurerm_application_insights_web_test
+    azurerm_application_insights_standard_web_test = var.azurerm_application_insights_standard_web_test
+    app_service_environments                       = var.app_service_environments
+    app_service_environments_v3                    = var.app_service_environments_v3
+    app_service_plans                              = var.app_service_plans
+    app_services                                   = var.app_services
+    function_apps                                  = var.function_apps
+    static_sites                                   = var.static_sites
   }
   data_factory = {
     data_factory                                 = var.data_factory
@@ -336,6 +358,7 @@ module "example" {
     logic_app_trigger_http_request = var.logic_app_trigger_http_request
     logic_app_trigger_recurrence   = var.logic_app_trigger_recurrence
     logic_app_workflow             = var.logic_app_workflow
+    logic_app_standard             = var.logic_app_standard
   }
   identity = {
     active_directory_domain_service             = var.active_directory_domain_service
@@ -359,6 +382,7 @@ module "example" {
     api_management_gateway_api          = var.api_management_gateway_api
     api_management_group                = var.api_management_group
     api_management_subscription         = var.api_management_subscription
+    api_management_product              = var.api_management_product
   }
   purview = {
     purview_accounts = var.purview_accounts
@@ -369,6 +393,6 @@ module "example" {
     digital_twins_endpoint_eventhubs    = var.digital_twins_endpoint_eventhubs
     digital_twins_endpoint_eventgrids   = var.digital_twins_endpoint_eventgrids
     digital_twins_endpoint_servicebuses = var.digital_twins_endpoint_servicebuses
-
   }
+  preview_features = var.preview_features
 }

@@ -1,6 +1,7 @@
 global_settings = {
   default_region = "region1"
   environment    = "test"
+  inherit_tags   = true
   regions = {
     region1 = "East US"
     region2 = "australiaeast"

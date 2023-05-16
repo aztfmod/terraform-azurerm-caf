@@ -1,9 +1,3 @@
-variable "base_tags" {
-  description = "(Optional) Base tags for the resource to be inherited from the resource group."
-  type        = any
-  default     = {}
-}
-
 variable "client_config" {
   type        = any
   description = "Client configuration object (see module README.md)."
@@ -14,11 +8,6 @@ variable "global_settings" {
   type        = any
   description = "Global settings object (see module README.md)"
   default     = {}
-}
-
-variable "resource_group_name" {
-  type        = string
-  description = "(Required) The name of the Resource Group where the resource should exist. Changing this forces a new resource to be created."
 }
 
 variable "remote_objects" {
@@ -33,7 +22,11 @@ variable "settings" {
   default     = {}
 }
 
-variable "location" {
-  type        = string
-  description = "(Required) Specifies the supported Azure location where to create the resource. Changing this forces a new resource to be created."
+variable "resource_group" {
+  description = "Resource group object"
+}
+
+variable "base_tags" {
+  description = "Base tags for the resource to be inherited from the resource group."
+  type        = bool
 }

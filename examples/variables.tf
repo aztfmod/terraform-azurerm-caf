@@ -333,6 +333,12 @@ variable "synapse_workspaces" {
 variable "azurerm_application_insights" {
   default = {}
 }
+variable "azurerm_application_insights_web_test" {
+  default = {}
+}
+variable "azurerm_application_insights_standard_web_test" {
+  default = {}
+}
 variable "role_mapping" {
   type    = any
   default = {}
@@ -411,14 +417,14 @@ variable "postgresql_flexible_servers" {
 variable "postgresql_servers" {
   default = {}
 }
-variable "cosmos_db" {
-  default = {}
-}
 variable "log_analytics" {
   type    = any
   default = {}
 }
 variable "logic_app_workflow" {
+  default = {}
+}
+variable "logic_app_standard" {
   default = {}
 }
 variable "logic_app_integration_account" {
@@ -526,6 +532,12 @@ variable "event_hubs" {
   default = {}
 }
 variable "automations" {
+  default = {}
+}
+variable "automation_schedules" {
+  default = {}
+}
+variable "automation_runbooks" {
   default = {}
 }
 variable "automation_log_analytics_links" {
@@ -895,6 +907,9 @@ variable "api_management_group" {
 variable "api_management_subscription" {
   default = {}
 }
+variable "api_management_product" {
+  default = {}
+}
 variable "lb" {
   default = {}
 }
@@ -1061,5 +1076,40 @@ variable "resource_provider_registration" {
   default = {}
 }
 variable "static_sites" {
+  default = {}
+}
+variable "aro_clusters" {
+  default = {}
+}
+variable "web_pubsubs" {
+  default = {}
+}
+variable "web_pubsub_hubs" {
+  default = {}
+}
+variable "aadb2c_directory" {
+  default = {}
+}
+variable "preview_features" {
+  default = {}
+}
+variable "private_dns_resolvers" {
+  default = {}
+}
+variable "private_dns_resolver_inbound_endpoints" {
+  default = {}
+}
+variable "private_dns_resolver_outbound_endpoints" {
+  default = {}
+}
+variable "private_dns_resolver_dns_forwarding_rulesets" {
+  default = {}
+}
+
+variable "private_dns_resolver_forwarding_rules" {
+  default = {}
+}
+
+variable "private_dns_resolver_virtual_network_links" {
   default = {}
 }

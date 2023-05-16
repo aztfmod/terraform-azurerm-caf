@@ -3,12 +3,14 @@ variable "client_config" {
 }
 variable "resource_group_name" {
   type        = string
-  description = "(Required) Name of the resource group where to create the resource. Changing this forces a new resource to be created. "
+  description = "Name of the resource group where to create the resource. Changing this forces a new resource to be created. "
+  default     = null
 }
 
 variable "location" {
   type        = string
-  description = "(Required) Specifies the Azure location to deploy the resource. Changing this forces a new resource to be created."
+  description = "location of the resource if different from the resource group."
+  default     = null
 }
 
 variable "tags" {
@@ -56,10 +58,6 @@ variable "global_settings" {
   type        = any
   description = "Global settings object (see module README.md)"
 }
-variable "base_tags" {
-  description = "Base tags for the resource to be inherited from the resource group."
-  type        = map(any)
-}
 variable "network_watchers" {
   type    = any
   default = {}
@@ -69,8 +67,16 @@ variable "network_security_groups" {
   default     = {}
   description = "Network Security Group cretaed with different Resource Group"
 }
-
 variable "remote_dns" {
   type    = any
   default = {}
+}
+
+variable "resource_group" {
+  type        = any
+  description = "Resource group object to deploy the virtual machine"
+}
+variable "base_tags" {
+  description = "Base tags for the resource to be inherited from the resource group."
+  type        = bool
 }

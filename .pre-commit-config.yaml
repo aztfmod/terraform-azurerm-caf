@@ -1,99 +1,20 @@
+# See http://pre-commit.com for more information
+# See http://pre-commit.com/hooks.html for more hooks
 repos:
-- repo: https://github.com/pre-commit/pre-commit-hooks
-  rev: v4.3.0
-  hooks:
-    # Git style
-    - id: check-added-large-files
-    - id: check-merge-conflict
-    - id: check-vcs-permalinks
-    - id: forbid-new-submodules
-    # no need to prevent commit to main since we use a fork approach for PRs
-    # - id: no-commit-to-branch
-
-    # Common errors
-    - id: end-of-file-fixer
-    - id: trailing-whitespace
-      args: [--markdown-linebreak-ext=md]
-      exclude: CHANGELOG.md
-    - id: check-yaml
-    - id: check-merge-conflict
-    - id: check-executables-have-shebangs
-
-    # Cross platform
-    - id: check-case-conflict
-    - id: mixed-line-ending
-      args: [--fix=lf]
-
-#- repo: https://github.com/jumanjihouse/pre-commit-hooks
-#  rev: 2.1.6
-#  hooks:
-#    - id: shfmt
-#      args: ['-l', '-i', '2', '-ci', '-sr', '-w']
-#    - id: shellcheck
-
-# Dockerfile linter
-# - repo: https://github.com/hadolint/hadolint
-#   rev: v2.10.0
-#   hooks:
-#     - id: hadolint
-#       args: [
-#         '--ignore', 'DL3027', # Do not use apt
-#         '--ignore', 'DL3007', # Using latest
-#         '--ignore', 'DL4006', # Not related to alpine
-#         '--ignore', 'SC1091', # Useless check
-#         '--ignore', 'SC2015', # Useless check
-#         '--ignore', 'SC3037', # Not related to alpine
-#         '--ignore', 'DL3013', # Pin versions in pip
-#       ]
-
-- repo: https://github.com/antonbabenko/pre-commit-terraform
-  rev:  v1.76.0 # Get the latest from: https://github.com/antonbabenko/pre-commit-terraform/releases
-  hooks:
-    # - id: tfupdate
-    #   name: Limit azurecaf provider version
-    #   args:
-    #     - --args=provider aztfmod/azurecaf
-    #     - --args=--version "~> 1.2.0"
-    # - id: tfupdate
-    #   name: Limit azuread provider version
-    #   args:
-    #     - --args=provider azuread
-    #     - --args=--version "~> 2.30.0"
-    # - id: tfupdate
-    #   name: Limit terraform version
-    #   args:
-    #     - --args=terraform
-    #     - --args=--version ">= 1.1.0"
-    # - id: tfupdate
-    #   name: Limit azuredevops provider version
-    #   args:
-    #     - --args=provider microsoft/azuredevops
-    #     - --args=--version "~> 0.1.3"
+  - repo: https://github.com/antonbabenko/pre-commit-terraform
+    rev: v1.77.3
+    hooks:
     - id: terraform_fmt
-    - id: terraform_validate
-      exclude: '^[^/]+$'                                      #excluding since it contains azurerm.vhub provider
-    # disable these until we have a better process around updating TF docs
-    # - id: terraform_docs
-    #   exclude: .travis
-    # - id: terraform_docs_without_aggregate_type_defaults
-    #   exclude: .travis
-    - id: terraform_tflint
-      exclude: examples                                       #excluding example tfvars since no need to fix it
-      args:
-        - --args=--disable-rule=terraform_unused_declarations #it is under azure control,variable/local declaraed might be used in future
-    #- id: terraform_tfsec
-    #- id: terraform_checkov
-    #- id: infracost_breakdown
-    #- id: terrascan
-
-# Automatic tagging best practices - commented out since it breaks workflow of https://github.com/antonbabenko/pre-commit-terraform
-# - repo: https://github.com/bridgecrewio/yor
-#   rev: 0.1.143
-#   hooks:
-#     - id: yor
-#       name: yor
-#       entry: yor tag -d
-#       args: ["."]
-#       language: golang
-#       types: [terraform]
-#       pass_filenames: false
+    - id: terraform_docs
+    #  - id: terraform_tflint
+    # - id: terraform_validate
+    # - id: terraform_tfsec
+    # - id: checkov
+  - repo: https://github.com/pre-commit/pre-commit-hooks
+    rev: v4.4.0
+    hooks:
+      - id: check-merge-conflict
+      - id: trailing-whitespace
+      - id: check-yaml
+      - id: check-added-large-files
+      - id: detect-private-key

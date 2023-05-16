@@ -2,13 +2,13 @@
 # https://learn.microsoft.com/en-us/azure/container-apps/networking#dns
 module "private_dns" {
   source = "../../networking/private-dns"
-  count  = var.settings.vnet.vnet_key != null && var.settings.vnet.internal ? 1 : 0
+  count  = try(var.settings.vnet.vnet_key, null) != null && try(var.settings.vnet.internal, false) ? 1 : 0
 
   global_settings     = var.global_settings
   client_config       = var.client_config
   name                = jsondecode(azapi_resource.container_app_env.output).properties.defaultDomain
   resource_group_name = local.resource_group.name
-  base_tags           = {}
+  base_tags           = false
   # cannot use this approach to create wildcard record, see note below
   records = {
     # a_records = {
@@ -35,7 +35,7 @@ module "private_dns" {
 # would prefer to pass this into private_dns module, but terraform for_each cannot be done with map keys
 # that are derived from resource attributes
 resource "azurerm_private_dns_a_record" "wildcard" {
-  count = var.settings.vnet.vnet_key != null && var.settings.vnet.internal ? 1 : 0
+  count = try(var.settings.vnet.vnet_key, null) != null && try(var.settings.vnet.internal, false) ? 1 : 0
   depends_on = [
     module.private_dns
   ]

@@ -6,14 +6,9 @@ variable "client_config" {
   type        = any
   description = "Client configuration object (see module README.md)."
 }
-variable "location" {
-  type        = string
-  description = "(Required) Specifies the supported Azure location where to create the resource. Changing this forces a new resource to be created."
-}
-
-variable "resource_group_name" {
-  type        = string
-  description = "Name of the existing resource group to deploy the virtual machine"
+variable "resource_group" {
+  type        = any
+  description = "Resource group object to deploy the virtual machine"
 }
 
 variable "keyvaults" {
@@ -74,7 +69,7 @@ variable "availability_sets" {
 
 variable "base_tags" {
   description = "Base tags for the resource to be inherited from the resource group."
-  type        = map(any)
+  type        = bool
 }
 
 variable "proximity_placement_groups" {

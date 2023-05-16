@@ -20,7 +20,12 @@ variable "location" {
 
 variable "resource_group_name" {
   type        = string
-  description = "(Required) Resource group of the Static Site"
+  description = "Resource group object to deploy the virtual machine"
+  default     = null
+}
+variable "resource_group" {
+  type        = any
+  description = "Resource group object to deploy the virtual machine"
 }
 
 variable "sku_tier" {
@@ -57,7 +62,7 @@ variable "global_settings" {
 
 variable "base_tags" {
   description = "Base tags for the resource to be inherited from the resource group."
-  type        = map(any)
+  type        = bool
 }
 
 variable "diagnostic_profiles" {
@@ -86,6 +91,9 @@ variable "subnet_id" {
 }
 
 variable "vnets" {
+  type = any
+}
+variable "custom_domains" {
   type    = any
   default = {}
 }

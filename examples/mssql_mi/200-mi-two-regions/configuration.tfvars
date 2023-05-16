@@ -277,9 +277,10 @@ mssql_mi_administrators = {
     resource_group_key = "sqlmi_region1"
     mi_server_key      = "sqlmi1"
     login              = "sqlmiadmin-khairi"
-    azuread_group_key  = "sql_mi_admins"
 
-    # group key or upn supported
+    # group key or existing group OID or upn supported
+    azuread_group_key = "sql_mi_admins"
+    # azuread_group_id   = "<specify existing azuread group's Object Id (OID) here>"
     # user_principal_name = ""
   }
 }
@@ -325,21 +326,21 @@ keyvaults = {
 #   tde_primary = {
 #     sqlmi1 = {
 #       mssql_managed_instance_key = "sqlmi1"
-#       key_permissions            = ["get", "unwrapKey", "wrapKey"]
+#       key_permissions            = ["get", "UnwrapKey", "WrapKey"]
 #     }
 #     sqlmi2 = {
 #       mssql_managed_instance_secondary_key = "sqlmi2"
-#       key_permissions                      = ["get", "unwrapKey", "wrapKey"]
+#       key_permissions                      = ["get", "UnwrapKey", "WrapKey"]
 #     }
 #   }
 #   tde_secondary = {
 #     sqlmi1 = {
 #       mssql_managed_instance_key = "sqlmi1"
-#       key_permissions            = ["get", "unwrapKey", "wrapKey"]
+#       key_permissions            = ["get", "UnwrapKey", "WrapKey"]
 #     }
 #     sqlmi2 = {
 #       mssql_managed_instance_secondary_key = "sqlmi2"
-#       key_permissions                      = ["get", "unwrapKey", "wrapKey"]
+#       key_permissions                      = ["get", "UnwrapKey", "WrapKey"]
 #     }
 #   }
 # }
@@ -349,7 +350,7 @@ keyvaults = {
 #     keyvault_key = "tde_primary"
 #     name         = "TDE"
 #     key_type     = "RSA"
-#     key_opts     = ["encrypt", "decrypt", "sign", "verify", "wrapKey", "unwrapKey"]
+#     key_opts     = ["Encrypt", "Decrypt", "Sign", "Verify", "WrapKey", "UnwrapKey"]
 #     key_size     = 2048
 #   }
 # }

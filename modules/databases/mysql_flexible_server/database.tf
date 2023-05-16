@@ -5,7 +5,7 @@ resource "time_sleep" "database_configuration" {
 }
 
 resource "azurecaf_name" "mysql_flexible_database" {
-  for_each = var.settings.mysql_databases
+  for_each = try(var.settings.mysql_databases, {})
 
   name          = each.value.name
   resource_type = "azurerm_mysql_flexible_server_database"
@@ -28,7 +28,7 @@ resource "azurerm_mysql_flexible_database" "mysql" {
 }
 
 resource "azurerm_key_vault_secret" "mysql_database_name" {
-  for_each = { for key, value in var.settings.mysql_databases : key => value if can(var.settings.keyvault) }
+  for_each = { for key, value in try(var.settings.mysql_databases, {}) : key => value if can(var.settings.keyvault) }
 
   name         = format("%s-ON-%s", azurerm_mysql_flexible_server.mysql.name, each.value.name)
   value        = each.value.name

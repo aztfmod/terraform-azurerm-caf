@@ -5,7 +5,7 @@ keyvaults = {
     sku_name           = "standard"
     creation_policies = {
       logged_in_user = {
-        certificate_permissions = ["Get", "List", "Update", "Create", "Import", "Delete", "Purge", "Recover", "Getissuers", "Setissuers", "Listissuers", "Deleteissuers", "Manageissuers", "Restore", "Managecontacts"]
+        certificate_permissions = ["Get", "List", "Update", "Create", "Import", "Delete", "Purge", "Recover", "GetIssuers", "SetIssuers", "ListIssuers", "DeleteIssuers", "ManageIssuers", "Restore", "ManageContacts"]
         secret_permissions      = ["Set", "Get", "List", "Delete", "Purge"]
       }
     }
