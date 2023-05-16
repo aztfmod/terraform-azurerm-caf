@@ -171,6 +171,9 @@ variable "resource_groups" {
 variable "network_security_group_definition" {
   default = {}
 }
+variable "network_security_security_rules" {
+  default = {}
+}
 variable "route_tables" {
   default = {}
 }

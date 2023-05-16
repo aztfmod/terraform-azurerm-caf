@@ -1,7 +1,8 @@
 variable "vcores" {
   description = "The number of vCores for Gen5. Allowed values: 8, 16, 24, 32, 40, 64, 80."
-  default     = 8
+  default     = 4
   nullable    = false
+  type        = number
 
   validation {
     condition = contains(
@@ -17,7 +18,7 @@ variable "vcores" {
       ],
       var.vcores
     )
-    error_message = format("Not supported value: '%s'. \nAdjust your configuration file with a supported value: %s",
+    error_message = format("Gen5 sku does not support this value: '%s'. \nAdjust the value for vcores with: %s",
       var.vcores,
       join(", ",
         [
@@ -34,6 +35,6 @@ variable "vcores" {
     )
   }
 }
-output "vCores" {
+output "vcores" {
   value = var.vcores
 }

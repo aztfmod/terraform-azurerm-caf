@@ -47,6 +47,7 @@ jobs:
     needs: load_scenarios
 
     strategy:
+      max-parallel: 20
       fail-fast: false
       matrix: ${{fromJSON(needs.load_scenarios.outputs.matrix)}}
 
