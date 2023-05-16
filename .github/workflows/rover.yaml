@@ -67,12 +67,14 @@ jobs:
             git clone -b ${{ inputs.LZ_REF }} https://github.com/Azure/caf-terraform-landingzones.git ${GITHUB_WORKSPACE}/landingzones
           fi
 
-      - name: Azure login
+      - name: Azure login and initialize the launchpad
         shell: bash
         run: |
           az login --service-principal -u ${{ secrets.ARM_CLIENT_ID }} -p ${{ secrets.ARM_CLIENT_SECRET }} --tenant ${{ secrets.ARM_TENANT_ID }} --only-show-errors 1> /dev/null
           az account set -s ${{ secrets.ARM_SUBSCRIPTION_ID }}
           az account show
+          #
+          /tf/rover/rover.sh init
 
       - name: Terraform Plan
         id: tf_plan
