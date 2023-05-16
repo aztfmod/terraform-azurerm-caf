@@ -16,9 +16,6 @@ on:
         required: true
         type: string
 
-env:
-  ROVER_RUNNER=true
-
 jobs:
 
   rover_setup:
@@ -48,6 +45,9 @@ jobs:
     container:
       image: aztfmod/rover:1.4.6-2305.0405
       options: --user 0
+
+    env:
+      ROVER_RUNNER=true
 
     steps:
       - uses: actions/checkout@v3
