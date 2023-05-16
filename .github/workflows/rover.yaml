@@ -68,8 +68,8 @@ jobs:
       - name: Azure login
         shell: bash
         run: |
-          az login --service-principal -u ${{ env.ARM_CLIENT_ID }} -p ${{ env.ARM_CLIENT_SECRET }} --tenant ${{ env.ARM_TENANT_ID }} --only-show-errors 1> /dev/null
-          az account set -s ${{ env.ARM_SUBSCRIPTION_ID }}
+          az login --service-principal -u ${{ secrets.ARM_CLIENT_ID }} -p ${{ secrets.ARM_CLIENT_SECRET }} --tenant ${{ secrets.ARM_TENANT_ID }} --only-show-errors 1> /dev/null
+          az account set -s ${{ secrets.ARM_SUBSCRIPTION_ID }}
           az account show
 
       - name: Terraform Plan
