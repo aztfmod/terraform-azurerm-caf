@@ -3,7 +3,7 @@
 # Licensed under the MIT License.
 #
 
-name: scenario
+name: landingzone
 
 on:
   workflow_dispatch:
@@ -33,28 +33,37 @@ jobs:
     runs-on: ubuntu-latest
     outputs:
       jobs: ${{ steps.load_scenarios.outputs.jobs }}
+      ARM_CLIENT_ID: ${{ steps.load_scenarios.outputs.ARM_CLIENT_ID }}
+      ARM_CLIENT_SECRET: ${{ steps.load_scenarios.outputs.ARM_CLIENT_SECRET }}
+      ARM_TENANT_ID: ${{ steps.load_scenarios.outputs.ARM_TENANT_ID }}
+      ARM_SUBSCRIPTION_ID: ${{ steps.load_scenarios.outputs.ARM_SUBSCRIPTION_ID }}
     steps:
       - uses: actions/checkout@v3
       - id: load_scenarios
         run: |
           jobs=$( cat ./.github/workflows/${{ github.event.inputs.scenario }} | jq -c .)
           echo "jobs=${jobs}" >> $GITHUB_OUTPUT
+          echo "ARM_CLIENT_ID=$ARM_CLIENT_ID" >> $GITHUB_OUTPUT
+          echo "ARM_CLIENT_SECRET=$ARM_CLIENT_SECRET" >> $GITHUB_OUTPUT
+          echo "ARM_TENANT_ID=$ARM_TENANT_ID" >> $GITHUB_OUTPUT
+          echo "ARM_SUBSCRIPTION_ID=$ARM_SUBSCRIPTION_ID" >> $GITHUB_OUTPUT
+
+
 
   job:
-  
     name: ${{ matrix.jobs.name }}
     needs: load_scenarios
 
     strategy:
       matrix: ${{ fromJSON(needs.load_scenarios.outputs.jobs) }}
 
-    uses: ./.github/workflows/phases.yaml
+    uses: ./.github/workflows/job.yaml
     with:
       matrix: ${{ toJSON(matrix.jobs) }}
-      ARM_CLIENT_ID: ${{ env.ARM_CLIENT_ID }}
-      ARM_CLIENT_SECRET: ${{ env.ARM_CLIENT_SECRET }}
-      ARM_TENANT_ID: ${{ env.ARM_TENANT_ID }}
-      ARM_SUBSCRIPTION_ID: ${{ env.ARM_SUBSCRIPTION_ID }}
+      ARM_CLIENT_ID: ${{ needs.load_scenarios.outputs.ARM_CLIENT_ID }}
+      ARM_CLIENT_SECRET: ${{ needs.load_scenarios.outputs.ARM_CLIENT_SECRET }}
+      ARM_TENANT_ID: ${{ needs.load_scenarios.outputs.ARM_TENANT_ID }}
+      ARM_SUBSCRIPTION_ID: ${{ needs.load_scenarios.outputs.ARM_SUBSCRIPTION_ID }}
 
   purge:
     name: purge
