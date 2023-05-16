@@ -19,10 +19,6 @@ on:
 env:
   TF_CLI_ARGS: "-no-color"
   TF_CLI_ARGS_destroy: "-auto-approve -refresh=false"
-  ARM_CLIENT_SECRET: ${{ secrets.ARM_CLIENT_SECRET }}
-  ARM_CLIENT_ID: ${{ secrets.ARM_CLIENT_ID }}
-  ARM_SUBSCRIPTION_ID: ${{ secrets.ARM_SUBSCRIPTION_ID }}
-  ARM_TENANT_ID: ${{ secrets.ARM_TENANT_ID }}
   TF_REGISTRY_DISCOVERY_RETRY: 5
   TF_REGISTRY_CLIENT_TIMEOUT: 15
   LZ_REF: int-5.7.0
@@ -33,20 +29,12 @@ jobs:
     runs-on: ubuntu-latest
     outputs:
       jobs: ${{ steps.load_scenarios.outputs.jobs }}
-      ARM_CLIENT_ID: ${{ steps.load_scenarios.outputs.ARM_CLIENT_ID }}
-      ARM_CLIENT_SECRET: ${{ steps.load_scenarios.outputs.ARM_CLIENT_SECRET }}
-      ARM_TENANT_ID: ${{ steps.load_scenarios.outputs.ARM_TENANT_ID }}
-      ARM_SUBSCRIPTION_ID: ${{ steps.load_scenarios.outputs.ARM_SUBSCRIPTION_ID }}
     steps:
       - uses: actions/checkout@v3
       - id: load_scenarios
         run: |
           jobs=$( cat ./.github/workflows/${{ github.event.inputs.scenario }} | jq -c .)
           echo "jobs=${jobs}" >> $GITHUB_OUTPUT
-          echo "ARM_CLIENT_ID=$ARM_CLIENT_ID" >> $GITHUB_OUTPUT
-          echo "ARM_CLIENT_SECRET=$ARM_CLIENT_SECRET" >> $GITHUB_OUTPUT
-          echo "ARM_TENANT_ID=$ARM_TENANT_ID" >> $GITHUB_OUTPUT
-          echo "ARM_SUBSCRIPTION_ID=$ARM_SUBSCRIPTION_ID" >> $GITHUB_OUTPUT
 
 
 
@@ -54,16 +42,18 @@ jobs:
     name: ${{ matrix.jobs.name }}
     needs: load_scenarios
 
+    env:
+      ARM_CLIENT_ID: ${{ secrets.ARM_CLIENT_ID }}
+      ARM_CLIENT_SECRET: ${{ secrets.ARM_CLIENT_SECRET }}
+      ARM_TENANT_ID: ${{ secrets.ARM_TENANT_ID }}
+      ARM_SUBSCRIPTION_ID: ${{ secrets.ARM_SUBSCRIPTION_ID }}
+
     strategy:
       matrix: ${{ fromJSON(needs.load_scenarios.outputs.jobs) }}
 
     uses: ./.github/workflows/phases.yaml
     with:
       matrix: ${{ toJSON(matrix.jobs) }}
-      ARM_CLIENT_ID: ${{ needs.load_scenarios.outputs.ARM_CLIENT_ID }}
-      ARM_CLIENT_SECRET: ${{ needs.load_scenarios.outputs.ARM_CLIENT_SECRET }}
-      ARM_TENANT_ID: ${{ needs.load_scenarios.outputs.ARM_TENANT_ID }}
-      ARM_SUBSCRIPTION_ID: ${{ needs.load_scenarios.outputs.ARM_SUBSCRIPTION_ID }}
 
   purge:
     name: purge
@@ -79,8 +69,8 @@ jobs:
     steps:
       - name: Login azure
         run: |
-          az login --service-principal -u '${{ env.ARM_CLIENT_ID }}' -p '${{ env.ARM_CLIENT_SECRET }}' --tenant '${{ env.ARM_TENANT_ID }}'
-          az account set -s  ${{ env.ARM_SUBSCRIPTION_ID }}
+          az login --service-principal -u '${{ secrets.ARM_CLIENT_ID }}' -p '${{ secrets.ARM_CLIENT_SECRET }}' --tenant '${{ secrets.ARM_TENANT_ID }}'
+          az account set -s  ${{ secrets.ARM_SUBSCRIPTION_ID }}
 
       - name: Complete purge
         run: |

@@ -15,18 +15,6 @@ on:
       lz_ref:
         required: true
         type: string
-      ARM_CLIENT_ID:
-        required: true
-        type: string
-      ARM_CLIENT_SECRET:
-        required: true
-        type: string
-      ARM_TENANT_ID:
-        required: true
-        type: string
-      ARM_SUBSCRIPTION_ID:
-        required: true
-        type: string
 
 
 jobs:
@@ -59,12 +47,6 @@ jobs:
       image: aztfmod/rover:1.4.6-2305.0405
       options: --user 0
 
-      # required for act
-      # volumes:
-      #   - home:/home/vscode
-      #   - tmp:/tmp
-      #   - cache:/tf/cache
-
     steps:
       - uses: actions/checkout@v3
 
@@ -86,8 +68,8 @@ jobs:
       - name: Azure login
         shell: bash
         run: |
-          az login --service-principal -u ${{ inputs.ARM_CLIENT_ID }} -p ${{ inputs.ARM_CLIENT_SECRET }} --tenant ${{ inputs.ARM_TENANT_ID }} --only-show-errors 1> /dev/null
-          az account set -s ${{ inputs.ARM_SUBSCRIPTION_ID }}
+          az login --service-principal -u ${{ env.ARM_CLIENT_ID }} -p ${{ env.ARM_CLIENT_SECRET }} --tenant ${{ env.ARM_TENANT_ID }} --only-show-errors 1> /dev/null
+          az account set -s ${{ env.ARM_SUBSCRIPTION_ID }}
           az account show
 
       - name: Terraform Plan
