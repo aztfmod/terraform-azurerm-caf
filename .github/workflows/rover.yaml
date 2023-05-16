@@ -37,7 +37,7 @@ jobs:
           echo "path=$path" >> $GITHUB_OUTPUT
 
 
-  rover_plan:
+  rover:
     name: ${{ inputs.name }}-${{ fromJSON(needs.rover_setup.outputs.name) }}
     runs-on: ubuntu-latest
     needs: rover_setup
@@ -47,7 +47,7 @@ jobs:
       options: --user 0
 
     env:
-      ROVER_RUNNER=true
+      ROVER_RUNNER: true
 
     steps:
       - uses: actions/checkout@v3
