@@ -30,6 +30,10 @@ jobs:
       phase1: ${{ steps.setup.outputs.phase1 }}
       phase2: ${{ steps.setup.outputs.phase2 }}
       lz_ref: ${{ steps.setup.outputs.lz_ref }}
+      ARM_CLIENT_ID: ${{ steps.setup.outputs.ARM_CLIENT_ID }}
+      ARM_CLIENT_SECRET: ${{ steps.setup.outputs.ARM_CLIENT_SECRET }}
+      ARM_TENANT_ID: ${{ steps.setup.outputs.ARM_TENANT_ID }}
+      ARM_SUBSCRIPTION_ID: ${{ steps.setup.outputs.ARM_SUBSCRIPTION_ID }}
     steps:
       - name: set outputs with default values
         id: setup
@@ -45,6 +49,10 @@ jobs:
           echo "phase1=$phase1" >> $GITHUB_OUTPUT
           echo "phase2=$phase2" >> $GITHUB_OUTPUT
           echo "lz_ref=$lz_ref" >> $GITHUB_OUTPUT
+          echo "ARM_CLIENT_ID=${{inputs.ARM_CLIENT_ID}}" >> $GITHUB_OUTPUT
+          echo "ARM_CLIENT_SECRET=${{inputs.ARM_CLIENT_SECRET}}" >> $GITHUB_OUTPUT
+          echo "ARM_TENANT_ID=${{inputs.ARM_TENANT_ID}}" >> $GITHUB_OUTPUT
+          echo "ARM_SUBSCRIPTION_ID=${{inputs.ARM_SUBSCRIPTION_ID}}" >> $GITHUB_OUTPUT
 
 
   phase1_deploy:
@@ -60,10 +68,10 @@ jobs:
       name: phase1
       phase: ${{ toJSON(matrix.phase) }}
       lz_ref: ${{ fromJSON(needs.setup.outputs.lz_ref) }}
-      ARM_CLIENT_ID: ${{ intputs.ARM_CLIENT_ID }}
-      ARM_CLIENT_SECRET: ${{ intputs.ARM_CLIENT_SECRET }}
-      ARM_TENANT_ID: ${{ intputs.ARM_TENANT_ID }}
-      ARM_SUBSCRIPTION_ID: ${{ intputs.ARM_SUBSCRIPTION_ID }}
+      ARM_CLIENT_ID: ${{ needs.setup.outputs.ARM_CLIENT_ID }}
+      ARM_CLIENT_SECRET: ${{ needs.setup.outputs.ARM_CLIENT_SECRET }}
+      ARM_TENANT_ID: ${{ needs.setup.outputs.ARM_TENANT_ID }}
+      ARM_SUBSCRIPTION_ID: ${{ needs.setup.outputs.ARM_SUBSCRIPTION_ID }}
 
   phase2_deploy:
     needs: [setup, phase1_deploy]
@@ -78,8 +86,8 @@ jobs:
       name: phase2
       phase: ${{ toJSON(matrix.phase) }}
       lz_ref: ${{ fromJSON(needs.setup.outputs.lz_ref) }}
-      ARM_CLIENT_ID: ${{ intputs.ARM_CLIENT_ID }}
-      ARM_CLIENT_SECRET: ${{ intputs.ARM_CLIENT_SECRET }}
-      ARM_TENANT_ID: ${{ intputs.ARM_TENANT_ID }}
-      ARM_SUBSCRIPTION_ID: ${{ intputs.ARM_SUBSCRIPTION_ID }}
+      ARM_CLIENT_ID: ${{ needs.setup.outputs.ARM_CLIENT_ID }}
+      ARM_CLIENT_SECRET: ${{ needs.setup.outputs.ARM_CLIENT_SECRET }}
+      ARM_TENANT_ID: ${{ needs.setup.outputs.ARM_TENANT_ID }}
+      ARM_SUBSCRIPTION_ID: ${{ needs.setup.outputs.ARM_SUBSCRIPTION_ID }}
 
