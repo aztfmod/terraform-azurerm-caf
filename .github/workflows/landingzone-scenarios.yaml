@@ -42,16 +42,11 @@ jobs:
     name: ${{ matrix.jobs.name }}
     needs: load_scenarios
 
-    env:
-      ARM_CLIENT_ID: ${{ secrets.ARM_CLIENT_ID }}
-      ARM_CLIENT_SECRET: ${{ secrets.ARM_CLIENT_SECRET }}
-      ARM_TENANT_ID: ${{ secrets.ARM_TENANT_ID }}
-      ARM_SUBSCRIPTION_ID: ${{ secrets.ARM_SUBSCRIPTION_ID }}
-
     strategy:
       matrix: ${{ fromJSON(needs.load_scenarios.outputs.jobs) }}
 
     uses: ./.github/workflows/phases.yaml
+    secrets: inherit
     with:
       matrix: ${{ toJSON(matrix.jobs) }}
 
