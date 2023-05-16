@@ -77,7 +77,7 @@ jobs:
         run: |
           /tf/rover/rover.sh \
             -lz ${GITHUB_WORKSPACE}/landingzones/caf_solution \
-            -var-folder ${GITHUB_WORKSPACE}/examples/${{inputs.folder}} \
+            -var-folder ${{ env.CURRENT_FOLDER }} \
             -tfstate ${{ env.STATE_FILE }} \
             -p ${{ env.PLAN_FILE }} \
             -var tags='{testing_job_id='"${{ github.run_id }}"'}' \
@@ -90,7 +90,7 @@ jobs:
         run: |
           /tf/rover/rover.sh \
             -lz ${GITHUB_WORKSPACE}/landingzones/caf_solution \
-            -var-folder ${GITHUB_WORKSPACE}/examples/${{inputs.folder}} \
+            -var-folder ${{ env.CURRENT_FOLDER }} \
             -tfstate ${{ env.STATE_FILE }} \
             -p ${{ env.PLAN_FILE }} \
             -var tags='{testing_job_id='"${{ github.run_id }}"'}' \
