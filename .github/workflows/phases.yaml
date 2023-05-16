@@ -42,13 +42,8 @@ jobs:
       matrix:
         phase: ${{ fromJSON(needs.setup.outputs.phase1) }}
 
-    env:
-      ARM_CLIENT_ID: ${{ env.ARM_CLIENT_ID }}
-      ARM_CLIENT_SECRET: ${{ env.ARM_CLIENT_SECRET }}
-      ARM_TENANT_ID: ${{ env.ARM_TENANT_ID }}
-      ARM_SUBSCRIPTION_ID: ${{ env.ARM_SUBSCRIPTION_ID }}
-
     uses: ./.github/workflows/rover.yaml
+    secrets: inherit
     with:
       scenario: ${{ needs.setup.outputs.name }}
       name: phase1
@@ -62,13 +57,8 @@ jobs:
       matrix:
         phase: ${{ fromJSON(needs.setup.outputs.phase2) }}
 
-    env:
-      ARM_CLIENT_ID: ${{ env.ARM_CLIENT_ID }}
-      ARM_CLIENT_SECRET: ${{ env.ARM_CLIENT_SECRET }}
-      ARM_TENANT_ID: ${{ env.ARM_TENANT_ID }}
-      ARM_SUBSCRIPTION_ID: ${{ env.ARM_SUBSCRIPTION_ID }}
-
     uses: ./.github/workflows/rover.yaml
+    secrets: inherit
     with:
       scenario: ${{ needs.setup.outputs.name }}
       name: phase2
