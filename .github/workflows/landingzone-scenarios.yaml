@@ -57,7 +57,7 @@ jobs:
     strategy:
       matrix: ${{ fromJSON(needs.load_scenarios.outputs.jobs) }}
 
-    uses: ./.github/workflows/job.yaml
+    uses: ./.github/workflows/phases.yaml
     with:
       matrix: ${{ toJSON(matrix.jobs) }}
       ARM_CLIENT_ID: ${{ needs.load_scenarios.outputs.ARM_CLIENT_ID }}
