@@ -16,6 +16,8 @@ on:
         required: true
         type: string
 
+env:
+  ROVER_RUNNER=true
 
 jobs:
 
