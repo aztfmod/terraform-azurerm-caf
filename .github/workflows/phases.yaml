@@ -1,0 +1,85 @@
+
+name: job_phases
+
+on:
+  workflow_call:
+    inputs:
+      matrix:
+        required: true
+        type: string
+      ARM_CLIENT_ID:
+        required: true
+        type: string
+      ARM_CLIENT_SECRET:
+        required: true
+        type: string
+      ARM_TENANT_ID:
+        required: true
+        type: string
+      ARM_SUBSCRIPTION_ID:
+        required: true
+        type: string
+
+jobs:
+
+  setup:
+    name: setup phases
+    runs-on: ubuntu-latest
+    outputs:
+      name: ${{ steps.setup.outputs.name }}
+      phase1: ${{ steps.setup.outputs.phase1 }}
+      phase2: ${{ steps.setup.outputs.phase2 }}
+      lz_ref: ${{ steps.setup.outputs.lz_ref }}
+    steps:
+      - name: set outputs with default values
+        id: setup
+        run: |
+          echo '${{inputs.matrix}}' | jq -c
+          #
+          name=$(echo '${{inputs.matrix}}' | jq -c .name) && echo "name: $name"
+          phase1=$(echo '${{inputs.matrix}}' | jq -c .phase1) && echo "phase1: $phase1"
+          phase2=$(echo '${{inputs.matrix}}' | jq -c .phase2) && echo "phase2: $phase2"
+          lz_ref=$(echo '${{inputs.matrix}}' | jq -c .lz_ref) && echo "lz_ref: $lz_ref"
+          #
+          echo "name=$name" >> $GITHUB_OUTPUT
+          echo "phase1=$phase1" >> $GITHUB_OUTPUT
+          echo "phase2=$phase2" >> $GITHUB_OUTPUT
+          echo "lz_ref=$lz_ref" >> $GITHUB_OUTPUT
+
+
+  phase1_deploy:
+    needs: setup
+
+    strategy:
+      matrix:
+        phase: ${{ fromJSON(needs.setup.outputs.phase1) }}
+
+    uses: ./.github/workflows/rover.yaml
+    with:
+      scenario: ${{ needs.setup.outputs.name }}
+      name: phase1
+      phase: ${{ toJSON(matrix.phase) }}
+      lz_ref: ${{ fromJSON(needs.setup.outputs.lz_ref) }}
+      ARM_CLIENT_ID: ${{ intputs.ARM_CLIENT_ID }}
+      ARM_CLIENT_SECRET: ${{ intputs.ARM_CLIENT_SECRET }}
+      ARM_TENANT_ID: ${{ intputs.ARM_TENANT_ID }}
+      ARM_SUBSCRIPTION_ID: ${{ intputs.ARM_SUBSCRIPTION_ID }}
+
+  phase2_deploy:
+    needs: [setup, phase1_deploy]
+
+    strategy:
+      matrix:
+        phase: ${{ fromJSON(needs.setup.outputs.phase2) }}
+
+    uses: ./.github/workflows/rover.yaml
+    with:
+      scenario: ${{ needs.setup.outputs.name }}
+      name: phase2
+      phase: ${{ toJSON(matrix.phase) }}
+      lz_ref: ${{ fromJSON(needs.setup.outputs.lz_ref) }}
+      ARM_CLIENT_ID: ${{ intputs.ARM_CLIENT_ID }}
+      ARM_CLIENT_SECRET: ${{ intputs.ARM_CLIENT_SECRET }}
+      ARM_TENANT_ID: ${{ intputs.ARM_TENANT_ID }}
+      ARM_SUBSCRIPTION_ID: ${{ intputs.ARM_SUBSCRIPTION_ID }}
+
