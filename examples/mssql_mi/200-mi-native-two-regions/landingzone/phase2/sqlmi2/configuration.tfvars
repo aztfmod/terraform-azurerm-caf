@@ -7,7 +7,7 @@ landingzone = {
 
   tfstates = {
     sqlmi1 = {
-      tfstate = "sqlmi1.tfstate"
+      tfstate = "sqlmi-sqlmi1.tfstate"
     }
   }
 }
