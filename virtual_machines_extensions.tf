@@ -42,6 +42,8 @@ module "vm_extension_diagnostics" {
 module "vm_extension_microsoft_azure_domainjoin" {
   source = "./modules/compute/virtual_machine_extensions"
 
+  depends_on = [module.vm_extension_custom_scriptextension]
+
   for_each = {
     for key, value in try(local.compute.virtual_machines, {}) : key => value
     if try(value.virtual_machine_extensions.microsoft_azure_domainjoin, null) != null
@@ -73,8 +75,6 @@ module "vm_extension_session_host_dscextension" {
 
 module "vm_extension_custom_scriptextension" {
   source = "./modules/compute/virtual_machine_extensions"
-
-  depends_on = [module.vm_extension_microsoft_azure_domainjoin]
 
   for_each = {
     for key, value in try(local.compute.virtual_machines, {}) : key => value

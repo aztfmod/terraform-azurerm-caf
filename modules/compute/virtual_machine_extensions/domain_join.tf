@@ -14,10 +14,6 @@ resource "azurerm_virtual_machine_extension" "domainjoin" {
     ]
   }
 
-  depends_on = [
-    azurerm_virtual_machine_extension.custom_script
-  ]
-
   settings = jsonencode(
     {
       "Name" : var.extension.domain_name,
