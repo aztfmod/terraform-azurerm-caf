@@ -45,7 +45,6 @@ mssql_managed_instances_secondary = {
     minimal_tls_version = "1.2"
     //networking
     networking = {
-      lz_key     = "sqlmi1"
       vnet_key   = "sqlmi_region2"
       subnet_key = "sqlmi2"
     }
@@ -54,13 +53,14 @@ mssql_managed_instances_secondary = {
     #service_principal
     identity = {
       type = "UserAssigned"
-      remote = {     # Use that block to reference a remote user MSI
-        "sqlmi1" = { # value of the lz_key
-          managed_identity_keys = [
-            "mi2"
-          ]
-        }
-      }
+      managed_identity_keys = ["mi2"]
+      # remote = {     # Use that block to reference a remote user MSI
+      #   "sqlmi1" = { # value of the lz_key
+      #     managed_identity_keys = [
+      #       "mi2"
+      #     ]
+      #   }
+      # }
     }
 
     public_data_endpoint_enabled = true
