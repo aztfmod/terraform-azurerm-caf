@@ -16,7 +16,7 @@ network_security_security_rules = {
       network_security_group_definition = {
         key = "sqlmi2"
       }
-      name                  = "Microsoft.Sql-managedInstances_UseOnly_mi-sqlmgmt-in--v10"
+      name                  = "Microsoft.Sql-managedInstances_UseOnly_mi-sqlmgmt-in-172-26-96-0-24-v10"
       access                = "Allow"
       description           = "Allow MI provisioning Control Plane Deployment and Authentication Service"
       protocol              = "Tcp"
@@ -34,7 +34,7 @@ network_security_security_rules = {
       network_security_group_definition = {
         key = "sqlmi2"
       }
-      name                  = "Microsoft.Sql-managedInstances_UseOnly_mi-corpsaw-in--v10"
+      name                  = "Microsoft.Sql-managedInstances_UseOnly_mi-corpsaw-in-172-26-96-0-24-v10"
       access                = "Allow"
       description           = "Allow MI Supportability"
       protocol              = "Tcp"
@@ -51,7 +51,7 @@ network_security_security_rules = {
       network_security_group_definition = {
         key = "sqlmi2"
       }
-      name                  = "Microsoft.Sql-managedInstances_UseOnly_mi-corppublic-in--v10"
+      name                  = "Microsoft.Sql-managedInstances_UseOnly_mi-corppublic-in-172-26-96-0-24-v10"
       access                = "Allow"
       description           = "Allow MI Supportability through Corpnet ranges"
       protocol              = "Tcp"
@@ -68,7 +68,7 @@ network_security_security_rules = {
       network_security_group_definition = {
         key = "sqlmi2"
       }
-      name                   = "Microsoft.Sql-managedInstances_UseOnly_mi-healthprobe-in--v10"
+      name                   = "Microsoft.Sql-managedInstances_UseOnly_mi-healthprobe-in-172-26-96-0-24-v10"
       access                 = "Allow"
       description            = "Allow Azure Load Balancer inbound traffic"
       protocol               = "*"
@@ -85,7 +85,7 @@ network_security_security_rules = {
       network_security_group_definition = {
         key = "sqlmi2"
       }
-      name                   = "Microsoft.Sql-managedInstances_UseOnly_mi-internal-in--v10"
+      name                   = "Microsoft.Sql-managedInstances_UseOnly_mi-internal-in-172-26-96-0-24-v10"
       access                 = "Allow"
       description            = "Allow MI internal inbound traffic"
       protocol               = "*"
@@ -151,7 +151,7 @@ network_security_security_rules = {
       network_security_group_definition = {
         key = "sqlmi2"
       }
-      name              = "Microsoft.Sql-managedInstances_UseOnly_mi-services-out--v10"
+      name              = "Microsoft.Sql-managedInstances_UseOnly_mi-services-out-172-26-96-0-24-v10"
       access            = "Allow"
       description       = "Allow MI services outbound traffic over https"
       protocol          = "Tcp"
@@ -172,7 +172,7 @@ network_security_security_rules = {
       network_security_group_definition = {
         key = "sqlmi2"
       }
-      name                   = "Microsoft.Sql-managedInstances_UseOnly_mi-internal-out--v10"
+      name                   = "Microsoft.Sql-managedInstances_UseOnly_mi-internal-out-172-26-96-0-24-v10"
       access                 = "Allow"
       description            = "Allow MI internal outbound traffic"
       protocol               = "*"
