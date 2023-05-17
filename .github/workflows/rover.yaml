@@ -48,6 +48,7 @@ jobs:
 
     env:
       ROVER_RUNNER: true
+      ARM_CLIENT_ID: ${{ secrets.ARM_CLIENT_ID }}
 
     steps:
       - uses: actions/checkout@v3
