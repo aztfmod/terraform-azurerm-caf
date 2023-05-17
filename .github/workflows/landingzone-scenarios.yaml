@@ -14,7 +14,8 @@ on:
         type: bool
       landingzone_ref:
         description: Set the base terraform landingzone tag, branch or ref to use to deploy the code
-        default: int-5.7.0
+        default: sqlmi.native.bugbash2
+        type: string
       scenario:
         description: "Select the scenario you want to run:"
         required: false
