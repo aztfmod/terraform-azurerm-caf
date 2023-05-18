@@ -52,7 +52,7 @@ mssql_managed_instances_secondary = {
     maintenance_configuration_name = "SQL_Default"
     #service_principal
     identity = {
-      type = "UserAssigned"
+      type                  = "UserAssigned"
       managed_identity_keys = ["mi2"]
       # remote = {     # Use that block to reference a remote user MSI
       #   "sqlmi1" = { # value of the lz_key
