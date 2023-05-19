@@ -6,7 +6,8 @@ mssql_mi_failover_groups = {
     region  = "region2"
 
     resource_group = {
-      key = "sqlmi_region2"
+      lz_key = "sqlmi1"
+      key    = "sqlmi_region2"
     }
     primary_server = {
       lz_key        = "sqlmi1"
