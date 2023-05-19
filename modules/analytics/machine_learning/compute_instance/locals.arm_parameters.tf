@@ -2,7 +2,7 @@ locals {
   arm_filename = "${path.module}/arm_compute_instance.json"
 
   # this is the format required by ARM templates
-  parameters_body = {
+  parameters_content = {
     computeInstanceName = {
       value = azurecaf_name.ci.result
     }

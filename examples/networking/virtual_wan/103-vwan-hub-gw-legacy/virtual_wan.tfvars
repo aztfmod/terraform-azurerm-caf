@@ -12,6 +12,13 @@ resource_groups = {
   }
 }
 
+# Required from 5.6.9 to destroy the firewall deployed with the ARM Template deployment
+# This way of deploying the firewall in vhub has been deprecated and only kept for backward compatibility
+# Use other examples for best practices. in networking/firewall
+provider_azurerm_features_template_deployment = {
+  delete_nested_items_during_deletion = true
+}
+
 virtual_wans = {
   vwan_re1 = {
     resource_group_key = "hub_re1"
