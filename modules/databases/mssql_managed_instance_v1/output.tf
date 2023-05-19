@@ -11,7 +11,7 @@ output "name" {
   description = "SQL MI Name"
 }
 output "location" {
-  value = var.location
+  value = local.location
 }
 output "principal_id" {
   value       = can(var.settings.identity) ? azurerm_mssql_managed_instance.mssqlmi.identity.0.principal_id : null

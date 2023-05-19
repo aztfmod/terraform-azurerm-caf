@@ -70,11 +70,11 @@ module "mssql_mi_failover_groups_v1" {
     for key, value in local.database.mssql_mi_failover_groups : key => value
     if try(value.version, "") == "v1"
   }
-  depends_on                  = [module.mssql_managed_instances_secondary_v1]
-  global_settings             = local.global_settings
-  settings                    = each.value
-  managed_instance            = local.combined_objects_mssql_managed_instances[try(each.value.primary_server.lz_key, local.client_config.landingzone_key)][each.value.primary_server.mi_server_key]
-  partner_managed_instance_id = local.combined_objects_mssql_managed_instances_secondary[try(each.value.secondary_server.lz_key, local.client_config.landingzone_key)][each.value.secondary_server.mi_server_key].id
+  depends_on               = [module.mssql_managed_instances_secondary_v1]
+  global_settings          = local.global_settings
+  settings                 = each.value
+  managed_instance         = local.combined_objects_mssql_managed_instances[try(each.value.primary_server.lz_key, local.client_config.landingzone_key)][each.value.primary_server.mi_server_key]
+  partner_managed_instance = local.combined_objects_mssql_managed_instances_secondary[try(each.value.secondary_server.lz_key, local.client_config.landingzone_key)][each.value.secondary_server.mi_server_key]
 }
 
 
