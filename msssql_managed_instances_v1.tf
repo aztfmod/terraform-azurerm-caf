@@ -73,8 +73,7 @@ module "mssql_mi_failover_groups_v1" {
   depends_on                  = [module.mssql_managed_instances_secondary_v1]
   global_settings             = local.global_settings
   settings                    = each.value
-  location                    = try(local.global_settings.regions[each.value.region], null)
-  managed_instance_id         = local.combined_objects_mssql_managed_instances[try(each.value.primary_server.lz_key, local.client_config.landingzone_key)][each.value.primary_server.mi_server_key].id
+  managed_instance            = local.combined_objects_mssql_managed_instances[try(each.value.primary_server.lz_key, local.client_config.landingzone_key)][each.value.primary_server.mi_server_key]
   partner_managed_instance_id = local.combined_objects_mssql_managed_instances_secondary[try(each.value.secondary_server.lz_key, local.client_config.landingzone_key)][each.value.secondary_server.mi_server_key].id
 }
 

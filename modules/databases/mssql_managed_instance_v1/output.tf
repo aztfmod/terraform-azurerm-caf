@@ -25,3 +25,7 @@ output "dns_zone_id" {
   value       = local.dns_zone_id
   description = "this is the zone id extracted from sql managed instance server fqdn and can be used while creating private dns zone for the managed instance"
 }
+output "resource_group_id" {
+  value       = local.resource_group_id
+  description = "Resource group id of the sql mi server."
+}
