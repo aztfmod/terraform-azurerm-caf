@@ -14,11 +14,11 @@ jobs:
     name: setup phases
     runs-on: ubuntu-latest
     outputs:
-      name: ${{ steps.setup.outputs.name }}
-      phase1: ${{ steps.setup.outputs.phase1 }}
-      phase2: ${{ steps.setup.outputs.phase2 }}
-      phase3: ${{ steps.setup.outputs.phase3 }}
-      lz_ref: ${{ steps.setup.outputs.lz_ref }}
+      name: ${{ steps.setup_destroy.outputs.name }}
+      phase1: ${{ steps.setup_destroy.outputs.phase1 }}
+      phase2: ${{ steps.setup_destroy.outputs.phase2 }}
+      phase3: ${{ steps.setup_destroy.outputs.phase3 }}
+      lz_ref: ${{ steps.setup_destroy.outputs.lz_ref }}
     steps:
       - name: set outputs with default values
         id: setup_destroy
