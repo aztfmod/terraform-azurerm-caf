@@ -258,6 +258,12 @@ variable "azuread_groups" {
 variable "azuread_roles" {
   default = {}
 }
+variable "azuread_administrative_units" {
+  default = {}
+}
+variable "azuread_administrative_unit_members" {
+  default = {}
+}
 variable "keyvaults" {
   default = {}
 }
