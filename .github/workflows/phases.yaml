@@ -1,5 +1,5 @@
 
-name: job_dispatcher
+name: phases_dispatcher
 
 on:
   workflow_call:

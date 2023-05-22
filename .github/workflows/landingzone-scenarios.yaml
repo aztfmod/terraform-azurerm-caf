@@ -67,7 +67,7 @@ jobs:
 
   destroy:
     name: ${{ matrix.jobs.name }} (destroy)
-    needs: load_scenarios
+    needs: [load_scenarios, deploy]
 
     strategy:
       max-parallel: 20

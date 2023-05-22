@@ -1,5 +1,5 @@
 
-name: job_dispatcher
+name: phases_dispatcher_destroy
 
 on:
   workflow_call:
@@ -75,7 +75,7 @@ jobs:
       plan_options: -destroy
 
   phase1_destroy:
-    needs: [sesetup_destroytup, phase2_destroy]
+    needs: [setup_destroy, phase2_destroy]
 
     strategy:
       max-parallel: 20
