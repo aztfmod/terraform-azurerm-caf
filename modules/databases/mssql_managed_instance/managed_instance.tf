@@ -108,9 +108,10 @@ data "external" "sqlmi_admin_password" {
 }
 
 data "azapi_resource" "mssqlmi" {
-  name      = azurecaf_name.mssqlmi.result
-  parent_id = local.parent_id
-  type      = "Microsoft.Sql/managedInstances@2021-11-01-preview"
+  depends_on = [azurerm_template_deployment.mssqlmi]
+  name       = azurecaf_name.mssqlmi.result
+  parent_id  = local.parent_id
+  type       = "Microsoft.Sql/managedInstances@2021-11-01-preview"
 }
 
 locals {

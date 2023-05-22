@@ -21,11 +21,6 @@ variable "var_folder_path" {
   default = ""
 }
 
-variable "provider_azurerm_features_keyvault" {
-  default = {
-    purge_soft_delete_on_destroy = true
-  }
-}
 # variable "cloud" {
 #   default = {}
 # }
