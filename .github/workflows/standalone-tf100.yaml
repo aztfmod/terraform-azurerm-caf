@@ -14,8 +14,9 @@ on:
         type: choice
         default: "standalone-scenarios.json"
         options:
-          - standalone-scenarios.json
+          - standalone-scenarios-azuread.json
           - standalone-scenarios-longrunners.json
+          - standalone-scenarios.json
 
 env:
   TF_CLI_ARGS: "-no-color"

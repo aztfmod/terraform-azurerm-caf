@@ -12,6 +12,8 @@ locals {
   }
 
   azuread = {
+    azuread_administrative_unit_members = try(var.azuread.azuread_administrative_unit_members, {})
+    azuread_administrative_units        = try(var.azuread.azuread_administrative_units, {})
     azuread_api_permissions             = try(var.azuread.azuread_api_permissions, {})
     azuread_applications                = try(var.azuread.azuread_applications, {})
     azuread_apps                        = try(var.azuread.azuread_apps, {})
