@@ -29,7 +29,6 @@ locals {
   combined_objects_azuread_applications                           = merge(tomap({ (local.client_config.landingzone_key) = module.azuread_applications_v1 }), try(var.remote_objects.azuread_applications, {}))
   combined_objects_azuread_apps                                   = merge(tomap({ (local.client_config.landingzone_key) = module.azuread_applications }), try(var.remote_objects.azuread_apps, {}))
   combined_objects_azuread_groups                                 = merge(tomap({ (local.client_config.landingzone_key) = module.azuread_groups }), try(var.remote_objects.azuread_groups, {}))
-  combined_objects_azuread_service_principals                     = merge(tomap({ (local.client_config.landingzone_key) = module.azuread_service_principals }), try(var.remote_objects.azuread_service_principals, {}))
   combined_objects_azuread_service_principal_passwords            = merge(tomap({ (local.client_config.landingzone_key) = module.azuread_service_principal_passwords }), try(var.remote_objects.azuread_service_principal_passwords, {}))
   combined_objects_azuread_service_principals                     = merge(tomap({ (local.client_config.landingzone_key) = module.azuread_service_principals }), try(var.remote_objects.azuread_service_principals, {}), try(var.data_sources.azuread_service_principals, {}))
   combined_objects_azuread_users                                  = merge(tomap({ (local.client_config.landingzone_key) = module.azuread_users }), try(var.remote_objects.azuread_users, {}), try(var.data_sources.azuread_users, {}))
