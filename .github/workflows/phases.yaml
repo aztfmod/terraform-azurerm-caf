@@ -65,3 +65,19 @@ jobs:
       phase: ${{ toJSON(matrix.phase) }}
       lz_ref: ${{ fromJSON(needs.setup.outputs.lz_ref) }}
 
+
+  phase3_deploy:
+    needs: [setup, phase2_deploy]
+
+    strategy:
+      matrix:
+        phase: ${{ fromJSON(needs.setup.outputs.phase3) }}
+
+    uses: ./.github/workflows/rover.yaml
+    secrets: inherit
+    with:
+      scenario: ${{ needs.setup.outputs.name }}
+      name: phase3
+      phase: ${{ toJSON(matrix.phase) }}
+      lz_ref: ${{ fromJSON(needs.setup.outputs.lz_ref) }}
+

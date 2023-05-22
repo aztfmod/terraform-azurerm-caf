@@ -9,6 +9,7 @@ mssql_mi_failover_groups = {
       mi_server_key = "sqlmi1"
     }
     secondary_server = {
+      lz_key        = "sqlmi2"
       mi_server_key = "sqlmi2"
     }
     secondary_type = "Standby" # or Geo
