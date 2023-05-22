@@ -15,6 +15,9 @@ on:
       lz_ref:
         required: true
         type: string
+      plan_options:
+        required: false
+        type: string
 
 jobs:
 
@@ -81,7 +84,7 @@ jobs:
           #
           /tf/rover/rover.sh init
 
-      - name: Terraform Plan
+      - name: Terraform Plan ${{ inputs.plan_options }}
         id: tf_plan
         run: |
           /tf/rover/rover.sh \
@@ -91,10 +94,10 @@ jobs:
             -p ${{ env.PLAN_FILE }} \
             -var tags='{testing_job_id='"${{ github.run_id }}"'}' \
             -var var_folder_path=${{ env.CURRENT_FOLDER }} \
-            -a plan
+            -a plan ${{ inputs.plan_options }}
 
 
-      - name: Terraform Apply
+      - name: Terraform Apply ${{ inputs.plan_options }}
         id: tf_apply
         run: |
           /tf/rover/rover.sh \

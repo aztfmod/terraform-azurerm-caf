@@ -52,7 +52,7 @@ jobs:
           jobs=$( cat ./.github/workflows/${{ github.event.inputs.scenario }} | jq -c .)
           echo "jobs=${jobs}" >> $GITHUB_OUTPUT
 
-  job:
+  deploy:
     name: ${{ matrix.jobs.name }}
     needs: load_scenarios
 
@@ -61,6 +61,19 @@ jobs:
       matrix: ${{ fromJSON(needs.load_scenarios.outputs.jobs) }}
 
     uses: ./.github/workflows/phases.yaml
+    secrets: inherit
+    with:
+      matrix: ${{ toJSON(matrix.jobs) }}
+
+  destroy:
+    name: ${{ matrix.jobs.name }} (destroy)
+    needs: load_scenarios
+
+    strategy:
+      max-parallel: 20
+      matrix: ${{ fromJSON(needs.load_scenarios.outputs.jobs) }}
+
+    uses: ./.github/workflows/phases_destroy.yaml
     secrets: inherit
     with:
       matrix: ${{ toJSON(matrix.jobs) }}
