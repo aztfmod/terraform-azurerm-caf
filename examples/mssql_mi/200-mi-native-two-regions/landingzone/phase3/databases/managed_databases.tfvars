@@ -2,8 +2,8 @@
 mssql_managed_databases = {
   managed_db1 = {
     version                   = "v1"
-    name                      = "lz-sql-managed-db1"
-    lz_key                    = "phase1"
+    name                      = "sql-managed-db1"
+    lz_key                    = "sqlmi1"
     mi_server_key             = "sqlmi1"
     short_term_retention_days = 30
 
@@ -17,8 +17,8 @@ mssql_managed_databases = {
   }
   managed_db2 = {
     version       = "v1"
-    name          = "lz-sql-managed-db2"
-    lz_key        = "phase1"
+    name          = "sql-managed-db2"
+    lz_key        = "sqlmi1"
     mi_server_key = "sqlmi1"
     long_term_retention_policy = {
       weekly_retention  = "P6W"

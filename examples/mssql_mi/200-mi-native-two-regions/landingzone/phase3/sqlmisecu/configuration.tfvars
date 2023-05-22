@@ -2,7 +2,7 @@
 landingzone = {
   backend_type        = "azurerm"
   level               = "level1"
-  key                 = "sqlmifo"
+  key                 = "sqlmisecu"
   global_settings_key = "sqlmi1"
 
   tfstates = {

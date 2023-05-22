@@ -17,8 +17,12 @@
       ],
       "phase3": [
         {
-          "name": "sqlmifo",
-          "path": "mssql_mi/200-mi-native-two-regions/landingzone/phase3/sqlmifo"
+          "name": "sqlmisecu",
+          "path": "mssql_mi/200-mi-native-two-regions/landingzone/phase3/sqlmisecu"
+        },
+        {
+          "name": "databases",
+          "path": "mssql_mi/200-mi-native-two-regions/landingzone/phase3/databases"
         }
       ]
     }

@@ -3,11 +3,11 @@ landingzone = {
   backend_type        = "azurerm"
   level               = "level1"
   key                 = "databases"
-  global_settings_key = "phase1"
+  global_settings_key = "sqlmi1"
 
   tfstates = {
-    phase1 = {
-      tfstate = "sqlmi-phase1.tfstate"
+    sqlmi1 = {
+      tfstate = "sqlmi-sqlmi1.tfstate"
     }
   }
 }

@@ -17,6 +17,7 @@ jobs:
       name: ${{ steps.setup.outputs.name }}
       phase1: ${{ steps.setup.outputs.phase1 }}
       phase2: ${{ steps.setup.outputs.phase2 }}
+      phase3: ${{ steps.setup.outputs.phase3 }}
       lz_ref: ${{ steps.setup.outputs.lz_ref }}
     steps:
       - name: set outputs with default values
@@ -27,11 +28,13 @@ jobs:
           name=$(echo '${{inputs.matrix}}' | jq -c .name) && echo "name: $name"
           phase1=$(echo '${{inputs.matrix}}' | jq -c .phase1) && echo "phase1: $phase1"
           phase2=$(echo '${{inputs.matrix}}' | jq -c .phase2) && echo "phase2: $phase2"
+          phase3=$(echo '${{inputs.matrix}}' | jq -c .phase3) && echo "phase3: $phase3"
           lz_ref=$(echo '${{inputs.matrix}}' | jq -c .lz_ref) && echo "lz_ref: $lz_ref"
           #
           echo "name=$name" >> $GITHUB_OUTPUT
           echo "phase1=$phase1" >> $GITHUB_OUTPUT
           echo "phase2=$phase2" >> $GITHUB_OUTPUT
+          echo "phase3=$phase3" >> $GITHUB_OUTPUT
           echo "lz_ref=$lz_ref" >> $GITHUB_OUTPUT
 
 
