@@ -57,6 +57,7 @@ jobs:
     needs: load_scenarios
 
     strategy:
+      max-parallel: 20
       matrix: ${{ fromJSON(needs.load_scenarios.outputs.jobs) }}
 
     uses: ./.github/workflows/phases.yaml

@@ -12,7 +12,7 @@ mssql_managed_instances_secondary = {
     }
 
     primary_server = {
-      lz_key        = "phase1"
+      lz_key        = "sqlmi1"
       mi_server_key = "sqlmi1"
     }
 
@@ -33,12 +33,12 @@ mssql_managed_instances_secondary = {
       # group key or existing group OID or upn supported (require authentication_mode = "aad_only")
       login_username    = "AAD DC Administrators"
       azuread_group_key = "sql_mi_admins"
-      lz_key            = "phase1"
+      lz_key            = "sqlmi1"
       # azuread_group_id   = "<specify existing azuread group's Object Id (OID) here>"
 
     }
     keyvault = {
-      lz_key = "phase1"
+      lz_key = "sqlmi1"
       key    = "sqlmi_rg1"
     }
     license_type        = "BasePrice" #BasePrice (Hybrid Benefit) or LicenseIncluded (Pay-As-You-Go)
@@ -46,20 +46,21 @@ mssql_managed_instances_secondary = {
     //networking
     networking = {
       vnet_key   = "sqlmi_region3"
-      subnet_key = "sqlmi"
+      subnet_key = "sqlmi3"
     }
     proxy_override                 = "Default" #"Default,Proxy,Redirect"
     maintenance_configuration_name = "SQL_Default"
     #service_principal
     identity = {
-      type = "UserAssigned"
-      remote = {     # Use that block to reference a remote user MSI
-        "phase1" = { # value of the lz_key
-          managed_identity_keys = [
-            "mi2"
-          ]
-        }
-      }
+      type                  = "UserAssigned"
+      managed_identity_keys = ["mi3"]
+      # remote = {     # Use that block to reference a remote user MSI
+      #   "sqlmi1" = { # value of the lz_key
+      #     managed_identity_keys = [
+      #       "mi2"
+      #     ]
+      #   }
+      # }
     }
 
     public_data_endpoint_enabled = true

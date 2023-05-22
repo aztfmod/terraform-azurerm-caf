@@ -3,6 +3,7 @@ global_settings = {
   regions = {
     region1 = "australiaeast"
     region2 = "japaneast"
+    region3 = "eastasia"
   }
   inherit_tags = true
 }

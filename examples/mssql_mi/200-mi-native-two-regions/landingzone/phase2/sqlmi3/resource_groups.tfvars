@@ -5,7 +5,7 @@ resource_groups = {
     region = "region3"
   }
   sqlmi_region3 = {
-    name   = "sqlmi-re3"
+    name   = "sqlmi-server-re3"
     region = "region3"
   }
 }
