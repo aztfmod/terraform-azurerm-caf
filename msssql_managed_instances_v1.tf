@@ -139,7 +139,7 @@ module "mssql_mi_secondary_tde_v1" {
     if try(value.version, "") == "v1"
   }
 
-  managed_instance_id   = can(each.value.mi_server.id) ? each.value.mi_server.id : module.mssql_managed_instances_secondary_v1[each.value.mi_server.key].id
+  managed_instance_id   = can(each.value.mi_server.id) ? each.value.mi_server.id : local.combined_objects_mssql_managed_instances_secondary[try(each.value.mi_server.lz_key, local.client_config.landingzone_key)][each.value.mi_server.key].id
   key_vault_key_id      = can(each.value.keyvault_key) ? try(each.value.keyvault_key.id, local.combined_objects_keyvault_keys[try(each.value.keyvault_key.lz_key, local.client_config.landingzone_key)][each.value.keyvault_key.key].id) : null
   auto_rotation_enabled = try(each.value.auto_rotation_enabled, true)
 }
