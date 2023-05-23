@@ -1,5 +1,9 @@
 global_settings = {
   default_region = "region1"
+  inherit_tags   = true
+  tags = {
+    global_tag = "global_tag"
+  }
   regions = {
     region1 = "northeurope"
   }
@@ -10,7 +14,7 @@ resource_groups = {
     name   = "mariadb-re1"
     region = "region1"
     tags = {
-      rgtag = "example"
+      rg_tag = "rg_tag"
     }
   }
   security_region1 = {
@@ -36,7 +40,7 @@ mariadb_servers = {
     subnet_key                    = "mariadb_subnet"
 
     tags = {
-      segment = "sales"
+      server_tag = "server_tag"
     }
 
     mariadb_configuration = {
@@ -66,6 +70,9 @@ mariadb_servers = {
         vnet_key           = "vnet_region1"
         subnet_key         = "mariadb_subnet"
         resource_group_key = "mariadb_region1"
+        tags = {
+          pl_tag = "pl_tag"
+        }
 
         private_service_connection = {
           name                                           = "sales-mariadb-re1"
@@ -137,7 +144,7 @@ storage_accounts = {
   }
   security-re1 = {
     name                     = "securityre1"
-    resource_group_key       = "security_region1"
+    resource_group_key       = "mariadb_region1"
     region                   = "region1"
     account_kind             = "BlobStorage"
     account_tier             = "Standard"
@@ -148,7 +155,7 @@ storage_accounts = {
 keyvaults = {
   mariadb-re1 = {
     name               = "mariadbre1"
-    resource_group_key = "security_region1"
+    resource_group_key = "mariadb_region1"
     sku_name           = "standard"
     creation_policies = {
       logged_in_user = {

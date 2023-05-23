@@ -1,11 +1,7 @@
 variable "resource_group_name" {
   type        = string
-  description = "(Required) The name of the resource group where to create the resource."
-}
-
-variable "location" {
-  type        = string
-  description = "(Required) Specifies the supported Azure location where to create the resource. Changing this forces a new resource to be created."
+  description = "Resource group object to deploy the virtual machine"
+  default     = null
 }
 
 variable "tags" {
@@ -26,11 +22,6 @@ variable "subnet_id" {
 variable "global_settings" {
   type        = any
   description = "Global settings object (see module README.md)"
-}
-
-variable "base_tags" {
-  description = "Base tags for the resource to be inherited from the resource group."
-  type        = map(any)
 }
 
 variable "diagnostic_profiles" {
@@ -57,10 +48,21 @@ variable "client_config" {
   type        = any
   description = "Client configuration object (see module README.md)."
 }
-
+variable "location" {
+  type        = string
+  description = "location of the resource if different from the resource group."
+  default     = null
+}
+variable "resource_group" {
+  description = "Resource group object to deploy the virtual machine"
+}
+variable "base_tags" {
+  description = "Base tags for the resource to be inherited from the resource group."
+  type        = bool
+}
 variable "redis_firewall_rules" {
   type = map(object({
-    name     = optional(string, null)
+    name     = optional(string)
     start_ip = string
     end_ip   = string
   }))

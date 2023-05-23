@@ -10,13 +10,13 @@ resource "azurecaf_name" "asev3" {
 
 resource "azurerm_app_service_environment_v3" "asev3" {
   name                                   = azurecaf_name.asev3.result
-  resource_group_name                    = var.resource_group_name
+  resource_group_name                    = local.resource_group_name
   subnet_id                              = var.subnet_id
   internal_load_balancing_mode           = try(var.settings.internal_load_balancing_mode, null)
   allow_new_private_endpoint_connections = try(var.settings.allow_new_private_endpoint_connections, null)
   dedicated_host_count                   = try(var.settings.dedicated_host_count, null)
   zone_redundant                         = try(var.settings.zone_redundant, null)
-  tags                                   = try(local.tags, null)
+  tags                                   = merge(local.tags, try(var.settings.tags, {}))
 
   dynamic "cluster_setting" {
     for_each = can(var.settings.cluster_settings) ? var.settings.cluster_settings : []

@@ -16,5 +16,5 @@ output "rbac_id" {
 }
 
 output "base_tags" {
-  value = var.base_tags
+  value = local.tags
 }

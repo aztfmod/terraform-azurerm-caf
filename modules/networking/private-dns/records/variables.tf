@@ -7,8 +7,12 @@ variable "client_config" {
   description = "Client configuration object (see module README.md)."
 }
 variable "resource_group_name" {
-  type        = string
-  description = "Name of resource groups hosting private DNS zone"
+  type    = string
+  default = null
+}
+variable "resource_group" {
+  type    = any
+  default = {}
 }
 variable "zone_name" {
   type        = string
@@ -20,7 +24,7 @@ variable "records" {
 }
 variable "base_tags" {
   description = "Base tags for the resource to be inherited from the resource group."
-  type        = map(any)
+  type        = bool
 }
 variable "tags" {
   type    = any

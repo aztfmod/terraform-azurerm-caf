@@ -9,14 +9,6 @@ variable "client_config" {
 variable "settings" {
   type = any
 }
-variable "resource_group_name" {
-  type        = string
-  description = "(Required) The name of the resource group where to create the resource."
-}
-variable "location" {
-  type        = string
-  description = "(Required) Specifies the supported Azure location where to create the resource. Changing this forces a new resource to be created."
-}
 variable "keyvault_id" {
   type = string
 }
@@ -46,9 +38,22 @@ variable "diagnostics" {
   type    = any
   default = {}
 }
+variable "location" {
+  type        = string
+  description = "location of the resource if different from the resource group."
+  default     = null
+}
+variable "resource_group_name" {
+  type        = string
+  description = "Resource group object to deploy the virtual machine"
+  default     = null
+}
+variable "resource_group" {
+  description = "Resource group object to deploy the virtual machine"
+}
 variable "base_tags" {
   description = "Base tags for the resource to be inherited from the resource group."
-  type        = map(any)
+  type        = bool
 }
 variable "private_dns" {
   type    = any

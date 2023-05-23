@@ -7,15 +7,26 @@ variable "client_config" {
   description = "Client configuration object (see module README.md)."
 }
 variable "storage_account" {
-  type = any
+  type        = any
+  description = "Storage account configuration object"
 }
 variable "resource_group_name" {
   type        = string
-  description = "(Required) The name of the resource group where to create the resource."
+  description = "Resource group object to deploy the virtual machine"
+  default     = null
+}
+variable "resource_group" {
+  type        = any
+  description = "Resource group object"
 }
 variable "location" {
   type        = string
-  description = "(Required) Specifies the supported Azure location where to create the resource. Changing this forces a new resource to be created."
+  description = "location of the resource if different from the resource group."
+  default     = null
+}
+variable "base_tags" {
+  description = "Base tags for the resource to be inherited from the resource group."
+  type        = bool
 }
 variable "vnets" {
   type    = any
@@ -27,10 +38,6 @@ variable "private_endpoints" {
 }
 variable "resource_groups" {
   type    = any
-  default = {}
-}
-variable "base_tags" {
-  type    = map(any)
   default = {}
 }
 variable "recovery_vaults" {
@@ -47,6 +54,22 @@ variable "diagnostic_profiles" {
   default = {}
 }
 
+variable "diagnostic_profiles_blob" {
+  default = {}
+}
+
+variable "diagnostic_profiles_queue" {
+  default = {}
+}
+
+variable "diagnostic_profiles_table" {
+  default = {}
+}
+
+variable "diagnostic_profiles_file" {
+  default = {}
+}
+
 variable "diagnostics" {
   type    = any
   default = {}
@@ -55,4 +78,8 @@ variable "diagnostics" {
 variable "managed_identities" {
   type    = any
   default = {}
+}
+
+variable "var_folder_path" {
+  type = string
 }

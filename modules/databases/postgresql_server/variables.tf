@@ -11,11 +11,8 @@ variable "settings" {
 }
 variable "resource_group_name" {
   type        = string
-  description = "(Required) The name of the resource group where to create the resource."
-}
-variable "location" {
-  type        = string
-  description = "(Required) Specifies the supported Azure location where to create the resource. Changing this forces a new resource to be created."
+  description = "Resource group object to deploy the virtual machine"
+  default     = null
 }
 variable "keyvault_id" {
   type = string
@@ -35,16 +32,12 @@ variable "subnet_id" {
 variable "private_endpoints" {
   type = any
 }
-variable "resource_groups" {
-  type = any
-}
-variable "base_tags" {
-  description = "Base tags for the resource to be inherited from the resource group."
-  type        = map(any)
-}
 variable "private_dns" {
   type    = any
   default = {}
+}
+variable "network_security_group_definition" {
+  default = null
 }
 variable "diagnostics" {
   type    = any
@@ -53,4 +46,20 @@ variable "diagnostics" {
 variable "diagnostic_profiles" {
   type    = any
   default = {}
+}
+variable "virtual_subnets" {
+  type = any
+}
+variable "location" {
+  type        = string
+  description = "location of the resource if different from the resource group."
+  default     = null
+}
+variable "resource_group" {
+  type        = any
+  description = "Resource group object to deploy the virtual machine"
+}
+variable "base_tags" {
+  description = "Base tags for the resource to be inherited from the resource group."
+  type        = bool
 }

@@ -1,3 +1,9 @@
+preview_features = {
+  "Microsoft.ContainerService" = [
+    "AKS-KedaPreview",
+    "TrustedAccessPreview"
+  ]
+}
 aks_clusters = {
   cluster_re1 = {
     name               = "akscluster-001"
@@ -20,7 +26,7 @@ aks_clusters = {
 
     network_policy = {
       network_plugin    = "azure"
-      load_balancer_sku = "Standard"
+      load_balancer_sku = "standard"
     }
 
     private_cluster_enabled = true
@@ -35,6 +41,20 @@ aks_clusters = {
     load_balancer_profile = {
       # Only one option can be set
       managed_outbound_ip_count = 1
+    }
+
+    private_endpoints = {
+      pe1 = {
+        name = "aks-pe"
+        #lz_key             = "" # for vnets created in different lz
+        vnet_key   = "spoke_devops_re1"
+        subnet_key = "private_endpoints"
+        private_service_connection = {
+          name                 = "aks-psc"
+          is_manual_connection = false
+          subresource_names    = ["management"]
+        }
+      }
     }
 
     default_node_pool = {
@@ -67,6 +87,10 @@ aks_clusters = {
           "project" = "user services"
         }
       }
+    }
+
+    tags = {
+      cluster = "finance"
     }
 
   }

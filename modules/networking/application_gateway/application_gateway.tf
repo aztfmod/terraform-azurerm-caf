@@ -28,13 +28,14 @@ data "azurerm_key_vault_certificate" "manual_certs" {
 
 resource "azurerm_application_gateway" "agw" {
   name                = azurecaf_name.agw.result
-  resource_group_name = var.resource_group_name
-  location            = var.location
+  resource_group_name = local.resource_group_name
+  location            = local.location
 
-  zones              = try(var.settings.zones, null)
-  enable_http2       = try(var.settings.enable_http2, true)
-  tags               = try(local.tags, null)
-  firewall_policy_id = can(var.settings.firewall_policy_id) || can(var.settings.waf_policy.key) == false ? try(var.settings.firewall_policy_id, null) : var.application_gateway_waf_policies[try(var.settings.waf_policy.lz_key, var.client_config.landingzone_key)][var.settings.waf_policy.key].id
+  zones                             = try(var.settings.zones, null)
+  enable_http2                      = try(var.settings.enable_http2, true)
+  tags                              = try(local.tags, null)
+  firewall_policy_id                = can(var.settings.firewall_policy_id) == true ? var.settings.firewall_policy_id : (can(var.settings.waf_policy.key) == true ? var.application_gateway_waf_policies[try(var.settings.waf_policy.lz_key, var.client_config.landingzone_key)][var.settings.waf_policy.key].id : null)
+  force_firewall_policy_association = can(var.settings.firewall_policy_id) == false && can(var.settings.waf_policy.key) == false ? false : true
 
   sku {
     name     = var.sku_name
@@ -131,6 +132,7 @@ resource "azurerm_application_gateway" "agw" {
       )
       rewrite_rule_set_name       = try(local.rewrite_rule_sets[format("%s-%s", request_routing_rule.value.app_key, local.request_routing_rules[format("%s-%s", request_routing_rule.value.app_key, request_routing_rule.value.request_routing_rule_key)].rule.rewrite_rule_set_key)].name, null)
       redirect_configuration_name = try(local.redirect_configurations[format("%s-%s", request_routing_rule.value.app_key, local.request_routing_rules[format("%s-%s", request_routing_rule.value.app_key, request_routing_rule.value.request_routing_rule_key)].rule.redirect_configuration_key)].name, null)
+      priority                    = try(local.request_routing_rules[format("%s-%s", request_routing_rule.value.app_key, request_routing_rule.value.request_routing_rule_key)].rule.priority, null)
     }
   }
 
@@ -158,7 +160,7 @@ resource "azurerm_application_gateway" "agw" {
   }
 
   dynamic "probe" {
-    for_each = try(local.probes)
+    for_each = try(local.probes, {})
 
     content {
       name                                      = probe.value.name
@@ -286,7 +288,7 @@ resource "azurerm_application_gateway" "agw" {
 
     content {
       name                = ssl_certificate.value.name
-      key_vault_secret_id = ssl_certificate.value.secret_id
+      key_vault_secret_id = ssl_certificate.value.versionless_secret_id
     }
   }
 

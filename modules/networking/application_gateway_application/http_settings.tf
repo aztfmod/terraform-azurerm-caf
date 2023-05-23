@@ -1,6 +1,6 @@
 
 resource "null_resource" "set_http_settings" {
-  depends_on = [null_resource.set_probe, null_resource.set_backend_pools, null_resource.set_ssl_cert, null_resource.set_root_cert]
+  depends_on = [null_resource.set_probe, null_resource.set_backend_pools, null_resource.set_root_cert]
 
   for_each = try(var.settings.http_settings, {})
 
@@ -30,14 +30,14 @@ resource "null_resource" "set_http_settings" {
       HOST_NAME                   = try(each.value.host_name, null)
       HOST_NAME_FROM_BACKEND_POOL = try(each.value.host_name_from_backend_pool, null)
       OVERRIDE_PATH               = try(each.value.path, null)
-      PROBE                       = try(each.value.probe, null)
+      PROBE                       = try(each.value.probe, try(var.settings.probes[each.value.probe_key].name, null))
       ROOT_CERTS                  = try(each.value.root_certs, null) //TODO
     }
   }
 }
 
 resource "null_resource" "delete_http_settings" {
-  depends_on = [null_resource.set_probe, null_resource.delete_backend_pool, null_resource.delete_ssl_cert, null_resource.delete_root_cert]
+  depends_on = [null_resource.delete_probe, null_resource.delete_backend_pool, null_resource.delete_ssl_cert, null_resource.delete_root_cert]
 
   for_each = try(var.settings.http_settings, {})
 

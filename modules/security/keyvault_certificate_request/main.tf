@@ -3,7 +3,7 @@ terraform {
   required_providers {
     azurerm = {
       source  = "hashicorp/azurerm"
-      version = "~> 2.99"
+      version = "~> 3.48"
     }
     azurecaf = {
       source  = "aztfmod/azurecaf"
@@ -13,6 +13,12 @@ terraform {
       source  = "hashicorp/null"
       version = "~> 3.2.1"
     }
+    azapi = {
+      source = "Azure/azapi"
+    }
   }
+}
 
+locals {
+  tags = var.inherit_tags ? var.tags : try(var.settings.tags, null)
 }

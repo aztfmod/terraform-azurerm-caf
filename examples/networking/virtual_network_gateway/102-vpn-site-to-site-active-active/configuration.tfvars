@@ -55,7 +55,7 @@ virtual_network_gateways = {
   gateway1 = {
     name                       = "mygateway"
     resource_group_key         = "vgnw"
-    type                       = "VPN"
+    type                       = "Vpn"
     sku                        = "VpnGw1"
     private_ip_address_enabled = true
     # enable active_active only with VPN Type

@@ -38,12 +38,12 @@ jobs:
     outputs:
       matrix: ${{ steps.load_scenarios.outputs.matrix }}
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v3
       - id: load_scenarios
         run: |
           cases=$((
             cat ./.github/workflows/${{ github.event.inputs.scenario }}) | jq -c .)
-          echo "::set-output name=matrix::${cases}"
+          echo "matrix=${cases}" >> $GITHUB_OUTPUT
 
   testcases:
     name: test
@@ -55,12 +55,12 @@ jobs:
       matrix: ${{fromJSON(needs.load_scenarios.outputs.matrix)}}
 
     container:
-      image: aztfmod/rover:1.2.5-2208.0208
+      image: aztfmod/rover-preview:1.4.4-2304.041231
       options: --user 0
 
     steps:
       - name: Checkout with tag ${{ github.event.inputs.base_version }}
-        uses: actions/checkout@v2
+        uses: actions/checkout@v3
         with:
           ref: ${{ github.event.inputs.base_version }}
 
@@ -104,12 +104,22 @@ jobs:
             ${{ env.PLAN_FILE }}
 
       - name: Checkout from selected branch
-        uses: actions/checkout@v2
+        uses: actions/checkout@v3
 
       - name: Terraform Init example with selected branch
         run: |
           terraform -chdir=${GITHUB_WORKSPACE}/examples \
           init -upgrade=true | grep -P '^- (?=Downloading|Using|Finding|Installing)|^[^-]'
+
+      - name: Terraform Refresh example with selected branch
+        run: |
+          terraform -chdir=${GITHUB_WORKSPACE}/examples \
+            refresh \
+            ${{ env.PARAMETER_FILES }} \
+            -var tags='{testing_job_id='"${{ github.run_id }}"'}' \
+            -var var_folder_path=${{ env.CURRENT_FOLDER }} \
+            -input=false \
+            -state=${{ env.STATE_FILE }}
 
       - name: Terraform Plan example with selected branch
         run: |
@@ -165,7 +175,7 @@ jobs:
     needs: [testcases]
 
     container:
-      image: aztfmod/rover:1.2.5-2208.0208
+      image: aztfmod/rover-preview:1.4.4-2304.041231
       options: --user 0
 
     steps:

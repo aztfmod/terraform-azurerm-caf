@@ -52,6 +52,8 @@ virtual_machines = {
         priority        = "Spot"
         eviction_policy = "Deallocate"
 
+        patch_mode = "AutomaticByOS"
+
         # Value of the nic keys to attach the VM. The first one in the list is the default nic
         network_interface_keys = ["nic0"]
 

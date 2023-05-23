@@ -1,6 +1,7 @@
 variable "location" {
   type        = string
-  description = "(Required) Specifies the supported Azure location where to create the resource. Changing this forces a new resource to be created."
+  description = "Specifies the supported Azure location where to create the resource. Changing this forces a new resource to be created."
+  default     = null
 }
 
 variable "settings" {
@@ -21,16 +22,12 @@ variable "global_settings" {
 
 variable "resource_group_name" {
   type        = string
-  description = "(Required) The name of the resource group where to create the resource."
+  description = "The name of the resource group where to create the resource."
+  default     = null
 }
 
 variable "diagnostics" {
   type = any
-}
-
-variable "base_tags" {
-  description = "Base tags for the resource to be inherited from the resource group."
-  type        = map(any)
 }
 
 variable "remote_objects" {
@@ -44,4 +41,12 @@ variable "client_config" {
 }
 variable "private_endpoints" {
   type = any
+}
+variable "resource_group" {
+  description = "Resource group object to deploy the virtual machine"
+  type        = any
+}
+variable "base_tags" {
+  description = "Base tags for the resource to be inherited from the resource group."
+  type        = bool
 }

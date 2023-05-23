@@ -8,7 +8,7 @@ keyvaults = {
     creation_policies = {
       logged_in_user = {
         secret_permissions      = ["Set", "Get", "List", "Delete", "Purge"]
-        certificate_permissions = ["managecontacts", "manageissuers"]
+        certificate_permissions = ["ManageContacts", "ManageIssuers"]
       }
     }
 

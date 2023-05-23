@@ -4,6 +4,10 @@ global_settings = {
     region1 = "australiacentral"
     region2 = "westeurope"
   }
+  inherit_tags = true
+  tags = {
+    base = "basetags"
+  }
 }
 
 resource_groups = {

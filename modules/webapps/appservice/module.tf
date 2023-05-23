@@ -14,10 +14,10 @@ resource "azurecaf_name" "app_service" {
 
 resource "azurerm_app_service" "app_service" {
   name                = azurecaf_name.app_service.result
-  location            = var.location
-  resource_group_name = var.resource_group_name
+  location            = local.location
+  resource_group_name = local.resource_group_name
   app_service_plan_id = var.app_service_plan_id
-  tags                = local.tags
+  tags                = merge(local.tags, try(var.settings.tags, {}))
 
   client_affinity_enabled = lookup(var.settings, "client_affinity_enabled", null)
   client_cert_enabled     = lookup(var.settings, "client_cert_enabled", null)
@@ -126,8 +126,8 @@ resource "azurerm_app_service" "app_service" {
         for_each = lookup(var.settings.auth_settings, "active_directory", {}) != {} ? [1] : []
 
         content {
-          client_id         = var.settings.auth_settings.active_directory.client_id
-          client_secret     = lookup(var.settings.auth_settings.active_directory, "client_secret", null)
+          client_id         = can(var.settings.auth_settings.active_directory.client_id_key) ? var.azuread_applications[try(var.settings.auth_settings.active_directory.client_id_lz_key, var.client_config.landingzone_key)][var.settings.auth_settings.active_directory.client_id_key].application_id : var.settings.auth_settings.active_directory.client_id
+          client_secret     = can(var.settings.auth_settings.active_directory.client_secret_key) ? var.azuread_service_principal_passwords[try(var.settings.auth_settings.active_directory.client_secret_lz_key, var.client_config.landingzone_key)][var.settings.auth_settings.active_directory.client_secret_key].service_principal_password : try(var.settings.auth_settings.active_directory.client_secret, null)
           allowed_audiences = lookup(var.settings.auth_settings.active_directory, "allowed_audiences", null)
         }
       }
@@ -283,7 +283,7 @@ resource "azurerm_template_deployment" "site_config" {
   count = lookup(var.settings, "numberOfWorkers", {}) != {} ? 1 : 0
 
   name                = azurecaf_name.app_service.result
-  resource_group_name = var.resource_group_name
+  resource_group_name = local.resource_group_name
 
   template_body = file(local.arm_filename)
 

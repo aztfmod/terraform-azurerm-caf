@@ -57,6 +57,13 @@ function execute_with_backoff {
     fi
 
     echo "Failure! Return code ${exitCode} - Retrying in $timeout.." 1>&2
+
+    if [[ -f "$FILE" ]]
+    then
+      echo "remove semaphore"
+      rm -rf "$FILE"
+    fi
+
     sleep $timeout
     attempt=$(( attempt + 1 ))
     timeout=$(( timeout * 2 ))
@@ -79,7 +86,7 @@ case "${RESOURCE}" in
         execute_with_backoff az network application-gateway address-pool delete -g ${RG_NAME} --gateway-name ${APPLICATION_GATEWAY_NAME} -n ${NAME}
         ;;
     FRONTENDPORT)
-        execute_with_backoff az network application-gateway address-pool delete -g ${RG_NAME} --gateway-name ${APPLICATION_GATEWAY_NAME} -n ${NAME}
+        execute_with_backoff az network application-gateway frontend-port delete -g ${RG_NAME} --gateway-name ${APPLICATION_GATEWAY_NAME} -n ${NAME}
         ;;
     HTTPSETTINGS)
         execute_with_backoff az network application-gateway http-settings delete -g ${RG_NAME} --gateway-name ${APPLICATION_GATEWAY_NAME} -n ${NAME}
@@ -104,5 +111,14 @@ case "${RESOURCE}" in
         ;;
     PROBE)
         execute_with_backoff az network application-gateway probe delete -g ${RG_NAME} --gateway-name ${APPLICATION_GATEWAY_NAME} -n ${NAME}
+        ;;
+    REWRITERULESET)
+        execute_with_backoff az network application-gateway rewrite-rule set delete -g ${RG_NAME} --gateway-name ${APPLICATION_GATEWAY_NAME} -n ${NAME}
+        ;;
+    REWRITERULE)
+        execute_with_backoff az network application-gateway rewrite-rule delete -g ${RG_NAME} --gateway-name ${APPLICATION_GATEWAY_NAME} -n ${NAME} --rule-set-name ${RULE_SET_NAME}
+        ;;
+    REWRITERULECONDITION)
+        execute_with_backoff az network application-gateway rewrite-rule condition delete -g ${RG_NAME} --gateway-name ${APPLICATION_GATEWAY_NAME} --variable ${VARIABLE} --rule-set-name ${RULE_SET_NAME} --rule-name ${RULE_NAME}
         ;;
 esac

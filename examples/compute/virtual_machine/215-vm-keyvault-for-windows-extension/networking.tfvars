@@ -9,7 +9,7 @@ network_security_group_definition = {
         priority                   = "101"
         direction                  = "Inbound"
         access                     = "Allow"
-        protocol                   = "tcp"
+        protocol                   = "Tcp"
         source_port_range          = "*"
         source_address_prefix      = "*"
         destination_address_prefix = "*"
@@ -18,7 +18,7 @@ network_security_group_definition = {
     ]
   }
 }
-# basic vnet that VMs connect to
+# Basic vnet that VMs connect to
 vnets = {
   vnet1 = {
     resource_group_key = "rg1"

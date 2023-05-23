@@ -6,21 +6,12 @@ variable "client_config" {
   type        = any
   description = "Client configuration object (see module README.md)."
 }
-variable "location" {
-  type        = string
-  description = "(Required) Specifies the supported Azure location where to create the resource. Changing this forces a new resource to be created."
-}
 variable "application_security_groups" {
   type = any
 }
 variable "application_gateways" {
   type = any
 }
-variable "resource_group_name" {
-  type        = string
-  description = "Name of the existing resource group to deploy the virtual machine"
-}
-
 variable "keyvaults" {
   type        = any
   description = "Keyvault to store the SSH public and private keys when not provided by the var.public_key_pem_file or retrieve admin username and password"
@@ -72,9 +63,12 @@ variable "availability_sets" {
   default = {}
 }
 
+variable "resource_group" {
+  description = "Resource group object"
+}
 variable "base_tags" {
   description = "Base tags for the resource to be inherited from the resource group."
-  type        = map(any)
+  type        = bool
 }
 
 variable "proximity_placement_groups" {

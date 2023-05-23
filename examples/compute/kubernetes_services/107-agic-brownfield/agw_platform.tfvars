@@ -7,8 +7,8 @@ application_gateway_platforms = {
     # lz_key     = ""                   # Set the lz_key if the vnet and subnet are remote
     vnet_key   = "spoke_aks_re1" # Check in the networking.tfvars for more details
     subnet_key = "application_gateway"
-    sku_name   = "WAF_v2"
-    sku_tier   = "WAF_v2"
+    sku_name   = "Standard_v2"
+    sku_tier   = "Standard_v2"
     resource_group = {
       # lz_key = ""                     # Set the lz_key if the resource group is remote
       key = "aks_re1"
@@ -86,6 +86,7 @@ application_gateway_platforms = {
       request_timeout               = "60"
       rule_type                     = "Basic"
       ssl_cert_key                  = "default" # ssl_certs key as defined above in line 59
+      priority                      = 10
     }
 
   }

@@ -5,6 +5,7 @@ variable "global_settings" {
 variable "settings" {
   type = any
 }
-variable "keyvault" {
+variable "keyvaults" {
   type = any
 }
+variable "client_config" {}

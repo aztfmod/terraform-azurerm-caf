@@ -4,6 +4,10 @@ global_settings = {
     region1 = "australiaeast"
     region2 = "australiacentral"
   }
+  inherit_tags = true
+  tags = {
+    example = "compute/kubernetes_services/104-private-cluster"
+  }
 }
 
 
@@ -14,8 +18,14 @@ resource_groups = {
   }
   aks_jumpbox_re1 = {
     name = "aks-jumpbox-re1"
+    tags = {
+      public_exposure = "portal"
+    }
   }
-
+  devops_re1 = {
+    name   = "devops-re1"
+    region = "region1"
+  }
 }
 
 storage_accounts = {

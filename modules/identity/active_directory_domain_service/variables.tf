@@ -15,12 +15,25 @@ variable "remote_objects" {
   description = "(Required) Specifies the supported Azure location where to create the resource. Changing this forces a new resource to be created."
   default     = {}
 }
-variable "base_tags" {
-  description = "Base tags for the resource to be inherited from the resource group."
-  type        = map(any)
-  default     = {}
+variable "vnets" {
+  type        = any
+  description = "(Required) Combined vnet object."
+}
+variable "location" {
+  type        = string
+  description = "location of the resource if different from the resource group."
+  default     = null
 }
 variable "resource_group_name" {
   type        = string
-  description = " The name of the Resource Group in which the Domain Service should exist. Changing this forces a new resource to be created."
+  description = "Resource group object to deploy the virtual machine"
+  default     = null
+}
+variable "resource_group" {
+  type        = any
+  description = "Resource group object to deploy the virtual machine"
+}
+variable "base_tags" {
+  description = "Base tags for the resource to be inherited from the resource group."
+  type        = bool
 }

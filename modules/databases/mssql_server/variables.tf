@@ -11,11 +11,13 @@ variable "settings" {
 }
 variable "resource_group_name" {
   type        = string
-  description = "(Required) The name of the resource group where to create the resource."
+  description = "The name of the resource group where to create the resource."
+  default     = null
 }
 variable "location" {
   type        = string
-  description = "(Required) Specifies the supported Azure location where to create the resource. Changing this forces a new resource to be created."
+  description = "Specifies the supported Azure location where to create the resource. Changing this forces a new resource to be created."
+  default     = null
 }
 variable "storage_accounts" {
   type = any
@@ -29,12 +31,17 @@ variable "vnets" {
 variable "private_endpoints" {
   type = any
 }
+variable "resource_group" {
+  type        = any
+  description = "Resource group object"
+}
 variable "resource_groups" {
-  type = any
+  type        = any
+  description = "Map of resource group objects by landing zone"
 }
 variable "base_tags" {
   description = "Base tags for the resource to be inherited from the resource group."
-  type        = map(any)
+  type        = bool
 }
 variable "private_dns" {
   type    = any

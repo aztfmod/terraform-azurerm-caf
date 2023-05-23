@@ -11,5 +11,5 @@ output "static_ip" {
 }
 
 output "vnet_configuration" {
-  value = var.settings.vnet.vnet_key != null ? jsondecode(azapi_resource.container_app_env.output).properties.vnetConfiguration : null
+  value = try(var.settings.vnet.vnet_key, null) != null ? jsondecode(azapi_resource.container_app_env.output).properties.vnetConfiguration : null
 }

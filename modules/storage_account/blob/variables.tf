@@ -7,3 +7,6 @@ variable "storage_container_name" {
 variable "settings" {
   type = any
 }
+variable "var_folder_path" {
+  type = any
+}

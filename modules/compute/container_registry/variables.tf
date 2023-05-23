@@ -69,12 +69,6 @@ variable "resource_groups" {
   type    = any
   default = {}
 }
-
-variable "base_tags" {
-  description = "Base tags for the resource to be inherited from the resource group."
-  type        = map(any)
-}
-
 variable "private_dns" {
   type    = any
   default = {}
@@ -83,4 +77,27 @@ variable "private_dns" {
 variable "public_network_access_enabled" {
   type    = any
   default = "true"
+}
+variable "location" {
+  description = "location of the resource if different from the resource group."
+  default     = null
+}
+variable "resource_group_name" {
+  description = "Resource group object to deploy the virtual machine"
+  default     = null
+}
+variable "resource_group" {
+  description = "Resource group object to deploy the virtual machine"
+}
+variable "base_tags" {
+  description = "Base tags for the resource to be inherited from the resource group."
+  type        = bool
+}
+
+variable "retention_policy" {
+  type = object({
+    days = optional(number, 0)
+  })
+  description = "(Optional) Structure describing untagged container retention policy"
+  default     = null
 }

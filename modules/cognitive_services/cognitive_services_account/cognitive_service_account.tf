@@ -18,11 +18,28 @@ resource "azurerm_cognitive_account" "service" {
   qna_runtime_endpoint = var.settings.kind == "QnAMaker" ? var.settings.qna_runtime_endpoint : try(var.settings.qna_runtime_endpoint, null)
 
   dynamic "network_acls" {
-    for_each = try(var.settings.network_acls, null) == null ? [] : [1]
+    for_each = can(var.settings.network_acls) ? [var.settings.network_acls] : []
     content {
-      default_action             = var.settings.network_acls.default_action
-      ip_rules                   = try(var.settings.network_acls.ip_rules, null)
-      virtual_network_subnet_ids = try(var.settings.network_acls.virtual_network_subnet_ids, null)
+      default_action = network_acls.value.default_action
+      ip_rules       = try(network_acls.value.ip_rules, null)
+
+      # to support migration from 2.99.0 to 3.7.0
+      dynamic "virtual_network_rules" {
+        for_each = can(network_acls.value.virtual_network_subnet_ids) ? toset(network_acls.value.virtual_network_subnet_ids) : []
+
+        content {
+          subnet_id = virtual_network_rules.value
+        }
+      }
+
+      dynamic "virtual_network_rules" {
+        for_each = try(network_acls.value.virtual_network_rules, {})
+
+        content {
+          subnet_id                            = virtual_network_rules.value.subnet_id
+          ignore_missing_vnet_service_endpoint = try(virtual_network_rules.value.ignore_missing_vnet_service_endpoint, null)
+        }
+      }
     }
   }
 

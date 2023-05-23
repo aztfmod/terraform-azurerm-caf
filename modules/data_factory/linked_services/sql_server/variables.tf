@@ -10,10 +10,6 @@ variable "settings" {
   type        = any
   description = "Used for general parameter."
 }
-variable "resource_group_name" {
-  type        = string
-  description = "(Required) The name of the resource group in which to create the Data Factory Linked Service."
-}
 variable "data_factory_id" {
   type        = string
   description = "(Required) The Data Factory name in which to associate the Linked Service with. Changing this forces a new resource."

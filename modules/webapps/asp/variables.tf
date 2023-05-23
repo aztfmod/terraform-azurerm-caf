@@ -1,26 +1,22 @@
-
-
-variable "tags" {
-  type        = any
-  description = "(Required) map of tags for the deployment"
-}
-
 variable "app_service_environment_id" {
   type        = any
   description = "(Required) ASE Id for App Service Plan Hosting Environment"
   default     = null
 }
-
-variable "resource_group_name" {
-  type        = string
-  description = "(Required) The name of the resource group where to create the resource."
-}
-
 variable "location" {
   type        = string
-  description = "(Required) Specifies the supported Azure location where to create the resource. Changing this forces a new resource to be created."
+  description = "(Required) Resource Location"
+  default     = null
 }
-
+variable "resource_group_name" {
+  type        = string
+  description = "Resource group object to deploy the virtual machine"
+  default     = null
+}
+variable "resource_group" {
+  type        = any
+  description = "Resource group object to deploy the virtual machine"
+}
 variable "settings" {
   type = any
 }
@@ -38,7 +34,7 @@ variable "global_settings" {
 
 variable "base_tags" {
   description = "Base tags for the resource to be inherited from the resource group."
-  type        = map(any)
+  type        = bool
 }
 
 variable "diagnostics" {

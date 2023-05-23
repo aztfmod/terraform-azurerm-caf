@@ -7,7 +7,7 @@ resource "azurerm_key_vault_certificate" "self_signed_winrm" {
 
   name         = format("%s-winrm-cert", azurecaf_name.windows[each.key].result)
   key_vault_id = local.keyvault.id
-  tags         = try(merge(var.base_tags, try(each.value.tags, null)), null)
+  tags         = merge(local.tags, try(each.value.tags, {}))
 
   certificate_policy {
     issuer_parameters {

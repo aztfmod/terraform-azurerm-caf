@@ -156,6 +156,6 @@ keyvault_keys = {
     name     = "tdekey"
     key_type = "RSA"
     key_size = 2048
-    key_opts = ["unwrapKey", "wrapKey"]
+    key_opts = ["UnwrapKey", "WrapKey"]
   }
 }

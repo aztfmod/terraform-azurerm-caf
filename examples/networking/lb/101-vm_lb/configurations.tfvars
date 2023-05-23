@@ -118,7 +118,7 @@ lb = {
       }
       private_ip_address_allocation = "Dynamic"
     }
-    sku = "basic" #SKU must match with the SKU of the PIP
+    sku = "Basic" #SKU must match with the SKU of the PIP
   }
 }
 lb_backend_address_pool = {

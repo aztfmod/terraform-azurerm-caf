@@ -21,7 +21,7 @@ resource "azurerm_monitor_diagnostic_setting" "diagnostics" {
   ) : null
 
   log_analytics_workspace_id     = contains(try([tostring(each.value.destination_type)], tolist(each.value.destination_type)), "log_analytics") ? try(var.diagnostics.diagnostics_destinations.log_analytics[each.value.destination_key].log_analytics_resource_id, var.diagnostics.log_analytics[var.diagnostics.diagnostics_destinations.log_analytics[each.value.destination_key].log_analytics_key].id) : null
-  log_analytics_destination_type = contains(try([tostring(each.value.destination_type)], tolist(each.value.destination_type)), "log_analytics") ? lookup(var.diagnostics.diagnostics_definition[each.value.definition_key], "log_analytics_destination_type", null) : null
+  log_analytics_destination_type = contains(try([tostring(each.value.destination_type)], tolist(each.value.destination_type)), "log_analytics") ? try(each.value.log_analytics_destination_type, lookup(var.diagnostics.diagnostics_definition[each.value.definition_key], "log_analytics_destination_type", null)) : null
 
   storage_account_id = contains(try([tostring(each.value.destination_type)], tolist(each.value.destination_type)), "storage") ? try(var.diagnostics.diagnostics_destinations.storage[each.value.destination_key][var.resource_location].storage_account_resource_id, var.diagnostics.storage_accounts[var.diagnostics.diagnostics_destinations.storage[each.value.destination_key][var.resource_location].storage_account_key].id) : null
 

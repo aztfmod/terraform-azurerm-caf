@@ -9,7 +9,6 @@ resource "azurecaf_name" "pipeline" {
 }
 resource "azurerm_data_factory_pipeline" "pipeline" {
   name                           = azurecaf_name.pipeline.result
-  resource_group_name            = var.resource_group_name
   data_factory_id                = var.data_factory_id
   description                    = try(var.settings.description, null)
   annotations                    = try(var.settings.annotations, null)

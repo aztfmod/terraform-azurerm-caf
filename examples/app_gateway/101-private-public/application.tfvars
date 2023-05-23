@@ -10,13 +10,14 @@ application_gateway_applications = {
         front_end_ip_configuration_key = "private"
         front_end_port_key             = "80"
         host_name                      = "cafdemo.com"
-        request_routing_rule_key       = "default"
+        request_routing_rule_key       = "rule1"
       }
       public = {
         name                           = "demo-app1-80-public"
         front_end_ip_configuration_key = "public"
         front_end_port_key             = "81"
         host_name                      = "cafdemo.com"
+        request_routing_rule_key       = "rule2"
       }
       public_82 = {
         name                           = "demo-app1-82-public"
@@ -28,13 +29,20 @@ application_gateway_applications = {
     }
 
     request_routing_rules = {
-      default = {
+      rule1 = {
         rule_type = "Basic"
+        priority  = 10
+        #rewrite_rule_set_key = "rule_set_1"
+      }
+      rule2 = {
+        rule_type = "Basic"
+        priority  = 13
         #rewrite_rule_set_key = "rule_set_1"
       }
       path_based = {
         rule_type        = "PathBasedRouting"
         url_path_map_key = "path_map_1"
+        priority         = 11
       }
     }
 

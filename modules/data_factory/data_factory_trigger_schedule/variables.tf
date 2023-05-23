@@ -10,10 +10,6 @@ variable "settings" {
   type        = any
   description = "Used for general parameter."
 }
-variable "resource_group_name" {
-  type        = string
-  description = "(Required) The name of the resource group in which to create the Data Factory Schedule Trigger"
-}
 variable "data_factory_id" {
   type        = string
   description = "(Required) The Data Factory ID in which to associate the Schedule Trigger with"

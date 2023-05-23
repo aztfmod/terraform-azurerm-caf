@@ -9,7 +9,7 @@ data "azurerm_key_vault_certificate" "root_certs" {
 }
 
 resource "null_resource" "set_root_cert" {
-  depends_on = [null_resource.set_backend_pools, null_resource.set_ssl_cert]
+  depends_on = [null_resource.set_backend_pools]
 
   for_each = try(var.settings.trusted_root_certificates, {})
 

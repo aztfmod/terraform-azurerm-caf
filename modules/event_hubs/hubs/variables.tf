@@ -1,19 +1,16 @@
 variable "global_settings" {
   type = any
-
 }
 variable "settings" {
   type = any
 }
-variable "resource_group" {
-  type        = any
-  description = "Resource group objects."
-}
-variable "base_tags" {
-  type = map(any)
-}
 variable "client_config" {
   type = any
+}
+variable "resource_group_name" {
+  type        = string
+  description = "Resource group name."
+  default     = null
 }
 variable "namespace_name" {
   type        = any

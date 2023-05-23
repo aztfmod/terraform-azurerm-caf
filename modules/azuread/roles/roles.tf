@@ -2,6 +2,7 @@
 resource "azuread_directory_role" "roles" {
   for_each = {
     for key in var.azuread_roles : key => key
+    if can(var.settings.version) == false
   }
   display_name = each.key
 }

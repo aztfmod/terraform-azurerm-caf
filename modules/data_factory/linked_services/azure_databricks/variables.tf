@@ -20,10 +20,6 @@ variable "base_tags" {
   type        = map(any)
   default     = {}
 }
-variable "resource_group_name" {
-  type        = string
-  description = " The name of the resource group in which to create the Data Factory Linked Service. Changing this forces a new resource."
-}
 variable "integration_runtime_name" {
   type        = any
   description = "(Optional) The integration runtime reference to associate with the Data Factory Linked Service Databricks."

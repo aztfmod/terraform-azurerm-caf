@@ -18,7 +18,7 @@ output "object_id" {
 output "display_name" {
   value = azuread_service_principal.app.object_id
 }
-# commented out b/c attributes no longer valid with azuread provider 2.30+
+# deprecated
 # output "oauth2_permissions" {
 #   value = azuread_service_principal.app.oauth2_permissions
 # }

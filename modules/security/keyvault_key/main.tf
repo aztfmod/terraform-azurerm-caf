@@ -3,7 +3,7 @@ terraform {
   required_providers {
     azurerm = {
       source  = "hashicorp/azurerm"
-      version = "~> 2.99"
+      version = "~> 3.48"
     }
     azurecaf = {
       source  = "aztfmod/azurecaf"
@@ -13,9 +13,6 @@ terraform {
 
 }
 locals {
-  module_tag = {
-    "module" = basename(abspath(path.module))
-  }
-  base_tags = try(var.global_settings.inherit_tags, false) ? try(var.keyvault.base_tags, {}) : {}
-  tags      = merge(local.base_tags, local.module_tag, try(var.settings.tags, {}))
+  base_tags = try(var.global_settings.inherit_tags, false) ? try(var.keyvaults.base_tags, {}) : {}
+  tags      = merge(local.base_tags, try(var.settings.tags, {}))
 }

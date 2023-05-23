@@ -49,7 +49,7 @@ resource "azapi_resource" "container_app_env" {
       # daprAIConnectionString = "string"
       # daprAIInstrumentationKey = "string"
       # only define vnet configuration if vnet_key is not null
-      vnetConfiguration = var.settings.vnet.vnet_key != null ? {
+      vnetConfiguration = try(var.settings.vnet.vnet_key, null) != null ? {
         dockerBridgeCidr       = var.settings.vnet.docker_bridge_cidr
         infrastructureSubnetId = try(var.vnets[coalesce(var.settings.vnet.lz_key, var.client_config.landingzone_key)][var.settings.vnet.vnet_key].subnets[var.settings.vnet.subnet_key].id, null)
         internal               = var.settings.vnet.internal
