@@ -2,14 +2,18 @@ variable "global_settings" {
   description = "Global settings object (see module README.md)"
 }
 variable "client_config" {}
-variable "base_tags" {
+variable "inherit_tags" {
   description = "Base tags for the resource to be inherited from the resource group."
-  type        = map(any)
+  type        = bool
 }
 variable "subnet_id" {}
 variable "resource_group_name" {
   description = "(Required) The name of the resource group where to create the resource."
   type        = string
+}
+variable "resource_group" {
+  description = "(Required) The resource group where to create the resource."
+  default     = {}
 }
 variable "location" {
   description = "(Required) Specifies the supported Azure location where to create the resource. Changing this forces a new resource to be created."
@@ -28,8 +32,6 @@ variable "group_id" {
 variable "keyvault" {}
 
 variable "primary_server_id" {}
-
-variable "resource_group_id" {}
 
 variable "settings" {
   validation {
@@ -61,6 +63,7 @@ variable "settings" {
             "service_principal",
             "sku",
             "storage_size_in_gb",
+            "tags",
             "timezone_id",
             "transparent_data_encryption",
             "vcores",
@@ -98,6 +101,7 @@ variable "settings" {
           "service_principal",
           "sku",
           "storage_size_in_gb",
+          "tags",
           "timezone_id",
           "transparent_data_encryption",
           "vcores",

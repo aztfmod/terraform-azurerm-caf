@@ -6,25 +6,25 @@ variable "vcores" {
   validation {
     condition = contains(
       [
-   
+
         8,
         16,
         24
       ],
       var.vcores
     )
-    error_message = format("Not supported value: '%s'. \nAdjust your configuration file with a supported value: %s",
+    error_message = format("Gen4 sku does not support this value: '%s'. \nAdjust the value for vcores with: %s",
       var.vcores,
       join(", ",
         [
-        8,
-        16,
-        24
+          8,
+          16,
+          24
         ]
       )
     )
   }
 }
-output "vCores" {
+output "vcores" {
   value = var.vcores
 }

@@ -296,6 +296,7 @@ locals {
     network_interface_backend_address_pool_association      = try(var.networking.network_interface_backend_address_pool_association, {})
     network_profiles                                        = try(var.networking.network_profiles, {})
     network_security_group_definition                       = try(var.networking.network_security_group_definition, {})
+    network_security_security_rules                         = try(var.networking.network_security_security_rules, {})
     network_watchers                                        = try(var.networking.network_watchers, {})
     private_dns                                             = try(var.networking.private_dns, {})
     private_dns_resolvers                                   = try(var.networking.private_dns_resolvers, {})

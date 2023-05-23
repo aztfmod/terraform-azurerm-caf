@@ -222,6 +222,7 @@ module "example" {
     nat_gateways                                            = var.nat_gateways
     network_interface_backend_address_pool_association      = var.network_interface_backend_address_pool_association
     network_security_group_definition                       = var.network_security_group_definition
+    network_security_security_rules                         = var.network_security_security_rules
     network_watchers                                        = var.network_watchers
     private_dns                                             = var.private_dns
     private_dns_resolvers                                   = var.private_dns_resolvers
