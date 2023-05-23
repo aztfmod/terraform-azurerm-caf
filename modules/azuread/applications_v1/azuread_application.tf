@@ -15,6 +15,14 @@ resource "azuread_application" "app" {
   prevent_duplicate_names        = try(var.settings.prevent_duplicate_names, false)
   fallback_public_client_enabled = try(var.settings.public_client, false)
 
+  dynamic "single_page_application" {
+    for_each = try(var.settings.single_page_application, null) != null ? [1] : []
+
+    content {
+      redirect_uris = try(var.settings.single_page_application.redirect_uris, [])
+    }
+  }
+
   dynamic "api" {
     for_each = try(var.settings.api, null) != null ? [1] : []
 

@@ -151,8 +151,8 @@ case "${RESOURCE}" in
          --name ${NAME} ${certfile}${keyvaultsecretid}
         ;;
     PATHMAP)
-        addresspool=$([ -z "${ADDRESS_POOL}" ] && echo "" || echo "--address-pool ${ADDRESS_POOL} ")
-        httpsettings=$([ -z "${HTTP_SETTINGS}" ] && echo "" || echo "--http-settings ${HTTP_SETTINGS} ")
+        addresspool=$([ -z "${ADDRESS_POOL}" ] && echo "" || echo "--address-pool ${ADDRESS_POOL} --default-address-pool ${ADDRESS_POOL} ")
+        httpsettings=$([ -z "${HTTP_SETTINGS}" ] && echo "" || echo "--http-settings ${HTTP_SETTINGS} --default-http-settings ${HTTP_SETTINGS} ")
         redirectconfig=$([ -z "${REDIRECT_CONFIG}" ] && echo "" || echo "--redirect-config ${REDIRECT_CONFIG} ")
         rewriteruleset=$([ -z "${REWRITE_RULE_SET}" ] && echo "" || echo "--rewrite-rule-set ${REWRITE_RULE_SET} ")
         rulename=$([ -z "${RULE_NAME}" ] && echo "" || echo "--rule-name ${RULE_NAME} ")

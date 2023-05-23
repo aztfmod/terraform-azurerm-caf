@@ -30,7 +30,7 @@ resource "null_resource" "set_ssl_cert" {
       NAME                     = each.value.name
       CERT_FILE                = try(each.value.cert_file, null)
       CERT_PASSWORD            = try(each.value.cert_password, null)
-      KEY_VAULT_SECRET_ID      = try(data.azurerm_key_vault_certificate.manual_certs[each.key].versionless_secret_id, var.keyvault_certificates[try(each.value.keyvault.lz_key, var.client_config.landingzone_key)][each.value.keyvault.certificate_key].secret_id, var.keyvault_certificate_requests[try(each.value.keyvault.lz_key, var.client_config.landingzone_key)][each.value.certificate_request_key].secret_id, null)
+      KEY_VAULT_SECRET_ID      = try(data.azurerm_key_vault_certificate.manual_certs[each.key].versionless_secret_id, var.keyvault_certificates[try(each.value.keyvault.lz_key, var.client_config.landingzone_key)][each.value.keyvault.certificate_key].versionless_secret_id, var.keyvault_certificate_requests[try(each.value.keyvault.lz_key, var.client_config.landingzone_key)][each.value.certificate_request_key].versionless_secret_id, null)
     }
   }
 }
