@@ -28,7 +28,7 @@ resource "azurerm_recovery_services_vault" "asr" {
     for_each = can(var.settings.encryption) ? [1] : []
 
     content {
-      key_id                            = var.settings.key_id
+      key_id                            = var.settings.encryption.key_id
       infrastructure_encryption_enabled = try(var.settings.encryption.infrastructure_encryption_enabled, true)
       use_system_assigned_identity      = true # only value possible in AzureRM provider 2.99.0
     }
