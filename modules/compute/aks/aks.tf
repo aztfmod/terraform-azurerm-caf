@@ -352,6 +352,7 @@ resource "azurerm_kubernetes_cluster" "aks" {
   private_cluster_enabled             = try(var.settings.private_cluster_enabled, null)
   private_dns_zone_id                 = try(var.private_dns_zone_id, null)
   private_cluster_public_fqdn_enabled = try(var.settings.private_cluster_public_fqdn_enabled, null)
+  public_network_access_enabled       = try(var.settings.public_network_access_enabled, true)
 
   #Enabled RBAC
   dynamic "azure_active_directory_role_based_access_control" {
