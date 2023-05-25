@@ -34,7 +34,7 @@ data "external" "certificate_issuer_password" {
     "bash", "-c",
     format(
       "az keyvault secret show --id '%s'secrets/'%s' --query '{value: value}' -o json",
-      local.remote.keyvaults[each.value.lz_key][each.value.keyvault_key].vault_uri,
+      local.combined_objects_keyvaults[try(each.value.lz_key, local.client_config.landingzone_key)][each.value.keyvault_key].vault_uri,
       each.value.cert_secret_name
     )
   ]
