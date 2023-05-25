@@ -18,10 +18,10 @@ module "aks_clusters" {
   admin_group_object_ids = try(each.value.admin_groups.azuread_group_keys, null) == null ? null : try(
     each.value.admin_groups.ids,
     [
-      for group_key in try(each.value.admin_groups.azuread_group_keys, {}) : 
-      coalesce(      
-        try( local.combined_objects_azuread_groups[each.value.admin_groups.lz_key][group_key].id, null ),
-        try( local.combined_objects_azuread_groups[local.client_config.landingzone_key][group_key].id, null )
+      for group_key in try(each.value.admin_groups.azuread_group_keys, {}) :
+      coalesce(
+        try(local.combined_objects_azuread_groups[each.value.admin_groups.lz_key][group_key].id, null),
+        try(local.combined_objects_azuread_groups[local.client_config.landingzone_key][group_key].id, null)
       )
     ]
   )

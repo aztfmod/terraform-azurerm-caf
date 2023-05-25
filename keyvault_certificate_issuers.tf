@@ -10,7 +10,7 @@ module "keyvault_certificate_issuers" {
   global_settings = local.global_settings
   settings        = each.value
   keyvault_id     = can(each.value.keyvault_id) ? each.value.keyvault_id : local.combined_objects_keyvaults[try(each.value.lz_key, local.client_config.landingzone_key)][each.value.keyvault_key].id
-  password        = can(each.value.cert_secret_name) || can(each.value.cert_issuer_password) ? try(jsondecode(data.azapi_resource.certificate_issuer_password[each.key].output).properties.value, each.value.cert_issuer_password) : data.azurerm_key_vault_secret.certificate_issuer_password[each.key].value
+  password        = can(each.value.cert_secret_name) || can(each.value.cert_issuer_password) ? try(data.external.certificate_issuer_password[each.key].result.value, each.value.cert_issuer_password) : data.azurerm_key_vault_secret.certificate_issuer_password[each.key].value
 }
 
 data "azurerm_key_vault_secret" "certificate_issuer_password" {
@@ -24,17 +24,20 @@ data "azurerm_key_vault_secret" "certificate_issuer_password" {
   key_vault_id = can(each.value.key_vault_id) ? each.value.key_vault_id : local.combined_objects_keyvaults[try(each.value.lz_key, local.client_config.landingzone_key)][each.value.keyvault_key].id
 }
 
-data "azapi_resource" "certificate_issuer_password" {
-  depends_on = [module.dynamic_keyvault_secrets]
+data "external" "certificate_issuer_password" {
   for_each = {
     for key, value in local.security.keyvault_certificate_issuers : key => value
     if can(value.cert_secret_name)
   }
 
-  type      = "Microsoft.KeyVault/vaults/secrets@2022-07-01"
-  parent_id = can(each.value.key_vault_id) ? each.value.key_vault_id : local.combined_objects_keyvaults[try(each.value.lz_key, local.client_config.landingzone_key)][each.value.keyvault_key].id
-  name      = each.value.cert_secret_name
-
+  program = [
+    "bash", "-c",
+    format(
+      "az keyvault secret show --id '%s'secrets/'%s' --query '{value: value}' -o json",
+      local.combined_objects_keyvaults[try(each.value.lz_key, local.client_config.landingzone_key)][each.value.keyvault_key].vault_uri,
+      each.value.cert_secret_name
+    )
+  ]
 }
 
 output "keyvault_certificate_issuers" {
