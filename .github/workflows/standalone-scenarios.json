@@ -6,6 +6,7 @@
     "app_gateway/102-waf-policy",
     "app_gateway/103-public-only",
     "app_gateway/210-agw-with-keyvault",
+    "app_gateway/211-agw-with-ssl-redirect",
     "app_gateway/301-agw-v1",
     "app_gateway/302-listener-ssl-policy",
     "app_insights/100-all-attributes",
