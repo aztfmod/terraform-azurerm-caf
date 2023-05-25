@@ -1,15 +1,12 @@
 terraform {
   required_providers {
   }
-  required_version = ">= 1.1.0"
+  required_version = ">= 1.3.0"
 }
 
 
 provider "azurerm" {
   features {
-    resource_group {
-      prevent_deletion_if_contains_resources = false
-    }
     api_management {
       purge_soft_delete_on_destroy = var.provider_azurerm_features_api_management.purge_soft_delete_on_destroy
       # recover_soft_deleted_api_managements = var.provider_azurerm_features_api_management.recover_soft_deleted_api_managements
