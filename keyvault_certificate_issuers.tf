@@ -25,11 +25,11 @@ data "azurerm_key_vault_secret" "certificate_issuer_password" {
 }
 
 data "external" "certificate_issuer_password" {
-    for_each = {
+  for_each = {
     for key, value in local.security.keyvault_certificate_issuers : key => value
     if can(value.cert_secret_name)
   }
-  
+
   program = [
     "bash", "-c",
     format(
