@@ -12,7 +12,7 @@ global_settings = {
 ###############################################################################
 data_sources = {
   subscriptions = {
-    my_subscription = {  # data source key
+    my_subscription = { # data source key
       subscription_id = "11111111-1111-1111-1111-111111111111"
     }
   }

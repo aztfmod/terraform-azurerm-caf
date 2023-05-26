@@ -5,6 +5,13 @@ global_settings = {
   }
 }
 
+# Required from 5.6.9 to destroy the firewall deployed with the ARM Template deployment
+# This way of deploying the firewall in vhub has been deprecated and only kept for backward compatibility
+# Use other examples for best practices. in networking/firewall
+provider_azurerm_features_template_deployment = {
+  delete_nested_items_during_deletion = true
+}
+
 resource_groups = {
   hub_re1 = {
     name   = "vnet-hub-re1"

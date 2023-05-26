@@ -1,13 +1,14 @@
-data "azapi_resource" "password" {
-  count        = lower(var.settings.certificate_policy.issuer_key_or_name) == "self" ? 0 : 1
+data "external" "password" {
+  count = lower(var.settings.certificate_policy.issuer_key_or_name) == "self" ? 0 : 1
   
-  type      = "Microsoft.KeyVault/vaults/secrets@2022-07-01"
-  parent_id = var.keyvault_id
-
-  name = try(
-    var.certificate_issuers[var.settings.certificate_policy.issuer_key_or_name].cert_password_key,
-    var.certificate_issuers[var.settings.certificate_policy.issuer_key_or_name].cert_secret_name
-    ) # added password_secret_name for remote lz which does not output secretname
+  program = [
+    "bash", "-c",
+    format(
+      "az keyvault secret show --id '%s'secrets/'%s' --query '{value: value}' -o json",
+      var.keyvault_id,
+      var.cert_secret_name
+    )
+  ]
 }
 
 locals {
@@ -15,7 +16,7 @@ locals {
     format("%s/GlobalSign_GetCertificateOrders.tpl", path.module),
     {
       UserName = var.certificate_issuers[var.settings.certificate_policy.issuer_key_or_name].account_id,
-      Password = jsondecode(data.azapi_resource.password.0.output).properties.value,
+      Password = data.external.password[0].result.value,
       FQDN     = regex("[^CN=]+", var.settings.certificate_policy.x509_certificate_properties.subject) # regex("[^CN=]+", "CN=crm.test.com") ==> crm.test.com
     }
   )
@@ -24,7 +25,7 @@ locals {
     format("%s/GlobalSign_cancel_order.tpl", path.module),
     {
       UserName = var.certificate_issuers[var.settings.certificate_policy.issuer_key_or_name].account_id,
-      Password = jsondecode(data.azapi_resource.password.0.output).properties.value
+      Password = data.external.password[0].result.value
     }
   )
 }

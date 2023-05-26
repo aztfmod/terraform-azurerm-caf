@@ -21,8 +21,8 @@ resource "null_resource" "set_url_path_rule" {
       NAME                     = each.value.name
       PATHS                    = each.value.paths
       PATHMAPNAME              = var.settings.url_path_maps[each.value.url_path_map_key].name
-      ADDRESS_POOL             = try(var.settings.backend_pools[each.value.backend_pool_key].name, null)
-      HTTP_SETTINGS            = try(var.settings.http_settings[each.value.http_settings_key].name, null)
+      ADDRESS_POOL             = var.settings.backend_pools[each.value.backend_pool_key].name
+      HTTP_SETTINGS            = var.settings.http_settings[each.value.http_settings_key].name
       REDIRECT_CONFIG          = try(each.value.redirect_config, null)
       REWRITE_RULE_SET         = try(var.settings.rewrite_rule_sets[each.value.rewrite_rule_set_key].name, null)
       WAF_POLICY               = try(each.value.waf_policy, null)
