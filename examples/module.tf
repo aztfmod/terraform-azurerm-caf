@@ -127,6 +127,8 @@ module "example" {
     azurerm_redis_caches               = var.azurerm_redis_caches
     cosmos_dbs                         = var.cosmos_dbs
     cosmosdb_sql_databases             = var.cosmosdb_sql_databases
+    cosmosdb_role_mapping              = var.cosmosdb_role_mapping
+    cosmosdb_role_definitions          = var.cosmosdb_role_definitions
     databricks_workspaces              = var.databricks_workspaces
     database_migration_services        = var.database_migration_services
     database_migration_projects        = var.database_migration_projects
