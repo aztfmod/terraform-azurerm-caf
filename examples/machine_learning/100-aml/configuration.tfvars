@@ -19,11 +19,12 @@ resource_groups = {
 #
 machine_learning_workspaces = {
   ml_workspace_re1 = {
-    name                     = "amlwrkspc"
-    resource_group_key       = "dap_azure_ml_re1"
-    keyvault_key             = "aml_secrets"
-    storage_account_key      = "amlstorage_re1"
-    application_insights_key = "ml_app_insight"
+    name                          = "amlwrkspc"
+    resource_group_key            = "dap_azure_ml_re1"
+    keyvault_key                  = "aml_secrets"
+    storage_account_key           = "amlstorage_re1"
+    application_insights_key      = "ml_app_insight"
+    public_network_access_enabled = true
     #sku_name                 = "Enterprise" # disabling this will set up Basic
     #Commenting sku_name as deprecated - per https://docs.microsoft.com/en-us/azure/machine-learning/concept-workspace#what-happened-to-enterprise-edition
   }
