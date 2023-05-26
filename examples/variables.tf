@@ -1053,3 +1053,9 @@ variable "iot_hub_certificate" {
   default = {}
 }
 
+variable "cosmosdb_role_mapping" {
+  default = {}
+}
+variable "cosmosdb_role_definitions" {
+  default = {}
+}
