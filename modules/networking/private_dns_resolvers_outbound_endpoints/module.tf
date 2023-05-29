@@ -17,5 +17,9 @@ resource "azurerm_private_dns_resolver_outbound_endpoint" "pvt_dns_resolver_outb
   tags                    = merge(local.tags, try(var.settings.tags, null))
   subnet_id               = var.subnet_id
 
+  lifecycle {
+    ignore_changes = [name]
+  }
+
 }
 
