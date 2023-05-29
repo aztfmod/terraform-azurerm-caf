@@ -110,6 +110,13 @@ virtual_network_gateways = {
               M/s/1JRtO3bDSzD9TazRVzn2oBqzSa8VgIo5C1nOnoAKJTlsClJKvIhnRlaLQqk=
               EOF
         }
+
+        # root_certificates = {
+        #   ca = {
+        #     name                  = "ca"
+        #     public_cert_data_file = "~/.certs/caCert64.pem"
+        #   }
+        # }
       }
     }
   }

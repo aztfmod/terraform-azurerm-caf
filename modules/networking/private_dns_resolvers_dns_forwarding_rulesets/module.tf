@@ -17,5 +17,9 @@ resource "azurerm_private_dns_resolver_dns_forwarding_ruleset" "pvt_dns_resolver
   tags                                       = merge(local.tags, try(var.settings.tags, null))
   private_dns_resolver_outbound_endpoint_ids = toset(var.outbound_endpoint_ids)
 
+  lifecycle {
+    ignore_changes = [name]
+  }
+
 }
 

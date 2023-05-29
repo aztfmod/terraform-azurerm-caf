@@ -15,11 +15,10 @@ variable "global_settings" {
   description = "Global settings object (see module README.md)"
 }
 variable "diagnostics" {}
-variable "vnets" {}
 variable "client_config" {
   description = "Client configuration object (see module README.md)."
 }
 variable "public_ip_addresses" {}
 
-
+variable "remote_objects" {}
 
