@@ -22,4 +22,8 @@ resource "azurerm_private_dns_resolver_inbound_endpoint" "pvt_dns_resolver_inbou
       subnet_id                    = ip_configurations.key
     }
   }
+
+  lifecycle {
+    ignore_changes = [name]
+  }
 }

@@ -8,9 +8,13 @@ module "virtual_network_gateways" {
   public_ip_addresses = local.combined_objects_public_ip_addresses
   diagnostics         = local.combined_diagnostics
   client_config       = local.client_config
-  vnets               = local.combined_objects_networking
   global_settings     = local.global_settings
   settings            = each.value
+  remote_objects = {
+    virtual_subnets = local.combined_objects_virtual_subnets
+    vnets           = local.combined_objects_networking
+  }
+
   depends_on = [
     module.networking.public_ip_addresses
   ]
