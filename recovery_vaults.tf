@@ -12,10 +12,6 @@ module "recovery_vaults" {
   private_dns       = local.combined_objects_private_dns
   resource_group    = local.combined_objects_resource_groups[try(each.value.resource_group.lz_key, local.client_config.landingzone_key)][try(each.value.resource_group.key, each.value.resource_group_key)]
   base_tags         = local.global_settings.inherit_tags
-
-  # support for CMK encryption
-  # key_id = try(local.combined_objects_keyvault_keys[try(each.value.encryption.keyvault_key.lz_key, local.client_config.landingzone_key)][try(each.value.encryption.key_vault_key_key, each.value.encryption.key_vault_key.key)].id, null)
-  # keyvault_id = try(local.combined_objects_keyvaults[try(each.value.encryption.keyvault.lz_key, local.client_config.landingzone_key)][each.value.encryption.keyvault.key].id, null)
 }
 
 output "recovery_vaults" {
