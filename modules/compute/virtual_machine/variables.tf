@@ -90,3 +90,9 @@ variable "network_security_groups" {
 variable "dedicated_hosts" {
   default = {}
 }
+
+variable "virtual_subnets" {
+  description = "Map of virtual_subnets objects"
+  default     = {}
+  nullable    = false
+}
