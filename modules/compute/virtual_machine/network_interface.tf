@@ -71,7 +71,7 @@ resource "azurerm_network_interface" "nic" {
 
     content {
       name                          = ip_configuration.value.name
-      subnet_id                     = can(ip_configuration.value.subnet_id) ? ip_configuration.value.subnet_id : var.vnets[try(ip_configuration.value.lz_key, var.client_config.landingzone_key)][ip_configuration.value.vnet_key].subnets[ip_configuration.value.subnet_key].id
+      subnet_id                     = can(ip_configuration.value.subnet_id) || can(ip_configuration.value.virtual_subnet_key) ? try(ip_configuration.value.subnet_id, var.virtual_subnets[try(ip_configuration.value.lz_key, var.client_config.landingzone_key)][ip_configuration.value.virtual_subnet_key].id) : var.vnets[try(ip_configuration.value.lz_key, var.client_config.landingzone_key)][ip_configuration.value.vnet_key].subnets[ip_configuration.value.subnet_key].id
       private_ip_address_allocation = try(ip_configuration.value.private_ip_address_allocation, "Dynamic")
       private_ip_address_version    = lookup(ip_configuration.value, "private_ip_address_version", null)
       private_ip_address            = lookup(ip_configuration.value, "private_ip_address", null)
