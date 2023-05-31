@@ -1,0 +1,19 @@
+---
+apiVersion: backstage.io/v1alpha1
+kind: Component
+metadata:
+  name: azr-terraform-module-azurerm-caf
+  language: terraform
+  description: |
+    This module allows you to create resources on Microsoft Azure, is used by the Cloud Adoption Framework for Azure (CAF) landing zones to provision resources in an Azure subscription and can deploy resources being directly invoked from the Terraform registry.
+  annotations:
+    gitlab.com/project-slug: Platform-Engineering-Services/PES-Playbooks
+    backstage.io/techdocs-ref: dir:/docs
+  tags:
+    - terraform
+    - caf
+    - azure
+spec:
+  type: service
+  owner: Platform-Engineering-Services/terraform-code-managers
+  lifecycle: production
