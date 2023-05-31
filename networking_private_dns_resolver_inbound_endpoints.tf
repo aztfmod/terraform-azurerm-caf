@@ -14,7 +14,7 @@ module "private_dns_resolver_inbound_endpoints" {
   subnet_ids = flatten(
     [
       for key, value in each.value.ip_configurations :
-      can(value.subnet_id) || can(value.vnet.key) == false ? try(value.subnet_id, try(local.combined_objects_virtual_subnets[try(value.vnet.lz_key, local.client_config.landingzone_key)][value.vnet.subnet_key].id) : local.combined_objects_networking[try(value.vnet.lz_key, local.client_config.landingzone_key)][value.vnet.key].subnets[value.vnet.subnet_key].id
+      can(value.subnet_id) || can(value.vnet.key) == false ? try(value.subnet_id, local.combined_objects_virtual_subnets[try(value.vnet.lz_key, local.client_config.landingzone_key)][value.vnet.subnet_key].id : local.combined_objects_networking[try(value.vnet.lz_key, local.client_config.landingzone_key)][value.vnet.key].subnets[value.vnet.subnet_key].id
     ]
   )
 
