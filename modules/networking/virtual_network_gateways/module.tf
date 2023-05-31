@@ -99,6 +99,17 @@ resource "azurerm_virtual_network_gateway" "vngw" {
           public_cert_data = file(root_certificate.value.public_cert_data_file)
         }
       }
+      dynamic "root_certificate" {
+        for_each = {
+          for key, value in try(vpn_client_configuration.value.root_certificates, {}) : key => value
+          if can(value.public_cert_data_from_var)
+        }
+
+        content {
+          name             = root_certificate.value.name
+          public_cert_data = var.bootstrap_root_ca_public_pem
+        }
+      }
       dynamic "revoked_certificate" {
         for_each = try(vpn_client_configuration.value.revoked_certificate, {})
         content {
