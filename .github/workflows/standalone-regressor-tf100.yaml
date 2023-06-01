@@ -19,6 +19,8 @@ on:
         default: 'standalone-scenarios.json'
         options:
         - standalone-scenarios.json
+        - standalone-compute.json
+        - standalone-networking.json
         - standalone-scenarios-longrunners.json
 
 env:
