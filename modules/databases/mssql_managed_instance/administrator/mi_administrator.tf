@@ -24,26 +24,3 @@ resource "null_resource" "set_mi_ad_admin" {
     }
   }
 }
-
-
-
-resource "null_resource" "remove_mi_ad_admin" {
-
-  triggers = {
-    resource_group_name = var.resource_group_name
-    mi_name             = var.mi_name
-  }
-
-  provisioner "local-exec" {
-    command     = format("%s/scripts/remove_mi_ad_admin.sh", path.module)
-    when        = destroy
-    interpreter = ["/bin/bash"]
-    on_failure  = fail
-
-    environment = {
-      RG_NAME = self.triggers.resource_group_name
-      MI_NAME = self.triggers.mi_name
-    }
-  }
-
-}

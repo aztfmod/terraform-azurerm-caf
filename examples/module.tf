@@ -131,12 +131,13 @@ module "example" {
     cosmosdb_role_definitions          = var.cosmosdb_role_definitions
     databricks_workspaces              = var.databricks_workspaces
     database_migration_services        = var.database_migration_services
-    database_migration_projects        = var.database_migration_projects
+    databricks_workspaces              = var.databricks_workspaces
     machine_learning_workspaces        = var.machine_learning_workspaces
     mariadb_servers                    = var.mariadb_servers
     mssql_databases                    = var.mssql_databases
     mssql_elastic_pools                = var.mssql_elastic_pools
     mssql_failover_groups              = var.mssql_failover_groups
+    mssql_managed_databases            = var.mssql_managed_databases
     mssql_managed_databases_backup_ltr = var.mssql_managed_databases_backup_ltr
     mssql_managed_databases_restore    = var.mssql_managed_databases_restore
     mssql_managed_instances            = var.mssql_managed_instances
@@ -146,11 +147,11 @@ module "example" {
     mssql_mi_secondary_tdes            = var.mssql_mi_secondary_tdes
     mssql_mi_tdes                      = var.mssql_mi_tdes
     mssql_servers                      = var.mssql_servers
+    mysql_flexible_server              = var.mysql_flexible_server
     mysql_servers                      = var.mysql_servers
     postgresql_flexible_servers        = var.postgresql_flexible_servers
     postgresql_servers                 = var.postgresql_servers
     synapse_workspaces                 = var.synapse_workspaces
-    mysql_flexible_server              = var.mysql_flexible_server
     data_explorer = {
       kusto_clusters                         = var.kusto_clusters
       kusto_databases                        = var.kusto_databases
