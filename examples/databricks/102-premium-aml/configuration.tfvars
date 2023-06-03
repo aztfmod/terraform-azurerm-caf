@@ -91,7 +91,6 @@ keyvaults = {
     name                     = "amlsecrets"
     resource_group_key       = "databricks_re1"
     sku_name                 = "premium"
-    soft_delete_enabled      = true
     purge_protection_enabled = true
   }
 }

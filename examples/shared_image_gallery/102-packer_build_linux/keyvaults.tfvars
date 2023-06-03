@@ -3,7 +3,6 @@ keyvaults = {
     name                = "packerakv"
     resource_group_key  = "sig"
     sku_name            = "standard"
-    soft_delete_enabled = true
     tags = {
       tfstate = "level2"
     }

@@ -16,7 +16,6 @@ keyvaults = {
     name                      = "kv1examplemsi"
     resource_group_key        = "rg1"
     sku_name                  = "premium"
-    soft_delete_enabled       = true
     enable_rbac_authorization = true
 
     # creation_policies = {}

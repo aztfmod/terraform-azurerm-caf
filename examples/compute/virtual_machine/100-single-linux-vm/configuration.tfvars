@@ -175,7 +175,6 @@ keyvaults = {
     name                        = "vmlinuxakv"
     resource_group_key          = "vm_region1"
     sku_name                    = "standard"
-    soft_delete_enabled         = true
     purge_protection_enabled    = true
     enabled_for_disk_encryption = true
     tags = {

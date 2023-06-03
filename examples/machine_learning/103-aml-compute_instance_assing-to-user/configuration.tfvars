@@ -64,7 +64,6 @@ keyvaults = {
     name                = "amlsecrets"
     resource_group_key  = "rg1"
     sku_name            = "premium"
-    soft_delete_enabled = true
   }
 }
 

@@ -34,7 +34,6 @@ keyvaults = {
     name                     = "integration"
     resource_group_key       = "integration"
     sku_name                 = "standard"
-    soft_delete_enabled      = true
     purge_protection_enabled = true
     creation_policies = {
       logged_in_user = {
