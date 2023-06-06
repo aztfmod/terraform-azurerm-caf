@@ -36,3 +36,12 @@ module "cdn_profiles" {
 output "cdn_profiles" {
   value = module.cdn_profiles
 }
+
+moved {
+  from = module.cdn_endpoint
+  to   = module.cdn_endpoints
+}
+moved {
+  from = module.cdn_profile
+  to   = module.cdn_profiles
+}
