@@ -45,6 +45,8 @@ virtual_machines = {
     virtual_machine_settings = {
       windows = {
         name           = "example_vm2"
+        # If true, the Azure VM name will be the same as the Windows computer name. If you plan to use Azure AD login, this must be true
+        allign_azure_vm_name_with_computer_name = true
         size           = "Standard_F2"
         admin_username = "adminuser"
 
