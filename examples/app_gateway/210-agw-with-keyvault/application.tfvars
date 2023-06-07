@@ -18,6 +18,7 @@ application_gateway_applications = {
         front_end_port_key             = "443"
         host_name                      = "demoapp1.cafdemo.com"
         request_routing_rule_key       = "default"
+        ssl_profile_key                = "profile1"
         keyvault_certificate = {
           certificate_key = "demoapp1.cafdemo.com"
           // To use manual uploaded cert

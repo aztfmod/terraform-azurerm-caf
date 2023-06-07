@@ -33,6 +33,11 @@ application_gateways = {
       }
     }
 
+    ssl_policy = {
+      policy_type = "Predefined"
+      policy_name = "AppGwSslPolicy20220101S"
+    }
+
     front_end_ip_configurations = {
       public = {
         name          = "public"
