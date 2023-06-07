@@ -48,21 +48,29 @@ resource "azurerm_application_gateway" "agw" {
     subnet_id = local.ip_configuration["gateway"].subnet_id
   }
 
+  ssl_policy {
+    disabled_protocols   = try(var.settings.ssl_policy.disabled_protocols, null)
+    policy_type          = try(var.settings.ssl_policy.policy_type, null)
+    policy_name          = try(var.settings.ssl_policy.policy_name, null)
+    cipher_suites        = try(var.settings.ssl_policy.cipher_suites, null)
+    min_protocol_version = try(var.settings.ssl_policy.min_protocol_version, null)
+  }
+
   dynamic "ssl_profile" {
     for_each = try(var.settings.ssl_profiles, {})
     content {
       name                             = ssl_profile.value.name
-      trusted_client_certificate_names = try(ssl_profile.trusted_client_certificate_names, null)
-      verify_client_cert_issuer_dn     = try(ssl_profile.verify_client_cert_issuer_dn, null)
+      trusted_client_certificate_names = try(ssl_profile.value.trusted_client_certificate_names, null)
+      verify_client_cert_issuer_dn     = try(ssl_profile.value.verify_client_cert_issuer_dn, null)
 
       dynamic "ssl_policy" {
         for_each = try(ssl_profile.value.ssl_policy, null) == null ? [] : [1]
         content {
-          disabled_protocols   = try(ssl_policy.value.disabled_protocols, null)
-          policy_type          = try(ssl_policy.value.policy_type, null)
-          policy_name          = try(ssl_policy.value.policy_name, null)
-          cipher_suites        = try(ssl_policy.value.cipher_suites, null)
-          min_protocol_version = try(ssl_policy.value.min_protocol_version, null)
+          disabled_protocols   = try(ssl_profile.value.ssl_policy.disabled_protocols, null)
+          policy_type          = try(ssl_profile.value.ssl_policy.policy_type, null)
+          policy_name          = try(ssl_profile.value.ssl_policy.policy_name, null)
+          cipher_suites        = try(ssl_profile.value.ssl_policy.cipher_suites, null)
+          min_protocol_version = try(ssl_profile.value.ssl_policy.min_protocol_version, null)
         }
       }
     }
@@ -111,6 +119,7 @@ resource "azurerm_application_gateway" "agw" {
       require_sni                    = try(http_listener.value.require_sni, false)
       ssl_certificate_name           = try(try(try(http_listener.value.keyvault_certificate_request.key, http_listener.value.keyvault_certificate.certificate_key), data.azurerm_key_vault_certificate.manual_certs[http_listener.key].name), null)
       firewall_policy_id             = try(var.application_gateway_waf_policies[try(http_listener.value.waf_policy.lz_key, var.client_config.landingzone_key)][http_listener.value.waf_policy.key].id, null)
+      ssl_profile_name               = try(var.settings.ssl_profiles[http_listener.value.ssl_profile_key].name, null)
     }
   }
 
