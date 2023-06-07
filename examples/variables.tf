@@ -1050,3 +1050,40 @@ variable "private_dns_resolver_forwarding_rules" {
 variable "private_dns_resolver_virtual_network_links" {
   default = {}
 }
+
+variable "iot_security_solution" {
+  default = {}
+}
+variable "iot_security_device_group" {
+  default = {}
+}
+variable "iot_central_application" {
+  default = {}
+}
+variable "iot_hub" {
+  default = {}
+}
+variable "iot_hub_dps" {
+  default = {}
+}
+variable "iot_hub_shared_access_policy" {
+  default = {}
+}
+variable "iot_dps_certificate" {
+  default = {}
+}
+variable "iot_dps_shared_access_policy" {
+  default = {}
+}
+variable "iot_hub_consumer_groups" {
+  default = {}
+}
+variable "iot_hub_certificate" {
+  default = {}
+}
+variable "cosmosdb_role_mapping" {
+  default = {}
+}
+variable "cosmosdb_role_definitions" {
+  default = {}
+}

@@ -1,4 +1,2 @@
-variable "server_name" {}
-variable "db_name" {}
+variable "database_id" {}
 variable "settings" {}
-variable "resource_group_name" {}
