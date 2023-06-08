@@ -23,7 +23,7 @@ aadb2c_directory = {
     data_residency_location = "United States"
     display_name            = "example-b2c-tenant"
     # Domain requires .onmicrosoft.com suffix
-    domain_name             = "100simpleaadb2cdirectory.onmicrosoft.com"
-    sku_name                = "PremiumP1"
+    domain_name = "100simpleaadb2cdirectory.onmicrosoft.com"
+    sku_name    = "PremiumP1"
   }
 }

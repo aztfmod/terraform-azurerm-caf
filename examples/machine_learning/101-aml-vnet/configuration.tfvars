@@ -5,6 +5,9 @@ global_settings = {
   }
 }
 
+provider_azurerm_features_template_deployment = {
+  delete_nested_items_during_deletion = true
+}
 
 #
 # Resource groups to be created
@@ -20,13 +23,16 @@ resource_groups = {
 #
 machine_learning_workspaces = {
   ml_workspace_re1 = {
-    name                     = "amlwrkspc"
-    resource_group_key       = "dap_azure_ml_re1"
-    keyvault_key             = "aml_secrets"
-    storage_account_key      = "amlstorage_re1"
-    application_insights_key = "ml_app_insight"
+    name                          = "amlwrkspc"
+    resource_group_key            = "dap_azure_ml_re1"
+    keyvault_key                  = "aml_secrets"
+    storage_account_key           = "amlstorage_re1"
+    application_insights_key      = "ml_app_insight"
+    public_network_access_enabled = true
     #sku_name                 = "Enterprise" # disabling this will set up Basic
     #Commenting sku_name as deprecated - per https://docs.microsoft.com/en-us/azure/machine-learning/concept-workspace#what-happened-to-enterprise-edition
+
+    # Don't create compute_instances [deprecated] - See examples 102 and 103 for machine_learning_compute_instance
     compute_instances = {
       compute_instance_re1 = {
         computeInstanceName   = "inst25"

@@ -18,3 +18,6 @@ variable "location" {
 variable "sourceDatabaseId" {
   default = ""
 }
+variable "resource_group_id" {
+
+}

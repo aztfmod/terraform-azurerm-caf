@@ -47,19 +47,21 @@ resource "azurerm_windows_virtual_machine" "vm" {
   depends_on = [azurerm_network_interface.nic, azurerm_network_interface_security_group_association.nic_nsg]
   for_each   = local.os_type == "windows" ? var.settings.virtual_machine_settings : {}
 
-  admin_password               = try(each.value.admin_password_key, null) == null ? random_password.admin[local.os_type].result : local.admin_password
-  admin_username               = try(each.value.admin_username_key, null) == null ? each.value.admin_username : local.admin_username
-  allow_extension_operations   = try(each.value.allow_extension_operations, null)
-  availability_set_id          = can(each.value.availability_set_key) || can(each.value.availability_set.key) ? var.availability_sets[try(var.client_config.landingzone_key, each.value.availability_set.lz_key)][try(each.value.availability_set_key, each.value.availability_set.key)].id : try(each.value.availability_set.id, each.value.availability_set_id, null)
-  computer_name                = azurecaf_name.windows_computer_name[each.key].result
-  enable_automatic_updates     = try(each.value.enable_automatic_updates, null)
-  encryption_at_host_enabled   = try(each.value.encryption_at_host_enabled, null)
-  eviction_policy              = try(each.value.eviction_policy, null)
-  license_type                 = try(each.value.license_type, null)
-  location                     = local.location
-  max_bid_price                = try(each.value.max_bid_price, null)
-  name                         = azurecaf_name.windows[each.key].result
-  network_interface_ids        = local.nic_ids
+  admin_password             = try(each.value.admin_password_key, null) == null ? random_password.admin[local.os_type].result : local.admin_password
+  admin_username             = try(each.value.admin_username_key, null) == null ? each.value.admin_username : local.admin_username
+  allow_extension_operations = try(each.value.allow_extension_operations, null)
+  availability_set_id        = can(each.value.availability_set_key) || can(each.value.availability_set.key) ? var.availability_sets[try(var.client_config.landingzone_key, each.value.availability_set.lz_key)][try(each.value.availability_set_key, each.value.availability_set.key)].id : try(each.value.availability_set.id, each.value.availability_set_id, null)
+  computer_name              = azurecaf_name.windows_computer_name[each.key].result
+  enable_automatic_updates   = try(each.value.enable_automatic_updates, null)
+  encryption_at_host_enabled = try(each.value.encryption_at_host_enabled, null)
+  eviction_policy            = try(each.value.eviction_policy, null)
+  license_type               = try(each.value.license_type, null)
+  location                   = local.location
+  max_bid_price              = try(each.value.max_bid_price, null)
+  name                       = azurecaf_name.windows[each.key].result
+  network_interface_ids      = local.nic_ids
+  # (Optional) Specifies the mode of in-guest patching to this Windows Virtual Machine. Possible values are Manual, AutomaticByOS and AutomaticByPlatform. Defaults to AutomaticByOS. For more information on patch modes please see the product documentation.
+  patch_mode                   = try(each.value.patch_mode, "AutomaticByOS")
   priority                     = try(each.value.priority, null)
   provision_vm_agent           = try(each.value.provision_vm_agent, true)
   proximity_placement_group_id = can(each.value.proximity_placement_group_key) || can(each.value.proximity_placement_group.key) ? var.proximity_placement_groups[try(var.client_config.landingzone_key, var.client_config.landingzone_key)][try(each.value.proximity_placement_group_key, each.value.proximity_placement_group.key)].id : try(each.value.proximity_placement_group_id, each.value.proximity_placement_group.id, null)
