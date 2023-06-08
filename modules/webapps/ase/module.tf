@@ -8,14 +8,14 @@ resource "azurecaf_name" "ase" {
   use_slug      = var.global_settings.use_slug
 }
 
-resource "azurerm_template_deployment" "ase" {
+resource "azurerm_resource_group_template_deployment" "ase" {
 
   name                = azurecaf_name.ase.result
   resource_group_name = var.resource_group_name
 
-  template_body = file(local.arm_filename)
+  template_content = file(local.arm_filename)
 
-  parameters_body = jsonencode(local.parameters_body)
+  parameters_content = jsonencode(local.parameters_content)
 
   deployment_mode = "Incremental"
 
@@ -30,7 +30,7 @@ resource "azurerm_template_deployment" "ase" {
 resource "null_resource" "destroy_ase" {
 
   triggers = {
-    resource_id = lookup(azurerm_template_deployment.ase.outputs, "id")
+    resource_id = lookup(azurerm_resource_group_template_deployment.ase.output_content, "id")
   }
 
   provisioner "local-exec" {
@@ -47,7 +47,7 @@ resource "null_resource" "destroy_ase" {
 }
 
 data "azurerm_app_service_environment" "ase" {
-  depends_on = [azurerm_template_deployment.ase]
+  depends_on = [azurerm_resource_group_template_deployment.ase]
 
   name                = azurecaf_name.ase.result
   resource_group_name = var.resource_group_name

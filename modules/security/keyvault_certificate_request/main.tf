@@ -3,6 +3,9 @@ terraform {
     azurecaf = {
       source = "aztfmod/azurecaf"
     }
+    azapi = {
+      source = "Azure/azapi"
+    }
   }
 }
 

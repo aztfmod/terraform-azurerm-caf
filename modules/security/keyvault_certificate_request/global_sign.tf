@@ -1,7 +1,14 @@
-data "azurerm_key_vault_secret" "password" {
-  count        = lower(var.settings.certificate_policy.issuer_key_or_name) == "self" ? 0 : 1
-  name         = var.certificate_issuers[var.settings.certificate_policy.issuer_key_or_name].cert_password_key
-  key_vault_id = var.keyvault_id
+data "external" "password" {
+  count = lower(var.settings.certificate_policy.issuer_key_or_name) == "self" ? 0 : 1
+  
+  program = [
+    "bash", "-c",
+    format(
+      "az keyvault secret show --id '%s'secrets/'%s' --query '{value: value}' -o json",
+      var.keyvault_id,
+      var.cert_secret_name
+    )
+  ]
 }
 
 locals {
@@ -9,7 +16,7 @@ locals {
     format("%s/GlobalSign_GetCertificateOrders.tpl", path.module),
     {
       UserName = var.certificate_issuers[var.settings.certificate_policy.issuer_key_or_name].account_id,
-      Password = data.azurerm_key_vault_secret.password[0].value,
+      Password = data.external.password[0].result.value,
       FQDN     = regex("[^CN=]+", var.settings.certificate_policy.x509_certificate_properties.subject) # regex("[^CN=]+", "CN=crm.test.com") ==> crm.test.com
     }
   )
@@ -18,7 +25,7 @@ locals {
     format("%s/GlobalSign_cancel_order.tpl", path.module),
     {
       UserName = var.certificate_issuers[var.settings.certificate_policy.issuer_key_or_name].account_id,
-      Password = data.azurerm_key_vault_secret.password[0].value
+      Password = data.external.password[0].result.value
     }
   )
 }

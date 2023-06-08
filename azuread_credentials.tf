@@ -12,8 +12,8 @@ module "azuread_credentials" {
 
   resources = {
     application = {
-      id             = try(local.combined_objects_azuread_applications[try(each.value.azuread_application.lz_key, local.client_config.landingzone_key)][each.value.azuread_application.key].id, {})
-      application_id = try(local.combined_objects_azuread_applications[try(each.value.azuread_application.lz_key, local.client_config.landingzone_key)][each.value.azuread_application.key].application_id, {})
+      id             = can(each.value.azuread_application.object_id) ? each.value.azuread_application.object_id : local.combined_objects_azuread_applications[try(each.value.azuread_application.lz_key, local.client_config.landingzone_key)][each.value.azuread_application.key].object_id
+      application_id = can(each.value.azuread_application.application_id) ? each.value.azuread_application.application_id : local.combined_objects_azuread_applications[try(each.value.azuread_application.lz_key, local.client_config.landingzone_key)][each.value.azuread_application.key].application_id
     }
   }
 }

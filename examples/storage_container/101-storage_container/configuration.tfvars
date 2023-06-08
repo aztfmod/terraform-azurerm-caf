@@ -44,6 +44,11 @@ role_mapping = {
             keys = ["user"]
           }
         }
+        "Storage Blob Data Reader" = {
+          managed_identities = {
+            keys = ["msi1"]
+          }
+        }
       }
     }
   }
@@ -81,6 +86,16 @@ storage_account_blobs = {
 
     delay = {
       create_duration = "30s"
+    }
+  }
+}
+
+
+managed_identities = {
+  msi1 = {
+    name = "msi"
+    resource_group = {
+      key = "test"
     }
   }
 }
