@@ -6,7 +6,7 @@ You can use this module directly from the Terraform registry using a minimalisti
 terraform {
   required_providers {
   }
-	required_version = ">= 1.3.0"
+  required_version = ">= 1.3.0"
 }
 
 provider "azurerm" {
