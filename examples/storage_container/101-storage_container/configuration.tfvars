@@ -90,7 +90,6 @@ storage_account_blobs = {
   }
 }
 
-
 managed_identities = {
   msi1 = {
     name = "msi"
