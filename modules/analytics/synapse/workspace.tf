@@ -13,35 +13,37 @@ resource "azurecaf_name" "ws" {
 # Tested with : AzureRM 2.57.0
 resource "azurerm_synapse_workspace" "ws" {
   name                                 = azurecaf_name.ws.result
-  resource_group_name                  = var.resource_group_name
-  location                             = var.location
+  resource_group_name                  = local.resource_group_name
+  location                             = local.location
   storage_data_lake_gen2_filesystem_id = var.storage_data_lake_gen2_filesystem_id
   sql_administrator_login              = var.settings.sql_administrator_login
   sql_administrator_login_password     = try(var.settings.sql_administrator_login_password, random_password.sql_admin.0.result)
   managed_virtual_network_enabled      = try(var.settings.managed_virtual_network_enabled, false)
   sql_identity_control_enabled         = try(var.settings.sql_identity_control_enabled, null)
   managed_resource_group_name          = try(var.settings.managed_resource_group_name, null)
-  tags                                 = local.tags
+  tags                                 = merge(local.tags, try(var.settings.tags, null))
 
   dynamic "aad_admin" {
-    for_each = try(var.settings.aad_admin, {}) == {} ? [] : [1]
+    for_each = try(var.settings.aad_admin, null) != null ? [var.settings.aad_admin] : []
 
     content {
-      login     = var.settings.aad_admin.login
-      object_id = var.settings.aad_admin.object_id
-      tenant_id = var.settings.aad_admin.tenant_id
+      login     = try(aad_admin.value.login, null)
+      object_id = try(aad_admin.value.object_id, null)
+      tenant_id = try(aad_admin.value.tenant_id, null)
     }
   }
 
   dynamic "azure_devops_repo" {
-    for_each = try(var.settings.azure_devops_repo, {}) == {} ? [] : [1]
+    for_each = try(var.settings.azure_devops_repo, null) != null ? [var.settings.azure_devops_repo] : []
 
     content {
-      account_name    = var.settings.azure_devops_repo.account_name
-      branch_name     = var.settings.azure_devops_repo.branch_name
-      project_name    = var.settings.azure_devops_repo.project_name
-      repository_name = var.settings.azure_devops_repo.repository_name
-      root_folder     = var.settings.azure_devops_repo.root_folder
+      account_name    = try(azure_devops_repo.value.account_name, null)
+      branch_name     = try(azure_devops_repo.value.branch_name, null)
+      last_commit_id  = try(azure_devops_repo.value.last_commit_id, null)
+      project_name    = try(azure_devops_repo.value.project_name, null)
+      repository_name = try(azure_devops_repo.value.repository_name, null)
+      root_folder     = try(azure_devops_repo.value.root_folder, null)
+      tenant_id       = try(azure_devops_repo.value.tenant_id, null)
     }
   }
 
@@ -54,14 +56,15 @@ resource "azurerm_synapse_workspace" "ws" {
   }
 
   dynamic "github_repo" {
-    for_each = try(var.settings.github_repo, {}) == {} ? [] : [1]
+    for_each = try(var.settings.github_repo, null) != null ? [var.settings.github_repo] : []
 
     content {
-      account_name    = var.settings.github_repo.account_name
-      branch_name     = var.settings.github_repo.branch_name
-      repository_name = var.settings.github_repo.repository_name
-      root_folder     = var.settings.github_repo.root_folder
-      git_url         = var.settings.github_repo.git_url
+      account_name    = try(github_repo.value.account_name, null)
+      branch_name     = try(github_repo.value.branch_name, null)
+      last_commit_id  = try(github_repo.value.last_commit_id, null)
+      repository_name = try(github_repo.value.repository_name, null)
+      root_folder     = try(github_repo.value.root_folder, null)
+      git_url         = try(github_repo.value.git_url, null)
     }
   }
 
@@ -113,7 +116,7 @@ resource "azurerm_key_vault_secret" "synapse_rg_name" {
   count = try(var.settings.sql_administrator_login_password, null) == null ? 1 : 0
 
   name         = format("%s-synapse-resource-group-name", azurerm_synapse_workspace.ws.name)
-  value        = var.resource_group_name
+  value        = local.resource_group_name
   key_vault_id = var.keyvault_id
 }
 

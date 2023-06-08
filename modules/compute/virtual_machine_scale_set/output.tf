@@ -31,3 +31,8 @@ output "ssh_keys" {
     ssh_private_key_open_ssh = azurerm_key_vault_secret.ssh_public_key_openssh[local.os_type].name #for backard compat, wrong name, will be removed in future version.
   } : null
 }
+
+output "identity" {
+  value       = local.os_type == "linux" ? try(azurerm_linux_virtual_machine_scale_set.vmss["linux"].identity, azurerm_linux_virtual_machine_scale_set.vmss_autoscaled["linux"].identity, null) : try(azurerm_windows_virtual_machine_scale_set.vmss["windows"].identity, null)
+  description = "The identity block of the virtual machine scale set"
+}

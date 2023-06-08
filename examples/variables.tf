@@ -21,11 +21,6 @@ variable "var_folder_path" {
   default = ""
 }
 
-variable "provider_azurerm_features_keyvault" {
-  default = {
-    purge_soft_delete_on_destroy = true
-  }
-}
 # variable "cloud" {
 #   default = {}
 # }
@@ -310,6 +305,9 @@ variable "azurerm_application_insights" {
   default = {}
 }
 variable "azurerm_application_insights_web_test" {
+  default = {}
+}
+variable "azurerm_application_insights_standard_web_test" {
   default = {}
 }
 variable "role_mapping" {
@@ -1012,5 +1010,52 @@ variable "static_sites" {
   default = {}
 }
 variable "aro_clusters" {
+  default = {}
+}
+variable "web_pubsubs" {
+  default = {}
+}
+variable "web_pubsub_hubs" {
+  default = {}
+}
+variable "aadb2c_directory" {
+  default = {}
+}
+
+variable "iot_security_solution" {
+  default = {}
+}
+variable "iot_security_device_group" {
+  default = {}
+}
+variable "iot_central_application" {
+  default = {}
+}
+variable "iot_hub" {
+  default = {}
+}
+variable "iot_hub_dps" {
+  default = {}
+}
+variable "iot_hub_shared_access_policy" {
+  default = {}
+}
+variable "iot_dps_certificate" {
+  default = {}
+}
+variable "iot_dps_shared_access_policy" {
+  default = {}
+}
+variable "iot_hub_consumer_groups" {
+  default = {}
+}
+variable "iot_hub_certificate" {
+  default = {}
+}
+
+variable "cosmosdb_role_mapping" {
+  default = {}
+}
+variable "cosmosdb_role_definitions" {
   default = {}
 }

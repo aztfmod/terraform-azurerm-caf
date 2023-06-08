@@ -83,6 +83,8 @@ diagnostics_definition = {
         ["AZFWApplicationRule", true, false, 7],
         ["AZFWApplicationRuleAggregation", true, false, 7],
         ["AZFWDnsQuery", true, false, 7],
+        ["AZFWFatFlow", true, true, 7],
+        ["AZFWFlowTrace", true, true, 7],
         ["AZFWFqdnResolveFailure", true, false, 7],
         ["AZFWIdpsSignature", true, false, 7],
         ["AZFWNatRule", true, false, 7],

@@ -24,30 +24,12 @@ variable "client_config" {
   description = "Client configuration object (see module README.md)."
 }
 
-# variable "location" {
-#   description = "Specifies the supported Azure location where to create the resource. Changing this forces a new resource to be created."
-#   type        = string
-# }
-
-variable "resource_group_name" {
-  description = "The resource group object where to create the resource."
-}
-
-variable "location" {
-  description = "The location where to create the resource."
-}
-
 variable "vnets" {
   description = "Virtual networks objects - contains all virtual networks that could potentially be used by the module."
 }
 
 variable "aml" {
   description = "Azure Machine Learning objects - contains all AML workspaces that could potentially be used by the module."
-}
-
-variable "base_tags" {
-  description = "Base tags for the resource to be inherited from the resource group."
-  type        = map(any)
 }
 
 variable "diagnostics" {
@@ -64,4 +46,19 @@ variable "resource_groups" {
 
 variable "private_dns" {
   default = {}
+}
+variable "location" {
+  description = "location of the resource if different from the resource group."
+  default     = null
+}
+variable "resource_group_name" {
+  description = "Resource group object to deploy the virtual machine"
+  default     = null
+}
+variable "resource_group" {
+  description = "Resource group object to deploy the virtual machine"
+}
+variable "base_tags" {
+  description = "Base tags for the resource to be inherited from the resource group."
+  type        = bool
 }

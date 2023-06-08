@@ -14,10 +14,10 @@ resource "azurecaf_name" "app_service" {
 
 resource "azurerm_app_service" "app_service" {
   name                = azurecaf_name.app_service.result
-  location            = var.location
-  resource_group_name = var.resource_group_name
+  location            = local.location
+  resource_group_name = local.resource_group_name
   app_service_plan_id = var.app_service_plan_id
-  tags                = local.tags
+  tags                = merge(local.tags, try(var.settings.tags, {}))
 
   client_affinity_enabled = lookup(var.settings, "client_affinity_enabled", null)
   client_cert_enabled     = lookup(var.settings, "client_cert_enabled", null)
@@ -39,7 +39,6 @@ resource "azurerm_app_service" "app_service" {
     for_each = lookup(var.settings, "site_config", {}) != {} ? [1] : []
 
     content {
-      # numberOfWorkers           = lookup(each.value.site_config, "numberOfWorkers", 1)  # defined in ARM template below
       always_on                 = lookup(var.settings.site_config, "always_on", false)
       app_command_line          = lookup(var.settings.site_config, "app_command_line", null)
       default_documents         = lookup(var.settings.site_config, "default_documents", null)
@@ -62,6 +61,7 @@ resource "azurerm_app_service" "app_service" {
       use_32_bit_worker_process = lookup(var.settings.site_config, "use_32_bit_worker_process", false)
       websockets_enabled        = lookup(var.settings.site_config, "websockets_enabled", false)
       scm_type                  = lookup(var.settings.site_config, "scm_type", null)
+      number_of_workers         = can(var.settings.numberOfWorkers) || can(var.settings.site_config.number_of_workers) ? try(var.settings.numberOfWorkers, var.settings.site_config.number_of_workers) : 1
 
       dynamic "cors" {
         for_each = lookup(var.settings.site_config, "cors", {}) != {} ? [1] : []
@@ -126,8 +126,8 @@ resource "azurerm_app_service" "app_service" {
         for_each = lookup(var.settings.auth_settings, "active_directory", {}) != {} ? [1] : []
 
         content {
-          client_id         = var.settings.auth_settings.active_directory.client_id
-          client_secret     = lookup(var.settings.auth_settings.active_directory, "client_secret", null)
+          client_id         = can(var.settings.auth_settings.active_directory.client_id_key) ? var.azuread_applications[try(var.settings.auth_settings.active_directory.client_id_lz_key, var.client_config.landingzone_key)][var.settings.auth_settings.active_directory.client_id_key].application_id : var.settings.auth_settings.active_directory.client_id
+          client_secret     = can(var.settings.auth_settings.active_directory.client_secret_key) ? var.azuread_service_principal_passwords[try(var.settings.auth_settings.active_directory.client_secret_lz_key, var.client_config.landingzone_key)][var.settings.auth_settings.active_directory.client_secret_key].service_principal_password : try(var.settings.auth_settings.active_directory.client_secret, null)
           allowed_audiences = lookup(var.settings.auth_settings.active_directory, "allowed_audiences", null)
         }
       }
@@ -275,24 +275,6 @@ resource "azurerm_app_service" "app_service" {
       site_config[0].scm_type
     ]
   }
-}
-
-resource "azurerm_template_deployment" "site_config" {
-  depends_on = [azurerm_app_service.app_service]
-
-  count = lookup(var.settings, "numberOfWorkers", {}) != {} ? 1 : 0
-
-  name                = azurecaf_name.app_service.result
-  resource_group_name = var.resource_group_name
-
-  template_body = file(local.arm_filename)
-
-  parameters = {
-    "numberOfWorkers" = tonumber(var.settings.numberOfWorkers)
-    "name"            = azurecaf_name.app_service.result
-  }
-
-  deployment_mode = "Incremental"
 }
 
 resource "azurerm_app_service_custom_hostname_binding" "app_service" {

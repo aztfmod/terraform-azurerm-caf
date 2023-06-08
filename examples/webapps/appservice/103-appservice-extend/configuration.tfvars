@@ -37,12 +37,12 @@ app_services = {
 
     settings = {
       enabled                 = true
-      numberOfWorkers         = 2
       client_affinity_enabled = false
       client_cert_enabled     = false
       https_only              = false
 
       site_config = {
+        number_of_workers        = 2
         default_documents        = ["main.aspx"]
         always_on                = true
         dotnet_framework_version = "v4.0"

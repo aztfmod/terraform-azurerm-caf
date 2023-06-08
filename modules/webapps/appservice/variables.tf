@@ -2,20 +2,20 @@ variable "client_config" {
   description = "Client configuration object (see module README.md)."
 }
 
-variable "tags" {
-  description = "(Required) map of tags for the deployment"
-}
-
 variable "name" {
   description = "(Required) Name of the App Service"
 }
 
 variable "location" {
   description = "(Required) Resource Location"
+  default     = null
 }
-
 variable "resource_group_name" {
-  description = "(Required) Resource group of the App Service"
+  description = "Resource group object to deploy the virtual machine"
+  default     = null
+}
+variable "resource_group" {
+  description = "Resource group object to deploy the virtual machine"
 }
 
 variable "app_service_plan_id" {
@@ -53,7 +53,7 @@ variable "global_settings" {
 
 variable "base_tags" {
   description = "Base tags for the resource to be inherited from the resource group."
-  type        = map(any)
+  type        = bool
 }
 
 variable "combined_objects" {
@@ -74,3 +74,5 @@ variable "vnets" {}
 variable "subnet_id" {}
 variable "private_endpoints" {}
 variable "private_dns" {}
+variable "azuread_applications" {}
+variable "azuread_service_principal_passwords" {}

@@ -67,14 +67,14 @@ resource "azurerm_linux_virtual_machine_scale_set" "vmss" {
   admin_username      = each.value.admin_username
   admin_password      = each.value.disable_password_authentication == false ? each.value.admin_password : null
   instances           = each.value.instances
-  location            = var.location
+  location            = local.location
   name                = azurecaf_name.linux[each.key].result
-  resource_group_name = var.resource_group_name
+  resource_group_name = local.resource_group_name
   sku                 = each.value.sku
   tags                = merge(local.tags, try(each.value.tags, null))
 
   computer_name_prefix            = azurecaf_name.linux_computer_name_prefix[each.key].result
-  custom_data                     = try(each.value.custom_data, null) == null ? null : filebase64(format("%s/%s", path.cwd, each.value.custom_data))
+  custom_data                     = try(each.value.custom_data, null) == null ? null : try(filebase64(format("%s/%s", path.cwd, each.value.custom_data)), filebase64(each.value.custom_data), base64encode(each.value.custom_data))
   disable_password_authentication = try(each.value.disable_password_authentication, true)
   eviction_policy                 = try(each.value.eviction_policy, null)
   max_bid_price                   = try(each.value.max_bid_price, null)
@@ -258,14 +258,14 @@ resource "azurerm_linux_virtual_machine_scale_set" "vmss_autoscaled" {
   admin_username      = each.value.admin_username
   admin_password      = each.value.disable_password_authentication == false ? each.value.admin_password : null
   instances           = each.value.instances
-  location            = var.location
+  location            = local.location
   name                = azurecaf_name.linux[each.key].result
-  resource_group_name = var.resource_group_name
+  resource_group_name = local.resource_group_name
   sku                 = each.value.sku
   tags                = merge(local.tags, try(each.value.tags, null))
 
   computer_name_prefix            = azurecaf_name.linux_computer_name_prefix[each.key].result
-  custom_data                     = try(each.value.custom_data, null) == null ? null : filebase64(format("%s/%s", path.cwd, each.value.custom_data))
+  custom_data                     = try(each.value.custom_data, null) == null ? null : try(filebase64(format("%s/%s", path.cwd, each.value.custom_data)), filebase64(each.value.custom_data), base64encode(each.value.custom_data))
   disable_password_authentication = try(each.value.disable_password_authentication, true)
   eviction_policy                 = try(each.value.eviction_policy, null)
   max_bid_price                   = try(each.value.max_bid_price, null)

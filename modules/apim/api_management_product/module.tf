@@ -10,3 +10,20 @@ resource "azurerm_api_management_product" "apim" {
   subscriptions_limit   = try(var.settings.subscriptions_limit, null)
   terms                 = try(var.settings.terms, null)
 }
+
+resource "azurerm_api_management_product_policy" "apim" {
+  count               = try(var.settings.policy, null) != null ? 1 : 0
+  api_management_name = var.api_management_name
+  resource_group_name = var.resource_group_name
+  product_id          = var.settings.product_id
+
+  xml_content = try(
+    try(
+      file("${path.cwd}/${var.settings.policy.xml_file}"),
+      var.settings.policy.xml_content
+    ),
+    null
+  )
+
+  xml_link = try(var.settings.policy.xml_link, null)
+}

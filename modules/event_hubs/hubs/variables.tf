@@ -1,9 +1,8 @@
 variable "global_settings" {}
 variable "settings" {}
-variable "resource_group" {
-  description = "Resource group objects."
+variable "resource_group_name" {
+  description = "Resource group name."
 }
-variable "base_tags" {}
 variable "client_config" {}
 variable "namespace_name" {
   description = "Name of the Event Hub Namespace."
