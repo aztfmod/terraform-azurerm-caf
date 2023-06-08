@@ -9,9 +9,9 @@ resource "azurecaf_name" "pva" {
 }
 
 resource "azurerm_purview_account" "pva" {
-  location                    = var.location
+  location                    = local.location
   name                        = azurecaf_name.pva.result
-  resource_group_name         = var.resource_group_name
+  resource_group_name         = local.resource_group_name
   public_network_enabled      = try(var.settings.public_network_enabled, null)
   managed_resource_group_name = try(var.settings.managed_resource_group_name, null)
   tags                        = local.tags

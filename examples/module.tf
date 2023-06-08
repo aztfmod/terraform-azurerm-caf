@@ -28,6 +28,10 @@ module "example" {
   var_folder_path                       = var.var_folder_path
   tags                                  = local.tags
 
+  aadb2c = {
+    aadb2c_directory = var.aadb2c_directory
+  }
+
   azuread = {
     azuread_api_permissions             = var.azuread_api_permissions
     azuread_applications                = var.azuread_applications
@@ -123,14 +127,17 @@ module "example" {
     azurerm_redis_caches               = var.azurerm_redis_caches
     cosmos_dbs                         = var.cosmos_dbs
     cosmosdb_sql_databases             = var.cosmosdb_sql_databases
+    cosmosdb_role_mapping              = var.cosmosdb_role_mapping
+    cosmosdb_role_definitions          = var.cosmosdb_role_definitions
     databricks_workspaces              = var.databricks_workspaces
     database_migration_services        = var.database_migration_services
-    database_migration_projects        = var.database_migration_projects
+    databricks_workspaces              = var.databricks_workspaces
     machine_learning_workspaces        = var.machine_learning_workspaces
     mariadb_servers                    = var.mariadb_servers
     mssql_databases                    = var.mssql_databases
     mssql_elastic_pools                = var.mssql_elastic_pools
     mssql_failover_groups              = var.mssql_failover_groups
+    mssql_managed_databases            = var.mssql_managed_databases
     mssql_managed_databases_backup_ltr = var.mssql_managed_databases_backup_ltr
     mssql_managed_databases_restore    = var.mssql_managed_databases_restore
     mssql_managed_instances            = var.mssql_managed_instances
@@ -140,11 +147,11 @@ module "example" {
     mssql_mi_secondary_tdes            = var.mssql_mi_secondary_tdes
     mssql_mi_tdes                      = var.mssql_mi_tdes
     mssql_servers                      = var.mssql_servers
+    mysql_flexible_server              = var.mysql_flexible_server
     mysql_servers                      = var.mysql_servers
     postgresql_flexible_servers        = var.postgresql_flexible_servers
     postgresql_servers                 = var.postgresql_servers
     synapse_workspaces                 = var.synapse_workspaces
-    mysql_flexible_server              = var.mysql_flexible_server
     data_explorer = {
       kusto_clusters                         = var.kusto_clusters
       kusto_databases                        = var.kusto_databases
@@ -171,6 +178,8 @@ module "example" {
     eventgrid_topic              = var.eventgrid_topic
     eventgrid_event_subscription = var.eventgrid_event_subscription
     eventgrid_domain_topic       = var.eventgrid_domain_topic
+    web_pubsubs                  = var.web_pubsubs
+    web_pubsub_hubs              = var.web_pubsub_hubs
   }
   networking = {
     application_gateway_applications                        = var.application_gateway_applications
@@ -294,14 +303,15 @@ module "example" {
 
   }
   webapp = {
-    azurerm_application_insights          = var.azurerm_application_insights
-    azurerm_application_insights_web_test = var.azurerm_application_insights_web_test
-    app_service_environments              = var.app_service_environments
-    app_service_environments_v3           = var.app_service_environments_v3
-    app_service_plans                     = var.app_service_plans
-    app_services                          = var.app_services
-    function_apps                         = var.function_apps
-    static_sites                          = var.static_sites
+    azurerm_application_insights                   = var.azurerm_application_insights
+    azurerm_application_insights_web_test          = var.azurerm_application_insights_web_test
+    azurerm_application_insights_standard_web_test = var.azurerm_application_insights_standard_web_test
+    app_service_environments                       = var.app_service_environments
+    app_service_environments_v3                    = var.app_service_environments_v3
+    app_service_plans                              = var.app_service_plans
+    app_services                                   = var.app_services
+    function_apps                                  = var.function_apps
+    static_sites                                   = var.static_sites
   }
   data_factory = {
     data_factory                                 = var.data_factory
@@ -376,5 +386,15 @@ module "example" {
     digital_twins_endpoint_eventhubs    = var.digital_twins_endpoint_eventhubs
     digital_twins_endpoint_eventgrids   = var.digital_twins_endpoint_eventgrids
     digital_twins_endpoint_servicebuses = var.digital_twins_endpoint_servicebuses
+    iot_hub                             = var.iot_hub
+    iot_hub_consumer_groups             = var.iot_hub_consumer_groups
+    iot_hub_certificate                 = var.iot_hub_certificate
+    iot_hub_shared_access_policy        = var.iot_hub_shared_access_policy
+    iot_hub_dps                         = var.iot_hub_dps
+    iot_dps_certificate                 = var.iot_dps_certificate
+    iot_dps_shared_access_policy        = var.iot_dps_shared_access_policy
+    iot_security_solution               = var.iot_security_solution
+    iot_security_device_group           = var.iot_security_device_group
+    iot_central_application             = var.iot_central_application
   }
 }

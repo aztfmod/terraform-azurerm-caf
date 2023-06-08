@@ -1,12 +1,6 @@
 
-variable "resource_group_name" {
-  description = "(Required) Name of the resource group where to create the resource. Changing this forces a new resource to be created. "
-  type        = string
-}
-
-variable "location" {
-  description = "(Required) Specifies the Azure location to deploy the resource. Changing this forces a new resource to be created."
-  type        = string
+variable "resource_group" {
+  description = "(Required) Resource group object where to create the resource. Changing this forces a new resource to be created. "
 }
 
 variable "diagnostics" {
@@ -22,7 +16,7 @@ variable "global_settings" {
 }
 variable "base_tags" {
   description = "Base tags for the resource to be inherited from the resource group."
-  type        = map(any)
+  type        = bool
 }
 
 variable "network_watchers" {

@@ -7,6 +7,10 @@ resource "random_string" "prefix" {
 }
 
 locals {
+  aadb2c = {
+    aadb2c_directory = try(var.aadb2c.aadb2c_directory, {})
+  }
+
   azuread = {
     azuread_api_permissions             = try(var.azuread.azuread_api_permissions, {})
     azuread_applications                = try(var.azuread.azuread_applications, {})
@@ -106,6 +110,8 @@ locals {
     azurerm_redis_caches               = try(var.database.azurerm_redis_caches, {})
     cosmos_dbs                         = try(var.database.cosmos_dbs, {})
     cosmosdb_sql_databases             = try(var.database.cosmosdb_sql_databases, {})
+    cosmosdb_role_definitions          = try(var.database.cosmosdb_role_definitions, {})
+    cosmosdb_role_mapping              = try(var.database.cosmosdb_role_mapping, {})
     database_migration_services        = try(var.database.database_migration_services, {})
     database_migration_projects        = try(var.database.database_migration_projects, {})
     databricks_workspaces              = try(var.database.databricks_workspaces, {})
@@ -233,6 +239,7 @@ locals {
   cognitive_services = {
     cognitive_services_account = try(var.cognitive_services.cognitive_services_account, {})
   }
+
   messaging = {
     signalr_services             = try(var.messaging.signalr_services, {})
     servicebus_namespaces        = try(var.messaging.servicebus_namespaces, {})
@@ -242,6 +249,8 @@ locals {
     eventgrid_topic              = try(var.messaging.eventgrid_topic, {})
     eventgrid_event_subscription = try(var.messaging.eventgrid_event_subscription, {})
     eventgrid_domain_topic       = try(var.messaging.eventgrid_domain_topic, {})
+    web_pubsubs                  = try(var.messaging.web_pubsubs, {})
+    web_pubsub_hubs              = try(var.messaging.web_pubsub_hubs, {})
   }
 
   networking = {
@@ -371,14 +380,15 @@ locals {
   }
 
   webapp = {
-    app_service_environments              = try(var.webapp.app_service_environments, {})
-    app_service_environments_v3           = try(var.webapp.app_service_environments_v3, {})
-    app_service_plans                     = try(var.webapp.app_service_plans, {})
-    app_services                          = try(var.webapp.app_services, {})
-    azurerm_application_insights          = try(var.webapp.azurerm_application_insights, {})
-    azurerm_application_insights_web_test = try(var.webapp.azurerm_application_insights_web_test, {})
-    function_apps                         = try(var.webapp.function_apps, {})
-    static_sites                          = try(var.webapp.static_sites, {})
+    app_service_environments                       = try(var.webapp.app_service_environments, {})
+    app_service_environments_v3                    = try(var.webapp.app_service_environments_v3, {})
+    app_service_plans                              = try(var.webapp.app_service_plans, {})
+    app_services                                   = try(var.webapp.app_services, {})
+    azurerm_application_insights                   = try(var.webapp.azurerm_application_insights, {})
+    azurerm_application_insights_web_test          = try(var.webapp.azurerm_application_insights_web_test, {})
+    azurerm_application_insights_standard_web_test = try(var.webapp.azurerm_application_insights_standard_web_test, {})
+    function_apps                                  = try(var.webapp.function_apps, {})
+    static_sites                                   = try(var.webapp.static_sites, {})
   }
 
   enable = {
@@ -390,6 +400,7 @@ locals {
     active_directory_domain_service             = try(var.identity.active_directory_domain_service, {})
     active_directory_domain_service_replica_set = try(var.identity.active_directory_domain_service_replica_set, {})
   }
+
   apim = {
     api_management                      = try(var.apim.api_management, {})
     api_management_api                  = try(var.apim.api_management_api, {})
@@ -415,5 +426,15 @@ locals {
     digital_twins_endpoint_eventhubs    = try(var.iot.digital_twins_endpoint_eventhubs, {})
     digital_twins_endpoint_eventgrids   = try(var.iot.digital_twins_endpoint_eventgrids, {})
     digital_twins_endpoint_servicebuses = try(var.iot.digital_twins_endpoint_servicebuses, {})
+    iot_hub                             = try(var.iot.iot_hub, {})
+    iot_hub_consumer_groups             = try(var.iot.iot_hub_consumer_groups, {})
+    iot_hub_certificate                 = try(var.iot.iot_hub_certificate, {})
+    iot_hub_shared_access_policy        = try(var.iot.iot_hub_shared_access_policy, {})
+    iot_hub_dps                         = try(var.iot.iot_hub_dps, {})
+    iot_dps_certificate                 = try(var.iot.iot_dps_certificate, {})
+    iot_dps_shared_access_policy        = try(var.iot.iot_dps_shared_access_policy, {})
+    iot_security_solution               = try(var.iot.iot_security_solution, {})
+    iot_security_device_group           = try(var.iot.iot_security_device_group, {})
+    iot_central_application             = try(var.iot.iot_central_application, {})
   }
 }

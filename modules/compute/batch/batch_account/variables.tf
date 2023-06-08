@@ -4,16 +4,10 @@ variable "global_settings" {
 variable "client_config" {
   description = "Client configuration object (see module README.md)."
 }
-variable "base_tags" {
-  description = "Base tags for the resource to be inherited from the resource group."
-  type        = map(any)
-}
 variable "diagnostics" {
   default = {}
 }
 variable "settings" {}
-variable "resource_group_name" {}
-variable "location" {}
 variable "keyvault" {
   default = null
 }
@@ -26,9 +20,6 @@ variable "storage_account_id" {
 variable "managed_identities" {
   default = {}
 }
-variable "resource_groups" {
-  default = {}
-}
 variable "vnets" {
   default = {}
 }
@@ -37,4 +28,19 @@ variable "private_dns" {
 }
 variable "private_endpoints" {
   default = {}
+}
+variable "location" {
+  description = "location of the resource if different from the resource group."
+  default     = null
+}
+variable "resource_group_name" {
+  description = "Resource group object to deploy the virtual machine"
+  default     = null
+}
+variable "resource_group" {
+  description = "Resource group object to deploy the virtual machine"
+}
+variable "base_tags" {
+  description = "Base tags for the resource to be inherited from the resource group."
+  type        = bool
 }

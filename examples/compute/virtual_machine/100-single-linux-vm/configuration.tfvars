@@ -4,6 +4,11 @@ global_settings = {
   regions = {
     region1 = "australiaeast"
   }
+
+  inherit_tags = true
+  tags = {
+    # base = "seeeetandalone2"
+  }
   resource_defaults = {
     virtual_machines = {
       # set the below to enable az managed boot diagostics for vms
@@ -16,7 +21,22 @@ global_settings = {
 resource_groups = {
   vm_region1 = {
     name = "example-virtual-machine-rg1"
+    tags = {
+      env2 = "standalone2"
+    }
   }
+  vm1_region1 = {
+    name = "example-virtual-machine-rg2"
+    tags = {
+      env = "standalone3"
+    }
+  }
+  # vm2_region1 = {
+  #   name = "example-virtual-machine-rg3"
+  #   tags = {
+  #     env = "standalone3"
+  #   }
+  # }
 }
 
 # Virtual machines
@@ -87,6 +107,7 @@ CUSTOM_DATA
         # Spot VM to save money
         priority        = "Spot"
         eviction_policy = "Deallocate"
+        patch_mode      = "ImageDefault"
 
         # Value of the nic keys to attach the VM. The first one in the list is the default nic
         network_interface_keys = ["nic0"]
@@ -125,6 +146,10 @@ CUSTOM_DATA
         lun                     = 1
         zones                   = ["1"]
         disk_encryption_set_key = "set1"
+        tags = {
+          # env2 = "standalone2"
+          base = "seeeetandalone3333333"
+        }
       }
     }
   }
@@ -173,6 +198,9 @@ keyvault_keys = {
     key_type           = "RSA"
     key_size           = "2048"
     key_opts           = ["encrypt", "decrypt", "sign", "verify", "wrapKey", "unwrapKey"]
+    tags = {
+      encryption = "rsa-204"
+    new_tag = "yes" }
   }
 }
 

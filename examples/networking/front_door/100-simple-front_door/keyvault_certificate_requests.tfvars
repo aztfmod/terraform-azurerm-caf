@@ -2,6 +2,9 @@ keyvault_certificate_requests = {
   crm_application = {
     name         = "crm-application"
     keyvault_key = "cert_secrets"
+    tags = {
+      project = "mobile app"
+    }
     certificate_policy = {
       issuer_key_or_name  = "self"
       exportable          = true

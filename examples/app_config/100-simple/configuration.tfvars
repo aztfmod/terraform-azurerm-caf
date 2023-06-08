@@ -5,6 +5,10 @@ global_settings = {
   }
 }
 
+provider_azurerm_features_template_deployment = {
+  delete_nested_items_during_deletion = true
+}
+
 resource_groups = {
   rg1 = {
     name   = "rg1"
@@ -17,5 +21,8 @@ app_config = {
     name               = "appConf1"
     resource_group_key = "rg1"
     location           = "region1"
+    tags = {
+      project = "sales"
+    }
   }
 }

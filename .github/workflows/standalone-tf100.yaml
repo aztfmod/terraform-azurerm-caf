@@ -15,6 +15,8 @@ on:
         default: "standalone-scenarios.json"
         options:
           - standalone-scenarios.json
+          - standalone-compute.json
+          - standalone-networking.json
           - standalone-scenarios-longrunners.json
 
 env:
@@ -34,12 +36,12 @@ jobs:
     outputs:
       matrix: ${{ steps.load_scenarios.outputs.matrix }}
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v3
       - id: load_scenarios
         run: |
           cases=$((
             cat ./.github/workflows/${{ github.event.inputs.scenario }}) | jq -c .)
-          echo "::set-output name=matrix::${cases}"
+          echo "matrix=${cases}" >> $GITHUB_OUTPUT
 
   testcases:
     name: test
@@ -51,12 +53,12 @@ jobs:
       matrix: ${{fromJSON(needs.load_scenarios.outputs.matrix)}}
 
     container:
-      image: aztfmod/rover:1.3.4-2211.2307
+      image: aztfmod/rover:1.4.6-2305.1807
       options: --user 0
 
     steps:
       - name: Checkout
-        uses: actions/checkout@v2
+        uses: actions/checkout@v3
 
       - name: Create environment variables
         run: |
@@ -136,7 +138,7 @@ jobs:
     needs: [testcases]
 
     container:
-      image: aztfmod/rover:1.3.4-2211.2307
+      image: aztfmod/rover:1.4.6-2305.1807
       options: --user 0
 
     steps:

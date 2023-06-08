@@ -26,7 +26,7 @@ output "resource_group_name" {
 }
 
 output "location" {
-  value       = var.location
+  value       = local.location
   description = "Azure region of the virtual network"
 }
 

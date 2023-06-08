@@ -19,10 +19,10 @@ resource "local_file" "packer_var_file" {
       image_publisher                                  = try(var.settings.image_publisher, null)
       image_offer                                      = try(var.settings.image_offer, null)
       image_sku                                        = try(var.settings.image_sku, null)
-      location                                         = var.location
+      location                                         = local.location
       vm_size                                          = var.settings.vm_size
       os_disk_size_gb                                  = try(var.settings.os_disk_size_gb, null)
-      managed_image_resource_group_name                = var.resource_group_name
+      managed_image_resource_group_name                = local.resource_group_name
       build_resource_group_name                        = var.build_resource_group_name
       virtual_network_name                             = try(var.vnet_name, null)
       virtual_network_subnet_name                      = try(var.subnet_name, null)
@@ -37,7 +37,7 @@ resource "local_file" "packer_var_file" {
       packer_working_dir                               = var.settings.packer_working_dir
       //shared_image_gallery destination values. If publishing to a different Subscription, change the following arguments and supply the values as variables
       subscription        = var.subscription
-      resource_group      = var.resource_group_name
+      resource_group      = local.resource_group_name
       gallery_name        = var.gallery_name
       image_name          = var.image_name
       image_version       = local.image_version
@@ -72,7 +72,7 @@ data "external" "image_versions" { # data source errors if no versions exist
     "bash", "-c",
     format(
       "a=$(az sig image-version list --resource-group %s --gallery-name %s --gallery-image-definition %s -o json --query 'max_by([].{name:name},&name)'); if [[ $a == *name* ]]; then echo $a; else echo '{ \"name\":\"0.0.0\" }'; fi",
-      var.resource_group_name, var.gallery_name, var.image_name
+      local.resource_group_name, var.gallery_name, var.image_name
     )
   ]
 }
@@ -96,7 +96,7 @@ resource "null_resource" "clean_old_versions" {
   }
   provisioner "local-exec" {
     command = format("az sig image-version list --resource-group %s --gallery-name %s --gallery-image-definition %s --query 'sort_by([].{name:name},&name) | [:-%d]' -o tsv | xargs -I '{}' az sig image-version delete --resource-group %s --gallery-name %s --gallery-image-definition %s --gallery-image-version '{}'",
-      var.resource_group_name, var.gallery_name, var.image_name, var.settings.keep_versions, var.resource_group_name, var.gallery_name, var.image_name
+      local.resource_group_name, var.gallery_name, var.image_name, var.settings.keep_versions, local.resource_group_name, var.gallery_name, var.image_name
     )
   }
   depends_on = [
@@ -106,7 +106,7 @@ resource "null_resource" "clean_old_versions" {
 
 resource "null_resource" "remove_all_versions" {
   triggers = {
-    resource_group_name = var.resource_group_name
+    resource_group_name = local.resource_group_name
     gallery_name        = var.gallery_name
     image_name          = var.image_name
   }
@@ -144,7 +144,7 @@ locals {
   packer_var_filepath      = "${var.settings.packer_working_dir}${var.settings.packer_var_file}"
   build_trigger            = md5("${filemd5(local.packer_template_filepath)}${var.settings.managed_image_name}${try(data.azurerm_platform_image.source[0].id, "")}${var.settings.keep_versions}${var.settings.image_sku}${try(data.azurerm_shared_image_version.source[0].id, "")}")
   managed_image_name       = format("%s-%s", var.settings.managed_image_name, local.image_version)
-  managed_image_version_id = try("/subscriptions/${var.subscription}/resourceGroups/${var.resource_group_name}/providers/Microsoft.Compute/images/${local.managed_image_name}", "")
+  managed_image_version_id = try("/subscriptions/${var.subscription}/resourceGroups/${local.resource_group_name}/providers/Microsoft.Compute/images/${local.managed_image_name}", "")
   highest_version_number   = data.external.image_versions.result.name
   next_version_number      = tonumber(element(split(".", local.highest_version_number), 2)) + 1
   image_version            = format("%s.%s.%s", "0", "0", tostring(local.next_version_number))

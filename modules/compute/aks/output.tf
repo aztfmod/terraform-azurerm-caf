@@ -7,15 +7,15 @@ output "cluster_name" {
 }
 
 output "resource_group_name" {
-  value = var.resource_group_name
+  value = local.resource_group_name
 }
 
 output "aks_kubeconfig_cmd" {
-  value = format("az aks get-credentials --name %s --resource-group %s --overwrite-existing", azurecaf_name.aks.result, var.resource_group_name)
+  value = format("az aks get-credentials --name %s --resource-group %s --overwrite-existing", azurecaf_name.aks.result, local.resource_group_name)
 }
 
 output "aks_kubeconfig_admin_cmd" {
-  value = format("az aks get-credentials --name %s --resource-group %s --overwrite-existing --admin", azurecaf_name.aks.result, var.resource_group_name)
+  value = format("az aks get-credentials --name %s --resource-group %s --overwrite-existing --admin", azurecaf_name.aks.result, local.resource_group_name)
 }
 
 output "kubelet_identity" {
