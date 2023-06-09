@@ -7,10 +7,6 @@ resource "random_string" "prefix" {
 }
 
 locals {
-  aadb2c = {
-    aadb2c_directory = try(var.aadb2c.aadb2c_directory, {})
-  }
-
   azuread = {
     azuread_administrative_unit_members = try(var.azuread.azuread_administrative_unit_members, {})
     azuread_administrative_units        = try(var.azuread.azuread_administrative_units, {})
@@ -298,6 +294,7 @@ locals {
     load_balancers                                          = try(var.networking.load_balancers, {})
     local_network_gateways                                  = try(var.networking.local_network_gateways, {})
     nat_gateways                                            = try(var.networking.nat_gateways, {})
+    network_connection_monitors                             = try(var.networking.network_connection_monitors, {})
     network_interface_backend_address_pool_association      = try(var.networking.network_interface_backend_address_pool_association, {})
     network_profiles                                        = try(var.networking.network_profiles, {})
     network_security_group_definition                       = try(var.networking.network_security_group_definition, {})
