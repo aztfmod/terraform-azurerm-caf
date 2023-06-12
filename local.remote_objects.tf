@@ -84,6 +84,7 @@ locals {
     mssql_servers                                  = try(local.combined_objects_mssql_servers, null)
     mysql_servers                                  = try(local.combined_objects_mysql_servers, null)
     nat_gateways                                   = try(local.combined_objects_nat_gateways, null)
+    network_connection_monitors                    = try(local.combined_objects_network_connection_monitors, null)
     network_security_groups                        = try(local.combined_objects_network_security_groups, null)
     network_watchers                               = try(local.combined_objects_network_watchers, null)
     networking                                     = try(local.combined_objects_networking, null)
