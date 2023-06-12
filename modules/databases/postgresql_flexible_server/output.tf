@@ -4,7 +4,7 @@ output "location" {
 }
 
 output "rbac_id" {
-  value = try(azurerm_postgresql_flexible_server.postgresql.identity[0].principal_id, null)
+  value = try(azurerm_postgresql_flexible_server_active_directory_administrator.postgresql.0.id, null)
 }
 
 output "postgresql_flexible_server_administrator_username" {
