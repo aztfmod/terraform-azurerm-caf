@@ -80,6 +80,5 @@ keyvaults = {
     name                = "amlsecrets"
     resource_group_key  = "dap_azure_ml_re1"
     sku_name            = "premium"
-    soft_delete_enabled = true
   }
 }

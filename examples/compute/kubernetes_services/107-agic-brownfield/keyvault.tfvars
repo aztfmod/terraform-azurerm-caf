@@ -8,7 +8,6 @@ keyvaults = {
     }
 
     sku_name                 = "premium"
-    soft_delete_enabled      = true
     purge_protection_enabled = false # set to true in production
 
     creation_policies = {
