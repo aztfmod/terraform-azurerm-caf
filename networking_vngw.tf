@@ -2,15 +2,20 @@ module "virtual_network_gateways" {
   source   = "./modules/networking/virtual_network_gateways"
   for_each = try(local.networking.virtual_network_gateways, {})
 
-  location            = can(local.global_settings.regions[each.value.region]) ? local.global_settings.regions[each.value.region] : local.combined_objects_resource_groups[try(each.value.resource_group.lz_key, local.client_config.landingzone_key)][try(each.value.resource_group.key, each.value.resource_group_key)].location
-  resource_group_name = can(each.value.resource_group.name) || can(each.value.resource_group_name) ? try(each.value.resource_group.name, each.value.resource_group_name) : local.combined_objects_resource_groups[try(each.value.resource_group.lz_key, local.client_config.landingzone_key)][try(each.value.resource_group_key, each.value.resource_group.key)].name
-  base_tags           = try(local.global_settings.inherit_tags, false) ? try(local.combined_objects_resource_groups[try(each.value.resource_group.lz_key, local.client_config.landingzone_key)][try(each.value.resource_group.key, each.value.resource_group_key)].tags, {}) : {}
-  public_ip_addresses = local.combined_objects_public_ip_addresses
-  diagnostics         = local.combined_diagnostics
-  client_config       = local.client_config
-  vnets               = local.combined_objects_networking
-  global_settings     = local.global_settings
-  settings            = each.value
+  location                     = can(local.global_settings.regions[each.value.region]) ? local.global_settings.regions[each.value.region] : local.combined_objects_resource_groups[try(each.value.resource_group.lz_key, local.client_config.landingzone_key)][try(each.value.resource_group.key, each.value.resource_group_key)].location
+  resource_group_name          = can(each.value.resource_group.name) || can(each.value.resource_group_name) ? try(each.value.resource_group.name, each.value.resource_group_name) : local.combined_objects_resource_groups[try(each.value.resource_group.lz_key, local.client_config.landingzone_key)][try(each.value.resource_group_key, each.value.resource_group.key)].name
+  base_tags                    = try(local.global_settings.inherit_tags, false) ? try(local.combined_objects_resource_groups[try(each.value.resource_group.lz_key, local.client_config.landingzone_key)][try(each.value.resource_group.key, each.value.resource_group_key)].tags, {}) : {}
+  public_ip_addresses          = local.combined_objects_public_ip_addresses
+  diagnostics                  = local.combined_diagnostics
+  client_config                = local.client_config
+  global_settings              = local.global_settings
+  settings                     = each.value
+  bootstrap_root_ca_public_pem = try(var.security.bootstrap_root_ca_public_pem, null)
+  remote_objects = {
+    virtual_subnets = local.combined_objects_virtual_subnets
+    vnets           = local.combined_objects_networking
+  }
+
   depends_on = [
     module.networking.public_ip_addresses
   ]

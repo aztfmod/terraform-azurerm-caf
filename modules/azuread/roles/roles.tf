@@ -6,6 +6,7 @@ resource "null_resource" "set_azure_ad_roles" {
 
   for_each = {
     for key in var.azuread_roles : key => key
+    if can(var.settings.version) == false
   }
 
   provisioner "local-exec" {

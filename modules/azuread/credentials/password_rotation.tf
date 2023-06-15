@@ -53,46 +53,15 @@ resource "time_rotating" "key" {
   rotation_days = local.key.days
 }
 
-resource "random_password" "key" {
-  count = lower(local.password_type) == "password" && try(var.settings.azuread_credential_policy_key, null) == null ? 1 : 0
-  keepers = {
-    frequency = time_rotating.key.0.rotation_rfc3339
-  }
-  length  = local.password_policy.length
-  special = local.password_policy.special
-  upper   = local.password_policy.upper
-  numeric = local.password_policy.number
-}
 
 resource "time_rotating" "key0" {
   count         = lower(local.password_type) == "password" && try(var.settings.azuread_credential_policy_key, null) != null ? 1 : 0
   rotation_days = local.key0.days
 }
 
-resource "random_password" "key0" {
-  count = lower(local.password_type) == "password" && try(var.settings.azuread_credential_policy_key, null) != null ? 1 : 0
-  keepers = {
-    frequency = time_rotating.key0.0.rotation_rfc3339
-  }
-  length  = local.password_policy.length
-  special = local.password_policy.special
-  upper   = local.password_policy.upper
-  numeric = local.password_policy.number
-}
 
 
 resource "time_rotating" "key1" {
   count         = lower(local.password_type) == "password" && try(var.settings.azuread_credential_policy_key, null) != null ? 1 : 0
   rotation_days = local.key1.days
-}
-
-resource "random_password" "key1" {
-  count = lower(local.password_type) == "password" && try(var.settings.azuread_credential_policy_key, null) != null ? 1 : 0
-  keepers = {
-    frequency = time_rotating.key1.0.rotation_rfc3339
-  }
-  length  = local.password_policy.length
-  special = local.password_policy.special
-  upper   = local.password_policy.upper
-  numeric = local.password_policy.number
 }

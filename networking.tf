@@ -69,11 +69,11 @@ module "virtual_subnets" {
   global_settings = local.global_settings
   settings        = each.value
 
-  name                                           = each.value.name
-  address_prefixes                               = try(each.value.cidr, [])
-  service_endpoints                              = try(each.value.service_endpoints, [])
-  enforce_private_link_endpoint_network_policies = try(each.value.enforce_private_link_endpoint_network_policies, false)
-  enforce_private_link_service_network_policies  = try(each.value.enforce_private_link_service_network_policies, false)
+  name                                          = each.value.name
+  address_prefixes                              = try(each.value.cidr, [])
+  service_endpoints                             = try(each.value.service_endpoints, [])
+  private_endpoint_network_policies_enabled     = try(each.value.private_endpoint_network_policies_enabled, each.value.enforce_private_link_endpoint_network_policies, null)
+  private_link_service_network_policies_enabled = try(each.value.private_link_service_network_policies_enabled, each.value.enforce_private_link_service_network_policies, null)
 
   resource_group_name  = can(each.value.vnet.key) ? local.combined_objects_networking[try(each.value.vnet.lz_key, local.client_config.landingzone_key)][each.value.vnet.key].resource_group_name : split("/", each.value.vnet.id)[4]
   virtual_network_name = can(each.value.vnet.key) ? local.combined_objects_networking[try(each.value.vnet.lz_key, local.client_config.landingzone_key)][each.value.vnet.key].name : split("/", each.value.vnet.id)[8]
@@ -126,23 +126,21 @@ module "public_ip_addresses" {
 
   name                       = azurecaf_name.public_ip_addresses[each.key].result
   global_settings            = local.global_settings
-  sku                        = try(each.value.sku, "Basic")
   allocation_method          = try(each.value.allocation_method, "Dynamic")
-  ip_version                 = try(each.value.ip_version, "IPv4")
-  idle_timeout_in_minutes    = try(each.value.idle_timeout_in_minutes, null)
+  diagnostic_profiles        = try(each.value.diagnostic_profiles, {})
+  diagnostics                = local.combined_diagnostics
   domain_name_label          = try(each.value.domain_name_label, null)
-  reverse_fqdn               = try(each.value.reverse_fqdn, null)
   generate_domain_name_label = try(each.value.generate_domain_name_label, false)
-  tags                       = try(each.value.tags, null)
+  idle_timeout_in_minutes    = try(each.value.idle_timeout_in_minutes, null)
   ip_tags                    = try(each.value.ip_tags, null)
+  ip_version                 = try(each.value.ip_version, "IPv4")
   public_ip_prefix_id        = can(each.value.public_ip_prefix.key) ? local.combined_objects_public_ip_prefixes[try(each.value.public_ip_prefix.lz_key, local.client_config.landingzone_key)][each.value.public_ip_prefix.key].id : try(each.value.public_ip_prefix_id, null)
-  zones = coalesce(
-    try(each.value.availability_zone, ""),
-    try(tostring(each.value.zones[0]), ""),
-    try(each.value.sku, "Basic") == "Basic" ? "No-Zone" : "Zone-Redundant"
-  )
-  diagnostic_profiles = try(each.value.diagnostic_profiles, {})
-  diagnostics         = local.combined_diagnostics
+  reverse_fqdn               = try(each.value.reverse_fqdn, null)
+  sku                        = try(each.value.sku, "Basic")
+  sku_tier                   = try(each.value.sku_tier, null)
+  tags                       = try(each.value.tags, null)
+  # Zone behavior kept to support smooth migration to azurerm 3.x
+  zones = try(each.value.sku, "Basic") == "Basic" ? [] : try(each.value.zones, null) == null ? ["1", "2", "3"] : each.value.zones
 
   base_tags           = local.global_settings.inherit_tags
   resource_group      = local.combined_objects_resource_groups[try(each.value.resource_group.lz_key, local.client_config.landingzone_key)][try(each.value.resource_group_key, each.value.resource_group.key)]
@@ -179,7 +177,7 @@ module "public_ip_prefixes" {
   sku                 = try(each.value.sku, "Standard")
   ip_version          = try(each.value.ip_version, "IPv4")
   tags                = try(each.value.tags, null)
-  zones               = try(each.value.zones, "Zone-Redundant")
+  zones               = try(each.value.zones, [])
   prefix_length       = try(each.value.prefix_length, 28)
   create_pips         = try(each.value.create_pips, false)
   diagnostic_profiles = try(each.value.diagnostic_profiles, {})

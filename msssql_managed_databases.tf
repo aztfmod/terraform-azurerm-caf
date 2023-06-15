@@ -1,13 +1,11 @@
-
-output "mssql_managed_databases" {
-  value = module.mssql_managed_databases
-
-}
+#
 
 module "mssql_managed_databases" {
-  source   = "./modules/databases/mssql_managed_database"
-  for_each = local.database.mssql_managed_databases
-
+  source = "./modules/databases/mssql_managed_database"
+  for_each = {
+    for key, value in local.database.mssql_managed_databases : key => value
+    if can(value.version) == false
+  }
   global_settings     = local.global_settings
   settings            = each.value
   resource_group_id   = local.combined_objects_mssql_managed_instances[try(each.value.lz_key, local.client_config.landingzone_key)][each.value.mi_server_key].resource_group_id
@@ -18,8 +16,11 @@ module "mssql_managed_databases" {
 }
 
 module "mssql_managed_databases_restore" {
-  source   = "./modules/databases/mssql_managed_database"
-  for_each = local.database.mssql_managed_databases_restore
+  source = "./modules/databases/mssql_managed_database"
+  for_each = {
+    for key, value in local.database.mssql_managed_databases_restore : key => value
+    if can(value.version) == false
+  }
 
   global_settings = local.global_settings
   settings        = each.value

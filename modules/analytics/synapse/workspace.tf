@@ -21,7 +21,12 @@ resource "azurerm_synapse_workspace" "ws" {
   managed_virtual_network_enabled      = try(var.settings.managed_virtual_network_enabled, false)
   sql_identity_control_enabled         = try(var.settings.sql_identity_control_enabled, null)
   managed_resource_group_name          = try(var.settings.managed_resource_group_name, null)
+  data_exfiltration_protection_enabled = try(var.settings.data_exfiltration_protection_enabled, null)
   tags                                 = merge(local.tags, try(var.settings.tags, null))
+
+  identity {
+    type = "SystemAssigned"
+  }
 
   dynamic "aad_admin" {
     for_each = try(var.settings.aad_admin, null) != null ? [var.settings.aad_admin] : []

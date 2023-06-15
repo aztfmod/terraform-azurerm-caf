@@ -13,7 +13,7 @@ resource_groups = {
   }
 }
 
-application_gateways = {
+application_gateway = {
   agw1 = {
     resource_group_key = "agw_region1"
     name               = "app_gateway_example"

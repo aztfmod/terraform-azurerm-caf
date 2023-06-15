@@ -427,3 +427,6 @@ variable "aadb2c" {
   description = "Configuration object - AAD B2C resources"
   default     = {}
 }
+variable "preview_features" {
+  default = {}
+}

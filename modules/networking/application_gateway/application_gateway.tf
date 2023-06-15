@@ -161,7 +161,7 @@ resource "azurerm_application_gateway" "agw" {
     }
   }
   dynamic "probe" {
-    for_each = try(local.probes)
+    for_each = try(local.probes, {})
 
     content {
       name                                      = probe.value.name

@@ -205,6 +205,7 @@ resource "azurerm_application_gateway" "agw" {
     http_listener_name         = var.settings.default.listener_name
     backend_address_pool_name  = var.settings.default.backend_address_pool_name
     backend_http_settings_name = var.settings.default.http_setting_name
+    priority                   = try(var.settings.default.priority, null)
   }
 
   lifecycle {
