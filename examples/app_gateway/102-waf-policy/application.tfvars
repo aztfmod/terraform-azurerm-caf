@@ -20,6 +20,7 @@ application_gateway_applications = {
     request_routing_rules = {
       default = {
         rule_type = "Basic"
+        priority  = 10
       }
     }
 

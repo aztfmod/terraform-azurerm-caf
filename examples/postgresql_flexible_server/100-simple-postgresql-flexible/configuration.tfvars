@@ -21,6 +21,7 @@ postgresql_flexible_servers = {
     region     = "region1"
     version    = "12"
     sku_name   = "MO_Standard_E4s_v3"
+    zone       = 2
     storage_mb = 131072
 
     resource_group = {
@@ -64,8 +65,12 @@ postgresql_flexible_servers = {
 
 
     postgresql_databases = {
-      postgresql_database = {
-        name = "sampledb"
+      sampledb1 = {
+        name = "sampledb1"
+      }
+      sampledb2 = {
+        name        = "sampledb2"
+        passthrough = true
       }
     }
 

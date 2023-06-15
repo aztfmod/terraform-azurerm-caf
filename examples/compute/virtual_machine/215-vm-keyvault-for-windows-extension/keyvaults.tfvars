@@ -10,7 +10,7 @@ keyvaults = {
         # policy to access secrets (required retrieve the admin credentials to RDP into VMs)
         secret_permissions = ["Set", "Get", "List", "Delete", "Purge", "Recover"]
         # need policy so current user can mange certificates in this key vault
-        certificate_permissions = ["Get", "List", "Update", "Create", "Import", "Delete", "Purge", "Recover", "Getissuers", "Setissuers", "Listissuers", "Deleteissuers", "Manageissuers", "Restore", "Managecontacts"]
+        certificate_permissions = ["Get", "List", "Update", "Create", "Import", "Delete", "Purge", "Recover", "GetIssuers", "SetIssuers", "ListIssuers", "DeleteIssuers", "ManageIssuers", "Restore", "ManageContacts"]
       }
     }
   }

@@ -15,11 +15,15 @@ variable "global_settings" {
   description = "Global settings object (see module README.md)"
 }
 variable "diagnostics" {}
-variable "vnets" {}
 variable "client_config" {
   description = "Client configuration object (see module README.md)."
 }
 variable "public_ip_addresses" {}
 
+variable "remote_objects" {}
 
-
+variable "bootstrap_root_ca_public_pem" {
+  description = "(Optional) - Public certificate to add to the Point to site VPN Gateway."
+  default     = null
+  type        = string
+}

@@ -18,6 +18,7 @@ on:
         type: choice
         default: 'standalone-scenarios.json'
         options:
+        - standalone-scenarios-azuread.json
         - standalone-scenarios.json
         - standalone-compute.json
         - standalone-networking.json

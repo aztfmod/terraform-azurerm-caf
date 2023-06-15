@@ -1,3 +1,9 @@
+preview_features = {
+  "Microsoft.ContainerService" = [
+    "AKS-KedaPreview",
+    "TrustedAccessPreview"
+  ]
+}
 aks_clusters = {
   cluster_re1 = {
     name               = "akscluster-001"
@@ -20,7 +26,7 @@ aks_clusters = {
 
     network_policy = {
       network_plugin    = "azure"
-      load_balancer_sku = "Standard"
+      load_balancer_sku = "standard"
     }
 
     private_cluster_enabled = true
