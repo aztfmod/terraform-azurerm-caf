@@ -25,3 +25,9 @@ variable "base_tags" {
 variable "resource_group_name" {
   description = " The name of the Resource Group in which the API Management Service should be exist. Changing this forces a new resource to be created."
 }
+
+variable "public_ip_addresses" {
+  default = {}
+
+}
+

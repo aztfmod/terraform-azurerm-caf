@@ -45,6 +45,9 @@ resource "azurerm_api_management" "apim" {
   gateway_disabled           = try(var.settings.gateway_disabled, null)
   min_api_version            = try(var.settings.min_api_version, null)
   zones                      = try(var.settings.zones, null)
+  public_ip_address_id       = try(var.remote_objects.public_ip_addresses[try(var.settings.public_ip_lz_key, var.client_config.landingzone_key)][var.settings.public_ip_key].id,null)
+
+
 
   dynamic "identity" {
     for_each = try(var.settings.identity, null) != null ? [var.settings.identity] : []
