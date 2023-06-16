@@ -107,9 +107,16 @@ monitor_metric_alert = {
       threshold        = 50
 
       dimension = {
-        name     = "ApiName"
-        operator = "Include"
-        values   = ["*"]
+        api = {
+          name     = "ApiName"
+          operator = "Include"
+          values   = ["*"]
+        }
+        serverbusy = {
+          name     = "ResponseType"
+          operator = "Include"
+          values   = ["ServerBusyError"]
+        }
       }
     }
 
