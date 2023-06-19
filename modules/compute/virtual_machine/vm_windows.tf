@@ -52,7 +52,7 @@ resource "azurerm_windows_virtual_machine" "vm" {
   license_type                 = try(each.value.license_type, null)
   location                     = local.location
   max_bid_price                = try(each.value.max_bid_price, null)
-  name                         = data.azurecaf_name.windows[each.key].result
+  name                         = try(each.value.allign_azure_vm_name_with_computer_name, false) == true ? data.azurecaf_name.windows_computer_name[each.key].result : data.azurecaf_name.windows[each.key].result
   network_interface_ids        = local.nic_ids
   priority                     = try(each.value.priority, null)
   patch_mode                   = try(each.value.patch_mode, "AutomaticByOS")
