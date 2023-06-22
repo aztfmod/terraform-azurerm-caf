@@ -297,17 +297,17 @@ resource "azurerm_kubernetes_cluster" "aks" {
   local_account_disabled = try(var.settings.local_account_disabled, false)
 
   dynamic "maintenance_window" {
-    for_each = can(var.settings.maintenance_window) ? [1] : []
+    for_each = try(var.settings.maintenance_window, null) == null ? [] : [1]
     content {
       dynamic "allowed" {
-        for_each = can(maintenance_window.value.allowed) ? [1] : []
+        for_each = var.settings.maintenance_window.allowed == null ? [] : [1]
         content {
           day   = var.settings.maintenance_window.allowed.day
           hours = var.settings.maintenance_window.allowed.hours
         }
       }
       dynamic "not_allowed" {
-        for_each = can(var.settings.maintenance_window.not_allowed) ? [1] : []
+        for_each = var.settings.maintenance_window.not_allowed == null ? [] : [1]
         content {
           end   = var.settings.maintenance_window.not_allowed.end
           start = var.settings.maintenance_window.not_allowed.start
