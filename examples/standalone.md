@@ -21,7 +21,7 @@ provider "azurerm" {
 
 module "caf" {
   source  = "aztfmod/caf/azurerm"
-  version = "5.3.11"
+  version = "5.7.0"
 
   providers = {
     azurerm.vhub = azurerm.vhub
