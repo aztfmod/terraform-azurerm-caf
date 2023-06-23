@@ -137,7 +137,6 @@ locals {
     machine_learning_workspaces                = local.combined_objects_machine_learning
     managed_identities                         = local.combined_objects_managed_identities
     management_group                           = local.management_groups
-    servicebus_namespaces                      = local.combined_objects_servicebus_namespaces
     mssql_databases                            = local.combined_objects_mssql_databases
     mssql_elastic_pools                        = local.combined_objects_mssql_elastic_pools
     mssql_managed_databases                    = local.combined_objects_mssql_managed_databases
@@ -153,6 +152,7 @@ locals {
     purview_accounts                           = local.combined_objects_purview_accounts
     recovery_vaults                            = local.combined_objects_recovery_vaults
     resource_groups                            = local.combined_objects_resource_groups
+    servicebus_namespaces                      = local.combined_objects_servicebus_namespaces
     storage_accounts                           = local.combined_objects_storage_accounts
     subscriptions                              = local.combined_objects_subscriptions
     synapse_workspaces                         = local.combined_objects_synapse_workspaces
