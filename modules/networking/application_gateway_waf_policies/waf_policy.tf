@@ -48,7 +48,7 @@ resource "azurerm_web_application_firewall_policy" "wafpolicy" {
     for_each = try(var.settings.managed_rules, {}) != {} ? [1] : []
     content {
       dynamic "exclusion" {
-        for_each = try(var.settings.managed_rules.exclusion, {})
+        for_each = try(var.settings.managed_rules.exclusions, {})
         content {
           match_variable          = exclusion.value.match_variable
           selector                = try(exclusion.value.selector, null)
