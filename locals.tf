@@ -17,6 +17,7 @@ locals {
     azuread_api_permissions             = try(var.azuread.azuread_api_permissions, {})
     azuread_applications                = try(var.azuread.azuread_applications, {})
     azuread_apps                        = try(var.azuread.azuread_apps, {})
+    azuread_conditional_access          = try(var.azuread.azuread_conditional_access, {})
     azuread_credential_policies         = try(var.azuread.azuread_credential_policies, {})
     azuread_credentials                 = try(var.azuread.azuread_credentials, {})
     azuread_groups                      = try(var.azuread.azuread_groups, {})
