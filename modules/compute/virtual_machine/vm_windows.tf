@@ -55,6 +55,7 @@ resource "azurerm_windows_virtual_machine" "vm" {
   name                         = data.azurecaf_name.windows[each.key].result
   network_interface_ids        = local.nic_ids
   priority                     = try(each.value.priority, null)
+  patch_mode                   = try(each.value.patch_mode, "AutomaticByOS")
   provision_vm_agent           = try(each.value.provision_vm_agent, true)
   proximity_placement_group_id = can(each.value.proximity_placement_group_key) || can(each.value.proximity_placement_group.key) ? var.proximity_placement_groups[try(var.client_config.landingzone_key, var.client_config.landingzone_key)][try(each.value.proximity_placement_group_key, each.value.proximity_placement_group.key)].id : try(each.value.proximity_placement_group_id, each.value.proximity_placement_group.id, null)
   resource_group_name          = local.resource_group_name

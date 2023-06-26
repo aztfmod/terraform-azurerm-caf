@@ -107,6 +107,7 @@ CUSTOM_DATA
         # Spot VM to save money
         priority        = "Spot"
         eviction_policy = "Deallocate"
+        patch_mode      = "ImageDefault"
 
         # Value of the nic keys to attach the VM. The first one in the list is the default nic
         network_interface_keys = ["nic0"]

@@ -29,14 +29,20 @@ module "example" {
   tags                                  = local.tags
   environment                           = var.environment
 
+  aadb2c = {
+    aadb2c_directory = var.aadb2c_directory
+  }
+
   azuread = {
+    azuread_administrative_unit_members = var.azuread_administrative_unit_members
+    azuread_administrative_units        = var.azuread_administrative_units
     azuread_api_permissions             = var.azuread_api_permissions
     azuread_applications                = var.azuread_applications
     azuread_apps                        = var.azuread_apps
+    azuread_credential_policies         = var.azuread_credential_policies
     azuread_credentials                 = var.azuread_credentials
     azuread_groups                      = var.azuread_groups
     azuread_groups_membership           = var.azuread_groups_membership
-    azuread_credential_policies         = var.azuread_credential_policies
     azuread_roles                       = var.azuread_roles
     azuread_service_principal_passwords = var.azuread_service_principal_passwords
     azuread_service_principals          = var.azuread_service_principals
@@ -216,8 +222,15 @@ module "example" {
     nat_gateways                                            = var.nat_gateways
     network_interface_backend_address_pool_association      = var.network_interface_backend_address_pool_association
     network_security_group_definition                       = var.network_security_group_definition
+    network_security_security_rules                         = var.network_security_security_rules
     network_watchers                                        = var.network_watchers
     private_dns                                             = var.private_dns
+    private_dns_resolvers                                   = var.private_dns_resolvers
+    private_dns_resolver_inbound_endpoints                  = var.private_dns_resolver_inbound_endpoints
+    private_dns_resolver_outbound_endpoints                 = var.private_dns_resolver_outbound_endpoints
+    private_dns_resolver_dns_forwarding_rulesets            = var.private_dns_resolver_dns_forwarding_rulesets
+    private_dns_resolver_forwarding_rules                   = var.private_dns_resolver_forwarding_rules
+    private_dns_resolver_virtual_network_links              = var.private_dns_resolver_virtual_network_links
     private_dns_vnet_links                                  = var.private_dns_vnet_links
     private_endpoints                                       = var.private_endpoints
     public_ip_addresses                                     = var.public_ip_addresses
@@ -384,4 +397,5 @@ module "example" {
     digital_twins_endpoint_eventgrids   = var.digital_twins_endpoint_eventgrids
     digital_twins_endpoint_servicebuses = var.digital_twins_endpoint_servicebuses
   }
+  preview_features = var.preview_features
 }

@@ -21,11 +21,6 @@ variable "var_folder_path" {
   default = ""
 }
 
-variable "provider_azurerm_features_keyvault" {
-  default = {
-    purge_soft_delete_on_destroy = true
-  }
-}
 # variable "cloud" {
 #   default = {}
 # }
@@ -171,6 +166,9 @@ variable "resource_groups" {
 variable "network_security_group_definition" {
   default = {}
 }
+variable "network_security_security_rules" {
+  default = {}
+}
 variable "route_tables" {
   default = {}
 }
@@ -256,6 +254,12 @@ variable "azuread_groups" {
   default = {}
 }
 variable "azuread_roles" {
+  default = {}
+}
+variable "azuread_administrative_units" {
+  default = {}
+}
+variable "azuread_administrative_unit_members" {
   default = {}
 }
 variable "keyvaults" {
@@ -1018,5 +1022,31 @@ variable "web_pubsubs" {
   default = {}
 }
 variable "web_pubsub_hubs" {
+  default = {}
+}
+variable "aadb2c_directory" {
+  default = {}
+}
+variable "preview_features" {
+  default = {}
+}
+variable "private_dns_resolvers" {
+  default = {}
+}
+variable "private_dns_resolver_inbound_endpoints" {
+  default = {}
+}
+variable "private_dns_resolver_outbound_endpoints" {
+  default = {}
+}
+variable "private_dns_resolver_dns_forwarding_rulesets" {
+  default = {}
+}
+
+variable "private_dns_resolver_forwarding_rules" {
+  default = {}
+}
+
+variable "private_dns_resolver_virtual_network_links" {
   default = {}
 }

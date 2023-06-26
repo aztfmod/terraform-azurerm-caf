@@ -1,0 +1,30 @@
+{
+  "jobs":[
+    {
+      "name": "sqlmi",
+      "lz_ref": "sqlmi.native.bugbash2",
+      "phase1": [
+        {
+          "name": "sqlmi1",
+          "path": "mssql_mi/200-mi-native-two-regions/landingzone/phase1/sqlmi1"
+        }
+      ],
+      "phase2": [
+        {
+          "name": "sqlmi2",
+          "path": "mssql_mi/200-mi-native-two-regions/landingzone/phase2/sqlmi2"
+        }
+      ],
+      "phase3": [
+        {
+          "name": "sqlmisecu",
+          "path": "mssql_mi/200-mi-native-two-regions/landingzone/phase3/sqlmisecu"
+        },
+        {
+          "name": "databases",
+          "path": "mssql_mi/200-mi-native-two-regions/landingzone/phase3/databases"
+        }
+      ]
+    }
+  ]
+}

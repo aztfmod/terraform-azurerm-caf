@@ -56,7 +56,7 @@ resource "azurerm_databricks_workspace" "ws" {
       private_subnet_name                                 = can(var.settings.custom_parameters.private_subnet_name) || can(var.settings.custom_parameters.private_subnet_key) == false ? try(var.settings.custom_parameters.private_subnet_name, null) : var.vnets[try(var.settings.custom_parameters.lz_key, var.client_config.landingzone_key)][var.settings.custom_parameters.vnet_key].subnets[var.settings.custom_parameters.private_subnet_key].name
 
       #the NSG-association ID is the subnet-id, so it can be simplified:
-      private_subnet_network_security_group_association_id = can(var.settings.custom_parameters.private_subnet_network_security_group_association_id) || can(var.settings.custom_parameters.public_subnet_key) == false ? try(var.settings.custom_parameters.private_subnet_network_security_group_association_id, null) : var.vnets[try(var.settings.custom_parameters.lz_key, var.client_config.landingzone_key)][var.settings.custom_parameters.vnet_key].subnets[var.settings.custom_parameters.public_subnet_key].id
+      private_subnet_network_security_group_association_id = can(var.settings.custom_parameters.private_subnet_network_security_group_association_id) || can(var.settings.custom_parameters.private_subnet_key) == false ? try(var.settings.custom_parameters.private_subnet_network_security_group_association_id, null) : var.vnets[try(var.settings.custom_parameters.lz_key, var.client_config.landingzone_key)][var.settings.custom_parameters.vnet_key].subnets[var.settings.custom_parameters.private_subnet_key].id
     }
   }
 }

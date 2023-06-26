@@ -2,7 +2,7 @@ locals {
   arm_filename = "${path.module}/app_config_settings.json"
 
   # this is the format required by ARM templates
-  parameters_body = {
+  parameters_content = {
     keyValueNames = {
       value = var.key_names
     }
