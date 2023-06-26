@@ -6,4 +6,5 @@ module "blob" {
   storage_account_name   = var.storage_account_name
   storage_container_name = var.settings.name
   settings               = each.value
+  var_folder_path        = var.var_folder_path
 }

@@ -1,0 +1,114 @@
+
+name: rover
+
+on:
+  workflow_call:
+    inputs:
+      scenario:
+        type: string
+      name:
+        required: true
+        type: string
+      phase:
+        required: true
+        type: string
+      lz_ref:
+        required: true
+        type: string
+      plan_options:
+        required: false
+        type: string
+
+jobs:
+
+  rover_setup:
+    name: ${{ inputs.name }}-setup
+    runs-on: ubuntu-latest
+    outputs:
+      name: ${{ steps.rover_setup.outputs.name }}
+      path: ${{ steps.rover_setup.outputs.path }}
+    steps:
+      - name: set outputs with default values
+        id: rover_setup
+        run: |
+          echo '${{inputs.phase}}' | jq -c
+          #
+          name=$(echo '${{inputs.phase}}' | jq -c .name) && echo "name: $name"
+          path=$(echo '${{inputs.phase}}' | jq -c .path) && echo "path: $path"
+          #
+          echo "name=$name" >> $GITHUB_OUTPUT
+          echo "path=$path" >> $GITHUB_OUTPUT
+
+
+  rover:
+    name: ${{ inputs.name }}-${{ fromJSON(needs.rover_setup.outputs.name) }}
+    runs-on: ubuntu-latest
+    needs: rover_setup
+
+    container:
+      image: aztfmod/rover:1.4.6-2305.1701
+      options: --user 0
+
+    env:
+      ROVER_RUNNER: true
+      ARM_USE_AZUREAD: true
+      ARM_CLIENT_ID: ${{ secrets.ARM_CLIENT_ID }}
+      ARM_CLIENT_SECRET: ${{ secrets.ARM_CLIENT_SECRET }}
+      ARM_TENANT_ID: ${{ secrets.ARM_TENANT_ID }}
+      ARM_SUBSCRIPTION_ID: ${{ secrets.ARM_SUBSCRIPTION_ID }}
+
+    steps:
+      - uses: actions/checkout@v3
+
+      - name: Set Environment Variables
+        run: |
+          FILE_NAME=${{ fromJSON(needs.rover_setup.outputs.name) }}
+          echo STATE_FILE=${{ fromJSON(inputs.scenario) }}-${FILE_NAME}.tfstate  >> $GITHUB_ENV
+          echo PLAN_FILE=${TF_DATA_DIR}/tfstates/${FILE_NAME}.plan >> $GITHUB_ENV
+          echo CURRENT_FOLDER=${GITHUB_WORKSPACE}/examples/${{ fromJSON(needs.rover_setup.outputs.path) }} >> $GITHUB_ENV
+          echo "jobid: ${{ github.run_id }}"
+
+      - name: Checkout cros landingzone repo and login to Azure
+        shell: bash
+        run: |
+          if [ ! -e  ${GITHUB_WORKSPACE}/landingzones/caf_solution ]; then
+            git clone -b ${{ inputs.LZ_REF }} https://github.com/Azure/caf-terraform-landingzones.git ${GITHUB_WORKSPACE}/landingzones
+          fi
+
+      - name: Azure login and initialize the launchpad
+        shell: bash
+        run: |
+          az login --service-principal -u ${{ secrets.ARM_CLIENT_ID }} -p ${{ secrets.ARM_CLIENT_SECRET }} --tenant ${{ secrets.ARM_TENANT_ID }} --only-show-errors 1> /dev/null
+          az account set -s ${{ secrets.ARM_SUBSCRIPTION_ID }}
+          az account show
+          #
+          /tf/rover/rover.sh init
+
+      - name: Terraform Plan ${{ inputs.plan_options }}
+        id: tf_plan
+        run: |
+          /tf/rover/rover.sh \
+            -lz ${GITHUB_WORKSPACE}/landingzones/caf_solution \
+            -var-folder ${{ env.CURRENT_FOLDER }} \
+            -tfstate ${{ env.STATE_FILE }} \
+            -p ${{ env.PLAN_FILE }} \
+            -var tags='{testing_job_id='"${{ github.run_id }}"'}' \
+            -var var_folder_path=${{ env.CURRENT_FOLDER }} \
+            -a plan ${{ inputs.plan_options }}
+
+
+      - name: Terraform Apply ${{ inputs.plan_options }}
+        id: tf_apply
+        run: |
+          /tf/rover/rover.sh \
+            -lz ${GITHUB_WORKSPACE}/landingzones/caf_solution \
+            -var-folder ${{ env.CURRENT_FOLDER }} \
+            -tfstate ${{ env.STATE_FILE }} \
+            -p ${{ env.PLAN_FILE }} \
+            -var tags='{testing_job_id='"${{ github.run_id }}"'}' \
+            -var var_folder_path=${{ env.CURRENT_FOLDER }} \
+            -a apply
+
+      - name: Azure logout
+        if: always()
+        run:  az account clear

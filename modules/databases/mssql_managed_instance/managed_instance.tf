@@ -8,12 +8,6 @@ resource "azurecaf_name" "mssqlmi" {
   passthrough   = var.global_settings.passthrough
 }
 
-# Part of migration from 2.99.0 to 3.7.0
-moved {
-  from = azurerm_template_deployment.mssqlmi
-  to   = azurerm_resource_group_template_deployment.mssqlmi
-}
-
 resource "azurerm_resource_group_template_deployment" "mssqlmi" {
 
   name                = azurecaf_name.mssqlmi.result
@@ -32,6 +26,7 @@ resource "azurerm_resource_group_template_deployment" "mssqlmi" {
     read   = "5m"
   }
 }
+
 
 resource "null_resource" "destroy_sqlmi" {
 
@@ -113,9 +108,10 @@ data "external" "sqlmi_admin_password" {
 }
 
 data "azapi_resource" "mssqlmi" {
-  name      = azurecaf_name.mssqlmi.result
-  parent_id = local.parent_id
-  type      = "Microsoft.Sql/managedInstances@2021-11-01-preview"
+  depends_on = [azurerm_resource_group_template_deployment.mssqlmi]
+  name       = azurecaf_name.mssqlmi.result
+  parent_id  = local.parent_id
+  type       = "Microsoft.Sql/managedInstances@2021-11-01-preview"
 }
 
 locals {

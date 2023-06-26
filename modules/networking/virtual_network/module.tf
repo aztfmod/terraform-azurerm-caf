@@ -24,6 +24,8 @@ resource "azurerm_virtual_network" "vnet" {
     )
   )
 
+  bgp_community = try(var.settings.vnet.bgp_community, null)
+
   dynamic "ddos_protection_plan" {
     for_each = var.ddos_id != "" || can(var.global_settings["ddos_protection_plan_id"]) ? [1] : []
 

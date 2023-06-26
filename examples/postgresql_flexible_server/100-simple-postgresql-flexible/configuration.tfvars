@@ -65,8 +65,12 @@ postgresql_flexible_servers = {
 
 
     postgresql_databases = {
-      postgresql_database = {
-        name = "sampledb"
+      sampledb1 = {
+        name = "sampledb1"
+      }
+      sampledb2 = {
+        name        = "sampledb2"
+        passthrough = true
       }
     }
 

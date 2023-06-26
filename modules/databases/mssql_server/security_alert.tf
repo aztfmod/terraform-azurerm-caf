@@ -15,7 +15,7 @@ data "azurerm_storage_account" "mssql_security_alert" {
 resource "azurerm_mssql_server_security_alert_policy" "mssql" {
   count = try(var.settings.security_alert_policy, null) == null ? 0 : 1
 
-  resource_group_name        = var.resource_group_name
+  resource_group_name        = local.resource_group_name
   server_name                = azurerm_mssql_server.mssql.name
   state                      = try(var.settings.state, "Enabled")
   storage_endpoint           = data.azurerm_storage_account.mssql_security_alert.0.primary_blob_endpoint

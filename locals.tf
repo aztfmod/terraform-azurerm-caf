@@ -7,7 +7,13 @@ resource "random_string" "prefix" {
 }
 
 locals {
+  aadb2c = {
+    aadb2c_directory = try(var.aadb2c.aadb2c_directory, {})
+  }
+
   azuread = {
+    azuread_administrative_unit_members = try(var.azuread.azuread_administrative_unit_members, {})
+    azuread_administrative_units        = try(var.azuread.azuread_administrative_units, {})
     azuread_api_permissions             = try(var.azuread.azuread_api_permissions, {})
     azuread_applications                = try(var.azuread.azuread_applications, {})
     azuread_apps                        = try(var.azuread.azuread_apps, {})
@@ -290,8 +296,15 @@ locals {
     network_interface_backend_address_pool_association      = try(var.networking.network_interface_backend_address_pool_association, {})
     network_profiles                                        = try(var.networking.network_profiles, {})
     network_security_group_definition                       = try(var.networking.network_security_group_definition, {})
+    network_security_security_rules                         = try(var.networking.network_security_security_rules, {})
     network_watchers                                        = try(var.networking.network_watchers, {})
     private_dns                                             = try(var.networking.private_dns, {})
+    private_dns_resolvers                                   = try(var.networking.private_dns_resolvers, {})
+    private_dns_resolver_inbound_endpoints                  = try(var.networking.private_dns_resolver_inbound_endpoints, {})
+    private_dns_resolver_outbound_endpoints                 = try(var.networking.private_dns_resolver_outbound_endpoints, {})
+    private_dns_resolver_dns_forwarding_rulesets            = try(var.networking.private_dns_resolver_dns_forwarding_rulesets, {})
+    private_dns_resolver_forwarding_rules                   = try(var.networking.private_dns_resolver_forwarding_rules, {})
+    private_dns_resolver_virtual_network_links              = try(var.networking.private_dns_resolver_virtual_network_links, {})
     private_dns_vnet_links                                  = try(var.networking.private_dns_vnet_links, {})
     public_ip_addresses                                     = try(var.networking.public_ip_addresses, {})
     relay_hybrid_connection                                 = try(var.networking.relay_hybrid_connection, {})

@@ -19,15 +19,17 @@ automations = {
     resource_group_key = "automation"
 
     identity = {
-      type                  = "UserAssigned"
-      managed_identity_keys = ["mi1"]
+      type = "SystemAssigned"
+      #managed_identity_keys = ["mi1"]
     }
   }
 }
 
 managed_identities = {
   mi1 = {
-    name               = "automation-msi"
-    resource_group_key = "automation"
+    name = "automation-msi"
+    resource_group_key = {
+      key = "automation"
+    }
   }
 }

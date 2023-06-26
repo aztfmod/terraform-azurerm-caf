@@ -9,6 +9,7 @@ module "subscriptions" {
   settings         = each.value
   client_config    = local.client_config
   diagnostics      = local.combined_diagnostics
+  tags             = merge(var.tags, lookup(each.value, "tags", {}))
 }
 
 module "subscription_billing_role_assignments" {

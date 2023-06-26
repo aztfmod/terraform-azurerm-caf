@@ -1,3 +1,4 @@
 variable "global_settings" {}
 variable "settings" {}
-variable "keyvault" {}
+variable "keyvaults" {}
+variable "client_config" {}

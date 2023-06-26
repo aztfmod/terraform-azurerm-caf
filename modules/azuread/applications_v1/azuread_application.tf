@@ -15,6 +15,38 @@ resource "azuread_application" "app" {
   prevent_duplicate_names        = try(var.settings.prevent_duplicate_names, false)
   fallback_public_client_enabled = try(var.settings.public_client, false)
 
+  dynamic "single_page_application" {
+    for_each = try(var.settings.single_page_application, null) != null ? [1] : []
+
+    content {
+      redirect_uris = try(var.settings.single_page_application.redirect_uris, [])
+    }
+  }
+
+  dynamic "api" {
+    for_each = try(var.settings.api, null) != null ? [1] : []
+
+    content {
+      known_client_applications      = try(var.settings.api.known_client_applications, [])
+      mapped_claims_enabled          = try(var.settings.api.mapped_claims_enabled, null)
+      requested_access_token_version = try(var.settings.api.requested_access_token_version, null)
+
+      dynamic "oauth2_permission_scope" {
+        for_each = try(var.settings.api.oauth2_permission_scopes, [])
+        content {
+          admin_consent_description  = oauth2_permission_scope.value.admin_consent_description
+          admin_consent_display_name = oauth2_permission_scope.value.admin_consent_display_name
+          id                         = oauth2_permission_scope.value.id
+          enabled                    = try(oauth2_permission_scope.value.enabled, null)
+          type                       = try(oauth2_permission_scope.value.type, null)
+          user_consent_description   = try(oauth2_permission_scope.value.user_consent_description, null)
+          user_consent_display_name  = try(oauth2_permission_scope.value.user_consent_display_name, null)
+          value                      = try(oauth2_permission_scope.value.value, null)
+        }
+      }
+    }
+  }
+
   dynamic "required_resource_access" {
     for_each = var.azuread_api_permissions
 
@@ -73,7 +105,7 @@ resource "azuread_application" "app" {
 
         content {
           access_token_issuance_enabled = can(var.settings.oauth2_allow_implicit_flow) || can(implicit_grant.value.access_token_issuance_enabled) ? try(var.settings.oauth2_allow_implicit_flow, implicit_grant.value.access_token_issuance_enabled) : null
-          id_token_issuance_enabled     = try(implicit_grant.value.access_token_issuance_enabled, null)
+          id_token_issuance_enabled     = try(implicit_grant.value.id_token_issuance_enabled, null)
         }
       }
     }
