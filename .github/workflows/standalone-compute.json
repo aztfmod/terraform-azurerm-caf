@@ -39,6 +39,7 @@
     "compute/virtual_machine/106-marketplace-image-with-plan",
     "compute/virtual_machine/108-mssql-vm",
     "compute/virtual_machine/110-win-linuxvm-custom-script-extension",
+    "compute/virtual_machine/113-single-linux-custom-data-template",
     "compute/virtual_machine/210-vm-bastion-winrm",
     "compute/virtual_machine/213-vm_generic_extensions",
     "compute/virtual_machine/214-vm-generic_extensions_complex",
