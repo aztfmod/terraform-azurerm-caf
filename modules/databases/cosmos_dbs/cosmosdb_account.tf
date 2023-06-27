@@ -24,8 +24,8 @@ resource "azurerm_cosmosdb_account" "cosmos_account" {
   is_virtual_network_filter_enabled   = try(var.settings.is_virtual_network_filter_enabled, null)
   create_mode                         = try(var.settings.create_mode, null)
   public_network_access_enabled       = try(var.settings.public_network_access_enabled, true)
-  access_key_metadata_writes_enabled  = try(var.settings.access_key_metadata_writes_enabled, true)
-  local_authentication_disabled       = try(var.settings.local_authentication_disabled, false)
+  access_key_metadata_writes_enabled  = try(var.settings.access_key_metadata_writes_enabled, null)
+  local_authentication_disabled       = try(var.settings.local_authentication_disabled, null)
 
   dynamic "consistency_policy" {
     for_each = lookup(var.settings, "consistency_policy", {}) == {} ? [] : [1]
