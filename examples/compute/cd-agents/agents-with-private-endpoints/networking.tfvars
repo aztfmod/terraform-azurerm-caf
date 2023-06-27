@@ -102,8 +102,9 @@ virtual_network_gateways = {
 
         root_certificates = {
           root = {
-            name                      = "root"
-            public_cert_data_from_var = "bootstrap_root_ca_public_pem"
+            name                               = "root"
+            public_cert_data_from_env_var_name = "bootstrap_root_ca_public_pem"
+            fails_if_empty                     = true
           }
         }
       }

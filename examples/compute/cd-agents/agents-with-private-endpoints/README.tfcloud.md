@@ -67,11 +67,7 @@ export BACKEND_type_hybrid=false
 export GITOPS_AGENT_POOL_EXECUTION_MODE=remote    # This deployment is using hosted TFC agents to bootstrap the environment
 export TF_VAR_backend_type=remote
 
-# Set the Azure devops Admin (full access) PAT token
-export TF_CLOUD_WORKSPACE_TF_VAR_bootstrap_root_ca_public_pem=$(cat ~/.certs/caCert64.pem)
-export TF_CLOUD_WORKSPACE_TF_SEC_ENV_BOOTSTRAP_CLIENT_CERT_PRIVATE_PEM=$(cat ~/.certs/rover-Cert.pem  | base64 | tr -d '\n')
-export TF_CLOUD_WORKSPACE_TF_SEC_ENV_BOOTSTRAP_CLIENT_KEY_PRIVATE_PEM=$(cat ~/.certs/rover-Key.pem  | base64 | tr -d '\n')
-export TF_CLOUD_WORKSPACE_TF_SEC_ENV_BOOTSTRAP_CLIENT_OPENVPN_PROFILE=$(cat  ~/.certs/OpenVPN/vpnconfig.ovpn  | base64 | tr -d '\n')
+export TF_CLOUD_WORKSPACE_TF_ENV_bootstrap_root_ca_public_pem=$(cat ~/.certs/caCert64.pem)
 export TF_CLOUD_WORKSPACE_TF_SEC_ENV_AZDO_TOKEN="$AZDO_TOKEN"
 export TF_CLOUD_WORKSPACE_TF_SEC_ENV_TFCLOUD_TOKEN="$TFCLOUD_TOKEN"
 
