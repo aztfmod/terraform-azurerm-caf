@@ -152,6 +152,7 @@ locals {
     purview_accounts                           = local.combined_objects_purview_accounts
     recovery_vaults                            = local.combined_objects_recovery_vaults
     resource_groups                            = local.combined_objects_resource_groups
+    servicebus_namespaces                      = local.combined_objects_servicebus_namespaces
     storage_accounts                           = local.combined_objects_storage_accounts
     subscriptions                              = local.combined_objects_subscriptions
     synapse_workspaces                         = local.combined_objects_synapse_workspaces
