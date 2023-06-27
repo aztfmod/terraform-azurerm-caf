@@ -3,20 +3,20 @@
   "contentVersion": "1.0.0.0",
   "parameters": {
     "managedInstanceName": {
-        "type": "string",
+        "type": "String",
         "metadata": {
             "description": "The name of the Managed Instance."
         }
     },
     "location": {
-        "type": "string",
+        "type": "String",
         "defaultValue": "[resourceGroup().location]",
         "metadata": {
             "description": "The location of the Managed Instance. Default is the location of the selected resource group."
         }
     },
     "skuName": {
-        "type": "string",
+        "type": "String",
         "defaultValue": "GP_Gen5",
         "allowedValues": [
             "GP_Gen4",
@@ -29,7 +29,7 @@
         }
     },
     "skuEdition": {
-        "type": "string",
+        "type": "String",
         "defaultValue": "GeneralPurpose",
         "allowedValues": [
             "GeneralPurpose",
@@ -40,25 +40,25 @@
         }
     },
     "administratorLogin": {
-        "type": "string",
+        "type": "String",
         "metadata": {
             "description": "The login of the Managed Instance admin."
         }
     },
     "administratorLoginPassword": {
-        "type": "securestring",
+        "type": "String",
         "metadata": {
             "description": "The password of the Managed Instance admin."
         }
     },
     "subnetId": {
-        "type": "string",
+        "type": "String",
         "metadata": {
             "description": "The subnet id where the Managed Instance will be deployed."
         }
     },
     "storageSizeInGB": {
-        "type": "int",
+        "type": "Int",
         "defaultValue": 256,
         "minValue": 32,
         "metadata": {
@@ -66,7 +66,7 @@
         }
     },
     "vCores": {
-        "type": "int",
+        "type": "Int",
         "defaultValue": 4,
         "allowedValues": [
             4,
@@ -83,7 +83,7 @@
         }
     },
     "licenseType": {
-        "type": "string",
+        "type": "String",
         "defaultValue": "LicenseIncluded",
         "allowedValues": [
             "LicenseIncluded",
@@ -94,7 +94,7 @@
         }
     },
     "hardwareFamily": {
-        "type": "string",
+        "type": "String",
         "defaultValue": "Gen5",
         "allowedValues": [
             "Gen4",
@@ -105,21 +105,21 @@
         }
     },
     "dnsZonePartner": {
-        "type": "string",
+        "type": "String",
         "defaultValue": "",
         "metadata": {
             "description": "The resource id of another Managed Instance whose DNS zone this Managed Instance will share after creation."
         }
     },
     "collation": {
-        "type": "string",
+        "type": "String",
         "defaultValue": "SQL_Latin1_General_CP1_CI_AS",
         "metadata": {
             "description": "Collation of the Managed Instance."
         }
     },
     "proxyOverride": {
-        "type": "string",
+        "type": "String",
         "defaultValue": "Proxy",
         "allowedValues": [
             "Proxy",
@@ -130,14 +130,14 @@
         }
     },
     "publicDataEndpointEnabled": {
-        "type": "bool",
+        "type": "Bool",
         "defaultValue": false,
         "metadata": {
             "description": "Determines whether public data endpoint will be enabled, required for clients outside of the connected virtual networks. Public endpoint will always default to Proxy connection mode."
         }
     },
     "minimalTlsVersion": {
-        "type": "string",
+        "type": "String",
         "defaultValue": "1.2",
         "allowedValues": [
             "1.0",
@@ -149,14 +149,14 @@
         }
     },
     "timezoneId": {
-        "type": "string",
+        "type": "String",
         "defaultValue": "UTC",
         "metadata": {
             "description": "Id of the timezone. Allowed values are timezones supported by Windows."
         }
     },
     "storageAccountType": {
-        "type": "string",
+        "type": "String",
         "defaultValue": "GRS",
         "allowedValues": [
             "GRS",
@@ -168,24 +168,24 @@
         }
     },
     "managedInstanceTags": {
-        "type": "object",
+        "type": "Object",
         "defaultValue": {},
         "metadata": {
             "description": "Resource tags to associate with the instance."
         }
     },
     "resourceGroupName": {
-        "type": "string"
+        "type": "String"
     },
     "zoneRedundant": {
-        "type": "bool",
+        "type": "Bool",
         "defaultValue": false,
         "metadata": {
             "description": "Whether or not the multi-az is enabled."
         }
     },
     "requestedBackupStorageRedundancy": {
-        "type": "string",
+        "type": "String",
         "defaultValue": "Geo",
         "metadata": {
             "description": "The storage account type used to store backups for this database."
@@ -202,7 +202,7 @@
       {
           "type": "Microsoft.Sql/managedInstances",
           "name": "[parameters('managedInstanceName')]",
-          "apiVersion": "2021-11-01-preview",
+          "apiVersion": "2021-11-01",
           "location": "[parameters('location')]",
           "sku": {
               "name": "[parameters('skuName')]",
@@ -235,12 +235,12 @@
   ],
   "outputs": {
       "id": {
-          "type": "string",
+          "type": "String",
           "value": "[resourceId(parameters('resourceGroupName'), 'Microsoft.Sql/managedInstances', parameters('managedInstanceName'))]"
       },
       "objectId": {
-        "type": "string",
-        "value": "[reference(parameters('managedInstanceName'), '2021-11-01-preview', 'Full').identity.principalId]"
+        "type": "String",
+        "value": "[reference(parameters('managedInstanceName'), '2021-11-01', 'Full').identity.principalId]"
       }
   }
 }
