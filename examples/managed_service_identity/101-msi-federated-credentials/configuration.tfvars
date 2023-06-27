@@ -15,6 +15,10 @@ resource_groups = {
     name   = "security-rg1"
     region = "region1"
   }
+  cluster = {
+    name   = "cluster-rg1"
+    region = "region1"
+  }
 }
 
 managed_identities = {
@@ -28,8 +32,8 @@ managed_identities = {
       dev = {
         name        = "some_name"
         aks_cluster = {
-          key             = "user-services"
-          lz_key          = "platform"
+          key             = "cluster_re1"
+          #lz_key          = ""
         }
         kubernetes  = {
           service_account  = "backend"
@@ -39,8 +43,7 @@ managed_identities = {
       qa = {
         name        = "testing"
         aks_cluster = {
-          key     = "uat"
-          lz_key  = "aks"
+          key     = "cluster_re1"
         }
         subject = "system:serviceaccount:default:qa"
       }
