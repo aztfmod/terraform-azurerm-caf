@@ -297,6 +297,18 @@ Stop the service
 sudo systemctl stop rover-agent-azdo-level0-1.service
 ```
 
+How to check if a job is running a terraform job
+```bash
+# Job is running
+sudo docker exec agent-tfe-4 ps | grep 'terraform'
+     50 ?        00:00:07 terraform
+    173 ?        00:00:00 terraform-provi
+    181 ?        00:00:00 terraform-provi
+    191 ?        00:00:00 terraform-provi
+    201 ?        00:00:00 terraform-provi
+    210 ?        00:00:00 terraform-provi
+```
+
 Supported scenarios:
 - Increase and decrease the number of agents 
 - If more agents are deployed that the max number of licensed agents, the additional agents are terminated in error state
