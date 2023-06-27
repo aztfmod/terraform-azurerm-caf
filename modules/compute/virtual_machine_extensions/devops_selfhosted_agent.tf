@@ -4,10 +4,10 @@ resource "random_integer" "devops_selfhosted_agent" {
   min = 1
   max = 500000
   keepers = {
-    sha                = sensitive(format("%s%s", sha256(jsonencode(local.devops_selfhosted_agent_protected_settings)), sha256(try(jsonencode(var.extension.devops_selfhosted_agent.fileUris), ""))))
-    num_agents         = try(var.extension.num_agents, null)
-    rover_version      = try(var.extension.rover_version, null)
-    token               = local.devops_selfhosted_agent_agent_pat.pat
+    sha           = sensitive(format("%s%s", sha256(jsonencode(local.devops_selfhosted_agent_protected_settings)), sha256(try(jsonencode(var.extension.devops_selfhosted_agent.fileUris), ""))))
+    num_agents    = try(var.extension.num_agents, null)
+    rover_version = try(var.extension.rover_version, null)
+    token         = local.devops_selfhosted_agent_agent_pat.pat
   }
 }
 

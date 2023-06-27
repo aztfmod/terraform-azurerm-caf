@@ -72,7 +72,7 @@ virtual_machines = {
 
 
         pats_from_env_variable = {
-          variable_name = "AZDO_TOKEN"
+          variable_name  = "AZDO_TOKEN"
           fails_if_empty = true
         }
 
@@ -165,7 +165,7 @@ virtual_machines = {
         # }
 
         pats_from_env_variable = {
-          variable_name = "TFCLOUD_TOKEN"
+          variable_name  = "TFCLOUD_TOKEN"
           fails_if_empty = true
         }
 
