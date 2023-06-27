@@ -11,6 +11,7 @@ on:
       - 'network*'
       - 'modules/networking/**'
       - 'examples/networking/**'
+      - ''.github/workflows/*networking.*'
 
 env:
   TF_CLI_ARGS: "-no-color"
