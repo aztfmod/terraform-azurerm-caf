@@ -62,7 +62,7 @@ application_gateway_waf_policies = {
     }
 
     managed_rules = {
-      exclusion = {
+      exclusions = {
         ex1 = {
           match_variable          = "RequestHeaderNames"
           selector                = "x-company-secret-header"
