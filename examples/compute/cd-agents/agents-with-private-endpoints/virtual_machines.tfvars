@@ -161,7 +161,7 @@ virtual_machines = {
         # pats = {
         #   # secret_name  = "azdo-pat-agent"
         #   # keyvault_key = "secrets"
-        #   value = "C10kccccccOw.atlaxxxx.9jz7Fye2ccccccy2CJCVkOqqjqLcccccc5LwLez94C13yeccccccMDVDAfc"
+        #   value = "your_PAT_in_cleartext_only_for_testing"
         # }
 
         pats_from_env_variable = {
