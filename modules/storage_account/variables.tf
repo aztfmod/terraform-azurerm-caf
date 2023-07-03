@@ -64,3 +64,9 @@ variable "managed_identities" {
 }
 
 variable "var_folder_path" {}
+
+variable "virtual_subnets" {
+  description = "Map of virtual_subnets objects"
+  default     = {}
+  nullable    = false
+}

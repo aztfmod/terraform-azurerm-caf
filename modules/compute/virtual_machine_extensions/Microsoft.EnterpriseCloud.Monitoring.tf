@@ -20,21 +20,19 @@ resource "azurerm_virtual_machine_extension" "monitoring" {
     }
   )
 
+  lifecycle {
+    precondition {
+      condition = anytrue(
+        [
+          for status in jsondecode(data.azapi_resource_action.azurerm_virtual_machine_status.output).statuses : "true"
+          if status.code == "PowerState/running"
+        ]
+      )
+      error_message = format("The virtual machine (%s) must be in running state to be able to deploy or modify the vm extension.", var.virtual_machine_id)
+    }
+  }
+
 }
-
-# data "azurerm_log_analytics_workspace" "monitoring" {
-#   for_each = var.extension_name == "microsoft_enterprise_cloud_monitoring" ? toset(["enabled"]) : toset([])
-
-#   name                = var.settings.diagnostics.log_analytics[var.extension.diagnostic_log_analytics_key].name
-#   resource_group_name = var.settings.diagnostics.log_analytics[var.extension.diagnostic_log_analytics_key].resource_group_name
-# }
-
-#
-# Use data external to retrieve value from different subscription
-#
-# With for_each it is not possible to change the provider's subscription at runtime so using the following pattern.
-#
-
 
 data "external" "monitoring_workspace_key" {
   for_each = var.extension_name == "microsoft_enterprise_cloud_monitoring" ? toset(["enabled"]) : toset([])

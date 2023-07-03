@@ -140,3 +140,58 @@ module "vm_extension_linux_diagnostic" {
     diagnostic_storage_account = local.combined_objects_diagnostic_storage_accounts[try(each.value.storage_account.lz_key, local.client_config.landingzone_key)][each.value.virtual_machine_extensions.linux_diagnostic.diagnostic_storage_account_key]
   }
 }
+
+module "vm_extensions_devops_selfhosted_agent" {
+  source = "./modules/compute/virtual_machine_extensions"
+
+  for_each = {
+    for key, value in local.compute.virtual_machines : key => value
+    if can(value.virtual_machine_extensions.devops_selfhosted_agent)
+  }
+
+  client_config      = local.client_config
+  virtual_machine_id = module.virtual_machines[each.key].id
+  extension          = each.value.virtual_machine_extensions.devops_selfhosted_agent
+  extension_name     = "devops_selfhosted_agent"
+
+  settings = {
+    devops_selfhosted_agent = {
+      var_folder_path  = var.var_folder_path
+      storage_accounts = module.storage_accounts
+      admin_username   = each.value.virtual_machine_settings[each.value.os_type].admin_username
+      storage_account_blobs_urls = can(each.value.virtual_machine_extensions.devops_selfhosted_agent.storage_account_blobs) ? [
+        for key in try(each.value.virtual_machine_extensions.devops_selfhosted_agent.storage_account_blobs, []) : module.storage_account_blobs[key].url
+      ] : each.value.virtual_machine_extensions.devops_selfhosted_agent.storage_account_blobs_urls
+      managed_identities = local.combined_objects_managed_identities
+      keyvaults          = local.combined_objects_keyvaults
+    }
+  }
+}
+
+
+module "vm_extensions_tfcloud_selfhosted_agent" {
+  source = "./modules/compute/virtual_machine_extensions"
+
+  for_each = {
+    for key, value in local.compute.virtual_machines : key => value
+    if can(value.virtual_machine_extensions.tfcloud_selfhosted_agent)
+  }
+
+  client_config      = local.client_config
+  virtual_machine_id = module.virtual_machines[each.key].id
+  extension          = each.value.virtual_machine_extensions.tfcloud_selfhosted_agent
+  extension_name     = "tfcloud_selfhosted_agent"
+
+  settings = {
+    tfcloud_selfhosted_agent = {
+      var_folder_path  = var.var_folder_path
+      storage_accounts = module.storage_accounts
+      admin_username   = each.value.virtual_machine_settings[each.value.os_type].admin_username
+      storage_account_blobs_urls = can(each.value.virtual_machine_extensions.tfcloud_selfhosted_agent.storage_account_blobs) ? [
+        for key in try(each.value.virtual_machine_extensions.tfcloud_selfhosted_agent.storage_account_blobs, []) : module.storage_account_blobs[key].url
+      ] : each.value.virtual_machine_extensions.tfcloud_selfhosted_agent.storage_account_blobs_urls
+      managed_identities = local.combined_objects_managed_identities
+      keyvaults          = local.combined_objects_keyvaults
+    }
+  }
+}
