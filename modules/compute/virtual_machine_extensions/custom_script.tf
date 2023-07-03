@@ -25,6 +25,18 @@ resource "azurerm_virtual_machine_extension" "custom_script" {
       delete = try(timeouts.value.delete, null)
     }
   }
+
+  lifecycle {
+    precondition {
+      condition = anytrue(
+        [
+          for status in jsondecode(data.azapi_resource_action.azurerm_virtual_machine_status.output).statuses : "true"
+          if status.code == "PowerState/running"
+        ]
+      )
+      error_message = format("The virtual machine (%s) must be in running state to be able to deploy or modify the vm extension.", var.virtual_machine_id)
+    }
+  }
 }
 
 locals {

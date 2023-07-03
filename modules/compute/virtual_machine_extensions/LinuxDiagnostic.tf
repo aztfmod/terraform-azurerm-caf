@@ -19,6 +19,18 @@ resource "azurerm_virtual_machine_extension" "linux_diagnostic" {
     "storageAccountSasToken" = data.azurerm_storage_account_sas.token[each.key].sas
     "storageAccountEndPoint" = try(var.settings.storage_account_endpoint, "https://core.windows.net")
   })
+
+  lifecycle {
+    precondition {
+      condition = anytrue(
+        [
+          for status in jsondecode(data.azapi_resource_action.azurerm_virtual_machine_status.output).statuses : "true"
+          if status.code == "PowerState/running"
+        ]
+      )
+      error_message = format("The virtual machine (%s) must be in running state to be able to deploy or modify the vm extension.", var.virtual_machine_id)
+    }
+  }
 }
 
 locals {

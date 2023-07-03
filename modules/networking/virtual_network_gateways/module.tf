@@ -56,7 +56,7 @@ resource "azurerm_virtual_network_gateway" "vngw" {
   }
 
   dynamic "vpn_client_configuration" {
-    for_each = try(var.settings.vpn_client_configuration, {})
+    for_each = can(var.settings.vpn_client_configuration) ? [var.settings.vpn_client_configuration[keys(var.settings.vpn_client_configuration)[0]]] : []
     content {
       address_space        = vpn_client_configuration.value.address_space
       vpn_auth_types       = try(vpn_client_configuration.value.vpn_auth_types, null)
@@ -102,12 +102,12 @@ resource "azurerm_virtual_network_gateway" "vngw" {
       dynamic "root_certificate" {
         for_each = {
           for key, value in try(vpn_client_configuration.value.root_certificates, {}) : key => value
-          if can(value.public_cert_data_from_var)
+          if can(value.public_cert_data_from_env_var_name)
         }
 
         content {
           name             = root_certificate.value.name
-          public_cert_data = var.bootstrap_root_ca_public_pem
+          public_cert_data = data.azurecaf_environment_variable.name[root_certificate.key].value
         }
       }
       dynamic "revoked_certificate" {
@@ -157,4 +157,14 @@ resource "azurerm_virtual_network_gateway" "vngw" {
     delete = "60m"
   }
 
+}
+
+data "azurecaf_environment_variable" "name" {
+  for_each = {
+    for key, value in try(var.settings.vpn_client_configuration[keys(var.settings.vpn_client_configuration)[0]].root_certificates, {}) : key => value
+    if can(value.public_cert_data_from_env_var_name)
+  }
+
+  name           = each.value.public_cert_data_from_env_var_name
+  fails_if_empty = try(each.value.fails_if_empty, null)
 }

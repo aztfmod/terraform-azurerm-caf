@@ -11,6 +11,7 @@ on:
       - 'network*'
       - 'modules/networking/**'
       - 'examples/networking/**'
+      - '.github/workflows/*networking.*'
 
 env:
   TF_CLI_ARGS: "-no-color"
@@ -32,8 +33,7 @@ jobs:
       - uses: actions/checkout@v3
       - id: load_scenarios
         run: |
-          cases=$((
-            cat ./.github/workflows/standalone-networking.json | jq -c .)
+          cases=$(cat ./.github/workflows/standalone-networking.json | jq -c .)
           echo "matrix=${cases}" >> $GITHUB_OUTPUT
 
   testcases:
