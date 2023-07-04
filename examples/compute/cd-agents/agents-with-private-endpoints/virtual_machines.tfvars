@@ -1,3 +1,8 @@
+provider_azurerm_features_virtual_machine = {
+  # To allow in-vm sheduled event to be sent and de-register properly the agents
+  graceful_shutdown = true
+}
+
 virtual_machines = {
   azdo_level0 = {
     resource_group_key = "agents"
@@ -53,9 +58,9 @@ virtual_machines = {
 
     virtual_machine_extensions = {
       devops_selfhosted_agent = {
-        agent_init_script = "devops_runtime_baremetal.sh"
+        agent_init_script = "rover_agents.sh"
         storage_account_blobs = [
-          "devops_runtime_baremetal"
+          "rover_agents"
         ]
 
         managed_identity = {
@@ -125,9 +130,9 @@ virtual_machines = {
         }
 
         source_image_reference = {
-          publisher = "canonical"
-          offer     = "0001-com-ubuntu-server-jammy"
-          sku       = "22_04-lts-gen2"
+          publisher = "RedHat"
+          offer     = "RHEL"
+          sku       = "87-gen2"
           version   = "latest"
         }
 
