@@ -12,7 +12,7 @@ resource_groups = {
   }
 }
 
-azurerm_powerbi_embedded = {
+powerbi_embedded = {
   powerbi_re1 = {
     name               = "examplepowerbi"
     region             = "region1"
