@@ -8,14 +8,8 @@ terraform {
 }
 
 locals {
-
-  tags = var.base_tags ? merge(
+  tags = var.global_settings.inherit_tags ? merge(
     var.global_settings.tags,
-    try(var.tags, null)
-    ) : merge(
-    try(var.tags,
-    null)
-  )
-
-
+    var.tags
+    ) : var.tags
 }
