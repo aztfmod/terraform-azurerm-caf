@@ -58,7 +58,7 @@ locals {
 
   devops_selfhosted_agent_protected_settings = can(var.settings.devops_selfhosted_agent) ? merge(
     {
-      commandToExecute = format("bash %s '%s' '%s' '%s' '%s' '%s' '%s' '%s'", var.extension.agent_init_script, var.extension.url, local.devops_selfhosted_agent_agent_pat.pat, var.extension.agent_pool_name, var.extension.agent_name_prefix, var.extension.num_agents, var.settings.devops_selfhosted_agent.admin_username, var.extension.rover_version)
+      commandToExecute = format("bash %s '%s' '%s' '%s' '%s' '%s' '%s' '%s' '%s'", var.extension.agent_init_script, "azdo", var.extension.url, local.devops_selfhosted_agent_agent_pat.pat, var.extension.agent_name_prefix, var.extension.num_agents, var.settings.devops_selfhosted_agent.admin_username, var.extension.rover_version, var.extension.agent_pool_name)
     },
     {
       managedIdentity = can(var.extension.managed_identity) && can(var.settings.devops_selfhosted_agent) ? {

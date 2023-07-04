@@ -20,16 +20,10 @@ storage_containers = {
 }
 
 storage_account_blobs = {
-  devops_runtime_baremetal = {
+  rover_agents = {
     storage_account_key    = "scripts"
     storage_container_name = "scripts"
-    name                   = "devops_runtime_baremetal.sh"
-    source                 = "scripts/devops_runtime_baremetal.sh"
-  }
-  tfcloud_selfhosted_agent = {
-    storage_account_key    = "scripts"
-    storage_container_name = "scripts"
-    name                   = "tfcloud_selfhosted_agent.sh"
-    source                 = "scripts/tfcloud_selfhosted_agent.sh"
+    name                   = "rover_agents.sh"
+    source                 = "scripts/rover_agents.sh"
   }
 }
