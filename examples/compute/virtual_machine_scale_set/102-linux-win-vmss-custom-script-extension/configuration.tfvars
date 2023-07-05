@@ -54,14 +54,14 @@ storage_account_blobs = {
     name                   = "helloworld.sh"
     storage_account_key    = "sa1"
     storage_container_name = "files"
-    source                 = "./compute/virtual_machine_scale_set/102-linux-win-vmss-custom-script-extension/scripts/helloworld.sh"
+    source                 = "scripts/helloworld.sh"
     parallelism            = 1
   }
   script2 = {
     name                   = "helloworld.ps1"
     storage_account_key    = "sa1"
     storage_container_name = "files"
-    source                 = "./compute/virtual_machine_scale_set/102-linux-win-vmss-custom-script-extension/scripts/helloworld.ps1"
+    source                 = "scripts/helloworld.ps1"
     parallelism            = 1
   }
 }
