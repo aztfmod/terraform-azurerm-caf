@@ -42,4 +42,13 @@ resource "azurerm_private_endpoint" "pep" {
     }
   }
 
+  dynamic "ip_configuration" {
+    for_each = can(var.settings.ip_configuration) ? [var.settings.ip_configuration] : []
+
+    content {
+      name = lookup(ip_configuration.value, "name")
+      private_ip_address = ip_configuration.value.private_ip_address
+    }
+  }  
+
 }
