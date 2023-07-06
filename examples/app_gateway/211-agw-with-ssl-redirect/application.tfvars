@@ -9,7 +9,7 @@ application_gateway_applications = {
         front_end_ip_configuration_key = "private"
         front_end_port_key             = "443"
         host_name                      = "demoapp1.cafdemo.com"
-        request_routing_rule_key       = "default"
+        request_routing_rule_key       = "default1"
         keyvault_certificate = {
           certificate_key = "demoapp1.cafdemo.com"
           // To use manual uploaded cert
@@ -23,7 +23,7 @@ application_gateway_applications = {
         front_end_ip_configuration_key = "public"
         front_end_port_key             = "4431"
         host_name                      = "demoapp1.cafdemo.com"
-        request_routing_rule_key       = "default"
+        request_routing_rule_key       = "default2"
         keyvault_certificate = {
           certificate_key = "demoapp1.cafdemo.com"
           // To use manual uploaded cert
@@ -34,8 +34,13 @@ application_gateway_applications = {
     }
 
     request_routing_rules = {
-      default = {
+      default1 = {
         rule_type = "Basic"
+        priority  = 10
+      }
+      default2 = {
+        rule_type = "Basic"
+        priority  = 11
       }
     }
 
@@ -72,6 +77,7 @@ application_gateway_applications = {
       default = {
         rule_type                   = "Basic"
         redirect_configuration_name = "redirect-https"
+        priority                    = 20
       }
     }
   }
