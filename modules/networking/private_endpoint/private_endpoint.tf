@@ -46,11 +46,11 @@ resource "azurerm_private_endpoint" "pep" {
     for_each = can(var.settings.ip_configuration) ? [var.settings.ip_configuration] : []
 
     content {
-      name = ip_configuration.value.name
+      name               = ip_configuration.value.name
       private_ip_address = ip_configuration.value.private_ip_address
-      subresource_name = lookup(ip_configuration.value, "subresource_name", null)
-      member_name  = lookup(ip_configuration.value, "member_name ", null)
+      subresource_name   = lookup(ip_configuration.value, "subresource_name", null)
+      member_name        = lookup(ip_configuration.value, "member_name ", null)
     }
-  }  
+  }
 
 }
