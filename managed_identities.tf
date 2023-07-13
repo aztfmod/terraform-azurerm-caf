@@ -13,7 +13,7 @@ module "managed_identities" {
 }
 
 #Later can be added the same resources for other type of Federated Identity Credentials, GitHub and other.
-resource "azurecaf_name" "fidc" {
+data "azurecaf_name" "fidc" {
   for_each    = local.aks_federated_identity_credentials
   depends_on  = [module.managed_identities]
 
@@ -30,7 +30,7 @@ resource "azurerm_federated_identity_credential" "fidc_aks" {
   for_each    = local.aks_federated_identity_credentials
   depends_on  = [module.managed_identities]
 
-  name                = azurecaf_name.fidc[each.key].result
+  name                = data.azurecaf_name.fidc[each.key].result
   resource_group_name = local.combined_objects_resource_groups[try(each.value.resource_group.lz_key, local.client_config.landingzone_key)][try(each.value.resource_group.key, each.value.resource_group)].name
   audience            = each.value.audience
   issuer              = each.value.issuer != null ? each.value.issuer : local.combined_objects_aks_clusters[try(each.value.aks_cluster.lz_key, local.client_config.landingzone_key)][each.value.aks_cluster.key].oidc_issuer_url
