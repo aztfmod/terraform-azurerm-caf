@@ -19,13 +19,13 @@ locals {
       db_roles = group.db_roles
       db_usernames = flatten([
         [for mi_key, mi_value in group : [
-          for value in mi_value.keys : [
-            try(var.managed_identities[var.client_config.landingzone_key][value].name, var.managed_identities[mi_value.lz_key][value].name)
+          for value in try(mi_value.keys, mi_value.managed_identity_keys, []) : [
+            try(var.managed_identities[mi_value.lz_key][value].name, var.managed_identities[var.client_config.landingzone_key][value].name)
           ]
         ] if mi_key == "managed_identities"],
         [for mi_key, mi_value in group : [
           for value in mi_value.keys : [
-            try(var.azuread_groups[var.client_config.landingzone_key][value].display_name, var.azuread_groups[mi_value.lz_key][value].display_name)
+            try(var.azuread_groups[mi_value.lz_key][value].display_name, var.azuread_groups[var.client_config.landingzone_key][value].display_name)
           ]
         ] if mi_key == "azuread_groups"]
       ])
