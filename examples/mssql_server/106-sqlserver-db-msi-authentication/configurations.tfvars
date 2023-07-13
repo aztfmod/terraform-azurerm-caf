@@ -107,6 +107,7 @@ mssql_databases = {
         managed_identities = {
           #lz_key  = ""   # lz_key
           keys    = ["webapp_mi"]
+          #managed_identity_keys = [""]
         }
         azuread_groups = {
           keys    = ["sql_admins","db_owners"]
