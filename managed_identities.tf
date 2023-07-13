@@ -62,17 +62,3 @@ locals {
 output "managed_identities" {
   value = module.managed_identities
 }
-
-output "msi_federated_credentials" {
-  value = {
-    for v in local.aks_federated_identity_credentials : v.managed_identity_key => {
-      namespace = v.kubernetes.namespace
-      service_account = v.kubernetes.service_account
-    }
-  }
-}
-
-
-
-
- 
