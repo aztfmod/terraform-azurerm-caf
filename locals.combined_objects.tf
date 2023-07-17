@@ -104,6 +104,7 @@ locals {
   combined_objects_mysql_flexible_server                          = merge(tomap({ (local.client_config.landingzone_key) = module.mysql_flexible_server }), try(var.remote_objects.mysql_flexible_server, {}))
   combined_objects_mysql_servers                                  = merge(tomap({ (local.client_config.landingzone_key) = module.mysql_servers }), try(var.remote_objects.mysql_servers, {}))
   combined_objects_nat_gateways                                   = merge(tomap({ (local.client_config.landingzone_key) = module.nat_gateways }), try(var.remote_objects.nat_gateways, {}))
+  combined_objects_network_connection_monitors                    = merge(tomap({ (local.client_config.landingzone_key) = module.network_connection_monitors }), try(var.remote_objects.network_connection_monitors, {}))
   combined_objects_network_profiles                               = merge(tomap({ (local.client_config.landingzone_key) = module.network_profiles }), try(var.remote_objects.network_profiles, {}))
   combined_objects_network_security_groups                        = merge(tomap({ (local.client_config.landingzone_key) = module.network_security_groups }), try(var.remote_objects.network_security_groups, {}))
   combined_objects_network_watchers                               = merge(tomap({ (local.client_config.landingzone_key) = module.network_watchers }), try(var.remote_objects.network_watchers, {}))
@@ -151,6 +152,7 @@ locals {
   combined_objects_wvd_applications                               = merge(tomap({ (local.client_config.landingzone_key) = module.wvd_applications }), try(var.remote_objects.wvd_applications, {}))
   combined_objects_wvd_host_pools                                 = merge(tomap({ (local.client_config.landingzone_key) = module.wvd_host_pools }), try(var.remote_objects.wvd_host_pools, {}))
   combined_objects_wvd_workspaces                                 = merge(tomap({ (local.client_config.landingzone_key) = module.wvd_workspaces }), try(var.remote_objects.wvd_workspaces, {}))
+  combined_objects_route_tables                                   = merge(tomap({ (local.client_config.landingzone_key) = module.route_tables }), try(var.remote_objects.route_tables, {}))
 
   combined_objects_subscriptions = merge(
     tomap(

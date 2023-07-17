@@ -164,6 +164,7 @@ locals {
     virtual_subnets                            = local.combined_objects_virtual_subnets
     virtual_machine_scale_sets                 = local.combined_objects_virtual_machine_scale_sets
     log_analytics                              = local.current_objects_log_analytics
+    route_tables                               = local.combined_objects_route_tables
   }
 
   current_objects_log_analytics = tomap(
