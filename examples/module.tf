@@ -409,5 +409,7 @@ module "example" {
     iot_security_device_group           = var.iot_security_device_group
     iot_central_application             = var.iot_central_application
   }
+  powerbi_embedded = var.powerbi_embedded
+
   preview_features = var.preview_features
 }

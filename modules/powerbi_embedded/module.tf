@@ -1,4 +1,4 @@
-resource "azurecaf_name" "powerbi" {
+data "azurecaf_name" "powerbi" {
   name          = var.name
   resource_type = "azurerm_powerbi_embedded"
   prefixes      = var.global_settings.prefixes
@@ -10,7 +10,7 @@ resource "azurecaf_name" "powerbi" {
 
 
 resource "azurerm_powerbi_embedded" "powerbi" {
-  name                = azurecaf_name.powerbi.result
+  name                = data.azurecaf_name.powerbi.result
   location            = var.location
   resource_group_name = var.resource_group_name
   sku_name            = var.sku_name
