@@ -7,13 +7,6 @@ resource "azurerm_virtual_machine_extension" "domainjoin" {
   type_handler_version       = try(var.extension.type_handler_version, "1.3")
   auto_upgrade_minor_version = try(var.extension.auto_upgrade_minor_version, true)
 
-  lifecycle {
-    ignore_changes = [
-      settings,
-      protected_settings
-    ]
-  }
-
   settings = jsonencode(
     {
       "Name" : var.extension.domain_name,
@@ -29,6 +22,22 @@ resource "azurerm_virtual_machine_extension" "domainjoin" {
       "Password" : data.azurerm_key_vault_secret.domain_join_password["enabled"].value
     }
   )
+
+  lifecycle {
+    ignore_changes = [
+      settings,
+      protected_settings
+    ]
+    precondition {
+      condition = anytrue(
+        [
+          for status in jsondecode(data.azapi_resource_action.azurerm_virtual_machine_status.output).statuses : "true"
+          if status.code == "PowerState/running"
+        ]
+      )
+      error_message = format("The virtual machine (%s) must be in running state to be able to deploy or modify the vm extension.", var.virtual_machine_id)
+    }
+  }
 }
 
 data "azurerm_key_vault_secret" "domain_join_password" {

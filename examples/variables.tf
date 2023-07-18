@@ -22,11 +22,6 @@ variable "var_folder_path" {
   default = ""
 }
 
-variable "provider_azurerm_features_keyvault" {
-  default = {
-    purge_soft_delete_on_destroy = true
-  }
-}
 # variable "cloud" {
 #   type = any
 #   default = {}
@@ -177,6 +172,9 @@ variable "network_security_group_definition" {
   type    = any
   default = {}
 }
+variable "network_security_security_rules" {
+  default = {}
+}
 variable "route_tables" {
   type    = any
   default = {}
@@ -269,6 +267,12 @@ variable "azuread_groups" {
 }
 variable "azuread_roles" {
   type    = any
+  default = {}
+}
+variable "azuread_administrative_units" {
+  default = {}
+}
+variable "azuread_administrative_unit_members" {
   default = {}
 }
 variable "keyvaults" {
@@ -1111,5 +1115,42 @@ variable "private_dns_resolver_forwarding_rules" {
 }
 
 variable "private_dns_resolver_virtual_network_links" {
+  default = {}
+}
+
+variable "iot_security_solution" {
+  default = {}
+}
+variable "iot_security_device_group" {
+  default = {}
+}
+variable "iot_central_application" {
+  default = {}
+}
+variable "iot_hub" {
+  default = {}
+}
+variable "iot_hub_dps" {
+  default = {}
+}
+variable "iot_hub_shared_access_policy" {
+  default = {}
+}
+variable "iot_dps_certificate" {
+  default = {}
+}
+variable "iot_dps_shared_access_policy" {
+  default = {}
+}
+variable "iot_hub_consumer_groups" {
+  default = {}
+}
+variable "iot_hub_certificate" {
+  default = {}
+}
+variable "cosmosdb_role_mapping" {
+  default = {}
+}
+variable "cosmosdb_role_definitions" {
   default = {}
 }

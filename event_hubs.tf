@@ -23,11 +23,11 @@ module "event_hub_namespace_auth_rules" {
   source   = "./modules/event_hubs/namespaces/auth_rules"
   for_each = try(var.event_hub_namespace_auth_rules, {})
 
-  client_config   = local.client_config
-  global_settings = local.global_settings
-  namespace_name  = module.event_hub_namespaces[each.value.event_hub_namespace_key].name
-  settings        = each.value
-  resource_group  = local.combined_objects_resource_groups[try(each.value.lz_key, local.client_config.landingzone_key)][try(each.value.resource_group_key, each.value.resource_group.key)]
+  client_config       = local.client_config
+  global_settings     = local.global_settings
+  namespace_name      = module.event_hub_namespaces[each.value.event_hub_namespace_key].name
+  settings            = each.value
+  resource_group_name = local.combined_objects_resource_groups[try(each.value.lz_key, local.client_config.landingzone_key)][try(each.value.resource_group_key, each.value.resource_group.key)].name
 
 
   depends_on = [
@@ -139,12 +139,12 @@ module "event_hub_consumer_groups" {
   source   = "./modules/event_hubs/consumer_groups"
   for_each = try(var.event_hub_consumer_groups, {})
 
-  client_config   = local.client_config
-  global_settings = local.global_settings
-  settings        = each.value
-  namespace_name  = module.event_hub_namespaces[each.value.event_hub_namespace_key].name
-  eventhub_name   = module.event_hubs[each.value.event_hub_name_key].name
-  resource_group  = local.combined_objects_resource_groups[try(each.value.lz_key, local.client_config.landingzone_key)][try(each.value.resource_group_key, each.value.resource_group.key)]
+  client_config       = local.client_config
+  global_settings     = local.global_settings
+  settings            = each.value
+  namespace_name      = module.event_hub_namespaces[each.value.event_hub_namespace_key].name
+  eventhub_name       = module.event_hubs[each.value.event_hub_name_key].name
+  resource_group_name = local.combined_objects_resource_groups[try(each.value.lz_key, local.client_config.landingzone_key)][try(each.value.resource_group_key, each.value.resource_group.key)].name
 
 
   depends_on = [

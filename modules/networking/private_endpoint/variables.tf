@@ -51,6 +51,5 @@ variable "private_dns" {
   default = {}
 }
 variable "tags" {
-  type    = any
   default = {}
 }

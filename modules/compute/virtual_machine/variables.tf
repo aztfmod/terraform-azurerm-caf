@@ -6,6 +6,12 @@ variable "client_config" {
   type        = any
   description = "Client configuration object (see module README.md)."
 }
+
+# variable "location" {
+#   description = "(Required) Specifies the supported Azure location where to create the resource. Changing this forces a new resource to be created."
+#   type        = string
+# }
+
 variable "resource_group" {
   type        = any
   description = "Resource group object to deploy the virtual machine"
@@ -108,4 +114,10 @@ variable "network_security_groups" {
 variable "dedicated_hosts" {
   type    = any
   default = {}
+}
+
+variable "virtual_subnets" {
+  description = "Map of virtual_subnets objects"
+  default     = {}
+  nullable    = false
 }

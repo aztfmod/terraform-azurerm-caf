@@ -12,7 +12,7 @@ variable "location" {
 }
 variable "resource_group_name" {
   type        = string
-  description = "Name of the existing resource group to deploy the virtual machine"
+  description = "Resource group object to deploy the virtual machine"
   default     = null
 }
 variable "resource_group" {

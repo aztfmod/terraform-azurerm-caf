@@ -1,9 +1,3 @@
-variable "resource_group_name" {
-  type        = string
-  description = "Resource group object to deploy the virtual machine"
-  default     = null
-}
-
 variable "tags" {
   type        = any
   description = "(Required) Map of tags to be applied to the resource"
@@ -53,6 +47,11 @@ variable "location" {
   description = "location of the resource if different from the resource group."
   default     = null
 }
+variable "resource_group_name" {
+  type        = string
+  description = "Resource group object to deploy the virtual machine"
+  default     = null
+}
 variable "resource_group" {
   description = "Resource group object to deploy the virtual machine"
 }
@@ -68,4 +67,7 @@ variable "redis_firewall_rules" {
   }))
   default     = null
   description = "Map of firewall rules to associate with redis cache"
+}
+variable "managed_identities" {
+  default = {}
 }

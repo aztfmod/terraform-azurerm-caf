@@ -12,17 +12,16 @@ variable "client_config" {
 variable "diagnostics" {
   type = any
 }
-variable "resource_group_name" {
-  description = "(Required) The name of the resource group where to create the resource."
-  type        = string
-  default     = null
-}
 variable "location" {
   description = "(Required) Resource Location"
   default     = null
 }
+variable "resource_group_name" {
+  type        = string
+  description = "Resource group object to deploy the virtual machine"
+  default     = null
+}
 variable "resource_group" {
-  type        = any
   description = "Resource group object to deploy the virtual machine"
 }
 variable "public_ip_addresses" {

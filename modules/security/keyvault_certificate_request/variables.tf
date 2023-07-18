@@ -24,3 +24,4 @@ variable "tags" {
 variable "inherit_tags" {
   type = bool
 }
+variable "cert_secret_name" {}

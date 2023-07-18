@@ -59,7 +59,7 @@ mssql_managed_instances = {
     }
     administratorLogin = "adminuser"
     # administratorLoginPassword = "@dm1nu53r@30102020"
-    # if password not set, a random complex passwor will be created and stored in the keyvault
+    # if password not set, a random complex password will be created and stored in the keyvault
     # the secret value can be changed after the deployment if needed
 
     //networking
@@ -70,7 +70,7 @@ mssql_managed_instances = {
     keyvault_key = "sqlmi_rg1"
 
     storageSizeInGB = 32
-    vCores          = 4
+    vCores          = 8
   }
 }
 
@@ -79,6 +79,24 @@ mssql_managed_databases = {
     resource_group_key = "sqlmi_region1"
     name               = "lz-sql-managed-db1"
     mi_server_key      = "sqlmi1"
+  }
+  managed_db2 = {
+    resource_group_key = "sqlmi_region1"
+    name               = "lz-sql-managed-db2"
+    mi_server_key      = "sqlmi1"
+  }
+}
+
+mssql_managed_databases_backup_ltr = {
+  sqlmi1 = {
+    resource_group_key = "sqlmi_region1"
+    mi_server_key      = "sqlmi1"
+    database_key       = "managed_db1"
+
+    weeklyRetention  = "P12W"
+    monthlyRetention = "P12M"
+    yearlyRetention  = "P5Y"
+    weekOfYear       = 16
   }
 }
 

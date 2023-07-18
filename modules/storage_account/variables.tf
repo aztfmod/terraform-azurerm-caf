@@ -36,10 +36,6 @@ variable "private_endpoints" {
   type    = any
   default = {}
 }
-variable "resource_groups" {
-  type    = any
-  default = {}
-}
 variable "recovery_vaults" {
   type    = any
   default = {}
@@ -70,6 +66,22 @@ variable "diagnostic_profiles_file" {
   default = {}
 }
 
+variable "diagnostic_profiles_blob" {
+  default = {}
+}
+
+variable "diagnostic_profiles_queue" {
+  default = {}
+}
+
+variable "diagnostic_profiles_table" {
+  default = {}
+}
+
+variable "diagnostic_profiles_file" {
+  default = {}
+}
+
 variable "diagnostics" {
   type    = any
   default = {}
@@ -80,6 +92,10 @@ variable "managed_identities" {
   default = {}
 }
 
-variable "var_folder_path" {
-  type = string
+variable "var_folder_path" {}
+
+variable "virtual_subnets" {
+  description = "Map of virtual_subnets objects"
+  default     = {}
+  nullable    = false
 }

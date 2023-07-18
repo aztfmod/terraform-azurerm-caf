@@ -12,6 +12,8 @@ locals {
   }
 
   azuread = {
+    azuread_administrative_unit_members = try(var.azuread.azuread_administrative_unit_members, {})
+    azuread_administrative_units        = try(var.azuread.azuread_administrative_units, {})
     azuread_api_permissions             = try(var.azuread.azuread_api_permissions, {})
     azuread_applications                = try(var.azuread.azuread_applications, {})
     azuread_apps                        = try(var.azuread.azuread_apps, {})
@@ -111,6 +113,8 @@ locals {
     azurerm_redis_caches               = try(var.database.azurerm_redis_caches, {})
     cosmos_dbs                         = try(var.database.cosmos_dbs, {})
     cosmosdb_sql_databases             = try(var.database.cosmosdb_sql_databases, {})
+    cosmosdb_role_definitions          = try(var.database.cosmosdb_role_definitions, {})
+    cosmosdb_role_mapping              = try(var.database.cosmosdb_role_mapping, {})
     database_migration_services        = try(var.database.database_migration_services, {})
     database_migration_projects        = try(var.database.database_migration_projects, {})
     databricks_workspaces              = try(var.database.databricks_workspaces, {})
@@ -295,6 +299,7 @@ locals {
     network_interface_backend_address_pool_association      = try(var.networking.network_interface_backend_address_pool_association, {})
     network_profiles                                        = try(var.networking.network_profiles, {})
     network_security_group_definition                       = try(var.networking.network_security_group_definition, {})
+    network_security_security_rules                         = try(var.networking.network_security_security_rules, {})
     network_watchers                                        = try(var.networking.network_watchers, {})
     private_dns                                             = try(var.networking.private_dns, {})
     private_dns_records                                     = try(var.networking.private_dns_records, {})
@@ -406,6 +411,7 @@ locals {
     active_directory_domain_service             = try(var.identity.active_directory_domain_service, {})
     active_directory_domain_service_replica_set = try(var.identity.active_directory_domain_service_replica_set, {})
   }
+
   apim = {
     api_management                      = try(var.apim.api_management, {})
     api_management_api                  = try(var.apim.api_management_api, {})
@@ -431,5 +437,15 @@ locals {
     digital_twins_endpoint_eventhubs    = try(var.iot.digital_twins_endpoint_eventhubs, {})
     digital_twins_endpoint_eventgrids   = try(var.iot.digital_twins_endpoint_eventgrids, {})
     digital_twins_endpoint_servicebuses = try(var.iot.digital_twins_endpoint_servicebuses, {})
+    iot_hub                             = try(var.iot.iot_hub, {})
+    iot_hub_consumer_groups             = try(var.iot.iot_hub_consumer_groups, {})
+    iot_hub_certificate                 = try(var.iot.iot_hub_certificate, {})
+    iot_hub_shared_access_policy        = try(var.iot.iot_hub_shared_access_policy, {})
+    iot_hub_dps                         = try(var.iot.iot_hub_dps, {})
+    iot_dps_certificate                 = try(var.iot.iot_dps_certificate, {})
+    iot_dps_shared_access_policy        = try(var.iot.iot_dps_shared_access_policy, {})
+    iot_security_solution               = try(var.iot.iot_security_solution, {})
+    iot_security_device_group           = try(var.iot.iot_security_device_group, {})
+    iot_central_application             = try(var.iot.iot_central_application, {})
   }
 }

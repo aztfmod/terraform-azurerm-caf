@@ -18,8 +18,9 @@ resource "azurerm_lb" "lb" {
   dynamic "frontend_ip_configuration" {
     for_each = try(var.settings.frontend_ip_configurations, null) != null ? var.settings.frontend_ip_configurations : []
     content {
-      name  = try(frontend_ip_configuration.value.name, null)
-      zones = try(frontend_ip_configuration.value.zones, null)
+      name = try(frontend_ip_configuration.value.name, null)
+      # TODO: availability_zone kept for smooth migration to 3.0
+      zones = can(frontend_ip_configuration.value.zones) ? frontend_ip_configuration.value.zones : try(frontend_ip_configuration.value.availability_zone, null)
       # if frontend_ip_configuration.value.subnet.id is defined and not null, use it.  Otherwise lookup subnet from remote_objects
       subnet_id                                          = try(frontend_ip_configuration.value.subnet.id, null) == null ? var.remote_objects.virtual_network[try(frontend_ip_configuration.value.subnet.lz_key, var.client_config.landingzone_key)][frontend_ip_configuration.value.subnet.vnet_key].subnets[frontend_ip_configuration.value.subnet.key].id : try(frontend_ip_configuration.value.subnet.id, null)
       gateway_load_balancer_frontend_ip_configuration_id = try(frontend_ip_configuration.value.gateway_load_balancer_frontend_ip_configuration_id, null)
@@ -31,7 +32,6 @@ resource "azurerm_lb" "lb" {
       public_ip_prefix_id  = try(frontend_ip_configuration.value.public_ip_prefix_id, null)
     }
   }
-
   sku      = try(var.settings.sku, null)
   sku_tier = try(var.settings.sku_tier, null)
   tags     = local.tags

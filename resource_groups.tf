@@ -10,7 +10,6 @@ module "resource_groups" {
   settings            = each.value
   global_settings     = local.global_settings
   tags                = merge(lookup(each.value, "tags", {}), var.tags)
-  base_tags           = local.global_settings.inherit_tags
 }
 
 

@@ -65,10 +65,6 @@ variable "private_endpoints" {
   default = {}
 }
 
-variable "resource_groups" {
-  type    = any
-  default = {}
-}
 variable "private_dns" {
   type    = any
   default = {}

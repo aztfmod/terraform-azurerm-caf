@@ -168,7 +168,7 @@
   "resources": [
     {
       "type": "Microsoft.MachineLearningServices/workspaces/computes",
-      "apiVersion": "2020-08-01",
+      "apiVersion": "2022-10-01",
       "name": "[concat(parameters('workspaceName'), '/', parameters('computeInstanceName'))]",
       "location": "[parameters('location')]",
       "tags": "[parameters('tags')]",

@@ -14,7 +14,7 @@ resource "azurerm_network_security_group" "nsg" {
   location            = local.location
   tags                = merge(local.tags, try(var.settings.tags, {}))
 
-  security_rule = can(var.settings.nsg) == false ? [] : [
+  security_rule = can(var.settings.nsg) == false ? null : [
     for key, value in local.security_rules : value
   ]
 }

@@ -24,3 +24,6 @@ variable "sourceDatabaseId" {
   type    = string
   default = ""
 }
+variable "resource_group_id" {
+  type = string
+}

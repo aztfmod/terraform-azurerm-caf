@@ -118,11 +118,15 @@ resource "azurerm_application_gateway" "agw" {
     for_each = local.listeners
 
     content {
-      name                       = "${try(local.request_routing_rules[format("%s-%s", request_routing_rule.value.app_key, request_routing_rule.value.request_routing_rule_key)].rule.prefix, "")}${request_routing_rule.value.name}"
-      rule_type                  = try(local.request_routing_rules[format("%s-%s", request_routing_rule.value.app_key, request_routing_rule.value.request_routing_rule_key)].rule.rule_type, "Basic")
-      http_listener_name         = request_routing_rule.value.name
-      backend_http_settings_name = try(local.backend_http_settings[request_routing_rule.value.app_key].name, null)
-      backend_address_pool_name  = try(local.backend_pools[request_routing_rule.value.app_key].name, null)
+      name               = "${try(local.request_routing_rules[format("%s-%s", request_routing_rule.value.app_key, request_routing_rule.value.request_routing_rule_key)].rule.prefix, "")}${request_routing_rule.value.name}"
+      rule_type          = try(local.request_routing_rules[format("%s-%s", request_routing_rule.value.app_key, request_routing_rule.value.request_routing_rule_key)].rule.rule_type, "Basic")
+      http_listener_name = request_routing_rule.value.name
+
+      # backend_http_settings_name and backend_address_pool_name are mutually exclusive with redirect_configuration_name
+      backend_http_settings_name  = try(local.request_routing_rules[format("%s-%s", request_routing_rule.value.app_key, request_routing_rule.value.request_routing_rule_key)].rule.redirect_configuration_name, null) == null ? local.backend_http_settings[request_routing_rule.value.app_key].name : null
+      backend_address_pool_name   = try(local.request_routing_rules[format("%s-%s", request_routing_rule.value.app_key, request_routing_rule.value.request_routing_rule_key)].rule.redirect_configuration_name, null) == null ? local.backend_pools[request_routing_rule.value.app_key].name : null
+      redirect_configuration_name = try(local.request_routing_rules[format("%s-%s", request_routing_rule.value.app_key, request_routing_rule.value.request_routing_rule_key)].rule.redirect_configuration_name, null)
+
       url_path_map_name = try(
         local.request_routing_rules[format("%s-%s", request_routing_rule.value.app_key, request_routing_rule.value.request_routing_rule_key)].rule.url_path_map_name,
         try(
@@ -130,9 +134,8 @@ resource "azurerm_application_gateway" "agw" {
           null
         )
       )
-      rewrite_rule_set_name       = try(local.rewrite_rule_sets[format("%s-%s", request_routing_rule.value.app_key, local.request_routing_rules[format("%s-%s", request_routing_rule.value.app_key, request_routing_rule.value.request_routing_rule_key)].rule.rewrite_rule_set_key)].name, null)
-      redirect_configuration_name = try(local.redirect_configurations[format("%s-%s", request_routing_rule.value.app_key, local.request_routing_rules[format("%s-%s", request_routing_rule.value.app_key, request_routing_rule.value.request_routing_rule_key)].rule.redirect_configuration_key)].name, null)
-      priority                    = try(local.request_routing_rules[format("%s-%s", request_routing_rule.value.app_key, request_routing_rule.value.request_routing_rule_key)].rule.priority, null)
+      rewrite_rule_set_name = try(local.rewrite_rule_sets[format("%s-%s", request_routing_rule.value.app_key, local.request_routing_rules[format("%s-%s", request_routing_rule.value.app_key, request_routing_rule.value.request_routing_rule_key)].rule.rewrite_rule_set_key)].name, null)
+      priority              = try(local.request_routing_rules[format("%s-%s", request_routing_rule.value.app_key, request_routing_rule.value.request_routing_rule_key)].rule.priority, null)
     }
   }
 
@@ -321,6 +324,19 @@ resource "azurerm_application_gateway" "agw" {
   }
 
   # custom_error_configuration {}
+
+  dynamic "redirect_configuration" {
+    for_each = try(var.settings.redirect_configurations, {})
+
+    content {
+      name                 = redirect_configuration.value.name
+      redirect_type        = redirect_configuration.value.redirect_type
+      target_listener_name = try(redirect_configuration.value.target_listener_name, null)
+      target_url           = try(redirect_configuration.value.target_url, null)
+      include_path         = try(redirect_configuration.value.include_path, false)
+      include_query_string = try(redirect_configuration.value.include_query_string, false)
+    }
+  }
 
   # autoscale_configuration {}
 

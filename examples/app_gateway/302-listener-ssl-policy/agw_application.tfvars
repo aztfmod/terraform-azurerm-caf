@@ -92,14 +92,18 @@ application_gateway_applications_v1 = {
 
     url_path_rules = {
       rule1 = {
-        name             = "rule1-demo"
-        url_path_map_key = "demo"
-        paths            = "/test/rule1/*"
+        name              = "rule1-demo"
+        url_path_map_key  = "demo"
+        paths             = "/test/rule1/*"
+        backend_pool_key  = "demo"
+        http_settings_key = "demo"
       }
       rule2 = {
-        name             = "rule2-demo"
-        url_path_map_key = "demo"
-        paths            = "/test/rule2/*"
+        name              = "rule2-demo"
+        url_path_map_key  = "demo"
+        paths             = "/test/rule2/*"
+        backend_pool_key  = "demo"
+        http_settings_key = "demo"
       }
     }
 

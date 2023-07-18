@@ -16,4 +16,8 @@ resource "azurerm_private_dns_resolver" "pvt_dns_resolver" {
   virtual_network_id  = var.virtual_network_id
   location            = local.location
   tags                = merge(local.tags, try(var.settings.tags, null))
+
+  lifecycle {
+    ignore_changes = [name]
+  }
 }

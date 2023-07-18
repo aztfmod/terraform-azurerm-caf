@@ -14,3 +14,7 @@ variable "client_config" {
   type        = any
   description = "Client configuration object (see module README.md)."
 }
+variable "remote_objects" {
+  description = "(Required) Specifies the supported Azure location where to create the resource. Changing this forces a new resource to be created."
+  default     = {}
+}

@@ -3,16 +3,14 @@ variable "global_settings" {
   description = "Global settings object (see module README.md)"
 }
 variable "log_analytics" {
-  type        = any
+  type        = string
   description = "Log analytics configuration object"
 }
 variable "location" {
-  type        = string
   description = "location of the resource if different from the resource group."
   default     = null
 }
 variable "resource_group_name" {
-  type        = string
   description = "Resource group object to deploy the virtual machine"
   default     = null
 }

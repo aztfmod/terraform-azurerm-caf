@@ -30,3 +30,5 @@ variable "client_config" {
 variable "public_ip_addresses" {
   type = any
 }
+
+variable "remote_objects" {}

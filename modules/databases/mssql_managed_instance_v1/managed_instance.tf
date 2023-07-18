@@ -14,19 +14,20 @@ resource "azurerm_mssql_managed_instance" "mssqlmi" {
   collation                      = try(var.settings.collation, null)
   dns_zone_partner_id            = can(var.primary_server_id != null) ? var.primary_server_id : null
   license_type                   = try(module.var_settings.license_type, "BasePrice")
-  location                       = var.location
+  location                       = local.location
   maintenance_configuration_name = try(var.settings.maintenance_configuration_name, null)
   minimum_tls_version            = try(var.settings.minimal_tls_version, null)
   name                           = data.azurecaf_name.mssqlmi.result
   public_data_endpoint_enabled   = try(var.settings.public_data_endpoint_enabled, null)
   proxy_override                 = try(module.var_settings.proxy_override, null)
-  resource_group_name            = var.resource_group_name
-  sku_name                       = local.sku.name
+  resource_group_name            = local.resource_group_name
+  sku_name                       = module.var_settings.sku_name
   storage_account_type           = var.settings.backup_storage_redundancy
   storage_size_in_gb             = try(var.settings.storage_size_in_gb, null)
   subnet_id                      = var.subnet_id
+  tags                           = local.tags
   timezone_id                    = try(var.settings.timezone_id, "UTC")
-  vcores                         = try(module.var_settings.vcores, "BasePrice")
+  vcores                         = module.var_settings.vcores
 
   dynamic "identity" {
     for_each = can(var.settings.identity) ? [1] : []
@@ -52,27 +53,14 @@ module "var_settings" {
   source = "./var/settings"
 
   vcores                    = try(var.settings.vcores, null)
-  sku                       = try(var.settings.sku, null)
+  sku_name                  = try(var.settings.sku.name, null)
   minimal_tls_version       = try(var.settings.minimal_tls_version, null)
   backup_storage_redundancy = try(var.settings.backup_storage_redundancy, null)
   storage_size_in_gb        = try(var.settings.storage_size_in_gb, null)
   license_type              = try(var.settings.license_type, null)
   proxy_override            = try(var.settings.proxy_override, null)
-  # administrators            = try(var.settings.administrators, null)
-  authentication_mode = try(var.settings.authentication_mode, null)
-  identity            = try(var.settings.identity, null)
-}
-
-locals {
-  sku = {
-    name = module.var_sku.name
-  }
-}
-
-module "var_sku" {
-  source = "./var/sku"
-
-  name = module.var_settings.sku.name
+  authentication_mode       = try(var.settings.authentication_mode, null)
+  identity                  = try(var.settings.identity, null)
 }
 
 module "var_identity" {
@@ -108,7 +96,7 @@ resource "azurerm_key_vault_secret" "sqlmi_admin_password" {
   name         = format("%s-password", azurerm_mssql_managed_instance.mssqlmi.name)
   value        = random_password.sqlmi_admin.0.result
   key_vault_id = var.keyvault.id
-  # tags         = local.tags
+  tags         = local.tags
 
   lifecycle {
     replace_triggered_by = [

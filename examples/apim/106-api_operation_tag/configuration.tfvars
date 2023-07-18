@@ -68,11 +68,18 @@ api_management_api_operation = {
     url_template = "/wishlists"
     description  = "Get WishList"
     request = {
-      query_parameter = {
-        name     = "test"
-        required = false
-        type     = "string"
-        values   = ["true", "false"]
+      headers = {
+        header1 = {
+          name     = "test"
+          required = false
+          type     = "string"
+          values   = ["true", "false"]
+          examples = {
+            ex1 = {
+              name = "name"
+            }
+          }
+        }
       }
     }
   }

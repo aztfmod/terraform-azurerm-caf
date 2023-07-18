@@ -15,6 +15,14 @@ resource "azuread_application" "app" {
   prevent_duplicate_names        = try(var.settings.prevent_duplicate_names, false)
   fallback_public_client_enabled = try(var.settings.public_client, false)
 
+  dynamic "single_page_application" {
+    for_each = try(var.settings.single_page_application, null) != null ? [1] : []
+
+    content {
+      redirect_uris = try(var.settings.single_page_application.redirect_uris, [])
+    }
+  }
+
   dynamic "api" {
     for_each = try(var.settings.api, null) != null ? [1] : []
 
@@ -97,7 +105,7 @@ resource "azuread_application" "app" {
 
         content {
           access_token_issuance_enabled = can(var.settings.oauth2_allow_implicit_flow) || can(implicit_grant.value.access_token_issuance_enabled) ? try(var.settings.oauth2_allow_implicit_flow, implicit_grant.value.access_token_issuance_enabled) : null
-          id_token_issuance_enabled     = try(implicit_grant.value.access_token_issuance_enabled, null)
+          id_token_issuance_enabled     = try(implicit_grant.value.id_token_issuance_enabled, null)
         }
       }
     }

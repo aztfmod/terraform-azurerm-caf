@@ -1,21 +1,9 @@
-
-variable "diagnostics" {
-  type = any
-}
-variable "client_config" {
-  type = any
-}
-variable "global_settings" {
-  type = any
-}
-variable "settings" {
-  type = any
-}
-variable "gallery_name" {
-  type = any
-}
+variable "diagnostics" {}
+variable "client_config" {}
+variable "global_settings" {}
+variable "settings" {}
+variable "gallery_name" {}
 variable "resource_group" {
-  type        = any
   description = "Resource group object"
 }
 variable "base_tags" {

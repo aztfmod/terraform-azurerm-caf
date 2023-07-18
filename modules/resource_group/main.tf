@@ -14,7 +14,6 @@ terraform {
 }
 
 locals {
-
   tags = var.base_tags ? merge(
     var.global_settings.tags,
     try(var.tags, null)
@@ -22,6 +21,4 @@ locals {
     try(var.tags,
     null)
   )
-
-
 }

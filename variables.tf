@@ -458,10 +458,12 @@ variable "apim" {
   type    = any
   default = {}
 }
+
 variable "purview" {
   type    = any
   default = {}
 }
+
 variable "sentinel_watchlists" {
   type    = any
   default = {}
@@ -483,6 +485,13 @@ variable "resource_provider_registration" {
 }
 variable "aadb2c" {
   type        = any
+  description = "Configuration object - AAD B2C resources"
+  default     = {}
+}
+variable "preview_features" {
+  default = {}
+}
+variable "aadb2c" {
   description = "Configuration object - AAD B2C resources"
   default     = {}
 }

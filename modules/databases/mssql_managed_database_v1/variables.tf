@@ -10,6 +10,7 @@ variable "settings" {
         for k in keys(var.settings) : contains(
           [
             "long_term_retention_policy",
+            "lz_key",
             "name",
             "short_term_retention_days",
             "version",
@@ -23,6 +24,7 @@ variable "settings" {
         keys(var.settings),
         [
           "long_term_retention_policy",
+          "lz_key",
           "name",
           "short_term_retention_days",
           "version",

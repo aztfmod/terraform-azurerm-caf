@@ -29,17 +29,34 @@ resource "azurerm_virtual_network_gateway" "vngw" {
 
   #Create multiple IPs only if active-active mode is enabled.
   dynamic "ip_configuration" {
-    for_each = try(var.settings.ip_configuration, {})
+    for_each = {
+      for key, value in try(var.settings.ip_configuration, {}) : key => value
+      if can(value.subnet_id) || can(value.vnet_key)
+    }
+
     content {
       name                          = ip_configuration.value.ipconfig_name
       public_ip_address_id          = can(ip_configuration.value.public_ip_address_id) || can(ip_configuration.value.public_ip_address_key) == false ? try(ip_configuration.value.public_ip_address_id, null) : var.public_ip_addresses[try(ip_configuration.value.lz_key, var.client_config.landingzone_key)][ip_configuration.value.public_ip_address_key].id
       private_ip_address_allocation = ip_configuration.value.private_ip_address_allocation
-      subnet_id                     = can(ip_configuration.value.subnet_id) ? ip_configuration.value.subnet_id : var.vnets[try(ip_configuration.value.lz_key, var.client_config.landingzone_key)][ip_configuration.value.vnet_key].subnets["GatewaySubnet"].id
+      subnet_id                     = can(ip_configuration.value.subnet_id) ? ip_configuration.value.subnet_id : var.remote_objects.vnets[try(ip_configuration.value.lz_key, var.client_config.landingzone_key)][ip_configuration.value.vnet_key].subnets["GatewaySubnet"].id
+    }
+  }
+  dynamic "ip_configuration" {
+    for_each = {
+      for key, value in try(var.settings.ip_configuration, {}) : key => value
+      if can(value.subnet_key)
+    }
+
+    content {
+      name                          = ip_configuration.value.ipconfig_name
+      public_ip_address_id          = can(ip_configuration.value.public_ip_address_id) || can(ip_configuration.value.public_ip_address_key) == false ? try(ip_configuration.value.public_ip_address_id, null) : var.public_ip_addresses[try(ip_configuration.value.lz_key, var.client_config.landingzone_key)][ip_configuration.value.public_ip_address_key].id
+      private_ip_address_allocation = ip_configuration.value.private_ip_address_allocation
+      subnet_id                     = var.remote_objects.virtual_subnets[try(ip_configuration.value.lz_key, var.client_config.landingzone_key)][ip_configuration.value.subnet_key].id
     }
   }
 
   dynamic "vpn_client_configuration" {
-    for_each = try(var.settings.vpn_client_configuration, {})
+    for_each = can(var.settings.vpn_client_configuration) ? [var.settings.vpn_client_configuration[keys(var.settings.vpn_client_configuration)[0]]] : []
     content {
       address_space        = vpn_client_configuration.value.address_space
       vpn_auth_types       = try(vpn_client_configuration.value.vpn_auth_types, null)
@@ -53,18 +70,44 @@ resource "azurerm_virtual_network_gateway" "vngw" {
       radius_server_secret  = try(vpn_client_configuration.value.radius_server_secret, null)
 
       dynamic "root_certificate" {
-        for_each = try(vpn_client_configuration.value.root_certificate, {})
+        for_each = can(vpn_client_configuration.value.root_certificate) ? [1] : []
+
         content {
           name             = vpn_client_configuration.value.root_certificate.name
           public_cert_data = vpn_client_configuration.value.root_certificate.public_cert_data
         }
       }
       dynamic "root_certificate" {
-        for_each = try(vpn_client_configuration.value.root_certificates, {})
+        for_each = {
+          for key, value in try(vpn_client_configuration.value.root_certificates, {}) : key => value
+          if can(value.public_cert_data)
+        }
 
         content {
           name             = root_certificate.value.name
           public_cert_data = root_certificate.value.public_cert_data
+        }
+      }
+      dynamic "root_certificate" {
+        for_each = {
+          for key, value in try(vpn_client_configuration.value.root_certificates, {}) : key => value
+          if can(value.public_cert_data_file)
+        }
+
+        content {
+          name             = root_certificate.value.name
+          public_cert_data = file(root_certificate.value.public_cert_data_file)
+        }
+      }
+      dynamic "root_certificate" {
+        for_each = {
+          for key, value in try(vpn_client_configuration.value.root_certificates, {}) : key => value
+          if can(value.public_cert_data_from_env_var_name)
+        }
+
+        content {
+          name             = root_certificate.value.name
+          public_cert_data = data.azurecaf_environment_variable.name[root_certificate.key].value
         }
       }
       dynamic "revoked_certificate" {
@@ -114,4 +157,14 @@ resource "azurerm_virtual_network_gateway" "vngw" {
     delete = "60m"
   }
 
+}
+
+data "azurecaf_environment_variable" "name" {
+  for_each = {
+    for key, value in try(var.settings.vpn_client_configuration[keys(var.settings.vpn_client_configuration)[0]].root_certificates, {}) : key => value
+    if can(value.public_cert_data_from_env_var_name)
+  }
+
+  name           = each.value.public_cert_data_from_env_var_name
+  fails_if_empty = try(each.value.fails_if_empty, null)
 }

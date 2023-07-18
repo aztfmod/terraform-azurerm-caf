@@ -212,6 +212,6 @@ resource "azurerm_api_management" "apim" {
 
     }
   }
-  tags = local.tags
+  tags = merge(local.tags, try(var.settings.tags, {}))
 
 }

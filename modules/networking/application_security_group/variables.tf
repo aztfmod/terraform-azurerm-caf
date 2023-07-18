@@ -9,12 +9,13 @@ variable "location" {
   description = "(Optional) Resource Location"
   default     = null
 }
-variable "settings" {
-  type = any
+variable "location" {
+  description = "(Optional) Resource Location"
+  default     = null
 }
-variable "global_settings" {
-  type        = any
-  description = "Global settings object (see module README.md)"
+variable "resource_group_name" {
+  description = "Resource group object to deploy the virtual machine"
+  default     = null
 }
 variable "resource_group" {
   type        = any
@@ -23,4 +24,11 @@ variable "resource_group" {
 variable "base_tags" {
   description = "Enable tags inheritence."
   type        = bool
+}
+variable "settings" {
+  type = any
+}
+variable "global_settings" {
+  type        = any
+  description = "Global settings object (see module README.md)"
 }

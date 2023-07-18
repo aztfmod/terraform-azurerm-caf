@@ -89,21 +89,9 @@ variable "diagnostics" {
   default = null
 }
 
-variable "vnets" {
-  type = any
-}
-variable "subnet_id" {
-  type = string
-}
-variable "private_endpoints" {
-  type = any
-}
-variable "private_dns" {
-  type = any
-}
-variable "azuread_applications" {
-  type = any
-}
-variable "azuread_service_principal_passwords" {
-  type = any
-}
+variable "vnets" {}
+variable "subnet_id" {}
+variable "private_endpoints" {}
+variable "private_dns" {}
+variable "azuread_applications" {}
+variable "azuread_service_principal_passwords" {}

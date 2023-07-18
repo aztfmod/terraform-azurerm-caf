@@ -51,5 +51,4 @@ resource "azurerm_app_service_virtual_network_swift_connection" "vnet_config" {
   app_service_id = azurerm_logic_app_standard.logic_app_standard.id
   subnet_id = can(var.vnet_integration.subnet_id) ? var.vnet_integration.subnet_id : try(var.vnets[try(var.vnet_integration.lz_key, var.client_config.landingzone_key)][var.vnet_integration.vnet_key].subnets[var.vnet_integration.subnet_key].id,
   try(var.virtual_subnets[var.client_config.landingzone_key][var.vnet_integration.subnet_key].id, var.virtual_subnets[var.vnet_integration.lz_key][var.vnet_integration.subnet_key].id))
-
 }

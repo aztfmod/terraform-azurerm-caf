@@ -18,7 +18,10 @@ on:
         type: choice
         default: 'standalone-scenarios.json'
         options:
+        - standalone-scenarios-azuread.json
         - standalone-scenarios.json
+        - standalone-compute.json
+        - standalone-networking.json
         - standalone-scenarios-longrunners.json
 
 env:
@@ -55,7 +58,7 @@ jobs:
       matrix: ${{fromJSON(needs.load_scenarios.outputs.matrix)}}
 
     container:
-      image: aztfmod/rover-preview:1.4.4-2304.041231
+      image: aztfmod/rover:1.4.6-2305.1807
       options: --user 0
 
     steps:
@@ -175,7 +178,7 @@ jobs:
     needs: [testcases]
 
     container:
-      image: aztfmod/rover-preview:1.4.4-2304.041231
+      image: aztfmod/rover:1.4.6-2305.1807
       options: --user 0
 
     steps:

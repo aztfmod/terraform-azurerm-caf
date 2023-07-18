@@ -5,9 +5,9 @@ variable "global_settings" {
 variable "settings" {
   type = any
 }
-variable "resource_group" {
-  type        = any
-  description = "Resource group objects."
+variable "resource_group_name" {
+  type        = string
+  description = "Resource group name."
 }
 variable "client_config" {
   type = any

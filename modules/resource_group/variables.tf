@@ -3,8 +3,10 @@ variable "global_settings" {
   description = "Global settings object (see module README.md)"
 }
 variable "tags" {
-  type        = any
   description = "(Required) Map of tags to be applied to the resource"
+  type        = map(any)
+  default     = {}
+  nullable    = false
 }
 variable "settings" {
   type = any
@@ -12,8 +14,4 @@ variable "settings" {
 variable "resource_group_name" {
   type        = string
   description = "(Required) The name of the resource group where to create the resource."
-}
-variable "base_tags" {
-  description = "Base tags for the resource to be inherited from the resource group."
-  type        = bool
 }

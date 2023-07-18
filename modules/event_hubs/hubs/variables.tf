@@ -8,13 +8,12 @@ variable "client_config" {
   type = any
 }
 variable "resource_group_name" {
-  type        = string
   description = "Resource group name."
   default     = null
 }
 variable "namespace_name" {
-  type        = any
   description = "Name of the Event Hub Namespace."
+  type        = string
 }
 variable "storage_account_id" {
   type        = string

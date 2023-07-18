@@ -139,13 +139,6 @@ module "public_ip_addresses" {
   sku                        = try(each.value.sku, "Basic")
   sku_tier                   = try(each.value.sku_tier, null)
   tags                       = try(each.value.tags, null)
-  # zones = coalesce(
-  #   try(each.value.availability_zone, ""),
-  #   try(tostring(each.value.zones[0]), ""),
-  #   # certain regions do not support "Zone-Redundant" public ips
-  #   "northcentralus" == (can(local.global_settings.regions[each.value.region]) ? local.global_settings.regions[each.value.region] : local.combined_objects_resource_groups[try(each.value.resource_group.lz_key, local.client_config.landingzone_key)][try(each.value.resource_group.key, each.value.resource_group_key)].location) ? "No-Zone" : "",
-  #   try(each.value.sku, "Basic") == "Basic" ? "No-Zone" : "Zone-Redundant"
-  # )
   # Zone behavior kept to support smooth migration to azurerm 3.x
   zones = try(each.value.sku, "Basic") == "Basic" ? [] : try(each.value.zones, null) == null ? ["1", "2", "3"] : each.value.zones
 

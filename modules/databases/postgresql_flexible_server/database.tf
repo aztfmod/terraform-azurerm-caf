@@ -6,7 +6,7 @@ resource "azurecaf_name" "postgresql_flexible_server_database" {
   prefixes      = var.global_settings.prefixes
   random_length = var.global_settings.random_length
   clean_input   = true
-  passthrough   = var.global_settings.passthrough
+  passthrough   = try(each.value.passthrough, false) ? true : var.global_settings.passthrough
   use_slug      = var.global_settings.use_slug
 }
 

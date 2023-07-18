@@ -102,7 +102,6 @@ locals {
   }
 
   services_roles = {
-    automations                                = local.combined_objects_automations
     aks_clusters                               = local.combined_objects_aks_clusters
     aks_ingress_application_gateway_identities = local.aks_ingress_application_gateway_identities
     api_management                             = local.combined_objects_api_management
@@ -113,6 +112,7 @@ locals {
     app_services                               = local.combined_objects_app_services
     application_gateway_platforms              = local.combined_objects_application_gateway_platforms
     application_gateways                       = local.combined_objects_application_gateways
+    automations                                = local.combined_objects_automations
     availability_sets                          = local.combined_objects_availability_sets
     azure_container_registries                 = local.combined_objects_azure_container_registries
     azuread_applications                       = local.combined_objects_azuread_applications
@@ -126,10 +126,13 @@ locals {
     data_factory                               = local.combined_objects_data_factory
     databricks_workspaces                      = local.combined_objects_databricks_workspaces
     dns_zones                                  = local.combined_objects_dns_zones
-    function_apps                              = local.combined_objects_function_apps
     event_hub_namespaces                       = local.combined_objects_event_hub_namespaces
+    function_apps                              = local.combined_objects_function_apps
+    iot_hub                                    = local.combined_objects_iot_hub
+    iot_hub_dps                                = local.combined_objects_iot_hub_dps
     keyvaults                                  = local.combined_objects_keyvaults
     kusto_clusters                             = local.combined_objects_kusto_clusters
+    log_analytics                              = local.current_objects_log_analytics
     logged_in                                  = local.logged_in
     machine_learning_compute_instance          = module.machine_learning_compute_instance
     machine_learning_workspaces                = local.combined_objects_machine_learning
@@ -150,6 +153,8 @@ locals {
     purview_accounts                           = local.combined_objects_purview_accounts
     recovery_vaults                            = local.combined_objects_recovery_vaults
     resource_groups                            = local.combined_objects_resource_groups
+    route_tables                               = local.combined_objects_route_tables
+    servicebus_namespaces                      = local.combined_objects_servicebus_namespaces
     storage_accounts                           = local.combined_objects_storage_accounts
     subscriptions                              = local.combined_objects_subscriptions
     synapse_workspaces                         = local.combined_objects_synapse_workspaces

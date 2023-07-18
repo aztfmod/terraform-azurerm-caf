@@ -9,16 +9,13 @@ variable "base_tags" {
   description = "Base tags for the resource to be inherited from the resource group."
   type        = bool
 }
-variable "subnet_id" {
-  type = string
-}
+variable "subnet_id" {}
 variable "location" {
   type        = string
   description = "(Required) Resource Location"
   default     = null
 }
 variable "resource_group_name" {
-  type        = string
   description = "Resource group object to deploy the virtual machine"
   default     = null
 }

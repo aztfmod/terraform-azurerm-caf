@@ -1,15 +1,7 @@
-variable "diagnostics" {
-  type = any
-}
-variable "client_config" {
-  type = any
-}
-variable "global_settings" {
-  type = any
-}
-variable "settings" {
-  type = any
-}
+variable "diagnostics" {}
+variable "client_config" {}
+variable "global_settings" {}
+variable "settings" {}
 variable "resource_group" {
   description = "Resource group object"
 }

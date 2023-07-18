@@ -1,12 +1,6 @@
 variable "client_config" {
   type = any
 }
-variable "resource_group_name" {
-  type        = string
-  description = "Name of the resource group where to create the resource. Changing this forces a new resource to be created. "
-  default     = null
-}
-
 variable "location" {
   type        = string
   description = "location of the resource if different from the resource group."
@@ -72,8 +66,16 @@ variable "remote_dns" {
   default = {}
 }
 
+variable "location" {
+  description = "location of the resource if different from the resource group."
+  default     = null
+}
+variable "resource_group_name" {
+  type        = string
+  description = "Resource group object to deploy the virtual machine"
+  default     = null
+}
 variable "resource_group" {
-  type        = any
   description = "Resource group object to deploy the virtual machine"
 }
 variable "base_tags" {

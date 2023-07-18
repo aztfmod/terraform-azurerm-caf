@@ -10,14 +10,15 @@ resource "azurerm_mariadb_server" "mariadb" {
   storage_mb = var.settings.storage_mb
   version    = var.settings.version
 
-  auto_grow_enabled             = try(var.settings.auto_grow_enabled, true)
-  backup_retention_days         = try(var.settings.backup_retention_days, null)
-  geo_redundant_backup_enabled  = try(var.settings.geo_redundant_backup_enabled, null)
-  public_network_access_enabled = try(var.settings.public_network_access_enabled, false)
-  ssl_enforcement_enabled       = try(var.settings.ssl_enforcement_enabled, true)
-  create_mode                   = try(var.settings.create_mode, "Default")
-  creation_source_server_id     = try(var.settings.creation_source_server_id, null)
-  tags                          = local.tags
+  auto_grow_enabled                = try(var.settings.auto_grow_enabled, true)
+  backup_retention_days            = try(var.settings.backup_retention_days, null)
+  geo_redundant_backup_enabled     = try(var.settings.geo_redundant_backup_enabled, null)
+  public_network_access_enabled    = try(var.settings.public_network_access_enabled, false)
+  ssl_enforcement_enabled          = try(var.settings.ssl_enforcement_enabled, true)
+  ssl_minimal_tls_version_enforced = try(var.settings.ssl_minimal_tls_version_enforced, "TLS1_2")
+  create_mode                      = try(var.settings.create_mode, "Default")
+  creation_source_server_id        = try(var.settings.creation_source_server_id, null)
+  tags                             = local.tags
 }
 
 # Generate mariadb server random admin password if not provided in the attribute administrator_login_password
