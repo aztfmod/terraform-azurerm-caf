@@ -13,12 +13,14 @@ resource "azurerm_role_assignment" "scope" {
 
 locals {
   services_scope = {
+    azuread_users    = local.combined_objects_azuread_users
     virtual_machines = local.combined_objects_virtual_machines
   }
 
   services_scope_rbac_id = {
     azuread_groups             = local.combined_objects_azuread_groups
     azuread_service_principals = local.combined_objects_azuread_service_principals
+    azuread_users              = local.combined_objects_azuread_users
     logged_in                  = local.logged_in
     managed_identities         = local.combined_objects_managed_identities
   }
