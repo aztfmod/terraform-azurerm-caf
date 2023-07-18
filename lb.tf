@@ -6,8 +6,9 @@ module "lb" {
   client_config   = local.client_config
   settings        = each.value
 
-  location            = can(local.global_settings.regions[each.value.region]) ? local.global_settings.regions[each.value.region] : local.combined_objects_resource_groups[try(each.value.resource_group.lz_key, local.client_config.landingzone_key)][try(each.value.resource_group.key, each.value.resource_group_key)].location
-  resource_group_name = can(each.value.resource_group.name) || can(each.value.resource_group_name) ? try(each.value.resource_group.name, each.value.resource_group_name) : local.combined_objects_resource_groups[try(each.value.resource_group.lz_key, local.client_config.landingzone_key)][try(each.value.resource_group_key, each.value.resource_group.key)].name
+  location = can(local.global_settings.regions[each.value.region]) ? local.global_settings.regions[each.value.region] : local.combined_objects_resource_groups[try(each.value.resource_group.lz_key, local.client_config.landingzone_key)][try(each.value.resource_group.key, each.value.resource_group_key)].location
+  # if resource_group.name is defined and not null, use that.  if resource_group_name is defined and not null, use that.  otherwise calculate name using combined_objects_resource_groups
+  resource_group_name = try(each.value.resource_group.name, null) != null ? each.value.resource_group.name : try(each.value.resource_group_name, null) != null ? each.value.resource_group_name : local.combined_objects_resource_groups[try(each.value.resource_group.lz_key, local.client_config.landingzone_key)][try(each.value.resource_group_key, each.value.resource_group.key)].name
 
   remote_objects = {
     resource_group      = local.combined_objects_resource_groups
@@ -60,8 +61,8 @@ module "lb_nat_pool" {
   global_settings = local.global_settings
   client_config   = local.client_config
   settings        = each.value
-
-  resource_group_name = can(each.value.resource_group.name) || can(each.value.resource_group_name) ? try(each.value.resource_group.name, each.value.resource_group_name) : local.combined_objects_resource_groups[try(each.value.resource_group.lz_key, local.client_config.landingzone_key)][try(each.value.resource_group_key, each.value.resource_group.key)].name
+  # if resource_group.name is defined and not null, use that.  if resource_group_name is defined and not null, use that.  otherwise calculate name using combined_objects_resource_groups
+  resource_group_name = try(each.value.resource_group.name, null) != null ? each.value.resource_group.name : try(each.value.resource_group_name, null) != null ? each.value.resource_group_name : local.combined_objects_resource_groups[try(each.value.resource_group.lz_key, local.client_config.landingzone_key)][try(each.value.resource_group_key, each.value.resource_group.key)].name
 
   remote_objects = {
     resource_group = local.combined_objects_resource_groups
@@ -79,7 +80,8 @@ module "lb_nat_rule" {
   client_config   = local.client_config
   settings        = each.value
 
-  resource_group_name = can(each.value.resource_group.name) || can(each.value.resource_group_name) ? try(each.value.resource_group.name, each.value.resource_group_name) : local.combined_objects_resource_groups[try(each.value.resource_group.lz_key, local.client_config.landingzone_key)][try(each.value.resource_group_key, each.value.resource_group.key)].name
+  # if resource_group.name is defined and not null, use that.  if resource_group_name is defined and not null, use that.  otherwise calculate name using combined_objects_resource_groups
+  resource_group_name = try(each.value.resource_group.name, null) != null ? each.value.resource_group.name : try(each.value.resource_group_name, null) != null ? each.value.resource_group_name : local.combined_objects_resource_groups[try(each.value.resource_group.lz_key, local.client_config.landingzone_key)][try(each.value.resource_group_key, each.value.resource_group.key)].name
 
   remote_objects = {
     resource_group = local.combined_objects_resource_groups
@@ -98,7 +100,8 @@ module "lb_outbound_rule" {
   client_config   = local.client_config
   settings        = each.value
 
-  resource_group_name = can(each.value.resource_group.name) || can(each.value.resource_group_name) ? try(each.value.resource_group.name, each.value.resource_group_name) : local.combined_objects_resource_groups[try(each.value.resource_group.lz_key, local.client_config.landingzone_key)][try(each.value.resource_group_key, each.value.resource_group.key)].name
+  # if resource_group.name is defined and not null, use that.  if resource_group_name is defined and not null, use that.  otherwise calculate name using combined_objects_resource_groups
+  resource_group_name = try(each.value.resource_group.name, null) != null ? each.value.resource_group.name : try(each.value.resource_group_name, null) != null ? each.value.resource_group_name : local.combined_objects_resource_groups[try(each.value.resource_group.lz_key, local.client_config.landingzone_key)][try(each.value.resource_group_key, each.value.resource_group.key)].name
 
   remote_objects = {
     resource_group          = local.combined_objects_resource_groups
@@ -133,13 +136,14 @@ module "lb_rule" {
   global_settings = local.global_settings
   client_config   = local.client_config
   settings        = each.value
-
-  resource_group_name = can(each.value.resource_group.name) || can(each.value.resource_group_name) ? try(each.value.resource_group.name, each.value.resource_group_name) : local.combined_objects_resource_groups[try(each.value.resource_group.lz_key, local.client_config.landingzone_key)][try(each.value.resource_group_key, each.value.resource_group.key)].name
-
-  backend_address_pool_ids = can(each.value.backend_address_pool_ids) || can(each.value.backend_address_pool) == false ? try(each.value.backend_address_pool_ids, null) : [
+  # if resource_group.name is defined and not null, use that.  if resource_group_name is defined and not null, use that.  otherwise calculate name using combined_objects_resource_groups
+  resource_group_name = try(each.value.resource_group.name, null) != null ? each.value.resource_group.name : try(each.value.resource_group_name, null) != null ? each.value.resource_group_name : local.combined_objects_resource_groups[try(each.value.resource_group.lz_key, local.client_config.landingzone_key)][try(each.value.resource_group_key, each.value.resource_group.key)].name
+  # if backend_address_pool_ids is defined and not null, use that.  if backend_address_pool is defined and not null, calculate ids using combined_objects_lb_backend_address_pool
+  backend_address_pool_ids = try(each.value.backend_address_pool_ids, null) != null ? each.value.backend_address_pool_ids : try(each.value.backend_address_pool, null) != null ? [
     for k, v in each.value.backend_address_pool : local.combined_objects_lb_backend_address_pool[try(v.lz_key, local.client_config.landingzone_key)][v.key].id
-  ]
-  probe_id = can(each.value.probe_id) || can(each.value.probe.key) == false ? try(each.value.probe_id, null) : local.combined_objects_lb_probe[try(each.value.probe.lz_key, local.client_config.landingzone_key)][each.value.probe.key].id
+  ] : null
+  # if probe_id is defined and non null, use that.  if probe.key is defined and not null, calculate id using combined_objects_lb_probe
+  probe_id = try(each.value.probe_id, null) != null ? each.value.probe_id : try(each.value.probe.key, null) != null ? local.combined_objects_lb_probe[try(each.value.probe.lz_key, local.client_config.landingzone_key)][each.value.probe.key].id : null
 
   remote_objects = {
     resource_group          = local.combined_objects_resource_groups
