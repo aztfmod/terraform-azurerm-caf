@@ -27,6 +27,9 @@ cosmos_dbs = {
     kind                      = "GlobalDocumentDB"
     enable_automatic_failover = "true"
 
+    #This parameter needs for more correct work with Cosmos custom roles
+    access_key_metadata_writes_enabled  = false 
+
     consistency_policy = {
       consistency_level       = "BoundedStaleness"
       max_interval_in_seconds = "300"
@@ -41,6 +44,8 @@ cosmos_dbs = {
         failover_priority = 0
       }
     }
+
+    local_authentication_disabled =  true
 
     sql_databases = {
       databases_re1 = {

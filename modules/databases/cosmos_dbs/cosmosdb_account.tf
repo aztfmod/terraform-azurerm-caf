@@ -17,13 +17,15 @@ resource "azurerm_cosmosdb_account" "cosmos_account" {
   kind                = try(var.settings.kind, "GlobalDocumentDB")
   tags                = local.tags
 
-  enable_free_tier                  = try(var.settings.enable_free_tier, false)
-  ip_range_filter                   = try(var.settings.ip_range_filter, null)
-  enable_multiple_write_locations   = try(var.settings.enable_multiple_write_locations, false)
-  enable_automatic_failover         = try(var.settings.enable_automatic_failover, null)
-  is_virtual_network_filter_enabled = try(var.settings.is_virtual_network_filter_enabled, null)
-  create_mode                       = try(var.settings.create_mode, null)
-  public_network_access_enabled     = try(var.settings.public_network_access_enabled, true)
+  enable_free_tier                    = try(var.settings.enable_free_tier, false)
+  ip_range_filter                     = try(var.settings.ip_range_filter, null)
+  enable_multiple_write_locations     = try(var.settings.enable_multiple_write_locations, false)
+  enable_automatic_failover           = try(var.settings.enable_automatic_failover, null)
+  is_virtual_network_filter_enabled   = try(var.settings.is_virtual_network_filter_enabled, null)
+  create_mode                         = try(var.settings.create_mode, null)
+  public_network_access_enabled       = try(var.settings.public_network_access_enabled, true)
+  access_key_metadata_writes_enabled  = try(var.settings.access_key_metadata_writes_enabled, null)
+  local_authentication_disabled       = try(var.settings.local_authentication_disabled, null)
 
   dynamic "consistency_policy" {
     for_each = lookup(var.settings, "consistency_policy", {}) == {} ? [] : [1]

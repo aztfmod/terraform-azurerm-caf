@@ -16,7 +16,8 @@ module "private_endpoint" {
   settings            = each.value
   subresource_names   = ["AzureSiteRecovery"]
   global_settings     = var.global_settings
-  base_tags           = local.tags
+  tags                = local.tags
+  base_tags           = var.base_tags
   private_dns         = var.private_dns
   client_config       = var.client_config
 }

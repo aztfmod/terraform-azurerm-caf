@@ -21,9 +21,3 @@ variable "client_config" {
 variable "public_ip_addresses" {}
 
 variable "remote_objects" {}
-
-variable "bootstrap_root_ca_public_pem" {
-  description = "(Optional) - Public certificate to add to the Point to site VPN Gateway."
-  default     = null
-  type        = string
-}
