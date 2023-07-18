@@ -23,7 +23,6 @@ locals {
   module_tag = {
     "module" = basename(abspath(path.module))
   }
-  arm_filename = "${path.module}/arm_backup_ltr.json"
 
   # this is the format required by ARM templates
   parameters_body = {
