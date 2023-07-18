@@ -32,6 +32,7 @@ resource "azurerm_storage_account" "stg" {
   location                          = local.location
   min_tls_version                   = try(var.storage_account.min_tls_version, "TLS1_2")
   is_hns_enabled                    = try(var.storage_account.is_hns_enabled, false)
+  sftp_enabled                      = try(var.storage_account.sftp_enabled, null)
   nfsv3_enabled                     = try(var.storage_account.nfsv3_enabled, false)
   queue_encryption_key_type         = try(var.storage_account.queue_encryption_key_type, null)
   resource_group_name               = local.resource_group_name
