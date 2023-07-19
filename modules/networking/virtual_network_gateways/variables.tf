@@ -20,9 +20,6 @@ variable "global_settings" {
 variable "diagnostics" {
   type = any
 }
-variable "vnets" {
-  type = any
-}
 variable "client_config" {
   type        = any
   description = "Client configuration object (see module README.md)."

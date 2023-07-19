@@ -30,10 +30,6 @@ variable "tags" {
   default     = null
   description = "(Optional) A mapping of tags to assign to the resource"
 }
-variable "location" {
-  description = "location of the resource if different from the resource group."
-  default     = null
-}
 variable "resource_group_name" {
   description = "Resource group object to deploy the virtual machine"
   default     = null

@@ -57,9 +57,3 @@ variable "private_endpoints" {
 variable "private_dns" {
   default = {}
 }
-variable "private_endpoints" {
-  default = {}
-}
-variable "private_dns" {
-  default = {}
-}

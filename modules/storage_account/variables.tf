@@ -66,22 +66,6 @@ variable "diagnostic_profiles_file" {
   default = {}
 }
 
-variable "diagnostic_profiles_blob" {
-  default = {}
-}
-
-variable "diagnostic_profiles_queue" {
-  default = {}
-}
-
-variable "diagnostic_profiles_table" {
-  default = {}
-}
-
-variable "diagnostic_profiles_file" {
-  default = {}
-}
-
 variable "diagnostics" {
   type    = any
   default = {}

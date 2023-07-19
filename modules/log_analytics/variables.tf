@@ -1,9 +1,7 @@
 variable "global_settings" {
-  type        = any
   description = "Global settings object (see module README.md)"
 }
 variable "log_analytics" {
-  type        = string
   description = "Log analytics configuration object"
 }
 variable "location" {
@@ -15,7 +13,6 @@ variable "resource_group_name" {
   default     = null
 }
 variable "resource_group" {
-  type        = any
   description = "Resource group object to deploy the virtual machine"
 }
 variable "base_tags" {

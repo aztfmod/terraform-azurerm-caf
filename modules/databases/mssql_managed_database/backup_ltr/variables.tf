@@ -1,6 +1,2 @@
-variable "database_id" {
-  type = string
-}
-variable "settings" {
-  type = any
-}
+variable "database_id" {}
+variable "settings" {}

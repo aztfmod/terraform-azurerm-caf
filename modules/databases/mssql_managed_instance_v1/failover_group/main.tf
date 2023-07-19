@@ -1,7 +1,8 @@
 terraform {
   required_providers {
     azapi = {
-      source = "azure/azapi"
+      source  = "Azure/azapi"
+      version = "~> 1.7.0"
     }
   }
 }

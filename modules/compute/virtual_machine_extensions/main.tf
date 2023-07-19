@@ -10,10 +10,12 @@ terraform {
       version = "~> 2.2.3"
     }
     azapi = {
-      source = "azure/azapi"
+      source  = "Azure/azapi"
+      version = "~> 1.7.0"
     }
     azurecaf = {
-      source = "aztfmod/azurecaf"
+      source  = "aztfmod/azurecaf"
+      version = "~> 1.2.0"
     }
   }
 }
