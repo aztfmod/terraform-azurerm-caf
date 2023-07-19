@@ -1,13 +1,10 @@
 terraform {
-  required_version = ">= 1.1.0"
   required_providers {
     azurecaf = {
-      source  = "aztfmod/azurecaf"
-      version = "~> 1.2.0"
+      source = "aztfmod/azurecaf"
     }
     azapi = {
-      source  = "Azure/azapi"
-      version = "~> 1.7.0"
+      source = "azure/azapi"
     }
   }
 }

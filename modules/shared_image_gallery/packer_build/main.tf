@@ -18,27 +18,21 @@ locals {
 }
 
 terraform {
-  required_version = ">= 1.1.0"
   required_providers {
     azurerm = {
-      source  = "hashicorp/azurerm"
-      version = "~> 3.48"
+      source = "hashicorp/azurerm"
     }
     azurecaf = {
-      source  = "aztfmod/azurecaf"
-      version = "~> 1.2.0"
+      source = "aztfmod/azurecaf"
     }
     local = {
-      source  = "hashicorp/local"
-      version = "~> 2.2.3"
+      source = "hashicorp/local"
     }
     external = {
-      source  = "hashicorp/external"
-      version = "~> 2.2.3"
+      source = "hashicorp/external"
     }
     null = {
-      source  = "hashicorp/null"
-      version = "~> 3.2.1"
+      source = "hashicorp/null"
     }
   }
 }

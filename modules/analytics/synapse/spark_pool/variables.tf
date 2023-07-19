@@ -9,6 +9,6 @@ variable "synapse_workspace_id" {
   type = any
 }
 variable "tags" {
-  type        = any
   description = "(Required) Map of tags to be applied to the resource"
+  type        = map(any)
 }
