@@ -114,7 +114,7 @@ dns_zones = {
         }
       } //srv
     }   //records
-  }     //dns_zone2  
+  }     //dns_zone2
   dns_zone3 = {
     name               = "" // Set as empty for CI. this will creation a random_domain_name.com
     resource_group_key = "dns_re1"
