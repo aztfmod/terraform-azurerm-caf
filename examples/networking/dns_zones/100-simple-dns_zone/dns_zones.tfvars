@@ -132,7 +132,7 @@ dns_zones = {
             }
           }
         }
-      }  // mx record
+      } // mx record
 
       txt = {
         example = {
@@ -142,7 +142,7 @@ dns_zones = {
           ]
           ttl = 3600
         }
-      }  //txt record
+      } //txt record
     }   //records
   }     //dns_zone3
 }
