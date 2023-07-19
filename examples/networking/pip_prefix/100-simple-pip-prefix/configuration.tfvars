@@ -11,4 +11,3 @@ resource_groups = {
     region = "region1"
   }
 }
-

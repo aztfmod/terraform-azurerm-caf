@@ -10,13 +10,15 @@ locals {
 
 terraform {
   required_providers {
+    azurerm = {
+      source = "hashicorp/azurerm"
+    }
     azurecaf = {
       source = "aztfmod/azurecaf"
     }
-    azurerm = {
-      source = "hashicorp/azurerm"
+    null = {
+      source = "hashicorp/null"
     }
   }
 
 }
-

@@ -67,3 +67,20 @@ output "private_dns_vnet_links" {
     module.private_dns_vnet_links_v1
   )
 }
+
+module "private_dns_records" {
+  source     = "./modules/networking/private-dns/records"
+  for_each   = try(local.networking.private_dns_records, {})
+  depends_on = [module.private_dns]
+
+  base_tags           = local.global_settings.inherit_tags
+  global_settings     = local.global_settings
+  client_config       = local.client_config
+  resource_group_name = try(each.value.private_dns_zone.resource_group_name, local.combined_objects_private_dns[try(each.value.private_dns_zone.lz_key, local.client_config.landingzone_key)][each.value.private_dns_zone.key].resource_group_name, null)
+  records             = each.value.records
+  zone_name           = can(each.value.private_dns_zone.name) ? each.value.private_dns_zone.name : local.combined_objects_private_dns[try(each.value.private_dns_zone.lz_key, local.client_config.landingzone_key)][each.value.private_dns_zone.key].name
+}
+
+output "private_dns_records" {
+  value = module.private_dns_records
+}

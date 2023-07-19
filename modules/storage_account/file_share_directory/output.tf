@@ -5,4 +5,3 @@ output "id" {
 output "name" {
   value = azurerm_storage_share_directory.share_directory.name
 }
-

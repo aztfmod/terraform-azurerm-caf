@@ -1,28 +1,31 @@
 variable "prefix" {
+  type        = any
   description = "You can use a prefix to add to the list of resource groups you want to create"
   default     = null
 }
 
 variable "tags" {
+  type        = any
   description = "(Required) Map of tags to be applied to the resource"
-  type        = map(any)
 }
 
 variable "name" {
-  description = "(Required) Specifies the name of the Application Insights component. Changing this forces a new resource to be created."
   type        = string
+  description = "(Required) Specifies the name of the Application Insights component. Changing this forces a new resource to be created."
 }
 
 variable "resource_group_name" {
+  type        = string
   description = "(Required) The name of the resource group where to create the resource."
 }
 
 variable "location" {
-  description = "(Required) Specifies the supported Azure location where to create the resource. Changing this forces a new resource to be created."
   type        = string
+  description = "(Required) Specifies the supported Azure location where to create the resource. Changing this forces a new resource to be created."
 }
 
 variable "application_type" {
+  type        = string
   description = "(Required) Specifies the type of Application Insights to create. Valid values are ios for iOS, java for Java web, MobileCenter for App Center, Node.JS for Node.js, other for General, phone for Windows Phone, store for Windows Store and web for ASP.NET. Please note these values are case sensitive; unmatched values are treated as ASP.NET by Azure. Changing this forces a new resource to be created."
   default     = "other"
 
@@ -77,14 +80,18 @@ variable "base_tags" {
   type        = map(any)
 }
 variable "workspace_id" {
+  type        = any
   description = "Log Analytics Workspace based workspace id"
   default     = null
 }
 variable "diagnostic_profiles" {
+  type    = any
   default = {}
 }
 variable "diagnostics" {
+  type    = any
   default = null
 }
 variable "settings" {
+  type = any
 }

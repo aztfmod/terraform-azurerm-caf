@@ -12,4 +12,3 @@ module "domain_name_registrations" {
 output "domain_name_registrations" {
   value = module.domain_name_registrations
 }
-

@@ -10,8 +10,8 @@ resource "azurecaf_name" "static_site" {
 
 resource "azurerm_static_site" "static_site" {
   name                = azurecaf_name.static_site.result
-  location            = var.location
-  resource_group_name = var.resource_group_name
+  location            = local.location
+  resource_group_name = local.resource_group_name
   tags                = local.tags
 
   sku_size = var.sku_size

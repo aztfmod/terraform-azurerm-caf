@@ -82,4 +82,3 @@ network_security_group_definition = {
   empty_nsg = {
   }
 }
-

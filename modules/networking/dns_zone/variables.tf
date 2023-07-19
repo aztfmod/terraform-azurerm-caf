@@ -1,10 +1,15 @@
 variable "resource_group_name" {
-  description = "(Required) The name of the resource group where to create the resource."
   type        = string
+  description = "(Required) The name of the resource group where to create the resource."
 }
-variable "client_config" {}
-variable "settings" {}
+variable "client_config" {
+  type = any
+}
+variable "settings" {
+  type = any
+}
 variable "global_settings" {
+  type        = any
   description = "Global settings object (see module README.md)"
 }
 variable "base_tags" {
@@ -12,5 +17,6 @@ variable "base_tags" {
   type        = map(any)
 }
 variable "resource_ids" {
+  type    = any
   default = {}
 }

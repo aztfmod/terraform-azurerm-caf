@@ -26,7 +26,7 @@ module "caf" {
   providers = {
     azurerm.vhub = azurerm.vhub
   }
-  
+
   global_settings = var.global_settings
   resource_groups = var.resource_groups
   keyvaults       = var.keyvaults

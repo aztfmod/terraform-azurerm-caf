@@ -91,7 +91,11 @@ resource "azurerm_storage_account" "stg" {
         for_each = lookup(var.storage_account.blob_properties, "delete_retention_policy", false) == false ? [] : [1]
 
         content {
-          days = try(var.storage_account.blob_properties.delete_retention_policy.delete_retention_policy, 7)
+          # var.storage_account.blob_properties.delete_retention_policy.delete_retention_policy for backwards compatibility
+          days = try(var.storage_account.blob_properties.delete_retention_policy.delete_retention_policy,
+            var.storage_account.blob_properties.delete_retention_policy.days,
+            7
+          )
         }
       }
 
@@ -99,7 +103,11 @@ resource "azurerm_storage_account" "stg" {
         for_each = lookup(var.storage_account.blob_properties, "container_delete_retention_policy", false) == false ? [] : [1]
 
         content {
-          days = try(var.storage_account.blob_properties.container_delete_retention_policy.container_delete_retention_policy, 7)
+          # var.storage_account.blob_properties.delete_retention_policy.delete_retention_policy for backwards compatibility
+          days = try(var.storage_account.blob_properties.container_delete_retention_policy.container_delete_retention_policy,
+            var.storage_account.blob_properties.container_delete_retention_policy.days,
+            7
+          )
         }
       }
     }
@@ -173,7 +181,8 @@ resource "azurerm_storage_account" "stg" {
       default_action = try(var.storage_account.network.default_action, "Deny")
       ip_rules       = try(var.storage_account.network.ip_rules, [])
       virtual_network_subnet_ids = try(var.storage_account.network.subnets, null) == null ? null : [
-        for key, value in var.storage_account.network.subnets : can(value.remote_subnet_id) ? value.remote_subnet_id : var.vnets[try(value.lz_key, var.client_config.landingzone_key)][value.vnet_key].subnets[value.subnet_key].id
+        # if remote_subnet_id or subnet_id is defined and not null, use it.  Otherwise calculate subnet id using vnets collection and provided keys
+        for key, value in var.storage_account.network.subnets : try(value.subnet_id, null) != null ? value.subnet_id : try(value.remote_subnet_id, null) != null ? value.remote_subnet_id : var.vnets[coalesce(try(value.lz_key, null), var.client_config.landingzone_key)][value.vnet_key].subnets[value.subnet_key].id
       ]
     }
   }

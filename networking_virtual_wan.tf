@@ -26,4 +26,3 @@ module "virtual_wans" {
   virtual_networks    = local.combined_objects_networking
   public_ip_addresses = local.combined_objects_public_ip_addresses
 }
-

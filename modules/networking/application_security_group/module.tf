@@ -14,5 +14,3 @@ resource "azurerm_application_security_group" "asg" {
   resource_group_name = local.resource_group_name
   tags                = merge(local.tags, try(var.settings.tags, {}))
 }
-
-

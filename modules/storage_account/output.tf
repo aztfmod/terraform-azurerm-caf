@@ -56,7 +56,7 @@ output "identity" {
 
 output "rbac_id" {
   description = " The Principal ID for the Service Principal associated with the Identity of this Storage Account. (Extracted from the identity block)"
-  value       = try(azurerm_storage_account.stg.identity.0.principal_id, null)
+  value       = try(azurerm_storage_account.stg.identity[0].principal_id, null)
 }
 
 output "backup_container_id" {

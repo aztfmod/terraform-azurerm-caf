@@ -47,5 +47,3 @@ module "vmware_express_route_authorizations" {
 output "vmware_express_route_authorizations" {
   value = module.vmware_express_route_authorizations
 }
-
-

@@ -9,8 +9,8 @@ module "application_gateways" {
   diagnostics                      = local.combined_diagnostics
   dns_zones                        = local.combined_objects_dns_zones
   global_settings                  = local.global_settings
-  keyvault_certificate_requests    = module.keyvault_certificate_requests
-  keyvault_certificates            = module.keyvault_certificates
+  keyvault_certificate_requests    = local.combined_objects_keyvault_certificate_requests
+  keyvault_certificates            = local.combined_objects_keyvault_certificates
   keyvaults                        = local.combined_objects_keyvaults
   managed_identities               = local.combined_objects_managed_identities
   private_dns                      = lookup(each.value, "private_dns_records", null) == null ? {} : local.combined_objects_private_dns

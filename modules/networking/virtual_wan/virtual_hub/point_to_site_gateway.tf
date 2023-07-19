@@ -17,7 +17,7 @@ resource "azurerm_point_to_site_vpn_gateway" "p2s_gateway" {
 
   count = try(var.virtual_hub_config.deploy_p2s, false) ? 1 : 0
 
-  name                        = azurecaf_name.p2s_gateway.0.result
+  name                        = azurecaf_name.p2s_gateway[0].result
   location                    = var.location
   resource_group_name         = var.resource_group_name
   tags                        = local.tags
@@ -54,7 +54,7 @@ resource "azurerm_vpn_server_configuration" "p2s_configuration" {
   depends_on = [azurerm_virtual_hub.vwan_hub]
   count      = try(var.virtual_hub_config.deploy_p2s, false) ? 1 : 0
 
-  name                     = azurecaf_name.p2s_gateway.0.result
+  name                     = azurecaf_name.p2s_gateway[0].result
   resource_group_name      = var.resource_group_name
   location                 = var.location
   tags                     = local.tags
@@ -66,4 +66,3 @@ resource "azurerm_vpn_server_configuration" "p2s_configuration" {
   }
 
 }
-

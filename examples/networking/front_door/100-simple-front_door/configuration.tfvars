@@ -12,4 +12,3 @@ resource_groups = {
     name = "front-door-rg"
   }
 }
-

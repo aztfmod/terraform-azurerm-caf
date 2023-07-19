@@ -1,7 +1,16 @@
 terraform {
   required_providers {
+    azurerm = {
+      source = "hashicorp/azurerm"
+    }
     azurecaf = {
       source = "aztfmod/azurecaf"
+    }
+    azuread = {
+      source = "hashicorp/azuread"
+    }
+    null = {
+      source = "hashicorp/null"
     }
   }
 

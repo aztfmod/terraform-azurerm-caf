@@ -1,15 +1,16 @@
 variable "resource_group_name" {
-  description = "The name of the resource group where to create the resource."
   type        = string
+  description = "The name of the resource group where to create the resource."
 }
 
 variable "global_settings" {
+  type        = any
   description = "Global settings object (see module README.md)"
 }
 
 variable "tags" {
+  type        = any
   description = "Map of tags to be applied to the resource"
-  type        = map(any)
 }
 
 variable "key_values" {

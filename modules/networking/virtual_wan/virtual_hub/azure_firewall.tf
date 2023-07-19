@@ -15,7 +15,7 @@ resource "azurecaf_name" "virtualhub_fw" {
 # As per https://docs.microsoft.com/en-us/azure/templates/microsoft.network/2019-09-01/azurefirewalls
 resource "azurerm_resource_group_template_deployment" "arm_template_vhub_firewall" {
   count               = try(var.virtual_hub_config.deploy_firewall, false) ? 1 : 0
-  name                = "arm_template_vhub_firewall"
+  name                = azurecaf_name.virtualhub_fw[0].result
   resource_group_name = var.resource_group_name
 
   template_content = file("${path.module}/arm_template_vhub_firewall.json")

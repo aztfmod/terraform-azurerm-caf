@@ -14,6 +14,7 @@ module "container_registry" {
   diagnostics         = local.combined_diagnostics
   diagnostic_profiles = try(each.value.diagnostic_profiles, {})
   private_endpoints   = try(each.value.private_endpoints, {})
+  retention_policy    = try(each.value.retention_policy, null)
   private_dns         = local.combined_objects_private_dns
   resource_groups     = local.combined_objects_resource_groups
   settings            = each.value
@@ -31,4 +32,3 @@ output "azure_container_registries" {
   value = module.container_registry
 
 }
-

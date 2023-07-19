@@ -198,4 +198,3 @@ azuread_groups = {
     prevent_duplicate_name = false
   }
 }
-

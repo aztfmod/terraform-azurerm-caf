@@ -14,4 +14,3 @@ resource "azurerm_logic_app_trigger_custom" "latc" {
   logic_app_id = var.logic_app_id
   body         = var.settings.body
 }
-

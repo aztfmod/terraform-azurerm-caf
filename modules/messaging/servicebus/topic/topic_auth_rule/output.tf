@@ -17,5 +17,3 @@ output "secondary_connection_string" {
   description = "The Secondary Connection String for the ServiceBus Namespace authorization Rule."
   value       = azurerm_servicebus_topic_authorization_rule.topic_auth_rule.secondary_connection_string
 }
-
-

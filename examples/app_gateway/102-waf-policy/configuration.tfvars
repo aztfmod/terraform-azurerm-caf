@@ -14,6 +14,3 @@ resource_groups = {
     name = "agw_waf-rg"
   }
 }
-
-
-

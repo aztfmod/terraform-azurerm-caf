@@ -17,7 +17,7 @@ data "azurerm_key_vault_secret" "certificate_issuer_password" {
   depends_on = [module.dynamic_keyvault_secrets]
   for_each = {
     for key, value in local.security.keyvault_certificate_issuers : key => value
-    if can(value.cert_password_key)
+    if try(value.cert_password_key, null) != null
   }
 
   name         = var.security.dynamic_keyvault_secrets[each.value.keyvault_key][each.value.cert_password_key].secret_name

@@ -29,3 +29,8 @@ variable "base_tags" {
   description = "Base tags for the resource to be inherited from the resource group."
   type        = bool
 }
+
+variable "diagnostics" {
+  type        = any
+  description = "(Required) Diagnostics object with the definitions and destination services"
+}

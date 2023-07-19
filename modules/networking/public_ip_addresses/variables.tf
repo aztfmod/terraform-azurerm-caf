@@ -2,12 +2,12 @@ variable "global_settings" {
   description = "Global settings object (see module README.md)"
 }
 variable "name" {
-  description = "(Required) Specifies the name of the Public IP resource . Changing this forces a new resource to be created."
   type        = string
+  description = "(Required) Specifies the name of the Public IP resource . Changing this forces a new resource to be created."
 }
 variable "sku" {
-  description = "(Optional) The SKU of the Public IP. Accepted values are Basic and Standard. Defaults to Basic."
   type        = string
+  description = "(Optional) The SKU of the Public IP. Accepted values are Basic and Standard. Defaults to Basic."
   default     = "Basic"
   validation {
     condition     = contains(["Basic", "Standard"], var.sku)
@@ -75,9 +75,9 @@ variable "reverse_fqdn" {
 }
 
 variable "tags" {
+  type        = any
   description = "(Optional) Tags for the resource to be deployed."
   default     = null
-  type        = map(any)
 }
 
 variable "zones" {
@@ -92,11 +92,13 @@ variable "zones" {
 }
 
 variable "diagnostics" {
+  type        = any
   description = "(Optional) Diagnostics objects where to deploy the diagnostics profiles."
   default     = {}
 }
 
 variable "diagnostic_profiles" {
+  type        = any
   description = "(Optional) Diagnostics profile settings to be deployed for the resource."
   default     = {}
 }
@@ -104,7 +106,7 @@ variable "diagnostic_profiles" {
 variable "ip_tags" {
   description = "(Optional) A mapping of IP tags to assign to the public IP."
   default     = {}
-  type        = map(any)
+  type        = any
 }
 
 variable "public_ip_prefix_id" {
@@ -114,10 +116,12 @@ variable "public_ip_prefix_id" {
 }
 
 variable "location" {
+  type        = string
   description = "location of the resource if different from the resource group."
   default     = null
 }
 variable "resource_group_name" {
+  type        = string
   description = "Resource group object to deploy the virtual machine"
   default     = null
 }

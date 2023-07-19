@@ -1,34 +1,58 @@
 variable "global_settings" {
+  type        = any
   description = "Global settings object (see module README.md)"
 }
-variable "settings" {}
+variable "settings" {
+  type = any
+}
 variable "client_config" {
+  type        = any
   description = "Client configuration object (see module README.md)."
 }
-variable "keyvault_id" {}
-variable "storage_accounts" {}
-variable "azuread_groups" {}
-variable "vnets" {}
-variable "subnet_id" {}
-variable "private_endpoints" {}
-variable "resource_groups" {}
+variable "keyvault_id" {
+  type = string
+}
+variable "storage_accounts" {
+  type = any
+}
+variable "azuread_groups" {
+  type = any
+}
+variable "vnets" {
+  type = any
+}
+variable "subnet_id" {
+  type = string
+}
+variable "private_endpoints" {
+  type = any
+}
+variable "resource_groups" {
+  type = any
+}
 variable "diagnostic_profiles" {
+  type    = any
   default = {}
 }
 variable "network_security_group_definition" {
+  type    = any
   default = null
 }
 variable "diagnostics" {
+  type    = any
   default = {}
 }
 variable "private_dns" {
+  type    = any
   default = {}
 }
 variable "location" {
+  type        = string
   description = "location of the resource if different from the resource group."
   default     = null
 }
 variable "resource_group_name" {
+  type        = string
   description = "Resource group object to deploy the virtual machine"
   default     = null
 }

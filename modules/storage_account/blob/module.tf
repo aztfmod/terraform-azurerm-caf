@@ -38,7 +38,6 @@ locals {
     format("%s/%s", var.var_folder_path, var.settings.source),
     var.settings.source
   ) : null
-
   source_content = can(var.settings.source_content) || can(fileexists(format("%s/%s", var.var_folder_path, var.settings.source_content))) ? try(
     file(format("%s/%s", var.var_folder_path, var.settings.source_content)),
     var.settings.source_content

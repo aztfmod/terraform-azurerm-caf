@@ -32,7 +32,7 @@ resource "azurerm_redis_cache" "redis" {
   subnet_id                     = try(var.subnet_id, null)
 
   dynamic "redis_configuration" {
-    for_each = lookup(var.redis, "redis_configuration", {}) != {} ? [var.redis.redis_configuration] : []
+    for_each = try(var.redis.redis_configuration, null) != null ? [var.redis.redis_configuration] : []
 
     content {
       aof_backup_enabled              = lookup(redis_configuration.value, "aof_backup_enabled", null)

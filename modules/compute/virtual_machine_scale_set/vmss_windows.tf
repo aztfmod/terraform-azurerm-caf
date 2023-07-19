@@ -319,8 +319,8 @@ resource "azurerm_key_vault_secret" "admin_password" {
 #
 
 locals {
-  admin_username = try(data.external.windows_admin_username.0.result.value, null)
-  admin_password = try(data.external.windows_admin_password.0.result.value, null)
+  admin_username = try(data.external.windows_admin_username[0].result.value, null)
+  admin_password = try(data.external.windows_admin_password[0].result.value, null)
 }
 
 #

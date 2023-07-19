@@ -30,5 +30,3 @@ resource "azurerm_mysql_flexible_server_firewall_rule" "mysql" {
     }
   }
 }
-
-

@@ -75,4 +75,3 @@ container_groups = {
     } //image_registry_credentials
   }   //github_private_image
 }
-

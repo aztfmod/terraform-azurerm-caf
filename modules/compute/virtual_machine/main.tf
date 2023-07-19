@@ -1,7 +1,19 @@
 terraform {
   required_providers {
+    azurerm = {
+      source = "hashicorp/azurerm"
+    }
     azurecaf = {
       source = "aztfmod/azurecaf"
+    }
+    tls = {
+      source = "hashicorp/tls"
+    }
+    external = {
+      source = "hashicorp/external"
+    }
+    random = {
+      source = "hashicorp/random"
     }
   }
 

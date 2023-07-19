@@ -12,4 +12,3 @@ output "policy_id" {
   value       = one(azurerm_api_management_product_policy.apim[*].id)
   description = "The ID of the API Management Product Policy."
 }
-

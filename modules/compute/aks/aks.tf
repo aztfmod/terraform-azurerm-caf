@@ -161,8 +161,8 @@ resource "azurerm_kubernetes_cluster" "aks" {
     }
   }
 
-  azure_policy_enabled             = can(var.settings.addon_profile.azure_policy) || can(var.settings.azure_policy_enabled) == false ? try(var.settings.addon_profile.azure_policy.0.enabled, null) : var.settings.azure_policy_enabled
-  http_application_routing_enabled = can(var.settings.addon_profile.http_application_routing) || can(var.settings.http_application_routing_enabled) == false ? try(var.settings.addon_profile.http_application_routing.0.enabled, null) : var.settings.http_application_routing_enabled
+  azure_policy_enabled             = can(var.settings.addon_profile.azure_policy) || can(var.settings.azure_policy_enabled) == false ? try(var.settings.addon_profile.azure_policy[0].enabled, null) : var.settings.azure_policy_enabled
+  http_application_routing_enabled = can(var.settings.addon_profile.http_application_routing) || can(var.settings.http_application_routing_enabled) == false ? try(var.settings.addon_profile.http_application_routing[0].enabled, null) : var.settings.http_application_routing_enabled
 
   dynamic "oms_agent" {
     for_each = try(var.settings.oms_agent[*], var.settings.oms_agent[*], {})

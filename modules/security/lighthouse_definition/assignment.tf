@@ -18,4 +18,3 @@ resource "azurerm_lighthouse_assignment" "resourcegroupassignment" {
   try(each.value.id, ""))
   lighthouse_definition_id = azurerm_lighthouse_definition.definition.id
 }
-

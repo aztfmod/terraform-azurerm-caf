@@ -24,7 +24,7 @@ resource "azurerm_postgresql_flexible_server_database" "postgresql" {
 resource "azurerm_key_vault_secret" "postgresql_database_name" {
   for_each = { for key, value in var.settings.postgresql_databases : key => value if can(var.settings.keyvault) }
 
-  name         = format("%s-ON-%s", each.value.name, azurecaf_name.postgresql_flexible_server.result)
+  name         = format("%s-ON-%s", each.value.name, azurecaf_name.postgresql_flexible_server[each.key].result)
   value        = each.value.name
   key_vault_id = var.remote_objects.keyvault_id
 }

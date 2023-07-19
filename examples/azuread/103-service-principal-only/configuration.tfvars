@@ -110,4 +110,3 @@ role_mapping = {
     }
   }
 }
-

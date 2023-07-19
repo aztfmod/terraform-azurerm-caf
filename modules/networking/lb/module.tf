@@ -14,24 +14,25 @@ resource "azurerm_lb" "lb" {
   resource_group_name = var.resource_group_name
   location            = var.location
 
+  # var.settings.frontend_ip_configurations to support lb with multiple frontends
   dynamic "frontend_ip_configuration" {
-    for_each = try(var.settings.frontend_ip_configuration, null) != null ? [var.settings.frontend_ip_configuration] : []
+    for_each = try(var.settings.frontend_ip_configurations, null) != null ? var.settings.frontend_ip_configurations : []
     content {
-      name                                               = try(frontend_ip_configuration.value.name, null)
+      name = try(frontend_ip_configuration.value.name, null)
+      # TODO: availability_zone kept for smooth migration to 3.0
+      zones = can(frontend_ip_configuration.value.zones) ? frontend_ip_configuration.value.zones : try(frontend_ip_configuration.value.availability_zone, null)
+      # if frontend_ip_configuration.value.subnet.id is defined and not null, use it.  Otherwise lookup subnet from remote_objects
+      subnet_id                                          = try(frontend_ip_configuration.value.subnet.id, null) == null ? var.remote_objects.virtual_network[try(frontend_ip_configuration.value.subnet.lz_key, var.client_config.landingzone_key)][frontend_ip_configuration.value.subnet.vnet_key].subnets[frontend_ip_configuration.value.subnet.key].id : try(frontend_ip_configuration.value.subnet.id, null)
       gateway_load_balancer_frontend_ip_configuration_id = try(frontend_ip_configuration.value.gateway_load_balancer_frontend_ip_configuration_id, null)
       private_ip_address                                 = try(frontend_ip_configuration.value.private_ip_address, null)
       private_ip_address_allocation                      = try(frontend_ip_configuration.value.private_ip_address_allocation, null)
       private_ip_address_version                         = try(frontend_ip_configuration.value.private_ip_address_version, null)
-      public_ip_prefix_id                                = try(frontend_ip_configuration.value.public_ip_prefix_id, null)
-      zones                                              = can(frontend_ip_configuration.value.zones) ? frontend_ip_configuration.value.zones : try(frontend_ip_configuration.value.availability_zone, null)
-      # TODO: availability_zone kept for smooth migration to 3.0
-
-      public_ip_address_id = can(frontend_ip_configuration.value.public_ip_address.id) || can(frontend_ip_configuration.value.public_ip_address.key) ? try(frontend_ip_configuration.value.public_ip_address.id, var.remote_objects.public_ip_addresses[try(frontend_ip_configuration.value.public_ip_address.lz_key, var.client_config.landingzone_key)][frontend_ip_configuration.value.public_ip_address.key].id) : null
-      subnet_id            = can(frontend_ip_configuration.value.subnet.id) || can(frontend_ip_configuration.value.subnet.key) ? try(frontend_ip_configuration.value.subnet.id, var.remote_objects.virtual_network[try(frontend_ip_configuration.value.subnet.lz_key, var.client_config.landingzone_key)][frontend_ip_configuration.value.subnet.vnet_key].subnets[frontend_ip_configuration.value.subnet.key].id) : null
-
+      # if frontend_ip_configuration.value.public_ip_address is defined or is null, no public ip.  Otherwise, if frontend_ip_configuration.value.public_ip_address.id is defined and not nul, use that.  Otherwise lookup public_ip from remote_objects
+      public_ip_address_id = try(frontend_ip_configuration.value.public_ip_address, null) == null ? null : try(frontend_ip_configuration.value.public_ip_address.id, null) == null ? var.remote_objects.public_ip_addresses[try(frontend_ip_configuration.value.public_ip_address.lz_key, var.client_config.landingzone_key)][frontend_ip_configuration.value.public_ip_address.key].id : try(frontend_ip_configuration.value.public_ip_address.id, null)
+      public_ip_prefix_id  = try(frontend_ip_configuration.value.public_ip_prefix_id, null)
     }
   }
-  sku      = try(title(var.settings.sku), null)
-  sku_tier = try(title(var.settings.sku_tier), null)
+  sku      = try(var.settings.sku, null)
+  sku_tier = try(var.settings.sku_tier, null)
   tags     = local.tags
 }

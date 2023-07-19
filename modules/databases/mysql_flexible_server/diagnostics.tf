@@ -9,5 +9,3 @@ module "diagnostics" {
   diagnostics       = var.remote_objects.diagnostics
   profiles          = var.settings.diagnostic_profiles
 }
-
-

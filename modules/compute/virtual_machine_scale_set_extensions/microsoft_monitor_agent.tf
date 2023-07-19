@@ -11,11 +11,12 @@ resource "azurerm_virtual_machine_scale_set_extension" "vmss_ext_mma" {
   type_handler_version       = try(var.extension.type_handler_version, var.virtual_machine_scale_set_os_type == "linux" ? "1.4" : "1.0")
 
   protected_settings = jsonencode({
-    "workspaceKey" = "${can(var.extension.workspace.primary_shared_key) ? var.extension.workspace.primary_shared_key : var.log_analytics_workspaces[try(var.extension.workspace.lz_key, var.client_config.landingzone_key)][var.extension.workspace.key].primary_shared_key}"
+    #Fixed terraform_deprecated_interpolation | orig ${}
+    "workspaceKey" = can(var.extension.workspace.primary_shared_key) ? var.extension.workspace.primary_shared_key : var.log_analytics_workspaces[try(var.extension.workspace.lz_key, var.client_config.landingzone_key)][var.extension.workspace.key].primary_shared_key
   })
   settings = jsonencode({
-    "workspaceId"               = "${can(var.extension.workspace.id) ? var.extension.workspace.id : var.log_analytics_workspaces[try(var.extension.workspace.lz_key, var.client_config.landingzone_key)][var.extension.workspace.key].workspace_id}"
+    #Fixed terraform_deprecated_interpolation | orig ${}
+    "workspaceId"               = can(var.extension.workspace.id) ? var.extension.workspace.id : var.log_analytics_workspaces[try(var.extension.workspace.lz_key, var.client_config.landingzone_key)][var.extension.workspace.key].workspace_id
     "stopOnMultipleConnections" = try(var.extension.stopOnMultipleConnections, true)
   })
 }
-

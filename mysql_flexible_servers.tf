@@ -24,4 +24,3 @@ module "mysql_flexible_server" {
   }
 
 }
-

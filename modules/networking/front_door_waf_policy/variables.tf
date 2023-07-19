@@ -1,19 +1,23 @@
 variable "resource_group_name" {
-  description = "(Required) The name of the resource group where to create the resource."
   type        = string
+  description = "(Required) The name of the resource group where to create the resource."
 }
-variable "settings" {}
+variable "settings" {
+  type = any
+}
 variable "base_tags" {
   description = "Base tags for the resource to be inherited from the resource group."
   type        = map(any)
 }
 variable "tags" {
+  type    = any
   default = {}
 }
 variable "global_settings" {
+  type        = any
   description = "Global settings object (see module README.md)"
 }
 variable "front_door_waf_policies" {
+  type    = any
   default = {}
 }
-

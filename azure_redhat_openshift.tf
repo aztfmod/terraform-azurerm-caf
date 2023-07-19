@@ -28,4 +28,3 @@ module "aro" {
 output "aro" {
   value = module.aro
 }
-

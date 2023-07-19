@@ -6,4 +6,3 @@ data "azurerm_storage_account" "postgresql_auditing" {
   name                = var.storage_accounts[var.settings.extended_auditing_policy.storage_account.key].name
   resource_group_name = var.storage_accounts[var.settings.extended_auditing_policy.storage_account.key].resource_group_name
 }
-

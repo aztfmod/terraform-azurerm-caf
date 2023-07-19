@@ -229,6 +229,3 @@ front_door_waf_policies = {
 
   }
 }
-
-
-

@@ -1,3 +1,7 @@
 
-variable "key" {}
-variable "keyvault" {}
+variable "key" {
+  type = any
+}
+variable "keyvault" {
+  type = any
+}

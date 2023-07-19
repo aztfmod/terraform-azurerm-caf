@@ -1,41 +1,52 @@
 variable "global_settings" {
+  type        = any
   description = "Global settings object (see module README.md)"
 }
 variable "client_config" {
+  type        = any
   description = "Client configuration object (see module README.md)."
 }
 variable "storage_account" {
+  type        = any
   description = "Storage account configuration object"
 }
-variable "location" {
-  description = "location of the resource if different from the resource group."
-  default     = null
-}
 variable "resource_group_name" {
+  type        = string
   description = "Resource group object to deploy the virtual machine"
   default     = null
 }
 variable "resource_group" {
-  description = "Resource group object to deploy the virtual machine"
+  type        = any
+  description = "Resource group object"
+}
+variable "location" {
+  type        = string
+  description = "location of the resource if different from the resource group."
+  default     = null
 }
 variable "base_tags" {
   description = "Base tags for the resource to be inherited from the resource group."
   type        = bool
 }
 variable "vnets" {
+  type    = any
   default = {}
 }
 variable "private_endpoints" {
+  type    = any
   default = {}
 }
 variable "recovery_vaults" {
+  type    = any
   default = {}
 }
 variable "private_dns" {
+  type    = any
   default = {}
 }
 
 variable "diagnostic_profiles" {
+  type    = any
   default = {}
 }
 
@@ -56,10 +67,12 @@ variable "diagnostic_profiles_file" {
 }
 
 variable "diagnostics" {
+  type    = any
   default = {}
 }
 
 variable "managed_identities" {
+  type    = any
   default = {}
 }
 

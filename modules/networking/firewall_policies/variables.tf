@@ -1,17 +1,21 @@
 variable "settings" {
+  type        = any
   description = "(Required) Azure Firewall Policy Configuration"
 }
 
 variable "global_settings" {
+  type        = any
   description = "Global settings object (see module README.md)"
 }
 
 variable "tags" {
+  type        = any
   description = "(Optional) A mapping of tags to assign to the resource"
   default     = {}
 }
 
 variable "resource_group" {
+  type        = any
   description = "(Required) A resource_group object."
 }
 

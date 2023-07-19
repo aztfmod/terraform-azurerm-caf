@@ -46,4 +46,3 @@ azurerm_redis_caches = {
     }
   }
 }
-

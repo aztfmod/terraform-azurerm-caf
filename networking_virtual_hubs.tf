@@ -25,4 +25,3 @@ module "virtual_hubs" {
   virtual_networks    = local.combined_objects_networking
   vwan_id             = can(each.value.virtual_wan) ? local.combined_objects_virtual_wans[try(each.value.virtual_wan.lz_key, local.client_config.landingzone_key)][each.value.virtual_wan.key].virtual_wan.id : null
 }
-

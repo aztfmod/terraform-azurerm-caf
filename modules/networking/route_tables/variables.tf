@@ -1,16 +1,20 @@
-variable "name" {}
+variable "name" {
+  type = string
+}
 variable "resource_group_name" {
-  description = "(Required) The name of the resource group where to create the resource."
   type        = string
+  description = "(Required) The name of the resource group where to create the resource."
 }
 variable "location" {
-  description = "(Required) Specifies the supported Azure location where to create the resource. Changing this forces a new resource to be created."
   type        = string
+  description = "(Required) Specifies the supported Azure location where to create the resource. Changing this forces a new resource to be created."
 }
-variable "disable_bgp_route_propagation" {}
+variable "disable_bgp_route_propagation" {
+  type = any
+}
 variable "tags" {
+  type        = any
   description = "(Required) Map of tags to be applied to the resource"
-  type        = map(any)
 }
 variable "base_tags" {
   description = "Base tags for the resource to be inherited from the resource group."

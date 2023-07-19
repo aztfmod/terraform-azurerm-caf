@@ -61,4 +61,3 @@ module "role_assignment_azuread_service_principals" {
   settings             = each.value
   cloud                = var.cloud
 }
-

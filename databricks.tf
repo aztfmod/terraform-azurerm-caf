@@ -22,4 +22,3 @@ output "databricks_workspaces" {
   value = module.databricks_workspaces
 
 }
-

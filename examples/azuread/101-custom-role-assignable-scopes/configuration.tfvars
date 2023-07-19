@@ -136,4 +136,3 @@ role_mapping = {
   }
 
 }
-

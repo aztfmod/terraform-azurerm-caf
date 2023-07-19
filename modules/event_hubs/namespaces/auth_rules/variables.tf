@@ -1,5 +1,15 @@
-variable "global_settings" {}
-variable "settings" {}
-variable "resource_group_name" {}
-variable "client_config" {}
-variable "namespace_name" {}
+variable "global_settings" {
+  type = any
+}
+variable "settings" {
+  type = any
+}
+variable "resource_group_name" {
+  type = string
+}
+variable "client_config" {
+  type = any
+}
+variable "namespace_name" {
+  type = any
+}

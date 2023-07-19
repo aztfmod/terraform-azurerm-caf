@@ -54,4 +54,3 @@ resource "azapi_resource" "aro" {
     create = "60m"
   }
 }
-

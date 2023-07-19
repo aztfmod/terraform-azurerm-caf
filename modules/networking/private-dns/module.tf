@@ -13,7 +13,7 @@ resource "azurerm_private_dns_a_record" "a_records" {
   resource_group_name = local.resource_group_name
   zone_name           = azurerm_private_dns_zone.private_dns.name
   ttl                 = each.value.ttl
-  tags                = merge(local.tags, try(each.value.tags, {}))
+  tags                = local.tags
   records             = each.value.records
 }
 
@@ -24,7 +24,7 @@ resource "azurerm_private_dns_aaaa_record" "aaaa_records" {
   resource_group_name = local.resource_group_name
   zone_name           = azurerm_private_dns_zone.private_dns.name
   ttl                 = each.value.ttl
-  tags                = merge(local.tags, try(each.value.tags, {}))
+  tags                = local.tags
   records             = each.value.records
 }
 
@@ -35,8 +35,10 @@ resource "azurerm_private_dns_cname_record" "cname_records" {
   resource_group_name = local.resource_group_name
   zone_name           = azurerm_private_dns_zone.private_dns.name
   ttl                 = each.value.ttl
-  tags                = merge(local.tags, try(each.value.tags, {}))
-  record              = each.value.records
+  # azurerm_private_dns_cname_record has argument "record" (singular) so this is confusing
+  # supporting "records" for backwards compatibility, but adding "record" to align with resource argument
+  record = try(each.value.records, each.value.record)
+  tags   = local.tags
 }
 
 resource "azurerm_private_dns_mx_record" "mx_records" {
@@ -46,7 +48,7 @@ resource "azurerm_private_dns_mx_record" "mx_records" {
   resource_group_name = local.resource_group_name
   zone_name           = azurerm_private_dns_zone.private_dns.name
   ttl                 = each.value.ttl
-  tags                = merge(local.tags, try(each.value.tags, {}))
+  tags                = local.tags
 
   dynamic "record" {
     for_each = each.value.records
@@ -65,7 +67,7 @@ resource "azurerm_private_dns_ptr_record" "ptr_records" {
   resource_group_name = local.resource_group_name
   zone_name           = azurerm_private_dns_zone.private_dns.name
   ttl                 = each.value.ttl
-  tags                = merge(local.tags, try(each.value.tags, {}))
+  tags                = local.tags
   records             = each.value.records
 }
 
@@ -76,7 +78,7 @@ resource "azurerm_private_dns_srv_record" "srv_records" {
   resource_group_name = local.resource_group_name
   zone_name           = azurerm_private_dns_zone.private_dns.name
   ttl                 = each.value.ttl
-  tags                = merge(local.tags, try(each.value.tags, {}))
+  tags                = local.tags
 
   dynamic "record" {
     for_each = each.value.records
@@ -97,7 +99,7 @@ resource "azurerm_private_dns_txt_record" "txt_records" {
   resource_group_name = local.resource_group_name
   zone_name           = azurerm_private_dns_zone.private_dns.name
   ttl                 = each.value.ttl
-  tags                = merge(local.tags, try(each.value.tags, {}))
+  tags                = local.tags
 
   dynamic "record" {
     for_each = each.value.records

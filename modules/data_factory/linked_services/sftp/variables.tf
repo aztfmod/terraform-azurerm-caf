@@ -1,47 +1,69 @@
+variable "global_settings" {
+  type        = any
+  description = "Global settings object (see module README.md)"
+}
+
+variable "settings" {
+  type        = any
+  description = "Used for general parameter."
+}
+
 variable "name" {
+  type        = string
   description = "(Required) Specifies the name of the Data Factory Linked Service. Changing this forces a new resource to be created. Must be globally unique."
 }
 
 variable "data_factory_id" {
+  type        = string
   description = "(Required) The Data Factory name in which to associate the Linked Service with. Changing this forces a new resource."
 }
 
 variable "description" {
+  type        = any
   description = "(Optional) The description for the Data Factory Linked Service."
 }
 
 variable "integration_runtime_name" {
+  type        = any
   description = "(Optional) The integration runtime reference to associate with the Data Factory Linked Service."
 }
 
 variable "annotations" {
+  type        = any
   description = "(Optional) List of tags that can be used for describing the Data Factory Linked Service."
 }
 
 variable "parameters" {
+  type        = any
   description = "(Optional) A map of parameters to associate with the Data Factory Linked Service."
 }
 
 variable "additional_properties" {
+  type        = any
   description = "(Optional) A map of additional properties to associate with the Data Factory Linked Service."
 }
 
 variable "authentication_type" {
+  type        = any
   description = "(Required) The type of authentication used to connect to the web table source. Valid options are Anonymous, Basic and ClientCertificate."
 }
 
 variable "host" {
+  type        = any
   description = "(Required) The SFTP server hostname."
 }
 
 variable "port" {
+  type        = any
   description = "(Required) The TCP port number that the SFTP server uses to lsiten for client connection. Default value is 22."
 }
 
 variable "username" {
+  type        = any
   description = "(Required) The username used to log on to the SFTP server."
 }
 
 variable "password" {
+  type        = any
   description = "(Required) Password to logon to the SFTP Server for Basic Authentication."
 }

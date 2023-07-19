@@ -1,26 +1,36 @@
-variable "settings" {}
+variable "settings" {
+  type = any
+}
 variable "global_settings" {
+  type        = any
   description = "Global settings object (see module README.md)"
 }
 variable "client_config" {
+  type        = any
   description = "Client configuration object (see module README.md)."
 }
-variable "diagnostics" {}
+variable "diagnostics" {
+  type = any
+}
 variable "location" {
   description = "(Optional) Resource Location"
   default     = null
 }
 variable "resource_group_name" {
+  type        = string
   description = "Resource group object to deploy the virtual machine"
   default     = null
 }
 variable "resource_group" {
+  type        = any
   description = "Resource group object to deploy the virtual machine"
 }
 variable "public_ip_addresses" {
+  type    = any
   default = {}
 }
 variable "vnets" {
+  type    = any
   default = {}
 }
 
@@ -51,14 +61,18 @@ variable "base_tags" {
   type        = bool
 }
 variable "private_dns" {
+  type    = any
   default = {}
 }
 variable "managed_identities" {
+  type    = any
   default = {}
 }
 variable "application_gateway_waf_policies" {
+  type    = any
   default = {}
 }
 variable "keyvaults" {
+  type    = any
   default = {}
 }

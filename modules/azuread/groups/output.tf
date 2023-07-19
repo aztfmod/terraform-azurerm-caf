@@ -23,11 +23,9 @@ output "display_name" {
 output "tenant_id" {
   description = "The tenand_id of the group created."
   value       = var.tenant_id
-
 }
 
 output "rbac_id" {
   description = "This attribute is used to set the role assignment."
   value       = azuread_group.group.id
-
 }

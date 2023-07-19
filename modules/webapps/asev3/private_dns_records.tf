@@ -9,4 +9,3 @@ resource "azurerm_private_dns_a_record" "a_records" {
   records             = azurerm_app_service_environment_v3.asev3.internal_inbound_ip_addresses
   tags                = merge(local.tags, try(each.value.tags, {}))
 }
-

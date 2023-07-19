@@ -115,7 +115,6 @@ dns_zones = {
       } //srv
     }   //records
   }     //dns_zone2
-  
   dns_zone3 = {
     name               = "" // Set as empty for CI. this will creation a random_domain_name.com
     resource_group_key = "dns_re1"
@@ -133,7 +132,7 @@ dns_zones = {
             }
           }
         }
-      }  // mx record
+      } // mx record
 
       txt = {
         example = {
@@ -143,7 +142,7 @@ dns_zones = {
           ]
           ttl = 3600
         }
-      }  //txt record
+      } //txt record
     }   //records
   }     //dns_zone3
 }

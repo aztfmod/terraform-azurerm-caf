@@ -78,3 +78,11 @@ variable "base_tags" {
   description = "Base tags for the resource to be inherited from the resource group."
   type        = bool
 }
+
+variable "retention_policy" {
+  type = object({
+    days = optional(number, 0)
+  })
+  description = "(Optional) Structure describing untagged container retention policy"
+  default     = null
+}

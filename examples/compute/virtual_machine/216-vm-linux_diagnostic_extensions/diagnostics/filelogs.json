@@ -1,7 +1,7 @@
 [
   {
-      "file": "/var/log/mydaemonlog",
-      "table": "MyDaemonEvents",
-      "sinks": ""
+    "file": "/var/log/mydaemonlog",
+    "table": "MyDaemonEvents",
+    "sinks": ""
   }
 ]

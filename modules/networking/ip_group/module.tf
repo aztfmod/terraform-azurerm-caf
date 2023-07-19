@@ -11,7 +11,8 @@ resource "azurecaf_name" "ip_group" {
 }
 
 locals {
-  cidrs = try(var.settings.cidrs, try(var.settings.subnet_keys, []) == [] ? var.vnet.address_space : flatten([
+  #fixed terraform_empty_list_equality, orig=> try(var.settings.subnet_keys, []) == []
+  cidrs = try(var.settings.cidrs, length(try(var.settings.subnet_keys, [])) == 0 ? var.vnet.address_space : flatten([
     for key, subnet in var.vnet.subnets : subnet.cidr
     if contains(var.settings.subnet_keys, key)
   ]))

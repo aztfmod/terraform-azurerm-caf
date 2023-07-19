@@ -1,8 +1,19 @@
-variable "settings" {}
+variable "settings" {
+  type = any
+}
 variable "global_settings" {
+  type        = any
   description = "Global settings object (see module README.md)"
 }
-variable "vpn_gateway_id" {}
-variable "vpn_sites" {}
-variable "client_config" {}
-variable "route_tables" {}
+variable "vpn_gateway_id" {
+  type = any
+}
+variable "vpn_sites" {
+  type = any
+}
+variable "client_config" {
+  type = any
+}
+variable "route_tables" {
+  type = any
+}

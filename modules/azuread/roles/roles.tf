@@ -1,36 +1,15 @@
-resource "null_resource" "set_azure_ad_roles" {
-
-  triggers = {
-    object_id = var.object_id
-  }
-
+# azuread provider includes new resource type, no need to call shell script to assign azuread roles
+resource "azuread_directory_role" "roles" {
   for_each = {
     for key in var.azuread_roles : key => key
     if can(var.settings.version) == false
   }
+  display_name = each.key
+}
 
-  provisioner "local-exec" {
-    command     = format("%s/scripts/set_ad_role.sh", path.module)
-    interpreter = ["/bin/bash"]
-    on_failure  = fail
+resource "azuread_directory_role_assignment" "assignments" {
+  for_each = resource.azuread_directory_role.roles
 
-    environment = {
-      METHOD                      = "POST"
-      AD_ROLE_NAME                = each.key
-      SERVICE_PRINCIPAL_OBJECT_ID = var.object_id
-    }
-  }
-
-  provisioner "local-exec" {
-    command     = format("%s/scripts/set_ad_role.sh", path.module)
-    when        = destroy
-    interpreter = ["/bin/bash"]
-    on_failure  = fail
-
-    environment = {
-      METHOD                      = "DELETE"
-      AD_ROLE_NAME                = each.key
-      SERVICE_PRINCIPAL_OBJECT_ID = self.triggers.object_id
-    }
-  }
+  role_id             = resource.azuread_directory_role.roles[each.key].template_id
+  principal_object_id = var.object_id
 }

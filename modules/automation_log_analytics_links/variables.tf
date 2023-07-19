@@ -1,4 +1,5 @@
 variable "settings" {
+  type        = any
   description = "Configuration object for the Automation account Log Analytics Workspace link."
   # # optional fields supported after TF14
   # type = object({
@@ -9,17 +10,18 @@ variable "settings" {
 }
 
 variable "global_settings" {
+  type        = any
   description = "Global settings object (see module README.md)"
 }
 
 variable "resource_group_name" {
-  description = "(Required) The name of the resource group where to create the resource."
   type        = string
+  description = "(Required) The name of the resource group where to create the resource."
 }
 
 variable "workspace_id" {
+  type        = any
   description = "(Required) The Log Analytics Workspace id"
-  type        = string
 }
 
 variable "read_access_id" {

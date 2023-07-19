@@ -1,24 +1,31 @@
 variable "global_settings" {
+  type        = any
   description = "Global settings object (see module README.md)"
 }
 variable "client_config" {
+  type        = any
   description = "Client configuration object (see module README.md)."
 }
-variable "tags" {
-  default = null
-}
-variable "name" {}
-
 variable "location" {
-  description = "location of the resource if different from the resource group."
+  type        = string
+  description = "(Required) Specifies the supported Azure location where to create the resource. Changing this forces a new resource to be created."
   default     = null
 }
 variable "resource_group_name" {
-  description = "Resource group object to deploy the virtual machine"
+  type        = string
+  description = "Name of the existing resource group to deploy the virtual machine"
   default     = null
+}
+variable "tags" {
+  type    = any
+  default = null
+}
+variable "name" {
+  type = string
 }
 variable "resource_group" {
   description = "Resource group object to deploy the virtual machine"
+  type        = any
 }
 variable "base_tags" {
   description = "Base tags for the resource to be inherited from the resource group."

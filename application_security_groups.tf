@@ -17,4 +17,3 @@ output "application_security_groups" {
   value = module.application_security_groups
 
 }
-

@@ -26,11 +26,12 @@ resource "azurerm_virtual_network" "vnet" {
 
   bgp_community = try(var.settings.vnet.bgp_community, null)
 
+  # setup ddos protection plan if ddos id is defined in variable or in global_settings
   dynamic "ddos_protection_plan" {
-    for_each = var.ddos_id != "" || can(var.global_settings["ddos_protection_plan_id"]) ? [1] : []
+    for_each = can(coalesce(var.ddos_id)) || can(var.global_settings["ddos_protection_plan_id"]) ? [1] : []
 
     content {
-      id     = var.ddos_id != "" ? var.ddos_id : var.global_settings["ddos_protection_plan_id"]
+      id     = can(coalesce(var.ddos_id)) ? var.ddos_id : var.global_settings["ddos_protection_plan_id"]
       enable = true
     }
   }
@@ -124,9 +125,9 @@ locals {
       for obj in try(var.settings.vnet.dns_servers_keys, {}) : #o.ip
       coalesce(
         try(var.remote_dns[obj.resource_type][obj.lz_key][obj.key].virtual_hub[obj.interface_index].private_ip_address, null),
-        try(var.remote_dns[obj.resource_type][obj.lz_key][obj.key].virtual_hub.0.private_ip_address, null),
+        try(var.remote_dns[obj.resource_type][obj.lz_key][obj.key].virtual_hub[0].private_ip_address, null),
         try(var.remote_dns[obj.resource_type][obj.lz_key][obj.key].ip_configuration[obj.interface_index].private_ip_address, null),
-        try(var.remote_dns[obj.resource_type][obj.lz_key][obj.key].ip_configuration.0.private_ip_address, null)
+        try(var.remote_dns[obj.resource_type][obj.lz_key][obj.key].ip_configuration[0].private_ip_address, null)
       )
       if contains(["azurerm_firewall", "azurerm_firewalls"], obj.resource_type)
     ],

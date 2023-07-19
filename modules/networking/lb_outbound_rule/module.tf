@@ -24,5 +24,4 @@ resource "azurerm_lb_outbound_rule" "lb" {
       name = try(frontend_ip_configuration.value.name, null)
     }
   }
-
 }

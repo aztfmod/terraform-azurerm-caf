@@ -15,9 +15,10 @@ output "service_principal_password" {
 output "end_date" {
   value = azuread_service_principal_password.pwd.end_date
 }
-output "end_date_relative" {
-  value = azuread_service_principal_password.pwd.end_date_relative
-}
+# commented out b/c attributes no longer valid with azuread provider 2.30+
+# output "end_date_relative" {
+#   value = azuread_service_principal_password.pwd.end_date_relative
+# }
 output "start_date" {
   value = azuread_service_principal_password.pwd.start_date
 }

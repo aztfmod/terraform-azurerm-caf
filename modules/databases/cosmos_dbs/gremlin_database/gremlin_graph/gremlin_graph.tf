@@ -45,4 +45,3 @@ resource "azurerm_cosmosdb_gremlin_graph" "graph" {
     }
   }
 }
-

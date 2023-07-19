@@ -34,7 +34,6 @@ storage_containers = {
   }
 }
 
-
 role_mapping = {
   built_in_role_mapping = {
     storage_containers = {
@@ -89,7 +88,6 @@ storage_account_blobs = {
     }
   }
 }
-
 
 managed_identities = {
   msi1 = {

@@ -1,4 +1,5 @@
 variable "build_resource_group_name" {
+  type    = any
   default = {}
 }
 variable "client_config" {}
@@ -17,13 +18,14 @@ variable "key_vault_id" {}
 variable "tenant_id" {}
 variable "subscription" {}
 variable "managed_identities" {
+  type    = any
   default = {}
 }
 variable "vnet_name" {
+  type    = any
   default = {}
 }
 variable "subnet_name" {
+  type    = any
   default = {}
 }
-
-

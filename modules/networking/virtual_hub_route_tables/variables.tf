@@ -1,5 +1,15 @@
-variable "client_config" {}
-variable "name" {}
-variable "remote_objects" {}
-variable "settings" {}
-variable "virtual_hub" {}
+variable "client_config" {
+  type = any
+}
+variable "name" {
+  type = string
+}
+variable "remote_objects" {
+  type = any
+}
+variable "settings" {
+  type = any
+}
+variable "virtual_hub" {
+  type = any
+}

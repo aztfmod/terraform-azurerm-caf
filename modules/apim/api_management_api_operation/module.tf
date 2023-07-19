@@ -13,7 +13,7 @@ resource "azurerm_api_management_api_operation" "apim" {
     content {
       description = try(request.value.description, null)
       dynamic "header" {
-        for_each = try(request.value.headers, {})
+        for_each = try(request.value.headers, null) != null ? request.value.headers : {}
         content {
           name          = header.value.name
           required      = header.value.required
@@ -37,7 +37,7 @@ resource "azurerm_api_management_api_operation" "apim" {
         }
       }
       dynamic "query_parameter" {
-        for_each = try(request.value.query_parameters, {})
+        for_each = try(request.value.query_parameters, null) != null ? request.value.query_parameters : {}
         content {
           name          = query_parameter.value.name
           required      = query_parameter.value.required
@@ -65,7 +65,7 @@ resource "azurerm_api_management_api_operation" "apim" {
         content {
           content_type = representation.value.content_type
           dynamic "form_parameter" {
-            for_each = try(representation.value.form_parameters, {})
+            for_each = try(var.settings.form_parameters, null) != null ? var.settings.form_parameters : {}
             content {
               name          = form_parameter.value.name
               required      = form_parameter.value.required
@@ -110,7 +110,7 @@ resource "azurerm_api_management_api_operation" "apim" {
       status_code = response.value.status_code
       description = try(response.value.description, null)
       dynamic "header" {
-        for_each = try(response.value.headers, {})
+        for_each = try(var.settings.headers, null) != null ? var.settings.headers : {}
         content {
           name          = header.value.name
           required      = header.value.required
@@ -138,7 +138,7 @@ resource "azurerm_api_management_api_operation" "apim" {
         content {
           content_type = representation.value.content_type
           dynamic "form_parameter" {
-            for_each = try(representation.value.form_parameters, {})
+            for_each = try(var.settings.form_parameters, null) != null ? var.settings.form_parameters : {}
             content {
               name          = form_parameter.value.name
               required      = form_parameter.value.required
@@ -178,7 +178,7 @@ resource "azurerm_api_management_api_operation" "apim" {
     }
   }
   dynamic "template_parameter" {
-    for_each = try(var.settings.template_parameters, {})
+    for_each = try(var.settings.template_parameters, null) != null ? var.settings.template_parameters : {}
     content {
       name          = template_parameter.value.name
       required      = template_parameter.value.required

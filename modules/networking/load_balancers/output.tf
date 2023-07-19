@@ -19,14 +19,14 @@ output "frontend_ip_configuration" {
 output "bap" {
   value = {
     for backend_address_pool_name, value in var.settings : backend_address_pool_name => {
-      id   = azurerm_lb_backend_address_pool.backend_address_pool.0.id
-      name = azurerm_lb_backend_address_pool.backend_address_pool.0.name
+      id   = azurerm_lb_backend_address_pool.backend_address_pool[0].id
+      name = azurerm_lb_backend_address_pool.backend_address_pool[0].name
     }
   }
 }
 
 output "backend_address_pool_id" {
-  value = azurerm_lb_backend_address_pool.backend_address_pool.0.id
+  value = azurerm_lb_backend_address_pool.backend_address_pool[0].id
 }
 
 output "probes" {

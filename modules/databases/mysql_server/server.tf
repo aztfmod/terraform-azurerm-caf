@@ -7,7 +7,7 @@ resource "azurerm_mysql_server" "mysql" {
   sku_name            = var.settings.sku_name
 
   administrator_login          = var.settings.administrator_login
-  administrator_login_password = try(var.settings.administrator_login_password, azurerm_key_vault_secret.mysql_admin_password.0.value)
+  administrator_login_password = try(var.settings.administrator_login_password, azurerm_key_vault_secret.mysql_admin_password[0].value)
 
   auto_grow_enabled                 = try(var.settings.auto_grow_enabled, true)
   storage_mb                        = var.settings.storage_mb
@@ -56,7 +56,7 @@ resource "azurerm_key_vault_secret" "mysql_admin_password" {
   count = try(var.settings.administrator_login_password, null) == null ? 1 : 0
 
   name         = format("%s-password", azurecaf_name.mysql.result)
-  value        = random_password.mysql_admin.0.result
+  value        = random_password.mysql_admin[0].result
   key_vault_id = var.keyvault_id
 
   lifecycle {

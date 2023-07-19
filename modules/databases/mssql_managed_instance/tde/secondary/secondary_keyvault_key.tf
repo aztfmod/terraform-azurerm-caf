@@ -46,4 +46,3 @@ resource "null_resource" "delete_sec_tde_key" {
   }
 
 }
-

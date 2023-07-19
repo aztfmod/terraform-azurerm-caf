@@ -101,7 +101,6 @@ locals {
     storage_containers = local.combined_objects_storage_containers
   }
 
-
   services_roles = {
     aks_clusters                               = local.combined_objects_aks_clusters
     aks_ingress_application_gateway_identities = local.aks_ingress_application_gateway_identities
@@ -163,6 +162,8 @@ locals {
     wvd_applications                           = local.combined_objects_wvd_applications
     wvd_host_pools                             = local.combined_objects_wvd_host_pools
     wvd_workspaces                             = local.combined_objects_wvd_workspaces
+    log_analytics                              = local.current_objects_log_analytics
+    route_tables                               = local.combined_objects_route_tables
   }
 
   current_objects_log_analytics = tomap(

@@ -28,7 +28,7 @@ cosmos_dbs = {
     enable_automatic_failover = "true"
 
     #This parameter needs for more correct work with Cosmos custom roles
-    access_key_metadata_writes_enabled  = false 
+    access_key_metadata_writes_enabled = false
 
     consistency_policy = {
       consistency_level       = "BoundedStaleness"
@@ -45,7 +45,7 @@ cosmos_dbs = {
       }
     }
 
-    local_authentication_disabled =  true
+    local_authentication_disabled = true
 
     sql_databases = {
       databases_re1 = {

@@ -1,26 +1,33 @@
 variable "global_settings" {
+  type    = any
   default = {}
 }
 variable "settings" {
+  type    = any
   default = {}
 }
 variable "client_config" {
+  type        = any
   description = "Client configuration object (see module README.md)."
 }
 variable "keyvaults" {
+  type    = any
   default = {}
 }
 
 variable "resources" {
+  type        = any
   description = "Application ID the credentials will be attached to."
 }
 
 variable "credential_policy" {
+  type        = any
   description = "Custom credential policy to apply."
   default     = null
 }
 
 variable "policy" {
+  type        = any
   description = "Default credential policy to apply."
   default = {
     # Length of the password

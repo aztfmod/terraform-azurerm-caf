@@ -84,6 +84,7 @@ locals {
     batch_certificates                  = try(var.compute.batch_certificates, {})
     batch_jobs                          = try(var.compute.batch_jobs, {})
     batch_pools                         = try(var.compute.batch_pools, {})
+    container_app_environment           = try(var.compute.container_app_environment, {})
     container_groups                    = try(var.compute.container_groups, {})
     dedicated_hosts                     = try(var.compute.dedicated_hosts, {})
     dedicated_host_groups               = try(var.compute.dedicated_host_groups, {})
@@ -218,8 +219,8 @@ locals {
     inherit_tags       = try(var.global_settings.inherit_tags, false)
     passthrough        = try(var.global_settings.passthrough, false)
     prefix             = try(var.global_settings.prefix, null)
-    prefix_with_hyphen = try(var.global_settings.prefix_with_hyphen, format("%s-", try(var.global_settings.prefix, try(var.global_settings.prefixes[0], random_string.prefix.0.result))))
-    prefixes           = try(var.global_settings.prefix, null) == "" ? null : try([var.global_settings.prefix], try(var.global_settings.prefixes, [random_string.prefix.0.result]))
+    prefix_with_hyphen = try(var.global_settings.prefix_with_hyphen, format("%s-", try(var.global_settings.prefix, try(var.global_settings.prefixes[0], random_string.prefix[0].result))))
+    prefixes           = try(var.global_settings.prefix, null) == "" ? null : try([var.global_settings.prefix], try(var.global_settings.prefixes, [random_string.prefix[0].result]))
     random_length      = try(var.global_settings.random_length, 0)
     regions            = try(var.global_settings.regions, null)
     tags               = try(var.global_settings.tags, null)
@@ -301,6 +302,7 @@ locals {
     network_security_security_rules                         = try(var.networking.network_security_security_rules, {})
     network_watchers                                        = try(var.networking.network_watchers, {})
     private_dns                                             = try(var.networking.private_dns, {})
+    private_dns_records                                     = try(var.networking.private_dns_records, {})
     private_dns_resolvers                                   = try(var.networking.private_dns_resolvers, {})
     private_dns_resolver_inbound_endpoints                  = try(var.networking.private_dns_resolver_inbound_endpoints, {})
     private_dns_resolver_outbound_endpoints                 = try(var.networking.private_dns_resolver_outbound_endpoints, {})
@@ -446,6 +448,6 @@ locals {
     iot_security_device_group           = try(var.iot.iot_security_device_group, {})
     iot_central_application             = try(var.iot.iot_central_application, {})
   }
-  
-  powerbi_embedded = try(var.powerbi_embedded, {})  
+
+  powerbi_embedded = try(var.powerbi_embedded, {})
 }

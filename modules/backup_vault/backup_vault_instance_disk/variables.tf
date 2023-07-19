@@ -1,9 +1,13 @@
 variable "location" {
-  description = "(Required) Specifies the supported Azure location where to create the resource. Changing this forces a new resource to be created."
   type        = string
+  description = "(Required) Specifies the supported Azure location where to create the resource. Changing this forces a new resource to be created."
 }
-variable "settings" {}
-variable "vault_id" {}
+variable "settings" {
+  type = any
+}
+variable "vault_id" {
+  type = any
+}
 variable "disk_id" {
   description = "Identifier of the disk to be used."
   type        = string

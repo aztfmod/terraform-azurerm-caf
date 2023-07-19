@@ -12,4 +12,3 @@ resource "azurerm_dashboard" "egress_dashboard" {
       fw_id  = var.fw_id
   })
 }
-

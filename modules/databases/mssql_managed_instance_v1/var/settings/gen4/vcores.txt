@@ -1,0 +1,30 @@
+variable "vcores" {
+  description = "The number of vCores for Gen4. Allowed values: 8, 16, 24"
+  default     = 8
+  nullable    = false
+
+  validation {
+    condition = contains(
+      [
+
+        8,
+        16,
+        24
+      ],
+      var.vcores
+    )
+    error_message = format("Not supported value: '%s'. \nAdjust your configuration file with a supported value: %s",
+      var.vcores,
+      join(", ",
+        [
+        8,
+        16,
+        24
+        ]
+      )
+    )
+  }
+}
+output "vCores" {
+  value = var.vcores
+}

@@ -10,7 +10,8 @@ resource "azuread_group" "group" {
   // https://github.com/hashicorp/terraform-provider-azuread/issues/464
   // https://github.com/microsoftgraph/msgraph-metadata/issues/92
   // tldr: If your group is initially owned by a service principal and you add a user to the owners, you are not able to remove the user from the owners again. At least one user has to stay owner.
-  security_enabled  = try(var.azuread_groups.security_enabled, true)
+  # if assignable_to_role is true, security_enabled must be true
+  security_enabled  = try(var.azuread_groups.security_enabled, var.azuread_groups.assignable_to_role, true)
   visibility        = try(var.azuread_groups.visibility, null)
   mail_enabled      = try(var.azuread_groups.mail_enabled, null)
   writeback_enabled = try(var.azuread_groups.writeback_enabled, null)
@@ -40,4 +41,3 @@ locals {
     ]
   )
 }
-

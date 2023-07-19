@@ -16,4 +16,3 @@ resource "azurerm_logic_app_integration_account" "ia" {
   sku_name            = var.settings.sku_name
   tags                = merge(local.tags, lookup(var.settings, "tags", {}))
 }
-
