@@ -1094,6 +1094,9 @@ variable "web_pubsub_hubs" {
 variable "aadb2c_directory" {
   default = {}
 }
+variable "powerbi_embedded" {
+  default = {}
+}
 variable "preview_features" {
   default = {}
 }

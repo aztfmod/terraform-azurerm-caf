@@ -134,6 +134,7 @@
     "postgresql_server/101-vnet-rule-postgresql",
     "postgresql_server/102-private-endpoint-postgresql",
     "postgresql_server/103-private-endpoint-with-fw-rule",
+    "powerbi_embedded/100-simple-powerbi",
     "purview/100-purview_account",
     "purview/101-purview_account_private_link",
     "recovery_vault/101-simple-asrv",

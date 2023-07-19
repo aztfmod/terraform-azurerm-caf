@@ -5,14 +5,14 @@ module "virtual_machines" {
   depends_on = [
     module.availability_sets,
     module.dynamic_keyvault_secrets,
-    module.keyvault_access_policies,
     module.keyvault_access_policies_azuread_apps,
-    module.proximity_placement_groups,
+    module.keyvault_access_policies,
     module.network_security_groups,
-    module.storage_account_blobs,
-    module.packer_service_principal,
     module.packer_build,
-    module.proximity_placement_groups
+    module.packer_service_principal,
+    module.proximity_placement_groups,
+    module.storage_account_blobs,
+    time_sleep.azurerm_role_assignment_for.0
   ]
   for_each = local.compute.virtual_machines
 

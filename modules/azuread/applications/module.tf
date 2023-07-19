@@ -102,7 +102,7 @@ resource "azuread_application" "app" {
 
         content {
           access_token_issuance_enabled = can(var.settings.oauth2_allow_implicit_flow) || can(implicit_grant.value.access_token_issuance_enabled) ? try(var.settings.oauth2_allow_implicit_flow, implicit_grant.value.access_token_issuance_enabled) : null
-          id_token_issuance_enabled     = try(implicit_grant.value.access_token_issuance_enabled, null)
+          id_token_issuance_enabled     = try(implicit_grant.value.id_token_issuance_enabled, null)
         }
       }
     }

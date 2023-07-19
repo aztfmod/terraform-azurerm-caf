@@ -1,6 +1,6 @@
 locals {
   # Need to update the storage tags if the environment tag is updated with the rover command line
-  caf_tags = try(var.settings.tags, null) == null ? null : try(var.settings.tags.environment, null) == null ? var.settings.tags : merge(lookup(var.settings, "tags", {}), { "environment" : var.global_settings.environment })
+  caf_tags = can(var.settings.tags.caf_environment) || can(var.settings.tags.environment) ? merge(lookup(var.settings, "tags", {}), { "caf_environment" : var.global_settings.environment }) : {}
 }
 
 # naming convention
