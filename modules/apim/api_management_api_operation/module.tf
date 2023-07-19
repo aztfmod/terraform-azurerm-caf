@@ -98,16 +98,6 @@ resource "azurerm_api_management_api_operation" "apim" {
               external_value = try(example.value.external_value, null)
             }
           }
-          dynamic "example" {
-            for_each = try(var.settings.example, {})
-            content {
-              name           = example.value.name
-              summary        = try(example.value.summary, null)
-              description    = try(example.value.description, null)
-              value          = try(example.value.value, null)
-              external_value = try(example.value.external_value, null)
-            }
-          }
           schema_id = try(representation.value.schema_id, null)
           type_name = try(representation.value.type_name, null)
         }
@@ -175,16 +165,6 @@ resource "azurerm_api_management_api_operation" "apim" {
             for_each = try(representation.value.examples, {})
             content {
               name           = try(example.value.name, null)
-              summary        = try(example.value.summary, null)
-              description    = try(example.value.description, null)
-              value          = try(example.value.value, null)
-              external_value = try(example.value.external_value, null)
-            }
-          }
-          dynamic "example" {
-            for_each = try(var.settings.example, {})
-            content {
-              name           = example.value.name
               summary        = try(example.value.summary, null)
               description    = try(example.value.description, null)
               value          = try(example.value.value, null)
