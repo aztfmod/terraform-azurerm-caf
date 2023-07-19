@@ -7,6 +7,7 @@ module "example" {
 
   current_landingzone_key               = var.landingzone.key
   custom_role_definitions               = var.custom_role_definitions
+  data_sources                          = var.data_sources
   event_hub_auth_rules                  = var.event_hub_auth_rules
   event_hub_consumer_groups             = var.event_hub_consumer_groups
   event_hub_namespace_auth_rules        = var.event_hub_namespace_auth_rules
