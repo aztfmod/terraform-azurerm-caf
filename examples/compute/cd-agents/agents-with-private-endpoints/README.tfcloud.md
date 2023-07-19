@@ -84,7 +84,7 @@ rover \
   -env xxx \
   -p ${TF_DATA_DIR}/bootstrap.tfstate.tfplan \
   -tf_cloud_force_run \
-  -a plan 
+  -a plan
 
 # once finished execute the apply
 
@@ -125,7 +125,7 @@ route
 You should see the following routes:
 
 ```bash
-➜  caf git:(main) route                                                                                        
+➜  caf git:(main) route
 Kernel IP routing table
 Destination     Gateway         Genmask         Flags Metric Ref    Use Iface
 default         172.17.0.1      0.0.0.0         UG    0      0        0 eth0
@@ -306,7 +306,7 @@ sudo docker exec agent-tfe-4 ps | grep 'terraform'
 ```
 
 Supported scenarios:
-- Increase and decrease the number of agents 
+- Increase and decrease the number of agents
 - If more agents are deployed that the max number of licensed agents, the additional agents are terminated in error state
 - Change the rover image (will remove and redeploy the docker containers) to upgrade Terraform and the Agent version https://hub.docker.com/repository/docker/aztfmod/rover-agent/tags?page=1&ordering=last_updated
 - Change the content of the script (will remove and redeploy the docker containers)

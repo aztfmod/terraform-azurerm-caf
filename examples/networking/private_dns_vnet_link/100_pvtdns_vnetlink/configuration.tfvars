@@ -22,7 +22,7 @@ resource_groups = {
 private_dns_vnet_links = {
   vnet_pvtdns_link1 = {
     #
-    # 
+    #
     #
     version  = "v1"
     vnet_key = "vnet_test"
