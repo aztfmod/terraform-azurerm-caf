@@ -68,7 +68,10 @@ variable "image_definitions" {
 }
 variable "disk_encryption_sets" {}
 
-variable "load_balancers" {}
+variable "load_balancers" {
+  default = {}
+
+}
 variable "lbs" {
   default = {}
 }

@@ -4,11 +4,11 @@ module "virtual_machine_scale_sets" {
   source = "./modules/compute/virtual_machine_scale_set"
   depends_on = [
     module.availability_sets,
-    module.dynamic_keyvault_secrets,
+    #module.dynamic_keyvault_secrets,
     module.keyvault_access_policies,
     module.keyvault_access_policies_azuread_apps,
     module.proximity_placement_groups,
-    module.load_balancers,
+    #module.load_balancers,
     module.application_gateways,
     module.application_security_groups,
     module.packer_service_principal,
@@ -28,16 +28,16 @@ module "virtual_machine_scale_sets" {
   global_settings             = local.global_settings
   image_definitions           = local.combined_objects_image_definitions
   keyvaults                   = local.combined_objects_keyvaults
-  load_balancers              = local.combined_objects_load_balancers
-  managed_identities          = local.combined_objects_managed_identities
-  network_security_groups     = try(module.network_security_groups, {})
-  lbs                         = local.combined_objects_lb
-  lb_backend_address_pool     = local.combined_objects_lb_backend_address_pool
-  proximity_placement_groups  = local.combined_objects_proximity_placement_groups
-  public_ip_addresses         = local.combined_objects_public_ip_addresses
-  recovery_vaults             = local.combined_objects_recovery_vaults
-  settings                    = each.value
-  vnets                       = local.combined_objects_networking
+  #load_balancers              = local.combined_objects_load_balancers
+  managed_identities      = local.combined_objects_managed_identities
+  network_security_groups = try(module.network_security_groups, {})
+  #lbs                         = local.combined_objects_lb
+  #lb_backend_address_pool     = local.combined_objects_lb_backend_address_pool
+  proximity_placement_groups = local.combined_objects_proximity_placement_groups
+  public_ip_addresses        = local.combined_objects_public_ip_addresses
+  recovery_vaults            = local.combined_objects_recovery_vaults
+  settings                   = each.value
+  vnets                      = local.combined_objects_networking
 
   # if boot_diagnostics_storage_account_key is points to a valid storage account, pass the endpoint
   # if boot_diagnostics_storage_account_key is empty string, pass empty string

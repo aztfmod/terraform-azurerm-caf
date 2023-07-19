@@ -11,11 +11,13 @@ resource "azurecaf_name" "subnet" {
 
 resource "azurerm_subnet" "subnet" {
 
-  name                                          = azurecaf_name.subnet.result
-  resource_group_name                           = var.resource_group_name
-  virtual_network_name                          = var.virtual_network_name
-  address_prefixes                              = var.address_prefixes
-  service_endpoints                             = var.service_endpoints
+  name                 = azurecaf_name.subnet.result
+  resource_group_name  = var.resource_group_name
+  virtual_network_name = var.virtual_network_name
+  address_prefixes     = var.address_prefixes
+  service_endpoints    = var.service_endpoints
+  //An argument named "private_endpoint_network_policies_enabled" is not expected here.
+  //An argument named "private_link_service_network_policies_enabled" is not expected here.
   private_endpoint_network_policies_enabled     = try(var.private_endpoint_network_policies_enabled, null)
   private_link_service_network_policies_enabled = try(var.private_link_service_network_policies_enabled, null)
 
