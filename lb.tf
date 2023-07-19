@@ -146,10 +146,8 @@ module "lb_rule" {
   probe_id = try(each.value.probe_id, null) != null ? each.value.probe_id : try(each.value.probe.key, null) != null ? local.combined_objects_lb_probe[try(each.value.probe.lz_key, local.client_config.landingzone_key)][each.value.probe.key].id : null
 
   remote_objects = {
-    resource_group          = local.combined_objects_resource_groups
-    lb                      = local.combined_objects_lb
-    lb_backend_address_pool = local.combined_objects_lb_backend_address_pool
-    lb_probe                = local.combined_objects_lb_probe
+    resource_group = local.combined_objects_resource_groups
+    lb             = local.combined_objects_lb
   }
 }
 output "lb_rule" {
