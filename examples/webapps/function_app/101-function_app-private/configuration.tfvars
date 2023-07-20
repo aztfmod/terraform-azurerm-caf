@@ -25,6 +25,7 @@ app_service_plans = {
   asp1 = {
     resource_group_key = "funapp"
     name               = "asp-simple"
+    kind               = "linux"
 
     sku = {
       tier = "Standard"
