@@ -7,7 +7,7 @@
 
 virtual_machines = {
 
-  vm1 = {
+  vm = {
     region             = "australiaeast"
     resource_group_key = "my_rg"
     provision_vm_agent = true
@@ -37,14 +37,17 @@ virtual_machines = {
 
     virtual_machine_settings = {
       windows = {
-        name           = "Merck-vm1"
-        size           = "Standard_D4s_v3"
-        admin_username = "adminuser"
-        zone           = "1"
+        name = "vm"
+        size = "Standard_D4s_v3"
+        # admin_username = "adminuser"
+        # Get existing username and password from keyvault secret's value set in the above attribute keyvault_key
+        admin_username_key = "username" # name of the secret in the keyvault
+        admin_password_key = "password" # name of the secret in the keyvault
+        zone               = "1"
 
         network_interface_keys = ["nic0"]
         os_disk = {
-          name                 = "Merck-vm1-os"
+          name                 = "vm-os"
           caching              = "ReadWrite"
           storage_account_type = "Premium_LRS"
         }
@@ -59,7 +62,7 @@ virtual_machines = {
 
     data_disks = {
       db_data1 = {
-        name                 = "datavm1"
+        name                 = "datavm"
         storage_account_type = "Premium_LRS"
         create_option        = "Empty"
         disk_size_gb         = "128"
