@@ -56,7 +56,7 @@ resource "azurerm_application_gateway" "agw" {
       verify_client_cert_issuer_dn     = try(ssl_profile.verify_client_cert_issuer_dn, null)
 
       dynamic "ssl_policy" {
-        for_each = try(ssl_profile.value.ssl_policy, null) == null ? [] : [1]
+        for_each = try(ssl_profile.value.ssl_policy, null) == null ? [] : [ssl_profile.value.ssl_policy]
         content {
           disabled_protocols   = try(ssl_policy.value.disabled_protocols, null)
           policy_type          = try(ssl_policy.value.policy_type, null)
