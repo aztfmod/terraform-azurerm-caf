@@ -446,6 +446,6 @@ locals {
     iot_security_device_group           = try(var.iot.iot_security_device_group, {})
     iot_central_application             = try(var.iot.iot_central_application, {})
   }
-  
-  powerbi_embedded = try(var.powerbi_embedded, {})  
+
+  powerbi_embedded = try(var.powerbi_embedded, {})
 }

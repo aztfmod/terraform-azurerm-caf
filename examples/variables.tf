@@ -1090,3 +1090,6 @@ variable "cosmosdb_role_mapping" {
 variable "cosmosdb_role_definitions" {
   default = {}
 }
+variable "data_sources" {
+  default = {}
+}
