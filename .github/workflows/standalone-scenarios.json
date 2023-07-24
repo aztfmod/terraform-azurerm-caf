@@ -1,6 +1,7 @@
 {
   "config_files": [
     "app_config/100-simple",
+    "app_config/101-private-link",
     "app_gateway/100-simple-app-gateway",
     "app_gateway/101-private-public",
     "app_gateway/102-waf-policy",
