@@ -6,7 +6,6 @@ terraform {
 
 
 provider "azurerm" {
-  skip_provider_registration = true
   features {
     api_management {
       purge_soft_delete_on_destroy = var.provider_azurerm_features_api_management.purge_soft_delete_on_destroy
