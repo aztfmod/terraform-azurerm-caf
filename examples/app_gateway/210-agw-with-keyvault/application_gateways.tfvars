@@ -28,7 +28,7 @@ application_gateways = {
         name = "SecureTLS"
         ssl_policy = {
           policy_type = "Predefined"
-          policy_name = "AppGwSslPolicy20220101S"
+          policy_name = "AppGwSslPolicy20170401S"
         }
       }
     }
