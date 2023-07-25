@@ -232,6 +232,9 @@ variable "mssql_mi_secondary_tdes" {
 variable "storage_accounts" {
   default = {}
 }
+variable "storage_account_file_shares" {
+  default = {}
+}
 variable "azuread_credential_policies" {
   default = {}
 }
@@ -1027,6 +1030,9 @@ variable "web_pubsub_hubs" {
 variable "aadb2c_directory" {
   default = {}
 }
+variable "powerbi_embedded" {
+  default = {}
+}
 variable "preview_features" {
   default = {}
 }
@@ -1085,5 +1091,8 @@ variable "cosmosdb_role_mapping" {
   default = {}
 }
 variable "cosmosdb_role_definitions" {
+  default = {}
+}
+variable "data_sources" {
   default = {}
 }

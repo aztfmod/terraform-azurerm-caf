@@ -14,3 +14,7 @@ variable "members" {
 variable "mssql_servers" {
   default = {}
 }
+variable "azuread_groups" {
+  default     = {}
+  description = "Support Azure AD group member of an Azure AD group."
+}

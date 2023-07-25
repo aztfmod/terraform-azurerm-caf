@@ -48,7 +48,7 @@ resource "time_sleep" "azurerm_role_assignment_for" {
   ) > 0 ? 1 : 0
 
   # 2 mins timer on creation
-  create_duration = "2m"
+  create_duration = "3m"
 }
 
 resource "time_sleep" "azurerm_role_assignment_for_deferred" {
@@ -98,7 +98,8 @@ locals {
 
   # Nested objects that must be processed after the services_roles
   services_roles_deferred = {
-    storage_containers = local.combined_objects_storage_containers
+    storage_containers          = local.combined_objects_storage_containers
+    storage_account_file_shares = local.combined_objects_storage_account_file_shares
   }
 
 
@@ -120,7 +121,6 @@ locals {
     azuread_apps                               = local.combined_objects_azuread_apps
     azuread_groups                             = local.combined_objects_azuread_groups
     azuread_service_principals                 = local.combined_objects_azuread_service_principals
-    azuread_users                              = local.combined_objects_azuread_users
     azurerm_firewalls                          = local.combined_objects_azurerm_firewalls
     backup_vaults                              = local.combined_objects_backup_vaults
     batch_accounts                             = local.combined_objects_batch_accounts
