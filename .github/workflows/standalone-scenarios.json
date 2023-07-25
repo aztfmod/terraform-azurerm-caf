@@ -1,6 +1,7 @@
 {
   "config_files": [
     "app_config/100-simple",
+    "app_config/101-private-link",
     "app_gateway/100-simple-app-gateway",
     "app_gateway/101-private-public",
     "app_gateway/102-waf-policy",
@@ -134,6 +135,7 @@
     "postgresql_server/101-vnet-rule-postgresql",
     "postgresql_server/102-private-endpoint-postgresql",
     "postgresql_server/103-private-endpoint-with-fw-rule",
+    "powerbi_embedded/100-simple-powerbi",
     "purview/100-purview_account",
     "purview/101-purview_account_private_link",
     "recovery_vault/101-simple-asrv",

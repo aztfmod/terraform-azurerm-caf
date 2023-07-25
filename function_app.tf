@@ -43,6 +43,6 @@ data "azurerm_storage_account" "function_apps" {
     if try(value.storage_account_key, null) != null
   }
 
-  name                = module.storage_accounts[each.value.storage_account_key].name
-  resource_group_name = module.storage_accounts[each.value.storage_account_key].resource_group_name
+  name                = local.combined_objects_storage_accounts[try(each.value.lz_key, local.client_config.landingzone_key)][each.value.storage_account_key].name
+  resource_group_name = local.combined_objects_storage_accounts[try(each.value.lz_key, local.client_config.landingzone_key)][each.value.storage_account_key].resource_group_name
 }
