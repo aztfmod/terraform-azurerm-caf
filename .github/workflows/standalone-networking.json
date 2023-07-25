@@ -1,5 +1,14 @@
 {
   "config_files": [
+    "networking/app_gateway/100-simple-app-gateway",
+    "networking/app_gateway/101-private-public",
+    "networking/app_gateway/102-waf-policy",
+    "networking/app_gateway/103-public-only",
+    "networking/app_gateway/209-agw-with-keyvault-ssl-policy",
+    "networking/app_gateway/210-agw-with-keyvault",
+    "networking/app_gateway/211-agw-with-ssl-redirect",
+    "networking/app_gateway/301-agw-v1",
+    "networking/app_gateway/302-listener-ssl-policy",
     "networking/bastion/100-bastion-with-vm",
     "networking/cdn/100-simple-cdn",
     "networking/dns_zones/100-simple-dns_zone",
