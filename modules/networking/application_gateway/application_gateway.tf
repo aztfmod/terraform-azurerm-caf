@@ -244,10 +244,16 @@ resource "azurerm_application_gateway" "agw" {
     }
   }
 
-
-  # ssl_policy {
-
-  # }
+  dynamic "ssl_policy" {
+    for_each = try(var.settings.ssl_policy, null) == null ? [] : [1]
+    content {
+      disabled_protocols   = try(var.settings.ssl_policy.disabled_protocols, null)
+      policy_type          = try(var.settings.ssl_policy.policy_type, null)
+      policy_name          = try(var.settings.ssl_policy.policy_name, null)
+      cipher_suites        = try(var.settings.ssl_policy.cipher_suites, null)
+      min_protocol_version = try(var.settings.ssl_policy.min_protocol_version, null)
+    }
+  }
 
   # probe {
 
