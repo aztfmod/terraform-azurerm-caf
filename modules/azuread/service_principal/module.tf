@@ -3,7 +3,7 @@ resource "azuread_service_principal" "app" {
   application_id               = var.application_id
   app_role_assignment_required = try(var.settings.app_role_assignment_required, false)
   tags                         = try(var.settings.tags, null)
-  
+
   owners = concat(
     try(var.settings.owners, []),
     [
