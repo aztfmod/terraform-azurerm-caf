@@ -72,3 +72,18 @@ variable "dynamic_app_settings" {
 variable "remote_objects" {
   default = null
 }
+variable "private_dns" {
+  default = {}
+}
+variable "private_endpoints" {
+  default  = {}
+  nullable = false
+}
+variable "virtual_subnets" {
+  description = "Map of virtual_subnets objects"
+  default     = {}
+  nullable    = false
+}
+variable "vnets" {
+  default = {}
+}
