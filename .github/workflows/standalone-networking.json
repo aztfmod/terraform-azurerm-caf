@@ -9,6 +9,7 @@
     "networking/app_gateway/211-agw-with-ssl-redirect",
     "networking/app_gateway/301-agw-v1",
     "networking/app_gateway/302-listener-ssl-policy",
+    "networking/app_gateway/303-listener-ssl-policy-redirect",
     "networking/bastion/100-bastion-with-vm",
     "networking/cdn/100-simple-cdn",
     "networking/dns_zones/100-simple-dns_zone",

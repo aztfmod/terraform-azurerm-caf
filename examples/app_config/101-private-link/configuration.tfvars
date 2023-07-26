@@ -49,8 +49,8 @@ vnets = {
     }
     subnets = {
       appconfig_endpoints = {
-        name              = "appconfig"
-        cidr              = ["10.1.100.64/26"]
+        name = "appconfig"
+        cidr = ["10.1.100.64/26"]
       }
       private_link = {
         name                                           = "private-links"
