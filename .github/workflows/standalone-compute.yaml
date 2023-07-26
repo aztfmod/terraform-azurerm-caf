@@ -3,15 +3,15 @@
 # Licensed under the MIT License.
 #
 
-name: standalone-networking
+name: standalone-compute
 
 on:
   push:
     paths:
-      - 'network*'
-      - 'modules/networking/**'
-      - 'examples/networking/**'
-      - '.github/workflows/*networking.*'
+      - 'compute_*'
+      - 'modules/compute/**'
+      - 'examples/compute/**'
+      - '.github/workflows/*compute.*'
 
 env:
   TF_CLI_ARGS: "-no-color"
@@ -33,7 +33,7 @@ jobs:
       - uses: actions/checkout@v3
       - id: load_scenarios
         run: |
-          cases=$(cat ./.github/workflows/standalone-networking.json | jq -c .)
+          cases=$(cat ./.github/workflows/standalone-compute.json | jq -c .)
           echo "matrix=${cases}" >> $GITHUB_OUTPUT
 
   testcases:
