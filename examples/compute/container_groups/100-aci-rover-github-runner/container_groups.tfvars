@@ -13,8 +13,8 @@ container_groups = {
 
     containers = {
       roverxpreview = {
-        name   = "aztfmod-rover-preview"
-        image  = "aztfmod/rover-agent:1.1.7-2203.230716-preview-github"
+        name   = "aztfmod-rover-agent"
+        image  = "aztfmod/rover-agent:1.5.3-2307.2007-github"
         cpu    = "4"
         memory = "2"
 
@@ -37,7 +37,7 @@ container_groups = {
         # Call the gh api command to generate an agent token to allow the agent to register in th pool
         # Note as this command always return a new token, it will force the container to be destroyed and recreated.
         secure_variables_from_command = {
-          AGENT_TOKEN = "gh api --method POST -H 'Accept: application/vnd.github.v3+json' /repos/orgname/reponame/actions/runners/registration-token | jq -r ' {value: .token}'"
+          AGENT_TOKEN = "AGENT_TOKEN"
         }
         environment_variables_from_resources = {
           AGENT_KEYVAULT_NAME = {
@@ -57,7 +57,7 @@ container_groups = {
         # 1 - set the value to variable, strip the USERNAME= and only keep the value using sed --> variable=$(env | grep USERNAME | sed 's/.*=//' )
         # 2 - build the json return value with jq and take $variable as input from step1 --> jq -n --arg var $variable '{value: $var}'
         variables_from_command = {
-          USERNAME = "variable=$(env | grep USERNAME | sed 's/.*=//' ) && jq -n --arg var $variable '{value: $var}'"
+          USERNAME = "USERNAME"
         }
       }
 

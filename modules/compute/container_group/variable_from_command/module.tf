@@ -1,13 +1,8 @@
-data "external" "get_variable_for" {
+data "azurecaf_environment_variable" "get_variable_for" {
   for_each = try(var.variables, {})
 
-  program = [
-    "bash", "-c", each.value
-  ]
-
-  query = {
-    trigger = var.trigger
-  }
+  name           = each.value
+  fails_if_empty = true
 }
 
 output "variables" {
@@ -16,6 +11,6 @@ output "variables" {
 
 locals {
   variables_from_command = {
-    for key, value in try(var.variables, {}) : key => data.external.get_variable_for[key].result.value
+    for key, value in try(var.variables, {}) : key => data.azurecaf_environment_variable.get_variable_for[key].value
   }
 }
