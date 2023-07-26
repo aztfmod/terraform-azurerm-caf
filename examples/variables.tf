@@ -235,6 +235,9 @@ variable "storage_accounts" {
 variable "storage_account_file_shares" {
   default = {}
 }
+variable "maps_account" {
+  default     = {}
+}
 variable "azuread_credential_policies" {
   default = {}
 }

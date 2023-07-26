@@ -185,6 +185,10 @@ variable "user_type" {
   default     = {}
 }
 
+variable "maps" {
+  description = "Configuration object - Azure map "
+  default     = {}
+}
 ## Azure AD
 variable "azuread" {
   description = "Configuration object - Azure Active Directory resources"
