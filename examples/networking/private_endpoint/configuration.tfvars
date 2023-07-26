@@ -55,7 +55,7 @@ keyvaults = {
 
         ip_configuration = {
           name               = "kv01_rg1-name"
-          private_ip_address = "10.150.100.70"
+          private_ip_address = "10.150.100.140"
           subresource_name   = "vault"
           member_name        = "default"
         }
