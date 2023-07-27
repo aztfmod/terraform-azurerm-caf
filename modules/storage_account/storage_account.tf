@@ -14,20 +14,20 @@ resource "azurecaf_name" "stg" {
   use_slug      = var.global_settings.use_slug
 }
 
-# Tested with :  AzureRM version 2.61.0
+# Tested with :  AzureRM version 3.45
 # Ref : https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/resources/storage_account
 
-resource "azurerm_storage_account" "stg" {
+resource "azurerm_storage_account" "stg" {  
   name                              = azurecaf_name.stg.result
   account_tier                      = try(var.storage_account.account_tier, "Standard")
   account_replication_type          = try(var.storage_account.account_replication_type, "LRS")
   account_kind                      = try(var.storage_account.account_kind, "StorageV2")
   access_tier                       = try(var.storage_account.access_tier, "Hot")
   allow_nested_items_to_be_public   = try(var.storage_account.allow_nested_items_to_be_public, var.storage_account.allow_blob_public_access, false)
-  cross_tenant_replication_enabled  = try(var.storage_account.cross_tenant_replication_enabled, null)
+  cross_tenant_replication_enabled  = try(var.storage_account.cross_tenant_replication_enabled, true)
   edge_zone                         = try(var.storage_account.edge_zone, null)
   enable_https_traffic_only         = try(var.storage_account.enable_https_traffic_only, true)
-  infrastructure_encryption_enabled = try(var.storage_account.infrastructure_encryption_enabled, null)
+  infrastructure_encryption_enabled = try(var.storage_account.infrastructure_encryption_enabled, false)
   large_file_share_enabled          = try(var.storage_account.large_file_share_enabled, null)
   location                          = local.location
   min_tls_version                   = try(var.storage_account.min_tls_version, "TLS1_2")
@@ -39,10 +39,11 @@ resource "azurerm_storage_account" "stg" {
   table_encryption_key_type         = try(var.storage_account.table_encryption_key_type, null)
   tags                              = merge(local.tags, try(var.storage_account.tags, null), local.caf_tags)
   public_network_access_enabled     = try(var.storage_account.public_network_access_enabled, null)
-
+  shared_access_key_enabled         = try(var.storage_account.shared_access_key_enabled, true)
+  default_to_oauth_authentication   = try(var.storage_account.default_to_oauth_authentication, false)
 
   dynamic "custom_domain" {
-    for_each = lookup(var.storage_account, "custom_domain", false) == false ? [] : [1]
+    for_each = can(var.storage_account.custom_domain) ? [1] : []
 
     content {
       name          = var.storage_account.custom_domain.name
@@ -50,13 +51,7 @@ resource "azurerm_storage_account" "stg" {
     }
   }
 
-  dynamic "identity" {
-    for_each = lookup(var.storage_account, "enable_system_msi", false) == false ? [] : [1]
 
-    content {
-      type = "SystemAssigned"
-    }
-  }
 
   dynamic "identity" {
     for_each = can(var.storage_account.identity) ? [var.storage_account.identity] : []
@@ -68,39 +63,50 @@ resource "azurerm_storage_account" "stg" {
   }
 
   dynamic "blob_properties" {
-    for_each = lookup(var.storage_account, "blob_properties", false) == false ? [] : [1]
+    for_each = can(var.storage_account.blob_properties) ? [1] : []
 
     content {
-      versioning_enabled       = try(var.storage_account.blob_properties.versioning_enabled, false)
-      change_feed_enabled      = try(var.storage_account.blob_properties.change_feed_enabled, false)
-      default_service_version  = try(var.storage_account.blob_properties.default_service_version, "2020-06-12")
-      last_access_time_enabled = try(var.storage_account.blob_properties.last_access_time_enabled, false)
+      versioning_enabled            = try(var.storage_account.blob_properties.versioning_enabled, false)
+      change_feed_enabled           = try(var.storage_account.blob_properties.change_feed_enabled, false)
+      change_feed_retention_in_days = try(var.storage_account.blob_properties.change_feed_retention_in_days, null)
+      default_service_version       = try(var.storage_account.blob_properties.default_service_version, "2020-06-12")
+      last_access_time_enabled      = try(var.storage_account.blob_properties.last_access_time_enabled, false)
 
       dynamic "cors_rule" {
-        for_each = lookup(var.storage_account.blob_properties, "cors_rule", false) == false ? [] : [1]
+        for_each = can(var.storage_account.blob_properties.cors_rule) ? [1] : []
 
         content {
-          allowed_headers    = var.storage_account.blob_properties.cors_rule.allowed_headers
-          allowed_methods    = var.storage_account.blob_properties.cors_rule.allowed_methods
-          allowed_origins    = var.storage_account.blob_properties.cors_rule.allowed_origins
-          exposed_headers    = var.storage_account.blob_properties.cors_rule.exposed_headers
-          max_age_in_seconds = var.storage_account.blob_properties.cors_rule.max_age_in_seconds
+          allowed_headers    = try(var.storage_account.blob_properties.cors_rule.allowed_headers, null)
+          allowed_methods    = try(var.storage_account.blob_properties.cors_rule.allowed_methods, null)
+          allowed_origins    = try(var.storage_account.blob_properties.cors_rule.allowed_origins, null)
+          exposed_headers    = try(var.storage_account.blob_properties.cors_rule.exposed_headers, null)
+          max_age_in_seconds = try(var.storage_account.blob_properties.cors_rule.max_age_in_seconds, null)
         }
       }
 
       dynamic "delete_retention_policy" {
-        for_each = lookup(var.storage_account.blob_properties, "delete_retention_policy", false) == false ? [] : [1]
+        for_each = can(var.storage_account.blob_properties.delete_retention_policy) ? [1] : []
 
         content {
-          days = try(var.storage_account.blob_properties.delete_retention_policy.delete_retention_policy, 7)
+          days = try(var.storage_account.blob_properties.delete_retention_policy.days, null)
+        }
+      }
+
+      dynamic "restore_policy" {
+        for_each = (can(var.storage_account.blob_properties.restore_policy) &&
+          can(var.storage_account.blob_properties.delete_retention_policy.days) &&
+        var.storage_account.blob_properties.versioning_enabled) ? [1] : []
+
+        content {
+          days = try(var.storage_account.blob_properties.restore_policy.days, null)
         }
       }
 
       dynamic "container_delete_retention_policy" {
-        for_each = lookup(var.storage_account.blob_properties, "container_delete_retention_policy", false) == false ? [] : [1]
+        for_each = can(var.storage_account.blob_properties.container_delete_retention_policy) ? [1] : []
 
         content {
-          days = try(var.storage_account.blob_properties.container_delete_retention_policy.container_delete_retention_policy, 7)
+          days = try(var.storage_account.blob_properties.container_delete_retention_policy.days, 7)
         }
       }
     }
@@ -158,6 +164,9 @@ resource "azurerm_storage_account" "stg" {
     }
   }
 
+
+
+
   dynamic "static_website" {
     for_each = lookup(var.storage_account, "static_website", false) == false ? [] : [1]
 
@@ -172,7 +181,7 @@ resource "azurerm_storage_account" "stg" {
     content {
       bypass         = try(var.storage_account.network.bypass, [])
       default_action = try(var.storage_account.network.default_action, "Deny")
-      ip_rules       = try(var.storage_account.network.ip_rules, [])
+      ip_rules       = try(var.storage_account.network.ip_rules, null)
       virtual_network_subnet_ids = try(var.storage_account.network.subnets, null) == null ? null : [
         for key, value in var.storage_account.network.subnets : can(value.remote_subnet_id) ? value.remote_subnet_id : var.vnets[try(value.lz_key, var.client_config.landingzone_key)][value.vnet_key].subnets[value.subnet_key].id
       ]
@@ -250,7 +259,7 @@ resource "azurerm_storage_account" "stg" {
 
   lifecycle {
     ignore_changes = [
-      location, resource_group_name
+      location, resource_group_name, customer_managed_key
     ]
   }
 }
