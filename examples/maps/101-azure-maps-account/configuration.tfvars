@@ -11,7 +11,7 @@ resource_groups = {
   }
 }
 
-maps_account = {
+maps_accounts = {
   map1 = {
     name                      = "map1"
     resource_group_key        = "test"

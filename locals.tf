@@ -243,7 +243,7 @@ locals {
   }
 
   maps = {
-    maps_account = try(var.maps.maps_account, {})
+    maps_accounts = try(var.maps.maps_accounts, {})
   }
   messaging = {
     signalr_services             = try(var.messaging.signalr_services, {})

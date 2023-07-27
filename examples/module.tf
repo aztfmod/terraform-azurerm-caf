@@ -395,7 +395,7 @@ module "example" {
     purview_accounts = var.purview_accounts
   }
   maps = {
-    maps_account = var.maps_account
+    maps_accounts = var.maps_accounts
   }
 
   iot = {
