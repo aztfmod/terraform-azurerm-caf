@@ -242,6 +242,9 @@ locals {
     cognitive_services_account = try(var.cognitive_services.cognitive_services_account, {})
   }
 
+  maps = {
+    maps_account = try(var.maps.maps_account, {})
+  }
   messaging = {
     signalr_services             = try(var.messaging.signalr_services, {})
     servicebus_namespaces        = try(var.messaging.servicebus_namespaces, {})
