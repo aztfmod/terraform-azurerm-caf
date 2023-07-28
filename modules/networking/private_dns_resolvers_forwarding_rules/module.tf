@@ -24,7 +24,11 @@ resource "azurerm_private_dns_resolver_forwarding_rule" "pvt_dns_resolver_forwar
       port       = try(target_dns_servers.value.port, 53)
     }
   }
-
+  lifecycle {
+    ignore_changes = [
+      name
+    ]
+  }
 
 }
 
