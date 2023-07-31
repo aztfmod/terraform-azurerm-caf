@@ -15,7 +15,7 @@ resource_groups = {
 keyvaults = {
 
   #
-  # Keyvault with private endpoint enabled and configured with a static ip
+  # Keyvault with private endpoint enabled and configured with two static ips
   #
   kv01_rg1 = {
     name               = "certificates"
