@@ -300,14 +300,14 @@ resource "azurerm_kubernetes_cluster" "aks" {
     for_each = try(var.settings.maintenance_window, null) == null ? [] : [1]
     content {
       dynamic "allowed" {
-        for_each = var.settings.maintenance_window.allowed == null ? [] : [1]
+        for_each = try(var.settings.maintenance_window.allowed, null) == null ? [] : [1]
         content {
           day   = var.settings.maintenance_window.allowed.day
           hours = var.settings.maintenance_window.allowed.hours
         }
       }
       dynamic "not_allowed" {
-        for_each = var.settings.maintenance_window.not_allowed == null ? [] : [1]
+        for_each = try(var.settings.maintenance_window.not_allowed, null) == null ? [] : [1]
         content {
           end   = var.settings.maintenance_window.not_allowed.end
           start = var.settings.maintenance_window.not_allowed.start
