@@ -5,8 +5,11 @@ variable "sku_name" {
 variable "global_settings" {
   description = "Global settings object (see module README.md)"
 }
+
+variable "resource_group" {
+  default = {}
+}
 variable "resource_group_name" {
-  description = "(Required) The name of the Resource Group in which the Azure Maps Account should exist. Changing this forces a new resource to be created."
   type        = string
 }
 variable "maps_accounts" {
@@ -16,3 +19,14 @@ variable "maps" {
   default     = {}
 }
 variable "settings" {}
+# variable "tags" {
+#   description = "(Required) Map of tags to be applied to the resource"
+#   type        = map(any)
+# }
+variable "remote_objects" {
+  default = {}
+}
+variable "base_tags" {
+  description = "Base tags for the resource to be inherited from the resource group."
+  type        = bool
+}

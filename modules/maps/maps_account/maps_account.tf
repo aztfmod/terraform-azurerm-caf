@@ -1,3 +1,4 @@
+
 # naming convention
 resource "azurecaf_name" "map" {
   name          = var.settings.name
@@ -10,6 +11,26 @@ resource "azurecaf_name" "map" {
 }
 resource "azurerm_maps_account" "map" {
   name                = azurecaf_name.map.result
-  resource_group_name = var.resource_group_name
-  sku_name            = var.sku_name
+  resource_group_name = local.resource_group_name
+  sku_name            = try(var.settings.sku_name ,"S0")
+  tags                = merge(local.tags, try(var.maps.maps_accounts.tags, null))
+
+}
+
+# Store the primary_access_key into keyvault if the attribute keyvault{} is defined.
+resource "azurerm_key_vault_secret" "primary_access_key" {
+  count = lookup(var.settings, "keyvault", null) == null ? 0 : 1
+
+  name         = format("%s-maps-primary-key", azurecaf_name.map.result)
+  value        = azurerm_maps_account.map.primary_access_key
+  key_vault_id = var.remote_objects.keyvault_id
+}
+
+# Store the secondary_access_key into keyvault if the attribute keyvault{} is defined.
+resource "azurerm_key_vault_secret" "secondary_access_key" {
+  count = lookup(var.settings, "keyvault", null) == null ? 0 : 1
+
+  name         = format("%s-maps-secondary-key", azurecaf_name.map.result)
+  value        = azurerm_maps_account.map.secondary_access_key
+  key_vault_id = var.remote_objects.keyvault_id
 }
