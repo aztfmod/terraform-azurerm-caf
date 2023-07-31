@@ -53,11 +53,19 @@ keyvaults = {
           subresource_names    = ["vault"]
         }
 
-        ip_configuration = {
-          name               = "kv01_rg1-name"
-          private_ip_address = "10.150.100.140"
-          subresource_name   = "vault"
-          member_name        = "default"
+        ip_configurations = {
+          static1= {          
+            name               = "kv01_rg1-name1"
+            private_ip_address = "10.150.100.140"
+            subresource_name   = "vault"
+            member_name        = "default"
+          }
+          static2 = {
+            name               = "kv01_rg1-name2"
+            private_ip_address = "10.150.100.150"
+            subresource_name   = "vault"
+            member_name        = "default2"
+          }
         }
 
         # private_dns = {

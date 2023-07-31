@@ -43,7 +43,7 @@ resource "azurerm_private_endpoint" "pep" {
   }
 
   dynamic "ip_configuration" {
-    for_each = can(var.settings.ip_configuration) ? [var.settings.ip_configuration] : []
+    for_each = try(var.settings.ip_configurations, {})
 
     content {
       name               = ip_configuration.value.name
