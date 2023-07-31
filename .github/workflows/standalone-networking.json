@@ -22,6 +22,7 @@
     "networking/pip_prefix/100-simple-pip-prefix",
     "networking/private_dns_vnet_link/100_pvtdns_vnetlink",
     "networking/private_dns/100-private-dns-vnet-links",
+    "networking/private_endpoint",
     "networking/private_links/endpoints/centralized",
     "networking/virtual_network/100-import-rg",
     "networking/virtual_network/100-simple-vnet-subnets-nsgs",
