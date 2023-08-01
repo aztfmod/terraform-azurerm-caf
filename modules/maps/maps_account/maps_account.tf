@@ -23,7 +23,7 @@ resource "azurerm_key_vault_secret" "primary_access_key" {
 
   name         = format("%s-primary-key", data.azurecaf_name.map.result)
   value        = azurerm_maps_account.map.primary_access_key
-  key_vault_id = var.remote_objects.keyvault_id
+  key_vault_id = var.remote_objects.keyvaults[try(var.settings.keyvault.lz_key, var.client_config.landingzone_key)][var.settings.keyvault.key].id
 }
 
 # Store the secondary_access_key into keyvault if the attribute keyvault{} is defined.
@@ -32,5 +32,5 @@ resource "azurerm_key_vault_secret" "secondary_access_key" {
 
   name         = format("%s-secondary-key", data.azurecaf_name.map.result)
   value        = azurerm_maps_account.map.secondary_access_key
-  key_vault_id = var.remote_objects.keyvault_id
+  key_vault_id = var.remote_objects.keyvaults[try(var.settings.keyvault.lz_key, var.client_config.landingzone_key)][var.settings.keyvault.key].id
 }

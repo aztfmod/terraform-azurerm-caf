@@ -13,9 +13,6 @@ output "secondary_access_key" {
 output "x_ms_client_id" {
   value = azurerm_maps_account.map.x_ms_client_id
 }
-# output "base_tags" {
-#   value = local.tags
-# }
 output "tags" {
   value = azurerm_maps_account.map.tags
 
