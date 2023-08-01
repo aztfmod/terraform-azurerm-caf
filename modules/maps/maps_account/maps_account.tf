@@ -1,6 +1,6 @@
 
 # naming convention
-resource "azurecaf_name" "map" {
+data "azurecaf_name" "map" {
   name          = var.settings.name
   resource_type = "azurerm_maps_account"
   prefixes      = var.global_settings.prefixes
@@ -10,7 +10,7 @@ resource "azurecaf_name" "map" {
   use_slug      = var.global_settings.use_slug
 }
 resource "azurerm_maps_account" "map" {
-  name                = azurecaf_name.map.result
+  name                = data.azurecaf_name.map.result
   resource_group_name = local.resource_group_name
   sku_name            = try(var.settings.sku_name ,"S0")
   tags                = merge(local.tags, try(var.maps.maps_accounts.tags, null))
@@ -21,7 +21,7 @@ resource "azurerm_maps_account" "map" {
 resource "azurerm_key_vault_secret" "primary_access_key" {
   count = lookup(var.settings, "keyvault", null) == null ? 0 : 1
 
-  name         = format("%s-maps-primary-key", azurecaf_name.map.result)
+  name         = format("%s-primary-key", data.azurecaf_name.map.result)
   value        = azurerm_maps_account.map.primary_access_key
   key_vault_id = var.remote_objects.keyvault_id
 }
@@ -30,7 +30,7 @@ resource "azurerm_key_vault_secret" "primary_access_key" {
 resource "azurerm_key_vault_secret" "secondary_access_key" {
   count = lookup(var.settings, "keyvault", null) == null ? 0 : 1
 
-  name         = format("%s-maps-secondary-key", azurecaf_name.map.result)
+  name         = format("%s-secondary-key", data.azurecaf_name.map.result)
   value        = azurerm_maps_account.map.secondary_access_key
   key_vault_id = var.remote_objects.keyvault_id
 }
