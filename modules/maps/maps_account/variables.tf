@@ -6,7 +6,7 @@ variable "resource_group" {
   default = {}
 }
 variable "resource_group_name" {
-  type        = string
+  type = string
 }
 variable "settings" {}
 

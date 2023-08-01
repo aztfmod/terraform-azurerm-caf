@@ -14,29 +14,29 @@ resource_groups = {
 
 maps_accounts = {
   map1 = {
-    name                      = "map1"
-    resource_group            = {
+    name = "map1"
+    resource_group = {
       key = "test"
     }
-    sku_name                  = "S1"
-    tags                      = {
+    sku_name = "S1"
+    tags = {
       environment = "test"
     }
     keyvault = {
-      key = "kv_maps"                  
+      key = "kv_maps"
     }
   }
   map2 = {
-    name                      = "map2"
-    resource_group            = {
+    name = "map2"
+    resource_group = {
       key = "test"
     }
-    sku_name                  = "S0"
-    tags                      = {
+    sku_name = "S0"
+    tags = {
       environment = "test"
     }
     keyvault = {
-      key = "kv_maps"                  
+      key = "kv_maps"
     }
   }
 }
