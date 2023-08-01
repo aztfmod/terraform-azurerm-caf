@@ -12,8 +12,8 @@ data "azurecaf_name" "map" {
 resource "azurerm_maps_account" "map" {
   name                = data.azurecaf_name.map.result
   resource_group_name = local.resource_group_name
-  sku_name            = try(var.settings.sku_name ,"S0")
-  tags                = merge(local.tags, try(var.maps.maps_accounts.tags, null))
+  sku_name            = var.settings.sku_name
+  tags                = local.tags
 
 }
 
