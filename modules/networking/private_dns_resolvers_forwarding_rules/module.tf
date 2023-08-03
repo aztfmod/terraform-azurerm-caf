@@ -11,7 +11,7 @@ data "azurecaf_name" "pvtdnsrfr" {
 
 
 resource "azurerm_private_dns_resolver_forwarding_rule" "pvt_dns_resolver_forwarding_rule" {
-  name                      = data.azurecaf_name.pvtdnsrfr.result
+  name                      = data.azurecaf_name.pvtdnsrfr.result //random name changes are a reported issue, can not find the reason right now. https://github.com/aztfmod/terraform-azurerm-caf/issues/1730. Lifecycle rule is a workaround...
   dns_forwarding_ruleset_id = var.dns_forwarding_ruleset_id
   domain_name               = var.settings.domain_name
   enabled                   = try(var.settings.enabled, null)
