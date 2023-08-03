@@ -80,8 +80,6 @@ dns_zones = {
         }
       } //caa
 
-
-
       a = {
         dns = {
           name = "dns"
@@ -117,4 +115,35 @@ dns_zones = {
       } //srv
     }   //records
   }     //dns_zone2
+
+  dns_zone3 = {
+    name               = "" // Set as empty for CI. this will creation a random_domain_name.com
+    resource_group_key = "dns_re1"
+
+    # More examples of dns records
+    records = {
+      mx = {
+        example = {
+          name = "@"
+          ttl  = 600
+          records = {
+            1 = {
+              preference = 10
+              exchange   = "mail1.contoso.com."
+            }
+          }
+        }
+      } // mx record
+
+      txt = {
+        example = {
+          name = "@"
+          records = [
+            { value = "google-site-verification" },
+          ]
+          ttl = 3600
+        }
+      } //txt record
+    }   //records
+  }     //dns_zone3
 }

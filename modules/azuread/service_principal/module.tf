@@ -4,6 +4,13 @@ resource "azuread_service_principal" "app" {
   app_role_assignment_required = try(var.settings.app_role_assignment_required, false)
   tags                         = try(var.settings.tags, null)
 
+  owners = concat(
+    try(var.settings.owners, []),
+    [
+      var.client_config.object_id
+    ]
+  )
+
   # lifecycle {
   #   ignore_changes = [application_id]
   # }

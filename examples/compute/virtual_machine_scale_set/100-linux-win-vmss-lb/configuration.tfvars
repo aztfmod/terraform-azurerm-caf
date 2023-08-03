@@ -108,7 +108,7 @@ public_ip_addresses = {
 load_balancers = {
   lb1 = {
     name                      = "lb-vmss"
-    sku                       = "basic"
+    sku                       = "Basic"
     resource_group_key        = "rg1"
     backend_address_pool_name = "vmss1"
     frontend_ip_configurations = {
@@ -120,7 +120,7 @@ load_balancers = {
   }
   lb2 = {
     name                      = "lb-vmss2"
-    sku                       = "basic"
+    sku                       = "Basic"
     resource_group_key        = "rg1"
     backend_address_pool_name = "vmss1"
     frontend_ip_configurations = {

@@ -38,7 +38,7 @@ keyvaults = {
     purge_protection_enabled = true
     creation_policies = {
       logged_in_user = {
-        certificate_permissions = ["Get", "List", "Update", "Create", "Import", "Delete", "Purge", "Recover", "Getissuers", "Setissuers", "Listissuers", "Deleteissuers", "Manageissuers", "Restore", "Managecontacts"]
+        certificate_permissions = ["Get", "List", "Update", "Create", "Import", "Delete", "Purge", "Recover", "GetIssuers", "SetIssuers", "ListIssuers", "DeleteIssuers", "ManageIssuers", "Restore", "ManageContacts"]
         secret_permissions      = ["Set", "Get", "List", "Delete", "Purge", "Recover"]
       }
     }
@@ -135,7 +135,7 @@ application_security_groups = {
 load_balancers = {
   lb-vmss = {
     name                      = "lb-vmss"
-    sku                       = "basic"
+    sku                       = "Basic"
     resource_group_key        = "integration"
     backend_address_pool_name = "vmss1"
     frontend_ip_configurations = {
@@ -157,7 +157,7 @@ load_balancers = {
         resource_group_key             = "integration"
         load_balancer_key              = "lb-vmss"
         lb_rule_name                   = "rule1"
-        protocol                       = "tcp"
+        protocol                       = "Tcp"
         probe_id_key                   = "probe1"
         frontend_port                  = "3389"
         backend_port                   = "3389"

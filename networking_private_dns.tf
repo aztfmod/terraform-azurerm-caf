@@ -56,7 +56,7 @@ module "private_dns_vnet_links" {
   base_tags          = {}
   global_settings    = local.global_settings
   client_config      = local.client_config
-  virtual_network_id = local.combined_objects_networking[try(each.value.lz_key, local.client_config.landingzone_key)][each.value.vnet_key].id
+  virtual_network_id = can(each.value.virtual_network_id) ? each.value.virtual_network_id : local.combined_objects_networking[try(each.value.lz_key, local.client_config.landingzone_key)][each.value.vnet_key].id
   private_dns        = local.combined_objects_private_dns
   settings           = each.value
 }

@@ -18,7 +18,6 @@ resource "azurerm_data_factory_integration_runtime_azure_ssis" "dfiras" {
   name = azurecaf_name.dfiras.result
 
   data_factory_id                  = var.data_factory_id
-  resource_group_name              = var.resource_group_name
   location                         = var.location
   node_size                        = var.settings.node_size
   number_of_nodes                  = try(var.settings.number_of_nodes, null)

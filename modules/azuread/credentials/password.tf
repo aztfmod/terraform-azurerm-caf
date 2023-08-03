@@ -1,43 +1,50 @@
 
 resource "azuread_application_password" "key" {
-  count       = try(var.settings.azuread_application, null) != null && lower(var.settings.type) == "password" && try(var.settings.azuread_credential_policy_key, null) == null ? 1 : 0
-  description = try(var.settings.description, local.description.key)
-  value       = random_password.key.0.result
-  end_date    = local.expiration_date.key
+  count        = try(var.settings.azuread_application, null) != null && lower(var.settings.type) == "password" && try(var.settings.azuread_credential_policy_key, null) == null ? 1 : 0
+  display_name = try(var.settings.display_name, local.description.key)
+  end_date     = local.expiration_date.key
 
   application_object_id = try(var.resources.application.id, null)
 
+  rotate_when_changed = {
+    rotation = time_rotating.key.0.id
+  }
+
   lifecycle {
     create_before_destroy = true
-    # ignore_changes        = [application_object_id]
   }
 }
 
 resource "azuread_application_password" "key0" {
-  count       = try(var.settings.azuread_application, null) != null && lower(var.settings.type) == "password" && try(var.settings.azuread_credential_policy_key, null) != null ? 1 : 0
-  description = try(var.settings.description, local.description.key0)
-  value       = random_password.key0.0.result
-  end_date    = local.expiration_date.key0
+  count        = try(var.settings.azuread_application, null) != null && lower(var.settings.type) == "password" && try(var.settings.azuread_credential_policy_key, null) != null ? 1 : 0
+  display_name = try(var.settings.display_name, local.description.key0)
+
+  end_date = local.expiration_date.key0
 
   application_object_id = try(var.resources.application.id, null)
 
+  rotate_when_changed = {
+    rotation = time_rotating.key0.0.id
+  }
+
   lifecycle {
     create_before_destroy = true
-    # ignore_changes        = [application_object_id]
   }
 }
 
 resource "azuread_application_password" "key1" {
-  count       = try(var.settings.azuread_application, null) != null && lower(var.settings.type) == "password" && try(var.settings.azuread_credential_policy_key, null) != null ? 1 : 0
-  description = try(var.settings.description, local.description.key1)
-  value       = random_password.key1.0.result
-  end_date    = local.expiration_date.key1
+  count        = try(var.settings.azuread_application, null) != null && lower(var.settings.type) == "password" && try(var.settings.azuread_credential_policy_key, null) != null ? 1 : 0
+  display_name = try(var.settings.display_name, local.description.key1)
+  end_date     = local.expiration_date.key1
 
   application_object_id = try(var.resources.application.id, null)
 
+  rotate_when_changed = {
+    rotation = time_rotating.key1.0.id
+  }
+
   lifecycle {
     create_before_destroy = true
-    # ignore_changes        = [application_object_id]
   }
 }
 

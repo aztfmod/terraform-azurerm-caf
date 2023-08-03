@@ -149,7 +149,7 @@ vpn_gateway_connections = {
         key = "routetable1" # Set the 'key' of the Route Table created in this (or a remote) deployment
       }
 
-      propagated_route_tables = {
+      propagated_route_table = {
         routetable1 = {
           # id = "" # Set the Resource ID of an existing Virtual WAN Route Table
           # lz_key = "" # Set the 'lz_key' of a Route Table created in a remote deployment
