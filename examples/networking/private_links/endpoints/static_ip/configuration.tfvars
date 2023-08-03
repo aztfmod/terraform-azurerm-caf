@@ -54,7 +54,7 @@ keyvaults = {
         }
 
         ip_configurations = {
-          static1= {          
+          static1 = {
             name               = "kv01_rg1-name1"
             private_ip_address = "10.150.100.140"
             subresource_name   = "vault"
