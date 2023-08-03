@@ -12,7 +12,6 @@
     "automation/103-automation-private-endpoints",
     "automation/104-automation-schedule-runbook",
     "communication/communication_services/101-communication_service",
-    "compute/azure_virtual_desktop/wvd_resources",
     "cosmos_db/100-simple-cosmos-db-cassandra",
     "cosmos_db/100-simple-cosmos-db-gremlin",
     "cosmos_db/100-simple-cosmos-db-mongo",
