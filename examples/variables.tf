@@ -289,6 +289,9 @@ variable "virtual_machines" {
 variable "virtual_machine_scale_sets" {
   default = {}
 }
+variable "ddos_services" {
+  default = {}
+}
 variable "bastion_hosts" {
   default = {}
 }
