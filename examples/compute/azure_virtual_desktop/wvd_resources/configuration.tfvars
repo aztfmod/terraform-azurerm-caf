@@ -17,12 +17,13 @@ resource_groups = {
 
 wvd_application_groups = {
   wvd_app_group_1 = {
-    resource_group_key = "wvd_region1"
-    host_pool_key      = "wvd_hp1"
-    wvd_workspace_key  = "wvd_ws1"
-    name               = "desktopgroup"
-    friendly_name      = "Published Desktop"
-    description        = "A description of my workspace"
+    resource_group_key           = "wvd_region1"
+    host_pool_key                = "wvd_hp1"
+    wvd_workspace_key            = "wvd_ws1"
+    name                         = "desktopgroup"
+    friendly_name                = "Published Desktop"
+    description                  = "A description of my workspace"
+    default_desktop_display_name = "desktopgroup"
     #Type of Virtual Desktop Application Group. Valid options are RemoteApp or Desktop.
     type = "Desktop"
   }
