@@ -13,10 +13,10 @@ resource "azurecaf_name" "asr_rg_vault" {
 
 resource "azurerm_recovery_services_vault" "asr" {
   name                = azurecaf_name.asr_rg_vault.result
-  location            = var.location
-  resource_group_name = var.resource_group_name
+  location            = local.location
+  resource_group_name = local.resource_group_name
   sku                 = "Standard"
-  tags                = local.tags
+  tags                = merge(local.tags, try(var.settings.tags, null))
   soft_delete_enabled = try(var.settings.soft_delete_enabled, true)
   storage_mode_type   = try(var.settings.storage_mode_type, "GeoRedundant")
 

@@ -1,5 +1,5 @@
 resource "azurerm_private_dns_a_record" "a_records" {
-  depends_on = [azurerm_template_deployment.ase]
+  depends_on = [azurerm_resource_group_template_deployment.ase]
   for_each   = try(var.settings.private_dns_records.a_records, {})
 
   name                = each.value.name == "" ? azurecaf_name.ase.result : format("%s.%s", each.value.name, azurecaf_name.ase.result)

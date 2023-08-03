@@ -52,7 +52,7 @@ resource "azurerm_vpn_gateway" "s2s_gateway" {
   }
 
   timeouts {
-    create = "60m"
+    create = "120m"
     delete = "120m"
   }
 }

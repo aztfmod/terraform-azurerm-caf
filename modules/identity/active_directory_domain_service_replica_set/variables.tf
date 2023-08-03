@@ -4,9 +4,9 @@ variable "settings" {
 variable "remote_objects" {
   description = "The remote objects the module depends on."
 }
-variable "location" {
-  description = "Region of the the Replica Set."
-}
 variable "client_config" {
   description = "Client configuration object (see module README.md)."
+}
+variable "location" {
+  description = "Location of the replica set"
 }

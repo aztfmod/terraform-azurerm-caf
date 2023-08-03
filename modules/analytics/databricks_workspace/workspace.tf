@@ -13,11 +13,11 @@ resource "azurecaf_name" "wp" {
 
 resource "azurerm_databricks_workspace" "ws" {
   name                        = azurecaf_name.wp.result
-  resource_group_name         = var.resource_group_name
-  location                    = var.location
+  resource_group_name         = local.resource_group_name
+  location                    = local.location
   sku                         = try(var.settings.sku, "standard")
   managed_resource_group_name = try(var.settings.managed_resource_group_name, null)
-  tags                        = try(local.tags, null)
+  tags                        = local.tags
 
   #todo:
   #load_balancer_backend_address_pool_id
@@ -56,7 +56,7 @@ resource "azurerm_databricks_workspace" "ws" {
       private_subnet_name                                 = can(var.settings.custom_parameters.private_subnet_name) || can(var.settings.custom_parameters.private_subnet_key) == false ? try(var.settings.custom_parameters.private_subnet_name, null) : var.vnets[try(var.settings.custom_parameters.lz_key, var.client_config.landingzone_key)][var.settings.custom_parameters.vnet_key].subnets[var.settings.custom_parameters.private_subnet_key].name
 
       #the NSG-association ID is the subnet-id, so it can be simplified:
-      private_subnet_network_security_group_association_id = can(var.settings.custom_parameters.private_subnet_network_security_group_association_id) || can(var.settings.custom_parameters.public_subnet_key) == false ? try(var.settings.custom_parameters.private_subnet_network_security_group_association_id, null) : var.vnets[try(var.settings.custom_parameters.lz_key, var.client_config.landingzone_key)][var.settings.custom_parameters.vnet_key].subnets[var.settings.custom_parameters.public_subnet_key].id
+      private_subnet_network_security_group_association_id = can(var.settings.custom_parameters.private_subnet_network_security_group_association_id) || can(var.settings.custom_parameters.private_subnet_key) == false ? try(var.settings.custom_parameters.private_subnet_network_security_group_association_id, null) : var.vnets[try(var.settings.custom_parameters.lz_key, var.client_config.landingzone_key)][var.settings.custom_parameters.vnet_key].subnets[var.settings.custom_parameters.private_subnet_key].id
     }
   }
 }

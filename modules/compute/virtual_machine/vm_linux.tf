@@ -6,7 +6,7 @@ resource "tls_private_key" "ssh" {
 }
 
 # Name of the VM in the Azure Control Plane
-resource "azurecaf_name" "linux" {
+data "azurecaf_name" "linux" {
   for_each = local.os_type == "linux" ? var.settings.virtual_machine_settings : {}
 
   name          = each.value.name
@@ -20,7 +20,7 @@ resource "azurecaf_name" "linux" {
 
 
 # Name of the Linux computer name
-resource "azurecaf_name" "linux_computer_name" {
+data "azurecaf_name" "linux_computer_name" {
   depends_on = [azurerm_network_interface.nic, azurerm_network_interface_security_group_association.nic_nsg]
   for_each   = local.os_type == "linux" ? var.settings.virtual_machine_settings : {}
 
@@ -34,7 +34,7 @@ resource "azurecaf_name" "linux_computer_name" {
 }
 
 # Name for the OS disk
-resource "azurecaf_name" "os_disk_linux" {
+data "azurecaf_name" "os_disk_linux" {
   for_each = local.os_type == "linux" ? var.settings.virtual_machine_settings : {}
 
   name          = try(each.value.os_disk.name, null)
@@ -44,13 +44,6 @@ resource "azurecaf_name" "os_disk_linux" {
   clean_input   = true
   passthrough   = var.global_settings.passthrough
   use_slug      = var.global_settings.use_slug
-
-  lifecycle {
-    ignore_changes = [
-      name #for ASR disk restores
-    ]
-  }
-
 }
 
 resource "azurerm_linux_virtual_machine" "vm" {
@@ -60,22 +53,24 @@ resource "azurerm_linux_virtual_machine" "vm" {
   admin_username                  = each.value.admin_username
   allow_extension_operations      = try(each.value.allow_extension_operations, null)
   availability_set_id             = can(each.value.availability_set_key) || can(each.value.availability_set.key) ? var.availability_sets[try(var.client_config.landingzone_key, each.value.availability_set.lz_key)][try(each.value.availability_set_key, each.value.availability_set.key)].id : try(each.value.availability_set.id, each.value.availability_set_id, null)
-  computer_name                   = azurecaf_name.linux_computer_name[each.key].result
+  computer_name                   = data.azurecaf_name.linux_computer_name[each.key].result
   disable_password_authentication = try(each.value.disable_password_authentication, true)
   encryption_at_host_enabled      = try(each.value.encryption_at_host_enabled, null)
   eviction_policy                 = try(each.value.eviction_policy, null)
   license_type                    = try(each.value.license_type, null)
-  location                        = var.location
+  location                        = local.location
   max_bid_price                   = try(each.value.max_bid_price, null)
-  name                            = azurecaf_name.linux[each.key].result
+  name                            = data.azurecaf_name.linux[each.key].result
   network_interface_ids           = local.nic_ids
-  priority                        = try(each.value.priority, null)
-  provision_vm_agent              = try(each.value.provision_vm_agent, true)
-  proximity_placement_group_id    = can(each.value.proximity_placement_group_key) || can(each.value.proximity_placement_group.key) ? var.proximity_placement_groups[try(var.client_config.landingzone_key, var.client_config.landingzone_key)][try(each.value.proximity_placement_group_key, each.value.proximity_placement_group.key)].id : try(each.value.proximity_placement_group_id, each.value.proximity_placement_group.id, null)
-  resource_group_name             = var.resource_group_name
-  size                            = each.value.size
-  tags                            = merge(local.tags, try(each.value.tags, null))
-  zone                            = try(each.value.zone, null)
+  # (Optional) Specifies the mode of in-guest patching to this Linux Virtual Machine. Possible values are AutomaticByPlatform and ImageDefault. Defaults to ImageDefault. For more information on patch modes please see the product documentation.
+  patch_mode                   = try(each.value.patch_mode, "ImageDefault")
+  priority                     = try(each.value.priority, null)
+  provision_vm_agent           = try(each.value.provision_vm_agent, true)
+  proximity_placement_group_id = can(each.value.proximity_placement_group_key) || can(each.value.proximity_placement_group.key) ? var.proximity_placement_groups[try(var.client_config.landingzone_key, var.client_config.landingzone_key)][try(each.value.proximity_placement_group_key, each.value.proximity_placement_group.key)].id : try(each.value.proximity_placement_group_id, each.value.proximity_placement_group.id, null)
+  resource_group_name          = local.resource_group_name
+  size                         = each.value.size
+  tags                         = merge(local.tags, try(each.value.tags, null))
+  zone                         = try(each.value.zone, null)
 
   custom_data = try(
     local.dynamic_custom_data[each.value.custom_data][each.value.name],
@@ -140,7 +135,7 @@ resource "azurerm_linux_virtual_machine" "vm" {
   os_disk {
     caching                   = try(each.value.os_disk.caching, null)
     disk_size_gb              = try(each.value.os_disk.disk_size_gb, null)
-    name                      = try(azurecaf_name.os_disk_linux[each.key].result, null)
+    name                      = try(data.azurecaf_name.os_disk_linux[each.key].result, null)
     storage_account_type      = try(each.value.os_disk.storage_account_type, null)
     write_accelerator_enabled = try(each.value.os_disk.write_accelerator_enabled, false)
     disk_encryption_set_id    = try(each.value.os_disk.disk_encryption_set_key, null) == null ? null : try(var.disk_encryption_sets[var.client_config.landingzone_key][each.value.os_disk.disk_encryption_set_key].id, var.disk_encryption_sets[each.value.os_disk.lz_key][each.value.os_disk.disk_encryption_set_key].id, null)
@@ -198,6 +193,8 @@ resource "azurerm_linux_virtual_machine" "vm" {
 
   lifecycle {
     ignore_changes = [
+      name,
+      computer_name,
       os_disk[0].name, #for ASR disk restores
       admin_ssh_key
     ]

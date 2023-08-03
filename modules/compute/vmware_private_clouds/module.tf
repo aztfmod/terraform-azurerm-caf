@@ -38,8 +38,8 @@ data "azurerm_key_vault_secret" "vcenter_password" {
 
 resource "azurerm_vmware_private_cloud" "vwpc" {
   name                = azurecaf_name.vwpc.result
-  resource_group_name = var.resource_group_name
-  location            = var.location
+  resource_group_name = local.resource_group_name
+  location            = local.location
   sku_name            = var.settings.sku_name
   management_cluster {
     size = var.settings.management_cluster.size
@@ -50,5 +50,5 @@ resource "azurerm_vmware_private_cloud" "vwpc" {
   nsxt_password    = try(var.settings.nsxt_password.password, data.azurerm_key_vault_secret.nsxt_password["enabled"].value, null)
   vcenter_password = try(var.settings.vcenter_password.password, data.azurerm_key_vault_secret.vcenter_password["enabled"].value, null)
 
-  tags = local.tags
+  tags = merge(local.tags, try(var.settings.tags, null))
 }

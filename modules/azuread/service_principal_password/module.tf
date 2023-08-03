@@ -1,8 +1,11 @@
 
 resource "azuread_service_principal_password" "pwd" {
   service_principal_id = var.service_principal_id
-  value                = random_password.pwd.result
   end_date             = timeadd(time_rotating.pwd.id, format("%sh", local.password_policy.expire_in_days * 24))
+
+  rotate_when_changed = {
+    rotation = time_rotating.pwd.id
+  }
 
   lifecycle {
     create_before_destroy = false
@@ -21,12 +24,3 @@ resource "time_rotating" "pwd" {
 }
 
 # Will force the password to change every month
-resource "random_password" "pwd" {
-  keepers = {
-    frequency = time_rotating.pwd.id
-  }
-  length  = local.password_policy.length
-  special = local.password_policy.special
-  upper   = local.password_policy.upper
-  numeric = local.password_policy.number
-}

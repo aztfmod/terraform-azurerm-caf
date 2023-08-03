@@ -15,8 +15,8 @@ resource "azurerm_function_app" "function_app" {
     ignore_changes = [name]
   }
   name                = azurecaf_name.plan.result
-  location            = var.location
-  resource_group_name = var.resource_group_name
+  location            = local.location
+  resource_group_name = local.resource_group_name
   app_service_plan_id = var.app_service_plan_id
   # client_affinity_enabled    = lookup(var.settings, "client_affinity_enabled", null) deprecated in azurerm >2.81.0
   enabled                    = try(var.settings.enabled, null)
@@ -25,7 +25,7 @@ resource "azurerm_function_app" "function_app" {
   version                    = try(var.settings.version, null)
   storage_account_name       = var.storage_account_name
   storage_account_access_key = var.storage_account_access_key
-  tags                       = local.tags
+  tags                       = merge(local.tags, try(var.settings.tags, {}))
 
   app_settings = local.app_settings
 

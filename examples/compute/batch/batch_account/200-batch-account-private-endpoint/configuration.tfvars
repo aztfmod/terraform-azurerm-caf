@@ -16,10 +16,11 @@ resource_groups = {
 
 batch_accounts = {
   batch1 = {
-    name                          = "batch"
-    resource_group_key            = "batch_region1"
-    storage_account_key           = "batch_region1"
-    public_network_access_enabled = false
+    name                                = "batch"
+    resource_group_key                  = "batch_region1"
+    storage_account_key                 = "batch_region1"
+    storage_account_authentication_mode = "StorageKeys"
+    public_network_access_enabled       = false
     private_endpoints = {
       pe1 = {
         name               = "batch"

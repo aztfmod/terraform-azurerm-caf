@@ -102,9 +102,9 @@ diagnostic_storage_accounts = {
 
 keyvaults = {
   example_vm_rg1 = {
-    name               = "vmlinuxdiac"
-    resource_group_key = "vm_region1"
-    sku_name           = "standard"
+    name                        = "vmlinuxdiac"
+    resource_group_key          = "vm_region1"
+    sku_name                    = "standard"
     creation_policies = {
       logged_in_user = {
         secret_permissions = ["Set", "Get", "List", "Delete", "Purge", "Recover"]
