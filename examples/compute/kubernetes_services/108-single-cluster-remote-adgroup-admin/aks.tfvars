@@ -26,7 +26,7 @@ aks_clusters = {
 
     network_profile = {
       network_plugin    = "azure"
-      load_balancer_sku = "Standard"
+      load_balancer_sku = "standard"
     }
 
     # enable_rbac = true
@@ -44,11 +44,11 @@ aks_clusters = {
       }
     }
 
-# Uncomment this admin_groups block and configure as per comments
-#    admin_groups = {
-#      lz_key             = "remote_lz" # Replace with remote landingzone key
-#      azuread_group_keys = ["aks_admins"] # Replace with Azure AD group key
-#    }
+    # Uncomment this admin_groups block and configure as per comments
+    #    admin_groups = {
+    #      lz_key             = "remote_lz" # Replace with remote landingzone key
+    #      azuread_group_keys = ["aks_admins"] # Replace with Azure AD group key
+    #    }
 
     load_balancer_profile = {
       # Only one option can be set

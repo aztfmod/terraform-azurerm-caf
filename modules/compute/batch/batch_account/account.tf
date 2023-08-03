@@ -9,13 +9,14 @@ resource "azurecaf_name" "account" {
 }
 
 resource "azurerm_batch_account" "account" {
-  name                          = azurecaf_name.account.result
-  resource_group_name           = local.resource_group_name
-  location                      = local.location
-  pool_allocation_mode          = try(var.settings.pool_allocation_mode, null)
-  public_network_access_enabled = try(var.settings.public_network_access_enabled, null)
-  storage_account_id            = var.storage_account_id
-  tags                          = local.tags
+  name                                = azurecaf_name.account.result
+  resource_group_name                 = local.resource_group_name
+  location                            = local.location
+  pool_allocation_mode                = try(var.settings.pool_allocation_mode, null)
+  public_network_access_enabled       = try(var.settings.public_network_access_enabled, null)
+  storage_account_id                  = try(var.storage_account_id, null)
+  storage_account_authentication_mode = try(var.storage_account_authentication_mode, null)
+  tags                                = local.tags
 
   dynamic "identity" {
     for_each = try(var.settings.identity, null) != null ? [var.settings.identity] : []

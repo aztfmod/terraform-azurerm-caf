@@ -1,6 +1,6 @@
 data "external" "password" {
   count = lower(var.settings.certificate_policy.issuer_key_or_name) == "self" ? 0 : 1
-  
+
   program = [
     "bash", "-c",
     format(

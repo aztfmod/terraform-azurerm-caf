@@ -115,6 +115,12 @@ resource "azurerm_mssql_virtual_machine" "mssqlvm" {
     }
   }
 
+  timeouts {
+    create = "2h"
+    update = "2h"
+    delete = "2h"
+    read   = "5m"
+  }
 }
 
 

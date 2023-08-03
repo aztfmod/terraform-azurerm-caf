@@ -83,3 +83,8 @@ output "identity" {
   value       = local.os_type == "linux" ? try(azurerm_linux_virtual_machine.vm["linux"].identity, null) : try(azurerm_windows_virtual_machine.vm["windows"].identity, null)
   description = "The identity block of the virtual machine"
 }
+
+output "rbac_id" {
+  value       = local.os_type == "linux" ? try(azurerm_linux_virtual_machine.vm["linux"].identity[0].principal_id, null) : try(azurerm_windows_virtual_machine.vm["windows"].identity[0].principal_id, null)
+  description = "The object_id for the role_mapping"
+}

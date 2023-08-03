@@ -3,7 +3,7 @@ role_mapping = {
     resource_groups = {
       "aks_re1" = {
         "Reader" = {
-          aks_ingress_application_gateway_identities = {
+          aks_clusters = {
             keys = ["cluster_re1"]
           }
         }
@@ -12,7 +12,7 @@ role_mapping = {
     application_gateway_platforms = {
       "agw" = {
         "Contributor" = {
-          aks_ingress_application_gateway_identities = {
+          aks_clusters = {
             keys = ["cluster_re1"]
           }
         }
@@ -21,7 +21,7 @@ role_mapping = {
     managed_identities = {
       "aks_usermsi" = {
         "Managed Identity Operator" = {
-          aks_ingress_application_gateway_identities = {
+          aks_clusters = {
             keys = ["cluster_re1"]
           }
         }

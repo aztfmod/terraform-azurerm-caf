@@ -1,7 +1,11 @@
 output "id" {
   description = "The ID of the group created."
   value       = azuread_group.group.id
+}
 
+output "object_id" {
+  description = "The object ID of the group created."
+  value       = azuread_group.group.object_id
 }
 
 # deprecated replaced by display_name
