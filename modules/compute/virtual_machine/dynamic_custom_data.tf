@@ -12,6 +12,8 @@ data "azurerm_key_vault_key" "custom_data" {
 
   key_vault_id = var.keyvaults[try(each.value.lz_key, var.client_config.landingzone_key)][each.value.keyvault_key].id
   name         = each.value.name
+
+  depends_on = [azurerm_managed_disk.disk]
 }
 
 data "azurerm_key_vault_certificate" "custom_data" {
