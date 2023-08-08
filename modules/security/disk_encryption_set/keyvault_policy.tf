@@ -1,6 +1,6 @@
 resource "azurerm_key_vault_access_policy" "des" {
   # do not create policy if identity is UserAssigned
-  for_each = try(regex("UserAssigned", var.settings.identity.type), null) != null ? [] : [1]
+  for_each = try(regex("UserAssigned", var.settings.identity.type), null) != null ? {} : { type : "SystemAssigned" }
 
   key_vault_id = var.keyvault_id
 
