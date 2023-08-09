@@ -202,6 +202,7 @@ module "example" {
     azurerm_routes                                          = var.azurerm_routes
     cdn_profile                                             = var.cdn_profile
     cdn_endpoint                                            = var.cdn_endpoint
+    ddos_services                                           = var.ddos_services
     dns_zone_records                                        = var.dns_zone_records
     dns_zones                                               = var.dns_zones
     domain_name_registrations                               = var.domain_name_registrations
@@ -393,6 +394,9 @@ module "example" {
   }
   purview = {
     purview_accounts = var.purview_accounts
+  }
+  maps = {
+    maps_accounts = var.maps_accounts
   }
 
   iot = {
