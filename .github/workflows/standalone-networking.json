@@ -7,6 +7,7 @@
     "networking/app_gateway/209-agw-with-keyvault-ssl-policy",
     "networking/app_gateway/210-agw-with-keyvault",
     "networking/app_gateway/211-agw-with-ssl-redirect",
+    "networking/app_gateway/212-waf-policy-with-exclusion",
     "networking/app_gateway/301-agw-v1",
     "networking/app_gateway/302-listener-ssl-policy",
     "networking/app_gateway/303-listener-ssl-policy-redirect",
