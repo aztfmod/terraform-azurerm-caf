@@ -21,3 +21,5 @@ variable "keyvault_certificate_requests" {
 variable "application_gateway_waf_policies" {
   default = {}
 }
+
+
