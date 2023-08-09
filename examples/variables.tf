@@ -233,7 +233,10 @@ variable "storage_accounts" {
   default = {}
 }
 variable "storage_account_file_shares" {
-  default = {}
+  default     = {}
+}
+variable "maps_accounts" {
+  default     = {}
 }
 variable "azuread_credential_policies" {
   default = {}
@@ -287,6 +290,9 @@ variable "virtual_machines" {
   default = {}
 }
 variable "virtual_machine_scale_sets" {
+  default = {}
+}
+variable "ddos_services" {
   default = {}
 }
 variable "bastion_hosts" {
