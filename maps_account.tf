@@ -9,10 +9,10 @@ module "maps_accounts" {
   resource_group_name = can(each.value.resource_group.name) || can(each.value.resource_group_name) ? try(each.value.resource_group.name, each.value.resource_group_name) : null
   settings            = each.value
   remote_objects = {
-    keyvaults         = local.combined_objects_keyvaults
+    keyvaults = local.combined_objects_keyvaults
   }
 }
 
 output "maps_accounts" {
-  value     = module.maps_accounts
+  value = module.maps_accounts
 }
