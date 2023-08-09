@@ -34,36 +34,29 @@ application_gateway_applications_v1 = {
         port = 8443
       }
       "8444" = {
-        name = "8443"
-        port = 8443
+        name = "8444"
+        port = 8444
       }
     }
 
     http_listeners = {
       public = {
-        name                           = "demo_http_listener01"
+        name                           = "public"
         front_end_ip_configuration_key = "public"
         front_end_port_key             = "80"
         host_name                      = "demo1.app1.com"
       }
       public_ssl = {
-        name                           = "demo_https_listener02"
+        name                           = "public_ssl"
         front_end_ip_configuration_key = "public"
         front_end_port_key             = "443"
         host_name                      = "demo1.app1.com"
         ssl_cert_key                   = "demo"
       }
       public_ssl2 = {
-        name                           = "demo_https_listener03"
+        name                           = "public_ssl2"
         front_end_ip_configuration_key = "public"
         front_end_port_key             = "8444"
-        host_name                      = "demo1.app1.com"
-        ssl_cert_key                   = "demo"
-      }
-      private_ssl = {
-        name                           = "demo_https_listener03"
-        front_end_ip_configuration_key = "private"
-        front_end_port_key             = "8443"
         host_name                      = "demo1.app1.com"
         ssl_cert_key                   = "demo"
       }
@@ -71,10 +64,10 @@ application_gateway_applications_v1 = {
     }
 
     redirect_configurations = {
-      redirect-https = {
-        name                 = "redirect-https"
-        redirect_type        = "Permanent"             #Permanent,Temporary,Found,SeeOther
-        target_listener_name = "demo_https_listener03" #redirection to a listener
+      redirect-https-listener = {
+        name                 = "redirect-https-listener"
+        redirect_type        = "Permanent"   #Permanent,Temporary,Found,SeeOther
+        target_listener_name = "public_ssl2" #redirection to a listener
         #target_url           = "https://bing.com"
         include_path         = true
         include_query_string = false
@@ -89,8 +82,8 @@ application_gateway_applications_v1 = {
 
     }
     request_routing_rules = {
-      default = {
-        name              = "default_demo_app1"
+      default_demo_app1_rule = {
+        name              = "default_demo_app1_rule"
         rule_type         = "PathBasedRouting"
         http_listener_key = "public"
         backend_pool_key  = "demo"
@@ -98,13 +91,13 @@ application_gateway_applications_v1 = {
         url_path_map_key  = "demo"
         priority          = 100
       }
-      external1 = {
-        name                = "demo_app1_external_rd_listener"
+      redirect_demo_app1_listener_rule = {
+        name                = "redirect_demo_app1_listener_rule"
         rule_type           = "Basic"
         http_listener_key   = "public_ssl"
         url_path_map_key    = "demo"
         priority            = 102
-        redirect_config_key = "redirect-https" #listener in the redirect config should not be the same listener provided above as http_listener_key
+        redirect_config_key = "redirect-https-listener"
       }
       external2 = {
         name                = "route_rule_redirect_url"
