@@ -8,7 +8,7 @@ module "private_endpoint" {
   source   = "../../networking/private_endpoint"
   for_each = var.private_endpoints
 
-  resource_id = azurerm_mssql_managed_instance.mssqlmi.id
+  resource_id =  azurerm_mssql_mi.mssqlmi.id
   #azurerm_mssql_server.mssql.id
   name                = each.value.name
   location            = var.resource_groups[try(each.value.resource_group.lz_key, var.client_config.landingzone_key)][try(each.value.resource_group.key, each.value.resource_group_key)].location
