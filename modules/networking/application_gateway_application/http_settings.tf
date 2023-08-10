@@ -19,8 +19,8 @@ resource "null_resource" "set_http_settings" {
       APPLICATION_GATEWAY_NAME    = var.application_gateway.name
       APPLICATION_GATEWAY_ID      = var.application_gateway.id
       NAME                        = each.value.name
-      PORT                        = var.application_gateway.frontend_ports[each.value.front_end_port_key].port
-      PROTOCOL                    = try(var.application_gateway.frontend_ports[each.value.front_end_port_key].protocol, null)
+      PORT                        = try(each.value.port, var.application_gateway.frontend_ports[each.value.front_end_port_key].port)
+      PROTOCOL                    = try(each.value.protocol, var.application_gateway.frontend_ports[each.value.front_end_port_key].protocol, null)
       COOKIE_BASED_AFFINITY       = try(each.value.cookie_based_affinity, null)
       TIMEOUT                     = try(each.value.timeout, null)
       AFFINITY_COOKIE_NAME        = try(each.value.affinity_cookie_name, null)

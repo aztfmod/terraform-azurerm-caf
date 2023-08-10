@@ -20,7 +20,9 @@ application_gateway_applications_v1 = {
 
     http_settings = {
       demo = {
-        name                        = "demo_http_setting01"
+        name = "demo_http_setting01"
+        # port = "8080"     # Use this if backend port is different from front end port
+        # protocol = "Http" # Http or Https, use this if backend protocol is different from front end protocol
         front_end_port_key          = "80"
         host_name_from_backend_pool = true
         timeout                     = 45
