@@ -10,7 +10,7 @@ module "private_endpoint" {
 
   resource_id         = azurerm_key_vault.keyvault.id
   name                = each.value.name
-  location            = local.location
+  location            = try(var.vnets[try(each.value.subnet.lz_key, each.value.lz_key, var.client_config.landingzone_key)][try(each.value.subnet.vnet_key, each.value.vnet_key)].location, local.location)
   resource_group_name = local.resource_group_name
   subnet_id           = can(each.value.subnet_id) ? each.value.subnet_id : var.vnets[try(each.value.subnet.lz_key, each.value.lz_key, var.client_config.landingzone_key)][try(each.value.subnet.vnet_key, each.value.vnet_key)].subnets[try(each.value.subnet.key, each.value.subnet_key)].id
   settings            = each.value
