@@ -12,6 +12,6 @@ resource "azurerm_dev_test_global_vm_shutdown_schedule" "enabled" {
     enabled         = try(var.settings.shutdown_schedule.notification_settings.enabled, null)
     time_in_minutes = try(var.settings.shutdown_schedule.notification_settings.time_in_minutes, null)
     email           = try(var.settings.shutdown_schedule.notification_settings.email, null)
-    webhook_url     = try(var.settings.shutdown_schedule.notification_settings.enabled, false) ? var.settings.shutdown_schedule.notification_settings.webhook_url : try(var.settings.shutdown_schedule.notification_settings.webhook_url, null)
+    webhook_url     = try(var.settings.shutdown_schedule.notification_settings.enabled, false) ? try(var.settings.shutdown_schedule.notification_settings.webhook_url, null) : null
   }
 }
