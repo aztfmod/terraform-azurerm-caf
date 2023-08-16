@@ -9,7 +9,7 @@ module "resource_groups" {
   resource_group_name = each.value.name
   settings            = each.value
   global_settings     = local.global_settings
-  tags                = merge(lookup(each.value, "tags", {}), var.tags)
+  tags                = var.tags
 }
 
 

@@ -60,10 +60,13 @@ application_gateways = {
     subnet_key         = "appgw"
     sku_name           = "WAF_v2"
     sku_tier           = "WAF_v2"
+    waf_policy = {
+      key = "wp1"
+    }
     capacity = {
       autoscale = {
         minimum_scale_unit = 1
-        maximum_scale_unit = 10
+        maximum_scale_unit = 3
       }
     }
 
@@ -102,13 +105,15 @@ application_gateway_applications = {
         name                           = "public-80"
         front_end_ip_configuration_key = "public"
         front_end_port_key             = "80"
-        request_routing_rule_key       = "default"
+        request_routing_rule_key       = "public-80"
       }
     }
 
     request_routing_rules = {
-      default = {
+      public-80 = {
+        name      = "public-80"
         rule_type = "Basic"
+        priority  = 110
       }
     }
 

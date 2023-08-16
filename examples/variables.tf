@@ -21,11 +21,6 @@ variable "var_folder_path" {
   default = ""
 }
 
-variable "provider_azurerm_features_keyvault" {
-  default = {
-    purge_soft_delete_on_destroy = true
-  }
-}
 # variable "cloud" {
 #   default = {}
 # }
@@ -171,6 +166,9 @@ variable "resource_groups" {
 variable "network_security_group_definition" {
   default = {}
 }
+variable "network_security_security_rules" {
+  default = {}
+}
 variable "route_tables" {
   default = {}
 }
@@ -258,6 +256,12 @@ variable "azuread_groups" {
 variable "azuread_roles" {
   default = {}
 }
+variable "azuread_administrative_units" {
+  default = {}
+}
+variable "azuread_administrative_unit_members" {
+  default = {}
+}
 variable "keyvaults" {
   default = {}
 }
@@ -307,6 +311,12 @@ variable "synapse_workspaces" {
   default = {}
 }
 variable "azurerm_application_insights" {
+  default = {}
+}
+variable "azurerm_application_insights_web_test" {
+  default = {}
+}
+variable "azurerm_application_insights_standard_web_test" {
   default = {}
 }
 variable "role_mapping" {
@@ -379,9 +389,6 @@ variable "postgresql_flexible_servers" {
   default = {}
 }
 variable "postgresql_servers" {
-  default = {}
-}
-variable "cosmos_db" {
   default = {}
 }
 variable "log_analytics" {
@@ -1009,5 +1016,77 @@ variable "static_sites" {
   default = {}
 }
 variable "aro_clusters" {
+  default = {}
+}
+variable "web_pubsubs" {
+  default = {}
+}
+variable "web_pubsub_hubs" {
+  default = {}
+}
+variable "aadb2c_directory" {
+  default = {}
+}
+variable "powerbi_embedded" {
+  default = {}
+}
+variable "preview_features" {
+  default = {}
+}
+variable "private_dns_resolvers" {
+  default = {}
+}
+variable "private_dns_resolver_inbound_endpoints" {
+  default = {}
+}
+variable "private_dns_resolver_outbound_endpoints" {
+  default = {}
+}
+variable "private_dns_resolver_dns_forwarding_rulesets" {
+  default = {}
+}
+
+variable "private_dns_resolver_forwarding_rules" {
+  default = {}
+}
+
+variable "private_dns_resolver_virtual_network_links" {
+  default = {}
+}
+
+variable "iot_security_solution" {
+  default = {}
+}
+variable "iot_security_device_group" {
+  default = {}
+}
+variable "iot_central_application" {
+  default = {}
+}
+variable "iot_hub" {
+  default = {}
+}
+variable "iot_hub_dps" {
+  default = {}
+}
+variable "iot_hub_shared_access_policy" {
+  default = {}
+}
+variable "iot_dps_certificate" {
+  default = {}
+}
+variable "iot_dps_shared_access_policy" {
+  default = {}
+}
+variable "iot_hub_consumer_groups" {
+  default = {}
+}
+variable "iot_hub_certificate" {
+  default = {}
+}
+variable "cosmosdb_role_mapping" {
+  default = {}
+}
+variable "cosmosdb_role_definitions" {
   default = {}
 }

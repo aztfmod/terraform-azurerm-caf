@@ -5,6 +5,6 @@ output "name" {
 }
 
 output "id" {
-  value       = lookup(azurerm_template_deployment.manageddb.outputs, "id")
+  value       = jsondecode(azapi_resource.manageddb.output).properties.outputs.id.value
   description = "SQL Managed DB Id"
 }

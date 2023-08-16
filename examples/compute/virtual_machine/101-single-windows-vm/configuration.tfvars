@@ -1,14 +1,13 @@
-
 global_settings = {
   default_region = "region1"
   regions = {
-    region1 = "australiaeast"
+    region1 = "southeastasia"
   }
 }
 
 resource_groups = {
   vm_region1 = {
-    name = "example-virtual-machine-rg1"
+    name = "example-virtual-machine-rg3"
   }
 }
 
@@ -48,10 +47,14 @@ virtual_machines = {
         size           = "Standard_F2"
         admin_username = "adminuser"
 
+
         # Spot VM to save money
         priority        = "Spot"
         eviction_policy = "Deallocate"
 
+        patch_mode = "AutomaticByOS"
+        # When you want to load the file from the folder in the custom_data always use the relative path from the caf_solution in landing zones
+        custom_data = "../../examples/compute/virtual_machine/101-single-windows-vm/scripts/custom.ps1"
         # Value of the nic keys to attach the VM. The first one in the list is the default nic
         network_interface_keys = ["nic0"]
 

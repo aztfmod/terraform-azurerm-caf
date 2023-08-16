@@ -4,25 +4,28 @@ variable "global_settings" {
 variable "client_config" {
   description = "Client configuration object (see module README.md)."
 }
-variable "storage_account" {}
-variable "resource_group_name" {
-  description = "(Required) The name of the resource group where to create the resource."
-  type        = string
+variable "storage_account" {
+  description = "Storage account configuration object"
 }
 variable "location" {
-  description = "(Required) Specifies the supported Azure location where to create the resource. Changing this forces a new resource to be created."
-  type        = string
+  description = "location of the resource if different from the resource group."
+  default     = null
+}
+variable "resource_group_name" {
+  description = "Resource group object to deploy the virtual machine"
+  default     = null
+}
+variable "resource_group" {
+  description = "Resource group object to deploy the virtual machine"
+}
+variable "base_tags" {
+  description = "Base tags for the resource to be inherited from the resource group."
+  type        = bool
 }
 variable "vnets" {
   default = {}
 }
 variable "private_endpoints" {
-  default = {}
-}
-variable "resource_groups" {
-  default = {}
-}
-variable "base_tags" {
   default = {}
 }
 variable "recovery_vaults" {
@@ -58,4 +61,12 @@ variable "diagnostics" {
 
 variable "managed_identities" {
   default = {}
+}
+
+variable "var_folder_path" {}
+
+variable "virtual_subnets" {
+  description = "Map of virtual_subnets objects"
+  default     = {}
+  nullable    = false
 }

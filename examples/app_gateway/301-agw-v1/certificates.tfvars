@@ -25,8 +25,9 @@ keyvault_certificates = {
       # upns = []
     }
 
-    tags = {
-      type = "SelfSigned"
+    cert_tags = {
+      type     = "SelfSigned"
+      sec_team = "qwerty"
     }
 
     # Possible values include Self (for self-signed certificate),

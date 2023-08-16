@@ -56,16 +56,30 @@ variable "private_endpoints" {
 variable "resource_groups" {
   default = {}
 }
-
-variable "base_tags" {
-  description = "Base tags for the resource to be inherited from the resource group."
-  type        = map(any)
-}
-
 variable "private_dns" {
   default = {}
 }
 
 variable "public_network_access_enabled" {
   default = "true"
+}
+
+variable "base_tags" {
+  type        = bool
+  description = "Base tags for the resource to be inherited from the resource group."
+}
+
+variable "resource_group" {
+  description = "Resource group object to deploy the virtual machine"
+  default     = null
+
+}
+
+variable "resource_group_name" {
+}
+
+
+variable "location" {
+  default     = null
+  description = "location of the resource if different from the resource group."
 }

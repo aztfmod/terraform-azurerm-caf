@@ -10,12 +10,13 @@ module "private_endpoint" {
 
   resource_id         = azurerm_key_vault.keyvault.id
   name                = each.value.name
-  location            = var.resource_groups[try(each.value.resource_group.lz_key, var.client_config.landingzone_key)][try(each.value.resource_group.key, each.value.resource_group_key)].location
-  resource_group_name = var.resource_groups[try(each.value.resource_group.lz_key, var.client_config.landingzone_key)][try(each.value.resource_group.key, each.value.resource_group_key)].name
-  subnet_id           = can(each.value.subnet_id) ? each.value.subnet_id : var.vnets[try(each.value.lz_key, var.client_config.landingzone_key)][each.value.vnet_key].subnets[each.value.subnet_key].id
+  location            = local.location
+  resource_group_name = local.resource_group_name
+  subnet_id           = can(each.value.subnet_id) || can(each.value.vnet_key) == false ? try(each.value.subnet_id, var.virtual_subnets[try(each.value.lz_key, var.client_config.landingzone_key)][each.value.subnet_key].id) : var.vnets[try(each.value.lz_key, var.client_config.landingzone_key)][each.value.vnet_key].subnets[each.value.subnet_key].id
   settings            = each.value
   global_settings     = var.global_settings
-  base_tags           = try(merge(var.base_tags, each.value.tags), {})
+  tags                = local.tags
+  base_tags           = var.base_tags
   private_dns         = var.private_dns
   client_config       = var.client_config
 }

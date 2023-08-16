@@ -1,0 +1,107 @@
+#
+# Copyright (c) Microsoft Corporation
+# Licensed under the MIT License.
+#
+
+name: landingzone
+
+on:
+  workflow_dispatch:
+    inputs:
+      destroy:
+        description: Destroy the deployments at the end.
+        default: true
+        type: bool
+      landingzone_ref:
+        description: Set the base terraform landingzone tag, branch or ref to use to deploy the code
+        default: sqlmi.native.bugbash2
+        type: string
+      restart_phase:
+        description: "Select the phase to restart the job from:"
+        required: true
+        type: choice
+        default: phase1
+        options:
+          - phase1
+          - phase2
+      scenario:
+        description: "Select the scenario you want to run:"
+        required: false
+        type: choice
+        default: "landingzone-scenarios-longrunners.json"
+        options:
+          - landingzone-scenarios-longrunners.json
+
+env:
+  TF_CLI_ARGS: "-no-color"
+  TF_CLI_ARGS_destroy: "-auto-approve -refresh=false"
+  TF_REGISTRY_DISCOVERY_RETRY: 5
+  TF_REGISTRY_CLIENT_TIMEOUT: 15
+  LZ_REF: ${{ inputs.landingzone_ref }}
+  ROVER_RUNNER: true
+
+jobs:
+  load_scenarios:
+    runs-on: ubuntu-latest
+    outputs:
+      jobs: ${{ steps.load_scenarios.outputs.jobs }}
+    steps:
+      - uses: actions/checkout@v3
+      - id: load_scenarios
+        run: |
+          jobs=$( cat ./.github/workflows/${{ github.event.inputs.scenario }} | jq -c .)
+          echo "jobs=${jobs}" >> $GITHUB_OUTPUT
+
+  deploy:
+    name: ${{ matrix.jobs.name }}
+    needs: load_scenarios
+
+    strategy:
+      max-parallel: 20
+      matrix: ${{ fromJSON(needs.load_scenarios.outputs.jobs) }}
+
+    uses: ./.github/workflows/phases.yaml
+    secrets: inherit
+    with:
+      matrix: ${{ toJSON(matrix.jobs) }}
+
+  destroy:
+    name: ${{ matrix.jobs.name }} (destroy)
+    needs: [load_scenarios, deploy]
+
+    strategy:
+      max-parallel: 20
+      matrix: ${{ fromJSON(needs.load_scenarios.outputs.jobs) }}
+
+    uses: ./.github/workflows/phases_destroy.yaml
+    secrets: inherit
+    with:
+      matrix: ${{ toJSON(matrix.jobs) }}
+
+  purge:
+    name: purge
+    runs-on: ubuntu-latest
+    if: inputs.destroy && (failure() || cancelled())
+
+    needs: [job]
+
+    container:
+      image: aztfmod/rover:1.4.6-2305.1701
+      options: --user 0
+
+    steps:
+      - name: Login azure
+        run: |
+          az login --service-principal -u '${{ secrets.ARM_CLIENT_ID }}' -p '${{ secrets.ARM_CLIENT_SECRET }}' --tenant '${{ secrets.ARM_TENANT_ID }}'
+          az account set -s  ${{ secrets.ARM_SUBSCRIPTION_ID }}
+
+      - name: Complete purge
+        run: |
+          for i in `az monitor diagnostic-settings subscription list -o tsv --query "value[?contains(name, '${{ github.run_id }}' )].name"`; do echo "purging subscription diagnostic-settings: $i" && $(az monitor diagnostic-settings subscription delete --name $i --yes); done
+          for i in `az monitor log-profiles list -o tsv --query '[].name'`; do az monitor log-profiles delete --name $i; done
+          for i in `az ad group list --query "[?contains(displayName, '${{ github.run_id }}')].id" -o tsv`; do echo "purging Azure AD group: $i" && $(az ad group delete --verbose --group $i || true); done
+          for i in `az ad app list --query "[?contains(displayName, '${{ github.run_id }}')].appId" -o tsv`; do echo "purging Azure AD app: $i" && $(az ad app delete --verbose --id $i || true); done
+          for i in `az keyvault list-deleted --query "[?tags.testing_job_id=='${{ github.run_id }}'].name" -o tsv`; do az keyvault purge --name $i; done
+          for i in `az group list --query "[?tags.testing_job_id=='${{ github.run_id }}'].name" -o tsv`; do echo "purging resource group: $i" && $(az group delete -n $i -y --no-wait || true); done
+          for i in `az role assignment list --query "[?contains(roleDefinitionName, '${{ github.run_id }}')].roleDefinitionName" -o tsv`; do echo "purging role assignment: $i" && $(az role assignment delete --role $i || true); done
+          for i in `az role definition list --query "[?contains(roleName, '${{ github.run_id }}')].roleName" -o tsv`; do echo "purging custom role definition: $i" && $(az role definition delete --name $i || true); done

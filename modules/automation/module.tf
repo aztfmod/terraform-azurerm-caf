@@ -12,8 +12,8 @@ resource "azurecaf_name" "auto_account" {
 
 resource "azurerm_automation_account" "auto_account" {
   name                          = azurecaf_name.auto_account.result
-  location                      = var.location
-  resource_group_name           = var.resource_group_name
+  location                      = local.location
+  resource_group_name           = local.resource_group_name
   tags                          = try(local.tags, {})
   public_network_access_enabled = try(var.settings.public_network_access_enabled, null)
   sku_name                      = "Basic" #only Basic is supported at this time.

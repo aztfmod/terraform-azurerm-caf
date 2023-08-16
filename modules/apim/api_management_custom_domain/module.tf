@@ -39,28 +39,28 @@ resource "azurerm_api_management_custom_domain" "apim" {
       negotiate_client_certificate = try(portal.value.negotiate_client_certificate, null)
     }
   }
-
-  dynamic "proxy" {
-    for_each = try(var.settings.proxy, null) != null ? [var.settings.proxy] : []
-    content {
-      host_name            = try(proxy.value.host_name, null)
-      certificate          = try(proxy.value.certificate, null)
-      certificate_password = try(proxy.value.certificate_password, null)
-      default_ssl_binding  = try(proxy.value.default_ssl_binding, null)
-      #key_vault_id = var.remote_objects.keyvault_certificates[var.client_config.landingzone_key][proxy.value.key_vault_certificate.certificate_key].secret_id
-      key_vault_id = try(
-        #data.azurerm_key_vault_certificate.manual_certs[each.key].secret_id,
-        try(var.remote_objects.keyvault_certificates[proxy.value.key_vault_certificate.lz_key][proxy.value.key_vault_certificate.certificate_key].secret_id, null),
-        try(var.remote_objects.keyvault_certificates[var.client_config.landingzone_key][proxy.value.key_vault_certificate.certificate_key].secret_id, null),
-        try(var.remote_objects.keyvault_certificate_requests[var.client_config.landingzone_key][proxy.value.certificate_request_key].secret_id, null),
-        try(var.remote_objects.keyvault_certificate_requests[proxy.value.key_vault_certificate.lz_key][proxy.value.certificate_request_key].secret_id, null),
-        try(proxy.value.key_vault_id, null),
-        null
-      )
-
-      negotiate_client_certificate = try(proxy.value.negotiate_client_certificate, null)
-    }
-  }
+  //Blocks of type "proxy" are not expected here.
+  #dynamic "proxy" {
+  #  for_each = try(var.settings.proxy, null) != null ? [var.settings.proxy] : []
+  #  content {
+  #    host_name            = try(proxy.value.host_name, null)
+  #    certificate          = try(proxy.value.certificate, null)
+  #    certificate_password = try(proxy.value.certificate_password, null)
+  #    default_ssl_binding  = try(proxy.value.default_ssl_binding, null)
+  #    #key_vault_id = var.remote_objects.keyvault_certificates[var.client_config.landingzone_key][proxy.value.key_vault_certificate.certificate_key].secret_id
+  #    key_vault_id = try(
+  #      #data.azurerm_key_vault_certificate.manual_certs[each.key].secret_id,
+  #      try(var.remote_objects.keyvault_certificates[proxy.value.key_vault_certificate.lz_key][proxy.value.key_vault_certificate.certificate_key].secret_id, null),
+  #      try(var.remote_objects.keyvault_certificates[var.client_config.landingzone_key][proxy.value.key_vault_certificate.certificate_key].secret_id, null),
+  #      try(var.remote_objects.keyvault_certificate_requests[var.client_config.landingzone_key][proxy.value.certificate_request_key].secret_id, null),
+  #      try(var.remote_objects.keyvault_certificate_requests[proxy.value.key_vault_certificate.lz_key][proxy.value.certificate_request_key].secret_id, null),
+  #      try(proxy.value.key_vault_id, null),
+  #      null
+  #    )
+  #
+  #    negotiate_client_certificate = try(proxy.value.negotiate_client_certificate, null)
+  #  }
+  #}
 
   dynamic "scm" {
     for_each = try(var.settings.scm, null) != null ? [var.settings.scm] : []

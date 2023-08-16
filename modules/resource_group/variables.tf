@@ -4,6 +4,8 @@ variable "global_settings" {
 variable "tags" {
   description = "(Required) Map of tags to be applied to the resource"
   type        = map(any)
+  default     = {}
+  nullable    = false  
 }
 variable "settings" {}
 variable "resource_group_name" {

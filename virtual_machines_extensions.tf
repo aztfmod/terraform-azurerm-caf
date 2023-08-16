@@ -135,8 +135,8 @@ module "vm_extension_linux_diagnostic" {
   extension_name     = "linux_diagnostic"
 
   settings = {
-    var_folder_path            = var.var_folder_path
-    diagnostics                = local.combined_diagnostics
-    diagnostic_storage_account = local.combined_objects_diagnostic_storage_accounts[try(each.value.storage_account.lz_key, local.client_config.landingzone_key)][each.value.virtual_machine_extensions.linux_diagnostic.diagnostic_storage_account_key]
+    var_folder_path                  = var.var_folder_path
+    diagnostics                      = local.combined_diagnostics
+    diagnostic_storage_account       = local.combined_objects_diagnostic_storage_accounts[try(each.value.storage_account.lz_key, local.client_config.landingzone_key)][each.value.virtual_machine_extensions.linux_diagnostic.diagnostic_storage_account_key]
   }
 }

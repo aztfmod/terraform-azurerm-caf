@@ -1,0 +1,92 @@
+
+name: phases_dispatcher
+
+on:
+  workflow_call:
+    inputs:
+      matrix:
+        required: true
+        type: string
+
+jobs:
+
+  setup:
+    name: setup phases
+    runs-on: ubuntu-latest
+    outputs:
+      name: ${{ steps.setup.outputs.name }}
+      phase1: ${{ steps.setup.outputs.phase1 }}
+      phase2: ${{ steps.setup.outputs.phase2 }}
+      phase3: ${{ steps.setup.outputs.phase3 }}
+      lz_ref: ${{ steps.setup.outputs.lz_ref }}
+    steps:
+      - name: set outputs with default values
+        id: setup
+        run: |
+          echo '${{inputs.matrix}}' | jq -c
+          #
+          name=$(echo '${{inputs.matrix}}' | jq -c .name) && echo "name: $name"
+          phase1=$(echo '${{inputs.matrix}}' | jq -c .phase1) && echo "phase1: $phase1"
+          phase2=$(echo '${{inputs.matrix}}' | jq -c .phase2) && echo "phase2: $phase2"
+          phase3=$(echo '${{inputs.matrix}}' | jq -c .phase3) && echo "phase3: $phase3"
+          lz_ref=$(echo '${{inputs.matrix}}' | jq -c .lz_ref) && echo "lz_ref: $lz_ref"
+          #
+          echo "name=$name" >> $GITHUB_OUTPUT
+          echo "phase1=$phase1" >> $GITHUB_OUTPUT
+          echo "phase2=$phase2" >> $GITHUB_OUTPUT
+          echo "phase3=$phase3" >> $GITHUB_OUTPUT
+          echo "lz_ref=$lz_ref" >> $GITHUB_OUTPUT
+
+
+  phase1_deploy:
+    needs: setup
+
+    strategy:
+      max-parallel: 20
+      fail-fast: false
+      matrix:
+        phase: ${{ fromJSON(needs.setup.outputs.phase1) }}
+
+    uses: ./.github/workflows/rover.yaml
+    secrets: inherit
+    with:
+      scenario: ${{ needs.setup.outputs.name }}
+      name: phase1
+      phase: ${{ toJSON(matrix.phase) }}
+      lz_ref: ${{ fromJSON(needs.setup.outputs.lz_ref) }}
+
+  phase2_deploy:
+    needs: [setup, phase1_deploy]
+
+    strategy:
+      max-parallel: 20
+      fail-fast: false
+      matrix:
+        phase: ${{ fromJSON(needs.setup.outputs.phase2) }}
+
+    uses: ./.github/workflows/rover.yaml
+    secrets: inherit
+    with:
+      scenario: ${{ needs.setup.outputs.name }}
+      name: phase2
+      phase: ${{ toJSON(matrix.phase) }}
+      lz_ref: ${{ fromJSON(needs.setup.outputs.lz_ref) }}
+
+
+  phase3_deploy:
+    needs: [setup, phase2_deploy]
+
+    strategy:
+      max-parallel: 20
+      fail-fast: false
+      matrix:
+        phase: ${{ fromJSON(needs.setup.outputs.phase3) }}
+
+    uses: ./.github/workflows/rover.yaml
+    secrets: inherit
+    with:
+      scenario: ${{ needs.setup.outputs.name }}
+      name: phase3
+      phase: ${{ toJSON(matrix.phase) }}
+      lz_ref: ${{ fromJSON(needs.setup.outputs.lz_ref) }}
+

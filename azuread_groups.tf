@@ -11,6 +11,9 @@ module "azuread_groups" {
   azuread_groups  = each.value
   tenant_id       = local.client_config.tenant_id
   client_config   = local.client_config
+  remote_objects = {
+    azuread_administrative_units = local.combined_objects_azuread_administrative_units
+  }
 }
 
 output "azuread_groups" {
@@ -25,7 +28,7 @@ module "azuread_groups_members" {
   client_config              = local.client_config
   settings                   = each.value
   azuread_groups             = module.azuread_groups
-  group_id                   = module.azuread_groups[each.key].id
+  group_id                   = module.azuread_groups[each.key].object_id
   azuread_apps               = module.azuread_applications
   azuread_service_principals = local.combined_objects_azuread_service_principals[try(each.value.lz_key, local.client_config.landingzone_key)]
 }

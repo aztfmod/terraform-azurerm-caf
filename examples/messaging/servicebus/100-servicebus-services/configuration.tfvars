@@ -52,9 +52,9 @@ servicebus_namespaces = {
       key = "rg1"
     }
     name     = "sbexample"
-    sku      = "premium" # basic | standard | premium
-    capacity = 1         # capacity only for premium: 1,2,4,8,16 otherwise 0
-    # zone_redundant = false # only true for premium
+    sku      = "Premium" # Basic | standard | Premium
+    capacity = 1         # capacity only for Premium: 1,2,4,8,16 otherwise 0
+    # zone_redundant = false # only true for Premium
     # tags = {} # optional
     namespace_auth_rules = {
       rule1 = {
@@ -212,7 +212,7 @@ servicebus_queues = {
     # status = "Active" # Active, Creating, Deleting, Disabled, ReceiveDisabled, Renaming, SendDisabled, Unknown
     # enable_batched_operations = true
     # auto_delete_on_idle = "PT5M"
-    # enable_partitioning = false # must be true on premium
+    # enable_partitioning = false # must be true on Premium
     # enable_express = false
 
     # forward_to = {

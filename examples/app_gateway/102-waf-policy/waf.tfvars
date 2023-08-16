@@ -3,6 +3,10 @@ application_gateway_waf_policies = {
     name               = "examplewafpolicy"
     resource_group_key = "agw_waf"
 
+    tags = {
+      secteam = "div12345"
+    }
+
     custom_rules = {
       rule1 = {
         name      = "Rule1"
@@ -62,7 +66,7 @@ application_gateway_waf_policies = {
     }
 
     managed_rules = {
-      exclusion = {
+      exclusions = {
         ex1 = {
           match_variable          = "RequestHeaderNames"
           selector                = "x-company-secret-header"

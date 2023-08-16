@@ -15,7 +15,7 @@ resource "azurerm_eventhub_authorization_rule" "evhub_rule" {
   name                = azurecaf_name.evh_rule.result
   namespace_name      = var.namespace_name
   eventhub_name       = var.eventhub_name
-  resource_group_name = var.resource_group.name
+  resource_group_name = var.resource_group_name
   listen              = try(var.settings.listen, false)
   send                = try(var.settings.send, false)
   manage              = try(var.settings.manage, false)

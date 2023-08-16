@@ -4,12 +4,13 @@ module "private_endpoint" {
 
   resource_id         = azurerm_storage_account.stg.id
   name                = each.value.name
-  location            = var.resource_groups[each.value.resource_group_key].location
-  resource_group_name = var.resource_groups[each.value.resource_group_key].name
-  subnet_id           = can(each.value.subnet_id) ? each.value.subnet_id : var.vnets[try(each.value.lz_key, var.client_config.landingzone_key)][each.value.vnet_key].subnets[each.value.subnet_key].id
+  location            = local.location
+  resource_group_name = local.resource_group_name
+  subnet_id           = can(each.value.subnet_id) || can(each.value.virtual_subnet_key) ? try(each.value.subnet_id, var.virtual_subnets[try(each.value.lz_key, var.client_config.landingzone_key)][each.value.virtual_subnet_key].id) : var.vnets[try(each.value.lz_key, var.client_config.landingzone_key)][each.value.vnet_key].subnets[each.value.subnet_key].id
   settings            = each.value
   global_settings     = var.global_settings
-  base_tags           = local.tags
+  tags                = local.tags
+  base_tags           = var.base_tags
   private_dns         = var.private_dns
   client_config       = var.client_config
 }

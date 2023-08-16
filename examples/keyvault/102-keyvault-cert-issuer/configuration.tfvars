@@ -24,7 +24,7 @@ keyvaults = {
     # cert_password_key  = "cert-password"
     creation_policies = {
       logged_in_user = {
-        certificate_permissions = ["Get", "List", "Update", "Create", "Import", "Delete", "Purge", "Recover", "Getissuers", "Setissuers", "Listissuers", "Deleteissuers", "Manageissuers", "Restore", "Managecontacts"]
+        certificate_permissions = ["Get", "List", "Update", "Create", "Import", "Delete", "Purge", "Recover", "GetIssuers", "SetIssuers", "ListIssuers", "DeleteIssuers", "ManageIssuers", "Restore", "ManageContacts"]
         secret_permissions      = ["Set", "Get", "List", "Delete", "Purge"]
       }
     }
@@ -49,9 +49,11 @@ keyvault_certificate_issuers = {
     organization_id    = "ExampleOrg"
     account_id         = "0000"
     resource_group_key = "kv_region1"
-    keyvault_key       = "cert_secrets"
-    cert_password_key  = "cert-password"
+    # lz_key           = "" # for remote lz
+    keyvault_key      = "cert_secrets"
+    cert_password_key = "cert-password"
     # cert_issuer_password = "password in clear text. not recommended"
+    # cert_secret_name = "cert-password" # replace the cert_password_key for remote lz reference
 
     admin_settings = {
       admin1 = {

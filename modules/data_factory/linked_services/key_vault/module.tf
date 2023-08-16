@@ -9,7 +9,6 @@ resource "azurecaf_name" "linked" {
 }
 resource "azurerm_data_factory_linked_service_key_vault" "linked_service_key_vault" {
   name                     = azurecaf_name.linked.name
-  resource_group_name      = var.resource_group_name
   data_factory_id          = var.data_factory_id
   description              = var.description
   integration_runtime_name = var.integration_runtime_name

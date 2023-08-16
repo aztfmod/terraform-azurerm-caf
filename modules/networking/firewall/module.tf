@@ -21,7 +21,7 @@ resource "azurerm_firewall" "fw" {
   sku_name            = try(var.settings.sku_name, "AZFW_VNet")
   sku_tier            = try(var.settings.sku_tier, "Standard")
   tags                = local.tags
-  threat_intel_mode   = try(var.settings.virtual_hub, null) != null ? "" : try(var.settings.threat_intel_mode, "Alert")
+  threat_intel_mode   = try(var.settings.threat_intel_mode, null)
   zones               = try(var.settings.zones, null)
 
   ## direct subnet_id reference
