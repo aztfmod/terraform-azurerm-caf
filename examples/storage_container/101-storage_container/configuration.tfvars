@@ -5,6 +5,8 @@ global_settings = {
   }
 }
 
+var_folder_path = "storage_container/101-storage_container"
+
 resource_groups = {
   test = {
     name = "rg1"
