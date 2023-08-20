@@ -42,7 +42,7 @@ resource "azurerm_firewall" "fw" {
     content {
       name                 = ip_configuration.key
       public_ip_address_id = var.public_ip_addresses[var.client_config.landingzone_key][ip_configuration.value].id
-      subnet_id            = try(var.subnet_id, null)
+      subnet_id            = contains(["0", 0], ip_configuration.key) ? var.subnet_id : null
     }
   }
   ## backward compat with published structures
