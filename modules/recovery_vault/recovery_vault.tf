@@ -38,7 +38,7 @@ resource "azurerm_recovery_services_vault" "asr" {
       key_id                            = var.settings.encryption.key_id
       infrastructure_encryption_enabled = try(var.settings.encryption.infrastructure_encryption_enabled, null)
       use_system_assigned_identity      = can(var.settings.encryption.user_assigned_identity) ? false : true
-      user_assigned_identity_id         = var.managed_identities[try(var.settings.encryption.user_assigned_identity.lz_key, var.client_config.landingzone_key)][var.settings.encryption.user_assigned_identity.key].id
+      user_assigned_identity_id         = can(var.settings.encryption.user_assigned_identity) ? var.managed_identities[try(var.settings.encryption.user_assigned_identity.lz_key, var.client_config.landingzone_key)][var.settings.encryption.user_assigned_identity.key].id : null
     }
   }
 }
