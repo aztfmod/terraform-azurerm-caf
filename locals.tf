@@ -87,6 +87,7 @@ locals {
     container_groups                    = try(var.compute.container_groups, {})
     dedicated_hosts                     = try(var.compute.dedicated_hosts, {})
     dedicated_host_groups               = try(var.compute.dedicated_host_groups, {})
+    elastic_clusters                    = try(var.compute.elastic_clusters, {})
     machine_learning_compute_instance   = try(var.compute.machine_learning_compute_instance, {})
     proximity_placement_groups          = try(var.compute.proximity_placement_groups, {})
     vmware_clusters                     = try(var.compute.vmware_clusters, {})

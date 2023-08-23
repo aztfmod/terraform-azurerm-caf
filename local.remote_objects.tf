@@ -58,6 +58,7 @@ locals {
     disk_encryption_sets                           = try(local.combined_objects_disk_encryption_sets, null)
     dns_zones                                      = try(local.combined_objects_dns_zones, null)
     ddos_services                                  = try(local.combined_objects_ddos_services, null)
+    elastic_clusters                               = try(local.combined_objects_elastic_clusters, null)
     event_hub_auth_rules                           = try(local.combined_objects_event_hub_auth_rules, null)
     event_hub_namespaces                           = try(local.combined_objects_event_hub_namespaces, null)
     express_route_circuit_authorizations           = try(local.combined_objects_express_route_circuit_authorizations, null)
