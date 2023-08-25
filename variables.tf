@@ -438,3 +438,6 @@ variable "preview_features" {
 variable "powerbi_embedded" {
   default = {}
 }
+variable "mi_federated_credentials" {
+  default = {}
+}

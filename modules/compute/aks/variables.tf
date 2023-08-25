@@ -39,3 +39,12 @@ variable "private_endpoints" {
 variable "private_dns" {
   default = {}
 }
+variable "azuread_federated_credentials" {
+  default = {}
+}
+variable "mi_federated_credentials" {
+  default = {}
+}
+variable "azuread_applications" {
+  default = {}
+}
