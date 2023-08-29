@@ -10,6 +10,10 @@ resource_groups = {
     name   = "aks-re1"
     region = "region1"
   }
+  msi_region1 = {
+    name   = "security-rg1"
+    region = "region1"
+  }
 }
 
 aks_clusters = {
@@ -82,9 +86,9 @@ aks_clusters = {
     azuread_federated_credentials = {
       cred1 = {
         display_name = "app-wi-fed02"
-        subject = "system:serviceaccount:demo:workload-identity-sa"
+        subject      = "system:serviceaccount:demo:workload-identity-sa"
         azuread_application = {
-          key = "test_client_v1"
+          key = "aks_auth_app"
           #lz_key = ""
         }
       }
@@ -95,10 +99,31 @@ aks_clusters = {
         name    = "mi-wi-demo02"
         subject = "system:serviceaccount:demo:workload-identity-sa"
         managed_identity = {
-          key = "level4"
+          key = "workload_system_mi"
           #lz_key = ""
         }
       }
     }
+  }
+}
+
+azuread_applications = {
+  aks_auth_app = {
+    application_name = "app-najeeb-sandbox-aksadmin"
+  }
+}
+
+azuread_service_principals = {
+  aks_auth_app = {
+    azuread_application = {
+      key = "aks_auth_app"
+    }
+  }
+}
+
+managed_identities = {
+  workload_system_mi = {
+    name               = "demo-mi-wi"
+    resource_group_key = "msi_region1"
   }
 }
