@@ -34,13 +34,11 @@ resource "random_id" "md5" {
 locals {
   md5_content = local.source != null ? filebase64sha512(local.source) : sha512(local.source_content)
 
-  source = can(var.settings.source) || can(fileexists(format("%s/%s", var.var_folder_path, var.settings.source))) ? try(
-    format("%s/%s", var.var_folder_path, var.settings.source),
-    var.settings.source
-  ) : null
+  _source_var_folder_path = can(format("%s/%s", var.var_folder_path, var.settings.source)) ? fileexists(format("%s/%s", var.var_folder_path, var.settings.source)) ? format("%s/%s", var.var_folder_path, var.settings.source) : null : null
 
-  source_content = can(var.settings.source_content) || can(fileexists(format("%s/%s", var.var_folder_path, var.settings.source_content))) ? try(
-    file(format("%s/%s", var.var_folder_path, var.settings.source_content)),
-    var.settings.source_content
-  ) : null
+  _source_direct = can(var.settings.source) ? var.settings.source : null
+
+  source = can(coalesce(local._source_var_folder_path, local._source_direct)) ? coalesce(local._source_var_folder_path, local._source_direct) : null
+
+  source_content = can(var.settings.source_content) ? var.settings.source_content : null
 }
