@@ -7,6 +7,7 @@ module "example" {
 
   current_landingzone_key               = var.landingzone.key
   custom_role_definitions               = var.custom_role_definitions
+  data_sources                          = var.data_sources
   event_hub_auth_rules                  = var.event_hub_auth_rules
   event_hub_consumer_groups             = var.event_hub_consumer_groups
   event_hub_namespace_auth_rules        = var.event_hub_namespace_auth_rules
@@ -27,19 +28,22 @@ module "example" {
   resource_provider_registration        = var.resource_provider_registration
   var_folder_path                       = var.var_folder_path
   tags                                  = local.tags
+  environment                           = var.environment
 
   aadb2c = {
     aadb2c_directory = var.aadb2c_directory
   }
 
   azuread = {
+    azuread_administrative_unit_members = var.azuread_administrative_unit_members
+    azuread_administrative_units        = var.azuread_administrative_units
     azuread_api_permissions             = var.azuread_api_permissions
     azuread_applications                = var.azuread_applications
     azuread_apps                        = var.azuread_apps
+    azuread_credential_policies         = var.azuread_credential_policies
     azuread_credentials                 = var.azuread_credentials
     azuread_groups                      = var.azuread_groups
     azuread_groups_membership           = var.azuread_groups_membership
-    azuread_credential_policies         = var.azuread_credential_policies
     azuread_roles                       = var.azuread_roles
     azuread_service_principal_passwords = var.azuread_service_principal_passwords
     azuread_service_principals          = var.azuread_service_principals
@@ -134,6 +138,7 @@ module "example" {
     databricks_workspaces              = var.databricks_workspaces
     machine_learning_workspaces        = var.machine_learning_workspaces
     mariadb_servers                    = var.mariadb_servers
+    mariadb_databases                  = var.mariadb_databases
     mssql_databases                    = var.mssql_databases
     mssql_elastic_pools                = var.mssql_elastic_pools
     mssql_failover_groups              = var.mssql_failover_groups
@@ -197,6 +202,7 @@ module "example" {
     azurerm_routes                                          = var.azurerm_routes
     cdn_profile                                             = var.cdn_profile
     cdn_endpoint                                            = var.cdn_endpoint
+    ddos_services                                           = var.ddos_services
     dns_zone_records                                        = var.dns_zone_records
     dns_zones                                               = var.dns_zones
     domain_name_registrations                               = var.domain_name_registrations
@@ -220,8 +226,15 @@ module "example" {
     nat_gateways                                            = var.nat_gateways
     network_interface_backend_address_pool_association      = var.network_interface_backend_address_pool_association
     network_security_group_definition                       = var.network_security_group_definition
+    network_security_security_rules                         = var.network_security_security_rules
     network_watchers                                        = var.network_watchers
     private_dns                                             = var.private_dns
+    private_dns_resolvers                                   = var.private_dns_resolvers
+    private_dns_resolver_inbound_endpoints                  = var.private_dns_resolver_inbound_endpoints
+    private_dns_resolver_outbound_endpoints                 = var.private_dns_resolver_outbound_endpoints
+    private_dns_resolver_dns_forwarding_rulesets            = var.private_dns_resolver_dns_forwarding_rulesets
+    private_dns_resolver_forwarding_rules                   = var.private_dns_resolver_forwarding_rules
+    private_dns_resolver_virtual_network_links              = var.private_dns_resolver_virtual_network_links
     private_dns_vnet_links                                  = var.private_dns_vnet_links
     private_endpoints                                       = var.private_endpoints
     public_ip_addresses                                     = var.public_ip_addresses
@@ -251,29 +264,30 @@ module "example" {
   }
 
   security = {
-    disk_encryption_sets                = var.disk_encryption_sets
-    dynamic_keyvault_secrets            = var.dynamic_keyvault_secrets
-    keyvault_certificate_issuers        = var.keyvault_certificate_issuers
-    keyvault_certificate_requests       = var.keyvault_certificate_requests
-    keyvault_keys                       = var.keyvault_keys
-    keyvault_certificates               = var.keyvault_certificates
-    lighthouse_definitions              = var.lighthouse_definitions
-    sentinel                            = var.sentinel
-    sentinel_automation_rules           = var.sentinel_automation_rules
-    sentinel_watchlists                 = var.sentinel_watchlists
-    sentinel_watchlist_items            = var.sentinel_watchlist_items
-    sentinel_ar_fusions                 = var.sentinel_ar_fusions
-    sentinel_ar_ml_behavior_analytics   = var.sentinel_ar_ml_behavior_analytics
-    sentinel_ar_ms_security_incidents   = var.sentinel_ar_ms_security_incidents
-    sentinel_ar_scheduled               = var.sentinel_ar_scheduled
-    sentinel_dc_aad                     = var.sentinel_dc_aad
-    sentinel_dc_app_security            = var.sentinel_dc_app_security
-    sentinel_dc_aws                     = var.sentinel_dc_aws
-    sentinel_dc_azure_threat_protection = var.sentinel_dc_azure_threat_protection
-    sentinel_dc_ms_threat_protection    = var.sentinel_dc_ms_threat_protection
-    sentinel_dc_office_365              = var.sentinel_dc_office_365
-    sentinel_dc_security_center         = var.sentinel_dc_security_center
-    sentinel_dc_threat_intelligence     = var.sentinel_dc_threat_intelligence
+    disk_encryption_sets                  = var.disk_encryption_sets
+    dynamic_keyvault_secrets              = var.dynamic_keyvault_secrets
+    keyvault_certificate_issuers          = var.keyvault_certificate_issuers
+    keyvault_certificate_requests         = var.keyvault_certificate_requests
+    keyvault_access_policies_azuread_apps = var.keyvault_access_policies_azuread_apps
+    keyvault_keys                         = var.keyvault_keys
+    keyvault_certificates                 = var.keyvault_certificates
+    lighthouse_definitions                = var.lighthouse_definitions
+    sentinel                              = var.sentinel
+    sentinel_automation_rules             = var.sentinel_automation_rules
+    sentinel_watchlists                   = var.sentinel_watchlists
+    sentinel_watchlist_items              = var.sentinel_watchlist_items
+    sentinel_ar_fusions                   = var.sentinel_ar_fusions
+    sentinel_ar_ml_behavior_analytics     = var.sentinel_ar_ml_behavior_analytics
+    sentinel_ar_ms_security_incidents     = var.sentinel_ar_ms_security_incidents
+    sentinel_ar_scheduled                 = var.sentinel_ar_scheduled
+    sentinel_dc_aad                       = var.sentinel_dc_aad
+    sentinel_dc_app_security              = var.sentinel_dc_app_security
+    sentinel_dc_aws                       = var.sentinel_dc_aws
+    sentinel_dc_azure_threat_protection   = var.sentinel_dc_azure_threat_protection
+    sentinel_dc_ms_threat_protection      = var.sentinel_dc_ms_threat_protection
+    sentinel_dc_office_365                = var.sentinel_dc_office_365
+    sentinel_dc_security_center           = var.sentinel_dc_security_center
+    sentinel_dc_threat_intelligence       = var.sentinel_dc_threat_intelligence
 
   }
 
@@ -296,10 +310,11 @@ module "example" {
     shared_image_galleries         = var.shared_image_galleries
   }
   storage = {
-    netapp_accounts        = var.netapp_accounts
-    storage_account_blobs  = var.storage_account_blobs
-    storage_account_queues = var.storage_account_queues
-    storage_containers     = var.storage_containers
+    netapp_accounts             = var.netapp_accounts
+    storage_account_blobs       = var.storage_account_blobs
+    storage_account_file_shares = var.storage_account_file_shares
+    storage_account_queues      = var.storage_account_queues
+    storage_containers          = var.storage_containers
 
   }
   webapp = {
@@ -380,6 +395,9 @@ module "example" {
   purview = {
     purview_accounts = var.purview_accounts
   }
+  maps = {
+    maps_accounts = var.maps_accounts
+  }
 
   iot = {
     digital_twins_instances             = var.digital_twins_instances
@@ -397,4 +415,7 @@ module "example" {
     iot_security_device_group           = var.iot_security_device_group
     iot_central_application             = var.iot_central_application
   }
+  powerbi_embedded = var.powerbi_embedded
+
+  preview_features = var.preview_features
 }

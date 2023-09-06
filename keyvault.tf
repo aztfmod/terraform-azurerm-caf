@@ -8,6 +8,7 @@ module "keyvaults" {
   settings           = each.value
   diagnostics        = local.combined_diagnostics
   vnets              = local.combined_objects_networking
+  virtual_subnets    = local.combined_objects_virtual_subnets
   azuread_groups     = local.combined_objects_azuread_groups
   managed_identities = local.combined_objects_managed_identities
   private_dns        = local.combined_objects_private_dns

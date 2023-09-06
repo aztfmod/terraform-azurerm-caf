@@ -3,10 +3,30 @@
 You can use this module directly from the Terraform registry using a minimalistic ```main.tf``` as follow:
 
 ```hcl
+terraform {
+  required_providers {
+  }
+  required_version = ">= 1.4.0"
+}
+
+provider "azurerm" {
+  features {}
+}
+
+provider "azurerm" {
+  features {}
+  skip_provider_registration = true
+  alias = "vhub"
+}
+
 module "caf" {
   source  = "aztfmod/caf/azurerm"
-  version = "5.3.11"
+  version = "5.7.0"
 
+  providers = {
+    azurerm.vhub = azurerm.vhub
+  }
+  
   global_settings = var.global_settings
   resource_groups = var.resource_groups
   keyvaults       = var.keyvaults

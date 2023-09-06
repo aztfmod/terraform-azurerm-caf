@@ -203,7 +203,7 @@ keyvault_keys = {
     name               = "disk-key"
     key_type           = "RSA"
     key_size           = "2048"
-    key_opts           = ["encrypt", "decrypt", "sign", "verify", "wrapKey", "unwrapKey"]
+    key_opts           = ["Encrypt", "Decrypt", "Sign", "Verify", "WrapKey", "UnwrapKey"]
   }
 }
 

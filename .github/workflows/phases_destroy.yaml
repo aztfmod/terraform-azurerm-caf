@@ -1,0 +1,94 @@
+
+name: phases_dispatcher_destroy
+
+on:
+  workflow_call:
+    inputs:
+      matrix:
+        required: true
+        type: string
+
+jobs:
+
+  setup_destroy:
+    name: setup phases
+    runs-on: ubuntu-latest
+    outputs:
+      name: ${{ steps.setup_destroy.outputs.name }}
+      phase1: ${{ steps.setup_destroy.outputs.phase1 }}
+      phase2: ${{ steps.setup_destroy.outputs.phase2 }}
+      phase3: ${{ steps.setup_destroy.outputs.phase3 }}
+      lz_ref: ${{ steps.setup_destroy.outputs.lz_ref }}
+    steps:
+      - name: set outputs with default values
+        id: setup_destroy
+        run: |
+          echo '${{inputs.matrix}}' | jq -c
+          #
+          name=$(echo '${{inputs.matrix}}' | jq -c .name) && echo "name: $name"
+          phase1=$(echo '${{inputs.matrix}}' | jq -c .phase1) && echo "phase1: $phase1"
+          phase2=$(echo '${{inputs.matrix}}' | jq -c .phase2) && echo "phase2: $phase2"
+          phase3=$(echo '${{inputs.matrix}}' | jq -c .phase3) && echo "phase3: $phase3"
+          lz_ref=$(echo '${{inputs.matrix}}' | jq -c .lz_ref) && echo "lz_ref: $lz_ref"
+          #
+          echo "name=$name" >> $GITHUB_OUTPUT
+          echo "phase1=$phase1" >> $GITHUB_OUTPUT
+          echo "phase2=$phase2" >> $GITHUB_OUTPUT
+          echo "phase3=$phase3" >> $GITHUB_OUTPUT
+          echo "lz_ref=$lz_ref" >> $GITHUB_OUTPUT
+
+
+  phase3_destroy:
+    needs: [setup_destroy]
+
+    strategy:
+      max-parallel: 20
+      fail-fast: false
+      matrix:
+        phase: ${{ fromJSON(needs.setup_destroy.outputs.phase3) }}
+
+    uses: ./.github/workflows/rover.yaml
+    secrets: inherit
+    with:
+      scenario: ${{ needs.setup_destroy.outputs.name }}
+      name: phase3
+      phase: ${{ toJSON(matrix.phase) }}
+      lz_ref: ${{ fromJSON(needs.setup_destroy.outputs.lz_ref) }}
+      plan_options: -destroy
+
+  phase2_destroy:
+    needs: [setup_destroy, phase3_destroy]
+
+    strategy:
+      max-parallel: 20
+      fail-fast: false
+      matrix:
+        phase: ${{ fromJSON(needs.setup_destroy.outputs.phase2) }}
+
+    uses: ./.github/workflows/rover.yaml
+    secrets: inherit
+    with:
+      scenario: ${{ needs.setup_destroy.outputs.name }}
+      name: phase2
+      phase: ${{ toJSON(matrix.phase) }}
+      lz_ref: ${{ fromJSON(needs.setup_destroy.outputs.lz_ref) }}
+      plan_options: -destroy
+
+  phase1_destroy:
+    needs: [setup_destroy, phase2_destroy]
+
+    strategy:
+      max-parallel: 20
+      fail-fast: false
+      matrix:
+        phase: ${{ fromJSON(needs.setup_destroy.outputs.phase1) }}
+
+    uses: ./.github/workflows/rover.yaml
+    secrets: inherit
+    with:
+      scenario: ${{ needs.setup_destroy.outputs.name }}
+      name: phase1
+      phase: ${{ toJSON(matrix.phase) }}
+      lz_ref: ${{ fromJSON(needs.setup_destroy.outputs.lz_ref) }}
+      plan_options: -destroy
+
