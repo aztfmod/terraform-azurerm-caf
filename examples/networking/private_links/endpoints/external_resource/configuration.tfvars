@@ -9,8 +9,9 @@ private_endpoints = {
         resource_group_key = "rg"
         private_service_connection = {
           name                 = "aks-ingress-psc"
-          is_manual_connection = false
+          is_manual_connection = true
           resource_alias = "somerandomlink.westeurope.azure.privatelinkservice"
+          request_message      = "example"
         }
       }
     }
