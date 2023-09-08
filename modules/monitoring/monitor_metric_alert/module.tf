@@ -47,7 +47,7 @@ resource "azurerm_monitor_metric_alert" "mma" {
       operator          = try(dynamic_criteria.value.operator, null)
       alert_sensitivity = try(dynamic_criteria.value.alert_sensitivity, null)
       dynamic "dimension" {
-        for_each = try(criteria.value.dimension, {})
+        for_each = try(dynamic_criteria.value.dimension, {})
         content {
           name     = try(dimension.value.name, null)
           operator = try(dimension.value.operator, null)
