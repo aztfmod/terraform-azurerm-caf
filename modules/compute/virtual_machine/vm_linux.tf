@@ -82,11 +82,11 @@ resource "azurerm_linux_virtual_machine" "vm" {
 
   # Create local ssh key
   dynamic "admin_ssh_key" {
-    for_each = lookup(each.value, "disable_password_authentication", true) == true && can(var.settings.public_key_pem_file) ? [1] : []
+    for_each = lookup(each.value, "disable_password_authentication", true) == true && local.create_sshkeys ? [1] : []
 
     content {
       username   = each.value.admin_username
-      public_key = local.create_sshkeys ? tls_private_key.ssh[each.key].public_key_openssh : file(var.settings.public_key_pem_file)
+      public_key = tls_private_key.ssh[each.key].public_key_openssh
     }
   }
 
@@ -129,6 +129,16 @@ resource "azurerm_linux_virtual_machine" "vm" {
       # username   = try(admin_ssh_key.value.username, each.value.admin_username)
       username   = each.value.admin_username
       public_key = replace(data.external.ssh_secret_keyvault[admin_ssh_key.key].result.public_ssh_key, "\r\n", "")
+    }
+  }
+
+  # by ssh public key
+  dynamic "admin_ssh_key" {
+    for_each = lookup(each.value, "disable_password_authentication", true) == true && can(var.settings.public_key_pem_file) == true ? [1] : []
+
+    content {
+      username   = each.value.admin_username
+      public_key = file(var.settings.public_key_pem_file)
     }
   }
 
