@@ -3,7 +3,7 @@ variable "short_term_retention_days" {
   nullable    = true
 
   validation {
-    condition = var.short_term_retention_day == null ? true : var.short_term_retention_days >= 1
+    condition = var.short_term_retention_days == null ? true : var.short_term_retention_days >= 1
 
     error_message = format("Not supported value: '%s'. \nAdjust your configuration file with a supported value of 1 or more days", var.short_term_retention_days)
   }
