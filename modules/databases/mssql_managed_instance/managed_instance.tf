@@ -10,7 +10,7 @@ resource "azurecaf_name" "mssqlmi" {
 
 resource "azurerm_resource_group_template_deployment" "mssqlmi" {
 
-  name                = "mssqlmi"
+  name                = azurecaf_name.mssqlmi.result
   resource_group_name = var.resource_group_name
 
   template_content = file(local.arm_filename)
