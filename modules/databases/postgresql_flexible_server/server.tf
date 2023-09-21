@@ -32,7 +32,7 @@ resource "azurerm_postgresql_flexible_server" "postgresql" {
     content {
       active_directory_auth_enabled = try(var.settings.authentication.active_directory_auth_enabled, null)
       password_auth_enabled         = try(var.settings.authentication.password_auth_enabled, null)
-      tenant_id                     = try(var.settings.authentication.tenant_id, null)
+      tenant_id                     = can(var.settings.authentication.tenant_id) ? var.settings.authentication.tenant_id : var.client_config.tenant_id
     }
   }
 
