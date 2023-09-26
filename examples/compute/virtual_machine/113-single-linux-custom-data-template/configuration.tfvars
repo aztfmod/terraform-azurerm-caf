@@ -63,7 +63,7 @@ virtual_machines = {
         disable_password_authentication = true
 
         custom_data = {
-          templatefile        = "custom_data.tpl"
+          templatefile        = "compute/virtual_machine/113-single-linux-custom-data-template/custom_data.tpl"
           my_value            = "my_value"
         }
         dynamic_custom_data = {
