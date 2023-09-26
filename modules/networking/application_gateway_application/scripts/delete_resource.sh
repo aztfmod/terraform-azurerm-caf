@@ -94,6 +94,9 @@ case "${RESOURCE}" in
     HTTPLISTENER)
         execute_with_backoff az network application-gateway http-listener delete -g ${RG_NAME} --gateway-name ${APPLICATION_GATEWAY_NAME} -n ${NAME}
         ;;
+    REDIRECTCONFIG)
+        execute_with_backoff az network application-gateway redirect-config delete -g ${RG_NAME} --gateway-name ${APPLICATION_GATEWAY_NAME} -n ${NAME}
+        ;;
     REQUESTROUTINGRULE)
         execute_with_backoff az network application-gateway rule delete -g ${RG_NAME} --gateway-name ${APPLICATION_GATEWAY_NAME} -n ${NAME}
         ;;

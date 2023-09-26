@@ -125,7 +125,7 @@ mssql_managed_instances = {
   sqlmi1 = {
     version = "v1"
     resource_group = {
-      key = "sqlmi_re1"
+      key = "sqlmi_region1"
     }
     name                = "lz-sql-mi-aztf"
     administrator_login = "adminuser"
@@ -155,7 +155,7 @@ mssql_managed_instances = {
     minimal_tls_version = "1.2"
     //networking
     networking = {
-      vnet_key   = "sqlmi_region1"
+      vnet_key   = "sqlmi_re1"
       subnet_key = "sqlmi1"
     }
     #proxy_override               = "Redirect"
@@ -215,8 +215,8 @@ mssql_managed_instances_secondary = {
     minimal_tls_version = "1.2"
     //networking
     networking = {
-      vnet_key   = "sqlmi_region1"
-      subnet_key = "sqlmi1"
+      vnet_key   = "sqlmi_region2"
+      subnet_key = "sqlmi2"
     }
     #proxy_override               = "Redirect"
     identity = {
@@ -309,18 +309,20 @@ managed_identities = {
 # }
 
 mssql_mi_failover_groups = {
-  failover-mi = {
+  sqlmi1_sqlmi2 = {
+    version            = "v1"
     resource_group_key = "sqlmi_region1"
-    name               = "failover-test"
+    name               = "sqlmi1-sqlmi2"
     primary_server = {
       mi_server_key = "sqlmi1"
     }
     secondary_server = {
       mi_server_key = "sqlmi2"
     }
-    readWriteEndpoint = {
-      failoverPolicy                         = "Automatic"
-      failoverWithDataLossGracePeriodMinutes = 60
+    readonly_endpoint_failover_policy_enabled = false
+    read_write_endpoint_failover_policy = {
+      mode          = "Automatic"
+      grace_minutes = 60
     }
   }
 }

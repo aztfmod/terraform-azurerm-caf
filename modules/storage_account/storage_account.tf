@@ -1,6 +1,6 @@
 locals {
   # Need to update the storage tags if the environment tag is updated with the rover command line
-  caf_tags = lookup(var.storage_account, "tags", null) == null ? null : lookup(var.storage_account.tags, "environment", null) == null ? var.storage_account.tags : merge(lookup(var.storage_account, "tags", {}), { "environment" : var.global_settings.environment })
+  caf_tags = can(var.storage_account.tags.caf_environment) || can(var.storage_account.tags.environment) ? merge(lookup(var.storage_account, "tags", {}), { "caf_environment" : var.global_settings.environment }) : {}
 }
 
 # naming convention
@@ -32,11 +32,13 @@ resource "azurerm_storage_account" "stg" {
   location                          = local.location
   min_tls_version                   = try(var.storage_account.min_tls_version, "TLS1_2")
   is_hns_enabled                    = try(var.storage_account.is_hns_enabled, false)
+  sftp_enabled                      = try(var.storage_account.sftp_enabled, null)
   nfsv3_enabled                     = try(var.storage_account.nfsv3_enabled, false)
   queue_encryption_key_type         = try(var.storage_account.queue_encryption_key_type, null)
   resource_group_name               = local.resource_group_name
   table_encryption_key_type         = try(var.storage_account.table_encryption_key_type, null)
   tags                              = merge(local.tags, try(var.storage_account.tags, null), local.caf_tags)
+  public_network_access_enabled     = try(var.storage_account.public_network_access_enabled, null)
 
 
   dynamic "custom_domain" {

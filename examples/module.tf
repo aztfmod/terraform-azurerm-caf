@@ -7,6 +7,7 @@ module "example" {
 
   current_landingzone_key               = var.landingzone.key
   custom_role_definitions               = var.custom_role_definitions
+  data_sources                          = var.data_sources
   event_hub_auth_rules                  = var.event_hub_auth_rules
   event_hub_consumer_groups             = var.event_hub_consumer_groups
   event_hub_namespace_auth_rules        = var.event_hub_namespace_auth_rules
@@ -201,6 +202,7 @@ module "example" {
     azurerm_routes                                          = var.azurerm_routes
     cdn_profile                                             = var.cdn_profile
     cdn_endpoint                                            = var.cdn_endpoint
+    ddos_services                                           = var.ddos_services
     dns_zone_records                                        = var.dns_zone_records
     dns_zones                                               = var.dns_zones
     domain_name_registrations                               = var.domain_name_registrations
@@ -308,10 +310,11 @@ module "example" {
     shared_image_galleries         = var.shared_image_galleries
   }
   storage = {
-    netapp_accounts        = var.netapp_accounts
-    storage_account_blobs  = var.storage_account_blobs
-    storage_account_queues = var.storage_account_queues
-    storage_containers     = var.storage_containers
+    netapp_accounts             = var.netapp_accounts
+    storage_account_blobs       = var.storage_account_blobs
+    storage_account_file_shares = var.storage_account_file_shares
+    storage_account_queues      = var.storage_account_queues
+    storage_containers          = var.storage_containers
 
   }
   webapp = {
@@ -392,6 +395,9 @@ module "example" {
   purview = {
     purview_accounts = var.purview_accounts
   }
+  maps = {
+    maps_accounts = var.maps_accounts
+  }
 
   iot = {
     digital_twins_instances             = var.digital_twins_instances
@@ -409,5 +415,7 @@ module "example" {
     iot_security_device_group           = var.iot_security_device_group
     iot_central_application             = var.iot_central_application
   }
+  powerbi_embedded = var.powerbi_embedded
+
   preview_features = var.preview_features
 }

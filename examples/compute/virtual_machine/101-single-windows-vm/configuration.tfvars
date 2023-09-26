@@ -53,7 +53,7 @@ virtual_machines = {
         eviction_policy = "Deallocate"
 
         patch_mode = "AutomaticByOS"
-# When you want to load the file from the folder in the custom_data always use the relative path from the caf_solution in landing zones
+        # When you want to load the file from the folder in the custom_data always use the relative path from the caf_solution in landing zones
         custom_data = "../../examples/compute/virtual_machine/101-single-windows-vm/scripts/custom.ps1"
         # Value of the nic keys to attach the VM. The first one in the list is the default nic
         network_interface_keys = ["nic0"]

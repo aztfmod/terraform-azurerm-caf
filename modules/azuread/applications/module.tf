@@ -102,7 +102,7 @@ resource "azuread_application" "app" {
 
         content {
           access_token_issuance_enabled = can(var.settings.oauth2_allow_implicit_flow) || can(implicit_grant.value.access_token_issuance_enabled) ? try(var.settings.oauth2_allow_implicit_flow, implicit_grant.value.access_token_issuance_enabled) : null
-          id_token_issuance_enabled     = try(implicit_grant.value.access_token_issuance_enabled, null)
+          id_token_issuance_enabled     = try(implicit_grant.value.id_token_issuance_enabled, null)
         }
       }
     }
@@ -113,6 +113,9 @@ resource "azuread_service_principal" "app" {
   application_id               = azuread_application.app.application_id
   app_role_assignment_required = try(var.settings.app_role_assignment_required, false)
   tags                         = try(var.settings.tags, null)
+  owners = [
+    var.client_config.object_id
+  ]
 }
 
 resource "azuread_service_principal_password" "pwd" {

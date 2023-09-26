@@ -9,7 +9,7 @@ output "name" {
 output "sql_containers" {
   value = {
     for k, v in var.settings.containers : k => {
-      "id": azurerm_cosmosdb_sql_container.container[k].id
+      "id" : azurerm_cosmosdb_sql_container.container[k].id
     }
   }
 }

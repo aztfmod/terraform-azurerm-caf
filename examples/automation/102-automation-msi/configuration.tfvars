@@ -28,7 +28,7 @@ automations = {
 managed_identities = {
   mi1 = {
     name = "automation-msi"
-    resource_group_key = {
+    resource_group = {
       key = "automation"
     }
   }
