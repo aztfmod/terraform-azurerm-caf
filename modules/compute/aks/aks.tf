@@ -169,6 +169,7 @@ resource "azurerm_kubernetes_cluster" "aks" {
 
     content {
       log_analytics_workspace_id = can(oms_agent.value.log_analytics_workspace_id) ? oms_agent.value.log_analytics_workspace_id : var.diagnostics.log_analytics[oms_agent.value.log_analytics_key].id
+      msi_auth_for_monitoring_enabled = try(oms_agent.value.msi_auth_for_monitoring_enabled, null)
     }
   }
   dynamic "microsoft_defender" {
