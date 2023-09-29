@@ -37,7 +37,7 @@ postgresql_flexible_servers = {
       password_auth_enabled = true
 
       # (Optional) The Tenant ID of the Azure Active Directory which is used by the Active Directory authentication. active_directory_auth_enabled must be set to true.
-      tenant_id = "00000-ee35-4265-95f6-46e9a9b4ec96"
+      #tenant_id = "00000-ee35-4265-95f6-46e9a9b4ec96"
     }
 
 
