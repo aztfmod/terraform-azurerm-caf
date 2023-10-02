@@ -1,5 +1,5 @@
 data "azurecaf_name" "managed_disk" {
-  for_each = try(var.settings.managed_disks, "managed_disks", {})
+  for_each = try(var.settings.managed_disks, {})
 
   name          = each.value.name
   resource_type = "azurerm_managed_disk"
@@ -12,7 +12,7 @@ data "azurecaf_name" "managed_disk" {
 
 
 resource "azurerm_managed_disk" "managed_disk" {
-  for_each = try(var.settings.managed_disks, "managed_disks", {})
+  for_each = try(var.settings.managed_disks, {})
 
 
   name                   = data.azurecaf_name.managed_disk[each.key].result
