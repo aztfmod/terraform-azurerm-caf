@@ -60,10 +60,21 @@ resource "azurerm_vpn_server_configuration" "p2s_configuration" {
   tags                     = local.tags
   vpn_authentication_types = var.virtual_hub_config.p2s_config.server_config.vpn_authentication_types
 
-  client_root_certificate {
-    name             = var.virtual_hub_config.p2s_config.server_config.client_root_certificate.name
-    public_cert_data = var.virtual_hub_config.p2s_config.server_config.client_root_certificate.public_cert_data
+  dynamic "client_root_certificate" {
+    for_each = contains(var.virtual_hub_config.p2s_config.server_config.vpn_authentication_types, "Certificate") ? [1] : []
+    content {
+      name             = var.virtual_hub_config.p2s_config.server_config.client_root_certificate.name
+      public_cert_data = var.virtual_hub_config.p2s_config.server_config.client_root_certificate.public_cert_data
+    }
   }
 
+  dynamic "azure_active_directory_authentication" {
+    for_each = can(var.virtual_hub_config.p2s_config.server_config.azure_active_directory_authentication) ? [1] : []
+    content {
+      audience = var.virtual_hub_config.p2s_config.server_config.azure_active_directory_authentication.audience
+      tenant = var.virtual_hub_config.p2s_config.server_config.azure_active_directory_authentication.tenant
+      issuer = var.virtual_hub_config.p2s_config.server_config.azure_active_directory_authentication.issuer
+    }    
+  }
 }
 
