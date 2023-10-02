@@ -1,7 +1,6 @@
 global_settings = {
   regions = {
-    region1 = "australiaeast"
-    region2 = "australiacentral"
+    region1 = "eastus2"
   }
 }
 resource_groups = {
