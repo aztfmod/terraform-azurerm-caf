@@ -60,7 +60,7 @@ diagnostics_definition = {
     categories = {
       metric = [
         #["Category name",  "Diagnostics Enabled(true/false)", "Retention Enabled(true/false)", Retention_period]
-        ["AllMetrics", true, false, 7],
+        ["AllMetrics", true, false, 0],
       ]
     }
   }

@@ -85,7 +85,7 @@
     "machine_learning/100-aml",
     "machine_learning/101-aml-vnet",
     "machine_learning/102-aml-compute_instance",
-    "maps/101-azure-maps-account/configuration.tfvars",
+    "maps/101-azure-maps-account",
     "managed_service_identity/100-msi-levels",
     "mariadb_server/100-simple-mariadb",
     "mariadb_server/101-vnet-rule-mariadb",

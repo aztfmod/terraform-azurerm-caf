@@ -13,5 +13,7 @@
     "azuread/106-azuread-application-with-api-scopes",
     "azuread/201-groups-and-roles",
     "azuread/202-azuread-application-federated-credentials"
+    "azuread/108-azuread-application-with-app-roles",
+    "azuread/201-groups-and-roles"
   ]
 }

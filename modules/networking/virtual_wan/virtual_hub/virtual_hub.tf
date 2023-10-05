@@ -11,13 +11,14 @@ resource "azurecaf_name" "vwan_hub" {
 
 ## creates a virtual hub in the region
 resource "azurerm_virtual_hub" "vwan_hub" {
-  name                = azurecaf_name.vwan_hub.result
-  resource_group_name = var.resource_group_name
-  location            = var.location
-  virtual_wan_id      = var.vwan_id
-  sku                 = try(var.virtual_hub_config.sku, null)
-  address_prefix      = try(var.virtual_hub_config.hub_address_prefix, null)
-  tags                = local.tags
+  name                   = azurecaf_name.vwan_hub.result
+  resource_group_name    = var.resource_group_name
+  location               = var.location
+  virtual_wan_id         = var.vwan_id
+  sku                    = try(var.virtual_hub_config.sku, null)
+  address_prefix         = try(var.virtual_hub_config.hub_address_prefix, null)
+  hub_routing_preference = try(var.virtual_hub_config.hub_routing_preference, null)
+  tags                   = local.tags
 
   dynamic "route" {
     for_each = try(var.virtual_hub_config.routes, {})

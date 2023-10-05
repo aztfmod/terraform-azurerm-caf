@@ -46,7 +46,7 @@ jobs:
     needs: rover_setup
 
     container:
-      image: aztfmod/rover:1.5.3-2307.2007
+      image: aztfmod/rover:1.5.6-2309.0507
       options: --user 0
 
     env:

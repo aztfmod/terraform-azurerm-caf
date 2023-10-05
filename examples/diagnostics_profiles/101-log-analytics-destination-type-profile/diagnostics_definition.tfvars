@@ -4,11 +4,11 @@ diagnostics_definition = {
     categories = {
       log = [
         # ["Category name",  "Diagnostics Enabled(true/false)", "Retention Enabled(true/false)", Retention_period]
-        ["VMProtectionAlerts", true, true, 90],
+        ["VMProtectionAlerts", true, true, 0],
       ]
       metric = [
         #["Category name",  "Diagnostics Enabled(true/false)", "Retention Enabled(true/false)", Retention_period]
-        ["AllMetrics", true, true, 90],
+        ["AllMetrics", true, true, 0],
       ]
     }
   }
@@ -18,13 +18,13 @@ diagnostics_definition = {
     categories = {
       log = [
         # ["Category name",  "Diagnostics Enabled(true/false)", "Retention Enabled(true/false)", Retention_period]
-        ["DDoSProtectionNotifications", true, true, 90],
-        ["DDoSMitigationFlowLogs", true, true, 90],
-        ["DDoSMitigationReports", true, true, 90],
+        ["DDoSProtectionNotifications", true, true, 0],
+        ["DDoSMitigationFlowLogs", true, true, 0],
+        ["DDoSMitigationReports", true, true, 0],
       ]
       metric = [
         #["Category name",  "Diagnostics Enabled(true/false)", "Retention Enabled(true/false)", Retention_period]
-        ["AllMetrics", true, true, 90],
+        ["AllMetrics", true, true, 0],
       ]
     }
   }
@@ -34,25 +34,25 @@ diagnostics_definition = {
     categories = {
       log = [
         # ["Category name",  "Diagnostics Enabled(true/false)", "Retention Enabled(true/false)", Retention_period]
-        ["AzureFirewallApplicationRule", true, true, 90],
-        ["AzureFirewallNetworkRule", true, true, 90],
-        ["AzureFirewallDnsProxy", true, true, 90],
-        ["AZFWApplicationRule", true, true, 90],
-        ["AZFWApplicationRuleAggregation", true, true, 90],
-        ["AZFWDnsQuery", true, true, 90],
-        ["AZFWFatFlow", true, true, 90],
-        ["AZFWFlowTrace", true, true, 90],
-        ["AZFWFqdnResolveFailure", true, true, 90],
-        ["AZFWIdpsSignature", true, true, 90],
-        ["AZFWNatRule", true, true, 90],
-        ["AZFWNatRuleAggregation", true, true, 90],
-        ["AZFWNetworkRule", true, true, 90],
-        ["AZFWNetworkRuleAggregation", true, true, 90],
-        ["AZFWThreatIntel", true, true, 90],
+        ["AzureFirewallApplicationRule", true, true, 0],
+        ["AzureFirewallNetworkRule", true, true, 0],
+        ["AzureFirewallDnsProxy", true, true, 0],
+        ["AZFWApplicationRule", true, true, 0],
+        ["AZFWApplicationRuleAggregation", true, true, 0],
+        ["AZFWDnsQuery", true, true, 0],
+        ["AZFWFatFlow", true, true, 0],
+        ["AZFWFlowTrace", true, true, 0],
+        ["AZFWFqdnResolveFailure", true, true, 0],
+        ["AZFWIdpsSignature", true, true, 0],
+        ["AZFWNatRule", true, true, 0],
+        ["AZFWNatRuleAggregation", true, true, 0],
+        ["AZFWNetworkRule", true, true, 0],
+        ["AZFWNetworkRuleAggregation", true, true, 0],
+        ["AZFWThreatIntel", true, true, 0],
       ]
       metric = [
         # ["Category name",  "Metric Enabled(true/false)", "Retention Enabled(true/false)", Retention_period]
-        ["AllMetrics", true, true, 90],
+        ["AllMetrics", true, true, 0],
       ]
     }
   }

@@ -345,7 +345,7 @@ network_security_group_definition = {
 #       ]
 #       # metric = [
 #       #   #["Category name",  "Diagnostics Enabled(true/false)", "Retention Enabled(true/false)", Retention_period]
-#       #   ["AllMetrics", false, false, 7],
+#       #   ["AllMetrics", false, false, 0],
 #       # ]
 #     }
 #   }
