@@ -123,8 +123,8 @@ resource "azurerm_monitor_action_group" "this" {
       use_common_alert_schema = try(webhook_receiver.value.use_common_alert_schema, false)
 
       dynamic "aad_auth" {
-        for_each = try(webhook_receiver.value.aad_auth, null) == null ? [] : [1]
-
+        # for_each = try(webhook_receiver.value.aad_auth, null) == null ? [] : [1]
+        for_each = try(webhook_receiver.value.aad_auth, {})
         content {
           object_id      = aad_auth.value.object_id
           identifier_uri = try(aad_auth.value.identifier_uri, null)
