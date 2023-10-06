@@ -39,11 +39,11 @@ diagnostics_definition = {
     categories = {
       log = [
         # ["Category name",  "Diagnostics Enabled(true/false)", "Retention Enabled(true/false)", Retention_period]
-        ["Audit", true, false, 7],
+        ["Audit", true, false, 0],
       ]
       metric = [
         #["Category name",  "Diagnostics Enabled(true/false)", "Retention Enabled(true/false)", Retention_period]
-        ["AllMetrics", true, false, 7],
+        ["AllMetrics", true, false, 0],
       ]
     }
   }
@@ -53,12 +53,12 @@ diagnostics_definition = {
     categories = {
       log = [
         # ["Category name",  "Diagnostics Enabled(true/false)", "Retention Enabled(true/false)", Retention_period]
-        ["ContainerRegistryRepositoryEvents", true, false, 7],
-        ["ContainerRegistryLoginEvents", true, false, 7],
+        ["ContainerRegistryRepositoryEvents", true, false, 0],
+        ["ContainerRegistryLoginEvents", true, false, 0],
       ]
       metric = [
         #["Category name",  "Diagnostics Enabled(true/false)", "Retention Enabled(true/false)", Retention_period]
-        ["AllMetrics", true, false, 7],
+        ["AllMetrics", true, false, 0],
       ]
     }
   }

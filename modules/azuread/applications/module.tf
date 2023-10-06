@@ -128,7 +128,7 @@ resource "azuread_service_principal_password" "pwd" {
   }
 
   lifecycle {
-    create_before_destroy = false
+    #create_before_destroy = false
   }
 }
 

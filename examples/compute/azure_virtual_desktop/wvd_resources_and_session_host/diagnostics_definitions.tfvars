@@ -10,10 +10,10 @@ diagnostics_definition = {
     categories = {
       log = [
         #["Category name",  "Diagnostics Enabled(true/false)", "Retention Enabled(true/false)", Retention_period]
-        ["Checkpoint", true, true, 7],
-        ["Error", true, true, 7],
-        ["Management", true, true, 7],
-        ["Feed", true, true, 7],
+        ["Checkpoint", true, true, 0],
+        ["Error", true, true, 0],
+        ["Management", true, true, 0],
+        ["Feed", true, true, 0],
       ]
     }
   }
@@ -23,12 +23,12 @@ diagnostics_definition = {
     categories = {
       log = [
         #["Category name",  "Diagnostics Enabled(true/false)", "Retention Enabled(true/false)", Retention_period]
-        ["Checkpoint", true, true, 7],
-        ["Error", true, true, 7],
-        ["Management", true, true, 7],
-        ["Connection", true, true, 7],
-        ["HostRegistration", true, true, 7],
-        ["AgentHealthStatus", true, true, 7],
+        ["Checkpoint", true, true, 0],
+        ["Error", true, true, 0],
+        ["Management", true, true, 0],
+        ["Connection", true, true, 0],
+        ["HostRegistration", true, true, 0],
+        ["AgentHealthStatus", true, true, 0],
       ]
     }
   }
@@ -38,9 +38,9 @@ diagnostics_definition = {
     categories = {
       log = [
         # ["Category name",  "Diagnostics Enabled(true/false)", "Retention Enabled(true/false)", Retention_period]
-        ["Checkpoint", true, true, 7],
-        ["Error", true, true, 7],
-        ["Management", true, true, 7],
+        ["Checkpoint", true, true, 0],
+        ["Error", true, true, 0],
+        ["Management", true, true, 0],
       ]
     }
   }
