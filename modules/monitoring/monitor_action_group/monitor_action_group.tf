@@ -126,9 +126,9 @@ resource "azurerm_monitor_action_group" "this" {
         for_each = try(webhook_receiver.value.aad_auth, null) == null ? [] : [1]
 
         content {
-          object_id      = var.settings.webhook_receiver.value.aad_auth.object_id
-          identifier_uri = try(var.settings.webhook_receiver.value.aad_auth.identifier_uri, null)
-          tenant_id      = try(var.settings.webhook_receiver.value.aad_auth.tenant_id, null)
+          object_id      = aad_auth.value.object_id
+          identifier_uri = try(aad_auth.value.identifier_uri, null)
+          tenant_id      = try(aad_auth.value.tenant_id, null)
         }
       }
     }
