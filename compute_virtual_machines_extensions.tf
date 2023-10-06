@@ -105,7 +105,8 @@ module "vm_extension_generic" {
 }
 
 module "keyvault_for_windows" {
-  source = "./modules/compute/virtual_machine_extensions"
+  source     = "./modules/compute/virtual_machine_extensions"
+  depends_on = [module.keyvault_certificates]
 
   for_each = {
     for key, value in try(local.compute.virtual_machines, {}) : key => value
