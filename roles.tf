@@ -124,6 +124,7 @@ locals {
     azurerm_firewalls                          = local.combined_objects_azurerm_firewalls
     backup_vaults                              = local.combined_objects_backup_vaults
     batch_accounts                             = local.combined_objects_batch_accounts
+    cosmos_dbs                                 = local.combined_objects_cosmos_dbs
     data_factory                               = local.combined_objects_data_factory
     databricks_workspaces                      = local.combined_objects_databricks_workspaces
     dns_zones                                  = local.combined_objects_dns_zones
