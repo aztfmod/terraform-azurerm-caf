@@ -125,6 +125,7 @@ locals {
     backup_vaults                              = local.combined_objects_backup_vaults
     batch_accounts                             = local.combined_objects_batch_accounts
     cognitive_services_account                 = local.combined_objects_cognitive_services_accounts
+    cosmos_dbs                                 = local.combined_objects_cosmos_dbs
     data_factory                               = local.combined_objects_data_factory
     databricks_workspaces                      = local.combined_objects_databricks_workspaces
     diagnostic_storage_accounts                = local.current_objects_diagnostic_storage_accounts
