@@ -62,6 +62,7 @@ resource "azurerm_kubernetes_cluster" "aks" {
     os_disk_size_gb               = try(var.settings.default_node_pool.os_disk_size_gb, null)
     os_disk_type                  = try(var.settings.default_node_pool.os_disk_type, null)
     os_sku                        = try(var.settings.default_node_pool.os_sku, null)
+    temporary_name_for_rotation   = try(var.settings.default_node_pool.temporary_name_for_rotation, null)
     tags                          = merge(try(var.settings.default_node_pool.tags, {}), local.tags)
     type                          = try(var.settings.default_node_pool.type, "VirtualMachineScaleSets")
     ultra_ssd_enabled             = try(var.settings.default_node_pool.ultra_ssd_enabled, false)
