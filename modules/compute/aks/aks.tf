@@ -165,7 +165,7 @@ resource "azurerm_kubernetes_cluster" "aks" {
   http_application_routing_enabled = can(var.settings.addon_profile.http_application_routing) || can(var.settings.http_application_routing_enabled) == false ? try(var.settings.addon_profile.http_application_routing.0.enabled, null) : var.settings.http_application_routing_enabled
 
   dynamic "oms_agent" {
-    for_each = try(var.settings.oms_agent[*], var.settings.oms_agent[*], {})
+    for_each = try(var.settings.addon_profile.oms_agent[*], var.settings.oms_agent[*], {})
 
     content {
       log_analytics_workspace_id = can(oms_agent.value.log_analytics_workspace_id) ? oms_agent.value.log_analytics_workspace_id : var.diagnostics.log_analytics[oms_agent.value.log_analytics_key].id
