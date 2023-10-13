@@ -96,3 +96,5 @@ variable "virtual_subnets" {
   default     = {}
   nullable    = false
 }
+
+variable "var_folder_path" {}

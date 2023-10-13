@@ -98,6 +98,12 @@ virtual_machines = {
         disable_password_authentication = true
 
         #custom_data - Users can either reference a local file path or a block of code as seen below.
+        # custom_data = {
+        #   template_path = "compute/virtual_machine/100-single-linux-vm/scripts/cloud-init/config.tpl"
+        #   template_vars = {
+        #     packages = ["ca-certificates", "curl", "apt-transport-https", "lsb-release", "azure-cli"]
+        #   }
+        # }
         # custom_data                     = "scripts/cloud-init/install-rover-tools.config"
         custom_data = <<CUSTOM_DATA
 #!/bin/bash
