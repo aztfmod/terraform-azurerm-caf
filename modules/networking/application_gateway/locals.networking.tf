@@ -35,8 +35,7 @@ locals {
   public_vnet  = merge(local.public_vnet_local, local.public_vnet_remote)
   private_subnets = merge(local.private_subnets_local, local.private_subnets_remote)
   public_subnets  = merge(local.public_subnets_local, local.public_subnets_remote)
-  private_subnets = merge(local.private_subnets_local, local.private_subnets_remote)
-  public_subnets  = merge(local.public_subnets_local, local.public_subnets_remote)
+
 
   ip_configuration = {
     gateway = {

@@ -4,7 +4,7 @@
 
 module "storage_account_file_shares" {
   source     = "./modules/storage_account/file_share"
-  depends_on = [azurerm_role_assignment.for]
+  #depends_on = [azurerm_role_assignment.for]
   for_each   = local.storage.storage_account_file_shares
 
   storage_account_name = local.combined_objects_storage_accounts[try(each.value.storage_account.lz_key, local.client_config.landingzone_key)][each.value.storage_account.key].name

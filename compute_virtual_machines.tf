@@ -11,8 +11,8 @@ module "virtual_machines" {
     module.packer_build,
     module.packer_service_principal,
     module.proximity_placement_groups,
-    module.storage_account_blobs,
-    time_sleep.azurerm_role_assignment_for.0
+    #module.storage_account_blobs,
+    #time_sleep.azurerm_role_assignment_for.0
   ]
   for_each = local.compute.virtual_machines
 
