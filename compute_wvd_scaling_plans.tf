@@ -1,5 +1,5 @@
 module "wvd_scaling_plans" {
-  source   = "./modules/compute/wvd_scaling_plans"
+  source   = "./modules/compute/wvd_scaling_plan"
   for_each = local.compute.wvd_scaling_plans
 
   global_settings     = local.global_settings
