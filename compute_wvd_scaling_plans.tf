@@ -14,5 +14,5 @@ module "wvd_scaling_plans" {
 }
 
 output "wvd_scaling_plans" {
-  value     = module.wvd_scaling_plans
+  value = module.wvd_scaling_plans
 }
