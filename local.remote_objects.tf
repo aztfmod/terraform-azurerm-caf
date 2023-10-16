@@ -141,6 +141,7 @@ locals {
     wvd_application_groups                         = try(local.combined_objects_wvd_application_groups, null)
     wvd_applications                               = try(local.combined_objects_wvd_applications, null)
     wvd_host_pools                                 = try(local.combined_objects_wvd_host_pools, null)
+    wvd_scaling_plans                              = try(local.combined_objects_wvd_scaling_plans, null)
     wvd_workspaces                                 = try(local.combined_objects_wvd_workspaces, null)
     subscriptions                                  = try(local.combined_objects_subscriptions, null)
   }

@@ -163,6 +163,7 @@ locals {
     wvd_application_groups                     = local.combined_objects_wvd_application_groups
     wvd_applications                           = local.combined_objects_wvd_applications
     wvd_host_pools                             = local.combined_objects_wvd_host_pools
+    wvd_scaling_plans                          = local.combined_objects_wvd_scaling_plans
     wvd_workspaces                             = local.combined_objects_wvd_workspaces
   }
 
