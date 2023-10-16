@@ -19,7 +19,7 @@ resource "azurerm_virtual_desktop_scaling_plan" "wvdsp" {
   tags                = merge(local.tags, try(var.settings.tags, null))
 
   dynamic "schedule" {
-    for_each = each.value.schedule
+    for_each = var.settings.schedule
 
     content {
       days_of_week                         = schedule.value.days_of_week
@@ -44,7 +44,7 @@ resource "azurerm_virtual_desktop_scaling_plan" "wvdsp" {
   }
 
   dynamic "host_pool" {
-    for_each = each.value.host_pool
+    for_each = var.settings.host_pool
 
     content {
       hostpool_id          = host_pool.value.vdpool_id
