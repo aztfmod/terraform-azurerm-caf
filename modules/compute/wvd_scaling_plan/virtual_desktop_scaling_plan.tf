@@ -47,7 +47,7 @@ resource "azurerm_virtual_desktop_scaling_plan" "wvdsp" {
     for_each = var.settings.host_pool
 
     content {
-      hostpool_id          = try(var.host_pools[host_pool.value.host_pool_key].id, host_pool.value.host_pool_id)
+      hostpool_id          = try(var.host_pools.local[host_pool.value.host_pool_key].id, host_pool.value.host_pool_id)
       scaling_plan_enabled = host_pool.value.enabled
     }
   }
