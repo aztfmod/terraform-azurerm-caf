@@ -1,11 +1,3 @@
-module "wvd_host_pool" {
-  source = "./modules/compute/wvd_host_pool"
-}
-
-locals {
-  wvd_host_pools = module.wvd_host_pool.wvd_host_pools
-}
-
 resource "azurecaf_name" "wvdsp" {
   name          = var.settings.name
   resource_type = "general_safe"
@@ -55,7 +47,7 @@ resource "azurerm_virtual_desktop_scaling_plan" "wvdsp" {
     for_each = var.settings.host_pool
 
     content {
-      hostpool_id          = try(module.wvd_host_pool[host_pool.value.host_pool_key].id, host_pool.value.host_pool_id)
+      hostpool_id          = try(locals.wvd_host_pool[host_pool.value.host_pool_key].id, host_pool.value.host_pool_id)
       scaling_plan_enabled = host_pool.value.enabled
     }
   }

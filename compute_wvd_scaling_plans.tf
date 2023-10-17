@@ -16,3 +16,12 @@ module "wvd_scaling_plans" {
 output "wvd_scaling_plans" {
   value = module.wvd_scaling_plans
 }
+
+module "wvd_host_pool" {
+  source = "./modules/compute/wvd_host_pool"
+}
+
+locals {
+  wvd_host_pools = module.wvd_host_pool.wvd_host_pools
+}
+
