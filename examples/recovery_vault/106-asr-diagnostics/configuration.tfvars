@@ -53,6 +53,7 @@ diagnostics_destinations = {
       event_hub_namespace_key = "event_hub_namespace1"
     }
   }
+}
 
 recovery_vaults = {
   asr1 = {
