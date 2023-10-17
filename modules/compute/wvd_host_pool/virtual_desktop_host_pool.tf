@@ -35,10 +35,4 @@ resource "azurerm_virtual_desktop_host_pool" "wvdpool" {
 resource "azurerm_virtual_desktop_host_pool_registration_info" "wvdpool" {
   hostpool_id     = azurerm_virtual_desktop_host_pool.wvdpool.id
   expiration_date = try(var.settings.registration_info.expiration_date, timeadd(timestamp(), var.settings.registration_info.token_validity))
-
-  lifecycle {
-    ignore_changes = [
-      token
-    ]
-  }
 }
