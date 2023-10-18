@@ -54,7 +54,7 @@ resource "azurerm_kubernetes_cluster" "aks" {
     max_pods                      = try(var.settings.default_node_pool.max_pods, 30)
     min_count                     = try(var.settings.default_node_pool.min_count, null)
     name                          = var.settings.default_node_pool.name //azurecaf_name.default_node_pool.result
-    node_count                    = try(var.settings.default_node_pool.node_count, 1)
+    node_count                    = try(var.settings.default_node_pool.node_count, null)
     node_labels                   = try(var.settings.default_node_pool.node_labels, null)
     node_public_ip_prefix_id      = try(var.settings.default_node_pool.node_public_ip_prefix_id, null)
     only_critical_addons_enabled  = try(var.settings.default_node_pool.only_critical_addons_enabled, false)
