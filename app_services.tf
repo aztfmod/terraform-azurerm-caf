@@ -56,7 +56,7 @@ resource "azurerm_app_service_slot_virtual_network_swift_connection" "vnet_confi
     flatten(
       [
         for key, app_service in local.webapp.app_services : [
-          for slot_key, slot in app_service.slots :
+          for slot_key, slot in try(app_service.slots, {}) :
           {
             key            = key
             slot_key       = slot_key
