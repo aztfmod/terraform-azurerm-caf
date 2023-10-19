@@ -74,21 +74,21 @@ output "possible_outbound_ip_addresses" {
 
 output "principal_id" {
   description = "The Principal ID associated with this Managed Service Identity."
-  value       = azurerm_function_app.example.identity[0].principal_id
+  value       = azurerm_function_app.function_app.identity[0].principal_id
 }
 
 output "tenant_id" {
   description = "The Tenant ID associated with this Managed Service Identity."
-  value       = azurerm_function_app.example.identity[0].tenant_id
+  value       = azurerm_function_app.function_app.identity[0].tenant_id
 }
 
 output "site_credential_name" {
   description = "The Site Credentials Username used for publishing."
-  value       = azurerm_function_app.example.site_credentia[0].name
+  value       = azurerm_function_app.function_app.site_credentia[0].name
 }
 
 output "site_credential_password" {
   description = "The Site Credentials Password used for publishing."
-  value       = azurerm_function_app.example.site_credential[0].password
+  value       = azurerm_function_app.function_app.site_credential[0].password
   sensitive   = true
 }
