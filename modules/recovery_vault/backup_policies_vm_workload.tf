@@ -39,26 +39,38 @@ resource "azurerm_backup_policy_vm_workload" "sql" {
     }
 
     dynamic "retention_monthly" {
+      for_each = each.value.retention_monthly.format_type == "Daily" ? [1] : []
+      content {
+        count       = each.value.retention_monthly.count
+        format_type = each.value.retention_monthly.format_type
+        monthdays   = each.value.retention_monthly.monthdays
+      }
+    }
+
+    dynamic "retention_monthly" {
+      for_each = each.value.retention_monthly.format_type == "Weekly" ? [1] : []
+      content {
+        count       = each.value.retention_monthly.count
+        format_type = each.value.retention_monthly.format_type
+        weekdays    = each.value.retention_monthly.weekdays
+        weeks       = each.value.retention_monthly.weeks
+      }
+    }
+
+
+
+    dynamic "retention_monthly" {
       for_each = lookup(each.value, "retention_monthly", null) == null ? [] : [1]
 
       content {
         count       = each.value.retention_monthly.count
-        format_type = each.value.retention_monthly.format_type
-        dynamic "Daily" {
-          for_each = each.value.retention_monthly.format_type == "Daily" ? [1] : []
+        dynamic "format_type_condition" {
+          for_each = var.format_type == "Daily" ? [1] : []
           content {
-            monthdays = each.value.retention_monthly.monthdays
-          }
-        }
-        dynamic "Weekly" {
-          for_each = each.value.retention_monthly.format_type == "Weekly" ? [1] : []
-          content {
-            weekdays = each.value.retention_monthly.weekdays
-            weeks    = each.value.retention_monthly.weeks
-          }
-        }
+            monthdays   = each.value.retention_monthly.monthdays
+
       }
-    }
+    }    
 
     dynamic "retention_yearly" {
       for_each = lookup(each.value, "retention_yearly", null) == null ? [] : [1]
