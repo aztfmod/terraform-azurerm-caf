@@ -20,6 +20,15 @@ resource "azurerm_backup_policy_vm_workload" "sql" {
       time                 = each.value.backup.time
       weekdays             = each.value.backup.weekdays
     }
+    dynamic "backup" {
+      for_each = lookup(each.value, "backup", null) == null ? [] : [1]
+
+      content {
+        frequency = each.value.backup.frequency
+        time      = each.value.backup.time
+      }
+    }
+
 
     dynamic "retention_daily" {
       for_each = lookup(each.value, "retention_daily", null) == null ? [] : [1]
@@ -64,9 +73,9 @@ resource "azurerm_backup_policy_vm_workload" "sql" {
         count       = each.value.retention_yearly.count
         format_type = each.value.retention_yearly.format_type
         months      = each.value.retention_yearly.months
-        monthdays   = each.value.retention_monthly.monthdays
-        weekdays    = each.value.retention_monthly.weekdays
-        weeks       = each.value.retention_monthly.weeks
+        monthdays   = each.value.retention_yearly.monthdays
+        weekdays    = each.value.retention_yearly.weekdays
+        weeks       = each.value.retention_yearly.weeks
       }
     }
 
