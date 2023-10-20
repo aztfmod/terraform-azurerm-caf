@@ -4,6 +4,7 @@ resource "azurecaf_name" "aro_cluster" {
   name          = var.settings.name
   resource_type = "azurerm_redhat_openshift_cluster"
   prefixes      = var.global_settings.prefixes
+  suffixes      = var.global_settings.suffixes
   random_length = var.global_settings.random_length
   clean_input   = true
   passthrough   = var.global_settings.passthrough
@@ -14,6 +15,7 @@ resource "azurecaf_name" "aro_domain" {
   name          = var.settings.cluster_profile.domain
   resource_type = "azurerm_redhat_openshift_domain"
   prefixes      = var.global_settings.prefixes
+  suffixes      = var.global_settings.suffixes
   random_length = var.global_settings.random_length
   clean_input   = true
   passthrough   = var.global_settings.passthrough
@@ -25,6 +27,7 @@ resource "azurecaf_name" "aro_res_rg" {
   name          = var.settings.cluster_profile.resource_group.name
   resource_type = "azurerm_resource_group"
   prefixes      = var.global_settings.prefixes
+  suffixes      = var.global_settings.suffixes
   random_length = var.global_settings.random_length
   clean_input   = true
   passthrough   = var.global_settings.passthrough

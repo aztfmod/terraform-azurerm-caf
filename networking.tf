@@ -114,6 +114,7 @@ resource "azurecaf_name" "public_ip_addresses" {
   name          = try(each.value.name, null)
   resource_type = "azurerm_public_ip"
   prefixes      = local.global_settings.prefixes
+  suffixes      = local.global_settings.suffixes
   random_length = local.global_settings.random_length
   clean_input   = true
   passthrough   = local.global_settings.passthrough
@@ -161,6 +162,7 @@ resource "azurecaf_name" "public_ip_prefixes" {
   name          = try(each.value.name, null)
   resource_type = "azurerm_public_ip_prefix"
   prefixes      = local.global_settings.prefixes
+  suffixes      = local.global_settings.suffixes
   random_length = local.global_settings.random_length
   clean_input   = true
   passthrough   = local.global_settings.passthrough
@@ -198,6 +200,7 @@ resource "azurecaf_name" "peering" {
   name          = try(each.value.name, "")
   resource_type = "azurerm_virtual_network_peering"
   prefixes      = local.global_settings.prefixes
+  suffixes      = local.global_settings.suffixes
   random_length = local.global_settings.random_length
   clean_input   = true
   passthrough   = local.global_settings.passthrough
@@ -257,6 +260,7 @@ resource "azurecaf_name" "route_tables" {
   name          = try(each.value.name, null)
   resource_type = "azurerm_route_table"
   prefixes      = local.global_settings.prefixes
+  suffixes      = local.global_settings.suffixes
   random_length = local.global_settings.random_length
   clean_input   = true
   passthrough   = local.global_settings.passthrough
@@ -281,6 +285,7 @@ resource "azurecaf_name" "routes" {
   name          = try(each.value.name, null)
   resource_type = "azurerm_route"
   prefixes      = local.global_settings.prefixes
+  suffixes      = local.global_settings.suffixes
   random_length = local.global_settings.random_length
   clean_input   = true
   passthrough   = local.global_settings.passthrough
@@ -318,6 +323,7 @@ resource "azurecaf_name" "ddos_protection_plan" {
   name          = try(each.value.name, null)
   resource_type = "azurerm_network_ddos_protection_plan"
   prefixes      = local.global_settings.prefixes
+  suffixes      = local.global_settings.suffixes
   random_length = local.global_settings.random_length
   clean_input   = true
   passthrough   = local.global_settings.passthrough
