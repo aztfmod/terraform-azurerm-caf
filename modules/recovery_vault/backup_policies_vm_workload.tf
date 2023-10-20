@@ -15,8 +15,10 @@ resource "azurerm_backup_policy_vm_workload" "sql" {
     policy_type = each.value.policy_type
 
     backup {
-      frequency = each.value.backup.frequency
-      time      = each.value.backup.time
+      frequency            = each.value.backup.frequency
+      frequency_in_minutes = each.value.backup.frequency_in_minutes
+      time                 = each.value.backup.time
+      weekdays             = each.value.backup.weekdays
     }
 
     dynamic "retention_daily" {
@@ -42,6 +44,9 @@ resource "azurerm_backup_policy_vm_workload" "sql" {
       content {
         count       = each.value.retention_monthly.count
         format_type = each.value.retention_monthly.format_type
+        monthdays   = each.value.retention_monthly.monthdays
+        weekdays    = each.value.retention_monthly.weekdays
+        weeks       = each.value.retention_monthly.weeks
       }
     }
 
@@ -52,6 +57,9 @@ resource "azurerm_backup_policy_vm_workload" "sql" {
         count       = each.value.retention_yearly.count
         format_type = each.value.retention_yearly.format_type
         months      = each.value.retention_yearly.months
+        monthdays   = each.value.retention_monthly.monthdays
+        weekdays    = each.value.retention_monthly.weekdays
+        weeks       = each.value.retention_monthly.weeks
       }
     }
 
