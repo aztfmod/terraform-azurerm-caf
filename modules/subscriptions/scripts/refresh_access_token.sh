@@ -6,7 +6,7 @@ set -e
 
 # user_type=$(az account show --query user.type -o tsv)
 # tenant_id=$(az account show --query tenantId -o tsv)
-# subscription_id=$(az account show --query id -o tsv)
+#subscription_id=$(az account show --query id -o tsv)
 
 # if [ ${user_type} == "user" ]; then
 #   echo "User type ${user_type}"
@@ -52,4 +52,4 @@ set -e
 
 # fi
 
-az account set -s ${subscription_id}
+#az account set -s ${subscription_id}
