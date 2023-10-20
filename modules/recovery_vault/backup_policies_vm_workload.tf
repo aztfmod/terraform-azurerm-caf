@@ -44,9 +44,19 @@ resource "azurerm_backup_policy_vm_workload" "sql" {
       content {
         count       = each.value.retention_monthly.count
         format_type = each.value.retention_monthly.format_type
-        monthdays   = each.value.retention_monthly.format_type == "Daily" ? [each.value.retention_monthly.monthdays] : null
-        weekdays    = each.value.retention_monthly.format_type == "Weekly" ? [each.value.retention_monthly.weekdays] : null
-        weeks       = each.value.retention_monthly.format_type == "Weekly" ? [each.value.retention_monthly.weeks] : null
+        dynamic "Daily" {
+          for_each = each.value.retention_monthly.format_type == "Daily" ? [1] : []
+          content {
+            monthdays = each.value.retention_monthly.monthdays
+          }
+        }
+        dynamic "Weekly" {
+          for_each = each.value.retention_monthly.format_type == "Weekly" ? [1] : []
+          content {
+            weekdays = each.value.retention_monthly.weekdays
+            weeks    = each.value.retention_monthly.weeks
+          }
+        }
       }
     }
 
