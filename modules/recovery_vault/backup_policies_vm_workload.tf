@@ -19,7 +19,7 @@ resource "azurerm_backup_policy_vm_workload" "sql" {
 
       content {
         frequency            = each.value.backup.frequency
-        #frequency_in_minutes = each.value.backup.frequency_in_minutes
+        frequency_in_minutes = each.value.backup.frequency_in_minutes
         time                 = each.value.backup.time
       }
     }
