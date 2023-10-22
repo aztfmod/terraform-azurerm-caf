@@ -14,10 +14,19 @@ resource "azurerm_backup_policy_vm_workload" "sql" {
   protection_policy {
     policy_type = each.value.policy_type
 
-    dynamic "backup" {
-      for_each = lookup(each.value, "backup", null) == null ? [] : [1]
+    backup {
+      count = var.frequency == "Daily" ? 1 : 0
+      frequency            = each.value.backup.frequency
+      frequency_in_minutes = each.value.backup.frequency_in_minutes
+      time                 = each.value.backup.time
+    }
 
-      content {}
+    backup {
+      count = var.frequency == "Weekly" ? 1 : 0
+      frequency            = each.value.backup.frequency
+      frequency_in_minutes = each.value.backup.frequency_in_minutes
+      time                 = each.value.backup.time
+      weekdays             = each.value.backup.weekdays
     }
 
 
