@@ -53,7 +53,7 @@ resource "azurerm_backup_policy_vm_workload" "sql" {
     }
 
     dynamic "retention_monthly" {
-      for_each = lookup(each.value, "retention_monthly", null) == null ? [] : [1] && each.value.retention_monthly.format_type == "Daily"
+      for_each = each.value.backup.format_type == "Daily" ? [1] : [] 
 
       content {
         count       = each.value.retention_monthly.count
@@ -63,7 +63,7 @@ resource "azurerm_backup_policy_vm_workload" "sql" {
     }
 
     dynamic "retention_monthly" {
-      for_each = lookup(each.value, "retention_monthly", null) == null ? [] : [1] && each.value.retention_monthly.format_type == "Weekly"
+      for_each = each.value.backup.format_type == "Weekly" ? [1] : []
 
       content {
         count       = each.value.retention_monthly.count
@@ -74,7 +74,7 @@ resource "azurerm_backup_policy_vm_workload" "sql" {
     }
 
     dynamic "retention_yearly" {
-      for_each = lookup(each.value, "retention_yearly", null) == null ? [] : [1] && each.value.retention_yearly.format_type == "Daily"
+      for_each = each.value.backup.format_type == "Daily" ? [1] : []
 
       content {
         count       = each.value.retention_yearly.count
@@ -87,13 +87,14 @@ resource "azurerm_backup_policy_vm_workload" "sql" {
     }
 
     dynamic "retention_yearly" {
-      for_each = lookup(each.value, "retention_yearly", null) == null ? [] : [1] && each.value.retention_yearly.format_type == "Daily"
+      for_each = each.value.backup.format_type == "Weekly" ? [1] : []
 
       content {
         count       = each.value.retention_yearly.count
         format_type = each.value.retention_yearly.format_type
         weekdays    = each.value.retention_yearly.weekdays
         weeks       = each.value.retention_yearly.weeks
+        months      = each.value.retention_yearly.months
       }
     }
 
