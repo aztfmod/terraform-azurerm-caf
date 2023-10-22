@@ -15,7 +15,7 @@ resource "azurerm_backup_policy_vm_workload" "sql" {
     policy_type = each.value.policy_type
 
     dynamic "backup" {
-      for_each = lookup(each.value, each.value.backup.frequency, null) == "Daily" ? [1] : []
+      for_each = lookup(each.value, backup.frequency, null) == "Daily" ? [1] : []
 
       content {
         frequency            = each.value.backup.frequency
@@ -25,7 +25,7 @@ resource "azurerm_backup_policy_vm_workload" "sql" {
     }
 
     dynamic "backup" {
-      for_each = lookup(each.value, each.value.backup.frequency, null) == "Weekly" ? [1] : []
+      for_each = lookup(each.value, backup.frequency, null) == "Weekly" ? [1] : []
 
       content {
         frequency            = each.value.backup.frequency
