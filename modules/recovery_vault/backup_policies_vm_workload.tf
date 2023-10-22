@@ -81,8 +81,6 @@ resource "azurerm_backup_policy_vm_workload" "sql" {
         format_type = each.value.retention_yearly.format_type
         monthdays   = each.value.retention_yearly.monthdays
         months      = each.value.retention_yearly.months
-        weekdays    = each.value.retention_yearly.weekdays
-        weeks       = each.value.retention_yearly.weeks
       }
     }
 
