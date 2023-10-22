@@ -38,33 +38,6 @@ resource "azurerm_backup_policy_vm_workload" "sql" {
       }
     }
 
-    dynamic "retention_weekly" {
-      for_each = lookup(each.value, "retention_weekly", null) == null ? [] : [1]
-
-      content {
-        count    = each.value.retention_weekly.count
-        weekdays = each.value.retention_weekly.weekdays
-      }
-    }
-
-    dynamic "retention_monthly" {
-      for_each = each.value.retention_monthly.format_type == "Daily" ? [1] : []
-      content {
-        count       = each.value.retention_monthly.count
-        format_type = each.value.retention_monthly.format_type
-      }
-    }
-
-    dynamic "retention_yearly" {
-      for_each = lookup(each.value, "retention_yearly", null) == null ? [] : [1]
-
-      content {
-        count       = each.value.retention_yearly.count
-        format_type = each.value.retention_yearly.format_type
-        months      = each.value.retention_yearly.months
-      }
-    }
-
     dynamic "simple_retention" {
       for_each = lookup(each.value, "simple_retention", null) == null ? [] : [1]
 
