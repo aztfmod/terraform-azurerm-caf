@@ -14,11 +14,25 @@ resource "azurerm_backup_policy_vm_workload" "sql" {
   protection_policy {
     policy_type = each.value.policy_type
 
-    backup {
-      frequency            = each.value.backup.frequency
-      frequency_in_minutes = each.value.backup.frequency_in_minutes
-      time                 = each.value.backup.time
-      weekdays             = each.value.backup.weekdays
+    dynamic "backup" {
+      for_each = each.value.backup.frequency == "Daily" ? [1] : []
+
+      content {
+        frequency            = each.value.backup.frequency
+        frequency_in_minutes = each.value.backup.frequency_in_minutes
+        time                 = each.value.backup.time
+      }
+    }
+
+    dynamic "backup" {
+      for_each = each.value.backup.frequency == "Weekly" ? [1] : []
+
+      content {
+        frequency            = each.value.backup.frequency
+        frequency_in_minutes = each.value.backup.frequency_in_minutes
+        time                 = each.value.backup.time
+        weekdays             = each.value.backup.weekdays
+      }
     }
 
     dynamic "retention_daily" {
