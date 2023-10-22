@@ -82,6 +82,7 @@ resource "azurerm_backup_policy_vm_workload" "sql" {
         count       = each.value.retention_monthly.count
         format_type = each.value.retention_monthly.retention_yearly_format_type
         monthdays   = each.value.retention_monthly.monthdays
+        months      = each.value.retention_monthly.months
         weekdays    = each.value.retention_monthly.weekdays
         weeks       = each.value.retention_monthly.weeks
       }
