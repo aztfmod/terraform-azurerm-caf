@@ -53,8 +53,7 @@ resource "azurerm_backup_policy_vm_workload" "sql" {
     }
 
     dynamic "retention_monthly" {
-      for_each = lookup(each.value, "retention_monthly", null) != null && each.value.retention_monthly.format_type == "Daily"  ? [1] : []
-      #for_each = each.value.retention_monthly != null && each.value.retention_monthly.format_type == "Daily" ? [1] : []
+      for_each = each.value.backup != null && each.value.format_type == "Daily" ? [1] : []
 
       content {
         count       = each.value.retention_monthly.count
@@ -64,8 +63,7 @@ resource "azurerm_backup_policy_vm_workload" "sql" {
     }
 
     dynamic "retention_monthly" {
-      for_each = lookup(each.value, "retention_monthly", null) != null && each.value.retention_monthly.format_type == "Weekly"  ? [1] : []
-      #for_each = each.value.retention_monthly != null && each.value.retention_monthly.format_type == "Weekly" ? [1] : []
+      for_each = each.value.retention_monthly.format_type == "Weekly" ? [1] : []
 
       content {
         count       = each.value.retention_monthly.count
@@ -76,8 +74,7 @@ resource "azurerm_backup_policy_vm_workload" "sql" {
     }
 
     dynamic "retention_yearly" {
-      for_each = lookup(each.value, "retention_yearly", null) != null && each.value.retention_yearly.format_type == "Daily"  ? [1] : []
-      #for_each = each.value.retention_yearly != null && each.value.retention_yearly.format_type == "Daily" ? [1] : []
+      for_each = each.value.retention_yearly.format_type == "Daily" ? [1] : []
 
       content {
         count       = each.value.retention_yearly.count
@@ -88,8 +85,7 @@ resource "azurerm_backup_policy_vm_workload" "sql" {
     }
 
     dynamic "retention_yearly" {
-      for_each = lookup(each.value, "retention_yearly", null) != null && each.value.retention_yearly.format_type == "Weekly"  ? [1] : []
-      #for_each = each.value.retention_yearly != null && each.value.retention_yearly.format_type == "Weekly" ? [1] : []
+      for_each = each.value.retention_yearly.format_type == "Weekly" ? [1] : []
 
       content {
         count       = each.value.retention_yearly.count
