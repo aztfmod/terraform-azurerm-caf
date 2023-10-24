@@ -86,7 +86,7 @@ variable "zones" {
   nullable    = true
 
   validation {
-    condition     = setunion(["1", "2", "3"], var.zones == null ? [""] : var.zones) == toset(["1", "2", "3"])
+    condition = var.zones == null || alltrue(try([for z in var.zones : z == "1" || z == "2" || z == "3" || z == ""],["1"]))
     error_message = "Update behavior to mandate specifying the zones in order to avoid accidental resources destructions. https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/resources/public_ip#zone."
   }
 }
