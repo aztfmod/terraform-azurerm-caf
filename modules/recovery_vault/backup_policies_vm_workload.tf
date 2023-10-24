@@ -53,19 +53,17 @@ resource "azurerm_backup_policy_vm_workload" "sql" {
     }
 
     dynamic "retention_monthly" {
-      for_each = each.value.backup.format_type == "Daily" ? [1] : []
+      for_each = each.value.retention_monthly.format_type == "Daily" ? [1] : []
 
       content {
         count       = each.value.retention_monthly.count
         format_type = each.value.retention_monthly.format_type
         monthdays   = each.value.retention_monthly.monthdays
-        weekdays    = each.value.retention_monthly.weekdays
-        weeks       = each.value.retention_monthly.weeks
       }
     }
 
     dynamic "retention_monthly" {
-      for_each = each.value.backup.format_type == "Weekly" ? [1] : []
+      for_each = each.value.retention_monthly.format_type == "Weekly" ? [1] : []
 
       content {
         count       = each.value.retention_monthly.count
@@ -76,26 +74,25 @@ resource "azurerm_backup_policy_vm_workload" "sql" {
     }
 
     dynamic "retention_yearly" {
-      for_each = each.value.backup.format_type == "Daily" ? [1] : []
+      for_each = each.value.retention_yearly.format_type == "Daily" ? [1] : []
 
       content {
         count       = each.value.retention_yearly.count
         format_type = each.value.retention_yearly.format_type
         monthdays   = each.value.retention_yearly.monthdays
         months      = each.value.retention_yearly.months
-        weekdays    = each.value.retention_yearly.weekdays
-        weeks       = each.value.retention_yearly.weeks
       }
     }
 
     dynamic "retention_yearly" {
-      for_each = each.value.backup.format_type == "Weekly" ? [1] : []
+      for_each = each.value.retention_yearly.format_type == "Weekly" ? [1] : []
 
       content {
         count       = each.value.retention_yearly.count
         format_type = each.value.retention_yearly.format_type
         weekdays    = each.value.retention_yearly.weekdays
         weeks       = each.value.retention_yearly.weeks
+        months      = each.value.retention_yearly.months
       }
     }
 
