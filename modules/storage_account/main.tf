@@ -16,4 +16,5 @@ locals {
 
   location            = coalesce(var.location, var.resource_group.location)
   resource_group_name = coalesce(var.resource_group_name, var.resource_group.name)
+  client_config       = try(var.client_config, null)
 }
