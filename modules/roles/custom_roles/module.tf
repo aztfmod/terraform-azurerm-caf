@@ -14,7 +14,6 @@ resource "azurecaf_name" "custom_role" {
   use_slug      = local.global_settings.use_slug
 }
 
-
 resource "azurerm_role_definition" "custom_role" {
   name = azurecaf_name.custom_role.result
 
