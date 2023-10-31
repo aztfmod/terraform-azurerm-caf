@@ -39,6 +39,7 @@ resource "azurerm_storage_account" "stg" {
   table_encryption_key_type         = try(var.storage_account.table_encryption_key_type, null)
   tags                              = merge(local.tags, try(var.storage_account.tags, null), local.caf_tags)
   public_network_access_enabled     = try(var.storage_account.public_network_access_enabled, null)
+  shared_access_key_enabled         = try(var.storage_account.shared_access_key_enabled, null)
 
 
   dynamic "custom_domain" {
