@@ -20,16 +20,16 @@ diagnostic_log_analytics = {
   }
 }
 
-container_app_environment = {
+container_app_environments = {
   cae1 = {
-    name                           = "cont-app-env-001"
-    region                         = "region1"
-    resource_group_key             = "rg1"
-    log_analytics_key              = "central_logs_region1"
+    name               = "cont-app-env-001"
+    region             = "region1"
+    resource_group_key = "rg1"
+    log_analytics_key  = "central_logs_region1"
   }
 }
 
-container_app = {
+container_apps = {
   ca1 = {
     name                          = "nginx-app"
     container_app_environment_key = "cae1"

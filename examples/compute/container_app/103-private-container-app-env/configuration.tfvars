@@ -71,12 +71,12 @@ storage_accounts = {
   }
 }
 
-container_app_environment = {
+container_app_environments = {
   cae1 = {
-    name                           = "cont-app-env-001"
-    region                         = "region1"
-    resource_group_key             = "rg1"
-    log_analytics_key              = "central_logs_region1"
+    name               = "cont-app-env-001"
+    region             = "region1"
+    resource_group_key = "rg1"
+    log_analytics_key  = "central_logs_region1"
     vnet = {
       vnet_key   = "cae_re1"
       subnet_key = "cae1"
@@ -89,7 +89,7 @@ container_app_environment = {
   }
 }
 
-container_app_dapr_component = {
+container_app_dapr_components = {
   dapr1 = {
     name                          = "dapr-component-001"
     container_app_environment_key = "cae1"
@@ -116,7 +116,7 @@ container_app_dapr_component = {
   }
 }
 
-container_app_environment_certificate = {
+container_app_environment_certificates = {
   caec1 = {
     name                          = "caec-cert-001"
     container_app_environment_key = "cae1"
@@ -125,19 +125,19 @@ container_app_environment_certificate = {
   }
 }
 
-container_app_environment_storage = {
+container_app_environment_storages = {
   caes1 = {
     name                          = "caes-storage-001"
     container_app_environment_key = "cae1"
     storage_account = {
       account_key = "sa1"
     }
-    share_name = "fs1"
+    share_name  = "fs1"
     access_mode = "ReadWrite"
   }
 }
 
-container_app = {
+container_apps = {
   ca1 = {
     name                          = "nginx-app"
     container_app_environment_key = "cae1"
@@ -152,15 +152,15 @@ container_app = {
           cpu    = 0.5
           memory = "1Gi"
           liveness_probe = {
-            port = 80
+            port      = 80
             transport = "HTTP"
           }
           readiness_probe = {
-            port = 80
+            port      = 80
             transport = "HTTP"
           }
           startup_probe = {
-            port = 80
+            port      = 80
             transport = "HTTP"
           }
           env = [
@@ -173,7 +173,7 @@ container_app = {
               value = 2
             },
             {
-              name = "SECRET_VAR"
+              name        = "SECRET_VAR"
               secret_name = "secret1"
             }
           ]
@@ -217,7 +217,7 @@ container_app = {
       custom_domain = {
         example = {
           certificate_key = "caec1"
-          name = "example.com"
+          name            = "example.com"
         }
       }
     }
