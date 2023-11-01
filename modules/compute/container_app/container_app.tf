@@ -26,7 +26,7 @@ resource "azurerm_container_app" "ca" {
         command = try(container.value.command, null)
         cpu     = container.value.cpu
         memory  = container.value.memory
-        
+
         dynamic "env" {
           for_each = try(container.value.env, {})
 
@@ -45,7 +45,7 @@ resource "azurerm_container_app" "ca" {
             host                             = try(liveness_probe.value.host, null)
             initial_delay                    = try(liveness_probe.value.initial_delay, null)
             interval_seconds                 = try(liveness_probe.value.interval_seconds, null)
-            path                             = try(liveness_probe.value.path, null) 
+            path                             = try(liveness_probe.value.path, null)
             port                             = liveness_probe.value.port
             termination_grace_period_seconds = try(liveness_probe.value.termination_grace_period_seconds, null)
             timeout                          = try(liveness_probe.value.timeout, null)
@@ -69,7 +69,7 @@ resource "azurerm_container_app" "ca" {
             failure_count_threshold = try(readiness_probe.value.failure_count_threshold, null)
             host                    = try(readiness_probe.value.host, null)
             interval_seconds        = try(readiness_probe.value.interval_seconds, null)
-            path                    = try(readiness_probe.value.path, null) 
+            path                    = try(readiness_probe.value.path, null)
             port                    = readiness_probe.value.port
             success_count_threshold = try(readiness_probe.value.success_count_threshold, null)
             timeout                 = try(readiness_probe.value.timeout, null)
@@ -93,7 +93,7 @@ resource "azurerm_container_app" "ca" {
             failure_count_threshold          = try(startup_probe.value.failure_count_threshold, null)
             host                             = try(startup_probe.value.host, null)
             interval_seconds                 = try(startup_probe.value.interval_seconds, null)
-            path                             = try(startup_probe.value.path, null) 
+            path                             = try(startup_probe.value.path, null)
             port                             = startup_probe.value.port
             termination_grace_period_seconds = try(startup_probe.value.termination_grace_period_seconds, null)
             timeout                          = try(startup_probe.value.timeout, null)
@@ -120,6 +120,77 @@ resource "azurerm_container_app" "ca" {
         }
       }
     }
+
+    dynamic "azure_queue_scale_rule" {
+      for_each = try(var.settings.template.azure_queue_scale_rule, {})
+      content {
+        name         = azure_queue_scale_rule.value.name
+        queue_name   = azure_queue_scale_rule.value.queue_name
+        queue_length = azure_queue_scale_rule.value.queue_length
+
+        dynamic "authentication" {
+          for_each = azure_queue_scale_rule.value.authentication
+
+          content {
+            secret_name       = authentication.value.secret_name
+            trigger_parameter = authentication.value.trigger_parameter
+          }
+        }
+      }
+    }
+
+    dynamic "custom_scale_rule" {
+      for_each = try(var.settings.template.custom_scale_rule, {})
+      content {
+        name             = custom_scale_rule.value.name
+        custom_rule_type = custom_scale_rule.value.custom_rule_type
+        metadata         = custom_scale_rule.value.metadata
+
+        dynamic "authentication" {
+          for_each = try(custom_scale_rule.value.authentication, {})
+
+          content {
+            secret_name       = authentication.value.secret_name
+            trigger_parameter = authentication.value.trigger_parameter
+          }
+        }
+      }
+    }
+
+    dynamic "http_scale_rule" {
+      for_each = try(var.settings.template.http_scale_rule, {})
+      content {
+        name                = http_scale_rule.value.name
+        concurrent_requests = http_scale_rule.value.concurrent_requests
+
+        dynamic "authentication" {
+          for_each = try(http_scale_rule.value.authentication, {})
+
+          content {
+            secret_name       = authentication.value.secret_name
+            trigger_parameter = authentication.value.trigger_parameter
+          }
+        }
+      }
+    }
+
+    dynamic "tcp_scale_rule" {
+      for_each = try(var.settings.template.tcp_scale_rule, {})
+      content {
+        name                = tcp_scale_rule.value.name
+        concurrent_requests = tcp_scale_rule.value.concurrent_requests
+
+        dynamic "authentication" {
+          for_each = try(tcp_scale_rule.value.authentication, {})
+
+          content {
+            secret_name       = authentication.value.secret_name
+            trigger_parameter = authentication.value.trigger_parameter
+          }
+        }
+      }
+    }
+
     min_replicas    = try(var.settings.template.min_replicas, null)
     max_replicas    = try(var.settings.template.max_replicas, null)
     revision_suffix = try(var.settings.template.revision_suffix, null)
@@ -135,7 +206,7 @@ resource "azurerm_container_app" "ca" {
     }
   }
 
- dynamic "ingress" {
+  dynamic "ingress" {
     for_each = can(var.settings.ingress) ? [var.settings.ingress] : []
 
     content {
@@ -150,12 +221,12 @@ resource "azurerm_container_app" "ca" {
 
         content {
           certificate_binding_type = try(custom_domain.value.certificate_binding_type, null)
-          certificate_id = can(custom_domain.value.certificate_id) ? custom_domain.value.certificate_id : var.combined_resources.container_app_environment_certificates[try(custom_domain.value.lz_key, var.client_config.landingzone_key)][custom_domain.value.certificate_key].id
-          name = custom_domain.value.name
+          certificate_id           = can(custom_domain.value.certificate_id) ? custom_domain.value.certificate_id : var.combined_resources.container_app_environment_certificates[try(custom_domain.value.lz_key, var.client_config.landingzone_key)][custom_domain.value.certificate_key].id
+          name                     = custom_domain.value.name
         }
       }
 
-      dynamic "traffic_weight"  {
+      dynamic "traffic_weight" {
         for_each = try(ingress.value.traffic_weight, {})
 
         content {

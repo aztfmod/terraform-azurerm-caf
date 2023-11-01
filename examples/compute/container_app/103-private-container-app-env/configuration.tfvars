@@ -185,8 +185,17 @@ container_apps = {
           }
         }
       }
+
       min_replicas = 1
-      max_replicas = 1
+      max_replicas = 3
+
+      http_scale_rule = {
+        rule1 = {
+          name                = "azure-http-rule"
+          concurrent_requests = 50
+        }
+      }
+
       volume = {
         vol1 = {
           name         = "vol1"
