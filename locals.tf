@@ -96,6 +96,7 @@ locals {
     wvd_application_groups              = try(var.compute.wvd_application_groups, {})
     wvd_host_pools                      = try(var.compute.wvd_host_pools, {})
     wvd_workspaces                      = try(var.compute.wvd_workspaces, {})
+    wvd_scaling_plans                   = try(var.compute.wvd_scaling_plans, {})
     virtual_machines                    = try(var.compute.virtual_machines, {})
     virtual_machine_scale_sets          = try(var.compute.virtual_machine_scale_sets, {})
     runbooks                            = try(var.compute.runbooks, {})
