@@ -24,7 +24,8 @@ resource "azurerm_app_configuration" "config" {
     for_each = lookup(var.settings, "identity", {}) == {} ? [] : [1]
 
     content {
-      type = var.settings.identity.type
+      type         = var.settings.identity.type
+      identity_ids = lower(var.settings.identity.type) == "userassigned" ? can(var.settings.identity.user_assigned_identity_id) ? [var.settings.identity.user_assigned_identity_id] : [var.managed_identities[try(var.settings.identity.lz_key, var.client_config.landingzone_key)][var.settings.identity.managed_identity_key].id] : null
     }
   }
 }
