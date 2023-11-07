@@ -16,7 +16,7 @@ output "backup_policies" {
   value = {
     virtual_machines = azurerm_backup_policy_vm.vm
     file_shares      = azurerm_backup_policy_file_share.fs
-    sql              = azurerm_backup_policy_vm_workload.sql
+    vm_workloads      = azurerm_backup_policy_vm_workload.vm_workload
   }
 }
 

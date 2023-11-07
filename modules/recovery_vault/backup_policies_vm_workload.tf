@@ -1,5 +1,5 @@
-resource "azurerm_backup_policy_vm_workload" "sql" {
-  for_each = try(var.settings.backup_policies.sql, {})
+resource "azurerm_backup_policy_vm_workload" "vm_workload" {
+  for_each = try(var.settings.backup_policies.vm_workloads, {})
 
   name                = each.value.name
   resource_group_name = local.resource_group_name

@@ -8,9 +8,10 @@ recovery_vaults = {
 
     soft_delete_enabled = false
     backup_policies = {
-      sql = {
-        policy1 = {
+      vm_workloads = {
+        sql1 = {
           name      = "SQLDataBase-Weekly"
+          workload_type = "SQLDataBase"
           vault_key = "asr1"
           rg_key    = "primary"
           timezone  = "UTC"
@@ -44,8 +45,9 @@ recovery_vaults = {
             months   = ["January"]
           }
         }
-        policy2 = {
+        sql2 = {
           name      = "SQLDataBase-Daily"
+          workload_type = "SQLDataBase"
           vault_key = "asr1"
           rg_key    = "primary"
           timezone  = "UTC"
@@ -80,33 +82,9 @@ recovery_vaults = {
             weeks    = ["Last"]
           }
         }
-        policy3 = {
-          name      = "SQL-Simple"
-          vault_key = "asr1"
-          rg_key    = "primary"
-          timezone  = "UTC"
-          compression_enabled = false
-          policy_type = "Full"
-
-          backup = {
-            frequency = "Weekly"
-            frequency_in_minutes = "30"
-            time      = "23:00"
-            weekdays  = ["Monday", "Wednesday", "Friday"]
-          }
-          simple_retention = {
-            count = 10
-          }
-          retention_weekly = {
-            count    = 104
-            weekdays  = ["Monday", "Wednesday", "Friday"]
-          }
-        }
-      }
-
-      saphana = {
-        policy1 = {
+        saphana1 = {
           name      = "SAPHanaDatabase-Weekly"
+          workload_type = "SAPHanaDatabase"
           vault_key = "asr1"
           rg_key    = "primary"
           timezone  = "UTC"
@@ -140,8 +118,9 @@ recovery_vaults = {
             months   = ["January"]
           }
         }
-        policy2 = {
+        saphana2 = {
           name      = "SAPHanaDatabase-Daily"
+          workload_type = "SAPHanaDatabase"
           vault_key = "asr1"
           rg_key    = "primary"
           timezone  = "UTC"
@@ -174,28 +153,6 @@ recovery_vaults = {
             months   = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"] # Req
             weekdays = ["Monday"]
             weeks    = ["Last"]
-          }
-        }
-        policy3 = {
-          name      = "SAPHanaDatabase-Simple"
-          vault_key = "asr1"
-          rg_key    = "primary"
-          timezone  = "UTC"
-          compression_enabled = false
-          policy_type = "Full"
-
-          backup = {
-            frequency = "Weekly"
-            frequency_in_minutes = "30"
-            time      = "23:00"
-            weekdays  = ["Monday", "Wednesday", "Friday"]
-          }
-          simple_retention = {
-            count = 10
-          }
-          retention_weekly = {
-            count    = 104
-            weekdays  = ["Monday", "Wednesday", "Friday"]
           }
         }
       }
