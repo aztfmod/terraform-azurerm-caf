@@ -62,9 +62,9 @@ resource "azurerm_virtual_network_gateway" "vngw" {
       vpn_auth_types       = try(vpn_client_configuration.value.vpn_auth_types, null)
       vpn_client_protocols = try(vpn_client_configuration.value.vpn_client_protocols, null)
 
-      aad_audience = try(vpn_client_configuration.value.aad_audience, null)
-      aad_issuer   = try(vpn_client_configuration.value.aad_issuer, null)
-      aad_tenant   = try(vpn_client_configuration.value.aad_tenant, null)
+      aad_audience = try(vpn_client_configuration.value.aad_issuer, null) != null ? vpn_client_configuration.value.aad_issuer : try(var.remote_objects.azuread_applications[try(vpn_client_configuration.value.aad_lz_key, var.client_config.landingzone_key)][vpn_client_configuration.value.aad_key].application_id, null)
+      aad_issuer   = try(vpn_client_configuration.value.aad_audience, null) != null ? vpn_client_configuration.value.aad_audience : try(format("https://sts.windows.net/%s/", var.remote_objects.azuread_applications[try(vpn_client_configuration.value.aad_lz_key, var.client_config.landingzone_key)][vpn_client_configuration.value.aad_key].tenant_id), null)
+      aad_tenant   = try(vpn_client_configuration.value.aad_tenant, null) != null ? vpn_client_configuration.value.aad_tenant : try(format("https://login.microsoftonline.com/%s/", var.remote_objects.azuread_applications[try(vpn_client_configuration.value.aad_lz_key, var.client_config.landingzone_key)][vpn_client_configuration.value.aad_key].tenant_id), null)
 
       radius_server_address = try(vpn_client_configuration.value.radius_server_address, null)
       radius_server_secret  = try(vpn_client_configuration.value.radius_server_secret, null)

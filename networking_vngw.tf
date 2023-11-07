@@ -11,8 +11,10 @@ module "virtual_network_gateways" {
   global_settings     = local.global_settings
   settings            = each.value
   remote_objects = {
-    virtual_subnets = local.combined_objects_virtual_subnets
-    vnets           = local.combined_objects_networking
+    virtual_subnets       = local.combined_objects_virtual_subnets
+    vnets                 = local.combined_objects_networking
+    azuread_applications  = local.combined_objects_azuread_applications
+    azuread_apps          = local.combined_objects_azuread_apps
   }
 
   depends_on = [

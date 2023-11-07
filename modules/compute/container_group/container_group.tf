@@ -34,6 +34,7 @@ resource "azurerm_container_group" "acg" {
   ip_address_type     = try(var.settings.ip_address_type, "Public")
   restart_policy      = try(var.settings.restart_policy, "Always")
   network_profile_id  = try(var.combined_resources.network_profiles[try(var.settings.network_profile.lz_key, var.client_config.landingzone_key)][var.settings.network_profile.key].id, null)
+  subnet_ids          = local.subnet_ids
 
   dynamic "exposed_port" {
     for_each = try(var.settings.exposed_port, [])

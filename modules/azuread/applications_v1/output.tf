@@ -44,6 +44,10 @@ output "prevent_duplicate_names" {
 output "fallback_public_client_enabled" {
   value = azuread_application.app.fallback_public_client_enabled
 }
+
+output "api" {
+  value = azuread_application.app.api
+}
 # deprecated - moved to web block
 # output "reply_urls" {
 #   value = azuread_application.app.reply_urls
