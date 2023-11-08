@@ -4,6 +4,9 @@ output "id" {
 output "keyvault_id" {
   value = var.keyvault_id
 }
+output "keyvault_uri" {
+  value = var.keyvault_uri
+}
 output "secret_id" {
   value = azurerm_key_vault_certificate.csr.secret_id
 }
