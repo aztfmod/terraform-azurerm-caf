@@ -31,27 +31,27 @@ resource "azurerm_virtual_network_gateway" "vngw" {
   dynamic "ip_configuration" {
     for_each = {
       for key, value in try(var.settings.ip_configuration, {}) : key => value
-      if can(value.subnet_id) || can(value.vnet_key)
+      if can(value.subnet_id) || can(value.vnet_key) || can(value.vnet.vnet_key)
     }
 
     content {
       name                          = ip_configuration.value.ipconfig_name
       public_ip_address_id          = can(ip_configuration.value.public_ip_address_id) || can(ip_configuration.value.public_ip_address_key) == false ? try(ip_configuration.value.public_ip_address_id, null) : var.public_ip_addresses[try(ip_configuration.value.lz_key, var.client_config.landingzone_key)][ip_configuration.value.public_ip_address_key].id
       private_ip_address_allocation = ip_configuration.value.private_ip_address_allocation
-      subnet_id                     = can(ip_configuration.value.subnet_id) ? ip_configuration.value.subnet_id : var.remote_objects.vnets[try(ip_configuration.value.lz_key, var.client_config.landingzone_key)][ip_configuration.value.vnet_key].subnets["GatewaySubnet"].id
+      subnet_id                     = can(ip_configuration.value.subnet_id) ? ip_configuration.value.subnet_id : var.remote_objects.vnets[try(ip_configuration.value.vnet.lz_key, try(ip_configuration.value.lz_key, var.client_config.landingzone_key))][try(ip_configuration.value.vnet.vnet_key, ip_configuration.value.vnet_key)].subnets["GatewaySubnet"].id
     }
   }
   dynamic "ip_configuration" {
     for_each = {
       for key, value in try(var.settings.ip_configuration, {}) : key => value
-      if can(value.subnet_key)
+      if can(value.subnet_key) || can(value.vnet.subnet_key)
     }
 
     content {
       name                          = ip_configuration.value.ipconfig_name
       public_ip_address_id          = can(ip_configuration.value.public_ip_address_id) || can(ip_configuration.value.public_ip_address_key) == false ? try(ip_configuration.value.public_ip_address_id, null) : var.public_ip_addresses[try(ip_configuration.value.lz_key, var.client_config.landingzone_key)][ip_configuration.value.public_ip_address_key].id
       private_ip_address_allocation = ip_configuration.value.private_ip_address_allocation
-      subnet_id                     = var.remote_objects.virtual_subnets[try(ip_configuration.value.lz_key, var.client_config.landingzone_key)][ip_configuration.value.subnet_key].id
+      subnet_id                     = var.remote_objects.virtual_subnets[try(ip_configuration.value.vnet.lz_key, try(ip_configuration.value.lz_key, var.client_config.landingzone_key))][try(ip_configuration.value.vnet.subnet_key, ip_configuration.value.subnet_key)].id
     }
   }
 
