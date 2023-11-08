@@ -34,5 +34,6 @@ module "hubs" {
   tags                = merge(try(each.value.tags, null), local.tags)
   virtual_hub_config  = each.value
   virtual_networks    = var.virtual_networks
+  keyvaults = var.keyvaults
   vwan_id             = azurerm_virtual_wan.vwan.id
 }
