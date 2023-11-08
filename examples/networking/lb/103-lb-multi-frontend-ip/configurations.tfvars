@@ -160,7 +160,7 @@ lb_rule = {
     disable_outbound_snat               = true
     enable_floating_ip                  = true
     idle_timeout_in_minutes             = 30
-    frontend_ip_configuration_name      = "loadbalancer-test-002"
+    frontend_ip_configuration_name      = "loadbalancer-example-002"
   }
 }
 
