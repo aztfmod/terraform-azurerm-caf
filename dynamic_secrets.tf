@@ -9,7 +9,7 @@ module "dynamic_keyvault_secrets" {
   for_each = {
     for keyvault_key, secrets in try(var.security.dynamic_keyvault_secrets, {}) : keyvault_key => {
       for key, value in secrets : key => value
-      if try(value.value, null) != null && try(value.value, null) != ""
+      if try(value.value, null) != null # && try(value.value, null) != ""  We want to allow empty values to support our Azdo-PAT usecease in level2
     }
   }
 
