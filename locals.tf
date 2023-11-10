@@ -10,7 +10,6 @@ locals {
   aadb2c = {
     aadb2c_directory = try(var.aadb2c.aadb2c_directory, {})
   }
-
   azuread = {
     azuread_administrative_unit_members = try(var.azuread.azuread_administrative_unit_members, {})
     azuread_administrative_units        = try(var.azuread.azuread_administrative_units, {})
@@ -242,6 +241,9 @@ locals {
     cognitive_services_account = try(var.cognitive_services.cognitive_services_account, {})
   }
 
+  maps = {
+    maps_accounts = try(var.maps.maps_accounts, {})
+  }
   messaging = {
     signalr_services             = try(var.messaging.signalr_services, {})
     servicebus_namespaces        = try(var.messaging.servicebus_namespaces, {})
@@ -295,6 +297,7 @@ locals {
     load_balancers                                          = try(var.networking.load_balancers, {})
     local_network_gateways                                  = try(var.networking.local_network_gateways, {})
     nat_gateways                                            = try(var.networking.nat_gateways, {})
+    network_connection_monitors                             = try(var.networking.network_connection_monitors, {})
     network_connection_monitors                             = try(var.networking.network_connection_monitors, {})
     network_interface_backend_address_pool_association      = try(var.networking.network_interface_backend_address_pool_association, {})
     network_profiles                                        = try(var.networking.network_profiles, {})
@@ -383,10 +386,11 @@ locals {
   }
 
   storage = {
-    netapp_accounts        = try(var.storage.netapp_accounts, {})
-    storage_account_blobs  = try(var.storage.storage_account_blobs, {})
-    storage_account_queues = try(var.storage.storage_account_queues, {})
-    storage_containers     = try(var.storage.storage_containers, {})
+    netapp_accounts             = try(var.storage.netapp_accounts, {})
+    storage_account_blobs       = try(var.storage.storage_account_blobs, {})
+    storage_account_file_shares = try(var.storage.storage_account_file_shares, {})
+    storage_account_queues      = try(var.storage.storage_account_queues, {})
+    storage_containers          = try(var.storage.storage_containers, {})
   }
 
   webapp = {
@@ -448,5 +452,5 @@ locals {
     iot_central_application             = try(var.iot.iot_central_application, {})
   }
 
-  powerbi_embedded = try(var.powerbi_embedded, {})  
+  powerbi_embedded = try(var.powerbi_embedded, {})
 }

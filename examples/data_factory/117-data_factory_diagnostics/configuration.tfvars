@@ -35,21 +35,21 @@ diagnostics_definition = {
     categories = {
       log = [
         # ["Category name",  "Diagnostics Enabled(true/false)", "Retention Enabled(true/false)", Retention_period]
-        ["ActivityRuns", true, false, 7],
-        ["PipelineRuns", true, false, 7],
-        ["TriggerRuns", true, false, 7],
-        ["SandboxPipelineRuns", true, false, 7],
-        ["SandboxActivityRuns", true, false, 7],
-        ["SSISPackageEventMessages", true, false, 7],
-        ["SSISPackageExecutableStatistics", true, false, 7],
-        ["SSISPackageEventMessageContext", true, false, 7],
-        ["SSISPackageExecutionComponentPhases", true, false, 7],
-        ["SSISPackageExecutionDataStatistics", true, false, 7],
-        ["SSISIntegrationRuntimeLogs", true, false, 7],
+        ["ActivityRuns", true, false, 0],
+        ["PipelineRuns", true, false, 0],
+        ["TriggerRuns", true, false, 0],
+        ["SandboxPipelineRuns", true, false, 0],
+        ["SandboxActivityRuns", true, false, 0],
+        ["SSISPackageEventMessages", true, false, 0],
+        ["SSISPackageExecutableStatistics", true, false, 0],
+        ["SSISPackageEventMessageContext", true, false, 0],
+        ["SSISPackageExecutionComponentPhases", true, false, 0],
+        ["SSISPackageExecutionDataStatistics", true, false, 0],
+        ["SSISIntegrationRuntimeLogs", true, false, 0],
       ]
       metric = [
         #["Category name",  "Diagnostics Enabled(true/false)", "Retention Enabled(true/false)", Retention_period]
-        ["AllMetrics", true, false, 7],
+        ["AllMetrics", true, false, 0],
       ]
     }
   }

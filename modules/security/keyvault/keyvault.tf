@@ -1,6 +1,6 @@
 locals {
   # Need to update the storage tags if the environment tag is updated with the rover command line
-  caf_tags = try(var.settings.tags, null) == null ? null : try(var.settings.tags.environment, null) == null ? var.settings.tags : merge(lookup(var.settings, "tags", {}), { "environment" : var.global_settings.environment })
+  caf_tags = can(var.settings.tags.caf_environment) || can(var.settings.tags.environment) ? merge(lookup(var.settings, "tags", {}), { "caf_environment" : var.global_settings.environment }) : {}
 }
 
 # naming convention
@@ -28,6 +28,7 @@ resource "azurerm_key_vault" "keyvault" {
   purge_protection_enabled        = try(var.settings.purge_protection_enabled, false)
   soft_delete_retention_days      = try(var.settings.soft_delete_retention_days, 7)
   enable_rbac_authorization       = try(var.settings.enable_rbac_authorization, false)
+  public_network_access_enabled   = try(var.settings.public_network_access_enabled, null)
   timeouts {
     delete = "60m"
 

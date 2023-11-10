@@ -122,6 +122,15 @@ case "${RESOURCE}" in
         execute_with_backoff az network application-gateway http-listener create -g ${RG_NAME} --gateway-name ${APPLICATION_GATEWAY_NAME} \
         -n ${NAME} --frontend-port ${PORT} ${frontendip}${hostname}${hostnames}${sslcert}${wafpolicy}
         ;;
+    REDIRECTCONFIG)
+        targetlistener=$([ -z "${TARGET_LISTENER_NAME}" ] && echo "" || echo "--target-listener ${TARGET_LISTENER_NAME} ")
+        targeturl=$([ -z "${TARGET_URL}" ] && echo "" || echo "--target-url ${TARGET_URL} ")
+        includepath=$([ -z "${INCLUDE_PATH}" ] && echo "" || echo "--include-path ${INCLUDE_PATH} ")
+        includequerystring=$([ -z "${INCLUDE_QUERY_STRING}" ] && echo "" || echo "--include-query-string ${INCLUDE_QUERY_STRING} ")
+        
+        execute_with_backoff az network application-gateway redirect-config create -g ${RG_NAME} --gateway-name ${APPLICATION_GATEWAY_NAME} \
+        -n ${NAME} --type ${REDIRECT_TYPE} ${targetlistener}${targeturl}${includepath}${includequerystring}
+        ;;
     REQUESTROUTINGRULE)
         listener=$([ -z "${LISTENER}" ] && echo "" || echo "--http-listener ${LISTENER} ")
         addresspool=$([ -z "${ADDRESS_POOL}" ] && echo "" || echo "--address-pool ${ADDRESS_POOL} ")
@@ -131,7 +140,7 @@ case "${RESOURCE}" in
         rewriteruleset=$([ -z "${REWRITE_RULE_SET}" ] && echo "" || echo "--rewrite-rule-set ${REWRITE_RULE_SET} ")
         ruletype=$([ -z "${RULE_TYPE}" ] && echo "" || echo "--rule-type ${RULE_TYPE} ")
         urlpathmap=$([ -z "${URL_PATH_MAP}" ] && echo "" || echo "--url-path-map ${URL_PATH_MAP} ")
-
+        
         execute_with_backoff az network application-gateway rule create -g ${RG_NAME} --gateway-name ${APPLICATION_GATEWAY_NAME} \
         -n ${NAME} ${listener}${addresspool}${httpsettings}${priority}${redirectconfig}${rewriteruleset}${ruletype}${urlpathmap}
         ;;

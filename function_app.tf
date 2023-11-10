@@ -21,8 +21,11 @@ module "function_apps" {
   #                 local.combined_objects_networking[try(each.value.settings.lz_key, local.client_config.landingzone_key)][each.value.settings.vnet_key].subnets[each.value.settings.subnet_key].id,
   #                 null
   #                 )
-  global_settings = local.global_settings
-
+  global_settings   = local.global_settings
+  private_dns       = local.combined_objects_private_dns
+  private_endpoints = try(each.value.private_endpoints, {})
+  vnets             = local.combined_objects_networking
+  virtual_subnets   = local.combined_objects_virtual_subnets
   remote_objects = {
     subnets = try(local.combined_objects_networking[try(each.value.settings.lz_key, local.client_config.landingzone_key)][each.value.settings.vnet_key].subnets, null)
   }
@@ -43,6 +46,6 @@ data "azurerm_storage_account" "function_apps" {
     if try(value.storage_account_key, null) != null
   }
 
-  name                = module.storage_accounts[each.value.storage_account_key].name
-  resource_group_name = module.storage_accounts[each.value.storage_account_key].resource_group_name
+  name                = local.combined_objects_storage_accounts[try(each.value.lz_key, local.client_config.landingzone_key)][each.value.storage_account_key].name
+  resource_group_name = local.combined_objects_storage_accounts[try(each.value.lz_key, local.client_config.landingzone_key)][each.value.storage_account_key].resource_group_name
 }
