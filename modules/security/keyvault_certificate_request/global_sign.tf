@@ -5,7 +5,7 @@ data "external" "password" {
     "bash", "-c",
     format(
       "az keyvault secret show --id '%s'secrets/'%s' --query '{value: value}' -o json",
-      var.keyvault_id,
+      var.keyvault_uri,
       var.cert_secret_name
     )
   ]
