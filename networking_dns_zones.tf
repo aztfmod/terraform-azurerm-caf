@@ -34,6 +34,7 @@ module "dns_zone_records" {
 
   resource_ids = {
     public_ip_addresses = local.combined_objects_public_ip_addresses
+    dns_zones           = local.combined_objects_dns_zones
   }
 }
 
