@@ -19,7 +19,7 @@ resource "azurerm_recovery_services_vault" "asr" {
   tags                          = merge(local.tags, try(var.settings.tags, null))
   soft_delete_enabled           = try(var.settings.soft_delete_enabled, true)
   storage_mode_type             = try(var.settings.storage_mode_type, "GeoRedundant")
-  public_network_access_enabled = try(var.settings.public_network_access_enabled, true)
+  public_network_access_enabled = try(var.settings.public_network_access_enabled, null)
   immutability                  = try(var.settings.immutability, null)
 
   identity {
