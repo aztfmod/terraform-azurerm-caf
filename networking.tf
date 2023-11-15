@@ -275,6 +275,10 @@ module "route_tables" {
   tags                          = try(each.value.tags, null)
 }
 
+output "route_tables" {
+  value = module.route_tables
+}
+
 resource "azurecaf_name" "routes" {
   for_each = local.networking.azurerm_routes
 
@@ -303,6 +307,10 @@ module "routes" {
     try(local.combined_objects_azurerm_firewalls[try(each.value.lz_key, local.client_config.landingzone_key)][each.value.private_ip_keys.azurerm_firewall.key].ip_configuration[each.value.private_ip_keys.azurerm_firewall.interface_index].private_ip_address, null)
   ), null) : null
 
+}
+
+output "routes" {
+  value = module.routes
 }
 
 #
