@@ -38,6 +38,35 @@ recovery_vaults = {
             }
           }
         }
+        saphana = {
+          name      = "SAPHANATest"
+          workload_type = "SAPHanaDatabase"
+          vault_key = "asr1"
+          rg_key    = "primary"
+          timezone  = "UTC"
+          compression_enabled = false
+          protection_policies = {
+            saphanafull = {
+              policy_type = "Full"
+              backup = {
+                frequency = "Daily"
+                time      = "15:00"
+              }
+              retention_daily  = {
+                count    = 8
+              }
+            }
+            saphanalog = {
+              policy_type = "Log"
+              backup = {
+                frequency_in_minutes = 15
+              }
+              simple_retention = {
+                count = 8
+              }
+            }
+          }          
+        }
       }
     }
   }
