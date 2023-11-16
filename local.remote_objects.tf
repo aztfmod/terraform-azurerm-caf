@@ -81,6 +81,7 @@ locals {
     mssql_managed_instances_secondary              = try(local.combined_objects_mssql_managed_instances_secondary, null)
     mssql_servers                                  = try(local.combined_objects_mssql_servers, null)
     mysql_servers                                  = try(local.combined_objects_mysql_servers, null)
+    mysql_flexible_servers                          = try(local.combined_objects_mysql_flexible_server, null)
     nat_gateways                                   = try(local.combined_objects_nat_gateways, null)
     network_security_groups                        = try(local.combined_objects_network_security_groups, null)
     network_watchers                               = try(local.combined_objects_network_watchers, null)
