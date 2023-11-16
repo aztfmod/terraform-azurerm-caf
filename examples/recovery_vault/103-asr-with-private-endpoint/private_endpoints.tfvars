@@ -10,6 +10,11 @@ private_endpoints = {
         # name = ""                        # Name of the private endpoint
         # lz_key = ""                      # Key of the landingzone where the storage account has been deployed.
         # resource_group_key = ""          # Key of the resource group where the private endpoint will be created. Default to the vnet's resource group
+        # resource_group = { # Or using a resource group from another LZ
+        #   key    = ""
+        #   lz_key = ""
+        # }
+
         # tags
         private_service_connection = {
           name = "psc-asr"
