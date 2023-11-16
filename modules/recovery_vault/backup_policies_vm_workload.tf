@@ -18,59 +18,59 @@ resource "azurerm_backup_policy_vm_workload" "vm_workload" {
       policy_type =  protection_policy.value.policy_type
 
       backup {
-        frequency            = try(each.value.backup.frequency, null)
-        frequency_in_minutes = try(each.value.backup.frequency_in_minutes, null)
-        time                 = try(each.value.backup.time, null)
-        weekdays             = try(each.value.backup.weekdays, null)
+        frequency            = try(protection_policy.value.backup.frequency, null)
+        frequency_in_minutes = try(protection_policy.value.backup.frequency_in_minutes, null)
+        time                 = try(protection_policy.value.backup.time, null)
+        weekdays             = try(protection_policy.value.backup.weekdays, null)
       }
 
       dynamic "retention_daily" {
-        for_each = lookup(each.value, "retention_daily", null) == null ? [] : [1]
+        for_each = lookup(protection_policy.value, "retention_daily", null) == null ? [] : [1]
 
         content {
-          count = each.value.retention_daily.count
+          count = protection_policy.value.retention_daily.count
         }
       }
 
       dynamic "retention_weekly" {
-        for_each = lookup(each.value, "retention_weekly", null) == null ? [] : [1]
+        for_each = lookup(protection_policy.value, "retention_weekly", null) == null ? [] : [1]
 
         content {
-          count    = each.value.retention_weekly.count
-          weekdays = each.value.retention_weekly.weekdays
+          count    = protection_policy.value.retention_weekly.count
+          weekdays = protection_policy.value.retention_weekly.weekdays
         }
       }
 
       dynamic "retention_monthly" {
-        for_each = lookup(each.value, "retention_monthly", null) == null ? [] : [1]
+        for_each = lookup(protection_policy.value, "retention_monthly", null) == null ? [] : [1]
 
         content {
-          count       = each.value.retention_monthly.count
-          format_type = each.value.retention_monthly.format_type
-          monthdays   = try(each.value.retention_monthly.monthdays, null)
-          weekdays    = try(each.value.retention_monthly.weekdays, null)
-          weeks       = try(each.value.retention_monthly.weeks, null)
+          count       = protection_policy.value.retention_monthly.count
+          format_type = protection_policy.value.retention_monthly.format_type
+          monthdays   = try(protection_policy.value.retention_monthly.monthdays, null)
+          weekdays    = try(protection_policy.value.retention_monthly.weekdays, null)
+          weeks       = try(protection_policy.value.retention_monthly.weeks, null)
         }
       }
 
       dynamic "retention_yearly" {
-        for_each = lookup(each.value, "retention_yearly", null) == null ? [] : [1]
+        for_each = lookup(protection_policy.value, "retention_yearly", null) == null ? [] : [1]
 
         content {
-          count       = each.value.retention_yearly.count
-          format_type = each.value.retention_yearly.format_type
-          months      = each.value.retention_yearly.months
-          monthdays   = try(each.value.retention_yearly.monthdays, null)
-          weekdays    = try(each.value.retention_yearly.weekdays, null)
-          weeks       = try(each.value.retention_yearly.weeks, null)
+          count       = protection_policy.value.retention_yearly.count
+          format_type = protection_policy.value.retention_yearly.format_type
+          months      = protection_policy.value.retention_yearly.months
+          monthdays   = try(protection_policy.value.retention_yearly.monthdays, null)
+          weekdays    = try(protection_policy.value.retention_yearly.weekdays, null)
+          weeks       = try(protection_policy.value.retention_yearly.weeks, null)
         }
       }
 
       dynamic "simple_retention" {
-        for_each = lookup(each.value, "simple_retention", null) == null ? [] : [1]
+        for_each = lookup(protection_policy.value, "simple_retention", null) == null ? [] : [1]
 
         content {
-          count = each.value.simple_retention.count
+          count = protection_policy.value.simple_retention.count
         }
       }
     }
