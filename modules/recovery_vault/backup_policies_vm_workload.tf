@@ -17,15 +17,11 @@ resource "azurerm_backup_policy_vm_workload" "vm_workload" {
     content {
       policy_type =  protection_policy.policy_type
 
-      dynamic "backup" {
-        for_each = lookup(each.value, "backup", null) == null ? [] : [1]
-
-        content {
-          frequency            = try(each.value.backup.frequency, null)
-          frequency_in_minutes = try(each.value.backup.frequency_in_minutes, null)
-          time                 = try(each.value.backup.time, null)
-          weekdays             = try(each.value.backup.weekdays, null)
-        }
+      backup {
+        frequency            = try(each.value.backup.frequency, null)
+        frequency_in_minutes = try(each.value.backup.frequency_in_minutes, null)
+        time                 = try(each.value.backup.time, null)
+        weekdays             = try(each.value.backup.weekdays, null)
       }
 
       dynamic "retention_daily" {
