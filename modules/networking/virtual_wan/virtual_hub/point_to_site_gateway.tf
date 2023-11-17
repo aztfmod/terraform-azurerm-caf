@@ -72,9 +72,9 @@ resource "azurerm_vpn_server_configuration" "p2s_configuration" {
     for_each = can(var.virtual_hub_config.p2s_config.server_config.azure_active_directory_authentication) ? [1] : []
     content {
       audience = var.virtual_hub_config.p2s_config.server_config.azure_active_directory_authentication.audience
-      tenant = var.virtual_hub_config.p2s_config.server_config.azure_active_directory_authentication.tenant
-      issuer = var.virtual_hub_config.p2s_config.server_config.azure_active_directory_authentication.issuer
-    }    
+      tenant   = var.virtual_hub_config.p2s_config.server_config.azure_active_directory_authentication.tenant
+      issuer   = var.virtual_hub_config.p2s_config.server_config.azure_active_directory_authentication.issuer
+    }
   }
 }
 
