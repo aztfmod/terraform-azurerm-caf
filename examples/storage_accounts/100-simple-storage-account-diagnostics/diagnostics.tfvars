@@ -32,8 +32,8 @@ diagnostics_definition = {
     categories = {
       metric = [
         #["Category name",  "Diagnostics Enabled(true/false)", "Retention Enabled(true/false)", Retention_period]
-        ["Transaction", true, false, 7],
-        ["Capacity", true, false, 7],
+        ["Transaction", true, false, 0],
+        ["Capacity", true, false, 0],
       ]
     }
   }
@@ -48,8 +48,8 @@ diagnostics_definition = {
       ]
       metric = [
         #["Category name",  "Diagnostics Enabled(true/false)", "Retention Enabled(true/false)", Retention_period]
-        ["Transaction", true, false, 7],
-        ["Capacity", true, false, 7],
+        ["Transaction", true, false, 0],
+        ["Capacity", true, false, 0],
       ]
     }
   }

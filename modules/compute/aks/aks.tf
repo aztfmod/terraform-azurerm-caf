@@ -54,7 +54,7 @@ resource "azurerm_kubernetes_cluster" "aks" {
     max_pods                      = try(var.settings.default_node_pool.max_pods, 30)
     min_count                     = try(var.settings.default_node_pool.min_count, null)
     name                          = var.settings.default_node_pool.name //azurecaf_name.default_node_pool.result
-    node_count                    = try(var.settings.default_node_pool.node_count, 1)
+    node_count                    = try(var.settings.default_node_pool.node_count, null)
     node_labels                   = try(var.settings.default_node_pool.node_labels, null)
     node_public_ip_prefix_id      = try(var.settings.default_node_pool.node_public_ip_prefix_id, null)
     only_critical_addons_enabled  = try(var.settings.default_node_pool.only_critical_addons_enabled, false)
@@ -165,10 +165,11 @@ resource "azurerm_kubernetes_cluster" "aks" {
   http_application_routing_enabled = can(var.settings.addon_profile.http_application_routing) || can(var.settings.http_application_routing_enabled) == false ? try(var.settings.addon_profile.http_application_routing.0.enabled, null) : var.settings.http_application_routing_enabled
 
   dynamic "oms_agent" {
-    for_each = try(var.settings.oms_agent[*], var.settings.oms_agent[*], {})
+    for_each = try(var.settings.addon_profile.oms_agent[*], var.settings.oms_agent[*], {})
 
     content {
       log_analytics_workspace_id = can(oms_agent.value.log_analytics_workspace_id) ? oms_agent.value.log_analytics_workspace_id : var.diagnostics.log_analytics[oms_agent.value.log_analytics_key].id
+      msi_auth_for_monitoring_enabled = try(oms_agent.value.msi_auth_for_monitoring_enabled, null)
     }
   }
   dynamic "microsoft_defender" {
@@ -297,17 +298,17 @@ resource "azurerm_kubernetes_cluster" "aks" {
   local_account_disabled = try(var.settings.local_account_disabled, false)
 
   dynamic "maintenance_window" {
-    for_each = can(var.settings.maintenance_window) ? [1] : []
+    for_each = try(var.settings.maintenance_window, null) == null ? [] : [1]
     content {
       dynamic "allowed" {
-        for_each = can(maintenance_window.value.allowed) ? [1] : []
+        for_each = try(var.settings.maintenance_window.allowed, null) == null ? [] : [1]
         content {
           day   = var.settings.maintenance_window.allowed.day
           hours = var.settings.maintenance_window.allowed.hours
         }
       }
       dynamic "not_allowed" {
-        for_each = can(var.settings.maintenance_window.not_allowed) ? [1] : []
+        for_each = try(var.settings.maintenance_window.not_allowed, null) == null ? [] : [1]
         content {
           end   = var.settings.maintenance_window.not_allowed.end
           start = var.settings.maintenance_window.not_allowed.start

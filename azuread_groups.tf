@@ -39,7 +39,7 @@ module "azuread_groups_membership" {
   for_each = local.azuread.azuread_groups_membership
 
   client_config              = local.client_config
-  group_key                  = each.key
+  group_key                  = try(each.value.key, each.key) # Make it possible to have orphen name of top level keys, useful when you have group keys with same name in different LZs
   settings                   = each.value
   group_id                   = try(try(try(module.azuread_groups[each.key].id, local.combined_objects_azuread_groups[try(each.value.group_lz_key, null)][each.key].id), each.value.group_id, null))
   azuread_groups             = local.combined_objects_azuread_groups

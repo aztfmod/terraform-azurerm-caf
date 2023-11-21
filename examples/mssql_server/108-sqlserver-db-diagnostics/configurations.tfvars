@@ -74,24 +74,24 @@ diagnostics_definition = {
     categories = {
       log = [
         #["Category name",  "Diagnostics Enabled(true/false)", "Retention Enabled(true/false)", Retention_period]
-        ["AutomaticTuning", true, false, 7],
-        ["Blocks", true, false, 7],
-        ["DatabaseWaitStatistics", true, false, 7],
-        ["Deadlocks", true, false, 7],
-        ["DevOpsOperationsAudit", true, false, 7],
-        ["QueryStoreRuntimeStatistics", true, false, 7],
-        ["QueryStoreWaitStatistics", true, false, 7],
-        ["SQLInsights", true, false, 7],
-        ["SQLSecurityAuditEvents", true, false, 7],
-        ["Timeouts", true, false, 7],
-        ["Errors", true, false, 7],
+        ["AutomaticTuning", true, false, 0],
+        ["Blocks", true, false, 0],
+        ["DatabaseWaitStatistics", true, false, 0],
+        ["Deadlocks", true, false, 0],
+        ["DevOpsOperationsAudit", true, false, 0],
+        ["QueryStoreRuntimeStatistics", true, false, 0],
+        ["QueryStoreWaitStatistics", true, false, 0],
+        ["SQLInsights", true, false, 0],
+        ["SQLSecurityAuditEvents", true, false, 0],
+        ["Timeouts", true, false, 0],
+        ["Errors", true, false, 0],
 
       ]
       metric = [
         #["Category name",  "Diagnostics Enabled(true/false)", "Retention Enabled(true/false)", Retention_period]
-        ["Basic", true, false, 7],
-        ["InstanceAndAppAdvanced", true, false, 7],
-        ["WorkloadManagement", true, false, 7],
+        ["Basic", true, false, 0],
+        ["InstanceAndAppAdvanced", true, false, 0],
+        ["WorkloadManagement", true, false, 0],
       ]
     }
   }
