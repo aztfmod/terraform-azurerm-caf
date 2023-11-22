@@ -106,6 +106,7 @@ module "example" {
     container_groups                    = var.container_groups
     dedicated_host_groups               = var.dedicated_host_groups
     dedicated_hosts                     = var.dedicated_hosts
+    elastic_clusters                    = var.elastic_clusters
     machine_learning_compute_instance   = var.machine_learning_compute_instance
     proximity_placement_groups          = var.proximity_placement_groups
     runbooks                            = var.runbooks
