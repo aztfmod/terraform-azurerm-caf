@@ -144,5 +144,6 @@ locals {
     wvd_host_pools                                 = try(local.combined_objects_wvd_host_pools, null)
     wvd_workspaces                                 = try(local.combined_objects_wvd_workspaces, null)
     subscriptions                                  = try(local.combined_objects_subscriptions, null)
+    cost_anomaly_alert                            = try(local.combined_objects_cost_anomaly_alert, null)
   }
 }

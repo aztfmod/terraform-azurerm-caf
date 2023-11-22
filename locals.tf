@@ -383,6 +383,7 @@ locals {
     packer_build                              = try(var.shared_services.packer_build, {})
     recovery_vaults                           = try(var.shared_services.recovery_vaults, {})
     shared_image_galleries                    = try(var.shared_services.shared_image_galleries, {})
+    cost_anomaly_alert                        = try(var.shared_services.cost_anomaly_alert, {})
   }
 
   storage = {
