@@ -610,6 +610,10 @@ variable "wvd_host_pools" {
 variable "wvd_applications" {
   default = {}
 }
+
+variable "wvd_scaling_plans" {
+  default = {}
+}
 variable "lighthouse_definitions" {
   default = {}
 }
