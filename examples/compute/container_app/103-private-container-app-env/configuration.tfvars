@@ -82,6 +82,7 @@ container_app_environments = {
       subnet_key = "cae1"
     }
     internal_load_balancer_enabled = true
+    zone_redundancy_enabled        = true
 
     tags = {
       environment = "testing"
