@@ -150,8 +150,8 @@ maintenance_assignment_virtual_machine = {
   example = {
     region                        = "region1"
     maintenance_configuration_key = "mc_re1"
-    virtual_machine_key           = "example_vm1"
+    virtual_machine = {
+      key = "example_vm1"
+    }
   }
 }
-
-
