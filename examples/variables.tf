@@ -559,6 +559,21 @@ variable "load_balancers" {
 variable "ip_groups" {
   default = {}
 }
+variable "container_app_environments" {
+  default = {}
+}
+variable "container_app_environment_certificates" {
+  default = {}
+}
+variable "container_app_dapr_components" {
+  default = {}
+}
+variable "container_apps" {
+  default = {}
+}
+variable "container_app_environment_storages" {
+  default = {}
+}
 variable "container_groups" {
   default = {}
 }
