@@ -6,6 +6,7 @@ module "recovery_vaults" {
   global_settings   = local.global_settings
   client_config     = local.client_config
   settings          = each.value
+  diagnostic_profiles = try(each.value.diagnostic_profiles, {})
   diagnostics       = local.combined_diagnostics
   identity          = try(each.value.identity, null)
   vnets             = try(local.combined_objects_networking, {})
