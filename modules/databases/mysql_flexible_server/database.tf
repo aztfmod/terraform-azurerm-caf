@@ -12,7 +12,7 @@ resource "azurecaf_name" "mysql_flexible_database" {
   prefixes      = var.global_settings.prefixes
   random_length = var.global_settings.random_length
   clean_input   = true
-  passthrough   = var.global_settings.passthrough
+  passthrough   = each.value.passthrough
   use_slug      = var.global_settings.use_slug
 }
 
