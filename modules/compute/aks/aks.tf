@@ -168,7 +168,7 @@ resource "azurerm_kubernetes_cluster" "aks" {
     for_each = try(var.settings.addon_profile.oms_agent[*], var.settings.oms_agent[*], {})
 
     content {
-      log_analytics_workspace_id = can(oms_agent.value.log_analytics_workspace_id) ? oms_agent.value.log_analytics_workspace_id : var.diagnostics.log_analytics[oms_agent.value.log_analytics_key].id
+      log_analytics_workspace_id      = can(oms_agent.value.log_analytics_workspace_id) ? oms_agent.value.log_analytics_workspace_id : var.diagnostics.log_analytics[oms_agent.value.log_analytics_key].id
       msi_auth_for_monitoring_enabled = try(oms_agent.value.msi_auth_for_monitoring_enabled, null)
     }
   }
@@ -350,6 +350,7 @@ resource "azurerm_kubernetes_cluster" "aks" {
 
   node_resource_group                 = azurecaf_name.rg_node.result
   oidc_issuer_enabled                 = try(var.settings.oidc_issuer_enabled, null)
+  open_service_mesh_enabled           = try(var.settings.open_service_mesh_enabled, null)
   private_cluster_enabled             = try(var.settings.private_cluster_enabled, null)
   private_dns_zone_id                 = try(var.private_dns_zone_id, null)
   private_cluster_public_fqdn_enabled = try(var.settings.private_cluster_public_fqdn_enabled, null)
