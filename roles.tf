@@ -161,8 +161,8 @@ locals {
     recovery_vaults                            = local.combined_objects_recovery_vaults
     resource_groups                            = local.combined_objects_resource_groups
     servicebus_namespaces                      = local.combined_objects_servicebus_namespaces
-    servicebus_topics                          = local.combined_objects_servicebus_topics
     servicebus_queues                          = local.combined_objects_servicebus_queues
+    servicebus_topics                          = local.combined_objects_servicebus_topics
     shared_image_galleries                     = local.combined_objects_shared_image_galleries
     storage_accounts                           = local.combined_objects_storage_accounts
     subscriptions                              = local.combined_objects_subscriptions
