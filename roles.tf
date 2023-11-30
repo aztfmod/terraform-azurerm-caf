@@ -156,8 +156,8 @@ locals {
     resource_groups                            = local.combined_objects_resource_groups
     route_tables                               = local.combined_objects_route_tables
     servicebus_namespaces                      = local.combined_objects_servicebus_namespaces
-    servicebus_topics                          = local.combined_objects_servicebus_topics
     servicebus_queues                          = local.combined_objects_servicebus_queues
+    servicebus_topics                          = local.combined_objects_servicebus_topics
     storage_accounts                           = local.combined_objects_storage_accounts
     subscriptions                              = local.combined_objects_subscriptions
     synapse_workspaces                         = local.combined_objects_synapse_workspaces
