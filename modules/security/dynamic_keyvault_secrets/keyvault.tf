@@ -48,3 +48,4 @@ module "secret_dynamic" {
   keyvault_id = var.keyvault.id
   config      = each.value.config
 }
+
