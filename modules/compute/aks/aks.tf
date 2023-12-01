@@ -348,6 +348,15 @@ resource "azurerm_kubernetes_cluster" "aks" {
     }
   }
 
+  dynamic "service_mesh_profile" {
+    for_each = try(var.settings.service_mesh_profile[*], {})
+    content {
+      mode                             = try(service_mesh_profile.value.mode, null)
+      internal_ingress_gateway_enabled = try(service_mesh_profile.value.internal_ingress_gateway_enabled, null)
+      external_ingress_gateway_enabled = try(service_mesh_profile.value.external_ingress_gateway_enabled, null)
+    }
+  }
+
   node_resource_group                 = azurecaf_name.rg_node.result
   oidc_issuer_enabled                 = try(var.settings.oidc_issuer_enabled, null)
   open_service_mesh_enabled           = try(var.settings.open_service_mesh_enabled, null)
