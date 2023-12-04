@@ -14,6 +14,7 @@ module "aks_clusters" {
   managed_identities  = local.combined_objects_managed_identities
   settings            = each.value
   vnets               = local.combined_objects_networking
+  subnets             = local.combined_objects_virtual_subnets
 
   admin_group_object_ids = try(each.value.admin_groups.azuread_group_keys, null) == null ? null : try(
     each.value.admin_groups.ids,
