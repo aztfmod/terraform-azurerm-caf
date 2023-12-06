@@ -44,7 +44,7 @@ resource "azurerm_container_registry" "acr" {
     for_each = can(var.settings.identity) ? [var.settings.identity] : []
 
     content {
-      type         = var.identity.type
+      type         = identity.value.type
       identity_ids = local.managed_identities
     }
   }
