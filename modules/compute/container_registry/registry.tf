@@ -54,7 +54,7 @@ resource "azurerm_container_registry" "acr" {
 
     content {
       enabled            = try(encryption.value.enabled, false)
-      key_vault_key_id   = try(encryption.value.key_vault_key_id, var.keyvault_keys[try(encryption.value.keyvault.lz_key, var.client_config.landingzone_key)][encryption.value.keyvault.key].id)
+      key_vault_key_id   = try(encryption.value.key_vault_key_id, var.keyvault_keys[try(encryption.value.keyvault.lz_key, var.client_config.landingzone_key)][encryption.value.keyvault.key].versionless_id)
       identity_client_id = try(encryption.value.identity_client_id, var.managed_identities[try(encryption.value.identity.lz_key, var.client_config.landingzone_key)][encryption.value.identity.key].client_id)
     }
   }
