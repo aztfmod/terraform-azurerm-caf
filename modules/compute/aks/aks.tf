@@ -211,10 +211,12 @@ resource "azurerm_kubernetes_cluster" "aks" {
 
   api_server_authorized_ip_ranges = try(var.settings.api_server_authorized_ip_ranges, null)
 
-  disk_encryption_set_id = try(coalesce(
-    try(var.settings.disk_encryption_set_id, ""),
-    try(var.settings.disk_encryption_set.id, "")
-  ), null)
+  disk_encryption_set_id = can(var.settings.disk_encryption_set_id) || can(var.settings.disk_encryption_set.id) ? try(var.settings.disk_encryption_set_id, var.settings.disk_encryption_set.id) : var.disk_encryption_sets[try(var.settings.disk_encryption_set.lz_key, var.settings.lz_key, var.client_config.landingzone_key)][try(var.settings.disk_encryption_set_key, var.settings.disk_encryption_set.key)].id
+
+  # disk_encryption_set_id = try(coalesce(
+  #   try(var.settings.disk_encryption_set_id, ""),
+  #   try(var.settings.disk_encryption_set.id, "")
+  # ), null)
 
   dynamic "api_server_access_profile" {
     for_each = try(var.settings.api_server_access_profile[*], {})
@@ -557,7 +559,8 @@ resource "azurerm_kubernetes_cluster_node_pool" "nodepools" {
     }
   }
 
-  vnet_subnet_id = can(each.value.subnet.resource_id) || can(each.value.vnet_subnet_id) ? try(each.value.subnet.resource_id, each.value.vnet_subnet_id) : var.vnets[try(var.settings.vnet.lz_key, var.settings.lz_key, var.client_config.landingzone_key)][try(var.settings.vnet.key, var.settings.vnet_key)].subnets[try(each.value.subnet.key, each.value.subnet_key)].id
+  vnet_subnet_id = can(each.value.subnet.resource_id) || can(each.value.vnet_subnet_id) ? try(each.value.subnet.resource_id, each.value.vnet_subnet_id) : try(var.vnets[try(var.settings.vnet.lz_key, var.settings.lz_key, var.client_config.landingzone_key)][try(var.settings.vnet.key, var.settings.vnet_key)].subnets[try(each.value.subnet.key, each.value.subnet_key)].id, var.subnets[try(each.value.subnet.lz_key, var.settings.subnet_lz_key, var.settings.subnet.lz_key, var.client_config.landingzone_key)][try(each.value.subnet.key, each.value.subnet_key)].id)
+  # vnet_subnet_id = can(each.value.subnet.resource_id) || can(each.value.vnet_subnet_id) ? try(each.value.subnet.resource_id, each.value.vnet_subnet_id) : var.vnets[try(var.settings.vnet.lz_key, var.settings.lz_key, var.client_config.landingzone_key)][try(var.settings.vnet.key, var.settings.vnet_key)].subnets[try(each.value.subnet.key, each.value.subnet_key)].id
 
   dynamic "windows_profile" {
     for_each = try(each.value.windows_profile[*], {})
