@@ -59,10 +59,18 @@ variable "resource_groups" {
 variable "private_dns" {
   default = {}
 }
+variable "managed_identities" {
+  default = {}
+}
+variable "keyvault_keys" {
+  default = {}
+}
 
 variable "public_network_access_enabled" {
-  default = "true"
+  default     = "true"
+  description = "(Optional) Whether public network access is allowed for the container registry."
 }
+
 variable "location" {
   description = "location of the resource if different from the resource group."
   default     = null

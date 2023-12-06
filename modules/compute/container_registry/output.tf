@@ -23,3 +23,8 @@ output "login_server_url" {
 output "admin_username" {
   value = azurerm_container_registry.acr.admin_username
 }
+
+output "identity" {
+  value = azurerm_container_registry.acr.identity
+}
+
