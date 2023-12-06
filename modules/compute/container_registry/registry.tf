@@ -24,7 +24,7 @@ resource "azurerm_container_registry" "acr" {
   network_rule_bypass_option    = try(var.settings.network_rule_bypass_option, "AzureServices")
 
   dynamic "trust_policy" {
-    for_each = try(var.settings.trust_policy, {})
+    for_each = can(var.settings.trust_policy) ? [var.settings.trust_policy] : []
 
     content {
       enabled = try(trust_policy.value.enabled, false)
@@ -32,7 +32,7 @@ resource "azurerm_container_registry" "acr" {
   }
 
   dynamic "retention_policy" {
-    for_each = try(var.settings.retention_policy, {})
+    for_each = can(var.settings.retention_policy) ? [var.settings.retention_policy] : []
 
     content {
       days    = try(retention_policy.value.days, 7)
@@ -50,7 +50,7 @@ resource "azurerm_container_registry" "acr" {
   }
 
   dynamic "encryption" {
-    for_each = try(var.settings.encryption, {})
+    for_each = can(var.settings.encryption) ? [var.settings.encryption] : []
 
     content {
       enabled            = try(encryption.value.enabled, false)
