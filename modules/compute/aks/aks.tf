@@ -355,7 +355,7 @@ resource "azurerm_kubernetes_cluster" "aks" {
   oidc_issuer_enabled                 = try(var.settings.oidc_issuer_enabled, null)
   private_cluster_enabled             = try(var.settings.private_cluster_enabled, null)
 
-  private_dns_zone_id                 = can(var.settings.private_dns_zone_id) ? var.settings.#private_dns_zone_id : var.private_dns[try(var.settings.private_dns.lz_key, var.settings.lz_key, var.client_config.landingzone_key)][try(var.settings.private_dns_key, var.settings.private_dns.key)].id
+  private_dns_zone_id                 = can(var.settings.private_dns_zone_id) ? var.settings.private_dns_zone_id : var.private_dns[try(var.settings.private_dns.lz_key, var.settings.lz_key, var.client_config.landingzone_key)][try(var.settings.private_dns_key, var.settings.private_dns.key)].id
   # private_dns_zone_id                 = try(var.private_dns_zone_id, null)
 
   private_cluster_public_fqdn_enabled = try(var.settings.private_cluster_public_fqdn_enabled, null)
