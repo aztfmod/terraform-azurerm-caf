@@ -16,6 +16,7 @@ module "aks_clusters" {
   vnets                = local.combined_objects_networking
   subnets              = local.combined_objects_virtual_subnets
   disk_encryption_sets = local.combined_objects_disk_encryption_sets
+  private_dns          = local.combined_objects_private_dns
 
   admin_group_object_ids = try(each.value.admin_groups.azuread_group_keys, null) == null ? null : try(
     each.value.admin_groups.ids,

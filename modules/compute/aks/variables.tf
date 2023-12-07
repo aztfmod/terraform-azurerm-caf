@@ -7,6 +7,7 @@ variable "settings" {}
 variable "vnets" {}
 variable "subnets" {}
 variable "disk_encryption_sets" {}
+variable "private_dns" {}
 variable "admin_group_object_ids" {}
 variable "location" {
   description = "location of the resource if different from the resource group."
