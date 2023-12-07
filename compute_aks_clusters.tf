@@ -17,6 +17,7 @@ module "aks_clusters" {
   subnets              = local.combined_objects_virtual_subnets
   disk_encryption_sets = local.combined_objects_disk_encryption_sets
   private_dns          = local.combined_objects_private_dns
+  private_endpoints    = try(each.value.private_endpoints, null)
 
   admin_group_object_ids = try(each.value.admin_groups.azuread_group_keys, null) == null ? null : try(
     each.value.admin_groups.ids,
@@ -30,7 +31,6 @@ module "aks_clusters" {
   )
 
   application_gateway = can(each.value.addon_profile.ingress_application_gateway.key) ? local.combined_objects_application_gateway_platforms[try(each.value.addon_profile.ingress_application_gateway.lz_key, local.client_config.landingzone_key)][each.value.addon_profile.ingress_application_gateway.key] : null
-  private_dns_zone_id = can(each.value.private_dns_zone.id) || can(each.value.private_dns_zone.key) == false ? try(each.value.private_dns_zone.id, null) : local.combined_objects_private_dns[try(each.value.private_dns_zone.lz_key, local.client_config.landingzone_key)][each.value.private_dns_zone.key].id
 
   base_tags           = local.global_settings.inherit_tags
   resource_group      = local.combined_objects_resource_groups[try(each.value.resource_group.lz_key, local.client_config.landingzone_key)][try(each.value.resource_group_key, each.value.resource_group.key)]
