@@ -140,8 +140,9 @@ resource "azurerm_kubernetes_cluster" "aks" {
     }
   }
 
-  dns_prefix                 = try(var.settings.dns_prefix, try(var.settings.dns_prefix_private_cluster, random_string.prefix.result))
+  dns_prefix                 = try(var.settings.dns_prefix, null)
   dns_prefix_private_cluster = try(var.settings.dns_prefix_private_cluster, null)
+
   automatic_channel_upgrade  = try(var.settings.automatic_channel_upgrade, null)
 
   dynamic "key_management_service" {
