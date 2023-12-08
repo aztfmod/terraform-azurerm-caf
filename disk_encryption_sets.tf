@@ -1,5 +1,8 @@
 module "disk_encryption_sets" {
   source = "./modules/security/disk_encryption_set"
+
+  depends_on = [time_sleep.azurerm_role_assignment_for]
+
   for_each = {
     for key, value in local.security.disk_encryption_sets : key => value
     if can(value.keyvault.key) == true
@@ -18,6 +21,9 @@ module "disk_encryption_sets" {
 
 module "disk_encryption_sets_external" {
   source = "./modules/security/disk_encryption_set_external"
+
+  depends_on = [time_sleep.azurerm_role_assignment_for]
+
   for_each = {
     for key, value in local.security.disk_encryption_sets : key => value
     if can(value.keyvault.key) == false
