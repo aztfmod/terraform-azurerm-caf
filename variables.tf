@@ -390,8 +390,14 @@ variable "random_strings" {
   default     = {}
 }
 
+# AI Services
 variable "cognitive_services" {
   description = "Configuration object - Cognitive Service Resource "
+  default     = {}
+}
+
+variable "search_services" {
+  description = "Configuration object - Search Service Resource "
   default     = {}
 }
 
