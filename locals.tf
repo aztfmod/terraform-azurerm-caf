@@ -23,6 +23,7 @@ locals {
     azuread_groups_membership           = try(var.azuread.azuread_groups_membership, {})
     azuread_roles                       = try(var.azuread.azuread_roles, {})
     azuread_service_principal_passwords = try(var.azuread.azuread_service_principal_passwords, {})
+    azuread_service_principal_token_signing_certificates = try(var.azuread.azuread_service_principal_token_signing_certificates, {})
     azuread_service_principals          = try(var.azuread.azuread_service_principals, {})
     azuread_users                       = try(var.azuread.azuread_users, {})
   }
