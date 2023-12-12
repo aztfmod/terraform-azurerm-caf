@@ -553,7 +553,7 @@ resource "azurerm_kubernetes_cluster_node_pool" "nodepools" {
   priority                     = try(each.value.priority, null)
   proximity_placement_group_id = try(each.value.proximity_placement_group_id, null)
   spot_max_price               = try(each.value.spot_max_price, null)
-  tags                         = merge(try(var.settings.default_node_pool.tags, {}), try(each.value.tags, {}))
+  tags                         = merge(try(var.settings.default_node_pool.tags, {}), try(each.value.tags, {}), local.tags)
   scale_down_mode              = try(each.value.scale_down_mode, null)
   ultra_ssd_enabled            = try(each.value.ultra_ssd_enabled, false)
   dynamic "upgrade_settings" {
