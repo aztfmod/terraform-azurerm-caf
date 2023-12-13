@@ -83,7 +83,7 @@ module "virtual_subnets" {
 resource "azurerm_subnet_route_table_association" "rt" {
   for_each = {
     for key, subnet in local.networking.virtual_subnets : key => subnet
-    if try(subnet.route_table_key, null) != null
+    if try(try(subnet.route_table_key, subnet.route_table.key), null) != null
   }
 
   subnet_id      = lookup(module.virtual_subnets, each.key, null).id
