@@ -87,7 +87,7 @@ resource "azurerm_subnet_route_table_association" "rt" {
   }
 
   subnet_id      = lookup(module.virtual_subnets, each.key, null).id
-  route_table_id = module.route_tables[each.value.route_table_key].id
+  route_table_id = local.combined_objects_route_tables[try(each.value.route_table.lz_key, local.client_config.landingzone_key)][try(each.value.route_table_key, each.value.route_table.key)].id
 }
 
 resource "azurerm_subnet_network_security_group_association" "nsg_vnet_association_version" {
