@@ -69,6 +69,7 @@ resource "azurerm_kubernetes_cluster" "aks" {
     capacity_reservation_group_id = try(var.settings.capacity_reservation_group_id, null)
     custom_ca_trust_enabled       = try(var.settings.custom_ca_trust_enabled, null)
     host_group_id                 = try(var.settings.host_group_id, null)
+    temporary_name_for_rotation   = try(var.settings.temporary_name_for_rotation, null)
 
     pod_subnet_id  = can(var.settings.default_node_pool.pod_subnet_key) == false || can(var.settings.default_node_pool.pod_subnet.key) == false || can(var.settings.default_node_pool.pod_subnet_id) || can(var.settings.default_node_pool.pod_subnet.resource_id) ? try(var.settings.default_node_pool.pod_subnet_id, var.settings.default_node_pool.pod_subnet.resource_id, null) : var.vnets[try(var.settings.lz_key, var.client_config.landingzone_key)][var.settings.vnet_key].subnets[try(var.settings.default_node_pool.pod_subnet_key, var.settings.default_node_pool.pod_subnet.key)].id
     vnet_subnet_id = can(var.settings.default_node_pool.vnet_subnet_id) || can(var.settings.default_node_pool.subnet.resource_id) ? try(var.settings.default_node_pool.vnet_subnet_id, var.settings.default_node_pool.subnet.resource_id) : try(var.vnets[try(var.settings.vnet.lz_key, var.settings.lz_key, var.client_config.landingzone_key)][try(var.settings.vnet.key, var.settings.vnet_key)].subnets[try(var.settings.default_node_pool.subnet_key, var.settings.default_node_pool.subnet.key)].id, var.subnets[try(var.settings.default_node_pool.subnet_lz_key, var.settings.default_node_pool.subnet.lz_key, var.client_config.landingzone_key)][try(var.settings.default_node_pool.subnet_key, var.settings.default_node_pool.subnet.key)].id)
@@ -143,7 +144,7 @@ resource "azurerm_kubernetes_cluster" "aks" {
   dns_prefix                 = try(var.settings.dns_prefix, null)
   dns_prefix_private_cluster = try(var.settings.dns_prefix_private_cluster, null)
 
-  automatic_channel_upgrade  = try(var.settings.automatic_channel_upgrade, null)
+  automatic_channel_upgrade = try(var.settings.automatic_channel_upgrade, null)
 
   dynamic "key_management_service" {
     for_each = try(var.settings.key_management_service[*], {})
@@ -352,11 +353,11 @@ resource "azurerm_kubernetes_cluster" "aks" {
     }
   }
 
-  node_resource_group                 = azurecaf_name.rg_node.result
-  oidc_issuer_enabled                 = try(var.settings.oidc_issuer_enabled, null)
-  private_cluster_enabled             = try(var.settings.private_cluster_enabled, null)
+  node_resource_group     = azurecaf_name.rg_node.result
+  oidc_issuer_enabled     = try(var.settings.oidc_issuer_enabled, null)
+  private_cluster_enabled = try(var.settings.private_cluster_enabled, null)
 
-  private_dns_zone_id                 = can(var.settings.private_dns_zone_id) ? var.settings.private_dns_zone_id : var.private_dns[try(var.settings.private_dns.lz_key, var.settings.lz_key, var.client_config.landingzone_key)][try(var.settings.private_dns_key, var.settings.private_dns.key)].id
+  private_dns_zone_id = can(var.settings.private_dns_zone_id) ? var.settings.private_dns_zone_id : var.private_dns[try(var.settings.private_dns.lz_key, var.settings.lz_key, var.client_config.landingzone_key)][try(var.settings.private_dns_key, var.settings.private_dns.key)].id
   # private_dns_zone_id                 = try(var.private_dns_zone_id, null)
 
   private_cluster_public_fqdn_enabled = try(var.settings.private_cluster_public_fqdn_enabled, null)
