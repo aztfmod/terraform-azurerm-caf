@@ -63,13 +63,13 @@ resource "azurerm_kubernetes_cluster" "aks" {
     os_disk_type                  = try(var.settings.default_node_pool.os_disk_type, null)
     os_sku                        = try(var.settings.default_node_pool.os_sku, null)
     tags                          = merge(try(var.settings.default_node_pool.tags, {}), local.tags)
+    temporary_name_for_rotation   = try(var.settings.default_node_pool.temporary_name_for_rotation, null)
     type                          = try(var.settings.default_node_pool.type, "VirtualMachineScaleSets")
     ultra_ssd_enabled             = try(var.settings.default_node_pool.ultra_ssd_enabled, false)
     vm_size                       = var.settings.default_node_pool.vm_size
     capacity_reservation_group_id = try(var.settings.capacity_reservation_group_id, null)
     custom_ca_trust_enabled       = try(var.settings.custom_ca_trust_enabled, null)
     host_group_id                 = try(var.settings.host_group_id, null)
-    temporary_name_for_rotation   = try(var.settings.temporary_name_for_rotation, null)
 
     pod_subnet_id  = can(var.settings.default_node_pool.pod_subnet_key) == false || can(var.settings.default_node_pool.pod_subnet.key) == false || can(var.settings.default_node_pool.pod_subnet_id) || can(var.settings.default_node_pool.pod_subnet.resource_id) ? try(var.settings.default_node_pool.pod_subnet_id, var.settings.default_node_pool.pod_subnet.resource_id, null) : var.vnets[try(var.settings.lz_key, var.client_config.landingzone_key)][var.settings.vnet_key].subnets[try(var.settings.default_node_pool.pod_subnet_key, var.settings.default_node_pool.pod_subnet.key)].id
     vnet_subnet_id = can(var.settings.default_node_pool.vnet_subnet_id) || can(var.settings.default_node_pool.subnet.resource_id) ? try(var.settings.default_node_pool.vnet_subnet_id, var.settings.default_node_pool.subnet.resource_id) : try(var.vnets[try(var.settings.vnet.lz_key, var.settings.lz_key, var.client_config.landingzone_key)][try(var.settings.vnet.key, var.settings.vnet_key)].subnets[try(var.settings.default_node_pool.subnet_key, var.settings.default_node_pool.subnet.key)].id, var.subnets[try(var.settings.default_node_pool.subnet_lz_key, var.settings.default_node_pool.subnet.lz_key, var.client_config.landingzone_key)][try(var.settings.default_node_pool.subnet_key, var.settings.default_node_pool.subnet.key)].id)
