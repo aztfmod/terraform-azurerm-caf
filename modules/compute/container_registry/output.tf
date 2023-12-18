@@ -28,3 +28,6 @@ output "identity" {
   value = azurerm_container_registry.acr.identity
 }
 
+output "rbac_id" {
+  value = try(azurerm_container_registry.acr.identity[0].principal_id, null)
+}
