@@ -25,7 +25,7 @@ resource "azurerm_data_factory" "df" {
     }
   }
   dynamic "global_parameter" {
-    for_each = try(var.settings.global_parameter, null) != null ? [var.settings.global_parameter] : []
+    for_each = try(var.settings.global_parameter, null) != null ? var.settings.global_parameter : {}
 
     content {
       name  = global_parameter.value.name
@@ -53,6 +53,13 @@ resource "azurerm_data_factory" "df" {
       tenant_id       = vsts_configuration.value.tenant_id
     }
   }
+
+  lifecycle {
+    ignore_changes = [
+      global_parameter
+    ]
+  }
+
   managed_virtual_network_enabled = try(var.settings.managed_virtual_network_enabled, null)
   public_network_enabled          = try(var.settings.public_network_enabled, null)
   #customer_managed_key_id         = try(var.settings.customer_managed_key_id)
