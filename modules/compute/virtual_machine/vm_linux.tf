@@ -76,13 +76,16 @@ resource "azurerm_linux_virtual_machine" "vm" {
   size                            = each.value.size
   tags                            = merge(local.tags, try(each.value.tags, null))
   zone                            = try(each.value.zone, null)
+  secure_boot_enabled             = try(each.value.secure_boot_enabled, null)
+  vtpm_enabled                    = try(each.value.vtpm_enabled, null)
+
 
   custom_data = try(
     try(
       try(local_sensitive_file.custom_data[each.key].content_base64, local.dynamic_custom_data[each.value.custom_data][each.value.name]),
-      try(filebase64(format("%s/%s", path.cwd, each.value.custom_data)), base64encode(each.value.custom_data))), 
+      try(filebase64(format("%s/%s", path.cwd, each.value.custom_data)), base64encode(each.value.custom_data))),
   null)
-  
+
 
   dedicated_host_id = can(each.value.dedicated_host.key) ? var.dedicated_hosts[try(each.value.dedicated_host.lz_key, var.client_config.landingzone_key)][each.value.dedicated_host.key].id : try(each.value.dedicated_host.id, null)
 
