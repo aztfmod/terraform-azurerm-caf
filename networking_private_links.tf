@@ -11,6 +11,8 @@ module "private_endpoints" {
   vnet              = try(local.combined_objects_networking[each.value.lz_key][each.value.vnet_key], local.combined_objects_networking[local.client_config.landingzone_key][each.value.vnet_key])
   base_tags         = local.global_settings.inherit_tags
 
+  custom_network_interface_name = each.value.custom_network_interface_name
+
   remote_objects = {
     diagnostic_storage_accounts     = local.combined_diagnostics.storage_accounts
     diagnostic_event_hub_namespaces = local.combined_diagnostics.event_hub_namespaces
