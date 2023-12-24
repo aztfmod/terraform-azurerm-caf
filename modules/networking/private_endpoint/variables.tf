@@ -7,10 +7,6 @@ variable "client_config" {
   default = {}
 }
 
-variable "custom_network_interface_name" {
-  default = {}
-}
-
 variable "global_settings" {
   description = "Global settings object (see module README.md)"
 }
