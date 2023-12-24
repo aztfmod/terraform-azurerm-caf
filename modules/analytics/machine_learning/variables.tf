@@ -59,8 +59,3 @@ variable "private_endpoints" {
 variable "private_dns" {
   default = {}
 }
-
-# variable "pep_base_tags" {
-#   description = "Base tags for the resource to be inherited from the resource group."
-#   type        = bool
-# }
