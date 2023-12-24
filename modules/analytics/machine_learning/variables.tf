@@ -51,3 +51,7 @@ variable "vnets" {
 variable "container_registry_id" {
   default = ""
 }
+
+variable "private_endpoints" {
+  default = {}
+}
