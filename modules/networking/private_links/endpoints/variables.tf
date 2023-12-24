@@ -14,3 +14,7 @@ variable "base_tags" {
   description = "Base tags for the resource to be inherited from the resource group."
   type        = bool
 }
+
+variable "custom_network_interface_name" {
+  default = {}
+}
