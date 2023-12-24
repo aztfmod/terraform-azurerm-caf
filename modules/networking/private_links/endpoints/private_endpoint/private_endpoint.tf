@@ -12,13 +12,12 @@ resource "azurecaf_name" "pep" {
 resource "azurerm_private_endpoint" "pep" {
   for_each = toset(var.subresource_names)
 
-  name                = format("%s-%s", azurecaf_name.pep.result, each.key)
-  location            = var.location
-  resource_group_name = var.resource_group_name
-  subnet_id           = var.subnet_id
-  tags                = local.tags
-
   custom_network_interface_name = var.settings.custom_network_interface_name
+  location                      = var.location
+  name                          = format("%s-%s", azurecaf_name.pep.result, each.key)
+  resource_group_name           = var.resource_group_name
+  subnet_id                     = var.subnet_id
+  tags                          = local.tags
 
   private_service_connection {
     name                           = format("%s-%s", var.settings.private_service_connection.name, replace(each.key, " ", "-"))
