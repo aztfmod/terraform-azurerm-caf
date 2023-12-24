@@ -13,6 +13,7 @@ module "machine_learning_workspaces" {
   container_registry_id   = can(each.value.container_registry_id) || can(each.value.container_registry_key) == false ? try(each.value.container_registry_id, null) : local.combined_objects_container_registry[try(each.value.lz_key, local.client_config.landingzone_key)][each.value.container_registry_key].id
   base_tags               = try(local.global_settings.inherit_tags, false) ? try(local.combined_objects_resource_groups[try(each.value.resource_group.lz_key, local.client_config.landingzone_key)][try(each.value.resource_group.key, each.value.resource_group_key)].tags, {}) : {}
 
+  private_endpoints = try(each.value.private_endpoints, {})
 }
 
 output "machine_learning_workspaces" {
