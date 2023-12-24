@@ -16,6 +16,8 @@ resource "azurerm_private_endpoint" "pep" {
   subnet_id           = var.subnet_id
   tags                = local.tags
 
+  custom_network_interface_name = each.value.custom_network_interface_name
+
   private_service_connection {
     name                           = var.settings.private_service_connection.name
     private_connection_resource_id = var.resource_id
