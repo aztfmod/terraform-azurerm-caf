@@ -33,8 +33,8 @@ variable "resource_groups" {}
 
 variable "settings" {}
 
-variable "tags" = {
-  var.tags
-}
+# variable "tags" {
+#   default = {}
+# }
 
 variable "vnets" {}
