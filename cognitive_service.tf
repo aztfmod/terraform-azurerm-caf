@@ -1,4 +1,4 @@
-module "cognitive_services_account" {
+module "cognitive_services_accounts" {
   source   = "./modules/cognitive_services/cognitive_services_account"
   for_each = local.cognitive_services.cognitive_services_account
 
