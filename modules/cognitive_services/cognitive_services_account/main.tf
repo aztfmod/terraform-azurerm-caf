@@ -8,8 +8,8 @@ terraform {
 
 locals {
   tags = var.base_tags ? merge(
+    local.module_tag,
     var.global_settings.tags,
-    try(var.resource_group.tags, null),
     try(var.settings.tags, null)
   ) : try(var.settings.tags, null)
 
