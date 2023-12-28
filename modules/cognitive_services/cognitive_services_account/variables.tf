@@ -11,7 +11,9 @@ variable "location" {
   type        = string
 }
 
-variable "private_endpoints" {}
+variable "private_endpoints" {
+  default = {}
+}
 
 variable "resource_group_name" {
   description = "Name of the existing resource group to deploy the virtual machine"
