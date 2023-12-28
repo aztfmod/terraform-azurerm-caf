@@ -4,6 +4,7 @@ locals {
   }
   # tags = merge(var.base_tags, local.module_tag, try(var.settings.tags, null))
   tags = var.base_tags ? merge(
+    local.module_tag,
     var.global_settings.tags,
     try(var.settings.tags, null)
   ) : try(var.settings.tags, null)
