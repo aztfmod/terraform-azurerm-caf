@@ -33,7 +33,7 @@ variable "resource_group_name" {
   type        = string
 }
 
-# variable "resource_groups" {}
+variable "resource_groups" {}
 
 variable "settings" {}
 
