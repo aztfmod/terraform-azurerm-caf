@@ -31,11 +31,12 @@ module "private_endpoints" {
     postgresql_servers          = local.combined_objects_postgresql_servers
     recovery_vaults             = local.combined_objects_recovery_vaults
     redis_caches                = local.combined_objects_redis_caches
+    search_services             = local.combined_objects_azurerm_search_services
     signalr_services            = local.combined_objects_signalr_services
     storage_accounts            = local.combined_objects_storage_accounts
     synapse_workspaces          = local.combined_objects_synapse_workspaces
   }
-
+combined_objects_azurerm_search_services
 }
 
 output "private_endpoints" {
