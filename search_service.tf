@@ -14,5 +14,5 @@ module "azurerm_search_service" {
 }
 
 output "search_service" {
-  value = module.search_service
+  value = module.azurerm_search_service
 }
