@@ -246,12 +246,14 @@ locals {
   }
 
   cognitive_services = {
+    azurerm_search_service     = try(var.cognitive_services.azurerm_search_service, {})
     cognitive_services_account = try(var.cognitive_services.cognitive_services_account, {})
   }
 
   maps = {
     maps_accounts = try(var.maps.maps_accounts, {})
   }
+  
   messaging = {
     signalr_services             = try(var.messaging.signalr_services, {})
     servicebus_namespaces        = try(var.messaging.servicebus_namespaces, {})
