@@ -36,7 +36,6 @@ module "private_endpoints" {
     storage_accounts            = local.combined_objects_storage_accounts
     synapse_workspaces          = local.combined_objects_synapse_workspaces
   }
-combined_objects_azurerm_search_services
 }
 
 output "private_endpoints" {
