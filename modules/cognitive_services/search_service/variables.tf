@@ -24,6 +24,10 @@ variable "private_endpoints" {
   default = {}
 }
 
+variable "public_network_access_enabled" {
+  default = {}
+}
+
 variable "resource_group_name" {
   description = "Name of the existing resource group to deploy to"
   type        = string
