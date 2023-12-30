@@ -9,27 +9,28 @@ resource "azurerm_analysis_services_server" "as_server" {
 
   dynamic "ipv4_firewall_rule" {
     # for_each = try(var.settings.ipv4_firewall_rules, null) != null ? [var.settings.ipv4_firewall_rules] : []
-    for_each = local.ipv4_firewall_rules
+    # for_each = local.ipv4_firewall_rules
+    for_each = var.settings.ipv4_firewall_rules
 
     content {
       name        = ipv4_firewall_rule.value.name
-      range_start = try(ipv4_firewall_rule.value.range_start, null)
-      range_end   = try(ipv4_firewall_rule.value.range_end, null)
+      range_start = ipv4_firewall_rule.value.range_start
+      range_end   = ipv4_firewall_rule.value.range_end
     }
   }
 }
 
-locals {
-  ipv4_firewall_rules = [
-    {
-      name        = "ClientIPAddress03"
-      range_start = "217.22.14.10"
-      range_end   = "217.22.14.10"
-    },
-    {
-      name        = "ClientIPAddress04"
-      range_start = "51.140.74.14"
-      range_end   = "51.140.74.14"
-    },
-  ]
-}
+# locals {
+#   ipv4_firewall_rules = [
+#     {
+#       name        = "ClientIPAddress03"
+#       range_start = "217.22.14.10"
+#       range_end   = "217.22.14.10"
+#     },
+#     {
+#       name        = "ClientIPAddress04"
+#       range_start = "51.140.74.14"
+#       range_end   = "51.140.74.14"
+#     },
+#   ]
+# }
