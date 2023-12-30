@@ -114,6 +114,7 @@ locals {
     purview_accounts = try(var.purview.purview_accounts, {})
   }
   database = {
+    analysis_services_server           = try(var.database.analysis_services_server, {})
     app_config                         = try(var.database.app_config, {})
     azurerm_redis_caches               = try(var.database.azurerm_redis_caches, {})
     cosmos_dbs                         = try(var.database.cosmos_dbs, {})
