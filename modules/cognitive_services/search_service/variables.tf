@@ -37,8 +37,4 @@ variable "resource_groups" {}
 
 variable "settings" {}
 
-# variable "tags" {
-#   default = {}
-# }
-
 variable "vnets" {}
