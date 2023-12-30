@@ -8,12 +8,12 @@ resource "azurerm_analysis_services_server" "as_server" {
   tags                    = local.tags
 
   dynamic "ipv4_firewall_rule" {
-    for_each = try(var.settings.ipv4_firewall_rule, null) != null ? [var.settings.ipv4_firewall_rule] : []
+    for_each = try(var.settings.ipv4_firewall_rules, null) != null ? [var.settings.ipv4_firewall_rules] : []
 
     content {
       name        = try(ipv4_firewall_rule.value.name, null)
-      range_end   = try(ipv4_firewall_rule.value.range_end, null)
       range_start = try(ipv4_firewall_rule.value.range_start, null)
+      range_end   = try(ipv4_firewall_rule.value.range_end, null)
     }
   }
 }
