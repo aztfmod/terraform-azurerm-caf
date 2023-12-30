@@ -8,7 +8,8 @@ resource "azurerm_analysis_services_server" "as_server" {
   tags                    = local.tags
 
   dynamic "ipv4_firewall_rule" {
-    for_each = try(var.settings.ipv4_firewall_rules, null) != null ? [var.settings.ipv4_firewall_rules] : []
+    # for_each = try(var.settings.ipv4_firewall_rules, null) != null ? [var.settings.ipv4_firewall_rules] : []
+    for_each = var.settings.ipv4_firewall_rules
 
     content {
       name        = ipv4_firewall_rule.value.name
