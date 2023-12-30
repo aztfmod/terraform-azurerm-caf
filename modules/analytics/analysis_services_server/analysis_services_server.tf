@@ -11,7 +11,7 @@ resource "azurerm_analysis_services_server" "as_server" {
     for_each = try(var.settings.ipv4_firewall_rules, null) != null ? [var.settings.ipv4_firewall_rules] : []
 
     content {
-      name        = try(ipv4_firewall_rule.value.name, null)
+      name        = ipv4_firewall_rule.value.name
       range_start = try(ipv4_firewall_rule.value.range_start, null)
       range_end   = try(ipv4_firewall_rule.value.range_end, null)
     }
