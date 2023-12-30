@@ -3,7 +3,7 @@ resource "azurerm_analysis_services_server" "as_server" {
   enable_power_bi_service = var.settings.enable_power_bi_service
   location                = local.resource_group.location
   name                    = var.settings.name
-  resource_group_name     = var.resource_group.name
+  resource_group_name     = var.resource_group_name
   sku                     = var.settings.sku
   tags                    = local.tags
 
