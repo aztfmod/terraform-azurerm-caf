@@ -33,8 +33,10 @@ module "keyvault_access_policies" {
   access_policies = each.value
   azuread_groups  = local.combined_objects_azuread_groups
   client_config   = local.client_config
+
   resources = {
     azuread_service_principals        = local.combined_objects_azuread_service_principals
+    data_factory                      = local.combined_objects_data_factory
     diagnostic_storage_accounts       = local.combined_objects_diagnostic_storage_accounts
     managed_identities                = local.combined_objects_managed_identities
     mssql_managed_instances           = local.combined_objects_mssql_managed_instances
