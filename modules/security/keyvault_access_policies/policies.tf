@@ -80,7 +80,7 @@ module "data_factory" {
 
   access_policy = each.value
   tenant_id     = var.client_config.tenant_id
-  object_id     = try(each.value.lz_key, null) == null ? var.resources.data_factory[var.client_config.landingzone_key][each.value.data_factory_key].principal_id : var.resources.data_factory[each.value.lz_key][each.value.data_factory_key].principal_id
+  object_id     = try(each.value.lz_key, null) == null ? var.resources.data_factory[var.client_config.landingzone_key][each.value.data_factory_key].rbac_id : var.resources.data_factory[each.value.lz_key][each.value.data_factory_key].rbac_id
 }
 
 module "logged_in_user" {
