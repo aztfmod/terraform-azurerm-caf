@@ -19,6 +19,6 @@ variable "base_tags" {
 variable "data_factory_id" {
   description = " Changing this forces a new Data Factory Self-hosted Integration Runtime to be created."
 }
-variable "description" {
-  description = "Description"
-}
+# variable "description" {
+#   description = "Description"
+# }
