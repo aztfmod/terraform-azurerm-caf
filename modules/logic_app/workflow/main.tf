@@ -12,4 +12,11 @@ locals {
     "module" = basename(abspath(path.module))
   }
   tags = merge(var.base_tags, local.module_tag, try(var.tags, null))
+
+  tags = merge(
+    var.base_tags,
+    local.module_tag,
+    var.global_settings.tags,
+    try(var.settings.tags, null)
+  ) : try(var.tags, null)
 }
