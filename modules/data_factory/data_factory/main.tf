@@ -9,6 +9,7 @@ terraform {
 locals {
   tags = var.base_tags ? merge(
     var.global_settings.tags,
+    var.settings.tags,
     try(var.resource_group.tags, null),
     try(var.tags, null)
   ) : try(var.tags, null)
