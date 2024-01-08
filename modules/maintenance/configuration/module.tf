@@ -19,7 +19,7 @@ resource "azurerm_maintenance_configuration" "maintenance_configuration" {
 
   
   dynamic "window" {
-    for_each = var.settings.window != null ? [var.settings.window] : []
+    for_each = try(var.settings.window, null) != null ? [var.settings.window] : []
     content {
       start_date_time      = window.value.start_date_time
       expiration_date_time = try(window.value.expiration_date_time, null)
@@ -34,11 +34,11 @@ resource "azurerm_maintenance_configuration" "maintenance_configuration" {
     for_each = var.settings.scope == "InGuestPatch" ? [1] : []
     content {
       dynamic "linux" {
-        for_each = try(var.install_patches.linux, null) != null ? [1] : []
+        for_each = try(var.settings.install_patches.linux, null) != null ? [1] : []
         content {
-          classifications_to_include    = try(var.install_patches.linux.classifications_to_include, ["Critical", "Security"])
-          package_names_mask_to_exclude = try(var.install_patches.linux.package_names_mask_to_exclude, [])
-          package_names_mask_to_include = try(var.install_patches.linux.package_names_mask_to_include, [])
+          classifications_to_include    = try(var.settings.install_patches.linux.classifications_to_include, ["Critical", "Security"])
+          package_names_mask_to_exclude = try(var.settings.install_patches.linux.package_names_mask_to_exclude, [])
+          package_names_mask_to_include = try(var.settings.install_patches.linux.package_names_mask_to_include, [])
         }
       }
 

@@ -64,7 +64,6 @@ virtual_machines = {
     # when boot_diagnostics_storage_account_key is empty string "", boot diagnostics will be put on azure managed storage
     # when boot_diagnostics_storage_account_key is a non-empty string, it needs to point to the key of a user managed storage defined in diagnostic_storage_accounts
     # if boot_diagnostics_storage_account_key is not defined, but global_settings.resource_defaults.virtual_machines.use_azmanaged_storage_for_boot_diagnostics is true, boot diagnostics will be put on azure managed storage
-    boot_diagnostics_storage_account_key = "bootdiag_region1"
 
     os_type = "windows"
 
@@ -96,7 +95,7 @@ virtual_machines = {
         eviction_policy = "Deallocate"
 
         patch_mode                         = "AutomaticByPlatform"
-        bypassPlatformChecksOnUserSchedule = true
+        bypass_platform_safety_checks_on_user_schedule_enabled = true
         # When you want to load the file from the folder in the custom_data always use the relative path from the caf_solution in landing zones
         custom_data = "../../examples/compute/virtual_machine/101-single-windows-vm/scripts/custom.ps1"
         # Value of the nic keys to attach the VM. The first one in the list is the default nic
