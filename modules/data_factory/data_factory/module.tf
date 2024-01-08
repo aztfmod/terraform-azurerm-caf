@@ -45,12 +45,13 @@ resource "azurerm_data_factory" "df" {
     for_each = try(var.settings.vsts_configuration, null) != null ? [var.settings.vsts_configuration] : []
 
     content {
-      account_name    = vsts_configuration.value.account_name
-      branch_name     = vsts_configuration.value.branch_name
-      project_name    = vsts_configuration.value.project_name
-      repository_name = vsts_configuration.value.repository_name
-      root_folder     = vsts_configuration.value.root_folder
-      tenant_id       = vsts_configuration.value.tenant_id
+      account_name       = vsts_configuration.value.account_name
+      branch_name        = vsts_configuration.value.branch_name
+      project_name       = vsts_configuration.value.project_name
+      publishing_enabled = try(vsts_configuration.value.publishing_enabled, null)
+      repository_name    = vsts_configuration.value.repository_name
+      root_folder        = vsts_configuration.value.root_folder
+      tenant_id          = vsts_configuration.value.tenant_id
     }
   }
 
