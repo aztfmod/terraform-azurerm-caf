@@ -16,6 +16,18 @@ application_gateway_applications_v1 = {
         #   key = ""
         # }
       }
+      demo2 = {
+        name  = "demo_pool02"
+        fqdns = ["babc-app-ptsg-5sspdemoappap2-lo.babc-ase-ase01-pd.appserviceenvironment.net"]
+      }
+      demo3 = {
+        name  = "demo_pool03"
+        fqdns = ["babc-app-ptsg-5sspdemoappap3-lo.babc-ase-ase01-pd.appserviceenvironment.net"]
+      }
+      demo4 = {
+        name  = "demo_pool04"
+        fqdns = ["babc-app-ptsg-5sspdemoappap4-lo.babc-ase-ase01-pd.appserviceenvironment.net"]
+      }
     }
 
     http_settings = {
@@ -83,12 +95,14 @@ application_gateway_applications_v1 = {
 
     url_path_maps = {
       demo = {
-        name                 = "test_path_map"
-        paths                = "/test/*"
-        rule_name            = "test_path_rule"
-        backend_pool_key     = "demo"
-        http_settings_key    = "demo"
-        rewrite_rule_set_key = "rrs1"
+        name                      = "test_path_map"
+        paths                     = "/test/*"
+        rule_name                 = "test_path_rule"
+        default_backend_pool_key  = "demo"
+        backend_pool_key          = "demo"
+        default_http_settings_key = "demo"
+        http_settings_key         = "demo"
+        rewrite_rule_set_key      = "rrs1"
       }
     }
 
@@ -97,14 +111,21 @@ application_gateway_applications_v1 = {
         name              = "rule1-demo"
         url_path_map_key  = "demo"
         paths             = "/test/rule1/*"
-        backend_pool_key  = "demo"
+        backend_pool_key  = "demo2"
         http_settings_key = "demo"
       }
       rule2 = {
         name              = "rule2-demo"
         url_path_map_key  = "demo"
         paths             = "/test/rule2/*"
-        backend_pool_key  = "demo"
+        backend_pool_key  = "demo3"
+        http_settings_key = "demo"
+      }
+      rule3 = {
+        name              = "rule3-demo"
+        url_path_map_key  = "demo"
+        paths             = "/test/rule3/*"
+        backend_pool_key  = "demo4"
         http_settings_key = "demo"
       }
     }
