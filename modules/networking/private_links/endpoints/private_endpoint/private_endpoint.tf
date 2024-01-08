@@ -12,7 +12,7 @@ resource "azurecaf_name" "pep" {
 resource "azurerm_private_endpoint" "pep" {
   for_each = toset(var.subresource_names)
 
-  custom_network_interface_name = var.settings.custom_network_interface_name
+  custom_network_interface_name = try(var.settings.custom_network_interface_name, null)
   location                      = var.location
   name                          = format("%s-%s", azurecaf_name.pep.result, each.key)
   resource_group_name           = var.resource_group_name
