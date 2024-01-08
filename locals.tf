@@ -114,6 +114,7 @@ locals {
     purview_accounts = try(var.purview.purview_accounts, {})
   }
   database = {
+    analysis_services_server           = try(var.database.analysis_services_server, {})
     app_config                         = try(var.database.app_config, {})
     azurerm_redis_caches               = try(var.database.azurerm_redis_caches, {})
     cosmos_dbs                         = try(var.database.cosmos_dbs, {})
@@ -246,12 +247,14 @@ locals {
   }
 
   cognitive_services = {
+    azurerm_search_service     = try(var.cognitive_services.azurerm_search_service, {})
     cognitive_services_account = try(var.cognitive_services.cognitive_services_account, {})
   }
 
   maps = {
     maps_accounts = try(var.maps.maps_accounts, {})
   }
+  
   messaging = {
     signalr_services             = try(var.messaging.signalr_services, {})
     servicebus_namespaces        = try(var.messaging.servicebus_namespaces, {})

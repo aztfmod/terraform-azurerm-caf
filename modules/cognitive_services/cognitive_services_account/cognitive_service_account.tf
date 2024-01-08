@@ -45,5 +45,5 @@ resource "azurerm_cognitive_account" "service" {
 
   custom_subdomain_name = try(var.settings.custom_subdomain_name, null)
 
-  tags = try(var.settings.tags, {})
+  tags = try(local.tags, {})
 }

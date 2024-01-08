@@ -3,10 +3,6 @@ variable "base_tags" {
   type        = bool
 }
 
-variable "client_config" {
-  description = "Client configuration object (see module README.md)."
-}
-
 variable "global_settings" {
   description = "Global settings object (see module README.md)"
 }
@@ -16,25 +12,9 @@ variable "location" {
   type        = string
 }
 
-variable "private_dns" {
-  default = {}
-}
-
-variable "private_endpoints" {
-  default = {}
-}
-
 variable "resource_group_name" {
   description = "Name of the existing resource group to deploy to"
   type        = string
 }
 
-variable "resource_groups" {}
-
 variable "settings" {}
-
-# variable "tags" {
-#   default = {}
-# }
-
-variable "vnets" {}
