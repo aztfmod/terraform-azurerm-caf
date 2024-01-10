@@ -364,6 +364,9 @@ variable "monitor_action_groups" {
 variable "monitor_autoscale_settings" {
   default = {}
 }
+variable "monitor_dashboard_grafana" {
+  default = {}
+}
 variable "monitoring" {
   default = {}
 }

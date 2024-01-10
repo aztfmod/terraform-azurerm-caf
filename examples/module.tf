@@ -309,6 +309,7 @@ module "example" {
     monitoring                     = var.monitoring
     monitor_metric_alert           = var.monitor_metric_alert
     monitor_activity_log_alert     = var.monitor_activity_log_alert
+    monitor_dashboard_grafana      = var.monitor_dashboard_grafana
     packer_build                   = var.packer_build
     packer_service_principal       = var.packer_service_principal
     recovery_vaults                = var.recovery_vaults

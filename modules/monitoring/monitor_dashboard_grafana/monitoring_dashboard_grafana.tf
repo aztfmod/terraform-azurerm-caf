@@ -1,0 +1,30 @@
+resource "azurerm_dashboard_grafana" "dashboard" {
+  name                                   = var.settings.name
+  resource_group_name                    = local.resource_group_name
+  location                               = local.location
+  api_key_enabled                        = var.settings.api_key_enabled
+  auto_generated_domain_name_label_scope = var.settings.auto_generated_domain_name_label_scope
+  deterministic_outbound_ip_enabled      = var.settings.deterministic_outbound_ip_enabled
+  public_network_access_enabled          = var.settings.public_network_access_enabled
+  # grafana_major_version                  = var.settings.grafana_major_version
+  sku                     = var.settings.sku
+  zone_redundancy_enabled = var.settings.zone_redundancy_enabled
+
+  dynamic "identity" {
+    for_each = try(var.settings.identity, null) == null ? [] : [1]
+
+    content {
+      type         = var.settings.identity.type
+      identity_ids = lower(var.settings.identity.type) == "userassigned" ? can(var.settings.identity.user_assigned_identity_id) ? [var.settings.identity.user_assigned_identity_id] : [var.managed_identities[try(var.settings.identity.lz_key, var.client_config.landingzone_key)][var.settings.identity.managed_identity_key].id] : null
+    }
+  }
+
+  tags = local.tags
+}
+
+# Add required role assignment over resource group containing the Azure Monitor Workspace
+resource "azurerm_role_assignment" "grafana" {
+  scope                = var.resource_group.id
+  role_definition_name = "Monitoring Reader"
+  principal_id         = azurerm_dashboard_grafana.dashboard.identity[0].principal_id
+}
