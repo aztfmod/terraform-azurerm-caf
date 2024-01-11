@@ -246,7 +246,9 @@ locals {
   cognitive_services = {
     cognitive_services_account = try(var.cognitive_services.cognitive_services_account, {})
   }
-
+  search_service = {
+    search_service = try(var.search_service, {})
+  }
   maps = {
     maps_accounts = try(var.maps.maps_accounts, {})
   }

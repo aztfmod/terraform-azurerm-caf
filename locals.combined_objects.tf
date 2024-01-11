@@ -144,6 +144,7 @@ locals {
   combined_objects_relay_namespace                                = merge(tomap({ (local.client_config.landingzone_key) = module.relay_namespace }), try(var.remote_objects.relay_namespace, {}))
   combined_objects_resource_groups                                = merge(tomap({ (local.client_config.landingzone_key) = merge(local.resource_groups, try(var.data_sources.resource_groups, {})) }), try(var.remote_objects.resource_groups, {}))
   combined_objects_route_tables                                   = merge(tomap({ (local.client_config.landingzone_key) = module.route_tables }), try(var.remote_objects.route_tables, {}))
+  combined_objects_search_service                                 = merge(tomap({ (local.client_config.landingzone_key) = module.search_service }), try(var.remote_objects.search_service, {}), try(var.data_sources.search_service, {}))
   combined_objects_sentinel_watchlists                            = merge(tomap({ (local.client_config.landingzone_key) = module.sentinel_watchlists }), try(var.remote_objects.sentinel_watchlists, {}))
   combined_objects_servicebus_namespaces                          = merge(tomap({ (local.client_config.landingzone_key) = module.servicebus_namespaces }), try(var.remote_objects.servicebus_namespaces, {}), try(var.data_sources.servicebus_namespaces, {}))
   combined_objects_servicebus_queues                              = merge(tomap({ (local.client_config.landingzone_key) = module.servicebus_queues }), try(var.remote_objects.servicebus_queues, {}), try(var.data_sources.servicebus_queues, {}))
