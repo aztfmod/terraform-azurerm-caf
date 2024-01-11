@@ -15,9 +15,5 @@ output "value" {
 }
 
 output "certificate" {
-  value = <<EOT
------BEGIN CERTIFICATE-----
-${azuread_service_principal_token_signing_certificate.token_signing_certificate.value}
------END CERTIFICATE-----
-EOT
+  value = "-----BEGIN CERTIFICATE-----${join("",  [for i, v in split("", azuread_service_principal_token_signing_certificate.token_signing_certificate.value) : i % 64 == 0 ? "\n${v}" : v ])}\n-----END CERTIFICATE-----"
 }
