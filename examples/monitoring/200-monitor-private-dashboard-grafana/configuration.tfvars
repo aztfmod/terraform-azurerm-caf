@@ -2,6 +2,10 @@ global_settings = {
   regions = {
     region1 = "australiaeast"
   }
+  inherit_tags = true
+  tags = {
+    example = "monitoring/200-monitor-private-dashboard-grafana"
+  }
 }
 
 resource_groups = {
@@ -16,7 +20,7 @@ monitor_dashboard_grafana = {
     name = "grafana-re1-001"
 
     resource_group = {
-      lz_key = "region1"
+      lz_key = "examples"
       key    = "grafana_re1"
     }
 
@@ -33,7 +37,7 @@ monitor_dashboard_grafana = {
     zone_redundancy_enabled                = false
 
     vnet = {
-      lz_key = "region1"
+      lz_key = "examples"
       key    = "grafana_re1"
     }
 
