@@ -41,6 +41,25 @@ monitor_dashboard_grafana = {
       key    = "grafana_re1"
     }
 
+    private_endpoints = {
+      dashboard_grafana = {
+        name               = "pep-grafana"
+        resource_group_key = "grafana_re1"
+        lz_key             = "examples"
+        vnet_key           = "grafana_re1"
+        subnet_key         = "private_endpoints"
+        private_service_connection = {
+          name                 = "psc-grafana"
+          is_manual_connection = false
+          subresource_names    = ["grafana"]
+        }
+        private_dns = {
+          lz_key = "examples"
+          keys   = ["privatelink.grafana.azure.com"]
+        }
+      }
+    }
+
     diagnostic_profiles = {
       logs = {
         name             = "dg-operations-logs"

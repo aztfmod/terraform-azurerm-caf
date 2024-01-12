@@ -1,16 +1,17 @@
 module "private_endpoint" {
   source   = "../../networking/private_endpoint"
-  for_each = var.private_endpoints
+  for_each = lookup(var.settings, "private_endpoints", {})
 
-  base_tags           = local.tags
-  client_config       = var.client_config
-  global_settings     = var.global_settings
-  location            = var.vnets[try(each.value.lz_key, var.client_config.landingzone_key)][try(each.value.vnet.key, each.value.vnet_key)].location
-  name                = each.value.name
-  private_dns         = var.private_dns
-  resource_group_name = var.resource_group_name
   resource_id         = azurerm_dashboard_grafana.dashboard.id
-  settings            = each.value
-  subnet_id           = can(each.value.subnet_id) ? each.value.subnet_id : try(var.vnets[try(each.value.lz_key, var.client_config.landingzone_key)][each.value.vnet_key].subnets[each.value.subnet_key].id, var.subnets[try(each.value.lz_key, var.client_config.landingzone_key)][each.value.subnet_key].id)
-  # subnet_id           = can(each.value.subnet_id) ? each.value.subnet_id : var.vnets[try(each.value.lz_key, var.client_config.landingzone_key)][each.value.vnet_key].subnets[each.value.subnet_key].id
+  name                = each.value.name
+  location            = local.location
+  resource_group_name = local.resource_group_name
+  subnet_id           = can(each.value.subnet_id) || can(each.value.vnet_key) == false ? try(each.value.subnet_id, var.subnets[try(each.value.lz_key, var.client_config.landingzone_key)][each.value.subnet_key].id) : var.vnets[try(each.value.lz_key, var.client_config.landingzone_key)][each.value.vnet_key].subnets[each.value.subnet_key].id
+
+  settings        = each.value
+  global_settings = var.global_settings
+  tags            = local.tags
+  base_tags       = var.base_tags
+  private_dns     = var.private_dns
+  client_config   = var.client_config
 }
