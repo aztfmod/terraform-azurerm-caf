@@ -57,6 +57,12 @@ resource "azurerm_postgresql_flexible_server" "postgresql" {
     }
   }
 
+  authentication {
+    active_directory_auth_enabled = try(var.settings.authentication.active_directory_auth_enabled, null)
+    password_auth_enabled         = try(var.settings.authentication.password_auth_enabled, null)
+    tenant_id                     = try(var.settings.authentication.active_directory_auth_enabled, false) ? try(var.settings.authentication.tenant_id, var.client_config.tenant_id) : null
+  }
+
   lifecycle {
     ignore_changes = [
       private_dns_zone_id,
@@ -115,4 +121,18 @@ resource "azurerm_key_vault_secret" "postgresql_fqdn" {
   name         = format("%s-fqdn", azurecaf_name.postgresql_flexible_server.result)
   value        = azurerm_postgresql_flexible_server.postgresql.fqdn
   key_vault_id = var.remote_objects.keyvault_id
+}
+
+resource "azurerm_postgresql_flexible_server_active_directory_administrator" "administrator" {
+  for_each            = try(var.settings.authentication.active_directory_administrators, {})
+  server_name         = azurerm_postgresql_flexible_server.postgresql.name
+  resource_group_name = local.resource_group_name
+  tenant_id           = try(var.settings.authentication.tenant_id, var.client_config.tenant_id)
+  object_id = can(each.value.object_id) ? each.value.object_id : (
+    each.value.principal_type == "ServicePrincipal" ? var.remote_objects.service_principals[try(each.value.object_lz_key, var.client_config.landingzone_key)][each.value.object_key].object_id :
+    each.value.principal_type == "Group" ? var.remote_objects.azuread_groups[try(each.value.object_lz_key, var.client_config.landingzone_key)][each.value.object_key].object_id :
+    each.value.principal_type == "User" ? var.remote_objects.azuread_users[try(each.value.object_lz_key, var.client_config.landingzone_key)][each.value.object_key].object_id : null
+  )
+  principal_name = each.value.principal_name
+  principal_type = each.value.principal_type
 }
