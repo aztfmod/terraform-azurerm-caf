@@ -52,11 +52,11 @@ locals {
             kubernetes            = try(object_resources.kubernetes, null)
             audience              = try(object_resources.audience, ["api://AzureADTokenExchange"])
             subject               = try(object_resources.subject, null)
-          } if try(object_resources.aks_cluster, null) != null || can(regex("cluster.azure.com", object_resources.issuer))
+          } //if try(object_resources.aks_cluster, null) != null || can(regex("cluster.azure.com", object_resources.issuer))
         ] if identity_keys == "federated_credential"
       ]
     ]) : format("%s_%s_%s", mapping.name, mapping.managed_identity_key, try(mapping.resource_group.key, mapping.resource_group)) => mapping
-  } 
+  }
 }
 
 output "managed_identities" {
