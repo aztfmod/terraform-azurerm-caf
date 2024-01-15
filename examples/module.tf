@@ -423,4 +423,9 @@ module "example" {
   powerbi_embedded = var.powerbi_embedded
 
   preview_features = var.preview_features
+
+  maintenance = {
+    maintenance_configuration              = var.maintenance_configuration
+    maintenance_assignment_virtual_machine = var.maintenance_assignment_virtual_machine
+  }
 }
