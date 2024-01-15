@@ -14,3 +14,15 @@ output "identity" {
 output "endpoint" {
   value = azurerm_dashboard_grafana.dashboard.endpoint
 }
+
+
+output "principal_id" {
+  value = azurerm_dashboard_grafana.dashboard.identity.0.principal_id
+}
+output "tenant_id" {
+  value = azurerm_dashboard_grafana.dashboard.identity.0.tenant_id
+}
+
+output "rbac_id" {
+  value = azurerm_dashboard_grafana.dashboard.identity.0.principal_id
+}

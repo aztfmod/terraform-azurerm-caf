@@ -70,3 +70,35 @@ monitor_dashboard_grafana = {
     }
   }
 }
+
+managed_identities = {
+  user1 = {
+    name               = "demo-user"
+    resource_group_key = "grafana_re1"
+  }
+}
+
+role_mapping = {
+  custom_role_mapping = {}
+
+  built_in_role_mapping = {
+    monitor_dashboard_grafana = {
+      grafana_re1 = {
+        "Grafana Admin" = {
+          managed_identities = {
+            keys = ["user1"]
+          }
+        }
+      }
+    }
+    resource_groups = {
+      grafana_re1 = {
+        "Monitoring Reader" = {
+          monitor_dashboard_grafana = {
+            keys = ["grafana_re1"]
+          }
+        }
+      }
+    }
+  }
+}

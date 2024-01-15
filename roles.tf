@@ -145,6 +145,7 @@ locals {
     mssql_managed_instances                    = local.combined_objects_mssql_managed_instances
     mssql_servers                              = local.combined_objects_mssql_servers
     maintenance_configuration                  = local.combined_objects_maintenance_configuration
+    monitor_dashboard_grafana                  = local.combined_objects_monitor_dashboard_grafana
     mysql_servers                              = local.combined_objects_mysql_servers
     network_watchers                           = local.combined_objects_network_watchers
     networking                                 = local.combined_objects_networking
