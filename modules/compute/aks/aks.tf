@@ -441,6 +441,15 @@ resource "azurerm_kubernetes_cluster" "aks" {
       dns_zone_id = try(web_app_routing.value.dns_zone_id, null)
     }
   }
+
+  dynamic "monitor_metrics" {
+    for_each = try(var.settings.monitor_metrics, null) == null ? [] : [1]
+
+    content {
+      annotations_allowed = try(var.settings.monitor_metrics.annotations_allowed, null)
+      labels_allowed      = try(var.settings.monitor_metrics.labels_allowed, null)
+    }
+  }
 }
 
 resource "random_string" "prefix" {
