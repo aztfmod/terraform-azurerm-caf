@@ -19,12 +19,13 @@ resource "azurerm_dashboard_grafana" "dashboard" {
     }
   }
 
-  tags = local.tags
-}
+  dynamic "azure_monitor_workspace_integrations" {
+    for_each = try(var.settings.azure_monitor_workspace_integrations, null) != null ? [var.settings.azure_monitor_workspace_integrations] : []
 
-# Add required role assignment over resource group containing the Azure Monitor Workspace
-resource "azurerm_role_assignment" "grafana" {
-  scope                = var.resource_group.id
-  role_definition_name = "Monitoring Reader"
-  principal_id         = azurerm_dashboard_grafana.dashboard.identity[0].principal_id
+    content {
+      resource_id = each.value.id
+    }
+  }
+
+  tags = local.tags
 }
