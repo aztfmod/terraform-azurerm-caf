@@ -19,13 +19,5 @@ resource "azurerm_dashboard_grafana" "dashboard" {
     }
   }
 
-  dynamic "azure_monitor_workspace_integrations" {
-    for_each = try(var.settings.azure_monitor_workspace_integrations, null) != null ? [var.settings.azure_monitor_workspace_integrations] : []
-
-    content {
-      resource_id = each.value.id
-    }
-  }
-
   tags = local.tags
 }
