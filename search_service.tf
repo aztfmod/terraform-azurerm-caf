@@ -1,8 +1,5 @@
 module "search_service" {
   source = "./modules/search_service"
-  # providers = {
-  #   azurerm = azurerm.searchservice
-  # }
   for_each = local.search_service.search_service
 
   client_config       = local.client_config
