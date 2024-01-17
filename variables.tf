@@ -438,6 +438,9 @@ variable "preview_features" {
 variable "powerbi_embedded" {
   default = {}
 }
+variable "maintenance" {
+  default = {}
+}
 variable "search_service" {
   description = "Configuration object - Search service Resource "
   default     = {}
