@@ -367,6 +367,9 @@ variable "monitor_autoscale_settings" {
 variable "monitor_dashboard_grafana" {
   default = {}
 }
+variable "monitor_dashboard_grafana_workspace_integrations" {
+  default = {}
+}
 variable "monitoring" {
   default = {}
 }
