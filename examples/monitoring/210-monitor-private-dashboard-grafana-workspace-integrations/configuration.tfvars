@@ -50,12 +50,11 @@ monitor_dashboard_grafana_workspace_integrations = {
       key    = "grafana_re1"
       workspaces = [
         {
-          id = "/subscriptions/c0effcf9-3741-47a8-b3af-541e25549917/resourcegroups/rg-srecced-platform-a0b/providers/microsoft.monitor/accounts/mw-srecced-platform-a0b"
+          resource_id = "/subscriptions/xxxxxx/resourcegroups/grafana-re1/providers/microsoft.monitor/accounts/grafana-re1-001"
         },
         {
-          id = "/subscriptions/c0effcf9-3741-47a8-b3af-541e25549917/resourcegroups/rg-srecced-platform-a0b/providers/microsoft.monitor/accounts/mw-srecced-platform-321"
+          resource_id = "/subscriptions/xxxxxx/resourcegroups/grafana-re1/providers/microsoft.monitor/accounts/grafana-re1-002"
         }
-
       ]
     }
   }

@@ -6,9 +6,9 @@ resource "azurerm_dashboard_grafana" "dashboard" {
   auto_generated_domain_name_label_scope = var.settings.auto_generated_domain_name_label_scope
   deterministic_outbound_ip_enabled      = var.settings.deterministic_outbound_ip_enabled
   public_network_access_enabled          = var.settings.public_network_access_enabled
-  # grafana_major_version                  = var.settings.grafana_major_version
-  sku                     = var.settings.sku
-  zone_redundancy_enabled = var.settings.zone_redundancy_enabled
+  grafana_major_version                  = var.settings.grafana_major_version
+  sku                                    = var.settings.sku
+  zone_redundancy_enabled                = var.settings.zone_redundancy_enabled
 
   dynamic "identity" {
     for_each = try(var.settings.identity, null) == null ? [] : [1]
