@@ -2,6 +2,10 @@ output "id" {
   value = azurerm_dashboard_grafana.dashboard.id
 }
 
+output "name" {
+  value = azurerm_dashboard_grafana.dashboard.name
+}
+
 output "resource_group_name" {
   value = local.resource_group_name
 }
