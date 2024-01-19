@@ -235,7 +235,7 @@ case "${RESOURCE}" in
         ignorecase=$([ -z "${IGNORE_CASE}" ] && echo "" || echo "--ignore-case ${IGNORE_CASE} ")
         negate=$([ -z "${NEGATE}" ] && echo "" || echo "--negate ${NEGATE} ")
         pattern=$([ -z "${PATTERN}" ] && echo "" || echo "--pattern ${PATTERN} ")
-2
+        
         execute_with_backoff az network application-gateway rewrite-rule condition create -g ${RG_NAME} \
             --gateway-name ${APPLICATION_GATEWAY_NAME} --variable ${VARIABLE} --rule-set-name ${RULE_SET_NAME} --rule-name ${RULE_NAME}\
             ${ignorecase} ${negate} ${pattern}
