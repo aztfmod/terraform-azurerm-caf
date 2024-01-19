@@ -1,6 +1,6 @@
 module "search_service" {
-  source = "./modules/search_service"
-  for_each = local.search_service.search_service
+  source   = "./modules/search_service"
+  for_each = local.search_services.search_services
 
   client_config       = local.client_config
   global_settings     = local.global_settings
@@ -12,6 +12,8 @@ module "search_service" {
   identity            = try(each.value.identity, null)
   private_endpoints   = try(each.value.private_endpoints, {})
   private_dns         = local.combined_objects_private_dns
+  vnets               = local.combined_objects_networking
+  virtual_subnets     = local.combined_objects_virtual_subnets
 }
 
 output "search_service" {

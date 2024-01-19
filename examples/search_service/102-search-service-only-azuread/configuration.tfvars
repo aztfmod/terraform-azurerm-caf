@@ -13,7 +13,7 @@ resource_groups = {
   }
 }
 
-search_service = {
+search_services = {
   ss1 = {
     name               = "ss003"
     resource_group_key = "new_rg"
