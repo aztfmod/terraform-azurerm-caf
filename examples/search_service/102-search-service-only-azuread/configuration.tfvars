@@ -23,7 +23,7 @@ search_services = {
       type = "SystemAssigned"
     }
     local_authentication_enabled  = false
-    public_network_access_enabled = true
-    allowed_ips                   = ["13.478.57.73"]
+    # public_network_access_enabled = true
+    # allowed_ips                   = ["13.478.57.73"]
   }
 }
