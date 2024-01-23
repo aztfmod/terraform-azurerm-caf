@@ -92,6 +92,7 @@ locals {
     machine_learning                                     = try(local.combined_objects_machine_learning, null)
     managed_identities                                   = try(local.combined_objects_managed_identities, null)
     monitor_action_groups                                = try(local.combined_objects_monitor_action_groups, null)
+    monitor_dashboard_grafana                            = try(local.combined_objects_monitor_dashboard_grafana, null)
     mssql_databases                                      = try(local.combined_objects_mssql_databases, null)
     mssql_elastic_pools                                  = try(local.combined_objects_mssql_elastic_pools, null)
     mssql_managed_databases                              = try(local.combined_objects_mssql_managed_databases, null)
