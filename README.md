@@ -1,18 +1,17 @@
 # Cloud Adoption Framework for Azure - Terraform module
 
-Microsoft [Cloud Adoption Framework for Azure](https://aka.ms/caf) provides you with guidance and best practices to adopt Azure.
+> :warning: This solution, offered by the Open-Source community, will no longer receive contributions from Microsoft. Customers are encouraged to transition to [Microsoft Azure Verified Modules](https://aka.ms/avm) for Microsoft support and updates.
 
-This module allows you to create resources on Microsoft Azure, is used by the Cloud Adoption Framework for Azure (CAF) landing zones to provision resources in an Azure subscription and can deploy resources being directly invoked from the Terraform registry.
+This module allows you to create resources on Microsoft Azure, is used by the Azure Terraform SRE to provision resources in an Azure subscription and can deploy resources being directly invoked from the Terraform registry.
 
 ## Prerequisites
 
-- Setup your **environment** using the following guide [Getting Started](https://github.com/Azure/caf-terraform-landingzones/blob/master/documentation/getting_started/getting_started.md) or you use it online with [GitHub Codespaces](https://github.com/features/codespaces).
+- Setup your **environment** using the following guide [Getting Started](https://github.com/aztfmod/caf-terraform-landingzones/blob/master/documentation/getting_started/getting_started.md) or you use it online with [GitHub Codespaces](https://github.com/features/codespaces).
 - Access to an **Azure subscription**.
-
 
 ## Getting started
 
-This module can be used inside [:books: Azure Terraform Landing zones](https://aka.ms/caf/terraform), or can be used as standalone, directly from the [Terraform registry](https://registry.terraform.io/modules/aztfmod/caf/azurerm/)
+This module can be used inside [:books: Azure Terraform Landing zones](https://aztfmod.github.io/documentation/), or can be used as standalone, directly from the [Terraform registry](https://registry.terraform.io/modules/aztfmod/caf/azurerm/)
 
 ```terraform
 module "caf" {
@@ -28,13 +27,9 @@ For a complete set of examples you can review the [full library here](https://gi
 
 <img src="https://aztfmod.azureedge.net/media/standalone.gif" width="720"/> <br/> <br/>
 
-
-
 ## Community
 
 Feel free to open an issue for feature or bug, or to submit a PR, [Please check out the WIKI for coding standards, common patterns and PR checklist.](https://github.com/aztfmod/terraform-azurerm-caf/wiki)
-
-In case you have any question, you can reach out to tf-landingzones at microsoft dot com.
 
 You can also reach us on [Gitter](https://gitter.im/aztfmod/community?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge)
 
@@ -42,14 +37,8 @@ You can also reach us on [Gitter](https://gitter.im/aztfmod/community?utm_source
 
 This project welcomes contributions and suggestions.  Most contributions require you to agree to a
 Contributor License Agreement (CLA) declaring that you have the right to, and actually do, grant us
-the rights to use your contribution. For details, visit https://cla.opensource.microsoft.com.
+the rights to use your contribution. For details, visit <https://cla.opensource.microsoft.com>.
 
 When you submit a pull request, a CLA bot will automatically determine whether you need to provide
 a CLA and decorate the PR appropriately (e.g., status check, comment). Simply follow the instructions
 provided by the bot. You will only need to do this once across all repos using our CLA.
-
-## Code of conduct
-
-This project has adopted the [Microsoft Open Source Code of Conduct](https://opensource.microsoft.com/codeofconduct/).
-For more information see the [Code of Conduct FAQ](https://opensource.microsoft.com/codeofconduct/faq/) or
-contact [opencode@microsoft.com](mailto:opencode@microsoft.com) with any additional questions or comments.
