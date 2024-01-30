@@ -428,4 +428,7 @@ module "example" {
     maintenance_configuration              = var.maintenance_configuration
     maintenance_assignment_virtual_machine = var.maintenance_assignment_virtual_machine
   }
+  search_services = {
+    search_services = var.search_services
+  }
 }
