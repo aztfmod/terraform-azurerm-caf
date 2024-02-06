@@ -375,4 +375,7 @@ module "example" {
     digital_twins_endpoint_servicebuses = var.digital_twins_endpoint_servicebuses
 
   }
+  search_services = {
+    search_services = var.search_services
+  }
 }
