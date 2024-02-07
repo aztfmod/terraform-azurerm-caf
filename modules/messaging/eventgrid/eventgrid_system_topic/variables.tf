@@ -13,10 +13,5 @@ variable "remote_objects" {
 }
 variable "base_tags" {
   description = "Base tags for the resource to be inherited from the resource group."
-  type        = map(any)
-  default     = {}
-}
-variable "base_tags" {
-  description = "Base tags for the resource to be inherited from the resource group."
   type        = bool
 }
