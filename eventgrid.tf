@@ -88,7 +88,8 @@ module "eventgrid_system_topic" {
   settings        = each.value
 
   remote_objects = {
-    resource_group   = local.combined_objects_resource_groups
+    resource_group         = local.combined_objects_resource_groups
+    communication_services = local.combined_objects_communication_services
   }
 }
 output "eventgrid_domainsystem_topic" {
