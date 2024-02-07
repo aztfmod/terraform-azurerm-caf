@@ -250,7 +250,9 @@ locals {
     azurerm_search_service     = try(var.cognitive_services.azurerm_search_service, {})
     cognitive_services_account = try(var.cognitive_services.cognitive_services_account, {})
   }
-
+  search_services = {
+    search_services = try(var.search_services.search_services, {})
+  }
   maps = {
     maps_accounts = try(var.maps.maps_accounts, {})
   }
