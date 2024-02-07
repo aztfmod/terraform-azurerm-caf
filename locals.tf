@@ -100,6 +100,7 @@ locals {
     wvd_applications                       = try(var.compute.wvd_applications, {})
     wvd_application_groups                 = try(var.compute.wvd_application_groups, {})
     wvd_host_pools                         = try(var.compute.wvd_host_pools, {})
+    wvd_scaling_plans                      = try(var.compute.wvd_scaling_plans, {})
     wvd_workspaces                         = try(var.compute.wvd_workspaces, {})
     virtual_machines                       = try(var.compute.virtual_machines, {})
     virtual_machine_scale_sets             = try(var.compute.virtual_machine_scale_sets, {})
@@ -113,6 +114,7 @@ locals {
     purview_accounts = try(var.purview.purview_accounts, {})
   }
   database = {
+    analysis_services_server           = try(var.database.analysis_services_server, {})
     app_config                         = try(var.database.app_config, {})
     azurerm_redis_caches               = try(var.database.azurerm_redis_caches, {})
     cosmos_dbs                         = try(var.database.cosmos_dbs, {})
@@ -245,6 +247,7 @@ locals {
   }
 
   cognitive_services = {
+    azurerm_search_service     = try(var.cognitive_services.azurerm_search_service, {})
     cognitive_services_account = try(var.cognitive_services.cognitive_services_account, {})
   }
   search_services = {
@@ -253,6 +256,7 @@ locals {
   maps = {
     maps_accounts = try(var.maps.maps_accounts, {})
   }
+  
   messaging = {
     signalr_services             = try(var.messaging.signalr_services, {})
     servicebus_namespaces        = try(var.messaging.servicebus_namespaces, {})
