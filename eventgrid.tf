@@ -77,3 +77,20 @@ module "eventgrid_domain_topic" {
 output "eventgrid_domain_topic" {
   value = module.eventgrid_domain_topic
 }
+
+module "eventgrid_system_topic" {
+  source   = "./modules/messaging/eventgrid/eventgrid_system_topic"
+  for_each = local.messaging.eventgrid_system_topic
+
+  base_tags       = local.global_settings.inherit_tags
+  client_config   = local.client_config
+  global_settings = local.global_settings
+  settings        = each.value
+
+  remote_objects = {
+    resource_group   = local.combined_objects_resource_groups
+  }
+}
+output "eventgrid_domainsystem_topic" {
+  value = module.eventgrid_system_topic
+}
