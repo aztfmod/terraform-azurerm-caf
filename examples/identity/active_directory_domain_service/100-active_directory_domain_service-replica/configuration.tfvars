@@ -37,9 +37,10 @@ active_directory_domain_service = {
     resource_group = {
       key = "rg"
     }
-    domain_name           = "widgetslogin.net"
-    sku                   = "Enterprise"
-    filtered_sync_enabled = false
+    domain_name               = "widgetslogin.net"
+    sku                       = "Enterprise"
+    filtered_sync_enabled     = false
+    domain_configuration_type = "FullySynced"
 
     initial_replica_set = {
       region = "region1"

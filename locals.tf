@@ -201,6 +201,7 @@ locals {
     managed_identities          = local.combined_objects_managed_identities
     mssql_databases             = local.combined_objects_mssql_databases
     mssql_servers               = local.combined_objects_mssql_servers
+    maintenance_configuration   = local.combined_objects_maintenance_configuration
     storage_accounts            = local.combined_objects_storage_accounts
     networking                  = local.combined_objects_networking
   }
@@ -246,7 +247,9 @@ locals {
   cognitive_services = {
     cognitive_services_account = try(var.cognitive_services.cognitive_services_account, {})
   }
-
+  search_services = {
+    search_services = try(var.search_services.search_services, {})
+  }
   maps = {
     maps_accounts = try(var.maps.maps_accounts, {})
   }
@@ -457,4 +460,10 @@ locals {
   }
 
   powerbi_embedded = try(var.powerbi_embedded, {})
+
+  maintenance = {
+    maintenance_configuration              = try(var.maintenance.maintenance_configuration, {})
+    maintenance_assignment_virtual_machine = try(var.maintenance.maintenance_assignment_virtual_machine, {})
+  }
+
 }
