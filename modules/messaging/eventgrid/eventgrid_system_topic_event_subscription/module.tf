@@ -11,7 +11,7 @@
 resource "azurerm_eventgrid_system_topic_event_subscription" "egstes" {
   name                 = var.settings.name
   resource_group_name  = can(var.settings.resource_group.name) ? var.settings.resource_group.name : var.remote_objects.resource_group[try(var.settings.resource_group.lz_key, var.client_config.landingzone_key)][var.settings.resource_group.key].name
-  system_topic         = can(var.settings.eventgrid_domain.name) ? var.settings.eventgrid_domain.name : var.remote_objects.eventgrid_domains[try(var.settings.eventgrid_domain.lz_key, var.client_config.landingzone_key)][var.settings.eventgrid_domain.key].name
+  system_topic         = can(var.settings.eventgrid_system_topic.name) ? var.settings.eventgrid_system_topic.name : var.remote_objects.eventgrid_system_topic[try(var.settings.eventgrid_system_topic.lz_key, var.client_config.landingzone_key)][var.settings.eventgrid_system_topic.key].name
 
   dynamic "webhook_endpoint" {
     for_each = try(var.settings.webhook_endpoint, null) != null ? [var.settings.webhook_endpoint] : []
