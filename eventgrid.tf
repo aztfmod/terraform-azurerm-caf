@@ -92,6 +92,23 @@ module "eventgrid_system_topic" {
     communication_services = local.combined_objects_communication_services
   }
 }
-output "eventgrid_domainsystem_topic" {
+output "eventgrid_system_topic" {
   value = module.eventgrid_system_topic
+}
+
+module "eventgrid_system_topic_event_subscription" {
+  source   = "./modules/messaging/eventgrid/eventgrid_system_topic_event_subscription"
+  for_each = local.messaging.eventgrid_system_topic_event_subscription
+
+  base_tags       = local.global_settings.inherit_tags
+  client_config   = local.client_config
+  global_settings = local.global_settings
+  settings        = each.value
+
+  remote_objects = {
+    resource_group = local.combined_objects_resource_groups
+  }
+}
+output "eventgrid_system_topic_event_subscription" {
+  value = module.eventgrid_system_topic_event_subscription
 }
