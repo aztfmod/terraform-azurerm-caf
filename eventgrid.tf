@@ -106,7 +106,8 @@ module "eventgrid_system_topic_event_subscription" {
   settings        = each.value
 
   remote_objects = {
-    resource_group = local.combined_objects_resource_groups
+    resource_group         = local.combined_objects_resource_groups
+    eventgrid_system_topic = local.combined_objects_eventgrid_system_topic
   }
 }
 output "eventgrid_system_topic_event_subscription" {
