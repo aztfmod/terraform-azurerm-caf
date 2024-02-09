@@ -11,7 +11,7 @@ resource "azurerm_eventgrid_system_topic" "egst" {
   name                   = var.settings.name
   location               = "Global"
   resource_group_name    = can(var.settings.resource_group.name) ? var.settings.resource_group.name : var.remote_objects.resource_group[try(var.settings.resource_group.lz_key, var.client_config.landingzone_key)][var.settings.resource_group.key].name
-  source_arm_resource_id = source_arm_resource_id = can(var.settings.source.id) ? var.settings.communication_services.id : var.remote_objects.communication_services[try(var.settings.communication_services.lz_key, var.client_config.landingzone_key)][var.settings.communication_services.key].id : null
+  source_arm_resource_id = can(var.settings.source.id) ? var.settings.communication_services.id : var.remote_objects.communication_services[try(var.settings.communication_services.lz_key, var.client_config.landingzone_key)][var.settings.communication_services.key].id : null
   tags                   = local.tags
   topic_type             = var.settings.topic_type
 }
