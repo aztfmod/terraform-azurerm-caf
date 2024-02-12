@@ -3,14 +3,17 @@ module "caf" {
   version = "5.1.0"
 }
 
-# eventgrid_domain_topic
+# eventgrid_system_topic
 
 ## Inputs
 | Name | Description | Type | Required |
 |------|-------------|------|:--------:|
-|name| Specifies the name of the EventGrid Domain Topic resource. Changing this forces a new resource to be created.||True|
-|domain_name| Specifies the name of the EventGrid Domain. Changing this forces a new resource to be created.||True|
+|name| Specifies the name of the EventGrid System Topic resource. Changing this forces a new resource to be created.||True|
+|source_arm_resource_id| Specifies the Resource ID of the source for the Event Grid System Topic. Changing this forces a new resource to be created.||True|
 |resource_group|The `resource_group` block as defined below.|Block|True|
+|location|The location of the EventGrid System Topic. Must be Global||True|
+|topic_type|The topic type for the EventGrid System Topic. ||True|
+|tags| A mapping of tags to assign to the resource.||False|
 
 ## Blocks
 | Block | Argument | Description | Required |
@@ -22,4 +25,5 @@ module "caf" {
 ## Outputs
 | Name | Description |
 |------|-------------|
-|id|The ID of the EventGrid Domain Topic.|||
+|id|The ID of the EventGrid System Topic.|||
+|name|The Name of the EventGrid System Topic.|||
