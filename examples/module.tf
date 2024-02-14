@@ -422,6 +422,8 @@ module "example" {
   }
   powerbi_embedded = var.powerbi_embedded
 
+  load_test = var.load_test
+
   preview_features = var.preview_features
 
   maintenance = {
