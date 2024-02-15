@@ -14,7 +14,7 @@ resource "azurerm_vpn_gateway_connection" "vpn_gateway_connection" {
   internet_security_enabled = var.settings.internet_security_enabled
 
   remote_vpn_site_id = coalesce(
-    try(var.vpn_sites[try(var.settings.vpn_site.lz_key, var.client_config.landingzone_key)][var.settings.vpn_site.key].vpn_site.id, null),
+    try(var.vpn_sites.vpn_site.id, null),
     try(var.settings.vpn_site_id, null)
   )
 
@@ -32,7 +32,7 @@ resource "azurerm_vpn_gateway_connection" "vpn_gateway_connection" {
       policy_based_traffic_selector_enabled = try(vpn_link.value.policy_based_traffic_selector_enabled, null)
 
       vpn_site_link_id = coalesce(
-        try(var.vpn_sites[try(var.settings.vpn_site.lz_key, var.client_config.landingzone_key)][var.settings.vpn_site.key].vpn_site.link[vpn_link.value.link_index].id, null),
+        try(var.vpn_sites.vpn_site.link[vpn_link.value.link_index].id, null),
         try(vpn_link.value.vpn_link_id, null)
       )
 

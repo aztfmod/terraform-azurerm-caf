@@ -17,7 +17,7 @@ module "vpn_gateway_connections" {
   settings        = each.value
   global_settings = local.global_settings
   client_config   = local.client_config
-  vpn_sites       = local.combined_objects_vpn_sites
+  vpn_sites       = local.combined_objects_vpn_sites[try(each.value.vpn_site.lz_key, local.client_config.landingzone_key)][each.value.vpn_site.key]
   route_tables    = local.combined_objects_virtual_hub_route_tables
 
   vpn_gateway_id = can(each.value.virtual_hub_gateway_id) || can(each.value.virtual_wan) ? try(each.value.virtual_hub_gateway_id, local.combined_objects_virtual_wans[try(each.value.virtual_wan.lz_key, each.value.lz_key, local.client_config.landingzone_key)][try(each.value.virtual_wan.key, each.value.virtual_wan_key)].virtual_hubs[try(each.value.virtual_hub.key, each.value.virtual_hub_key)].s2s_gateway.id) : local.combined_objects_virtual_hubs[try(each.value.virtual_hub.lz_key, local.client_config.landingzone_key)][each.value.virtual_hub.key].s2s_gateway.id
