@@ -1,7 +1,7 @@
 
 #
 #
-# VPN Gateway Connection
+# VPN Gateway NAT Rule used for VPN Gatway Connection
 #
 #
 
