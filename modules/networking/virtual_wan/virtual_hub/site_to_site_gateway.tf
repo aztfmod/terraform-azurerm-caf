@@ -24,7 +24,7 @@ resource "azurerm_vpn_gateway" "s2s_gateway" {
 
   scale_unit                            = var.virtual_hub_config.s2s_config.scale_unit
   routing_preference                    = try(var.virtual_hub_config.s2s_config.routing_preference, "Microsoft Network")
-  bgp_route_translation_for_nat_enabled = var.virtual_hub_config.s2s_config.bgp_route_translation_for_nat_enabled
+  bgp_route_translation_for_nat_enabled = try(var.virtual_hub_config.s2s_config.bgp_route_translation_for_nat_enabled, false)
 
   dynamic "bgp_settings" {
     for_each = try(var.virtual_hub_config.s2s_config.bgp_settings, null) == null ? [] : [1]

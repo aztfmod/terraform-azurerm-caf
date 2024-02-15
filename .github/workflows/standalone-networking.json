@@ -45,6 +45,7 @@
     "networking/virtual_subnets/100-simple-subnet-rbac",
     "networking/virtual_wan/100-vwan-multi-hubs",
     "networking/virtual_wan/106-vwan-hub-routes",
-    "networking/virtual_wan/108-vwan-vpn-site"
+    "networking/virtual_wan/108-vwan-vpn-site",
+    "networking/virtual_wan/111-vwan-vpn-gateway-connection-with-nat"
   ]
 }
