@@ -77,3 +77,48 @@ module "eventgrid_domain_topic" {
 output "eventgrid_domain_topic" {
   value = module.eventgrid_domain_topic
 }
+
+module "eventgrid_system_topic" {
+  source   = "./modules/messaging/eventgrid/eventgrid_system_topic"
+  for_each = local.messaging.eventgrid_system_topic
+
+  global_settings = local.global_settings
+  client_config   = local.client_config
+  settings        = each.value
+
+  remote_objects = {
+    all                    = local.remote_objects
+  }
+}
+output "eventgrid_system_topic" {
+  value = module.eventgrid_system_topic
+}
+
+module "azurerm_eventgrid_system_topic_event_subscription" {
+  source   = "./modules/messaging/eventgrid/eventgrid_system_topic_event_subscription"
+  for_each = local.messaging.eventgrid_system_topic_event_subscription
+
+  global_settings = local.global_settings
+  client_config   = local.client_config
+  settings        = each.value
+
+
+  remote_objects = {
+    all                    = local.remote_objects,
+    eventgrid_system_topics = local.combined_objects_eventgrid_system_topics
+    functions              = local.combined_objects_function_apps,
+    eventhubs              = local.combined_objects_event_hubs,
+    servicebus_topic       = local.combined_objects_servicebus_topics,
+    servicebus_queues      = local.combined_objects_servicebus_queues,
+    storage_accounts       = local.combined_objects_storage_accounts,
+    hybrid_connections     = local.combined_objects_relay_hybrid_connection,
+    storage_account_queues = local.combined_objects_storage_account_queues
+  }
+
+  depends_on = [
+    module.eventgrid_system_topic
+  ]
+}
+output "azurerm_eventgrid_system_topic_event_subscription" {
+  value = module.azurerm_eventgrid_system_topic_event_subscription
+}

@@ -77,6 +77,7 @@ locals {
   combined_objects_event_hubs                                     = merge(tomap({ (local.client_config.landingzone_key) = module.event_hubs }), try(var.remote_objects.event_hubs, {}))
   combined_objects_eventgrid_domains                              = merge(tomap({ (local.client_config.landingzone_key) = module.eventgrid_domain }), try(var.remote_objects.eventgrid_domain, {}))
   combined_objects_eventgrid_topics                               = merge(tomap({ (local.client_config.landingzone_key) = module.eventgrid_topic }), try(var.remote_objects.eventgrid_topic, {}))
+  combined_objects_eventgrid_system_topics                        = merge(tomap({ (local.client_config.landingzone_key) = module.eventgrid_system_topic }), try(var.remote_objects.eventgrid_system_topic, {}))
   combined_objects_express_route_circuit_authorizations           = merge(tomap({ (local.client_config.landingzone_key) = module.express_route_circuit_authorizations }), try(var.remote_objects.express_route_circuit_authorizations, {}))
   combined_objects_express_route_circuit_peerings                 = merge(tomap({ (local.client_config.landingzone_key) = module.express_route_circuit_peerings }), try(var.remote_objects.express_route_circuit_peerings, {}))
   combined_objects_express_route_circuits                         = merge(tomap({ (local.client_config.landingzone_key) = module.express_route_circuits }), try(var.remote_objects.express_route_circuits, {}), try(var.data_sources.express_route_circuits, {}))
