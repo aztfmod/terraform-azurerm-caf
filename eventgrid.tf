@@ -87,7 +87,7 @@ module "eventgrid_system_topic" {
   settings        = each.value
 
   remote_objects = {
-    all                    = local.remote_objects
+    all = local.remote_objects
   }
 }
 output "eventgrid_system_topic" {
@@ -104,15 +104,15 @@ module "azurerm_eventgrid_system_topic_event_subscription" {
 
 
   remote_objects = {
-    all                    = local.remote_objects,
+    all                     = local.remote_objects,
     eventgrid_system_topics = local.combined_objects_eventgrid_system_topics
-    functions              = local.combined_objects_function_apps,
-    eventhubs              = local.combined_objects_event_hubs,
-    servicebus_topic       = local.combined_objects_servicebus_topics,
-    servicebus_queues      = local.combined_objects_servicebus_queues,
-    storage_accounts       = local.combined_objects_storage_accounts,
-    hybrid_connections     = local.combined_objects_relay_hybrid_connection,
-    storage_account_queues = local.combined_objects_storage_account_queues
+    functions               = local.combined_objects_function_apps,
+    eventhubs               = local.combined_objects_event_hubs,
+    servicebus_topic        = local.combined_objects_servicebus_topics,
+    servicebus_queues       = local.combined_objects_servicebus_queues,
+    storage_accounts        = local.combined_objects_storage_accounts,
+    hybrid_connections      = local.combined_objects_relay_hybrid_connection,
+    storage_account_queues  = local.combined_objects_storage_account_queues
   }
 
   depends_on = [

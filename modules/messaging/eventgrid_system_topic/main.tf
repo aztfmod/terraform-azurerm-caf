@@ -27,6 +27,6 @@ locals {
   ])
 
   provided_identities = try(var.settings.identity.managed_identity_ids, [])
-  managed_identities = concat(local.provided_identities, local.managed_local_identities, local.managed_remote_identities)
+  managed_identities  = concat(local.provided_identities, local.managed_local_identities, local.managed_remote_identities)
 
 }

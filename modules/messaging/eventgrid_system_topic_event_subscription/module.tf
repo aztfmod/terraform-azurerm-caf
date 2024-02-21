@@ -55,8 +55,8 @@ resource "azurerm_eventgrid_system_topic_event_subscription" "egstes" {
     for_each = try(var.settings.subject_filter, null) != null ? [var.settings.subject_filter] : []
     content {
       subject_begins_with = try(subject_filter.value.subject_begins_with, null)
-      subject_ends_with = try(subject_filter.value.subject_ends_with, null)
-      case_sensitive = try(subject_filter.value.case_sensitive , null)
+      subject_ends_with   = try(subject_filter.value.subject_ends_with, null)
+      case_sensitive      = try(subject_filter.value.case_sensitive, null)
     }
   }
 
