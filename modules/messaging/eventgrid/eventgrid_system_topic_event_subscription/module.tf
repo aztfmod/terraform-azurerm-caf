@@ -202,7 +202,7 @@ resource "azurerm_eventgrid_system_topic_event_subscription" "egstes" {
     for_each = try(var.settings.delivery_identity, null) != null ? [var.settings.delivery_identity] : []
     content {
       type                   = try(delivery_identity.value.type, null)
-      user_assigned_identity = try(delivery_identity.value.user_assigned_identity, null)
+      user_assigned_identity = coalesce(try(delivery_identity.value.id, null), try(var.remote_objects.all.managed_identities[try(delivery_identity.value.lz_key, var.client_config.landingzone_key)][delivery_identity.value.key].id, null))
     }
   }
   dynamic "delivery_property" {
