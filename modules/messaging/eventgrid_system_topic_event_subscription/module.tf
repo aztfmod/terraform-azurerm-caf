@@ -218,8 +218,8 @@ resource "azurerm_eventgrid_system_topic_event_subscription" "egstes" {
   dynamic "dead_letter_identity" {
     for_each = try(var.settings.dead_letter_identity, null) != null ? [var.settings.dead_letter_identity] : []
     content {
-      type                   = try(dead_letter_identity.value.type, null)
-      user_assigned_identity = try(dead_letter_identity.value.user_assigned_identity, null)
+      type                   = try(delivery_identity.value.type, null)
+      user_assigned_identity = coalesce(try(delivery_identity.value.id, null), try(var.remote_objects.all.managed_identities[try(delivery_identity.value.lz_key, var.client_config.landingzone_key)][delivery_identity.value.key].id))  
     }
   }
   dynamic "storage_blob_dead_letter_destination" {
