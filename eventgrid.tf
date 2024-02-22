@@ -84,6 +84,7 @@ module "eventgrid_system_topic" {
 
   global_settings = local.global_settings
   client_config   = local.client_config
+  base_tags       = try(local.global_settings.inherit_tags, false) ? try(local.combined_objects_resource_groups[try(each.value.resource_group.lz_key, local.client_config.landingzone_key)][try(each.value.resource_group.key, each.value.resource_group_key)].tags, {}) : {}
   settings        = each.value
 
   remote_objects = {
@@ -100,6 +101,7 @@ module "azurerm_eventgrid_system_topic_event_subscription" {
 
   global_settings = local.global_settings
   client_config   = local.client_config
+  base_tags       = try(local.global_settings.inherit_tags, false) ? try(local.combined_objects_resource_groups[try(each.value.resource_group.lz_key, local.client_config.landingzone_key)][try(each.value.resource_group.key, each.value.resource_group_key)].tags, {}) : {}
   settings        = each.value
 
 
@@ -115,9 +117,6 @@ module "azurerm_eventgrid_system_topic_event_subscription" {
     storage_account_queues  = local.combined_objects_storage_account_queues
   }
 
-  depends_on = [
-    module.eventgrid_system_topic
-  ]
 }
 output "azurerm_eventgrid_system_topic_event_subscription" {
   value = module.azurerm_eventgrid_system_topic_event_subscription
