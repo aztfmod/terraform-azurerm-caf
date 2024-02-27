@@ -69,6 +69,7 @@ resource "azurerm_kubernetes_cluster" "aks" {
     capacity_reservation_group_id = try(var.settings.capacity_reservation_group_id, null)
     custom_ca_trust_enabled       = try(var.settings.custom_ca_trust_enabled, null)
     host_group_id                 = try(var.settings.host_group_id, null)
+    temporary_name_for_rotation   = try(var.settings.default_node_pool.temporary_name_for_rotation, null)
 
     pod_subnet_id  = can(var.settings.default_node_pool.pod_subnet_key) == false || can(var.settings.default_node_pool.pod_subnet.key) == false || can(var.settings.default_node_pool.pod_subnet_id) || can(var.settings.default_node_pool.pod_subnet.resource_id) ? try(var.settings.default_node_pool.pod_subnet_id, var.settings.default_node_pool.pod_subnet.resource_id, null) : var.vnets[try(var.settings.lz_key, var.client_config.landingzone_key)][var.settings.vnet_key].subnets[try(var.settings.default_node_pool.pod_subnet_key, var.settings.default_node_pool.pod_subnet.key)].id
     vnet_subnet_id = can(var.settings.default_node_pool.vnet_subnet_id) || can(var.settings.default_node_pool.subnet.resource_id) ? try(var.settings.default_node_pool.vnet_subnet_id, var.settings.default_node_pool.subnet.resource_id) : var.vnets[try(var.settings.vnet.lz_key, var.settings.lz_key, var.client_config.landingzone_key)][try(var.settings.vnet.key, var.settings.vnet_key)].subnets[try(var.settings.default_node_pool.subnet_key, var.settings.default_node_pool.subnet.key)].id
@@ -327,6 +328,7 @@ resource "azurerm_kubernetes_cluster" "aks" {
       docker_bridge_cidr  = try(network_profile.value.docker_bridge_cidr, null)
       outbound_type       = try(network_profile.value.outbound_type, null)
       pod_cidr            = try(network_profile.value.pod_cidr, null)
+      pod_cidrs           = try(network_profile.value.pod_cidrs, null)
       service_cidr        = try(network_profile.value.service_cidr, null)
       service_cidrs       = try(network_profile.value.network_cidrs, null)
       load_balancer_sku   = try(network_profile.value.load_balancer_sku, null)

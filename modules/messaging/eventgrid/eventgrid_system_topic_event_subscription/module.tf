@@ -1,4 +1,3 @@
-
 resource "azurecaf_name" "egstes" {
   name          = var.settings.name
   resource_type = "azurerm_eventgrid_event_subscription"
@@ -10,8 +9,8 @@ resource "azurecaf_name" "egstes" {
 }
 resource "azurerm_eventgrid_system_topic_event_subscription" "egstes" {
   name                  = azurecaf_name.egstes.result
-  system_topic          = coalesce(try(var.settings.scope.id, null), try(var.remote_objects.eventgrid_system_topics[try(var.settings.scope.lz_key, var.client_config.landingzone_key)][var.settings.scope.key].name, null))
-  resource_group_name   = coalesce(try(var.settings.resource_group.name, null), try(var.remote_objects.all.resource_groups[try(var.settings.resource_group.lz_key, var.client_config.landingzone_key)][var.settings.resource_group.key].name, null), try(var.remote_objects.eventgrid_system_topics[try(var.settings.scope.lz_key, var.client_config.landingzone_key)][var.settings.scope.key].resource_group_name, null))
+  system_topic          = local.system_topic
+  resource_group_name   = local.resource_group_name
   expiration_time_utc   = try(var.settings.expiration_time_utc, null)
   event_delivery_schema = try(var.settings.event_delivery_schema, null)
   included_event_types = try(var.settings.included_event_types, null)
@@ -202,7 +201,7 @@ resource "azurerm_eventgrid_system_topic_event_subscription" "egstes" {
     for_each = try(var.settings.delivery_identity, null) != null ? [var.settings.delivery_identity] : []
     content {
       type                   = try(delivery_identity.value.type, null)
-      user_assigned_identity = coalesce(try(delivery_identity.value.id, null), try(var.remote_objects.all.managed_identities[try(delivery_identity.value.lz_key, var.client_config.landingzone_key)][delivery_identity.value.key].id, null))
+      user_assigned_identity = coalesce(try(delivery_identity.value.id, null), try(var.remote_objects.managed_identities[try(delivery_identity.value.lz_key, var.client_config.landingzone_key)][delivery_identity.value.key].id))  
     }
   }
   dynamic "delivery_property" {
