@@ -18,5 +18,9 @@ module "postgresql_flexible_servers" {
     private_dns_zone_id = can(each.value.private_dns_zone.key) ? local.combined_objects_private_dns[try(each.value.private_dns_zone.lz_key, local.client_config.landingzone_key)][each.value.private_dns_zone.key].id : null
     keyvault_id         = can(each.value.keyvault.key) ? local.combined_objects_keyvaults[try(each.value.keyvault.lz_key, local.client_config.landingzone_key)][each.value.keyvault.key].id : null
     diagnostics         = local.combined_diagnostics
+    managed_identities  = local.combined_objects_managed_identities
+    azuread_groups      = local.combined_objects_azuread_groups
+    azuread_users       = local.combined_objects_azuread_users
+    service_principals  = local.combined_objects_azuread_service_principals
   }
 }

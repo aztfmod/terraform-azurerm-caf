@@ -41,6 +41,7 @@ locals {
     container_registry                             = try(local.combined_objects_container_registry, null)
     cosmos_dbs                                     = try(local.combined_objects_cosmos_dbs, null)
     databricks_workspaces                          = try(local.combined_objects_databricks_workspaces, null)
+    cost_anomaly_alert                             = try(local.combined_objects_cost_anomaly_alert, null)
     data_factory                                   = try(local.combined_objects_data_factory, null)
     data_factory_integration_runtime_azure_ssis    = try(local.combined_objects_data_factory_integration_runtime_azure_ssis, null)
     data_factory_linked_service_azure_blob_storage = try(local.combined_objects_data_factory_linked_service_azure_blob_storage, null)
@@ -144,6 +145,5 @@ locals {
     wvd_host_pools                                 = try(local.combined_objects_wvd_host_pools, null)
     wvd_workspaces                                 = try(local.combined_objects_wvd_workspaces, null)
     subscriptions                                  = try(local.combined_objects_subscriptions, null)
-    cost_anomaly_alert                            = try(local.combined_objects_cost_anomaly_alert, null)
   }
 }

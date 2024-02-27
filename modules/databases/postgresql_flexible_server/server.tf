@@ -16,6 +16,7 @@ resource "azurerm_postgresql_flexible_server" "postgresql" {
   sku_name            = try(var.settings.sku_name, null)
   zone                = try(var.settings.zone, null)
   storage_mb          = try(var.settings.storage_mb, null)
+  auto_grow_enabled   = try(var.settings.auto_grow_enabled, null)
 
   delegated_subnet_id = var.remote_objects.subnet_id
   private_dns_zone_id = var.remote_objects.private_dns_zone_id
@@ -52,10 +53,19 @@ resource "azurerm_postgresql_flexible_server" "postgresql" {
     for_each = try(var.settings.high_availability, null) == null ? [] : [var.settings.high_availability]
 
     content {
-      mode                      = "ZoneRedundant"
-      standby_availability_zone = var.settings.zone == null ? null : var.settings.high_availability.standby_availability_zone
+      mode                      = try(var.settings.high_availability.mode, "ZoneRedundant")
+      standby_availability_zone = var.settings.high_availability.mode == "SameZone" ? var.settings.zone : try(var.settings.high_availability.standby_availability_zone, null)
     }
   }
+
+  dynamic "identity" {
+      for_each = can(var.settings.identity) ? [var.settings.identity] : []
+
+      content {
+        type         = "UserAssigned"
+        identity_ids = local.managed_identities
+      }
+    }
 
   lifecycle {
     ignore_changes = [
