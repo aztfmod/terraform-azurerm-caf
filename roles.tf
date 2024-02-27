@@ -126,6 +126,7 @@ locals {
     batch_accounts                             = local.combined_objects_batch_accounts
     data_factory                               = local.combined_objects_data_factory
     databricks_workspaces                      = local.combined_objects_databricks_workspaces
+    disk_encryption_sets                       = local.combined_objects_disk_encryption_sets
     dns_zones                                  = local.combined_objects_dns_zones
     event_hub_namespaces                       = local.combined_objects_event_hub_namespaces
     function_apps                              = local.combined_objects_function_apps

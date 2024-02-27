@@ -115,7 +115,7 @@ locals {
     recovery_vaults                                      = try(local.combined_objects_recovery_vaults, null)
     redis_caches                                         = try(local.combined_objects_redis_caches, null)
     resource_groups                                      = try(local.combined_objects_resource_groups, null)
-    search_services                                = try(local.combined_objects_search_services, null)
+    search_services                                      = try(local.combined_objects_search_services, null)
     servicebus_namespaces                                = try(local.combined_objects_servicebus_namespaces, null)
     servicebus_topics                                    = try(local.combined_objects_servicebus_topics, null)
     servicebus_queues                                    = try(local.combined_objects_servicebus_queues, null)
