@@ -265,6 +265,7 @@ module "example" {
     vnets                                                   = var.vnets
     virtual_subnets                                         = var.virtual_subnets
     vpn_gateway_connections                                 = var.vpn_gateway_connections
+    vpn_gateway_nat_rules                                   = var.vpn_gateway_nat_rules
     vpn_sites                                               = var.vpn_sites
   }
 

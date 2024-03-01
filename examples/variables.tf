@@ -640,6 +640,9 @@ variable "vpn_sites" {
 variable "vpn_gateway_connections" {
   default = {}
 }
+variable "vpn_gateway_nat_rules" {
+  default = {}
+}
 variable "servicebus_namespaces" {
   default = {}
 }
