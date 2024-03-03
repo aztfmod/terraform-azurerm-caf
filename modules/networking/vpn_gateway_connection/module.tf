@@ -30,6 +30,18 @@ resource "azurerm_vpn_gateway_connection" "vpn_gateway_connection" {
       shared_key                            = try(vpn_link.value.shared_key, null)
       local_azure_ip_address_enabled        = try(vpn_link.value.local_azure_ip_address_enabled, null)
       policy_based_traffic_selector_enabled = try(vpn_link.value.policy_based_traffic_selector_enabled, null)
+      egress_nat_rule_ids = try(compact(
+        [
+          for key, value in vpn_link.value.egress_nat_rules :
+          can(value.id) ? value.id : var.nat_rules[try(value.lz_key, var.client_config.landingzone_key)][value.key].id
+        ]
+      ), [])
+      ingress_nat_rule_ids = try(compact(
+        [
+          for key, value in vpn_link.value.ingress_nat_rules :
+          can(value.id) ? value.id : var.nat_rules[try(value.lz_key, var.client_config.landingzone_key)][value.key].id
+        ]
+      ), [])
 
       vpn_site_link_id = coalesce(
         try(var.vpn_sites[try(var.settings.vpn_site.lz_key, var.client_config.landingzone_key)][var.settings.vpn_site.key].vpn_site.link[vpn_link.value.link_index].id, null),
