@@ -355,6 +355,9 @@ variable "batch_pools" {
 variable "databricks_workspaces" {
   default = {}
 }
+variable "databricks_access_connectors" {
+  default = {}
+}
 variable "machine_learning_workspaces" {
   default = {}
 }
