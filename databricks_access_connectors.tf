@@ -15,5 +15,4 @@ module "databricks_access_connectors" {
 
 output "databricks_access_connectors" {
   value = module.databricks_access_connectors
-
 }
