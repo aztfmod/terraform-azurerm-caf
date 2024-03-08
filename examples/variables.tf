@@ -1129,3 +1129,6 @@ variable "maintenance_assignment_virtual_machine" {
 variable "search_services" {
   default     = {}
 }
+variable "load_test" {
+  default = {}
+}
