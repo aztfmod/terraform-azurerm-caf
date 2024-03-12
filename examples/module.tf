@@ -265,6 +265,7 @@ module "example" {
     vnets                                                   = var.vnets
     virtual_subnets                                         = var.virtual_subnets
     vpn_gateway_connections                                 = var.vpn_gateway_connections
+    vpn_gateway_nat_rules                                   = var.vpn_gateway_nat_rules
     vpn_sites                                               = var.vpn_sites
   }
 
@@ -423,6 +424,8 @@ module "example" {
     iot_central_application             = var.iot_central_application
   }
   powerbi_embedded = var.powerbi_embedded
+
+  load_test = var.load_test
 
   preview_features = var.preview_features
 

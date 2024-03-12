@@ -93,6 +93,28 @@ resource "azurerm_app_service" "app_service" {
           }
         }
       }
+      dynamic "scm_ip_restriction" {
+        for_each = try(var.settings.site_config.scm_ip_restriction, {})
+
+        content {
+          ip_address                = lookup(scm_ip_restriction.value, "ip_address", null)
+          service_tag               = lookup(scm_ip_restriction.value, "service_tag", null)
+          virtual_network_subnet_id = can(scm_ip_restriction.value.virtual_network_subnet_id) ? scm_ip_restriction.value.virtual_network_subnet_id : can(scm_ip_restriction.value.virtual_network_subnet.id) ? scm_ip_restriction.value.virtual_network_subnet.id : can(scm_ip_restriction.value.virtual_network_subnet.subnet_key) ? var.combined_objects.networking[try(scm_ip_restriction.value.virtual_network_subnet.lz_key, var.client_config.landingzone_key)][scm_ip_restriction.value.virtual_network_subnet.vnet_key].subnets[scm_ip_restriction.value.virtual_network_subnet.subnet_key].id : null
+          name                      = lookup(scm_ip_restriction.value, "name", null)
+          priority                  = lookup(scm_ip_restriction.value, "priority", null)
+          action                    = lookup(scm_ip_restriction.value, "action", null)
+          dynamic "headers" {
+            for_each = try(scm_ip_restriction.headers, {})
+
+            content {
+              x_azure_fdid      = lookup(headers.value, "x_azure_fdid", null)
+              x_fd_health_probe = lookup(headers.value, "x_fd_health_probe", null)
+              x_forwarded_for   = lookup(headers.value, "x_forwarded_for", null)
+              x_forwarded_host  = lookup(headers.value, "x_forwarded_host", null)
+            }
+          }
+        }
+      }
     }
   }
 

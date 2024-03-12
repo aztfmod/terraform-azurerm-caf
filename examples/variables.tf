@@ -646,6 +646,9 @@ variable "vpn_sites" {
 variable "vpn_gateway_connections" {
   default = {}
 }
+variable "vpn_gateway_nat_rules" {
+  default = {}
+}
 variable "servicebus_namespaces" {
   default = {}
 }
@@ -1131,4 +1134,7 @@ variable "maintenance_assignment_virtual_machine" {
 }
 variable "search_services" {
   default     = {}
+}
+variable "load_test" {
+  default = {}
 }

@@ -343,6 +343,7 @@ locals {
     vnet_peerings_v1                                        = try(var.networking.vnet_peerings_v1, {})
     vnets                                                   = try(var.networking.vnets, {})
     vpn_gateway_connections                                 = try(var.networking.vpn_gateway_connections, {})
+    vpn_gateway_nat_rules                                   = try(var.networking.vpn_gateway_nat_rules, {})
     vpn_sites                                               = try(var.networking.vpn_sites, {})
   }
 
@@ -469,4 +470,6 @@ locals {
     maintenance_assignment_virtual_machine = try(var.maintenance.maintenance_assignment_virtual_machine, {})
   }
 
+
+  load_test = try(var.load_test, {})
 }
