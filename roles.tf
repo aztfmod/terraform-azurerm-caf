@@ -72,6 +72,18 @@ data "azurerm_management_group" "level" {
   name = lower(each.key) == "root" ? data.azurerm_client_config.current.tenant_id : each.key
 }
 
+data "azurerm_key_vault_secret" "key_vault_secret" {
+  depends_on = [
+    module.dynamic_keyvault_secrets,
+    time_sleep.azurerm_role_assignment_for
+  ]
+  for_each = {
+    for key, value in try(var.role_mapping.built_in_role_mapping.dynamic_keyvault_secrets, {}) : key => value
+  }
+  key_vault_id = try(local.combined_objects_keyvaults[var.current_landingzone_key][each.value.keyvault_key].id, null)
+  name         = try(local.security.dynamic_keyvault_secrets[each.value.keyvault_key][each.key].secret_name, null)
+}
+
 locals {
 
   aks_ingress_application_gateway_identities = tomap(
@@ -96,10 +108,21 @@ locals {
     }
   )
 
+  dynamic_keyvault_secrets = tomap({
+      (var.current_landingzone_key) = {
+        for key, value in try(var.role_mapping.built_in_role_mapping.dynamic_keyvault_secrets, {}) :
+        key => {
+          id =  data.azurerm_key_vault_secret.key_vault_secret[key].resource_versionless_id
+        }
+      }
+    }
+  )
+
   # Nested objects that must be processed after the services_roles
   services_roles_deferred = {
     storage_containers          = local.combined_objects_storage_containers
     storage_account_file_shares = local.combined_objects_storage_account_file_shares
+    dynamic_keyvault_secrets    = local.dynamic_keyvault_secrets
   }
 
 
@@ -226,7 +249,7 @@ locals {
                     object_id_lz_key        = try(object_resources.lz_key, null)
                   }
                 ]
-              ] if role_definition_name != "lz_key"
+              ] if !contains(["lz_key", "keyvault_key"], role_definition_name)
             ]
           ]
         ]
@@ -250,44 +273,54 @@ locals {
 #       }
 #     }
 #   }
-
-#  built_in_role_mapping = {
-#       aks_clusters = {
-#         seacluster = {
-#           "Azure Kubernetes Service Cluster Admin Role" = {
-#             azuread_group_keys = {
-#               keys = [ "aks_admins" ]
-#             }
-#             managed_identity_keys = {
-#               keys = [ "jumpbox" ]
-#             }
+#
+#   built_in_role_mapping = {
+#     aks_clusters = {
+#       seacluster = {
+#         "Azure Kubernetes Service Cluster Admin Role" = {
+#           azuread_group_keys = {
+#             keys = [ "aks_admins" ]
 #           }
-#         }
-#       }
-#       azure_container_registries = {
-#         acr1 = {
-#           "AcrPull" = {
-#             aks_cluster_keys = {
-#               keys = [ "seacluster" ]
-#             }
-#           }
-#         }
-#       }
-#       storage_accounts = {
-#         scripts_region1 = {
-#           "Storage Blob Data Contributor" = {
-#             logged_in = {
-#               keys = [ "user" ]
-#             }
-#             managed_identities = {
-#               lz_key = "launchpad"
-#               keys = [ "level0", "level1" ]
-#             }
+#           managed_identity_keys = {
+#             keys = [ "jumpbox" ]
 #           }
 #         }
 #       }
 #     }
-# ......
+#     azure_container_registries = {
+#       acr1 = {
+#         "AcrPull" = {
+#           aks_cluster_keys = {
+#             keys = [ "seacluster" ]
+#           }
+#         }
+#       }
+#     }
+#     storage_accounts = {
+#       scripts_region1 = {
+#         "Storage Blob Data Contributor" = {
+#           logged_in = {
+#             keys = [ "user" ]
+#           }
+#           managed_identities = {
+#             lz_key = "launchpad"
+#             keys = [ "level0", "level1" ]
+#           }
+#         }
+#       }
+#     }
+#     dynamic_keyvault_secrets = {
+#       my_secret_key = {
+#         keyvault_key = "kv1"
+#         "Key Vault Secrets User" = {
+#           azuread_groups = {
+#             keys = ["my_group"]
+#           }
+#         }
+#       }
+#     }
+#   }
+#......
 
 ## Generates a transformed structure for azurerm_role_assignment to process
 # built_in_roles = {
