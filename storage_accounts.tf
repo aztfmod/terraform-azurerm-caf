@@ -56,3 +56,17 @@ module "encryption_scopes" {
   storage_account_id = module.storage_accounts[each.key].id
   keyvault_keys      = local.combined_objects_keyvault_keys
 }
+
+module "local_users" {
+  source = "./modules/storage_account/local_users"
+  for_each = {
+    for key, value in var.storage_accounts : key => value
+    if can(value.local_users)
+  }
+  storage_account_id = module.storage_accounts[each.key].id
+  settings           = each.value
+  client_config      = local.client_config
+  remote_objects = {
+    keyvaults = local.combined_objects_keyvaults
+  }
+}
