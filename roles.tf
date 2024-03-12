@@ -208,44 +208,61 @@ locals {
   roles_to_process = {
     for mapping in
     flatten(
-      [                                                                 # Variable
-        for key_mode, all_role_mapping in var.role_mapping : [          #  built_in_role_mapping = {
-          for key, role_mappings in all_role_mapping : [                #       aks_clusters = {
-            for scope_key_resource, role_mapping in role_mappings : [   #         seacluster = {
-              for role_definition_name, resources in role_mapping : [   #           "Azure Kubernetes Service Cluster Admin Role" = {
-                for object_id_key, object_resources in resources : [    #             azuread_group_keys = {
-                  for object_id_key_resource in object_resources.keys : #               keys = [ "aks_admins" ] ----End of variable
-                  {                                                     # "seacluster_Azure_Kubernetes_Service_Cluster_Admin_Role_aks_admins" = {
-                    mode                    = key_mode                  #   "mode" = "built_in_role_mapping"
-                    scope_resource_key      = key
-                    scope_lz_key            = try(role_mapping.lz_key, null)
-                    scope_key_resource      = scope_key_resource
-                    role_definition_name    = role_definition_name
-                    object_id_resource_type = object_id_key
-                    object_id_key_resource  = object_id_key_resource #   "object_id_key_resource" = "aks_admins"
-                    object_id_lz_key        = try(object_resources.lz_key, null)
-                  }
-                ]
+      [                                                                                                                                  # Variable
+        for key_mode, all_role_mapping in var.role_mapping : [                                                                           # built_in_role_mapping = {
+          for key, role_mappings in all_role_mapping : [                                                                                 #   keyvaults = {
+            for scope_key_resource, role_mapping in role_mappings : [                                                                    #     "kv_sql_prod" = {
+              for role_definition_name, resources in role_mapping : [                                                                    #       "Key Vault Secrets Officer" = {
+                for object_id_key, object_resources in resources : [                                                                     #          azuread_groups = {
+                  for object_id_lz_keys, object_resource in object_resources : [                                                         #             "identity_level2" = {
+                    for object_id_key_resource in(can(object_resources.keys)) ? object_resources.keys : object_resource.keys : [         #                keys = ["admin_sql"]                  # Support for legacy variable format
+                      {                                                                                                                  # "keyvaults_Key_Vault_Secrets_Officer_admin_sql" = {
+                        mode                    = key_mode                                                                               #   "mode" = "built_in_role_mapping"
+                        scope_resource_key      = key
+                        scope_lz_key            = try(role_mapping.lz_key, null)
+                        scope_key_resource      = scope_key_resource
+                        role_definition_name    = role_definition_name
+                        object_id_resource_type = object_id_key
+                        object_id_key_resource  = object_id_key_resource                                                                 #   "object_id_key_resource" = "admin_sql"
+                        object_id_lz_key        = can(object_resources.keys) ? try(object_resources.lz_key, null) : object_id_lz_keys    # Support for previous variable format without lz_key level before object_id_key_resource
+                      }
+                    ]
+                  ] if object_id_lz_keys != "lz_key"                                                                                     # Support for legacy variable format
+                ] if object_id_key != "lz_key"
               ] if role_definition_name != "lz_key"
-            ]
+            ] 
           ]
         ]
       ]
     ) : format("%s_%s_%s_%s", mapping.object_id_resource_type, mapping.scope_key_resource, replace(mapping.role_definition_name, " ", "_"), mapping.object_id_key_resource) => mapping
   }
 }
-
 # The code transform this input format to
 #   custom_role_mapping = {
 #     subscription_keys = {
 #       logged_in_subscription = {
 #         "caf-launchpad-contributor" = {
-#           azuread_group_keys = [
-#             "keyvault_level0_rw", "keyvault_level1_rw", "keyvault_level2_rw", "keyvault_level3_rw", "keyvault_level4_rw",
-#           ]
-#           managed_identity_keys = [
-#             "level0", "level1", "level2", "level3", "level4"
-#           ]
+#           azuread_groups = {
+#             lz_key_1 = {                                                           # Landing zone keys as objects, when you need to map identities of same type from different landing zones
+#                keys = ["keyvault_level0_rw", "keyvault_level1_rw"]
+#             }
+#             lz_key_2 = {
+#                keys = ["keyvault_level2_rw"]
+#             }
+#             lz_key_3 = {
+#                keys = ["keyvault_level3_rw", "keyvault_level4_rw"]
+#             }
+#           managed_identities = {
+#                lz_key = "launchpad"                                                # This is also supported
+#                keys = ["level0", "level1", "level2", "level3", "level4"]
+#           }
+#           managed_identities = {
+#                lz_key = "launchpad"                                                # This is also supported
+#                keys = ["level0", "level1", "level2", "level3", "level4"]
+#           }
+#           loged_in = {
+#              keys = ["user"]
+#           }
 #         }
 #       }
 #     }
@@ -256,8 +273,12 @@ locals {
 #         seacluster = {
 #           "Azure Kubernetes Service Cluster Admin Role" = {
 #             azuread_group_keys = {
-#               keys = [ "aks_admins" ]
-#             }
+#               lz_key_1 = { 
+#                 keys = [ "aks_admins" ]
+#               }
+#               lz_key_2 = { # ex, launchpad
+#                 keys = [ "platform-maintainers" ]
+#               }
 #             managed_identity_keys = {
 #               keys = [ "jumpbox" ]
 #             }
