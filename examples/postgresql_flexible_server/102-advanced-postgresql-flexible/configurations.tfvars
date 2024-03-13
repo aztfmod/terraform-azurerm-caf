@@ -85,17 +85,6 @@ postgresql_flexible_servers = {
       standby_availability_zone = "2"
     }
 
-    authentication = {
-      active_directory_auth_enabled = true
-      active_directory_administrators = {
-        test_client = {
-          object_key     = "sp1"
-          principal_name = "testclient"
-          principal_type = "ServicePrincipal"
-        }
-      }
-    }
-
     tags = {
       segment = "sales"
     }
@@ -170,21 +159,5 @@ private_dns = {
       }
     }
 
-  }
-}
-
-azuread_applications = {
-  test_client = {
-    useprefix        = true
-    application_name = "test-client"
-  }
-}
-
-
-azuread_service_principals = {
-  sp1 = {
-    azuread_application = {
-      key = "test_client"
-    }
   }
 }

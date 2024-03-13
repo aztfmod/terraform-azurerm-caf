@@ -24,8 +24,8 @@ resource "azurerm_postgresql_flexible_server" "postgresql" {
   point_in_time_restore_time_in_utc = try(var.settings.create_mode, "PointInTimeRestore") == "PointInTimeRestore" ? try(var.settings.point_in_time_restore_time_in_utc, null) : null
   source_server_id                  = try(var.settings.create_mode, "PointInTimeRestore") == "PointInTimeRestore" ? try(var.settings.source_server_id, null) : null
 
-  administrator_login    = try(var.settings.create_mode, "Default") == "Default" ? try(var.settings.administrator_username, "pgadmin") : null
-  administrator_password = try(var.settings.create_mode, "Default") == "Default" ? try(var.settings.administrator_password, azurerm_key_vault_secret.postgresql_administrator_password.0.value) : null
+  administrator_login    = try(var.settings.create_mode, "Default") == "Default" && try(var.settings.authentication.password_auth_enabled, true) ? try(var.settings.administrator_username, "pgadmin") : null
+  administrator_password = try(var.settings.create_mode, "Default") == "Default" && try(var.settings.authentication.password_auth_enabled, true) ? try(var.settings.administrator_password, azurerm_key_vault_secret.postgresql_administrator_password.0.value) : null
 
   dynamic "authentication" {
     for_each = try(var.settings.authentication, null) == null ? [] : [var.settings.authentication]
@@ -55,12 +55,6 @@ resource "azurerm_postgresql_flexible_server" "postgresql" {
       mode                      = "ZoneRedundant"
       standby_availability_zone = var.settings.zone == null ? null : var.settings.high_availability.standby_availability_zone
     }
-  }
-
-  authentication {
-    active_directory_auth_enabled = try(var.settings.authentication.active_directory_auth_enabled, null)
-    password_auth_enabled         = try(var.settings.authentication.password_auth_enabled, null)
-    tenant_id                     = try(var.settings.authentication.active_directory_auth_enabled, false) ? try(var.settings.authentication.tenant_id, var.client_config.tenant_id) : null
   }
 
   lifecycle {
@@ -131,8 +125,9 @@ resource "azurerm_postgresql_flexible_server_active_directory_administrator" "ad
   object_id = can(each.value.object_id) ? each.value.object_id : (
     each.value.principal_type == "ServicePrincipal" ? var.remote_objects.service_principals[try(each.value.object_lz_key, var.client_config.landingzone_key)][each.value.object_key].object_id :
     each.value.principal_type == "Group" ? var.remote_objects.azuread_groups[try(each.value.object_lz_key, var.client_config.landingzone_key)][each.value.object_key].object_id :
-    each.value.principal_type == "User" ? var.remote_objects.azuread_users[try(each.value.object_lz_key, var.client_config.landingzone_key)][each.value.object_key].object_id : null
+    each.value.principal_type == "User" ? var.remote_objects.azuread_users[try(each.value.object_lz_key, var.client_config.landingzone_key)][each.value.object_key].object_id :
+    each.value.principal_type == "ManagedIdentity" ? var.remote_objects.managed_identities[try(each.value.object_lz_key, var.client_config.landingzone_key)][each.value.object_key].principal_id : null
   )
   principal_name = each.value.principal_name
-  principal_type = each.value.principal_type
+  principal_type = each.value.principal_type == "ManagedIdentity" ? "ServicePrincipal" : each.value.principal_type
 }
