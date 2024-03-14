@@ -222,8 +222,8 @@ locals {
                     scope_key_resource      = scope_key_resource
                     role_definition_name    = role_definition_name
                     object_id_resource_type = object_id_key
-                    object_id_key_resource  = object_id_key_resource #   "object_id_key_resource" = "aks_admins"
-                    object_id_lz_key        = try(object_resources.lz_key, null)
+                    object_id_key_resource  = try(object_id_key_resource.key, object_id_key_resource) #   "object_id_key_resource" = "aks_admins"
+                    object_id_lz_key        = try(object_id_key_resource.lz_key, object_resources.lz_key, null)
                   }
                 ]
               ] if role_definition_name != "lz_key"
@@ -231,7 +231,7 @@ locals {
           ]
         ]
       ]
-    ) : format("%s_%s_%s_%s", mapping.object_id_resource_type, mapping.scope_key_resource, replace(mapping.role_definition_name, " ", "_"), mapping.object_id_key_resource) => mapping
+    ) : format("%s_%s_%s_%s_%s", mapping.object_id_resource_type, mapping.scope_key_resource, replace(mapping.role_definition_name, " ", "_"), coalesce(mapping.object_id_lz_key, local.client_config.landingzone_key), mapping.object_id_key_resource) => mapping
   }
 }
 
