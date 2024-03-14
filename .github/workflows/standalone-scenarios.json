@@ -130,6 +130,7 @@
     "postgresql_flexible_server/100-simple-postgresql-flexible",
     "postgresql_flexible_server/101-delegated-subnet-with-fw-rule",
     "postgresql_flexible_server/102-advanced-postgresql-flexible",
+    "postgresql_flexible_server/104-private-endpoint",
     "postgresql_server/100-simple-postgresql",
     "postgresql_server/101-vnet-rule-postgresql",
     "postgresql_server/102-private-endpoint-postgresql",

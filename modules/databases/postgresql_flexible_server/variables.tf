@@ -26,3 +26,11 @@ variable "base_tags" {
   description = "Base tags for the resource to be inherited from the resource group."
   type        = bool
 }
+
+variable "vnets" {}
+
+variable "private_endpoints" {}
+
+variable "private_dns" {
+  default = {}
+}
