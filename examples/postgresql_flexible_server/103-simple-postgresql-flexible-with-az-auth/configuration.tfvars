@@ -38,8 +38,15 @@ postgresql_flexible_servers = {
 
       # (Optional) The Tenant ID of the Azure Active Directory which is used by the Active Directory authentication. active_directory_auth_enabled must be set to true.
       #tenant_id = "00000-ee35-4265-95f6-46e9a9b4ec96"
-    }
 
+      active_directory_administrators = {
+        test_client = {
+          object_key     = "sp1"
+          principal_name = "testclient"
+          principal_type = "ServicePrincipal"
+        }
+      }
+    }
 
     # Auto-generated administrator credentials stored in azure keyvault when not set (recommended).
     # administrator_username  = "postgresqladmin"
@@ -105,6 +112,21 @@ keyvaults = {
       logged_in_user = {
         secret_permissions = ["Set", "Get", "List", "Delete", "Purge"]
       }
+    }
+  }
+}
+
+azuread_applications = {
+  test_client = {
+    useprefix        = true
+    application_name = "test-client"
+  }
+}
+
+azuread_service_principals = {
+  sp1 = {
+    azuread_application = {
+      key = "test_client"
     }
   }
 }
