@@ -122,6 +122,13 @@ resource "azuread_application" "app" {
   }
 }
 
+resource "random_uuid" "app_role_id" {
+  for_each = {
+    for key, value in try(var.settings.app_roles, {}) : key => value
+    if try(value.id, null) == null
+  }
+}
+
 resource "azuread_service_principal" "app" {
   application_id               = azuread_application.app.application_id
   app_role_assignment_required = try(var.settings.app_role_assignment_required, false)
