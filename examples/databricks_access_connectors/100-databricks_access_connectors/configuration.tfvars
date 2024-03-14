@@ -17,7 +17,7 @@ databricks_access_connectors = {
       resource_group_key = "dac_test"
       identity = {
         type   = "UserAssigned" #SystemAssigned
-        #managed_identity_keys = ["dac_test"]
+        managed_identity_keys = ["dac_test"]
     }
      tags = {
        test = "test"
