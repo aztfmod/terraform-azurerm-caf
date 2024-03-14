@@ -7,6 +7,7 @@ module "example" {
 
   current_landingzone_key               = var.landingzone.key
   custom_role_definitions               = var.custom_role_definitions
+  data_sources                          = var.data_sources
   event_hub_auth_rules                  = var.event_hub_auth_rules
   event_hub_consumer_groups             = var.event_hub_consumer_groups
   event_hub_namespace_auth_rules        = var.event_hub_namespace_auth_rules
@@ -92,31 +93,36 @@ module "example" {
     communication_services = var.communication_services
   }
   compute = {
-    aks_clusters                        = var.aks_clusters
-    aro_clusters                        = var.aro_clusters
-    availability_sets                   = var.availability_sets
-    azure_container_registries          = var.azure_container_registries
-    batch_accounts                      = var.batch_accounts
-    batch_applications                  = var.batch_applications
-    batch_certificates                  = var.batch_certificates
-    batch_jobs                          = var.batch_jobs
-    batch_pools                         = var.batch_pools
-    bastion_hosts                       = var.bastion_hosts
-    container_groups                    = var.container_groups
-    dedicated_host_groups               = var.dedicated_host_groups
-    dedicated_hosts                     = var.dedicated_hosts
-    machine_learning_compute_instance   = var.machine_learning_compute_instance
-    proximity_placement_groups          = var.proximity_placement_groups
-    runbooks                            = var.runbooks
-    virtual_machine_scale_sets          = var.virtual_machine_scale_sets
-    virtual_machines                    = var.virtual_machines
-    vmware_private_clouds               = var.vmware_private_clouds
-    vmware_clusters                     = var.vmware_clusters
-    vmware_express_route_authorizations = var.vmware_express_route_authorizations
-    wvd_applications                    = var.wvd_applications
-    wvd_application_groups              = var.wvd_application_groups
-    wvd_host_pools                      = var.wvd_host_pools
-    wvd_workspaces                      = var.wvd_workspaces
+    aks_clusters                           = var.aks_clusters
+    aro_clusters                           = var.aro_clusters
+    availability_sets                      = var.availability_sets
+    azure_container_registries             = var.azure_container_registries
+    batch_accounts                         = var.batch_accounts
+    batch_applications                     = var.batch_applications
+    batch_certificates                     = var.batch_certificates
+    batch_jobs                             = var.batch_jobs
+    batch_pools                            = var.batch_pools
+    bastion_hosts                          = var.bastion_hosts
+    container_apps                         = var.container_apps
+    container_app_dapr_components          = var.container_app_dapr_components
+    container_app_environments             = var.container_app_environments
+    container_app_environment_certificates = var.container_app_environment_certificates
+    container_app_environment_storages     = var.container_app_environment_storages
+    container_groups                       = var.container_groups
+    dedicated_host_groups                  = var.dedicated_host_groups
+    dedicated_hosts                        = var.dedicated_hosts
+    machine_learning_compute_instance      = var.machine_learning_compute_instance
+    proximity_placement_groups             = var.proximity_placement_groups
+    runbooks                               = var.runbooks
+    virtual_machine_scale_sets             = var.virtual_machine_scale_sets
+    virtual_machines                       = var.virtual_machines
+    vmware_private_clouds                  = var.vmware_private_clouds
+    vmware_clusters                        = var.vmware_clusters
+    vmware_express_route_authorizations    = var.vmware_express_route_authorizations
+    wvd_applications                       = var.wvd_applications
+    wvd_application_groups                 = var.wvd_application_groups
+    wvd_host_pools                         = var.wvd_host_pools
+    wvd_workspaces                         = var.wvd_workspaces
   }
   diagnostics = {
     diagnostic_event_hub_namespaces = var.diagnostic_event_hub_namespaces
@@ -201,6 +207,7 @@ module "example" {
     azurerm_routes                                          = var.azurerm_routes
     cdn_profile                                             = var.cdn_profile
     cdn_endpoint                                            = var.cdn_endpoint
+    ddos_services                                           = var.ddos_services
     dns_zone_records                                        = var.dns_zone_records
     dns_zones                                               = var.dns_zones
     domain_name_registrations                               = var.domain_name_registrations
@@ -258,6 +265,7 @@ module "example" {
     vnets                                                   = var.vnets
     virtual_subnets                                         = var.virtual_subnets
     vpn_gateway_connections                                 = var.vpn_gateway_connections
+    vpn_gateway_nat_rules                                   = var.vpn_gateway_nat_rules
     vpn_sites                                               = var.vpn_sites
   }
 
@@ -308,10 +316,11 @@ module "example" {
     shared_image_galleries         = var.shared_image_galleries
   }
   storage = {
-    netapp_accounts        = var.netapp_accounts
-    storage_account_blobs  = var.storage_account_blobs
-    storage_account_queues = var.storage_account_queues
-    storage_containers     = var.storage_containers
+    netapp_accounts             = var.netapp_accounts
+    storage_account_blobs       = var.storage_account_blobs
+    storage_account_file_shares = var.storage_account_file_shares
+    storage_account_queues      = var.storage_account_queues
+    storage_containers          = var.storage_containers
 
   }
   webapp = {
@@ -392,6 +401,9 @@ module "example" {
   purview = {
     purview_accounts = var.purview_accounts
   }
+  maps = {
+    maps_accounts = var.maps_accounts
+  }
 
   iot = {
     digital_twins_instances             = var.digital_twins_instances
@@ -409,5 +421,17 @@ module "example" {
     iot_security_device_group           = var.iot_security_device_group
     iot_central_application             = var.iot_central_application
   }
+  powerbi_embedded = var.powerbi_embedded
+
+  load_test = var.load_test
+
   preview_features = var.preview_features
+
+  maintenance = {
+    maintenance_configuration              = var.maintenance_configuration
+    maintenance_assignment_virtual_machine = var.maintenance_assignment_virtual_machine
+  }
+  search_services = {
+    search_services = var.search_services
+  }
 }

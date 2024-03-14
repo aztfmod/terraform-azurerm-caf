@@ -30,6 +30,8 @@
     "networking/virtual_wan/104-vwan-hub-gw-spp",
     "networking/virtual_wan/105-vwan-hub-route-table",
     "networking/virtual_wan/109-vwan-vpn-gateway-connection",
+    "networking/virtual_wan/110-vwan-hub-gw-p2s-keyvault-cert",
+    "networking/virtual_wan/111-vwan-vpn-gateway-connection-with-nat",
     "redis_cache/100-redis-standard",
     "redis_cache/101-redis-diagnostics",
     "redis_cache/102-redis-private",

@@ -98,16 +98,16 @@ diagnostics_definition = {
     categories = {
       log = [
         #["Category name",  "Diagnostics Enabled(true/false)", "Retention Enabled(true/false)", Retention_period]
-        ["AppServiceHTTPLogs", true, false, 7],
-        ["AppServiceConsoleLogs", true, false, 7],
-        ["AppServiceAppLogs", true, false, 7],
-        ["AppServiceAuditLogs", true, false, 7],
-        ["AppServiceIPSecAuditLogs", true, false, 7],
-        ["AppServicePlatformLogs", true, false, 7],
+        ["AppServiceHTTPLogs", true, false, 0],
+        ["AppServiceConsoleLogs", true, false, 0],
+        ["AppServiceAppLogs", true, false, 0],
+        ["AppServiceAuditLogs", true, false, 0],
+        ["AppServiceIPSecAuditLogs", true, false, 0],
+        ["AppServicePlatformLogs", true, false, 0],
       ]
       metric = [
         #["Category name",  "Diagnostics Enabled(true/false)", "Retention Enabled(true/false)", Retention_period]
-        ["AllMetrics", true, false, 7],
+        ["AllMetrics", true, false, 0],
       ]
     }
   }

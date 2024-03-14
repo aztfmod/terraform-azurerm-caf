@@ -20,11 +20,11 @@ diagnostics_definition = {
     categories = {
       log = [
         # ["Category name",  "Diagnostics Enabled(true/false)", "Retention Enabled(true/false)", Retention_period]
-        ["VMProtectionAlerts", true, false, 7],
+        ["VMProtectionAlerts", true, false, 0],
       ]
       metric = [
         #["Category name",  "Diagnostics Enabled(true/false)", "Retention Enabled(true/false)", Retention_period]
-        ["AllMetrics", true, false, 7],
+        ["AllMetrics", true, false, 0],
       ]
     }
 
@@ -34,10 +34,10 @@ diagnostics_definition = {
     categories = {
       log = [
         # ["Category name",  "Diagnostics Enabled(true/false)", "Retention Enabled(true/false)", Retention_period]
-        ["BastionAuditLogs", true, false, 7],
+        ["BastionAuditLogs", true, false, 0],
       ]
       metric = [
-        ["AllMetrics", true, true, 7],
+        ["AllMetrics", true, true, 0],
       ]
     }
 
@@ -48,12 +48,12 @@ diagnostics_definition = {
     categories = {
       log = [
         #["Category name",  "Diagnostics Enabled(true/false)", "Retention Enabled(true/false)", Retention_period]
-        ["DDoSProtectionNotifications", true, true, 7],
-        ["DDoSMitigationFlowLogs", true, true, 7],
-        ["DDoSMitigationReports", true, true, 7],
+        ["DDoSProtectionNotifications", true, true, 0],
+        ["DDoSMitigationFlowLogs", true, true, 0],
+        ["DDoSMitigationReports", true, true, 0],
       ]
       metric = [
-        ["AllMetrics", true, true, 7],
+        ["AllMetrics", true, true, 0],
       ]
     }
   }

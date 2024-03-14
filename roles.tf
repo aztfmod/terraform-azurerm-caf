@@ -48,7 +48,7 @@ resource "time_sleep" "azurerm_role_assignment_for" {
   ) > 0 ? 1 : 0
 
   # 2 mins timer on creation
-  create_duration = "2m"
+  create_duration = "3m"
 }
 
 resource "time_sleep" "azurerm_role_assignment_for_deferred" {
@@ -98,7 +98,8 @@ locals {
 
   # Nested objects that must be processed after the services_roles
   services_roles_deferred = {
-    storage_containers = local.combined_objects_storage_containers
+    storage_containers          = local.combined_objects_storage_containers
+    storage_account_file_shares = local.combined_objects_storage_account_file_shares
   }
 
 
@@ -120,7 +121,6 @@ locals {
     azuread_apps                               = local.combined_objects_azuread_apps
     azuread_groups                             = local.combined_objects_azuread_groups
     azuread_service_principals                 = local.combined_objects_azuread_service_principals
-    azuread_users                              = local.combined_objects_azuread_users
     azurerm_firewalls                          = local.combined_objects_azurerm_firewalls
     backup_vaults                              = local.combined_objects_backup_vaults
     batch_accounts                             = local.combined_objects_batch_accounts
@@ -144,6 +144,7 @@ locals {
     mssql_managed_databases                    = local.combined_objects_mssql_managed_databases
     mssql_managed_instances                    = local.combined_objects_mssql_managed_instances
     mssql_servers                              = local.combined_objects_mssql_servers
+    maintenance_configuration                  = local.combined_objects_maintenance_configuration
     mysql_servers                              = local.combined_objects_mysql_servers
     network_watchers                           = local.combined_objects_network_watchers
     networking                                 = local.combined_objects_networking
@@ -156,6 +157,7 @@ locals {
     resource_groups                            = local.combined_objects_resource_groups
     route_tables                               = local.combined_objects_route_tables
     servicebus_namespaces                      = local.combined_objects_servicebus_namespaces
+    servicebus_topics                          = local.combined_objects_servicebus_topics
     storage_accounts                           = local.combined_objects_storage_accounts
     subscriptions                              = local.combined_objects_subscriptions
     synapse_workspaces                         = local.combined_objects_synapse_workspaces

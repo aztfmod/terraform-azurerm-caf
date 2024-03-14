@@ -42,4 +42,24 @@ resource "azurerm_private_endpoint" "pep" {
     }
   }
 
+  dynamic "ip_configuration" {
+    for_each = try(var.settings.ip_configurations, {})
+
+    content {
+      name               = ip_configuration.value.name
+      private_ip_address = ip_configuration.value.private_ip_address
+      subresource_name   = lookup(ip_configuration.value, "subresource_name", null)
+      member_name        = lookup(ip_configuration.value, "member_name", null)
+    }
+  }
+
+}
+
+resource "time_sleep" "delay" {
+  count = can(lookup(var.settings,var.settings.delay_time_after_creation,false)) ? 1: 0
+  depends_on = [azurerm_private_endpoint.pep]
+  create_duration = var.settings.delay_time_after_creation
+  lifecycle {
+    replace_triggered_by = [ azurerm_private_endpoint.pep ]
+  }
 }

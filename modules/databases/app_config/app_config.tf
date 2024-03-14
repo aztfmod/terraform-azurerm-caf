@@ -12,17 +12,20 @@ resource "azurecaf_name" "app_config" {
 
 # Create config data store resource
 resource "azurerm_app_configuration" "config" {
-  name                = azurecaf_name.app_config.result
-  resource_group_name = local.resource_group_name
-  sku                 = try(var.settings.sku_name, "standard")
-  location            = local.location
-  tags                = merge(local.tags, try(var.settings.tags, {}))
+  name                  = azurecaf_name.app_config.result
+  resource_group_name   = local.resource_group_name
+  sku                   = try(var.settings.sku_name, "standard")
+  local_auth_enabled    = try(var.settings.local_auth_enabled, null)
+  public_network_access = try(var.settings.public_network_access, null)
+  location              = local.location
+  tags                  = merge(local.tags, try(var.settings.tags, {}))
 
   dynamic "identity" {
     for_each = lookup(var.settings, "identity", {}) == {} ? [] : [1]
 
     content {
-      type = var.settings.identity.type
+      type         = var.settings.identity.type
+      identity_ids = lower(var.settings.identity.type) == "userassigned" ? can(var.settings.identity.user_assigned_identity_id) ? [var.settings.identity.user_assigned_identity_id] : [var.managed_identities[try(var.settings.identity.lz_key, var.client_config.landingzone_key)][var.settings.identity.managed_identity_key].id] : null
     }
   }
 }

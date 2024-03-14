@@ -74,31 +74,36 @@ locals {
   }, var.cloud)
 
   compute = {
-    aks_clusters                        = try(var.compute.aks_clusters, {})
-    aro_clusters                        = try(var.compute.aro_clusters, {})
-    availability_sets                   = try(var.compute.availability_sets, {})
-    azure_container_registries          = try(var.compute.azure_container_registries, {})
-    bastion_hosts                       = try(var.compute.bastion_hosts, {})
-    batch_accounts                      = try(var.compute.batch_accounts, {})
-    batch_applications                  = try(var.compute.batch_applications, {})
-    batch_certificates                  = try(var.compute.batch_certificates, {})
-    batch_jobs                          = try(var.compute.batch_jobs, {})
-    batch_pools                         = try(var.compute.batch_pools, {})
-    container_groups                    = try(var.compute.container_groups, {})
-    dedicated_hosts                     = try(var.compute.dedicated_hosts, {})
-    dedicated_host_groups               = try(var.compute.dedicated_host_groups, {})
-    machine_learning_compute_instance   = try(var.compute.machine_learning_compute_instance, {})
-    proximity_placement_groups          = try(var.compute.proximity_placement_groups, {})
-    vmware_clusters                     = try(var.compute.vmware_clusters, {})
-    vmware_private_clouds               = try(var.compute.vmware_private_clouds, {})
-    vmware_express_route_authorizations = try(var.compute.vmware_express_route_authorizations, {})
-    wvd_applications                    = try(var.compute.wvd_applications, {})
-    wvd_application_groups              = try(var.compute.wvd_application_groups, {})
-    wvd_host_pools                      = try(var.compute.wvd_host_pools, {})
-    wvd_workspaces                      = try(var.compute.wvd_workspaces, {})
-    virtual_machines                    = try(var.compute.virtual_machines, {})
-    virtual_machine_scale_sets          = try(var.compute.virtual_machine_scale_sets, {})
-    runbooks                            = try(var.compute.runbooks, {})
+    aks_clusters                           = try(var.compute.aks_clusters, {})
+    aro_clusters                           = try(var.compute.aro_clusters, {})
+    availability_sets                      = try(var.compute.availability_sets, {})
+    azure_container_registries             = try(var.compute.azure_container_registries, {})
+    bastion_hosts                          = try(var.compute.bastion_hosts, {})
+    batch_accounts                         = try(var.compute.batch_accounts, {})
+    batch_applications                     = try(var.compute.batch_applications, {})
+    batch_certificates                     = try(var.compute.batch_certificates, {})
+    batch_jobs                             = try(var.compute.batch_jobs, {})
+    batch_pools                            = try(var.compute.batch_pools, {})
+    container_apps                         = try(var.compute.container_apps, {})
+    container_app_dapr_components          = try(var.compute.container_app_dapr_components, {})
+    container_app_environments             = try(var.compute.container_app_environments, {})
+    container_app_environment_certificates = try(var.compute.container_app_environment_certificates, {})
+    container_app_environment_storages     = try(var.compute.container_app_environment_storages, {})
+    container_groups                       = try(var.compute.container_groups, {})
+    dedicated_hosts                        = try(var.compute.dedicated_hosts, {})
+    dedicated_host_groups                  = try(var.compute.dedicated_host_groups, {})
+    machine_learning_compute_instance      = try(var.compute.machine_learning_compute_instance, {})
+    proximity_placement_groups             = try(var.compute.proximity_placement_groups, {})
+    vmware_clusters                        = try(var.compute.vmware_clusters, {})
+    vmware_private_clouds                  = try(var.compute.vmware_private_clouds, {})
+    vmware_express_route_authorizations    = try(var.compute.vmware_express_route_authorizations, {})
+    wvd_applications                       = try(var.compute.wvd_applications, {})
+    wvd_application_groups                 = try(var.compute.wvd_application_groups, {})
+    wvd_host_pools                         = try(var.compute.wvd_host_pools, {})
+    wvd_workspaces                         = try(var.compute.wvd_workspaces, {})
+    virtual_machines                       = try(var.compute.virtual_machines, {})
+    virtual_machine_scale_sets             = try(var.compute.virtual_machine_scale_sets, {})
+    runbooks                               = try(var.compute.runbooks, {})
   }
 
   communication = {
@@ -196,6 +201,7 @@ locals {
     managed_identities          = local.combined_objects_managed_identities
     mssql_databases             = local.combined_objects_mssql_databases
     mssql_servers               = local.combined_objects_mssql_servers
+    maintenance_configuration   = local.combined_objects_maintenance_configuration
     storage_accounts            = local.combined_objects_storage_accounts
     networking                  = local.combined_objects_networking
   }
@@ -241,7 +247,12 @@ locals {
   cognitive_services = {
     cognitive_services_account = try(var.cognitive_services.cognitive_services_account, {})
   }
-
+  search_services = {
+    search_services = try(var.search_services.search_services, {})
+  }
+  maps = {
+    maps_accounts = try(var.maps.maps_accounts, {})
+  }
   messaging = {
     signalr_services             = try(var.messaging.signalr_services, {})
     servicebus_namespaces        = try(var.messaging.servicebus_namespaces, {})
@@ -331,6 +342,7 @@ locals {
     vnet_peerings_v1                                        = try(var.networking.vnet_peerings_v1, {})
     vnets                                                   = try(var.networking.vnets, {})
     vpn_gateway_connections                                 = try(var.networking.vpn_gateway_connections, {})
+    vpn_gateway_nat_rules                                   = try(var.networking.vpn_gateway_nat_rules, {})
     vpn_sites                                               = try(var.networking.vpn_sites, {})
   }
 
@@ -382,10 +394,11 @@ locals {
   }
 
   storage = {
-    netapp_accounts        = try(var.storage.netapp_accounts, {})
-    storage_account_blobs  = try(var.storage.storage_account_blobs, {})
-    storage_account_queues = try(var.storage.storage_account_queues, {})
-    storage_containers     = try(var.storage.storage_containers, {})
+    netapp_accounts             = try(var.storage.netapp_accounts, {})
+    storage_account_blobs       = try(var.storage.storage_account_blobs, {})
+    storage_account_file_shares = try(var.storage.storage_account_file_shares, {})
+    storage_account_queues      = try(var.storage.storage_account_queues, {})
+    storage_containers          = try(var.storage.storage_containers, {})
   }
 
   webapp = {
@@ -446,4 +459,14 @@ locals {
     iot_security_device_group           = try(var.iot.iot_security_device_group, {})
     iot_central_application             = try(var.iot.iot_central_application, {})
   }
+
+  powerbi_embedded = try(var.powerbi_embedded, {})
+
+  maintenance = {
+    maintenance_configuration              = try(var.maintenance.maintenance_configuration, {})
+    maintenance_assignment_virtual_machine = try(var.maintenance.maintenance_assignment_virtual_machine, {})
+  }
+
+
+  load_test = try(var.load_test, {})
 }

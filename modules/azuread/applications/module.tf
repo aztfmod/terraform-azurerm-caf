@@ -113,6 +113,9 @@ resource "azuread_service_principal" "app" {
   application_id               = azuread_application.app.application_id
   app_role_assignment_required = try(var.settings.app_role_assignment_required, false)
   tags                         = try(var.settings.tags, null)
+  owners = [
+    var.client_config.object_id
+  ]
 }
 
 resource "azuread_service_principal_password" "pwd" {
@@ -125,7 +128,7 @@ resource "azuread_service_principal_password" "pwd" {
   }
 
   lifecycle {
-    create_before_destroy = false
+    #create_before_destroy = false
   }
 }
 

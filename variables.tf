@@ -185,6 +185,11 @@ variable "user_type" {
   default     = {}
 }
 
+## Azure Maps
+variable "maps" {
+  description = "Configuration object - Azure map "
+  default     = {}
+}
 ## Azure AD
 variable "azuread" {
   description = "Configuration object - Azure Active Directory resources"
@@ -430,3 +435,18 @@ variable "aadb2c" {
 variable "preview_features" {
   default = {}
 }
+variable "powerbi_embedded" {
+  default = {}
+}
+variable "maintenance" {
+  default = {}
+}
+variable "search_services" {
+  description = "Configuration object - Search service Resource "
+  default     = {}
+}
+variable "load_test" {
+  description = "Configuration object - Load Test resources"
+  default     = {}
+}
+

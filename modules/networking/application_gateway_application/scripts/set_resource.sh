@@ -122,6 +122,15 @@ case "${RESOURCE}" in
         execute_with_backoff az network application-gateway http-listener create -g ${RG_NAME} --gateway-name ${APPLICATION_GATEWAY_NAME} \
         -n ${NAME} --frontend-port ${PORT} ${frontendip}${hostname}${hostnames}${sslcert}${wafpolicy}
         ;;
+    REDIRECTCONFIG)
+        targetlistener=$([ -z "${TARGET_LISTENER_NAME}" ] && echo "" || echo "--target-listener ${TARGET_LISTENER_NAME} ")
+        targeturl=$([ -z "${TARGET_URL}" ] && echo "" || echo "--target-url ${TARGET_URL} ")
+        includepath=$([ -z "${INCLUDE_PATH}" ] && echo "" || echo "--include-path ${INCLUDE_PATH} ")
+        includequerystring=$([ -z "${INCLUDE_QUERY_STRING}" ] && echo "" || echo "--include-query-string ${INCLUDE_QUERY_STRING} ")
+        
+        execute_with_backoff az network application-gateway redirect-config create -g ${RG_NAME} --gateway-name ${APPLICATION_GATEWAY_NAME} \
+        -n ${NAME} --type ${REDIRECT_TYPE} ${targetlistener}${targeturl}${includepath}${includequerystring}
+        ;;
     REQUESTROUTINGRULE)
         listener=$([ -z "${LISTENER}" ] && echo "" || echo "--http-listener ${LISTENER} ")
         addresspool=$([ -z "${ADDRESS_POOL}" ] && echo "" || echo "--address-pool ${ADDRESS_POOL} ")
@@ -131,7 +140,7 @@ case "${RESOURCE}" in
         rewriteruleset=$([ -z "${REWRITE_RULE_SET}" ] && echo "" || echo "--rewrite-rule-set ${REWRITE_RULE_SET} ")
         ruletype=$([ -z "${RULE_TYPE}" ] && echo "" || echo "--rule-type ${RULE_TYPE} ")
         urlpathmap=$([ -z "${URL_PATH_MAP}" ] && echo "" || echo "--url-path-map ${URL_PATH_MAP} ")
-
+        
         execute_with_backoff az network application-gateway rule create -g ${RG_NAME} --gateway-name ${APPLICATION_GATEWAY_NAME} \
         -n ${NAME} ${listener}${addresspool}${httpsettings}${priority}${redirectconfig}${rewriteruleset}${ruletype}${urlpathmap}
         ;;
@@ -151,15 +160,35 @@ case "${RESOURCE}" in
          --name ${NAME} ${certfile}${keyvaultsecretid}
         ;;
     PATHMAP)
-        addresspool=$([ -z "${ADDRESS_POOL}" ] && echo "" || echo "--address-pool ${ADDRESS_POOL} --default-address-pool ${ADDRESS_POOL} ")
-        httpsettings=$([ -z "${HTTP_SETTINGS}" ] && echo "" || echo "--http-settings ${HTTP_SETTINGS} --default-http-settings ${HTTP_SETTINGS} ")
+        defaultaddresspool=$([ -z "${DEFAULT_ADDRESS_POOL}" ] && echo "" || echo "--default-address-pool ${DEFAULT_ADDRESS_POOL} ")
+        addresspool=$([ -z "${ADDRESS_POOL}" ] && echo "" || echo "--address-pool ${ADDRESS_POOL} ")
+        defaulthttpsettings=$([ -z "${DEFAULT_HTTP_SETTINGS}" ] && echo "" || echo "--default-http-settings ${DEFAULT_HTTP_SETTINGS} ")
+        httpsettings=$([ -z "${HTTP_SETTINGS}" ] && echo "" || echo "--http-settings ${HTTP_SETTINGS} ")
+        defaultredirectconfig=$([ -z "${DEFAULT_REDIRECT_CONFIG}" ] && echo "" || echo "--default-redirect-config ${DEFAULT_REDIRECT_CONFIG} ")
         redirectconfig=$([ -z "${REDIRECT_CONFIG}" ] && echo "" || echo "--redirect-config ${REDIRECT_CONFIG} ")
+        defaultrewriteruleset=$([ -z "${DEFAULT_REWRITE_RULE_SET}" ] && echo "" || echo "--default-rewrite-rule-set ${DEFAULT_REWRITE_RULE_SET} ")
         rewriteruleset=$([ -z "${REWRITE_RULE_SET}" ] && echo "" || echo "--rewrite-rule-set ${REWRITE_RULE_SET} ")
         rulename=$([ -z "${RULE_NAME}" ] && echo "" || echo "--rule-name ${RULE_NAME} ")
         wafpolicy=$([ -z "${WAF_POLICY}" ] && echo "" || echo "--waf-policy ${WAF_POLICY} ")
 
-        execute_with_backoff az network application-gateway url-path-map create -g ${RG_NAME} --gateway-name ${APPLICATION_GATEWAY_NAME} \
-            -n ${NAME} --paths ${PATHS} ${addresspool}${httpsettings}${redirectconfig}${rewriteruleset}${rulename}${wafpolicy}
+        # Check if pathmap already created
+        output=$(az network application-gateway url-path-map show -g ${RG_NAME} --gateway-name ${APPLICATION_GATEWAY_NAME} -n ${NAME} 2> error.txt)
+
+        # Check if the error file contains the ResourceNotFoundError message
+        if grep -q "ResourceNotFoundError" error.txt; then
+            execute_with_backoff az network application-gateway url-path-map create -g ${RG_NAME} --gateway-name ${APPLICATION_GATEWAY_NAME} \
+            -n ${NAME} --paths ${PATHS} ${defaultaddresspool}${addresspool}${defaulthttpsettings}${httpsettings} \
+            ${defaultredirectconfig}${redirectconfig}${defaultrewriteruleset}${rewriteruleset}${rulename}${wafpolicy}
+        else
+            execute_with_backoff az network application-gateway url-path-map update  -g ${RG_NAME} --gateway-name ${APPLICATION_GATEWAY_NAME} \
+            -n ${NAME} ${defaultaddresspool}${defaulthttpsettings}${defaultredirectconfig}${defaultrewriteruleset}
+            execute_with_backoff az network application-gateway url-path-map rule create  -g ${RG_NAME} --gateway-name ${APPLICATION_GATEWAY_NAME} \
+            -n ${RULE_NAME} --path-map-name ${NAME} --paths ${PATHS} ${addresspool}${httpsettings}${redirectconfig}${rewriteruleset}${wafpolicy}
+        fi
+
+        # Remove the error file
+        rm error.txt
+
         ;;
     PATHRULE)
         addresspool=$([ -z "${ADDRESS_POOL}" ] && echo "" || echo "--address-pool ${ADDRESS_POOL} ")
@@ -206,7 +235,7 @@ case "${RESOURCE}" in
         ignorecase=$([ -z "${IGNORE_CASE}" ] && echo "" || echo "--ignore-case ${IGNORE_CASE} ")
         negate=$([ -z "${NEGATE}" ] && echo "" || echo "--negate ${NEGATE} ")
         pattern=$([ -z "${PATTERN}" ] && echo "" || echo "--pattern ${PATTERN} ")
-
+        
         execute_with_backoff az network application-gateway rewrite-rule condition create -g ${RG_NAME} \
             --gateway-name ${APPLICATION_GATEWAY_NAME} --variable ${VARIABLE} --rule-set-name ${RULE_SET_NAME} --rule-name ${RULE_NAME}\
             ${ignorecase} ${negate} ${pattern}

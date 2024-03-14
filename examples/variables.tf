@@ -232,6 +232,12 @@ variable "mssql_mi_secondary_tdes" {
 variable "storage_accounts" {
   default = {}
 }
+variable "storage_account_file_shares" {
+  default = {}
+}
+variable "maps_accounts" {
+  default = {}
+}
 variable "azuread_credential_policies" {
   default = {}
 }
@@ -284,6 +290,9 @@ variable "virtual_machines" {
   default = {}
 }
 variable "virtual_machine_scale_sets" {
+  default = {}
+}
+variable "ddos_services" {
   default = {}
 }
 variable "bastion_hosts" {
@@ -550,6 +559,21 @@ variable "load_balancers" {
 variable "ip_groups" {
   default = {}
 }
+variable "container_app_environments" {
+  default = {}
+}
+variable "container_app_environment_certificates" {
+  default = {}
+}
+variable "container_app_dapr_components" {
+  default = {}
+}
+variable "container_apps" {
+  default = {}
+}
+variable "container_app_environment_storages" {
+  default = {}
+}
 variable "container_groups" {
   default = {}
 }
@@ -614,6 +638,9 @@ variable "vpn_sites" {
   default = {}
 }
 variable "vpn_gateway_connections" {
+  default = {}
+}
+variable "vpn_gateway_nat_rules" {
   default = {}
 }
 variable "servicebus_namespaces" {
@@ -1027,6 +1054,9 @@ variable "web_pubsub_hubs" {
 variable "aadb2c_directory" {
   default = {}
 }
+variable "powerbi_embedded" {
+  default = {}
+}
 variable "preview_features" {
   default = {}
 }
@@ -1085,5 +1115,20 @@ variable "cosmosdb_role_mapping" {
   default = {}
 }
 variable "cosmosdb_role_definitions" {
+  default = {}
+}
+variable "data_sources" {
+  default = {}
+}
+variable "maintenance_configuration" {
+  default = {}
+}
+variable "maintenance_assignment_virtual_machine" {
+  default = {}
+}
+variable "search_services" {
+  default     = {}
+}
+variable "load_test" {
   default = {}
 }

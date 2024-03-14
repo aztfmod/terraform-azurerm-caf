@@ -25,8 +25,8 @@ variable "vnets" {
 variable "pips" {
   default = null
 }
+variable "private_endpoints" {}
 variable "combined_resources" {
   description = "Provide a map of combined resources for environment_variables_from_resources"
   default     = {}
 }
-

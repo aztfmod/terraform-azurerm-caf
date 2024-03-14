@@ -9,6 +9,7 @@ resource "azurerm_backup_policy_vm" "vm" {
   recovery_vault_name            = azurerm_recovery_services_vault.asr.name
   instant_restore_retention_days = try(each.value.instant_restore_retention_days, null)
   timezone                       = try(each.value.timezone, null)
+  policy_type                    = try(each.value.policy_type, null)
 
   dynamic "backup" {
     for_each = lookup(each.value, "backup", null) == null ? [] : [1]

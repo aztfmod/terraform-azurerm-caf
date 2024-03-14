@@ -11,7 +11,7 @@ resource "azuread_application_password" "key" {
   }
 
   lifecycle {
-    create_before_destroy = true
+    #create_before_destroy = true
   }
 }
 
@@ -28,7 +28,7 @@ resource "azuread_application_password" "key0" {
   }
 
   lifecycle {
-    create_before_destroy = true
+    #create_before_destroy = true
   }
 }
 
@@ -44,7 +44,7 @@ resource "azuread_application_password" "key1" {
   }
 
   lifecycle {
-    create_before_destroy = true
+    #create_before_destroy = true
   }
 }
 

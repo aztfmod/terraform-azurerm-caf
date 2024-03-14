@@ -28,3 +28,10 @@ variable "combined_objects" {
 }
 
 variable "client_config" {}
+variable "managed_identities" {}
+variable "keyvaults" {}
+variable "vnets" {}
+variable "resource_groups" {}
+variable "private_dns" {
+  default = {}
+}

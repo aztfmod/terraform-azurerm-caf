@@ -86,7 +86,7 @@ jobs:
     needs: [job]
 
     container:
-      image: aztfmod/rover:1.4.6-2305.1701
+      image: aztfmod/rover:1.5.7-2310.0211
       options: --user 0
 
     steps:

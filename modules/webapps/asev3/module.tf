@@ -22,8 +22,8 @@ resource "azurerm_app_service_environment_v3" "asev3" {
     for_each = can(var.settings.cluster_settings) ? var.settings.cluster_settings : []
 
     content {
-      name  = cluster_setting.name
-      value = cluster_setting.value
+      name  = cluster_setting.value.name
+      value = cluster_setting.value.value
     }
   }
 

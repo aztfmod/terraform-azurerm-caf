@@ -63,6 +63,7 @@ resource "azurerm_kubernetes_cluster" "aks" {
     os_disk_type                  = try(var.settings.default_node_pool.os_disk_type, null)
     os_sku                        = try(var.settings.default_node_pool.os_sku, null)
     tags                          = merge(try(var.settings.default_node_pool.tags, {}), local.tags)
+    temporary_name_for_rotation   = try(var.settings.default_node_pool.temporary_name_for_rotation, null)
     type                          = try(var.settings.default_node_pool.type, "VirtualMachineScaleSets")
     ultra_ssd_enabled             = try(var.settings.default_node_pool.ultra_ssd_enabled, false)
     vm_size                       = var.settings.default_node_pool.vm_size
@@ -165,10 +166,11 @@ resource "azurerm_kubernetes_cluster" "aks" {
   http_application_routing_enabled = can(var.settings.addon_profile.http_application_routing) || can(var.settings.http_application_routing_enabled) == false ? try(var.settings.addon_profile.http_application_routing.0.enabled, null) : var.settings.http_application_routing_enabled
 
   dynamic "oms_agent" {
-    for_each = try(var.settings.oms_agent[*], var.settings.oms_agent[*], {})
+    for_each = try(var.settings.addon_profile.oms_agent[*], var.settings.oms_agent[*], {})
 
     content {
       log_analytics_workspace_id = can(oms_agent.value.log_analytics_workspace_id) ? oms_agent.value.log_analytics_workspace_id : var.diagnostics.log_analytics[oms_agent.value.log_analytics_key].id
+      msi_auth_for_monitoring_enabled = try(oms_agent.value.msi_auth_for_monitoring_enabled, null)
     }
   }
   dynamic "microsoft_defender" {
@@ -297,17 +299,17 @@ resource "azurerm_kubernetes_cluster" "aks" {
   local_account_disabled = try(var.settings.local_account_disabled, false)
 
   dynamic "maintenance_window" {
-    for_each = can(var.settings.maintenance_window) ? [1] : []
+    for_each = try(var.settings.maintenance_window, null) == null ? [] : [1]
     content {
       dynamic "allowed" {
-        for_each = can(maintenance_window.value.allowed) ? [1] : []
+        for_each = try(var.settings.maintenance_window.allowed, null) == null ? [] : [1]
         content {
           day   = var.settings.maintenance_window.allowed.day
           hours = var.settings.maintenance_window.allowed.hours
         }
       }
       dynamic "not_allowed" {
-        for_each = can(var.settings.maintenance_window.not_allowed) ? [1] : []
+        for_each = try(var.settings.maintenance_window.not_allowed, null) == null ? [] : [1]
         content {
           end   = var.settings.maintenance_window.not_allowed.end
           start = var.settings.maintenance_window.not_allowed.start
