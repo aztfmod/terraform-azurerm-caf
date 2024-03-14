@@ -8,8 +8,8 @@ module "private_endpoint" {
 
   resource_id         = azurerm_app_configuration.config.id
   name                = each.value.name
-  location            = local.location
-  resource_group_name = local.resource_group_name
+  location            = try(var.resource_groups[try(each.value.resource_group.lz_key, var.client_config.landingzone_key)][try(each.value.resource_group.key, each.value.resource_group_key)].location, local.location)
+  resource_group_name = try(var.resource_groups[try(each.value.resource_group.lz_key, var.client_config.landingzone_key)][try(each.value.resource_group.key, each.value.resource_group_key)].name, local.resource_group_name)
   subnet_id           = can(each.value.subnet_id) ? each.value.subnet_id : var.vnets[try(each.value.lz_key, var.client_config.landingzone_key)][each.value.vnet_key].subnets[each.value.subnet_key].id
   settings            = each.value
   global_settings     = var.global_settings
