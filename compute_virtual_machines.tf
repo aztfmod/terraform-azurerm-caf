@@ -29,7 +29,7 @@ module "virtual_machines" {
   network_security_groups     = local.combined_objects_network_security_groups
   proximity_placement_groups  = local.combined_objects_proximity_placement_groups
   public_ip_addresses         = local.combined_objects_public_ip_addresses
-  recovery_vaults             = local.combined_objects_recovery_vaults
+  recovery_vaults             = can(each.value.backup.vault_key) ? local.combined_objects_recovery_vaults[try(each.value.backup.lz_key, local.client_config.landingzone_key)][each.value.backup.vault_key] : null
   settings                    = each.value
   storage_accounts            = local.combined_objects_storage_accounts
   vnets                       = local.combined_objects_networking
