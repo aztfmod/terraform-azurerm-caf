@@ -169,7 +169,7 @@ resource "azurerm_kubernetes_cluster" "aks" {
     for_each = try(var.settings.addon_profile.oms_agent[*], var.settings.oms_agent[*], {})
 
     content {
-      log_analytics_workspace_id = can(oms_agent.value.log_analytics_workspace_id) ? oms_agent.value.log_analytics_workspace_id : var.diagnostics.log_analytics[oms_agent.value.log_analytics_key].id
+      log_analytics_workspace_id      = can(oms_agent.value.log_analytics_workspace_id) ? oms_agent.value.log_analytics_workspace_id : var.diagnostics.log_analytics[oms_agent.value.log_analytics_key].id
       msi_auth_for_monitoring_enabled = try(oms_agent.value.msi_auth_for_monitoring_enabled, null)
     }
   }
@@ -573,3 +573,15 @@ resource "azurerm_kubernetes_cluster_node_pool" "nodepools" {
   node_count = try(each.value.node_count, null)
 }
 
+#
+# Extension
+#
+
+resource "azurerm_kubernetes_cluster_extension" "cluster_extension" {
+  for_each               = try(var.settings.cluster_extension, {})
+  name                   = each.value.name
+  cluster_id             = azurerm_kubernetes_cluster.aks.id
+  extension_type         = try(each.value.extension_type, null)
+  release_train          = try(each.value.release_train, null)
+  configuration_settings = try(each.value.configuration_settings, {})
+}
