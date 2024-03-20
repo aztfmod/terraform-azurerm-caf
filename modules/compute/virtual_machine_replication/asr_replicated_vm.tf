@@ -1,3 +1,4 @@
+# this is necessary to bypass a bug in the provider that doesn't normalize case and detects change when there is none
 locals {
   os_disk_id = join("/", concat(
     [""],
@@ -97,7 +98,7 @@ resource "azurerm_site_recovery_replicated_vm" "replication" {
   dynamic "managed_disk" {
     for_each = lookup(var.settings, "data_disks", {})
     content {
-      disk_id = local.local.data_disk_id[managed_disk.key]
+      disk_id = local.data_disk_id[managed_disk.key]
       staging_storage_account_id = coalesce(
         try(var.storage_accounts[var.client_config.landingzone_key][var.settings.replication.staging_storage_account_key].id, null),
         try(var.storage_accounts[var.settings.replication.staging_storage_account.lz_key][var.settings.replication.staging_storage_account.key].id, null)
