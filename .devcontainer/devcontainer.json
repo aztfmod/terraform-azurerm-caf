@@ -1,34 +1,43 @@
 {
     "name": "Azure CAF module",
 
-    // Update the 'dockerComposeFile' list if you have more compose files or use different names.
-    "dockerComposeFile": "docker-compose.yml",
-
-    // The 'service' property is the name of the service for the container that VS Code should
-    // use. Update this value and .devcontainer/docker-compose.yml to the real service name.
-    "service": "rover",
-
     // Container user to use in VSCode Online and GitHub Codespaces
+    "image": "aztfmod/rover:1.7.5-2403.1406",
     "remoteUser": "vscode",
 
-    // The optional 'workspaceFolder' property is the path VS Code should open by default when
-    // connected. This is typically a volume mount in .devcontainer/docker-compose.yml
+    // Volume mounts for the container.
+    "mounts": [
+        "source=volume-caf-vscode,target=/home/vscode",
+        "source=volume-caf-vscode-bashhistory,target=/commandhistory",
+        "source=/var/run/docker.sock,target=/var/run/docker.sock,type=bind",
+        "source=${localEnv:HOME}${localEnv:USERPROFILE}/.ssh,target=/home/vscode/.ssh,type=bind,consistency=cached"
+    ],
+
+    // Adding features to the container.
+    "features": {
+        "ghcr.io/devcontainers/features/docker-outside-of-docker:1": {},
+        "ghcr.io/mickeahlinder/devcontainer-features/tfenv:1": {}
+    },
+
+    // Container run arguments.
+    "runArgs": [
+		"--cap-add=SYS_PTRACE",
+		"--security-opt",
+		"seccomp=unconfined",
+		"--init"
+	],
+
+    // Workspace mounts and environment variables can be added here.
+    "workspaceMount": "source=${localWorkspaceFolder},target=/tf/caf,type=bind",
     "workspaceFolder": "/tf/caf",
 
-    // Use 'settings' to set *default* container specific settings.json values on container create.
-    // You can edit these settings after create using File > Preferences > Settings > Remote.
-
-
-    // Uncomment the next line if you want start specific services in your Docker Compose config.
-    // "runServices": [],
-
-    // Uncomment this like if you want to keep your containers running after VS Code shuts down.
-    // "shutdownAction": "none",
 
     // Uncomment the next line to run commands after the container is created.
-	"postCreateCommand": "sudo cp -R /tmp/.ssh-localhost/* ~/.ssh && sudo chown -R $(whoami):$(whoami) /tf/caf ~/.ssh && sudo chmod 400 ~/.ssh/* && git config --global core.editor vi && pre-commit install && pre-commit autoupdate",
+	"postCreateCommand" : "sudo chmod 400 ~/.ssh/* && git config --global core.editor vi && pre-commit install && pre-commit autoupdate",
+    // "postCreateCommand": "sudo cp -R /tmp/.ssh-localhost/* ~/.ssh && sudo chown -R $(whoami):$(whoami) /tf/caf ~/.ssh && sudo chmod 400 ~/.ssh/* && git config --global core.editor vi && pre-commit install && pre-commit autoupdate",
 
-    // Add the IDs of extensions you want installed when the container is created in the array below.
+
+    // Adding the extensions you in the container.
     "customizations": {
         "vscode": {
             "extensions": [
@@ -39,4 +48,6 @@
 			]
         }
     }
+
+
 }
