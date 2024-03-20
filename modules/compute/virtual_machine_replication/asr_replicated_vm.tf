@@ -18,6 +18,14 @@ locals {
       [lower(split("/", var.virtual_machine_data_disks[key])[8])]
     ))
   }
+
+  virtual_machine_id = join("/", concat(
+    [""],
+    slice(split("/", var.virtual_machine_id), 1, 4),
+    [lower(split("/", var.virtual_machine_id)[4])],
+    slice(split("/", var.virtual_machine_id), 5, 8),
+    [lower(split("/", var.virtual_machine_id)[8])]
+  ))
 }
 
 resource "azurerm_site_recovery_replicated_vm" "replication" {
@@ -48,7 +56,7 @@ resource "azurerm_site_recovery_replicated_vm" "replication" {
     try(var.recovery_vaults[var.client_config.landingzone_key][var.settings.replication.vault_key].recovery_fabrics[var.settings.replication.source.recovery_fabric_key].name, null),
     try(var.recovery_vaults[var.settings.replication.lz_key][var.settings.replication.vault_key].recovery_fabrics[var.settings.replication.source.recovery_fabric_key].name, null)
   )
-  source_vm_id = var.virtual_machine_id
+  source_vm_id = local.virtual_machine_id
   source_recovery_protection_container_name = coalesce(
     try(var.settings.replication.source.protection_container_name, null),
     try(var.recovery_vaults[var.client_config.landingzone_key][var.settings.replication.vault_key].protection_containers[var.settings.replication.source.protection_container_key].name, null),
