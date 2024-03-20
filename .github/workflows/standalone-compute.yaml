@@ -30,7 +30,7 @@ jobs:
     outputs:
       matrix: ${{ steps.load_scenarios.outputs.matrix }}
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
       - id: load_scenarios
         run: |
           cases=$(cat ./.github/workflows/standalone-compute.json | jq -c .)
@@ -46,12 +46,12 @@ jobs:
       matrix: ${{fromJSON(needs.load_scenarios.outputs.matrix)}}
 
     container:
-      image: aztfmod/rover:1.5.7-2310.0211
+      image: aztfmod/rover:1.7.5-2403.1406
       options: --user 0
 
     steps:
       - name: Checkout
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
 
       - name: Create environment variables
         run: |
@@ -131,7 +131,7 @@ jobs:
     needs: [testcases]
 
     container:
-      image: aztfmod/rover:1.5.7-2310.0211
+      image: aztfmod/rover:1.7.5-2403.1406
       options: --user 0
 
     steps:
