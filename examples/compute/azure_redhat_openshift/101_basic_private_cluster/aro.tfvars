@@ -49,7 +49,8 @@ aro_clusters = {
       #  secret           = "your_secret"
       #  secret_id        = "resource_id_of_the_secret"
       #}
-      version = "4.10.40"
+      version = "4.13.23"
+      ## can get the last version with "az aro get-versions --location eastus"
       resource_group = {
         # cant be an existing RG, you can specify the name of the RG to create with id="" or just a name=""
         # id = "resource_group_id"
