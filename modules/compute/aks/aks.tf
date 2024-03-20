@@ -169,7 +169,7 @@ resource "azurerm_kubernetes_cluster" "aks" {
     for_each = try(var.settings.addon_profile.oms_agent[*], var.settings.oms_agent[*], {})
 
     content {
-      log_analytics_workspace_id = can(oms_agent.value.log_analytics_workspace_id) ? oms_agent.value.log_analytics_workspace_id : var.diagnostics.log_analytics[oms_agent.value.log_analytics_key].id
+      log_analytics_workspace_id      = can(oms_agent.value.log_analytics_workspace_id) ? oms_agent.value.log_analytics_workspace_id : var.diagnostics.log_analytics[oms_agent.value.log_analytics_key].id
       msi_auth_for_monitoring_enabled = try(oms_agent.value.msi_auth_for_monitoring_enabled, null)
     }
   }
@@ -354,7 +354,8 @@ resource "azurerm_kubernetes_cluster" "aks" {
   private_cluster_enabled             = try(var.settings.private_cluster_enabled, null)
   private_dns_zone_id                 = try(var.private_dns_zone_id, null)
   private_cluster_public_fqdn_enabled = try(var.settings.private_cluster_public_fqdn_enabled, null)
-  public_network_access_enabled       = try(var.settings.public_network_access_enabled, true)
+  # public_network_access_enabled       = try(var.settings.public_network_access_enabled, true)
+  # deprecated https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/resources/kubernetes_cluster#public_network_access_enabled
 
   #Enabled RBAC
   dynamic "azure_active_directory_role_based_access_control" {
