@@ -14,10 +14,10 @@ resource "azurerm_maintenance_configuration" "maintenance_configuration" {
   location                 = var.location
   scope                    = var.scope
   visibility               = try(var.visibility, null)
-  properties               = try(var.properties, {})  
+  properties               = try(var.properties, {})
   in_guest_user_patch_mode = var.settings.scope == "InGuestPatch" ? var.in_guest_user_patch_mode : try(var.in_guest_user_patch_mode, null)
 
-  
+
   dynamic "window" {
     for_each = try(var.settings.window, null) != null ? [var.settings.window] : []
     content {
@@ -52,7 +52,7 @@ resource "azurerm_maintenance_configuration" "maintenance_configuration" {
         }
       }
 
-      reboot = try(var.settings.install_patches.reboot, "IfRequired" )
+      reboot = try(var.settings.install_patches.reboot, "IfRequired")
     }
   }
 
