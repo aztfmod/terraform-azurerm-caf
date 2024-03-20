@@ -1,7 +1,28 @@
+locals {
+  os_disk_id = join("/", concat(
+    [""],
+    slice(split("/", var.virtual_machine_os_disk.id), 1, 4),
+    [lower(split("/", var.virtual_machine_os_disk.id)[4])],
+    slice(split("/", var.virtual_machine_os_disk.id), 5, 8),
+    [lower(split("/", var.virtual_machine_os_disk.id)[8])]
+  ))
+
+  data_disk_id = {
+    for key, value in lookup(var.settings, "data_disks", {}) : key =>
+    join("/", concat(
+      [""],
+      slice(split("/", var.virtual_machine_data_disks[key]), 1, 4),
+      [lower(split("/", var.virtual_machine_data_disks[key])[4])],
+      slice(split("/", var.virtual_machine_data_disks[key]), 5, 8),
+      [lower(split("/", var.virtual_machine_data_disks[key])[8])]
+    ))
+  }
+}
+
 resource "azurerm_site_recovery_replicated_vm" "replication" {
   count = try(var.settings.replication, null) == null ? 0 : 1
 
-  name                = "${var.virtual_machine_name}-repl"
+  name = "${var.virtual_machine_name}-repl"
   resource_group_name = coalesce(
     try(var.settings.replication.recovery_vault_rg, null),
     try(split("/", var.settings.replication.recovery_vault_id)[4], null),
@@ -59,29 +80,29 @@ resource "azurerm_site_recovery_replicated_vm" "replication" {
   )
 
   managed_disk {
-      disk_id = lower(var.virtual_machine_os_disk.id)
-      staging_storage_account_id = coalesce(
-        try(var.storage_accounts[var.client_config.landingzone_key][var.settings.replication.staging_storage_account_key].id, null),
-        try(var.storage_accounts[var.settings.replication.staging_storage_account.lz_key][var.settings.replication.staging_storage_account.key].id, null)
-      )
-      target_resource_group_id      = coalesce(
-        try(var.resource_groups[var.client_config.landingzone_key][var.settings.replication.target.resource_group_key].id, null),
-        try(var.recovery_vaults[var.settings.replication.target.resource_group.lz_key][var.settings.replication.resource_group.key].id, null)
-      )
-      target_disk_type              = var.virtual_machine_os_disk.storage_account_type
-      target_replica_disk_type      = var.virtual_machine_os_disk.storage_account_type
-      target_disk_encryption_set_id = try(var.virtual_machine_os_disk.disk_encryption_set_id, null)
+    disk_id = local.os_disk_id
+    staging_storage_account_id = coalesce(
+      try(var.storage_accounts[var.client_config.landingzone_key][var.settings.replication.staging_storage_account_key].id, null),
+      try(var.storage_accounts[var.settings.replication.staging_storage_account.lz_key][var.settings.replication.staging_storage_account.key].id, null)
+    )
+    target_resource_group_id = coalesce(
+      try(var.resource_groups[var.client_config.landingzone_key][var.settings.replication.target.resource_group_key].id, null),
+      try(var.recovery_vaults[var.settings.replication.target.resource_group.lz_key][var.settings.replication.resource_group.key].id, null)
+    )
+    target_disk_type              = var.virtual_machine_os_disk.storage_account_type
+    target_replica_disk_type      = var.virtual_machine_os_disk.storage_account_type
+    target_disk_encryption_set_id = try(var.virtual_machine_os_disk.disk_encryption_set_id, null)
   }
 
   dynamic "managed_disk" {
     for_each = lookup(var.settings, "data_disks", {})
     content {
-      disk_id                    = lower(var.virtual_machine_data_disks[managed_disk.key])
+      disk_id = local.local.data_disk_id[managed_disk.key]
       staging_storage_account_id = coalesce(
         try(var.storage_accounts[var.client_config.landingzone_key][var.settings.replication.staging_storage_account_key].id, null),
         try(var.storage_accounts[var.settings.replication.staging_storage_account.lz_key][var.settings.replication.staging_storage_account.key].id, null)
       )
-      target_resource_group_id      = coalesce(
+      target_resource_group_id = coalesce(
         try(var.resource_groups[var.client_config.landingzone_key][var.settings.replication.target.resource_group_key].id, null),
         try(var.recovery_vaults[var.settings.replication.target.resource_group.lz_key][var.settings.replication.resource_group.key].id, null)
       )
