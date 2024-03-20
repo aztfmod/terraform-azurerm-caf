@@ -13,7 +13,7 @@ module "recovery_vaults" {
   private_dns         = local.combined_objects_private_dns
   resource_group      = local.combined_objects_resource_groups[try(each.value.resource_group.lz_key, local.client_config.landingzone_key)][try(each.value.resource_group.key, each.value.resource_group_key)]
   base_tags           = local.global_settings.inherit_tags
-  managed_identities = local.combined_objects_managed_identities
+  managed_identities  = local.combined_objects_managed_identities
 }
 
 output "recovery_vaults" {
