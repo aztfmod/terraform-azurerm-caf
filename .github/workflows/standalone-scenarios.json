@@ -106,6 +106,7 @@
     "messaging/web_pubsub/101-web-pubsub-hub",
     "messaging/web_pubsub/102-web-pubsub-usermsi",
     "messaging/web_pubsub/103-web-pubsub-keyvault",
+    "messaging/notification_hub/100-notification-hub",
     "monitoring/100-service-health-alerts",
     "monitoring/101-monitor-action-groups",
     "monitoring/102-monitor_activity_log_alert",
