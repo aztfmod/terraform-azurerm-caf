@@ -949,6 +949,15 @@ variable "eventgrid_event_subscription" {
 variable "eventgrid_domain_topic" {
   default = {}
 }
+variable "notification_hub_namespaces" {
+  default = {}
+}
+variable "notification_hubs" {
+  default = {}
+}
+variable "notification_hub_auth_rules" {
+  default = {}
+}
 variable "relay_hybrid_connection" {
   default = {}
 }
@@ -1130,7 +1139,7 @@ variable "maintenance_assignment_virtual_machine" {
   default = {}
 }
 variable "search_services" {
-  default     = {}
+  default = {}
 }
 variable "load_test" {
   default = {}
