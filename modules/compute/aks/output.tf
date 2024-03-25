@@ -47,3 +47,7 @@ output "node_resource_group" {
 output "private_fqdn" {
   value = azurerm_kubernetes_cluster.aks.private_fqdn
 }
+
+output "oidc_issuer_url" {
+  value = azurerm_kubernetes_cluster.aks.oidc_issuer_url
+}

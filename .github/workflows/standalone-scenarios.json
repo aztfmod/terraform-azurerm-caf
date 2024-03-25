@@ -93,6 +93,7 @@
     "maintenance_configuration/201-maintenance-configuration-assignment-vm-linux",
     "maps/101-azure-maps-account",
     "managed_service_identity/100-msi-levels",
+    "managed_service_identity/101-msi-federated-credentials",
     "mariadb_server/100-simple-mariadb",
     "mariadb_server/101-vnet-rule-mariadb",
     "mariadb_server/102-private-endpoint-mariadb",
