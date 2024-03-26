@@ -22,6 +22,7 @@ resource "azurerm_api_management" "apim" {
     content {
 
       location = try(additional_location.value.location, null)
+      public_ip_address_id  = try(var.public_ip_addresses[try(additional_location.value.additional_location.lz_key, var.client_config.landingzone_key)][additional_location.value.additional_location.key].id, null)
       dynamic "virtual_network_configuration" {
         for_each = try(var.settings.virtual_network_configuration, null) != null ? [var.settings.virtual_network_configuration] : []
 
@@ -202,6 +203,7 @@ resource "azurerm_api_management" "apim" {
       enabled = try(tenant_access.value.enabled, null)
     }
   }
+  public_ip_address_id = try(var.public_ip_addresses[try(var.settings.public_ip_address.lz_key, var.client_config.landingzone_key)][var.settings.public_ip_address.key].id, null)
   virtual_network_type = try(var.settings.virtual_network_type, null)
   dynamic "virtual_network_configuration" {
     for_each = try(var.settings.virtual_network_configuration, null) != null ? [var.settings.virtual_network_configuration] : []
