@@ -152,6 +152,7 @@ virtual_machines = {
 
           disk_encryption_set_key = "set1"
           # lz_key = "" # for remote disk_encryption_set
+          # disk_encryption_set_id = "/subscription/xxx/id" # for disk_encryption_set_id
         }
 
         source_image_reference = {
