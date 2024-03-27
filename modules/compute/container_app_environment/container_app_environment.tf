@@ -19,7 +19,7 @@ resource "azurerm_container_app_environment" "cae" {
   zone_redundancy_enabled                     = try(var.settings.zone_redundancy_enabled, null)
   tags                                        = merge(local.tags, try(var.settings.tags, null))
   dynamic "workload_profile" {
-      for_each = try(var.settings.identity, null) != null ? [var.settings.workload_profile] : [] 
+      for_each = try(var.settings.workload_profile, null) != null ? [var.settings.workload_profile] : [] 
       content {
         name                  = workload_profile.value.name
         workload_profile_type = workload_profile.value.workload_profile_type
