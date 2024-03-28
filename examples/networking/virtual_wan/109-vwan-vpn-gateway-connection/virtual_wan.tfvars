@@ -43,7 +43,7 @@ virtual_hub_route_tables = {
     virtual_wan_key = "vwan_re1"
     virtual_hub_key = "hub_re1"
 
-    labels = ["label1"]
+    labels = ["label1", "default"]
   }
   routetable2 = {
     name = "example-vhubroutetable2"
@@ -143,22 +143,26 @@ vpn_gateway_connections = {
     }
 
     routing = { # Optional
-      associated_route_table = {
-        # id = "" # Set the Resource ID of an existing Virtual WAN Route Table
-        # lz_key = "" # Set the 'lz_key' of a Route Table created in a remote deployment
-        key = "routetable1" # Set the 'key' of the Route Table created in this (or a remote) deployment
-      }
+      # associated_route_table = { # Can only be Default Route Table https://learn.microsoft.com/en-us/azure/virtual-wan/about-virtual-hub-routing#considerations
+      # id = "" # Set the Resource ID of an existing Virtual WAN Route Table
+      # lz_key = "" # Set the 'lz_key' of a Route Table created in a remote deployment
+      # key = "routetable1" # Set the 'key' of the Route Table created in this (or a remote) deployment
+      # }
 
       propagated_route_table = {
-        routetable1 = {
-          # id = "" # Set the Resource ID of an existing Virtual WAN Route Table
-          # lz_key = "" # Set the 'lz_key' of a Route Table created in a remote deployment
-          key = "routetable1" # Set the 'key' of the Route Table created in this (or a remote) deployment
-        }
-        routetable2 = {
-          # id = "" # Set the Resource ID of an existing Virtual WAN Route Table
-          # lz_key = "" # Set the 'lz_key' of a Route Table created in a remote deployment
-          key = "routetable2" # Set the 'key' of the Route Table created in this (or a remote) deployment
+        route_tables = {
+          routetable1 = {
+            # id = "" # Set the Resource ID of an existing Virtual WAN Route Table
+            # lz_key = "" # Set the 'lz_key' of a Route Table created in a remote deployment
+            key    = "routetable1" # Set the 'key' of the Route Table created in this (or a remote) deployment
+            labels = ["label1"]    # Optional
+          }
+          routetable2 = {
+            # id = "" # Set the Resource ID of an existing Virtual WAN Route Table
+            # lz_key = "" # Set the 'lz_key' of a Route Table created in a remote deployment
+            key    = "routetable2"         # Set the 'key' of the Route Table created in this (or a remote) deployment
+            labels = ["label2", "default"] # Optional
+          }
         }
       }
     }
