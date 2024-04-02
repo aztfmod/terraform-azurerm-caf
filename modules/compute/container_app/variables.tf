@@ -18,3 +18,7 @@ variable "resource_group" {
 }
 variable "settings" {}
 variable "container_app_environment_id" {}
+variable "workload_profile_name" {
+  description = "The name of the Workload Profile in the Container App Environment that this Container App should be placed in."
+  default = "Consumption"
+}
