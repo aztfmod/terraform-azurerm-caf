@@ -231,9 +231,9 @@ resource "azurerm_container_app" "ca" {
         for_each = try(ingress.value.traffic_weight, {})
 
         content {
-          label           = traffic_weight.value.label
+          label           = var.settings.revision_mode == "Single" ? try(traffic_weight.value.label, null) : traffic_weight.value.label
           latest_revision = traffic_weight.value.latest_revision
-          revision_suffix = traffic_weight.value.revision_suffix
+          revision_suffix = var.settings.revision_mode == "Single" ? try(traffic_weight.value.revision_suffix, null) : traffic_weight.value.revision_suffix
           percentage      = traffic_weight.value.percentage
         }
       }
