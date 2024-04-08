@@ -16,6 +16,12 @@ resource "azurerm_api_management" "apim" {
   publisher_name      = var.settings.publisher_name
   publisher_email     = var.settings.publisher_email
   sku_name            = var.settings.sku_name
+
+  public_ip_address_id  = try(coalesce(
+        try(var.public_ip_addresses[var.client_config.landingzone_key][var.settings.public_ip.key].id, var.public_ip_addresses[var.settings.public_ip.lz_key][var.settings.public_ip.key].id, null),
+        try(var.settings.public_ip_id, null)
+  ), null)
+  
   dynamic "additional_location" {
     for_each = try(var.settings.additional_location, null) != null ? [var.settings.additional_location] : []
 
