@@ -407,6 +407,8 @@ locals {
     app_service_environments_v3                    = try(var.webapp.app_service_environments_v3, {})
     app_service_plans                              = try(var.webapp.app_service_plans, {})
     app_services                                   = try(var.webapp.app_services, {})
+    windows_web_apps                               = try(var.webapp.windows_web_apps, {})
+    linux_web_apps                                 = try(var.webapp.linux_web_apps, {})
     azurerm_application_insights                   = try(var.webapp.azurerm_application_insights, {})
     azurerm_application_insights_web_test          = try(var.webapp.azurerm_application_insights_web_test, {})
     azurerm_application_insights_standard_web_test = try(var.webapp.azurerm_application_insights_standard_web_test, {})
