@@ -10,9 +10,6 @@ resource_groups = {
     name   = "postgresql-region1"
     region = "region1"
   }
-  security_region1 = {
-    name = "security-region1"
-  }
 }
 
 postgresql_flexible_servers = {
@@ -21,31 +18,12 @@ postgresql_flexible_servers = {
     region     = "region1"
     version    = "12"
     sku_name   = "MO_Standard_E4s_v3"
-    zone       = 2
+    zone       = 1
     storage_mb = 131072
 
     resource_group = {
       key = "postgresql_region1"
       # lz_key = ""                           # Set the lz_key if the resource group is remote.
-    }
-
-    authentication = {
-      # (Optional) Whether or not Active Directory authentication is allowed to access the PostgreSQL Flexible Server. Defaults to false.
-      active_directory_auth_enabled = true
-
-      # (Optional) Whether or not password authentication is allowed to access the PostgreSQL Flexible Server. Defaults to true.
-      password_auth_enabled = true
-
-      # (Optional) The Tenant ID of the Azure Active Directory which is used by the Active Directory authentication. active_directory_auth_enabled must be set to true.
-      #tenant_id = "00000-ee35-4265-95f6-46e9a9b4ec96"
-
-      active_directory_administrators = {
-        test_client = {
-          object_key     = "sp1"
-          principal_name = "testclient"
-          principal_type = "ServicePrincipal"
-        }
-      }
     }
 
     # Auto-generated administrator credentials stored in azure keyvault when not set (recommended).
@@ -93,6 +71,26 @@ postgresql_flexible_servers = {
       }
     }
 
+    private_endpoints = {
+      pe1 = {
+        name               = "pe1"
+        vnet_key           = "vnet_region1"
+        subnet_key         = "private_endpoints"
+        resource_group_key = "postgresql_region1"
+
+        private_service_connection = {
+          name                 = "pe1"
+          is_manual_connection = false
+          subresource_names    = ["postgresqlServer"]
+        }
+
+        private_dns = {
+          zone_group_name = "postgres"
+          keys            = ["postgres"]
+        }
+      }
+    }
+
     tags = {
       segment = "sales"
     }
@@ -105,7 +103,7 @@ postgresql_flexible_servers = {
 keyvaults = {
   postgresql_region1 = {
     name                = "akv"
-    resource_group_key  = "security_region1"
+    resource_group_key  = "postgresql_region1"
     sku_name            = "standard"
     soft_delete_enabled = true
     creation_policies = {
@@ -116,17 +114,30 @@ keyvaults = {
   }
 }
 
-azuread_applications = {
-  test_client = {
-    useprefix        = true
-    application_name = "test-client"
+## Networking configuration
+vnets = {
+  vnet_region1 = {
+    resource_group_key = "postgresql_region1"
+    region             = "region1"
+
+    vnet = {
+      name          = "postgresql"
+      address_space = ["10.10.0.0/24"]
+    }
+
+    subnets = {
+      private_endpoints = {
+        name                                           = "private-endpoint"
+        cidr                                           = ["10.10.0.0/25"]
+        enforce_private_link_endpoint_network_policies = true
+      }
+    }
   }
 }
 
-azuread_service_principals = {
-  sp1 = {
-    azuread_application = {
-      key = "test_client"
-    }
+private_dns = {
+  postgres = {
+    name               = "privatelink.postgres.database.azure.com"
+    resource_group_key = "postgresql_region1"
   }
 }

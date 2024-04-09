@@ -124,6 +124,7 @@ locals {
     database_migration_services        = try(var.database.database_migration_services, {})
     database_migration_projects        = try(var.database.database_migration_projects, {})
     databricks_workspaces              = try(var.database.databricks_workspaces, {})
+    databricks_access_connectors       = try(var.database.databricks_access_connectors, {})
     machine_learning_workspaces        = try(var.database.machine_learning_workspaces, {})
     mariadb_databases                  = try(var.database.mariadb_databases, {})
     mariadb_servers                    = try(var.database.mariadb_servers, {})
@@ -348,6 +349,7 @@ locals {
     vnet_peerings_v1                                        = try(var.networking.vnet_peerings_v1, {})
     vnets                                                   = try(var.networking.vnets, {})
     vpn_gateway_connections                                 = try(var.networking.vpn_gateway_connections, {})
+    vpn_gateway_nat_rules                                   = try(var.networking.vpn_gateway_nat_rules, {})
     vpn_sites                                               = try(var.networking.vpn_sites, {})
   }
 
@@ -472,4 +474,6 @@ locals {
     maintenance_assignment_virtual_machine = try(var.maintenance.maintenance_assignment_virtual_machine, {})
   }
 
+
+  load_test = try(var.load_test, {})
 }

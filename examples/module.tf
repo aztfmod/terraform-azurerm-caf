@@ -141,6 +141,7 @@ module "example" {
     databricks_workspaces              = var.databricks_workspaces
     database_migration_services        = var.database_migration_services
     databricks_workspaces              = var.databricks_workspaces
+    databricks_access_connectors       = var.databricks_access_connectors
     machine_learning_workspaces        = var.machine_learning_workspaces
     mariadb_servers                    = var.mariadb_servers
     mariadb_databases                  = var.mariadb_databases
@@ -265,6 +266,7 @@ module "example" {
     vnets                                                   = var.vnets
     virtual_subnets                                         = var.virtual_subnets
     vpn_gateway_connections                                 = var.vpn_gateway_connections
+    vpn_gateway_nat_rules                                   = var.vpn_gateway_nat_rules
     vpn_sites                                               = var.vpn_sites
   }
 
@@ -421,6 +423,8 @@ module "example" {
     iot_central_application             = var.iot_central_application
   }
   powerbi_embedded = var.powerbi_embedded
+
+  load_test = var.load_test
 
   preview_features = var.preview_features
 
