@@ -33,5 +33,5 @@ resource "azurerm_lb" "lb" {
   }
   sku      = try(title(var.settings.sku), null)
   sku_tier = try(title(var.settings.sku_tier), null)
-  tags     = local.tags
+  tags     = merge(local.tags, try(var.settings.tags, null))
 }
