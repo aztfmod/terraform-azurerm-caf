@@ -21,3 +21,6 @@ variable "resource_group_name" {
 variable "location" {
   description = " The key of the location in which to create the Load Balancer."
 }
+variable "resource_group" {
+  description = "Resource group object to deploy the load balancer"
+}
