@@ -24,6 +24,10 @@ module "route_servers_bgp_connections" {
   global_settings = local.global_settings
   route_servers   = local.combined_objects_route_servers
   settings        = each.value
+
+  remote_objects = {
+    route_servers = local.combined_objects_route_servers
+  }
 }
 
 output "route_servers_bgp_connections" {
