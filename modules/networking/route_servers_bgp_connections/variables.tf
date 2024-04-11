@@ -6,3 +6,6 @@ variable "client_config" {
 }
 variable "settings" {}
 variable "route_servers" {}
+variable "remote_objects" {
+  default     = {}
+}
