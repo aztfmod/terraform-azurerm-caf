@@ -15,3 +15,16 @@ module "route_servers" {
 output "route_servers" {
   value = module.route_servers
 }
+
+module "route_servers_bgp_connections" {
+  source   = "./modules/networking/route_servers_bgp_connections"
+  for_each = local.networking.route_servers_bgp_connections
+
+  client_config   = local.client_config
+  global_settings = local.global_settings
+  settings        = each.value
+}
+
+output "route_servers_bgp_connections" {
+  value = module.route_servers_bgp_connections
+}

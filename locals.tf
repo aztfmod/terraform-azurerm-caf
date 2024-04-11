@@ -331,6 +331,7 @@ locals {
     relay_namespace                                         = try(var.networking.relay_namespace, {})
     public_ip_prefixes                                      = try(var.networking.public_ip_prefixes, {})
     route_servers                                           = try(var.networking.route_servers, {})
+    route_servers_bgp_connections                           = try(var.networking.route_servers_bgp_connections, {})
     route_tables                                            = try(var.networking.route_tables, {})
     traffic_manager_profile                                 = try(var.networking.traffic_manager_profile, {})
     traffic_manager_nested_endpoint                         = try(var.networking.traffic_manager_nested_endpoint, {})
