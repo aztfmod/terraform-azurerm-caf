@@ -22,6 +22,7 @@ module "route_servers_bgp_connections" {
 
   client_config   = local.client_config
   global_settings = local.global_settings
+  route_servers   = local.combined_objects_route_servers
   settings        = each.value
 }
 
