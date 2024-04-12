@@ -11,6 +11,8 @@ module "function_apps" {
   app_service_plan_id        = can(each.value.app_service_plan_id) || can(each.value.app_service_plan_key) == false ? try(each.value.app_service_plan_id, null) : local.combined_objects_app_service_plans[try(each.value.lz_key, local.client_config.landingzone_key)][each.value.app_service_plan_key].id
   settings                   = each.value.settings
   application_insight        = try(each.value.application_insight_key, null) == null ? null : module.azurerm_application_insights[each.value.application_insight_key]
+  diagnostic_profiles        = try(each.value.diagnostic_profiles, null)
+  diagnostics                = local.combined_diagnostics
   identity                   = try(each.value.identity, null)
   connection_strings         = try(each.value.connection_strings, {})
   storage_account_name       = try(data.azurerm_storage_account.function_apps[each.key].name, null)
