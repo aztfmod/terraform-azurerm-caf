@@ -22,14 +22,34 @@ resource "azurerm_notification_hub" "hub" {
       bundle_id        = var.settings.apns_credential.bundle_id
       key_id           = var.settings.apns_credential.key_id
       team_id          = var.settings.apns_credential.team_id
-      token            = var.settings.apns_credential.token
+      token = try(
+        data.azurerm_key_vault_secret.apns_credential_token.value,
+        var.settings.apns_credential.token,
+        null
+      )
     }
   }
 
   dynamic "gcm_credential" {
     for_each = lookup(var.settings, "gcm_credential", null) == null ? [] : [1]
     content {
-      api_key = var.settings.gcm_credential.api_key
+      api_key = try(
+        data.azurerm_key_vault_secret.gcm_credential_api_key.value,
+        var.settings.gcm_credential.api_key,
+        null
+      )
     }
   }
+}
+
+data "azurerm_key_vault_secret" "apns_credential_token" {
+  for_each     = try(var.settings.apns_credential.token_secret_name, {})
+  name         = var.settings.apns_credential.token_secret_name
+  key_vault_id = var.key_vault_id
+}
+
+data "azurerm_key_vault_secret" "gcm_credential_api_key" {
+  for_each     = try(var.settings.gcm_credential.api_key_secret_name, {}) 
+  name         = var.settings.gcm_credential.api_key_secret_name
+  key_vault_id = var.key_vault_id
 }

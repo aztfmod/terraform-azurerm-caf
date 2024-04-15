@@ -27,6 +27,7 @@ module "notification_hubs" {
   namespace_name      = local.combined_objects_notification_hub_namespaces[try(each.value.namespace.lz_key, local.client_config.landingzone_key)][try(each.value.namespace.key, each.value.namespace_key)].name
   resource_group      = local.combined_objects_resource_groups[try(each.value.resource_group.lz_key, local.client_config.landingzone_key)][try(each.value.resource_group_key, each.value.resource_group.key)]
   resource_group_name = can(each.value.resource_group.name) || can(each.value.resource_group_name) ? try(each.value.resource_group.name, each.value.resource_group_name) : null
+  key_vault_id        = can(each.value.key_vault_id) ? each.value.key_vault_id : try(local.combined_objects_keyvaults[try(each.value.lz_key, local.client_config.landingzone_key)][each.value.keyvault_key].id, null)
 }
 
 output "notification_hubs" {

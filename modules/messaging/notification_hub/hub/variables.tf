@@ -25,3 +25,7 @@ variable "location" {
   description = "Specifies the supported Azure location where to create the resource. Changing this forces a new resource to be created."
   default     = null
 }
+variable "key_vault_id" {
+  description = "The ID of the key vault where the secrets are stored."
+  type        = string
+}
