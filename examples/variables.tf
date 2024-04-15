@@ -1135,3 +1135,12 @@ variable "search_services" {
 variable "load_test" {
   default = {}
 }
+variable "notification_hub_namespaces" {
+  default = {}
+}
+variable "notification_hubs" {
+  default = {}
+}
+variable "notification_hub_auth_rules" {
+  default = {}
+}
