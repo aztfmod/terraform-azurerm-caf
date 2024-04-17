@@ -355,6 +355,9 @@ variable "batch_pools" {
 variable "databricks_workspaces" {
   default = {}
 }
+variable "databricks_access_connectors" {
+  default = {}
+}
 variable "machine_learning_workspaces" {
   default = {}
 }
@@ -1128,4 +1131,7 @@ variable "maintenance_assignment_virtual_machine" {
 }
 variable "search_services" {
   default     = {}
+}
+variable "load_test" {
+  default = {}
 }
