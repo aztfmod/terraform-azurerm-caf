@@ -15,8 +15,16 @@
 
     // Adding features to the container.
     "features": {
+        "ghcr.io/azure/azure-dev/azd:latest": {},
         "ghcr.io/devcontainers/features/docker-outside-of-docker:1": {},
-        "ghcr.io/mickeahlinder/devcontainer-features/tfenv:1": {}
+        "ghcr.io/devcontainers/features/azure-cli:1": {},
+        "ghcr.io/mickeahlinder/devcontainer-features/tfenv:1": {},
+        "ghcr.io/devcontainers-contrib/features/tfsec:1": {},
+        "ghcr.io/devcontainers-contrib/features/checkov:1": {},
+        "ghcr.io/devcontainers-contrib/features/pre-commit:2": {},
+        "ghcr.io/devcontainers/features/kubectl-helm-minikube:1": {},
+        "ghcr.io/devcontainers/features/github-cli:1": {}
+
     },
 
     // Container run arguments.
