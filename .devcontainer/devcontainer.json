@@ -2,7 +2,7 @@
     "name": "Azure CAF module",
 
     // Container user to use in VSCode Online and GitHub Codespaces
-    "image": "aztfmod/rover:1.7.5-2403.1406",
+    "image": "aztfmod/rover-preview:1.7.5-2404.221518",
     "remoteUser": "vscode",
 
     // Volume mounts for the container.
