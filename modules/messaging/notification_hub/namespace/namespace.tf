@@ -1,4 +1,4 @@
-resource "azurecaf_name" "azurerm_notification_hub_namespace" {
+resource "azurecaf_name" "namespace" {
   name          = var.settings.name
   resource_type = "azurerm_notification_hub_namespace"
   prefixes      = var.global_settings.prefixes
@@ -9,8 +9,8 @@ resource "azurecaf_name" "azurerm_notification_hub_namespace" {
 }
 
 
-resource "azurerm_notification_hub_namespace" "notification_hub_namespace" {
-  name                = azurecaf_name.azurerm_notification_hub_namespace.result
+resource "azurerm_notification_hub_namespace" "namespace" {
+  name                = azurecaf_name.namespace.result
   resource_group_name = local.resource_group_name
   location            = local.location
   namespace_type      = var.settings.namespace_type

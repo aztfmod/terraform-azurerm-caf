@@ -19,3 +19,9 @@ variable "location" {
   description = "Specifies the supported Azure location where to create the resource. Changing this forces a new resource to be created."
   default     = null
 }
+variable "diagnostic_profiles" {
+  default = null
+}
+variable "diagnostics" {
+  default = null
+}
