@@ -1,9 +1,3 @@
-preview_features = {
-  "Microsoft.ContainerService" = [
-    "AzureServiceMeshPreview"
-  ]
-}
-
 global_settings = {
   default_region = "region1"
   regions = {
