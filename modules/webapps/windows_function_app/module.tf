@@ -37,22 +37,10 @@ resource "azurerm_windows_function_app" "windows_function_app" {
         #python_version - (Optional) The version of Python to run. Possible values are 3.11, 3.10, 3.9, 3.8 and 3.7.
         #powershell_core_version - (Optional) The version of PowerShell Core to run. Possible values are 7, and 7.2.
         #use_custom_runtime - (Optional) Should the windows Function App use a custom runtime?
-        dynamic "docker" {
-          for_each = local.site_config.application_stack.docker != null ? [1] : []
-          content {
-            registry_url      = local.site_config.application_stack.docker.registry_url
-            image_name        = local.site_config.application_stack.docker.image_name
-            image_tag         = local.site_config.application_stack.docker.image_tag
-            registry_username = lookup(local.site_config.application_stack.docker, "registry_username", null)
-            registry_password = lookup(local.site_config.application_stack.docker, "registry_password", null)
-          }
-
-        }
         dotnet_version              = lookup(local.site_config.application_stack, "dotnet_version", null)
         use_dotnet_isolated_runtime = lookup(local.site_config.application_stack, "use_dotnet_isolated_runtime", null)
         java_version                = lookup(local.site_config.application_stack, "java_version", null)
         node_version                = lookup(local.site_config.application_stack, "node_version", null)
-        python_version              = lookup(local.site_config.application_stack, "python_version", null)
         powershell_core_version     = lookup(local.site_config.application_stack, "powershell_core_version", null)
         use_custom_runtime          = lookup(local.site_config.application_stack, "use_custom_runtime", null)
       }
@@ -64,8 +52,6 @@ resource "azurerm_windows_function_app" "windows_function_app" {
         retention_period_days = lookup(app_service_logs.value, "retention_period_days", null)
       }
     }
-    container_registry_managed_identity_client_id = lookup(local.site_config, "container_registry_managed_identity_client_id", null)
-    container_registry_use_managed_identity       = lookup(local.site_config, "container_registry_use_managed_identity", null)
     dynamic "cors" {
       for_each = lookup(local.site_config, "cors", {}) != {} ? [1] : []
 
