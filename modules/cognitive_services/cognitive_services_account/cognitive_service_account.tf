@@ -9,10 +9,11 @@ resource "azurecaf_name" "service" {
 }
 
 resource "azurerm_cognitive_account" "service" {
-  name                = azurecaf_name.service.result
-  location            = var.location
-  resource_group_name = var.resource_group_name
   kind                = var.settings.kind
+  local_auth_enabled  = var.settings.local_auth_enabled
+  location            = var.location
+  name                = azurecaf_name.service.result
+  resource_group_name = var.resource_group_name
   sku_name            = var.settings.sku_name
 
   qna_runtime_endpoint = var.settings.kind == "QnAMaker" ? var.settings.qna_runtime_endpoint : try(var.settings.qna_runtime_endpoint, null)
