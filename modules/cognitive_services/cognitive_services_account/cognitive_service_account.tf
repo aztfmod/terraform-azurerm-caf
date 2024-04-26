@@ -9,8 +9,8 @@ resource "azurecaf_name" "service" {
 }
 
 resource "azurerm_cognitive_account" "service" {
-  disable_local_auth  = var.settings.disable_local_auth
   kind                = var.settings.kind
+  local_auth_enabled  = var.settings.local_auth_enabled
   location            = var.location
   name                = azurecaf_name.service.result
   resource_group_name = var.resource_group_name
