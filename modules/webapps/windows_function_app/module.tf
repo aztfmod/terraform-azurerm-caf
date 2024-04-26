@@ -1,11 +1,11 @@
 
 resource "azurecaf_name" "plan" {
+  clean_input   = true
   name          = var.name
-  resource_type = "azurerm_function_app"
+  passthrough   = var.global_settings.passthrough
   prefixes      = var.global_settings.prefixes
   random_length = var.global_settings.random_length
-  clean_input   = true
-  passthrough   = var.global_settings.passthrough
+  resource_type = "azurerm_function_app"
   use_slug      = var.global_settings.use_slug
 }
 
@@ -26,6 +26,26 @@ resource "azurerm_windows_function_app" "windows_function_app" {
     app_scale_limit                        = lookup(local.site_config, "app_scale_limit", null)
     application_insights_connection_string = lookup(local.site_config, "application_insights_connection_string", null)
     application_insights_key               = lookup(local.site_config, "application_insights_key", null)
+    default_documents                      = lookup(local.site_config, "default_documents", null)
+    elastic_instance_minimum               = lookup(local.site_config, "elastic_instance_minimum", null)
+    ftps_state                             = lookup(local.site_config, "ftps_state", "Disabled")
+    health_check_eviction_time_in_min      = lookup(local.site_config, "health_check_eviction_time_in_min", null)
+    health_check_path                      = lookup(local.site_config, "health_check_path", null)
+    http2_enabled                          = lookup(local.site_config, "http2_enabled", false)
+    load_balancing_mode                    = lookup(local.site_config, "load_balancing_mode", null)
+    managed_pipeline_mode                  = lookup(local.site_config, "managed_pipeline_mode", null)
+    minimum_tls_version                    = lookup(local.site_config, "minimum_tls_version", "1.2")
+    pre_warmed_instance_count              = lookup(local.site_config, "pre_warmed_instance_count", null)
+    remote_debugging_enabled               = lookup(local.site_config, "remote_debugging_enabled", false)
+    remote_debugging_version               = lookup(local.site_config, "remote_debugging_version", null)
+    runtime_scale_monitoring_enabled       = lookup(local.site_config, "runtime_scale_monitoring_enabled", null)
+    scm_minimum_tls_version                = lookup(local.site_config, "scm_minimum_tls_version", "1.2")
+    scm_use_main_ip_restriction            = lookup(local.site_config, "scm_use_main_ip_restriction", null)
+    use_32_bit_worker                      = lookup(local.site_config, "use_32_bit_worker", true)
+    vnet_route_all_enabled                 = lookup(local.site_config, "vnet_route_all_enabled", false)
+    websockets_enabled                     = lookup(local.site_config, "websockets_enabled", false)
+    worker_count                           = lookup(local.site_config, "worker_count", null)
+
     dynamic "application_stack" {
       for_each = lookup(local.site_config, "application_stack", {}) != {} ? [1] : []
       content {
@@ -38,13 +58,14 @@ resource "azurerm_windows_function_app" "windows_function_app" {
         #powershell_core_version - (Optional) The version of PowerShell Core to run. Possible values are 7, and 7.2.
         #use_custom_runtime - (Optional) Should the windows Function App use a custom runtime?
         dotnet_version              = lookup(local.site_config.application_stack, "dotnet_version", null)
-        use_dotnet_isolated_runtime = lookup(local.site_config.application_stack, "use_dotnet_isolated_runtime", null)
         java_version                = lookup(local.site_config.application_stack, "java_version", null)
         node_version                = lookup(local.site_config.application_stack, "node_version", null)
         powershell_core_version     = lookup(local.site_config.application_stack, "powershell_core_version", null)
         use_custom_runtime          = lookup(local.site_config.application_stack, "use_custom_runtime", null)
+        use_dotnet_isolated_runtime = lookup(local.site_config.application_stack, "use_dotnet_isolated_runtime", null)
       }
     }
+
     dynamic "app_service_logs" {
       for_each = lookup(local.site_config, "app_service_logs", {}) != {} ? [1] : []
       content {
@@ -52,6 +73,7 @@ resource "azurerm_windows_function_app" "windows_function_app" {
         retention_period_days = lookup(app_service_logs.value, "retention_period_days", null)
       }
     }
+
     dynamic "cors" {
       for_each = lookup(local.site_config, "cors", {}) != {} ? [1] : []
 
@@ -60,12 +82,7 @@ resource "azurerm_windows_function_app" "windows_function_app" {
         support_credentials = lookup(cors.value, "support_credentials", null)
       }
     }
-    default_documents                 = lookup(local.site_config, "default_documents", null)
-    elastic_instance_minimum          = lookup(local.site_config, "elastic_instance_minimum", null)
-    ftps_state                        = lookup(local.site_config, "ftps_state", "Disabled")
-    health_check_path                 = lookup(local.site_config, "health_check_path", null)
-    health_check_eviction_time_in_min = lookup(local.site_config, "health_check_eviction_time_in_min", null)
-    http2_enabled                     = lookup(local.site_config, "http2_enabled", false)
+
     dynamic "ip_restriction" {
       for_each = length(local.ip_restrictions) > 0 ? local.ip_restrictions : []
       content {
@@ -77,16 +94,11 @@ resource "azurerm_windows_function_app" "windows_function_app" {
             #x_fd_health_probe - (Optional) Specifies if a Front Door Health Probe should be expected. The only possible value is 1.
             #x_forwarded_for - (Optional) Specifies a list of addresses for which matching should be applied. Omitting this value means allow any.
             #x_forwarded_host - (Optional) Specifies a list of Hosts for which matching should be applied.
-
             x_azure_fdid      = lookup(ip_restriction.value, "x_azure_fdid", null)
             x_fd_health_probe = lookup(ip_restriction.value, "x_fd_health_probe", null)
             x_forwarded_for   = lookup(ip_restriction.value, "x_forwarded_for", null)
             x_forwarded_host  = lookup(ip_restriction.value, "x_forwarded_host", null)
-
-
           }
-
-
         }
         ip_address                = lookup(ip_restriction.value, "ip_address", null)
         name                      = lookup(ip_restriction.value, "name", null)
@@ -95,13 +107,7 @@ resource "azurerm_windows_function_app" "windows_function_app" {
         virtual_network_subnet_id = lookup(ip_restriction.value, "virtual_network_subnet_id", null)
       }
     }
-    load_balancing_mode              = lookup(local.site_config, "load_balancing_mode", null)
-    managed_pipeline_mode            = lookup(local.site_config, "managed_pipeline_mode", null)
-    minimum_tls_version              = lookup(local.site_config, "minimum_tls_version", "1.2")
-    pre_warmed_instance_count        = lookup(local.site_config, "pre_warmed_instance_count", null)
-    remote_debugging_enabled         = lookup(local.site_config, "remote_debugging_enabled", false)
-    remote_debugging_version         = lookup(local.site_config, "remote_debugging_version", null)
-    runtime_scale_monitoring_enabled = lookup(local.site_config, "runtime_scale_monitoring_enabled", null)
+
     dynamic "scm_ip_restriction" {
       for_each = length(local.scm_ip_restrictions) > 0 ? local.scm_ip_restrictions : []
       content {
@@ -130,22 +136,18 @@ resource "azurerm_windows_function_app" "windows_function_app" {
         virtual_network_subnet_id = lookup(scm_ip_restriction.value, "virtual_network_subnet_id", null)
       }
     }
-    scm_minimum_tls_version     = lookup(local.site_config, "scm_minimum_tls_version", "1.2")
-    scm_use_main_ip_restriction = lookup(local.site_config, "scm_use_main_ip_restriction", null)
-    use_32_bit_worker           = lookup(local.site_config, "use_32_bit_worker", true)
-    vnet_route_all_enabled      = lookup(local.site_config, "vnet_route_all_enabled", false)
-    websockets_enabled          = lookup(local.site_config, "websockets_enabled", false)
-    worker_count                = lookup(local.site_config, "worker_count", null)
+
   }
+
   app_settings = local.app_settings
   dynamic "auth_settings" {
     for_each = lookup(var.settings, "auth_settings", {}) != {} ? [1] : []
 
     content {
-      enabled                        = lookup(var.settings.auth_settings, "enabled", false)
       additional_login_parameters    = lookup(var.settings.auth_settings, "additional_login_parameters", null)
       allowed_external_redirect_urls = lookup(var.settings.auth_settings, "allowed_external_redirect_urls", null)
       default_provider               = lookup(var.settings.auth_settings, "default_provider", null)
+      enabled                        = lookup(var.settings.auth_settings, "enabled", false)
       issuer                         = lookup(var.settings.auth_settings, "issuer", null)
       runtime_version                = lookup(var.settings.auth_settings, "runtime_version", null)
       token_refresh_extension_hours  = lookup(var.settings.auth_settings, "token_refresh_extension_hours", null)
@@ -156,9 +158,9 @@ resource "azurerm_windows_function_app" "windows_function_app" {
         for_each = lookup(var.settings.auth_settings, "active_directory", {}) != {} ? [1] : []
 
         content {
+          allowed_audiences = lookup(var.settings.auth_settings.active_directory, "allowed_audiences", null)
           client_id         = var.settings.auth_settings.active_directory.client_id
           client_secret     = lookup(var.settings.auth_settings.active_directory, "client_secret", null)
-          allowed_audiences = lookup(var.settings.auth_settings.active_directory, "allowed_audiences", null)
         }
       }
 
@@ -207,17 +209,17 @@ resource "azurerm_windows_function_app" "windows_function_app" {
     for_each = lookup(var.settings, "auth_settings_v2", {}) != {} ? [1] : []
     content {
       auth_enabled                            = lookup(local.auth_settings_v2, "auth_enabled", false)
-      runtime_version                         = lookup(local.auth_settings_v2, "runtime_version", "~1")
       config_file_path                        = lookup(local.auth_settings_v2, "config_file_path", null)
-      require_authentication                  = lookup(local.auth_settings_v2, "require_authentication", null)
-      unauthenticated_action                  = lookup(local.auth_settings_v2, "unauthenticated_action", RedirectRoLoginPage)
       default_provider                        = lookup(local.auth_settings_v2, "default_provider", null)
       excluded_paths                          = lookup(local.auth_settings_v2, "excluded_paths", null)
-      require_https                           = lookup(local.auth_settings_v2, "require_https", null)
-      http_route_api_prefix                   = lookup(local.auth_settings_v2, "http_route_api_prefix", "/.auth")
       forward_proxy_convention                = lookup(local.auth_settings_v2, "forward_proxy_convention", null)
       forward_proxy_custom_host_header_name   = lookup(local.auth_settings_v2, "forward_proxy_custom_host_header_name", null)
       forward_proxy_custom_scheme_header_name = lookup(local.auth_settings_v2, "forward_proxy_custom_scheme_header_name", null)
+      http_route_api_prefix                   = lookup(local.auth_settings_v2, "http_route_api_prefix", "/.auth")
+      require_authentication                  = lookup(local.auth_settings_v2, "require_authentication", null)
+      require_https                           = lookup(local.auth_settings_v2, "require_https", null)
+      runtime_version                         = lookup(local.auth_settings_v2, "runtime_version", "~1")
+      unauthenticated_action                  = lookup(local.auth_settings_v2, "unauthenticated_action", RedirectRoLoginPage)
       dynamic "apple_v2" {
         for_each = lookup(local.auth_settings, "apple_v2", {}) != {} ? [1] : []
         content {
@@ -231,18 +233,18 @@ resource "azurerm_windows_function_app" "windows_function_app" {
         for_each = lookup(local.auth_settings_v2, "active_directory_v2", {}) != {} ? [1] : []
 
         content {
-          client_id                            = local.auth_settings_v2.active_directory_v2.client_id
-          tenant_auth_endpoint                 = local.auth_settings_v2.active_directory_v2.tenant_auth_endpoint
-          client_secret_setting_name           = lookup(local.auth_settings_v2.active_directory_v2, "client_secret_setting_name", null)
-          client_secret_certificate_thumbprint = lookup(local.auth_settings_v2.active_directory_v2, "client_secret_certificate_thumbprint", null)
-          jwt_allowed_groups                   = lookup(local.auth_settings_v2.active_directory_v2, "jwt_allowed_groups", null)
-          jwt_allowed_client_applications      = lookup(local.auth_settings_v2.active_directory_v2, "jwt_allowed_client_applications", null)
-          www_authentication_disabled          = lookup(local.auth_settings_v2.active_directory_v2, "www_authentication_disabled", false)
+          allowed_applications                 = lookup(local.auth_settings_v2.active_directory_v2, "allowed_applications", null)
+          allowed_audiences                    = lookup(local.auth_settings_v2.active_directory_v2, "allowed_audiences", null)
           allowed_groups                       = lookup(local.auth_settings_v2.active_directory_v2, "allowed_groups", null)
           allowed_identities                   = lookup(local.auth_settings_v2.active_directory_v2, "allowed_identities", null)
-          allowed_applications                 = lookup(local.auth_settings_v2.active_directory_v2, "allowed_applications", null)
+          client_id                            = local.auth_settings_v2.active_directory_v2.client_id
+          client_secret_certificate_thumbprint = lookup(local.auth_settings_v2.active_directory_v2, "client_secret_certificate_thumbprint", null)
+          client_secret_setting_name           = lookup(local.auth_settings_v2.active_directory_v2, "client_secret_setting_name", null)
+          jwt_allowed_client_applications      = lookup(local.auth_settings_v2.active_directory_v2, "jwt_allowed_client_applications", null)
+          jwt_allowed_groups                   = lookup(local.auth_settings_v2.active_directory_v2, "jwt_allowed_groups", null)
           login_parameters                     = lookup(local.auth_settings_v2.active_directory_v2, "login_parameters", null)
-          allowed_audiences                    = lookup(local.auth_settings_v2.active_directory_v2, "allowed_audiences", null)
+          tenant_auth_endpoint                 = local.auth_settings_v2.active_directory_v2.tenant_auth_endpoint
+          www_authentication_disabled          = lookup(local.auth_settings_v2.active_directory_v2, "www_authentication_disabled", false)
         }
       }
       dynamic "azure_static_web_app_v2" {
@@ -255,20 +257,18 @@ resource "azurerm_windows_function_app" "windows_function_app" {
       dynamic "custom_oidc_v2" {
         for_each = lookup(local.auth_settings_v2, "custom_oidc_v2", {}) != {} ? [1] : []
         content {
-          name                          = local.auth_settings_v2.custom_oidc_v2.name
-          client_id                     = local.auth_settings_v2.custom_oidc_v2.client_id
-          openid_configuration_endpoint = local.auth_settings_v2.custom_oidc_v2.openid_configuration_endpoint
-          name_claim_type               = lookup(local.auth_settings_v2.custom_oidc_v2, "name_claim_type", null)
-          scopes                        = lookup(local.auth_settings_v2.custom_oidc_v2, "scopes", null)
-          client_credential_method      = lookup(local.auth_settings_v2.custom_oidc_v2, "client_credential_method", null)
-          client_secret_setting_name    = lookup(local.auth_settings_v2.custom_oidc_v2, "client_secret_setting_name", null)
           authorisation_endpoint        = lookup(local.auth_settings_v2.custom_oidc_v2, "authorisation_endpoint", null)
-          token_endpoint                = lookup(local.auth_settings_v2.custom_oidc_v2, "token_endpoint", null)
-          issuer_endpoint               = lookup(local.auth_settings_v2.custom_oidc_v2, "issuer_endpoint", null)
           certification_uri             = lookup(local.auth_settings_v2.custom_oidc_v2, "certification_uri", null)
-
+          client_credential_method      = lookup(local.auth_settings_v2.custom_oidc_v2, "client_credential_method", null)
+          client_id                     = local.auth_settings_v2.custom_oidc_v2.client_id
+          client_secret_setting_name    = lookup(local.auth_settings_v2.custom_oidc_v2, "client_secret_setting_name", null)
+          issuer_endpoint               = lookup(local.auth_settings_v2.custom_oidc_v2, "issuer_endpoint", null)
+          name                          = local.auth_settings_v2.custom_oidc_v2.name
+          name_claim_type               = lookup(local.auth_settings_v2.custom_oidc_v2, "name_claim_type", null)
+          openid_configuration_endpoint = local.auth_settings_v2.custom_oidc_v2.openid_configuration_endpoint
+          scopes                        = lookup(local.auth_settings_v2.custom_oidc_v2, "scopes", null)
+          token_endpoint                = lookup(local.auth_settings_v2.custom_oidc_v2, "token_endpoint", null)
         }
-
       }
 
       dynamic "facebook_v2" {
@@ -294,9 +294,9 @@ resource "azurerm_windows_function_app" "windows_function_app" {
       dynamic "google_v2" {
         for_each = lookup(local.auth_settings_v2, "google_v2", {}) != {} ? [1] : []
         content {
+          allowed_audiences          = lookup(local.auth_settings_v2.google_v2, "allowed_audiences", null)
           client_id                  = local.auth_settings_v2.google_v2.client_id
           client_secret_setting_name = local.auth_settings_v2.google_v2.client_secret_setting_name
-          allowed_audiences          = lookup(local.auth_settings_v2.google_v2, "allowed_audiences", null)
           login_scopes               = lookup(local.auth_settings_v2.google_v2, "login_scopes", null)
         }
       }
@@ -304,14 +304,12 @@ resource "azurerm_windows_function_app" "windows_function_app" {
       dynamic "microsoft_v2" {
         for_each = lookup(local.auth_settings_v2, "microsoft_v2", {}) != {} ? [1] : []
         content {
+          allowed_audiences          = lookup(local.auth_settings_v2.microsoft_v2, "allowed_audiences", null)
           client_id                  = local.auth_settings_v2.microsoft_v2.client_id
           client_secret_setting_name = local.auth_settings_v2.microsoft_v2.client_secret_setting_name
-          allowed_audiences          = lookup(local.auth_settings_v2.microsoft_v2, "allowed_audiences", null)
           login_scopes               = lookup(local.auth_settings_v2.microsoft_v2, "login_scopes", null)
         }
       }
-
-
 
       dynamic "twitter_v2" {
         for_each = lookup(local.auth_settings_v2, "twitter_v2", {}) != {} ? [1] : []
@@ -324,30 +322,29 @@ resource "azurerm_windows_function_app" "windows_function_app" {
       dynamic "login" {
         for_each = lookup(local.auth_settings_v2, "login", {}) != {} ? [1] : []
         content {
-          logout_endpoint                   = lookup(local.auth_settings_v2.login, "logout_endpoint", null)
-          token_store_enabled               = lookup(local.auth_settings_v2.login, "token_store_enabled", false)
-          token_refresh_extension_time      = lookup(local.auth_settings_v2.login, "token_refresh_extension_time", null)
-          token_store_path                  = lookup(local.auth_settings_v2.login, "token_store_path", null)
-          token_store_sas_setting_name      = lookup(local.auth_settings_v2.login, "token_store_sas_setting_name", null)
-          preserve_url_fragments_for_logins = lookup(local.auth_settings_v2.login, "preserve_url_fragments_for_logins", false)
           allowed_external_redirect_urls    = lookup(local.auth_settings_v2.login, "allowed_external_redirect_urls", null)
           cookie_expiration_convention      = lookup(local.auth_settings_v2.login, "cookie_expiration_convention", "FixedTime")
           cookie_expiration_time            = lookup(local.auth_settings_v2.login, "cookie_expiration_time", "08:00:00")
-          validate_nonce                    = lookup(local.auth_settings_v2.login, "validate_nonce", true)
+          logout_endpoint                   = lookup(local.auth_settings_v2.login, "logout_endpoint", null)
           nonce_expiration_time             = lookup(local.auth_settings_v2.login, "nonce_expiration_time", "00:05:00")
+          preserve_url_fragments_for_logins = lookup(local.auth_settings_v2.login, "preserve_url_fragments_for_logins", false)
+          token_refresh_extension_time      = lookup(local.auth_settings_v2.login, "token_refresh_extension_time", null)
+          token_store_enabled               = lookup(local.auth_settings_v2.login, "token_store_enabled", false)
+          token_store_path                  = lookup(local.auth_settings_v2.login, "token_store_path", null)
+          token_store_sas_setting_name      = lookup(local.auth_settings_v2.login, "token_store_sas_setting_name", null)
+          validate_nonce                    = lookup(local.auth_settings_v2.login, "validate_nonce", true)
         }
-
       }
     }
-
   }
+
   dynamic "backup" {
     for_each = lookup(var.settings, "backup", {}) != {} ? [1] : []
 
     content {
+      enabled             = lookup(var.settings.backup, "enabled", true)
       name                = var.settings.backup.name
       storage_account_url = var.settings.backup.storage_account_url
-      enabled             = lookup(var.settings.backup, "enabled", true)
 
       dynamic "schedule" {
         for_each = try(var.settings.backup.schedule, {})
@@ -364,8 +361,22 @@ resource "azurerm_windows_function_app" "windows_function_app" {
   }
   builtin_logging_enabled            = try(var.settings.builtin_logging_enabled, true)
   client_certificate_enabled         = try(var.settings.client_certificate_enabled, null)
-  client_certificate_mode            = try(var.settings.client_certificate_mode, null)
   client_certificate_exclusion_paths = try(var.settings.client_certificate_exclusion_paths, null)
+  client_certificate_mode            = try(var.settings.client_certificate_mode, null)
+  content_share_force_disabled       = try(var.settings.content_share_force_disabled, null)
+  daily_memory_time_quota            = try(var.settings.daily_memory_time_quota, 0)
+  enabled                            = try(var.settings.enabled, null)
+  functions_extension_version        = try(var.settings.functions_extension_version, "~4")
+  https_only                         = try(var.settings.https_only, false)
+  public_network_access_enabled      = try(var.settings.public_network_access_enabled, null)
+  storage_account_access_key         = try(var.storage_account_access_key, null)
+  storage_account_name               = try(var.storage_account_name, null)
+  storage_key_vault_secret_id        = try(var.settings.storage_key_vault_secret_id, null)
+  storage_uses_managed_identity      = try(var.settings.storage_uses_managed_identity, null)
+  tags                               = merge(local.tags, try(var.settings.tags, {}))
+  virtual_network_subnet_id          = try(var.settings.virtual_network_subnet_id, null)
+  zip_deploy_file                    = try(var.settings.zip_deploy_file, null)
+
   # Create connection strings.
   dynamic "connection_string" {
     for_each = var.connection_strings
@@ -375,17 +386,12 @@ resource "azurerm_windows_function_app" "windows_function_app" {
       value = connection_string.value.value
     }
   }
-  daily_memory_time_quota       = try(var.settings.daily_memory_time_quota, 0)
-  enabled                       = try(var.settings.enabled, null)
-  content_share_force_disabled  = try(var.settings.content_share_force_disabled, null)
-  functions_extension_version   = try(var.settings.functions_extension_version, "~4")
-  https_only                    = try(var.settings.https_only, false)
-  public_network_access_enabled = try(var.settings.public_network_access_enabled, null)
+
   dynamic "identity" {
     for_each = try(var.identity, null) == null ? [] : [1]
     content {
-      type         = var.identity.type
       identity_ids = lower(var.identity.type) == "userassigned" ? local.managed_identities : null
+      type         = var.identity.type
     }
   }
 
@@ -395,10 +401,10 @@ resource "azurerm_windows_function_app" "windows_function_app" {
     content {
       access_key   = var.settings.storage_account.access_key
       account_name = var.settings.storage_account.account_name
+      mount_path   = lookup(var.settings.storage_account.mount_path, null)
       name         = var.settings.storage_account.name
       share_name   = var.settings.storage_account.share_name
       type         = var.settings.storage_account.type
-      mount_path   = lookup(var.settings.storage_account.mount_path, null)
     }
   }
   # Create a variable to hold the list of app setting names that the windows Function App will not swap between Slots when a swap operation is triggered.
@@ -409,16 +415,7 @@ resource "azurerm_windows_function_app" "windows_function_app" {
       connection_string_names = lookup(var.settings.sticky_settings, "connection_string_names", null)
     }
   }
-
-  storage_account_access_key    = try(var.storage_account_access_key, null)
-  storage_account_name          = try(var.storage_account_name, null)
-  storage_key_vault_secret_id   = try(var.settings.storage_key_vault_secret_id, null)
-  storage_uses_managed_identity = try(var.settings.storage_uses_managed_identity, null)
-  tags                          = merge(local.tags, try(var.settings.tags, {}))
-  virtual_network_subnet_id     = try(var.settings.virtual_network_subnet_id, null)
-  zip_deploy_file               = try(var.settings.zip_deploy_file, null)
 }
-
 
 resource "azurerm_app_service_virtual_network_swift_connection" "vnet_config" {
   depends_on     = [azurerm_windows_function_app.windows_function_app]
