@@ -55,3 +55,15 @@ automation_schedules = {
     week_days              = ["Friday"]
   }
 }
+
+automation_job_schedules = {
+  job_schedule1 = {
+    resource_group_key              = "automation"
+    automation_account_schedule_key = "schedule1"
+    automation_account_runbook_key  = "runbook1"
+    automation_account_key          = "auto1"
+    automation_account_parameters = {
+      vmname = "MyVM"
+    }
+  }
+}

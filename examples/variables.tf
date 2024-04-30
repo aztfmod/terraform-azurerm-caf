@@ -509,6 +509,9 @@ variable "event_hubs" {
 variable "automations" {
   default = {}
 }
+variable "automation_job_schedules" {
+  default = {}
+}
 variable "automation_schedules" {
   default = {}
 }
@@ -1133,7 +1136,7 @@ variable "maintenance_assignment_virtual_machine" {
   default = {}
 }
 variable "search_services" {
-  default     = {}
+  default = {}
 }
 variable "load_test" {
   default = {}

@@ -299,6 +299,7 @@ module "example" {
 
   shared_services = {
     automations                                      = var.automations
+    automation_job_schedules                         = var.automation_job_schedules
     automation_schedules                             = var.automation_schedules
     automation_runbooks                              = var.automation_runbooks
     automation_log_analytics_links                   = var.automation_log_analytics_links

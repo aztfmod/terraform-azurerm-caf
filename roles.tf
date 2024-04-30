@@ -115,6 +115,8 @@ locals {
     application_gateway_platforms              = local.combined_objects_application_gateway_platforms
     application_gateways                       = local.combined_objects_application_gateways
     automations                                = local.combined_objects_automations
+    automation_runbooks                        = local.combined_objects_automation_runbooks
+    automation_schedules                       = local.combined_objects_automation_schedules
     availability_sets                          = local.combined_objects_availability_sets
     azure_container_registries                 = local.combined_objects_azure_container_registries
     azuread_applications                       = local.combined_objects_azuread_applications

@@ -23,6 +23,8 @@ locals {
   combined_objects_application_insights_web_test                  = merge(tomap({ (local.client_config.landingzone_key) = module.azurerm_application_insights_web_test }), try(var.remote_objects.azurerm_application_insights_web_test, {}))
   combined_objects_application_security_groups                    = merge(tomap({ (local.client_config.landingzone_key) = module.application_security_groups }), try(var.remote_objects.application_security_groups, {}))
   combined_objects_automations                                    = merge(tomap({ (local.client_config.landingzone_key) = module.automations }), try(var.remote_objects.automations, {}))
+  combined_objects_automation_runbooks                            = merge(tomap({ (local.client_config.landingzone_key) = module.automation_runbooks }), try(var.remote_objects.automation_runbooks, {}))
+  combined_objects_automation_schedules                           = merge(tomap({ (local.client_config.landingzone_key) = module.automation_schedules }), try(var.remote_objects.automation_schedules, {}))
   combined_objects_availability_sets                              = merge(tomap({ (local.client_config.landingzone_key) = module.availability_sets }), try(var.remote_objects.availability_sets, {}))
   combined_objects_azure_container_registries                     = merge(tomap({ (local.client_config.landingzone_key) = module.container_registry }), try(var.remote_objects.container_registry, {}))
   combined_objects_azuread_administrative_units                   = merge(tomap({ (local.client_config.landingzone_key) = module.azuread_administrative_unit }), try(var.remote_objects.administrative_units, {}))
