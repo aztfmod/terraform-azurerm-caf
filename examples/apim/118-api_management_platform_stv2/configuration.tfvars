@@ -150,7 +150,7 @@ api_management = {
     region               = "region1"
 
     # Required to deploy APIM on platform verions stv2.*
-    public_ip = {       
+    public_ip_address = {       
       key     = "pip_apim_uks"
      # lz_key = ""
     }  
