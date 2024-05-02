@@ -3,7 +3,7 @@ locals {
   # combined_objects will merge it with the local objects
   combined_objects_aadb2c_directory                               = merge(tomap({ (local.client_config.landingzone_key) = module.aadb2c_directory }), try(var.remote_objects.aadb2c_directory, {}))
   combined_objects_aks_clusters                                   = merge(tomap({ (local.client_config.landingzone_key) = module.aks_clusters }), try(var.remote_objects.aks_clusters, {}), try(var.data_sources.aks_clusters, {}))
-  combined_objects_analysis_services_server                       = merge(tomap({ (local.client_config.landingzone_key) = module.analysis_services_server }), try(var.remote_objects.analysis_services_server, {}), try(var.data_sources.analysis_services_server, {}))
+  combined_objects_analysis_services_server                       = merge(tomap({ (local.client_config.landingzone_key) = merge(module.analysis_services_server, try(var.data_sources.analysis_services_server, {})) }), try(var.remote_objects.analysis_services_server, {}))
   combined_objects_api_management                                 = merge(tomap({ (local.client_config.landingzone_key) = module.api_management }), try(var.remote_objects.api_management, {}), try(var.data_sources.api_management, {}))
   combined_objects_api_management_api                             = merge(tomap({ (local.client_config.landingzone_key) = module.api_management_api }), try(var.remote_objects.api_management_api, {}), try(var.data_sources.api_management_api, {}))
   combined_objects_api_management_api_operation                   = merge(tomap({ (local.client_config.landingzone_key) = module.api_management_api_operation }), try(var.remote_objects.api_management_api_operation, {}))
