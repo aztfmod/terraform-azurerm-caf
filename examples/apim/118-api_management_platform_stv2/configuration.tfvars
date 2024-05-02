@@ -26,7 +26,7 @@ vnets = {
     region             = "region1"
     vnet = {
       name          = "example-uks" # prefix-vnet-example-uks
-      address_space = [""] 
+      address_space = ["10.0.0.0/16"] 
     }
     subnets = {
       
@@ -34,7 +34,7 @@ vnets = {
       
       snet_example_apim_uks = {
         name            = "example-apim-uks" #prefix-snet-example-apim-uks
-        cidr            = [""]
+        cidr            = ["10.0.1.0/24"]
         nsg_key         = "nsg_example_apim_uks"
       # route_table_key = ""
         service_endpoints = ["Microsoft.KeyVault", "Microsoft.Storage", "Microsoft.Sql", "Microsoft.EventHub", "Microsoft.ServiceBus"] # service endpoints required for APIM
@@ -51,26 +51,7 @@ network_security_group_definition = {
   nsg_example_apim_uks = {
     name               = "example-apim-uks" # prefix-nsg-example-apim-uks
     version            = 1
-    flow_logs = {
-    resource_group_key = "rg_example_apim_uks" 
-      name    = "example-apim-uks" # example-apim-uks
-      version = 2
-      enabled = true
-      storage_account = {
-        storage_account_destination = "all_regions"
-        retention = {
-          enabled = true
-          days    = 30
-        }
-      }
-      traffic_analytics = {
-        enabled                             = true
-        log_analytics_workspace_destination = "central_logs"
-        workspace_region                    = "uksouth"
-        interval_in_minutes                 = "10"
-      }
-    }
-    # Baseline APIM rules come from Microsoft documentation - https://learn.microsoft.com/en-us/azure/api-management/api-management-using-with-internal-vnet?tabs=stv2#configure-nsg-rules
+    resource_group_key = "rg_example_apim_uks"
     nsg = [
       {
         name                       = "Inbound-ApiManagement",
@@ -162,7 +143,7 @@ public_ip_addresses = {
 api_management = {
   apim_uks = {
     name                 = "example-uks" # prefix-apim-example-uks
-    resource_group_key   = "rg_example_apim_uks "
+    resource_group_key   = "rg_example_apim_uks"
     publisher_name       = "apim.example.sre.com"
     publisher_email      = "example.apim@sre.com"
     sku_name             = "Developer_1" # https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/resources/api_management#sku_name
@@ -195,6 +176,6 @@ api_management = {
 managed_identities = {
   msi_apim_uks = {
     name               = "example-apim-uks" # prefix-msi-example-apim-uks
-    resource_group_key = "rg_dev_apim_uks"
+    resource_group_key = "rg_example_apim_uks"
   }
 }
