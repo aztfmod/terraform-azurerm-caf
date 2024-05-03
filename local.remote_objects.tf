@@ -2,6 +2,7 @@ locals {
   remote_objects = {
     aadb2c_directory                               = try(local.combined_objects_aadb2c_directory, null)
     aks_clusters                                   = try(local.combined_objects_aks_clusters, null)
+    analysis_services_server                       = try(local.combined_objects_analysis_services_server, null)
     api_management                                 = try(local.combined_objects_api_management, null)
     api_management_api                             = try(local.combined_objects_api_management_api, null)
     management_api_operation                       = try(local.combined_objects_api_management_api_operation, null)
