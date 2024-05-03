@@ -25,8 +25,8 @@ vnets = {
     }
     subnets = {
       default = {
-        name    = "default"
-        cidr    = ["10.5.1.0/24"]
+        name = "default"
+        cidr = ["10.5.1.0/24"]
       }
     }
   }

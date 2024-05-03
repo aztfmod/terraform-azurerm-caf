@@ -52,19 +52,19 @@ app_services = {
 
         ip_restriction = [
           {
-            name        = "deny-all-traffic"
-            action      = "Deny"
-            ip_address  = "0.0.0.0/0"
-            priority    = 65000
+            name       = "deny-all-traffic"
+            action     = "Deny"
+            ip_address = "0.0.0.0/0"
+            priority   = 65000
           }
         ]
 
         scm_ip_restriction = [
           {
-            name        = "allow-all-traffic"
-            action      = "Allow"
-            ip_address  = "0.0.0.0/0"
-            priority    = 65000
+            name       = "allow-all-traffic"
+            action     = "Allow"
+            ip_address = "0.0.0.0/0"
+            priority   = 65000
           }
         ]
       }

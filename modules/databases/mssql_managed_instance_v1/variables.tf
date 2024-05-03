@@ -30,7 +30,16 @@ variable "group_id" {
 }
 
 variable "keyvault" {}
-
+variable "resource_groups" {}
+variable "vnets" {}
+variable "private_endpoints" {}
+variable "base_tags" {
+  description = "Base tags for the resource to be inherited from the resource group."
+  type        = map(any)
+}
+variable "private_dns" {
+  default = {}
+}
 variable "primary_server_id" {}
 
 variable "settings" {
@@ -54,6 +63,7 @@ variable "settings" {
             "minimal_tls_version",
             "name",
             "networking",
+            "private_endpoints",
             "primary_server",
             "proxy_override",
             "public_data_endpoint_enabled",

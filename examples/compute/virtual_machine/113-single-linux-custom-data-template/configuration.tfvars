@@ -63,23 +63,23 @@ virtual_machines = {
         disable_password_authentication = true
 
         custom_data = {
-          templatefile        = "compute/virtual_machine/113-single-linux-custom-data-template/custom_data.tpl"
-          my_value            = "my_value"
+          templatefile = "compute/virtual_machine/113-single-linux-custom-data-template/custom_data.tpl"
+          my_value     = "my_value"
         }
         dynamic_custom_data = {
           vnets = {
-            vnet_region1 ={}
+            vnet_region1 = {}
           }
           storage_accounts = {
             sa1 = {
-                file_share           = "share1"
-                file_share_directory = "dir1"
+              file_share           = "share1"
+              file_share_directory = "dir1"
             }
           }
           keyvault_keys = {
             key1 = {
               keyvault_key = "example_vm_rg1"
-              name = "disk-key"
+              name         = "disk-key"
             }
           }
         }

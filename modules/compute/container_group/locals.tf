@@ -72,9 +72,9 @@ locals {
     ) : mapping.container_key => mapping...
   }
 
-  subnet_ids = try(var.settings.subnets, null) == null ? null :  [
+  subnet_ids = try(var.settings.subnets, null) == null ? null : [
     for key, value in var.settings.subnets :
-      try(var.combined_resources.vnets[try(value.lz_key, var.client_config.landingzone_key)].subnets[value.subnet_key].id, try(var.combined_resources.virtual_subnets[try(value.lz_key, var.client_config.landingzone_key)][value.subnet_key].id, null))
+    try(var.combined_resources.vnets[try(value.lz_key, var.client_config.landingzone_key)].subnets[value.subnet_key].id, try(var.combined_resources.virtual_subnets[try(value.lz_key, var.client_config.landingzone_key)][value.subnet_key].id, null))
   ]
 }
 

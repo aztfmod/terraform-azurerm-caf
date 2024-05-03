@@ -398,9 +398,19 @@ resource "azurerm_kubernetes_cluster" "aks" {
     }
   }
 
-  node_resource_group     = azurecaf_name.rg_node.result
-  oidc_issuer_enabled     = try(var.settings.oidc_issuer_enabled, null)
-  private_cluster_enabled = try(var.settings.private_cluster_enabled, null)
+  dynamic "service_mesh_profile" {
+    for_each = try(var.settings.service_mesh_profile[*], {})
+    content {
+      mode                             = try(service_mesh_profile.value.mode, null)
+      internal_ingress_gateway_enabled = try(service_mesh_profile.value.internal_ingress_gateway_enabled, null)
+      external_ingress_gateway_enabled = try(service_mesh_profile.value.external_ingress_gateway_enabled, null)
+    }
+  }
+
+  node_resource_group       = azurecaf_name.rg_node.result
+  oidc_issuer_enabled       = try(var.settings.oidc_issuer_enabled, null)
+  open_service_mesh_enabled = try(var.settings.open_service_mesh_enabled, null)
+  private_cluster_enabled   = try(var.settings.private_cluster_enabled, null)
 
   private_dns_zone_id = can(var.settings.private_dns_zone_id) ? var.settings.private_dns_zone_id : var.private_dns[try(var.settings.private_dns.lz_key, var.settings.lz_key, var.client_config.landingzone_key)][try(var.settings.private_dns_key, var.settings.private_dns.key)].id
   # private_dns_zone_id                 = try(var.private_dns_zone_id, null)

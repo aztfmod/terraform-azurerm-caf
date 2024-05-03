@@ -52,9 +52,10 @@ resource "azurerm_kusto_cluster" "kusto" {
       maximum_instances = optimized_auto_scale.value.maximum_instances
     }
   }
-  trusted_external_tenants = try(var.settings.trusted_external_tenants, null)
-  zones                    = try(var.settings.zones, null)
-  engine                   = try(var.settings.engine, null)
-  auto_stop_enabled        = try(var.settings.auto_stop_enabled, null)
-  tags                     = local.tags
+  trusted_external_tenants      = try(var.settings.trusted_external_tenants, null)
+  zones                         = try(var.settings.zones, null)
+  engine                        = try(var.settings.engine, null)
+  auto_stop_enabled             = try(var.settings.auto_stop_enabled, null)
+  public_network_access_enabled = try(var.settings.public_network_access_enabled, null)
+  tags                          = local.tags
 }
