@@ -2,7 +2,7 @@
     "name": "Azure CAF module",
 
     // Container user to use in VSCode Online and GitHub Codespaces
-    "image": "aztfmod/rover-preview:1.7.5-2404.221518",
+    "image": "ghcr.io/arnaudlh/rover/roverlight:2405.062046",
     "remoteUser": "vscode",
 
     // Volume mounts for the container.
@@ -16,11 +16,8 @@
     // Adding features to the container.
     "features": {
         "ghcr.io/azure/azure-dev/azd:latest": {},
-        "ghcr.io/devcontainers/features/docker-outside-of-docker:1": {},
         "ghcr.io/devcontainers/features/azure-cli:1": {},
         "ghcr.io/mickeahlinder/devcontainer-features/tfenv:1": {},
-        "ghcr.io/devcontainers-contrib/features/tfsec:1": {},
-        "ghcr.io/devcontainers-contrib/features/checkov:1": {},
         "ghcr.io/devcontainers-contrib/features/pre-commit:2": {},
         "ghcr.io/devcontainers/features/kubectl-helm-minikube:1": {},
         "ghcr.io/devcontainers/features/github-cli:1": {}
