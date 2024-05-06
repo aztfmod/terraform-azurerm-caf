@@ -24,21 +24,13 @@
 
     },
 
-    // Container run arguments.
-    "runArgs": [
-		"--cap-add=SYS_PTRACE",
-		"--security-opt",
-		"seccomp=unconfined",
-		"--init"
-	],
-
     // Workspace mounts and environment variables can be added here.
     "workspaceMount": "source=${localWorkspaceFolder},target=/tf/caf,type=bind",
     "workspaceFolder": "/tf/caf",
 
 
     // Uncomment the next line to run commands after the container is created.
-	"postCreateCommand" : "sudo chmod 400 ~/.ssh/* && git config --global core.editor vi && pre-commit install && pre-commit autoupdate",
+	"postCreateCommand" : "sudo chmod 400 ~/.ssh/* && git config --global core.editor vi && echo 'export PATH=$HOME/.tfenv/tfenv-3.0.0/bin:$PATH' >> ~/.zshrc",
     // "postCreateCommand": "sudo cp -R /tmp/.ssh-localhost/* ~/.ssh && sudo chown -R $(whoami):$(whoami) /tf/caf ~/.ssh && sudo chmod 400 ~/.ssh/* && git config --global core.editor vi && pre-commit install && pre-commit autoupdate",
 
 
