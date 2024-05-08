@@ -23,7 +23,7 @@ resource "azurerm_notification_hub" "hub" {
       key_id           = var.settings.apns_credential.key_id
       team_id          = var.settings.apns_credential.team_id
       token = try(
-        data.azurerm_key_vault_secret.apns_credential_token.value,
+        data.azurerm_key_vault_secret.apns_credential_token[0].value,
         var.settings.apns_credential.token,
         null
       )
@@ -34,7 +34,7 @@ resource "azurerm_notification_hub" "hub" {
     for_each = lookup(var.settings, "gcm_credential", null) == null ? [] : [1]
     content {
       api_key = try(
-        data.azurerm_key_vault_secret.gcm_credential_api_key.value,
+        data.azurerm_key_vault_secret.gcm_credential_api_key[0].value,
         var.settings.gcm_credential.api_key,
         null
       )
@@ -43,13 +43,13 @@ resource "azurerm_notification_hub" "hub" {
 }
 
 data "azurerm_key_vault_secret" "apns_credential_token" {
-  for_each     = try(var.settings.apns_credential.token_secret_name, {})
+  count        = try(var.settings.apns_credential.token_secret_name, null) != null ? 1 : 0
   name         = var.settings.apns_credential.token_secret_name
   key_vault_id = var.key_vault_id
 }
 
 data "azurerm_key_vault_secret" "gcm_credential_api_key" {
-  for_each     = try(var.settings.gcm_credential.api_key_secret_name, {}) 
+  count        = try(var.settings.gcm_credential.api_key_secret_name, null) != null ? 1 : 0
   name         = var.settings.gcm_credential.api_key_secret_name
   key_vault_id = var.key_vault_id
 }
