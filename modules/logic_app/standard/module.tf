@@ -15,7 +15,9 @@ resource "azurerm_logic_app_standard" "logic_app_standard" {
   app_service_plan_id        = local.app_service_plan.id
   storage_account_name       = local.storage_account.name
   storage_account_access_key = local.storage_account.primary_access_key
-
+  version                    = lookup(var.settings, "version", null)
+  virtual_network_subnet_id  = lookup(var.settings, "vnet_integration", null) != null ? can(var.settings.vnet_integration.subnet_id) ? var.settings.vnet_integration.subnet_id : try(var.vnets[try(var.settings.vnet_integration.lz_key, var.client_config.landingzone_key)][var.settings.vnet_integration.vnet_key].subnets[var.settings.vnet_integration.subnet_key].id,
+  try(var.virtual_subnets[var.client_config.landingzone_key][var.settings.vnet_integration.subnet_key].id, var.virtual_subnets[var.settings.vnet_integration.lz_key][var.settings.vnet_integration.subnet_key].id)) : null
   app_settings = local.app_settings
 
   dynamic "site_config" {
@@ -42,14 +44,22 @@ resource "azurerm_logic_app_standard" "logic_app_standard" {
       }
     }
   }
-}
-
-resource "azurerm_app_service_virtual_network_swift_connection" "vnet_config" {
-  depends_on = [azurerm_logic_app_standard.logic_app_standard]
-  count      = lookup(var.settings, "vnet_integration", {}) != {} ? 1 : 0
-
-  app_service_id = azurerm_logic_app_standard.logic_app_standard.id
-  subnet_id = can(var.vnet_integration.subnet_id) ? var.vnet_integration.subnet_id : try(var.vnets[try(var.vnet_integration.lz_key, var.client_config.landingzone_key)][var.vnet_integration.vnet_key].subnets[var.vnet_integration.subnet_key].id,
-  try(var.virtual_subnets[var.client_config.landingzone_key][var.vnet_integration.subnet_key].id, var.virtual_subnets[var.vnet_integration.lz_key][var.vnet_integration.subnet_key].id))
+  dynamic "identity" {
+    for_each = lookup(var.settings, "identity", {}) != {} ? [1] : []
+    content {
+      type = lookup(var.settings.identity, "type", null)
+      identity_ids = try(try(lookup(var.settings.identity, "identity_ids"), [try(var.managed_identities[var.client_config.landingzone_key][var.settings.identity.key].id, var.managed_identities[var.settings.identity.lz_key][var.settings.identity.key].id)]), null)
+    }
+  }
 
 }
+
+#resource "azurerm_app_service_virtual_network_swift_connection" "vnet_config" {
+#  depends_on = [azurerm_logic_app_standard.logic_app_standard]
+#  count      = lookup(var.settings, "vnet_integration", {}) != {} ? 1 : 0
+#
+#  app_service_id = azurerm_logic_app_standard.logic_app_standard.id
+#  subnet_id = can(var.vnet_integration.subnet_id) ? var.vnet_integration.subnet_id : try(var.vnets[try(var.vnet_integration.lz_key, var.client_config.landingzone_key)][var.vnet_integration.vnet_key].subnets[var.vnet_integration.subnet_key].id,
+#  try(var.virtual_subnets[var.client_config.landingzone_key][var.vnet_integration.subnet_key].id, var.virtual_subnets[var.vnet_integration.lz_key][var.vnet_integration.subnet_key].id))
+#
+#}
