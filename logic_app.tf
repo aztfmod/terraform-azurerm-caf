@@ -152,7 +152,7 @@ module "logic_app_standard" {
   private_dns        = local.combined_objects_private_dns
   vnets              = local.combined_objects_networking
   virtual_subnets    = local.combined_objects_virtual_subnets
-  base_tags          = try(local.global_settings.inherit_tags, false) ? local.resource_groups[each.value.resource_group_key].tags : {}
+  base_tags          = try(local.global_settings.inherit_tags, false)
   vnet_integration   = try(each.value.vnet_integration, {})
   managed_identities = local.combined_objects_managed_identities
 }
