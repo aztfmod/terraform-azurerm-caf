@@ -47,7 +47,7 @@ resource "azurerm_logic_app_standard" "logic_app_standard" {
     for_each = lookup(var.settings, "identity", {}) != {} ? [1] : []
     content {
       type = lookup(var.settings.identity, "type", null)
-      identity_ids = try(try(lookup(var.settings.identity, "identity_ids"), [try(var.managed_identities[var.client_config.landingzone_key][var.settings.identity.key].id, var.managed_identities[var.settings.identity.lz_key][var.settings.identity.key].id)]), null)
+      identity_ids = can(var.settings.identity.ids) ? var.settings.identity.ids : can(var.settings.identity.key) ? [var.managed_identities[try(var.settings.identity.lz_key, var.client_config.landingzone_key)][var.settings.identity.key].id] : null
     }
   }
 
