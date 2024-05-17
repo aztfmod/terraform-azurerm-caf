@@ -16,9 +16,8 @@ resource "azurerm_logic_app_standard" "logic_app_standard" {
   storage_account_name       = local.storage_account.name
   storage_account_access_key = local.storage_account.primary_access_key
   version                    = lookup(var.settings, "version", null)
-  # Uncomment virtual_network_subnet_id and remove azurerm_app_service_virtual_network_swift_connection to fix issue: https://github.com/aztfmod/terraform-azurerm-caf/issues/1975
-  #virtual_network_subnet_id  = lookup(var.settings, "vnet_integration", null) != null ? can(var.settings.vnet_integration.subnet_id) ? var.settings.vnet_integration.subnet_id : try(var.vnets[try(var.settings.vnet_integration.lz_key, var.client_config.landingzone_key)][var.settings.vnet_integration.vnet_key].subnets[var.settings.vnet_integration.subnet_key].id,
-  #try(var.virtual_subnets[var.client_config.landingzone_key][var.settings.vnet_integration.subnet_key].id, var.virtual_subnets[var.settings.vnet_integration.lz_key][var.settings.vnet_integration.subnet_key].id)) : null
+  virtual_network_subnet_id  = lookup(var.settings, "vnet_integration", null) != null ? can(var.settings.vnet_integration.subnet_id) ? var.settings.vnet_integration.subnet_id : try(var.vnets[try(var.settings.vnet_integration.lz_key, var.client_config.landingzone_key)][var.settings.vnet_integration.vnet_key].subnets[var.settings.vnet_integration.subnet_key].id,
+    try(var.virtual_subnets[var.client_config.landingzone_key][var.settings.vnet_integration.subnet_key].id, var.virtual_subnets[var.settings.vnet_integration.lz_key][var.settings.vnet_integration.subnet_key].id)) : null
   app_settings = local.app_settings
 
   dynamic "site_config" {
@@ -52,15 +51,5 @@ resource "azurerm_logic_app_standard" "logic_app_standard" {
       identity_ids = can(var.settings.identity.ids) ? var.settings.identity.ids : can(var.settings.identity.key) ? [var.managed_identities[try(var.settings.identity.lz_key, var.client_config.landingzone_key)][var.settings.identity.key].id] : null
     }
   }
-
-}
-
-resource "azurerm_app_service_virtual_network_swift_connection" "vnet_config" {
-  depends_on = [azurerm_logic_app_standard.logic_app_standard]
-  count      = lookup(var.settings, "vnet_integration", {}) != {} ? 1 : 0
-
-  app_service_id = azurerm_logic_app_standard.logic_app_standard.id
-  subnet_id = can(var.vnet_integration.subnet_id) ? var.vnet_integration.subnet_id : try(var.vnets[try(var.vnet_integration.lz_key, var.client_config.landingzone_key)][var.vnet_integration.vnet_key].subnets[var.vnet_integration.subnet_key].id,
-  try(var.virtual_subnets[var.client_config.landingzone_key][var.vnet_integration.subnet_key].id, var.virtual_subnets[var.vnet_integration.lz_key][var.vnet_integration.subnet_key].id))
 
 }
