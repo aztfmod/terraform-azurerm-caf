@@ -15,7 +15,10 @@ resource "azurerm_logic_app_standard" "logic_app_standard" {
   app_service_plan_id        = local.app_service_plan.id
   storage_account_name       = local.storage_account.name
   storage_account_access_key = local.storage_account.primary_access_key
-
+  version                    = lookup(var.settings, "version", null)
+  # Uncomment virtual_network_subnet_id and remove azurerm_app_service_virtual_network_swift_connection to fix issue: https://github.com/aztfmod/terraform-azurerm-caf/issues/1975
+  #virtual_network_subnet_id  = lookup(var.settings, "vnet_integration", null) != null ? can(var.settings.vnet_integration.subnet_id) ? var.settings.vnet_integration.subnet_id : try(var.vnets[try(var.settings.vnet_integration.lz_key, var.client_config.landingzone_key)][var.settings.vnet_integration.vnet_key].subnets[var.settings.vnet_integration.subnet_key].id,
+  #try(var.virtual_subnets[var.client_config.landingzone_key][var.settings.vnet_integration.subnet_key].id, var.virtual_subnets[var.settings.vnet_integration.lz_key][var.settings.vnet_integration.subnet_key].id)) : null
   app_settings = local.app_settings
 
   dynamic "site_config" {
@@ -42,6 +45,14 @@ resource "azurerm_logic_app_standard" "logic_app_standard" {
       }
     }
   }
+  dynamic "identity" {
+    for_each = lookup(var.settings, "identity", {}) != {} ? [1] : []
+    content {
+      type = lookup(var.settings.identity, "type", null)
+      identity_ids = can(var.settings.identity.ids) ? var.settings.identity.ids : can(var.settings.identity.key) ? [var.managed_identities[try(var.settings.identity.lz_key, var.client_config.landingzone_key)][var.settings.identity.key].id] : null
+    }
+  }
+
 }
 
 resource "azurerm_app_service_virtual_network_swift_connection" "vnet_config" {
