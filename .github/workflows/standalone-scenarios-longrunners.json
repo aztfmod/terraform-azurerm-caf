@@ -17,6 +17,7 @@
     "apim/115-api_management_private_virtual_network",
     "apim/116-api_management_subscription",
     "apim/117-api_management_product",
+    "apim/118-api_management_platform_stv2",
     "app_gateway/301-agw-v1",
     "compute/vmware_cluster/101-vmware_cluster",
     "mssql_mi/200-mi",
