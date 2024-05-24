@@ -45,7 +45,7 @@ resource "azurerm_linux_web_app_slot" "slots" {
       managed_pipeline_mode     = lookup(var.settings.site_config, "managed_pipeline_mode", null)
       #min_tls_version           = lookup(var.settings.site_config, "min_tls_version", "1.2")
       #php_version               = lookup(var.settings.site_config, "php_version", null)
-      python_version            = lookup(var.settings.site_config, "python_version", null)
+      #python_version            = lookup(var.settings.site_config, "python_version", null)
       remote_debugging_enabled  = lookup(var.settings.site_config, "remote_debugging_enabled", null)
       remote_debugging_version  = lookup(var.settings.site_config, "remote_debugging_version", null)
       #use_32_bit_worker_process = lookup(var.settings.site_config, "use_32_bit_worker_process", false)
