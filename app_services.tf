@@ -59,7 +59,6 @@ module "windows_web_apps" {
   combined_objects                    = local.dynamic_app_config_combined_objects
   global_settings                     = local.global_settings
   settings                            = each.value.settings
-  slots                               = try(each.value.slots, {})
   identity                            = try(each.value.identity, null)
   app_settings                        = try(each.value.app_settings, null)
   connection_string                   = try(each.value.connection_string, {})
