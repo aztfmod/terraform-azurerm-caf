@@ -3,7 +3,7 @@ output "id" {
   description = "The ID of the App Service."
 }
 output "default_hostname" {
-  value       = azurerm_windows_web_app.windows_web_apps.default_hostname 
+  value       = azurerm_windows_web_app.windows_web_apps.default_hostname
   description = "The Default Hostname associated with the Linux Web App"
 }
 output "outbound_ip_addresses" {
