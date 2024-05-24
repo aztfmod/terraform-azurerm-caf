@@ -74,3 +74,7 @@ variable "azuread_service_principal_passwords" {}
 variable "slots" {
   default = {}
 }
+
+variable "application_insight" {
+  default = null
+}
