@@ -78,3 +78,7 @@ variable "slots" {
 variable "application_insight" {
   default = null
 }
+
+variable "dynamic_settings_to_process" {
+  default = {}
+}
