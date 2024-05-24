@@ -35,7 +35,7 @@ locals {
     object_id               = local.object_id
     subscription_id         = data.azurerm_client_config.current.subscription_id
     tenant_id               = data.azurerm_client_config.current.tenant_id
-  } : map(var.client_config)
+  } : tomap(var.client_config)
 
   cloud = merge({
     acrLoginServerEndpoint                      = try(var.cloud.acrLoginServerEndpoint, {})
