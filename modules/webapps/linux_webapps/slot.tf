@@ -3,13 +3,13 @@
 resource "azurerm_linux_web_app_slot" "slots" {
   for_each = var.slots
 
-  name                = each.value.name
-  app_service_id      = azurerm_linux_web_app.linux_web_apps.id
+  name           = each.value.name
+  app_service_id = azurerm_linux_web_app.linux_web_apps.id
   #location            = local.location
   #resource_group_name = local.resource_group_name
   #app_service_plan_id = var.app_service_plan_id
   #app_service_name    = azurerm_app_service.app_service.name
-  tags                = local.tags
+  tags = local.tags
 
   client_affinity_enabled = lookup(var.settings, "client_affinity_enabled", null)
   enabled                 = lookup(var.settings, "enabled", null)
@@ -31,27 +31,27 @@ resource "azurerm_linux_web_app_slot" "slots" {
 
     content {
       # numberOfWorkers           = lookup(each.value.site_config, "numberOfWorkers", 1)  # defined in ARM template below
-      always_on                 = lookup(var.settings.site_config, "always_on", false)
-      app_command_line          = lookup(var.settings.site_config, "app_command_line", null)
-      default_documents         = lookup(var.settings.site_config, "default_documents", null)
+      always_on         = lookup(var.settings.site_config, "always_on", false)
+      app_command_line  = lookup(var.settings.site_config, "app_command_line", null)
+      default_documents = lookup(var.settings.site_config, "default_documents", null)
       #dotnet_framework_version  = lookup(var.settings.site_config, "dotnet_framework_version", null)
-      ftps_state                = lookup(var.settings.site_config, "ftps_state", "FtpsOnly")
-      http2_enabled             = lookup(var.settings.site_config, "http2_enabled", false)
+      ftps_state    = lookup(var.settings.site_config, "ftps_state", "FtpsOnly")
+      http2_enabled = lookup(var.settings.site_config, "http2_enabled", false)
       #java_version              = lookup(var.settings.site_config, "java_version", null)
       #java_container            = lookup(var.settings.site_config, "java_container", null)
       #java_container_version    = lookup(var.settings.site_config, "java_container_version", null)
-      local_mysql_enabled       = lookup(var.settings.site_config, "local_mysql_enabled", null)
+      local_mysql_enabled = lookup(var.settings.site_config, "local_mysql_enabled", null)
       #linux_fx_version          = lookup(var.settings.site_config, "linux_fx_version", null)
       #windows_fx_version        = lookup(var.settings.site_config, "windows_fx_version", null)
-      managed_pipeline_mode     = lookup(var.settings.site_config, "managed_pipeline_mode", null)
+      managed_pipeline_mode = lookup(var.settings.site_config, "managed_pipeline_mode", null)
       #min_tls_version           = lookup(var.settings.site_config, "min_tls_version", "1.2")
       #php_version               = lookup(var.settings.site_config, "php_version", null)
       #python_version            = lookup(var.settings.site_config, "python_version", null)
-      remote_debugging_enabled  = lookup(var.settings.site_config, "remote_debugging_enabled", null)
-      remote_debugging_version  = lookup(var.settings.site_config, "remote_debugging_version", null)
+      remote_debugging_enabled = lookup(var.settings.site_config, "remote_debugging_enabled", null)
+      remote_debugging_version = lookup(var.settings.site_config, "remote_debugging_version", null)
       #use_32_bit_worker_process = lookup(var.settings.site_config, "use_32_bit_worker_process", false)
-      websockets_enabled        = lookup(var.settings.site_config, "websockets_enabled", false)
-      scm_type                  = lookup(var.settings.site_config, "scm_type", null)
+      websockets_enabled = lookup(var.settings.site_config, "websockets_enabled", false)
+      scm_type           = lookup(var.settings.site_config, "scm_type", null)
 
       dynamic "cors" {
         for_each = lookup(var.settings.site_config, "cors", {}) != {} ? [1] : []
@@ -110,7 +110,7 @@ resource "azurerm_linux_web_app_slot" "slots" {
     for_each = lookup(var.settings, "auth_settings", {}) != {} ? [1] : []
 
     content {
-      enabled                        = lookup(var.settings.auth_settings, "enabled", false)
+      enabled = lookup(var.settings.auth_settings, "enabled", false)
       #additional_login_params        = lookup(var.settings.auth_settings, "additional_login_params", null)
       allowed_external_redirect_urls = lookup(var.settings.auth_settings, "allowed_external_redirect_urls", null)
       default_provider               = lookup(var.settings.auth_settings, "default_provider", null)
