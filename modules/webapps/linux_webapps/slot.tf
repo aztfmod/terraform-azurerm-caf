@@ -41,7 +41,7 @@ resource "azurerm_linux_web_app_slot" "slots" {
       #java_container            = lookup(var.settings.site_config, "java_container", null)
       #java_container_version    = lookup(var.settings.site_config, "java_container_version", null)
       local_mysql_enabled       = lookup(var.settings.site_config, "local_mysql_enabled", null)
-      linux_fx_version          = lookup(var.settings.site_config, "linux_fx_version", null)
+      #linux_fx_version          = lookup(var.settings.site_config, "linux_fx_version", null)
       #windows_fx_version        = lookup(var.settings.site_config, "windows_fx_version", null)
       managed_pipeline_mode     = lookup(var.settings.site_config, "managed_pipeline_mode", null)
       #min_tls_version           = lookup(var.settings.site_config, "min_tls_version", "1.2")
