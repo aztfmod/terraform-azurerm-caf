@@ -65,7 +65,7 @@ resource "azurerm_linux_web_app" "linux_web_apps" {
       websockets_enabled                            = lookup(var.settings.site_config, "websockets_enabled", null)
       vnet_route_all_enabled                        = lookup(var.settings.site_config, "vnet_route_all_enabled", null)
       worker_count                                  = lookup(var.settings.site_config, "worker_count", null)
-      auto_heal_enabled                             = lookup(var.settings.site_config, "aut_heal_setting", null)
+      auto_heal_enabled                             = lookup(var.settings.site_config, "auto_heal_setting", null)
 
       dynamic "application_stack" {
         for_each = lookup(var.settings.site_config, "application_stack", {}) != {} ? [1] : []
