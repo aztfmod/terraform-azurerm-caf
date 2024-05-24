@@ -63,6 +63,10 @@ variable "diagnostic_profiles" {
 variable "diagnostics" {
   default = null
 }
+
+
+variable "auto_heal_setting" {}
+variable "auto_heal_enabled" {}
 variable "vnets" {}
 variable "subnet_id" {}
 variable "private_endpoints" {}
