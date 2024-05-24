@@ -174,7 +174,7 @@ resource "azurerm_linux_web_app_slot" "slots" {
   lifecycle {
     ignore_changes = [
       app_settings["WEBSITE_RUN_FROM_PACKAGE"],
-      site_config[0].scm_type
+      #site_config[0].scm_type
     ]
   }
 }
