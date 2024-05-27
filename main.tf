@@ -35,6 +35,9 @@ provider "azapi" {
   skip_provider_registration = true
 }
 
+provider "azuread" {
+}
+
 data "azurerm_subscription" "primary" {}
 data "azurerm_client_config" "current" {}
 data "azuread_client_config" "current" {}
