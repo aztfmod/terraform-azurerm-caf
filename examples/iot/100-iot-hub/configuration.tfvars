@@ -43,7 +43,7 @@ iot_hub_certificate = {
       key = "iothub1"
     }
     is_verified         = true
-    certificate_content = "iot/100-iot-hub/cert.pem"
+    certificate_content = "examples/iot/100-iot-hub/cert.pem"
   }
 }
 
