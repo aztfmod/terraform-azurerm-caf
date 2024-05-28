@@ -80,32 +80,35 @@ output "windows_web_apps" {
 }
 
 module "linux_web_apps" {
-  source                              = "./modules/webapps/linux_webapps"
-  depends_on                          = [module.networking]
-  for_each                            = local.webapp.linux_web_apps
-  name                                = each.value.name
-  client_config                       = local.client_config
-  app_service_plan_id                 = can(each.value.app_service_plan_id) ? each.value.app_service_plan_id : local.combined_objects_app_service_plans[try(each.value.lz_key, local.client_config.landingzone_key)][each.value.app_service_plan_key].id
-  combined_objects                    = local.dynamic_app_config_combined_objects
-  storage_accounts                    = local.combined_objects_storage_accounts
-  global_settings                     = local.global_settings
-  settings                            = each.value.settings
-  slots                               = try(each.value.slots, {})
-  identity                            = try(each.value.identity, null)
-  app_settings                        = try(each.value.app_settings, null)
-  connection_string                   = try(each.value.connection_string, {})
-  vnets                               = local.combined_objects_networking
-  virtual_subnets                     = local.combined_objects_virtual_subnets
-  subnet_id                           = can(each.value.subnet_id) || can(each.value.vnet_key) == false ? try(each.value.subnet_id, null) : local.combined_objects_networking[try(each.value.lz_key, local.client_config.landingzone_key)][each.value.vnet_key].subnets[each.value.subnet_key].id
-  private_endpoints                   = try(each.value.private_endpoints, {})
-  private_dns                         = local.combined_objects_private_dns
-  base_tags                           = local.global_settings.inherit_tags
-  resource_group                      = local.combined_objects_resource_groups[try(each.value.resource_group.lz_key, local.client_config.landingzone_key)][try(each.value.resource_group_key, each.value.resource_group.key)]
-  resource_group_name                 = can(each.value.resource_group.name) || can(each.value.resource_group_name) ? try(each.value.resource_group.name, each.value.resource_group_name) : null
-  location                            = try(local.global_settings.regions[each.value.region], null)
+  source     = "./modules/webapps/linux_webapps"
+  depends_on = [module.networking]
+  for_each   = local.webapp.linux_web_apps
+
+  app_service_plan_id = can(each.value.app_service_plan_id) ? each.value.app_service_plan_id : local.combined_objects_app_service_plans[try(each.value.lz_key, local.client_config.landingzone_key)][each.value.app_service_plan_key].id
+  app_settings        = try(each.value.app_settings, null)
+  connection_string   = try(each.value.connection_string, {})
+  identity            = try(each.value.identity, null)
+  location            = try(local.global_settings.regions[each.value.region], null)
+  name                = each.value.name
+  private_endpoints   = try(each.value.private_endpoints, {})
+  resource_group      = local.combined_objects_resource_groups[try(each.value.resource_group.lz_key, local.client_config.landingzone_key)][try(each.value.resource_group_key, each.value.resource_group.key)]
+  resource_group_name = can(each.value.resource_group.name) || can(each.value.resource_group_name) ? try(each.value.resource_group.name, each.value.resource_group_name) : null
+  settings            = each.value.settings
+  slots               = try(each.value.slots, {})
+  subnet_id           = can(each.value.subnet_id) || can(each.value.vnet_key) == false ? try(each.value.subnet_id, null) : local.combined_objects_networking[try(each.value.lz_key, local.client_config.landingzone_key)][each.value.vnet_key].subnets[each.value.subnet_key].id
+
   azuread_applications                = local.combined_objects_azuread_applications
   azuread_service_principal_passwords = local.combined_objects_azuread_service_principal_passwords
+  base_tags                           = local.global_settings.inherit_tags
+  client_config                       = local.client_config
+  combined_objects                    = local.dynamic_app_config_combined_objects
+  global_settings                     = local.global_settings
+  private_dns                         = local.combined_objects_private_dns
+  storage_accounts                    = local.combined_objects_storage_accounts
+  virtual_subnets                     = local.combined_objects_virtual_subnets
+  vnets                               = local.combined_objects_networking
 }
+
 output "linux_web_apps" {
   value = module.linux_web_apps
 }

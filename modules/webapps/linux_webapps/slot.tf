@@ -62,11 +62,14 @@ resource "azurerm_linux_web_app_slot" "slots" {
         }
       }
       dynamic "ip_restriction" {
-        for_each = lookup(var.settings.site_config, "ip_restriction", {}) != {} ? [1] : []
+        # for_each = lookup(var.settings.site_config, "ip_restriction", {}) != {} ? [1] : []
+        for_each = try(var.settings.site_config.ip_restriction, {})
 
         content {
-          ip_address                = lookup(var.settings.site_config.ip_restriction, "ip_address", null)
-          virtual_network_subnet_id = lookup(var.settings.site_config.ip_restriction, "virtual_network_subnet_id", null)
+          # ip_address                = lookup(var.settings.site_config.ip_restriction, "ip_address", null)
+          # virtual_network_subnet_id = lookup(var.settings.site_config.ip_restriction, "virtual_network_subnet_id", null)
+          ip_address                = can(ip_restriction.value.ip_address) ? ip_restriction.value.ip_address : null
+          virtual_network_subnet_id = can(ip_restriction.value.virtual_network_subnet_id) ? ip_restriction.value.virtual_network_subnet_id : can(ip_restriction.value.virtual_network_subnet.id) ? ip_restriction.value.virtual_network_subnet.id : can(ip_restriction.value.virtual_network_subnet.subnet_key) ? var.combined_objects.networking[try(ip_restriction.value.virtual_network_subnet.lz_key, var.client_config.landingzone_key)][ip_restriction.value.virtual_network_subnet.vnet_key].subnets[ip_restriction.value.virtual_network_subnet.subnet_key].id : null
         }
       }
       dynamic "scm_ip_restriction" {
