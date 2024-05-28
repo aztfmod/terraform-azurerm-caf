@@ -69,7 +69,12 @@ resource "azurerm_linux_web_app_slot" "slots" {
           # ip_address                = lookup(var.settings.site_config.ip_restriction, "ip_address", null)
           # virtual_network_subnet_id = lookup(var.settings.site_config.ip_restriction, "virtual_network_subnet_id", null)
           ip_address                = can(ip_restriction.value.ip_address) ? ip_restriction.value.ip_address : null
-          virtual_network_subnet_id = can(ip_restriction.value.virtual_network_subnet_id) ? ip_restriction.value.virtual_network_subnet_id : can(ip_restriction.value.virtual_network_subnet.id) ? ip_restriction.value.virtual_network_subnet.id : can(ip_restriction.value.virtual_network_subnet.subnet_key) ? var.combined_objects.networking[try(ip_restriction.value.virtual_network_subnet.lz_key, var.client_config.landingzone_key)][ip_restriction.value.virtual_network_subnet.vnet_key].subnets[ip_restriction.value.virtual_network_subnet.subnet_key].id : null
+          # virtual_network_subnet_id = can(ip_restriction.value.virtual_network_subnet_id) ? ip_restriction.value.virtual_network_subnet_id : can(ip_restriction.value.virtual_network_subnet.id) ? ip_restriction.value.virtual_network_subnet.id : can(ip_restriction.value.virtual_network_subnet.subnet_key) ? can (var.combined_objects.networking) ? var.combined_objects.networking[try(ip_restriction.value.virtual_network_subnet.lz_key, var.client_config.landingzone_key)][ip_restriction.value.virtual_network_subnet.vnet_key].subnets[ip_restriction.value.virtual_network_subnet.subnet_key].id : null
+          virtual_network_subnet_id = try(coalesce(
+            try(var.vnets[try(ip_restriction.value.virtual_network_subnet.lz_key, var.client_config.landingzone_key)][ip_restriction.value.virtual_network_subnet.vnet_key].subnets[ip_restriction.value.virtual_network_subnet.subnet_key].id, null),
+            try(var.virtual_subnets[try(ip_restriction.value.virtual_network_subnet.lz_key, var.client_config.landingzone_key)][ip_restriction.value.virtual_network_subnet.subnet_key].id, null),
+            try(ip_restriction.value.virtual_network_subnet_id, null))
+          )
         }
       }
       dynamic "scm_ip_restriction" {
