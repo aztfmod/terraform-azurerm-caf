@@ -109,7 +109,6 @@ resource "azurerm_linux_web_app" "linux_web_apps" {
             try(ip_restriction.value.virtual_network_subnet_id, null)), null
           )
 
-
           dynamic "headers" {
             for_each = try(ip_restriction.headers, {})
 

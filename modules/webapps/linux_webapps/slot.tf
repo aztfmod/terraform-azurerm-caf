@@ -61,6 +61,7 @@ resource "azurerm_linux_web_app_slot" "slots" {
           support_credentials = lookup(var.settings.site_config.cors, "support_credentials", null)
         }
       }
+
       dynamic "ip_restriction" {
         for_each = try(var.settings.site_config.ip_restriction, {})
 
@@ -74,20 +75,22 @@ resource "azurerm_linux_web_app_slot" "slots" {
           virtual_network_subnet_id = try(coalesce(
             try(var.vnets[try(ip_restriction.value.virtual_network_subnet.lz_key, var.client_config.landingzone_key)][ip_restriction.value.virtual_network_subnet.vnet_key].subnets[ip_restriction.value.virtual_network_subnet.subnet_key].id, null),
             try(var.virtual_subnets[try(ip_restriction.value.virtual_network_subnet.lz_key, var.client_config.landingzone_key)][ip_restriction.value.virtual_network_subnet.subnet_key].id, null),
-            try(ip_restriction.value.virtual_network_subnet_id, null))
+            try(ip_restriction.value.virtual_network_subnet_id, null)), null
           )
         }
       }
+
       dynamic "scm_ip_restriction" {
         for_each = try(var.settings.site_config.scm_ip_restriction, {})
 
         content {
+          action                    = lookup(scm_ip_restriction.value, "action", null)
           ip_address                = lookup(scm_ip_restriction.value, "ip_address", null)
-          service_tag               = lookup(scm_ip_restriction.value, "service_tag", null)
-          virtual_network_subnet_id = can(scm_ip_restriction.value.virtual_network_subnet_id) ? scm_ip_restriction.value.virtual_network_subnet_id : can(scm_ip_restriction.value.virtual_network_subnet.id) ? scm_ip_restriction.value.virtual_network_subnet.id : can(scm_ip_restriction.value.virtual_network_subnet.subnet_key) ? var.combined_objects.networking[try(scm_ip_restriction.value.virtual_network_subnet.lz_key, var.client_config.landingzone_key)][scm_ip_restriction.value.virtual_network_subnet.vnet_key].subnets[scm_ip_restriction.value.virtual_network_subnet.subnet_key].id : null
           name                      = lookup(scm_ip_restriction.value, "name", null)
           priority                  = lookup(scm_ip_restriction.value, "priority", null)
-          action                    = lookup(scm_ip_restriction.value, "action", null)
+          service_tag               = lookup(scm_ip_restriction.value, "service_tag", null)
+          virtual_network_subnet_id = can(scm_ip_restriction.value.virtual_network_subnet_id) ? scm_ip_restriction.value.virtual_network_subnet_id : can(scm_ip_restriction.value.virtual_network_subnet.id) ? scm_ip_restriction.value.virtual_network_subnet.id : can(scm_ip_restriction.value.virtual_network_subnet.subnet_key) ? var.combined_objects.networking[try(scm_ip_restriction.value.virtual_network_subnet.lz_key, var.client_config.landingzone_key)][scm_ip_restriction.value.virtual_network_subnet.vnet_key].subnets[scm_ip_restriction.value.virtual_network_subnet.subnet_key].id : null
+
           dynamic "headers" {
             for_each = try(scm_ip_restriction.headers, {})
 
