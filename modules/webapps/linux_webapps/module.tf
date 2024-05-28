@@ -106,7 +106,7 @@ resource "azurerm_linux_web_app" "linux_web_apps" {
           virtual_network_subnet_id = try(coalesce(
             try(var.vnets[try(ip_restriction.value.virtual_network_subnet.lz_key, var.client_config.landingzone_key)][ip_restriction.value.virtual_network_subnet.vnet_key].subnets[ip_restriction.value.virtual_network_subnet.subnet_key].id, null),
             try(var.virtual_subnets[try(ip_restriction.value.virtual_network_subnet.lz_key, var.client_config.landingzone_key)][ip_restriction.value.virtual_network_subnet.subnet_key].id, null),
-            try(ip_restriction.value.virtual_network_subnet_id, null))
+            try(ip_restriction.value.virtual_network_subnet_id, null)), null
           )
 
 
