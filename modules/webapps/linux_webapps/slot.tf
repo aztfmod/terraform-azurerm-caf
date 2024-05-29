@@ -50,6 +50,7 @@ resource "azurerm_linux_web_app_slot" "slots" {
       remote_debugging_enabled = lookup(var.settings.site_config, "remote_debugging_enabled", null)
       remote_debugging_version = lookup(var.settings.site_config, "remote_debugging_version", null)
       #use_32_bit_worker_process = lookup(var.settings.site_config, "use_32_bit_worker_process", false)
+      vnet_route_all_enabled                        = lookup(var.settings.site_config, "vnet_route_all_enabled", null)
       websockets_enabled = lookup(var.settings.site_config, "websockets_enabled", false)
       scm_type           = lookup(var.settings.site_config, "scm_type", null)
 
