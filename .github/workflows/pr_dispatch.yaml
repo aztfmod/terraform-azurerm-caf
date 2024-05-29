@@ -59,6 +59,5 @@ jobs:
       - name: Repository Dispatch
         uses: peter-evans/repository-dispatch@v3
         with:
-          token: ${{ secrets.GITHUB_TOKEN }}
           event-type: pr-${{ matrix.scenario }}
           client-payload: '{"scenario": "${{ (matrix.scenario) }}", "sha": "${{ github.event.pull_request.head.sha }}"}'
