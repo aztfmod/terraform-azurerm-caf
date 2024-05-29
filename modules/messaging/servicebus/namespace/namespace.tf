@@ -11,11 +11,12 @@ resource "azurecaf_name" "namespace" {
 }
 
 resource "azurerm_servicebus_namespace" "namespace" {
-  name                = azurecaf_name.namespace.result
-  sku                 = var.settings.sku
-  capacity            = try(var.settings.capacity, null)
-  zone_redundant      = try(var.settings.zone_redundant, null)
-  tags                = merge(local.base_tags, try(var.settings.tags, {}))
-  location            = local.location
-  resource_group_name = local.resource_group_name
+  name                         = azurecaf_name.namespace.result
+  sku                          = var.settings.sku
+  capacity                     = try(var.settings.capacity, null)
+  zone_redundant               = try(var.settings.zone_redundant, null)
+  tags                         = merge(local.base_tags, try(var.settings.tags, {}))
+  premium_messaging_partitions = try(var.settings.premium_messaging_partitions, null)
+  location                     = local.location
+  resource_group_name          = local.resource_group_name
 }
