@@ -19,6 +19,7 @@ module "private_endpoints" {
     app_config                 = local.combined_objects_app_config
     batch_accounts             = local.combined_objects_batch_accounts
     azure_container_registries = local.combined_objects_azure_container_registries
+    cognitive_services_accounts = local.combined_objects_cognitive_services_accounts
     cosmos_dbs                 = local.combined_objects_cosmos_dbs
     data_factory               = local.combined_objects_data_factory
     event_hub_namespaces       = local.combined_objects_event_hub_namespaces

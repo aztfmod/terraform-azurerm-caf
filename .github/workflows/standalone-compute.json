@@ -2,9 +2,9 @@
   "config_files": [
     "compute/availability_set/100-simple-availabilityset",
     "compute/availability_set/101-availabilityset-with-proximity-placement-group",
-    "compute/azure_virtual_desktop/wvd_resources",
     "compute/azure_redhat_openshift/101_basic_private_cluster",
     "compute/azure_redhat_openshift/102_basic_public_cluster",
+    "compute/azure_virtual_desktop/wvd_resources",
     "compute/batch/batch_account/100-batch-account-storage",
     "compute/batch/batch_account/100-batch-account",
     "compute/batch/batch_account/200-batch-account-private-endpoint",
@@ -26,6 +26,7 @@
     "compute/kubernetes_services/105-cluster-usermsi",
     "compute/kubernetes_services/107-agic-brownfield",
     "compute/kubernetes_services/108-single-cluster-remote-adgroup-admin",
+    "compute/kubernetes_services/109-single-cluster-istio",
     "compute/proximity_placement_group",
     "compute/virtual_machine_scale_set/100-linux-win-vmss-lb",
     "compute/virtual_machine_scale_set/101-linux-win-vmss-agw",
@@ -48,6 +49,7 @@
     "compute/virtual_machine/214-vm-generic_extensions_complex",
     "compute/virtual_machine/215-vm-keyvault-for-windows-extension",
     "compute/virtual_machine/216-vm-linux_diagnostic_extensions",
-    "compute/virtual_machine/217-vm-disk-encryption-set-msi"
+    "compute/virtual_machine/217-vm-disk-encryption-set-msi",
+    "compute/vmware_cluster/101-vmware_cluster"
   ]
 }

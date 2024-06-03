@@ -46,7 +46,7 @@ jobs:
     needs: rover_setup
 
     container:
-      image: aztfmod/rover:1.5.7-2310.0211
+      image: aztfmod/rover:1.8.4-2405.2306
       options: --user 0
 
     env:
@@ -58,7 +58,7 @@ jobs:
       ARM_SUBSCRIPTION_ID: ${{ secrets.ARM_SUBSCRIPTION_ID }}
 
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
 
       - name: Set Environment Variables
         run: |

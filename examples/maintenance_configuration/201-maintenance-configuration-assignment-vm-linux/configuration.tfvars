@@ -6,7 +6,7 @@ global_settings = {
   }
 
   inherit_tags = true
-  
+
   resource_defaults = {
     virtual_machines = {
       # set the below to enable az managed boot diagostics for vms
@@ -70,17 +70,17 @@ virtual_machines = {
         # Spot VM to save money
         priority        = "Spot"
         eviction_policy = "Deallocate"
-        
-        patch_mode                         = "AutomaticByPlatform"
+
+        patch_mode                                             = "AutomaticByPlatform"
         bypass_platform_safety_checks_on_user_schedule_enabled = true
 
         # Value of the nic keys to attach the VM. The first one in the list is the default nic
         network_interface_keys = ["nic0"]
 
         os_disk = {
-          name                    = "example_vm1-os"
-          caching                 = "ReadWrite"
-          storage_account_type    = "Standard_LRS"
+          name                 = "example_vm1-os"
+          caching              = "ReadWrite"
+          storage_account_type = "Standard_LRS"
         }
         identity = {
           type = "SystemAssigned" #SystemAssigned OR UserAssigned OR SystemAssigned, UserAssigned
@@ -105,10 +105,10 @@ virtual_machines = {
         name                 = "server1-data1"
         storage_account_type = "Standard_LRS"
         # Only Empty is supported. More community contributions required to cover other scenarios
-        create_option           = "Empty"
-        disk_size_gb            = "10"
-        lun                     = 1
-        zones                   = ["1"]
+        create_option = "Empty"
+        disk_size_gb  = "10"
+        lun           = 1
+        zones         = ["1"]
       }
     }
   }
