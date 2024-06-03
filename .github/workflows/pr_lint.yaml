@@ -3,15 +3,17 @@
 # Licensed under the MIT License.
 #
 
-name: PR Dispatch Workflow
+name: PR Tflint
 
 on:
+  workflow_dispatch:
   pull_request:
     types: [opened, synchronize, reopened]
 
 env:
   TF_VERSION: "1.8.4"
   TF_LINT_VERSION: "v0.50.3"
+
 jobs:
   linting:
     name: Format and Lint Checks
@@ -35,7 +37,6 @@ jobs:
         with:
           tflint_version: ${{ env.TF_LINT_VERSION }}
 
-        
       - name: Run TFLint with reviewdog
         uses: reviewdog/action-tflint@v1
         with:
@@ -43,21 +44,3 @@ jobs:
           reporter: github-pr-check
           level: info
           tflint_init: true
-
-  dispatch:
-    runs-on: ubuntu-latest
-    strategy:
-      matrix:
-        scenario: 
-          - standalone-scenarios-azuread.json
-          - standalone-scenarios.json
-          - standalone-compute.json
-          - standalone-networking.json
-          - standalone-scenarios-longrunners.json
-
-    steps:
-      - name: Repository Dispatch
-        uses: peter-evans/repository-dispatch@v3
-        with:
-          event-type: pr-${{ matrix.scenario }}
-          client-payload: '{"scenario": "${{ (matrix.scenario) }}", "sha": "${{ github.event.pull_request.head.sha }}"}'

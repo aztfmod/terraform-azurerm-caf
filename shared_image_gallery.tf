@@ -44,7 +44,7 @@ module "packer_service_principal" {
   tenant_id       = data.azurerm_client_config.current.tenant_id
   gallery_name    = module.shared_image_galleries[each.value.shared_image_gallery_destination.gallery_key].name
   image_name      = module.image_definitions[each.value.shared_image_gallery_destination.image_key].name
-  key_vault_id    = lookup(each.value, "keyvault_key") == null ? null : module.keyvaults[each.value.keyvault_key].id
+  key_vault_id    = lookup(each.value, "keyvault_key", null) == null ? null : module.keyvaults[each.value.keyvault_key].id
   settings        = each.value
 
   depends_on = [
@@ -67,7 +67,7 @@ module "packer_build" {
   tenant_id                 = data.azurerm_client_config.current.tenant_id
   gallery_name              = module.shared_image_galleries[each.value.shared_image_gallery_destination.gallery_key].name
   image_name                = module.image_definitions[each.value.shared_image_gallery_destination.image_key].name
-  key_vault_id              = lookup(each.value, "keyvault_key") == null ? null : module.keyvaults[each.value.keyvault_key].id
+  key_vault_id              = each.value.keyvault_key == null ? null : module.keyvaults[each.value.keyvault_key].id
   managed_identities        = local.combined_objects_managed_identities
   vnet_name                 = try(try(local.combined_objects_networking[each.value.lz_key][each.value.vnet_key].name, local.combined_objects_networking[local.client_config.landingzone_key][each.value.vnet_key].name), "")
   subnet_name               = try(lookup(each.value, "lz_key", null) == null ? local.combined_objects_networking[local.client_config.landingzone_key][each.value.vnet_key].subnets[each.value.subnet_key].name : local.combined_objects_networking[each.value.lz_key][each.value.vnet_key].subnets[each.value.subnet_key].name, "")

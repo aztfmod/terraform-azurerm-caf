@@ -3,7 +3,7 @@ mock_provider "azurerm" {
 }
 
 mock_provider "azurerm" {
-  alias = "vhub"
+  alias  = "vhub"
   source = "./tests/mock_data"
 }
 

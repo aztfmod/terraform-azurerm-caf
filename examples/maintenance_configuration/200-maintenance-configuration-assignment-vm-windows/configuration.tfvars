@@ -94,7 +94,7 @@ virtual_machines = {
         priority        = "Spot"
         eviction_policy = "Deallocate"
 
-        patch_mode                         = "AutomaticByPlatform"
+        patch_mode                                             = "AutomaticByPlatform"
         bypass_platform_safety_checks_on_user_schedule_enabled = true
         # When you want to load the file from the folder in the custom_data always use the relative path from the caf_solution in landing zones
         custom_data = "../../examples/compute/virtual_machine/101-single-windows-vm/scripts/custom.ps1"
