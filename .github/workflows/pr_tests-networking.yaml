@@ -15,7 +15,7 @@ on:
       - '.github/workflows/*networking.*'
 
 env:
-  scenario: standalone-networking.json
+  SCENARIO: standalone-networking.json
   TF_VERSION: "1.8.4"
   TF_LINT_VERSION: "v0.50.3"
 
