@@ -33,3 +33,12 @@ mock_data "azuread_service_principal" {
     object_id      = "00000000-0000-0000-0000-000000000000"
   }
 }
+
+mock_data "azurerm_role_definition" {
+  defaults = {
+    id          = "b24988ac-6180-42a0-ab88-20f7382dd24c"
+    description = "Contributor"
+    type        = "BuiltInRole"
+  }
+
+}
