@@ -7,7 +7,7 @@ name: PR tests
 
 on:
   repository_dispatch:
-    types: [pr-*]
+    types: [int-*]
   workflow_dispatch:
     inputs:
       scenario:
@@ -22,10 +22,6 @@ on:
           - standalone-networking.json
           - standalone-scenarios-longrunners.json
 
-permissions:
-  id-token: write
-  contents: read
-
 env:
   DEFAULT_SCENARIO: "standalone-networking.json"
   TF_VERSION: "1.8.4"
@@ -39,9 +35,6 @@ jobs:
       matrix: ${{ steps.load_scenarios.outputs.matrix }}
     steps:
       - uses: actions/checkout@v4
-        with:
-          ref: ${{ github.event.client_payload.sha }}
-
       - id: load_scenarios
         run: |
           echo "Scenario: ${{ github.event.client_payload.scenario }}"
@@ -64,8 +57,6 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v4
-        with:
-          ref: ${{ github.event.client_payload.sha }}
 
       - name: Create environment variables
         run: |
@@ -116,6 +107,10 @@ jobs:
           -verbose
 
   terraform_integration_tests:
+    permissions:
+      id-token: write
+      contents: read
+
     name: Integration-${{ matrix.config_files }}
     runs-on: ubuntu-latest
     if: always()
@@ -131,8 +126,6 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v4
-        with:
-          ref: ${{ github.event.client_payload.sha }}
 
       - name: Create environment variables
         run: |
@@ -161,7 +154,7 @@ jobs:
           key: ${{ runner.os }}-terraform-${{ hashFiles('**/.terraform.lock.hcl') }}
           restore-keys: |
             ${{ runner.os }}-terraform-
-  
+
       - name: Azure Login
         uses: azure/login@v2
         with:
@@ -221,6 +214,10 @@ jobs:
             ${{ env.PLAN_FILE }}-destroy
 
   purge:
+    permissions:
+      id-token: write
+      contents: read
+
     name: Purge Integration Environment
     runs-on: ubuntu-latest
     if: ${{ failure() || cancelled() }}
