@@ -26,20 +26,20 @@ vnets = {
     region             = "region1"
     vnet = {
       name          = "example-uks" # prefix-vnet-example-uks
-      address_space = ["10.0.0.0/16"] 
+      address_space = ["10.0.0.0/16"]
     }
     subnets = {
-      
+
       # Example subnet for APIM private endpoint
-      
+
       snet_example_apim_uks = {
-        name            = "example-apim-uks" #prefix-snet-example-apim-uks
-        cidr            = ["10.0.1.0/24"]
-        nsg_key         = "nsg_example_apim_uks"
-      # route_table_key = ""
+        name    = "example-apim-uks" #prefix-snet-example-apim-uks
+        cidr    = ["10.0.1.0/24"]
+        nsg_key = "nsg_example_apim_uks"
+        # route_table_key = ""
         service_endpoints = ["Microsoft.KeyVault", "Microsoft.Storage", "Microsoft.Sql", "Microsoft.EventHub", "Microsoft.ServiceBus"] # service endpoints required for APIM
       }
-    }  
+    }
   }
 }
 
@@ -142,31 +142,31 @@ public_ip_addresses = {
 
 api_management = {
   apim_uks = {
-    name                 = "example-uks" # prefix-apim-example-uks
-    resource_group_key   = "rg_example_apim_uks"
-    publisher_name       = "apim.example.sre.com"
-    publisher_email      = "example.apim@sre.com"
-    sku_name             = "Developer_1" # https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/resources/api_management#sku_name
-    region               = "region1"
+    name               = "example-uks" # prefix-apim-example-uks
+    resource_group_key = "rg_example_apim_uks"
+    publisher_name     = "apim.example.sre.com"
+    publisher_email    = "example.apim@sre.com"
+    sku_name           = "Developer_1" # https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/resources/api_management#sku_name
+    region             = "region1"
 
     # Required to deploy APIM on platform verions stv2.*
-    public_ip_address = {       
-      key     = "pip_apim_uks"
-     # lz_key = ""
-    }  
+    public_ip_address = {
+      key = "pip_apim_uks"
+      # lz_key = ""
+    }
 
     virtual_network_type = "Internal" # The type of virtual network you want to use, valid values include: None, External, Internal. Defaults to None.
     virtual_network_configuration = {
       vnet_key   = "vnet_example_uks"
       subnet_key = "snet_example_apim_uks"
-    # lz_key     = ""
+      # lz_key     = ""
     }
 
     identity = {
       type                  = "UserAssigned"
       managed_identity_keys = ["msi_apim_uks"]
     }
-    
+
     portal = {
       host_name = "example.apim.com"
     }

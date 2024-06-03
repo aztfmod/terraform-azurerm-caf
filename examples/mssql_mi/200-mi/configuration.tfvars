@@ -21,7 +21,7 @@ vnets = {
     resource_group_key = "networking_region1"
     vnet = {
       name          = "sqlmi-rg1"
-      address_space = ["172.25.88.0/21","10.2.0.0/24"]
+      address_space = ["172.25.88.0/21", "10.2.0.0/24"]
     }
     subnets = {
       sqlmi1 = {

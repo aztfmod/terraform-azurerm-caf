@@ -16,9 +16,9 @@ cognitive_services_account = {
     resource_group = {
       key = "rg1"
     }
-    name    = "pineconellmdemoopenai1"
-    kind    = "OpenAI"
-    sku_name = "S0"
+    name                  = "pineconellmdemoopenai1"
+    kind                  = "OpenAI"
+    sku_name              = "S0"
     custom_subdomain_name = "cs-alz-caf-test-b"
     #log_analytics_key = "la1"
   }
@@ -34,9 +34,9 @@ vnets = {
     specialsubnets = {}
     subnets = {
       private_endpoints_subnet = {
-        name                                     = "PrivateEndpoints"
-        cidr                                     = ["10.0.16.0/24"]
-        enforce_private_endpoint_network_policies = true
+        name                                           = "PrivateEndpoints"
+        cidr                                           = ["10.0.16.0/24"]
+        enforce_private_endpoint_network_policies      = true
         enforce_private_link_endpoint_network_policies = false
       }
     }
@@ -58,12 +58,12 @@ private_dns = {
 
 private_endpoints = {
   vnet1 = {
-    vnet_key            = "vnet1"
-    subnet_keys         = ["private_endpoints_subnet"]
+    vnet_key           = "vnet1"
+    subnet_keys        = ["private_endpoints_subnet"]
     resource_group_key = "rg1"
-      cognitive_services_account = {
-        my_account = {
-          private_service_connection = {
+    cognitive_services_account = {
+      my_account = {
+        private_service_connection = {
           name = "CognitiveServicesPrivateEndpoint"
         }
         private_dns = {
