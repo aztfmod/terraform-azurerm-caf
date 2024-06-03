@@ -49,6 +49,7 @@
     "compute/virtual_machine/214-vm-generic_extensions_complex",
     "compute/virtual_machine/215-vm-keyvault-for-windows-extension",
     "compute/virtual_machine/216-vm-linux_diagnostic_extensions",
-    "compute/virtual_machine/217-vm-disk-encryption-set-msi"
+    "compute/virtual_machine/217-vm-disk-encryption-set-msi",
+    "compute/azurerm_managed_disk/100-standalone-managed-disk"
   ]
 }
