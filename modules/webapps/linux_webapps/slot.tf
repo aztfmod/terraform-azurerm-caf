@@ -15,6 +15,7 @@ resource "azurerm_linux_web_app_slot" "slots" {
   enabled                 = lookup(var.settings, "enabled", null)
   https_only              = lookup(var.settings, "https_only", null)
 
+
   dynamic "identity" {
     for_each = try(var.identity, null) != null ? [1] : []
 
@@ -30,18 +31,21 @@ resource "azurerm_linux_web_app_slot" "slots" {
     for_each = lookup(var.settings, "site_config", {}) != {} ? [1] : []
 
     content {
-      always_on                = lookup(var.settings.site_config, "always_on", false)
-      app_command_line         = lookup(var.settings.site_config, "app_command_line", null)
-      default_documents        = lookup(var.settings.site_config, "default_documents", null)
-      ftps_state               = lookup(var.settings.site_config, "ftps_state", "FtpsOnly")
-      http2_enabled            = lookup(var.settings.site_config, "http2_enabled", false)
-      local_mysql_enabled      = lookup(var.settings.site_config, "local_mysql_enabled", null)
-      managed_pipeline_mode    = lookup(var.settings.site_config, "managed_pipeline_mode", null)
-      remote_debugging_enabled = lookup(var.settings.site_config, "remote_debugging_enabled", null)
-      remote_debugging_version = lookup(var.settings.site_config, "remote_debugging_version", null)
-      scm_type                 = lookup(var.settings.site_config, "scm_type", null)
-      websockets_enabled       = lookup(var.settings.site_config, "websockets_enabled", false)
-      vnet_route_all_enabled   = lookup(var.settings.site_config, "vnet_route_all_enabled", null)
+      always_on                         = lookup(var.settings.site_config, "always_on", false)
+      app_command_line                  = lookup(var.settings.site_config, "app_command_line", null)
+      auto_heal_enabled                 = can(var.settings.site_config.auto_heal_setting)
+      default_documents                 = lookup(var.settings.site_config, "default_documents", null)
+      ftps_state                        = lookup(var.settings.site_config, "ftps_state", "FtpsOnly")
+      health_check_eviction_time_in_min = lookup(var.settings.site_config, "health_check_eviction_time_in_min", null)
+      health_check_path                 = lookup(var.settings.site_config, "health_check_path", null)
+      http2_enabled                     = lookup(var.settings.site_config, "http2_enabled", false)
+      local_mysql_enabled               = lookup(var.settings.site_config, "local_mysql_enabled", null)
+      managed_pipeline_mode             = lookup(var.settings.site_config, "managed_pipeline_mode", null)
+      remote_debugging_enabled          = lookup(var.settings.site_config, "remote_debugging_enabled", null)
+      remote_debugging_version          = lookup(var.settings.site_config, "remote_debugging_version", null)
+      scm_type                          = lookup(var.settings.site_config, "scm_type", null)
+      vnet_route_all_enabled            = lookup(var.settings.site_config, "vnet_route_all_enabled", null)
+      websockets_enabled                = lookup(var.settings.site_config, "websockets_enabled", false)
 
       # numberOfWorkers           = lookup(each.value.site_config, "numberOfWorkers", 1)  # defined in ARM template below
       #dotnet_framework_version  = lookup(var.settings.site_config, "dotnet_framework_version", null)
@@ -54,6 +58,60 @@ resource "azurerm_linux_web_app_slot" "slots" {
       #php_version               = lookup(var.settings.site_config, "php_version", null)
       #python_version            = lookup(var.settings.site_config, "python_version", null)
       #use_32_bit_worker_process = lookup(var.settings.site_config, "use_32_bit_worker_process", false)
+
+      dynamic "auto_heal_setting" {
+        for_each = lookup(var.settings.site_config, "auto_heal_setting", {}) != {} ? [1] : []
+        content {
+
+          dynamic "action" {
+            for_each = lookup(var.settings.site_config.auto_heal_setting, "action", {}) != {} ? [1] : []
+            content {
+              action_type                    = lookup(var.settings.site_config.auto_heal_setting.action, "action_type", null)
+              minimum_process_execution_time = lookup(var.settings.site_config.auto_heal_setting.action, "minimum_process_execution_time", null)
+            }
+          }
+
+          dynamic "trigger" {
+            for_each = lookup(var.settings.site_config.auto_heal_setting, "trigger", {}) != {} ? [1] : []
+            content {
+
+              dynamic "requests" {
+                for_each = lookup(var.settings.site_config.auto_heal_setting.trigger, "requests", {}) != {} ? [1] : []
+                content {
+                  count    = lookup(var.settings.site_config.auto_heal_setting.trigger.requests, "count", null)
+                  interval = lookup(var.settings.site_config.auto_heal_setting.trigger.requests, "interval", null)
+                }
+              }
+
+              dynamic "slow_request" {
+                for_each = lookup(var.settings.site_config.auto_heal_setting.trigger, "slow_request", {}) != {} ? [
+                  1
+                ] : []
+                content {
+                  count      = lookup(var.settings.site_config.auto_heal_setting.trigger.slow_request, "count", null)
+                  interval   = lookup(var.settings.site_config.auto_heal_setting.trigger.slow_request, "interval", null)
+                  time_taken = lookup(var.settings.site_config.auto_heal_setting.trigger.slow_request, "time_taken", null)
+                  path       = lookup(var.settings.site_config.auto_heal_setting.trigger.slow_request, "path", null)
+                }
+              }
+
+              dynamic "status_code" {
+                for_each = lookup(var.settings.site_config.auto_heal_setting.trigger, "status_code", {}) != {} ? [
+                  1
+                ] : []
+                content {
+                  count             = lookup(var.settings.site_config.auto_heal_setting.trigger.status_code, "count", null)
+                  interval          = lookup(var.settings.site_config.auto_heal_setting.trigger.status_code, "interval", null)
+                  status_code_range = lookup(var.settings.site_config.auto_heal_setting.trigger.status_code, "status_code_range", null)
+                  sub_status        = lookup(var.settings.site_config.auto_heal_setting.trigger.status_code, "sub_status", null)
+                  win32_status_code = lookup(var.settings.site_config.auto_heal_setting.trigger.status_code, "win32_status_code", null)
+                  path              = lookup(var.settings.site_config.auto_heal_setting.trigger.status_code, "path", null)
+                }
+              }
+            }
+          }
+        }
+      }
 
       dynamic "cors" {
         for_each = lookup(var.settings.site_config, "cors", {}) != {} ? [1] : []
