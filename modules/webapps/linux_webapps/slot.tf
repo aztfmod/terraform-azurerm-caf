@@ -3,18 +3,84 @@
 resource "azurerm_linux_web_app_slot" "slots" {
   for_each = var.slots
 
-  name           = each.value.name
-  app_service_id = azurerm_linux_web_app.linux_web_apps.id
+  app_service_id                  = azurerm_linux_web_app.linux_web_apps.id
+  app_settings                    = var.app_settings
+  client_affinity_enabled         = lookup(var.settings, "client_affinity_enabled", null)
+  enabled                         = lookup(var.settings, "enabled", null)
+  https_only                      = lookup(var.settings, "https_only", null)
+  key_vault_reference_identity_id = can(var.settings.key_vault_reference_identity.key) ? var.combined_objects.managed_identities[try(var.settings.identity.lz_key, var.client_config.landingzone_key)][var.settings.key_vault_reference_identity.key].id : try(var.settings.key_vault_reference_identity.id, null)
+  name                            = each.value.name
+  tags                            = local.tags
+
   #location            = local.location
   #resource_group_name = local.resource_group_name
   #app_service_plan_id = var.app_service_plan_id
   #app_service_name    = azurerm_app_service.app_service.name
-  tags = local.tags
 
-  client_affinity_enabled = lookup(var.settings, "client_affinity_enabled", null)
-  enabled                 = lookup(var.settings, "enabled", null)
-  https_only              = lookup(var.settings, "https_only", null)
+  dynamic "auth_settings" {
+    for_each = lookup(var.settings, "auth_settings", {}) != {} ? [1] : []
 
+    content {
+      enabled = lookup(var.settings.auth_settings, "enabled", false)
+      #additional_login_params        = lookup(var.settings.auth_settings, "additional_login_params", null)
+      allowed_external_redirect_urls = lookup(var.settings.auth_settings, "allowed_external_redirect_urls", null)
+      default_provider               = lookup(var.settings.auth_settings, "default_provider", null)
+      issuer                         = lookup(var.settings.auth_settings, "issuer", null)
+      runtime_version                = lookup(var.settings.auth_settings, "runtime_version", null)
+      token_refresh_extension_hours  = lookup(var.settings.auth_settings, "token_refresh_extension_hours", null)
+      token_store_enabled            = lookup(var.settings.auth_settings, "token_store_enabled", null)
+      unauthenticated_client_action  = lookup(var.settings.auth_settings, "unauthenticated_client_action", null)
+
+      dynamic "active_directory" {
+        for_each = lookup(var.settings.auth_settings, "active_directory", {}) != {} ? [1] : []
+
+        content {
+          client_id         = var.settings.auth_settings.active_directory.client_id
+          client_secret     = lookup(var.settings.auth_settings.active_directory, "client_secret", null)
+          allowed_audiences = lookup(var.settings.auth_settings.active_directory, "allowed_audiences", null)
+        }
+      }
+
+      dynamic "facebook" {
+        for_each = lookup(var.settings.auth_settings, "facebook", {}) != {} ? [1] : []
+
+        content {
+          app_id       = var.settings.auth_settings.facebook.app_id
+          app_secret   = var.settings.auth_settings.facebook.app_secret
+          oauth_scopes = lookup(var.settings.auth_settings.facebook, "oauth_scopes", null)
+        }
+      }
+
+      dynamic "google" {
+        for_each = lookup(var.settings.auth_settings, "google", {}) != {} ? [1] : []
+
+        content {
+          client_id     = var.settings.auth_settings.google.client_id
+          client_secret = var.settings.auth_settings.google.client_secret
+          oauth_scopes  = lookup(var.settings.auth_settings.google, "oauth_scopes", null)
+        }
+      }
+
+      dynamic "microsoft" {
+        for_each = lookup(var.settings.auth_settings, "microsoft", {}) != {} ? [1] : []
+
+        content {
+          client_id     = var.settings.auth_settings.microsoft.client_id
+          client_secret = var.settings.auth_settings.microsoft.client_secret
+          oauth_scopes  = lookup(var.settings.auth_settings.microsoft, "oauth_scopes", null)
+        }
+      }
+
+      dynamic "twitter" {
+        for_each = lookup(var.settings.auth_settings, "twitter", {}) != {} ? [1] : []
+
+        content {
+          consumer_key    = var.settings.auth_settings.twitter.consumer_key
+          consumer_secret = var.settings.auth_settings.twitter.consumer_secret
+        }
+      }
+    }
+  }
 
   dynamic "identity" {
     for_each = try(var.identity, null) != null ? [1] : []
@@ -24,8 +90,6 @@ resource "azurerm_linux_web_app_slot" "slots" {
       identity_ids = lower(var.identity.type) == "userassigned" ? local.managed_identities : null
     }
   }
-
-  key_vault_reference_identity_id = can(var.settings.key_vault_reference_identity.key) ? var.combined_objects.managed_identities[try(var.settings.identity.lz_key, var.client_config.landingzone_key)][var.settings.key_vault_reference_identity.key].id : try(var.settings.key_vault_reference_identity.id, null)
 
   dynamic "site_config" {
     for_each = lookup(var.settings, "site_config", {}) != {} ? [1] : []
@@ -166,8 +230,6 @@ resource "azurerm_linux_web_app_slot" "slots" {
     }
   }
 
-  app_settings = var.app_settings
-
   dynamic "connection_string" {
     for_each = var.connection_string
 
@@ -178,70 +240,11 @@ resource "azurerm_linux_web_app_slot" "slots" {
     }
   }
 
-  dynamic "auth_settings" {
-    for_each = lookup(var.settings, "auth_settings", {}) != {} ? [1] : []
-
-    content {
-      enabled = lookup(var.settings.auth_settings, "enabled", false)
-      #additional_login_params        = lookup(var.settings.auth_settings, "additional_login_params", null)
-      allowed_external_redirect_urls = lookup(var.settings.auth_settings, "allowed_external_redirect_urls", null)
-      default_provider               = lookup(var.settings.auth_settings, "default_provider", null)
-      issuer                         = lookup(var.settings.auth_settings, "issuer", null)
-      runtime_version                = lookup(var.settings.auth_settings, "runtime_version", null)
-      token_refresh_extension_hours  = lookup(var.settings.auth_settings, "token_refresh_extension_hours", null)
-      token_store_enabled            = lookup(var.settings.auth_settings, "token_store_enabled", null)
-      unauthenticated_client_action  = lookup(var.settings.auth_settings, "unauthenticated_client_action", null)
-
-      dynamic "active_directory" {
-        for_each = lookup(var.settings.auth_settings, "active_directory", {}) != {} ? [1] : []
-
-        content {
-          client_id         = var.settings.auth_settings.active_directory.client_id
-          client_secret     = lookup(var.settings.auth_settings.active_directory, "client_secret", null)
-          allowed_audiences = lookup(var.settings.auth_settings.active_directory, "allowed_audiences", null)
-        }
-      }
-
-      dynamic "facebook" {
-        for_each = lookup(var.settings.auth_settings, "facebook", {}) != {} ? [1] : []
-
-        content {
-          app_id       = var.settings.auth_settings.facebook.app_id
-          app_secret   = var.settings.auth_settings.facebook.app_secret
-          oauth_scopes = lookup(var.settings.auth_settings.facebook, "oauth_scopes", null)
-        }
-      }
-
-      dynamic "google" {
-        for_each = lookup(var.settings.auth_settings, "google", {}) != {} ? [1] : []
-
-        content {
-          client_id     = var.settings.auth_settings.google.client_id
-          client_secret = var.settings.auth_settings.google.client_secret
-          oauth_scopes  = lookup(var.settings.auth_settings.google, "oauth_scopes", null)
-        }
-      }
-
-      dynamic "microsoft" {
-        for_each = lookup(var.settings.auth_settings, "microsoft", {}) != {} ? [1] : []
-
-        content {
-          client_id     = var.settings.auth_settings.microsoft.client_id
-          client_secret = var.settings.auth_settings.microsoft.client_secret
-          oauth_scopes  = lookup(var.settings.auth_settings.microsoft, "oauth_scopes", null)
-        }
-      }
-
-      dynamic "twitter" {
-        for_each = lookup(var.settings.auth_settings, "twitter", {}) != {} ? [1] : []
-
-        content {
-          consumer_key    = var.settings.auth_settings.twitter.consumer_key
-          consumer_secret = var.settings.auth_settings.twitter.consumer_secret
-        }
-      }
-    }
-  }
+  virtual_network_subnet_id = try(coalesce(
+    try(var.vnets[try(var.settings.virtual_network_subnet.lz_key, var.client_config.landingzone_key)][var.settings.virtual_network_subnet.vnet_key].subnets[var.settings.virtual_network_subnet.subnet_key].id, null),
+    try(var.virtual_subnets[try(var.settings.virtual_network_subnet.lz_key, var.client_config.landingzone_key)][var.settings.virtual_network_subnet.subnet_key].id, null),
+    try(var.settings.virtual_network_subnet_id, null))
+  )
 
   lifecycle {
     ignore_changes = [
