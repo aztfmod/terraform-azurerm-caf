@@ -56,7 +56,6 @@ module "windows_web_apps" {
 
   app_service_plan_id                 = can(each.value.app_service_plan_id) ? each.value.app_service_plan_id : local.combined_objects_app_service_plans[try(each.value.lz_key, local.client_config.landingzone_key)][each.value.app_service_plan_key].id
   app_settings                        = try(each.value.app_settings, null)
-  application_insight                 = try(each.value.application_insight_key, null) == null ? null : module.azurerm_application_insights[each.value.application_insight_key]
   azuread_applications                = local.combined_objects_azuread_applications
   azuread_service_principal_passwords = local.combined_objects_azuread_service_principal_passwords
   base_tags                           = local.global_settings.inherit_tags
@@ -75,6 +74,7 @@ module "windows_web_apps" {
   subnet_id                           = can(each.value.subnet_id) || can(each.value.vnet_key) == false ? try(each.value.subnet_id, null) : local.combined_objects_networking[try(each.value.lz_key, local.client_config.landingzone_key)][each.value.vnet_key].subnets[each.value.subnet_key].id
   virtual_subnets                     = local.combined_objects_virtual_subnets
   vnets                               = local.combined_objects_networking
+  # application_insight                 = try(each.value.application_insight_key, null) == null ? null : module.azurerm_application_insights[each.value.application_insight_key]
 }
 
 output "windows_web_apps" {
