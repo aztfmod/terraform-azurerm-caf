@@ -11,35 +11,35 @@ resource "azurecaf_name" "linux_web_apps" {
 
 
 resource "azurerm_linux_web_app" "linux_web_apps" {
-  name                               = azurecaf_name.linux_web_apps.result
+  app_settings                       = var.app_settings
+  client_affinity_enabled            = lookup(var.settings, "client_affinity_enabled", null)
+  client_certificate_enabled         = lookup(var.settings, "client_certificate_enabled", null)
+  client_certificate_exclusion_paths = lookup(var.settings, "client_certificate_mode", null)
+  client_certificate_mode            = lookup(var.settings, "client_certificate_mode", null)
+  enabled                            = lookup(var.settings, "enabled", true)
+  https_only                         = lookup(var.settings, "https_only", null)
+  key_vault_reference_identity_id    = can(var.settings.key_vault_reference_identity.key) ? var.combined_objects.managed_identities[try(var.settings.identity.lz_key, var.client_config.landingzone_key)][var.settings.key_vault_reference_identity.key].id : try(var.settings.key_vault_reference_identity.id, null)
   location                           = local.location
+  name                               = azurecaf_name.linux_web_apps.result
+  public_network_access_enabled      = lookup(var.settings, "public_network_access_enabled", null)
   resource_group_name                = local.resource_group_name
   service_plan_id                    = var.app_service_plan_id
   tags                               = merge(local.tags, try(var.settings.tags, {}))
-  client_affinity_enabled            = lookup(var.settings, "client_affinity_enabled", null)
-  client_certificate_enabled         = lookup(var.settings, "client_certificate_enabled", null)
-  client_certificate_mode            = lookup(var.settings, "client_certificate_mode", null)
-  client_certificate_exclusion_paths = lookup(var.settings, "client_certificate_mode", null)
-  enabled                            = lookup(var.settings, "enabled", true)
-  https_only                         = lookup(var.settings, "https_only", null)
-  public_network_access_enabled      = lookup(var.settings, "public_network_access_enabled", null)
+
   virtual_network_subnet_id = try(coalesce(
     try(var.vnets[try(var.settings.virtual_network_subnet.lz_key, var.client_config.landingzone_key)][var.settings.virtual_network_subnet.vnet_key].subnets[var.settings.virtual_network_subnet.subnet_key].id, null),
     try(var.virtual_subnets[try(var.settings.virtual_network_subnet.lz_key, var.client_config.landingzone_key)][var.settings.virtual_network_subnet.subnet_key].id, null),
     try(var.settings.virtual_network_subnet_id, null))
   )
-  app_settings                    = var.app_settings
-  key_vault_reference_identity_id = can(var.settings.key_vault_reference_identity.key) ? var.combined_objects.managed_identities[try(var.settings.identity.lz_key, var.client_config.landingzone_key)][var.settings.key_vault_reference_identity.key].id : try(var.settings.key_vault_reference_identity.id, null)
 
   dynamic "identity" {
     for_each = try(var.identity, null) == null ? [] : [1]
 
     content {
-      type         = var.identity.type
       identity_ids = lower(var.identity.type) == "userassigned" ? local.managed_identities : null
+      type         = var.identity.type
     }
   }
-
 
   dynamic "site_config" {
     for_each = lookup(var.settings, "site_config", {}) != {} ? [1] : []
@@ -48,11 +48,12 @@ resource "azurerm_linux_web_app" "linux_web_apps" {
       always_on                                     = lookup(var.settings.site_config, "always_on", false)
       api_management_api_id                         = lookup(var.settings.site_config, "api_management_api_id", null)
       app_command_line                              = lookup(var.settings.site_config, "app_command_line", null)
+      auto_heal_enabled                             = can(var.settings.site_config.auto_heal_setting)
       container_registry_managed_identity_client_id = lookup(var.settings.site_config, "container_registry_managed_identity_client_id", null)
       container_registry_use_managed_identity       = lookup(var.settings.site_config, "container_registry_use_managed_identity", false)
       ftps_state                                    = lookup(var.settings.site_config, "ftps_state", null)
-      health_check_path                             = lookup(var.settings.site_config, "health_check_path", null)
       health_check_eviction_time_in_min             = lookup(var.settings.site_config, "health_check_eviction_time_in_min", null)
+      health_check_path                             = lookup(var.settings.site_config, "health_check_path", null)
       http2_enabled                                 = lookup(var.settings.site_config, "http2_enabled", null)
       load_balancing_mode                           = lookup(var.settings.site_config, "load_balancing_mode", null)
       managed_pipeline_mode                         = lookup(var.settings.site_config, "managed_pipeline_mode", null)
@@ -62,23 +63,22 @@ resource "azurerm_linux_web_app" "linux_web_apps" {
       scm_minimum_tls_version                       = lookup(var.settings.site_config, "scm_minimum_tls_version", null)
       scm_use_main_ip_restriction                   = lookup(var.settings.site_config, "scm_use_main_ip_restriction", null)
       use_32_bit_worker                             = lookup(var.settings.site_config, "use_32_bit_worker", null)
-      websockets_enabled                            = lookup(var.settings.site_config, "websockets_enabled", null)
       vnet_route_all_enabled                        = lookup(var.settings.site_config, "vnet_route_all_enabled", null)
+      websockets_enabled                            = lookup(var.settings.site_config, "websockets_enabled", null)
       worker_count                                  = lookup(var.settings.site_config, "worker_count", null)
-      auto_heal_enabled                             = can(var.settings.site_config.auto_heal_setting)
 
       dynamic "application_stack" {
         for_each = lookup(var.settings.site_config, "application_stack", {}) != {} ? [1] : []
         content {
           docker_image_name        = lookup(var.settings.site_config.application_stack, "docker_image_name", null)
+          docker_registry_password = lookup(var.settings.site_config.application_stack, "docker_registry_password", null)
           docker_registry_url      = lookup(var.settings.site_config.application_stack, "docker_registry_url", null)
           docker_registry_username = lookup(var.settings.site_config.application_stack, "docker_registry_username", null)
-          docker_registry_password = lookup(var.settings.site_config.application_stack, "docker_registry_password", null)
           dotnet_version           = lookup(var.settings.site_config.application_stack, "dotnet_version", null)
           go_version               = lookup(var.settings.site_config.application_stack, "go_version", null)
-          java_version             = lookup(var.settings.site_config.application_stack, "java_version", null)
           java_server              = lookup(var.settings.site_config.application_stack, "java_server", null)
           java_server_version      = lookup(var.settings.site_config.application_stack, "java_server_version", null)
+          java_version             = lookup(var.settings.site_config.application_stack, "java_version", null)
           node_version             = lookup(var.settings.site_config.application_stack, "node_version", null)
           php_version              = lookup(var.settings.site_config.application_stack, "php_version", null)
           python_version           = lookup(var.settings.site_config.application_stack, "python_version", null)
@@ -125,16 +125,18 @@ resource "azurerm_linux_web_app" "linux_web_apps" {
         for_each = try(var.settings.site_config.scm_ip_restriction, {})
 
         content {
+          action      = lookup(scm_ip_restriction.value, "action", null)
           ip_address  = lookup(scm_ip_restriction.value, "ip_address", null)
+          name        = lookup(scm_ip_restriction.value, "name", null)
+          priority    = lookup(scm_ip_restriction.value, "priority", null)
           service_tag = lookup(scm_ip_restriction.value, "service_tag", null)
+
           virtual_network_subnet_id = try(coalesce(
             try(var.vnets[try(scm_ip_restriction.value.virtual_network_subnet.lz_key, var.client_config.landingzone_key)][scm_ip_restriction.value.virtual_network_subnet.vnet_key].subnets[scm_ip_restriction.value.virtual_network_subnet.subnet_key].id, null),
             try(var.virtual_subnets[try(scm_ip_restriction.value.virtual_network_subnet.lz_key, var.client_config.landingzone_key)][scm_ip_restriction.value.virtual_network_subnet.subnet_key].id, null),
             try(scm_ip_restriction.value.virtual_network_subnet_id, null))
           )
-          name     = lookup(scm_ip_restriction.value, "name", null)
-          priority = lookup(scm_ip_restriction.value, "priority", null)
-          action   = lookup(scm_ip_restriction.value, "action", null)
+
           dynamic "headers" {
             for_each = try(scm_ip_restriction.headers, {})
 
@@ -147,6 +149,7 @@ resource "azurerm_linux_web_app" "linux_web_apps" {
           }
         }
       }
+
       dynamic "auto_heal_setting" {
         for_each = lookup(var.settings.site_config, "auto_heal_setting", {}) != {} ? [1] : []
         content {
@@ -172,28 +175,26 @@ resource "azurerm_linux_web_app" "linux_web_apps" {
               }
 
               dynamic "slow_request" {
-                for_each = lookup(var.settings.site_config.auto_heal_setting.trigger, "slow_request", {}) != {} ? [
-                  1
-                ] : []
+                for_each = lookup(var.settings.site_config.auto_heal_setting.trigger, "slow_request", {}) != {} ? [1] : []
+
                 content {
                   count      = lookup(var.settings.site_config.auto_heal_setting.trigger.slow_request, "count", null)
                   interval   = lookup(var.settings.site_config.auto_heal_setting.trigger.slow_request, "interval", null)
-                  time_taken = lookup(var.settings.site_config.auto_heal_setting.trigger.slow_request, "time_taken", null)
                   path       = lookup(var.settings.site_config.auto_heal_setting.trigger.slow_request, "path", null)
+                  time_taken = lookup(var.settings.site_config.auto_heal_setting.trigger.slow_request, "time_taken", null)
                 }
               }
 
               dynamic "status_code" {
-                for_each = lookup(var.settings.site_config.auto_heal_setting.trigger, "status_code", {}) != {} ? [
-                  1
-                ] : []
+                for_each = lookup(var.settings.site_config.auto_heal_setting.trigger, "status_code", {}) != {} ? [1] : []
+
                 content {
                   count             = lookup(var.settings.site_config.auto_heal_setting.trigger.status_code, "count", null)
                   interval          = lookup(var.settings.site_config.auto_heal_setting.trigger.status_code, "interval", null)
+                  path              = lookup(var.settings.site_config.auto_heal_setting.trigger.status_code, "path", null)
                   status_code_range = lookup(var.settings.site_config.auto_heal_setting.trigger.status_code, "status_code_range", null)
                   sub_status        = lookup(var.settings.site_config.auto_heal_setting.trigger.status_code, "sub_status", null)
                   win32_status_code = lookup(var.settings.site_config.auto_heal_setting.trigger.status_code, "win32_status_code", null)
-                  path              = lookup(var.settings.site_config.auto_heal_setting.trigger.status_code, "path", null)
                 }
               }
             }
@@ -213,14 +214,15 @@ resource "azurerm_linux_web_app" "linux_web_apps" {
       value = connection_string.value.value
     }
   }
+
   dynamic "auth_settings" {
     for_each = lookup(var.settings, "auth_settings", {}) != {} ? [1] : []
 
     content {
-      enabled                        = lookup(var.settings.auth_settings, "enabled", false)
       additional_login_parameters    = lookup(var.settings.auth_settings, "additional_login_parameters ", null)
       allowed_external_redirect_urls = lookup(var.settings.auth_settings, "allowed_external_redirect_urls", null)
       default_provider               = lookup(var.settings.auth_settings, "default_provider", null)
+      enabled                        = lookup(var.settings.auth_settings, "enabled", false)
       issuer                         = lookup(var.settings.auth_settings, "issuer", null)
       runtime_version                = lookup(var.settings.auth_settings, "runtime_version", null)
       token_refresh_extension_hours  = lookup(var.settings.auth_settings, "token_refresh_extension_hours", null)
@@ -277,38 +279,41 @@ resource "azurerm_linux_web_app" "linux_web_apps" {
       }
     }
   }
+
   dynamic "auth_settings_v2" {
     for_each = lookup(var.settings, "auth_settings_v2", {}) != {} ? [1] : []
     content {
       auth_enabled                            = lookup(var.settings.auth_settings_v2, "auth_enabled", false)
-      runtime_version                         = lookup(var.settings.auth_settings_v2, "runtime_version", null)
       config_file_path                        = lookup(var.settings.auth_settings_v2, "config_file_path", null)
-      require_authentication                  = lookup(var.settings.auth_settings_v2, "require_authentication", null)
-      unauthenticated_action                  = lookup(var.settings.auth_settings_v2, "unauthenticated_action", null)
       default_provider                        = lookup(var.settings.auth_settings_v2, "default_provider", null)
       excluded_paths                          = lookup(var.settings.auth_settings_v2, "excluded_paths", null)
-      require_https                           = lookup(var.settings.auth_settings_v2, "require_https", null)
-      http_route_api_prefix                   = lookup(var.settings.auth_settings_v2, "http_route_api_prefix", null)
       forward_proxy_convention                = lookup(var.settings.auth_settings_v2, "forward_proxy_convention", null)
       forward_proxy_custom_host_header_name   = lookup(var.settings.auth_settings_v2, "forward_proxy_custom_host_header_name", null)
       forward_proxy_custom_scheme_header_name = lookup(var.settings.auth_settings_v2, "forward_proxy_custom_scheme_header_name", null)
+      http_route_api_prefix                   = lookup(var.settings.auth_settings_v2, "http_route_api_prefix", null)
+      require_authentication                  = lookup(var.settings.auth_settings_v2, "require_authentication", null)
+      require_https                           = lookup(var.settings.auth_settings_v2, "require_https", null)
+      runtime_version                         = lookup(var.settings.auth_settings_v2, "runtime_version", null)
+      unauthenticated_action                  = lookup(var.settings.auth_settings_v2, "unauthenticated_action", null)
+
       dynamic "login" {
         for_each = lookup(var.settings.auth_settings_v2, "login", {}) != {} ? [1] : []
 
         content {
-          logout_endpoint                   = lookup(var.settings.auth_settings_v2.login, "logout_endpoint", null)
-          token_store_enabled               = lookup(var.settings.auth_settings_v2.login, "token_store_enabled", null)
-          token_refresh_extension_time      = lookup(var.settings.auth_settings_v2.login, "token_refresh_extension_time", null)
-          token_store_path                  = lookup(var.settings.auth_settings_v2.login, "token_store_path", null)
-          token_store_sas_setting_name      = lookup(var.settings.auth_settings_v2.login, "token_store_sas_setting_name", null)
-          preserve_url_fragments_for_logins = lookup(var.settings.auth_settings_v2.login, "preserve_url_fragments_for_logins", null)
           allowed_external_redirect_urls    = lookup(var.settings.auth_settings_v2.login, "allowed_external_redirect_urls", null)
           cookie_expiration_convention      = lookup(var.settings.auth_settings_v2.login, "cookie_expiration_convention", null)
           cookie_expiration_time            = lookup(var.settings.auth_settings_v2.login, "cookie_expiration_time", null)
-          validate_nonce                    = lookup(var.settings.auth_settings_v2.login, "validate_nonce", null)
+          logout_endpoint                   = lookup(var.settings.auth_settings_v2.login, "logout_endpoint", null)
           nonce_expiration_time             = lookup(var.settings.auth_settings_v2.login, "nonce_expiration_time", null)
+          preserve_url_fragments_for_logins = lookup(var.settings.auth_settings_v2.login, "preserve_url_fragments_for_logins", null)
+          token_refresh_extension_time      = lookup(var.settings.auth_settings_v2.login, "token_refresh_extension_time", null)
+          token_store_enabled               = lookup(var.settings.auth_settings_v2.login, "token_store_enabled", null)
+          token_store_path                  = lookup(var.settings.auth_settings_v2.login, "token_store_path", null)
+          token_store_sas_setting_name      = lookup(var.settings.auth_settings_v2.login, "token_store_sas_setting_name", null)
+          validate_nonce                    = lookup(var.settings.auth_settings_v2.login, "validate_nonce", null)
         }
       }
+
       dynamic "apple_v2" {
         for_each = lookup(var.settings.auth_settings_v2, "apple_v2", {}) != {} ? [1] : []
 
@@ -318,6 +323,7 @@ resource "azurerm_linux_web_app" "linux_web_apps" {
           login_scopes               = lookup(var.settings.auth_settings_v2.apple_v2, "login_scopes", null)
         }
       }
+
       dynamic "azure_static_web_app_v2" {
         for_each = lookup(var.settings.auth_settings_v2, "azure_static_web_app_v2", {}) != {} ? [1] : []
 
@@ -325,6 +331,7 @@ resource "azurerm_linux_web_app" "linux_web_apps" {
           client_id = can(var.settings.auth_settings_v2.azure_static_web_app_v2.client_id_key) ? var.azuread_applications[try(var.settings.auth_settings_v2.azure_static_web_app_v2.client_id_lz_key, var.client_config.landingzone_key)][var.settings.auth_settings_v2.azure_static_web_app_v2.client_id_key].application_id : var.settings.auth_settings_v2.azure_static_web_app_v2.client_id
         }
       }
+
       dynamic "facebook_v2" {
         for_each = lookup(var.settings.auth_settings_v2, "facebook_v2_v2", {}) != {} ? [1] : []
 
@@ -335,6 +342,7 @@ resource "azurerm_linux_web_app" "linux_web_apps" {
           login_scopes            = lookup(var.settings.auth_settings_v2.facebook_v2, "login_scopes", null)
         }
       }
+
       dynamic "github_v2" {
         for_each = lookup(var.settings.auth_settings_v2, "github_v2", {}) != {} ? [1] : []
         content {
@@ -475,5 +483,3 @@ resource "azurerm_linux_web_app" "linux_web_apps" {
     }
   }
 }
-
-

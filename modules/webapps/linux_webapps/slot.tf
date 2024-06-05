@@ -12,19 +12,13 @@ resource "azurerm_linux_web_app_slot" "slots" {
   name                            = each.value.name
   tags                            = local.tags
 
-  #location            = local.location
-  #resource_group_name = local.resource_group_name
-  #app_service_plan_id = var.app_service_plan_id
-  #app_service_name    = azurerm_app_service.app_service.name
-
   dynamic "auth_settings" {
     for_each = lookup(var.settings, "auth_settings", {}) != {} ? [1] : []
 
     content {
-      enabled = lookup(var.settings.auth_settings, "enabled", false)
-      #additional_login_params        = lookup(var.settings.auth_settings, "additional_login_params", null)
       allowed_external_redirect_urls = lookup(var.settings.auth_settings, "allowed_external_redirect_urls", null)
       default_provider               = lookup(var.settings.auth_settings, "default_provider", null)
+      enabled                        = lookup(var.settings.auth_settings, "enabled", false)
       issuer                         = lookup(var.settings.auth_settings, "issuer", null)
       runtime_version                = lookup(var.settings.auth_settings, "runtime_version", null)
       token_refresh_extension_hours  = lookup(var.settings.auth_settings, "token_refresh_extension_hours", null)
@@ -82,12 +76,22 @@ resource "azurerm_linux_web_app_slot" "slots" {
     }
   }
 
+  dynamic "connection_string" {
+    for_each = var.connection_string
+
+    content {
+      name  = connection_string.value.name
+      type  = connection_string.value.type
+      value = connection_string.value.value
+    }
+  }
+
   dynamic "identity" {
     for_each = try(var.identity, null) != null ? [1] : []
 
     content {
-      type         = try(var.identity.type, null)
       identity_ids = lower(var.identity.type) == "userassigned" ? local.managed_identities : null
+      type         = try(var.identity.type, null)
     }
   }
 
@@ -110,18 +114,6 @@ resource "azurerm_linux_web_app_slot" "slots" {
       scm_type                          = lookup(var.settings.site_config, "scm_type", null)
       vnet_route_all_enabled            = lookup(var.settings.site_config, "vnet_route_all_enabled", null)
       websockets_enabled                = lookup(var.settings.site_config, "websockets_enabled", false)
-
-      # numberOfWorkers           = lookup(each.value.site_config, "numberOfWorkers", 1)  # defined in ARM template below
-      #dotnet_framework_version  = lookup(var.settings.site_config, "dotnet_framework_version", null)
-      #java_version              = lookup(var.settings.site_config, "java_version", null)
-      #java_container            = lookup(var.settings.site_config, "java_container", null)
-      #java_container_version    = lookup(var.settings.site_config, "java_container_version", null)
-      #linux_fx_version          = lookup(var.settings.site_config, "linux_fx_version", null)
-      #windows_fx_version        = lookup(var.settings.site_config, "windows_fx_version", null)
-      #min_tls_version           = lookup(var.settings.site_config, "min_tls_version", "1.2")
-      #php_version               = lookup(var.settings.site_config, "php_version", null)
-      #python_version            = lookup(var.settings.site_config, "python_version", null)
-      #use_32_bit_worker_process = lookup(var.settings.site_config, "use_32_bit_worker_process", false)
 
       dynamic "auto_heal_setting" {
         for_each = lookup(var.settings.site_config, "auto_heal_setting", {}) != {} ? [1] : []
@@ -166,10 +158,10 @@ resource "azurerm_linux_web_app_slot" "slots" {
                 content {
                   count             = lookup(var.settings.site_config.auto_heal_setting.trigger.status_code, "count", null)
                   interval          = lookup(var.settings.site_config.auto_heal_setting.trigger.status_code, "interval", null)
+                  path              = lookup(var.settings.site_config.auto_heal_setting.trigger.status_code, "path", null)
                   status_code_range = lookup(var.settings.site_config.auto_heal_setting.trigger.status_code, "status_code_range", null)
                   sub_status        = lookup(var.settings.site_config.auto_heal_setting.trigger.status_code, "sub_status", null)
                   win32_status_code = lookup(var.settings.site_config.auto_heal_setting.trigger.status_code, "win32_status_code", null)
-                  path              = lookup(var.settings.site_config.auto_heal_setting.trigger.status_code, "path", null)
                 }
               }
             }
@@ -227,16 +219,6 @@ resource "azurerm_linux_web_app_slot" "slots" {
           }
         }
       }
-    }
-  }
-
-  dynamic "connection_string" {
-    for_each = var.connection_string
-
-    content {
-      name  = connection_string.value.name
-      type  = connection_string.value.type
-      value = connection_string.value.value
     }
   }
 
