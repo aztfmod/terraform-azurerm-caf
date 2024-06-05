@@ -54,8 +54,8 @@ resource "local_sensitive_file" "custom_data" {
 resource "azurerm_linux_virtual_machine" "vm" {
   for_each = local.os_type == "linux" ? var.settings.virtual_machine_settings : {}
 
-  admin_password                  = each.value.disable_password_authentication == false ? each.value.admin_password : null
-  admin_username                  = each.value.admin_username
+  admin_password                  = each.value.disable_password_authentication == false ? try(each.value.admin_password_key, null) == null ? each.value.admin_password : local.admin_password : null
+  admin_username                  = try(each.value.admin_username_key, null) == null ? each.value.admin_username : local.admin_username
   allow_extension_operations      = try(each.value.allow_extension_operations, null)
   availability_set_id             = can(each.value.availability_set_key) || can(each.value.availability_set.key) ? var.availability_sets[try(var.client_config.landingzone_key, each.value.availability_set.lz_key)][try(each.value.availability_set_key, each.value.availability_set.key)].id : try(each.value.availability_set.id, each.value.availability_set_id, null)
   computer_name                   = data.azurecaf_name.linux_computer_name[each.key].result
@@ -95,7 +95,7 @@ resource "azurerm_linux_virtual_machine" "vm" {
     for_each = lookup(each.value, "disable_password_authentication", true) == true && local.create_sshkeys ? [1] : []
 
     content {
-      username   = each.value.admin_username
+      username   = try(each.value.admin_username_key, null) == null ? each.value.admin_username : local.admin_username
       public_key = local.create_sshkeys ? tls_private_key.ssh[each.key].public_key_openssh : file(var.settings.public_key_pem_file)
     }
   }
@@ -109,7 +109,7 @@ resource "azurerm_linux_virtual_machine" "vm" {
     content {
       # "Destination path for SSH public keys is currently limited to its default value /home/adminuser/.ssh/authorized_keys  due to a known issue in Linux provisioning agent."
       # username   = try(admin_ssh_key.value.username, each.value.admin_username)
-      username   = each.value.admin_username
+      username   = try(each.value.admin_username_key, null) == null ? each.value.admin_username : local.admin_username
       public_key = replace(data.external.ssh_public_key_id[admin_ssh_key.key].result.public_ssh_key, "\r\n", "")
     }
   }
@@ -123,7 +123,7 @@ resource "azurerm_linux_virtual_machine" "vm" {
     content {
       # "Destination path for SSH public keys is currently limited to its default value /home/adminuser/.ssh/authorized_keys  due to a known issue in Linux provisioning agent."
       # username   = try(admin_ssh_key.value.username, each.value.admin_username)
-      username   = each.value.admin_username
+      username   = try(each.value.admin_username_key, null) == null ? each.value.admin_username : local.admin_username
       public_key = replace(data.external.secret_key_id[admin_ssh_key.key].result.public_ssh_key, "\r\n", "")
     }
   }
@@ -137,7 +137,7 @@ resource "azurerm_linux_virtual_machine" "vm" {
     content {
       # "Destination path for SSH public keys is currently limited to its default value /home/adminuser/.ssh/authorized_keys  due to a known issue in Linux provisioning agent."
       # username   = try(admin_ssh_key.value.username, each.value.admin_username)
-      username   = each.value.admin_username
+      username   = coalesce(local.admin_username, each.value.admin_username)
       public_key = replace(data.external.ssh_secret_keyvault[admin_ssh_key.key].result.public_ssh_key, "\r\n", "")
     }
   }
@@ -205,6 +205,8 @@ resource "azurerm_linux_virtual_machine" "vm" {
       name,
       computer_name,
       os_disk[0].name, #for ASR disk restores
+      admin_username,  # Only used for initial deployment as it can be changed later by GPO
+      admin_password,  # Only used for initial deployment as it can be changed later by GPO
       admin_ssh_key
     ]
   }
