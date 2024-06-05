@@ -1,4 +1,3 @@
-
 resource "azurecaf_name" "linux_web_apps" {
   name          = var.name
   resource_type = "azurerm_app_service"
@@ -8,7 +7,6 @@ resource "azurecaf_name" "linux_web_apps" {
   passthrough   = var.global_settings.passthrough
   use_slug      = var.global_settings.use_slug
 }
-
 
 resource "azurerm_linux_web_app" "linux_web_apps" {
   app_settings                       = var.app_settings

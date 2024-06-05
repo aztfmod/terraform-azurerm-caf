@@ -10,20 +10,23 @@ variable "location" {
   description = "(Required) Resource Location"
   default     = null
 }
+
 variable "resource_group_name" {
   description = "Resource group object to deploy the virtual machine"
   default     = null
 }
+
 variable "resource_group" {
   description = "Resource group object to deploy the virtual machine"
 }
+
 variable "app_settings" {
   type    = map(any)
   default = {}
 }
+
 variable "app_service_plan_id" {
 }
-
 
 variable "connection_string" {
   default = {}
@@ -47,12 +50,15 @@ variable "base_tags" {
   description = "Base tags for the resource to be inherited from the resource group."
   type        = bool
 }
+
 variable "identity" {
   default = null
 }
+
 variable "combined_objects" {
   default = {}
 }
+
 # variable "storage_accounts" {
 #   default = {}
 # }
@@ -60,6 +66,7 @@ variable "combined_objects" {
 variable "diagnostic_profiles" {
   default = {}
 }
+
 variable "diagnostics" {
   default = null
 }
