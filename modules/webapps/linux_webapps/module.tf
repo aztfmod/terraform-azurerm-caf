@@ -9,7 +9,7 @@ resource "azurecaf_name" "linux_web_apps" {
 }
 
 resource "azurerm_linux_web_app" "linux_web_apps" {
-  app_settings                       = var.app_settings
+  app_settings                       = local.app_settings
   client_affinity_enabled            = lookup(var.settings, "client_affinity_enabled", null)
   client_certificate_enabled         = lookup(var.settings, "client_certificate_enabled", null)
   client_certificate_exclusion_paths = lookup(var.settings, "client_certificate_mode", null)
