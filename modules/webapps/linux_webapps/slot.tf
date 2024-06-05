@@ -3,9 +3,8 @@
 resource "azurerm_linux_web_app_slot" "slots" {
   for_each = var.slots
 
-  app_settings                    = local.app_settings
   app_service_id                  = azurerm_linux_web_app.linux_web_apps.id
-  app_settings                    = var.app_settings
+  app_settings                    = local.app_settings
   client_affinity_enabled         = lookup(var.settings, "client_affinity_enabled", null)
   enabled                         = lookup(var.settings, "enabled", null)
   https_only                      = lookup(var.settings, "https_only", null)
