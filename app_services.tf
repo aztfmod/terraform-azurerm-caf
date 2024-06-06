@@ -90,6 +90,7 @@ module "linux_web_apps" {
   app_settings        = try(each.value.app_settings, null)
   application_insight = try(each.value.application_insight_key, null) == null ? null : module.azurerm_application_insights[each.value.application_insight_key]
   connection_string   = try(each.value.connection_string, {})
+  diagnostic_profiles = try(each.value.diagnostic_profiles, null)
   identity            = try(each.value.identity, null)
   location            = try(local.global_settings.regions[each.value.region], null)
   name                = each.value.name
