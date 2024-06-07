@@ -1,10 +1,10 @@
 resource "azurecaf_name" "linux_web_apps" {
+  clean_input   = true
   name          = var.name
-  resource_type = "azurerm_app_service"
+  passthrough   = var.global_settings.passthrough
   prefixes      = var.global_settings.prefixes
   random_length = var.global_settings.random_length
-  clean_input   = true
-  passthrough   = var.global_settings.passthrough
+  resource_type = "azurerm_app_service"
   use_slug      = var.global_settings.use_slug
 }
 
@@ -29,189 +29,6 @@ resource "azurerm_linux_web_app" "linux_web_apps" {
     try(var.virtual_subnets[try(var.settings.virtual_network_subnet.lz_key, var.client_config.landingzone_key)][var.settings.virtual_network_subnet.subnet_key].id, null),
     try(var.settings.virtual_network_subnet_id, null))
   )
-
-  dynamic "identity" {
-    for_each = try(var.identity, null) == null ? [] : [1]
-
-    content {
-      identity_ids = lower(var.identity.type) == "userassigned" ? local.managed_identities : null
-      type         = var.identity.type
-    }
-  }
-
-  dynamic "site_config" {
-    for_each = lookup(var.settings, "site_config", {}) != {} ? [1] : []
-
-    content {
-      always_on                                     = lookup(var.settings.site_config, "always_on", false)
-      api_management_api_id                         = lookup(var.settings.site_config, "api_management_api_id", null)
-      app_command_line                              = lookup(var.settings.site_config, "app_command_line", null)
-      auto_heal_enabled                             = can(var.settings.site_config.auto_heal_setting)
-      container_registry_managed_identity_client_id = lookup(var.settings.site_config, "container_registry_managed_identity_client_id", null)
-      container_registry_use_managed_identity       = lookup(var.settings.site_config, "container_registry_use_managed_identity", false)
-      ftps_state                                    = lookup(var.settings.site_config, "ftps_state", null)
-      health_check_eviction_time_in_min             = lookup(var.settings.site_config, "health_check_eviction_time_in_min", null)
-      health_check_path                             = lookup(var.settings.site_config, "health_check_path", null)
-      http2_enabled                                 = lookup(var.settings.site_config, "http2_enabled", null)
-      load_balancing_mode                           = lookup(var.settings.site_config, "load_balancing_mode", null)
-      managed_pipeline_mode                         = lookup(var.settings.site_config, "managed_pipeline_mode", null)
-      minimum_tls_version                           = lookup(var.settings.site_config, "minimum_tls_version", null)
-      remote_debugging_enabled                      = lookup(var.settings.site_config, "remote_debugging_enabled", null)
-      remote_debugging_version                      = lookup(var.settings.site_config, "remote_debugging_version", null)
-      scm_minimum_tls_version                       = lookup(var.settings.site_config, "scm_minimum_tls_version", null)
-      scm_use_main_ip_restriction                   = lookup(var.settings.site_config, "scm_use_main_ip_restriction", null)
-      use_32_bit_worker                             = lookup(var.settings.site_config, "use_32_bit_worker", null)
-      vnet_route_all_enabled                        = lookup(var.settings.site_config, "vnet_route_all_enabled", null)
-      websockets_enabled                            = lookup(var.settings.site_config, "websockets_enabled", null)
-      worker_count                                  = lookup(var.settings.site_config, "worker_count", null)
-
-      dynamic "application_stack" {
-        for_each = lookup(var.settings.site_config, "application_stack", {}) != {} ? [1] : []
-        content {
-          docker_image_name        = lookup(var.settings.site_config.application_stack, "docker_image_name", null)
-          docker_registry_password = lookup(var.settings.site_config.application_stack, "docker_registry_password", null)
-          docker_registry_url      = lookup(var.settings.site_config.application_stack, "docker_registry_url", null)
-          docker_registry_username = lookup(var.settings.site_config.application_stack, "docker_registry_username", null)
-          dotnet_version           = lookup(var.settings.site_config.application_stack, "dotnet_version", null)
-          go_version               = lookup(var.settings.site_config.application_stack, "go_version", null)
-          java_server              = lookup(var.settings.site_config.application_stack, "java_server", null)
-          java_server_version      = lookup(var.settings.site_config.application_stack, "java_server_version", null)
-          java_version             = lookup(var.settings.site_config.application_stack, "java_version", null)
-          node_version             = lookup(var.settings.site_config.application_stack, "node_version", null)
-          php_version              = lookup(var.settings.site_config.application_stack, "php_version", null)
-          python_version           = lookup(var.settings.site_config.application_stack, "python_version", null)
-          ruby_version             = lookup(var.settings.site_config.application_stack, "ruby_version", null)
-        }
-      }
-      dynamic "cors" {
-        for_each = lookup(var.settings.site_config, "cors", {}) != {} ? [1] : []
-
-        content {
-          allowed_origins     = lookup(var.settings.site_config.cors, "allowed_origins", null)
-          support_credentials = lookup(var.settings.site_config.cors, "support_credentials", null)
-        }
-      }
-      dynamic "ip_restriction" {
-        for_each = try(var.settings.site_config.ip_restriction, {})
-
-        content {
-          action      = lookup(ip_restriction.value, "action", null)
-          ip_address  = lookup(ip_restriction.value, "ip_address", null)
-          name        = lookup(ip_restriction.value, "name", null)
-          priority    = lookup(ip_restriction.value, "priority", null)
-          service_tag = lookup(ip_restriction.value, "service_tag", null)
-
-          virtual_network_subnet_id = try(coalesce(
-            try(var.vnets[try(ip_restriction.value.virtual_network_subnet.lz_key, var.client_config.landingzone_key)][ip_restriction.value.virtual_network_subnet.vnet_key].subnets[ip_restriction.value.virtual_network_subnet.subnet_key].id, null),
-            try(var.virtual_subnets[try(ip_restriction.value.virtual_network_subnet.lz_key, var.client_config.landingzone_key)][ip_restriction.value.virtual_network_subnet.subnet_key].id, null),
-            try(ip_restriction.value.virtual_network_subnet_id, null)), null
-          )
-
-          dynamic "headers" {
-            for_each = try(ip_restriction.headers, {})
-
-            content {
-              x_azure_fdid      = lookup(headers.value, "x_azure_fdid", null)
-              x_fd_health_probe = lookup(headers.value, "x_fd_health_probe", null)
-              x_forwarded_for   = lookup(headers.value, "x_forwarded_for", null)
-              x_forwarded_host  = lookup(headers.value, "x_forwarded_host", null)
-            }
-          }
-        }
-      }
-      dynamic "scm_ip_restriction" {
-        for_each = try(var.settings.site_config.scm_ip_restriction, {})
-
-        content {
-          action      = lookup(scm_ip_restriction.value, "action", null)
-          ip_address  = lookup(scm_ip_restriction.value, "ip_address", null)
-          name        = lookup(scm_ip_restriction.value, "name", null)
-          priority    = lookup(scm_ip_restriction.value, "priority", null)
-          service_tag = lookup(scm_ip_restriction.value, "service_tag", null)
-
-          virtual_network_subnet_id = try(coalesce(
-            try(var.vnets[try(scm_ip_restriction.value.virtual_network_subnet.lz_key, var.client_config.landingzone_key)][scm_ip_restriction.value.virtual_network_subnet.vnet_key].subnets[scm_ip_restriction.value.virtual_network_subnet.subnet_key].id, null),
-            try(var.virtual_subnets[try(scm_ip_restriction.value.virtual_network_subnet.lz_key, var.client_config.landingzone_key)][scm_ip_restriction.value.virtual_network_subnet.subnet_key].id, null),
-            try(scm_ip_restriction.value.virtual_network_subnet_id, null))
-          )
-
-          dynamic "headers" {
-            for_each = try(scm_ip_restriction.headers, {})
-
-            content {
-              x_azure_fdid      = lookup(headers.value, "x_azure_fdid", null)
-              x_fd_health_probe = lookup(headers.value, "x_fd_health_probe", null)
-              x_forwarded_for   = lookup(headers.value, "x_forwarded_for", null)
-              x_forwarded_host  = lookup(headers.value, "x_forwarded_host", null)
-            }
-          }
-        }
-      }
-
-      dynamic "auto_heal_setting" {
-        for_each = lookup(var.settings.site_config, "auto_heal_setting", {}) != {} ? [1] : []
-        content {
-
-          dynamic "action" {
-            for_each = lookup(var.settings.site_config.auto_heal_setting, "action", {}) != {} ? [1] : []
-            content {
-              action_type                    = lookup(var.settings.site_config.auto_heal_setting.action, "action_type", null)
-              minimum_process_execution_time = lookup(var.settings.site_config.auto_heal_setting.action, "minimum_process_execution_time", null)
-            }
-          }
-
-          dynamic "trigger" {
-            for_each = lookup(var.settings.site_config.auto_heal_setting, "trigger", {}) != {} ? [1] : []
-            content {
-
-              dynamic "requests" {
-                for_each = lookup(var.settings.site_config.auto_heal_setting.trigger, "requests", {}) != {} ? [1] : []
-                content {
-                  count    = lookup(var.settings.site_config.auto_heal_setting.trigger.requests, "count", null)
-                  interval = lookup(var.settings.site_config.auto_heal_setting.trigger.requests, "interval", null)
-                }
-              }
-
-              dynamic "slow_request" {
-                for_each = lookup(var.settings.site_config.auto_heal_setting.trigger, "slow_request", {}) != {} ? [1] : []
-
-                content {
-                  count      = lookup(var.settings.site_config.auto_heal_setting.trigger.slow_request, "count", null)
-                  interval   = lookup(var.settings.site_config.auto_heal_setting.trigger.slow_request, "interval", null)
-                  path       = lookup(var.settings.site_config.auto_heal_setting.trigger.slow_request, "path", null)
-                  time_taken = lookup(var.settings.site_config.auto_heal_setting.trigger.slow_request, "time_taken", null)
-                }
-              }
-
-              dynamic "status_code" {
-                for_each = lookup(var.settings.site_config.auto_heal_setting.trigger, "status_code", {}) != {} ? [1] : []
-
-                content {
-                  count             = lookup(var.settings.site_config.auto_heal_setting.trigger.status_code, "count", null)
-                  interval          = lookup(var.settings.site_config.auto_heal_setting.trigger.status_code, "interval", null)
-                  path              = lookup(var.settings.site_config.auto_heal_setting.trigger.status_code, "path", null)
-                  status_code_range = lookup(var.settings.site_config.auto_heal_setting.trigger.status_code, "status_code_range", null)
-                  sub_status        = lookup(var.settings.site_config.auto_heal_setting.trigger.status_code, "sub_status", null)
-                  win32_status_code = lookup(var.settings.site_config.auto_heal_setting.trigger.status_code, "win32_status_code", null)
-                }
-              }
-            }
-          }
-        }
-      }
-    }
-  }
-
-
-  dynamic "connection_string" {
-    for_each = var.connection_string
-
-    content {
-      name  = connection_string.value.name
-      type  = connection_string.value.type
-      value = connection_string.value.value
-    }
-  }
 
   dynamic "auth_settings" {
     for_each = lookup(var.settings, "auth_settings", {}) != {} ? [1] : []
@@ -397,18 +214,6 @@ resource "azurerm_linux_web_app" "linux_web_apps" {
     }
   }
 
-  dynamic "storage_account" {
-    for_each = lookup(var.settings, "storage_account", {})
-    content {
-      name         = storage_account.value.name
-      type         = storage_account.value.type
-      account_name = can(storage_account.value.account_key) ? var.storage_accounts[try(storage_account.value.lz_key, var.client_config.landingzone_key)][storage_account.value.account_key].name : try(storage_account.value.account_name, null)
-      share_name   = storage_account.value.share_name
-      access_key   = can(storage_account.value.account_key) ? var.storage_accounts[try(storage_account.value.lz_key, var.client_config.landingzone_key)][storage_account.value.account_key].primary_access_key : try(storage_account.value.access_key, null)
-      mount_path   = lookup(storage_account.value, "mount_path", null)
-    }
-  }
-
   dynamic "backup" {
     for_each = lookup(var.settings, "backup", {}) != {} ? [1] : []
 
@@ -428,6 +233,25 @@ resource "azurerm_linux_web_app" "linux_web_apps" {
           start_time               = lookup(var.settings.backup.schedule, "start_time", null)
         }
       }
+    }
+  }
+
+  dynamic "connection_string" {
+    for_each = var.connection_string
+
+    content {
+      name  = connection_string.value.name
+      type  = connection_string.value.type
+      value = connection_string.value.value
+    }
+  }
+
+  dynamic "identity" {
+    for_each = try(var.identity, null) == null ? [] : [1]
+
+    content {
+      identity_ids = lower(var.identity.type) == "userassigned" ? local.managed_identities : null
+      type         = var.identity.type
     }
   }
 
@@ -478,6 +302,184 @@ resource "azurerm_linux_web_app" "linux_web_apps" {
           }
         }
       }
+    }
+  }
+
+  dynamic "site_config" {
+    for_each = lookup(var.settings, "site_config", {}) != {} ? [1] : []
+
+    content {
+      always_on                                     = lookup(var.settings.site_config, "always_on", false)
+      api_management_api_id                         = lookup(var.settings.site_config, "api_management_api_id", null)
+      app_command_line                              = lookup(var.settings.site_config, "app_command_line", null)
+      auto_heal_enabled                             = can(var.settings.site_config.auto_heal_setting)
+      container_registry_managed_identity_client_id = lookup(var.settings.site_config, "container_registry_managed_identity_client_id", null)
+      container_registry_use_managed_identity       = lookup(var.settings.site_config, "container_registry_use_managed_identity", false)
+      ftps_state                                    = lookup(var.settings.site_config, "ftps_state", null)
+      health_check_eviction_time_in_min             = lookup(var.settings.site_config, "health_check_eviction_time_in_min", null)
+      health_check_path                             = lookup(var.settings.site_config, "health_check_path", null)
+      http2_enabled                                 = lookup(var.settings.site_config, "http2_enabled", null)
+      load_balancing_mode                           = lookup(var.settings.site_config, "load_balancing_mode", null)
+      managed_pipeline_mode                         = lookup(var.settings.site_config, "managed_pipeline_mode", null)
+      minimum_tls_version                           = lookup(var.settings.site_config, "minimum_tls_version", null)
+      remote_debugging_enabled                      = lookup(var.settings.site_config, "remote_debugging_enabled", null)
+      remote_debugging_version                      = lookup(var.settings.site_config, "remote_debugging_version", null)
+      scm_minimum_tls_version                       = lookup(var.settings.site_config, "scm_minimum_tls_version", null)
+      scm_use_main_ip_restriction                   = lookup(var.settings.site_config, "scm_use_main_ip_restriction", null)
+      use_32_bit_worker                             = lookup(var.settings.site_config, "use_32_bit_worker", null)
+      vnet_route_all_enabled                        = lookup(var.settings.site_config, "vnet_route_all_enabled", null)
+      websockets_enabled                            = lookup(var.settings.site_config, "websockets_enabled", null)
+      worker_count                                  = lookup(var.settings.site_config, "worker_count", null)
+
+      dynamic "application_stack" {
+        for_each = lookup(var.settings.site_config, "application_stack", {}) != {} ? [1] : []
+        content {
+          docker_image_name        = lookup(var.settings.site_config.application_stack, "docker_image_name", null)
+          docker_registry_password = lookup(var.settings.site_config.application_stack, "docker_registry_password", null)
+          docker_registry_url      = lookup(var.settings.site_config.application_stack, "docker_registry_url", null)
+          docker_registry_username = lookup(var.settings.site_config.application_stack, "docker_registry_username", null)
+          dotnet_version           = lookup(var.settings.site_config.application_stack, "dotnet_version", null)
+          go_version               = lookup(var.settings.site_config.application_stack, "go_version", null)
+          java_server              = lookup(var.settings.site_config.application_stack, "java_server", null)
+          java_server_version      = lookup(var.settings.site_config.application_stack, "java_server_version", null)
+          java_version             = lookup(var.settings.site_config.application_stack, "java_version", null)
+          node_version             = lookup(var.settings.site_config.application_stack, "node_version", null)
+          php_version              = lookup(var.settings.site_config.application_stack, "php_version", null)
+          python_version           = lookup(var.settings.site_config.application_stack, "python_version", null)
+          ruby_version             = lookup(var.settings.site_config.application_stack, "ruby_version", null)
+        }
+      }
+
+      dynamic "cors" {
+        for_each = lookup(var.settings.site_config, "cors", {}) != {} ? [1] : []
+
+        content {
+          allowed_origins     = lookup(var.settings.site_config.cors, "allowed_origins", null)
+          support_credentials = lookup(var.settings.site_config.cors, "support_credentials", null)
+        }
+      }
+
+      dynamic "ip_restriction" {
+        for_each = try(var.settings.site_config.ip_restriction, {})
+
+        content {
+          action      = lookup(ip_restriction.value, "action", null)
+          ip_address  = lookup(ip_restriction.value, "ip_address", null)
+          name        = lookup(ip_restriction.value, "name", null)
+          priority    = lookup(ip_restriction.value, "priority", null)
+          service_tag = lookup(ip_restriction.value, "service_tag", null)
+
+          virtual_network_subnet_id = try(coalesce(
+            try(var.vnets[try(ip_restriction.value.virtual_network_subnet.lz_key, var.client_config.landingzone_key)][ip_restriction.value.virtual_network_subnet.vnet_key].subnets[ip_restriction.value.virtual_network_subnet.subnet_key].id, null),
+            try(var.virtual_subnets[try(ip_restriction.value.virtual_network_subnet.lz_key, var.client_config.landingzone_key)][ip_restriction.value.virtual_network_subnet.subnet_key].id, null),
+            try(ip_restriction.value.virtual_network_subnet_id, null)), null
+          )
+
+          dynamic "headers" {
+            for_each = try(ip_restriction.headers, {})
+
+            content {
+              x_azure_fdid      = lookup(headers.value, "x_azure_fdid", null)
+              x_fd_health_probe = lookup(headers.value, "x_fd_health_probe", null)
+              x_forwarded_for   = lookup(headers.value, "x_forwarded_for", null)
+              x_forwarded_host  = lookup(headers.value, "x_forwarded_host", null)
+            }
+          }
+        }
+      }
+
+      dynamic "scm_ip_restriction" {
+        for_each = try(var.settings.site_config.scm_ip_restriction, {})
+
+        content {
+          action      = lookup(scm_ip_restriction.value, "action", null)
+          ip_address  = lookup(scm_ip_restriction.value, "ip_address", null)
+          name        = lookup(scm_ip_restriction.value, "name", null)
+          priority    = lookup(scm_ip_restriction.value, "priority", null)
+          service_tag = lookup(scm_ip_restriction.value, "service_tag", null)
+
+          virtual_network_subnet_id = try(coalesce(
+            try(var.vnets[try(scm_ip_restriction.value.virtual_network_subnet.lz_key, var.client_config.landingzone_key)][scm_ip_restriction.value.virtual_network_subnet.vnet_key].subnets[scm_ip_restriction.value.virtual_network_subnet.subnet_key].id, null),
+            try(var.virtual_subnets[try(scm_ip_restriction.value.virtual_network_subnet.lz_key, var.client_config.landingzone_key)][scm_ip_restriction.value.virtual_network_subnet.subnet_key].id, null),
+            try(scm_ip_restriction.value.virtual_network_subnet_id, null))
+          )
+
+          dynamic "headers" {
+            for_each = try(scm_ip_restriction.headers, {})
+
+            content {
+              x_azure_fdid      = lookup(headers.value, "x_azure_fdid", null)
+              x_fd_health_probe = lookup(headers.value, "x_fd_health_probe", null)
+              x_forwarded_for   = lookup(headers.value, "x_forwarded_for", null)
+              x_forwarded_host  = lookup(headers.value, "x_forwarded_host", null)
+            }
+          }
+        }
+      }
+
+      dynamic "auto_heal_setting" {
+        for_each = lookup(var.settings.site_config, "auto_heal_setting", {}) != {} ? [1] : []
+        content {
+
+          dynamic "action" {
+            for_each = lookup(var.settings.site_config.auto_heal_setting, "action", {}) != {} ? [1] : []
+            content {
+              action_type                    = lookup(var.settings.site_config.auto_heal_setting.action, "action_type", null)
+              minimum_process_execution_time = lookup(var.settings.site_config.auto_heal_setting.action, "minimum_process_execution_time", null)
+            }
+          }
+
+          dynamic "trigger" {
+            for_each = lookup(var.settings.site_config.auto_heal_setting, "trigger", {}) != {} ? [1] : []
+            content {
+
+              dynamic "requests" {
+                for_each = lookup(var.settings.site_config.auto_heal_setting.trigger, "requests", {}) != {} ? [1] : []
+                content {
+                  count    = lookup(var.settings.site_config.auto_heal_setting.trigger.requests, "count", null)
+                  interval = lookup(var.settings.site_config.auto_heal_setting.trigger.requests, "interval", null)
+                }
+              }
+
+              dynamic "slow_request" {
+                for_each = lookup(var.settings.site_config.auto_heal_setting.trigger, "slow_request", {}) != {} ? [1] : []
+
+                content {
+                  count      = lookup(var.settings.site_config.auto_heal_setting.trigger.slow_request, "count", null)
+                  interval   = lookup(var.settings.site_config.auto_heal_setting.trigger.slow_request, "interval", null)
+                  path       = lookup(var.settings.site_config.auto_heal_setting.trigger.slow_request, "path", null)
+                  time_taken = lookup(var.settings.site_config.auto_heal_setting.trigger.slow_request, "time_taken", null)
+                }
+              }
+
+              dynamic "status_code" {
+                for_each = lookup(var.settings.site_config.auto_heal_setting.trigger, "status_code", {}) != {} ? [1] : []
+
+                content {
+                  count             = lookup(var.settings.site_config.auto_heal_setting.trigger.status_code, "count", null)
+                  interval          = lookup(var.settings.site_config.auto_heal_setting.trigger.status_code, "interval", null)
+                  path              = lookup(var.settings.site_config.auto_heal_setting.trigger.status_code, "path", null)
+                  status_code_range = lookup(var.settings.site_config.auto_heal_setting.trigger.status_code, "status_code_range", null)
+                  sub_status        = lookup(var.settings.site_config.auto_heal_setting.trigger.status_code, "sub_status", null)
+                  win32_status_code = lookup(var.settings.site_config.auto_heal_setting.trigger.status_code, "win32_status_code", null)
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+
+  dynamic "storage_account" {
+    for_each = lookup(var.settings, "storage_account", {})
+    content {
+      name         = storage_account.value.name
+      type         = storage_account.value.type
+      account_name = can(storage_account.value.account_key) ? var.storage_accounts[try(storage_account.value.lz_key, var.client_config.landingzone_key)][storage_account.value.account_key].name : try(storage_account.value.account_name, null)
+      share_name   = storage_account.value.share_name
+      access_key   = can(storage_account.value.account_key) ? var.storage_accounts[try(storage_account.value.lz_key, var.client_config.landingzone_key)][storage_account.value.account_key].primary_access_key : try(storage_account.value.access_key, null)
+      mount_path   = lookup(storage_account.value, "mount_path", null)
     }
   }
 }
