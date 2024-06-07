@@ -83,6 +83,25 @@ module "data_factory" {
   object_id     = try(each.value.lz_key, null) == null ? var.resources.data_factory[var.client_config.landingzone_key][each.value.data_factory_key].rbac_id : var.resources.data_factory[each.value.lz_key][each.value.data_factory_key].rbac_id
 }
 
+module "linux_web_apps" {
+  source = "./access_policy"
+  for_each = {
+    for key, access_policy in var.access_policies : key => access_policy
+    if try(access_policy.linux_web_apps_key, null) != null
+  }
+
+  keyvault_id = coalesce(
+    var.keyvault_id,
+    try(var.keyvaults[each.value.keyvault_lz_key][var.keyvault_key].id, null),
+    try(var.keyvaults[var.client_config.landingzone_key][var.keyvault_key].id, null),
+    try(var.keyvaults[each.value.lz_key][var.keyvault_key].id, null) // For backward compatibility
+  )
+
+  access_policy = each.value
+  tenant_id     = var.client_config.tenant_id
+  object_id     = try(each.value.lz_key, null) == null ? var.resources.linux_web_apps[var.client_config.landingzone_key][each.value.linux_web_apps_key].rbac_id : var.resources.linux_web_apps[each.value.lz_key][each.value.linux_web_apps_key].rbac_id
+}
+
 module "logged_in_user" {
   source = "./access_policy"
   for_each = {
