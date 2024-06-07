@@ -27,6 +27,14 @@ resource "azurerm_logic_app_workflow" "la" {
     ]
   }
 
+  dynamic "identity" {
+    for_each = can(var.settings.identity) ? [var.settings.identity] : []
+    content {
+      type         = identity.value.type
+      identity_ids = concat(local.managed_identities, try(identity.value.identity_ids, []))
+    }
+  }  
+
 }
 
 
