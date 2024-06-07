@@ -1,8 +1,28 @@
-variable "resource_id" {}
+variable "base_tags" {
+  description = "Base tags for the resource to be inherited from the resource group."
+  type        = bool
+}
+
+variable "client_config" {
+  default = {}
+}
+
+variable "global_settings" {
+  description = "Global settings object (see module README.md)"
+}
+
+variable "location" {
+  description = "Specifies the supported Azure location where the resource exists. Changing this forces a new resource to be created."
+  default     = null
+}
 
 variable "name" {
   type        = string
   description = "(Required) Specifies the name. Changing this forces a new resource to be created."
+}
+
+variable "private_dns" {
+  default = {}
 }
 
 variable "resource_group_name" {
@@ -14,28 +34,14 @@ variable "resource_groups" {
   default     = {}
 }
 
-variable "location" {
-  description = "Specifies the supported Azure location where the resource exists. Changing this forces a new resource to be created."
-  default     = null
-}
+variable "resource_id" {}
+
+variable "settings" {}
 
 variable "subnet_id" {}
-variable "settings" {}
-variable "global_settings" {
-  description = "Global settings object (see module README.md)"
-}
-variable "base_tags" {
-  description = "Base tags for the resource to be inherited from the resource group."
-  type        = bool
-}
+
 variable "subresource_names" {
   default = []
-}
-variable "client_config" {
-  default = {}
-}
-variable "private_dns" {
-  default = {}
 }
 variable "tags" {
   default = {}

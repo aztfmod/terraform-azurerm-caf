@@ -18,6 +18,7 @@ resource "azurerm_mssql_database" "mssqldb" {
   geo_backup_enabled                  = try(var.settings.geo_backup_enabled, false)
   ledger_enabled                      = try(var.settings.ledger_enabled, false)
   license_type                        = try(var.settings.license_type, null)
+  maintenance_configuration_name      = try(var.settings.maintenance_configuration_name, null)
   max_size_gb                         = try(var.settings.max_size_gb, null)
   min_capacity                        = try(var.settings.min_capacity, null)
   name                                = azurecaf_name.mssqldb.result

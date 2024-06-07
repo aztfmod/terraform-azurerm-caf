@@ -13,8 +13,7 @@ variable "remote_objects" {
 }
 variable "base_tags" {
   description = "Base tags for the resource to be inherited from the resource group."
-  type        = map(any)
-  default     = {}
+  type        = bool
 }
 variable "resource_group_name" {
   description = " The name of the Resource Group in which to create the Load Balancer."

@@ -41,7 +41,7 @@ variable "application_insights_id" {
 
 variable "base_tags" {
   description = "Base tags for the resource to be inherited from the resource group."
-  type        = map(any)
+  type        = bool
 }
 
 variable "vnets" {
@@ -50,4 +50,12 @@ variable "vnets" {
 
 variable "container_registry_id" {
   default = ""
+}
+
+variable "private_endpoints" {
+  default = {}
+}
+
+variable "private_dns" {
+  default = {}
 }

@@ -106,6 +106,7 @@ locals {
   services_roles = {
     aks_clusters                               = local.combined_objects_aks_clusters
     aks_ingress_application_gateway_identities = local.aks_ingress_application_gateway_identities
+    analysis_services_server                   = local.combined_objects_analysis_services_server
     api_management                             = local.combined_objects_api_management
     app_config                                 = local.combined_objects_app_config
     app_service_environments                   = local.combined_objects_app_service_environments
