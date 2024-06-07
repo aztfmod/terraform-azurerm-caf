@@ -1,4 +1,3 @@
-
 module "azuread_apps" {
   source = "./access_policy"
   for_each = {
