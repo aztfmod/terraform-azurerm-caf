@@ -2,6 +2,7 @@ locals {
   remote_objects = {
     aadb2c_directory                               = try(local.combined_objects_aadb2c_directory, null)
     aks_clusters                                   = try(local.combined_objects_aks_clusters, null)
+    analysis_services_server                       = try(local.combined_objects_analysis_services_server, null)
     api_management                                 = try(local.combined_objects_api_management, null)
     api_management_api                             = try(local.combined_objects_api_management_api, null)
     management_api_operation                       = try(local.combined_objects_api_management_api_operation, null)
@@ -114,6 +115,7 @@ locals {
     recovery_vaults                                = try(local.combined_objects_recovery_vaults, null)
     redis_caches                                   = try(local.combined_objects_redis_caches, null)
     resource_groups                                = try(local.combined_objects_resource_groups, null)
+    route_servers                                  = try(local.combined_objects_route_servers, null)
     search_services                                = try(local.combined_objects_search_services, null)
     servicebus_namespaces                          = try(local.combined_objects_servicebus_namespaces, null)
     servicebus_topics                              = try(local.combined_objects_servicebus_topics, null)

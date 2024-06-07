@@ -38,7 +38,6 @@ resource "azurerm_private_endpoint" "pep" {
         ),
         lookup(private_dns_zone_group.value, "ids", [])
       )
-
     }
   }
 
