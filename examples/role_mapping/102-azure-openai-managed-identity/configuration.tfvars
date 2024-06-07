@@ -16,16 +16,16 @@ cognitive_services_account = {
     resource_group = {
       key = "rg1"
     }
-    name    = "pinecone-llm-demoopenai"
-    kind    = "OpenAI"
-    sku_name = "S0"
+    name                  = "pinecone-llm-demoopenai"
+    kind                  = "OpenAI"
+    sku_name              = "S0"
     custom_subdomain_name = "cs-alz-caf-llm-demoopenai"
   }
 }
 
 managed_identities = {
   workload-msi = {
-    name = "example-msi-openai-rolemap-msi"
+    name               = "example-msi-openai-rolemap-msi"
     resource_group_key = "rg1"
   }
 }

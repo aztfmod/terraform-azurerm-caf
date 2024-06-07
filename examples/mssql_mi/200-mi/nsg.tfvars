@@ -84,6 +84,6 @@ network_security_group_definition = {
     ]
   }
   subnet02 = {
-    nsg= []
+    nsg = []
   }
 }

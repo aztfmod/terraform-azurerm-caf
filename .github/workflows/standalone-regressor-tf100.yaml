@@ -18,11 +18,10 @@ on:
         type: choice
         default: 'standalone-scenarios.json'
         options:
-        - standalone-scenarios-azuread.json
+        - standalone-azuread.json
         - standalone-scenarios.json
         - standalone-compute.json
         - standalone-networking.json
-        - standalone-scenarios-longrunners.json
 
 env:
   TF_CLI_ARGS: '-no-color'
@@ -58,7 +57,7 @@ jobs:
       matrix: ${{fromJSON(needs.load_scenarios.outputs.matrix)}}
 
     container:
-      image: aztfmod/rover:1.7.5-2405.0203
+      image: aztfmod/rover:1.8.4-2405.2306
       options: --user 0
 
     steps:
@@ -178,7 +177,7 @@ jobs:
     needs: [testcases]
 
     container:
-      image: aztfmod/rover:1.7.5-2405.0203
+      image: aztfmod/rover:1.8.4-2405.2306
       options: --user 0
 
     steps:

@@ -36,6 +36,10 @@
     "networking/private_dns/100-private-dns-vnet-links",
     "networking/private_links/endpoints/centralized",
     "networking/private_links/endpoints/static_ip",
+    "networking/virtual_network_gateway/100-expressroute-gateway",
+    "networking/virtual_network_gateway/101-vpn-site-to-site",
+    "networking/virtual_network_gateway/102-vpn-site-to-site-active-active",
+    "networking/virtual_network_gateway/103-vpn-site-to-site-connection",
     "networking/virtual_network/100-import-rg",
     "networking/virtual_network/100-simple-vnet-subnets-nsgs",
     "networking/virtual_network/100-subnet-delegation",
@@ -44,7 +48,16 @@
     "networking/virtual_network/201-nsg-flow-logs-v1",
     "networking/virtual_subnets/100-simple-subnet-rbac",
     "networking/virtual_wan/100-vwan-multi-hubs",
+    "networking/virtual_wan/101-vwan-hub-firewall-legacy",
+    "networking/virtual_wan/102-vwan-hub-firewall-secured-vhub",
+    "networking/virtual_wan/102a-vwan-hub-firewall-secured-vhub-fw-mgr",
+    "networking/virtual_wan/103-vwan-hub-gw-legacy",
+    "networking/virtual_wan/104-vwan-hub-gw-spp",
+    "networking/virtual_wan/105-vwan-hub-route-table",
     "networking/virtual_wan/106-vwan-hub-routes",
-    "networking/virtual_wan/108-vwan-vpn-site"
+    "networking/virtual_wan/108-vwan-vpn-site",
+    "networking/virtual_wan/109-vwan-vpn-gateway-connection",
+    "networking/virtual_wan/110-vwan-hub-gw-p2s-keyvault-cert",
+    "networking/virtual_wan/111-vwan-vpn-gateway-connection-with-nat"
   ]
 }
