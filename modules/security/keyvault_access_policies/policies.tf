@@ -99,7 +99,7 @@ module "linux_web_apps" {
 
   access_policy = each.value
   tenant_id     = var.client_config.tenant_id
-  object_id     = try(each.value.lz_key, null) == null ? var.resources.linux_web_apps[var.client_config.landingzone_key][each.value.linux_web_apps_key].rbac_id : var.resources.linux_web_apps[each.value.lz_key][each.value.linux_web_apps_key].rbac_id
+  object_id     = try(each.value.lz_key, null) == null ? var.resources.linux_web_apps[var.client_config.landingzone_key][each.value.linux_web_apps_key].identity : var.resources.linux_web_apps[each.value.lz_key][each.value.linux_web_apps_key].identity
 }
 
 module "logged_in_user" {

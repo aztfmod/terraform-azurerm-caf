@@ -21,9 +21,7 @@ module "keyvaults" {
 
 #
 # Keyvault access policies
-#-
-
-
+#
 module "keyvault_access_policies" {
   source   = "./modules/security/keyvault_access_policies"
   for_each = var.keyvault_access_policies
