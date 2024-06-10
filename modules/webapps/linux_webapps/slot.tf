@@ -239,9 +239,8 @@ resource "azurerm_linux_web_app_slot" "slots" {
 resource "azurerm_app_service_slot_custom_hostname_binding" "app_service_slot" {
   for_each = try(var.slots, {})
 
-  app_service_name    = azurerm_linux_web_app.linux_web_apps.name
+  app_service_slot_id = azurerm_linux_web_app_slot.slots.[each.value].id
   hostname            = each.value.custom_hostname_binding.hostname
-  resource_group_name = local.resource_group_name
   ssl_state           = try(each.value.custom_hostname_binding.ssl_state, null)
   thumbprint          = try(each.value.custom_hostname_binding.thumbprint, null)
 }
