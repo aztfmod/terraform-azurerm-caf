@@ -236,7 +236,7 @@ resource "azurerm_linux_web_app_slot" "slots" {
   }
 }
 
-resource "azurerm_app_service_custom_hostname_binding" "app_service_slot" {
+resource "azurerm_app_service_slot_custom_hostname_binding" "app_service_slot" {
   for_each = try(var.slots, {})
 
   app_service_name    = azurerm_linux_web_app.linux_web_apps.name
