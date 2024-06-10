@@ -107,6 +107,7 @@ resource "azurerm_linux_web_app_slot" "slots" {
       health_check_eviction_time_in_min = lookup(var.settings.site_config, "health_check_eviction_time_in_min", null)
       health_check_path                 = lookup(var.settings.site_config, "health_check_path", null)
       http2_enabled                     = lookup(var.settings.site_config, "http2_enabled", false)
+      ip_restriction_default_action     = lookup(var.settings.site_config, "ip_restriction_default_action", null)
       local_mysql_enabled               = lookup(var.settings.site_config, "local_mysql_enabled", null)
       managed_pipeline_mode             = lookup(var.settings.site_config, "managed_pipeline_mode", null)
       remote_debugging_enabled          = lookup(var.settings.site_config, "remote_debugging_enabled", null)

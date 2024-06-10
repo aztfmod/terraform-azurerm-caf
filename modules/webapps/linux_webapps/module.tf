@@ -319,6 +319,7 @@ resource "azurerm_linux_web_app" "linux_web_apps" {
       health_check_eviction_time_in_min             = lookup(var.settings.site_config, "health_check_eviction_time_in_min", null)
       health_check_path                             = lookup(var.settings.site_config, "health_check_path", null)
       http2_enabled                                 = lookup(var.settings.site_config, "http2_enabled", null)
+      ip_restriction_default_action                 = lookup(var.settings.site_config, "ip_restriction_default_action", null)
       load_balancing_mode                           = lookup(var.settings.site_config, "load_balancing_mode", null)
       managed_pipeline_mode                         = lookup(var.settings.site_config, "managed_pipeline_mode", null)
       minimum_tls_version                           = lookup(var.settings.site_config, "minimum_tls_version", null)
