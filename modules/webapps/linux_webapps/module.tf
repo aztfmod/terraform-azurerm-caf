@@ -488,7 +488,7 @@ resource "azurerm_app_service_custom_hostname_binding" "app_service" {
   for_each            = try(var.settings.custom_hostname_binding, {})
 
   app_service_name    = azurerm_linux_web_app.linux_web_apps.name
-  resource_group_name = var.resource_group_name
+  resource_group_name = local.resource_group_name
   hostname            = var.settings.custom_hostname_binding.hostname
   ssl_state           = try(var.settings.custom_hostname_binding.ssl_state, null)
   thumbprint          = try(var.settings.custom_hostname_binding.thumbprint, null)

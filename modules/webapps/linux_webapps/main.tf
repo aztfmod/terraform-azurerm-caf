@@ -28,6 +28,7 @@ locals {
 
   location            = coalesce(var.location, var.resource_group.location)
   resource_group_name = coalesce(var.resource_group_name, var.resource_group.name)
+
   app_settings = merge(try(var.app_settings, {}), var.application_insight == null ? {} :
     {
       "APPINSIGHTS_INSTRUMENTATIONKEY"             = var.application_insight.instrumentation_key,
