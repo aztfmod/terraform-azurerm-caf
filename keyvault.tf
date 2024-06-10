@@ -35,11 +35,11 @@ module "keyvault_access_policies" {
     azuread_service_principals        = local.combined_objects_azuread_service_principals
     data_factory                      = local.combined_objects_data_factory
     diagnostic_storage_accounts       = local.combined_objects_diagnostic_storage_accounts
-    linux_web_apps                    = local.combined_objects_linux_web_apps
     managed_identities                = local.combined_objects_managed_identities
     mssql_managed_instances           = local.combined_objects_mssql_managed_instances
     mssql_managed_instances_secondary = local.combined_objects_mssql_managed_instances_secondary
     storage_accounts                  = local.combined_objects_storage_accounts
+    # linux_web_apps                    = local.combined_objects_linux_web_apps
   }
 }
 
