@@ -10,11 +10,11 @@ recovery_vaults = {
     backup_policies = {
       vm_workloads = {
         sql = {
-          name      = "SQLTest"
-          workload_type = "SQLDataBase"
-          vault_key = "asr1"
-          rg_key    = "primary"
-          timezone  = "UTC"
+          name                = "SQLTest"
+          workload_type       = "SQLDataBase"
+          vault_key           = "asr1"
+          rg_key              = "primary"
+          timezone            = "UTC"
           compression_enabled = false
           protection_policies = {
             sqlfull = {
@@ -23,8 +23,8 @@ recovery_vaults = {
                 frequency = "Daily"
                 time      = "15:00"
               }
-              retention_daily  = {
-                count    = 8
+              retention_daily = {
+                count = 8
               }
             }
             sqllog = {
@@ -39,11 +39,11 @@ recovery_vaults = {
           }
         }
         saphana = {
-          name      = "SAPHANATest"
-          workload_type = "SAPHanaDatabase"
-          vault_key = "asr1"
-          rg_key    = "primary"
-          timezone  = "UTC"
+          name                = "SAPHANATest"
+          workload_type       = "SAPHanaDatabase"
+          vault_key           = "asr1"
+          rg_key              = "primary"
+          timezone            = "UTC"
           compression_enabled = false
           protection_policies = {
             saphanafull = {
@@ -52,8 +52,8 @@ recovery_vaults = {
                 frequency = "Daily"
                 time      = "15:00"
               }
-              retention_daily  = {
-                count    = 8
+              retention_daily = {
+                count = 8
               }
             }
             saphanalog = {
@@ -65,7 +65,7 @@ recovery_vaults = {
                 count = 8
               }
             }
-          }          
+          }
         }
       }
     }

@@ -14,7 +14,6 @@ module "private_endpoints" {
   remote_objects = {
     diagnostic_storage_accounts     = local.combined_diagnostics.storage_accounts
     diagnostic_event_hub_namespaces = local.combined_diagnostics.event_hub_namespaces
-
     aks_clusters                = local.combined_objects_aks_clusters
     app_config                  = local.combined_objects_app_config
     azure_container_registries  = local.combined_objects_azure_container_registries

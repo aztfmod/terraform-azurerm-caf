@@ -22,7 +22,7 @@ search_services = {
     identity = {
       type = "SystemAssigned"
     }
-    local_authentication_enabled  = false
+    local_authentication_enabled = false
     # public_network_access_enabled = true
     # allowed_ips                   = ["13.478.57.73"]
   }

@@ -39,7 +39,7 @@ aks_clusters = {
 
     addon_profile = {
       oms_agent = {
-        log_analytics_key = "central_logs_region1"
+        log_analytics_key               = "central_logs_region1"
         msi_auth_for_monitoring_enabled = true
       }
     }
