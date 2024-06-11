@@ -283,6 +283,7 @@ locals {
     azurerm_routes                                          = try(var.networking.azurerm_routes, {})
     cdn_endpoint                                            = try(var.networking.cdn_endpoint, {})
     cdn_profile                                             = try(var.networking.cdn_profile, {})
+    cdn_frontdoor_profiles                                  = try(var.networking.cdn_front_door_profiles, {})
     ddos_services                                           = try(var.networking.ddos_services, {})
     dns_zone_records                                        = try(var.networking.dns_zone_records, {})
     dns_zones                                               = try(var.networking.dns_zones, {})
