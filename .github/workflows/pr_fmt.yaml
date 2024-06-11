@@ -1,0 +1,51 @@
+#
+# Copyright (c) Microsoft Corporation
+# Licensed under the MIT License.
+#
+
+name: PR fmt
+
+on:
+  pull_request:
+    types: [opened, synchronize, reopened]
+
+env:
+  TF_VERSION: "1.8.4"
+
+jobs:
+  linting:
+    name: Format and Lint Checks
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Install Terraform
+        uses: hashicorp/setup-terraform@v3
+        with:
+          terraform_version:  ${{ env.TF_VERSION }}
+
+      - name: Check terraform formatting
+        id: fmt_check
+        run: |
+          terraform fmt -check -recursive
+          echo "fmt_outcome=$?" >> $GITHUB_ENV
+        continue-on-error: true
+
+      - name: Post PR comment on fmt failure
+        if: env.fmt_outcome != '0'
+        uses: actions/github-script@v7
+        with:
+          github-token: ${{secrets.GITHUB_TOKEN}}
+          script: |
+            const issue_number = context.issue.number;
+            const owner = context.repo.owner;
+            const repo = context.repo.repo;
+            const body = "Please run `terraform fmt` to format your Terraform files according to the standard conventions.";
+            github.rest.pulls.createReview({
+              owner,
+              repo,
+              pull_number: issue_number,
+              event: "COMMENT",
+              body
+            });
