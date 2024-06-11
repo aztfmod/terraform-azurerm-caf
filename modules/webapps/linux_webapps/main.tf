@@ -43,6 +43,6 @@ locals {
   logs_storage_account = can(var.settings.logs.application_logs.azure_blob_storage) ? var.storage_accounts[try(var.settings.logs.lz_key, var.client_config.landingzone_key)][var.settings.logs.storage_account_key] : null
   logs_sas_url         = can(local.logs_storage_account) ? "${local.logs_storage_account.primary_blob_endpoint}${local.logs_storage_account.containers[var.settings.logs.container_key].name}${data.azurerm_storage_account_blob_container_sas.logs[0].sas}" : null
 
-  http_logs_storage_account = can(var.settings.logs.http_logs) ? var.storage_accounts[try(var.settings.logs.http_logs.lz_key, var.client_config.landingzone_key)][var.settings.logs.http_logs.storage_account_key] : null
+  http_logs_storage_account = can(var.settings.logs.http_logs.azure_blob_storage) ? var.storage_accounts[try(var.settings.logs.http_logs.lz_key, var.client_config.landingzone_key)][var.settings.logs.http_logs.storage_account_key] : null
   http_logs_sas_url         = can(local.http_logs_storage_account) ? "${local.http_logs_storage_account.primary_blob_endpoint}${local.http_logs_storage_account.containers[var.settings.logs.http_logs.container_key].name}${data.azurerm_storage_account_blob_container_sas.http_logs[0].sas}" : null
 }
