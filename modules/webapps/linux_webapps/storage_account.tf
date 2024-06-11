@@ -1,12 +1,12 @@
 data "azurerm_storage_account" "backup_storage_account" {
-  count = can(var.settings.backup) ? 1 : 0
+  count = can(var.settings.backup.sas_policy) ? 1 : 0
 
   name                = local.backup_storage_account.name
   resource_group_name = local.backup_storage_account.resource_group_name
 }
 
 data "azurerm_storage_account_blob_container_sas" "backup" {
-  count = can(var.settings.backup) ? 1 : 0
+  count = can(var.settings.backup.sas_policy) ? 1 : 0
 
   connection_string = data.azurerm_storage_account.backup_storage_account.0.primary_connection_string
   container_name    = local.backup_storage_account.containers[var.settings.backup.container_key].name
@@ -26,7 +26,7 @@ data "azurerm_storage_account_blob_container_sas" "backup" {
 }
 
 data "azurerm_storage_account_blob_container_sas" "logs" {
-  count = can(var.settings.logs) ? 1 : 0
+  count = can(var.settings.logs.sas_policy) ? 1 : 0
 
   connection_string = data.azurerm_storage_account.backup_storage_account.0.primary_connection_string
   container_name    = local.logs_storage_account.containers[var.settings.logs.container_key].name
@@ -47,7 +47,7 @@ data "azurerm_storage_account_blob_container_sas" "logs" {
 
 
 data "azurerm_storage_account_blob_container_sas" "http_logs" {
-  count = can(var.settings.logs.http_logs) ? 1 : 0
+  count = can(var.settings.logs.http_logs.sas_policy) ? 1 : 0
 
   connection_string = data.azurerm_storage_account.backup_storage_account.0.primary_connection_string
   container_name    = local.http_logs_storage_account.containers[var.settings.logs.http_logs.container_key].name
