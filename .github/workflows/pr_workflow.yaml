@@ -23,7 +23,6 @@ on:
           - standalone-scenarios-longrunners.json
 
 permissions:
-  id-token: write
   contents: read
 
 env:
