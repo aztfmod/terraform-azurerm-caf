@@ -9,11 +9,11 @@ resource "azurerm_container_app_environment_dapr_component" "cadc" {
 
   dynamic "metadata" {
     for_each = try(var.settings.metadata, {})
-    
+
     content {
-      name                     = metadata.value.name
-      secret_name              = try(metadata.value.secret_name, null)
-      value                    = try(metadata.value.value, null)
+      name        = metadata.value.name
+      secret_name = try(metadata.value.secret_name, null)
+      value       = try(metadata.value.value, null)
     }
   }
 
@@ -21,8 +21,8 @@ resource "azurerm_container_app_environment_dapr_component" "cadc" {
     for_each = try(var.settings.secret, {})
 
     content {
-      name                     = secret.value.name
-      value                    = secret.value.value
+      name  = secret.value.name
+      value = secret.value.value
     }
   }
 }
