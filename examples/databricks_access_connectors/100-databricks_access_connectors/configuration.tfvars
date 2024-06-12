@@ -13,16 +13,16 @@ resource_groups = {
 
 databricks_access_connectors = {
   dac_1 = {
-      name = "example-name"
-      resource_group_key = "dac_test"
-      identity = {
-        type   = "UserAssigned" #SystemAssigned
-        managed_identity_keys = ["dac_test"]
+    name               = "example-name"
+    resource_group_key = "dac_test"
+    identity = {
+      type                  = "UserAssigned" #SystemAssigned
+      managed_identity_keys = ["dac_test"]
     }
-     tags = {
-       test = "test"
-       test1 = "test1"
-     }
+    tags = {
+      test  = "test"
+      test1 = "test1"
+    }
   }
 }
 
