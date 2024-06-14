@@ -35,6 +35,10 @@ module "diagnostic_storage_accounts" {
   location            = try(local.global_settings.regions[each.value.region], null)
   base_tags           = local.global_settings.inherit_tags
   var_folder_path     = var.var_folder_path
+  vnets               = local.combined_objects_networking
+  virtual_subnets     = local.combined_objects_virtual_subnets
+  private_dns         = local.combined_objects_private_dns
+  private_endpoints   = try(each.value.private_endpoints, {})
 }
 
 resource "azurerm_storage_account_customer_managed_key" "diasacmk" {
