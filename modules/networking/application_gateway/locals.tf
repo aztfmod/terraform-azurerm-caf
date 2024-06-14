@@ -78,6 +78,17 @@ locals {
     for key, value in local.listeners : [try(value.keyvault_certificate.certificate_key, [])]
   ]))
 
+  manual_certificates = {
+    for cert in distinct(
+      [
+        for key, value in local.listeners : {
+          cert_key = value.keyvault_certificate.certificate_name
+          cert_value = value.keyvault_certificate
+        } if try(value.keyvault_certificate.certificate_name, null) != null
+      ]
+    ) : cert.cert_key => cert.cert_value
+  }
+
   certificate_request_keys = distinct(flatten([
     for key, value in local.listeners : [try(value.keyvault_certificate_request.key, [])]
   ]))
