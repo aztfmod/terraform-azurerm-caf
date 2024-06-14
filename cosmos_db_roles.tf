@@ -22,7 +22,7 @@ module "cosmosdb_custom_roles" {
   account_name = (
     can(each.value.account.name) || can(each.value.account_name) ?
     try(each.value.account.name, each.value.account_name) :
-    local.combined_objects_cosmos_dbs[try(each.value.account.lz_key, local.client_config.landingzone_key)][try(each.value.account_key, each.value.account.key)].name
+    local.combined_objects_cosmos_dbs[try(each.value.account_lz_key, local.client_config.landingzone_key)][try(each.value.account_key, each.value.account.key)].name
   )
   assignable_scopes  = local.cosmos_db_assignable_scopes[each.key]
   permissions        = each.value.permissions
@@ -34,7 +34,7 @@ module "cosmosdb_custom_roles" {
 resource "azurerm_cosmosdb_sql_role_assignment" "cosmos_account" {
   for_each = local.cosmosdb_account_roles
 
-  account_name = local.combined_objects_cosmos_dbs[try(each.value.account.lz_key, local.client_config.landingzone_key)][try(each.value.account_key, each.value.account.key)].name
+  account_name = local.combined_objects_cosmos_dbs[try(each.value.account_lz_key, local.client_config.landingzone_key)][try(each.value.account_key, each.value.account.key)].name
   resource_group_name = (
     try(each.value.resource_group.name, null) != null || try(each.value.resource_group_name, null) != null ?
     try(each.value.resource_group.name, each.value.resource_group_name) :
@@ -76,7 +76,7 @@ resource "azurerm_cosmosdb_sql_role_assignment" "cosmos_sql_database" {
     try(each.value.resource_group.name, each.value.resource_group_name) :
     local.combined_objects_resource_groups[try(each.value.resource_group.lz_key, local.client_config.landingzone_key)][try(each.value.resource_group_key, each.value.resource_group.key)].name
   )
-  account_name = local.combined_objects_cosmos_dbs[try(each.value.account.lz_key, local.client_config.landingzone_key)][try(each.value.account_key, each.value.account.key)].name
+  account_name = local.combined_objects_cosmos_dbs[try(each.value.account_lz_key, local.client_config.landingzone_key)][try(each.value.account_key, each.value.account.key)].name
   principal_id = (
     each.value.object_id_resource_type == "object_ids" ?
     each.value.object_id_key_resource : each.value.object_id_lz_key == null ?
@@ -112,7 +112,7 @@ resource "azurerm_cosmosdb_sql_role_assignment" "cosmos_sql_container" {
     try(each.value.resource_group.name, each.value.resource_group_name) :
     local.combined_objects_resource_groups[try(each.value.resource_group.lz_key, local.client_config.landingzone_key)][try(each.value.resource_group_key, each.value.resource_group.key)].name
   )
-  account_name = local.combined_objects_cosmos_dbs[try(each.value.account.lz_key, local.client_config.landingzone_key)][try(each.value.account_key, each.value.account.key)].name
+  account_name = local.combined_objects_cosmos_dbs[try(each.value.account_lz_key, local.client_config.landingzone_key)][try(each.value.account_key, each.value.account.key)].name
   principal_id = (
     each.value.object_id_resource_type == "object_ids" ?
     each.value.object_id_key_resource : each.value.object_id_lz_key == null ?
