@@ -139,6 +139,11 @@ locals {
       for obj in try(var.settings.vnet.dns_servers_keys, {}) :
       var.remote_dns.virtual_machines[obj.lz_key][obj.key].ip_configuration[obj.nic_key].private_ip_addresses
       if contains(["virtual_machines", "virtual_machine"], obj.resource_type)
+    ],
+    [
+      for obj in try(var.settings.vnet.dns_servers_keys, {}) :
+      var.remote_dns.private_dns_resolver_inbound_endpoints[obj.lz_key][obj.key].private_ip_address
+      if contains(["private_dns_resolver_inbound_endpoints", "private_dns_resolver_inbound_endpoint","private_dns_resolver"], obj.resource_type)
     ]
   )
 }

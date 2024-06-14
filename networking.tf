@@ -54,10 +54,11 @@ module "networking" {
   # Does not support legacy load_balancers. Prefer lb
   #
   remote_dns = {
-    azurerm_firewall  = try(var.remote_objects.azurerm_firewalls, {})
-    azurerm_firewalls = try(var.remote_objects.azurerm_firewalls, {})
-    virtual_machines  = try(var.remote_objects.virtual_machines, {})
-    lb                = try(var.remote_objects.lb, {})
+    private_dns_resolver_inbound_endpoints = try(var.remote_objects.private_dns_resolver_inbound_endpoints, {})
+    azurerm_firewall                       = try(var.remote_objects.azurerm_firewalls, {})
+    azurerm_firewalls                      = try(var.remote_objects.azurerm_firewalls, {})
+    virtual_machines                       = try(var.remote_objects.virtual_machines, {})
+    lb                                     = try(var.remote_objects.lb, {})
   }
 }
 
@@ -140,8 +141,9 @@ module "public_ip_addresses" {
   sku_tier                   = try(each.value.sku_tier, null)
   tags                       = try(each.value.tags, null)
   # Zone behavior kept to support smooth migration to azurerm 3.x
-  zones = try(each.value.sku, "Basic") == "Basic" ? [] : try(each.value.zones, null) == null ? ["1", "2", "3"] : each.value.zones
-
+  # blinQ: in some scenarios a Standard SKU public_ip with no zones (null) is required, ex: virtual network gateway with SKU VpnGw1 (no AZ). Add support for zones = [""] to support this scenarios
+  zones = try(each.value.sku, "Basic") == "Basic" || try(each.value.zones, null) == [""] ? [] : try(each.value.zones, null) == null ? ["1", "2", "3"] : each.value.zones
+  # zones = try(each.value.sku, "Basic") == "Basic" ? [] : try(each.value.zones, null) == null ? ["1", "2", "3"] : each.value.zones
   base_tags           = local.global_settings.inherit_tags
   resource_group      = local.combined_objects_resource_groups[try(each.value.resource_group.lz_key, local.client_config.landingzone_key)][try(each.value.resource_group_key, each.value.resource_group.key)]
   resource_group_name = can(each.value.resource_group.name) || can(each.value.resource_group_name) ? try(each.value.resource_group.name, each.value.resource_group_name) : null
