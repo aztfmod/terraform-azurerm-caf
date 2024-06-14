@@ -1,6 +1,6 @@
 
 locals {
-  global_settings = merge(var.global_settings, try(var.custom_role.global_settings,{}))
+  global_settings = merge(var.global_settings, try(var.custom_role.global_settings, {}))
 }
 
 resource "azurecaf_name" "custom_role" {
