@@ -21,7 +21,8 @@ output "rbac_id" {
 output "slot" {
   value = {
     for key, value in try(var.slots, {}) : key => {
-      id = azurerm_app_service_slot.slots[key].id
+      id   = azurerm_app_service_slot.slots[key].id
+      name = azurerm_app_service_slot.slots[key].name
     }
   }
 }
