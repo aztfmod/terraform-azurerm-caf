@@ -1,4 +1,4 @@
-# Tested with :  AzureRM version 2.61.0
+# Tested with :  AzureRM version 2.99.0
 # Ref : https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/resources/recovery_services_vault
 
 resource "azurecaf_name" "asr_rg_vault" {
@@ -23,7 +23,24 @@ resource "azurerm_recovery_services_vault" "asr" {
   immutability                  = try(var.settings.immutability, null)
 
   identity {
-    type = "SystemAssigned"
+    type = try(var.settings.identity.type, "SystemAssigned")
+
+    # if type contains UserAssigned, `identity_ids` is mandatory
+    identity_ids = try(regex("UserAssigned", var.settings.identity.type), null) != null ? flatten([
+      for managed_identity in var.settings.identity.managed_identities : [
+        var.managed_identities[try(managed_identity.lz_key, var.client_config.landingzone_key)][managed_identity.key].id
+      ]
+    ]) : null
   }
 
+  dynamic "encryption" {
+    for_each = can(var.settings.encryption) ? [1] : []
+
+    content {
+      key_id                            = var.settings.encryption.key_id
+      infrastructure_encryption_enabled = try(var.settings.encryption.infrastructure_encryption_enabled, null)
+      use_system_assigned_identity      = can(var.settings.encryption.user_assigned_identity) ? false : true
+      user_assigned_identity_id         = can(var.settings.encryption.user_assigned_identity) ? var.managed_identities[try(var.settings.encryption.user_assigned_identity.lz_key, var.client_config.landingzone_key)][var.settings.encryption.user_assigned_identity.key].id : null
+    }
+  }
 }
