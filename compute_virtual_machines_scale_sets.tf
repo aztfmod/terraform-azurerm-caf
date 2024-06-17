@@ -13,8 +13,9 @@ module "virtual_machine_scale_sets" {
     module.packer_build,
     module.packer_service_principal,
     module.proximity_placement_groups,
-    time_sleep.azurerm_role_assignment_for.0
+    time_sleep.azurerm_role_assignment_for[0]
   ]
+
   for_each = local.compute.virtual_machine_scale_sets
 
   availability_sets           = local.combined_objects_availability_sets

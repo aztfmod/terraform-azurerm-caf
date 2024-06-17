@@ -10,7 +10,7 @@ data "azurecaf_name" "disk" {
   use_slug      = var.global_settings.use_slug
 }
 
-resource "azurerm_managed_disk" "disk" { 
+resource "azurerm_managed_disk" "disk" {
   for_each = lookup(var.settings, "data_disks", {})
 
   name                   = data.azurecaf_name.disk[each.key].result

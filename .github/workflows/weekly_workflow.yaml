@@ -1,0 +1,247 @@
+#
+# Copyright (c) Microsoft Corporation
+# Licensed under the MIT License.
+#
+
+name: PR tests
+
+on:
+  repository_dispatch:
+    types: [int-*]
+  workflow_dispatch:
+    inputs:
+      scenario:
+        description: "Select the scenario you want to run:"
+        required: false
+        type: choice
+        default: "standalone-networking.json"
+        options:
+          - standalone-azuread.json
+          - standalone-scenarios.json
+          - standalone-compute.json
+          - standalone-networking.json
+          - standalone-dataplat.json
+
+env:
+  DEFAULT_SCENARIO: "standalone-networking.json"
+  TF_VERSION: "1.8.4"
+  TF_LINT_VERSION: "v0.50.3"
+
+jobs:
+  load_scenarios:
+    name: Load Test Scenarios Matrix
+    runs-on: ubuntu-latest
+    outputs:
+      matrix: ${{ steps.load_scenarios.outputs.matrix }}
+    steps:
+      - uses: actions/checkout@v4
+      - id: load_scenarios
+        run: |
+          echo "Scenario: ${{ github.event.client_payload.scenario }}"
+          if [[ "${{ github.event_name }}" == "workflow_dispatch" ]]; then
+            cases=$(cat ./.github/workflows/${{ github.event.inputs.scenario }} | jq -c .)
+          else
+            cases=$(cat ./.github/workflows/${{ github.event.client_payload.scenario }} | jq -c .)
+          fi
+          echo "matrix=${cases}" >> $GITHUB_OUTPUT
+
+  mock_plan_scenarios:
+    name: Test-${{ matrix.config_files }}
+    runs-on: ubuntu-latest
+    needs: load_scenarios
+
+    strategy:
+      fail-fast: false
+      matrix: ${{fromJSON(needs.load_scenarios.outputs.matrix)}}
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Create environment variables
+        run: |
+          cd ${GITHUB_WORKSPACE}/examples/${{ matrix.config_files }}
+          FILE_NAME=$(echo ${{ matrix.config_files }} | sed 's./..g' | xargs)
+          echo STATE_FILE=${HOME}/tfstates/${FILE_NAME}.tfstate  >> $GITHUB_ENV
+          echo PLAN_FILE=${HOME}/tfstates/${FILE_NAME}.plan >> $GITHUB_ENV
+          echo CURRENT_FOLDER=${GITHUB_WORKSPACE}/examples/${{ matrix.config_files }} >> $GITHUB_ENV
+          echo PARAMETER_FILES=$(find ${GITHUB_WORKSPACE}/examples/${{ matrix.config_files }} | grep .tfvars | sed 's/.*/-var-file=&/' | xargs) >> $GITHUB_ENV
+
+      - name: Install Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20.x'
+
+      - name: Install Terraform
+        uses: hashicorp/setup-terraform@v3
+        with:
+          terraform_version: ${{ env.TF_VERSION }}
+
+      - name: Configure Terraform plugin cache
+        run: |
+          echo "TF_PLUGIN_CACHE_DIR=$HOME/.terraform.d/plugin-cache" >>"$GITHUB_ENV"
+          mkdir --parents "$HOME/.terraform.d/plugin-cache"
+
+      - name: Cache Terraform
+        uses: actions/cache@v4
+        with:
+          path: |
+            ~/.terraform.d/plugin-cache
+          key: ${{ runner.os }}-terraform-${{ hashFiles('**/.terraform.lock.hcl') }}
+          restore-keys: |
+            ${{ runner.os }}-terraform-
+
+      - name: Terraform Init example
+        id: tf_init
+        run: |
+          terraform -chdir=examples \
+          init
+
+      - name: Terraform Test example
+        id: tf_test
+        run: |
+          terraform -chdir=examples \
+          test \
+          -test-directory=./tests/mock \
+          ${{ env.PARAMETER_FILES }} \
+          -verbose
+
+  terraform_integration_tests:
+    permissions:
+      id-token: write
+      contents: read
+
+    name: Integration-${{ matrix.config_files }}
+    runs-on: ubuntu-latest
+    if: always()
+    needs: [load_scenarios, mock_plan_scenarios]
+
+    strategy:
+      fail-fast: false
+      matrix: ${{fromJSON(needs.load_scenarios.outputs.matrix)}}
+
+    environment:
+      name: 'integration'
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Create environment variables
+        run: |
+          cd ${GITHUB_WORKSPACE}/examples/${{ matrix.config_files }}
+          FILE_NAME=$(echo ${{ matrix.config_files }} | sed 's./..g' | xargs)
+          echo STATE_FILE=${HOME}/tfstates/${FILE_NAME}.tfstate  >> $GITHUB_ENV
+          echo PLAN_FILE=${HOME}/tfstates/${FILE_NAME}.plan >> $GITHUB_ENV
+          echo CURRENT_FOLDER=${GITHUB_WORKSPACE}/examples/${{ matrix.config_files }} >> $GITHUB_ENV
+          echo PARAMETER_FILES=$(find ${GITHUB_WORKSPACE}/examples/${{ matrix.config_files }} | grep .tfvars | sed 's/.*/-var-file=&/' | xargs) >> $GITHUB_ENV
+
+      - name: Install Terraform
+        uses: hashicorp/setup-terraform@v3
+        with:
+          terraform_version: ${{ env.TF_VERSION }}
+
+      - name: Configure Terraform plugin cache
+        run: |
+          echo "TF_PLUGIN_CACHE_DIR=$HOME/.terraform.d/plugin-cache" >>"$GITHUB_ENV"
+          mkdir --parents "$HOME/.terraform.d/plugin-cache"
+
+      - name: Cache Terraform
+        uses: actions/cache@v4
+        with:
+          path: |
+            ~/.terraform.d/plugin-cache
+          key: ${{ runner.os }}-terraform-${{ hashFiles('**/.terraform.lock.hcl') }}
+          restore-keys: |
+            ${{ runner.os }}-terraform-
+
+      - name: Azure Login
+        uses: azure/login@v2
+        with:
+          client-id: ${{ secrets.AZURE_CLIENT_ID }}
+          tenant-id: ${{ secrets.AZURE_TENANT_ID }}
+          subscription-id: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
+
+      - name: Terraform Init example
+        id: tf_init
+        run: |
+          terraform -chdir=${GITHUB_WORKSPACE}/examples \
+          init | grep -P '^- (?=Downloading|Using|Finding|Installing)|^[^-]'
+
+      - name: Terraform Plan example
+        id: tf_plan
+        run: |
+          terraform -chdir=${GITHUB_WORKSPACE}/examples \
+            plan \
+            ${{ env.PARAMETER_FILES }} \
+            -var tags='{testing_job_id='"${{ github.run_id }}"'}' \
+            -var var_folder_path=${{ env.CURRENT_FOLDER }} \
+            -refresh=true \
+            -input=false \
+            -state=${{ env.STATE_FILE }} \
+            -out=${{ env.PLAN_FILE }}
+
+      - name: Terraform Apply example
+        id: tf_apply
+        run: |
+          terraform -chdir=${GITHUB_WORKSPACE}/examples \
+            apply \
+            -state=${{ env.STATE_FILE }} \
+            ${{ env.PLAN_FILE }}
+
+      - name: Terraform Destroy Plan
+        id: tf_destroy_plan
+        run: |
+          terraform -chdir=${GITHUB_WORKSPACE}/examples \
+            plan \
+            ${{ env.PARAMETER_FILES }} \
+            -var tags='{testing_job_id='"${{ github.run_id }}"'}' \
+            -var var_folder_path=${{ env.CURRENT_FOLDER }} \
+            -refresh=true \
+            -input=false \
+            -destroy \
+            -state=${{ env.STATE_FILE }} \
+            -out=${{ env.PLAN_FILE }}-destroy
+
+      - name: Terraform Destroy Apply
+        id: tf_destroy_apply
+        run: |
+          terraform -chdir=${GITHUB_WORKSPACE}/examples \
+            apply \
+            -refresh=false \
+            -auto-approve \
+            -state=${{ env.STATE_FILE }} \
+            ${{ env.PLAN_FILE }}-destroy
+
+  purge:
+    permissions:
+      id-token: write
+      contents: read
+
+    name: Purge Integration Environment
+    runs-on: ubuntu-latest
+    if: ${{ failure() || cancelled() }}
+
+    needs: [load_scenarios, terraform_integration_tests]
+
+    environment:
+      name: 'integration'
+
+    steps:
+      - name: Azure Login
+        uses: azure/login@v2
+        with:
+          client-id: ${{ secrets.AZURE_CLIENT_ID }}
+          tenant-id: ${{ secrets.AZURE_TENANT_ID }}
+          subscription-id: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
+
+      - name: Purge based on run_id
+        run: |
+          for i in `az monitor diagnostic-settings subscription list -o tsv --query "value[?contains(name, '${{ github.run_id }}' )].name"`; do echo "purging subscription diagnostic-settings: $i" && $(az monitor diagnostic-settings subscription delete --name $i --yes); done
+          for i in `az monitor log-profiles list -o tsv --query '[].name'`; do az monitor log-profiles delete --name $i; done
+          for i in `az ad group list --query "[?contains(displayName, '${{ github.run_id }}')].id" -o tsv`; do echo "purging Azure AD group: $i" && $(az ad group delete --verbose --group $i || true); done
+          for i in `az ad app list --query "[?contains(displayName, '${{ github.run_id }}')].appId" -o tsv`; do echo "purging Azure AD app: $i" && $(az ad app delete --verbose --id $i || true); done
+          for i in `az keyvault list-deleted --query "[?tags.testing_job_id=='${{ github.run_id }}'].name" -o tsv`; do az keyvault purge --name $i; done
+          for i in `az group list --query "[?tags.testing_job_id=='${{ github.run_id }}'].name" -o tsv`; do echo "purging resource group: $i" && $(az group delete -n $i -y --no-wait || true); done
+          for i in `az role assignment list --query "[?contains(roleDefinitionName, '${{ github.run_id }}')].roleDefinitionName" -o tsv`; do echo "purging role assignment: $i" && $(az role assignment delete --role $i || true); done
+          for i in `az role definition list --query "[?contains(roleName, '${{ github.run_id }}')].roleName" -o tsv`; do echo "purging custom role definition: $i" && $(az role definition delete --name $i || true); done

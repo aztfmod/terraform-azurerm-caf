@@ -18,11 +18,10 @@ on:
         type: choice
         default: 'standalone-scenarios.json'
         options:
-        - standalone-scenarios-azuread.json
+        - standalone-azuread.json
         - standalone-scenarios.json
         - standalone-compute.json
         - standalone-networking.json
-        - standalone-scenarios-longrunners.json
 
 env:
   TF_CLI_ARGS: '-no-color'
@@ -41,7 +40,7 @@ jobs:
     outputs:
       matrix: ${{ steps.load_scenarios.outputs.matrix }}
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
       - id: load_scenarios
         run: |
           cases=$((
@@ -58,12 +57,12 @@ jobs:
       matrix: ${{fromJSON(needs.load_scenarios.outputs.matrix)}}
 
     container:
-      image: aztfmod/rover:1.5.7-2310.0211
+      image: aztfmod/rover:1.8.4-2405.2306
       options: --user 0
 
     steps:
       - name: Checkout with tag ${{ github.event.inputs.base_version }}
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
         with:
           ref: ${{ github.event.inputs.base_version }}
 
@@ -107,7 +106,7 @@ jobs:
             ${{ env.PLAN_FILE }}
 
       - name: Checkout from selected branch
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
 
       - name: Terraform Init example with selected branch
         run: |
@@ -178,7 +177,7 @@ jobs:
     needs: [testcases]
 
     container:
-      image: aztfmod/rover:1.5.7-2310.0211
+      image: aztfmod/rover:1.8.4-2405.2306
       options: --user 0
 
     steps:

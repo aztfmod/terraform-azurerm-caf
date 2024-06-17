@@ -127,6 +127,7 @@ locals {
     cognitive_services_account                 = local.combined_objects_cognitive_services_accounts
     data_factory                               = local.combined_objects_data_factory
     databricks_workspaces                      = local.combined_objects_databricks_workspaces
+    diagnostic_storage_accounts                = local.current_objects_diagnostic_storage_accounts
     dns_zones                                  = local.combined_objects_dns_zones
     event_hub_namespaces                       = local.combined_objects_event_hub_namespaces
     function_apps                              = local.combined_objects_function_apps
@@ -173,6 +174,11 @@ locals {
   current_objects_log_analytics = tomap(
     {
       (var.current_landingzone_key) = merge(local.combined_objects_log_analytics, local.combined_diagnostics.log_analytics)
+    }
+  )
+  current_objects_diagnostic_storage_accounts = tomap(
+    {
+      (var.current_landingzone_key) = merge(local.combined_objects_diagnostic_storage_accounts, local.combined_diagnostics.storage_accounts)
     }
   )
 
