@@ -1,6 +1,6 @@
 
 data "azurerm_key_vault_secret" "custom_data" {
-  for_each = local.os_type == "linux" ? try({for k,v in local.dynamic_custom_data_to_process["keyvaults"]: k => v }, {}) : {}
+  for_each = local.os_type == "linux" ? try({ for k, v in local.dynamic_custom_data_to_process["keyvaults"] : k => v }, {}) : {}
 
   key_vault_id = var.keyvaults[try(each.value.lz_key, var.client_config.landingzone_key)][each.value.keyvault_key].id
   name         = each.value.name
@@ -8,7 +8,7 @@ data "azurerm_key_vault_secret" "custom_data" {
 }
 
 data "azurerm_key_vault_key" "custom_data" {
-  for_each = local.os_type == "linux" ? try({for k,v in local.dynamic_custom_data_to_process["keyvault_keys"]: k =>v }, {}) : {}
+  for_each = local.os_type == "linux" ? try({ for k, v in local.dynamic_custom_data_to_process["keyvault_keys"] : k => v }, {}) : {}
 
   key_vault_id = var.keyvaults[try(each.value.lz_key, var.client_config.landingzone_key)][each.value.keyvault_key].id
   name         = each.value.name
@@ -17,7 +17,7 @@ data "azurerm_key_vault_key" "custom_data" {
 }
 
 data "azurerm_key_vault_certificate" "custom_data" {
-  for_each = local.os_type == "linux" ? try({for k,v in local.dynamic_custom_data_to_process["keyvault_certificates"]: k => v }, {}) : {}
+  for_each = local.os_type == "linux" ? try({ for k, v in local.dynamic_custom_data_to_process["keyvault_certificates"] : k => v }, {}) : {}
 
   key_vault_id = var.keyvaults[try(each.value.lz_key, var.client_config.landingzone_key)][each.value.keyvault_key].id
   name         = each.value.name
@@ -25,7 +25,7 @@ data "azurerm_key_vault_certificate" "custom_data" {
 }
 
 locals {
-  
+
   palo_alto_connection_string = {
     for item in var.settings.virtual_machine_settings :
     item.name => base64encode("storage-account=${var.storage_accounts[var.client_config.landingzone_key][item.palo_alto_connection_string.storage_account].name}, access-key=${var.storage_accounts[var.client_config.landingzone_key][item.palo_alto_connection_string.storage_account].primary_access_key}, file-share=${var.storage_accounts[var.client_config.landingzone_key][item.palo_alto_connection_string.storage_account].file_share[item.palo_alto_connection_string.file_share].name}, share-directory=${var.storage_accounts[var.client_config.landingzone_key][item.palo_alto_connection_string.storage_account].file_share[item.palo_alto_connection_string.file_share].file_share_directories[item.palo_alto_connection_string.file_share_directory].name}")
@@ -33,14 +33,14 @@ locals {
   }
 
   combined_objects = {
-    storage_accounts           = var.storage_accounts
-    keyvaults                  = var.keyvaults
-    keyvault_keys              = try(data.azurerm_key_vault_key.custom_data,{})
-    keyvault_secrets           = try(data.azurerm_key_vault_secret.custom_data,{})
-    keyvault_certificates      = try(data.azurerm_key_vault_certificate.custom_data,{})
-    vnets                      = var.vnets 
+    storage_accounts      = var.storage_accounts
+    keyvaults             = var.keyvaults
+    keyvault_keys         = try(data.azurerm_key_vault_key.custom_data, {})
+    keyvault_secrets      = try(data.azurerm_key_vault_secret.custom_data, {})
+    keyvault_certificates = try(data.azurerm_key_vault_certificate.custom_data, {})
+    vnets                 = var.vnets
   }
-  
+
   dynamic_custom_data_to_process = {
     for setting in
     flatten([
@@ -55,10 +55,10 @@ locals {
     ]) : setting.key => setting.value
   }
 
-  dynamic_custom_data_combined_objects ={
-    for key, value in local.dynamic_custom_data_to_process: key =>
+  dynamic_custom_data_combined_objects = {
+    for key, value in local.dynamic_custom_data_to_process : key =>
     {
-      for k,v in value: k => try(local.combined_objects[key][try(v.lz_key, var.client_config.landingzone_key)][k], local.combined_objects[key][k])
+      for k, v in value : k => try(local.combined_objects[key][try(v.lz_key, var.client_config.landingzone_key)][k], local.combined_objects[key][k])
     }
   }
 

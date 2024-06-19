@@ -15,7 +15,7 @@ resource "azurerm_backup_policy_vm_workload" "vm_workload" {
     for_each = each.value.protection_policies
 
     content {
-      policy_type =  protection_policy.value.policy_type
+      policy_type = protection_policy.value.policy_type
 
       backup {
         frequency            = try(protection_policy.value.backup.frequency, null)

@@ -15,9 +15,11 @@ resource "azurerm_backup_policy_vm" "vm" {
     for_each = lookup(each.value, "backup", null) == null ? [] : [1]
 
     content {
-      frequency = lookup(each.value.backup, "frequency", null)
-      time      = each.value.backup.time
-      weekdays  = lookup(each.value.backup, "weekdays", null)
+      frequency     = lookup(each.value.backup, "frequency", null)
+      hour_interval = lookup(each.value.backup, "hour_interval", null)
+      hour_duration = lookup(each.value.backup, "hour_duration", null)
+      time          = each.value.backup.time
+      weekdays      = lookup(each.value.backup, "weekdays", null)
     }
   }
 

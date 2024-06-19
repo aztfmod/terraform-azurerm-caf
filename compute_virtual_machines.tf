@@ -14,7 +14,7 @@ module "virtual_machines" {
     module.storage_account_blobs,
     time_sleep.azurerm_role_assignment_for[0]
   ]
-  
+
   for_each = local.compute.virtual_machines
 
   application_security_groups = local.combined_objects_application_security_groups

@@ -11,5 +11,5 @@ resource "azurerm_databricks_access_connector" "databricks_access_connector" {
       identity_ids = concat(local.managed_identities, try(identity.value.identity_ids, []))
     }
   }
-  
+
 }
