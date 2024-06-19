@@ -136,10 +136,12 @@ locals {
     iot_hub_dps                                = local.combined_objects_iot_hub_dps
     keyvaults                                  = local.combined_objects_keyvaults
     kusto_clusters                             = local.combined_objects_kusto_clusters
+    linux_web_apps                             = local.combined_objects_linux_web_apps
     log_analytics                              = local.current_objects_log_analytics
     logged_in                                  = local.logged_in
     machine_learning_compute_instance          = module.machine_learning_compute_instance
     machine_learning_workspaces                = local.combined_objects_machine_learning
+    maintenance_configuration                  = local.combined_objects_maintenance_configuration
     managed_identities                         = local.combined_objects_managed_identities
     management_group                           = local.management_groups
     monitor_action_groups                      = local.combined_objects_monitor_action_groups
@@ -148,7 +150,6 @@ locals {
     mssql_managed_databases                    = local.combined_objects_mssql_managed_databases
     mssql_managed_instances                    = local.combined_objects_mssql_managed_instances
     mssql_servers                              = local.combined_objects_mssql_servers
-    maintenance_configuration                  = local.combined_objects_maintenance_configuration
     mysql_servers                              = local.combined_objects_mysql_servers
     network_watchers                           = local.combined_objects_network_watchers
     networking                                 = local.combined_objects_networking
