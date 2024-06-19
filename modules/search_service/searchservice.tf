@@ -29,4 +29,5 @@ resource "azurerm_search_service" "search_service" {
   }
   partition_count = ((lower(var.settings.sku) != "free") && (lower(var.settings.sku) != "basic")) ? try(var.settings.partition_count, null) : null
   replica_count   = (lower(var.settings.sku) != "free") ? try(var.settings.replica_count, null) : null
+  tags            = local.tags
 }

@@ -17,8 +17,24 @@ resource "azurerm_logic_app_workflow" "la" {
   logic_app_integration_account_id   = try(var.settings.logic_app_integration_account_id, null)
   workflow_schema                    = try(var.settings.workflow_schema, null)
   workflow_version                   = try(var.settings.workflow_version, null)
-  parameters                         = try(var.settings.parameters, null)
+  workflow_parameters                = {"$connections" = jsonencode({ "defaultValue" = {}, "type" = "Object" })}
+  parameters                         = {"$connections" = jsonencode(var.settings.connections)}
   tags                               = local.tags
+
+  lifecycle {
+    ignore_changes = [
+      workflow_parameters, parameters
+    ]
+  }
+
+  dynamic "identity" {
+    for_each = can(var.settings.identity) ? [var.settings.identity] : []
+    content {
+      type         = identity.value.type
+      identity_ids = concat(local.managed_identities, try(identity.value.identity_ids, []))
+    }
+  }  
+
 }
 
 

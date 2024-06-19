@@ -10,5 +10,6 @@ resource "azurecaf_name" "dfirsh" {
 
 resource "azurerm_data_factory_integration_runtime_self_hosted" "dfirsh" {
   data_factory_id = var.data_factory_id
+  description     = var.settings.description
   name            = azurecaf_name.dfirsh.result
 }

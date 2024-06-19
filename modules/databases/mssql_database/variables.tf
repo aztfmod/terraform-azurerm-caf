@@ -26,3 +26,7 @@ variable "diagnostic_profiles" {
 variable "diagnostics" {
   default = null
 }
+
+variable "maintenance_configuration_name" {
+  default = null
+}
