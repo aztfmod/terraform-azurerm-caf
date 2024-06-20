@@ -3,7 +3,7 @@ module "machine_learning_workspaces" {
   for_each = local.database.machine_learning_workspaces
 
   application_insights_id = can(each.value.application_insights_key) ? try(module.azurerm_application_insights[each.value.application_insights_key].id, null) : null
-  base_tags               = try(local.global_settings.inherit_tags, false) ? try(local.combined_objects_resource_groups[try(each.value.resource_group.lz_key, local.client_config.landingzone_key)][try(each.value.resource_group.key, each.value.resource_group_key)].tags, {}) : {}
+  base_tags               = local.global_settings.inherit_tags
   client_config           = local.client_config
   container_registry_id   = can(each.value.container_registry_id) || can(each.value.container_registry_key) == false ? try(each.value.container_registry_id, null) : local.combined_objects_container_registry[try(each.value.lz_key, local.client_config.landingzone_key)][each.value.container_registry_key].id
   global_settings         = local.global_settings
