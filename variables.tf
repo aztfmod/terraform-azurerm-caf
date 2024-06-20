@@ -450,3 +450,7 @@ variable "load_test" {
   default     = {}
 }
 
+
+variable "invoice_sections" {
+  default = {}
+}

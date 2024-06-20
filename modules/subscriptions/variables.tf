@@ -10,7 +10,9 @@ variable "client_config" {}
 variable "global_settings" {
   description = "Global settings object (see module README.md)"
 }
-
+variable "billing_scope_id" {
+    default = {}
+}
 # For diagnostics settings
 variable "diagnostics" {
   default = {}
