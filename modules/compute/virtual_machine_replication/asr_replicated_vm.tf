@@ -1,33 +1,3 @@
-# this is necessary to bypass a bug in the provider that doesn't normalize case and detects change when there is none
-locals {
-  os_disk_id = join("/", concat(
-    [""],
-    slice(split("/", var.virtual_machine_os_disk.id), 1, 4),
-    [lower(split("/", var.virtual_machine_os_disk.id)[4])],
-    slice(split("/", var.virtual_machine_os_disk.id), 5, 8),
-    [lower(split("/", var.virtual_machine_os_disk.id)[8])]
-  ))
-
-  data_disk_id = {
-    for key, value in lookup(var.settings, "data_disks", {}) : key =>
-    join("/", concat(
-      [""],
-      slice(split("/", var.virtual_machine_data_disks[key]), 1, 4),
-      [lower(split("/", var.virtual_machine_data_disks[key])[4])],
-      slice(split("/", var.virtual_machine_data_disks[key]), 5, 8),
-      [lower(split("/", var.virtual_machine_data_disks[key])[8])]
-    ))
-  }
-
-  virtual_machine_id = join("/", concat(
-    [""],
-    slice(split("/", var.virtual_machine_id), 1, 4),
-    [lower(split("/", var.virtual_machine_id)[4])],
-    slice(split("/", var.virtual_machine_id), 5, 8),
-    [lower(split("/", var.virtual_machine_id)[8])]
-  ))
-}
-
 resource "azurerm_site_recovery_replicated_vm" "replication" {
   count = try(var.settings.replication, null) == null ? 0 : 1
 
@@ -56,7 +26,7 @@ resource "azurerm_site_recovery_replicated_vm" "replication" {
     try(var.recovery_vaults[var.client_config.landingzone_key][var.settings.replication.vault_key].recovery_fabrics[var.settings.replication.source.recovery_fabric_key].name, null),
     try(var.recovery_vaults[var.settings.replication.lz_key][var.settings.replication.vault_key].recovery_fabrics[var.settings.replication.source.recovery_fabric_key].name, null)
   )
-  source_vm_id = local.virtual_machine_id
+  source_vm_id = var.virtual_machine_id
   source_recovery_protection_container_name = coalesce(
     try(var.settings.replication.source.protection_container_name, null),
     try(var.recovery_vaults[var.client_config.landingzone_key][var.settings.replication.vault_key].protection_containers[var.settings.replication.source.protection_container_key].name, null),
@@ -89,7 +59,7 @@ resource "azurerm_site_recovery_replicated_vm" "replication" {
   )
 
   managed_disk {
-    disk_id = local.os_disk_id
+    disk_id = var.virtual_machine_os_disk.id
     staging_storage_account_id = coalesce(
       try(var.storage_accounts[var.client_config.landingzone_key][var.settings.replication.staging_storage_account_key].id, null),
       try(var.storage_accounts[var.settings.replication.staging_storage_account.lz_key][var.settings.replication.staging_storage_account.key].id, null)
@@ -106,7 +76,7 @@ resource "azurerm_site_recovery_replicated_vm" "replication" {
   dynamic "managed_disk" {
     for_each = lookup(var.settings, "data_disks", {})
     content {
-      disk_id = local.data_disk_id[managed_disk.key]
+      disk_id = var.virtual_machine_data_disks[managed_disk.key]
       staging_storage_account_id = coalesce(
         try(var.storage_accounts[var.client_config.landingzone_key][var.settings.replication.staging_storage_account_key].id, null),
         try(var.storage_accounts[var.settings.replication.staging_storage_account.lz_key][var.settings.replication.staging_storage_account.key].id, null)
