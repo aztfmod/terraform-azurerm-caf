@@ -81,6 +81,7 @@ locals {
   linux_admin_password = can(var.settings.virtual_machine_settings["linux"].admin_password_key) ? data.external.linux_admin_password.0.result.value : null
 }
 
+
 resource "azurerm_linux_virtual_machine" "vm" {
   for_each = local.os_type == "linux" ? var.settings.virtual_machine_settings : {}
 
@@ -235,7 +236,9 @@ resource "azurerm_linux_virtual_machine" "vm" {
       name,
       computer_name,
       os_disk[0].name, #for ASR disk restores
-      admin_ssh_key
+      admin_ssh_key,
+      admin_password,
+      admin_username
     ]
   }
 
