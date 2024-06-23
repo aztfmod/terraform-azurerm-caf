@@ -16,3 +16,6 @@ variable "resource_group_name" {
 
 variable "settings" {}
 
+variable "managed_identities" {
+  default = {}
+}
