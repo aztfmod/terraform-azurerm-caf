@@ -9,11 +9,11 @@ resource "azurecaf_name" "service" {
 }
 
 resource "azurerm_cognitive_account" "service" {
-  name                = azurecaf_name.service.result
-  location            = var.location
-  resource_group_name = var.resource_group_name
-  kind                = var.settings.kind
-  sku_name            = var.settings.sku_name
+  name                          = azurecaf_name.service.result
+  location                      = var.location
+  resource_group_name           = var.resource_group_name
+  kind                          = var.settings.kind
+  sku_name                      = var.settings.sku_name
 
   qna_runtime_endpoint = var.settings.kind == "QnAMaker" ? var.settings.qna_runtime_endpoint : try(var.settings.qna_runtime_endpoint, null)
 
@@ -24,7 +24,7 @@ resource "azurerm_cognitive_account" "service" {
       identity_ids = can(var.settings.identity.ids) ? var.settings.identity.ids : can(var.settings.identity.key) ? [var.managed_identities[try(var.settings.identity.lz_key, var.client_config.landingzone_key)][var.settings.identity.key].id] : null
     }
   }
-  
+
   dynamic "network_acls" {
     for_each = can(var.settings.network_acls) ? [var.settings.network_acls] : []
     content {
