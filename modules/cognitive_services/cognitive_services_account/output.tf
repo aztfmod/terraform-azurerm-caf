@@ -14,5 +14,5 @@ output "rbac_id" {
 }
 
 output "identity" {
-  value = try(azurerm_cognitive_account.identity, null)
+  value = try(azurerm_cognitive_account.service.identity, null)
 }
