@@ -30,6 +30,7 @@ cognitive_services_account = {
     name     = "cs-test-1"
     kind     = "OpenAI"
     sku_name = "S0"
+    public_network_access_enabled = true
 
     identity = {
       type = "SystemAssigned, UserAssigned" // Can be "SystemAssigned, UserAssigned" or "SystemAssigned" or "UserAssigned"
