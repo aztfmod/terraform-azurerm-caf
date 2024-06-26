@@ -83,7 +83,7 @@ container_app_environments = {
     }
     internal_load_balancer_enabled = true
     zone_redundancy_enabled        = true
-     workload_profile {
+     workload_profile = {
       name                  = "caetest"
       workload_profile_type = "D4"
       minimum_count         = 0
