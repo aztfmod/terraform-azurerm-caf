@@ -56,10 +56,10 @@ resource "azurerm_private_endpoint" "pep" {
 }
 
 resource "time_sleep" "delay" {
-  count = can(lookup(var.settings,var.settings.delay_time_after_creation,false)) ? 1: 0
-  depends_on = [azurerm_private_endpoint.pep]
+  count           = can(lookup(var.settings, var.settings.delay_time_after_creation, false)) ? 1 : 0
+  depends_on      = [azurerm_private_endpoint.pep]
   create_duration = var.settings.delay_time_after_creation
   lifecycle {
-    replace_triggered_by = [ azurerm_private_endpoint.pep ]
+    replace_triggered_by = [azurerm_private_endpoint.pep]
   }
 }
