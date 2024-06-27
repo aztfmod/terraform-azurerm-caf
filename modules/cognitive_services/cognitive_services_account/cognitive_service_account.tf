@@ -16,7 +16,7 @@ resource "azurerm_cognitive_account" "service" {
   sku_name                      = var.settings.sku_name
   public_network_access_enabled = try(var.settings.public_network_access_enabled, true)
   custom_subdomain_name         = try(var.settings.custom_subdomain_name, null)
-  tags                          = merge(local.tags, try(var.settings.tags, null))
+  tags                          = try(var.settings.tags, {})
   qna_runtime_endpoint          = var.settings.kind == "QnAMaker" ? var.settings.qna_runtime_endpoint : try(var.settings.qna_runtime_endpoint, null)
 
   dynamic "identity" {
