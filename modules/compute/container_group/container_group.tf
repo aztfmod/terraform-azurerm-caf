@@ -33,7 +33,8 @@ resource "azurerm_container_group" "acg" {
   tags                = merge(local.tags, try(var.settings.tags, null))
   ip_address_type     = try(var.settings.ip_address_type, "Public")
   restart_policy      = try(var.settings.restart_policy, "Always")
-  network_profile_id  = try(var.combined_resources.network_profiles[try(var.settings.network_profile.lz_key, var.client_config.landingzone_key)][var.settings.network_profile.key].id, null)
+  subnet_ids          = try(var.settings.network.subnets, null) == null ? null : [for key, value in var.settings.network.subnets : can(value.subnet_id) ? value.subnet_id : var.combined_resources.networking[try(value.lz_key, var.client_config.landingzone_key)][value.vnet_key].subnets[value.subnet_key].id]
+
 
   dynamic "exposed_port" {
     for_each = try(var.settings.exposed_port, [])
@@ -178,9 +179,10 @@ resource "azurerm_container_group" "acg" {
   dynamic "image_registry_credential" {
     for_each = try(var.settings.image_registry_credentials, {})
     content {
-      server   = image_registry_credential.value.server
-      username = try(data.azurerm_key_vault_secret.image_registry_credential_username[image_registry_credential.key].value, image_registry_credential.value.username)
-      password = try(data.azurerm_key_vault_secret.image_registry_credential_password[image_registry_credential.key].value, image_registry_credential.value.password)
+      server                    = image_registry_credential.value.server
+      username                  = try(data.azurerm_key_vault_secret.image_registry_credential_username[image_registry_credential.key].value, image_registry_credential.value.username, null)
+      password                  = try(data.azurerm_key_vault_secret.image_registry_credential_password[image_registry_credential.key].value, image_registry_credential.value.password, null)
+      user_assigned_identity_id = try(var.settings.identity, false) == false ? null : try(local.managed_identities[0], null)
     }
   }
 
