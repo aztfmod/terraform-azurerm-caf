@@ -40,6 +40,7 @@ locals {
     consumption_budgets_subscriptions              = try(local.combined_objects_consumption_budgets_subscriptions, null)
     container_registry                             = try(local.combined_objects_container_registry, null)
     cosmos_dbs                                     = try(local.combined_objects_cosmos_dbs, null)
+    custom_roles                                   = try(local.combined_objects_custom_roles, null)
     databricks_workspaces                          = try(local.combined_objects_databricks_workspaces, null)
     databricks_access_connectors                   = try(local.combined_objects_databricks_access_connectors, null)
     data_factory                                   = try(local.combined_objects_data_factory, null)

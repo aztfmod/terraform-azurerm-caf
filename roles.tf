@@ -21,7 +21,7 @@ resource "azurerm_role_assignment" "for" {
   }
 
   principal_id         = each.value.object_id_resource_type == "object_ids" ? each.value.object_id_key_resource : each.value.object_id_lz_key == null ? local.services_roles[each.value.object_id_resource_type][var.current_landingzone_key][each.value.object_id_key_resource].rbac_id : local.services_roles[each.value.object_id_resource_type][each.value.object_id_lz_key][each.value.object_id_key_resource].rbac_id
-  role_definition_id   = each.value.mode == "custom_role_mapping" ? module.custom_roles[each.value.role_definition_name].role_definition_resource_id : null
+  role_definition_id   = each.value.mode == "custom_role_mapping" ? local.combined_objects_custom_roles[try(each.value.custom_role_lz_key, local.client_config.landingzone_key)][each.value.role_definition_name].role_definition_resource_id : null
   role_definition_name = each.value.mode == "built_in_role_mapping" ? each.value.role_definition_name : null
   scope                = each.value.scope_lz_key == null ? local.services_roles[each.value.scope_resource_key][var.current_landingzone_key][each.value.scope_key_resource].id : local.services_roles[each.value.scope_resource_key][each.value.scope_lz_key][each.value.scope_key_resource].id
 }
@@ -33,7 +33,7 @@ resource "azurerm_role_assignment" "for_deferred" {
   }
 
   principal_id         = each.value.object_id_resource_type == "object_ids" ? each.value.object_id_key_resource : each.value.object_id_lz_key == null ? local.services_roles[each.value.object_id_resource_type][var.current_landingzone_key][each.value.object_id_key_resource].rbac_id : local.services_roles[each.value.object_id_resource_type][each.value.object_id_lz_key][each.value.object_id_key_resource].rbac_id
-  role_definition_id   = each.value.mode == "custom_role_mapping" ? module.custom_roles[each.value.role_definition_name].role_definition_resource_id : null
+  role_definition_id   = each.value.mode == "custom_role_mapping" ? local.combined_objects_custom_roles[try(each.value.custom_role_lz_key, local.client_config.landingzone_key)][each.value.role_definition_name].role_definition_resource_id : null
   role_definition_name = each.value.mode == "built_in_role_mapping" ? each.value.role_definition_name : null
   scope                = each.value.scope_lz_key == null ? local.services_roles_deferred[each.value.scope_resource_key][var.current_landingzone_key][each.value.scope_key_resource].id : local.services_roles_deferred[each.value.scope_resource_key][each.value.scope_lz_key][each.value.scope_key_resource].id
 }
@@ -216,15 +216,16 @@ locals {
   roles_to_process = {
     for mapping in
     flatten(
-      [                                                                 # Variable
-        for key_mode, all_role_mapping in var.role_mapping : [          #  built_in_role_mapping = {
-          for key, role_mappings in all_role_mapping : [                #       aks_clusters = {
-            for scope_key_resource, role_mapping in role_mappings : [   #         seacluster = {
-              for role_definition_name, resources in role_mapping : [   #           "Azure Kubernetes Service Cluster Admin Role" = {
-                for object_id_key, object_resources in resources : [    #             azuread_group_keys = {
-                  for object_id_key_resource in object_resources.keys : #               keys = [ "aks_admins" ] ----End of variable
-                  {                                                     # "seacluster_Azure_Kubernetes_Service_Cluster_Admin_Role_aks_admins" = {
-                    mode                    = key_mode                  #   "mode" = "built_in_role_mapping"
+      [                                                                                                               # Variable
+        for key_mode, all_role_mapping in var.role_mapping : [                                                        #  built_in_role_mapping = {
+          for key, role_mappings in all_role_mapping : [                                                              #       aks_clusters = {
+            for scope_key_resource, role_mapping in role_mappings : [                                                 #         seacluster = {
+              for role_definition_name, resources in role_mapping : [                                                 #           "Azure Kubernetes Service Cluster Admin Role" = {
+                for object_id_key, object_resources in resources : [                                                  #             azuread_groups = {
+                  for object_id_key_resource in object_resources.keys :                                               #               keys = [ "aks_admins" ] ----End of variable
+                  {                                                                                                   # "seacluster_Azure_Kubernetes_Service_Cluster_Admin_Role_aks_admins" = {
+                    custom_role_lz_key      = key_mode == "custom_role_mapping" ? try(resources.lz_key, null) : null  #   "lz_key"  = "zone1" #Landing zone key where was created custom RBAC role
+                    mode                    = key_mode                                                                #   "mode"    = "built_in_role_mapping"
                     scope_resource_key      = key
                     scope_lz_key            = try(role_mapping.lz_key, null)
                     scope_key_resource      = scope_key_resource
@@ -233,7 +234,7 @@ locals {
                     object_id_key_resource  = object_id_key_resource #   "object_id_key_resource" = "aks_admins"
                     object_id_lz_key        = try(object_resources.lz_key, null)
                   }
-                ]
+                ] if object_id_key != "lz_key"
               ] if role_definition_name != "lz_key"
             ]
           ]
@@ -248,9 +249,22 @@ locals {
 #     subscription_keys = {
 #       logged_in_subscription = {
 #         "caf-launchpad-contributor" = {
-#           azuread_group_keys = [
-#             "keyvault_level0_rw", "keyvault_level1_rw", "keyvault_level2_rw", "keyvault_level3_rw", "keyvault_level4_rw",
+#           azuread_groups = {
+#             keys  = [
+#               "keyvault_level0_rw", "keyvault_level1_rw", "keyvault_level2_rw", "keyvault_level3_rw", "keyvault_level4_rw",
+#             ]
+#           }
+#           managed_identity_keys = [
+#             "level0", "level1", "level2", "level3", "level4"
 #           ]
+#         }
+#         "caf-service-bus-custom" = {
+#           lz_key         = "zone1"
+#           azuread_groups = {
+#             keys  = [
+#               "keyvault_level0_rw", "keyvault_level1_rw", "keyvault_level2_rw", "keyvault_level3_rw", "keyvault_level4_rw",
+#             ]
+#           }
 #           managed_identity_keys = [
 #             "level0", "level1", "level2", "level3", "level4"
 #           ]
@@ -263,8 +277,9 @@ locals {
 #       aks_clusters = {
 #         seacluster = {
 #           "Azure Kubernetes Service Cluster Admin Role" = {
-#             azuread_group_keys = {
-#               keys = [ "aks_admins" ]
+#             azuread_groups = {
+#               lz_key  = "zone1"
+#               keys    = [ "aks_admins" ]
 #             }
 #             managed_identity_keys = {
 #               keys = [ "jumpbox" ]
@@ -336,7 +351,7 @@ locals {
 # "seacluster_Azure_Kubernetes_Service_Cluster_Admin_Role_aks_admins" = {
 #   "mode" = "built_in_role_mapping"
 #   "object_id_key_resource" = "aks_admins"
-#   "object_id_resource_type" = "azuread_group_keys"
+#   "object_id_resource_type" = "azuread_groups"
 #   "role_definition_name" = "Azure Kubernetes Service Cluster Admin Role"
 #   "scope_key_resource" = "seacluster"
 #   "scope_resource_key" = "aks_clusters"
@@ -350,3 +365,7 @@ locals {
 #   "scope_resource_key" = "aks_clusters"
 # }
 # .......
+
+output "custom_roles" {
+  value = module.custom_roles
+}
