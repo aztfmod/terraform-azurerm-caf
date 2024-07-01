@@ -1,5 +1,5 @@
 output "id" {
-  value = local.os_type == "linux" ? try(azurerm_linux_virtual_machine.vm["linux"].id, null) : try(azurerm_windows_virtual_machine.vm["windows"].id, null)
+  value = local.os_type == "linux" ? try(azurerm_linux_virtual_machine.vm["linux"].id, null) : (local.os_type == "windows" ? try(azurerm_windows_virtual_machine.vm["windows"].id, null) : try(azurerm_virtual_machine.vm["legacy"].id, null) )
 }
 
 output "ip_configuration" {
