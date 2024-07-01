@@ -138,12 +138,14 @@ lb = {
       key = "lb"
     }
     frontend_ip_configuration = {
-      name = "config1"
-      subnet = {
-        vnet_key = "vnet_test"
-        key      = "subnet1"
+      fipc_001 = {
+        name = "config1"
+        subnet = {
+          vnet_key = "vnet_test"
+          key      = "subnet1"
+        }
+        private_ip_address_allocation = "Dynamic"
       }
-      private_ip_address_allocation = "Dynamic"
     }
     sku = "Basic" #SKU must match with the SKU of the PIP
   }
