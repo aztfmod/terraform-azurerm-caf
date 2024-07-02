@@ -75,14 +75,14 @@ resource "azurerm_kubernetes_cluster" "aks" {
     vnet_subnet_id = can(var.settings.default_node_pool.vnet_subnet_id) || can(var.settings.default_node_pool.subnet.resource_id) ? try(var.settings.default_node_pool.vnet_subnet_id, var.settings.default_node_pool.subnet.resource_id) : var.vnets[try(var.settings.vnet.lz_key, var.settings.lz_key, var.client_config.landingzone_key)][try(var.settings.vnet.key, var.settings.vnet_key)].subnets[try(var.settings.default_node_pool.subnet_key, var.settings.default_node_pool.subnet.key)].id
 
     dynamic "upgrade_settings" {
-      for_each = try(var.settings.default_node_pool.upgrade_settings, null) == null ? [] : [1]
+      for_each = try(var.settings.default_node_pool.upgrade_settings, null) == null ? [] : [var.settings.default_node_pool.upgrade_settings]
       content {
         max_surge = upgrade_settings.value.max_surge
       }
     }
 
     dynamic "kubelet_config" {
-      for_each = try(var.settings.default_node_pool.kubelet_config, null) == null ? [] : [1]
+      for_each = try(var.settings.default_node_pool.kubelet_config, null) == null ? [] : [var.settings.default_node_pool.kubelet_config]
       content {
         allowed_unsafe_sysctls    = try(kubelet_config.value.allowed_unsafe_sysctls, null)
         container_log_max_line    = try(kubelet_config.value.container_log_max_line, null)
@@ -97,11 +97,11 @@ resource "azurerm_kubernetes_cluster" "aks" {
       }
     }
     dynamic "linux_os_config" {
-      for_each = try(var.settings.default_node_pool.linux_os_config, null) == null ? [] : [1]
+      for_each = try(var.settings.default_node_pool.linux_os_config, null) == null ? [] : [var.settings.default_node_pool.linux_os_config]
       content {
         swap_file_size_mb = try(linux_os_config.value.allowed_unsafe_sysctls, null)
         dynamic "sysctl_config" {
-          for_each = try(linux_os_config.value.sysctl_config, null) == null ? [] : [1]
+          for_each = try(linux_os_config.value.sysctl_config, null) == null ? [] : [linux_os_config.value.sysctl_config]
           content {
             fs_aio_max_nr                      = try(sysctl_config.value.fs_aio_max_nr, null)
             fs_file_max                        = try(sysctl_config.value.fs_file_max, null)
@@ -473,7 +473,7 @@ resource "azurerm_kubernetes_cluster_node_pool" "nodepools" {
   host_group_id                 = try(each.value.host_group_id, null)
 
   dynamic "kubelet_config" {
-    for_each = try(each.value.kubelet_config, null) == null ? [] : [1]
+    for_each = try(each.value.kubelet_config, null) == null ? [] : [each.value.kubelet_config]
     content {
       allowed_unsafe_sysctls    = try(kubelet_config.value.allowed_unsafe_sysctls, null)
       container_log_max_line    = try(kubelet_config.value.container_log_max_line, null)
@@ -488,11 +488,11 @@ resource "azurerm_kubernetes_cluster_node_pool" "nodepools" {
     }
   }
   dynamic "linux_os_config" {
-    for_each = try(each.value.linux_os_config, null) == null ? [] : [1]
+    for_each = try(each.value.linux_os_config, null) == null ? [] : [each.value.linux_os_config]
     content {
       swap_file_size_mb = try(linux_os_config.value.allowed_unsafe_sysctls, null)
       dynamic "sysctl_config" {
-        for_each = try(linux_os_config.value.sysctl_config, null) == null ? [] : [1]
+        for_each = try(linux_os_config.value.sysctl_config, null) == null ? [] : [linux_os_config.value.sysctl_config]
         content {
           fs_aio_max_nr                      = try(sysctl_config.value.fs_aio_max_nr, null)
           fs_file_max                        = try(sysctl_config.value.fs_file_max, null)
@@ -561,7 +561,7 @@ resource "azurerm_kubernetes_cluster_node_pool" "nodepools" {
   scale_down_mode              = try(each.value.scale_down_mode, null)
   ultra_ssd_enabled            = try(each.value.ultra_ssd_enabled, false)
   dynamic "upgrade_settings" {
-    for_each = try(each.value.upgrade_settings, null) == null ? [] : [1]
+    for_each = try(each.value.upgrade_settings, null) == null ? [] : [each.value.upgrade_settings]
     content {
       max_surge = upgrade_settings.value.max_surge
     }
