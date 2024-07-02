@@ -8,7 +8,9 @@ module "mssql_databases" {
   for_each = local.database.mssql_databases
 
   global_settings     = local.global_settings
+  client_config       = local.client_config
   cloud               = local.cloud
+  azuread_groups      = local.combined_objects_azuread_groups
   managed_identities  = local.combined_objects_managed_identities
   settings            = each.value
   server_id           = can(each.value.server_id) ? each.value.server_id : local.combined_objects_mssql_servers[try(each.value.lz_key, local.client_config.landingzone_key)][each.value.mssql_server_key].id
