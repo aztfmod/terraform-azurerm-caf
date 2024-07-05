@@ -9,7 +9,7 @@ resource "azurecaf_name" "lb" {
   passthrough   = var.global_settings.passthrough
   use_slug      = var.global_settings.use_slug
 }
-#new
+
 resource "azurerm_lb_rule" "lb" {
   name                           = azurecaf_name.lb.result
   loadbalancer_id                = can(var.settings.loadbalancer.id) || can(var.settings.loadbalancer.key) ? try(var.settings.loadbalancer.id, var.remote_objects.lb[try(var.settings.loadbalancer.lz_key, var.client_config.landingzone_key)][var.settings.loadbalancer.key].id) : null
@@ -25,21 +25,3 @@ resource "azurerm_lb_rule" "lb" {
   disable_outbound_snat          = try(var.settings.disable_outbound_snat, null)
   enable_tcp_reset               = try(var.settings.enable_tcp_reset, null)
 }
-
-
-#old
-# resource "azurerm_lb_rule" "lb" {
-#   name                           = azurecaf_name.lb.result
-#   loadbalancer_id                = can(var.settings.loadbalancer.id) ? var.settings.loadbalancer.id : var.remote_objects.lb[try(var.settings.loadbalancer.lz_key, var.client_config.landingzone_key)][var.settings.loadbalancer.key].id
-#   frontend_ip_configuration_name = var.settings.frontend_ip_configuration_name
-#   protocol                       = var.settings.protocol
-#   frontend_port                  = var.settings.frontend_port
-#   backend_port                   = var.settings.backend_port
-#   backend_address_pool_ids       = try(var.settings.backend_address_pool_ids, null)
-#   probe_id                       = try(var.settings.probe_id, null)
-#   enable_floating_ip             = try(var.settings.enable_floating_ip, null)
-#   idle_timeout_in_minutes        = try(var.settings.idle_timeout_in_minutes, null)
-#   load_distribution              = try(var.settings.load_distribution, null)
-#   disable_outbound_snat          = try(var.settings.disable_outbound_snat, null)
-#   enable_tcp_reset               = try(var.settings.enable_tcp_reset, null)
-# }
