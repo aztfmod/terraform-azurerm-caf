@@ -110,6 +110,7 @@ output "lb_outbound_rule" {
   value = module.lb_outbound_rule
 }
 
+
 module "lb_probe" {
   source   = "./modules/networking/lb_probe"
   for_each = local.networking.lb_probe
@@ -125,9 +126,12 @@ module "lb_probe" {
     lb             = local.combined_objects_lb
   }
 }
+
+
 output "lb_probe" {
   value = module.lb_probe
 }
+
 module "lb_rule" {
   source   = "./modules/networking/lb_rule"
   for_each = local.networking.lb_rule
@@ -137,6 +141,11 @@ module "lb_rule" {
   settings        = each.value
 
   resource_group_name = can(each.value.resource_group.name) || can(each.value.resource_group_name) ? try(each.value.resource_group.name, each.value.resource_group_name) : local.combined_objects_resource_groups[try(each.value.resource_group.lz_key, local.client_config.landingzone_key)][try(each.value.resource_group_key, each.value.resource_group.key)].name
+
+  backend_address_pool_ids = can(each.value.backend_address_pool_ids) || can(each.value.backend_address_pool) == false ? try(each.value.backend_address_pool_ids, null) : [
+    for k, v in each.value.backend_address_pool : local.combined_objects_lb_backend_address_pool[try(v.lz_key, local.client_config.landingzone_key)][v.key].id
+  ]
+  probe_id = can(each.value.probe_id) || can(each.value.probe.key) == false ? try(each.value.probe_id, null) : local.combined_objects_lb_probe[try(each.value.probe.lz_key, local.client_config.landingzone_key)][each.value.probe.key].id
 
   remote_objects = {
     resource_group = local.combined_objects_resource_groups
