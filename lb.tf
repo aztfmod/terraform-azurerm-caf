@@ -71,6 +71,7 @@ module "lb_nat_pool" {
 output "lb_nat_pool" {
   value = module.lb_nat_pool
 }
+
 module "lb_nat_rule" {
   source   = "./modules/networking/lb_nat_rule"
   for_each = local.networking.lb_nat_rule
@@ -110,7 +111,6 @@ output "lb_outbound_rule" {
   value = module.lb_outbound_rule
 }
 
-
 module "lb_probe" {
   source   = "./modules/networking/lb_probe"
   for_each = local.networking.lb_probe
@@ -126,8 +126,6 @@ module "lb_probe" {
     lb             = local.combined_objects_lb
   }
 }
-
-
 output "lb_probe" {
   value = module.lb_probe
 }
