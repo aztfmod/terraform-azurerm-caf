@@ -1,6 +1,7 @@
 {
   "config_files": [
     "cognitive_services/100-cognitive-services-account",
+    "cognitive_services/101-cognitive-services-account-managed-identity",
     "compute/batch/batch_certificate/100-batch-certificate - path",
     "compute/batch/batch_job/100-batch-job - quotas",
     "compute/batch/batch_pool/100-batch-pool - quotas",
