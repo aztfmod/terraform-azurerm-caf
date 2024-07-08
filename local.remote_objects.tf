@@ -131,6 +131,7 @@ locals {
     virtual_hubs                                   = try(local.combined_objects_virtual_hubs, null)
     virtual_machine_scale_sets                     = try(local.combined_objects_virtual_machine_scale_sets, null)
     virtual_machines                               = try(local.combined_objects_virtual_machines, null)
+    virtual_machines_replication                   = try(local.combined_objects_virtual_machines_replication, null)
     virtual_subnets                                = try(local.combined_objects_virtual_subnets, null)
     virtual_wans                                   = try(local.combined_objects_virtual_wans, null)
     vmware_clusters                                = try(local.combined_objects_vmware_clusters, null)
