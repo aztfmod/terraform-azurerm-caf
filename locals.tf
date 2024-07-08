@@ -102,6 +102,7 @@ locals {
     wvd_host_pools                         = try(var.compute.wvd_host_pools, {})
     wvd_workspaces                         = try(var.compute.wvd_workspaces, {})
     virtual_machines                       = try(var.compute.virtual_machines, {})
+    virtual_machines_replication           = try(var.compute.virtual_machines_replication, {})
     virtual_machine_scale_sets             = try(var.compute.virtual_machine_scale_sets, {})
     runbooks                               = try(var.compute.runbooks, {})
   }
