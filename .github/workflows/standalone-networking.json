@@ -24,6 +24,7 @@
     "networking/front_door/100-simple-front_door",
     "networking/front_door/101-front_door_waf",
     "networking/front_door/102-front_door_advanced",
+    "networking/cdn_frontdoor/100-front_door_advanced/front_doors.tfvars",
     "networking/ip_group/100-simple-ip_group",
     "networking/ip_group/101-firewall-ip_group",
     "networking/ip_group/102-remote-rg-ip_group",

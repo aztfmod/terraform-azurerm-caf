@@ -811,6 +811,9 @@ variable "cdn_endpoint" {
 variable "cdn_profile" {
   default = {}
 }
+variable "cdn_front_door_profiles" {
+  default = {}
+}
 variable "function_apps" {
   default = {}
 }
