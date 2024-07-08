@@ -1,7 +1,17 @@
+locals {
+  app_config_id = join("/", concat(
+    [""],
+    slice(split("/", var.app_config_id), 1, 4),
+    [lower(split("/", var.app_config_id)[4])],
+    slice(split("/", var.app_config_id), 5, 8),
+    [lower(split("/", var.app_config_id)[8])]
+  ))
+}
+
 resource "azurerm_app_configuration_key" "config" {
   for_each = var.config_settings
 
-  configuration_store_id = var.app_config_id
+  configuration_store_id = local.app_config_id
   key                    = each.value.key
   label                  = try(each.value.label, null)
   # if value is a keyvault reference, set the correct type, set value to null and set vault_key_reference
