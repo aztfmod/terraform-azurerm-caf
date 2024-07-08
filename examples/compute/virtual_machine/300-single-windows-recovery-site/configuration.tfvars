@@ -38,7 +38,7 @@ recovery_vaults = {
       type = "UserAssigned"
       managed_identities = {
         asr1 = {
-          key = "asr1"
+          key = "asr"
         }
       }
     }
