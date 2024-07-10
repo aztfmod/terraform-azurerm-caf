@@ -449,6 +449,6 @@ variable "load_test" {
   description = "Configuration object - Load Test resources"
   default     = {}
 }
-variable "recovery_plans" {  
-  default     = {}
+variable "recovery_plans" {
+  default = {}
 }
