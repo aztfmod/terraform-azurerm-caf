@@ -1123,10 +1123,7 @@ variable "cosmosdb_role_definitions" {
 variable "data_sources" {
   default = {}
 }
-variable "maintenance_configuration" {
-  default = {}
-}
-variable "maintenance_assignment_virtual_machine" {
+variable "maintenance" {
   default = {}
 }
 variable "search_services" {

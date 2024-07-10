@@ -38,7 +38,19 @@ output "maintenance_assignment_virtual_machine" {
 }
 
 
+module "maintenance_assignment_dynamic_scope" {
+  source   = "./modules/maintenance/assignment_dynamic_scope"
+  for_each = local.maintenance.maintenance_assignment_dynamic_scope
 
+  client_config                = local.client_config
+  global_settings              = local.global_settings
+  name                         = each.value.name
+  maintenance_configuration_id = can(each.value.maintenance_configuration_id) ? each.value.maintenance_configuration_id : local.combined_objects_maintenance_configuration[try(each.value.lz_key, local.client_config.landingzone_key)][each.value.maintenance_configuration_key].id  
+  # resource_group_name          = [for rg_key in each.value.resource_group_key : local.combined_objects_resource_groups[try(each.value.lz_key, local.client_config.landingzone_key)][rg_key].name]
+  resource_group_name          = can(each.value.resource_group_name) ? each.value.resource_group_name : [for rg_key in each.value.resource_group_key : local.combined_objects_resource_groups[try(each.value.lz_key, local.client_config.landingzone_key)][rg_key].name]
+  settings                     = each.value
+}
 
-
-
+output "maintenance_assignment_dynamic_scope" {
+  value = module.maintenance_assignment_dynamic_scope
+}
