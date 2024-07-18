@@ -44,15 +44,20 @@ maintenance_configuration = {
 
 maintenance_assignment_dynamic_scope = {
   example = {
-    name = "example-linux-tags"
+    name                          = "example-windows-tags"
     maintenance_configuration_key = "mc_re1"
-    resource_group_key       = ["rg1", "rg2"]
-    # resource_group_name = ["rsg_umc","rsg_umc2"]
     filter = {
-      locations       = ["West Europe", "France Central"]
-      os_types        = ["Linux"]
-      resource_types  = ["Microsoft.Compute/virtualMachines"]
-      tag_filter      = "All"
+      # locations       = ["France Central","Japan West"]
+      os_types           = ["Windows"]
+      resource_types     = ["Microsoft.Compute/virtualMachines"]
+      resource_group_key = ["rg1", "rg2"]
+      # resources_groups       = {
+      #     rg1 = {
+      #       lz_key = "test"
+      #       key =  ["rg1", "rg2"]
+      #     }
+      # }
+      tag_filter = "Any"
       tags = {
         tag_example = {
           tag    = "foo"

@@ -2,6 +2,10 @@ variable "global_settings" {
   description = "Global settings object (see module README.md)"
 }
 
+variable "resource_groups" {
+  description = "(Required) The resource group objects where to create the resource."
+}
+
 variable "client_config" {
   description = "Client configuration object (see module README.md)."
 }
@@ -30,8 +34,4 @@ variable "settings" {
 variable "name" {
   description = "(Required) The name which should be used for this Dynamic Maintenance Assignment. Changing this forces a new Dynamic Maintenance Assignment to be created."
   type        = string
-}
-
-variable "resource_group_name" {
-  description = "Resource group object"
 }
