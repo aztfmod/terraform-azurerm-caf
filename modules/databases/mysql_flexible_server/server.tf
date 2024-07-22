@@ -54,8 +54,8 @@ resource "azurerm_mysql_flexible_server" "mysql" {
     content {
       auto_grow_enabled  = try(var.settings.storage.auto_grow_enabled, "True")
       io_scaling_enabled = try(var.settings.storage.io_scaling_enabled, "False")
-      iops               = try(var.settings.storage.iops, "360")
-      size_gb            = try(var.settings.storage.size_gb, "20")
+      iops               = var.settings.storage.io_scaling_enabled ? null : try(var.settings.storage.iops, "360")
+      size_gb            = var.settings.storage.io_scaling_enabled ? null : try(var.settings.storage.size_gb, "20")
     }
   }
 
