@@ -1,7 +1,7 @@
 global_settings = {
   default_region = "region1"
   regions = {
-    region1 = "southeastasia"
+    region1 = "australiaeast"
   }
 }
 
@@ -106,6 +106,7 @@ servicebus_namespaces = {
     sku      = "Premium" # Basic | standard | Premium
     capacity = 1         # capacity only for Premium: 1,2,4,8,16 otherwise 0
     # zone_redundant = false # only true for Premium
+    premium_messaging_partitions = 1
     # tags = {} # optional
     namespace_auth_rules = {
       rule1 = {

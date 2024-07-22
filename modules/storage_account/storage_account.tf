@@ -22,7 +22,7 @@ resource "azurerm_storage_account" "stg" {
   account_tier                      = try(var.storage_account.account_tier, "Standard")
   account_replication_type          = try(var.storage_account.account_replication_type, "LRS")
   account_kind                      = try(var.storage_account.account_kind, "StorageV2")
-  access_tier                       = try(var.storage_account.access_tier, "Hot")
+  access_tier                       = contains(["BlobStorage", "FileStorage", "StorageV2"], try(var.storage_account.account_kind, "StorageV2")) ? try(var.storage_account.access_tier, "Hot") : null
   allow_nested_items_to_be_public   = try(var.storage_account.allow_nested_items_to_be_public, var.storage_account.allow_blob_public_access, false)
   cross_tenant_replication_enabled  = try(var.storage_account.cross_tenant_replication_enabled, null)
   edge_zone                         = try(var.storage_account.edge_zone, null)

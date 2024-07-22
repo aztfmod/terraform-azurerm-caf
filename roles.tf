@@ -124,8 +124,10 @@ locals {
     azurerm_firewalls                          = local.combined_objects_azurerm_firewalls
     backup_vaults                              = local.combined_objects_backup_vaults
     batch_accounts                             = local.combined_objects_batch_accounts
+    cognitive_services_account                 = local.combined_objects_cognitive_services_accounts
     data_factory                               = local.combined_objects_data_factory
     databricks_workspaces                      = local.combined_objects_databricks_workspaces
+    diagnostic_storage_accounts                = local.current_objects_diagnostic_storage_accounts
     dns_zones                                  = local.combined_objects_dns_zones
     event_hub_namespaces                       = local.combined_objects_event_hub_namespaces
     function_apps                              = local.combined_objects_function_apps
@@ -139,11 +141,13 @@ locals {
     machine_learning_workspaces                = local.combined_objects_machine_learning
     managed_identities                         = local.combined_objects_managed_identities
     management_group                           = local.management_groups
+    monitor_action_groups                      = local.combined_objects_monitor_action_groups
     mssql_databases                            = local.combined_objects_mssql_databases
     mssql_elastic_pools                        = local.combined_objects_mssql_elastic_pools
     mssql_managed_databases                    = local.combined_objects_mssql_managed_databases
     mssql_managed_instances                    = local.combined_objects_mssql_managed_instances
     mssql_servers                              = local.combined_objects_mssql_servers
+    maintenance_configuration                  = local.combined_objects_maintenance_configuration
     mysql_servers                              = local.combined_objects_mysql_servers
     network_watchers                           = local.combined_objects_network_watchers
     networking                                 = local.combined_objects_networking
@@ -156,6 +160,7 @@ locals {
     resource_groups                            = local.combined_objects_resource_groups
     route_tables                               = local.combined_objects_route_tables
     servicebus_namespaces                      = local.combined_objects_servicebus_namespaces
+    servicebus_topics                          = local.combined_objects_servicebus_topics
     storage_accounts                           = local.combined_objects_storage_accounts
     subscriptions                              = local.combined_objects_subscriptions
     synapse_workspaces                         = local.combined_objects_synapse_workspaces
@@ -169,6 +174,11 @@ locals {
   current_objects_log_analytics = tomap(
     {
       (var.current_landingzone_key) = merge(local.combined_objects_log_analytics, local.combined_diagnostics.log_analytics)
+    }
+  )
+  current_objects_diagnostic_storage_accounts = tomap(
+    {
+      (var.current_landingzone_key) = merge(local.combined_objects_diagnostic_storage_accounts, local.combined_diagnostics.storage_accounts)
     }
   )
 

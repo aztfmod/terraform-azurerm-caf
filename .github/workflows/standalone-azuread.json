@@ -1,0 +1,17 @@
+{
+  "config_files": [
+    "azuread/100-azuread_administrative_units",
+    "azuread/100-azuread-application-with-sevice-principle-with-builtin-roles",
+    "azuread/100-sevice-principle-with-builtin-roles",
+    "azuread/101-azuread_administrative_unit_member",
+    "azuread/101-azuread-application-with-service-principle-with-custom-roles",
+    "azuread/101-service-principle-with-custom-roles",
+    "azuread/102-password-rotation",
+    "azuread/103-service-principal-only",
+    "azuread/104-azuread-group-membership",
+    "azuread/105-azuread-application-with-optional-claims",
+    "azuread/106-azuread-application-with-api-scopes",
+    "azuread/108-azuread-application-with-app-roles",
+    "azuread/201-groups-and-roles"
+  ]
+}

@@ -35,7 +35,7 @@ locals {
     object_id               = local.object_id
     subscription_id         = data.azurerm_client_config.current.subscription_id
     tenant_id               = data.azurerm_client_config.current.tenant_id
-  } : map(var.client_config)
+  } : tomap(var.client_config)
 
   cloud = merge({
     acrLoginServerEndpoint                      = try(var.cloud.acrLoginServerEndpoint, {})
@@ -74,31 +74,36 @@ locals {
   }, var.cloud)
 
   compute = {
-    aks_clusters                        = try(var.compute.aks_clusters, {})
-    aro_clusters                        = try(var.compute.aro_clusters, {})
-    availability_sets                   = try(var.compute.availability_sets, {})
-    azure_container_registries          = try(var.compute.azure_container_registries, {})
-    bastion_hosts                       = try(var.compute.bastion_hosts, {})
-    batch_accounts                      = try(var.compute.batch_accounts, {})
-    batch_applications                  = try(var.compute.batch_applications, {})
-    batch_certificates                  = try(var.compute.batch_certificates, {})
-    batch_jobs                          = try(var.compute.batch_jobs, {})
-    batch_pools                         = try(var.compute.batch_pools, {})
-    container_groups                    = try(var.compute.container_groups, {})
-    dedicated_hosts                     = try(var.compute.dedicated_hosts, {})
-    dedicated_host_groups               = try(var.compute.dedicated_host_groups, {})
-    machine_learning_compute_instance   = try(var.compute.machine_learning_compute_instance, {})
-    proximity_placement_groups          = try(var.compute.proximity_placement_groups, {})
-    vmware_clusters                     = try(var.compute.vmware_clusters, {})
-    vmware_private_clouds               = try(var.compute.vmware_private_clouds, {})
-    vmware_express_route_authorizations = try(var.compute.vmware_express_route_authorizations, {})
-    wvd_applications                    = try(var.compute.wvd_applications, {})
-    wvd_application_groups              = try(var.compute.wvd_application_groups, {})
-    wvd_host_pools                      = try(var.compute.wvd_host_pools, {})
-    wvd_workspaces                      = try(var.compute.wvd_workspaces, {})
-    virtual_machines                    = try(var.compute.virtual_machines, {})
-    virtual_machine_scale_sets          = try(var.compute.virtual_machine_scale_sets, {})
-    runbooks                            = try(var.compute.runbooks, {})
+    aks_clusters                           = try(var.compute.aks_clusters, {})
+    aro_clusters                           = try(var.compute.aro_clusters, {})
+    availability_sets                      = try(var.compute.availability_sets, {})
+    azure_container_registries             = try(var.compute.azure_container_registries, {})
+    bastion_hosts                          = try(var.compute.bastion_hosts, {})
+    batch_accounts                         = try(var.compute.batch_accounts, {})
+    batch_applications                     = try(var.compute.batch_applications, {})
+    batch_certificates                     = try(var.compute.batch_certificates, {})
+    batch_jobs                             = try(var.compute.batch_jobs, {})
+    batch_pools                            = try(var.compute.batch_pools, {})
+    container_apps                         = try(var.compute.container_apps, {})
+    container_app_dapr_components          = try(var.compute.container_app_dapr_components, {})
+    container_app_environments             = try(var.compute.container_app_environments, {})
+    container_app_environment_certificates = try(var.compute.container_app_environment_certificates, {})
+    container_app_environment_storages     = try(var.compute.container_app_environment_storages, {})
+    container_groups                       = try(var.compute.container_groups, {})
+    dedicated_hosts                        = try(var.compute.dedicated_hosts, {})
+    dedicated_host_groups                  = try(var.compute.dedicated_host_groups, {})
+    machine_learning_compute_instance      = try(var.compute.machine_learning_compute_instance, {})
+    proximity_placement_groups             = try(var.compute.proximity_placement_groups, {})
+    vmware_clusters                        = try(var.compute.vmware_clusters, {})
+    vmware_private_clouds                  = try(var.compute.vmware_private_clouds, {})
+    vmware_express_route_authorizations    = try(var.compute.vmware_express_route_authorizations, {})
+    wvd_applications                       = try(var.compute.wvd_applications, {})
+    wvd_application_groups                 = try(var.compute.wvd_application_groups, {})
+    wvd_host_pools                         = try(var.compute.wvd_host_pools, {})
+    wvd_workspaces                         = try(var.compute.wvd_workspaces, {})
+    virtual_machines                       = try(var.compute.virtual_machines, {})
+    virtual_machine_scale_sets             = try(var.compute.virtual_machine_scale_sets, {})
+    runbooks                               = try(var.compute.runbooks, {})
   }
 
   communication = {
@@ -117,6 +122,7 @@ locals {
     database_migration_services        = try(var.database.database_migration_services, {})
     database_migration_projects        = try(var.database.database_migration_projects, {})
     databricks_workspaces              = try(var.database.databricks_workspaces, {})
+    databricks_access_connectors       = try(var.database.databricks_access_connectors, {})
     machine_learning_workspaces        = try(var.database.machine_learning_workspaces, {})
     mariadb_databases                  = try(var.database.mariadb_databases, {})
     mariadb_servers                    = try(var.database.mariadb_servers, {})
@@ -196,6 +202,7 @@ locals {
     managed_identities          = local.combined_objects_managed_identities
     mssql_databases             = local.combined_objects_mssql_databases
     mssql_servers               = local.combined_objects_mssql_servers
+    maintenance_configuration   = local.combined_objects_maintenance_configuration
     storage_accounts            = local.combined_objects_storage_accounts
     networking                  = local.combined_objects_networking
   }
@@ -218,8 +225,8 @@ locals {
     inherit_tags       = try(var.global_settings.inherit_tags, false)
     passthrough        = try(var.global_settings.passthrough, false)
     prefix             = try(var.global_settings.prefix, null)
-    prefix_with_hyphen = try(var.global_settings.prefix_with_hyphen, format("%s-", try(var.global_settings.prefix, try(var.global_settings.prefixes[0], random_string.prefix.0.result))))
-    prefixes           = try(var.global_settings.prefix, null) == "" ? null : try([var.global_settings.prefix], try(var.global_settings.prefixes, [random_string.prefix.0.result]))
+    prefix_with_hyphen = try(var.global_settings.prefix_with_hyphen, format("%s-", try(var.global_settings.prefix, try(var.global_settings.prefixes[0], random_string.prefix[0].result))))
+    prefixes           = try(var.global_settings.prefix, null) == "" ? null : try([var.global_settings.prefix], try(var.global_settings.prefixes, [random_string.prefix[0].result]))
     random_length      = try(var.global_settings.random_length, 0)
     regions            = try(var.global_settings.regions, null)
     tags               = try(var.global_settings.tags, null)
@@ -241,7 +248,9 @@ locals {
   cognitive_services = {
     cognitive_services_account = try(var.cognitive_services.cognitive_services_account, {})
   }
-
+  search_services = {
+    search_services = try(var.search_services.search_services, {})
+  }
   maps = {
     maps_accounts = try(var.maps.maps_accounts, {})
   }
@@ -334,10 +343,11 @@ locals {
     vnet_peerings_v1                                        = try(var.networking.vnet_peerings_v1, {})
     vnets                                                   = try(var.networking.vnets, {})
     vpn_gateway_connections                                 = try(var.networking.vpn_gateway_connections, {})
+    vpn_gateway_nat_rules                                   = try(var.networking.vpn_gateway_nat_rules, {})
     vpn_sites                                               = try(var.networking.vpn_sites, {})
   }
 
-  object_id = coalesce(var.logged_user_objectId, var.logged_aad_app_objectId, try(data.azuread_client_config.current.object_id, null), try(data.azuread_service_principal.logged_in_app.0.object_id, null))
+  object_id = coalesce(var.logged_user_objectId, var.logged_aad_app_objectId, try(data.azuread_client_config.current.object_id, null), try(data.azuread_service_principal.logged_in_app[0].object_id, null))
 
   security = {
     disk_encryption_sets                = try(var.security.disk_encryption_sets, {})
@@ -452,4 +462,12 @@ locals {
   }
 
   powerbi_embedded = try(var.powerbi_embedded, {})
+
+  maintenance = {
+    maintenance_configuration              = try(var.maintenance.maintenance_configuration, {})
+    maintenance_assignment_virtual_machine = try(var.maintenance.maintenance_assignment_virtual_machine, {})
+  }
+
+
+  load_test = try(var.load_test, {})
 }

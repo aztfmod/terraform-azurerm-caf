@@ -355,6 +355,9 @@ variable "batch_pools" {
 variable "databricks_workspaces" {
   default = {}
 }
+variable "databricks_access_connectors" {
+  default = {}
+}
 variable "machine_learning_workspaces" {
   default = {}
 }
@@ -559,6 +562,21 @@ variable "load_balancers" {
 variable "ip_groups" {
   default = {}
 }
+variable "container_app_environments" {
+  default = {}
+}
+variable "container_app_environment_certificates" {
+  default = {}
+}
+variable "container_app_dapr_components" {
+  default = {}
+}
+variable "container_apps" {
+  default = {}
+}
+variable "container_app_environment_storages" {
+  default = {}
+}
 variable "container_groups" {
   default = {}
 }
@@ -623,6 +641,9 @@ variable "vpn_sites" {
   default = {}
 }
 variable "vpn_gateway_connections" {
+  default = {}
+}
+variable "vpn_gateway_nat_rules" {
   default = {}
 }
 variable "servicebus_namespaces" {
@@ -1100,5 +1121,17 @@ variable "cosmosdb_role_definitions" {
   default = {}
 }
 variable "data_sources" {
+  default = {}
+}
+variable "maintenance_configuration" {
+  default = {}
+}
+variable "maintenance_assignment_virtual_machine" {
+  default = {}
+}
+variable "search_services" {
+  default = {}
+}
+variable "load_test" {
   default = {}
 }
