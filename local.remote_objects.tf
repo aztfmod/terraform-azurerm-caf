@@ -11,6 +11,8 @@ locals {
     app_service_environments_v3                    = try(local.combined_objects_app_service_environments_v3, null)
     app_service_plans                              = try(local.combined_objects_app_service_plans, null)
     app_services                                   = try(local.combined_objects_app_services, null)
+    windows_web_apps                               = try(local.combined_objects_windows_web_apps, null)
+    linux_web_apps                                 = try(local.combined_objects_linux_web_apps, null)
     application_gateway_platforms                  = try(local.combined_objects_application_gateway_platforms, null)
     application_gateway_waf_policies               = try(local.combined_objects_application_gateway_waf_policies, null)
     application_gateways                           = try(local.combined_objects_application_gateways, null)
