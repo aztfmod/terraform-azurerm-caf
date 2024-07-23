@@ -197,12 +197,14 @@ locals {
     app_config                  = local.combined_objects_app_config
     azure_container_registries  = local.combined_objects_azure_container_registries
     client_config               = tomap({ (local.client_config.landingzone_key) = { config = local.client_config } })
+    cosmos_dbs                  = local.combined_objects_cosmos_dbs
     keyvaults                   = local.combined_objects_keyvaults
     machine_learning_workspaces = local.combined_objects_machine_learning
     managed_identities          = local.combined_objects_managed_identities
     mssql_databases             = local.combined_objects_mssql_databases
     mssql_servers               = local.combined_objects_mssql_servers
     maintenance_configuration   = local.combined_objects_maintenance_configuration
+    signalr_services            = local.combined_objects_signalr_services
     storage_accounts            = local.combined_objects_storage_accounts
     networking                  = local.combined_objects_networking
   }
