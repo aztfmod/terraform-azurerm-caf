@@ -7,6 +7,11 @@ locals {
     for key, value in var.settings.containers : key => value
     if try(value.count, null) == null
   }
+  containers_secrets_from_kv = {
+    for key, value in local.containers_foreach : "kv_secrets" => {
+      for secret_key, secret_value in try(value.secure_environment_variables_from_kv, {}) : secret_key => secret_value
+    }
+  }
 
   # Get the containers with count
   countainers_count = {
@@ -22,22 +27,23 @@ locals {
         for key, value in local.countainers_count : [
           for number in range(value.count) :
           {
-            key                           = format("%s-%s", key, number)
-            iterator                      = number
-            name                          = format("%s-%s", value.name, number)
-            image                         = value.image
-            cpu                           = value.cpu
-            memory                        = value.memory
-            environment_variables         = try(value.environment_variables, null)
-            variables_from_command        = try(value.variables_from_command, {})
-            secure_environment_variables  = try(value.secure_environment_variables, null)
-            secure_variables_from_command = try(value.secure_variables_from_command, {})
-            commands                      = try(value.commands, null)
-            gpu                           = try(value.gpu, null)
-            ports                         = try(value.ports, {})
-            readiness_probe               = try(value.readiness_probe, null)
-            liveness_probe                = try(value.liveness_probe, null)
-            volume                        = try(value.volume, null)
+            key                                  = format("%s-%s", key, number)
+            iterator                             = number
+            name                                 = format("%s-%s", value.name, number)
+            image                                = value.image
+            cpu                                  = value.cpu
+            memory                               = value.memory
+            environment_variables                = try(value.environment_variables, null)
+            variables_from_command               = try(value.variables_from_command, {})
+            secure_environment_variables         = try(value.secure_environment_variables, null)
+            secure_variables_from_command        = try(value.secure_variables_from_command, {})
+            secure_environment_variables_from_kv = try(value.secure_environment_variables_from_kv, {})
+            commands                             = try(value.commands, null)
+            gpu                                  = try(value.gpu, null)
+            ports                                = try(value.ports, {})
+            readiness_probe                      = try(value.readiness_probe, null)
+            liveness_probe                       = try(value.liveness_probe, null)
+            volume                               = try(value.volume, null)
           }
         ]
       ]
@@ -72,3 +78,10 @@ locals {
     ) : mapping.container_key => mapping...
   }
 }
+
+
+output "countainers_count_expanded" {
+  value = local.containers_secrets_from_kv
+}
+
+

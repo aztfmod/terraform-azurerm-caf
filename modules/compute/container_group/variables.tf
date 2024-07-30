@@ -14,3 +14,8 @@ variable "dynamic_keyvault_secrets" {
   description = "Provide credenrials for private image registries"
   default     = {}
 }
+
+variable "subnet_id" {
+  description = "Provide virtual subnets for container group"
+}
+

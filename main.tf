@@ -1,5 +1,11 @@
 
 terraform {
+  cloud {
+    organization = "FutureLog"
+    workspaces {
+      name = "devops"
+    }
+  }
   required_providers {
     azurerm = {
       source  = "hashicorp/azurerm"

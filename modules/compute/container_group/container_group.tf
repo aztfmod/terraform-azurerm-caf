@@ -35,6 +35,8 @@ resource "azurerm_container_group" "acg" {
   restart_policy      = try(var.settings.restart_policy, "Always")
   network_profile_id  = try(var.combined_resources.network_profiles[try(var.settings.network_profile.lz_key, var.client_config.landingzone_key)][var.settings.network_profile.key].id, null)
 
+  subnet_ids = var.subnet_id
+
   dynamic "exposed_port" {
     for_each = try(var.settings.exposed_port, [])
 
@@ -60,7 +62,8 @@ resource "azurerm_container_group" "acg" {
       )
       secure_environment_variables = merge(
         try(container.value.secure_environment_variables, null),
-        try(module.secure_variables_from_command[container.key].variables, null)
+        try(module.secure_variables_from_command[container.key].variables, null),
+        tomap({ for key, value in try(container.value.secure_environment_variables_from_kv, {}) : key => try(data.azurerm_key_vault_secret.secret[key].value, null) })
       )
 
       commands = try(container.value.commands, null)
@@ -178,9 +181,11 @@ resource "azurerm_container_group" "acg" {
   dynamic "image_registry_credential" {
     for_each = try(var.settings.image_registry_credentials, {})
     content {
-      server   = image_registry_credential.value.server
-      username = try(data.azurerm_key_vault_secret.image_registry_credential_username[image_registry_credential.key].value, image_registry_credential.value.username)
-      password = try(data.azurerm_key_vault_secret.image_registry_credential_password[image_registry_credential.key].value, image_registry_credential.value.password)
+      server                    = try(var.combined_resources.azure_container_registries[var.client_config.landingzone_key][image_registry_credential.value.registry_key].login_server, image_registry_credential.value.server)
+      username                  = try(try(data.azurerm_key_vault_secret.image_registry_credential_username[image_registry_credential.key].value, image_registry_credential.value.username), null)
+      password                  = try(try(data.azurerm_key_vault_secret.image_registry_credential_password[image_registry_credential.key].value, image_registry_credential.value.password), null)
+      user_assigned_identity_id = try(var.combined_resources.managed_identities[var.client_config.landingzone_key][image_registry_credential.value.identity_key].id, image_registry_credential.value.identity_id)
+
     }
   }
 

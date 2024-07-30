@@ -9,3 +9,6 @@ output "ip_address" {
 output "fqdn" {
   value = azurerm_container_group.acg.fqdn
 }
+output "subnet_id" {
+  value = azurerm_container_group.acg.subnet_ids
+}

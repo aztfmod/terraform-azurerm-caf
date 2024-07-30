@@ -18,4 +18,10 @@ resource "azurerm_container_app_environment" "cae" {
   internal_load_balancer_enabled              = try(var.settings.internal_load_balancer_enabled, null)
   zone_redundancy_enabled                     = try(var.settings.zone_redundancy_enabled, null)
   tags                                        = merge(local.tags, try(var.settings.tags, null))
+  workload_profile {
+    name                  = "Consumption"
+    workload_profile_type = "Consumption"
+    minimum_count         = 0
+    maximum_count         = 10
+  }
 }
