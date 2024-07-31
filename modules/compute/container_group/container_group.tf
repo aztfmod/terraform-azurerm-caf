@@ -35,7 +35,7 @@ resource "azurerm_container_group" "acg" {
   restart_policy      = try(var.settings.restart_policy, "Always")
   network_profile_id  = try(var.combined_resources.network_profiles[try(var.settings.network_profile.lz_key, var.client_config.landingzone_key)][var.settings.network_profile.key].id, null)
 
-  subnet_ids = var.subnet_id
+  subnet_ids = [var.subnet_ids]
 
   dynamic "exposed_port" {
     for_each = try(var.settings.exposed_port, [])
@@ -63,7 +63,7 @@ resource "azurerm_container_group" "acg" {
       secure_environment_variables = merge(
         try(container.value.secure_environment_variables, null),
         try(module.secure_variables_from_command[container.key].variables, null),
-        tomap({ for key, value in try(container.value.secure_environment_variables_from_kv, {}) : key => try(data.azurerm_key_vault_secret.secret[key].value, null) })
+        tomap({ for key, value in try(container.value.secure_environment_variables_from_kv, {}) : value.env_variable_name => try(data.azurerm_key_vault_secret.secret[key].value, null) })
       )
 
       commands = try(container.value.commands, null)

@@ -15,7 +15,8 @@ variable "dynamic_keyvault_secrets" {
   default     = {}
 }
 
-variable "subnet_id" {
+variable "subnet_ids" {
   description = "Provide virtual subnets for container group"
+ 
 }
 

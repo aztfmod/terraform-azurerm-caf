@@ -13,12 +13,12 @@ module "container_groups" {
   global_settings          = local.global_settings
   settings                 = each.value
   dynamic_keyvault_secrets = try(local.security.dynamic_keyvault_secrets, {})
-  subnet_id            = can(each.value.subnet_id) ? each.value.subnet_id : try(local.combined_objects_networking[try(each.value.vnet.lz_key, local.client_config.landingzone_key)][each.value.vnet.vnet_key].subnets[each.value.vnet.subnet_key].id, null)
+  subnet_ids = can(each.value.subnet_id) ? each.value.subnet_id : try(local.combined_objects_networking[try(each.value.vnet.lz_key, local.client_config.landingzone_key)][each.value.vnet.vnet_key].subnets[each.value.vnet.subnet_key].id, null)
 
   combined_resources = {
-    keyvaults          = local.combined_objects_keyvaults
-    managed_identities = local.combined_objects_managed_identities
-    network_profiles   = local.combined_objects_network_profiles
+    keyvaults                  = local.combined_objects_keyvaults
+    managed_identities         = local.combined_objects_managed_identities
+    network_profiles           = local.combined_objects_network_profiles
     azure_container_registries = local.combined_objects_azure_container_registries
   }
 }
