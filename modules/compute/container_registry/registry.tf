@@ -53,3 +53,13 @@ resource "azurerm_container_registry" "acr" {
   }
 }
 
+
+resource "azurerm_container_registry_agent_pool" "example" {
+  for_each                  = try(var.settings.agent_pools, {})
+  name                      = each.key
+  instance_count            = try(each.value.count, 1)
+  resource_group_name       = local.resource_group_name
+  location                  = local.location
+  container_registry_name   = azurerm_container_registry.acr.name
+  virtual_network_subnet_id = try(can(each.value.subnet_id) ? each.value.subnet_id : var.vnets[try(each.value.lz_key, var.client_config.landingzone_key)][each.value.vnet_key].subnets[each.value.subnet_key].id, null)
+}
