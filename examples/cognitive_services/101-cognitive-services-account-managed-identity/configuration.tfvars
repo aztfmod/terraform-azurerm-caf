@@ -27,14 +27,14 @@ cognitive_services_account = {
       # lz_key = "examples"
       key = "test-rg"
     }
-    name     = "cs-test-1"
-    kind     = "OpenAI"
-    sku_name = "S0"
+    name                          = "cs-test-1"
+    kind                          = "OpenAI"
+    sku_name                      = "S0"
     public_network_access_enabled = true
 
     identity = {
       type = "SystemAssigned, UserAssigned" // Can be "SystemAssigned, UserAssigned" or "SystemAssigned" or "UserAssigned"
-      key  = "cognitive_msi" // A must with "SystemAssigned, UserAssigned" and "UserAssigned"
+      key  = "cognitive_msi"                // A must with "SystemAssigned, UserAssigned" and "UserAssigned"
     }
 
     tags = {
