@@ -51,6 +51,13 @@ azuread_applications = {
           id    = "d4c3605a-b327-35c5-f04d-77f7fcdd4995"
           type  = "Admin"
           value = "app"
+        },
+        {
+          admin_consent_description  = "Allow to administer app2."
+          admin_consent_display_name = "Administer app2"
+          enabled                    = true
+          type  = "Admin"
+          value = "app2"
         }
       ]
     }
