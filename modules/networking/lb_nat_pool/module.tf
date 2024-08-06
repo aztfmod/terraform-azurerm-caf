@@ -16,7 +16,7 @@ resource "azurerm_lb_nat_pool" "lb" {
   frontend_port_end              = var.settings.frontend_port_end
   frontend_port_start            = var.settings.frontend_port_start
   idle_timeout_in_minutes        = try(var.settings.idle_timeout_in_minutes, null)
-  loadbalancer_id                = can(var.settings.loadbalancer.id) || can(var.settings.loadbalancer.key) ? try(var.settings.loadbalancer.id, var.remote_objects.lb[try(var.settings.loadbalancer.lz_key, var.client_config.landingzone_key)][var.settings.loadbalancer.key].id) : null
+  loadbalancer_id                = can(var.settings.loadbalancer.id) ? var.settings.loadbalancer.id : can(var.settings.loadbalancer.key) ? var.remote_objects.lb[try(var.settings.loadbalancer.lz_key, var.client_config.landingzone_key)][var.settings.loadbalancer.key].id : null
   name                           = azurecaf_name.lb.result
   protocol                       = var.settings.protocol
   resource_group_name            = var.resource_group_name
