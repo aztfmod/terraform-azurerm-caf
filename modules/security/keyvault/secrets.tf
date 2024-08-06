@@ -7,7 +7,7 @@ resource "azurerm_key_vault_secret" "secret" {
   }
 
   name            = each.value.name
-  value           = try(each.value.is_value_filepath, false) ? base64encode(file(each.value.value)) : each.value.value
+  value           = try(each.value.is_value_filepath, false) ? (try(each.value.base64encode, true) ? base64encode(file(each.value.value)) : replace(file(each.value.value), "/\n/", "\n")) : each.value.value
   key_vault_id    = azurerm_key_vault.keyvault.id
   content_type    = try(each.value.content_type, null)
   not_before_date = try(each.value.not_before_date, null)
@@ -24,7 +24,7 @@ resource "azurerm_key_vault_secret" "secret_ignore_changes" {
   }
 
   name            = each.value.name
-  value           = try(each.value.is_value_filepath, false) ? base64encode(file(each.value.value)) : each.value.value
+  value           = try(each.value.is_value_filepath, false) ? (try(each.value.base64encode, true) ? base64encode(file(each.value.value)) : replace(file(each.value.value), "/\n/", "\n")) : each.value.value
   key_vault_id    = azurerm_key_vault.keyvault.id
   content_type    = try(each.value.content_type, null)
   not_before_date = try(each.value.not_before_date, null)
