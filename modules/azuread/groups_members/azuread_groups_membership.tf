@@ -61,3 +61,14 @@ module "membership_logged_in_object_id" {
   group_object_id  = can(var.group_id) ? var.group_id : var.azuread_groups[try(var.settings.group_lz_key, var.client_config.landingzone_key)][var.group_key].id
   member_object_id = var.client_config.object_id
 }
+
+module "membership_azuread_group_keys" {
+  source   = "./member"
+  for_each = {
+    for key, value in try(var.settings.azuread_group_keys, {}) : key => value
+    if key != "logged_in"
+  }
+
+  group_object_id  = var.group_id # Not required to validate options, parent module validate all posible options.
+  member_object_id = var.azuread_groups[try(each.value.lz_key, var.client_config.landingzone_key)][try(each.value.key, each.key)].id
+}
