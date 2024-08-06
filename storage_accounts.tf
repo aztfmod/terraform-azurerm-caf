@@ -38,10 +38,11 @@ resource "azurerm_storage_account_customer_managed_key" "cmk" {
     if can(value.customer_managed_key)
   }
 
-  storage_account_id = module.storage_accounts[each.key].id
-  key_vault_id       = local.combined_objects_keyvaults[try(each.value.customer_managed_key.lz_key, local.client_config.landingzone_key)][each.value.customer_managed_key.keyvault_key].id
-  key_name           = can(each.value.customer_managed_key.key_name) ? each.value.customer_managed_key.key_name : local.combined_objects_keyvault_keys[try(each.value.customer_managed_key.lz_key, local.client_config.landingzone_key)][each.value.customer_managed_key.keyvault_key_key].name
-  key_version        = try(each.value.customer_managed_key.key_version, null)
+  storage_account_id        = module.storage_accounts[each.key].id
+  key_vault_id              = local.combined_objects_keyvaults[try(each.value.customer_managed_key.kv_lz_key, each.value.customer_managed_key.lz_key, local.client_config.landingzone_key)][each.value.customer_managed_key.keyvault_key].id
+  key_name                  = can(each.value.customer_managed_key.key_name) ? each.value.customer_managed_key.key_name : local.combined_objects_keyvault_keys[try(each.value.customer_managed_key.lz_key, local.client_config.landingzone_key)][each.value.customer_managed_key.keyvault_key_key].name
+  key_version               = try(each.value.customer_managed_key.key_version, null)
+  user_assigned_identity_id = can(each.value.customer_managed_key.user_assigned_identity_id) ? each.value.customer_managed_key.user_assigned_identity_id : local.combined_objects_managed_identities[try(each.value.customer_managed_key.user_assigned_identity.lz_key, local.client_config.landingzone_key)][try(each.value.customer_managed_key.user_assigned_identity_key, each.value.customer_managed_key.user_assigned_identity.key)].id
 }
 
 module "encryption_scopes" {
