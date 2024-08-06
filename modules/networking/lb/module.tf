@@ -15,7 +15,7 @@ resource "azurerm_lb" "lb" {
   location            = var.location
 
   dynamic "frontend_ip_configuration" {
-    for_each = try(var.settings.frontend_ip_configuration, null) != null ? [var.settings.frontend_ip_configuration] : []
+    for_each = try(var.settings.frontend_ip_configuration, null)
     content {
       name                                               = try(frontend_ip_configuration.value.name, null)
       gateway_load_balancer_frontend_ip_configuration_id = try(frontend_ip_configuration.value.gateway_load_balancer_frontend_ip_configuration_id, null)
