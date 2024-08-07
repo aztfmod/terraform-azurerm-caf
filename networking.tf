@@ -32,8 +32,8 @@ module "networking" {
   for_each   = local.networking.vnets
 
   application_security_groups       = local.combined_objects_application_security_groups
-  client_config                     = local.client_config
-  ddos_id                           = try(local.combined_objects_ddos_services[try(each.value.ddos_services_lz_key, local.client_config.landingzone_key)][try(each.value.ddos_services_key, each.value.ddos_services_key)].id, "")
+  client_config                     = local.client_config  
+  ddos_id                           = can(each.value.ddos_protection_plan_id) || can(each.value.ddos_services_key) == false ? try(each.value.ddos_protection_plan_id, null) : try(local.combined_objects_ddos_services[try(each.value.ddos_services_lz_key, local.client_config.landingzone_key)][try(each.value.ddos_services_key, each.value.ddos_services_key)].id, "")
   diagnostics                       = local.combined_diagnostics
   global_settings                   = local.global_settings
   network_security_groups           = module.network_security_groups
