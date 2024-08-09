@@ -450,3 +450,8 @@ variable "load_test" {
   default     = {}
 }
 
+
+
+variable "azurerm_management_locks" {
+  default = {}
+}
