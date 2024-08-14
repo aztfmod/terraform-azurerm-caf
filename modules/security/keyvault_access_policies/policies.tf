@@ -83,6 +83,12 @@ module "logged_in_user" {
   object_id     = var.client_config.object_id
 }
 
+resource "time_sleep" "logged_in_user" {
+  depends_on = [module.logged_in_user]
+
+  create_duration = "30s"
+}
+
 module "logged_in_aad_app" {
   source = "./access_policy"
   for_each = {
@@ -100,6 +106,12 @@ module "logged_in_aad_app" {
   access_policy = each.value
   tenant_id     = var.client_config.tenant_id
   object_id     = var.client_config.object_id
+}
+
+resource "time_sleep" "logged_in_aad_app" {
+  depends_on = [module.logged_in_aad_app]
+
+  create_duration = "30s"
 }
 
 module "object_id" {
