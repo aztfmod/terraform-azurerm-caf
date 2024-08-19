@@ -44,3 +44,8 @@ variable "resource_groups" {}
 variable "resource_group" {}
 
 variable "vnets" {}
+
+variable "inherit_base_tags" {
+  description = "Base tags for the resource to be inherited from the resource group."
+  type        = bool
+}
