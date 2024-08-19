@@ -19,7 +19,7 @@ module "mysql_flexible_server" {
   resource_groups   = try(each.value.private_endpoints, {}) == {} ? null : local.resource_groups
   resource_group    = local.combined_objects_resource_groups[try(each.value.resource_group.lz_key, local.client_config.landingzone_key)][try(each.value.resource_group_key, each.value.resource_group.key)]
   vnets             = local.combined_objects_networking
-  base_tags         = local.global_settings.inherit_tags
+  inherit_base_tags = local.global_settings.inherit_tags
   remote_objects = {
     subnet_id           = can(each.value.vnet.subnet_key) ? local.combined_objects_networking[try(each.value.vnet.lz_key, local.client_config.landingzone_key)][each.value.vnet.key].subnets[each.value.vnet.subnet_key].id : null
     private_dns_zone_id = can(each.value.private_dns_zone.key) ? local.combined_objects_private_dns[try(each.value.private_dns_zone.lz_key, local.client_config.landingzone_key)][each.value.private_dns_zone.key].id : null
