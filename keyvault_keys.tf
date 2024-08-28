@@ -1,5 +1,5 @@
 module "keyvault_keys" {
-  depends_on = [module.keyvaults, module.keyvault_access_policies, time_sleep.azurerm_role_assignment_for.0]
+  depends_on = [module.keyvaults, module.keyvault_access_policies]
 
   source = "./modules/security/keyvault_key"
 
