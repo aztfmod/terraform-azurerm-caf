@@ -73,6 +73,7 @@
     "messaging/eventgrid/101-simple-eventgrid-topic-private-endpoint",
     "messaging/eventgrid/102-eventgrid_subscription",
     "messaging/eventgrid/200-simple-eventgrid-domain-topic",
+    "messaging/eventgrid/300-simple-eventgrid-system-topic",
     "messaging/servicebus/100-servicebus-services",
     "messaging/servicebus/200-servicebus-privatelink",
     "messaging/web_pubsub/100-simple-web-pubsub",
