@@ -8,7 +8,7 @@ module "private_endpoint" {
   global_settings = var.global_settings
   location        = local.location
   name            = each.value.name
-  private_dns     = can(each.value.private_dns) ? var.remote_objects.private_dns : {}
+  private_dns     = var.remote_objects.private_dns
   resource_groups = var.remote_objects.resource_groups
   resource_id     = azurerm_web_pubsub.wps.id
   settings        = each.value

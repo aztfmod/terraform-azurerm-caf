@@ -18,6 +18,8 @@ aks_clusters = {
     resource_group_key = "aks_re1"
     os_type            = "Linux"
 
+    cost_analysis_enabled = true
+
     identity = {
       type = "SystemAssigned"
     }
