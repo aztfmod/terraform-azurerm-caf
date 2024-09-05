@@ -1,16 +1,16 @@
 locals {
   # CAF landing zones can retrieve remote objects from a different landing zone and the
   # combined_objects will merge it with the local objects
-  combined_objects_aadb2c_directory                               = merge(tomap({ (local.client_config.landingzone_key) = module.aadb2c_directory }), try(var.remote_objects.aadb2c_directory, {}))
-  combined_objects_aks_clusters                                   = merge(tomap({ (local.client_config.landingzone_key) = module.aks_clusters }), try(var.remote_objects.aks_clusters, {}), try(var.data_sources.aks_clusters, {}))
-  combined_objects_api_management                                 = merge(tomap({ (local.client_config.landingzone_key) = module.api_management }), try(var.remote_objects.api_management, {}), try(var.data_sources.api_management, {}))
-  combined_objects_api_management_api                             = merge(tomap({ (local.client_config.landingzone_key) = module.api_management_api }), try(var.remote_objects.api_management_api, {}), try(var.data_sources.api_management_api, {}))
-  combined_objects_api_management_api_operation                   = merge(tomap({ (local.client_config.landingzone_key) = module.api_management_api_operation }), try(var.remote_objects.api_management_api_operation, {}))
-  combined_objects_api_management_gateway                         = merge(tomap({ (local.client_config.landingzone_key) = module.api_management_gateway }), try(var.remote_objects.api_management_gateway, {}), try(var.data_sources.api_management_gateway, {}))
-  combined_objects_api_management_logger                          = merge(tomap({ (local.client_config.landingzone_key) = module.api_management_logger }), try(var.remote_objects.api_management_logger, {}))
-  combined_objects_api_management_product                         = merge(tomap({ (local.client_config.landingzone_key) = module.api_management_product }), try(var.remote_objects.api_management_product, {}))
-  combined_objects_app_config                                     = merge(tomap({ (local.client_config.landingzone_key) = module.app_config }), try(var.remote_objects.app_config, {}), try(var.data_sources.app_config, {}))
-  combined_objects_app_service_environments                       = merge(tomap({ (local.client_config.landingzone_key) = module.app_service_environments }), try(var.remote_objects.app_service_environments, {}), try(var.data_sources.app_service_environments, {}))
+  combined_objects_aadb2c_directory                               = merge(tomap({ (local.client_config.landingzone_key) = module.aadb2c_directory }), lookup(var.remote_objects, "aadb2c_directory", {}))
+  combined_objects_aks_clusters                                   = merge(tomap({ (local.client_config.landingzone_key) = module.aks_clusters }), lookup(var.remote_objects, "aks_clusters", {}), lookup(var.data_sources, "aks_clusters", {}))
+  combined_objects_api_management                                 = merge(tomap({ (local.client_config.landingzone_key) = module.api_management }), lookup(var.remote_objects, "api_management", {}), lookup(var.data_sources, "api_management", {}))
+  combined_objects_api_management_api                             = merge(tomap({ (local.client_config.landingzone_key) = module.api_management_api }), lookup(var.remote_objects, "api_management_api", {}), lookup(var.data_sources, "api_management_api", {}))
+  combined_objects_api_management_api_operation                   = merge(tomap({ (local.client_config.landingzone_key) = module.api_management_api_operation }), lookup(var.remote_objects, "api_management_api_operation", {}))
+  combined_objects_api_management_gateway                         = merge(tomap({ (local.client_config.landingzone_key) = module.api_management_gateway }), lookup(var.remote_objects, "api_management_gateway", {}), lookup(var.data_sources, "api_management_gateway", {}))
+  combined_objects_api_management_logger                          = merge(tomap({ (local.client_config.landingzone_key) = module.api_management_logger }), lookup(var.remote_objects, "api_management_logger", {}))
+  combined_objects_api_management_product                         = merge(tomap({ (local.client_config.landingzone_key) = module.api_management_product }), lookup(var.remote_objects, "api_management_product", {}))
+  combined_objects_app_config                                     = merge(tomap({ (local.client_config.landingzone_key) = module.app_config }), lookup(var.remote_objects, "app_config", {}), lookup(var.data_sources, "app_config", {}))
+  combined_objects_app_service_environments                       = merge(tomap({ (local.client_config.landingzone_key) = module.app_service_environments }), lookup(var.remote_objects, "app_service_environments", {}), lookup(var.data_sources, "app_service_environments", {}))
   combined_objects_app_service_environments_all                   = merge(local.combined_objects_app_service_environments, local.combined_objects_app_service_environments_v3)
   combined_objects_app_service_environments_v3                    = merge(tomap({ (local.client_config.landingzone_key) = merge(module.app_service_environments_v3, try(var.data_sources.app_service_environments_v3, {})) }), try(var.remote_objects.app_service_environments_v3, {}))
   combined_objects_app_service_plans                              = merge(tomap({ (local.client_config.landingzone_key) = merge(module.app_service_plans, try(var.data_sources.app_service_plans, {})) }), try(var.remote_objects.app_service_plans, {}))
@@ -190,11 +190,11 @@ locals {
         (local.client_config.landingzone_key) = merge(
           module.subscriptions,
           { ("logged_in_subscription") = { id = data.azurerm_subscription.primary.id } },
-          try(var.data_sources.subscriptions, {})
+          lookup(var.data_sources, "subscriptions", {})
         )
       }
     ),
-    try(var.remote_objects.subscriptions, {})
+    lookup(var.remote_objects, "subscriptions", {})
   )
 
 }
