@@ -32,7 +32,7 @@ resource "azurerm_windows_function_app" "windows_function_app" {
         dotnet_version              = lookup(local.site_config.application_stack, "dotnet_version", null)
         use_dotnet_isolated_runtime = lookup(local.site_config.application_stack, "use_dotnet_isolated_runtime", null)
         java_version                = lookup(local.site_config.application_stack, "java_version", null)
-        node_version                = lookup(local.site_config.application_stack, "node_version", null)        
+        node_version                = lookup(local.site_config.application_stack, "node_version", null)
         powershell_core_version     = lookup(local.site_config.application_stack, "powershell_core_version", null)
         use_custom_runtime          = lookup(local.site_config.application_stack, "use_custom_runtime", null)
       }

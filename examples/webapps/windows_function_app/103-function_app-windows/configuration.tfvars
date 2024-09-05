@@ -55,7 +55,7 @@ windows_function_apps = {
         min_tls_version           = "1.2"
         use_32_bit_worker_process = false
         vnet_route_all_enabled    = true
-      }      
+      }
     }
   }
 }
