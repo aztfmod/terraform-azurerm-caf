@@ -141,6 +141,7 @@
     "webapps/function_app/101-function_app-private",
     "webapps/function_app/102-function_app-linux",
     "webapps/function_app/103-function_app-windows",
+    "webapps/windows_function_app/103-function_app-windows",
     "webapps/static_site/101-simple-static-web-app"
   ]
 }

@@ -85,6 +85,7 @@ locals {
   combined_objects_front_door                                     = merge(tomap({ (local.client_config.landingzone_key) = module.front_doors }), lookup(var.remote_objects, "front_doors", {}))
   combined_objects_front_door_waf_policies                        = merge(tomap({ (local.client_config.landingzone_key) = module.front_door_waf_policies }), lookup(var.remote_objects, "front_door_waf_policies", {}))
   combined_objects_function_apps                                  = merge(tomap({ (local.client_config.landingzone_key) = module.function_apps }), lookup(var.remote_objects, "function_apps", {}))
+  combined_objects_windows_function_apps                          = merge(tomap({ (local.client_config.landingzone_key) = module.windows_function_apps }), try(var.remote_objects.windows_function_apps, {}))  
   combined_objects_image_definitions                              = merge(tomap({ (local.client_config.landingzone_key) = module.image_definitions }), lookup(var.remote_objects, "image_definitions", {}))
   combined_objects_integration_service_environment                = merge(tomap({ (local.client_config.landingzone_key) = module.integration_service_environment }), lookup(var.remote_objects, "integration_service_environment", {}))
   combined_objects_iot_central_application                        = merge(tomap({ (local.client_config.landingzone_key) = module.iot_central_application }), lookup(var.remote_objects, "iot_central_application", {}))
