@@ -34,7 +34,7 @@ mysql_flexible_server = {
       # lz_key = ""                           # Set the lz_key if the resource group is remote.
     }
     # Auto-generated administrator credentials stored in azure keyvault when not set (recommended).
-    #administrator_username  = "psqladminss"
+    #administrator_username  = "mysqladmin"
     #administrator_password  = "ComplxP@ssw0rd!!"
 
     vnet = {
