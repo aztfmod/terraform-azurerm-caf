@@ -5,10 +5,10 @@ output "id" {
 
 output "maintenance_configuration_name" {
   description = "The name of the maintenance configuration."
-  value = azurerm_maintenance_configuration.maintenance_configuration.name
+  value       = azurerm_maintenance_configuration.maintenance_configuration.name
 }
 
 output "maintenance_configuration_location" {
   description = "The location where the resource exists"
-  value = azurerm_maintenance_configuration.maintenance_configuration.location
+  value       = azurerm_maintenance_configuration.maintenance_configuration.location
 }

@@ -1,5 +1,5 @@
 module "private_endpoint" {
-  source   = "../../../networking/private_endpoint"
+  source = "../../../networking/private_endpoint"
   #for_each = try(var.settings.private_endpoints, {})
   for_each = lookup(var.settings, "private_endpoints", {})
 

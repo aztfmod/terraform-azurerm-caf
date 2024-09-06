@@ -161,7 +161,7 @@ resource "azurerm_kubernetes_cluster" "aks" {
       subnet_name = aci_connector_linux.value.subnet_name
     }
   }
-
+  cost_analysis_enabled            = try(var.settings.cost_analysis_enabled, null)
   azure_policy_enabled             = can(var.settings.addon_profile.azure_policy) || can(var.settings.azure_policy_enabled) == false ? try(var.settings.addon_profile.azure_policy.0.enabled, null) : var.settings.azure_policy_enabled
   http_application_routing_enabled = can(var.settings.addon_profile.http_application_routing) || can(var.settings.http_application_routing_enabled) == false ? try(var.settings.addon_profile.http_application_routing.0.enabled, null) : var.settings.http_application_routing_enabled
 
