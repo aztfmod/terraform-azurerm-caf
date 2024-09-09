@@ -13,6 +13,13 @@ resource_groups = {
   }
 }
 
+managed_identities = {
+  demo1 = {
+    name               = "demo1"
+    resource_group_key = "cosmosdb_region1"
+  }
+}
+
 cosmos_dbs = {
   cosmosdb_account_re1 = {
     name                      = "cosmosdb-ex101"
@@ -20,6 +27,13 @@ cosmos_dbs = {
     offer_type                = "Standard"
     kind                      = "GlobalDocumentDB"
     enable_automatic_failover = "true"
+
+    identity = {
+      type = "UserAssigned"
+      managed_identity_keys = [
+        "demo1"
+      ]
+    }
 
     consistency_policy = {
       consistency_level       = "BoundedStaleness"
