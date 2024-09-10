@@ -106,6 +106,6 @@ resource "azurerm_site_recovery_replicated_vm" "replication" {
   }
 
   timeouts {
-    create = "6h"
+    create = "12h"
   }
 }
