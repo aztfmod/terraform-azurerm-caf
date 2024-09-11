@@ -60,7 +60,6 @@ module "eventgrid_event_subscription" {
 output "eventgrid_event_subscription" {
   value = module.eventgrid_event_subscription
 }
-
 module "eventgrid_domain_topic" {
   source   = "./modules/messaging/eventgrid/eventgrid_domain_topic"
   for_each = local.messaging.eventgrid_domain_topic
@@ -77,7 +76,6 @@ module "eventgrid_domain_topic" {
 output "eventgrid_domain_topic" {
   value = module.eventgrid_domain_topic
 }
-
 module "eventgrid_system_topic" {
   source   = "./modules/messaging/eventgrid/eventgrid_system_topic"
   for_each = local.messaging.eventgrid_system_topic
@@ -86,10 +84,8 @@ module "eventgrid_system_topic" {
   client_config   = local.client_config
   settings        = each.value
   base_tags       = try(local.global_settings.inherit_tags, false) ? try(local.combined_objects_resource_groups[try(each.value.resource_group.lz_key, local.client_config.landingzone_key)][try(each.value.resource_group.key, each.value.resource_group_key)].tags, {}) : {}
-
-  location = can(local.global_settings.regions[each.value.region]) ? local.global_settings.regions[each.value.region] : local.combined_objects_resource_groups[try(each.value.resource_group.lz_key, local.client_config.landingzone_key)][try(each.value.resource_group.key, each.value.resource_group_key)].location
-
-  remote_objects = local.remote_objects
+  location        = lookup(each.value, "region", null) != null ? each.value.region : can(local.global_settings.regions[each.value.region]) ? local.global_settings.regions[each.value.region] : local.combined_objects_resource_groups[try(each.value.resource_group.lz_key, local.client_config.landingzone_key)][try(each.value.resource_group.key, each.value.resource_group_key)].location
+  remote_objects  = local.remote_objects
 }
 output "eventgrid_system_topic" {
   value = module.eventgrid_system_topic
