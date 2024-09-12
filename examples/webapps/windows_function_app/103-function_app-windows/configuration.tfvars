@@ -45,10 +45,10 @@ windows_function_apps = {
     app_service_plan_key = "asp1"
     storage_account_key  = "sa1"
     settings = {
-      application_stack = {
-        powershell_core_version = "7.4"
-      }
       site_config = {
+        application_stack = {
+            powershell_core_version = "7.4"
+        }
         ftps_state                = "Disabled" // AllAllowed, FtpsOnly and Disabled
         always_on                 = true
         http2_enabled             = true
