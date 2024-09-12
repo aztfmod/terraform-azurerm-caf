@@ -814,6 +814,10 @@ variable "cdn_profile" {
 variable "function_apps" {
   default = {}
 }
+variable "windows_function_apps" {
+  default = {}
+  type    = map(any)
+}
 variable "active_directory_domain_service" {
   default = {}
 }
