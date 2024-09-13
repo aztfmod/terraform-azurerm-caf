@@ -114,6 +114,7 @@ locals {
     app_services                               = local.combined_objects_app_services
     application_gateway_platforms              = local.combined_objects_application_gateway_platforms
     application_gateways                       = local.combined_objects_application_gateways
+    application_insights                       = local.combined_objects_application_insights
     automations                                = local.combined_objects_automations
     automation_runbooks                        = local.combined_objects_automation_runbooks
     automation_schedules                       = local.combined_objects_automation_schedules
