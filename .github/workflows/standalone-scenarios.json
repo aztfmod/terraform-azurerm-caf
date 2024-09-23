@@ -68,6 +68,7 @@
     "maintenance_configuration/101-maintenance-configuration-schedule",
     "maintenance_configuration/200-maintenance-configuration-assignment-vm-windows",
     "maintenance_configuration/201-maintenance-configuration-assignment-vm-linux",
+    "maintenance_configuration/300-maintenance-configuration-assignment-dynamic-scope",
     "managed_service_identity/100-msi-levels",
     "maps/101-azure-maps-account",
     "messaging/eventgrid/100-simple-eventgrid-topic",
