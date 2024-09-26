@@ -506,7 +506,7 @@ variable "event_hubs" {
 variable "automations" {
   default = {}
 }
-variable "automation_powershell72_module"  {
+variable "automation_powershell72_module" {
   default = {}
 }
 variable "automation_schedules" {
