@@ -30,6 +30,7 @@
     "automation/102-automation-msi",
     "automation/103-automation-private-endpoints",
     "automation/104-automation-schedule-runbook",
+    "automation/105-automation-powershell-module",
     "communication/communication_services/101-communication_service",
     "diagnostics_profiles/100-multiple-destinations",
     "diagnostics_profiles/100-multiple-destinations",
