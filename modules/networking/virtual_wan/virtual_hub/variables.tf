@@ -45,6 +45,9 @@ variable "virtual_networks" {
 variable "public_ip_addresses" {
   description = "Combined object for public ip addresses"
 }
+variable "keyvaults" {
+  description = "Combined object for keyvaults"
+}
 variable "client_config" {
 
 }

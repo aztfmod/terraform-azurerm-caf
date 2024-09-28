@@ -3,16 +3,17 @@ You can test the workflows on your local machine
 
 ## MacOS
 
-Install act to run Github workflows on your local machine
-```
+Install [Act](https://github.com/nektos/act) to run Github workflows on your local machine
+
+```bash
 brew install act
 ```
 
-from the root of the module
+From the root of the module:
 
-```
+```bash
 # Make sure you have a GH_TOKEN with repo and workflow privileges
-export GH_TOKEN=xxx
+export GH_TOKEN="$(gh auth token)"
 
 act --container-architecture linux/arm64 \
   -s GITHUB_TOKEN=$GITHUB_TOKEN \

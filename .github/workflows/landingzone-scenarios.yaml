@@ -46,7 +46,7 @@ jobs:
     outputs:
       jobs: ${{ steps.load_scenarios.outputs.jobs }}
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
       - id: load_scenarios
         run: |
           jobs=$( cat ./.github/workflows/${{ github.event.inputs.scenario }} | jq -c .)
@@ -86,7 +86,7 @@ jobs:
     needs: [job]
 
     container:
-      image: aztfmod/rover:1.5.7-2310.0211
+      image: aztfmod/rover:1.8.4-2405.2306
       options: --user 0
 
     steps:

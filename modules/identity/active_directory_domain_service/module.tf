@@ -19,13 +19,14 @@ resource "azurecaf_name" "aadds" {
 #   use_slug      = var.global_settings.use_slug
 # }
 resource "azurerm_active_directory_domain_service" "aadds" {
-  name                  = azurecaf_name.aadds.result
-  resource_group_name   = local.resource_group_name
-  location              = local.location
-  domain_name           = var.settings.domain_name
-  filtered_sync_enabled = try(var.settings.filtered_sync_enabled, null)
-  sku                   = var.settings.sku
-  tags                  = merge(local.tags, try(var.settings.tags, {}))
+  name                      = azurecaf_name.aadds.result
+  resource_group_name       = local.resource_group_name
+  location                  = local.location
+  domain_name               = var.settings.domain_name
+  filtered_sync_enabled     = try(var.settings.filtered_sync_enabled, null)
+  domain_configuration_type = try(var.settings.domain_configuration_type, null)
+  sku                       = var.settings.sku
+  tags                      = merge(local.tags, try(var.settings.tags, {}))
 
   dynamic "secure_ldap" {
     for_each = can(var.settings.secure_ldap) ? [var.settings.secure_ldap] : []
