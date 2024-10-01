@@ -104,6 +104,14 @@ locals {
     virtual_machines                       = try(var.compute.virtual_machines, {})
     virtual_machine_scale_sets             = try(var.compute.virtual_machine_scale_sets, {})
     runbooks                               = try(var.compute.runbooks, {})
+    dev_center                             = try(var.compute.dev_center, {})
+    dev_center_catalog                     = try(var.compute.dev_center_catalog, {})
+    dev_center_dev_box_definition          = try(var.compute.dev_center_dev_box_definition, {})
+    dev_center_environment_type            = try(var.compute.dev_center_environment_type, {})
+    dev_center_gallery                     = try(var.compute.dev_center_gallery, {})
+    dev_center_network_connection          = try(var.compute.dev_center_network_connection, {})
+    dev_center_project                     = try(var.compute.dev_center_project, {})
+    dev_center_project_environment_type    = try(var.compute.dev_center_project_environment_type, {})
   }
 
   communication = {

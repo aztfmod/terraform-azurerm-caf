@@ -123,6 +123,14 @@ module "example" {
     wvd_application_groups                 = var.wvd_application_groups
     wvd_host_pools                         = var.wvd_host_pools
     wvd_workspaces                         = var.wvd_workspaces
+    dev_center                             = var.dev_center
+    dev_center_catalog                     = var.dev_center_catalog
+    dev_box_definition                     = var.dev_box_definition
+    environment_type                       = var.environment_type
+    dev_center_gallery                     = var.dev_center_gallery
+    network_connection                     = var.network_connection
+    dev_center_project                     = var.dev_center_project
+    dev_center_project_environment_type    = var.dev_center_project_environment_type
   }
   diagnostics = {
     diagnostic_event_hub_namespaces = var.diagnostic_event_hub_namespaces

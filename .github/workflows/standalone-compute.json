@@ -50,6 +50,14 @@
     "compute/virtual_machine/215-vm-keyvault-for-windows-extension",
     "compute/virtual_machine/216-vm-linux_diagnostic_extensions",
     "compute/virtual_machine/217-vm-disk-encryption-set-msi",
-    "compute/vmware_cluster/101-vmware_cluster"
+    "compute/vmware_cluster/101-vmware_cluster",
+    "azurerm_dev_center/dev_center",
+    "azurerm_dev_center/dev_center_catalog",
+    "azurerm_dev_center/dev_box_definition",
+    "azurerm_dev_center/environment_type",
+    "azurerm_dev_center/gallery",
+    "azurerm_dev_center/network_connection",
+    "azurerm_dev_center/project",
+    "azurerm_dev_center/project_environment_type"
   ]
 }
