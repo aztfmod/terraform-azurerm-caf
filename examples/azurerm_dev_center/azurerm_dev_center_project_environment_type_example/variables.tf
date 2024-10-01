@@ -1,15 +1,15 @@
-variable "project_name" {
-  description = "The name of the Dev Center project."
-  type        = string
-}
-
-variable "location" {
-  description = "The location of the Dev Center project."
+variable "project_environment_type_name" {
+  description = "The name of the Project Environment Type."
   type        = string
 }
 
 variable "resource_group_name" {
-  description = "The name of the resource group in which to create the Dev Center project."
+  description = "The name of the resource group in which to create the Project Environment Type."
+  type        = string
+}
+
+variable "location" {
+  description = "The location of the Project Environment Type."
   type        = string
 }
 
