@@ -106,6 +106,7 @@
     "redis_cache/103-redis-private-endpoints",
     "role_mapping/100-simple-role-mapping",
     "role_mapping/101-function-app-managed-identity",
+    "role_mapping/103-abac",
     "search_service/100-search-service-both-apikeys-and-azuread",
     "search_service/101-search-service-only-api-keys",
     "search_service/102-search-service-only-azuread",
