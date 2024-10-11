@@ -110,6 +110,7 @@
     "search_service/100-search-service-both-apikeys-and-azuread",
     "search_service/101-search-service-only-api-keys",
     "search_service/102-search-service-only-azuread",
+    "security_center/101-subscription_pricing",
     "sentinel/101-automation_rule",
     "sentinel/104-ar_fusion",
     "sentinel/105-ar_ml_behavior_analytics",
