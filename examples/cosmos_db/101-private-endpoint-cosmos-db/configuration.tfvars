@@ -26,7 +26,7 @@ cosmos_dbs = {
     resource_group_key            = "cosmosdb_region1"
     offer_type                    = "Standard"
     kind                          = "GlobalDocumentDB"
-    enable_automatic_failover     = "true"
+    automatic_failover_enabled     = "true"
     public_network_access_enabled = false
 
     consistency_policy = {
@@ -50,10 +50,10 @@ cosmos_dbs = {
     }
 
     # Optional
-    enable_free_tier = false
+    free_tier_enabled = false
     ip_range_filter  = "116.88.85.63,116.88.85.64"
     #capabilities              = ["EnableTable"]
-    enable_multiple_write_locations = false
+    multiple_write_locations_enabled = false
     tags = {
       "project" = "EDH"
     }

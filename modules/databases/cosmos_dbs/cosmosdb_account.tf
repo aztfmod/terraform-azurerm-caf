@@ -17,10 +17,10 @@ resource "azurerm_cosmosdb_account" "cosmos_account" {
   kind                = try(var.settings.kind, "GlobalDocumentDB")
   tags                = local.tags
 
-  enable_free_tier                   = try(var.settings.enable_free_tier, false)
+  free_tier_enabled                   = try(var.settings.free_tier_enabled, false)
   ip_range_filter                    = try(var.settings.ip_range_filter, null)
-  enable_multiple_write_locations    = try(var.settings.enable_multiple_write_locations, false)
-  enable_automatic_failover          = try(var.settings.enable_automatic_failover, null)
+  multiple_write_locations_enabled    = try(var.settings.multiple_write_locations_enabled, false)
+  automatic_failover_enabled          = try(var.settings.automatic_failover_enabled, null)
   is_virtual_network_filter_enabled  = try(var.settings.is_virtual_network_filter_enabled, null)
   create_mode                        = try(var.settings.create_mode, null)
   public_network_access_enabled      = try(var.settings.public_network_access_enabled, true)
