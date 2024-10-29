@@ -16,7 +16,7 @@ resource "azurerm_subnet" "subnet" {
   virtual_network_name                          = var.virtual_network_name
   address_prefixes                              = var.address_prefixes
   service_endpoints                             = var.service_endpoints
-  private_endpoint_network_policies_enabled     = try(var.private_endpoint_network_policies_enabled, null)
+  private_endpoint_network_policies     = try(var.private_endpoint_network_policies, null)
   private_link_service_network_policies_enabled = try(var.private_link_service_network_policies_enabled, null)
 
   dynamic "delegation" {

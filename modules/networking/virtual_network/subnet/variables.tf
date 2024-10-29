@@ -12,8 +12,8 @@ variable "address_prefixes" {
   description = "(Optional) The address prefixes to use for the subnet."
   default     = []
 }
-variable "private_endpoint_network_policies_enabled" {
-  description = "(Optional) Enable or Disable network policies for the private endpoint on the subnet. Setting this to true will Enable the policy and setting this to false will Disable the policy. Defaults to true."
+variable "private_endpoint_network_policies" {
+  description = "(Optional) Enable or Disable network policies for the private endpoint on the subnet. Possible values are Disabled, Enabled, NetworkSecurityGroupEnabled and RouteTableEnabled. Defaults to Disabled."
   nullable    = true
 }
 variable "private_link_service_network_policies_enabled" {
