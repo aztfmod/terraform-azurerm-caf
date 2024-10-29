@@ -32,14 +32,6 @@ resource "azurerm_container_registry" "acr" {
           ip_range = ip_rule.value.ip_range
         }
       }
-      dynamic "virtual_network" {
-        for_each = try(network_rule_set.value.virtual_networks, {})
-
-        content {
-          action    = "Allow"
-          subnet_id = can(virtual_network.value.subnet_id) ? virtual_network.value.subnet_id : var.vnets[try(virtual_network.value.lz_key, var.client_config.landingzone_key)][virtual_network.value.vnet_key].subnets[virtual_network.value.subnet_key].id
-        }
-      }
     }
   }
 
