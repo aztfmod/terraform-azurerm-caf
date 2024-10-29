@@ -55,8 +55,7 @@ module "example" {
   #   attestationEndpoint                         = var.attestationEndpoint
   #   azureDatalakeAnalyticsCatalogAndJobEndpoint = var.azureDatalakeAnalyticsCatalogAndJobEndpoint
   #   azureDatalakeStoreFileSystemEndpoint        = var.azureDatalakeStoreFileSystemEndpoint
-  #   keyvaultDns                                 = var.keyvaultDns
-  #   mariadbServerEndpoint                       = var.mariadbServerEndpoint
+  #   keyvaultDns                                 = var.keyvaultDns  
   #   mhsmDns                                     = var.mhsmDns
   #   mysqlServerEndpoint                         = var.mysqlServerEndpoint
   #   postgresqlServerEndpoint                    = var.postgresqlServerEndpoint
@@ -140,11 +139,8 @@ module "example" {
     cosmosdb_role_definitions          = var.cosmosdb_role_definitions
     databricks_workspaces              = var.databricks_workspaces
     database_migration_services        = var.database_migration_services
-    databricks_workspaces              = var.databricks_workspaces
     databricks_access_connectors       = var.databricks_access_connectors
     machine_learning_workspaces        = var.machine_learning_workspaces
-    mariadb_servers                    = var.mariadb_servers
-    mariadb_databases                  = var.mariadb_databases
     mssql_databases                    = var.mssql_databases
     mssql_elastic_pools                = var.mssql_elastic_pools
     mssql_failover_groups              = var.mssql_failover_groups

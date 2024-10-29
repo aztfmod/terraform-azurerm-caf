@@ -39,9 +39,6 @@ variable "var_folder_path" {
 # variable "keyvaultDns" {
 #   default = ".vault.azure.net"
 # }
-# variable "mariadbServerEndpoint" {
-#   default = ".mariadb.database.azure.com"
-# }
 # variable "mhsmDns" {
 #   default = ".managedhsm.azure.net"
 # }
@@ -206,12 +203,6 @@ variable "mssql_managed_databases_backup_ltr" {
   default = {}
 }
 variable "mssql_elastic_pools" {
-  default = {}
-}
-variable "mariadb_servers" {
-  default = {}
-}
-variable "mariadb_databases" {
   default = {}
 }
 variable "mssql_failover_groups" {
