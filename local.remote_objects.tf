@@ -36,6 +36,8 @@ locals {
     batch_pools                                    = try(local.combined_objects_batch_pools, null)
     cdn_profile                                    = try(local.combined_objects_cdn_profile, null)
     cognitive_services_accounts                    = try(local.combined_objects_cognitive_services_accounts, null)
+    cognitive_account_customer_managed_key         = try(local.combined_objects_cognitive_account_customer_managed_key, null)
+    cognitive_deployment                           = try(local.combined_objects_cognitive_deployment, null)
     consumption_budgets_resource_groups            = try(local.combined_objects_consumption_budgets_resource_groups, null)
     consumption_budgets_subscriptions              = try(local.combined_objects_consumption_budgets_subscriptions, null)
     container_registry                             = try(local.combined_objects_container_registry, null)

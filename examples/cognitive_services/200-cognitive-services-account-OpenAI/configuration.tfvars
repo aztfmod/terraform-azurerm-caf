@@ -4,6 +4,7 @@ global_settings = {
     region1 = "westus"
   }
   random_length = 5
+  #pass_through = true
 }
 
 resource_groups = {
@@ -13,7 +14,7 @@ resource_groups = {
 }
 
 cognitive_services_account = {
-  test_account-1 = {
+  openai_account-1 = {
     resource_group = {
       # accepts either id or key to get resource group id
       # id = "/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/resourceGroup1"
@@ -21,8 +22,8 @@ cognitive_services_account = {
       key = "test-rg"
     }
     name     = "cs-alz-caf-test-1"
-    kind     = "ComputerVision"
-    sku_name = "F0"
+    kind     = "OpenAI"
+    sku_name = "S0"
     tags = {
       env = "test"
     }
@@ -31,22 +32,21 @@ cognitive_services_account = {
     #   default_action = "Allow"
     #   ip_rules       = ["10.10.10.0/16"]
     # }
-  }
-  test_account-2 = {
-    resource_group = {
-      # accepts either id or key to get resource group id
-      # id = "/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/resourceGroup1"
-      # lz_key = "examples"
-      key = "test-rg"
-    }
-    name     = "cs-alz-caf-test-2"
-    kind     = "QnAMaker"
-    sku_name = "F0"
-    tags = {
-      env = "test"
-    }
-    qna_runtime_endpoint = "https://cs-alz-caf-test-2.azurewebsites.net"
-
-  }
+  }   
 }
 
+cognitive_deployment = {
+  openai_deployment-1 = {
+    name = "gpt4-listillo"
+    cognitive_account_key = "openai_account-1"
+   #cognitive_account_id = "/subscriptions/12345678-1234-9876-4563-123456789012/resourceGroups/example-resource-group/providers/Microsoft.CognitiveServices/accounts/accountValue"
+    model = {
+      format = "OpenAI"
+      name = "gpt-4"
+      version = "1106-Preview"
+    }
+    scale = {
+      type = "Standard"      
+    }
+  }
+}
