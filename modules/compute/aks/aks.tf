@@ -360,12 +360,12 @@ resource "azurerm_kubernetes_cluster" "aks" {
 
   #Enabled RBAC
   dynamic "azure_active_directory_role_based_access_control" {
-    for_each = try(var.settings.role_based_access_control[*], {})
+    for_each = can(var.settings.azure_active_directory_role_based_access_control) ? [var.settings.azure_active_directory_role_based_access_control] : []
 
     content {
-      tenant_id = try(azure_active_directory_role_based_access_control.value.azure_active_directory.tenant_id, null)
+      tenant_id              = try(azure_active_directory_role_based_access_control.value.tenant_id, null)
       azure_rbac_enabled     = try(azure_active_directory_role_based_access_control.value.enabled, true)
-      admin_group_object_ids = try(azure_active_directory_role_based_access_control.value.azure_active_directory.admin_group_object_ids, try(var.admin_group_object_ids, null))
+      admin_group_object_ids = try(azure_active_directory_role_based_access_control.value.admin_group_object_ids, [])
     }
   }
 
