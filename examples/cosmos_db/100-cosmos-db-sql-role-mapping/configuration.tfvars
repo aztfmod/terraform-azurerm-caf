@@ -60,7 +60,8 @@ cosmos_dbs = {
         containers = {
           container1 = {
             name               = "container-ex101"
-            partition_key_path = "/partitionKeyPath"
+            # Ensure partition_key_paths is a list
+            partition_key_paths = ["/partitionKeyPath"]
 
             autoscale_settings = {
               max_throughput = 4000

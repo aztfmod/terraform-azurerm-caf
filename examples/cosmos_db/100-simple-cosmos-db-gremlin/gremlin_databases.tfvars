@@ -46,7 +46,7 @@ cosmos_dbs = {
 
     # optional
     free_tier_enabled                = false
-    ip_range_filter                 = ""
+    ip_range_filter                 = []
     multiple_write_locations_enabled = false
     tags = {
       "project" = "EDH"
