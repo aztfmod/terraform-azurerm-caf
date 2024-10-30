@@ -365,7 +365,7 @@ resource "azurerm_kubernetes_cluster" "aks" {
     content {
       tenant_id              = try(azure_active_directory_role_based_access_control.value.tenant_id, null)
       azure_rbac_enabled     = try(azure_active_directory_role_based_access_control.value.enabled, true)
-      admin_group_object_ids = try(azure_active_directory_role_based_access_control.value.admin_group_object_ids, [])
+      admin_group_object_ids = try(azure_active_directory_role_based_access_control.value.admin_group_object_ids, var.admin_group_object_ids, [])
     }
   }
 
