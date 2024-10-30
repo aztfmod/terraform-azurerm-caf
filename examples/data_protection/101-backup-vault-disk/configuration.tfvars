@@ -50,7 +50,7 @@ backup_vault_policies = {
     type                            = "disk"
     backup_vault_key                = "bv0"
     policy_name                     = "backup-policy-lvl0"
-    operational_default_retention_duration =              = "P7D"                                #Specific ISO 8601 format
+    operational_default_retention_duration              = "P7D"                                #Specific ISO 8601 format
     backup_repeating_time_intervals = ["R/2022-04-20T00:00:00+00:00/PT4H"] # ISO 8601 repeating time interval
     retention_rules = {
       Daily = {
