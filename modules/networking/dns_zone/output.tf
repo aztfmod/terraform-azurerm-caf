@@ -6,8 +6,8 @@ output "id" {
 output "name" {
   description = "The fully qualified domain name of the Record Set."
 
-  # This regex remove the last dot as the end
-  value = regex("(.+).", azurerm_dns_zone.dns_zone.soa_record[0].fqdn)[0]
+  # This regex removes the last dot at the end
+  value = length(azurerm_dns_zone.dns_zone.soa_record) > 0 ? regex("(.+).", azurerm_dns_zone.dns_zone.soa_record[0].fqdn)[0] : ""
 }
 
 output "resource_group_name" {
