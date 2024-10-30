@@ -145,11 +145,11 @@ locals {
     mssql_mi_tdes                      = try(var.database.mssql_mi_tdes, {})
     mssql_servers                      = try(var.database.mssql_servers, {})
     mysql_databases                    = try(var.database.mysql_databases, {})
-    mysql_servers                      = try(var.database.mysql_servers, {})
+    mysql_flexible_servers             = try(var.database.mysql_flexible_servers, {})
     postgresql_flexible_servers        = try(var.database.postgresql_flexible_servers, {})
     postgresql_servers                 = try(var.database.postgresql_servers, {})
     synapse_workspaces                 = try(var.database.synapse_workspaces, {})
-    mysql_flexible_server              = try(var.database.mysql_flexible_server, {})
+
 
     data_explorer = {
       kusto_clusters                         = try(var.database.data_explorer.kusto_clusters, {})
