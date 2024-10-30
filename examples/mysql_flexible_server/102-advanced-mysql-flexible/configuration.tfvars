@@ -174,34 +174,48 @@ monitor_action_groups = {
   }
 }
 
-monitor_metric_alert = {
-  mysql-cpu-utilization = {
-    name           = "mysql-cpu-utilization"
-    resource_group = { key = "mysql_region1" }
-    description    = "Action will be triggered when cpu utilization is greater than 90% in the last 30 min."
-    severity       = 2
-    frequency      = "PT15M"
-    window_size    = "PT30M"
 
-    criteria = {
-      metric_namespace = "Microsoft.DBforMySQL/flexibleServers"
-      metric_name      = "cpu_percent"
-      aggregation      = "Average"
-      operator         = "GreaterThan"
-      threshold        = 90
-    }
-
-    scopes = {
-      scope1 = {
-        resource_type = "mysql_flexible_server"
-        key           = "primary_re1"
-      }
-    }
-
-    action = {
-      action_group = {
-        key = "example"
-      }
-    }
-  }
-}
+# Debug, fail with:
+#│ Error: Not enough list items
+#│
+#│   with module.example.module.monitor_metric_alert["mysql-cpu-utilization"].azurerm_monitor_metric_alert.mma,
+#│   on ../modules/monitoring/monitor_metric_alert/module.tf line 14, in resource "azurerm_monitor_metric_alert" "mma":
+#│   14:   scopes = try(flatten([
+#│   15:     for key, value in var.settings.scopes : coalesce(
+#│   16:       try(var.remote_objects[value.resource_type][value.lz_key][value.lz_key][value.key].id, null),
+#│   17:       try(var.remote_objects[value.resource_type][var.client_config.landingzone_key][value.key].id, null),
+#│   18:       try(value.id, null),
+#│   19:       []
+#│   20:     )
+#│   21:   ]), [])
+#monitor_metric_alert = {
+#  mysql-cpu-utilization = {
+#    name           = "mysql-cpu-utilization"
+#    resource_group = { key = "mysql_region1" }
+#    description    = "Action will be triggered when cpu utilization is greater than 90% in the last 30 min."
+#    severity       = 2
+#    frequency      = "PT15M"
+#    window_size    = "PT30M"
+#
+#    criteria = {
+#      metric_namespace = "Microsoft.DBforMySQL/flexibleServers"
+#      metric_name      = "cpu_percent"
+#      aggregation      = "Average"
+#      operator         = "GreaterThan"
+#      threshold        = 90
+#    }
+#
+#    scopes = {
+#      scope1 = {
+#        resource_type = "mysql_flexible_servers"
+#        key           = "primary_re1"
+#      }
+#    }
+#
+#    action = {
+#      action_group = {
+#        key = "example"
+#      }
+#    }
+#  }
+#}
