@@ -18,7 +18,7 @@ resource "azurerm_cognitive_account" "service" {
   sku_name            = var.settings.sku_name
 
   # all of `custom_subdomain_name,network_acls` must be specified
-  custom_subdomain_name = var.settings.custom_subdomain_name != null && length(var.settings.network_acls) > 0 ? var.settings.custom_subdomain_name : null
+  custom_subdomain_name = try(var.settings.custom_subdomain_name, null)
   dynamic_throttling_enabled = try(var.settings.dynamic_throttling_enabled, null)
   #checkov:skip=CKV2_AZURE_22:Ensure that Cognitive Services enables customer-managed key for encryption. This is a conditional resource
   dynamic "customer_managed_key" {

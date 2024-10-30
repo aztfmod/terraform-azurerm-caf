@@ -70,16 +70,20 @@ cognitive_services_account = {
 
 cognitive_deployment = {
   openai_deployment-1 = {
-    name                  = "gpt4-listillo"
+    name = "gpt4"
     cognitive_account_key = "openai_account-1"
     #cognitive_account_id = "/subscriptions/12345678-1234-9876-4563-123456789012/resourceGroups/example-resource-group/providers/Microsoft.CognitiveServices/accounts/accountValue"
+    #Check https://learn.microsoft.com/en-us/azure/ai-services/openai/concepts/models?tabs=python-secure%2Cglobal-standard%2Cstandard-chat-completions
+    #Check  https://learn.microsoft.com/en-us/azure/ai-services/openai/concepts/models?tabs=python-secure%2Cglobal-standard%2Cstandard-chat-completions#global-standard-model-availability
     model = {
-      format  = "OpenAI"
-      name    = "gpt-4"
-      version = "1106-Preview"
+      format = "OpenAI"
+      name = "gpt-4"
+      version = "turbo-2024-04-09"
+
     }
-    scale = {
-      type = "Standard"
+    sku = {
+      name = "Standard"
+      capacity = 1  
     }
   }
 }
@@ -110,7 +114,8 @@ virtual_subnets = {
   private_endpoints = {
     name                                           = "private-endpoint"
     cidr                                           = ["172.33.2.0/24"]
-    enforce_private_link_endpoint_network_policies = true
+    #private_endpoint_network_policies = "Enabled"
+    private_endpoint_network_policies = "Enabled"
     vnet = {
       # id = "/subscriptions/xxxx-xxxx-xxxx-xxx/resourceGroups/example-rg/providers/Microsoft.Network/virtualNetworks/example-vnet"
       # lz_key = ""

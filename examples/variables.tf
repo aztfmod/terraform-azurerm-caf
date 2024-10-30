@@ -667,6 +667,13 @@ variable "nat_gateways" {
 variable "cognitive_services_account" {
   default = {}
 }
+variable "cognitive_account_customer_managed_key" {
+  default = {}
+}
+variable "cognitive_deployment" {
+  default = {}
+}
+
 variable "database_migration_services" {
   default = {}
 }

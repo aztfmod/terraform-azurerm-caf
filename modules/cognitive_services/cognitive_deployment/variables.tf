@@ -7,12 +7,12 @@ variable "settings" {
       - format: The format of the model.
       - name: The name of the model.
       - version: The version of the model.
-    - scale: The scale object is used to define the configuration of the scale.
-      - type: The type of the scale.
-      - tier: The tier of the scale.
-      - size: The size of the scale.
-      - family: The family of the scale.
-      - capacity: The capacity of the scale.
+    - sku: The sku object is used to define the configuration of the sku.
+      - name: The name of the sku.
+      - tier: The tier of the sku.
+      - size: The size of the sku.
+      - family: The family of the sku.
+      - capacity: The capacity of the sku.
     - rai_policy_name: The name of the RAI policy.
     - version_upgrade_option: The version upgrade option.
     Example Input:
@@ -25,12 +25,12 @@ variable "settings" {
         name    = "model-name"
         version = "model-version"
       }
-      scale = {
-        type     = "scale-type"
-        tier     = "scale-tier"
-        size     = "scale-size"
-        family   = "scale-family"
-        capacity = "scale-capacity"
+      sku = {
+        name     = "sku-name"
+        tier     = "sku-tier"
+        size     = "sku-size"
+        family   = "sku-family"
+        capacity = "sku-capacity"
       }
       rai_policy_name = "rai-policy-name"
       version_upgrade_option = "version-upgrade-option"
@@ -47,8 +47,8 @@ DESCRIPTION
       name    = string
       version = optional(string)
     })
-    scale = object({
-      type     = string
+    sku = object({
+      name     = string
       tier     = optional(string)
       size     = optional(string)
       family   = optional(string)

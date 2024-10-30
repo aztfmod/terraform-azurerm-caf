@@ -16,12 +16,12 @@ resource "azurerm_cognitive_deployment" "service" {
     name    = var.settings.model.name
     version = try(var.settings.model.version, null)
   }
-  scale {
-    type     = var.settings.scale.type
-    tier     = try(var.settings.scale.tier, null)
-    size     = try(var.settings.scale.size, null)
-    family   = try(var.settings.scale.family, null)
-    capacity = try(var.settings.scale.capacity, null)
+  sku {
+    name     = var.settings.sku.name
+    tier     = try(var.settings.sku.tier, null)
+    size     = try(var.settings.sku.size, null)
+    family   = try(var.settings.sku.family, null)
+    capacity = try(var.settings.sku.capacity, 1)
   }
 
   rai_policy_name        = try(var.settings.rai_policy_name, null)
