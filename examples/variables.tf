@@ -385,9 +385,6 @@ variable "application_gateway_applications_v1" {
 variable "application_gateway_waf_policies" {
   default = {}
 }
-variable "mysql_servers" {
-  default = {}
-}
 variable "postgresql_flexible_servers" {
   default = {}
 }
