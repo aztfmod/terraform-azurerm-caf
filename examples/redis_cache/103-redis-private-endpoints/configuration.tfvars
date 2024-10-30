@@ -65,7 +65,7 @@ vnets = {
       pep = {
         name                                           = "pep"
         cidr                                           = ["10.1.0.0/28"]
-        enforce_private_link_endpoint_network_policies = "true"
+        private_endpoint_network_policies = "Enabled"
       }
     }
   }

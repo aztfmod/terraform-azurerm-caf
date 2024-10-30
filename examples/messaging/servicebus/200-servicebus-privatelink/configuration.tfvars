@@ -29,7 +29,7 @@ vnets = {
         name                                           = "subnet2"
         cidr                                           = ["172.33.101.0/24"]
         service_endpoint                               = ["Microsoft.ServiceBus"]
-        enforce_private_link_endpoint_network_policies = "true"
+        private_endpoint_network_policies = "Enabled"
       }
     }
   }
