@@ -43,7 +43,7 @@ cosmos_dbs = {
 
     # Optional
     free_tier_enabled = false
-    ip_range_filter  = "116.88.85.63,116.88.85.64"
+    ip_range_filter  = ["116.88.85.63","116.88.85.64"]
     #capabilities              = ["EnableTable"]
     multiple_write_locations_enabled = false
     tags = {
