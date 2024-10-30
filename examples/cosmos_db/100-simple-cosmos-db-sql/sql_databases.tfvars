@@ -62,7 +62,7 @@ cosmos_dbs = {
         containers = {
           container1 = {
             name               = "container-ex101"
-            partition_key_path = "/partitionKeyPath"
+            partition_key_paths = ["/partitionKeyPath"]
 
             unique_key = {
               paths = ["/uniquePath1", "/uniquePath2"]
