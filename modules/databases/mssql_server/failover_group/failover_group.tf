@@ -22,11 +22,5 @@ resource "azurerm_mssql_failover_group" "failover_group" {
     grace_minutes = var.settings.read_write_endpoint_failover_policy.mode == "Automatic" ? var.settings.read_write_endpoint_failover_policy.grace_minutes : null
   }
 
-  dynamic "readonly_endpoint_failover_policy" {
-    for_each = lookup(var.settings, "readonly_endpoint_failover_policy", {}) == {} ? [] : [1]
-
-    content {
-      mode = var.settings.readonly_endpoint_failover_policy.mode
-    }
-  }
+  readonly_endpoint_failover_policy_enabled = try(var.settings.readonly_endpoint_failover_policy_enabled,null)
 }
