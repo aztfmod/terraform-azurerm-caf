@@ -100,7 +100,7 @@ vnets = {
       private_link = {
         name                                           = "private-links"
         cidr                                           = ["10.150.100.128/26"]
-        enforce_private_link_endpoint_network_policies = true
+        private_endpoint_network_policies = "Enabled"
       }
     }
   }

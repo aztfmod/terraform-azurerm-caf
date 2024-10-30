@@ -12,13 +12,13 @@ vnets = {
         name                                           = "aks_nodepool_system"
         cidr                                           = ["100.64.48.0/24"]
         nsg_key                                        = "azure_kubernetes_cluster_nsg"
-        enforce_private_link_endpoint_network_policies = true
+        private_endpoint_network_policies = "Enabled"
       }
       aks_nodepool_user1 = {
         name                                           = "aks_nodepool_user1"
         cidr                                           = ["100.64.49.0/24"]
         nsg_key                                        = "azure_kubernetes_cluster_nsg"
-        enforce_private_link_endpoint_network_policies = true
+        private_endpoint_network_policies = "Enabled"
       }
       aks_nodepool_user2 = {
         name    = "aks_nodepool_user2"
@@ -33,7 +33,7 @@ vnets = {
       private_endpoints = {
         name                                           = "private_endpoints"
         cidr                                           = ["100.64.51.0/27"]
-        enforce_private_link_endpoint_network_policies = true
+        private_endpoint_network_policies = "Enabled"
       }
       jumpbox = {
         name    = "jumpbox"
@@ -55,7 +55,7 @@ vnets = {
       private_endpoints = {
         name                                           = "private_endpoints"
         cidr                                           = ["10.0.0.0/27"]
-        enforce_private_link_endpoint_network_policies = true
+        private_endpoint_network_policies = "Enabled"
       }
     }
   }

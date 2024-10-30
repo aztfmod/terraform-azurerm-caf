@@ -112,13 +112,13 @@ vnets = {
       private_dns = {
         name                                           = "private-dns"
         cidr                                           = ["10.10.0.0/25"]
-        enforce_private_link_endpoint_network_policies = true
+        private_endpoint_network_policies = "Enabled"
         enforce_private_link_service_network_policies  = false
       }
       mysql = {
         name                                           = "mysql"
         cidr                                           = ["10.10.0.128/25"]
-        enforce_private_link_endpoint_network_policies = true
+        private_endpoint_network_policies = "Enabled"
         delegation = {
           name               = "mysql"
           service_delegation = "Microsoft.DBforMySQL/flexibleServers"
