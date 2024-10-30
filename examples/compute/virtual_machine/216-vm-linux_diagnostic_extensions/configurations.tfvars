@@ -56,8 +56,8 @@ virtual_machines = {
     }
     virtual_machine_extensions = {
       linux_diagnostic = {
-        ladcfg_file_path               = "./diagnostics/ladcfg.json"
-        filelogs_file_path             = "./diagnostics/filelogs.json"
+        ladcfg_file_path               = "./compute/virtual_machine/216-vm-linux_diagnostic_extensions/diagnostics/ladcfg.json"
+        filelogs_file_path             = "./compute/virtual_machine/216-vm-linux_diagnostic_extensions/diagnostics/filelogs.json"
         diagnostic_storage_account_key = "bootdiag_region1"
       }
     }
