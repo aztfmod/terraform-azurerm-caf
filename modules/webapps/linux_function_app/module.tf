@@ -9,11 +9,12 @@ resource "azurecaf_name" "plan" {
   use_slug      = var.global_settings.use_slug
 }
 
-resource "azurerm_windows_function_app" "windows_function_app" {
+resource "azurerm_linux_function_app" "linux_function_app" {
   #To avoid redeploy with existing customer
   lifecycle {
     ignore_changes = [name, virtual_network_subnet_id]
   }
+
   location            = local.location
   name                = azurecaf_name.plan.result
   resource_group_name = local.resource_group_name
@@ -29,10 +30,30 @@ resource "azurerm_windows_function_app" "windows_function_app" {
     dynamic "application_stack" {
       for_each = lookup(local.site_config, "application_stack", {}) != {} ? [1] : []
       content {
+        #docker - (Optional) One or more docker blocks as defined below.
+        #dotnet_version - (Optional) The version of .NET to use. Possible values include 3.1, 6.0 and 7.0.
+        #use_dotnet_isolated_runtime - (Optional) Should the DotNet process use an isolated runtime. Defaults to false.
+        #java_version - (Optional) The Version of Java to use. Supported versions include 8, 11 & 17.
+        #node_version - (Optional) The version of Node to run. Possible values include 12, 14, 16 and 18.
+        #python_version - (Optional) The version of Python to run. Possible values are 3.11, 3.10, 3.9, 3.8 and 3.7.
+        #powershell_core_version - (Optional) The version of PowerShell Core to run. Possible values are 7, and 7.2.
+        #use_custom_runtime - (Optional) Should the Linux Function App use a custom runtime?
+        dynamic "docker" {
+          for_each = lookup(local.site_config.application_stack, "docker", {}) != {} ? [1] : []
+          content {
+            registry_url      = local.site_config.application_stack.docker.registry_url
+            image_name        = local.site_config.application_stack.docker.image_name
+            image_tag         = local.site_config.application_stack.docker.image_tag
+            registry_username = lookup(local.site_config.application_stack.docker, "registry_username", null)
+            registry_password = lookup(local.site_config.application_stack.docker, "registry_password", null)
+          }
+
+        }
         dotnet_version              = lookup(local.site_config.application_stack, "dotnet_version", null)
         use_dotnet_isolated_runtime = lookup(local.site_config.application_stack, "use_dotnet_isolated_runtime", null)
         java_version                = lookup(local.site_config.application_stack, "java_version", null)
         node_version                = lookup(local.site_config.application_stack, "node_version", null)
+        python_version              = lookup(local.site_config.application_stack, "python_version", null)
         powershell_core_version     = lookup(local.site_config.application_stack, "powershell_core_version", null)
         use_custom_runtime          = lookup(local.site_config.application_stack, "use_custom_runtime", null)
       }
@@ -44,6 +65,8 @@ resource "azurerm_windows_function_app" "windows_function_app" {
         retention_period_days = lookup(app_service_logs.value, "retention_period_days", null)
       }
     }
+    container_registry_managed_identity_client_id = lookup(local.site_config, "container_registry_managed_identity_client_id", null)
+    container_registry_use_managed_identity       = lookup(local.site_config, "container_registry_use_managed_identity", null)
     dynamic "cors" {
       for_each = lookup(local.site_config, "cors", {}) != {} ? [1] : []
 
@@ -303,6 +326,8 @@ resource "azurerm_windows_function_app" "windows_function_app" {
         }
       }
 
+
+
       dynamic "twitter_v2" {
         for_each = lookup(local.auth_settings_v2, "twitter_v2", {}) != {} ? [1] : []
         content {
@@ -391,7 +416,7 @@ resource "azurerm_windows_function_app" "windows_function_app" {
       mount_path   = lookup(var.settings.storage_account.mount_path, null)
     }
   }
-  # Create a variable to hold the list of app setting names that the Windows Function App will not swap between Slots when a swap operation is triggered.
+  # Create a variable to hold the list of app setting names that the Linux Function App will not swap between Slots when a swap operation is triggered.
   dynamic "sticky_settings" {
     for_each = lookup(var.settings, "sticky_settings", {}) != {} ? [1] : []
     content {
@@ -405,14 +430,14 @@ resource "azurerm_windows_function_app" "windows_function_app" {
   storage_key_vault_secret_id   = try(var.settings.storage_key_vault_secret_id, null)
   storage_uses_managed_identity = try(var.settings.storage_uses_managed_identity, null)
   tags                          = merge(local.tags, try(var.settings.tags, {}))
-  virtual_network_subnet_id     = try(var.settings.virtual_network_subnet_id, null)
-  zip_deploy_file               = try(var.settings.zip_deploy_file, null)
+  # virtual_network_subnet_id     = try(var.settings.virtual_network_subnet_id, null)
+  zip_deploy_file = try(var.settings.zip_deploy_file, null)
 }
 
 resource "azurerm_app_service_virtual_network_swift_connection" "vnet_config" {
-  depends_on     = [azurerm_windows_function_app.windows_function_app]
+  depends_on     = [azurerm_linux_function_app.linux_function_app]
   count          = lookup(var.settings, "subnet_key", null) == null && lookup(var.settings, "subnet_id", null) == null && try(var.settings.virtual_network_subnet_id, null) == null ? 0 : 1
-  app_service_id = azurerm_windows_function_app.windows_function_app.id
+  app_service_id = azurerm_linux_function_app.linux_function_app.id
   subnet_id = coalesce(
     try(var.remote_objects.subnets[var.settings.subnet_key].id, null),
     try(var.settings.subnet_id, null)
