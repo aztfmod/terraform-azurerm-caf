@@ -71,6 +71,7 @@
     "maintenance_configuration/201-maintenance-configuration-assignment-vm-linux",
     "maintenance_configuration/300-maintenance-configuration-assignment-dynamic-scope",
     "managed_service_identity/100-msi-levels",
+    "management_lock/100-basic-lock",
     "maps/101-azure-maps-account",
     "messaging/eventgrid/100-simple-eventgrid-topic",
     "messaging/eventgrid/101-simple-eventgrid-topic-private-endpoint",

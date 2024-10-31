@@ -452,3 +452,6 @@ variable "load_test" {
 variable "recovery_plans" {
   default = {}
 }
+variable "management_locks" {
+  default = {}
+}
