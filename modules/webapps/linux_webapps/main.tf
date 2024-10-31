@@ -35,7 +35,7 @@ locals {
     try(var.app_settings, {}),
     try(local.dynamic_settings_to_process, {})
   )
-  
+
   location               = coalesce(var.location, var.resource_group.location)
   resource_group_name    = coalesce(var.resource_group_name, var.resource_group.name)
   backup_storage_account = can(var.settings.backup) ? var.storage_accounts[try(var.settings.backup.lz_key, var.client_config.landingzone_key)][var.settings.backup.storage_account_key] : null

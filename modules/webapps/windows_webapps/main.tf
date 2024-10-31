@@ -25,7 +25,7 @@ locals {
     try(var.settings.tags,
     null)
   )
-  
+
   app_settings = merge(
     var.application_insight == null ? {} : {
       "APPINSIGHTS_INSTRUMENTATIONKEY"             = var.application_insight.instrumentation_key,

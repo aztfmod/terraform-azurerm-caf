@@ -33,7 +33,7 @@ app_service_plans = {
 }
 
 linux_web_apps = {
- linux_web_app_simple = {
+  linux_web_app_simple = {
     name                 = "linux-web-app-simple"
     resource_group_key   = "linux_webapp_simple"
     app_service_plan_key = "asp1"
@@ -43,11 +43,11 @@ linux_web_apps = {
       always_on  = "false"
 
       site_config = {
-        ftps_state      = "Disabled"
-        always_on       = "false"
-        
+        ftps_state = "Disabled"
+        always_on  = "false"
+
         application_stack = {
-          java_server = "JAVA"
+          java_server  = "JAVA"
           java_version = "11"
         }
       }

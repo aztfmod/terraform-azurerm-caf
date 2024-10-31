@@ -469,4 +469,4 @@ resource "azurerm_app_service_virtual_network_swift_connection" "vnet_config" {
     try(var.settings.subnet_id, null)
   )
 }
-  
+

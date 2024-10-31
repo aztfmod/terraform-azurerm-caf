@@ -33,7 +33,7 @@ app_service_plans = {
 }
 
 windows_web_apps = {
- windows_web_app_simple = {
+  windows_web_app_simple = {
     name                 = "windows-web-app-simple"
     resource_group_key   = "windows_webapp_simple"
     app_service_plan_key = "asp1"
@@ -43,11 +43,11 @@ windows_web_apps = {
       always_on  = "false"
 
       site_config = {
-        ftps_state      = "Disabled"
-        always_on       = "false"
-        
+        ftps_state = "Disabled"
+        always_on  = "false"
+
         application_stack = {
-          current_stack = "dotnetcore"
+          current_stack       = "dotnetcore"
           dotnet_core_version = "v4.0"
         }
       }
