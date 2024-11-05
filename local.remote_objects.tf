@@ -64,6 +64,7 @@ locals {
     express_route_circuit_authorizations           = try(local.combined_objects_express_route_circuit_authorizations, null)
     express_route_circuit_peerings                 = try(local.combined_objects_express_route_circuit_peerings, null)
     express_route_circuits                         = try(local.combined_objects_express_route_circuits, null)
+    eventgrid_topic                                = try(local.combined_objects_eventgrid_topics, null)
     front_door                                     = try(local.combined_objects_front_door, null)
     front_door_waf_policies                        = try(local.combined_objects_front_door_waf_policies, null)
     integration_service_environment                = try(local.combined_objects_integration_service_environment, null)
