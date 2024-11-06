@@ -43,7 +43,7 @@ locals {
   # managed identity
   identity_type           = try(var.extension.identity_type, "") #userassigned, systemassigned or null
   managed_local_identity  = try(var.managed_identities[var.client_config.landingzone_key][var.extension.managed_identity_key].principal_id, "")
-  managed_remote_identity = try(var.managed_identities[var.extension.lz_key][var.extension.managed_identity_key].principal_id, "")
+  managed_remote_identity = try(var.managed_identities[var.extension.managed_identity_lz_key][var.extension.managed_identity_key].principal_id, var.managed_identities[var.extension.lz_key][var.extension.managed_identity_key].principal_id, "")
   provided_identity       = try(var.extension.managed_identity_id, "")
   managed_identity        = try(coalesce(local.managed_local_identity, local.managed_remote_identity, local.provided_identity), "")
 
@@ -71,7 +71,7 @@ locals {
   # fileuris
   fileuri_sa_key       = try(var.extension.fileuri_sa_key, "")
   fileuri_sa_path      = try(var.extension.fileuri_sa_path, "")
-  fileuri_sa           = local.fileuri_sa_key != "" ? try(var.storage_accounts[var.extension.lz_key][var.extension.fileuri_sa_key].primary_blob_endpoint, var.storage_accounts[var.client_config.landingzone_key][var.extension.fileuri_sa_key].primary_blob_endpoint) : ""
+  fileuri_sa           = local.fileuri_sa_key != "" ? try(var.storage_accounts[var.extension.fileuri_sa_lz_key][var.extension.fileuri_sa_key].primary_blob_endpoint, var.storage_accounts[var.extension.lz_key][var.extension.fileuri_sa_key].primary_blob_endpoint, var.storage_accounts[var.client_config.landingzone_key][var.extension.fileuri_sa_key].primary_blob_endpoint) : ""
   fileuri_sa_full_path = "${local.fileuri_sa}${local.fileuri_sa_path}"
   fileuri_sa_defined   = try(var.extension.fileuris, "")
   fileuris             = local.fileuri_sa_defined == "" ? [local.fileuri_sa_full_path] : var.extension.fileuris

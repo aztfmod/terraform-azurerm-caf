@@ -67,7 +67,7 @@ iot_dps_certificate = {
       key = "dps1"
     }
     resource_group_key  = "ioth_region1"
-    certificate_content = "iot/103-iot-hub-with-dps/cert.pem"
+    certificate_content = "examples/iot/103-iot-hub-with-dps/cert.pem"
   }
 }
 

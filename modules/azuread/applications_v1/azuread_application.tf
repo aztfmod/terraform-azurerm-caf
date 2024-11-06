@@ -36,7 +36,7 @@ resource "azuread_application" "app" {
         content {
           admin_consent_description  = oauth2_permission_scope.value.admin_consent_description
           admin_consent_display_name = oauth2_permission_scope.value.admin_consent_display_name
-          id                         = oauth2_permission_scope.value.id
+          id                         = try(oauth2_permission_scope.value.id, random_uuid.oauth2_permission_scopes[oauth2_permission_scope.key].id)
           enabled                    = try(oauth2_permission_scope.value.enabled, null)
           type                       = try(oauth2_permission_scope.value.type, null)
           user_consent_description   = try(oauth2_permission_scope.value.user_consent_description, null)
@@ -128,6 +128,13 @@ resource "azuread_application" "app" {
 resource "random_uuid" "app_role_id" {
   for_each = {
     for key, value in try(var.settings.app_roles, {}) : key => value
+    if try(value.id, null) == null
+  }
+}
+
+resource "random_uuid" "oauth2_permission_scopes" {
+  for_each = {
+    for key, value in try(var.settings.api.oauth2_permission_scopes, {}) : key => value
     if try(value.id, null) == null
   }
 }

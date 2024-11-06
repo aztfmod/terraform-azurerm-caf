@@ -63,6 +63,7 @@ resource "azurerm_kubernetes_cluster" "aks" {
     os_disk_type                  = try(var.settings.default_node_pool.os_disk_type, null)
     os_sku                        = try(var.settings.default_node_pool.os_sku, null)
     tags                          = merge(try(var.settings.default_node_pool.tags, {}), local.tags)
+    temporary_name_for_rotation   = try(var.settings.default_node_pool.temporary_name_for_rotation, null)
     type                          = try(var.settings.default_node_pool.type, "VirtualMachineScaleSets")
     ultra_ssd_enabled             = try(var.settings.default_node_pool.ultra_ssd_enabled, false)
     vm_size                       = var.settings.default_node_pool.vm_size
@@ -160,15 +161,15 @@ resource "azurerm_kubernetes_cluster" "aks" {
       subnet_name = aci_connector_linux.value.subnet_name
     }
   }
-
+  cost_analysis_enabled            = try(var.settings.cost_analysis_enabled, null)
   azure_policy_enabled             = can(var.settings.addon_profile.azure_policy) || can(var.settings.azure_policy_enabled) == false ? try(var.settings.addon_profile.azure_policy.0.enabled, null) : var.settings.azure_policy_enabled
   http_application_routing_enabled = can(var.settings.addon_profile.http_application_routing) || can(var.settings.http_application_routing_enabled) == false ? try(var.settings.addon_profile.http_application_routing.0.enabled, null) : var.settings.http_application_routing_enabled
 
   dynamic "oms_agent" {
-    for_each = try(var.settings.oms_agent[*], var.settings.oms_agent[*], {})
+    for_each = try(var.settings.addon_profile.oms_agent[*], var.settings.oms_agent[*], {})
 
     content {
-      log_analytics_workspace_id = can(oms_agent.value.log_analytics_workspace_id) ? oms_agent.value.log_analytics_workspace_id : var.diagnostics.log_analytics[oms_agent.value.log_analytics_key].id
+      log_analytics_workspace_id      = can(oms_agent.value.log_analytics_workspace_id) ? oms_agent.value.log_analytics_workspace_id : var.diagnostics.log_analytics[oms_agent.value.log_analytics_key].id
       msi_auth_for_monitoring_enabled = try(oms_agent.value.msi_auth_for_monitoring_enabled, null)
     }
   }
@@ -348,8 +349,18 @@ resource "azurerm_kubernetes_cluster" "aks" {
     }
   }
 
+  dynamic "service_mesh_profile" {
+    for_each = try(var.settings.service_mesh_profile[*], {})
+    content {
+      mode                             = try(service_mesh_profile.value.mode, null)
+      internal_ingress_gateway_enabled = try(service_mesh_profile.value.internal_ingress_gateway_enabled, null)
+      external_ingress_gateway_enabled = try(service_mesh_profile.value.external_ingress_gateway_enabled, null)
+    }
+  }
+
   node_resource_group                 = azurecaf_name.rg_node.result
   oidc_issuer_enabled                 = try(var.settings.oidc_issuer_enabled, null)
+  open_service_mesh_enabled           = try(var.settings.open_service_mesh_enabled, null)
   private_cluster_enabled             = try(var.settings.private_cluster_enabled, null)
   private_dns_zone_id                 = try(var.private_dns_zone_id, null)
   private_cluster_public_fqdn_enabled = try(var.settings.private_cluster_public_fqdn_enabled, null)

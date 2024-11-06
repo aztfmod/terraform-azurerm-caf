@@ -70,7 +70,7 @@ variable "generate_domain_name_label" {
 
 variable "reverse_fqdn" {
   description = "(Optional) A fully qualified domain name that resolves to this public IP address. If the reverseFqdn is specified, then a PTR DNS record is created pointing from the IP address in the in-addr.arpa domain to the reverse FQDN."
-  type        = bool
+  type        = string
   default     = null
 }
 

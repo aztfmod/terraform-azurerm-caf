@@ -1,6 +1,7 @@
 {
   "config_files": [
     "cognitive_services/100-cognitive-services-account",
+    "cognitive_services/101-cognitive-services-account-managed-identity",
     "compute/batch/batch_certificate/100-batch-certificate - path",
     "compute/batch/batch_job/100-batch-job - quotas",
     "compute/batch/batch_pool/100-batch-pool - quotas",
@@ -14,11 +15,6 @@
     "consumption_budget/105-consumption-budget-subscription-aks",
     "messaging/signalr/100-signalr-simple",
     "mssql_mi/200-mi-two-regions",
-    "networking/virtual_network_gateway/100-expressroute-gateway",
-    "networking/virtual_network_gateway/101-vpn-site-to-site",
-    "networking/virtual_network_gateway/102-vpn-site-to-site-active-active",
-    "networking/virtual_network_gateway/103-vpn-site-to-site-connection",
-    "networking/virtual_wan/100-vwan-multi-hubs",
     "networking/virtual_wan/101-vwan-hub-firewall-legacy",
     "networking/virtual_wan/102-vwan-hub-firewall-new",
     "networking/virtual_wan/103-vwan-hub-gw",

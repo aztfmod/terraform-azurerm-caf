@@ -21,7 +21,7 @@ vnets = {
     resource_group_key = "networking_region1"
     vnet = {
       name          = "sqlmi-rg1"
-      address_space = ["172.25.88.0/21"]
+      address_space = ["172.25.88.0/21", "10.2.0.0/24"]
     }
     subnets = {
       sqlmi1 = {
@@ -38,6 +38,12 @@ vnets = {
             "Microsoft.Network/virtualNetworks/subnets/unprepareNetworkPolicies/action"
           ]
         }
+      }
+      subnet02 = {
+        name            = "subnet02"
+        cidr            = ["10.2.0.0/24"]
+        nsg_key         = "subnet02"
+        route_table_key = "sqlmi1"
       }
     }
   }
@@ -71,6 +77,19 @@ mssql_managed_instances = {
 
     storageSizeInGB = 32
     vCores          = 8
+    private_endpoints = {
+      privatelink-sqlmi = {
+        name               = "pe-sqlmi1"
+        vnet_key           = "sqlmi_region1"
+        subnet_key         = "subnet02"
+        resource_group_key = "sqlmi_region1"
+        private_service_connection = {
+          name                 = "conn-sqlmi1"
+          is_manual_connection = false
+          subresource_names    = ["managedInstance"]
+        }
+      }
+    }
   }
 }
 

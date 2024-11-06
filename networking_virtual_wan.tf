@@ -25,5 +25,6 @@ module "virtual_wans" {
   global_settings     = local.global_settings
   virtual_networks    = local.combined_objects_networking
   public_ip_addresses = local.combined_objects_public_ip_addresses
+  keyvaults           = local.combined_objects_keyvaults
 }
 
