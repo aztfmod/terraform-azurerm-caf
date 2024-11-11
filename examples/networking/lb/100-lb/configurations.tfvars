@@ -52,9 +52,11 @@ lb = {
       key = "rg1"
     }
     frontend_ip_configuration = {
-      name = "PublicIPAddress"
-      public_ip_address = {
-        key = "lb_pip"
+      fipc_001 = {
+        name = "PublicIPAddress"
+        public_ip_address = {
+          key = "lb_pip"
+        }
       }
     }
     sku = "Standard"
