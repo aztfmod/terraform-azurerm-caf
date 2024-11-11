@@ -12,9 +12,9 @@ resource "azurerm_servicebus_topic" "topic" {
   auto_delete_on_idle                     = try(var.settings.auto_delete_on_idle, null)
   default_message_ttl                     = try(var.settings.default_message_ttl, null)
   duplicate_detection_history_time_window = try(var.settings.duplicate_detection_history_time_window, null)
-  enable_batched_operations               = try(var.settings.enable_batched_operations, null)
-  enable_express                          = try(var.settings.enable_express, null)
-  enable_partitioning                     = try(var.settings.enable_partitioning, null)
+  batched_operations_enabled              = try(var.settings.batched_operations_enabled, null)
+  express_enabled                         = try(var.settings.express_enabled, null)
+  partitioning_enabled                    = try(var.settings.partitioning_enabled, null)
   max_size_in_megabytes                   = try(var.settings.max_size_in_megabytes, null)
   max_message_size_in_kilobytes           = try(var.settings.max_message_size_in_kilobytes, null)
   name                                    = azurecaf_name.topic.result

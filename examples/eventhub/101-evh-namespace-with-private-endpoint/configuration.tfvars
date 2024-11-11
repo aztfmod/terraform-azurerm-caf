@@ -68,7 +68,7 @@ vnets = {
       evh_subnet = {
         name                                           = "evh_subnet"
         cidr                                           = ["10.150.120.0/25"]
-        enforce_private_link_endpoint_network_policies = "true"
+        private_endpoint_network_policies = "Enabled"
 
       }
     }

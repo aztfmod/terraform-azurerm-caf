@@ -20,7 +20,7 @@ storage_accounts = {
     account_tier             = "Standard"  #Valid options are Standard and Premium. For BlockBlobStorage and FileStorage accounts only Premium is valid
     account_replication_type = "LRS"       # https://docs.microsoft.com/en-us/azure/storage/common/storage-redundancy
     min_tls_version          = "TLS1_2"    # Possible values are TLS1_0, TLS1_1, and TLS1_2. Defaults to TLS1_0 for new storage accounts.
-    #enable_https_traffic_only = false    #not needed as toggled automatically when nfsv3_enabled is selected.
+    #https_traffic_only_enabled = false    #not needed as toggled automatically when nfsv3_enabled is selected.
     is_hns_enabled = true
     nfsv3_enabled  = true
 

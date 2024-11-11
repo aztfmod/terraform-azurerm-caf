@@ -13,5 +13,6 @@ resource "azurerm_synapse_sql_pool" "sql_pool" {
   synapse_workspace_id = var.synapse_workspace_id
   sku_name             = try(var.settings.sku_name, "DW100c")
   create_mode          = try(var.settings.create_mode, "Default")
+  storage_account_type = try(var.settings.storage_account_type, "GRS")
   tags                 = local.tags
 }

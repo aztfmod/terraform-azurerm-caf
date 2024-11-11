@@ -19,9 +19,24 @@ resource "azurerm_servicebus_namespace" "namespace" {
   name                         = azurecaf_name.namespace.result
   sku                          = var.settings.sku
   capacity                     = try(var.settings.capacity, null)
-  zone_redundant               = try(var.settings.zone_redundant, null)
   tags                         = merge(try(var.settings.tags, null), local.caf_tags)
   premium_messaging_partitions = try(var.settings.premium_messaging_partitions, null)
   location                     = local.location
   resource_group_name          = local.resource_group_name
+  dynamic "network_rule_set" {
+    for_each = try(var.settings.network_rule_sets, {})
+    content {
+      default_action                = try(network_rule_set.value.default_action, null)
+      public_network_access_enabled = try(network_rule_set.value.public_network_access_enabled, null)
+      trusted_services_allowed      = try(network_rule_set.value.trusted_services_allowed, null)
+      ip_rules                      = try(network_rule_set.value.ip_rules, null)
+      dynamic "network_rules" {
+        for_each = try(network_rule_set.value.subnets, {})
+        content {
+          subnet_id = can(network_rules.value.id) ? network_rules.value.id : var.remote_objects.vnets[try(network_rules.value.lz_key, var.client_config.landingzone_key)][network_rules.value.vnet_key].subnets[network_rules.value.subnet_key].id
+          ignore_missing_vnet_service_endpoint = try(network_rules.value.ignore_missing_vnet_service_endpoint, null)
+        }
+      }
+  }
+}
 }

@@ -179,7 +179,7 @@ vnets = {
         cidr                                           = ["10.1.0.0/24"]
         nsg_key                                        = "nsg"
         service_endpoints                              = ["Microsoft.KeyVault"]
-        enforce_private_link_endpoint_network_policies = true
+        private_endpoint_network_policies = "Enabled"
       }
     }
   }

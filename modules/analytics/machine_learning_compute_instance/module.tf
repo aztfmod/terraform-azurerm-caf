@@ -11,7 +11,6 @@ resource "azurecaf_name" "mlci" {
 resource "azurerm_machine_learning_compute_instance" "mlci" {
   name = azurecaf_name.mlci.result
 
-  location                      = var.location
   machine_learning_workspace_id = var.remote_objects.machine_learning_workspace_id
   virtual_machine_size          = var.settings.virtual_machine_size
   authorization_type            = try(var.settings.authorization_type, null)

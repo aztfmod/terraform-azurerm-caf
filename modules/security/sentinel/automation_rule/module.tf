@@ -30,13 +30,5 @@ resource "azurerm_sentinel_automation_rule" "automation_rule" {
     }
   }
 
-  dynamic "condition" {
-    for_each = try(var.settings.condition, {})
-
-    content {
-      operator = try(condition.value.operator, null)
-      property = try(condition.value.property, null)
-      values   = try(condition.value.values, null)
-    }
+  condition_json = try(var.settings.condition_json, null)
   }
-}

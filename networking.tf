@@ -72,7 +72,7 @@ module "virtual_subnets" {
   name                                          = each.value.name
   address_prefixes                              = try(each.value.cidr, [])
   service_endpoints                             = try(each.value.service_endpoints, [])
-  private_endpoint_network_policies_enabled     = try(each.value.private_endpoint_network_policies_enabled, each.value.enforce_private_link_endpoint_network_policies, null)
+  private_endpoint_network_policies     = try(each.value.private_endpoint_network_policies, each.value.enforce_private_link_endpoint_network_policies, null)
   private_link_service_network_policies_enabled = try(each.value.private_link_service_network_policies_enabled, each.value.enforce_private_link_service_network_policies, null)
 
   resource_group_name  = can(each.value.vnet.key) ? local.combined_objects_networking[try(each.value.vnet.lz_key, local.client_config.landingzone_key)][each.value.vnet.key].resource_group_name : split("/", each.value.vnet.id)[4]
@@ -271,7 +271,7 @@ module "route_tables" {
   location                      = can(local.global_settings.regions[each.value.region]) ? local.global_settings.regions[each.value.region] : local.combined_objects_resource_groups[try(each.value.resource_group.lz_key, local.client_config.landingzone_key)][try(each.value.resource_group.key, each.value.resource_group_key)].location
   resource_group_name           = can(each.value.resource_group.name) || can(each.value.resource_group_name) ? try(each.value.resource_group.name, each.value.resource_group_name) : local.combined_objects_resource_groups[try(each.value.resource_group.lz_key, local.client_config.landingzone_key)][try(each.value.resource_group_key, each.value.resource_group.key)].name
   base_tags                     = try(local.global_settings.inherit_tags, false) ? try(local.combined_objects_resource_groups[try(each.value.resource_group.lz_key, local.client_config.landingzone_key)][try(each.value.resource_group.key, each.value.resource_group_key)].tags, {}) : {}
-  disable_bgp_route_propagation = try(each.value.disable_bgp_route_propagation, null)
+  bgp_route_propagation_enabled = try(each.value.bgp_route_propagation_enabled, null)
   tags                          = try(each.value.tags, null)
 }
 

@@ -20,7 +20,7 @@ resource "azurerm_servicebus_subscription" "subscription" {
   lock_duration                             = try(var.settings.lock_duration, null)
   dead_lettering_on_message_expiration      = try(var.settings.dead_lettering_on_message_expiration, null)
   dead_lettering_on_filter_evaluation_error = try(var.settings.dead_lettering_on_filter_evaluation_error, null)
-  enable_batched_operations                 = try(var.settings.enable_batched_operations, null)
+  batched_operations_enabled                = try(var.settings.batched_operations_enabled, null)
   requires_session                          = try(var.settings.requires_session, null)
   status                                    = try(var.settings.status, null)
 

@@ -24,7 +24,7 @@ vnets = {
       example = {
         name                                           = "example-subnet"
         cidr                                           = ["10.0.1.0/24"]
-        enforce_private_link_endpoint_network_policies = "true"
+        private_endpoint_network_policies = "Enabled"
       }
     }
   }

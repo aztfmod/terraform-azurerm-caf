@@ -79,7 +79,7 @@ vnets = {
         name                                           = "jumphost"
         cidr                                           = ["100.64.103.0/27"]
         service_endpoint                               = ["Microsoft.ContainerRegistry"]
-        enforce_private_link_endpoint_network_policies = "true"
+        private_endpoint_network_policies = "Enabled"
       }
     }
   }

@@ -39,9 +39,6 @@ variable "var_folder_path" {
 # variable "keyvaultDns" {
 #   default = ".vault.azure.net"
 # }
-# variable "mariadbServerEndpoint" {
-#   default = ".mariadb.database.azure.com"
-# }
 # variable "mhsmDns" {
 #   default = ".managedhsm.azure.net"
 # }
@@ -206,12 +203,6 @@ variable "mssql_managed_databases_backup_ltr" {
   default = {}
 }
 variable "mssql_elastic_pools" {
-  default = {}
-}
-variable "mariadb_servers" {
-  default = {}
-}
-variable "mariadb_databases" {
   default = {}
 }
 variable "mssql_failover_groups" {
@@ -392,9 +383,6 @@ variable "application_gateway_applications_v1" {
   default = {}
 }
 variable "application_gateway_waf_policies" {
-  default = {}
-}
-variable "mysql_servers" {
   default = {}
 }
 variable "postgresql_flexible_servers" {
@@ -679,6 +667,13 @@ variable "nat_gateways" {
 variable "cognitive_services_account" {
   default = {}
 }
+variable "cognitive_account_customer_managed_key" {
+  default = {}
+}
+variable "cognitive_deployment" {
+  default = {}
+}
+
 variable "database_migration_services" {
   default = {}
 }

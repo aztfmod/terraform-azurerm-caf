@@ -31,7 +31,7 @@ vnets = {
       private_endpoints = {
         name                                           = "private_endpoints"
         cidr                                           = ["100.64.51.0/27"]
-        enforce_private_link_endpoint_network_policies = true
+        private_endpoint_network_policies = "Enabled"
       }
       jumpbox = {
         name    = "jumpbox"

@@ -19,7 +19,7 @@ cosmos_dbs = {
     resource_group_key        = "cosmosdb_region1"
     offer_type                = "Standard"
     kind                      = "MongoDB"
-    enable_automatic_failover = "true"
+    automatic_failover_enabled = "true"
 
     consistency_policy = {
       consistency_level       = "BoundedStaleness"
@@ -44,9 +44,9 @@ cosmos_dbs = {
     }
 
     # optional
-    enable_free_tier                = false
-    ip_range_filter                 = ""
-    enable_multiple_write_locations = false
+    free_tier_enabled                = false
+    ip_range_filter                 = []
+    multiple_write_locations_enabled = false
     tags = {
       "project" = "EDH"
     }

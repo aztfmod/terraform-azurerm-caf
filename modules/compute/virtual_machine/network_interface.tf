@@ -48,8 +48,8 @@ resource "azurerm_network_interface" "nic" {
   resource_group_name = local.resource_group_name
 
   dns_servers                   = lookup(each.value, "dns_servers", null)
-  enable_ip_forwarding          = lookup(each.value, "enable_ip_forwarding", false)
-  enable_accelerated_networking = lookup(each.value, "enable_accelerated_networking", false)
+  ip_forwarding_enabled          = lookup(each.value, "ip_forwarding_enabled", false)
+  accelerated_networking_enabled = lookup(each.value, "accelerated_networking_enabled", false)
   internal_dns_name_label       = lookup(each.value, "internal_dns_name_label", null)
   tags                          = merge(local.tags, try(each.value.tags, null))
 
@@ -91,7 +91,7 @@ resource "azurerm_network_interface" "nic" {
 #     vnet_key                = "hub_rg1"
 #     subnet_key              = "jumpbox"
 #     name                    = "0"
-#     enable_ip_forwarding    = false
+#     ip_forwarding_enabled    = false
 #     internal_dns_name_label = "nic0"
 #     // Prefer network_security_group orver nsg_key. Will be removed in version 6
 #     nsg_key                 = "data"       // requires a version 1 nsg definition (see compute/vm/210-vm-bastion-winrm example)
@@ -107,7 +107,7 @@ resource "azurerm_network_interface" "nic" {
 #         vnet_key                = "vnet_region1"
 #         subnet_key              = "bastion"
 #         name                    = "0-bastion_host"
-#         enable_ip_forwarding    = false
+#         ip_forwarding_enabled    = false
 #         internal_dns_name_label = "bastion-host-nic0"
 #         public_ip_address_key   = "bastion_host_pip1"
 #       }

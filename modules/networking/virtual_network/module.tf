@@ -50,7 +50,7 @@ module "special_subnets" {
   address_prefixes                              = lookup(each.value, "cidr", [])
   service_endpoints                             = lookup(each.value, "service_endpoints", [])
   resource_group_name                           = local.resource_group_name
-  private_endpoint_network_policies_enabled     = try(each.value.private_endpoint_network_policies_enabled, each.value.enforce_private_link_endpoint_network_policies, null)
+  private_endpoint_network_policies     = try(each.value.private_endpoint_network_policies, each.value.enforce_private_link_endpoint_network_policies, null)
   private_link_service_network_policies_enabled = try(each.value.private_link_service_network_policies_enabled, each.value.enforce_private_link_service_network_policies, null)
   settings                                      = each.value
 }
@@ -65,7 +65,7 @@ module "subnets" {
   address_prefixes                              = lookup(each.value, "cidr", [])
   service_endpoints                             = lookup(each.value, "service_endpoints", [])
   virtual_network_name                          = azurerm_virtual_network.vnet.name
-  private_endpoint_network_policies_enabled     = try(each.value.private_endpoint_network_policies_enabled, each.value.enforce_private_link_endpoint_network_policies, null)
+  private_endpoint_network_policies     = try(each.value.private_endpoint_network_policies, each.value.enforce_private_link_endpoint_network_policies, null)
   private_link_service_network_policies_enabled = try(each.value.private_link_service_network_policies_enabled, each.value.enforce_private_link_service_network_policies, null)
   settings                                      = each.value
 }

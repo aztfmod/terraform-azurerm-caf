@@ -33,7 +33,7 @@ databricks_workspaces = {
     name                                  = "sales_workspace"
     resource_group_key                    = "databricks_re1"
     sku                                   = "premium"
-    public_network_access_enabled         = false
+    private_endpoint_network_policies     = "Enabled"
     network_security_group_rules_required = "NoAzureDatabricksRules"
     tags = {
       ws = "ws"
@@ -78,7 +78,7 @@ vnets = {
       pep = {
         name                                           = "pep"
         cidr                                           = ["10.100.100.0/28"]
-        enforce_private_link_endpoint_network_policies = "true"
+        private_endpoint_network_policies = "Enabled"
       }
       databricks_public = {
         nsg_key = "databricks_public"

@@ -24,7 +24,7 @@ vnets = {
       subnet1 = {
         name                                           = "signalr-pr-subnet"
         cidr                                           = ["10.100.100.0/29"]
-        enforce_private_link_endpoint_network_policies = "true"
+        private_endpoint_network_policies = "Enabled"
       }
     }
 
@@ -40,7 +40,7 @@ vnets = {
       subnet1 = {
         name                                           = "signalr-pr-subnet"
         cidr                                           = ["10.100.100.8/29"]
-        enforce_private_link_endpoint_network_policies = "true"
+        private_endpoint_network_policies = "Enabled"
       }
     }
 
