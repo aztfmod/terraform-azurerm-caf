@@ -25,6 +25,7 @@ locals {
     azuread_service_principal_passwords = try(var.azuread.azuread_service_principal_passwords, {})
     azuread_service_principals          = try(var.azuread.azuread_service_principals, {})
     azuread_users                       = try(var.azuread.azuread_users, {})
+    azuread_federated_credentials       = try(var.azuread.azuread_federated_credentials, {})
   }
 
   client_config = var.client_config == {} ? {

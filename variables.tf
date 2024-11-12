@@ -450,3 +450,6 @@ variable "load_test" {
   default     = {}
 }
 
+variable "mi_federated_credentials" {
+  default = {}
+}
