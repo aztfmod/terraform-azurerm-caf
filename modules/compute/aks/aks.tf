@@ -77,7 +77,9 @@ resource "azurerm_kubernetes_cluster" "aks" {
     dynamic "upgrade_settings" {
       for_each = try(var.settings.default_node_pool.upgrade_settings, null) == null ? [] : [1]
       content {
-        max_surge = upgrade_settings.value.max_surge
+        drain_timeout_in_minutes      = try(var.settings.default_node_pool.upgrade_settings.drain_timeout_in_minutes, null)
+        node_soak_duration_in_minutes = try(var.settings.default_node_pool.upgrade_settings.node_soak_duration_in_minutes, null)
+        max_surge                     = var.settings.default_node_pool.upgrade_settings.max_surge
       }
     }
 
