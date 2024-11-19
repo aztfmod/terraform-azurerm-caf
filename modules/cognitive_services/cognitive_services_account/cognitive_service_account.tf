@@ -77,5 +77,3 @@ resource "azurerm_cognitive_deployment" "deployment" {
     capacity = try(each.value.scale.capacity, null)
   }
 }
-
-}
