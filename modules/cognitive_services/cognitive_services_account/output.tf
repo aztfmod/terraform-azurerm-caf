@@ -26,3 +26,8 @@ output "rbac_id" {
 output "identity" {
   value = try(azurerm_cognitive_account.service.identity, null)
 }
+
+output "deployment_id" {
+  description = "The ID of the Deployment for Azure Cognitive Services Account."
+  value       = azurerm_cognitive_deployment.id
+}
