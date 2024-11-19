@@ -19,5 +19,5 @@ output "identity" {
 
 output "deployment_id" {
   description = "The ID of the Deployment for Azure Cognitive Services Account."
-  value       = azurerm_cognitive_deployment.id
+  value       = try(azurerm_cognitive_deployment.deployment[0].id, null)
 }
