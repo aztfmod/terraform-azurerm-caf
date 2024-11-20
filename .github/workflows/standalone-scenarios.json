@@ -20,6 +20,7 @@
     "apim/118-api_management_platform_stv2",
     "app_config/100-simple",
     "app_config/101-private-link",
+    "app_config/102-dynamic-settings",
     "app_insights/100-all-attributes",
     "app_insights/100-simple",
     "app_insights/102-workspace-based-central-logs",
