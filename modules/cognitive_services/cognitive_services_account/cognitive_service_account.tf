@@ -57,7 +57,7 @@ resource "azurerm_cognitive_account" "service" {
 resource "azurerm_cognitive_deployment" "deployment" {
   depends_on = [azurerm_cognitive_account.service]
 
-  for_each               = var.settings.deployment
+  for_each               = try(var.settings.deployment, {})
   name                   = each.value.name
   cognitive_account_id   = azurerm_cognitive_account.service.id
   rai_policy_name        = try(each.value.rai_policy, null)
