@@ -817,6 +817,10 @@ variable "cdn_profile" {
 variable "function_apps" {
   default = {}
 }
+variable "linux_function_apps" {
+  default = {}
+  type    = map(any)
+}
 variable "windows_function_apps" {
   default = {}
   type    = map(any)
