@@ -3,14 +3,14 @@ terraform {
   required_providers {
     azurerm = {
       source  = "hashicorp/azurerm"
-      version = "~> 3.40"
+      version = "~> 3.40, < 3.100"
       configuration_aliases = [
         azurerm.vhub
       ]
     }
     azuread = {
       source  = "hashicorp/azuread"
-      version = "~> 1.4.0"
+      version = "< 3.0.0"
     }
     azapi = {
       source  = "azure/azapi"
