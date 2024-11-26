@@ -19,3 +19,6 @@ variable "base_tags" {
 variable "resource_group_name" {
   description = " The name of the resource group in which to create the activity log alert instance."
 }
+variable "location" {
+  description = "The location/region where the activity log alert will be created."
+}
