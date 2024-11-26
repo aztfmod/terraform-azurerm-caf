@@ -37,6 +37,11 @@ aks_clusters = {
       load_balancer_sku = "standard"
     }
 
+    admin_groups = {
+      # ids = []
+      azuread_group_keys = ["aks_admins"]
+    }
+
     azure_active_directory_role_based_access_control = {
       managed            = true
       azure_rbac_enabled = true
