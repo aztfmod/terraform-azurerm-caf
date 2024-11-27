@@ -18,3 +18,7 @@ output "rbac_id" {
 output "name" {
   value = azurerm_user_assigned_identity.msi.name
 }
+
+output "tenant_id" {
+  value = azurerm_user_assigned_identity.msi.tenant_id
+}

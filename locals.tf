@@ -220,6 +220,9 @@ locals {
     managed_identities           = local.combined_objects_managed_identities
     resource_groups              = local.combined_objects_resource_groups
     storage_accounts             = local.combined_objects_storage_accounts
+    cognitive_services_accounts  = local.combined_objects_cognitive_services_accounts
+    search_services              = local.combined_objects_search_services
+    cosmos_dbs                   = local.combined_objects_cosmos_dbs
   }
 
   global_settings = merge({
