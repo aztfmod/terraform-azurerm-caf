@@ -8,6 +8,8 @@ resource "random_string" "prefix" {
 
 locals {
   azuread = {
+    azuread_administrative_unit_members = try(var.azuread.azuread_administrative_unit_members, {})
+    azuread_administrative_units        = try(var.azuread.azuread_administrative_units, {})
     azuread_api_permissions             = try(var.azuread.azuread_api_permissions, {})
     azuread_applications                = try(var.azuread.azuread_applications, {})
     azuread_apps                        = try(var.azuread.azuread_apps, {})
@@ -22,7 +24,7 @@ locals {
   }
 
   client_config = var.client_config == {} ? {
-    client_id               = data.azurerm_client_config.current.client_id
+    client_id               = data.azuread_client_config.current.client_id
     landingzone_key         = var.current_landingzone_key
     logged_aad_app_objectId = local.object_id
     logged_user_objectId    = local.object_id
@@ -323,7 +325,7 @@ locals {
     vpn_sites                                               = try(var.networking.vpn_sites, {})
   }
 
-  object_id = coalesce(var.logged_user_objectId, var.logged_aad_app_objectId, try(data.azurerm_client_config.current.object_id, null), try(data.azuread_service_principal.logged_in_app.0.object_id, null))
+  object_id = coalesce(var.logged_user_objectId, var.logged_aad_app_objectId, try(data.azuread_client_config.current.object_id, null), try(data.azuread_service_principal.logged_in_app.0.object_id, null))
 
   security = {
     disk_encryption_sets                = try(var.security.disk_encryption_sets, {})

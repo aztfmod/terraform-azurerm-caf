@@ -25,7 +25,7 @@ resource "azurerm_storage_account" "stg" {
   public_network_access_enabled     = try(var.storage_account.allow_blob_public_access, var.storage_account.public_network_access_enabled, false)
   allow_nested_items_to_be_public   = try(var.storage_account.allow_nested_items_to_be_public, null)
   cross_tenant_replication_enabled  = try(var.storage_account.cross_tenant_replication_enabled, null)
-  https_traffic_only_enabled        = try(var.storage_account.https_traffic_only_enabled, true)
+  enable_https_traffic_only        = try(var.storage_account.enable_https_traffic_only, true)
   infrastructure_encryption_enabled = try(var.storage_account.infrastructure_encryption_enabled, null)
   is_hns_enabled                    = try(var.storage_account.is_hns_enabled, false)
   large_file_share_enabled          = try(var.storage_account.large_file_share_enabled, null)

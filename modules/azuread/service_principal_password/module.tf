@@ -1,7 +1,6 @@
 
 resource "azuread_service_principal_password" "pwd" {
   service_principal_id = var.service_principal_id
-  value                = random_password.pwd.result
   end_date             = timeadd(time_rotating.pwd.id, format("%sh", local.password_policy.expire_in_days * 24))
 
   lifecycle {
