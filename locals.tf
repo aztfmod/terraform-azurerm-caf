@@ -474,4 +474,6 @@ locals {
 
 
   load_test = try(var.load_test, {})
+
+  azurerm_management_locks = try(var.azurerm_management_locks, {})
 }
