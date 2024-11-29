@@ -105,11 +105,26 @@ monitor_metric_alert = {
       aggregation      = "Total"
       operator         = "GreaterThan"
       threshold        = 50
+    }
 
-      dimension = {
+    # for single dimension
+    # dimension = {
+    #     name     = "ApiName"
+    #     operator = "Include"
+    #     values   = ["*"]
+    # }
+
+    # for multiple dimensions
+    dimensions = {
+      api = {
         name     = "ApiName"
         operator = "Include"
         values   = ["*"]
+      }
+      serverbusy = {
+        name     = "ResponseType"
+        operator = "Include"
+        values   = ["ServerBusyError"]
       }
     }
 
