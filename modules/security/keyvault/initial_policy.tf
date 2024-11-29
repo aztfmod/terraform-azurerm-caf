@@ -11,3 +11,9 @@ module "initial_policy" {
     managed_identities = var.managed_identities
   }
 }
+
+resource "time_sleep" "initial_policy" {
+  depends_on = [module.initial_policy]
+
+  create_duration = "30s"
+}
