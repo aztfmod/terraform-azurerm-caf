@@ -48,6 +48,16 @@ resource "azurerm_cosmosdb_account" "cosmos_account" {
     }
   }
 
+
+  dynamic "identity" {
+    for_each = can(var.settings.identity) ? [var.settings.identity] : []
+
+    content {
+      type         = identity.value.type
+      identity_ids = local.managed_identities
+    }
+  }
+
   # Optional
   dynamic "capabilities" {
     for_each = try(toset(var.settings.capabilities), [])
