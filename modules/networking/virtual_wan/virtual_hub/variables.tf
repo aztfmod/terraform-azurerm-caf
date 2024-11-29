@@ -6,10 +6,26 @@ variable "prefix" {
 
 variable "global_settings" {
   description = "global settings"
+  // Only set keys required in this module
+  type = object({
+    use_slug = optional(bool)
+    random_length = optional(number)
+    prefixes = optional(list(string))
+    passthrough = optional(bool)
+  })
 }
 
 variable "virtual_hub_config" {
   description = "core_networking"
+  type = object({
+    hub_name = string
+    sku = string
+    hub_address_prefix = string
+    firewall_name = optional(string)
+    p2s_config = optional(any)
+    s2s_config = optional(any)
+    er_config = optional(any)
+  })
 }
 
 variable "location" {
