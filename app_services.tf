@@ -49,3 +49,27 @@ resource "azurerm_app_service_virtual_network_swift_connection" "vnet_config" {
   app_service_id = module.app_services[each.key].id
   subnet_id      = local.combined_objects_networking[try(each.value.vnet_integration.lz_key, local.client_config.landingzone_key)][each.value.vnet_integration.vnet_key].subnets[each.value.vnet_integration.subnet_key].id
 }
+
+resource "azurerm_app_service_slot_virtual_network_swift_connection" "vnet_config" {
+  for_each = {
+    for mapping in
+    flatten(
+      [
+        for key, app_service in local.webapp.app_services : [
+          for slot_key, slot in try(app_service.slots, {}) :
+          {
+            key            = key
+            slot_key       = slot_key
+            slot_name      = module.app_services[key].slot[slot_key].name
+            app_service_id = module.app_services[key].id
+            subnet_id      = local.combined_objects_networking[try(app_service.vnet_integration.lz_key, local.client_config.landingzone_key)][app_service.vnet_integration.vnet_key].subnets[app_service.vnet_integration.subnet_key].id
+          }
+        ]
+      ]
+    ) : format("%s_%s", mapping.key, mapping.slot_key) => mapping
+  }
+
+  slot_name      = each.value.slot_name
+  app_service_id = each.value.app_service_id
+  subnet_id      = each.value.subnet_id
+}

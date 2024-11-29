@@ -177,6 +177,12 @@ app_services = {
       }
     }
 
+    slots = {
+      test = {
+        name = "test"
+      }
+    }
+
     app_settings = {
       "WEBSITE_NODE_DEFAULT_VERSION" = "6.9.1"
     }
