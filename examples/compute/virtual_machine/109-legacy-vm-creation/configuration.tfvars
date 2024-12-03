@@ -61,7 +61,7 @@ virtual_machines = {
           caching               = "ReadWrite"
           disk_size_gb          = "64"
           create_option         = "FromImage"
-          operating_system_type = "Linux"
+          operating_system      = "Linux"
         }
 
         os_profile_linux_config = {
@@ -149,7 +149,7 @@ virtual_machines = {
           caching               = "ReadWrite"
           disk_size_gb          = "127"
           create_option         = "FromImage"
-          operating_system_type = "Windows"
+          operating_system      = "Windows"
         }
 
         os_profile_windows_config = {
