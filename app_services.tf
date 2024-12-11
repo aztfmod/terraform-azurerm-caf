@@ -80,7 +80,7 @@ module "windows_web_apps" {
   azuread_service_principal_passwords = local.combined_objects_azuread_service_principal_passwords
   application_insight                 = try(each.value.application_insight_key, null) == null ? null : module.azurerm_application_insights[each.value.application_insight_key]
   diagnostic_profiles                 = try(each.value.diagnostic_profiles, null)
-  diagnostics                         = local.combined_diagnostics  
+  diagnostics                         = local.combined_diagnostics
 }
 
 output "windows_web_apps" {
@@ -117,7 +117,7 @@ module "linux_web_apps" {
   azuread_service_principal_passwords = local.combined_objects_azuread_service_principal_passwords
   application_insight                 = try(each.value.application_insight_key, null) == null ? null : module.azurerm_application_insights[each.value.application_insight_key]
   diagnostic_profiles                 = try(each.value.diagnostic_profiles, null)
-  diagnostics                         = local.combined_diagnostics  
+  diagnostics                         = local.combined_diagnostics
 }
 output "linux_web_apps" {
   value = module.linux_web_apps
