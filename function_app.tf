@@ -70,6 +70,8 @@ module "windows_function_apps" {
   storage_account_name       = try(data.azurerm_storage_account.windows_function_apps[each.key].name, null)
   storage_account_access_key = try(data.azurerm_storage_account.windows_function_apps[each.key].primary_access_key, null)
   tags                       = try(each.value.tags, null)
+  diagnostic_profiles        = try(each.value.diagnostic_profiles, null)
+  diagnostics                = local.combined_diagnostics
   # subnet_id = try(
   #                 each.value.subnet_id,
   #                 local.combined_objects_networking[try(each.value.settings.lz_key, local.client_config.landingzone_key)][each.value.settings.vnet_key].subnets[each.value.settings.subnet_key].id,
@@ -122,6 +124,8 @@ module "linux_function_apps" {
   storage_account_name       = try(data.azurerm_storage_account.linux_function_apps[each.key].name, null)
   storage_account_access_key = try(data.azurerm_storage_account.linux_function_apps[each.key].primary_access_key, null)
   tags                       = try(each.value.tags, null)
+  diagnostic_profiles        = try(each.value.diagnostic_profiles, null)
+  diagnostics                = local.combined_diagnostics  
   # subnet_id = try(
   #                 each.value.subnet_id,
   #                 local.combined_objects_networking[try(each.value.settings.lz_key, local.client_config.landingzone_key)][each.value.settings.vnet_key].subnets[each.value.settings.subnet_key].id,

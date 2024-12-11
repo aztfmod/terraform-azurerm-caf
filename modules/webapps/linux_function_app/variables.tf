@@ -112,3 +112,11 @@ variable "storage_account_access_key" {
 variable "dynamic_app_settings" {
   default = {}
 }
+
+variable "diagnostic_profiles" {
+  default = {}
+}
+
+variable "diagnostics" {
+  default = null
+}
