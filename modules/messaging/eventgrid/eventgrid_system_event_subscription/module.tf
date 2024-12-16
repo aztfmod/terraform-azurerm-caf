@@ -47,6 +47,7 @@ resource "azurerm_eventgrid_system_topic_event_subscription" "eges" {
     }
   }
   included_event_types = try(var.settings.included_event_types, null)
+
   dynamic "subject_filter" {
     for_each = try(var.settings.subject_filter, null) != null ? [var.settings.subject_filter] : []
     content {
