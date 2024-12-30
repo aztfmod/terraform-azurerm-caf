@@ -67,7 +67,7 @@ resource "azurerm_backup_policy_vm" "vm" {
       archived_restore_point {
         mode          = lookup(each.value.tiering_policy, "mode", null)
         duration      = try(each.value.tiering_policy.duration, null)
-        duration_type = try(each.value.tiering_policy.type, null)
+        duration_type = try(each.value.tiering_policy.duration_type, null)
       }
     }
   }
