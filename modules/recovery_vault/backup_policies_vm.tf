@@ -60,4 +60,15 @@ resource "azurerm_backup_policy_vm" "vm" {
       months   = each.value.retention_yearly.months
     }
   }
+
+  dynamic "tiering_policy" {
+    for_each = lookup(each.value, "tiering_policy", null) == null ? [] : [1]
+    content {
+      archived_restore_point {
+        mode          = lookup(each.value.tiering_policy, "mode", null)
+        duration      = try(each.value.tiering_policy.duration, null)
+        duration_type = try(each.value.tiering_policy.duration_type, null)
+      }
+    }
+  }
 }
