@@ -13,6 +13,7 @@ resource "azurerm_app_configuration_key" "config" {
 
   configuration_store_id = local.app_config_id
   key                    = each.value.key
+  content_type           = each.value.content_type
   label                  = try(each.value.label, null)
   # if value is a keyvault reference, set the correct type, set value to null and set vault_key_reference
   type                = try(each.value.vault_key, null) == null ? "kv" : "vault"
