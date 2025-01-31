@@ -12,7 +12,7 @@ variable "elastic_pool_id" {
 }
 variable "base_tags" {
   description = "Base tags for the resource to be inherited from the resource group."
-  type        = map(any)
+  type        = bool
 }
 variable "sqlcmd_dbname" {
   default = null
@@ -26,3 +26,19 @@ variable "diagnostic_profiles" {
 variable "diagnostics" {
   default = null
 }
+variable "resource_group" {
+  description = "The resource group object in which the resources will be created"
+}
+variable "resource_group_name" {}
+variable "vnets" {}
+variable "private_dns" {
+  default = {}
+}
+variable "private_endpoints" {}
+
+variable "client_config" {
+  description = "Client configuration object (see module README.md)."
+}
+variable "mssql_servers" {}
+
+variable "keyvault_id" {}
