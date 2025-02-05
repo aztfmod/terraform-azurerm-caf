@@ -57,7 +57,7 @@ resource "azurerm_cosmosdb_sql_role_assignment" "cosmos_account" {
         try(each.value.resource_group.name, each.value.resource_group_name) :
         local.combined_objects_resource_groups[try(each.value.resource_group.lz_key, local.client_config.landingzone_key)][try(each.value.resource_group_key, each.value.resource_group.key)].name
       ),
-      local.combined_objects_resource_groups[try(each.value.resource_group.lz_key, local.client_config.landingzone_key)][try(each.value.resource_group_key, each.value.resource_group.key)].name,
+      local.combined_objects_cosmos_dbs[try(each.value.account.lz_key, local.client_config.landingzone_key)][try(each.value.account_key, each.value.account.key)].name,
       local.cosmosdb_built_in_roles[lower(each.value.role_definition_name)]
     )
   )
@@ -93,7 +93,7 @@ resource "azurerm_cosmosdb_sql_role_assignment" "cosmos_sql_database" {
         try(each.value.resource_group.name, each.value.resource_group_name) :
         local.combined_objects_resource_groups[try(each.value.resource_group.lz_key, local.client_config.landingzone_key)][try(each.value.resource_group_key, each.value.resource_group.key)].name
       ),
-      local.combined_objects_resource_groups[try(each.value.resource_group.lz_key, local.client_config.landingzone_key)][try(each.value.resource_group_key, each.value.resource_group.key)].name,
+      local.combined_objects_cosmos_dbs[try(each.value.account.lz_key, local.client_config.landingzone_key)][try(each.value.account_key, each.value.account.key)].name,
       local.cosmosdb_built_in_roles[lower(each.value.role_definition_name)]
     )
   )
@@ -129,7 +129,7 @@ resource "azurerm_cosmosdb_sql_role_assignment" "cosmos_sql_container" {
         try(each.value.resource_group.name, each.value.resource_group_name) :
         local.combined_objects_resource_groups[try(each.value.resource_group.lz_key, local.client_config.landingzone_key)][try(each.value.resource_group_key, each.value.resource_group.key)].name
       ),
-      local.combined_objects_resource_groups[try(each.value.resource_group.lz_key, local.client_config.landingzone_key)][try(each.value.resource_group_key, each.value.resource_group.key)].name,
+      local.combined_objects_cosmos_dbs[try(each.value.account.lz_key, local.client_config.landingzone_key)][try(each.value.account_key, each.value.account.key)].name,
       local.cosmosdb_built_in_roles[lower(each.value.role_definition_name)]
     )
   )
