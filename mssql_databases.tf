@@ -24,7 +24,7 @@ module "mssql_databases" {
   private_endpoints   = try(each.value.job.private_endpoints, {})
   private_dns         = local.combined_objects_private_dns
   resource_group      = local.combined_objects_resource_groups[try(each.value.resource_group.lz_key, local.client_config.landingzone_key)][try(each.value.resource_group_key, each.value.resource_group.key)]
-  resource_group_name = module.mssql_servers[each.value.resource_group_key].resource_group_name
+  resource_group_name = try(module.mssql_servers[each.value.resource_group_key].resource_group_name, null)
   mssql_servers       = local.combined_objects_mssql_servers
   keyvault_id         = try(local.combined_objects_keyvaults[try(each.value.keyvault.lz_key, local.client_config.landingzone_key)][try(each.value.keyvault.key, each.value.keyvault_key)].id, null)
 }
