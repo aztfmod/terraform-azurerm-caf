@@ -54,6 +54,8 @@
     "mssql_server/107-sqlserver-db-retention-policy",
     "mssql_server/108-sqlserver-db-diagnostics",
     "mssql_server/109-sqlserver-network-firewall-rule",
+    "mssql_server/112-sqlserver-db-user-creation",
+    "mssql_server/113-sqlserver-db-job-agent",
     "mysql_flexible_server/100-simple-mysql-flexible",
     "mysql_flexible_server/101-delegated-subnet-with-fw-rule",
     "mysql_flexible_server/102-advanced-mysql-flexible",

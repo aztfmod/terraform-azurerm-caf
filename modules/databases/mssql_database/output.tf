@@ -17,3 +17,11 @@ output "server_name" {
 output "server_fqdn" {
   value = local.server_name
 }
+
+output "job_agent_id" {
+  description = "ID of the MSSQL job agent"
+  value = {
+    for k, v in azapi_resource.mssql_job_agents : k => v.id
+  }
+}
+
