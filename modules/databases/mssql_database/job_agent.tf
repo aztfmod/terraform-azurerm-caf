@@ -1,5 +1,5 @@
 resource "azapi_resource" "mssql_job_agents" {
-  for_each = try(var.settings.job, null) != null ? { "job_agent" = var.settings.job } : {}
+  count = try(var.settings.job, null) == null ? 0 : 1
 
   type      = "Microsoft.Sql/servers/jobAgents@2024-05-01-preview"
   name      = var.settings.job.name
@@ -36,16 +36,16 @@ resource "azapi_resource" "mssql_job_agents_jobs" {
 
   type      = "Microsoft.Sql/servers/jobAgents/jobs@2024-05-01-preview"
   name      = each.value.name
-  parent_id = azapi_resource.mssql_job_agents["job_agent"].id
+  parent_id = azapi_resource.mssql_job_agents.0.id
   body = jsonencode({
     properties = {
       description = try(each.value.description, null)
       schedule = {
-        enabled   = try(each.value.schedule.enabled, null)
-        startTime = try(each.value.schedule.startTime, null)
-        endTime   = try(each.value.schedule.endTime, null)
+        enabled   = try(each.value.schedule.enabled, false)
+        startTime = try(each.value.schedule.startTime, "0001-01-01T00:00:00Z")
+        endTime   = try(each.value.schedule.endTime, "0001-01-01T00:00:00Z")
         interval  = try(each.value.schedule.interval, null)
-        type      = try(each.value.schedule.type, null)
+        type      = try(each.value.schedule.type, "Once")
       }
     }
   })
@@ -108,7 +108,7 @@ resource "azapi_resource" "mssql_job_agents_targetgroups" {
 
   type      = "Microsoft.Sql/servers/jobAgents/targetGroups@2024-05-01-preview"
   name      = each.value.tg_value.name
-  parent_id = azapi_resource.mssql_job_agents["job_agent"].id
+  parent_id = azapi_resource.mssql_job_agents.0.id
 
   body = jsonencode({
     properties = {
@@ -127,3 +127,75 @@ resource "azapi_resource" "mssql_job_agents_targetgroups" {
   response_export_values    = ["properties.outputs"]
 }
 
+resource "azapi_resource" "mssql_job_agents_private_endpoint" {
+  count = try(var.settings.job.private_endpoint_name, null) == null ? 0 : 1
+
+  type      = "Microsoft.Sql/servers/jobAgents/privateEndpoints@2024-05-01-preview"
+  name      = var.job_private_endpoint_name
+  parent_id = azapi_resource.mssql_job_agents.0.id
+
+  body = jsonencode({
+    properties = {
+      targetServerAzureResourceId = var.mssql_servers[try(var.settings.lz_key, var.client_config.landingzone_key)][var.settings.mssql_server_key].id
+    }
+  })
+  schema_validation_enabled = false
+  response_export_values    = ["properties.privateEndpointConnections"]
+  depends_on                = [azapi_resource.mssql_job_agents]
+}
+
+resource "time_sleep" "wait_for_private_endpoint" {
+  count = try(var.settings.job.private_endpoint_name, null) == null ? 0 : 1
+
+  create_duration = "2m"
+  depends_on      = [azapi_resource.mssql_job_agents]
+
+  triggers = {
+    timestamp = timestamp()
+  }
+}
+locals {
+  connections = jsondecode(data.azapi_resource.sql_server.output).properties.privateEndpointConnections
+
+  private_endpoint_connection_name = (
+    local.connections == null || length(local.connections) == 0 ? null :
+    try(
+      element([
+        for connection in local.connections :
+        connection.id
+        if var.job_private_endpoint_name != null && connection.properties.privateLinkServiceConnectionState.status == "Pending"
+      ], 0),
+      "temp"
+    )
+  )
+}
+
+# Data source pour récupérer les informations sur le serveur SQL
+data "azapi_resource" "sql_server" {
+
+  type                   = "Microsoft.Sql/servers@2024-05-01-preview"
+  resource_id            = var.mssql_servers[try(var.settings.lz_key, var.client_config.landingzone_key)][var.settings.mssql_server_key].id
+  response_export_values = ["properties.privateEndpointConnections"]
+
+  depends_on = [time_sleep.wait_for_private_endpoint]
+}
+
+resource "azapi_update_resource" "approve_private_endpoint" {
+  count = try(var.settings.job.private_endpoint_name, null) == null ? 0 : 1
+
+  type = "Microsoft.Sql/servers/privateEndpointConnections@2024-05-01-preview"
+  # resource_id = "${var.mssql_servers[try(var.settings.lz_key, var.client_config.landingzone_key)][var.settings.mssql_server_key].id}/privateEndpointConnections/${local.private_endpoint_connection_name}"
+  resource_id = local.private_endpoint_connection_name
+  body = jsonencode({
+    properties = {
+      privateLinkServiceConnectionState = {
+        status      = "Approved"
+        description = "Approved by Terraform"
+      }
+    }
+  })
+
+  lifecycle {
+    ignore_changes = all
+  }
+}

@@ -56,16 +56,18 @@ mssql_databases = {
         }
       }
 
+      private_endpoint_name = "job-pe1"
+
       jobs = {
         examplejob1 = {
           name        = "examplejob1"
           description = "Test description"
           schedule = {
             enabled   = true
-            startTime = "2024-04-16T23:00:00Z"
-            endTime   = "9999-12-31T11:59:59Z"
+            startTime = "2025-03-01T00:00:00Z"
+            endTime   = "2025-12-01T00:00:00Z"
             interval  = "P1D"
-            type      = "Once"
+            type      = "Recurring"
           }
           steps = {
             step1 = {
