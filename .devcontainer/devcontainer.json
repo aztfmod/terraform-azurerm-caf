@@ -2,7 +2,7 @@
     "name": "Azure SRE module",
 
     // Container user to use in VSCode Online and GitHub Codespaces
-    "image": "ghcr.io/arnaudlh/rover/roverlight:2502.220930",
+    "image": "ghcr.io/arnaudlh/rover/roverlight:2502.221253",
     "remoteUser": "vscode",
 
     // Volume mounts for the container.
