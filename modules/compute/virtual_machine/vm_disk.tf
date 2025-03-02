@@ -35,8 +35,11 @@ resource "azurerm_managed_disk" "disk" {
 resource "azurerm_virtual_machine_data_disk_attachment" "disk" {
   for_each = lookup(var.settings, "data_disks", {})
 
-  managed_disk_id           = can(azurerm_managed_disk.disk[each.key].id) ? azurerm_managed_disk.disk[each.key].id : each.value.restored_disk_id
-  virtual_machine_id        = local.os_type == "linux" ? azurerm_linux_virtual_machine.vm["linux"].id : azurerm_windows_virtual_machine.vm["windows"].id
+  managed_disk_id = coalesce(
+    try(each.value.restored_disk_id, null),
+    try(azurerm_managed_disk.disk[each.key].id, null)
+  )
+  virtual_machine_id        = local.os_type == "linux" ? azurerm_linux_virtual_machine.vm["linux"].id : (local.os_type == "windows" ? azurerm_windows_virtual_machine.vm["windows"].id : azurerm_virtual_machine.vm["legacy"].id)
   lun                       = each.value.lun
   caching                   = lookup(each.value, "caching", "None")
   write_accelerator_enabled = lookup(each.value, "write_accelerator_enabled", false)

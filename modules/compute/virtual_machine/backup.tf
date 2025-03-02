@@ -14,7 +14,7 @@ resource "azurerm_backup_protected_vm" "backup" {
     try(var.recovery_vaults[var.client_config.landingzone_key][var.settings.backup.vault_key].name, null),
     try(var.recovery_vaults[var.settings.backup.lz_key][var.settings.backup.vault_key].name, null)
   )
-  source_vm_id = local.os_type == "linux" ? try(azurerm_linux_virtual_machine.vm["linux"].id, null) : try(azurerm_windows_virtual_machine.vm["windows"].id, null)
+  source_vm_id = local.os_type == "linux" ? try(azurerm_linux_virtual_machine.vm["linux"].id, null) : (local.os_type == "windows" ? try(azurerm_windows_virtual_machine.vm["windows"].id, null) : try(azurerm_virtual_machine.vm["legacy"].id, null))
   backup_policy_id = coalesce(
     try(var.settings.backup.backup_policy_id, null),
     try(var.recovery_vaults[var.client_config.landingzone_key][var.settings.backup.vault_key].backup_policies.virtual_machines[var.settings.backup.policy_key].id, null),

@@ -83,6 +83,7 @@ virtual_machines = {
         }
 
         storage_data_disk = {
+          # If this block is used, the data_disks block should not be used together. If both are used against the same Virtual Machine, spurious changes will occur.
           lun0 = {
             name          = "vm_1-lun0"
             create_option = "FromImage"
@@ -108,6 +109,32 @@ virtual_machines = {
         }
       }
     }
+    
+    backup = {
+      vault_key  = "asr1"
+      policy_key = "policy1"
+      #lz_key = "" if in landing zone context, you can get the state from a remote LZ using this key
+    }
+    
+    data_disks = {
+      # If this block is used, the storage_data_disk block should not be used together. If both are used against the same Virtual Machine, spurious changes will occur.
+      db_data1 = {
+        name                 = "bastion-db-data1"
+        storage_account_type = "Standard_LRS"
+        # Only Empty is supported. More community contributions required to cover other scenarios
+        create_option = "Empty"
+        disk_size_gb  = "10"
+        lun           = 1
+      }
+      db_data2 = {
+        name                 = "bastion-db-data2"
+        storage_account_type = "Standard_LRS"
+        create_option        = "Empty"
+        disk_size_gb         = "10"
+        lun                  = 2
+      }
+    }
+    
   },
   vm_2 = {
     tags = {
