@@ -28,7 +28,7 @@ mysql_flexible_server = {
     }
 
     # Auto-generated administrator credentials stored in azure keyvault when not set (recommended).
-    # administrator_username  = "psqladmin"
+    # administrator_username  = "mysqladmin"
     # administrator_password  = "ComplxP@ssw0rd!"
     keyvault = {
       key = "mysql_region1" # (Required) when auto-generated.
