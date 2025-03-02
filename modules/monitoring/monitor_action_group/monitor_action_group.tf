@@ -67,11 +67,18 @@ resource "azurerm_monitor_action_group" "this" {
     for_each = try(var.settings.event_hub_receiver, {})
     content {
       name = event_hub_receiver.value.name
-      event_hub_id = coalesce(
-        try(var.remote_objects.event_hub_namespaces[event_hub_receiver.value.event_hub.lz_key][event_hub_receiver.value.event_hub.key].id, null),
-        try(var.remote_objects.event_hub_namespaces[var.client_config.landingzone_key][event_hub_receiver.value.event_hub.key].id, null),
+      event_hub_name = coalesce(
+        try(
+        var.remote_objects.event_hubs[event_hub_receiver.value.event_hub.lz_key][event_hub_receiver.value.event_hub.key].name, null),
+        try(var.remote_objects.event_hubs[var.client_config.landingzone_key][event_hub_receiver.value.event_hub.key].name, null),
+        try(event_hub_receiver.value.event_hub.name, null)
+      )
+      event_hub_namespace = coalesce(
+        try(var.remote_objects.event_hub_namespaces[event_hub_receiver.value.event_hub.lz_key][event_hub_receiver.value.event_hub.key].name, null),
+        try(var.remote_objects.event_hub_namespaces[var.client_config.landingzone_key][event_hub_receiver.value.event_hub.key].name, null),
         try(event_hub_receiver.value.event_hub.key, null)
       )
+      subscription_id = try(event_hub_receiver.value.subscription_id, null)
       tenant_id               = try(event_hub_receiver.value.tenant_id, null)
       use_common_alert_schema = try(event_hub_receiver.value.use_common_alert_schema, null)
     }

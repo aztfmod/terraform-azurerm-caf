@@ -9,5 +9,3 @@ share-directory=${storage_accounts["sa1"].file_share["share1"].file_share_direct
 
 ###### PUBLIC KEY ########
 ${keyvault_keys["key1"].public_key_pem}
-
-vnet_address_space=${vnets["vnet_region1"].address_space[0]}

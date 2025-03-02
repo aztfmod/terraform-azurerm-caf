@@ -47,6 +47,7 @@ The current folder contains an example of module with the whole features set of 
 ```bash
 cd /tf/caf/examples
 az login
+export  ARM_SUBSCRIPTION_ID=00000000-0000-0000-0000-000000000000
 terraform init
 terraform plan -var-file <path to your variable file>
 terraform apply -var-file <path to your variable file>

@@ -50,8 +50,9 @@ backup_vault_policies = {
     type                            = "disk"
     backup_vault_key                = "bv0"
     policy_name                     = "backup-policy-lvl0"
-    retention_duration              = "P7D"                                #Specific ISO 8601 format
+    operational_default_retention_duration              = "P7D"                                #Specific ISO 8601 format
     backup_repeating_time_intervals = ["R/2022-04-20T00:00:00+00:00/PT4H"] # ISO 8601 repeating time interval
+    retention_duration              = "P7D"                                #Specific ISO 8601 format
     retention_rules = {
       Daily = {
         name              = "Daily"
@@ -110,6 +111,31 @@ keyvaults = {
         secret_permissions = ["Set", "Get", "List", "Delete", "Purge", "Recover"]
         key_permissions    = ["Get", "List", "Update", "Create", "Import", "Delete", "Recover", "Backup", "Restore", "Decrypt", "Encrypt", "UnwrapKey", "WrapKey", "Verify", "Sign", "Purge"]
       }
+    }
+  }
+}
+
+keyvault_keys = {
+  key1 = {
+    keyvault_key       = "example_vm_rg1"
+    resource_group_key = "bv"
+    name               = "disk-key"
+    key_type           = "RSA"
+    key_size           = "2048"
+    key_opts           = ["encrypt", "decrypt", "sign", "verify", "wrapKey", "unwrapKey"]
+    tags = {
+      encryption = "rsa-204"
+    new_tag = "yes" }
+  }
+}
+
+disk_encryption_sets = {
+  set1 = {
+    name               = "deskey1"
+    resource_group_key = "bv"
+    key_vault_key_key  = "key1"
+    keyvault = {
+      key = "example_vm_rg1"
     }
   }
 }

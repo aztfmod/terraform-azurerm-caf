@@ -38,13 +38,11 @@ aks_clusters = {
       load_balancer_sku = "standard"
     }
 
-    role_based_access_control = {
-      enabled = true
-      azure_active_directory = {
-        managed            = true
-        azure_rbac_enabled = true
-      }
-    }
+    #azure_active_directory_role_based_access_control = {
+    #  enabled = true
+    #  tenant_id = "00000000-0000-0000-0000-000000000000"
+    #  admin_group_object_ids = ["00000000-0000-0000-0000-000000000000"]
+    #}
 
     addon_profile = {
       oms_agent = {

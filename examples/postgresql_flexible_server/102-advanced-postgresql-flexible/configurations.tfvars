@@ -123,13 +123,13 @@ vnets = {
       private_dns = {
         name                                           = "private-dns"
         cidr                                           = ["10.10.0.0/25"]
-        enforce_private_link_endpoint_network_policies = true
+        private_endpoint_network_policies = "Enabled"
         enforce_private_link_service_network_policies  = false
       }
       postgresql = {
         name                                           = "postgresql"
         cidr                                           = ["10.10.0.128/25"]
-        enforce_private_link_endpoint_network_policies = true
+        private_endpoint_network_policies = "Enabled"
         delegation = {
           name               = "postgresql"
           service_delegation = "Microsoft.DBforPostgreSQL/flexibleServers"

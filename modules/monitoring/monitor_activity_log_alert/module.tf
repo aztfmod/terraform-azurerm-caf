@@ -11,6 +11,7 @@ resource "azurecaf_name" "mala" {
 resource "azurerm_monitor_activity_log_alert" "mala" {
   name                = azurecaf_name.mala.result
   resource_group_name = var.resource_group_name
+  location = local.location
   scopes = try(flatten([
     for key, value in var.settings.scopes : coalesce(
       try(var.remote_objects[value.resource_type][value.lz_key][value.key].id, null),

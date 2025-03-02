@@ -86,50 +86,7 @@ resource "azurerm_consumption_budget_resource_group" "this" {
         }
       }
 
-      dynamic "not" {
-        for_each = try(var.settings.filter.not, null) == null ? [] : [1]
 
-        content {
-          dynamic "dimension" {
-            for_each = {
-              for key, value in try(var.settings.filter.not.dimension, {}) : key => value
-              if lower(value.name) != "resource_key"
-            }
-
-            content {
-              name     = dimension.value.name
-              operator = try(dimension.value.operator, "In")
-              values   = dimension.value.values
-            }
-          }
-
-          dynamic "dimension" {
-            for_each = {
-              for key, value in try(var.settings.filter.not.dimension, {}) : key => value
-              if lower(value.name) == "resource_key"
-            }
-
-            content {
-              name     = "ResourceId"
-              operator = try(dimension.value.operator, "In")
-              values = try(flatten([
-                for key, value in var.local_combined_resources[dimension.value.resource_key][try(dimension.value.lz_key, var.client_config.landingzone_key)] : value.id
-                if contains(dimension.value.values, key)
-              ]), [])
-            }
-          }
-
-          dynamic "tag" {
-            for_each = try(var.settings.filter.not.tag, null) == null ? [] : [1]
-
-            content {
-              name     = var.settings.filter.not.tag.name
-              operator = try(var.settings.filter.not.tag.operator, "In")
-              values   = var.settings.filter.not.tag.values
-            }
-          }
-        }
-      }
     }
   }
 }

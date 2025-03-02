@@ -46,7 +46,7 @@ resource "null_resource" "destroy_ase" {
 
 }
 
-data "azurerm_app_service_environment" "ase" {
+data "azurerm_app_service_environment_v3" "ase" {
   depends_on = [azurerm_resource_group_template_deployment.ase]
 
   name                = azurecaf_name.ase.result

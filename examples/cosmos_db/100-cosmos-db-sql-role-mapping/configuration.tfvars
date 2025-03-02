@@ -25,7 +25,7 @@ cosmos_dbs = {
     resource_group_key        = "cosmosdb_region1"
     offer_type                = "Standard"
     kind                      = "GlobalDocumentDB"
-    enable_automatic_failover = "true"
+    automatic_failover_enabled = "true"
 
     #This parameter needs for more correct work with Cosmos custom roles
     access_key_metadata_writes_enabled = false
@@ -60,7 +60,8 @@ cosmos_dbs = {
         containers = {
           container1 = {
             name               = "container-ex101"
-            partition_key_path = "/partitionKeyPath"
+            # Ensure partition_key_paths is a list
+            partition_key_paths = ["/partitionKeyPath"]
 
             autoscale_settings = {
               max_throughput = 4000

@@ -54,7 +54,7 @@ vnets = {
         name                                           = "pep"
         cidr                                           = ["100.64.103.0/27"]
         service_endpoints                              = ["Microsoft.Storage"]
-        enforce_private_link_endpoint_network_policies = "true"
+        private_endpoint_network_policies = "Enabled"
       }
     }
   }

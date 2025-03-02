@@ -76,7 +76,13 @@ resource "azurerm_windows_virtual_machine_scale_set" "vmss" {
   priority                     = try(each.value.priority, null)
   provision_vm_agent           = try(each.value.provision_vm_agent, true)
   proximity_placement_group_id = can(each.value.proximity_placement_group_key) || can(each.value.proximity_placement_group.key) ? var.proximity_placement_groups[try(var.client_config.landingzone_key, var.client_config.landingzone_key)][try(each.value.proximity_placement_group_key, each.value.proximity_placement_group.key)].id : try(each.value.proximity_placement_group_id, each.value.proximity_placement_group.id, null)
-  scale_in_policy              = try(each.value.scale_in_policy, null)
+  dynamic "scale_in" {
+    for_each = can(each.value.scale_in) ? [1] : []
+    content {
+      rule = each.value.scale_in.rule
+      force_deletion_enabled = each.value.scale_in.force_deletion_enabled
+    }
+  }
   zone_balance                 = try(each.value.zone_balance, null)
   zones                        = try(each.value.zones, null)
   single_placement_group       = try(each.value.single_placement_group, null)

@@ -26,7 +26,7 @@ module "private_endpoints" {
     keyvaults                   = local.combined_objects_keyvaults
     machine_learning            = local.combined_objects_machine_learning
     mssql_servers               = local.combined_objects_mssql_servers
-    mysql_servers               = local.combined_objects_mysql_servers
+    mysql_flexible_servers      = local.combined_objects_mysql_flexible_servers
     networking                  = local.combined_objects_networking
     postgresql_servers          = local.combined_objects_postgresql_servers
     recovery_vaults             = local.combined_objects_recovery_vaults

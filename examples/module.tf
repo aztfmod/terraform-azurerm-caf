@@ -55,8 +55,7 @@ module "example" {
   #   attestationEndpoint                         = var.attestationEndpoint
   #   azureDatalakeAnalyticsCatalogAndJobEndpoint = var.azureDatalakeAnalyticsCatalogAndJobEndpoint
   #   azureDatalakeStoreFileSystemEndpoint        = var.azureDatalakeStoreFileSystemEndpoint
-  #   keyvaultDns                                 = var.keyvaultDns
-  #   mariadbServerEndpoint                       = var.mariadbServerEndpoint
+  #   keyvaultDns                                 = var.keyvaultDns  
   #   mhsmDns                                     = var.mhsmDns
   #   mysqlServerEndpoint                         = var.mysqlServerEndpoint
   #   postgresqlServerEndpoint                    = var.postgresqlServerEndpoint
@@ -87,7 +86,9 @@ module "example" {
   # }
 
   cognitive_services = {
-    cognitive_services_account = var.cognitive_services_account
+    cognitive_services_account             = var.cognitive_services_account
+    cognitive_account_customer_managed_key = var.cognitive_account_customer_managed_key
+    cognitive_deployment                   = var.cognitive_deployment 
   }
   communication = {
     communication_services = var.communication_services
@@ -140,11 +141,8 @@ module "example" {
     cosmosdb_role_definitions          = var.cosmosdb_role_definitions
     databricks_workspaces              = var.databricks_workspaces
     database_migration_services        = var.database_migration_services
-    databricks_workspaces              = var.databricks_workspaces
     databricks_access_connectors       = var.databricks_access_connectors
     machine_learning_workspaces        = var.machine_learning_workspaces
-    mariadb_servers                    = var.mariadb_servers
-    mariadb_databases                  = var.mariadb_databases
     mssql_databases                    = var.mssql_databases
     mssql_elastic_pools                = var.mssql_elastic_pools
     mssql_failover_groups              = var.mssql_failover_groups
@@ -159,7 +157,6 @@ module "example" {
     mssql_mi_tdes                      = var.mssql_mi_tdes
     mssql_servers                      = var.mssql_servers
     mysql_flexible_server              = var.mysql_flexible_server
-    mysql_servers                      = var.mysql_servers
     postgresql_flexible_servers        = var.postgresql_flexible_servers
     postgresql_servers                 = var.postgresql_servers
     synapse_workspaces                 = var.synapse_workspaces

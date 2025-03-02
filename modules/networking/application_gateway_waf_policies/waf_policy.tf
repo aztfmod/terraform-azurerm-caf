@@ -83,11 +83,22 @@ resource "azurerm_web_application_firewall_policy" "wafpolicy" {
             for_each = try(managed_rule_set.value.rule_group_override, {})
             content {
               rule_group_name = rule_group_override.value.rule_group_name
-              disabled_rules  = try(rule_group_override.value.disabled_rules, null)
+              #The rule block supports the following:
+              #id - (Required) Identifier for the managed rule.
+              #enabled - (Optional) Describes if the managed rule is in enabled state or disabled state. Defaults to false.
+              #action - (Optional) Describes the override action to be applied when rule matches. Possible values are Allow, AnomalyScoring, Block, JSChallenge and Log. JSChallenge is only valid for rulesets of type Microsoft_BotManagerRuleSet.
+              dynamic "rule" {
+                for_each = try(rule_group_override.value.rules, {})
+                content {
+                  id      = rule.value.id
+                  enabled = try(rule.value.enabled, false)
+                  action  = try(rule.value.action, null)
+              }
             }
           }
         }
       }
     }
   }
+}
 }

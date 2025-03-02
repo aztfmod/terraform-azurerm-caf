@@ -30,12 +30,11 @@ aks_clusters = {
     }
 
     # enable_rbac = true
-    role_based_access_control = {
-      enabled = true
-      azure_active_directory = {
-        managed = true
-      }
-    }
+     #azure_active_directory_role_based_access_control = {
+    #  enabled = true
+    #  tenant_id = "00000000-0000-0000-0000-000000000000"
+    #  admin_group_object_ids = ["00000000-0000-0000-0000-000000000000"]
+    #}
 
     oms_agent = {
       log_analytics_key = "central_logs_region1"
@@ -44,6 +43,7 @@ aks_clusters = {
     service_mesh_profile = {
       internal_ingress_gateway_enabled = true
       mode                             = "Istio"
+      revisions                        = ["asm-1-20"]
     }
 
     # admin_groups = {

@@ -51,7 +51,7 @@ virtual_subnets = {
     vnet = {
       key = "bootstrap"
     }
-    private_endpoint_network_policies_enabled = true
+    private_endpoint_network_policies = true
   }
 }
 

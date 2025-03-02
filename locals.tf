@@ -6,6 +6,14 @@ resource "random_string" "prefix" {
   numeric = false
 }
 
+resource "random_string" "suffix" {
+  count   = try(var.global_settings.suffix, null) == null ? 1 : 0
+  length  = 4
+  special = false
+  upper   = false
+  numeric = false
+}
+
 locals {
   aadb2c = {
     aadb2c_directory = try(var.aadb2c.aadb2c_directory, {})
@@ -42,8 +50,7 @@ locals {
     attestationEndpoint                         = try(var.cloud.attestationEndpoint, {})
     azureDatalakeAnalyticsCatalogAndJobEndpoint = try(var.cloud.azureDatalakeAnalyticsCatalogAndJobEndpoint, {})
     azureDatalakeStoreFileSystemEndpoint        = try(var.cloud.azureDatalakeStoreFileSystemEndpoint, {})
-    keyvaultDns                                 = try(var.cloud.keyvaultDns, {})
-    mariadbServerEndpoint                       = try(var.cloud.mariadbServerEndpoint, {})
+    keyvaultDns                                 = try(var.cloud.keyvaultDns, {})    
     mhsmDns                                     = try(var.cloud.mhsmDns, {})
     mysqlServerEndpoint                         = try(var.cloud.mysqlServerEndpoint, {})
     postgresqlServerEndpoint                    = try(var.cloud.postgresqlServerEndpoint, {})
@@ -123,9 +130,7 @@ locals {
     database_migration_projects        = try(var.database.database_migration_projects, {})
     databricks_workspaces              = try(var.database.databricks_workspaces, {})
     databricks_access_connectors       = try(var.database.databricks_access_connectors, {})
-    machine_learning_workspaces        = try(var.database.machine_learning_workspaces, {})
-    mariadb_databases                  = try(var.database.mariadb_databases, {})
-    mariadb_servers                    = try(var.database.mariadb_servers, {})
+    machine_learning_workspaces        = try(var.database.machine_learning_workspaces, {})    
     mssql_databases                    = try(var.database.mssql_databases, {})
     mssql_elastic_pools                = try(var.database.mssql_elastic_pools, {})
     mssql_failover_groups              = try(var.database.mssql_failover_groups, {})
@@ -140,11 +145,11 @@ locals {
     mssql_mi_tdes                      = try(var.database.mssql_mi_tdes, {})
     mssql_servers                      = try(var.database.mssql_servers, {})
     mysql_databases                    = try(var.database.mysql_databases, {})
-    mysql_servers                      = try(var.database.mysql_servers, {})
+    mysql_flexible_servers             = try(var.database.mysql_flexible_servers, {})
     postgresql_flexible_servers        = try(var.database.postgresql_flexible_servers, {})
     postgresql_servers                 = try(var.database.postgresql_servers, {})
     synapse_workspaces                 = try(var.database.synapse_workspaces, {})
-    mysql_flexible_server              = try(var.database.mysql_flexible_server, {})
+
 
     data_explorer = {
       kusto_clusters                         = try(var.database.data_explorer.kusto_clusters, {})
@@ -225,11 +230,16 @@ locals {
     default_region     = try(var.global_settings.default_region, "region1")
     environment        = try(var.global_settings.environment, var.environment)
     inherit_tags       = try(var.global_settings.inherit_tags, false)
-    passthrough        = try(var.global_settings.passthrough, false)
     prefix             = try(var.global_settings.prefix, null)
-    prefix_with_hyphen = try(var.global_settings.prefix_with_hyphen, format("%s-", try(var.global_settings.prefix, try(var.global_settings.prefixes[0], random_string.prefix[0].result))))
-    prefixes           = try(var.global_settings.prefix, null) == "" ? null : try([var.global_settings.prefix], try(var.global_settings.prefixes, [random_string.prefix[0].result]))
+    suffix             = try(var.global_settings.suffix, null)
+    prefix_with_hyphen = try(var.global_settings.prefix_with_hyphen, format("%s-", try(var.global_settings.prefix, try(var.global_settings.prefixes[0], random_string.prefix.0.result))))
+    prefixes           = try(var.global_settings.prefix, null) == "" ? null : try([var.global_settings.prefix], try(var.global_settings.prefixes, [random_string.prefix.0.result]))
+    suffixes           = try(var.global_settings.suffixes, null) == "" ? null : try([var.global_settings.suffix], try(var.global_settings.suffixes, [random_string.suffix.0.result]))
     random_length      = try(var.global_settings.random_length, 0)
+    random_seed        = try(var.global_settings.random_seed, null)
+    resource_types     = try(var.global_settings.resource_types, [])
+    separator          = try(var.global_settings.separator, "-")
+    passthrough        = try(var.global_settings.passthrough, false)
     regions            = try(var.global_settings.regions, null)
     tags               = try(var.global_settings.tags, null)
     use_slug           = try(var.global_settings.use_slug, true)
@@ -249,6 +259,8 @@ locals {
 
   cognitive_services = {
     cognitive_services_account = try(var.cognitive_services.cognitive_services_account, {})
+    cognitive_account_customer_managed_key = try(var.cognitive_services.cognitive_account_customer_managed_key, {})
+    cognitive_deployment                   = try(var.cognitive_services.cognitive_deployment, {})
   }
   search_services = {
     search_services = try(var.search_services.search_services, {})

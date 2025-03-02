@@ -11,7 +11,7 @@ vnets = {
         cidr                                           = ["10.1.1.0/24"]
         service_endpoints                              = ["Microsoft.ContainerRegistry", "Microsoft.Storage"]
         enforce_private_link_service_network_policies  = true
-        enforce_private_link_endpoint_network_policies = true
+        private_endpoint_network_policies = "Enabled"
       }
       subnet2 = {
         name              = "worker"
