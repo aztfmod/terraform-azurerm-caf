@@ -450,3 +450,6 @@ variable "load_test" {
   default     = {}
 }
 
+variable "management_locks" {
+  default = {}
+}
