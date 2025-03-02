@@ -83,6 +83,12 @@ mssql_servers = {
     }
   }
 }
+### usage example with UserAssigned MI:
+    # identity = {
+    #   type = "UserAssigned"
+    #   managed_identity_key = "sql_server_mi"
+    #   lz_key = "identity"
+    # }
 
 mssql_databases = {
 
@@ -99,12 +105,13 @@ mssql_databases = {
       group1 = { # group_name
         db_roles = ["db_owner", "db_accessadmin"]
         managed_identities = {
-          examples = { # lz_key
-            managed_identity_keys = ["webapp_mi"]
-          }
-          # remote_mi = {
-          #   managed_identity_keys = ["mi1"]
-          # }
+          #lz_key  = ""   # lz_key
+          keys    = ["webapp_mi"]
+          #managed_identity_keys = [""]
+        }
+        azuread_groups = {
+          keys    = ["sql_admins","db_owners"]
+          lz_key  = "lz2"  # lz_key
         }
       }
     }
