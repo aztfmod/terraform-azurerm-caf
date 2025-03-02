@@ -178,9 +178,10 @@ resource "azurerm_container_group" "acg" {
   dynamic "image_registry_credential" {
     for_each = try(var.settings.image_registry_credentials, {})
     content {
-      server   = image_registry_credential.value.server
-      username = try(data.azurerm_key_vault_secret.image_registry_credential_username[image_registry_credential.key].value, image_registry_credential.value.username)
-      password = try(data.azurerm_key_vault_secret.image_registry_credential_password[image_registry_credential.key].value, image_registry_credential.value.password)
+      server                    = image_registry_credential.value.server
+      username                  = try(data.azurerm_key_vault_secret.image_registry_credential_username[image_registry_credential.key].value, image_registry_credential.value.username, null)
+      password                  = try(data.azurerm_key_vault_secret.image_registry_credential_password[image_registry_credential.key].value, image_registry_credential.value.password, null)
+      user_assigned_identity_id = can(var.settings.identity.type) ? lower(var.settings.identity.type) == "userassigned" ? try(local.managed_identities[0], null) : null : null
     }
   }
 
