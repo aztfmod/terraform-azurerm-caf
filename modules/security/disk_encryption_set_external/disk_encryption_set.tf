@@ -9,6 +9,7 @@ resource "azurerm_disk_encryption_set" "encryption_set" {
   auto_key_rotation_enabled = try(var.settings.auto_key_rotation_enabled, null)
   encryption_type           = try(var.settings.encryption_type, null)
 
+
   identity {
     type = try(var.settings.identity.type, "SystemAssigned")
 

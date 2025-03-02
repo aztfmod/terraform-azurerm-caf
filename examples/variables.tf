@@ -506,6 +506,9 @@ variable "event_hubs" {
 variable "automations" {
   default = {}
 }
+variable "automation_powershell72_module" {
+  default = {}
+}
 variable "automation_schedules" {
   default = {}
 }
@@ -813,6 +816,14 @@ variable "cdn_profile" {
 }
 variable "function_apps" {
   default = {}
+}
+variable "linux_function_apps" {
+  default = {}
+  type    = map(any)
+}
+variable "windows_function_apps" {
+  default = {}
+  type    = map(any)
 }
 variable "active_directory_domain_service" {
   default = {}

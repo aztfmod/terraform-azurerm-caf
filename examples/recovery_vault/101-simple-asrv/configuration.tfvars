@@ -60,6 +60,11 @@ recovery_vaults = {
             weeks    = ["Last"]
             months   = ["January"]
           }
+          tiering_policy = {
+            mode          = "TierAfter"
+            duration      = 3
+            duration_type = "Weeks"
+          }
         }
       }
 

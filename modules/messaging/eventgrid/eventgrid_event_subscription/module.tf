@@ -16,7 +16,7 @@ resource "azurerm_eventgrid_event_subscription" "eges" {
   dynamic "azure_function_endpoint" {
     for_each = try(var.settings.azure_function_endpoint, null) != null ? [var.settings.azure_function_endpoint] : []
     content {
-      function_id                       = can(azure_function_endpoint.value.function.id) ? azure_function_endpoint.value.function.id : can(var.remote_objects.functions[try(azure_function_endpoint.value.function.lz_key, var.client_config.landingzone_key)][azure_function_endpoint.value.function.key].id) ? var.remote_objects.functions[try(azure_function_endpoint.value.function.lz_key, var.client_config.landingzone_key)][azure_function_endpoint.value.function.key].id : null
+      function_id                       = can(azure_function_endpoint.value.function.id) ? azure_function_endpoint.value.function.id : (can(var.remote_objects.functions[try(azure_function_endpoint.value.function.lz_key, var.client_config.landingzone_key)][azure_function_endpoint.value.function.key].id) ? "${var.remote_objects.functions[try(azure_function_endpoint.value.function.lz_key, var.client_config.landingzone_key)][azure_function_endpoint.value.function.key].id}/functions/${azure_function_endpoint.value.function.name}" : null)
       max_events_per_batch              = try(azure_function_endpoint.value.max_events_per_batch, null)
       preferred_batch_size_in_kilobytes = try(azure_function_endpoint.value.preferred_batch_size_in_kilobytes, null)
     }

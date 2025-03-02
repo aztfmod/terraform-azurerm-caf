@@ -53,3 +53,27 @@ resource "azurerm_cognitive_account" "service" {
     }
   }
 }
+
+resource "azurerm_cognitive_deployment" "deployment" {
+  depends_on = [azurerm_cognitive_account.service]
+
+  for_each               = var.settings.deployment
+  name                   = each.value.name
+  cognitive_account_id   = azurerm_cognitive_account.service.id
+  rai_policy_name        = try(each.value.rai_policy, null)
+  version_upgrade_option = try(each.value.version_upgrade_option, null)
+
+  model {
+    name    = each.value.model.name
+    format  = each.value.model.format
+    version = try(each.value.model.version, null)
+  }
+
+  scale {
+    type     = each.value.scale.type
+    tier     = try(each.value.scale.tier, null)
+    size     = try(each.value.scale.size, null)
+    family   = try(each.value.scale.family, null)
+    capacity = try(each.value.scale.capacity, null)
+  }
+}

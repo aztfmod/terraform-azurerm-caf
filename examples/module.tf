@@ -300,6 +300,7 @@ module "example" {
 
   shared_services = {
     automations                    = var.automations
+    automation_powershell72_module = var.automation_powershell72_module
     automation_schedules           = var.automation_schedules
     automation_runbooks            = var.automation_runbooks
     automation_log_analytics_links = var.automation_log_analytics_links
@@ -333,6 +334,7 @@ module "example" {
     app_service_plans                              = var.app_service_plans
     app_services                                   = var.app_services
     function_apps                                  = var.function_apps
+    windows_function_apps                          = var.windows_function_apps
     static_sites                                   = var.static_sites
   }
   data_factory = {

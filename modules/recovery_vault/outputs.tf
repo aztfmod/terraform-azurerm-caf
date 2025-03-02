@@ -39,3 +39,13 @@ output "rbac_id" {
   description = "Principal Id of the Vault"
   value       = try(azurerm_recovery_services_vault.asr.identity.0.principal_id, null)
 }
+
+output "recovery_fabrics" {
+  description = "Output the set of replication fabrics in the vault"
+  value       = azurerm_site_recovery_fabric.recovery_fabric
+}
+
+output "protection_containers" {
+  description = "Output the set of protection containers in the vault"
+  value       = azurerm_site_recovery_protection_container.protection_container
+}
