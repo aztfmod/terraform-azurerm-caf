@@ -10,6 +10,10 @@ private_endpoints = {
 
         # name = ""                        # Name of the private endpoint
         # resource_group_key = ""          # Key of the resource group where the private endpoint will be created. Defaults to the vnet's resource group
+        # resource_group = { # Or using a resource group from another LZ
+        #   key    = ""
+        #   lz_key = ""
+        # }
         private_service_connection = {
           name              = "psc-backup"
           subresource_names = ["AzureBackup"]
