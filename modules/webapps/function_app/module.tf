@@ -150,7 +150,11 @@ resource "azurerm_function_app" "function_app" {
 
         content {
           ip_address                = lookup(ip_restriction.value, "ip_address", null)
+          service_tag               = lookup(scm_ip_restriction.value, "service_tag", null)
           virtual_network_subnet_id = lookup(ip_restriction.value, "virtual_network_subnet_id", null)
+          name                      = lookup(scm_ip_restriction.value, "name", null)
+          priority                  = lookup(scm_ip_restriction.value, "priority", null)
+          action                    = lookup(scm_ip_restriction.value, "action", null)
         }
       }
       dynamic "scm_ip_restriction" {
