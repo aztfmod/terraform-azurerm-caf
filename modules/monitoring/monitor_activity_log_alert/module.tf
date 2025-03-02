@@ -13,7 +13,7 @@ resource "azurerm_monitor_activity_log_alert" "mala" {
   resource_group_name = var.resource_group_name
   scopes = try(flatten([
     for key, value in var.settings.scopes : coalesce(
-      try(var.remote_objects[value.resource_type][value.lz_key][value.lz_key][value.key].id, null),
+      try(var.remote_objects[value.resource_type][value.lz_key][value.key].id, null),
       try(var.remote_objects[value.resource_type][var.client_config.landingzone_key][value.key].id, null),
       try(value.id, null),
       []
@@ -28,7 +28,7 @@ resource "azurerm_monitor_activity_log_alert" "mala" {
       resource_type     = try(criteria.value.resource_type, null)
       resource_group    = try(criteria.value.resource_group, null)
       resource_id = try(
-        var.remote_objects[criteria.value.resource.resource_type][criteria.value.resource.lz_key][criteria.value.resource.lz_key][criteria.value.resource.key].id,
+        var.remote_objects[criteria.value.resource.resource_type][criteria.value.resource.lz_key][criteria.value.resource.key].id,
         var.remote_objects[criteria.value.resource.resource_type][var.client_config.landingzone_key][criteria.value.resource.key].id,
         criteria.value.resource.id,
         null
