@@ -207,6 +207,7 @@ module "example" {
     azurerm_firewalls                                       = var.azurerm_firewalls
     azurerm_routes                                          = var.azurerm_routes
     cdn_profile                                             = var.cdn_profile
+    cdn_front_door_profiles                                 = var.cdn_front_door_profiles
     cdn_endpoint                                            = var.cdn_endpoint
     ddos_services                                           = var.ddos_services
     dns_zone_records                                        = var.dns_zone_records
