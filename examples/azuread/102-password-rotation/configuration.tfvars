@@ -68,6 +68,7 @@ azuread_apps = {
   test_client = {
     useprefix        = true
     application_name = "test-client"
+    owners           = "custom_owner"
     password_policy = {
       # Length of the password
       length  = 250
