@@ -380,6 +380,7 @@ locals {
 
   shared_services = {
     automations                               = try(var.shared_services.automations, {})
+    automation_powershell72_module            = try(var.shared_services.automation_powershell72_module, {})
     automation_schedules                      = try(var.shared_services.automation_schedules, {})
     automation_runbooks                       = try(var.shared_services.automation_runbooks, {})
     automation_log_analytics_links            = try(var.shared_services.automation_log_analytics_links, {})
