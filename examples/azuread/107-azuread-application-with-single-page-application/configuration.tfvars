@@ -56,8 +56,8 @@ azuread_applications = {
           admin_consent_description  = "Allow to administer app2."
           admin_consent_display_name = "Administer app2"
           enabled                    = true
-          type  = "Admin"
-          value = "app2"
+          type                       = "Admin"
+          value                      = "app2"
         }
       ]
     }
