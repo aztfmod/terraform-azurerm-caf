@@ -24,5 +24,23 @@ app_config = {
     tags = {
       project = "sales"
     }
+
+    # sample fixed key value pairs
+    settings = {
+      "key" = "value"
+    }
+
+    # sample dynamic key value pair vault_uri for keyvault <key_vault_key> in state <landing_zone_key>
+    # possible other resources are listed in definition of 'dynamic_app_config_combined_objects' in locals.tf (https://github.com/aztfmod/terraform-azurerm-caf/blob/5b85b6e8bd7283788f3c3bb37e7e0b7cff40e7fd/locals.tf#L209) 
+    # dynamic_settings = {
+    #   "dynamickey" = {
+    #     keyvaults = {
+    #       "<key_vault_key>" = {
+    #         lz_key = "<landing_zone_key>"
+    #         attribute_key = "vault_uri"
+    #       }
+    #     }
+    #   }
+    # }
   }
 }
