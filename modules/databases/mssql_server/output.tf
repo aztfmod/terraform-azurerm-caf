@@ -18,6 +18,10 @@ output "azuread_administrator" {
   value = try(azurerm_mssql_server.mssql.azuread_administrator, null)
 }
 
+output "administrator_login" {
+  value = try(azurerm_mssql_server.mssql.administrator_login, null)
+}
+
 output "name" {
   value = azurecaf_name.mssql.result
 }
