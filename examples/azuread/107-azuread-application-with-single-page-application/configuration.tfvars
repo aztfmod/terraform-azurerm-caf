@@ -27,9 +27,9 @@ azuread_apps = {
 
 azuread_applications = {
   test_client_v1 = {
-    useprefix        = true
-    application_name = "test-client-v1"
-    public_client    = true
+    useprefix                      = true
+    application_name               = "test-client-v1"
+    fallback_public_client_enabled = true
 
     single_page_application = {
       redirect_uris = [

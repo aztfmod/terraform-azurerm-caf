@@ -13,7 +13,7 @@ resource "azuread_application" "app" {
   group_membership_claims        = try(var.settings.group_membership_claims, ["All"])
   identifier_uris                = try(var.settings.identifier_uris, null)
   prevent_duplicate_names        = try(var.settings.prevent_duplicate_names, false)
-  fallback_public_client_enabled = try(var.settings.public_client, false)
+  fallback_public_client_enabled = try(var.settings.fallback_public_client_enabled, false)
 
   dynamic "single_page_application" {
     for_each = try(var.settings.single_page_application, null) != null ? [1] : []
@@ -121,6 +121,12 @@ resource "azuread_application" "app" {
           id_token_issuance_enabled     = try(implicit_grant.value.id_token_issuance_enabled, null)
         }
       }
+    }
+  }
+  dynamic "public_client" {
+    for_each = try(var.settings.public_client, null) != null ? [var.settings.public_client] : []
+    content {
+      redirect_uris = try(public_client.value.redirect_uris, null)
     }
   }
 }

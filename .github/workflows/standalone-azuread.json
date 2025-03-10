@@ -12,6 +12,7 @@
     "azuread/105-azuread-application-with-optional-claims",
     "azuread/106-azuread-application-with-api-scopes",
     "azuread/108-azuread-application-with-app-roles",
+    "azuread/109-azuread-application-with-public-client",
     "azuread/201-groups-and-roles"
   ]
 }
